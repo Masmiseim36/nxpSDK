@@ -1,0 +1,9 @@
+<map id="sensors/mma845x_drv.h" name="sensors/mma845x_drv.h">
+<area shape="rect" id="node2" href="$mma845x__drv_8c.html" title="The mma845x_drv.c file implements the mma845x functional interface. " alt="" coords="5,95,168,121"/>
+<area shape="rect" id="node3" href="$mma845x__fifo_8c.html" title="The mma845x_fifo.c file implements the ISSDK MMA845x sensor driver example demonstration with FIFO mo..." alt="" coords="193,87,362,129"/>
+<area shape="rect" id="node4" href="$mma845x__interrupt_8c.html" title="The mma845x_interrupt.c file implements the ISSDK MMA845x sensor driver example demonstration with In..." alt="" coords="386,87,555,129"/>
+<area shape="rect" id="node5" href="$mma845x__poll_8c.html" title="The mma845x_poll.c file implements the ISSDK MMA845x sensor driver example demonstration with polling..." alt="" coords="579,87,749,129"/>
+<area shape="rect" id="node6" href="$_f_r_d_m-_k_l25_z_2mma845x__demo_8c.html" title="driverexamples/demos\l/FRDM&#45;KL25Z/mma845x_demo.c" alt="" coords="773,87,987,129"/>
+<area shape="rect" id="node7" href="$_f_r_d_m-_k_l27_z_2mma845x__demo_8c.html" title="driverexamples/demos\l/FRDM&#45;KL27Z/mma845x_demo.c" alt="" coords="1011,87,1226,129"/>
+<area shape="rect" id="node8" href="$pedometer__stepcount__mma8451_8c.html" title="The pedometer_stepcount_mma8451.c file implements the ISSDK prdometer example using MMA8451 sensor as..." alt="" coords="1251,80,1461,136"/>
+</map>

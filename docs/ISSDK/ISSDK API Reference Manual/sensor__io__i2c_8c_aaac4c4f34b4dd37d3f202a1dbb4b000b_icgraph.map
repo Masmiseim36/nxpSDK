@@ -1,0 +1,18 @@
+<map id="Sensor_I2C_Write" name="Sensor_I2C_Write">
+<area shape="rect" id="node2" href="$diff__p__drv_8h.html#ab6966a8c4618c35437648c001c1d641d" title="The interface function to configure he sensor. " alt="" coords="192,5,345,32"/>
+<area shape="rect" id="node3" href="$fxas21002__drv_8h.html#abef3b2c3849b49331142f7a6266fde9a" title="The interface function to configure he sensor. " alt="" coords="180,56,357,83"/>
+<area shape="rect" id="node4" href="$demo__11axis_8c.html#a840291bc02cba5474a4cb46a9b9566fe" title="Main function. " alt="" coords="405,183,456,209"/>
+<area shape="rect" id="node5" href="$drivers_8h.html#a79f26568f569b2f59c6cbb818f885789" title="FXLS8471Q_Idle" alt="" coords="209,157,328,184"/>
+<area shape="rect" id="node6" href="$drivers_8h.html#a7c8424e014e2bdbb1dd61fcb4731857b" title="FXLS8471Q_Init" alt="" coords="211,208,326,235"/>
+<area shape="rect" id="node7" href="$fxls8962__drv_8h.html#a1b62cba67669ae79f5f3c2e5f846a6c7" title="The interface function to configure he sensor. " alt="" coords="185,259,353,285"/>
+<area shape="rect" id="node8" href="$fxos8700__drv_8h.html#adcb4dbaa31a6b4ccd6031ee6cc97bb66" title="The interface function to configure he sensor. " alt="" coords="183,309,354,336"/>
+<area shape="rect" id="node9" href="$drivers_8h.html#a885024916f4959fb4d226465b68f8e90" title="FXOS8700_Idle" alt="" coords="213,360,324,387"/>
+<area shape="rect" id="node10" href="$drivers_8h.html#ac61bf451efc3a4eab179dbc59268b3e7" title="FXOS8700_Init" alt="" coords="215,411,323,437"/>
+<area shape="rect" id="node11" href="$fxpq3115__drv_8h.html#a02cdde2f932058060c53dc8314e8d03f" title="The interface function to configure he sensor. " alt="" coords="183,461,354,488"/>
+<area shape="rect" id="node12" href="$mag3110__drv_8h.html#a2de85bf13cfe26dbc0ca9be7f4625cba" title="The interface function to configure he sensor. " alt="" coords="185,512,352,539"/>
+<area shape="rect" id="node13" href="$drivers_8h.html#a8b3e60cfe3482a21af1efd34d3e31cc2" title="MAG3110_Idle" alt="" coords="215,563,322,589"/>
+<area shape="rect" id="node14" href="$drivers_8h.html#a20b118514f14ce008825433f72527ecd" title="MAG3110_Init" alt="" coords="217,613,321,640"/>
+<area shape="rect" id="node15" href="$mma845x__drv_8h.html#a6c537b63c09b23480c1a3d6ef6e29fef" title="The interface function to configure he sensor. " alt="" coords="185,664,353,691"/>
+<area shape="rect" id="node16" href="$mma865x__drv_8h.html#a5944d87d922a1bdbbf5f2574acc1e143" title="The interface function to configure he sensor. " alt="" coords="185,715,353,741"/>
+<area shape="rect" id="node17" href="$mpl3115__drv_8h.html#a8dce7c0e6c9d7ef6cf9c6c2fd3c093ae" title="The interface function to configure he sensor. " alt="" coords="187,765,351,792"/>
+</map>

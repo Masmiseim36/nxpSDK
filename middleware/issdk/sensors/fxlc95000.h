@@ -1,0 +1,120 @@
+/*
+ * The Clear BSD License
+ * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright 2016-2017 NXP
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted (subject to the limitations in the disclaimer below) provided
+ * that the following conditions are met:
+ *
+ * o Redistributions of source code must retain the above copyright notice, this list
+ *   of conditions and the following disclaimer.
+ *
+ * o Redistributions in binary form must reproduce the above copyright notice, this
+ *   list of conditions and the following disclaimer in the documentation and/or
+ *   other materials provided with the distribution.
+ *
+ * o Neither the name of the copyright holder nor the names of its
+ *   contributors may be used to endorse or promote products derived from this
+ *   software without specific prior written permission.
+ *
+ * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+/**
+ * @file fxlc95000.h
+ * @brief The fxlc95000.h contains the FXLC95000L Digital Accelerometer command definitions and access macros.
+ *        The commands and definitions are valid only when ISF1P195K GetAccelDataWithCI is running on FXLC95000.
+ *        Refer to Section 2 of FXLC95000CL Data Sheet for details on ISF and associated ISF1P195K_SW_REFERENCE_RM for
+ *        ISF1P195K software.
+ */
+#ifndef FXLC95000_H_
+#define FXLC95000_H_
+
+/*! @brief Size of fixed header bytes in sensor commands. */
+#define FXLC95000_HDR_SIZE 4
+
+/*! @brief Time stamp and XYZ Data Register Offset. */
+#define FXLC95000_SAMPLE_OFFSET 16
+
+/*! @brief Offset of 2-Byte ISF1.1_95k_Build_ID in Device Info Response. */
+#define FXLC95000_BUILD_ID_OFFSET 12
+
+/*! @brief The FXLC95000 Size of ISF1.1_95k_Build_ID. */
+#define FXLC95000_BUILD_ID_SIZE 2
+
+/*! @brief The FXLC95000 BCD encoded ISF1.1_95k_Build_ID. */
+#define FXLC95000_BUILD_ID 0x36C2
+
+/*! @brief The FXLC95000 Reserved filed bytes. */
+#define FXLC95000_RESERVED_ID 0xFFFF
+
+/*! @brief Offset of 2-Byte SA95000 Part Number in Device Info Response. */
+#define FXLC95000_PART_NUMBER_OFFSET 14
+
+/*! @brief The FXLC95000 Size of Part Number. */
+#define FXLC95000_PART_NUMBER_SIZE 2
+
+/*! @brief The FXLC95000 2-byte packed BCD encoded Part Number (BCD for Last 4 characters). */
+#define FXLC95000_PART_NUMBER 0x5000
+
+/*! @brief The FXLC95000 I2C Slave Address */
+#define FXLC95000_I2C_ADDRESS 0x4C
+
+/*! @brief The FXLC95000 Set Report Rate Command Header Bytes */
+#define FXLC95000_SET_ODR_CMD_HDR 0x02, 0x02, 0x03, 0x04
+
+/*! @brief The FXLC95000 Set Resolution Command Header Bytes */
+#define FXLC95000_SET_RESOLUTION_CMD_HDR 0x02, 0x02, 0x07, 0x01
+
+/*! @brief The FXLC95000 Set Range Command Header Bytes */
+#define FXLC95000_SET_RANGE_CMD_HDR 0x02, 0x02, 0x08, 0x01
+
+/*! @brief The FXLC95000 Set Report Rate Payload Bytes */
+#define FXLC95000_SST_ODR_PAYLOAD(x) (x & 0xFF000000) >> 24, (x & 0xFF0000) >> 16, (x & 0xFF00) >> 8, (x & 0xFF)
+
+/*! @brief The FXLC95000 FS Range 2G */
+#define FXLC95000_ACCEL_RANGE_2G 0x40
+
+/*! @brief The FXLC95000 FS Range 4G */
+#define FXLC95000_ACCEL_RANGE_4G 0x80
+
+/*! @brief The FXLC95000 FS Range 8G */
+#define FXLC95000_ACCEL_RANGE_8G 0xC0
+
+/*! @brief The FXLC95000 Resoultion 10-Bit */
+#define FXLC95000_ACCEL_RESOLUTION_10_BIT 0x0C
+
+/*! @brief The FXLC95000 Resoultion 12-Bit */
+#define FXLC95000_ACCEL_RESOLUTION_12_BIT 0x08
+
+/*! @brief The FXLC95000 Resoultion 14-Bit */
+#define FXLC95000_ACCEL_RESOLUTION_14_BIT 0x04
+
+/*! @brief The FXLC95000 Resoultion 16-Bit */
+#define FXLC95000_ACCEL_RESOLUTION_16_BIT 0x00
+
+static const uint8_t BootToFlash[] = {0x29, 0x00, 0xFF, 0xFF, 0xFF, 0xFF};
+static const uint8_t GetDeviceInfoCmd[] = {0x00, 0x00};
+static const uint8_t ConfigureMBoxCmd[] = {0x01, 0x02, 0x18, 0x14, 0x02, 0x03, 0x02, 0x02, 0x02, 0x01, 0x02, 0x00,
+                                           0x02, 0x05, 0x02, 0x04, 0x02, 0x07, 0x02, 0x06, 0x02, 0x09, 0x02, 0x08};
+static const uint8_t QuickReadInterruptEnable[] = {0x01, 0x02, 0x38, 0x01, 0x01};
+static const uint8_t QuickReadInterruptDisable[] = {0x01, 0x02, 0x38, 0x01, 0x00};
+static const uint8_t StartDataCmd[] = {0x02, 0x02, 0x00, 0x01, 0x52};
+static const uint8_t StopDataCmd[] = {0x02, 0x02, 0x00, 0x01, 0x51};
+static const uint8_t ShutdownCmd[] = {0x02, 0x02, 0x00, 0x01, 0x50};
+static const uint8_t UnprotectFlash[] = {0x40, 0x00};
+static const uint8_t EraseMainFlashArray[] = {0x12, 0xC5, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0xFF, 0xFF};
+static const uint8_t ProtectFlash[] = {0x38, 0x00};
+
+#endif /* FXLC95000_H_ */ 

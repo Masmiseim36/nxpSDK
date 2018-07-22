@@ -1,0 +1,12 @@
+<map id="sensors/fxos8700.h" name="sensors/fxos8700.h">
+<area shape="rect" id="node2" href="$fxos8700__drv_8h.html" title="The fxos8700_drv.h file describes the fxos8700 driver interface and structures. " alt="" coords="134,102,293,129"/>
+<area shape="rect" id="node3" href="$driver___f_x_o_s8700_8c.html" title="Provides init() and read() functions for the FXOS8700 6&#45;axis accel plus mag. " alt="" coords="5,206,192,247"/>
+<area shape="rect" id="node4" href="$pedometer__stepcount__fxos8700_8c.html" title="The pedometer_stepcount_fxos8700.c file implements the ISSDK prdometer example using FXOS8700 sensor ..." alt="" coords="221,199,432,255"/>
+<area shape="rect" id="node5" href="$orientaion__application__baremetal__agm01_8c.html" title="The orientaion_application_baremetal_agm01.c file implements the ISSDK baremetal orientation applicat..." alt="" coords="369,80,527,151"/>
+<area shape="rect" id="node6" href="$orientaion__application__freertos__agm01_8c.html" title="The orientaion_application_freertos_agm01.c file implements the ISSDK freeRTOS orientation applicatio..." alt="" coords="551,80,710,151"/>
+<area shape="rect" id="node7" href="$lpc_2auto__detection__service_8c.html" title="drivers/ads/lpc/auto\l_detection_service.c" alt="" coords="734,95,874,136"/>
+<area shape="rect" id="node8" href="$kinetis_2auto__detection__service_8c.html" title="drivers/ads/kinetis\l/auto_detection_service.c" alt="" coords="898,95,1067,136"/>
+<area shape="rect" id="node9" href="$main__agm01__freertos__two__tasks_8c.html" title="FreeRTOS (two task) implementation of sensor fusion on FRDM&#45;K64F. " alt="" coords="1092,87,1292,143"/>
+<area shape="rect" id="node10" href="$main__baremetal_8c.html" title="Bare metal implementation of sensor fusion on FRDM&#45;K64F. " alt="" coords="1316,95,1495,136"/>
+<area shape="rect" id="node11" href="$main__freertos__two__tasks_8c.html" title="FreeRTOS (two task) implementation of sensor fusion on FRDM&#45;K64F. " alt="" coords="1519,87,1678,143"/>
+</map>

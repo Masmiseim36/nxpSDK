@@ -1,0 +1,14 @@
+/**
+@page rtos_log RTOS Change Log
+
+@section uCOS-III uC/OS-III for KSDK
+Current version is uC/OS-III  V3.05.01.
+
+  - V3.05.01
+    - New Features:
+      - Add template application for Kinetis Expert (KEx) tool (template_application).
+    - Bug Fix:
+      - [KPSDK-7247] Downgrade port files from V3.05.01 to V3.05.00 due the context switch issue.
+    - Other changes:
+      - Folder structure reduction. Keep only Kinetis related parts.
+*/

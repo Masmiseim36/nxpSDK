@@ -1,0 +1,14 @@
+<map id="algorithms/sensorfusion/sources/status.h" name="algorithms/sensorfusion/sources/status.h">
+<area shape="rect" id="node2" href="$orientaion__application__baremetal__agm01_8c.html" title="The orientaion_application_baremetal_agm01.c file implements the ISSDK baremetal orientation applicat..." alt="" coords="5,95,164,165"/>
+<area shape="rect" id="node3" href="$orientaion__application__freertos__agm01_8c.html" title="The orientaion_application_freertos_agm01.c file implements the ISSDK freeRTOS orientation applicatio..." alt="" coords="188,95,347,165"/>
+<area shape="rect" id="node4" href="$driver___f_x_o_s8700_8c.html" title="Provides init() and read() functions for the FXOS8700 6&#45;axis accel plus mag. " alt="" coords="371,109,558,151"/>
+<area shape="rect" id="node5" href="$main__agm01__freertos__two__tasks_8c.html" title="FreeRTOS (two task) implementation of sensor fusion on FRDM&#45;K64F. " alt="" coords="582,102,782,158"/>
+<area shape="rect" id="node6" href="$main__agm04__freertos__two__tasks_8c.html" title="FreeRTOS (two task) implementation of sensor fusion on FRDM&#45;K64F/FRDM&#45;STBC&#45;AGM04 using MMA8652 (Accel..." alt="" coords="806,102,1006,158"/>
+<area shape="rect" id="node7" href="$main__agmp03__freertos__two__tasks_8c.html" title="FreeRTOS (two task) implementation of sensor fusion. " alt="" coords="1031,102,1237,158"/>
+<area shape="rect" id="node8" href="$main__baremetal_8c.html" title="Bare metal implementation of sensor fusion on FRDM&#45;K64F. " alt="" coords="1262,109,1441,151"/>
+<area shape="rect" id="node9" href="$main__freertos__agm02_8c.html" title="FreeRTOS (two task) implementation of sensor fusion on FRDM&#45;K64F/FRDM&#45;FXS&#45;AGM02. " alt="" coords="1465,102,1624,158"/>
+<area shape="rect" id="node10" href="$main__freertos__agm02__power__cycling_8c.html" title="FreeRTOS (two task) implementation of sensor fusion on FRDM&#45;K64F/FRDM&#45;FXS&#45;AGM02 with smart power&#45;cycl..." alt="" coords="1649,102,1817,158"/>
+<area shape="rect" id="node11" href="$main__freertos__two__tasks_8c.html" title="FreeRTOS (two task) implementation of sensor fusion on FRDM&#45;K64F. " alt="" coords="1841,102,2000,158"/>
+<area shape="rect" id="node12" href="$sensor__fusion_8c.html" title="The sensor_fusion.c file implements the top level programming interface. " alt="" coords="2024,109,2191,151"/>
+<area shape="rect" id="node13" href="$status_8c.html" title="Application&#45;specific status subsystem. " alt="" coords="2215,109,2373,151"/>
+</map>

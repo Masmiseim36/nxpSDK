@@ -1,0 +1,15 @@
+<map id="Register_SPI_Read" name="Register_SPI_Read">
+<area shape="rect" id="node2" href="$lpc_2auto__detection__service_8c.html#a9e2ed26195eaf78326777a51c8ac1f3a" title="ADS_FXLS8471Query" alt="" coords="199,5,350,32"/>
+<area shape="rect" id="node3" href="$lpc_2auto__detection__service_8c.html#a7381a2e1ee8e3fb264314c9c71216c98" title="ADS_FXLS8962Query" alt="" coords="199,56,350,83"/>
+<area shape="rect" id="node4" href="$fxas21002__drv_8h.html#a6a3e2b9d7fd78d3bcfbeae10000473c7" title="The interface function to initialize the sensor. " alt="" coords="189,107,361,133"/>
+<area shape="rect" id="node5" href="$fxlc95000__drv_8h.html#aec67caf020c27066c2918ca5ba6807ac" title="The interface function to initialize the sensor. " alt="" coords="189,157,360,184"/>
+<area shape="rect" id="node6" href="$drivers_8h.html#a7c8424e014e2bdbb1dd61fcb4731857b" title="FXLS8471Q_Init" alt="" coords="217,208,332,235"/>
+<area shape="rect" id="node7" href="$fxls8471q__drv_8h.html#abaaef883aa8d1d70ac1e5d9b4efb5e26" title="The interface function to initialize the sensor for I2C. " alt="" coords="188,259,361,285"/>
+<area shape="rect" id="node8" href="$fxls8962__drv_8h.html#ae96e138137bcdd86b47f8e28db1aa907" title="The interface function to initialize the sensor. " alt="" coords="193,309,356,336"/>
+<area shape="rect" id="node9" href="$fxos8700__drv_8h.html#ae968c689f91d84fb937839876121e3b4" title="The interface function to initialize the sensor. " alt="" coords="191,360,358,387"/>
+<area shape="rect" id="node10" href="$host__io__uart_8h.html#a3924d21a0703878695ebdb68f720fff9" title="Host_IO_Receive" alt="" coords="214,411,335,437"/>
+<area shape="rect" id="node11" href="$mma9553__drv_8h.html#a7aa85a35ea5947bf6ebd459911596bab" title="The interface function to configure he sensor. " alt="" coords="409,487,580,513"/>
+<area shape="rect" id="node12" href="$mma9553__drv_8h.html#aa9e0baf731b01815b94c95276e6be639" title="The interface function to initialize the sensor. " alt="" coords="413,549,576,576"/>
+<area shape="rect" id="node13" href="$sensor__io__spi_8h.html#a6891c5409037ff96ef29750f131f4c00" title="Write commands to a sensor. " alt="" coords="193,512,356,539"/>
+<area shape="rect" id="node14" href="$sensor__io__spi_8h.html#a77509913bc008bceacf1e5f500e7499d" title="Read register data from a sensor. " alt="" coords="211,613,339,640"/>
+</map>

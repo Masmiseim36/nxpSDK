@@ -1,0 +1,6 @@
+<map id="algorithms/sensorfusion/sources/matrix.h" name="algorithms/sensorfusion/sources/matrix.h">
+<area shape="rect" id="node2" href="$sensor__fusion_8h.html" title="The sensor_fusion.h file implements the top level programming interface. " alt="" coords="149,95,316,136"/>
+<area shape="rect" id="node3" href="$fusion_8c.html" title="Lower level sensor fusion interface. " alt="" coords="5,184,164,225"/>
+<area shape="rect" id="node4" href="$matrix_8c.html" title="Matrix manipulation functions. " alt="" coords="188,184,347,225"/>
+<area shape="rect" id="node5" href="$orientation_8c.html" title="Functions to convert between various orientation representations. " alt="" coords="371,184,529,225"/>
+</map>

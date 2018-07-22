@@ -1,0 +1,4 @@
+<map id="BOARD_SystickElapsedTicks" name="BOARD_SystickElapsedTicks">
+<area shape="rect" id="node2" href="$data__format__service_8h.html#a5d7069350a7d7e65686c77a8038f462f" title="The interface function to append the data on the formated stream. " alt="" coords="299,5,361,32"/>
+<area shape="rect" id="node3" href="$systick__utils_8c.html#a2dd49d058150eac99fde5badd93a90c6" title="SysTick_GetOVFCount" alt="" coords="251,56,409,83"/>
+</map>

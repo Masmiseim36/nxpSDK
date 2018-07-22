@@ -1,0 +1,34 @@
+uCOS-III_for_Kinetis_SDK_v2.0
+
+Original package is available on demand from Micrium, Inc. Supported version can be found in Kinetis
+SDK Release notes document. Folder structure of uc/OS-III in SDK is reduced to keep only necessary
+Kinetis related files. Folder nesting is minimalized.
+
+Directory structure:
+--------------------
+Original uC/OS-II folder structure
+    uC_OS-III Package (OS3+LIB+CPU+Common+Clk+Shell)
+      └ Micrium
+        └ Software
+          ├ uC-Common
+          ├ uC-Shell
+          ├ uC-Clk
+          ├ uC-CPU
+          ├ uC-LIB
+          └ uCOS-III
+
+SDK uC/OS-II folder structure
+    ucosiii
+      ├ template_application
+      ├ uC-CPU
+      ├ uC-LIB
+      └ uCOS-III
+
+Configuration:
+--------------
+Application contains several configuration files based on following templates:
+    rtos\ucosiii\uC-CPU\Cfg\Template\cpu_cfg.h
+    rtos\ucosiii\uCOS-III\Cfg\Template\os_cfg_app.h
+    rtos\ucosiii\uCOS-III\Cfg\Template\os_cfg.h
+    rtos\ucosiii\uCOS-III\Cfg\Template\os_app_hooks.h
+    rtos\ucosiii\uCOS-III\Cfg\Template\os_app_hooks.c

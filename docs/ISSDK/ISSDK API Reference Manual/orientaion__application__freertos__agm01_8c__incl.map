@@ -1,0 +1,11 @@
+<map id="driverexamples/demos/FRDM&#45;K64F/orientaion_application_freertos_agm01.c" name="driverexamples/demos/FRDM&#45;K64F/orientaion_application_freertos_agm01.c">
+<area shape="rect" id="node13" href="$fsl__i2c__cmsis_8h.html" title="fsl_i2c_cmsis.h" alt="" coords="1101,124,1213,151"/>
+<area shape="rect" id="node15" href="$fxas21002_8h.html" title="The fxas21002.h contains the fxas21002 sensor register definitions and its bit mask. " alt="" coords="1379,124,1471,151"/>
+<area shape="rect" id="node16" href="$fxos8700_8h.html" title="The fxos8700.h file contains the register definitions for FXOS8700 sensor driver. ..." alt="" coords="1495,124,1581,151"/>
+<area shape="rect" id="node17" href="$register__io__i2c_8h.html" title="The register_io_i2c.h file declares low&#45;level interface functions for reading and writing sensor regi..." alt="" coords="1605,124,1722,151"/>
+<area shape="rect" id="node18" href="$host__io__uart_8h.html" title="The host_io_uart.h file contains the Host Protocol interface definitions and configuration. " alt="" coords="1746,124,1850,151"/>
+<area shape="rect" id="node21" href="$sensor__fusion_8h.html" title="The sensor_fusion.h file implements the top level programming interface. " alt="" coords="2184,124,2297,151"/>
+<area shape="rect" id="node22" href="$control_8h.html" title="Defines control sub&#45;system. " alt="" coords="2322,124,2394,151"/>
+<area shape="rect" id="node23" href="$status_8h.html" title="Application&#45;specific status subsystem. " alt="" coords="2418,124,2487,151"/>
+<area shape="rect" id="node24" href="$drivers_8h.html" title="Provides function prototypes for driver level interfaces. " alt="" coords="2512,124,2583,151"/>
+</map>

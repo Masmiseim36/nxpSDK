@@ -1,0 +1,5 @@
+<map id="sensors/fxlc95000.h" name="sensors/fxlc95000.h">
+<area shape="rect" id="node2" href="$fxlc95000__drv_8h.html" title="The fxlc95000_drv.h file describes the FXLC95000L driver interface and structures. " alt="" coords="5,87,167,114"/>
+<area shape="rect" id="node3" href="$lpc_2auto__detection__service_8c.html" title="drivers/ads/lpc/auto\l_detection_service.c" alt="" coords="191,80,331,121"/>
+<area shape="rect" id="node4" href="$kinetis_2auto__detection__service_8c.html" title="drivers/ads/kinetis\l/auto_detection_service.c" alt="" coords="355,80,524,121"/>
+</map>

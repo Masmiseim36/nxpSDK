@@ -1,0 +1,88 @@
+/*!
+@page middleware_log Middleware Change Log
+
+@section multicore Multicore SDK
+  Current version is 2.3.0.
+
+  - 2.3.0
+    - Multicore SDK component versions:
+      - embedded Remote Procedure Call (eRPC) v1.5.0
+      - eRPC generator (erpcgen) v.1.5.0
+      - Multicore Manager (MCMgr) v3.0.0
+      - RPMsg-Lite v1.2.0
+    - New Features:
+      - eRPC: Added support for unions type non-wrapped by structure.
+      - eRPC: Added callbacks support.
+      - eRPC: Added support @external annotation for functions.
+      - eRPC: Added support @name annotation.
+      - eRPC: Added Messaging Unit transport layer.
+      - eRPC: Added RPMSG Lite RTOS TTY transport layer.
+      - eRPC: Added version verification and IDL version verification between eRPC code and eRPC generated shim code.
+      - eRPC: Added support of shared memory pointer.
+      - eRPC: Added annotation to forbid generating const keyword for function parameters.
+      - eRPC: Added python matrix multiply example.
+      - eRPC: Added nested call support.
+      - eRPC: Added struct member "byref" option support.
+      - eRPC: Added support of forward declarations of structures
+      - eRPC: Added Python RPMsg Multiendpoint kernel module support
+      - eRPC: Added eRPC sniffer tool
+      - MCMgr: Unused API removed
+      - MCMgr: Added the ability for remote core monitoring and event handling
+      - RPMsg-Lite: Several source files renamed to avoid conflicts with other middleware sw components
+      - RPMsg-Lite: Added the ability to use Multicore Manager (MCMGR) as the IPC interrupts router
+
+  - 2.2.0
+    - Multicore SDK component versions:
+      - embedded Remote Procedure Call (eRPC) v1.4.0
+      - eRPC generator (erpcgen) v.1.4.0
+      - Multicore Manager (MCMgr) v2.0.1
+      - RPMsg-Lite v1.1.0
+    - New Features:
+      - eRPC: win_flex_bison.zip for windows updated
+      - eRPC: Use one codec (instead of inCodec outCodec)
+      - eRPC: New RPMsg-Lite Zero Copy (RPMsgZC) transport layer
+      - MCMgr: code updated to be Misra compliant
+      - RPMsg-Lite: Added macros for packed structures (compiler.h)
+      - RPMsg-Lite: Improved interrupt handling in platform layer
+      - RPMsg-Lite: Changed RL_BUFFER_SIZE definition
+      - RPMsg-Lite: Fix of double initialization of vring shared data structure
+      - RPMsg-Lite: Support for the multi-instance
+
+  - 2.1.0
+    - Multicore SDK component versions:
+      - embedded Remote Procedure Call (eRPC) v1.3.0
+      - eRPC generator (erpcgen) v.1.3.0
+    - New Features:
+      - eRPC: New annotation types introduced (@length, @max_length, ...)
+      - eRPC: Support for running both erpc client and erpc server on one side
+      - eRPC: New transport layers for (LP)UART, (D)SPI
+      - eRPC: Error handling support
+
+  - 2.0.0
+    - Multicore SDK component versions:
+      - embedded Remote Procedure Call (eRPC) v1.2.0
+      - eRPC generator (erpcgen) v.1.2.0
+      - Multicore Manager (MCMgr) v2.0.0
+      - RPMsg-Lite v1.0.0
+    - New Features:
+      - Multicore SDK support for lpcxpresso54114 board added.
+      - RPMsg component of the Open-AMP framework re-implemented and the RPMsg-Lite version introduced.
+      - eRPC source directory organization changed.
+      - Many eRPC improvements.
+
+  - 1.1.0
+    - Multicore SDK component versions:
+      - embedded Remote Procedure Call (eRPC) v1.1.0
+      - Multicore Manager (MCMgr) v1.1.0
+      - Open-AMP / RPMsg based on SHA1 ID 44b5f3c0a6458f3cf80 rev01
+    - New Features:
+      - Multicore SDK 1.1.0 ported to KSDK 2.0.0.
+      - Python support added into eRPC.
+
+  - 1.0.0
+    - Multicore SDK component versions:
+      - embedded Remote Procedure Call (eRPC) v1.0.0
+      - Multicore Manager (MCMgr) v1.0.0
+      - Open-AMP / RPMsg based on SHA1 ID 44b5f3c0a6458f3cf80 rev00
+
+*/

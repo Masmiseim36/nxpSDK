@@ -1,0 +1,13 @@
+<map id="sensors/fxos8700_drv.h" name="sensors/fxos8700_drv.h">
+<area shape="rect" id="node2" href="$fxos8700__drv_8c.html" title="The fxos8700_drv.c file implements the fxos8700 sensor driver functional interfaces. " alt="" coords="5,95,164,121"/>
+<area shape="rect" id="node3" href="$fxos8700__fifo_8c.html" title="The fxos8700.c file implements the ISSDK FXOS8700 sensor driver example demonstration with FIFO mode..." alt="" coords="188,87,352,129"/>
+<area shape="rect" id="node4" href="$fxos8700__interrupt_8c.html" title="The fxos8700_interrupt.c file implements the ISSDK FXOS8700 sensor driver example demonstration with ..." alt="" coords="376,87,540,129"/>
+<area shape="rect" id="node5" href="$fxos8700__poll_8c.html" title="The fxos8700_poll.c file implements the ISSDK FXOS8700 sensor driver example demonstration with polli..." alt="" coords="564,87,728,129"/>
+<area shape="rect" id="node6" href="$fxos8700__poll__spi_8c.html" title="The fxos8700_poll_spi.c file implements the ISSDK FXOS8700 SPI sensor driver example demonstration fo..." alt="" coords="752,87,916,129"/>
+<area shape="rect" id="node7" href="$_f_r_d_m-_k22_f_2fxos8700__demo_8c.html" title="driverexamples/demos\l/FRDM&#45;K22F/fxos8700_demo.c" alt="" coords="940,87,1144,129"/>
+<area shape="rect" id="node8" href="$_f_r_d_m-_k64_f_2fxos8700__demo_8c.html" title="driverexamples/demos\l/FRDM&#45;K64F/fxos8700_demo.c" alt="" coords="1168,87,1372,129"/>
+<area shape="rect" id="node9" href="$data__logger__demo_8c.html" title="The data_logger_demo.c file implements the ISSDK Data Logger for RD&#45;KL25&#45;AGMP01 example demonstration..." alt="" coords="1396,80,1571,136"/>
+<area shape="rect" id="node10" href="$_l_p_c-54114_2fxos8700__demo_8c.html" title="driverexamples/demos\l/LPC&#45;54114/fxos8700_demo.c" alt="" coords="1595,87,1791,129"/>
+<area shape="rect" id="node11" href="$driver___f_x_o_s8700_8c.html" title="Provides init() and read() functions for the FXOS8700 6&#45;axis accel plus mag. " alt="" coords="1815,87,2002,129"/>
+<area shape="rect" id="node12" href="$pedometer__stepcount__fxos8700_8c.html" title="The pedometer_stepcount_fxos8700.c file implements the ISSDK prdometer example using FXOS8700 sensor ..." alt="" coords="2026,80,2237,136"/>
+</map>

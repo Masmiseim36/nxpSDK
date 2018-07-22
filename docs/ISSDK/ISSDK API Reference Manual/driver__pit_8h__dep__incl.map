@@ -1,0 +1,6 @@
+<map id="algorithms/sensorfusion/sources/driver_pit.h" name="algorithms/sensorfusion/sources/driver_pit.h">
+<area shape="rect" id="node2" href="$orientaion__application__baremetal__agm01_8c.html" title="The orientaion_application_baremetal_agm01.c file implements the ISSDK baremetal orientation applicat..." alt="" coords="5,95,164,165"/>
+<area shape="rect" id="node3" href="$main__agm04__freertos__two__tasks_8c.html" title="FreeRTOS (two task) implementation of sensor fusion on FRDM&#45;K64F/FRDM&#45;STBC&#45;AGM04 using MMA8652 (Accel..." alt="" coords="189,102,389,158"/>
+<area shape="rect" id="node4" href="$main__baremetal_8c.html" title="Bare metal implementation of sensor fusion on FRDM&#45;K64F. " alt="" coords="413,109,591,151"/>
+<area shape="rect" id="node5" href="$main__freertos__agm02_8c.html" title="FreeRTOS (two task) implementation of sensor fusion on FRDM&#45;K64F/FRDM&#45;FXS&#45;AGM02. " alt="" coords="616,102,775,158"/>
+</map>

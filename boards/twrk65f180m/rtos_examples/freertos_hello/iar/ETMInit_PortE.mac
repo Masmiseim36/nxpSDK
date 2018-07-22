@@ -1,0 +1,30 @@
+execUserReset() {
+  __message "---- Enabling internal clock to Port A ----" ;
+  __writeMemory32(0xFFFF,0x40048038, "Memory");
+  __message "---- Enabling Trace Clock ----" ;
+  __writeMemory32(0x00001000,0x40048004, "Memory");		// SIM->SOPT2 --> TRACECLKSEL Bit
+ 
+  __message "---- Enabling Trace Pin Function ----" ;
+  __writeMemory32(0x00000500,0x4004D000, "Memory");	// TraceClock, low drive strength	--> PTE0
+  __writeMemory32(0x00000540,0x4004D004, "Memory");	// Trace data, High drive strength	--> PTE1
+  __writeMemory32(0x00000540,0x4004D008, "Memory");	// PTE2
+  __writeMemory32(0x00000540,0x4004D00C, "Memory");	// PTE3
+  __writeMemory32(0x00000540,0x4004D010, "Memory");	// PTE4
+ 
+   __message "---- Enable trace funtion ----" ;
+  __writeMemory32(0x01000000,0xE000EDFC, "Memory");
+  __message "---- Unlock ETM ----" ;
+  __writeMemory32(0xC5ACCE55,0xE0041FB0, "Memory");
+  __message "---- Set sync port size as 4 ----" ;
+  __writeMemory32(0x00000008,0xE0040004, "Memory");
+  __writeMemory32(0x00000000,0xE00400F0, "Memory");
+
+  __writeMemory32(0x00FFFF00,0xE0001004, "Memory");     //   DWT_CYCCNT_REG = 0x00FFFF00;
+  __writeMemory32(0x00000000,0xE0001000, "Memory");     //   DWT_CTRL_REG   = 0x00000401;
+//  __writeMemory32(0x00000401,0xE0001000, "Memory");     //   DWT_CTRL_REG   = 0x00000401;
+//  __writeMemory32(0x00000001,0xE0000E80, "Memory");     //   ITM Trace control. Bit 0: Global enable
+//  __writeMemory32(0x00000005,0xE0000E80, "Memory");     //   ITM Trace control. Bit 2: SYNCENA, Bit 0: Global enable
+//  __writeMemory32(0x0000000D,0xE0000E80, "Memory");     //   ITM Trace control. Bit 2: SYNCENA, Bit 0: Global enable
+//  __writeMemory32(0x00000400,0xE0000E90, "Memory");     //   ITM Trace cycle count
+}
+ 

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<workspace>
+  <batchBuild>
+    <batchDefinition>
+      <name>all</name>
+      <member>
+        <project>mma8491q_frdmkl25-a8491</project>
+        <configuration>Release</configuration>
+      </member>
+      <member>
+        <project>mma8491q_frdmkl25-a8491</project>
+        <configuration>Debug</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>Release</name>
+      <member>
+        <project>mma8491q_frdmkl25-a8491</project>
+        <configuration>Release</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>Debug</name>
+      <member>
+        <project>mma8491q_frdmkl25-a8491</project>
+        <configuration>Debug</configuration>
+      </member>
+    </batchDefinition>
+  </batchBuild>
+  <project>
+    <path>$WS_DIR$/mma8491q_frdmkl25-a8491.ewp</path>
+  </project>
+</workspace>

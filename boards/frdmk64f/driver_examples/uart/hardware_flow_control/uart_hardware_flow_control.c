@@ -1,0 +1,162 @@
+/*
+ * The Clear BSD License
+ * Copyright 2017 NXP
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted (subject to the limitations in the disclaimer below) provided
+ * that the following conditions are met:
+ *
+ * o Redistributions of source code must retain the above copyright notice, this list
+ *   of conditions and the following disclaimer.
+ *
+ * o Redistributions in binary form must reproduce the above copyright notice, this
+ *   list of conditions and the following disclaimer in the documentation and/or
+ *   other materials provided with the distribution.
+ *
+ * o Neither the name of the copyright holder nor the names of its
+ *   contributors may be used to endorse or promote products derived from this
+ *   software without specific prior written permission.
+ *
+ * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+#include "board.h"
+#include "fsl_uart.h"
+#include "fsl_debug_console.h"
+
+#include "pin_mux.h"
+#include "clock_config.h"
+/*******************************************************************************
+ * Definitions
+ ******************************************************************************/
+/* UART instance and clock */
+#define DEMO_UART UART1
+#define DEMO_UART_CLKSRC UART1_CLK_SRC
+#define DEMO_UART_CLK_FREQ CLOCK_GetFreq(UART1_CLK_SRC)
+#define DELAY_TIME 100000U
+#define TRANSFER_SIZE 256U        /*! Transfer dataSize */
+#define TRANSFER_BAUDRATE 115200U /*! Transfer baudrate - 115200 */
+
+/*******************************************************************************
+ * Prototypes
+ ******************************************************************************/
+/* UART user callback */
+void UART_UserCallback(UART_Type *base, uart_handle_t *handle, status_t status, void *userData);
+
+/*******************************************************************************
+ * Variables
+ ******************************************************************************/
+uint8_t transferRxData[TRANSFER_SIZE] = {0U};
+uint8_t transferTxData[TRANSFER_SIZE] = {0U};
+uart_handle_t g_uartHandle;
+volatile bool isTransferCompleted = false;
+
+/*******************************************************************************
+ * Code
+ ******************************************************************************/
+/* PUART user callback */
+void UART_UserCallback(UART_Type *base, uart_handle_t *handle, status_t status, void *userData)
+{
+    if (kStatus_UART_TxIdle == status)
+    {
+        isTransferCompleted = true;
+    }
+}
+/*!
+ * @brief Main function
+ */
+int main(void)
+{
+    uint32_t i = 0U, errCount = 0U;
+    status_t status = 0;
+    uart_config_t config;
+    uart_transfer_t sendXfer;
+
+    BOARD_InitPins();
+    BOARD_BootClockRUN();
+
+    BOARD_InitDebugConsole();
+    PRINTF("This is UART hardware flow control example on one board.\r\n");
+    PRINTF("This example will send data to itself and will use hardware flow control to avoid the overflow.\r\n");
+    PRINTF("Please make sure you make the correct line connection. Basically, the connection is: \r\n");
+    PRINTF("      UART_TX    --     UART_RX    \r\n");
+    PRINTF("      UART_RTS   --     UART_CTS   \r\n");
+    /*
+     * config.baudRate_Bps = 115200U;
+     * config.parityMode = kUART_ParityDisabled;
+     * config.stopBitCount = kUART_OneStopBit;
+     * config.txFifoWatermark = 0;
+     * config.rxFifoWatermark = 0;
+     * config.enableTx = false;
+     * config.enableRx = false;
+     */
+    UART_GetDefaultConfig(&config);
+    config.baudRate_Bps = BOARD_DEBUG_UART_BAUDRATE;
+    config.enableTx = true;
+    config.enableRx = true;
+    config.enableRxRTS = true;
+    config.enableTxCTS = true;
+
+    UART_Init(DEMO_UART, &config, DEMO_UART_CLK_FREQ);
+    UART_TransferCreateHandle(DEMO_UART, &g_uartHandle, UART_UserCallback, NULL);
+
+    /* Set up the transfer data */
+    for (i = 0U; i < TRANSFER_SIZE; i++)
+    {
+        transferTxData[i] = i % 256U;
+        transferRxData[i] = 0U;
+    }
+
+    sendXfer.data = (uint8_t *)transferTxData;
+    sendXfer.dataSize = TRANSFER_SIZE;
+    UART_TransferSendNonBlocking(DEMO_UART, &g_uartHandle, &sendXfer);
+
+    /* Delay for some time to let the RTS pin dessart. */
+    for (i = 0U; i < DELAY_TIME; i++)
+    {
+        __NOP();
+    }
+
+    status = UART_ReadBlocking(DEMO_UART, transferRxData, TRANSFER_SIZE);
+    if (kStatus_Success != status)
+    {
+        PRINTF(" Error occured when UART receiving data.\r\n");
+    }
+    /* Wait for the transmit complete. */
+    while (!isTransferCompleted)
+    {
+    }
+
+    for (i = 0U; i < TRANSFER_SIZE; i++)
+    {
+        if (transferTxData[i] != transferRxData[i])
+        {
+            errCount++;
+        }
+    }
+    if (errCount)
+    {
+        PRINTF("Data not matched! Transfer error.\r\n");
+    }
+    else
+    {
+        PRINTF("Data matched! Transfer successfully.\r\n");
+    }
+    /* Deinit the UART. */
+    UART_Deinit(DEMO_UART);
+
+    while (1)
+    {
+    }
+}

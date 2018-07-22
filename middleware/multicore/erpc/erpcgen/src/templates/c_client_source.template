@@ -1,0 +1,117 @@
+{% if mlComment != ""%}
+{$mlComment}
+
+{% endif %}
+{$commonHeader()}
+
+#include "client_manager.h"
+#include "erpc_port.h"
+extern "C"
+{
+#include "{$commonHeaderName}.h"
+{% if groupNames %}
+// import callbacks declaration from other groups
+{% for name in groupNames if name != group.name %}
+#include "{$outputFilename}_{$name}.h"
+{% endfor %}
+{% endif %}
+}
+
+{$checkVersion()}
+
+{$checkCrc()}
+{% if nestedCall %}
+#if !ERPC_NESTED_CALLS
+#error "When @nested annotation is used, then ERPC_NESTED_CALLS macro need be enabled and server need be set."
+#endif
+{% endif %}
+
+using namespace erpc;
+using namespace std;
+
+extern ClientManager *g_client;
+{$generateCrcVariable()}
+{$> setSharedMemAddresses()}
+{% if unitTest %}
+{$> callbackTable(functions)}
+{% endif %}
+{$> constantsDefinitions(consts)}
+{$> symbolHeader(group.symbolsMap.symbolsToServer, "serial", "def")}
+{$> symbolSource(group.symbolsMap.symbolsToServer, "serial", "def")}
+{$> symbolHeader(group.symbolsMap.symbolsToClient, "deserial", "def")}
+{$> symbolSource(group.symbolsMap.symbolsToClient, "deserial", "def")}
+{$> symbolHeader(group.symbolsMap.symbolsToServer, "serial", "noSharedMem")}
+{$> symbolSource(group.symbolsMap.symbolsToServer, "serial", "noSharedMem")}
+{$> symbolHeader(group.symbolsMap.symbolsToClient, "deserial", "noSharedMem")}
+{$> symbolSource(group.symbolsMap.symbolsToClient, "deserial", "noSharedMem")}
+{% for iface in group.interfaces %}
+{%  for fn in iface.functions %}
+
+// {$iface.name} interface {$fn.name} function client shim.
+{$fn.prototype}
+{
+{%   if errVar != ""  %}
+    erpc_status_t {$errVar}kErpcStatus_Success;
+
+{%   endif %}
+    // Get a new request.
+{%   if !fn.isReturnValue %}
+    RequestContext request = g_client->createRequest(true);
+{%   else %}
+    RequestContext request = g_client->createRequest(false);
+{%   endif -- isReturnValue %}
+
+    // Encode the request.
+    Codec * codec = request.getCodec();
+{%   if generateAllocErrorChecks %}
+    if (codec == NULL)
+    {
+        {$allocErrVar}kErpcStatus_MemoryError;
+    }
+{%    if not generateInfraErrorChecks %}
+    else
+    {
+{$addIndent("    ", f_clientEncode(iface, fn))}
+    }
+{%    endif -- not generateInfraErrorChecks %}
+{%   endif -- generateAllocErrorChecks%}
+{%   if generateInfraErrorChecks or not generateAllocErrorChecks %}
+
+{$f_clientEncode(iface, fn)}
+{%   endif %}
+{%   if fn.isReturnValue %}
+{%    if fn.needTempVariableClient %}
+    int32_t _tmp_local;
+{%    endif %}
+{%    if fn.returnValue.type.isNotVoid %}
+    {$fn.returnValue.resultVariable};
+{% endif %}
+{%    if generateAllocErrorChecks && not generateInfraErrorChecks %}
+    if (!err)
+    {
+{$addIndent("    ", f_clientDecode(iface, fn))}
+    }
+{% else %}
+{$f_clientDecode(iface, fn)}
+{% endif %}
+{%   endif -- isReturnValue %}
+    // Dispose of the request.
+    g_client->releaseRequest(request);
+{%   if errVar != ""  %}
+{# Handle error #}
+
+    if (err)
+    {
+        client_error_handler_t errorHandler = g_client->getErrorHandler();
+        if (errorHandler != NULL)
+        {
+            (*errorHandler)(err);
+        }
+        {% if fn.returnValue.type.isNotVoid %}return {$fn.returnValue.errorReturnValue};{% endif -- isNotVoid %}
+    }
+{%   endif %}
+
+    return{% if fn.returnValue.type.isNotVoid %} result{% endif -- isNotVoid %};
+}
+{%  endfor -- fn %}
+{% endfor -- iface %}

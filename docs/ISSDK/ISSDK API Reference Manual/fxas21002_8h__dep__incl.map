@@ -1,0 +1,12 @@
+<map id="sensors/fxas21002.h" name="sensors/fxas21002.h">
+<area shape="rect" id="node2" href="$fxas21002__drv_8h.html" title="The fxas21002_drv.h file describes the fxas21002 driver interface and structures. ..." alt="" coords="5,102,171,129"/>
+<area shape="rect" id="node3" href="$orientaion__application__baremetal__agm01_8c.html" title="The orientaion_application_baremetal_agm01.c file implements the ISSDK baremetal orientation applicat..." alt="" coords="195,80,354,151"/>
+<area shape="rect" id="node4" href="$orientaion__application__freertos__agm01_8c.html" title="The orientaion_application_freertos_agm01.c file implements the ISSDK freeRTOS orientation applicatio..." alt="" coords="378,80,537,151"/>
+<area shape="rect" id="node5" href="$lpc_2auto__detection__service_8c.html" title="drivers/ads/lpc/auto\l_detection_service.c" alt="" coords="561,95,701,136"/>
+<area shape="rect" id="node6" href="$kinetis_2auto__detection__service_8c.html" title="drivers/ads/kinetis\l/auto_detection_service.c" alt="" coords="725,95,894,136"/>
+<area shape="rect" id="node7" href="$driver___f_x_a_s21002_8c.html" title="Provides init() and read() functions for the FXAS21002 gyroscope. " alt="" coords="919,95,1111,136"/>
+<area shape="rect" id="node8" href="$main__agm01__freertos__two__tasks_8c.html" title="FreeRTOS (two task) implementation of sensor fusion on FRDM&#45;K64F. " alt="" coords="1135,87,1335,143"/>
+<area shape="rect" id="node9" href="$main__agmp03__freertos__two__tasks_8c.html" title="FreeRTOS (two task) implementation of sensor fusion. " alt="" coords="1359,87,1566,143"/>
+<area shape="rect" id="node10" href="$main__baremetal_8c.html" title="Bare metal implementation of sensor fusion on FRDM&#45;K64F. " alt="" coords="1591,95,1769,136"/>
+<area shape="rect" id="node11" href="$main__freertos__two__tasks_8c.html" title="FreeRTOS (two task) implementation of sensor fusion on FRDM&#45;K64F. " alt="" coords="1794,87,1953,143"/>
+</map>

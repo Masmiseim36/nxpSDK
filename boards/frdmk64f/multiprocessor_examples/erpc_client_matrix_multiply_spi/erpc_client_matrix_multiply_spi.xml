@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
+  <externalDefinitions>
+    <definition extID="com.nxp.mcuxpresso"/>
+    <definition extID="middleware.multicore.erpc.common.MK64F12"/>
+    <definition extID="middleware.multicore.erpc.doc.MK64F12"/>
+    <definition extID="middleware.multicore.erpc.eRPC_client.MK64F12"/>
+    <definition extID="middleware.multicore.erpc.eRPC_dspi_master_c_wrapper.MK64F12"/>
+    <definition extID="middleware.multicore.erpc.eRPC_dspi_master_transport.MK64F12"/>
+    <definition extID="middleware.multicore.erpc.eRPC_port_stdlib.MK64F12"/>
+    <definition extID="platform.devices.MK64F12_CMSIS.MK64F12"/>
+    <definition extID="platform.devices.MK64F12_startup.MK64F12"/>
+    <definition extID="platform.drivers.clock.MK64F12"/>
+    <definition extID="platform.drivers.common.MK64F12"/>
+    <definition extID="platform.drivers.dspi.MK64F12"/>
+    <definition extID="platform.drivers.flash.MK64F12"/>
+    <definition extID="platform.drivers.gpio.MK64F12"/>
+    <definition extID="platform.drivers.port.MK64F12"/>
+    <definition extID="platform.drivers.smc.MK64F12"/>
+    <definition extID="platform.drivers.uart.MK64F12"/>
+    <definition extID="platform.utilities.assert.MK64F12"/>
+    <definition extID="platform.utilities.debug_console.MK64F12"/>
+    <definition extID="iar"/>
+    <definition extID="mdk"/>
+    <definition extID="kds"/>
+    <definition extID="mcuxpresso"/>
+    <definition extID="armgcc"/>
+  </externalDefinitions>
+  <example id="frdmk64f_erpc_client_matrix_multiply_spi" name="erpc_client_matrix_multiply_spi" category="multiprocessor_examples" dependency="middleware.multicore.erpc.eRPC_dspi_master_transport.MK64F12 middleware.multicore.erpc.common.MK64F12 middleware.multicore.erpc.eRPC_dspi_master_c_wrapper.MK64F12 platform.drivers.dspi.MK64F12 platform.drivers.common.MK64F12 platform.drivers.clock.MK64F12 platform.drivers.flash.MK64F12 platform.drivers.gpio.MK64F12 platform.utilities.debug_console.MK64F12 platform.drivers.port.MK64F12 platform.drivers.uart.MK64F12 platform.drivers.smc.MK64F12 platform.devices.MK64F12_CMSIS.MK64F12 platform.devices.MK64F12_startup.MK64F12 platform.utilities.assert.MK64F12 middleware.multicore.erpc.eRPC_client.MK64F12 middleware.multicore.erpc.eRPC_port_stdlib.MK64F12 middleware.multicore.erpc.doc.MK64F12" toolchain="iar mdk armgcc kds mcuxpresso">
+    <projects>
+      <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.ccnature"/>
+    </projects>
+    <toolchainSettings>
+      <toolchainSetting id_refs="com.nxp.mcuxpresso">
+        <!-- asm -->
+        <!-- gcc -->
+        <option id="com.crt.advproject.c.misc.dialect" type="enum">
+          <value>com.crt.advproject.misc.dialect.gnu99</value>
+        </option>
+        <option id="com.crt.advproject.gcc.exe.debug.option.debugging.level" type="enum">
+          <value>gnu.c.debugging.level.default</value>
+        </option>
+        <option id="com.crt.advproject.gcc.exe.release.option.debugging.level" type="enum">
+          <value>gnu.c.debugging.level.default</value>
+        </option>
+        <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
+          <value>CPU_MK64FN1M0VLL12</value>
+          <value>FRDM_K64F</value>
+          <value>FREEDOM</value>
+        </option>
+        <option id="gnu.c.compiler.option.optimization.flags" type="string">
+          <value>-fno-common</value>
+        </option>
+        <option id="gnu.c.compiler.option.misc.other" type="string">
+          <value>-c  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin</value>
+        </option>
+        <!-- cpp -->
+        <option id="com.crt.advproject.cpp.misc.dialect" type="enum">
+          <value>com.crt.advproject.misc.dialect.gnupp11</value>
+        </option>
+        <option id="gnu.cpp.compiler.option.preprocessor.def" type="stringList">
+          <value>CPU_MK64FN1M0VLL12</value>
+        </option>
+        <option id="gnu.cpp.compiler.option.optimization.flags" type="string">
+          <value>-fno-common</value>
+        </option>
+        <option id="gnu.cpp.compiler.option.other.other" type="string">
+          <value>-c  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin  -fno-rtti  -fno-exceptions</value>
+        </option>
+        <!-- cpp linker -->
+        <option id="gnu.cpp.link.option.nostdlibs" type="boolean">
+          <value>true</value>
+        </option>
+        <option id="gnu.cpp.link.option.other" type="stringList">
+          <value>--gc-sections</value>
+        </option>
+        <option id="com.crt.advproject.link.memory.heapAndStack.cpp" type="string">
+          <value>&amp;Heap:Default;Default;0x2000&amp;Stack:Default;Default;0x400</value>
+        </option>
+        <option id="gnu.cpp.link.option.flags" type="string">
+          <value>-g  --specs=nano.specs  -fno-common  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin   -Wall</value>
+        </option>
+      </toolchainSetting>
+    </toolchainSettings>
+    <source path="boards/frdmk64f/multiprocessor_examples/erpc_client_matrix_multiply_spi" target_path="board" type="c_include">
+      <files mask="board.h"/>
+      <files mask="clock_config.h"/>
+      <files mask="pin_mux.h"/>
+    </source>
+    <source path="boards/frdmk64f/multiprocessor_examples/erpc_client_matrix_multiply_spi" target_path="board" type="src">
+      <files mask="board.c"/>
+      <files mask="clock_config.c"/>
+      <files mask="pin_mux.c"/>
+    </source>
+    <source path="boards/frdmk64f/multiprocessor_examples/erpc_client_matrix_multiply_spi" target_path="doc" type="doc" toolchain="iar mdk kds mcuxpresso">
+      <files mask="readme.txt"/>
+    </source>
+    <source path="boards/frdmk64f/multiprocessor_examples/erpc_client_matrix_multiply_spi" target_path="source" type="c_include">
+      <files mask="erpc_config.h"/>
+    </source>
+    <source path="boards/frdmk64f/multiprocessor_examples/erpc_client_matrix_multiply_spi" target_path="source" type="src">
+      <files mask="main_client.c"/>
+    </source>
+    <source path="boards/frdmk64f/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service" target_path="erpc/service" type="c_include">
+      <files mask="erpc_crc16.h"/>
+      <files mask="erpc_matrix_multiply.h"/>
+    </source>
+    <source path="boards/frdmk64f/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service" target_path="erpc/service" type="script">
+      <files mask="erpc_matrix_multiply.erpc"/>
+    </source>
+    <source path="boards/frdmk64f/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service" target_path="erpc/service" type="src">
+      <files mask="erpc_matrix_multiply_client.cpp"/>
+    </source>
+    <source path="boards/frdmk64f/multiprocessor_examples/erpc_common" target_path="erpc" type="c_include">
+      <files mask="erpc_error_handler.h"/>
+    </source>
+    <source path="boards/frdmk64f/multiprocessor_examples/erpc_common" target_path="erpc" type="src">
+      <files mask="erpc_error_handler.cpp"/>
+    </source>
+  </example>
+</ksdk:examples>

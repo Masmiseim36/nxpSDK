@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<workspace>
+  <batchBuild>
+    <batchDefinition>
+      <name>all</name>
+      <member>
+        <project>hsadc_dual_seperate_conversion</project>
+        <configuration>Release</configuration>
+      </member>
+      <member>
+        <project>hsadc_dual_seperate_conversion</project>
+        <configuration>Debug</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>Release</name>
+      <member>
+        <project>hsadc_dual_seperate_conversion</project>
+        <configuration>Release</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>Debug</name>
+      <member>
+        <project>hsadc_dual_seperate_conversion</project>
+        <configuration>Debug</configuration>
+      </member>
+    </batchDefinition>
+  </batchBuild>
+  <project>
+    <path>$WS_DIR$/hsadc_dual_seperate_conversion.ewp</path>
+  </project>
+</workspace>

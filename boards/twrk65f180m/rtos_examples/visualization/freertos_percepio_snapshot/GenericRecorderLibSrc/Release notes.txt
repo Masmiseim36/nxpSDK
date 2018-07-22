@@ -1,0 +1,30 @@
+Release notes - Snapshot Trace Recorder Library
+for Percepio Tracealyzer/FreeRTOS+Trace
+
+June 30, 2016. Percepio AB.
+www.percepio.com
+
+Changed v3.0.7 -> v3.0.9
+- Fixed type mismatch for extern declaration
+- Fixed ISR tailchaining compile bug for certain hardware ports 
+Changed v3.0.5 -> v3.0.7
+- Added support for FreeRTOS v9
+- Fixed null pointer usage when timer creation failed
+- Moved frequency calculation for CortexM
+- Fixed mostly cosmetic issue regarding tail-chained interrupts and pending task switches
+Changed v3.0.4 -> v3.0.5
+- Fixed compile issue for systick based timestamp sources.
+- Fixed potential frequency calculation issue.
+Changed v3.0.3 -> v3.0.4
+- Fix for timestamps based on free running clocks.
+Changed v3.0.2 -> v3.0.3
+- Better support for Low Power Mode / Tickless idle.
+- Default trace buffer mode is now RingBuffer instead of StopWhenFull.
+Changed v3.0.1 -> v3.0.2
+- Bug fix related to nested ISRs.
+- Removed "defined but not used" warning for heapMemUsage.
+- Fixed float value assignment warning.
+Changed v3.0.0 -> v3.0.1
+- Fixed ISR preemption handling.
+
+For questions, contact support@percepio.com or sales@percepio.com

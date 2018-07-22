@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<example name="ucosiii" category="usb_examples/usb_host_hid_mouse" board_ref="TWR_K65F180M" version="1.0.0" format_version="2.1">
+  <source path="CMSIS/Include" target_path="CMSIS/Include" type="c_include">
+    <files mask="arm_common_tables.h"/>
+    <files mask="arm_const_structs.h"/>
+    <files mask="arm_math.h"/>
+    <files mask="cmsis_armcc.h"/>
+    <files mask="cmsis_armcc_V6.h"/>
+    <files mask="cmsis_gcc.h"/>
+    <files mask="core_cm0.h"/>
+    <files mask="core_cm0plus.h"/>
+    <files mask="core_cm3.h"/>
+    <files mask="core_cm4.h"/>
+    <files mask="core_cm7.h"/>
+    <files mask="core_cmFunc.h"/>
+    <files mask="core_cmInstr.h"/>
+    <files mask="core_cmSimd.h"/>
+    <files mask="core_sc000.h"/>
+    <files mask="core_sc300.h"/>
+  </source>
+  <source path="boards/twrk65f180m/usb_examples/usb_host_hid_mouse/ucosiii" target_path="sources" type="c_include">
+    <files mask="board.h"/>
+    <files mask="clock_config.h"/>
+    <files mask="cpu_cfg.h"/>
+    <files mask="host_mouse.h"/>
+    <files mask="os_cfg.h"/>
+    <files mask="os_cfg_app.h"/>
+    <files mask="pin_mux.h"/>
+    <files mask="usb_host_config.h"/>
+  </source>
+  <source path="boards/twrk65f180m/usb_examples/usb_host_hid_mouse/ucosiii" target_path="sources" type="src">
+    <files mask="app.c"/>
+    <files mask="board.c"/>
+    <files mask="clock_config.c"/>
+    <files mask="host_mouse.c"/>
+    <files mask="pin_mux.c"/>
+  </source>
+  <source path="devices/MK65F18/arm" target_path="devices/arm" type="asm_include" compiler="arm">
+    <files mask="startup_MK65F18.s"/>
+  </source>
+  <source path="devices/MK65F18/drivers" target_path="drivers" type="c_include">
+    <files mask="fsl_clock.h"/>
+    <files mask="fsl_common.h"/>
+    <files mask="fsl_flash.h"/>
+    <files mask="fsl_gpio.h"/>
+    <files mask="fsl_lpuart.h"/>
+    <files mask="fsl_mpu.h"/>
+    <files mask="fsl_port.h"/>
+    <files mask="fsl_sim.h"/>
+    <files mask="fsl_smc.h"/>
+    <files mask="fsl_uart.h"/>
+  </source>
+  <source path="devices/MK65F18/drivers" target_path="drivers" type="src">
+    <files mask="fsl_clock.c"/>
+    <files mask="fsl_common.c"/>
+    <files mask="fsl_flash.c"/>
+    <files mask="fsl_gpio.c"/>
+    <files mask="fsl_lpuart.c"/>
+    <files mask="fsl_mpu.c"/>
+    <files mask="fsl_sim.c"/>
+    <files mask="fsl_smc.c"/>
+    <files mask="fsl_uart.c"/>
+  </source>
+  <source path="devices/MK65F18/gcc" target_path="devices/gcc" type="asm_include" compiler="gcc">
+    <files mask="startup_MK65F18.S"/>
+  </source>
+  <source path="devices/MK65F18/iar" target_path="devices/iar" type="asm_include" compiler="iar">
+    <files mask="startup_MK65F18.s"/>
+  </source>
+  <source path="devices/MK65F18/utilities" target_path="utilities" type="c_include">
+    <files mask="fsl_debug_console.h"/>
+  </source>
+  <source path="devices/MK65F18/utilities" target_path="utilities" type="src">
+    <files mask="fsl_debug_console.c"/>
+    <files mask="fsl_sbrk.c"/>
+  </source>
+  <source path="devices/MK65F18" target_path="devices" type="c_include">
+    <files mask="MK65F18.h"/>
+    <files mask="MK65F18_features.h"/>
+    <files mask="fsl_device_registers.h"/>
+    <files mask="system_MK65F18.h"/>
+  </source>
+  <source path="devices/MK65F18" target_path="devices" type="src">
+    <files mask="system_MK65F18.c"/>
+  </source>
+  <source path="middleware/usb_1.4.0/host/class" target_path="usb/host/class" type="c_include">
+    <files mask="usb_host_hid.h"/>
+    <files mask="usb_host_hub.h"/>
+    <files mask="usb_host_hub_app.h"/>
+  </source>
+  <source path="middleware/usb_1.4.0/host/class" target_path="usb/host/class" type="src">
+    <files mask="usb_host_hid.c"/>
+    <files mask="usb_host_hub.c"/>
+    <files mask="usb_host_hub_app.c"/>
+  </source>
+  <source path="middleware/usb_1.4.0/host" target_path="usb/host" type="c_include">
+    <files mask="usb_host.h"/>
+    <files mask="usb_host_devices.h"/>
+    <files mask="usb_host_ehci.h"/>
+    <files mask="usb_host_framework.h"/>
+    <files mask="usb_host_hci.h"/>
+    <files mask="usb_host_khci.h"/>
+  </source>
+  <source path="middleware/usb_1.4.0/host" target_path="usb/host" type="src">
+    <files mask="usb_host_devices.c"/>
+    <files mask="usb_host_ehci.c"/>
+    <files mask="usb_host_framework.c"/>
+    <files mask="usb_host_hci.c"/>
+    <files mask="usb_host_khci.c"/>
+  </source>
+  <source path="middleware/usb_1.4.0/include" target_path="usb/include" type="c_include">
+    <files mask="usb.h"/>
+    <files mask="usb_misc.h"/>
+    <files mask="usb_spec.h"/>
+  </source>
+  <source path="middleware/usb_1.4.0/osa" target_path="usb/osa" type="c_include">
+    <files mask="usb_osa.h"/>
+    <files mask="usb_osa_ucosiii.h"/>
+  </source>
+  <source path="middleware/usb_1.4.0/osa" target_path="usb/osa" type="src">
+    <files mask="usb_osa_ucosiii.c"/>
+  </source>
+  <source path="middleware/usb_1.4.0/phy" target_path="usb/phy" type="c_include">
+    <files mask="usb_phy.h"/>
+  </source>
+  <source path="middleware/usb_1.4.0/phy" target_path="usb/phy" type="src">
+    <files mask="usb_phy.c"/>
+  </source>
+  <source path="rtos/ucosiii_3.05.01/uC-CPU/ARM-Cortex-M4/GNU" target_path="ucosiii/uC-CPU/ARM-Cortex-M4/GNU" type="asm_include" compiler="gcc">
+    <files mask="cpu_a.S"/>
+  </source>
+  <source path="rtos/ucosiii_3.05.01/uC-CPU/ARM-Cortex-M4/GNU" target_path="ucosiii/uC-CPU/ARM-Cortex-M4/GNU" type="c_include" compiler="gcc">
+    <files mask="cpu.h"/>
+  </source>
+  <source path="rtos/ucosiii_3.05.01/uC-CPU/ARM-Cortex-M4/GNU" target_path="ucosiii/uC-CPU/ARM-Cortex-M4/GNU" type="src" compiler="gcc">
+    <files mask="cpu_c.c"/>
+  </source>
+  <source path="rtos/ucosiii_3.05.01/uC-CPU/ARM-Cortex-M4/IAR" target_path="ucosiii/uC-CPU/ARM-Cortex-M4/IAR" type="asm_include" compiler="iar">
+    <files mask="cpu_a.asm"/>
+  </source>
+  <source path="rtos/ucosiii_3.05.01/uC-CPU/ARM-Cortex-M4/IAR" target_path="ucosiii/uC-CPU/ARM-Cortex-M4/IAR" type="c_include" compiler="iar">
+    <files mask="cpu.h"/>
+  </source>
+  <source path="rtos/ucosiii_3.05.01/uC-CPU/ARM-Cortex-M4/IAR" target_path="ucosiii/uC-CPU/ARM-Cortex-M4/IAR" type="src" compiler="iar">
+    <files mask="cpu_c.c"/>
+  </source>
+  <source path="rtos/ucosiii_3.05.01/uC-CPU/ARM-Cortex-M4/RealView" target_path="ucosiii/uC-CPU/ARM-Cortex-M4/RealView" type="asm_include" compiler="arm">
+    <files mask="cpu_a.asm"/>
+  </source>
+  <source path="rtos/ucosiii_3.05.01/uC-CPU/ARM-Cortex-M4/RealView" target_path="ucosiii/uC-CPU/ARM-Cortex-M4/RealView" type="c_include" compiler="arm">
+    <files mask="cpu.h"/>
+  </source>
+  <source path="rtos/ucosiii_3.05.01/uC-CPU/ARM-Cortex-M4/RealView" target_path="ucosiii/uC-CPU/ARM-Cortex-M4/RealView" type="src" compiler="arm">
+    <files mask="cpu_c.c"/>
+  </source>
+  <source path="rtos/ucosiii_3.05.01/uC-CPU" target_path="ucosiii/uC-CPU" type="c_include">
+    <files mask="cpu_core.h"/>
+    <files mask="cpu_def.h"/>
+  </source>
+  <source path="rtos/ucosiii_3.05.01/uC-CPU" target_path="ucosiii/uC-CPU" type="src">
+    <files mask="cpu_core.c"/>
+  </source>
+  <source path="rtos/ucosiii_3.05.01/uC-LIB" target_path="ucosiii/uC-LIB" type="c_include">
+    <files mask="lib_def.h"/>
+  </source>
+  <source path="rtos/ucosiii_3.05.01/uCOS-III/Ports/ARM-Cortex-M4/Generic/ARM" target_path="ucosiii/uCOS-III/Ports/ARM-Cortex-M4/Generic/ARM" type="asm_include" compiler="arm">
+    <files mask="os_cpu_a.asm"/>
+  </source>
+  <source path="rtos/ucosiii_3.05.01/uCOS-III/Ports/ARM-Cortex-M4/Generic/ARM" target_path="ucosiii/uCOS-III/Ports/ARM-Cortex-M4/Generic/ARM" type="c_include" compiler="arm">
+    <files mask="os_cpu.h"/>
+  </source>
+  <source path="rtos/ucosiii_3.05.01/uCOS-III/Ports/ARM-Cortex-M4/Generic/ARM" target_path="ucosiii/uCOS-III/Ports/ARM-Cortex-M4/Generic/ARM" type="src" compiler="arm">
+    <files mask="os_cpu_c.c"/>
+  </source>
+  <source path="rtos/ucosiii_3.05.01/uCOS-III/Ports/ARM-Cortex-M4/Generic/GNU" target_path="ucosiii/uCOS-III/Ports/ARM-Cortex-M4/Generic/GNU" type="asm_include" compiler="gcc">
+    <files mask="os_cpu_a.S"/>
+  </source>
+  <source path="rtos/ucosiii_3.05.01/uCOS-III/Ports/ARM-Cortex-M4/Generic/GNU" target_path="ucosiii/uCOS-III/Ports/ARM-Cortex-M4/Generic/GNU" type="c_include" compiler="gcc">
+    <files mask="os_cpu.h"/>
+  </source>
+  <source path="rtos/ucosiii_3.05.01/uCOS-III/Ports/ARM-Cortex-M4/Generic/GNU" target_path="ucosiii/uCOS-III/Ports/ARM-Cortex-M4/Generic/GNU" type="src" compiler="gcc">
+    <files mask="os_cpu_c.c"/>
+  </source>
+  <source path="rtos/ucosiii_3.05.01/uCOS-III/Ports/ARM-Cortex-M4/Generic/IAR" target_path="ucosiii/uCOS-III/Ports/ARM-Cortex-M4/Generic/IAR" type="asm_include" compiler="iar">
+    <files mask="os_cpu_a.asm"/>
+  </source>
+  <source path="rtos/ucosiii_3.05.01/uCOS-III/Ports/ARM-Cortex-M4/Generic/IAR" target_path="ucosiii/uCOS-III/Ports/ARM-Cortex-M4/Generic/IAR" type="c_include" compiler="iar">
+    <files mask="os_cpu.h"/>
+  </source>
+  <source path="rtos/ucosiii_3.05.01/uCOS-III/Ports/ARM-Cortex-M4/Generic/IAR" target_path="ucosiii/uCOS-III/Ports/ARM-Cortex-M4/Generic/IAR" type="src" compiler="iar">
+    <files mask="os_cpu_c.c"/>
+  </source>
+  <source path="rtos/ucosiii_3.05.01/uCOS-III/Source" target_path="ucosiii/uCOS-III/Source" type="c_include">
+    <files mask="os.h"/>
+    <files mask="os_type.h"/>
+  </source>
+  <source path="rtos/ucosiii_3.05.01/uCOS-III/Source" target_path="ucosiii/uCOS-III/Source" type="src">
+    <files mask="os_cfg_app.c"/>
+    <files mask="os_core.c"/>
+    <files mask="os_dbg.c"/>
+    <files mask="os_flag.c"/>
+    <files mask="os_int.c"/>
+    <files mask="os_mem.c"/>
+    <files mask="os_mon.c"/>
+    <files mask="os_msg.c"/>
+    <files mask="os_mutex.c"/>
+    <files mask="os_pend_multi.c"/>
+    <files mask="os_prio.c"/>
+    <files mask="os_q.c"/>
+    <files mask="os_sem.c"/>
+    <files mask="os_stat.c"/>
+    <files mask="os_task.c"/>
+    <files mask="os_tick.c"/>
+    <files mask="os_time.c"/>
+    <files mask="os_tmr.c"/>
+    <files mask="os_var.c"/>
+  </source>
+  <include_paths>
+    <include path="CMSIS/Include"/>
+    <include path="devices/arm" compiler="arm"/>
+    <include path="devices/gcc" compiler="gcc"/>
+    <include path="devices/iar" compiler="iar"/>
+    <include path="devices"/>
+    <include path="drivers"/>
+    <include path="sources"/>
+    <include path="ucosiii/uC-CPU/ARM-Cortex-M4/GNU" compiler="gcc"/>
+    <include path="ucosiii/uC-CPU/ARM-Cortex-M4/IAR" compiler="iar"/>
+    <include path="ucosiii/uC-CPU/ARM-Cortex-M4/RealView" compiler="arm"/>
+    <include path="ucosiii/uC-CPU"/>
+    <include path="ucosiii/uC-LIB"/>
+    <include path="ucosiii/uCOS-III/Ports/ARM-Cortex-M4/Generic/ARM" compiler="arm"/>
+    <include path="ucosiii/uCOS-III/Ports/ARM-Cortex-M4/Generic/GNU" compiler="gcc"/>
+    <include path="ucosiii/uCOS-III/Ports/ARM-Cortex-M4/Generic/IAR" compiler="iar"/>
+    <include path="ucosiii/uCOS-III/Source"/>
+    <include path="usb/host/class"/>
+    <include path="usb/host"/>
+    <include path="usb/include"/>
+    <include path="usb/osa"/>
+    <include path="usb/phy"/>
+    <include path="utilities"/>
+  </include_paths>
+</example>

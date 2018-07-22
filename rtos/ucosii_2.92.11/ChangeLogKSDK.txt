@@ -1,0 +1,13 @@
+/**
+@page rtos_log RTOS Change Log
+
+@section uCOS-II uC/OS-II for KSDK
+Current version is uC/OS-II  V2.92.11.
+
+  - 2.92.11
+    - New Features:
+      - Add template application for Kinetis Expert (KEx) tool (template_application).
+    - Other changes:
+      - Folder structure reduction. Keep only Kinetis related parts.
+      - Add wrappers for adaptation of PendSV_Handler and SysTick_Handler. Related files are located in rtos\\ucosii\\uCOS-II\\Ports\\ARM-Cortex-Mx\\Generic\\\<compiler\>\\fsl_isr_wrapper.S
+*/

@@ -1,0 +1,5 @@
+<map id="driverexamples/mag3110/mag3110_normal.c" name="driverexamples/mag3110/mag3110_normal.c">
+<area shape="rect" id="node7" href="$fsl__i2c__cmsis_8h.html" title="fsl_i2c_cmsis.h" alt="" coords="611,95,723,121"/>
+<area shape="rect" id="node9" href="$mag3110__drv_8h.html" title="The mag3110_drv.h file describes the MAG3110 driver interface and structures. " alt="" coords="859,95,969,121"/>
+<area shape="rect" id="node10" href="$systick__utils_8h.html" title="ARM Systick Utilities. " alt="" coords="993,95,1099,121"/>
+</map>

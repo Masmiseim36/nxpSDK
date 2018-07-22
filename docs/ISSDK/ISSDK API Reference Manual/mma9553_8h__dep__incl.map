@@ -1,0 +1,5 @@
+<map id="sensors/mma9553.h" name="sensors/mma9553.h">
+<area shape="rect" id="node2" href="$mma9553__drv_8h.html" title="The mma9553_drv.h file describes the MMA9553L driver interface and structures. " alt="" coords="5,87,168,114"/>
+<area shape="rect" id="node3" href="$lpc_2auto__detection__service_8c.html" title="drivers/ads/lpc/auto\l_detection_service.c" alt="" coords="193,80,333,121"/>
+<area shape="rect" id="node4" href="$kinetis_2auto__detection__service_8c.html" title="drivers/ads/kinetis\l/auto_detection_service.c" alt="" coords="357,80,526,121"/>
+</map>

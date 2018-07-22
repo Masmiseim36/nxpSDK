@@ -1,0 +1,8 @@
+<map id="algorithms/sensorfusion/sources/driver_FXOS8700.c" name="algorithms/sensorfusion/sources/driver_FXOS8700.c">
+<area shape="rect" id="node3" href="$sensor__fusion_8h.html" title="The sensor_fusion.h file implements the top level programming interface. " alt="" coords="95,95,208,121"/>
+<area shape="rect" id="node4" href="$sensor__io__i2c_8h.html" title="The sensor_io_i2c.h file declares low&#45;level interface functions for reading and writing sensor regist..." alt="" coords="204,169,317,196"/>
+<area shape="rect" id="node5" href="$fxos8700_8h.html" title="The fxos8700.h file contains the register definitions for FXOS8700 sensor driver. ..." alt="" coords="371,169,457,196"/>
+<area shape="rect" id="node6" href="$fxos8700__drv_8h.html" title="The fxos8700_drv.h file describes the fxos8700 driver interface and structures. " alt="" coords="284,95,392,121"/>
+<area shape="rect" id="node7" href="$drivers_8h.html" title="Provides function prototypes for driver level interfaces. " alt="" coords="468,95,539,121"/>
+<area shape="rect" id="node8" href="$status_8h.html" title="Application&#45;specific status subsystem. " alt="" coords="563,95,633,121"/>
+</map>

@@ -1,0 +1,170 @@
+Release Name: MCUXpresso Software Development Kit (SDK)
+Release Version: 2.3.0
+
+AWS IoT                    version: 2.1.1                                    
+                           Location: /boards/evkmimxrt1050/demo_apps/lwip/lwi
+                           p_httpscli_mbedTLS/freertos                       
+                           Description: AWS C SDK for Internet of Things     
+                           Service                                           
+                           License: Apache License 2.0                       
+                           Author: Amazon Inc (http://www.amazon.com/)       
+                           name: AWS IoT                                     
+                           Format: source code                               
+                           URL: https://github.com/aws/aws-iot-device-sdk-   
+                           embedded-C                                        
+
+CMSIS Core header files    Author: ARM                                       
+                           parentversion: 5.0.1                              
+                           URL: http://silver.arm.com                        
+                           name: CMSIS Core header files                     
+                           Format: source code                               
+                           License: Apache License 2.0, See                  
+                           <rootfolder>/CMSIS/LICENSE.txt                    
+                           Location: CMSIS/Include                           
+                           version: 5.0.1 (CMSIS Download 5.0.1)             
+                           Description: Industry-standard header files       
+                           distributes by ARM for cortex-M cores             
+
+CMSIS DSP Library          name: CMSIS DSP Library                           
+                           Format: source code                               
+                           License: Apache License 2.0, See                  
+                           <rootfolder>/CMSIS/LICENSE.txt                    
+                           parentversion: 5.0.1                              
+                           Author: ARM                                       
+                           version: 5.0.1 (CMSIS download 5.0.1)             
+                           URL: http://silver.arm.com                        
+                           Location: CMSIS/DSP_Lib                           
+                           Description: A digital signal processing library  
+                           for Cortex-M cores from ARM                       
+
+DMA Manager                Format: source code                               
+                           Location: middleware/dma_manager                  
+                           Description: A software component used for manage 
+                           on-chip DMA channel resources.                    
+                           name: DMA Manager                                 
+                           License: Open Source - BSD-3-Clause Clear         
+                           version: 2.1.0                                    
+                           Author: Freescale                                 
+
+FatFs                      Approved Open Source License: Yes                 
+                           Author: Electronic Lives Mfg. by ChaN of Ageo     
+                           city, Japan (hobbyist)                            
+                           Description: FatFs is a generic FAT file system   
+                           module for small embedded systems.                
+                           Format: source code                               
+                           License: Open Source - FatFs License,             
+                           <rootfolder>/middleware/fatfs/doc/en/appnote.html 
+                           Location: middleware/fatfs                        
+                           name: FatFs                                       
+                           URL: http://elm-chan.org/fsw/ff/00index_e.html    
+                           version: 0.12c                                    
+
+FreeRTOS(tm)               Author: Real Time Engineers, Ltd.                 
+                           Description: A real-time operating system(RTOS)   
+                           from Real Time Engineers, Ltd.                    
+                           Format: source code                               
+                           License: Modified GPLv2. See                      
+                           ,<rootfolder>/rtos/freertos/License/license.txt.  
+                           Location: rtos/freertos                           
+                           name: FreeRTOS(tm)                                
+                           URL: http://www.freertos.org                      
+                           version: 9.0.0                                    
+
+ISSDK                      version: 1.6                                      
+                           Location: middleware/issdk                        
+                           Description: Freescale IoT Sensing SDK. It        
+                           combines a set of robust Sensor Drivers and       
+                           Algorithms along with example applications.       
+                           License: Open Source - BSD-3-Clause Clear         
+                           Author: Freescale                                 
+                           name: ISSDK                                       
+                           Format: source code                               
+
+KSDK Peripheral Driver     Description: Peripheral drivers are designed for  
+                           the most common use cases indentified for         
+                           the underlying hardware block.                    
+                           Author: Freescale                                 
+                           Version: 2.x.x                                    
+                           License: Open Source - BSD-3-Clause Clear         
+                           Format: source code                               
+                           Location: devices/<device_name>/drivers           
+
+LIBJPEG                    version: 9b                                       
+                           Location: middleware/libjpeg                      
+                           Description: JPEG image encoding, decoding, and   
+                           transcoding                                       
+                           License: IJG, See                                 
+                           <rootfolder>/middleware/libjpeg/README            
+                           Author: IJG (http://www.ijg.org/)                 
+                           name: LIBJPEG                                     
+                           Format: source code                               
+                           URL: http://www.ijg.org                           
+
+MBED TLS stack             Author: ARM                                       
+                           Description: Cryptographic and SSL/TLS Library    
+                           Format: source code                               
+                           License: Apache-2-Clause                          
+                           Location: middleware/mbedtls                      
+                           name: MBED TLS stack                              
+                           URL: https://tls.mbed.org/                        
+                           version: 2.6.0                                    
+
+SD MMC Card middleware     name: SD MMC Card middleware                      
+                           Location: middleware/sdmmc                        
+                           License: Open Source - BSD-3-Clause Clear         
+                           Description: A software component support SD card,
+                           eMMC card.                                        
+                           Author: Freescale                                 
+                           version: 2.1.2                                    
+                           Format: source code                               
+
+USB                        version: 1.6.3                                    
+                           Location: middleware/usb                          
+                           Description: Freescale USB stack. This is a       
+                           version of the USB stack that has been integrated 
+                           with the MCUXpresso SDK.                          
+                           License: Open Source - BSD-3-Clause Clear         
+                           Author: Freescale                                 
+                           name: USB                                         
+                           Format: source code                               
+
+emWin                      version: 5.38                                     
+                           Location: middleware/emwin                        
+                           Description: emWin graphics library               
+                           License: Licensed to NXP, binary distribution only
+                           Author: SEGGER Microcontroller Systems LLC        
+                           name: emWin                                       
+                           Format: binary library                            
+                           URL: http://www.nxp.com/pages/emwin-graphics-     
+                           library:EMWIN-GRAPHICS-LIBRARY                    
+
+lwIP TCP/IP Stack          Author: Swedish Institute of Computer Science     
+                           Description: A light-weight TCP/IP stack          
+                           Format: source code                               
+                           License: Open Source - BSD-3-Clause               
+                           Location: middleware/lwip                         
+                           name: lwIP TCP/IP Stack                           
+                           URL: http://savannah.nongnu.org/projects/lwip     
+                           version: 2.0.2                                    
+
+wifi_qca                   version: 2.0.0                                    
+                           Location: middleware/wifi_qca                     
+                           Description: Qualcomm Wi-Fi stack                 
+                           License: Open Source - BSD-3-Clause               
+                           Author: Qualcomm Atheros, Inc.                    
+                           name: wifi_qca                                    
+                           Format: source code                               
+                           URL: https://www.qualcomm.com/products/wifi-      
+                           platforms                                         
+
+wolfSSL                    Author: wolfSSL Inc.                              
+                           Description: wolfSSL is cryptography and SSL/TLS  
+                           library                                           
+                           Format: source code                               
+                           License: 3rd party evaluation. See <rootfolder>/mi
+                           ddleware/wolfssl_3.9.8/wolfSSL_cyaSSL_evaluation_l
+                           icense_agreement.pdf                              
+                           Location: middleware/wolfssl                      
+                           name: wolfSSL                                     
+                           URL: https://www.wolfssl.com                      
+                           version: 3.9.8                                    

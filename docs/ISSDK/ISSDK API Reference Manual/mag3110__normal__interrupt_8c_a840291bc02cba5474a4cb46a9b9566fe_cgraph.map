@@ -1,0 +1,12 @@
+<map id="main" name="main">
+<area shape="rect" id="node2" href="$frdm-k64f_2board_8c.html#a4c84ccb952cb083367d7040cf9de3db8" title="BOARD_InitDebugConsole" alt="" coords="107,5,283,32"/>
+<area shape="rect" id="node3" href="$group__pin__mux.html#ga2c9fe54b6b84723fbaa590a6f4576966" title="Configures pin routing and optionally pin electrical features. " alt="" coords="135,56,254,83"/>
+<area shape="rect" id="node4" href="$systick__utils_8c.html#ad43629969994e92bd3620e630bda24c8" title="Function to enable systicks framework. " alt="" coords="115,107,274,133"/>
+<area shape="rect" id="node5" href="$data__format__service_8h.html#a5d7069350a7d7e65686c77a8038f462f" title="The interface function to append the data on the formated stream. " alt="" coords="333,233,395,260"/>
+<area shape="rect" id="node6" href="$mag3110__drv_8c.html#a2de85bf13cfe26dbc0ca9be7f4625cba" title="The interface function to configure he sensor. " alt="" coords="111,208,278,235"/>
+<area shape="rect" id="node7" href="$mag3110__drv_8c.html#a578b46ebf521f9d389bdc8f68904ed2e" title="The interface function to initialize the sensor. " alt="" coords="115,259,275,285"/>
+<area shape="rect" id="node8" href="$mag3110__drv_8c.html#ad21e17c18a85571ddb312850e5d61f30" title="The interface function to read the sensor data. " alt="" coords="109,309,280,336"/>
+<area shape="rect" id="node9" href="$mag3110__drv_8c.html#a81a9d6ede8ef261fd61d7ae0c32f7e1c" title=": The interface function to set the I2C Idle Task. " alt="" coords="104,360,285,387"/>
+<area shape="rect" id="node10" href="$mag3110__normal__interrupt_8c.html#a8d5b450f18f0a0f9556683caefc468ba" title="This is the Sensor Data Ready ISR implementation. " alt="" coords="111,411,278,453"/>
+<area shape="rect" id="node11" href="$lpc54114_8c.html#a5423cac017d1d1a8ac8bba8e91e80e29" title="Configures the system to WAIT power mode. API name used from Kinetis family to maintain compatibility..." alt="" coords="108,477,281,504"/>
+</map>

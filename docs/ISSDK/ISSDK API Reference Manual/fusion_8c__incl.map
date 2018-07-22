@@ -1,0 +1,9 @@
+<map id="algorithms/sensorfusion/sources/fusion.c" name="algorithms/sensorfusion/sources/fusion.c">
+<area shape="rect" id="node5" href="$sensor__fusion_8h.html" title="The sensor_fusion.h file implements the top level programming interface. " alt="" coords="126,169,239,196"/>
+<area shape="rect" id="node6" href="$orientation_8h.html" title="Functions to convert between various orientation representations. " alt="" coords="179,244,272,271"/>
+<area shape="rect" id="node7" href="$matrix_8h.html" title="Matrix manipulation functions. " alt="" coords="296,244,365,271"/>
+<area shape="rect" id="node8" href="$fusion_8h.html" title="Lower level sensor fusion interface. " alt="" coords="175,95,241,121"/>
+<area shape="rect" id="node9" href="$approximations_8h.html" title="Math approximations file. " alt="" coords="455,95,577,121"/>
+<area shape="rect" id="node10" href="$drivers_8h.html" title="Provides function prototypes for driver level interfaces. " alt="" coords="601,95,671,121"/>
+<area shape="rect" id="node11" href="$control_8h.html" title="Defines control sub&#45;system. " alt="" coords="696,95,768,121"/>
+</map>

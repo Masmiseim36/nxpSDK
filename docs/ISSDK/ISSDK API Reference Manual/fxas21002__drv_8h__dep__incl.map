@@ -1,0 +1,12 @@
+<map id="sensors/fxas21002_drv.h" name="sensors/fxas21002_drv.h">
+<area shape="rect" id="node2" href="$fxas21002__drv_8c.html" title="The fxas21002_drv.c file implements the FXAS21002 sensor driver interfaces. " alt="" coords="5,95,171,121"/>
+<area shape="rect" id="node3" href="$fxas21002__fifo_8c.html" title="The fxas21002_fifo.c file implements the ISSDK FXAS21002 sensor driver example demonstration with FIF..." alt="" coords="195,87,365,129"/>
+<area shape="rect" id="node4" href="$fxas21002__interrupt_8c.html" title="The fxas21002_interrupt.c file implements the ISSDK FXAS21002 sensor driver example demonstration wit..." alt="" coords="389,87,560,129"/>
+<area shape="rect" id="node5" href="$fxas21002__poll_8c.html" title="The fxas21002_poll.c file implements the ISSDK FXAS21002 sensor driver example demonstration with pol..." alt="" coords="584,87,755,129"/>
+<area shape="rect" id="node6" href="$fxas21002__poll__spi_8c.html" title="The fxas21002_poll_spi.c file implements the ISSDK FXAS21002 SPI sensor driver example demonstration ..." alt="" coords="779,87,949,129"/>
+<area shape="rect" id="node7" href="$demo__11axis_8c.html" title="The demo_11axis.c file implements the ISSDK FXLS8962, MAG3110, FXAS21002 and MPL3115 sensors 12&#45;Axis ..." alt="" coords="974,87,1165,129"/>
+<area shape="rect" id="node8" href="$_f_r_d_m-_k22_f_2fxas21002__demo_8c.html" title="driverexamples/demos\l/FRDM&#45;K22F/fxas21002\l_demo.c" alt="" coords="1189,80,1350,136"/>
+<area shape="rect" id="node9" href="$_f_r_d_m-_k64_f_2fxas21002__demo_8c.html" title="driverexamples/demos\l/FRDM&#45;K64F/fxas21002\l_demo.c" alt="" coords="1374,80,1535,136"/>
+<area shape="rect" id="node10" href="$data__logger__demo_8c.html" title="The data_logger_demo.c file implements the ISSDK Data Logger for RD&#45;KL25&#45;AGMP01 example demonstration..." alt="" coords="1559,80,1734,136"/>
+<area shape="rect" id="node11" href="$_l_p_c-54114_2fxas21002__demo_8c.html" title="driverexamples/demos\l/LPC&#45;54114/fxas21002\l_demo.c" alt="" coords="1758,80,1911,136"/>
+</map>

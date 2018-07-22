@@ -1,0 +1,6 @@
+<map id="driverexamples/demos/FRDM&#45;K64F/mma865x_demo.c" name="driverexamples/demos/FRDM&#45;K64F/mma865x_demo.c">
+<area shape="rect" id="node8" href="$fsl__i2c__cmsis_8h.html" title="fsl_i2c_cmsis.h" alt="" coords="597,95,709,121"/>
+<area shape="rect" id="node11" href="$mma865x__drv_8h.html" title="The mma865x_drv.h file describes the MMA865x driver interface and structures. " alt="" coords="987,95,1100,121"/>
+<area shape="rect" id="node13" href="$host__io__uart_8h.html" title="The host_io_uart.h file contains the Host Protocol interface definitions and configuration. " alt="" coords="1243,95,1347,121"/>
+<area shape="rect" id="node14" href="$systick__utils_8h.html" title="ARM Systick Utilities. " alt="" coords="1371,95,1478,121"/>
+</map>

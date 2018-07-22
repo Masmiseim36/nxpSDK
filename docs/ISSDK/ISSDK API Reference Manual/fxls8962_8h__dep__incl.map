@@ -1,0 +1,7 @@
+<map id="sensors/fxls8962.h" name="sensors/fxls8962.h">
+<area shape="rect" id="node2" href="$fxls8962__drv_8h.html" title="The fxls8962_drv.h file describes the FXLS8962AF driver interface and structures. ..." alt="" coords="5,95,160,121"/>
+<area shape="rect" id="node3" href="$lpc_2auto__detection__service_8c.html" title="drivers/ads/lpc/auto\l_detection_service.c" alt="" coords="185,87,325,129"/>
+<area shape="rect" id="node4" href="$kinetis_2auto__detection__service_8c.html" title="drivers/ads/kinetis\l/auto_detection_service.c" alt="" coords="349,87,518,129"/>
+<area shape="rect" id="node5" href="$driver___f_x_l_s8962_8c.html" title="Provides init() and read() functions for the FXLS8962 3&#45;axis accelerometer. " alt="" coords="542,87,725,129"/>
+<area shape="rect" id="node6" href="$main__agmp03__freertos__two__tasks_8c.html" title="FreeRTOS (two task) implementation of sensor fusion. " alt="" coords="749,80,955,136"/>
+</map>

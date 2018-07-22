@@ -1,0 +1,27 @@
+var group__ltc__edma__driver__des =
+[
+    [ "LTC_DES_EncryptEcbEDMA", "group__ltc__edma__driver__des.html#gaa7ad2401b49345f66173d01c629ef9a8", null ],
+    [ "LTC_DES_DecryptEcbEDMA", "group__ltc__edma__driver__des.html#ga6ff5ba165de638a70df79364194c3144", null ],
+    [ "LTC_DES_EncryptCbcEDMA", "group__ltc__edma__driver__des.html#ga049db7c96a63adef4bbadd33631badd5", null ],
+    [ "LTC_DES_DecryptCbcEDMA", "group__ltc__edma__driver__des.html#ga5e26bce550d518dbec824dffff9c166c", null ],
+    [ "LTC_DES_EncryptCfbEDMA", "group__ltc__edma__driver__des.html#ga95db4a0b9a725de0749b0c1a584bfa8a", null ],
+    [ "LTC_DES_DecryptCfbEDMA", "group__ltc__edma__driver__des.html#ga98d53050b087b6d62ce19263a3b1bdb0", null ],
+    [ "LTC_DES_EncryptOfbEDMA", "group__ltc__edma__driver__des.html#gaa56e8f954c872ba04057d09a87e75f33", null ],
+    [ "LTC_DES_DecryptOfbEDMA", "group__ltc__edma__driver__des.html#ga88083cfd956294c1d43a398068a56943", null ],
+    [ "LTC_DES2_EncryptEcbEDMA", "group__ltc__edma__driver__des.html#ga4854f273ab423a8e06a71b6656766477", null ],
+    [ "LTC_DES2_DecryptEcbEDMA", "group__ltc__edma__driver__des.html#ga62f7e51b55f49e8eefb9617451a22a51", null ],
+    [ "LTC_DES2_EncryptCbcEDMA", "group__ltc__edma__driver__des.html#ga790e8c4ac6b82a6f81520d6fc48b33a3", null ],
+    [ "LTC_DES2_DecryptCbcEDMA", "group__ltc__edma__driver__des.html#ga027d43f5113fa0efab13b5bbcc10d386", null ],
+    [ "LTC_DES2_EncryptCfbEDMA", "group__ltc__edma__driver__des.html#gaf4b00b3cccc36e29e968bbc571d97656", null ],
+    [ "LTC_DES2_DecryptCfbEDMA", "group__ltc__edma__driver__des.html#ga3ec6270b57d9e70798ac222b97588189", null ],
+    [ "LTC_DES2_EncryptOfbEDMA", "group__ltc__edma__driver__des.html#ga002e71cea0fb1f3e3a16c76d7fc72405", null ],
+    [ "LTC_DES2_DecryptOfbEDMA", "group__ltc__edma__driver__des.html#ga5eebaffedaecd1e09c8180147a454b8b", null ],
+    [ "LTC_DES3_EncryptEcbEDMA", "group__ltc__edma__driver__des.html#gaf70766838045ba73cf0555cc95df2bdf", null ],
+    [ "LTC_DES3_DecryptEcbEDMA", "group__ltc__edma__driver__des.html#gaea29c3eca32ada931d764b84b6b35513", null ],
+    [ "LTC_DES3_EncryptCbcEDMA", "group__ltc__edma__driver__des.html#gad83541de1cc0c038614d197339792f20", null ],
+    [ "LTC_DES3_DecryptCbcEDMA", "group__ltc__edma__driver__des.html#gaf021b770255600dc43bec4cfed82a7fe", null ],
+    [ "LTC_DES3_EncryptCfbEDMA", "group__ltc__edma__driver__des.html#gad2bf7a5fbe8421c5c850106dd60f726c", null ],
+    [ "LTC_DES3_DecryptCfbEDMA", "group__ltc__edma__driver__des.html#ga7cfcb8dc1390b72aca805b06a810776b", null ],
+    [ "LTC_DES3_EncryptOfbEDMA", "group__ltc__edma__driver__des.html#ga1aac651f3e4d3cbf7e34d1570fafc4e5", null ],
+    [ "LTC_DES3_DecryptOfbEDMA", "group__ltc__edma__driver__des.html#ga2b5b93b93f84c8e99f7ee4d315594c51", null ]
+];

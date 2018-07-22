@@ -1,0 +1,18 @@
+<map id="drivers/ads/lpc/auto_detection_service.c" name="drivers/ads/lpc/auto_detection_service.c">
+<area shape="rect" id="node3" href="$mma9553_8h.html" title="The mma9553.h contains the MMA9553L Digital Pedometer command definitions and access macros..." alt="" coords="23,95,114,121"/>
+<area shape="rect" id="node4" href="$mpl3115_8h.html" title="The mpl3115.h contains the MPL3115 Pressure sensor register definitions, access macros, and device access functions. " alt="" coords="138,95,221,121"/>
+<area shape="rect" id="node5" href="$mag3110_8h.html" title="The mag3110.h contains the MAG3110 Magnetic sensor register definitions, access macros, and device access functions. " alt="" coords="245,95,332,121"/>
+<area shape="rect" id="node6" href="$mma865x_8h.html" title="The mma865x.h contains the MMA865xFC Digital Accelerometer Sensor register definitions, access macros, and device access functions. " alt="" coords="357,95,447,121"/>
+<area shape="rect" id="node7" href="$fxls8962_8h.html" title="This file contains the FXLS8962 Accelerometer register definitions, access macros, and device access functions. " alt="" coords="472,95,553,121"/>
+<area shape="rect" id="node8" href="$fxpq3115_8h.html" title="The fxpq3115.h contains the FXPQ3115 Pressure sensor register definitions, access macros..." alt="" coords="578,95,663,121"/>
+<area shape="rect" id="node9" href="$fxos8700_8h.html" title="The fxos8700.h file contains the register definitions for FXOS8700 sensor driver. ..." alt="" coords="687,95,773,121"/>
+<area shape="rect" id="node10" href="$fxas21002_8h.html" title="The fxas21002.h contains the fxas21002 sensor register definitions and its bit mask. " alt="" coords="797,95,889,121"/>
+<area shape="rect" id="node11" href="$fxlc95000_8h.html" title="The fxlc95000.h contains the FXLC95000L Digital Accelerometer command definitions and access macros..." alt="" coords="914,95,1002,121"/>
+<area shape="rect" id="node12" href="$fxls8471q_8h.html" title="The fxls8471q.h file contains the register definitions for fxls8471q sensor driver. " alt="" coords="1026,95,1114,121"/>
+<area shape="rect" id="node15" href="$register__io__spi_8h.html" title="The register_io_spi.h file declares low&#45;level interface functions for reading and writing sensor regi..." alt="" coords="1370,95,1487,121"/>
+<area shape="rect" id="node16" href="$register__io__i2c_8h.html" title="The register_io_i2c.h file declares low&#45;level interface functions for reading and writing sensor regi..." alt="" coords="1511,95,1629,121"/>
+<area shape="rect" id="node17" href="$auto__detection__shield_8h.html" title="The auto_detection_shield.h file describes the definitions for Sensor I2C and SPI parameters required..." alt="" coords="1653,95,1812,121"/>
+<area shape="rect" id="node18" href="$lpc_2auto__detection__service_8h.html" title="auto_detection_service.h" alt="" coords="1837,95,2002,121"/>
+<area shape="rect" id="node20" href="$fsl__i2c__cmsis_8h.html" title="fsl_i2c_cmsis.h" alt="" coords="2149,95,2261,121"/>
+<area shape="rect" id="node21" href="$fsl__spi__cmsis_8h.html" title="fsl_spi_cmsis.h" alt="" coords="2285,95,2397,121"/>
+</map>

@@ -1,0 +1,16 @@
+<map id="main" name="main">
+<area shape="rect" id="node2" href="$frdm-k64f_2board_8c.html#a4c84ccb952cb083367d7040cf9de3db8" title="BOARD_InitDebugConsole" alt="" coords="104,5,280,32"/>
+<area shape="rect" id="node3" href="$group__pin__mux.html#ga2c9fe54b6b84723fbaa590a6f4576966" title="Configures pin routing and optionally pin electrical features. " alt="" coords="133,56,251,83"/>
+<area shape="rect" id="node4" href="$drivers_8h.html#ab2b8fae18f293a3068dc83760454401d" title="FXAS21002_Idle" alt="" coords="133,107,251,133"/>
+<area shape="rect" id="node5" href="$drivers_8h.html#a81c5b987e709b3991bc7c1bc1e659c1f" title="FXAS21002_Init" alt="" coords="135,157,249,184"/>
+<area shape="rect" id="node6" href="$drivers_8h.html#a1e2a1a192ed7f150fc24fc11df8d4c1e" title="FXAS21002_Read" alt="" coords="129,208,255,235"/>
+<area shape="rect" id="node7" href="$drivers_8h.html#ae47d028795d19902358ad6644c2995f7" title="FXLS8952_Init" alt="" coords="139,259,245,285"/>
+<area shape="rect" id="node8" href="$drivers_8h.html#aed1eb4f64f11c00b221a14839b996d1e" title="FXLS8952_Read" alt="" coords="133,309,251,336"/>
+<area shape="rect" id="node9" href="$control_8c.html#a67029acf1be9712c5d30c625132ad958" title="Initialize the control subsystem and all related hardware. " alt="" coords="125,360,259,387"/>
+<area shape="rect" id="node10" href="$status_8c.html#a01619741119cf3432f8cfff23334c793" title="initializeStatusSubsystem" alt="" coords="105,411,279,437"/>
+<area shape="rect" id="node11" href="$sensor__fusion_8c.html#a43b44018042fabb5179c2e62277cc942" title="utility function to insert default values in the top level structure " alt="" coords="111,461,273,488"/>
+<area shape="rect" id="node12" href="$driver___m_a_g3110_8c.html#a8b3e60cfe3482a21af1efd34d3e31cc2" title="MAG3110_Idle" alt="" coords="139,512,245,539"/>
+<area shape="rect" id="node13" href="$driver___m_a_g3110_8c.html#a20b118514f14ce008825433f72527ecd" title="MAG3110_Init" alt="" coords="140,563,244,589"/>
+<area shape="rect" id="node14" href="$driver___m_a_g3110_8c.html#a2592117f3e2fed5f61ff029cb18fa556" title="MAG3110_Read" alt="" coords="133,613,251,640"/>
+<area shape="rect" id="node15" href="$main__freertos__agm02__power__cycling_8c.html#a9bc3ff19e01b5212420dbe5bd004b40a" title="motionCheck" alt="" coords="143,664,241,691"/>
+</map>

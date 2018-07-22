@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<example name="emwin_gui_demo" category="emwin_examples" board_ref="FRDM_K28F" version="1.0.0" format_version="2.1">
+  <source path="boards/frdmk28f/emwin_examples/emwin_gui_demo" target_path="sources" type="c_include">
+    <files mask="board.h"/>
+    <files mask="clock_config.h"/>
+    <files mask="emwin_support.h"/>
+    <files mask="fsl_ft5406.h"/>
+    <files mask="fsl_ssd1963.h"/>
+    <files mask="pin_mux.h"/>
+  </source>
+  <source path="boards/frdmk28f/emwin_examples/emwin_gui_demo" target_path="doc" type="doc">
+    <files mask="readme.txt"/>
+  </source>
+  <source path="boards/frdmk28f/emwin_examples/emwin_gui_demo" target_path="sources" type="src">
+    <files mask="board.c"/>
+    <files mask="clock_config.c"/>
+    <files mask="emwin_gui_demo.c"/>
+    <files mask="emwin_support.c"/>
+    <files mask="fsl_ft5406.c"/>
+    <files mask="fsl_ssd1963.c"/>
+    <files mask="pin_mux.c"/>
+  </source>
+  <source path="devices/MK28F15/arm" target_path="devices/arm" type="src" compilers="arm">
+    <files mask="startup_MK28F15.s"/>
+  </source>
+  <source path="devices/MK28F15/drivers" target_path="drivers" type="c_include">
+    <files mask="fsl_clock.h"/>
+    <files mask="fsl_common.h"/>
+    <files mask="fsl_dmamux.h"/>
+    <files mask="fsl_edma.h"/>
+    <files mask="fsl_flash.h"/>
+    <files mask="fsl_flexio.h"/>
+    <files mask="fsl_flexio_mculcd.h"/>
+    <files mask="fsl_flexio_mculcd_edma.h"/>
+    <files mask="fsl_gpio.h"/>
+    <files mask="fsl_i2c.h"/>
+    <files mask="fsl_lpuart.h"/>
+    <files mask="fsl_port.h"/>
+    <files mask="fsl_qspi.h"/>
+    <files mask="fsl_smc.h"/>
+    <files mask="fsl_sysmpu.h"/>
+  </source>
+  <source path="devices/MK28F15/drivers" target_path="drivers" type="src">
+    <files mask="fsl_clock.c"/>
+    <files mask="fsl_common.c"/>
+    <files mask="fsl_dmamux.c"/>
+    <files mask="fsl_edma.c"/>
+    <files mask="fsl_flash.c"/>
+    <files mask="fsl_flexio.c"/>
+    <files mask="fsl_flexio_mculcd.c"/>
+    <files mask="fsl_flexio_mculcd_edma.c"/>
+    <files mask="fsl_gpio.c"/>
+    <files mask="fsl_i2c.c"/>
+    <files mask="fsl_lpuart.c"/>
+    <files mask="fsl_qspi.c"/>
+    <files mask="fsl_smc.c"/>
+    <files mask="fsl_sysmpu.c"/>
+  </source>
+  <source path="devices/MK28F15/gcc" target_path="devices/gcc" type="src" compilers="gcc">
+    <files mask="startup_MK28F15.S"/>
+  </source>
+  <source path="devices/MK28F15/iar" target_path="devices/iar" type="src" compilers="iar">
+    <files mask="startup_MK28F15.s"/>
+  </source>
+  <source path="devices/MK28F15/utilities/io" target_path="utilities" type="c_include">
+    <files mask="fsl_io.h"/>
+  </source>
+  <source path="devices/MK28F15/utilities/io" target_path="utilities" type="src">
+    <files mask="fsl_io.c"/>
+  </source>
+  <source path="devices/MK28F15/utilities/log" target_path="utilities" type="c_include">
+    <files mask="fsl_log.h"/>
+  </source>
+  <source path="devices/MK28F15/utilities/log" target_path="utilities" type="src">
+    <files mask="fsl_log.c"/>
+  </source>
+  <source path="devices/MK28F15/utilities/str" target_path="utilities" type="c_include">
+    <files mask="fsl_str.h"/>
+  </source>
+  <source path="devices/MK28F15/utilities/str" target_path="utilities" type="src">
+    <files mask="fsl_str.c"/>
+  </source>
+  <source path="devices/MK28F15/utilities" target_path="utilities" type="c_include">
+    <files mask="fsl_debug_console.h"/>
+    <files mask="fsl_debug_console_conf.h"/>
+  </source>
+  <source path="devices/MK28F15/utilities" target_path="utilities" type="src">
+    <files mask="fsl_assert.c"/>
+    <files mask="fsl_debug_console.c"/>
+  </source>
+  <source path="devices/MK28F15" target_path="devices" type="c_include">
+    <files mask="MK28F15.h"/>
+    <files mask="MK28F15_features.h"/>
+    <files mask="fsl_device_registers.h"/>
+    <files mask="system_MK28F15.h"/>
+  </source>
+  <source path="devices/MK28F15" target_path="devices" type="src">
+    <files mask="system_MK28F15.c"/>
+  </source>
+  <source path="middleware/emwin/emWin_Config" target_path="emwin/emWin_Config" type="c_include">
+    <files mask="GUIConf.h"/>
+    <files mask="LCDConf.h"/>
+  </source>
+  <source path="middleware/emwin/emWin_header" target_path="emwin/emWin_header" type="c_include">
+    <files mask="BUTTON.h"/>
+    <files mask="BUTTON_Private.h"/>
+    <files mask="CALENDAR.h"/>
+    <files mask="CHECKBOX.h"/>
+    <files mask="CHECKBOX_Private.h"/>
+    <files mask="CHOOSECOLOR.h"/>
+    <files mask="CHOOSEFILE.h"/>
+    <files mask="DIALOG.h"/>
+    <files mask="DIALOG_Intern.h"/>
+    <files mask="DROPDOWN.h"/>
+    <files mask="DROPDOWN_Private.h"/>
+    <files mask="EDIT.h"/>
+    <files mask="EDIT_Private.h"/>
+    <files mask="FRAMEWIN.h"/>
+    <files mask="FRAMEWIN_Private.h"/>
+    <files mask="GRAPH.h"/>
+    <files mask="GRAPH_Private.h"/>
+    <files mask="GUI.h"/>
+    <files mask="GUIDRV_BitPlains.h"/>
+    <files mask="GUIDRV_DCache.h"/>
+    <files mask="GUIDRV_DCache_Private.h"/>
+    <files mask="GUIDRV_Dist.h"/>
+    <files mask="GUIDRV_FlexColor.h"/>
+    <files mask="GUIDRV_FlexColor_Private.h"/>
+    <files mask="GUIDRV_IST3088.h"/>
+    <files mask="GUIDRV_IST3088_Private.h"/>
+    <files mask="GUIDRV_Lin.h"/>
+    <files mask="GUIDRV_Lin_Opt_16.h"/>
+    <files mask="GUIDRV_Lin_Opt_24.h"/>
+    <files mask="GUIDRV_Lin_Opt_32.h"/>
+    <files mask="GUIDRV_Lin_Opt_8.h"/>
+    <files mask="GUIDRV_Lin_Private.h"/>
+    <files mask="GUIDRV_NoOpt_1_8.h"/>
+    <files mask="GUIDRV_S1D13748.h"/>
+    <files mask="GUIDRV_S1D13748_Private.h"/>
+    <files mask="GUIDRV_S1D13781.h"/>
+    <files mask="GUIDRV_S1D13781_Private.h"/>
+    <files mask="GUIDRV_S1D15G00.h"/>
+    <files mask="GUIDRV_SLin.h"/>
+    <files mask="GUIDRV_SLin_Private.h"/>
+    <files mask="GUIDRV_SPage.h"/>
+    <files mask="GUIDRV_SPage_Private.h"/>
+    <files mask="GUIDRV_SSD1926.h"/>
+    <files mask="GUIDRV_SSD1926_Private.h"/>
+    <files mask="GUIDRV_Template.h"/>
+    <files mask="GUIDRV_TemplateI.h"/>
+    <files mask="GUIDRV_TemplateI_Private.h"/>
+    <files mask="GUITDRV_ADS7846.h"/>
+    <files mask="GUI_ARRAY.h"/>
+    <files mask="GUI_ARRAY_Private.h"/>
+    <files mask="GUI_BMP_Private.h"/>
+    <files mask="GUI_ConfDefaults.h"/>
+    <files mask="GUI_Debug.h"/>
+    <files mask="GUI_FontIntern.h"/>
+    <files mask="GUI_GCache_Private.h"/>
+    <files mask="GUI_GIF_Private.h"/>
+    <files mask="GUI_HOOK.h"/>
+    <files mask="GUI_JPEG_Private.h"/>
+    <files mask="GUI_Private.h"/>
+    <files mask="GUI_SPRITE_Private.h"/>
+    <files mask="GUI_SetOrientation.h"/>
+    <files mask="GUI_SetOrientationCX.h"/>
+    <files mask="GUI_Type.h"/>
+    <files mask="GUI_VNC.h"/>
+    <files mask="GUI_Version.h"/>
+    <files mask="GUI__BiDi2_Brackets_800.h"/>
+    <files mask="GUI__BiDi2_Types_800.h"/>
+    <files mask="Global.h"/>
+    <files mask="HEADER.h"/>
+    <files mask="HEADER_Private.h"/>
+    <files mask="ICONVIEW.h"/>
+    <files mask="ICONVIEW_Private.h"/>
+    <files mask="IMAGE.h"/>
+    <files mask="IMAGE_Private.h"/>
+    <files mask="IP_FS.h"/>
+    <files mask="KNOB.h"/>
+    <files mask="KNOB_Private.h"/>
+    <files mask="LCD.h"/>
+    <files mask="LCD_ConfDefaults.h"/>
+    <files mask="LCD_Private.h"/>
+    <files mask="LCD_Protected.h"/>
+    <files mask="LCD_SIM.h"/>
+    <files mask="LISTBOX.h"/>
+    <files mask="LISTBOX_Private.h"/>
+    <files mask="LISTVIEW.h"/>
+    <files mask="LISTVIEW_Private.h"/>
+    <files mask="LISTWHEEL.h"/>
+    <files mask="LISTWHEEL_Private.h"/>
+    <files mask="MENU.h"/>
+    <files mask="MENU_Private.h"/>
+    <files mask="MESSAGEBOX.h"/>
+    <files mask="MULTIEDIT.h"/>
+    <files mask="MULTIPAGE.h"/>
+    <files mask="MULTIPAGE_Private.h"/>
+    <files mask="PROGBAR.h"/>
+    <files mask="PROGBAR_Private.h"/>
+    <files mask="RADIO.h"/>
+    <files mask="RADIO_Private.h"/>
+    <files mask="SCROLLBAR.h"/>
+    <files mask="SCROLLBAR_Private.h"/>
+    <files mask="SEGGER.h"/>
+    <files mask="SLIDER.h"/>
+    <files mask="SLIDER_Private.h"/>
+    <files mask="SPINBOX.h"/>
+    <files mask="SPINBOX_Private.h"/>
+    <files mask="SWIPELIST.h"/>
+    <files mask="SWIPELIST_Private.h"/>
+    <files mask="TEXT.h"/>
+    <files mask="TEXT_Private.h"/>
+    <files mask="TREEVIEW.h"/>
+    <files mask="TREEVIEW_Private.h"/>
+    <files mask="WIDGET.h"/>
+    <files mask="WINDOW_Private.h"/>
+    <files mask="WM.h"/>
+    <files mask="WM_GUI.h"/>
+    <files mask="WM_Intern.h"/>
+  </source>
+  <source path="middleware/emwin/emWin_library/ARMGCC" target_path="emwin/emWin_library/ARMGCC" type="lib" compilers="gcc">
+    <files mask="libemWin_M4F.a"/>
+  </source>
+  <source path="middleware/emwin/emWin_library/IAR" target_path="emwin/emWin_library/IAR" type="lib" compilers="iar">
+    <files mask="emWin_M4F.a"/>
+  </source>
+  <source path="middleware/emwin/emWin_library/KDS" target_path="emwin/emWin_library/KDS" type="lib" compilers="gcc">
+    <files mask="libemWin_M4F.a"/>
+  </source>
+  <source path="middleware/emwin/emWin_library/Keil" target_path="emwin/emWin_library/Keil" type="lib" compilers="arm">
+    <files mask="emWin_M4F.lib"/>
+  </source>
+  <source path="middleware/emwin/emWin_library/MCUXpresso" target_path="emwin/emWin_library/MCUXpresso" type="lib" compilers="gcc">
+    <files mask="libemWin_M4F.a"/>
+  </source>
+  <include_paths>
+    <include path="devices"/>
+    <include path="drivers"/>
+    <include path="emwin/emWin_Config"/>
+    <include path="emwin/emWin_header"/>
+    <include path="emwin/emWin_library/ARMGCC" compilers="gcc"/>
+    <include path="emwin/emWin_library/IAR" compilers="iar"/>
+    <include path="emwin/emWin_library/KDS" compilers="gcc"/>
+    <include path="emwin/emWin_library/Keil" compilers="arm"/>
+    <include path="emwin/emWin_library/MCUXpresso" compilers="gcc"/>
+    <include path="sources"/>
+    <include path="utilities"/>
+  </include_paths>
+</example>

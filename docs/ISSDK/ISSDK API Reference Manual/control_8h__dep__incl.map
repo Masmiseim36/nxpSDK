@@ -1,0 +1,19 @@
+<map id="algorithms/sensorfusion/sources/control.h" name="algorithms/sensorfusion/sources/control.h">
+<area shape="rect" id="node2" href="$orientaion__application__baremetal__agm01_8c.html" title="The orientaion_application_baremetal_agm01.c file implements the ISSDK baremetal orientation applicat..." alt="" coords="5,95,164,165"/>
+<area shape="rect" id="node3" href="$orientaion__application__freertos__agm01_8c.html" title="The orientaion_application_freertos_agm01.c file implements the ISSDK freeRTOS orientation applicatio..." alt="" coords="188,95,347,165"/>
+<area shape="rect" id="node4" href="$control_8c.html" title="Defines control sub&#45;system. " alt="" coords="371,109,529,151"/>
+<area shape="rect" id="node5" href="$control__lpc_8c.html" title="Defines control sub&#45;system for LPC54114. " alt="" coords="553,109,712,151"/>
+<area shape="rect" id="node6" href="$control__lpsci_8c.html" title="Defines control sub&#45;system. " alt="" coords="737,109,897,151"/>
+<area shape="rect" id="node7" href="$debug_8c.html" title="ApplyPerturbation function used to analyze dynamic performance. " alt="" coords="921,109,1080,151"/>
+<area shape="rect" id="node8" href="$_decode_command_bytes_8c.html" title="Command interpreter which interfaces to the Sensor Fusion Toolbox. " alt="" coords="1105,109,1329,151"/>
+<area shape="rect" id="node9" href="$fusion_8c.html" title="Lower level sensor fusion interface. " alt="" coords="1353,109,1512,151"/>
+<area shape="rect" id="node10" href="$main__agm01__freertos__two__tasks_8c.html" title="FreeRTOS (two task) implementation of sensor fusion on FRDM&#45;K64F. " alt="" coords="1537,102,1737,158"/>
+<area shape="rect" id="node11" href="$main__agm04__freertos__two__tasks_8c.html" title="FreeRTOS (two task) implementation of sensor fusion on FRDM&#45;K64F/FRDM&#45;STBC&#45;AGM04 using MMA8652 (Accel..." alt="" coords="1761,102,1961,158"/>
+<area shape="rect" id="node12" href="$main__agmp03__freertos__two__tasks_8c.html" title="FreeRTOS (two task) implementation of sensor fusion. " alt="" coords="1985,102,2192,158"/>
+<area shape="rect" id="node13" href="$main__baremetal_8c.html" title="Bare metal implementation of sensor fusion on FRDM&#45;K64F. " alt="" coords="2217,109,2395,151"/>
+<area shape="rect" id="node14" href="$main__freertos__agm02_8c.html" title="FreeRTOS (two task) implementation of sensor fusion on FRDM&#45;K64F/FRDM&#45;FXS&#45;AGM02. " alt="" coords="2420,102,2579,158"/>
+<area shape="rect" id="node15" href="$main__freertos__agm02__power__cycling_8c.html" title="FreeRTOS (two task) implementation of sensor fusion on FRDM&#45;K64F/FRDM&#45;FXS&#45;AGM02 with smart power&#45;cycl..." alt="" coords="2603,102,2771,158"/>
+<area shape="rect" id="node16" href="$main__freertos__two__tasks_8c.html" title="FreeRTOS (two task) implementation of sensor fusion on FRDM&#45;K64F. " alt="" coords="2796,102,2955,158"/>
+<area shape="rect" id="node17" href="$output__stream_8c.html" title="Implements streaming function for the status subsystem. See status.h. " alt="" coords="2979,109,3150,151"/>
+<area shape="rect" id="node18" href="$sensor__fusion_8c.html" title="The sensor_fusion.c file implements the top level programming interface. " alt="" coords="3175,109,3341,151"/>
+</map>

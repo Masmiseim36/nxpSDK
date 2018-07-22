@@ -1,0 +1,22 @@
+--- FreeRTOS integration notes ---
+Original package is available at freertos.org. Supported version can be found in Kinetis SDK Release
+notes document.
+
+Original FreeRTOS folder structure
+FreeRTOS
+  ├ FreeRTOS
+  │  ├ Demo
+  │  ├ License
+  │  └ Source
+  └ FreeRTOS-Plus
+     ├ Demo
+     └ Source
+
+SDK FreeRTOS folder structure
+freertos
+  ├ License
+  └ Source
+
+Configuration
+Each FreeRTOS application contains application dependent configuration file FreeRTOSConfig.h based
+on template from: http://www.freertos.org/a00110.html

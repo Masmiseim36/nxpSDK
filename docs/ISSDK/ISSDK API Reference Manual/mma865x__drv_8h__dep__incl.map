@@ -1,0 +1,9 @@
+<map id="sensors/mma865x_drv.h" name="sensors/mma865x_drv.h">
+<area shape="rect" id="node2" href="$mma865x__drv_8c.html" title="The mma865x_drv.c file implements the mma865x functional interface. " alt="" coords="5,95,168,121"/>
+<area shape="rect" id="node3" href="$mma865x__fifo_8c.html" title="The mma865x_fifo.c file implements the ISSDK MMA865x sensor driver example demonstration with FIFO mo..." alt="" coords="193,87,362,129"/>
+<area shape="rect" id="node4" href="$mma865x__freefall_8c.html" title="The mma865x_freefall.c file implements the ISSDK MMA865x sensor driver example demonstration for Free..." alt="" coords="386,87,555,129"/>
+<area shape="rect" id="node5" href="$mma865x__interrupt_8c.html" title="The mma865x_interrupt.c file implements the ISSDK MMA865x sensor driver example demonstration with In..." alt="" coords="579,87,749,129"/>
+<area shape="rect" id="node6" href="$mma865x__poll_8c.html" title="The mma865x_poll.c file implements the ISSDK MMA865x sensor driver example demonstration with Normal ..." alt="" coords="773,87,942,129"/>
+<area shape="rect" id="node7" href="$mma865x__demo_8c.html" title="The mma865x_demo.c file implements the ISSDK MMA865x sensor demo example demonstration with interrupt..." alt="" coords="966,87,1175,129"/>
+<area shape="rect" id="node8" href="$pedometer__stepcount__mma8652_8c.html" title="The pedometer_stepcount_mma8652.c file implements the ISSDK prdometer example using MMA8652 sensor as..." alt="" coords="1200,80,1411,136"/>
+</map>

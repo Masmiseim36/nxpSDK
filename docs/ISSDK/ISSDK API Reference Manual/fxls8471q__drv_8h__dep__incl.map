@@ -1,0 +1,8 @@
+<map id="sensors/fxls8471q_drv.h" name="sensors/fxls8471q_drv.h">
+<area shape="rect" id="node2" href="$fxls8471q__drv_8c.html" title="The fxls8471q_drv.c file implements the FXLS8471Q sensor driver interfaces. " alt="" coords="5,95,167,121"/>
+<area shape="rect" id="node3" href="$fxls8471q__spi__fifo_8c.html" title="The fxls8471q_fifo.c file implements the ISSDK FXLS8471Q sensor driver example demonstration for SPI ..." alt="" coords="191,87,357,129"/>
+<area shape="rect" id="node4" href="$fxls8471q__spi__interrupt_8c.html" title="The fxls8471q_interrupt.c file implements the ISSDK FXLS8471Q sensor driver example demonstration wit..." alt="" coords="382,87,553,129"/>
+<area shape="rect" id="node5" href="$fxls8471q__spi__poll_8c.html" title="The fxls8471q_poll_spi.c file implements the ISSDK FXLS8471Q sensor driver example demonstration for ..." alt="" coords="577,87,744,129"/>
+<area shape="rect" id="node6" href="$fxls8471__demo_8c.html" title="The fxls8471_demo.c file implements the ISSDK FXLS8471 sensor demo example demonstration with interru..." alt="" coords="768,80,924,136"/>
+<area shape="rect" id="node7" href="$driver___f_x_l_s8471_q_8c.html" title="Provides init() and read() functions for the FXLS8471Q 3&#45;axis accel. " alt="" coords="948,87,1141,129"/>
+</map>

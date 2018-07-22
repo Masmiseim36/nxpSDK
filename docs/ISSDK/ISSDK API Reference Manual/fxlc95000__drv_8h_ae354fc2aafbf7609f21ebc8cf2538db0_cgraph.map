@@ -1,0 +1,6 @@
+<map id="FXLC95000_I2C_CheckRomMode" name="FXLC95000_I2C_CheckRomMode">
+<area shape="rect" id="node2" href="$systick__utils_8c.html#ab052b802081fd87e1bda8d56e2c0db42" title="Function to insert delays. " alt="" coords="283,5,425,32"/>
+<area shape="rect" id="node3" href="$data__format__service_8h.html#a5d7069350a7d7e65686c77a8038f462f" title="The interface function to append the data on the formated stream. " alt="" coords="485,81,547,108"/>
+<area shape="rect" id="node4" href="$register__io__i2c_8c.html#ac5a66aa1b8d95d267c9d68cb475c9e01" title="The interface function to write a sensor register. " alt="" coords="271,107,437,133"/>
+<area shape="rect" id="node5" href="$register__io__i2c_8c.html#ac8a60c799d9dbc84531b4680762eb8dc" title="The interface function to read a sensor register. " alt="" coords="287,157,421,184"/>
+</map>

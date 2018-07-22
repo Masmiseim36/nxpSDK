@@ -1,0 +1,11 @@
+<map id="sensors/mag3110_drv.h" name="sensors/mag3110_drv.h">
+<area shape="rect" id="node2" href="$mag3110__drv_8c.html" title="The mag3110_drv.c file implements the MAG3110 sensor driver interfaces. " alt="" coords="5,87,164,114"/>
+<area shape="rect" id="node3" href="$mag3110__normal_8c.html" title="The mag3110_normal.c file implements the ISSDK MAG3110 sensor driver example demonstration with polli..." alt="" coords="189,80,354,121"/>
+<area shape="rect" id="node4" href="$mag3110__normal__interrupt_8c.html" title="The mag3110_normal_interrupt.c file implements the ISSDK MAG3110 sensor driver example demonstration ..." alt="" coords="379,80,569,121"/>
+<area shape="rect" id="node5" href="$mag3110__oneshot_8c.html" title="The mag3110_oneshot.c file implements the ISSDK MAG3110 sensor driver example demonstration with poll..." alt="" coords="594,80,759,121"/>
+<area shape="rect" id="node6" href="$demo__11axis_8c.html" title="The demo_11axis.c file implements the ISSDK FXLS8962, MAG3110, FXAS21002 and MPL3115 sensors 12&#45;Axis ..." alt="" coords="784,80,975,121"/>
+<area shape="rect" id="node7" href="$_f_r_d_m-_k22_f_2mag3110__demo_8c.html" title="driverexamples/demos\l/FRDM&#45;K22F/mag3110_demo.c" alt="" coords="999,80,1205,121"/>
+<area shape="rect" id="node8" href="$_f_r_d_m-_k64_f_2mag3110__demo_8c.html" title="driverexamples/demos\l/FRDM&#45;K64F/mag3110_demo.c" alt="" coords="1229,80,1434,121"/>
+<area shape="rect" id="node9" href="$_f_r_d_m-_k_l27_z_2mag3110__demo_8c.html" title="driverexamples/demos\l/FRDM&#45;KL27Z/mag3110_demo.c" alt="" coords="1458,80,1669,121"/>
+<area shape="rect" id="node10" href="$_l_p_c-54114_2mag3110__demo_8c.html" title="driverexamples/demos\l/LPC&#45;54114/mag3110_demo.c" alt="" coords="1693,80,1890,121"/>
+</map>

@@ -1,0 +1,6 @@
+<map id="boardkit/frdm&#45;kl27z/frdm_kl27z.h" name="boardkit/frdm&#45;kl27z/frdm_kl27z.h">
+<area shape="rect" id="node2" href="$frdm-kl27z_2pin__mux_8h.html" title="pin_mux.h" alt="" coords="5,95,88,121"/>
+<area shape="rect" id="node5" href="$frdm-kl27z_2_r_t_e___device_8h.html" title="RTE_Device.h" alt="" coords="342,95,445,121"/>
+<area shape="rect" id="node6" href="$_driver___g_p_i_o_8h.html" title="The Driver_GPIO.h file contains the definitions for GPIO Driver direction. " alt="" coords="469,95,573,121"/>
+<area shape="rect" id="node8" href="$systick__utils_8h.html" title="ARM Systick Utilities. " alt="" coords="717,95,824,121"/>
+</map>

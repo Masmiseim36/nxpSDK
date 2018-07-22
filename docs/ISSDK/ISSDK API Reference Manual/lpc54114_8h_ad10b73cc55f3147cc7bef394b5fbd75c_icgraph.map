@@ -1,0 +1,6 @@
+<map id="SMC_SetPowerModeWait" name="SMC_SetPowerModeWait">
+<area shape="rect" id="node2" href="$fxlc95000__flash__demo_8c.html#a4d3c6a49cdb7699813aa88ce1bc3d7e5" title="fxlc95000_enSensor" alt="" coords="245,5,384,32"/>
+<area shape="rect" id="node3" href="$pedometer__stepcount__fxos8700_8c.html#a840291bc02cba5474a4cb46a9b9566fe" title="Main function. " alt="" coords="289,56,340,83"/>
+<area shape="rect" id="node4" href="$mma8491q__demo_8c.html#acd491e3672edcc5136e9859a1871240e" title="mma8491q_mode_activate" alt="" coords="227,107,403,133"/>
+<area shape="rect" id="node5" href="$mma8491q__demo_8c.html#aa95230cd7e7fa6a4945e86b2fe7889c4" title="mma8491q_mode_fwk_init" alt="" coords="227,157,402,184"/>
+</map>

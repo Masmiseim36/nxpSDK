@@ -1,0 +1,12 @@
+<map id="main" name="main">
+<area shape="rect" id="node2" href="$lpc_2auto__detection__service_8c.html#a95285f14f6707e326e523c82d926c900" title="The function to register Application Name and initialte ADS. " alt="" coords="128,5,253,32"/>
+<area shape="rect" id="node3" href="$systick__utils_8c.html#ad43629969994e92bd3620e630bda24c8" title="Function to enable systicks framework. " alt="" coords="111,56,270,83"/>
+<area shape="rect" id="node4" href="$drivers_8h.html#a81c5b987e709b3991bc7c1bc1e659c1f" title="FXAS21002_Init" alt="" coords="133,107,248,133"/>
+<area shape="rect" id="node5" href="$drivers_8h.html#a1e2a1a192ed7f150fc24fc11df8d4c1e" title="FXAS21002_Read" alt="" coords="127,157,254,184"/>
+<area shape="rect" id="node6" href="$driver___f_x_o_s8700_8c.html#ac61bf451efc3a4eab179dbc59268b3e7" title="FXOS8700_Init" alt="" coords="137,208,245,235"/>
+<area shape="rect" id="node7" href="$data__format__service_8h.html#a5d7069350a7d7e65686c77a8038f462f" title="The interface function to append the data on the formated stream. " alt="" coords="325,233,387,260"/>
+<area shape="rect" id="node8" href="$driver___f_x_o_s8700_8c.html#a5388755d21701d88d79a4bfda99dbebf" title="FXOS8700_Read" alt="" coords="130,309,251,336"/>
+<area shape="rect" id="node9" href="$host__io__uart_8c.html#ab4b858422bbaae71aff2ab540ae0e2b1" title="Host_IO_Init" alt="" coords="144,360,237,387"/>
+<area shape="rect" id="node10" href="$status_8c.html#a01619741119cf3432f8cfff23334c793" title="initializeStatusSubsystem" alt="" coords="104,411,277,437"/>
+<area shape="rect" id="node11" href="$sensor__fusion_8c.html#a43b44018042fabb5179c2e62277cc942" title="utility function to insert default values in the top level structure " alt="" coords="109,461,272,488"/>
+</map>

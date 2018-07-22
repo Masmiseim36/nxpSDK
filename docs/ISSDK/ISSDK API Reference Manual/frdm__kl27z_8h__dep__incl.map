@@ -1,0 +1,6 @@
+<map id="boardkit/frdm&#45;kl27z/frdm_kl27z.h" name="boardkit/frdm&#45;kl27z/frdm_kl27z.h">
+<area shape="rect" id="node2" href="$gpio__driver__irq__kl27z_8c.html" title="The gpio_driver_irq_kl27z.c file containes the Generic IRQ implmentation for the FRDM&#45;KL27Z GPIO..." alt="" coords="5,95,163,136"/>
+<area shape="rect" id="node3" href="$frdm-kl27z_2frdm_2issdk__hal_8h.html" title="boardkit/frdm&#45;kl27z\l/frdm/issdk_hal.h" alt="" coords="187,95,319,136"/>
+<area shape="rect" id="node4" href="$frdm-kl27z_2frdm-stbc-b3115_2issdk__hal_8h.html" title="boardkit/frdm&#45;kl27z\l/frdm&#45;stbc&#45;b3115/issdk_hal.h" alt="" coords="344,95,533,136"/>
+<area shape="rect" id="node5" href="$frdm__kl27z_8c.html" title="The frdm_kl27z.c file defines GPIO pins for FRDM&#45;KL27Z board. " alt="" coords="558,95,690,136"/>
+</map>

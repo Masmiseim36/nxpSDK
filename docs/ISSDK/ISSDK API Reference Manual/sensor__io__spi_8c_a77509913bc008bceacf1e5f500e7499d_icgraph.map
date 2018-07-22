@@ -1,0 +1,9 @@
+<map id="Sensor_SPI_Read" name="Sensor_SPI_Read">
+<area shape="rect" id="node2" href="$fxas21002__drv_8h.html#a7d9d71cedd7f34f0cec84627fa94a73f" title="The interface function to read the sensor data. " alt="" coords="210,5,393,32"/>
+<area shape="rect" id="node3" href="$fxlc95000__drv_8h.html#ac1215eeedc9ffa5b5d3ee5b133d7ee2a" title="The interface function to read the sensor data. " alt="" coords="181,56,421,83"/>
+<area shape="rect" id="node4" href="$drivers_8h.html#ac818465f3f2f5bd60e71c5c7d8a8a261" title="FXLS8471Q_Read" alt="" coords="237,107,365,133"/>
+<area shape="rect" id="node5" href="$fxls8471q__drv_8h.html#ad16c8372e2c0bcbcd12af93a2f223814" title="The interface function to read the sensor data. " alt="" coords="210,157,393,184"/>
+<area shape="rect" id="node6" href="$fxls8962__drv_8h.html#a28138a58c06aa727c707aa927d95105c" title="The interface function to read the sensor data. " alt="" coords="215,208,388,235"/>
+<area shape="rect" id="node7" href="$fxos8700__drv_8h.html#afc06d66f845ef2b99f1fcace0900b79d" title="The interface function to read the sensor data. " alt="" coords="213,259,389,285"/>
+<area shape="rect" id="node8" href="$mma9553__drv_8h.html#a429c90eecb38e688d08310a3d3be3c81" title="The interface function to read the sensor data. " alt="" coords="185,309,418,336"/>
+</map>

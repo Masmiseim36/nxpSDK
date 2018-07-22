@@ -1,0 +1,6 @@
+<map id="main" name="main">
+<area shape="rect" id="node2" href="$frdm-k64f_2board_8c.html#a4c84ccb952cb083367d7040cf9de3db8" title="BOARD_InitDebugConsole" alt="" coords="104,5,280,32"/>
+<area shape="rect" id="node3" href="$group__pin__mux.html#ga2c9fe54b6b84723fbaa590a6f4576966" title="Configures pin routing and optionally pin electrical features. " alt="" coords="133,56,251,83"/>
+<area shape="rect" id="node4" href="$lpc_2auto__detection__service_8c.html#a95285f14f6707e326e523c82d926c900" title="The function to register Application Name and initialte ADS. " alt="" coords="129,107,255,133"/>
+<area shape="rect" id="node5" href="$systick__utils_8c.html#ad43629969994e92bd3620e630bda24c8" title="Function to enable systicks framework. " alt="" coords="113,157,271,184"/>
+</map>

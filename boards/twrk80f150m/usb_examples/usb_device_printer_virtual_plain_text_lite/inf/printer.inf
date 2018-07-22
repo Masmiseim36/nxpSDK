@@ -1,0 +1,44 @@
+[Version]
+Signature="$Windows NT$"
+Class=Printer
+ClassGUID={4D36E979-E325-11CE-BFC1-08002BE10318}
+Provider=%MFGNAME%
+CatalogFile=printer.cat
+DriverVer=03/15/2016,1.0
+
+[Manufacturer]
+%MFGNAME%=NXPDevice,NTamd64
+
+[NXPDevice]
+%DESCRIPTION%=DriverInstall, USB\VID_1FC9&PID_009B
+
+[NXPDevice.NTamd64]
+%DESCRIPTION% = DriverInstall, USB\VID_1FC9&PID_009B
+
+[DriverInstall.nt]
+CopyFiles=@ADIST5.PPD
+DataSection=PSCRIPT_DATA
+DataFile=ADIST5.PPD
+Include=NTPRINT.INF
+Needs=PSCRIPT.OEM
+
+[DriverInstall.NTamd64]
+CopyFiles=@ADIST5.PPD
+DataSection=PSCRIPT_DATA
+DataFile=ADIST5.PPD
+Include=NTPRINT.INF
+Needs=PSCRIPT.OEM
+
+[DestinationDirs]
+DefaultDestDir=66000
+
+[SourceDisksNames]
+1=%Disk1%,,,""
+
+[SourceDisksFiles]
+ADIST5.PPD =1
+
+[Strings]
+MFGNAME="NXP"
+DESCRIPTION="Adobe Generic PostScript printer driver"
+Disk1="Adobe Driver Disk"

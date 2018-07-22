@@ -1,0 +1,6 @@
+<map id="algorithms/pedometer/include/pedometer.h" name="algorithms/pedometer/include/pedometer.h">
+<area shape="rect" id="node2" href="$pedometer_8c.html" title="The pedometer.c file contains the interface definitions for pedometer application. " alt="" coords="5,102,152,143"/>
+<area shape="rect" id="node3" href="$pedometer__stepcount__fxos8700_8c.html" title="The pedometer_stepcount_fxos8700.c file implements the ISSDK prdometer example using FXOS8700 sensor ..." alt="" coords="176,95,387,151"/>
+<area shape="rect" id="node4" href="$pedometer__stepcount__mma8451_8c.html" title="The pedometer_stepcount_mma8451.c file implements the ISSDK prdometer example using MMA8451 sensor as..." alt="" coords="411,95,621,151"/>
+<area shape="rect" id="node5" href="$pedometer__stepcount__mma8652_8c.html" title="The pedometer_stepcount_mma8652.c file implements the ISSDK prdometer example using MMA8652 sensor as..." alt="" coords="645,95,856,151"/>
+</map>

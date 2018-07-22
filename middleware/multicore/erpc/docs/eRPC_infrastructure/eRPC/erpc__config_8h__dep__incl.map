@@ -1,0 +1,24 @@
+<map id="erpc_config.h" name="erpc_config.h">
+<area shape="rect" id="node2" href="$erpc__config__internal_8h_source.html" title="erpc_config_internal.h" alt="" coords="862,80,1010,107"/>
+<area shape="rect" id="node3" href="$client__manager_8h.html" title="client_manager.h" alt="" coords="387,162,509,189"/>
+<area shape="rect" id="node6" href="$erpc__client__setup_8h.html" title="erpc_client_setup.h" alt="" coords="105,251,239,278"/>
+<area shape="rect" id="node7" href="$framed__transport_8h.html" title="framed_transport.h" alt="" coords="637,251,768,278"/>
+<area shape="rect" id="node15" href="$server_8h.html" title="server.h" alt="" coords="939,162,1005,189"/>
+<area shape="rect" id="node17" href="$erpc__port_8h.html" title="erpc_port.h" alt="" coords="1030,162,1117,189"/>
+<area shape="rect" id="node18" href="$erpc__threading_8h.html" title="erpc_threading.h" alt="" coords="745,162,863,189"/>
+<area shape="rect" id="node20" href="$mu__transport_8h.html" title="mu_transport.h" alt="" coords="995,251,1104,278"/>
+<area shape="rect" id="node21" href="$erpc__arbitrated__client__setup_8h.html" title="erpc_arbitrated_client\l_setup.h" alt="" coords="1141,155,1288,196"/>
+<area shape="rect" id="node22" href="$erpc__server__setup_8h.html" title="erpc_server_setup.h" alt="" coords="1312,162,1451,189"/>
+<area shape="rect" id="node23" href="$rpmsg__lite__transport_8h.html" title="rpmsg_lite_transport.h" alt="" coords="1475,162,1626,189"/>
+<area shape="rect" id="node4" href="$arbitrated__client__manager_8h.html" title="arbitrated_client_manager.h" alt="" coords="263,251,446,278"/>
+<area shape="rect" id="node5" href="$transport__arbitrator_8h.html" title="transport_arbitrator.h" alt="" coords="470,251,613,278"/>
+<area shape="rect" id="node8" href="$dspi__master__transport_8h.html" title="dspi_master_transport.h" alt="" coords="531,333,693,360"/>
+<area shape="rect" id="node9" href="$dspi__slave__transport_8h.html" title="dspi_slave_transport.h" alt="" coords="718,333,869,360"/>
+<area shape="rect" id="node10" href="$serial__transport_8h.html" title="serial_transport.h" alt="" coords="893,333,1016,360"/>
+<area shape="rect" id="node11" href="$spi__master__transport_8h.html" title="spi_master_transport.h" alt="" coords="5,333,160,360"/>
+<area shape="rect" id="node12" href="$spi__slave__transport_8h.html" title="spi_slave_transport.h" alt="" coords="184,333,328,360"/>
+<area shape="rect" id="node13" href="$tcp__transport_8h.html" title="tcp_transport.h" alt="" coords="1040,333,1149,360"/>
+<area shape="rect" id="node14" href="$uart__cmsis__transport_8h.html" title="uart_cmsis_transport.h" alt="" coords="352,333,507,360"/>
+<area shape="rect" id="node16" href="$simple__server_8h.html" title="simple_server.h" alt="" coords="1128,251,1240,278"/>
+<area shape="rect" id="node19" href="$inter__thread__buffer__transport_8h.html" title="inter_thread_buffer\l_transport.h" alt="" coords="843,244,971,285"/>
+</map>

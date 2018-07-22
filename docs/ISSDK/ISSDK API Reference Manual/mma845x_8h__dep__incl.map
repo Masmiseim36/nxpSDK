@@ -1,0 +1,6 @@
+<map id="sensors/mma845x.h" name="sensors/mma845x.h">
+<area shape="rect" id="node2" href="$mma845x__drv_8h.html" title="The mma845x_drv.h file describes the MMA845x driver interface and structures. " alt="" coords="5,87,168,114"/>
+<area shape="rect" id="node3" href="$pedometer__stepcount__mma8451_8c.html" title="The pedometer_stepcount_mma8451.c file implements the ISSDK prdometer example using MMA8451 sensor as..." alt="" coords="40,169,251,225"/>
+<area shape="rect" id="node4" href="$kinetis_2auto__detection__service_8c.html" title="drivers/ads/kinetis\l/auto_detection_service.c" alt="" coords="243,80,413,121"/>
+<area shape="rect" id="node5" href="$driver___m_m_a845_x_8c.html" title="Provides init() and read() functions for the MMA845x 3&#45;axis accel family. " alt="" coords="437,80,619,121"/>
+</map>

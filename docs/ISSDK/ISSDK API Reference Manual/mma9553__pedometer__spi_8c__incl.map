@@ -1,0 +1,5 @@
+<map id="driverexamples/mma9553/mma9553_pedometer_spi.c" name="driverexamples/mma9553/mma9553_pedometer_spi.c">
+<area shape="rect" id="node8" href="$fsl__spi__cmsis_8h.html" title="fsl_spi_cmsis.h" alt="" coords="721,95,833,121"/>
+<area shape="rect" id="node11" href="$mma9553__drv_8h.html" title="The mma9553_drv.h file describes the MMA9553L driver interface and structures. " alt="" coords="1088,95,1201,121"/>
+<area shape="rect" id="node12" href="$systick__utils_8h.html" title="ARM Systick Utilities. " alt="" coords="1226,95,1333,121"/>
+</map>

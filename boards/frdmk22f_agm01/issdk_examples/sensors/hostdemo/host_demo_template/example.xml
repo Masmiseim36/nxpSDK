@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<example name="host_demo_template" category="issdk_examples/sensors/hostdemo" board_ref="FRDM_K22F" version="1.0.0" format_version="2.1">
+  <source path="CMSIS/Driver/Include" target_path="CMSIS/Driver/Include" type="c_include">
+    <files mask="Driver_Common.h"/>
+    <files mask="Driver_I2C.h"/>
+    <files mask="Driver_SPI.h"/>
+    <files mask="Driver_USART.h"/>
+  </source>
+  <source path="boards/frdmk22f_agm01/issdk_examples/sensors/hostdemo/host_demo_template" target_path="sources" type="c_include">
+    <files mask="board.h"/>
+    <files mask="clock_config.h"/>
+    <files mask="pin_mux.h"/>
+  </source>
+  <source path="boards/frdmk22f_agm01/issdk_examples/sensors/hostdemo/host_demo_template" target_path="doc" type="doc">
+    <files mask="readme.txt"/>
+  </source>
+  <source path="boards/frdmk22f_agm01/issdk_examples/sensors/hostdemo/host_demo_template" target_path="sources" type="src">
+    <files mask="board.c"/>
+    <files mask="clock_config.c"/>
+    <files mask="host_demo.c"/>
+    <files mask="pin_mux.c"/>
+  </source>
+  <source path="boards/frdmk22f_agm01" target_path="sources" type="c_include">
+    <files mask="RTE_Device.h"/>
+    <files mask="frdm_k22f.h"/>
+    <files mask="frdm_stbc_agm01_shield.h"/>
+    <files mask="issdk_hal.h"/>
+  </source>
+  <source path="boards/frdmk22f_agm01" target_path="sources" type="src">
+    <files mask="frdm_k22f.c"/>
+  </source>
+  <source path="devices/MK22F51212/arm" target_path="devices/arm" type="src" compilers="arm">
+    <files mask="startup_MK22F51212.s"/>
+  </source>
+  <source path="devices/MK22F51212/cmsis_drivers" target_path="drivers" type="c_include">
+    <files mask="fsl_dspi_cmsis.h"/>
+    <files mask="fsl_i2c_cmsis.h"/>
+    <files mask="fsl_uart_cmsis.h"/>
+  </source>
+  <source path="devices/MK22F51212/cmsis_drivers" target_path="drivers" type="src">
+    <files mask="fsl_dspi_cmsis.c"/>
+    <files mask="fsl_i2c_cmsis.c"/>
+    <files mask="fsl_uart_cmsis.c"/>
+  </source>
+  <source path="devices/MK22F51212/drivers" target_path="drivers" type="c_include">
+    <files mask="fsl_clock.h"/>
+    <files mask="fsl_common.h"/>
+    <files mask="fsl_dmamux.h"/>
+    <files mask="fsl_dspi.h"/>
+    <files mask="fsl_dspi_edma.h"/>
+    <files mask="fsl_edma.h"/>
+    <files mask="fsl_flash.h"/>
+    <files mask="fsl_gpio.h"/>
+    <files mask="fsl_i2c.h"/>
+    <files mask="fsl_i2c_edma.h"/>
+    <files mask="fsl_lptmr.h"/>
+    <files mask="fsl_lpuart.h"/>
+    <files mask="fsl_port.h"/>
+    <files mask="fsl_smc.h"/>
+    <files mask="fsl_uart.h"/>
+    <files mask="fsl_uart_edma.h"/>
+  </source>
+  <source path="devices/MK22F51212/drivers" target_path="drivers" type="src">
+    <files mask="fsl_clock.c"/>
+    <files mask="fsl_common.c"/>
+    <files mask="fsl_dmamux.c"/>
+    <files mask="fsl_dspi.c"/>
+    <files mask="fsl_dspi_edma.c"/>
+    <files mask="fsl_edma.c"/>
+    <files mask="fsl_flash.c"/>
+    <files mask="fsl_gpio.c"/>
+    <files mask="fsl_i2c.c"/>
+    <files mask="fsl_i2c_edma.c"/>
+    <files mask="fsl_lptmr.c"/>
+    <files mask="fsl_lpuart.c"/>
+    <files mask="fsl_smc.c"/>
+    <files mask="fsl_uart.c"/>
+    <files mask="fsl_uart_edma.c"/>
+  </source>
+  <source path="devices/MK22F51212/gcc" target_path="devices/gcc" type="src" compilers="gcc">
+    <files mask="startup_MK22F51212.S"/>
+  </source>
+  <source path="devices/MK22F51212/iar" target_path="devices/iar" type="src" compilers="iar">
+    <files mask="startup_MK22F51212.s"/>
+  </source>
+  <source path="devices/MK22F51212/utilities/io" target_path="utilities" type="c_include">
+    <files mask="fsl_io.h"/>
+  </source>
+  <source path="devices/MK22F51212/utilities/io" target_path="utilities" type="src">
+    <files mask="fsl_io.c"/>
+  </source>
+  <source path="devices/MK22F51212/utilities/log" target_path="utilities" type="c_include">
+    <files mask="fsl_log.h"/>
+  </source>
+  <source path="devices/MK22F51212/utilities/log" target_path="utilities" type="src">
+    <files mask="fsl_log.c"/>
+  </source>
+  <source path="devices/MK22F51212/utilities/str" target_path="utilities" type="c_include">
+    <files mask="fsl_str.h"/>
+  </source>
+  <source path="devices/MK22F51212/utilities/str" target_path="utilities" type="src">
+    <files mask="fsl_str.c"/>
+  </source>
+  <source path="devices/MK22F51212/utilities" target_path="utilities" type="c_include">
+    <files mask="fsl_debug_console.h"/>
+    <files mask="fsl_debug_console_conf.h"/>
+  </source>
+  <source path="devices/MK22F51212/utilities" target_path="utilities" type="src">
+    <files mask="fsl_assert.c"/>
+    <files mask="fsl_debug_console.c"/>
+  </source>
+  <source path="devices/MK22F51212" target_path="devices" type="c_include">
+    <files mask="MK22F51212.h"/>
+    <files mask="MK22F51212_features.h"/>
+    <files mask="fsl_device_registers.h"/>
+    <files mask="system_MK22F51212.h"/>
+  </source>
+  <source path="devices/MK22F51212" target_path="devices" type="src">
+    <files mask="system_MK22F51212.c"/>
+  </source>
+  <source path="middleware/issdk/drivers/ads/kinetis" target_path="issdk/drivers/ads/kinetis" type="c_include">
+    <files mask="auto_detection_service.h"/>
+  </source>
+  <source path="middleware/issdk/drivers/ads/kinetis" target_path="issdk/drivers/ads/kinetis" type="src">
+    <files mask="auto_detection_service.c"/>
+  </source>
+  <source path="middleware/issdk/drivers/ads" target_path="issdk/drivers/ads" type="c_include">
+    <files mask="auto_detection_shield.h"/>
+  </source>
+  <source path="middleware/issdk/drivers/gpio/kinetis" target_path="issdk/drivers/gpio/kinetis" type="c_include">
+    <files mask="gpio_driver.h"/>
+  </source>
+  <source path="middleware/issdk/drivers/gpio/kinetis" target_path="issdk/drivers/gpio/kinetis" type="src">
+    <files mask="gpio_driver.c"/>
+    <files mask="gpio_driver_irq.c"/>
+  </source>
+  <source path="middleware/issdk/drivers/gpio" target_path="issdk/drivers/gpio" type="c_include">
+    <files mask="Driver_GPIO.h"/>
+  </source>
+  <source path="middleware/issdk/drivers/host" target_path="issdk/drivers/host" type="c_include">
+    <files mask="comm_interface.h"/>
+    <files mask="data_format_hdlc.h"/>
+    <files mask="data_format_json.h"/>
+    <files mask="data_format_service.h"/>
+    <files mask="host_interface_service.h"/>
+  </source>
+  <source path="middleware/issdk/drivers/host" target_path="issdk/drivers/host" type="src">
+    <files mask="comm_if_uart.c"/>
+    <files mask="data_format_hdlc.c"/>
+    <files mask="data_format_json.c"/>
+    <files mask="host_interface_service.c"/>
+  </source>
+  <source path="middleware/issdk/drivers/systick" target_path="issdk/drivers/systick" type="c_include">
+    <files mask="systick_utils.h"/>
+  </source>
+  <source path="middleware/issdk/drivers/systick" target_path="issdk/drivers/systick" type="src">
+    <files mask="systick_utils.c"/>
+  </source>
+  <source path="middleware/issdk/sensors" target_path="issdk/sensors" type="c_include">
+    <files mask="diff_p.h"/>
+    <files mask="fxas21002.h"/>
+    <files mask="fxlc95000.h"/>
+    <files mask="fxls8471q.h"/>
+    <files mask="fxls8962.h"/>
+    <files mask="fxos8700.h"/>
+    <files mask="fxpq3115.h"/>
+    <files mask="host_io_uart.h"/>
+    <files mask="mag3110.h"/>
+    <files mask="mma845x.h"/>
+    <files mask="mma8491q.h"/>
+    <files mask="mma865x.h"/>
+    <files mask="mma9553.h"/>
+    <files mask="mpl3115.h"/>
+    <files mask="register_io_i2c.h"/>
+    <files mask="register_io_spi.h"/>
+    <files mask="sensor_drv.h"/>
+    <files mask="sensor_io_i2c.h"/>
+    <files mask="sensor_io_spi.h"/>
+  </source>
+  <source path="middleware/issdk/sensors" target_path="issdk/sensors" type="src">
+    <files mask="host_io_uart.c"/>
+    <files mask="register_io_i2c.c"/>
+    <files mask="register_io_spi.c"/>
+    <files mask="sensor_io_i2c.c"/>
+    <files mask="sensor_io_spi.c"/>
+  </source>
+  <source path="middleware/issdk" target_path="issdk/" type="">
+    <files mask="issdk_ads.meta"/>
+    <files mask="issdk_gpio_driver.meta"/>
+    <files mask="issdk_host.meta"/>
+    <files mask="issdk_interfaces.meta"/>
+    <files mask="issdk_sensors.meta"/>
+    <files mask="issdk_utils.meta"/>
+  </source>
+  <include_paths>
+    <include path="CMSIS/Driver/Include"/>
+    <include path="devices"/>
+    <include path="drivers"/>
+    <include path="issdk/"/>
+    <include path="issdk/drivers/ads/kinetis"/>
+    <include path="issdk/drivers/ads"/>
+    <include path="issdk/drivers/gpio/kinetis"/>
+    <include path="issdk/drivers/gpio"/>
+    <include path="issdk/drivers/host"/>
+    <include path="issdk/drivers/systick"/>
+    <include path="issdk/sensors"/>
+    <include path="sources"/>
+    <include path="utilities"/>
+  </include_paths>
+</example>

@@ -1,0 +1,27 @@
+<map id="message_buffer.h" name="message_buffer.h">
+<area shape="rect" id="node2" href="$codec_8h.html" title="codec.h" alt="" coords="339,162,407,189"/>
+<area shape="rect" id="node10" href="$transport_8h.html" title="transport.h" alt="" coords="1646,80,1730,107"/>
+<area shape="rect" id="node11" href="$framed__transport_8h.html" title="framed_transport.h" alt="" coords="1119,162,1249,189"/>
+<area shape="rect" id="node20" href="$inter__thread__buffer__transport_8h.html" title="inter_thread_buffer\l_transport.h" alt="" coords="1965,155,2093,196"/>
+<area shape="rect" id="node21" href="$mu__transport_8h.html" title="mu_transport.h" alt="" coords="2117,162,2227,189"/>
+<area shape="rect" id="node24" href="$rpmsg__lite__rtos__transport_8h.html" title="rpmsg_lite_rtos_transport.h" alt="" coords="1738,244,1918,271"/>
+<area shape="rect" id="node25" href="$rpmsg__lite__transport_8h.html" title="rpmsg_lite_transport.h" alt="" coords="2009,244,2159,271"/>
+<area shape="rect" id="node26" href="$rpmsg__tty__rtos__transport_8h.html" title="rpmsg_tty_rtos_transport.h" alt="" coords="2217,244,2396,271"/>
+<area shape="rect" id="node3" href="$client__manager_8h.html" title="client_manager.h" alt="" coords="263,244,385,271"/>
+<area shape="rect" id="node5" href="$transport__arbitrator_8h.html" title="transport_arbitrator.h" alt="" coords="507,319,650,345"/>
+<area shape="rect" id="node7" href="$basic__codec_8h.html" title="basic_codec.h" alt="" coords="41,244,148,271"/>
+<area shape="rect" id="node8" href="$server_8h.html" title="server.h" alt="" coords="172,244,239,271"/>
+<area shape="rect" id="node4" href="$arbitrated__client__manager_8h.html" title="arbitrated_client_manager.h" alt="" coords="142,319,325,345"/>
+<area shape="rect" id="node6" href="$erpc__client__setup_8h.html" title="erpc_client_setup.h" alt="" coords="349,319,483,345"/>
+<area shape="rect" id="node9" href="$simple__server_8h.html" title="simple_server.h" alt="" coords="5,319,117,345"/>
+<area shape="rect" id="node19" href="$message__loggers_8h.html" title="message_loggers.h" alt="" coords="1806,162,1941,189"/>
+<area shape="rect" id="node22" href="$rpmsg__linux__transport_8h_source.html" title="rpmsg_linux_transport.h" alt="" coords="1358,162,1519,189"/>
+<area shape="rect" id="node23" href="$rpmsg__lite__base__transport_8h.html" title="rpmsg_lite_base_transport.h" alt="" coords="1595,162,1781,189"/>
+<area shape="rect" id="node12" href="$dspi__master__transport_8h.html" title="dspi_master_transport.h" alt="" coords="1441,244,1604,271"/>
+<area shape="rect" id="node13" href="$dspi__slave__transport_8h.html" title="dspi_slave_transport.h" alt="" coords="461,244,611,271"/>
+<area shape="rect" id="node14" href="$serial__transport_8h.html" title="serial_transport.h" alt="" coords="636,244,759,271"/>
+<area shape="rect" id="node15" href="$spi__master__transport_8h.html" title="spi_master_transport.h" alt="" coords="783,244,937,271"/>
+<area shape="rect" id="node16" href="$spi__slave__transport_8h.html" title="spi_slave_transport.h" alt="" coords="961,244,1105,271"/>
+<area shape="rect" id="node17" href="$tcp__transport_8h.html" title="tcp_transport.h" alt="" coords="1129,244,1239,271"/>
+<area shape="rect" id="node18" href="$uart__cmsis__transport_8h.html" title="uart_cmsis_transport.h" alt="" coords="1263,244,1417,271"/>
+</map>

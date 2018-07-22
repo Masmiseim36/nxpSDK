@@ -1,0 +1,6 @@
+<map id="sensors/mma865x.h" name="sensors/mma865x.h">
+<area shape="rect" id="node2" href="$mma865x__drv_8h.html" title="The mma865x_drv.h file describes the MMA865x driver interface and structures. " alt="" coords="5,87,168,114"/>
+<area shape="rect" id="node3" href="$lpc_2auto__detection__service_8c.html" title="drivers/ads/lpc/auto\l_detection_service.c" alt="" coords="193,80,333,121"/>
+<area shape="rect" id="node4" href="$kinetis_2auto__detection__service_8c.html" title="drivers/ads/kinetis\l/auto_detection_service.c" alt="" coords="357,80,526,121"/>
+<area shape="rect" id="node5" href="$driver___m_m_a8652_8c.html" title="Provides init() and read() functions for the MMA8652 3&#45;axis accel family. " alt="" coords="550,80,733,121"/>
+</map>

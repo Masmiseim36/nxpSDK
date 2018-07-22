@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<workspace>
+  <batchBuild>
+    <batchDefinition>
+      <name>all</name>
+      <member>
+        <project>fxls8471q_spi_interrupt_frdmkl25-a8471</project>
+        <configuration>Release</configuration>
+      </member>
+      <member>
+        <project>fxls8471q_spi_interrupt_frdmkl25-a8471</project>
+        <configuration>Debug</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>Release</name>
+      <member>
+        <project>fxls8471q_spi_interrupt_frdmkl25-a8471</project>
+        <configuration>Release</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>Debug</name>
+      <member>
+        <project>fxls8471q_spi_interrupt_frdmkl25-a8471</project>
+        <configuration>Debug</configuration>
+      </member>
+    </batchDefinition>
+  </batchBuild>
+  <project>
+    <path>$WS_DIR$/fxls8471q_spi_interrupt_frdmkl25-a8471.ewp</path>
+  </project>
+</workspace>

@@ -1,0 +1,8 @@
+<map id="sensors/mpl3115.h" name="sensors/mpl3115.h">
+<area shape="rect" id="node2" href="$mpl3115__drv_8h.html" title="The mpl3115_drv.h file describes the MPL3115 driver interface and structures. " alt="" coords="5,102,160,129"/>
+<area shape="rect" id="node3" href="$orientaion__application__baremetal__agm01_8c.html" title="The orientaion_application_baremetal_agm01.c file implements the ISSDK baremetal orientation applicat..." alt="" coords="185,80,343,151"/>
+<area shape="rect" id="node4" href="$lpc_2auto__detection__service_8c.html" title="drivers/ads/lpc/auto\l_detection_service.c" alt="" coords="367,95,507,136"/>
+<area shape="rect" id="node5" href="$kinetis_2auto__detection__service_8c.html" title="drivers/ads/kinetis\l/auto_detection_service.c" alt="" coords="531,95,701,136"/>
+<area shape="rect" id="node6" href="$main__baremetal_8c.html" title="Bare metal implementation of sensor fusion on FRDM&#45;K64F. " alt="" coords="725,95,904,136"/>
+<area shape="rect" id="node7" href="$main__freertos__two__tasks_8c.html" title="FreeRTOS (two task) implementation of sensor fusion on FRDM&#45;K64F. " alt="" coords="929,87,1087,143"/>
+</map>

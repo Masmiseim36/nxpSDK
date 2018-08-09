@@ -128,7 +128,9 @@ void            { return TOK_VOID; }
 
 {INT}                               {
                                         int base = 0;
-                                        uint32_t value;
+                                        uint64_t value;
+                                        IntegerValue::int_type_t intType;
+                                        bool longType = false;
 
                                         // check for binary number
                                         if (yytext[0] == '0' && yytext[1] == 'b')
@@ -137,11 +139,40 @@ void            { return TOK_VOID; }
                                             yytext += 2;    // skip over the "0b"
                                         }
 
+                                        int lastCharIdx = strlen(yytext) - 1;
+                                        if (yytext[lastCharIdx] == 'l' || yytext[lastCharIdx] == 'L')
+                                        {
+                                            longType= true;
+                                        }
+
+                                        if (yytext[lastCharIdx] == 'u' || yytext[lastCharIdx] == 'U' || yytext[lastCharIdx -1] == 'u' || yytext[lastCharIdx-1] == 'U')
+                                        {
+                                            if (longType)
+                                            {
+                                                intType = IntegerValue::int_type_t::kUnsignedLong;
+                                            }
+                                            else
+                                            {
+                                                intType = IntegerValue::int_type_t::kUnsigned;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (longType)
+                                            {
+                                                intType = IntegerValue::int_type_t::kSignedLong;
+                                            }
+                                            else
+                                            {
+                                                intType = IntegerValue::int_type_t::kSigned;
+                                            }
+                                        }
+
                                         // convert value
-                                        value = (uint32_t)strtoul(yytext, NULL, base);
+                                        value = (uint64_t)strtoull(yytext, NULL, base);
 
                                         // set resulting symbol value
-                                        m_value = new IntegerValue(value);
+                                        m_value = new IntegerValue(value, intType);
                                         return TOK_INT_LITERAL;
                                     }
 

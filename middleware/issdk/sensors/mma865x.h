@@ -1,6 +1,6 @@
 /*
  * The Clear BSD License
- * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
@@ -30,11 +30,6 @@
  * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
-/**
- * @file mma865x.h
- * @brief The mma865x.h contains the MMA865xFC Digital Accelerometer Sensor register definitions, access macros, and
- * device access functions.
  */
 #ifndef MMA865x_H_
 #define MMA865x_H_

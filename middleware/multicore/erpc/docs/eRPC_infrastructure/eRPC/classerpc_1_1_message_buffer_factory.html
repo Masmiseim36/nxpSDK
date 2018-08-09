@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC API Reference
-   &#160;<span id="projectnumber">Rev. 1.5.0</span>
+   &#160;<span id="projectnumber">Rev. 1.7.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -51,7 +51,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="modules.html"><span>API&#160;Reference</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -121,7 +120,7 @@ $(document).ready(function(){initNavTree('classerpc_1_1_message_buffer_factory.h
 <p>Abstract interface for message buffer factory.  
  <a href="classerpc_1_1_message_buffer_factory.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="message__buffer_8h_source.html">message_buffer.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="erpc__message__buffer_8h_source.html">erpc_message_buffer.h</a>&gt;</code></p>
 <div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Inheritance diagram for erpc::MessageBufferFactory:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
@@ -133,19 +132,19 @@ $(document).ready(function(){initNavTree('classerpc_1_1_message_buffer_factory.h
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a9897093c65b390b0c7f1595384ad9029"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_message_buffer_factory.html#a9897093c65b390b0c7f1595384ad9029">MessageBufferFactory</a> ()</td></tr>
-<tr class="memdesc:a9897093c65b390b0c7f1595384ad9029"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a9897093c65b390b0c7f1595384ad9029">More...</a><br /></td></tr>
-<tr class="separator:a9897093c65b390b0c7f1595384ad9029"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac2b0d9092be2a6e757dcc4bdc8baefd5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac2b0d9092be2a6e757dcc4bdc8baefd5"></a>
-virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_message_buffer_factory.html#ac2b0d9092be2a6e757dcc4bdc8baefd5">~MessageBufferFactory</a> ()</td></tr>
-<tr class="memdesc:ac2b0d9092be2a6e757dcc4bdc8baefd5"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classerpc_1_1_client_manager.html" title="Base client implementation. ">ClientManager</a> destructor. <br /></td></tr>
-<tr class="separator:ac2b0d9092be2a6e757dcc4bdc8baefd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a988ac3778b4164dc497429128078447b"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classerpc_1_1_message_buffer.html">MessageBuffer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_message_buffer_factory.html#a988ac3778b4164dc497429128078447b">create</a> ()=0</td></tr>
-<tr class="memdesc:a988ac3778b4164dc497429128078447b"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function creates new message buffer.  <a href="#a988ac3778b4164dc497429128078447b">More...</a><br /></td></tr>
-<tr class="separator:a988ac3778b4164dc497429128078447b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a27ba896a8eb9a1aee6b02894acd724cf"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_message_buffer_factory.html#a27ba896a8eb9a1aee6b02894acd724cf">createServerBuffer</a> ()</td></tr>
-<tr class="memdesc:a27ba896a8eb9a1aee6b02894acd724cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function inform server if it has to create buffer for received message.  <a href="#a27ba896a8eb9a1aee6b02894acd724cf">More...</a><br /></td></tr>
-<tr class="separator:a27ba896a8eb9a1aee6b02894acd724cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a619ed494036f760b0394b43815f2a086"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_message_buffer_factory.html#a619ed494036f760b0394b43815f2a086">MessageBufferFactory</a> (void)</td></tr>
+<tr class="memdesc:a619ed494036f760b0394b43815f2a086"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a619ed494036f760b0394b43815f2a086">More...</a><br /></td></tr>
+<tr class="separator:a619ed494036f760b0394b43815f2a086"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add24390e455e842edc93467feb40e8eb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="add24390e455e842edc93467feb40e8eb"></a>
+virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_message_buffer_factory.html#add24390e455e842edc93467feb40e8eb">~MessageBufferFactory</a> (void)</td></tr>
+<tr class="memdesc:add24390e455e842edc93467feb40e8eb"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classerpc_1_1_client_manager.html" title="Base client implementation. ">ClientManager</a> destructor. <br /></td></tr>
+<tr class="separator:add24390e455e842edc93467feb40e8eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16330c2cb35a0329efb98430018273da"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classerpc_1_1_message_buffer.html">MessageBuffer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_message_buffer_factory.html#a16330c2cb35a0329efb98430018273da">create</a> (void)=0</td></tr>
+<tr class="memdesc:a16330c2cb35a0329efb98430018273da"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function creates new message buffer.  <a href="#a16330c2cb35a0329efb98430018273da">More...</a><br /></td></tr>
+<tr class="separator:a16330c2cb35a0329efb98430018273da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a52d400d44d1836d7764cc64e3d842a06"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_message_buffer_factory.html#a52d400d44d1836d7764cc64e3d842a06">createServerBuffer</a> (void)</td></tr>
+<tr class="memdesc:a52d400d44d1836d7764cc64e3d842a06"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function inform server if it has to create buffer for received message.  <a href="#a52d400d44d1836d7764cc64e3d842a06">More...</a><br /></td></tr>
+<tr class="separator:a52d400d44d1836d7764cc64e3d842a06"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aab77e9b0501e87a332f4cb3e2835bd54"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_message_buffer_factory.html#aab77e9b0501e87a332f4cb3e2835bd54">prepareServerBufferForSend</a> (<a class="el" href="classerpc_1_1_message_buffer.html">MessageBuffer</a> *message)</td></tr>
 <tr class="memdesc:aab77e9b0501e87a332f4cb3e2835bd54"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is preparing output buffer on server side.  <a href="#aab77e9b0501e87a332f4cb3e2835bd54">More...</a><br /></td></tr>
 <tr class="separator:aab77e9b0501e87a332f4cb3e2835bd54"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -156,7 +155,7 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Abstract interface for message buffer factory. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a9897093c65b390b0c7f1595384ad9029"></a>
+<a class="anchor" id="a619ed494036f760b0394b43815f2a086"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -166,6 +165,7 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
         <tr>
           <td class="memname">erpc::MessageBufferFactory::MessageBufferFactory </td>
           <td>(</td>
+          <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
@@ -183,7 +183,7 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a988ac3778b4164dc497429128078447b"></a>
+<a class="anchor" id="a16330c2cb35a0329efb98430018273da"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -193,6 +193,7 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
         <tr>
           <td class="memname">virtual <a class="el" href="classerpc_1_1_message_buffer.html">MessageBuffer</a> erpc::MessageBufferFactory::create </td>
           <td>(</td>
+          <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
@@ -207,11 +208,11 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <p>This function creates new message buffer. </p>
 <dl class="section return"><dt>Returns</dt><dd>New created <a class="el" href="classerpc_1_1_message_buffer.html" title="Represents a memory buffer containing a message. ">MessageBuffer</a>. </dd></dl>
 
-<p>Implemented in <a class="el" href="class_static_message_buffer_factory.html#ab312c0505632896b9b7e569748feea88">StaticMessageBufferFactory</a>, <a class="el" href="class_r_p_msg_t_t_y_message_buffer_factory.html#af16f805b249cdf2b48a8e34327123040">RPMsgTTYMessageBufferFactory</a>, <a class="el" href="class_r_p_msg_message_buffer_factory.html#adc9449265c16be49a2cf88faff09d984">RPMsgMessageBufferFactory</a>, and <a class="el" href="class_dynamic_message_buffer_factory.html#aaf3b384ee4b4f97c03009db66a67b473">DynamicMessageBufferFactory</a>.</p>
+<p>Implemented in <a class="el" href="class_static_message_buffer_factory.html#ad4c95ae84adaa4d8b7bc715573165730">StaticMessageBufferFactory</a>, <a class="el" href="class_r_p_msg_t_t_y_message_buffer_factory.html#ae8c7d0c780e3154d64e0ea3de04d6e4a">RPMsgTTYMessageBufferFactory</a>, <a class="el" href="class_r_p_msg_message_buffer_factory.html#ae72406342f6e2b96011d30e8e5918d4a">RPMsgMessageBufferFactory</a>, and <a class="el" href="class_dynamic_message_buffer_factory.html#aaf3b384ee4b4f97c03009db66a67b473">DynamicMessageBufferFactory</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a27ba896a8eb9a1aee6b02894acd724cf"></a>
+<a class="anchor" id="a52d400d44d1836d7764cc64e3d842a06"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -221,6 +222,7 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
         <tr>
           <td class="memname">virtual bool erpc::MessageBufferFactory::createServerBuffer </td>
           <td>(</td>
+          <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
@@ -235,7 +237,7 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <p>This function inform server if it has to create buffer for received message. </p>
 <dl class="section return"><dt>Returns</dt><dd>Has to return TRUE when server need create buffer for receiving message. </dd></dl>
 
-<p>Reimplemented in <a class="el" href="class_r_p_msg_t_t_y_message_buffer_factory.html#a1d9fcd60ab30fd6cfed77b9121394d51">RPMsgTTYMessageBufferFactory</a>, and <a class="el" href="class_r_p_msg_message_buffer_factory.html#aab3771b2fc455a454b3443a231ae3f7a">RPMsgMessageBufferFactory</a>.</p>
+<p>Reimplemented in <a class="el" href="class_r_p_msg_t_t_y_message_buffer_factory.html#a9ac04949815a91b1aede1845c8c4cf61">RPMsgTTYMessageBufferFactory</a>, and <a class="el" href="class_r_p_msg_message_buffer_factory.html#ac138322782db86733dfe641363dca38e">RPMsgMessageBufferFactory</a>.</p>
 
 </div>
 </div>
@@ -309,8 +311,8 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li><a class="el" href="message__buffer_8h_source.html">message_buffer.h</a></li>
-<li>message_buffer.cpp</li>
+<li><a class="el" href="erpc__message__buffer_8h_source.html">erpc_message_buffer.h</a></li>
+<li>erpc_message_buffer.cpp</li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

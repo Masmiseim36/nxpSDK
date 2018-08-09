@@ -6,7 +6,7 @@
  *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
+ *  that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -55,6 +55,9 @@
 /*! @brief DSPI dummy data if there is no Tx data.*/
 #define DSPI_DUMMY_DATA (0x00U) /*!< Dummy data used for Tx if there is no txData. */
 #endif
+
+/*! @brief Global variable for dummy data value setting. */
+extern volatile uint8_t g_dspiDummyData[];
 
 /*! @brief Status for the DSPI driver.*/
 enum _dspi_status
@@ -708,6 +711,12 @@ static inline uint32_t DSPI_GetRxRegisterAddress(SPI_Type *base)
  * @name Bus Operations
  * @{
  */
+/*!
+ * @brief Get instance number for DSPI module.
+ *
+ * @param base DSPI peripheral base address.
+ */
+uint32_t DSPI_GetInstance(SPI_Type *base);
 
 /*!
  * @brief Configures the DSPI for master or slave.

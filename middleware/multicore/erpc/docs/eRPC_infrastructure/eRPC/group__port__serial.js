@@ -1,4 +1,4 @@
 var group__port__serial =
 [
-    [ "serial.h", "serial_8h.html", null ]
+    [ "erpc_serial.h", "erpc__serial_8h.html", null ]
 ];

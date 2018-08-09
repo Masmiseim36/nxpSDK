@@ -89,6 +89,16 @@ void erpc_server_deinit(void);
  */
 void erpc_add_service_to_server(void *service);
 
+/*!
+ * @brief Can be used to set own crcStart number.
+ *
+ * For example can be used generated crc from erpcgen
+ * which is providing when @crc annotation is used.
+ * Accessed can be through 'extern const uint32_t erpc_generated_crc;'
+ *
+ * @param[in] crcStart Set start number for crc.
+ */
+void erpc_server_set_crc(uint32_t crcStart);
 //@}
 
 //! @name Server control
@@ -127,7 +137,7 @@ void erpc_server_stop(void);
  *
  * @param[in] transport Initiated transport.
  *
- * @retval True When transport was succesfully added.
+ * @retval True When transport was successfully added.
  * @retval False When transport wasn't added.
  */
 bool erpc_server_add_message_logger(erpc_transport_t transport);

@@ -68,7 +68,6 @@ var annotated_dup =
     [ "OptIterRwd", "class_opt_iter_rwd.html", "class_opt_iter_rwd" ],
     [ "OptStrTokIter", "class_opt_str_tok_iter.html", "class_opt_str_tok_iter" ],
     [ "PathSearcher", "class_path_searcher.html", "class_path_searcher" ],
-    [ "SizedIntegerValue", "class_sized_integer_value.html", "class_sized_integer_value" ],
     [ "smart_ptr", "classsmart__ptr.html", "classsmart__ptr" ],
     [ "smart_ptr_delete", "structsmart__ptr__delete.html", null ],
     [ "smart_ptr_delete_array", "structsmart__ptr__delete__array.html", null ],

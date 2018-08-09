@@ -54,7 +54,7 @@ namespace erpcgen {
 class Interface : public Symbol
 {
 public:
-    typedef std::vector<Function *> function_vector_t;
+    typedef std::vector<Function *> function_vector_t; /*!< Vector of Interface functions. */
 
     /*!
      * @brief Constructor.
@@ -122,7 +122,7 @@ public:
      * @see std::string VoidType::getDescription() const
      * @see std::string ArrayType::getDescription() const
      * @see std::string ListType::getDescription() const
-    */
+     */
     virtual std::string getDescription() const;
 
 protected:

@@ -96,7 +96,6 @@
  * Prototypes
  ******************************************************************************/
 void BOARD_I2C_ReleaseBus(void);
-void i2cInit(void);
 int32_t init_mag_accel(void);
 void Sensor_ReadData(int16_t *Ax, int16_t *Ay, int16_t *Az, int16_t *Mx, int16_t *My, int16_t *Mz);
 void Delay(uint32_t ticks);
@@ -353,15 +352,15 @@ int main(void)
     BOARD_InitDebugConsole();
 
     /*i2c inic*/
-    i2cInit();
+    BOARD_Accel_I2C_Init();
 
     /* Initialize magnetometer and accelerometer */
-	if (0 != init_mag_accel())
-	{
-		/* Failed to initialize magnetometer and accelerometer */
-		for (;;)
-			;
-	}
+    if (0 != init_mag_accel())
+    {
+        /* Failed to initialize magnetometer and accelerometer */
+        for (;;)
+            ;
+    }
 
     /* DAC and ADC init */
     DAC_ADC_Init();
@@ -383,7 +382,7 @@ int main(void)
         if (status != kErpcStatus_Success)
         {
             /* print error description */
-            erpc_error_handler(status);
+            erpc_error_handler(status, 0);
 
             /* stop erpc server */
             erpc_server_stop();

@@ -28,6 +28,8 @@ var classerpcgen_1_1_ast_walker =
     [ "handleParam", "classerpcgen_1_1_ast_walker.html#a574a603c666837a2ac4a9b9785bc7171", null ],
     [ "handleProgram", "classerpcgen_1_1_ast_walker.html#ab9551e2291ee950c20073ab6f70185cf", null ],
     [ "handleProgram", "classerpcgen_1_1_ast_walker.html#a8ead8ef50e773f16173b32aacc60b32f", null ],
+    [ "handleRoot", "classerpcgen_1_1_ast_walker.html#a970bb8e4a6a67bb3bafd22fa966d8c37", null ],
+    [ "handleRoot", "classerpcgen_1_1_ast_walker.html#a8c06ec301f40a5ff305dd6831056f141", null ],
     [ "handleStruct", "classerpcgen_1_1_ast_walker.html#a2be03186bb3f90ea7b80bbca8656627d", null ],
     [ "handleStruct", "classerpcgen_1_1_ast_walker.html#abc8a045f62115cf6cfc727bceb0437c0", null ],
     [ "handleStructMember", "classerpcgen_1_1_ast_walker.html#ac70398c32a6b5a64059fe6719b9b6561", null ],
@@ -40,6 +42,7 @@ var classerpcgen_1_1_ast_walker =
     [ "handleUnion", "classerpcgen_1_1_ast_walker.html#a4abd51735d5fba66e8217e5015796a72", null ],
     [ "handleUnionCase", "classerpcgen_1_1_ast_walker.html#a3ff9202c77108331623c8d47cc35317e", null ],
     [ "handleUnionCase", "classerpcgen_1_1_ast_walker.html#a867523976c755d9324697f1b791d9555", null ],
+    [ "startWalk", "classerpcgen_1_1_ast_walker.html#a2069c2eade111406176330e8c5491ae1", null ],
     [ "walk", "classerpcgen_1_1_ast_walker.html#a8b4e46fd87bbb3cfb655fcd4fb8c2c24", null ],
     [ "m_fileName", "classerpcgen_1_1_ast_walker.html#abb18b1e2ae8a82550d0c073927cea0f5", null ]
 ];

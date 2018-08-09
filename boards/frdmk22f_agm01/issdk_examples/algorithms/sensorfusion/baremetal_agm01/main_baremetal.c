@@ -1,6 +1,6 @@
 /*
  * The Clear BSD License
- * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
@@ -44,13 +44,16 @@
 #include "board.h"              // KSDK header file to define board configuration
 #include "pin_mux.h"            // KSDK header file for pin mux initialization functions
 #include "clock_config.h"       // KSDK header file for clock configuration
+#ifndef CPU_LPC54114J256BD64_cm4
 #include "fsl_port.h"           // KSDK header file for Port I/O control
+#include "fsl_pit.h"            // KSDK header file for Periodic Interval Timer
+#else
+#include "fsl_ctimer.h"         // KSDK header file for the LPC CTIMER module
+#endif
 #include "fsl_i2c.h"            // KSDK header file for I2C interfaces
-#include "fsl_smc.h"
 #include "register_io_i2c.h"
 #include "fsl_i2c_cmsis.h"
 
-#include "fsl_pit.h"            // KSDK header feile for Periodic Interval Timer
 #include "fxas21002.h"          // Register and bit-field definitions
 #include "mpl3115.h"            // Register and bit-field definitions
 #include "fxos8700.h"           // Register and bit-field definitions
@@ -108,6 +111,7 @@ int main(void)
     while (true)
     {
         if (true == pitIsrFlag) {               // Check whether occur interupt and toggle LED
+
             sfg.readSensors(&sfg, 1);           // Reads sensors, applies HAL and does averaging (if applicable)
             sfg.conditionSensorReadings(&sfg);  // magCal is run as part of this
             sfg.runFusion(&sfg);                // Run the actual fusion algorithms

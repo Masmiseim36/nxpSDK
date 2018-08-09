@@ -1,6 +1,6 @@
 /*
  * The Clear BSD License
- * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright (c) 2017, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
@@ -35,7 +35,7 @@
 /**
  * @file mpl3115_poll_demo.c
  * @brief The mpl3115_poll_demo.c file implements the ISSDK MPL3115 sensor
- *        demo example demonstration with poll mode.
+ *        demo example demonstration with One-Shot Poll mode.
  */
 
 //-----------------------------------------------------------------------
@@ -64,35 +64,37 @@
 //-----------------------------------------------------------------------
 // Macros
 //-----------------------------------------------------------------------
-/*! In MPL3115 the Auto Acquisition Time Step (ODR) can be set only in powers of 2
- *  (i.e. 2^x, where x is the SAMPLING_EXPONENT).
- *  This gives a range of 1 second to 2^15 seconds (9 hours). */
-#define MPL3115_SAMPLING_EXPONENT 1 /* 2 seconds */
+#define MPL3115_T_ON_MAX 1000       /* MAX Turn On Time after RST */
 #define MPL3115_DATA_SIZE 5         /* 3 byte Pressure and 2 byte Temperature. */
 #define MPL3115_STREAM_DATA_SIZE 10 /* 6 byte Data */
+#define LED_TOGGLE_RATE 100         /* Toggle LED after every 100 samples. */
 
 /*! @brief Unique Name for this application which should match the target GUI pkg name. */
-#define APPLICATION_NAME "MPL3115A2"
+#define APPLICATION_NAME "Digital Pressure Altimeter Demo (MPL3115)"
 /*! @brief Version to distinguish between instances the same application based on target Shield and updates. */
-#define APPLICATION_VERSION "1.0"
+#define APPLICATION_VERSION "2.5"
 
 //-----------------------------------------------------------------------
 // Constants
 //-----------------------------------------------------------------------
-/*! @brief Register settings for Normal (non buffered) mode. */
-const registerwritelist_t cMpl3115ConfigNormal[] = {
+/*! @brief Register settings for Interrupt (non buffered) Enablement with ONe-Shot Mode. */
+const registerwritelist_t cMpl3115ConfigPoll[] = {
+    /* Set 100Hz OSR and Clear ALT and ACTIBE Bits. */
+    {MPL3115_CTRL_REG1, MPL3115_CTRL_REG1_ALT_BAR | MPL3115_CTRL_REG1_OS_OSR_2 | MPL3115_CTRL_REG1_SBYB_STANDBY,
+                        MPL3115_CTRL_REG1_ALT_MASK | MPL3115_CTRL_REG1_OS_MASK | MPL3115_CTRL_REG1_SBYB_MASK},
     /* Enable Data Ready and Event flags for Pressure, Temperature or either. */
-    {MPL3115_PT_DATA_CFG,
-     MPL3115_PT_DATA_CFG_TDEFE_ENABLED | MPL3115_PT_DATA_CFG_PDEFE_ENABLED | MPL3115_PT_DATA_CFG_DREM_ENABLED,
-     MPL3115_PT_DATA_CFG_TDEFE_MASK | MPL3115_PT_DATA_CFG_PDEFE_MASK | MPL3115_PT_DATA_CFG_DREM_MASK},
-    /* Set Over Sampling Ratio to 128. */
-    {MPL3115_CTRL_REG1, MPL3115_CTRL_REG1_OS_OSR_128, MPL3115_CTRL_REG1_OS_MASK},
-    /* Set Auto acquisition time step. */
-    {MPL3115_CTRL_REG2, MPL3115_SAMPLING_EXPONENT, MPL3115_CTRL_REG2_ST_MASK},
+    {MPL3115_PT_DATA_CFG, MPL3115_PT_DATA_CFG_TDEFE_ENABLED | MPL3115_PT_DATA_CFG_PDEFE_ENABLED | MPL3115_PT_DATA_CFG_DREM_ENABLED,
+                          MPL3115_PT_DATA_CFG_TDEFE_MASK | MPL3115_PT_DATA_CFG_PDEFE_MASK | MPL3115_PT_DATA_CFG_DREM_MASK},
     __END_WRITE_DATA__};
 
-/*! @brief Address of Status Register. */
-const registerreadlist_t cMpl3115Status[] = {{.readFrom = MPL3115_STATUS, .numBytes = 1}, __END_READ_DATA__};
+/*! @brief Register settings for Triggring One-Shot Sampling. */
+const registerwritelist_t cMpl3115SetOST[] = {
+    /* Set the One ShoT Bit. */
+    {MPL3115_CTRL_REG1, MPL3115_CTRL_REG1_OST_SET, MPL3115_CTRL_REG1_OST_MASK},
+    __END_WRITE_DATA__};
+
+/*! @brief Address of Register containing OST Bit. */
+const registerreadlist_t cMpl3115GetOST[] = {{.readFrom = MPL3115_CTRL_REG1, .numBytes = 1}, __END_READ_DATA__};
 
 /*! @brief Address and size of Raw Pressure+Temperature Data in Normal Mode. */
 const registerreadlist_t cMpl3115OutputNormal[] = {{.readFrom = MPL3115_OUT_P_MSB, .numBytes = MPL3115_DATA_SIZE},
@@ -105,6 +107,7 @@ char boardString[ADS_MAX_STRING_LENGTH] = {0}, shieldString[ADS_MAX_STRING_LENGT
      embAppName[ADS_MAX_STRING_LENGTH] = {0};
 volatile bool bStreamingEnabled = false, bMpl3115Ready = false;
 uint8_t gStreamID; /* The auto assigned Stream ID. */
+int32_t gSystick;
 GENERIC_DRIVER_GPIO *pGpioDriver = &Driver_GPIO_KSDK;
 
 //-----------------------------------------------------------------------
@@ -169,6 +172,7 @@ bool process_host_command(
             case HOST_CMD_START:
                 if (hostCommand[1] == gStreamID && bMpl3115Ready && bStreamingEnabled == false)
                 {
+                    BOARD_SystickStart(&gSystick);
                     bStreamingEnabled = true;
                     success = true;
                 }
@@ -195,8 +199,9 @@ bool process_host_command(
  */
 int main(void)
 {
-    int32_t status, systick;
-    uint8_t dataReady, data[MPL3115_DATA_SIZE], streamingPacket[STREAMING_HEADER_LEN + MPL3115_STREAM_DATA_SIZE];
+    int32_t status;
+    uint8_t dataReady, toggle_led = 0;
+    uint8_t data[MPL3115_DATA_SIZE], streamingPacket[STREAMING_HEADER_LEN + MPL3115_STREAM_DATA_SIZE];
 
     mpl3115_i2c_sensorhandle_t mpl3115Driver;
     mpl3115_pressuredata_t rawData = {.timestamp = 0};
@@ -266,14 +271,15 @@ int main(void)
     status = MPL3115_I2C_Initialize(&mpl3115Driver, &I2C_S_DRIVER, I2C_S_DEVICE_INDEX, MPL3115_I2C_ADDR,
                                     MPL3115_WHOAMI_VALUE);
     if (SENSOR_ERROR_NONE == status)
-    {
-        /*!  Set the task to be executed while waiting for I2C transactions to complete. */
+    {   /*!  Set the task to be executed while waiting for I2C transactions to complete. */
         MPL3115_I2C_SetIdleTask(&mpl3115Driver, (registeridlefunction_t)SMC_SetPowerModeVlpr, SMC);
 
-        /*! Configure the MPL3115 sensor driver. */
-        status = MPL3115_I2C_Configure(&mpl3115Driver, cMpl3115ConfigNormal);
-        if (SENSOR_ERROR_NONE == status)
-        {
+        /*! We do not call MPL3115_I2C_Configure() in this case as we are going to read samples on demand.
+         * We explicitly only enable ISR settings. */
+        status = Sensor_I2C_Write(mpl3115Driver.pCommDrv, &mpl3115Driver.deviceInfo, mpl3115Driver.slaveAddress,
+                                  cMpl3115ConfigPoll);
+        if (ARM_DRIVER_OK == status)
+        { /* Ready only if INT Configure write success. */
             bMpl3115Ready = true;
         }
     }
@@ -290,7 +296,6 @@ int main(void)
     {
         /*! Populate streaming header. */
         Host_IO_Add_ISO_Header(gStreamID, streamingPacket, MPL3115_STREAM_DATA_SIZE);
-        BOARD_SystickStart(&systick);
         pGpioDriver->clr_pin(&GREEN_LED); /* Set LED to indicate application is ready. */
     }
 
@@ -298,32 +303,42 @@ int main(void)
     {        /* Call UART Non-Blocking Receive. */
         Host_IO_Receive(process_host_command, HOST_FORMAT_HDLC);
 
-        /* Process packets only if streaming has been enabled by Host and ISR is available. */
+        /* Process packets only if streaming has been enabled by Host. */
         if (false == bStreamingEnabled)
         {
             SMC_SetPowerModeWait(SMC); /* Power save, wait if nothing to do. */
             continue;
         }
-        else
-        { /*! Clear the data ready flag, it will be set again by the ISR. */
-            /*! Wait for data ready from the MPL3115. */
-            status = MPL3115_I2C_ReadData(&mpl3115Driver, cMpl3115Status, &dataReady);
-            if (0 == (dataReady & MPL3115_DR_STATUS_PTDR_MASK))
-            { /* Loop, if new sample is not available. */
-                continue;
-            }
-            pGpioDriver->toggle_pin(&GREEN_LED);
+
+        /* Trigger acquisition of the Next Sample. */
+        status = Sensor_I2C_Write(mpl3115Driver.pCommDrv, &mpl3115Driver.deviceInfo, mpl3115Driver.slaveAddress,
+                                  cMpl3115SetOST);
+        if (ARM_DRIVER_OK != status)
+        { /* Exit if OST write failed. */
+            return -1;
         }
+
+        do /*! Keep checking the OST FLAG for completion. */
+        {
+            status = MPL3115_I2C_ReadData(&mpl3115Driver, cMpl3115GetOST, &dataReady);
+            if (ARM_DRIVER_OK != status)
+            {
+                return -1;
+            }
+            /* Call UART Non-Blocking Receive while waiting for OST. */
+            Host_IO_Receive(process_host_command, HOST_FORMAT_HDLC);
+        } /* Loop, untill sample acquisition is not completed. */
+        while (MPL3115_CTRL_REG1_OST_RESET != (dataReady & MPL3115_CTRL_REG1_OST_MASK));
 
         /*! Read raw sensor data from the MPL3115. */
         status = MPL3115_I2C_ReadData(&mpl3115Driver, cMpl3115OutputNormal, data);
         if (ARM_DRIVER_OK != status)
-        { /* Loop, if sample read failed. */
-            continue;
+        { /* Exit if sample read failed. */
+            return -1;
         }
 
         /* Update timestamp from Systick framework. */
-        rawData.timestamp += BOARD_SystickElapsedTime_us(&systick);
+        rawData.timestamp += BOARD_SystickElapsedTime_us(&gSystick);
 
         /*! Convert the raw sensor data to signed 32-bit and 16-bit containers for display to the debug port. */
         rawData.pressure = (uint32_t)((data[0]) << 16) | ((data[1]) << 8) | ((data[2]));
@@ -335,5 +350,10 @@ int main(void)
         memcpy(streamingPacket + STREAMING_HEADER_LEN, &rawData, MPL3115_STREAM_DATA_SIZE);
         /* Send streaming packet to Host. */
         Host_IO_Send(streamingPacket, sizeof(streamingPacket), HOST_FORMAT_HDLC);
+        if (toggle_led++ == LED_TOGGLE_RATE)
+        { /* Toggle LED at a refresh rate that is perceivable to indicate application is active. */
+            toggle_led = 0;
+            pGpioDriver->toggle_pin(&GREEN_LED);
+        }
     }
 }

@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC Generator (erpcgen)
-   &#160;<span id="projectnumber">Rev. 1.5.0</span>
+   &#160;<span id="projectnumber">Rev. 1.7.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -155,17 +155,23 @@ Public Member Functions</h2></td></tr>
 virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_ast_walker.html#a044afaa6e4984fb4d161fc13b95ec959">~AstWalker</a> ()=default</td></tr>
 <tr class="memdesc:a044afaa6e4984fb4d161fc13b95ec959"><td class="mdescLeft">&#160;</td><td class="mdescRight">destructor <br /></td></tr>
 <tr class="separator:a044afaa6e4984fb4d161fc13b95ec959"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8b4e46fd87bbb3cfb655fcd4fb8c2c24"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_ast_walker.html#a8b4e46fd87bbb3cfb655fcd4fb8c2c24">walk</a> (<a class="el" href="classerpcgen_1_1_ast_node.html">AstNode</a> *node)</td></tr>
-<tr class="memdesc:a8b4e46fd87bbb3cfb655fcd4fb8c2c24"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function walk the <a class="el" href="classerpcgen_1_1_ast_node.html" title="Homogeneous AST node class. ">AstNode</a> depth-first and invoke handler methods.  <a href="#a8b4e46fd87bbb3cfb655fcd4fb8c2c24">More...</a><br /></td></tr>
-<tr class="separator:a8b4e46fd87bbb3cfb655fcd4fb8c2c24"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2069c2eade111406176330e8c5491ae1"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_ast_walker.html#a2069c2eade111406176330e8c5491ae1">startWalk</a> (<a class="el" href="classerpcgen_1_1_ast_node.html">AstNode</a> *node)</td></tr>
+<tr class="memdesc:a2069c2eade111406176330e8c5491ae1"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function walk the <a class="el" href="classerpcgen_1_1_ast_node.html" title="Homogeneous AST node class. ">AstNode</a> depth-first and invoke handler methods.  <a href="#a2069c2eade111406176330e8c5491ae1">More...</a><br /></td></tr>
+<tr class="separator:a2069c2eade111406176330e8c5491ae1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
+<tr class="memitem:a8b4e46fd87bbb3cfb655fcd4fb8c2c24"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_ast_walker.html#a8b4e46fd87bbb3cfb655fcd4fb8c2c24">walk</a> (<a class="el" href="classerpcgen_1_1_ast_node.html">AstNode</a> *node)</td></tr>
+<tr class="memdesc:a8b4e46fd87bbb3cfb655fcd4fb8c2c24"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function walk the <a class="el" href="classerpcgen_1_1_ast_node.html" title="Homogeneous AST node class. ">AstNode</a> depth-first and invoke handler methods.  <a href="#a8b4e46fd87bbb3cfb655fcd4fb8c2c24">More...</a><br /></td></tr>
+<tr class="separator:a8b4e46fd87bbb3cfb655fcd4fb8c2c24"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a900fc56225d0233158eaa9254a3a18f6"><td class="memTemplParams" colspan="2">template&lt;typename D &gt; </td></tr>
 <tr class="memitem:a900fc56225d0233158eaa9254a3a18f6"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_ast_walker.html#a900fc56225d0233158eaa9254a3a18f6">dispatch</a> (<a class="el" href="classerpcgen_1_1_ast_node.html">AstNode</a> *node)</td></tr>
 <tr class="memdesc:a900fc56225d0233158eaa9254a3a18f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function invoke the appropriate handler method for the node's token type..  <a href="#a900fc56225d0233158eaa9254a3a18f6">More...</a><br /></td></tr>
 <tr class="separator:a900fc56225d0233158eaa9254a3a18f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader"></div></td></tr>
+<tr class="memitem:a970bb8e4a6a67bb3bafd22fa966d8c37"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a970bb8e4a6a67bb3bafd22fa966d8c37"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>handleRoot</b> (<a class="el" href="classerpcgen_1_1_ast_node.html">AstNode</a> *node, <a class="el" href="classerpcgen_1_1_ast_walker.html#structerpcgen_1_1_ast_walker_1_1top__down">top_down</a>)</td></tr>
+<tr class="separator:a970bb8e4a6a67bb3bafd22fa966d8c37"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab9551e2291ee950c20073ab6f70185cf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab9551e2291ee950c20073ab6f70185cf"></a>
 virtual <a class="el" href="classerpcgen_1_1_ast_node.html">AstNode</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>handleProgram</b> (<a class="el" href="classerpcgen_1_1_ast_node.html">AstNode</a> *node, <a class="el" href="classerpcgen_1_1_ast_walker.html#structerpcgen_1_1_ast_walker_1_1top__down">top_down</a>)</td></tr>
 <tr class="separator:ab9551e2291ee950c20073ab6f70185cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -218,6 +224,9 @@ virtual <a class="el" href="classerpcgen_1_1_ast_node.html">AstNode</a> *&#160;<
 virtual <a class="el" href="classerpcgen_1_1_ast_node.html">AstNode</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>handleAnnotation</b> (<a class="el" href="classerpcgen_1_1_ast_node.html">AstNode</a> *node, <a class="el" href="classerpcgen_1_1_ast_walker.html#structerpcgen_1_1_ast_walker_1_1top__down">top_down</a>)</td></tr>
 <tr class="separator:a6ddcaa932133b554b3e702168666f155"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader"></div></td></tr>
+<tr class="memitem:a8c06ec301f40a5ff305dd6831056f141"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8c06ec301f40a5ff305dd6831056f141"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>handleRoot</b> (<a class="el" href="classerpcgen_1_1_ast_node.html">AstNode</a> *node, <a class="el" href="classerpcgen_1_1_ast_walker.html#structerpcgen_1_1_ast_walker_1_1bottom__up">bottom_up</a>)</td></tr>
+<tr class="separator:a8c06ec301f40a5ff305dd6831056f141"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8ead8ef50e773f16173b32aacc60b32f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8ead8ef50e773f16173b32aacc60b32f"></a>
 virtual <a class="el" href="classerpcgen_1_1_ast_node.html">AstNode</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>handleProgram</b> (<a class="el" href="classerpcgen_1_1_ast_node.html">AstNode</a> *node, <a class="el" href="classerpcgen_1_1_ast_walker.html#structerpcgen_1_1_ast_walker_1_1bottom__up">bottom_up</a>)</td></tr>
 <tr class="separator:a8ead8ef50e773f16173b32aacc60b32f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -400,6 +409,41 @@ template&lt;typename D &gt; </div>
 
 </div>
 </div>
+<a class="anchor" id="a2069c2eade111406176330e8c5491ae1"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AstWalker::startWalk </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classerpcgen_1_1_ast_node.html">AstNode</a> *&#160;</td>
+          <td class="paramname"><em>node</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>This function walk the <a class="el" href="classerpcgen_1_1_ast_node.html" title="Homogeneous AST node class. ">AstNode</a> depth-first and invoke handler methods. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">node</td><td>The root node of the tree to walk.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See also</dt><dd>void <a class="el" href="classerpcgen_1_1_ast_walker.html#a900fc56225d0233158eaa9254a3a18f6" title="This function invoke the appropriate handler method for the node&#39;s token type.. ">AstWalker::dispatch(AstNode * node)</a> </dd>
+<dd>
+void <a class="el" href="classerpcgen_1_1_ast_walker.html#a8b4e46fd87bbb3cfb655fcd4fb8c2c24" title="This function walk the AstNode depth-first and invoke handler methods. ">AstWalker::walk(AstNode * node)</a> </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a8b4e46fd87bbb3cfb655fcd4fb8c2c24"></a>
 <div class="memitem">
 <div class="memproto">
@@ -417,7 +461,7 @@ template&lt;typename D &gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">

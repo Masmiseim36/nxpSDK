@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC Generator (erpcgen)
-   &#160;<span id="projectnumber">Rev. 1.5.0</span>
+   &#160;<span id="projectnumber">Rev. 1.7.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -134,8 +134,7 @@ Inheritance diagram for erpcgen::UnionType:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a9d534ef03d1f474ed0405949fe154d7a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9d534ef03d1f474ed0405949fe154d7a"></a>
-typedef std::vector&lt; <a class="el" href="classerpcgen_1_1_union_case.html">UnionCase</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>case_vector_t</b></td></tr>
+<tr class="memitem:a9d534ef03d1f474ed0405949fe154d7a"><td class="memItemLeft" align="right" valign="top">typedef std::vector&lt; <a class="el" href="classerpcgen_1_1_union_case.html">UnionCase</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_union_type.html#a9d534ef03d1f474ed0405949fe154d7a">case_vector_t</a></td></tr>
 <tr class="separator:a9d534ef03d1f474ed0405949fe154d7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_types_classerpcgen_1_1_data_type"><td colspan="2" onclick="javascript:toggleInherit('pub_types_classerpcgen_1_1_data_type')"><img src="closed.png" alt="-"/>&#160;Public Types inherited from <a class="el" href="classerpcgen_1_1_data_type.html">erpcgen::DataType</a></td></tr>
 <tr class="memitem:a7b5230551817ee50d98d111d06212068 inherit pub_types_classerpcgen_1_1_data_type"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7b5230551817ee50d98d111d06212068"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_data_type.html#a7b5230551817ee50d98d111d06212068">_data_type</a> { <br />
@@ -203,6 +202,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a8a458b46a9531a34a22a84f9f8aa842d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_union_type.html#a8a458b46a9531a34a22a84f9f8aa842d">UnionType</a> (const std::string &amp;name, const std::string &amp;discriminatorName)</td></tr>
 <tr class="memdesc:a8a458b46a9531a34a22a84f9f8aa842d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a8a458b46a9531a34a22a84f9f8aa842d">More...</a><br /></td></tr>
 <tr class="separator:a8a458b46a9531a34a22a84f9f8aa842d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adeecf2ae226e623cae19b52dffc1f77b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_union_type.html#adeecf2ae226e623cae19b52dffc1f77b">UnionType</a> (const <a class="el" href="classerpcgen_1_1_token.html">Token</a> &amp;tok, const std::string &amp;discriminatorName)</td></tr>
+<tr class="memdesc:adeecf2ae226e623cae19b52dffc1f77b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#adeecf2ae226e623cae19b52dffc1f77b">More...</a><br /></td></tr>
+<tr class="separator:adeecf2ae226e623cae19b52dffc1f77b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6f25e14871e1ff00a579a09b255c746f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6f25e14871e1ff00a579a09b255c746f"></a>
 <a class="el" href="classerpcgen_1_1_struct_type.html">StructType</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_union_type.html#a6f25e14871e1ff00a579a09b255c746f">getParentStruct</a> ()</td></tr>
 <tr class="memdesc:a6f25e14871e1ff00a579a09b255c746f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the struct owning this union. <br /></td></tr>
@@ -214,19 +216,19 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:ab43e74456e7e9ca2c869b764fef5ad48"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_union_type.html#ab43e74456e7e9ca2c869b764fef5ad48">addCase</a> (<a class="el" href="classerpcgen_1_1_union_case.html">UnionCase</a> *unionCase)</td></tr>
 <tr class="memdesc:ab43e74456e7e9ca2c869b764fef5ad48"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function will add union case to current union.  <a href="#ab43e74456e7e9ca2c869b764fef5ad48">More...</a><br /></td></tr>
 <tr class="separator:ab43e74456e7e9ca2c869b764fef5ad48"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae8ca991afd47858d15e1cea0a37f27b5"><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_union_type.html#ae8ca991afd47858d15e1cea0a37f27b5">getDescription</a> () const </td></tr>
-<tr class="memdesc:ae8ca991afd47858d15e1cea0a37f27b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns description about the union.  <a href="#ae8ca991afd47858d15e1cea0a37f27b5">More...</a><br /></td></tr>
-<tr class="separator:ae8ca991afd47858d15e1cea0a37f27b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeea76b2bae97a5f2c86fb352279a205e"><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_union_type.html#aeea76b2bae97a5f2c86fb352279a205e">getDescription</a> () const </td></tr>
+<tr class="memdesc:aeea76b2bae97a5f2c86fb352279a205e"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns description about the union.  <a href="#aeea76b2bae97a5f2c86fb352279a205e">More...</a><br /></td></tr>
+<tr class="separator:aeea76b2bae97a5f2c86fb352279a205e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3eac98c19587d456ad2f2f8c596baebb"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_union_type.html#a3eac98c19587d456ad2f2f8c596baebb">isUnion</a> () const </td></tr>
 <tr class="memdesc:a3eac98c19587d456ad2f2f8c596baebb"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function return "true" value for identify union type.  <a href="#a3eac98c19587d456ad2f2f8c596baebb">More...</a><br /></td></tr>
 <tr class="separator:a3eac98c19587d456ad2f2f8c596baebb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af20afe6693acdd034be5e48404f3b67a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_union_type.html#af20afe6693acdd034be5e48404f3b67a">isNonEncapsulatedUnion</a> () const </td></tr>
 <tr class="memdesc:af20afe6693acdd034be5e48404f3b67a"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function return "true" value for identify non-encapsulated discriminated union type.  <a href="#af20afe6693acdd034be5e48404f3b67a">More...</a><br /></td></tr>
 <tr class="separator:af20afe6693acdd034be5e48404f3b67a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a48dfb389a100918e91bcef2203e0ad4a"><td class="memItemLeft" align="right" valign="top">case_vector_t &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_union_type.html#a48dfb389a100918e91bcef2203e0ad4a">getCases</a> ()</td></tr>
+<tr class="memitem:a48dfb389a100918e91bcef2203e0ad4a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classerpcgen_1_1_union_type.html#a9d534ef03d1f474ed0405949fe154d7a">case_vector_t</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_union_type.html#a48dfb389a100918e91bcef2203e0ad4a">getCases</a> ()</td></tr>
 <tr class="memdesc:a48dfb389a100918e91bcef2203e0ad4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns union cases vector.  <a href="#a48dfb389a100918e91bcef2203e0ad4a">More...</a><br /></td></tr>
 <tr class="separator:a48dfb389a100918e91bcef2203e0ad4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5f91fb1760b5014e39f8ed1de5deeb70"><td class="memItemLeft" align="right" valign="top">case_vector_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_union_type.html#a5f91fb1760b5014e39f8ed1de5deeb70">getUniqueCases</a> ()</td></tr>
+<tr class="memitem:a5f91fb1760b5014e39f8ed1de5deeb70"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classerpcgen_1_1_union_type.html#a9d534ef03d1f474ed0405949fe154d7a">case_vector_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_union_type.html#a5f91fb1760b5014e39f8ed1de5deeb70">getUniqueCases</a> ()</td></tr>
 <tr class="memdesc:a5f91fb1760b5014e39f8ed1de5deeb70"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns unique union cases vector.  <a href="#a5f91fb1760b5014e39f8ed1de5deeb70">More...</a><br /></td></tr>
 <tr class="separator:a5f91fb1760b5014e39f8ed1de5deeb70"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac8c6e128c8891eaa4b12cfaebd751de0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_union_type.html#ac8c6e128c8891eaa4b12cfaebd751de0">addUnionMemberDeclaration</a> (const std::string &amp;name, <a class="el" href="classerpcgen_1_1_data_type.html">DataType</a> *dataType)</td></tr>
@@ -279,8 +281,11 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:a1be5c32e9ccf8d694c0fd10f15e04e6e inherit pub_methods_classerpcgen_1_1_data_type"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_data_type.html#a1be5c32e9ccf8d694c0fd10f15e04e6e">isBinary</a> () const </td></tr>
 <tr class="memdesc:a1be5c32e9ccf8d694c0fd10f15e04e6e inherit pub_methods_classerpcgen_1_1_data_type"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function return "false" value as default for identify binary type.  <a href="#a1be5c32e9ccf8d694c0fd10f15e04e6e">More...</a><br /></td></tr>
 <tr class="separator:a1be5c32e9ccf8d694c0fd10f15e04e6e inherit pub_methods_classerpcgen_1_1_data_type"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a808605c3d694c3fa2ef896bc1cdecf60 inherit pub_methods_classerpcgen_1_1_data_type"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_data_type.html#a808605c3d694c3fa2ef896bc1cdecf60">isBool</a> () const </td></tr>
+<tr class="memdesc:a808605c3d694c3fa2ef896bc1cdecf60 inherit pub_methods_classerpcgen_1_1_data_type"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function return "false" value as default for identify bool type.  <a href="#a808605c3d694c3fa2ef896bc1cdecf60">More...</a><br /></td></tr>
+<tr class="separator:a808605c3d694c3fa2ef896bc1cdecf60 inherit pub_methods_classerpcgen_1_1_data_type"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9431e09a25ce91aaa8e8301ced975d92 inherit pub_methods_classerpcgen_1_1_data_type"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_data_type.html#a9431e09a25ce91aaa8e8301ced975d92">isBuiltin</a> () const </td></tr>
-<tr class="memdesc:a9431e09a25ce91aaa8e8301ced975d92 inherit pub_methods_classerpcgen_1_1_data_type"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function return "false" value as default for identify string type.  <a href="#a9431e09a25ce91aaa8e8301ced975d92">More...</a><br /></td></tr>
+<tr class="memdesc:a9431e09a25ce91aaa8e8301ced975d92 inherit pub_methods_classerpcgen_1_1_data_type"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function return "false" value as default for identify builtin type.  <a href="#a9431e09a25ce91aaa8e8301ced975d92">More...</a><br /></td></tr>
 <tr class="separator:a9431e09a25ce91aaa8e8301ced975d92 inherit pub_methods_classerpcgen_1_1_data_type"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac9a2e6e456ae83bcca8a9f0946a5d317 inherit pub_methods_classerpcgen_1_1_data_type"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_data_type.html#ac9a2e6e456ae83bcca8a9f0946a5d317">isEnum</a> () const </td></tr>
 <tr class="memdesc:ac9a2e6e456ae83bcca8a9f0946a5d317 inherit pub_methods_classerpcgen_1_1_data_type"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function return "false" value as default for identify enum type.  <a href="#ac9a2e6e456ae83bcca8a9f0946a5d317">More...</a><br /></td></tr>
@@ -291,9 +296,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:a6b8242766c0018450af0e4da4954139c inherit pub_methods_classerpcgen_1_1_data_type"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_data_type.html#a6b8242766c0018450af0e4da4954139c">isList</a> () const </td></tr>
 <tr class="memdesc:a6b8242766c0018450af0e4da4954139c inherit pub_methods_classerpcgen_1_1_data_type"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function return "false" value as default for identify list type.  <a href="#a6b8242766c0018450af0e4da4954139c">More...</a><br /></td></tr>
 <tr class="separator:a6b8242766c0018450af0e4da4954139c inherit pub_methods_classerpcgen_1_1_data_type"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a90cb8b73955d9b97853b3d4cfb765de8 inherit pub_methods_classerpcgen_1_1_data_type"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a90cb8b73955d9b97853b3d4cfb765de8"></a>
-virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_data_type.html#a90cb8b73955d9b97853b3d4cfb765de8">isScalar</a> () const </td></tr>
-<tr class="memdesc:a90cb8b73955d9b97853b3d4cfb765de8 inherit pub_methods_classerpcgen_1_1_data_type"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns whether the type is a scalar builtin type. <br /></td></tr>
+<tr class="memitem:a90cb8b73955d9b97853b3d4cfb765de8 inherit pub_methods_classerpcgen_1_1_data_type"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_data_type.html#a90cb8b73955d9b97853b3d4cfb765de8">isScalar</a> () const </td></tr>
+<tr class="memdesc:a90cb8b73955d9b97853b3d4cfb765de8 inherit pub_methods_classerpcgen_1_1_data_type"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function return "false" value as default for identify scalar builtin type.  <a href="#a90cb8b73955d9b97853b3d4cfb765de8">More...</a><br /></td></tr>
 <tr class="separator:a90cb8b73955d9b97853b3d4cfb765de8 inherit pub_methods_classerpcgen_1_1_data_type"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab5c453e35889dd4d64ed621a9470b806 inherit pub_methods_classerpcgen_1_1_data_type"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_data_type.html#ab5c453e35889dd4d64ed621a9470b806">isString</a> () const </td></tr>
 <tr class="memdesc:ab5c453e35889dd4d64ed621a9470b806 inherit pub_methods_classerpcgen_1_1_data_type"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function return "false" value as default for identify string type.  <a href="#ab5c453e35889dd4d64ed621a9470b806">More...</a><br /></td></tr>
@@ -324,9 +328,6 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <tr class="memitem:a84c290b9cf7672b0f94aea9ff27acf1f inherit pub_methods_classerpcgen_1_1_symbol"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol.html#a84c290b9cf7672b0f94aea9ff27acf1f">getName</a> () const </td></tr>
 <tr class="memdesc:a84c290b9cf7672b0f94aea9ff27acf1f inherit pub_methods_classerpcgen_1_1_symbol"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns symbol name.  <a href="#a84c290b9cf7672b0f94aea9ff27acf1f">More...</a><br /></td></tr>
 <tr class="separator:a84c290b9cf7672b0f94aea9ff27acf1f inherit pub_methods_classerpcgen_1_1_symbol"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8f96db9d57dda1612b86863618b4b190 inherit pub_methods_classerpcgen_1_1_symbol"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8f96db9d57dda1612b86863618b4b190"></a>
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>getOutputName</b> ()</td></tr>
-<tr class="separator:a8f96db9d57dda1612b86863618b4b190 inherit pub_methods_classerpcgen_1_1_symbol"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af3a2dbfad1b23fbdfa3ef6e3812ad357 inherit pub_methods_classerpcgen_1_1_symbol"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol.html#af3a2dbfad1b23fbdfa3ef6e3812ad357">setName</a> (const std::string &amp;newName)</td></tr>
 <tr class="memdesc:af3a2dbfad1b23fbdfa3ef6e3812ad357 inherit pub_methods_classerpcgen_1_1_symbol"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function set symbol name.  <a href="#af3a2dbfad1b23fbdfa3ef6e3812ad357">More...</a><br /></td></tr>
 <tr class="separator:af3a2dbfad1b23fbdfa3ef6e3812ad357 inherit pub_methods_classerpcgen_1_1_symbol"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -345,24 +346,24 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>getOutputName<
 <tr class="memitem:a828866509c0ee041aaf7e31ab18cf2da inherit pub_methods_classerpcgen_1_1_symbol"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol.html#a828866509c0ee041aaf7e31ab18cf2da">addAnnotation</a> (const <a class="el" href="classerpcgen_1_1_annotation.html">Annotation</a> &amp;a)</td></tr>
 <tr class="memdesc:a828866509c0ee041aaf7e31ab18cf2da inherit pub_methods_classerpcgen_1_1_symbol"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function add annotation to vector of symbol annotations.  <a href="#a828866509c0ee041aaf7e31ab18cf2da">More...</a><br /></td></tr>
 <tr class="separator:a828866509c0ee041aaf7e31ab18cf2da inherit pub_methods_classerpcgen_1_1_symbol"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa3f9fe166df63e096228de582e87248b inherit pub_methods_classerpcgen_1_1_symbol"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol.html#aa3f9fe166df63e096228de582e87248b">printAnnotations</a> ()</td></tr>
-<tr class="memdesc:aa3f9fe166df63e096228de582e87248b inherit pub_methods_classerpcgen_1_1_symbol"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns description about annotation.  <a href="#aa3f9fe166df63e096228de582e87248b">More...</a><br /></td></tr>
-<tr class="separator:aa3f9fe166df63e096228de582e87248b inherit pub_methods_classerpcgen_1_1_symbol"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a674a1dff60207fa512a2a2b7b7146c3b inherit pub_methods_classerpcgen_1_1_symbol"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classerpcgen_1_1_annotation.html">Annotation</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol.html#a674a1dff60207fa512a2a2b7b7146c3b">findAnnotation</a> (std::string name)</td></tr>
-<tr class="memdesc:a674a1dff60207fa512a2a2b7b7146c3b inherit pub_methods_classerpcgen_1_1_symbol"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find annotation in the annotation list.  <a href="#a674a1dff60207fa512a2a2b7b7146c3b">More...</a><br /></td></tr>
-<tr class="separator:a674a1dff60207fa512a2a2b7b7146c3b inherit pub_methods_classerpcgen_1_1_symbol"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8ac0fa46b91ae20ff49c62cfab29a810 inherit pub_methods_classerpcgen_1_1_symbol"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="classerpcgen_1_1_annotation.html">Annotation</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol.html#a8ac0fa46b91ae20ff49c62cfab29a810">getAnnotations</a> (std::string name)</td></tr>
-<tr class="memdesc:a8ac0fa46b91ae20ff49c62cfab29a810 inherit pub_methods_classerpcgen_1_1_symbol"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find annotations matching name in the annotation list.  <a href="#a8ac0fa46b91ae20ff49c62cfab29a810">More...</a><br /></td></tr>
-<tr class="separator:a8ac0fa46b91ae20ff49c62cfab29a810 inherit pub_methods_classerpcgen_1_1_symbol"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af62148192831515bdb2a451ac2b29bba inherit pub_methods_classerpcgen_1_1_symbol"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol.html#af62148192831515bdb2a451ac2b29bba">printAnnotations</a> ()</td></tr>
+<tr class="memdesc:af62148192831515bdb2a451ac2b29bba inherit pub_methods_classerpcgen_1_1_symbol"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns description about annotation.  <a href="#af62148192831515bdb2a451ac2b29bba">More...</a><br /></td></tr>
+<tr class="separator:af62148192831515bdb2a451ac2b29bba inherit pub_methods_classerpcgen_1_1_symbol"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a883f6744741ad9076cb427c39c3783a4 inherit pub_methods_classerpcgen_1_1_symbol"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classerpcgen_1_1_annotation.html">Annotation</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol.html#a883f6744741ad9076cb427c39c3783a4">findAnnotation</a> (std::string name, Annotation::program_lang_t lang)</td></tr>
+<tr class="memdesc:a883f6744741ad9076cb427c39c3783a4 inherit pub_methods_classerpcgen_1_1_symbol"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find annotation in the annotation list.  <a href="#a883f6744741ad9076cb427c39c3783a4">More...</a><br /></td></tr>
+<tr class="separator:a883f6744741ad9076cb427c39c3783a4 inherit pub_methods_classerpcgen_1_1_symbol"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc5781b006ddfee4823e33698f9b65a6 inherit pub_methods_classerpcgen_1_1_symbol"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="classerpcgen_1_1_annotation.html">Annotation</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol.html#acc5781b006ddfee4823e33698f9b65a6">getAnnotations</a> (std::string name, Annotation::program_lang_t lang)</td></tr>
+<tr class="memdesc:acc5781b006ddfee4823e33698f9b65a6 inherit pub_methods_classerpcgen_1_1_symbol"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find annotations matching name in the annotation list.  <a href="#acc5781b006ddfee4823e33698f9b65a6">More...</a><br /></td></tr>
+<tr class="separator:acc5781b006ddfee4823e33698f9b65a6 inherit pub_methods_classerpcgen_1_1_symbol"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3bcd445c92c9ae8c225ac053809a590e inherit pub_methods_classerpcgen_1_1_symbol"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; <a class="el" href="classerpcgen_1_1_annotation.html">Annotation</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol.html#a3bcd445c92c9ae8c225ac053809a590e">getAnnotations</a> () const </td></tr>
-<tr class="memdesc:a3bcd445c92c9ae8c225ac053809a590e inherit pub_methods_classerpcgen_1_1_symbol"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find annotations matching name in the annotation list.  <a href="#a3bcd445c92c9ae8c225ac053809a590e">More...</a><br /></td></tr>
+<tr class="memdesc:a3bcd445c92c9ae8c225ac053809a590e inherit pub_methods_classerpcgen_1_1_symbol"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return all <a class="el" href="classerpcgen_1_1_symbol.html" title="Base class for all named declarations in the IDL. ">Symbol</a> annotations.  <a href="#a3bcd445c92c9ae8c225ac053809a590e">More...</a><br /></td></tr>
 <tr class="separator:a3bcd445c92c9ae8c225ac053809a590e inherit pub_methods_classerpcgen_1_1_symbol"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a73cbbdf49a7871529f147d5f987c5097 inherit pub_methods_classerpcgen_1_1_symbol"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_value.html">Value</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol.html#a73cbbdf49a7871529f147d5f987c5097">getAnnValue</a> (const std::string annName)</td></tr>
-<tr class="memdesc:a73cbbdf49a7871529f147d5f987c5097 inherit pub_methods_classerpcgen_1_1_symbol"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function search and returns <a class="el" href="class_value.html" title="Abstract base class for values of arbitrary types. ">Value</a> object for given annotation name.  <a href="#a73cbbdf49a7871529f147d5f987c5097">More...</a><br /></td></tr>
-<tr class="separator:a73cbbdf49a7871529f147d5f987c5097 inherit pub_methods_classerpcgen_1_1_symbol"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad1fd4ff5335298c0192832550c26e76f inherit pub_methods_classerpcgen_1_1_symbol"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol.html#ad1fd4ff5335298c0192832550c26e76f">getAnnStringValue</a> (const std::string annName)</td></tr>
-<tr class="memdesc:ad1fd4ff5335298c0192832550c26e76f inherit pub_methods_classerpcgen_1_1_symbol"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function search and returns string for given annotation name.  <a href="#ad1fd4ff5335298c0192832550c26e76f">More...</a><br /></td></tr>
-<tr class="separator:ad1fd4ff5335298c0192832550c26e76f inherit pub_methods_classerpcgen_1_1_symbol"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6935af23ecdcd2f9fb2a02f92ebae1f9 inherit pub_methods_classerpcgen_1_1_symbol"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_value.html">Value</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol.html#a6935af23ecdcd2f9fb2a02f92ebae1f9">getAnnValue</a> (const std::string annName, Annotation::program_lang_t lang)</td></tr>
+<tr class="memdesc:a6935af23ecdcd2f9fb2a02f92ebae1f9 inherit pub_methods_classerpcgen_1_1_symbol"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function search and returns <a class="el" href="class_value.html" title="Abstract base class for values of arbitrary types. ">Value</a> object for given annotation name.  <a href="#a6935af23ecdcd2f9fb2a02f92ebae1f9">More...</a><br /></td></tr>
+<tr class="separator:a6935af23ecdcd2f9fb2a02f92ebae1f9 inherit pub_methods_classerpcgen_1_1_symbol"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44d832e6e7934e13f6d6ab1d8799cbdf inherit pub_methods_classerpcgen_1_1_symbol"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol.html#a44d832e6e7934e13f6d6ab1d8799cbdf">getAnnStringValue</a> (const std::string annName, Annotation::program_lang_t lang)</td></tr>
+<tr class="memdesc:a44d832e6e7934e13f6d6ab1d8799cbdf inherit pub_methods_classerpcgen_1_1_symbol"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function search and returns string for given annotation name.  <a href="#a44d832e6e7934e13f6d6ab1d8799cbdf">More...</a><br /></td></tr>
+<tr class="separator:a44d832e6e7934e13f6d6ab1d8799cbdf inherit pub_methods_classerpcgen_1_1_symbol"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a85fc3b86b1d1935f3017f8d5db3a2111 inherit pub_methods_classerpcgen_1_1_symbol"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol.html#a85fc3b86b1d1935f3017f8d5db3a2111">getMlComment</a> ()</td></tr>
 <tr class="memdesc:a85fc3b86b1d1935f3017f8d5db3a2111 inherit pub_methods_classerpcgen_1_1_symbol"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns multiline comment for this symbol declared in IDL file.  <a href="#a85fc3b86b1d1935f3017f8d5db3a2111">More...</a><br /></td></tr>
 <tr class="separator:a85fc3b86b1d1935f3017f8d5db3a2111 inherit pub_methods_classerpcgen_1_1_symbol"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -397,7 +398,21 @@ Additional Inherited Members</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Discriminated union data type. </p>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+</div><h2 class="groupheader">Member Typedef Documentation</h2>
+<a class="anchor" id="a9d534ef03d1f474ed0405949fe154d7a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef std::vector&lt;<a class="el" href="classerpcgen_1_1_union_case.html">UnionCase</a> *&gt; <a class="el" href="classerpcgen_1_1_union_type.html#a9d534ef03d1f474ed0405949fe154d7a">erpcgen::UnionType::case_vector_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Vector of Union cases. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a8a458b46a9531a34a22a84f9f8aa842d"></a>
 <div class="memitem">
 <div class="memproto">
@@ -435,6 +450,50 @@ Additional Inherited Members</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">name</td><td>Given name. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">discriminatorName</td><td>Discriminator name. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="adeecf2ae226e623cae19b52dffc1f77b"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">erpcgen::UnionType::UnionType </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classerpcgen_1_1_token.html">Token</a> &amp;&#160;</td>
+          <td class="paramname"><em>tok</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>discriminatorName</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructor. </p>
+<p>This function set data type to union data type and symbol token to given token. It will also set discriminator name.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">tok</td><td>Given token.. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">discriminatorName</td><td>Discriminator name. </td></tr>
   </table>
   </dd>
@@ -541,7 +600,7 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">case_vector_t&amp; erpcgen::UnionType::getCases </td>
+          <td class="memname"><a class="el" href="classerpcgen_1_1_union_type.html#a9d534ef03d1f474ed0405949fe154d7a">case_vector_t</a>&amp; erpcgen::UnionType::getCases </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -559,7 +618,7 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ae8ca991afd47858d15e1cea0a37f27b5"></a>
+<a class="anchor" id="aeea76b2bae97a5f2c86fb352279a205e"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -567,7 +626,7 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::string UnionType::getDescription </td>
+          <td class="memname">string UnionType::getDescription </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -582,19 +641,19 @@ Additional Inherited Members</h2></td></tr>
 
 <p>This function returns description about the union. </p>
 <dl class="section return"><dt>Returns</dt><dd>String description about struct.</dd></dl>
-<dl class="section see"><dt>See also</dt><dd>std::string <a class="el" href="classerpcgen_1_1_alias_type.html#a1dcefef6c4e73b429ebfddc13d056d9c" title="This function returns description about the alias. ">AliasType::getDescription() const</a> </dd>
+<dl class="section see"><dt>See also</dt><dd>std::string <a class="el" href="classerpcgen_1_1_alias_type.html#af67a4592991def524769acb6280a7d92" title="This function returns description about the alias. ">AliasType::getDescription() const</a> </dd>
 <dd>
-std::string <a class="el" href="classerpcgen_1_1_enum_type.html#a7b1138290c55479bfd939a61eaceb392" title="This function returns description about the enum. ">EnumType::getDescription() const</a> </dd>
+std::string <a class="el" href="classerpcgen_1_1_enum_type.html#ab95b28ad62ecb25638468b2ba7783921" title="This function returns description about the enum. ">EnumType::getDescription() const</a> </dd>
 <dd>
-std::string <a class="el" href="classerpcgen_1_1_enum_member.html#a72f031925bbc83f049e07fd04bd16abe" title="This function returns description about the enum member. ">EnumMember::getDescription() const</a> </dd>
+std::string <a class="el" href="classerpcgen_1_1_enum_member.html#a64ce4b33dfa9c10635ac2fd64089a4f1" title="This function returns description about the enum member. ">EnumMember::getDescription() const</a> </dd>
 <dd>
-std::string <a class="el" href="classerpcgen_1_1_struct_member.html#a839ee493aa6fafaac3dda9ec292ed1dd" title="This function returns description about the struct member. ">StructMember::getDescription() const</a> </dd>
+std::string <a class="el" href="classerpcgen_1_1_struct_member.html#a35caff93a725d1a34e961cafc2a09085" title="This function returns description about the struct member. ">StructMember::getDescription() const</a> </dd>
 <dd>
 std::string <a class="el" href="classerpcgen_1_1_void_type.html#a329b76a4ef8e30637e7607883772b0e3" title="This function returns description about the void. ">VoidType::getDescription() const</a> </dd>
 <dd>
-std::string <a class="el" href="classerpcgen_1_1_array_type.html#a1c5a4e6413834ed1d286ae56d4566f85" title="This function returns description about the array. ">ArrayType::getDescription() const</a> </dd>
+std::string <a class="el" href="classerpcgen_1_1_array_type.html#a2f24b1e2e72bda762761a4bc2f03eaae" title="This function returns description about the array. ">ArrayType::getDescription() const</a> </dd>
 <dd>
-std::string <a class="el" href="classerpcgen_1_1_list_type.html#acd69b19dae89b94123a97cbfad33ba0c" title="This function returns description about the list. ">ListType::getDescription() const</a> </dd></dl>
+std::string <a class="el" href="classerpcgen_1_1_list_type.html#a360f3a198f4f48067dbf79b0c9fd71c3" title="This function returns description about the list. ">ListType::getDescription() const</a> </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classerpcgen_1_1_symbol.html#a84732dc398fd0cbf64d53d45db1cc8c5">erpcgen::Symbol</a>.</p>
 
@@ -682,7 +741,7 @@ std::string <a class="el" href="classerpcgen_1_1_list_type.html#acd69b19dae89b94
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">UnionType::case_vector_t UnionType::getUniqueCases </td>
+          <td class="memname"><a class="el" href="classerpcgen_1_1_union_type.html#a9d534ef03d1f474ed0405949fe154d7a">UnionType::case_vector_t</a> UnionType::getUniqueCases </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>

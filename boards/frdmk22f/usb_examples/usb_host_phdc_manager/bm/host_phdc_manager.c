@@ -1,7 +1,7 @@
 /*
  * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016, 2018 NXP
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -38,6 +38,7 @@
 #include "ieee11073_types.h"
 #include "ieee11073_nomenclature.h"
 #include "host_phdc_manager.h"
+#include "app.h"
 
 #include "usb_host_phdc.h"
 #include "fsl_debug_console.h"
@@ -1683,9 +1684,9 @@ static void PHDC_ManagerControlCallback(void *param, uint8_t *data, uint32_t dat
     }
     else
     {
-        if (phdcManagerInstance->runWaitState == kRunWaitSetInterface)
+        if (phdcManagerInstance->runWaitState == kUSB_HostPhdcRunWaitSetInterface)
         {
-            phdcManagerInstance->runState = kRunSetInterfaceDone;
+            phdcManagerInstance->runState = kUSB_HostPhdcRunSetInterfaceDone;
         }
     }
 }
@@ -1704,17 +1705,17 @@ static void PHDC_ManagerBulkInCallback(void *param, uint8_t *data, uint32_t data
 {
     host_phdc_manager_instance_t *phdcManagerInstance = (host_phdc_manager_instance_t *)param;
 
-    if (phdcManagerInstance->runWaitState == kRunWaitDataReceived)
+    if (phdcManagerInstance->runWaitState == kUSB_HostPhdcRunWaitDataReceived)
     {
         if (phdcManagerInstance->devState == kStatus_DEV_Attached)
         {
             if (status == kStatus_USB_Success)
             {
-                phdcManagerInstance->runState = kRunDataReceived;
+                phdcManagerInstance->runState = kUSB_HostPhdcRunDataReceived;
             }
             else
             {
-                phdcManagerInstance->runState = kRunPrimeDataReceive;
+                phdcManagerInstance->runState = kUSB_HostPhdcRunPrimeDataReceive;
             }
         }
     }
@@ -1793,7 +1794,7 @@ void HOST_PhdcManagerTask(void *param)
                 break;
 
             case kStatus_DEV_Attached:
-                phdcManagerInstance->runState = kRunSetInterface;
+                phdcManagerInstance->runState = kUSB_HostPhdcRunSetInterface;
                 status =
                     USB_HostPhdcInit(phdcManagerInstance->deviceHandle, (void **)&phdcManagerInstance->classHandle);
                 if (status != kStatus_USB_Success)
@@ -1808,7 +1809,7 @@ void HOST_PhdcManagerTask(void *param)
                 break;
             case kStatus_DEV_Detached:
                 phdcManagerInstance->devState = kStatus_DEV_Idle;
-                phdcManagerInstance->runState = kRunIdle;
+                phdcManagerInstance->runState = kUSB_HostPhdcRunIdle;
                 USB_HostPhdcDeinit(phdcManagerInstance->deviceHandle, phdcManagerInstance->classHandle);
                 PHDC_ManagerSetState(phdcManagerInstance, IEEE11073_MANAGER_DISCONNECTED);
                 phdcManagerInstance->classHandle = NULL;
@@ -1822,12 +1823,12 @@ void HOST_PhdcManagerTask(void *param)
     /* run state */
     switch (phdcManagerInstance->runState)
     {
-        case kRunIdle:
+        case kUSB_HostPhdcRunIdle:
             break;
 
-        case kRunSetInterface:
-            phdcManagerInstance->runWaitState = kRunWaitSetInterface;
-            phdcManagerInstance->runState = kRunIdle;
+        case kUSB_HostPhdcRunSetInterface:
+            phdcManagerInstance->runWaitState = kUSB_HostPhdcRunWaitSetInterface;
+            phdcManagerInstance->runState = kUSB_HostPhdcRunIdle;
             if (USB_HostPhdcSetInterface(phdcManagerInstance->classHandle, phdcManagerInstance->interfaceHandle, 0U,
                                          PHDC_ManagerControlCallback, phdcManagerInstance) != kStatus_USB_Success)
             {
@@ -1835,12 +1836,12 @@ void HOST_PhdcManagerTask(void *param)
             }
             break;
 
-        case kRunSetInterfaceDone:
+        case kUSB_HostPhdcRunSetInterfaceDone:
             PHDC_ManagerSetState(param, IEEE11073_MANAGER_CONNECTED_UNASSOCIATED);
             /* Clear received buffer */
             memset((void *)&phdcManagerInstance->recvDataBuffer[0U], 0U, APDU_MAX_BUFFER_SIZE);
-            phdcManagerInstance->runWaitState = kRunWaitDataReceived;
-            phdcManagerInstance->runState = kRunIdle;
+            phdcManagerInstance->runWaitState = kUSB_HostPhdcRunWaitDataReceived;
+            phdcManagerInstance->runState = kUSB_HostPhdcRunIdle;
             status = USB_HostPhdcRecv(phdcManagerInstance->classHandle, 0xFEU, phdcManagerInstance->recvDataBuffer,
                                       APDU_MAX_BUFFER_SIZE, PHDC_ManagerBulkInCallback, phdcManagerInstance);
             if (status != kStatus_USB_Success)
@@ -1848,10 +1849,10 @@ void HOST_PhdcManagerTask(void *param)
                 usb_echo("Error in USB_HostPhdcRecv: %x\r\n", status);
             }
             break;
-        case kRunDataReceived:
+        case kUSB_HostPhdcRunDataReceived:
             PHDC_ManagerRecvComplete(param);
-            phdcManagerInstance->runWaitState = kRunWaitDataReceived;
-            phdcManagerInstance->runState = kRunIdle;
+            phdcManagerInstance->runWaitState = kUSB_HostPhdcRunWaitDataReceived;
+            phdcManagerInstance->runState = kUSB_HostPhdcRunIdle;
             status = USB_HostPhdcRecv(phdcManagerInstance->classHandle, 0xFEU, phdcManagerInstance->recvDataBuffer,
                                       APDU_MAX_BUFFER_SIZE, PHDC_ManagerBulkInCallback, phdcManagerInstance);
             if (status != kStatus_USB_Success)
@@ -1860,9 +1861,9 @@ void HOST_PhdcManagerTask(void *param)
             }
             break;
 
-        case kRunPrimeDataReceive:
-            phdcManagerInstance->runWaitState = kRunWaitDataReceived;
-            phdcManagerInstance->runState = kRunIdle;
+        case kUSB_HostPhdcRunPrimeDataReceive:
+            phdcManagerInstance->runWaitState = kUSB_HostPhdcRunWaitDataReceived;
+            phdcManagerInstance->runState = kUSB_HostPhdcRunIdle;
             status = USB_HostPhdcRecv(phdcManagerInstance->classHandle, 0xFEU, phdcManagerInstance->recvDataBuffer,
                                       APDU_MAX_BUFFER_SIZE, PHDC_ManagerBulkInCallback, phdcManagerInstance);
             if (status != kStatus_USB_Success)

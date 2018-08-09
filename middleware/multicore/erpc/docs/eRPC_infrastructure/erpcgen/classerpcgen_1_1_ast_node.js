@@ -18,7 +18,7 @@ var classerpcgen_1_1_ast_node =
     [ "end", "classerpcgen_1_1_ast_node.html#a1256929971e46c6b71298b3aa0ed3e37", null ],
     [ "getAttribute", "classerpcgen_1_1_ast_node.html#abbb9fcfb549677f64e71b3345b17ef53", null ],
     [ "getChild", "classerpcgen_1_1_ast_node.html#a651cbcd73e0c4c0b75b8c21334bf3bbd", null ],
-    [ "getDescription", "classerpcgen_1_1_ast_node.html#ab2dfef2691fc7d9acaa2731732cb7e6f", null ],
+    [ "getDescription", "classerpcgen_1_1_ast_node.html#a814dc8085d1ac2fe4290200f514fdece", null ],
     [ "getIndex", "classerpcgen_1_1_ast_node.html#a077d782a18bdfb22d8a10a828481088c", null ],
     [ "getIndexOfChild", "classerpcgen_1_1_ast_node.html#aed311b11f950bd3cf65e1a66e96a3cc1", null ],
     [ "getParent", "classerpcgen_1_1_ast_node.html#a71886c95f8fe70f115ccba2883cb4f08", null ],

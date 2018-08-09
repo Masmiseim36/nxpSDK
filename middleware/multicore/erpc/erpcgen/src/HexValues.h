@@ -41,7 +41,7 @@
 //! \brief Determines whether \a c is a hex digit character.
 bool isHexDigit(char c);
 
-//! \brief Converts a hexidecimal character to the integer equivalent.
+//! \brief Converts a hexadecimal character to the integer equivalent.
 uint8_t hexCharToInt(char c);
 
 //! \brief Converts a hex-encoded byte to the integer equivalent.

@@ -2,9 +2,7 @@ var searchData=
 [
   ['semantic_5ferror',['semantic_error',['../classerpcgen_1_1semantic__error.html',1,'erpcgen']]],
   ['setoutputlevel',['SetOutputLevel',['../class_log_1_1_set_output_level.html',1,'Log']]],
-  ['sizedintegervalue',['SizedIntegerValue',['../class_sized_integer_value.html',1,'']]],
   ['smart_5fptr',['smart_ptr',['../classsmart__ptr.html',1,'']]],
-  ['smart_5fptr_3c_20value_20_3e',['smart_ptr&lt; Value &gt;',['../classsmart__ptr.html',1,'']]],
   ['smart_5fptr_5fdelete',['smart_ptr_delete',['../structsmart__ptr__delete.html',1,'']]],
   ['smart_5fptr_5fdelete_5farray',['smart_ptr_delete_array',['../structsmart__ptr__delete__array.html',1,'']]],
   ['smart_5fptr_5ffree',['smart_ptr_free',['../structsmart__ptr__free.html',1,'']]],

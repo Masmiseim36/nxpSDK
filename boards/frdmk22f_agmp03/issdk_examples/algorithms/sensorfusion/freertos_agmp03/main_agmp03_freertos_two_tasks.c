@@ -1,6 +1,6 @@
 /*
  * The Clear BSD License
- * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
@@ -60,7 +60,6 @@
 #include "mag3110.h"            // register address and bit field definitions
 #include "register_io_i2c.h"
 #include "fsl_i2c_cmsis.h"
-//#include "fsl_dspi_cmsis.h"
 
 // Sensor Fusion Headers
 #include "sensor_fusion.h"      // top level magCal and sensor fusion interfaces
@@ -100,10 +99,18 @@ int main(void)
     initializeStatusSubsystem(&statusSubsystem);                        // configure pins and ports for the status sub-system
     initSensorFusionGlobals(&sfg, &statusSubsystem, &controlSubsystem); // Initialize sensor fusion structures
     // "install" the sensors we will be using
+#if F_USING_GYRO
     sfg.installSensor(&sfg, &sensors[0], FXAS21002_I2C_ADDR, 1, (void*) I2Cdrv, &i2cBusInfo, FXAS21002_Init, FXAS21002_Read);
+#endif
+#if F_USING_MAG
     sfg.installSensor(&sfg, &sensors[1], MAG3110_I2C_ADDR,   1, (void*) I2Cdrv, &i2cBusInfo, MAG3110_Init,  MAG3110_Read);
+#endif
+#if F_USING_PRESSURE
     sfg.installSensor(&sfg, &sensors[2], MPL3115_I2C_ADDR,   1, (void*) I2Cdrv, &i2cBusInfo, MPL3115_Init,  MPL3115_Read);
+#endif
+#if F_USING_ACCEL
     sfg.installSensor(&sfg, &sensors[3], FXLS8962_I2C_ADDR,  1, (void*) I2Cdrv, &i2cBusInfo, FXLS8962_Init,  FXLS8962_Read);
+#endif
     sfg.initializeFusionEngine(&sfg);	        // This will initialize sensors and magnetic calibration
 
     event_group = xEventGroupCreate();

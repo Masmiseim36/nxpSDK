@@ -1,7 +1,7 @@
 /*
  * The Clear BSD License
  * Copyright (c) 2015 -2016, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016, 2018 NXP
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -45,41 +45,33 @@
 
 #define EP_TYPE_MASK (0x03)
 
-/*! @brief host audio speaker app device attach/detach status */
-typedef enum _host_audio_app_state
-{
-    kStatus_DEV_Idle = 0, /*!< there is no device attach/detach */
-    kStatus_DEV_Attached, /*!< device is attached */
-    kStatus_DEV_Detached, /*!< device is detached */
-} host_audio_app_state_t;
-
 /*! @brief host app run status */
 typedef enum __host_audio_app_runState
 {
-    kRunIdle = 0,                    /*!< idle */
-    kRunSetControlInterface,         /*!< execute set control interface code */
-    kRunSetControlInterfaceDone,     /*!<  set control interface done */
-    kRunWaitSetControlInterface,     /*!< wait control interface done */
-    kRunWaitSetStreamInterface,      /*!< wait steam interface done */
-    kRunSetInterfaceDone,            /*!< set interface done */
-    kRunWaitGetStreamDescriptor,     /*!< wait get stream descriotor */
-    kRunGetStreamDescriptorDone,     /*!< get stream descriotor done */
-    kRunWaitAudioGetMinVolume,       /*!< wait get minimum volume command done */
-    kRunAudioGetMaxVolume,           /*!< execute get maximum volume command done */
-    kRunWaitAudioGetMaxVolume,       /*!< wait get maximum volume command done */
-    kRunAudioGetResVolume,           /*!< execute get res volume command done */
-    kRunWaitAudioGetResVolume,       /*!< wait get res volume command done */
-    kRunAudioConfigChannel,          /*!< execute config audio channel */
-    kRunWaitAudioConfigChannel,      /*!< wait config audio channel */
-    kRunAudioConfigChannel1Vol,      /*!< execute config audio channel 1*/
-    kRunWaitAudioConfigChannel1Vol,  /*!< wait config audio channel 1*/
-    kRunAudioConfigChannel2Vol,      /*!< execute config audio channel 2*/
-    kRunWaitAudioConfigChannel2Vol,  /*!< wait config audio channel 2*/
-    kRunWaitAudioSetCurSamplingFreq, /*!< wait config audio set sampling freq*/
-    kRunAudioSetCurSamplingFreq,     /*!< execute audio set current sampling freq*/
-    kRunAudioConfigMute,             /*!< execute audio config mute*/
-    kRunWaitAudioConfigMute,         /*!< wait audio config mute*/
-    kRunAudioDone,                   /*!< audio done */
+    kUSB_HostAudioRunIdle = 0,                    /*!< idle */
+    kUSB_HostAudioRunSetControlInterface,         /*!< execute set control interface code */
+    kUSB_HostAudioRunSetControlInterfaceDone,     /*!<  set control interface done */
+    kUSB_HostAudioRunWaitSetControlInterface,     /*!< wait control interface done */
+    kUSB_HostAudioRunWaitSetStreamInterface,      /*!< wait steam interface done */
+    kUSB_HostAudioRunSetInterfaceDone,            /*!< set interface done */
+    kUSB_HostAudioRunWaitGetStreamDescriptor,     /*!< wait get stream descriotor */
+    kUSB_HostAudioRunGetStreamDescriptorDone,     /*!< get stream descriotor done */
+    kUSB_HostAudioRunWaitAudioGetMinVolume,       /*!< wait get minimum volume command done */
+    kUSB_HostAudioRunAudioGetMaxVolume,           /*!< execute get maximum volume command done */
+    kUSB_HostAudioRunWaitAudioGetMaxVolume,       /*!< wait get maximum volume command done */
+    kUSB_HostAudioRunAudioGetResVolume,           /*!< execute get res volume command done */
+    kUSB_HostAudioRunWaitAudioGetResVolume,       /*!< wait get res volume command done */
+    kUSB_HostAudioRunAudioConfigChannel,          /*!< execute config audio channel */
+    kUSB_HostAudioRunWaitAudioConfigChannel,      /*!< wait config audio channel */
+    kUSB_HostAudioRunAudioConfigChannel1Vol,      /*!< execute config audio channel 1*/
+    kUSB_HostAudioRunWaitAudioConfigChannel1Vol,  /*!< wait config audio channel 1*/
+    kUSB_HostAudioRunAudioConfigChannel2Vol,      /*!< execute config audio channel 2*/
+    kUSB_HostAudioRunWaitAudioConfigChannel2Vol,  /*!< wait config audio channel 2*/
+    kUSB_HostAudioRunWaitAudioSetCurSamplingFreq, /*!< wait config audio set sampling freq*/
+    kUSB_HostAudioRunAudioSetCurSamplingFreq,     /*!< execute audio set current sampling freq*/
+    kUSB_HostAudioRunAudioConfigMute,             /*!< execute audio config mute*/
+    kUSB_HostAudioRunWaitAudioConfigMute,         /*!< wait audio config mute*/
+    kUSB_HostAudioRunAudioDone,                   /*!< audio done */
 } host_audio_app_runState_t;
 
 /*! @brief USB host audio instance structure */

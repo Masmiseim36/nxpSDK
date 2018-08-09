@@ -24,41 +24,89 @@ interface MatrixMultiplyService // cover functions for same topic
 }
 ```
 
-Footprint - release target, error checking code in shim code is enabled:
- - client - shim code file: _erpc_matrix_multiply_client.o_
+_Footprint - release target, error checking code in shim code is enabled, compiled in IAR 8.20.1.14188:_
+ - **client - shim code file: _erpc_matrix_multiply_client.o_**
 
 file name | ro code | ro data |rw data
 ---|---|---|---
-basic_codec.o                   |   194   |   200   |     0
-client_manager.o                |   260   |    32   |     0
-crc16.o                         |    48   |     0   |     0
-erpc_client_setup.o             |   164   |    24   |    48
-erpc_matrix_multiply_client.o   |   412   |     8   |     0
-erpc_port_stdlib.o              |    16   |     0   |     0
-erpc_setup_mbf_dynamic.o        |    74   |    32   |     8
-erpc_setup_uart_cmsis.o         |    28   |     0   |    16
-framed_transport.o              |   136   |     0   |     0
-message_buffer.o                |    98   |     0   |     0
-uart_cmsis_transport.o          |   152   |    44   |     2
+basic_codec.o                   |    296   |   192   |     0
+client_manager.o                |    302   |    36   |     0
+crc16.o                         |     64   |     0   |     0
+erpc_client_setup.o             |    174   |    24   |    48
+erpc_matrix_multiply_client.o   |    288   |     4   |     0
+erpc_port_stdlib.o              |     32   |     0   |     0
+erpc_setup_mbf_dynamic.o        |     78   |    32   |     8
+erpc_setup_uart_cmsis.o         |     36   |     0   |    16
+framed_transport.o              |    142   |     0   |     0
+message_buffer.o                |     98   |     0   |     0
+uart_cmsis_transport.o          |    192   |    44   |     2
 ---|---|---|---
-**Total:**                          |  **1582**   |   **340**   |    **74**
+**Total:**                      | **1702** | **332** | **74**
+
+shim code | ro code | ro data |rw data
+---|---|---|---
+minimum shim size               |     96   |    0    |    0
+interface                       |      0   |    0    |    0
+oneway function                 |     80   |    0    |    0
+void function                   |     80   |    0    |    0
+in int                          |     16   |    0    |    0
+out int                         |     16   |    0    |    0
+in enum                         |     16   |    0    |    0
+out enum                        |     20   |    0    |    0
+in list @length                 |     48   |    0    |    0
+out list @length                |     68   |    0    |    0
+in array                        |     24   |    0    |    0
+out array                       |     24   |    0    |    0
+in struct{int}                  |     16   |    0    |    0
+out struct{int}                 |     16   |    0    |    0
+in struct{int} @shared          |     16   |    0    |    0
+in union{int,int}               |     44   |    0    |    0
+out union{int,int}              |     52   |    0    |    0
+in string                       |     24   |    0    |    0
+out string                      |     60   |    0    |    0
+in string @nullable             |     48   |    0    |    0
+out string @nullable            |     80   |    0    |    0
 
 
- - server - shim code file: _erpc_matrix_multiply_server.o_
+ - **server - shim code file: _erpc_matrix_multiply_server.o_**
 
 file name | ro code | ro data |rw data
 ---|---|---|---
-basic_codec.o                  |    194   |   200    |    0
-crc16.o                        |     48   |     0    |    0
-erpc_matrix_multiply_server.o  |    432   |    28    |    0
-erpc_port_stdlib.o             |     16   |     0    |    0
-erpc_server_setup.o            |    184   |    24    |   48
-erpc_setup_mbf_dynamic.o       |     74   |    32    |    8
-erpc_setup_uart_cmsis.o        |     28   |     0    |   16
-framed_transport.o             |    136   |     0    |    0
+basic_codec.o                  |    296   |   192    |    0
+crc16.o                        |     64   |     0    |    0
+erpc_matrix_multiply_server.o  |    316   |    24    |    16
+erpc_port_stdlib.o             |     32   |     0    |    0
+erpc_server_setup.o            |    230   |    24    |   48
+erpc_setup_mbf_dynamic.o       |     78   |    32    |    8
+erpc_setup_uart_cmsis.o        |     36   |     0    |   16
+framed_transport.o             |    142   |     0    |    0
 message_buffer.o               |    108   |     0    |    0
-server.o                       |    120   |     0    |    0
-simple_server.o                |    240   |    36    |    0
-uart_cmsis_transport.o         |    156   |    44    |    2
+server.o                       |    118   |     0    |    0
+simple_server.o                |    360   |    40    |    0
+uart_cmsis_transport.o         |    196   |    44    |    2
 ---|---|---|---
-**Total:**                         |   **1736**   |   **364**    |   **74**
+**Total:**                     | **1976** | **356**  | **90**
+
+shim code | ro code | ro data |rw data
+---|---|---|---
+minimum shim size              |     48   |    20    |   16
+interface                      |     36   |     0    |    0
+oneway function                |     12   |     0    |    0
+void function                  |     76   |     0    |    0
+in int                         |     12   |     0    |    0
+out int                        |     12   |     0    |    0
+in enum                        |     12   |     0    |    0
+out enum                       |     12   |     0    |    0
+in list @length                |     88   |     0    |    0
+out list @length               |     88   |     0    |    0
+in array                       |     32   |     0    |    0
+out array                      |     24   |     0    |    0
+in struct{int}                 |     48   |     0    |    0
+out struct{int}                |     48   |     0    |    0
+in struct{int} @shared         |     16   |     0    |    0
+in union{int,int}              |     68   |     0    |    0
+out union{int,int}             |     76   |     0    |    0
+in string                      |     72   |     0    |    0
+out string                     |     76   |     0    |    0
+in string @nullable            |     92   |     0    |    0
+out string @nullable           |    108   |     0    |    0

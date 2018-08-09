@@ -66,6 +66,9 @@ typedef enum
 /*! @brief Definition of pipe structure. */
 typedef struct _usb_device_phdc_pipe
 {
+    uint8_t *pipeDataBuffer;      /*!< pipe data buffer backup when stall */
+    uint32_t pipeDataLen;         /*!< pipe data length backup when stall  */
+    uint8_t pipeStall;            /*!< pipe is stall  */
     uint8_t ep;     /*!< The endpoint number of the pipe. */
     uint8_t isBusy; /*!< 1: The pipe is transferring packet, 0: The pipe is idle. */
 } usb_device_phdc_pipe_t;

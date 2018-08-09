@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['kbasiccodecversion',['kBasicCodecVersion',['../classerpc_1_1_basic_codec.html#a41fd14db0b41fabf23c177a342ae0ff5',1,'erpc::BasicCodec']]],
+  ['kbasiccodecversion',['kBasicCodecVersion',['../classerpc_1_1_basic_codec.html#a548211f98d9af26e1776e2193cf58d6e',1,'erpc::BasicCodec']]],
   ['kerpcstatus_5fbadaddressscale',['kErpcStatus_BadAddressScale',['../group__infra.html#ggacf5d3df9e7a78f29bc823b71f1529752aacb677f121aad621850b6d6639b738e0',1,'erpc_common.h']]],
   ['kerpcstatus_5fbufferoverrun',['kErpcStatus_BufferOverrun',['../group__infra.html#ggacf5d3df9e7a78f29bc823b71f1529752a3bff393dd25fb3a82cb6742c012959c7',1,'erpc_common.h']]],
   ['kerpcstatus_5fconnectionclosed',['kErpcStatus_ConnectionClosed',['../group__infra.html#ggacf5d3df9e7a78f29bc823b71f1529752adc60b9b2440d0fcc2ca34938e3b25072',1,'erpc_common.h']]],
@@ -19,5 +19,6 @@ var searchData=
   ['kerpcstatus_5fsuccess',['kErpcStatus_Success',['../group__infra.html#ggacf5d3df9e7a78f29bc823b71f1529752aad3aa76a604b7bd6c3828c50b33dca33',1,'erpc_common.h']]],
   ['kerpcstatus_5ftimeout',['kErpcStatus_Timeout',['../group__infra.html#ggacf5d3df9e7a78f29bc823b71f1529752a7aa4608aa8a74a398c117e2b8ba3ef7e',1,'erpc_common.h']]],
   ['kerpcstatus_5funknowncallback',['kErpcStatus_UnknownCallback',['../group__infra.html#ggacf5d3df9e7a78f29bc823b71f1529752af4a6ec9c941efc86e332dc9af9c96a4c',1,'erpc_common.h']]],
-  ['kerpcstatus_5funknownname',['kErpcStatus_UnknownName',['../group__infra.html#ggacf5d3df9e7a78f29bc823b71f1529752aff42f37fa0019fe4e4186b9c78839ca6',1,'erpc_common.h']]]
+  ['kerpcstatus_5funknownname',['kErpcStatus_UnknownName',['../group__infra.html#ggacf5d3df9e7a78f29bc823b71f1529752aff42f37fa0019fe4e4186b9c78839ca6',1,'erpc_common.h']]],
+  ['kwaitforever',['kWaitForever',['../classerpc_1_1_semaphore.html#a2f8418d5b20e94a577caa0d0e428c441',1,'erpc::Semaphore']]]
 ];

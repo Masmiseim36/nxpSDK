@@ -16,7 +16,7 @@
 </g>
 <!-- Node2 -->
 <g id="node2" class="node"><title>Node2</title>
-<g id="a_node2"><a xlink:href="classerpc_1_1_message_logger.html" target="_top" xlink:title="erpc::MessageLogger">
+<g id="a_node2"><a xlink:href="classerpc_1_1_message_logger.html" target="_top" xlink:title="Logging messages objects used for logging sent/received messages. ">
 <polygon fill="white" stroke="black" points="3,-67.5 3,-86.5 113,-86.5 113,-67.5 3,-67.5"/>
 <text text-anchor="middle" x="58" y="-74.5" font-family="Helvetica,sans-Serif" font-size="10.00">erpc::MessageLogger</text>
 </a>

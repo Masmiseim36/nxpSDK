@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC API Reference
-   &#160;<span id="projectnumber">Rev. 1.5.0</span>
+   &#160;<span id="projectnumber">Rev. 1.7.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -51,7 +51,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li class="current"><a href="modules.html"><span>API&#160;Reference</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -104,7 +103,6 @@ $(document).ready(function(){initNavTree('group__mu__transport.html','');});
 <div class="header">
   <div class="summary">
 <a href="#files">Files</a> &#124;
-<a href="#namespaces">Namespaces</a> &#124;
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
@@ -128,13 +126,7 @@ $(document).ready(function(){initNavTree('group__mu__transport.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="files"></a>
 Files</h2></td></tr>
-<tr class="memitem:mu__transport_8h"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mu__transport_8h.html">mu_transport.h</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
-Namespaces</h2></td></tr>
-<tr class="memitem:namespaceerpc"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceerpc.html">erpc</a></td></tr>
-<tr class="memdesc:namespaceerpc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logging messages objects used for logging sent/received messages. <br /></td></tr>
+<tr class="memitem:erpc__mu__transport_8h"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="erpc__mu__transport_8h.html">erpc_mu_transport.h</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
@@ -147,27 +139,6 @@ Classes</h2></td></tr>
 Macros</h2></td></tr>
 <tr class="memitem:gaa82790221f23bdec962980cdefd23108"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__mu__transport.html#gaa82790221f23bdec962980cdefd23108">MU_REG_COUNT</a></td></tr>
 <tr class="separator:gaa82790221f23bdec962980cdefd23108"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab46d8678232d9eac704c64a9e8c5c16c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gab46d8678232d9eac704c64a9e8c5c16c"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>MU_LAST_REG_IDX</b></td></tr>
-<tr class="separator:gab46d8678232d9eac704c64a9e8c5c16c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7f9e1ae36443eadbb7414692e603d314"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga7f9e1ae36443eadbb7414692e603d314"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>MU_RX_Interrupt_Handler</b>(x)</td></tr>
-<tr class="separator:ga7f9e1ae36443eadbb7414692e603d314"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1e060797899b8ea1f620b6077f52cf13"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga1e060797899b8ea1f620b6077f52cf13"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>MU_RX_Interrupt</b>(number)</td></tr>
-<tr class="separator:ga1e060797899b8ea1f620b6077f52cf13"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaea9284195af2b00eb0d192e32fc406bb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaea9284195af2b00eb0d192e32fc406bb"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>MU_RxFullFlagISRCallback</b></td></tr>
-<tr class="separator:gaea9284195af2b00eb0d192e32fc406bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0f3ba00bcb4962a2c3c544bc6c5e3cf3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga0f3ba00bcb4962a2c3c544bc6c5e3cf3"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>MU_TX_Interrupt_Handler</b>(x)</td></tr>
-<tr class="separator:ga0f3ba00bcb4962a2c3c544bc6c5e3cf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae2b6701c99713e1b5c479ba78e4d853e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gae2b6701c99713e1b5c479ba78e4d853e"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>MU_TX_Interrupt</b>(number)</td></tr>
-<tr class="separator:gae2b6701c99713e1b5c479ba78e4d853e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaaa7c9240d2edda6f8d3e6dd4ab2cf93c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaaa7c9240d2edda6f8d3e6dd4ab2cf93c"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>MU_TxEmptyFlagISRCallback</b></td></tr>
-<tr class="separator:gaaa7c9240d2edda6f8d3e6dd4ab2cf93c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a class="anchor" id="gaa82790221f23bdec962980cdefd23108"></a>
@@ -179,7 +150,7 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>&lt; Count of MU tx/rx registers to be used by this transport layer. Keep one MU channel for MCMGR operations. </p>
+<p>Count of MU tx/rx registers to be used by this transport layer </p>
 
 </div>
 </div>

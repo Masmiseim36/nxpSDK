@@ -1,6 +1,6 @@
 /*
  * The Clear BSD License
- * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright (c) 2017, Freescale Semiconductor, Inc.
  * Copyright 2017 NXP
  * All rights reserved.
  *
@@ -75,9 +75,9 @@
 #define MPXV5004DP_STREAM_DATA_SIZE 6U
 
 /*! @brief Unique Name for this application which should match the target GUI pkg name. */
-#define APPLICATION_NAME "MPXV5004DP"
+#define APPLICATION_NAME "Analog Pressure Sensor Demo (MPXV5004DP)"
 /*! @brief Version to distinguish between instances the same application based on target Shield and updates. */
-#define APPLICATION_VERSION "1.0"
+#define APPLICATION_VERSION "2.5"
 
 //-----------------------------------------------------------------------
 // Data Types
@@ -98,6 +98,7 @@ volatile bool bAdc12ConversionCompletedFlag = false, bStreamingEnabled = false, 
 adc12_channel_config_t gAdcChannelConfigStruct;
 volatile uint32_t gAdcConversionValue;
 uint8_t gStreamID; /* The auto assigned Stream ID. */
+int32_t gSystick;
 GENERIC_DRIVER_GPIO *pGpioDriver = &Driver_GPIO_KSDK;
 
 //-----------------------------------------------------------------------
@@ -210,6 +211,7 @@ bool process_host_command(
             case HOST_CMD_START:
                 if (hostCommand[1] == gStreamID && bDp5004Ready && bStreamingEnabled == false)
                 {
+                    BOARD_SystickStart(&gSystick);
                     bStreamingEnabled = true;
                     LPTMR_StartTimer(LPTMR0);
                     success = true;
@@ -238,7 +240,7 @@ bool process_host_command(
  */
 int main(void)
 {
-    int32_t status, systick;
+    int32_t status;
     dp5004_pressuredata_t rawData = {.timestamp = 0};
     uint8_t streamingPacket[STREAMING_HEADER_LEN + MPXV5004DP_STREAM_DATA_SIZE];
 
@@ -294,7 +296,6 @@ int main(void)
     {
         /*! Populate streaming header. */
         Host_IO_Add_ISO_Header(gStreamID, streamingPacket, MPXV5004DP_STREAM_DATA_SIZE);
-        BOARD_SystickStart(&systick);
         pGpioDriver->clr_pin(&GREEN_LED); /* Set LED to indicate application is ready. */
     }
 
@@ -314,7 +315,7 @@ int main(void)
         }
 
         /* Update timestamp from Systick framework. */
-        rawData.timestamp += BOARD_SystickElapsedTime_us(&systick);
+        rawData.timestamp += BOARD_SystickElapsedTime_us(&gSystick);
 
         rawData.pressure = (uint16_t)MPXV5004DP_PRESSURE_FROM_ADC_VALUE(gAdcConversionValue);
 

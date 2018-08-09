@@ -11,8 +11,8 @@
 <polygon fill="white" stroke="none" points="-4,4 -4,-385 471,-385 471,4 -4,4"/>
 <!-- Node1 -->
 <g id="node1" class="node"><title>Node1</title>
-<polygon fill="#bfbfbf" stroke="black" points="0,-95.5 0,-114.5 82,-114.5 82,-95.5 0,-95.5"/>
-<text text-anchor="middle" x="41" y="-102.5" font-family="Helvetica,sans-Serif" font-size="10.00">erpc::Transport</text>
+<polygon fill="#bfbfbf" stroke="black" points="0,-38.5 0,-57.5 82,-57.5 82,-38.5 0,-38.5"/>
+<text text-anchor="middle" x="41" y="-45.5" font-family="Helvetica,sans-Serif" font-size="10.00">erpc::Transport</text>
 </g>
 <!-- Node2 -->
 <g id="node2" class="node"><title>Node2</title>
@@ -24,8 +24,8 @@
 </g>
 <!-- Node1&#45;&gt;Node2 -->
 <g id="edge1" class="edge"><title>Node1&#45;&gt;Node2</title>
-<path fill="none" stroke="midnightblue" d="M56.7201,-122.735C71.1088,-139.289 94.2589,-163.936 118,-181 134.256,-192.685 154.641,-202.613 170.28,-209.388"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="59.1895,-120.236 50.0376,-114.898 53.8632,-124.778 59.1895,-120.236"/>
+<path fill="none" stroke="midnightblue" d="M48.7516,-67.1027C59.5219,-95.2223 83.0096,-147.986 118,-181 131.591,-193.823 150.335,-203.229 165.868,-209.475"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="51.9984,-65.7915 45.2489,-57.6249 45.4325,-68.2181 51.9984,-65.7915"/>
 </g>
 <!-- Node10 -->
 <g id="node10" class="node"><title>Node10</title>
@@ -37,8 +37,8 @@
 </g>
 <!-- Node1&#45;&gt;Node10 -->
 <g id="edge9" class="edge"><title>Node1&#45;&gt;Node10</title>
-<path fill="none" stroke="midnightblue" d="M67.2873,-119.406C81.7816,-127.21 100.517,-136.548 118,-143 127.886,-146.648 138.745,-149.821 149.099,-152.474"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="68.8811,-116.288 58.4307,-114.545 65.5129,-122.425 68.8811,-116.288"/>
+<path fill="none" stroke="midnightblue" d="M51.7387,-66.4146C64.1804,-88.1068 87.771,-123.635 118,-143 124.107,-146.912 130.965,-150.019 138,-152.486"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="54.7265,-64.5851 46.8229,-57.5293 48.6014,-67.9738 54.7265,-64.5851"/>
 </g>
 <!-- Node11 -->
 <g id="node11" class="node"><title>Node11</title>
@@ -50,12 +50,12 @@
 </g>
 <!-- Node1&#45;&gt;Node11 -->
 <g id="edge10" class="edge"><title>Node1&#45;&gt;Node11</title>
-<path fill="none" stroke="midnightblue" d="M92.151,-111.248C109.748,-113.441 129.453,-115.896 146.839,-118.062"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="92.4236,-107.755 82.0676,-109.992 91.5581,-114.702 92.4236,-107.755"/>
+<path fill="none" stroke="midnightblue" d="M59.6535,-64.5104C74.2548,-77.3175 96.0818,-94.5883 118,-105 127.024,-109.286 137.121,-112.673 146.947,-115.325"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="61.7192,-61.6607 51.9454,-57.5712 57.0357,-66.8631 61.7192,-61.6607"/>
 </g>
 <!-- Node12 -->
 <g id="node12" class="node"><title>Node12</title>
-<g id="a_node12"><a xlink:href="classerpc_1_1_r_p_msg_base_transport.html" target="_top" xlink:title="Transport that other RPMsg transports inherts. ">
+<g id="a_node12"><a xlink:href="classerpc_1_1_r_p_msg_base_transport.html" target="_top" xlink:title="Transport that other RPMsg transports inherits. ">
 <polygon fill="white" stroke="black" points="127,-76.5 127,-95.5 264,-95.5 264,-76.5 127,-76.5"/>
 <text text-anchor="middle" x="195.5" y="-83.5" font-family="Helvetica,sans-Serif" font-size="10.00">erpc::RPMsgBaseTransport</text>
 </a>
@@ -63,12 +63,12 @@
 </g>
 <!-- Node1&#45;&gt;Node12 -->
 <g id="edge11" class="edge"><title>Node1&#45;&gt;Node12</title>
-<path fill="none" stroke="midnightblue" d="M92.0524,-98.764C103.221,-97.3724 115.244,-95.8745 126.987,-94.4115"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="91.5581,-95.2984 82.0676,-100.008 92.4236,-102.245 91.5581,-95.2984"/>
+<path fill="none" stroke="midnightblue" d="M90.122,-60.0424C99.3737,-62.3542 108.987,-64.7541 118,-67 130.349,-70.0772 143.822,-73.4261 155.972,-76.4432"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="90.8207,-56.6094 80.2704,-57.5798 89.1231,-63.4005 90.8207,-56.6094"/>
 </g>
 <!-- Node16 -->
 <g id="node16" class="node"><title>Node16</title>
-<g id="a_node16"><a xlink:href="classerpc_1_1_r_p_msg_linux_transport.html" target="_top" xlink:title="RPMSG linux transport to send/receive messages through RPMSG endpoints based on https://github.com/NXPmicro/rpmsg&#45;sysfs/tree/0aa1817545a765c200b1b2f9b6680a420dcf9171 implementation. ">
+<g id="a_node16"><a xlink:href="classerpc_1_1_r_p_msg_linux_transport.html" target="_top" xlink:title="RPMSG Linux transport to send/receive messages through RPMSG endpoints based on https://github.com/codeauroraforum/rpmsg&#45;sysfs/tree/0aa1817545a765c200b1b2f9b6680a420dcf9171 implementation. ">
 <polygon fill="white" stroke="black" points="127,-38.5 127,-57.5 264,-57.5 264,-38.5 127,-38.5"/>
 <text text-anchor="middle" x="195.5" y="-45.5" font-family="Helvetica,sans-Serif" font-size="10.00">erpc::RPMsgLinuxTransport</text>
 </a>
@@ -76,8 +76,23 @@
 </g>
 <!-- Node1&#45;&gt;Node16 -->
 <g id="edge15" class="edge"><title>Node1&#45;&gt;Node16</title>
-<path fill="none" stroke="midnightblue" d="M67.2873,-90.5941C81.7816,-82.7899 100.517,-73.4521 118,-67 127.886,-63.3517 138.745,-60.1792 149.099,-57.5263"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="65.5129,-87.5755 58.4307,-95.4554 68.8811,-93.7118 65.5129,-87.5755"/>
+<path fill="none" stroke="midnightblue" d="M59.4049,-34.5455C92.4054,-24.3572 162.89,-25.6252 186.561,-38.3493"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="57.7313,-31.4468 49.7722,-38.4398 60.355,-37.9365 57.7313,-31.4468"/>
+</g>
+<!-- Node1&#45;&gt;Node16 -->
+<g id="edge16" class="edge"><title>Node1&#45;&gt;Node16</title>
+<path fill="none" stroke="midnightblue" d="M92.3945,-41.6074C103.467,-41.2899 115.364,-41.1839 126.987,-41.2895"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="91.9361,-38.1215 82.0676,-41.9767 92.1863,-45.117 91.9361,-38.1215"/>
+</g>
+<!-- Node1&#45;&gt;Node16 -->
+<g id="edge17" class="edge"><title>Node1&#45;&gt;Node16</title>
+<path fill="none" stroke="midnightblue" d="M92.3945,-54.3926C103.467,-54.7101 115.364,-54.8161 126.987,-54.7105"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="92.1863,-50.883 82.0676,-54.0233 91.9361,-57.8785 92.1863,-50.883"/>
+</g>
+<!-- Node1&#45;&gt;Node16 -->
+<g id="edge18" class="edge"><title>Node1&#45;&gt;Node16</title>
+<path fill="none" stroke="midnightblue" d="M59.4049,-61.4545C92.4054,-71.6428 162.89,-70.3748 186.561,-57.6507"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="60.355,-58.0635 49.7722,-57.5602 57.7313,-64.5532 60.355,-58.0635"/>
 </g>
 <!-- Node17 -->
 <g id="node17" class="node"><title>Node17</title>
@@ -88,9 +103,9 @@
 </g>
 </g>
 <!-- Node1&#45;&gt;Node17 -->
-<g id="edge16" class="edge"><title>Node1&#45;&gt;Node17</title>
-<path fill="none" stroke="midnightblue" d="M55.0575,-87.1811C68.7916,-69.7354 91.9931,-43.6984 118,-29 124.91,-25.0947 132.616,-21.9837 140.402,-19.5075"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="52.0579,-85.3424 48.7737,-95.4154 57.6227,-89.589 52.0579,-85.3424"/>
+<g id="edge19" class="edge"><title>Node1&#45;&gt;Node17</title>
+<path fill="none" stroke="midnightblue" d="M90.122,-35.9576C99.3737,-33.6458 108.987,-31.2459 118,-29 130.349,-25.9228 143.822,-22.5739 155.972,-19.5568"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="89.1231,-32.5995 80.2704,-38.4202 90.8207,-39.3906 89.1231,-32.5995"/>
 </g>
 <!-- Node3 -->
 <g id="node3" class="node"><title>Node3</title>

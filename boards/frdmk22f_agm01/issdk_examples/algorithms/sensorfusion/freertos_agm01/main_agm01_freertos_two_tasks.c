@@ -1,6 +1,6 @@
 /*
  * The Clear BSD License
- * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
@@ -108,6 +108,7 @@ int main(void)
     sfg.setStatus(&sfg, NORMAL);                // If we got this far, let's set status state to NORMAL
     vTaskStartScheduler();                      // Start the RTOS scheduler
     sfg.setStatus(&sfg, HARD_FAULT);            // If we got this far, FreeRTOS does not have enough memory allocated
+    // Program Arduino A0 pin as output
     for (;;) ;
 }
 

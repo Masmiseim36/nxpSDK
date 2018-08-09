@@ -1,6 +1,6 @@
 /*
  * The Clear BSD License
- * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
@@ -64,29 +64,50 @@
 //-----------------------------------------------------------------------
 // Macros
 //-----------------------------------------------------------------------
-#define FXAS21002_STREAM_DATA_SIZE 10
+#define FXAS21002_STREAM_DATA_SIZE 12
 
 /*! @brief Unique Name for this application which should match the target GUI pkg name. */
-#define APPLICATION_NAME "FXAS21002C"
+#define APPLICATION_NAME "FXAS21002 Gyroscope Demo"
 /*! @brief Version to distinguish between instances the same application based on target Shield and updates. */
-#define APPLICATION_VERSION "1.0"
+#define APPLICATION_VERSION "2.5"
+/* Number of packets to skip after every restart. */
+#define SKIP_PACKET_COUNT 5
+
+/*! @brief This structure defines the fxas21002 raw data buffer.*/
+typedef struct
+{
+    uint32_t timestamp; /*! The time, this sample was recorded.  */
+    int16_t gyro[3];    /*!< The gyro data */
+    int8_t temp;
+    uint8_t intsrc;
+} fxas21002_gyrodataUser_t;
 
 //-----------------------------------------------------------------------
 // Constants
 //-----------------------------------------------------------------------
 /*! Prepare the register write list to configure FXAS21002 in non-FIFO mode. */
 const registerwritelist_t fxas21002_Config_Isr[] = {
+    /*! Clear F_SETUP */
+    {FXAS21002_F_SETUP, 0x00, 0x00},
     /*! Configure CTRL_REG1 register to put FXAS21002 to 12.5Hz sampling rate. */
     {FXAS21002_CTRL_REG1, FXAS21002_CTRL_REG1_DR_12_5HZ, FXAS21002_CTRL_REG1_DR_MASK},
     /*! Configure CTRL_REG2 register to set interrupt configuration settings. */
-    {FXAS21002_CTRL_REG2, FXAS21002_CTRL_REG2_IPOL_ACTIVE_HIGH | FXAS21002_CTRL_REG2_INT_EN_DRDY_ENABLE |
-                              FXAS21002_CTRL_REG2_INT_CFG_DRDY_INT1,
-     FXAS21002_CTRL_REG2_IPOL_MASK | FXAS21002_CTRL_REG2_INT_EN_DRDY_MASK | FXAS21002_CTRL_REG2_INT_CFG_DRDY_MASK},
+    {FXAS21002_CTRL_REG2, FXAS21002_CTRL_REG2_IPOL_ACTIVE_HIGH | FXAS21002_CTRL_REG2_INT_EN_DRDY_ENABLE | FXAS21002_CTRL_REG2_INT_CFG_DRDY_INT1,
+                          FXAS21002_CTRL_REG2_IPOL_MASK | FXAS21002_CTRL_REG2_INT_EN_DRDY_MASK | FXAS21002_CTRL_REG2_INT_CFG_DRDY_MASK},
+    {FXAS21002_CTRL_REG2, FXAS21002_CTRL_REG2_INT_EN_RT_ENABLE, FXAS21002_CTRL_REG2_INT_EN_RT_MASK},
+    /*! Clear CTRL_REG3 */
+    {FXAS21002_CTRL_REG3, 0x00, 0x00},
     __END_WRITE_DATA__};
 
 /*! Prepare the register read list to read the raw gyro data from the FXAS21002. */
 const registerreadlist_t fxas21002_Output_Values[] = {
     {.readFrom = FXAS21002_OUT_X_MSB, .numBytes = FXAS21002_GYRO_DATA_SIZE}, __END_READ_DATA__};
+
+const registerreadlist_t fxas21002_Reg[] = {
+    {.readFrom = FXAS21002_INT_SRC_FLAG, .numBytes = 1}, __END_READ_DATA__};
+
+const registerreadlist_t fxas21002_Temp[] = {
+    {.readFrom = FXAS21002_TEMP, .numBytes = 1}, __END_READ_DATA__};
 
 //-----------------------------------------------------------------------
 // Global Variables
@@ -94,7 +115,9 @@ const registerreadlist_t fxas21002_Output_Values[] = {
 char boardString[ADS_MAX_STRING_LENGTH] = {0}, shieldString[ADS_MAX_STRING_LENGTH] = {0},
      embAppName[ADS_MAX_STRING_LENGTH] = {0};
 volatile bool bStreamingEnabled = false, bFxas21002DataReady = false, bFxas21002Ready = false;
+volatile uint8_t bSkipPacket = 0;
 uint8_t gStreamID; /* The auto assigned Stream ID. */
+int32_t gSystick;
 GENERIC_DRIVER_GPIO *pGpioDriver = &Driver_GPIO_KSDK;
 
 //-----------------------------------------------------------------------
@@ -165,7 +188,9 @@ bool process_host_command(
             case HOST_CMD_START:
                 if (hostCommand[1] == gStreamID && bFxas21002Ready && bStreamingEnabled == false)
                 {
+                    BOARD_SystickStart(&gSystick);
                     bStreamingEnabled = true;
+                    bSkipPacket = SKIP_PACKET_COUNT;
                     success = true;
                 }
                 break;
@@ -191,11 +216,11 @@ bool process_host_command(
  */
 int main(void)
 {
-    int32_t status, systick;
-    uint8_t data[FXAS21002_GYRO_DATA_SIZE], streamingPacket[STREAMING_HEADER_LEN + FXAS21002_STREAM_DATA_SIZE];
+    int32_t status;
+    uint8_t intSrc, tempOut, data[FXAS21002_GYRO_DATA_SIZE], streamingPacket[STREAMING_HEADER_LEN + FXAS21002_STREAM_DATA_SIZE];
 
     fxas21002_i2c_sensorhandle_t fxas21002Driver;
-    fxas21002_gyrodata_t rawData = {.timestamp = 0};
+    fxas21002_gyrodataUser_t rawData = {.timestamp = 0};
 
     ARM_DRIVER_I2C *pI2Cdriver = &I2C_S_DRIVER;
     ARM_DRIVER_USART *pUartDriver = &HOST_S_DRIVER;
@@ -289,7 +314,6 @@ int main(void)
     {
         /*! Populate streaming header. */
         Host_IO_Add_ISO_Header(gStreamID, streamingPacket, FXAS21002_STREAM_DATA_SIZE);
-        BOARD_SystickStart(&systick);
         pGpioDriver->clr_pin(&GREEN_LED);
     }
 
@@ -318,17 +342,39 @@ int main(void)
             continue;
         }
 
+        // Read intSrc Register of FXAS21002
+        status = FXAS21002_I2C_ReadData(&fxas21002Driver, fxas21002_Reg, &intSrc);
+        if (ARM_DRIVER_OK != status)
+        {
+            return -1;
+        }
+
+        status = FXAS21002_I2C_ReadData(&fxas21002Driver, fxas21002_Temp, &tempOut);
+        if (ARM_DRIVER_OK != status)
+        {
+           return -1;
+        }
+
         /* Update timestamp from Systick framework. */
-        rawData.timestamp += BOARD_SystickElapsedTime_us(&systick);
+        rawData.timestamp += BOARD_SystickElapsedTime_us(&gSystick);
 
         /*! Convert the raw sensor data to signed 16-bit container for display to the debug port. */
         rawData.gyro[0] = ((int16_t)data[0] << 8) | data[1];
         rawData.gyro[1] = ((int16_t)data[2] << 8) | data[3];
         rawData.gyro[2] = ((int16_t)data[4] << 8) | data[5];
+        rawData.temp = tempOut;
+        rawData.intsrc = intSrc;
 
         /* Copy Raw samples to Streaming Buffer. */
         memcpy(streamingPacket + STREAMING_HEADER_LEN, &rawData, FXAS21002_STREAM_DATA_SIZE);
         /* Send streaming packet to Host. */
-        Host_IO_Send(streamingPacket, sizeof(streamingPacket), HOST_FORMAT_HDLC);
+        if(bSkipPacket)
+        {
+            bSkipPacket--;
+        }
+        else
+        {
+            Host_IO_Send(streamingPacket, sizeof(streamingPacket), HOST_FORMAT_HDLC);
+        }
     }
 }

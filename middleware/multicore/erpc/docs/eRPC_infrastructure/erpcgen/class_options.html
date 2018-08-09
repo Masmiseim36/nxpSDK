@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC Generator (erpcgen)
-   &#160;<span id="projectnumber">Rev. 1.5.0</span>
+   &#160;<span id="projectnumber">Rev. 1.7.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -230,22 +230,22 @@ Caveat</h1>
 <p>Ignore case when matching short-options. </p>
 </td></tr>
 <tr><td class="fieldname"><a class="anchor" id="a455ec724e9fbd8a18cb85284a58774b5a4d61357123cfb81ca1d85bf360bc3b10"></a>QUIET&#160;</td><td class="fielddoc">
-<p>Dont print error messages. </p>
+<p>Don't print error messages. </p>
 </td></tr>
 <tr><td class="fieldname"><a class="anchor" id="a455ec724e9fbd8a18cb85284a58774b5ac483ab89c261a64567d7b192ca3e933b"></a>PLUS&#160;</td><td class="fielddoc">
 <p>Allow "+" as a long-option prefix. </p>
 </td></tr>
 <tr><td class="fieldname"><a class="anchor" id="a455ec724e9fbd8a18cb85284a58774b5a42e2f53fb3e419dd5db83870b4982981"></a>SHORT_ONLY&#160;</td><td class="fielddoc">
-<p>Dont accept long-options. </p>
+<p>Don't accept long-options. </p>
 </td></tr>
 <tr><td class="fieldname"><a class="anchor" id="a455ec724e9fbd8a18cb85284a58774b5ab33a744d942ca0879a682bc295525ac4"></a>LONG_ONLY&#160;</td><td class="fielddoc">
-<p>Dont accept short-options (also allows "-" as a long-option prefix). </p>
+<p>Don't accept short-options (also allows "-" as a long-option prefix). </p>
 </td></tr>
 <tr><td class="fieldname"><a class="anchor" id="a455ec724e9fbd8a18cb85284a58774b5a07b810cf3728f88289deebd6a8769e0f"></a>NOGUESSING&#160;</td><td class="fielddoc">
-<p>Normally, when we see a short (long) option on the command line that doesnt match any known short (long) options, then we try to "guess" by seeing if it will match any known long (short) option. Setting this mask prevents this "guessing" from occurring. </p>
+<p>Normally, when we see a short (long) option on the command line that doesn't match any known short (long) options, then we try to "guess" by seeing if it will match any known long (short) option. Setting this mask prevents this "guessing" from occurring. </p>
 </td></tr>
 <tr><td class="fieldname"><a class="anchor" id="a455ec724e9fbd8a18cb85284a58774b5aead50e0e93ecc08b89d561c09d688739"></a>PARSE_POS&#160;</td><td class="fielddoc">
-<p>By default, <a class="el" href="class_options.html" title="parse command-line options ">Options</a> will not present positional command-line arguments to the user and will instead stop parsing when the first positonal argument has been encountered. If this flag is given, <a class="el" href="class_options.html" title="parse command-line options ">Options</a> will present positional arguments to the user with a return code of POSITIONAL; ENDOPTS will be returned only when the end of the argument list is reached. </p>
+<p>By default, <a class="el" href="class_options.html" title="parse command-line options ">Options</a> will not present positional command-line arguments to the user and will instead stop parsing when the first positional argument has been encountered. If this flag is given, <a class="el" href="class_options.html" title="parse command-line options ">Options</a> will present positional arguments to the user with a return code of POSITIONAL; ENDOPTS will be returned only when the end of the argument list is reached. </p>
 </td></tr>
 </table>
 
@@ -318,7 +318,7 @@ Caveat</h1>
 <p>If an invalid long-option is found then BADKWD is returned and optarg points to the bad long-option.</p>
 <p>If an ambiguous long-option is found then AMBIGUOUS is returned and optarg points to the ambiguous long-option.</p>
 <p>If the PARSE_POS control-flag is set then POSITIONAL is returned when a positional argument is encountered and optarg points to the positonal argument (and "iter" is advanced to the next argument in the iterator).</p>
-<p>Unless <a class="el" href="class_options.html#a455ec724e9fbd8a18cb85284a58774b5a4d61357123cfb81ca1d85bf360bc3b10" title="Dont print error messages. ">Options::QUIET</a> is used, missing option-arguments and invalid options (and the like) will automatically cause error messages to be issued to cerr. </p>
+<p>Unless <a class="el" href="class_options.html#a455ec724e9fbd8a18cb85284a58774b5a4d61357123cfb81ca1d85bf360bc3b10" title="Don&#39;t print error messages. ">Options::QUIET</a> is used, missing option-arguments and invalid options (and the like) will automatically cause error messages to be issued to cerr. </p>
 
 </div>
 </div>

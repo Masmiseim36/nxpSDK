@@ -25,11 +25,10 @@ With board to board connection, one I2C instance on one board is used as I2C mas
 
 Toolchain supported
 ===================
-- IAR embedded Workbench 8.11.3
-- Keil MDK 5.23
-- GCC ARM Embedded 6-2017-q2
-- Kinetis Development Studio IDE 3.2.0
-- MCUXpresso10.1.0
+- Keil MDK 5.24a
+- IAR embedded Workbench 8.22.2
+- GCC ARM Embedded 7-2017-q4-major
+- MCUXpresso10.2.0
 
 Hardware requirements
 =====================
@@ -81,7 +80,7 @@ Prepare the Demo
 Running the demo
 ================
 When the example runs successfully:
-If using 1 board, you can see the similar information from the terminal as below. (Applicable to all boards except TWR-KM34Z75M)
+If using 1 FRDM-K22F board, you can see the similar information from the terminal as below.
 
 
 
@@ -146,7 +145,7 @@ Master received data :
 End of FreeRTOS I2C example.
 
 
-If using 2 boards, you can see the similar information from the terminal associated with master board and slave board as below. (Applicable to all boards)
+If using 2 FRDM-K22F boards, you can see the similar information from the terminal associated with master board and slave board as below.
 
 For master:
 

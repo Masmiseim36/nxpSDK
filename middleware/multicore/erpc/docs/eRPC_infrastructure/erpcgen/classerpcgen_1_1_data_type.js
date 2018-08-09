@@ -21,6 +21,7 @@ var classerpcgen_1_1_data_type =
     [ "isAlias", "classerpcgen_1_1_data_type.html#a68c92086e4cfadcf8a8fd5063fed070d", null ],
     [ "isArray", "classerpcgen_1_1_data_type.html#a9c4c85f49b5d199ae23326daf228e1d2", null ],
     [ "isBinary", "classerpcgen_1_1_data_type.html#a1be5c32e9ccf8d694c0fd10f15e04e6e", null ],
+    [ "isBool", "classerpcgen_1_1_data_type.html#a808605c3d694c3fa2ef896bc1cdecf60", null ],
     [ "isBuiltin", "classerpcgen_1_1_data_type.html#a9431e09a25ce91aaa8e8301ced975d92", null ],
     [ "isEnum", "classerpcgen_1_1_data_type.html#ac9a2e6e456ae83bcca8a9f0946a5d317", null ],
     [ "isFunction", "classerpcgen_1_1_data_type.html#aef196a0f34ccb4ed88f586f0ed436734", null ],

@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC API Reference
-   &#160;<span id="projectnumber">Rev. 1.5.0</span>
+   &#160;<span id="projectnumber">Rev. 1.7.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -51,7 +51,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="modules.html"><span>API&#160;Reference</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -125,13 +124,13 @@ $(document).ready(function(){initNavTree('classerpc_1_1_server.html','');});
   <tr><td class="entry"><a class="el" href="classerpc_1_1_server.html#a878ae2656b002af6f9299faa5b9b975a">m_transport</a></td><td class="entry"><a class="el" href="classerpc_1_1_server.html">erpc::Server</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classerpc_1_1_server.html#a9dc0e23354f3ba5749926bdd190c0b54">processMessage</a>(Codec *codec, message_type_t msgType, uint32_t serviceId, uint32_t methodId, uint32_t sequence)</td><td class="entry"><a class="el" href="classerpc_1_1_server.html">erpc::Server</a></td><td class="entry"><span class="mlabel">protected</span><span class="mlabel">virtual</span></td></tr>
   <tr><td class="entry"><a class="el" href="classerpc_1_1_server.html#adc48348af0d73d670f8ea13d6f4a8e10">readHeadOfMessage</a>(Codec *codec, message_type_t &amp;msgType, uint32_t &amp;serviceId, uint32_t &amp;methodId, uint32_t &amp;sequence)</td><td class="entry"><a class="el" href="classerpc_1_1_server.html">erpc::Server</a></td><td class="entry"><span class="mlabel">protected</span><span class="mlabel">virtual</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classerpc_1_1_server.html#abf1f88034b1868c865287d6aaa3c93c9">run</a>()=0</td><td class="entry"><a class="el" href="classerpc_1_1_server.html">erpc::Server</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classerpc_1_1_server.html#a76bd7ff4f0750a4dda8ac50eec545ae6">Server</a>()</td><td class="entry"><a class="el" href="classerpc_1_1_server.html">erpc::Server</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classerpc_1_1_server.html#ac1644dcaf2b4d46a4166a56bb52a8bb9">run</a>(void)=0</td><td class="entry"><a class="el" href="classerpc_1_1_server.html">erpc::Server</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classerpc_1_1_server.html#a392b7f75d7634b7be09bdd804e05c137">Server</a>(void)</td><td class="entry"><a class="el" href="classerpc_1_1_server.html">erpc::Server</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classerpc_1_1_server.html#a10343432a08dc5f419d513690ff17bad">setCodecFactory</a>(CodecFactory *factory)</td><td class="entry"><a class="el" href="classerpc_1_1_server.html">erpc::Server</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr><td class="entry"><a class="el" href="classerpc_1_1_server.html#aea0bb0b2dc6f0e08bdca12f0fecf8af3">setMessageBufferFactory</a>(MessageBufferFactory *factory)</td><td class="entry"><a class="el" href="classerpc_1_1_server.html">erpc::Server</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classerpc_1_1_server.html#a51eff77c9e51f4a95264b674ffb45ead">setTransport</a>(Transport *transport)</td><td class="entry"><a class="el" href="classerpc_1_1_server.html">erpc::Server</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="classerpc_1_1_server.html#a9de6b97cc002e5924dc3ce43c1881afe">stop</a>()=0</td><td class="entry"><a class="el" href="classerpc_1_1_server.html">erpc::Server</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classerpc_1_1_server.html#ad5cee0a2e099df621576db4e82db4bc1">~Server</a>()</td><td class="entry"><a class="el" href="classerpc_1_1_server.html">erpc::Server</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classerpc_1_1_server.html#a9e52d510fa41358445fec23e66da4de5">stop</a>(void)=0</td><td class="entry"><a class="el" href="classerpc_1_1_server.html">erpc::Server</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classerpc_1_1_server.html#a7d16c4654358bd70e50f6f2527bf43a5">~Server</a>(void)</td><td class="entry"><a class="el" href="classerpc_1_1_server.html">erpc::Server</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
 </table></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.5-->

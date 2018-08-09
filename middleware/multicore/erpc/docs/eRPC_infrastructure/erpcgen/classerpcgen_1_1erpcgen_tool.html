@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC Generator (erpcgen)
-   &#160;<span id="projectnumber">Rev. 1.5.0</span>
+   &#160;<span id="projectnumber">Rev. 1.7.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -167,8 +167,7 @@ Protected Types</h2></td></tr>
 <br />
  }</td></tr>
 <tr class="separator:a2272fbc051cb2f34767db19b2b96b836"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab9ed3d07de22a3b0114028d69554430c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab9ed3d07de22a3b0114028d69554430c"></a>
-typedef vector&lt; string &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>string_vector_t</b></td></tr>
+<tr class="memitem:ab9ed3d07de22a3b0114028d69554430c"><td class="memItemLeft" align="right" valign="top">typedef vector&lt; string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1erpcgen_tool.html#ab9ed3d07de22a3b0114028d69554430c">string_vector_t</a></td></tr>
 <tr class="separator:ab9ed3d07de22a3b0114028d69554430c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
@@ -185,16 +184,39 @@ Protected Attributes</h2></td></tr>
 <tr class="separator:ae6648f09df35b3de810795266d0e14a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7f026b5a3af0d88ab5e17a0ce22770b2"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1erpcgen_tool.html#a7f026b5a3af0d88ab5e17a0ce22770b2">m_ErpcFile</a></td></tr>
 <tr class="separator:a7f026b5a3af0d88ab5e17a0ce22770b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaeaf2e1b96eeb30d29ec00a20ded6701"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaeaf2e1b96eeb30d29ec00a20ded6701"></a>
-string_vector_t&#160;</td><td class="memItemRight" valign="bottom"><b>m_positionalArgs</b></td></tr>
+<tr class="memitem:aaeaf2e1b96eeb30d29ec00a20ded6701"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classerpcgen_1_1erpcgen_tool.html#ab9ed3d07de22a3b0114028d69554430c">string_vector_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1erpcgen_tool.html#aaeaf2e1b96eeb30d29ec00a20ded6701">m_positionalArgs</a></td></tr>
 <tr class="separator:aaeaf2e1b96eeb30d29ec00a20ded6701"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a545ca3976d44a60b1ce59f2a63897e86"><td class="memItemLeft" align="right" valign="top">languages_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1erpcgen_tool.html#a545ca3976d44a60b1ce59f2a63897e86">m_outputLanguage</a></td></tr>
 <tr class="separator:a545ca3976d44a60b1ce59f2a63897e86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a90adef0cb996f0bb4df3092315c1d5a1"><td class="memItemLeft" align="right" valign="top">InterfaceDefinition::codec_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1erpcgen_tool.html#a90adef0cb996f0bb4df3092315c1d5a1">m_codec</a></td></tr>
+<tr class="separator:a90adef0cb996f0bb4df3092315c1d5a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Class that encapsulates the erpcgen tool. </p>
 <p>A single global logger instance is created during object construction. It is never freed because we need it up to the last possible minute, when an exception could be thrown. </p>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+</div><h2 class="groupheader">Member Typedef Documentation</h2>
+<a class="anchor" id="ab9ed3d07de22a3b0114028d69554430c"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef vector&lt;string&gt; <a class="el" href="classerpcgen_1_1erpcgen_tool.html#ab9ed3d07de22a3b0114028d69554430c">erpcgen::erpcgenTool::string_vector_t</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Vector of positional arguments. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a7ddf48e09ef4a67f0dfcf800482e635c"></a>
 <div class="memitem">
 <div class="memproto">
@@ -264,7 +286,7 @@ string_vector_t&#160;</td><td class="memItemRight" valign="bottom"><b>m_position
 <p>Validate arguments that can be checked. </p>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">std::runtime_error</td><td>Thrown if an argument value fails to pass validation. </td></tr>
+    <tr><td class="paramname">runtime_error</td><td>Thrown if an argument value fails to pass validation. </td></tr>
   </table>
   </dd>
 </dl>
@@ -420,6 +442,27 @@ string_vector_t&#160;</td><td class="memItemRight" valign="bottom"><b>m_position
 
 </div>
 </div>
+<a class="anchor" id="a90adef0cb996f0bb4df3092315c1d5a1"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">InterfaceDefinition::codec_t erpcgen::erpcgenTool::m_codec</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Used codec type. </p>
+
+</div>
+</div>
 <a class="anchor" id="a7f026b5a3af0d88ab5e17a0ce22770b2"></a>
 <div class="memitem">
 <div class="memproto">
@@ -501,6 +544,27 @@ string_vector_t&#160;</td><td class="memItemRight" valign="bottom"><b>m_position
 </table>
 </div><div class="memdoc">
 <p>Output language we're generating. </p>
+
+</div>
+</div>
+<a class="anchor" id="aaeaf2e1b96eeb30d29ec00a20ded6701"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classerpcgen_1_1erpcgen_tool.html#ab9ed3d07de22a3b0114028d69554430c">string_vector_t</a> erpcgen::erpcgenTool::m_positionalArgs</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Positional arguments. </p>
 
 </div>
 </div>

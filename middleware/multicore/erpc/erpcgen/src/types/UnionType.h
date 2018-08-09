@@ -53,7 +53,7 @@ namespace erpcgen {
 class UnionType : public DataType
 {
 public:
-    typedef std::vector<UnionCase *> case_vector_t;
+    typedef std::vector<UnionCase *> case_vector_t; /*!< Vector of Union cases. */
 
     /*!
      * @brief Constructor.

@@ -45,9 +45,10 @@
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
 
-//! @brief Version 1.5.0.
-#define ERPC_VERSION "1.5.0"
-#define ERPC_VERSION_NUMBER 10500
+//! @brief String version of eRPC.
+#define ERPC_VERSION "1.7.0"
+//! @brief Integer version of eRPC.
+#define ERPC_VERSION_NUMBER 10700
 
 /*! @} */
 

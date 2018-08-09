@@ -177,7 +177,7 @@ extern gpioHandleKSDK_t INT2;
 #define CORE_SYSTICK_HZ 80000000        ///< core and systick clock rate (Hz)
 #define CALIBRATION_NVM_ADDR 0x0007F800 ///< start of final 2K (sector size) of 512K flash
 #define ADS_NVM_ADDR 0x0007F000         ///< start of the next to last 2K (sector size) of the 512K flash
-#define FLASH_SECTOR_SIZE_PROPERTY kFLASH_PropertyPflashSectorSize
+#define FLASH_SECTOR_SIZE_PROPERTY kFLASH_PropertyPflash0SectorSize
 #define FLASH_ERASE_KEY kFLASH_ApiEraseKey
 
 // offsets from start of NVM block for calibration coefficients

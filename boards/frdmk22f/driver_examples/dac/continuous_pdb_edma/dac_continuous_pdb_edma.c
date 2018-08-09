@@ -3,10 +3,10 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
+ *  that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -47,7 +47,7 @@
 #define DEMO_PDB_BASEADDR PDB0
 #define DEMO_PDB_MODULUS_VALUE 0xFFFU
 #define DEMO_PDB_DELAY_VALUE 0U
-#define DEMO_PDB_DAC_CHANNEL 0U
+#define DEMO_PDB_DAC_CHANNEL kPDB_DACTriggerChannel0
 #define DEMO_PDB_DAC_INTERVAL_VALUE (0xFFFU)
 #define DEMO_DAC_BASEADDR DAC0
 #define DEMO_DMAMUX_BASEADDR DMAMUX

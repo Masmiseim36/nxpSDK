@@ -32,6 +32,9 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include "erpc_crc16.h"
+#include "erpc_tcp_transport.h"
+#include "erpc_transport.h"
 #include "erpc_transport_setup.h"
 #include "erpc_version.h"
 #include "ErpcLexer.h"
@@ -40,10 +43,8 @@
 #include "SearchPath.h"
 #include "Sniffer.h"
 #include "UniqueIdChecker.h"
-#include "crc16.h"
+#include "annotations.h"
 #include "options.h"
-#include "tcp_transport.h"
-#include "transport.h"
 #include <cstdint>
 #include <cstdlib>
 #include <stdexcept>
@@ -72,10 +73,17 @@ const char k_version[] = ERPC_VERSION;
 /*! Copyright string. */
 const char k_copyright[] = "Copyright 2017 NXP. All rights reserved.";
 
-static const char *k_optionsDefinition[] = {
-    "?|help", "V|version", "o:output <filePath>", "v|verbose", "I:path <filePath>", "t:transport <transport>",
-    "q:quantity <quantity>", "b:baudrate <baudrate>", "p:port <port>", "h:host <host>", NULL
-};
+static const char *k_optionsDefinition[] = { "?|help",
+                                             "V|version",
+                                             "o:output <filePath>",
+                                             "v|verbose",
+                                             "I:path <filePath>",
+                                             "t:transport <transport>",
+                                             "q:quantity <quantity>",
+                                             "b:baudrate <baudrate>",
+                                             "p:port <port>",
+                                             "h:host <host>",
+                                             NULL };
 
 /*! Help string. */
 const char k_usageText[] =
@@ -355,8 +363,6 @@ public:
 
             // Parse and build definition model.
             InterfaceDefinition def;
-            uint16_t idlCrc16 = def.parse(m_ErpcFile);
-            Log::info("CRC%d\n", idlCrc16);
 
             // Check for duplicate function IDs
             UniqueIdChecker uniqueIdCheck;
@@ -391,7 +397,15 @@ public:
                 }
             }
 
-            Crc16 crc(idlCrc16);
+            Crc16 crc;
+            if (def.hasProgramSymbol())
+            {
+                Program *program = def.getProgramSymbol();
+                if (program->findAnnotation(CRC_ANNOTATION, Annotation::kC) != nullptr)
+                {
+                    crc.setCrcStart(def.getIdlCrc16());
+                }
+            }
             _transport->setCrc16(&crc);
             Sniffer s(_transport, &def, m_outputFilePath, m_quantity);
             return s.run();
@@ -413,13 +427,13 @@ public:
     /*!
      * @brief Validate arguments that can be checked.
      *
-     * @exception std::runtime_error Thrown if an argument value fails to pass validation.
+     * @exception runtime_error Thrown if an argument value fails to pass validation.
      */
     void checkArguments()
     {
         //      if (m_outputFilePath == NULL)
         //      {
-        //          throw std::runtime_error("no output file was specified");
+        //          throw runtime_error("no output file was specified");
         //      }
     }
 

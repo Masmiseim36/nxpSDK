@@ -1,0 +1,22 @@
+Release Name: IoT Sensing Software Development Kit (ISSDK)
+Release Version: 1.7
+
+ISSDK                      version: 1.7
+                           Location: middleware/issdk
+                           Description: Freescale IoT Sensing SDK. It
+                           combines a set of robust Sensor Drivers and
+                           Algorithms along with example applications.
+                           License: Open Source - BSD-3-Clause Clear
+                           Author: Freescale
+                           name: ISSDK
+                           Format: source code
+
+Pedometer Library          Description: Pedometer algorithm library for
+                           Arm Cortex M0+ and M4 processors.
+                           version: 1.0
+                           Location: middleware/issdk/algorithms/pedometer/lib
+                           Description: Pedometer library
+                           License: LA_OPT_Base_License
+                           Author: KEYnetik, Inc
+                           name: Pedometer Library
+                           Format: binary library

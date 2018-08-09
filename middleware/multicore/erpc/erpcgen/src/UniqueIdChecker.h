@@ -57,7 +57,7 @@ namespace erpcgen {
 class UniqueIdChecker
 {
 public:
-    typedef std::pair<int, std::string> idAndName_t;
+    typedef std::pair<int, std::string> idAndName_t; /*!< Pair id of function/interface with name. */
 
     /*!
      * @brief This function will set unique id numbers for functions and interfaces

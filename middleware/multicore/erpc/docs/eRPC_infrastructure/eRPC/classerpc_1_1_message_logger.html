@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC API Reference
-   &#160;<span id="projectnumber">Rev. 1.5.0</span>
+   &#160;<span id="projectnumber">Rev. 1.7.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -51,7 +51,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="modules.html"><span>API&#160;Reference</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -115,9 +114,14 @@ $(document).ready(function(){initNavTree('classerpc_1_1_message_logger.html','')
 <a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="classerpc_1_1_message_logger-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">erpc::MessageLogger Class Reference</div>  </div>
+<div class="title">erpc::MessageLogger Class Reference<div class="ingroups"><a class="el" href="group__infra.html">Infrastructure</a> &raquo; <a class="el" href="group__infra__utility.html">Utilities</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Logging messages objects used for logging sent/received messages.  
+ <a href="classerpc_1_1_message_logger.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="erpc__message__loggers_8h_source.html">erpc_message_loggers.h</a>&gt;</code></p>
 <div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Collaboration diagram for erpc::MessageLogger:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
@@ -131,21 +135,21 @@ $(document).ready(function(){initNavTree('classerpc_1_1_message_logger.html','')
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ae6317cf8f4c10faa57b5ba834d136fe6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae6317cf8f4c10faa57b5ba834d136fe6"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_message_logger.html#ae6317cf8f4c10faa57b5ba834d136fe6">MessageLogger</a> (<a class="el" href="classerpc_1_1_transport.html">Transport</a> *transport)</td></tr>
-<tr class="memdesc:ae6317cf8f4c10faa57b5ba834d136fe6"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classerpc_1_1_message_logger.html">MessageLogger</a> constructor. <br /></td></tr>
+<tr class="memdesc:ae6317cf8f4c10faa57b5ba834d136fe6"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classerpc_1_1_message_logger.html" title="Logging messages objects used for logging sent/received messages. ">MessageLogger</a> constructor. <br /></td></tr>
 <tr class="separator:ae6317cf8f4c10faa57b5ba834d136fe6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a876f81f3e117ca5015dbb2de56952194"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a876f81f3e117ca5015dbb2de56952194"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_message_logger.html#a876f81f3e117ca5015dbb2de56952194">~MessageLogger</a> ()</td></tr>
-<tr class="memdesc:a876f81f3e117ca5015dbb2de56952194"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classerpc_1_1_message_logger.html">MessageLogger</a> destructor. <br /></td></tr>
-<tr class="separator:a876f81f3e117ca5015dbb2de56952194"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a23692e8dd45f1ad968fb06346700f28e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classerpc_1_1_message_logger.html">MessageLogger</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_message_logger.html#a23692e8dd45f1ad968fb06346700f28e">getNext</a> ()</td></tr>
-<tr class="memdesc:a23692e8dd45f1ad968fb06346700f28e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return next logger.  <a href="#a23692e8dd45f1ad968fb06346700f28e">More...</a><br /></td></tr>
-<tr class="separator:a23692e8dd45f1ad968fb06346700f28e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2faf737b59d295c825ec8a59b2692f1a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2faf737b59d295c825ec8a59b2692f1a"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_message_logger.html#a2faf737b59d295c825ec8a59b2692f1a">~MessageLogger</a> (void)</td></tr>
+<tr class="memdesc:a2faf737b59d295c825ec8a59b2692f1a"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classerpc_1_1_message_logger.html" title="Logging messages objects used for logging sent/received messages. ">MessageLogger</a> destructor. <br /></td></tr>
+<tr class="separator:a2faf737b59d295c825ec8a59b2692f1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2837865cc28ee772501fe4d1c81886ae"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classerpc_1_1_message_logger.html">MessageLogger</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_message_logger.html#a2837865cc28ee772501fe4d1c81886ae">getNext</a> (void)</td></tr>
+<tr class="memdesc:a2837865cc28ee772501fe4d1c81886ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return next logger.  <a href="#a2837865cc28ee772501fe4d1c81886ae">More...</a><br /></td></tr>
+<tr class="separator:a2837865cc28ee772501fe4d1c81886ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3412c1f44a61311a4dd2418fc2fd0f69"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_message_logger.html#a3412c1f44a61311a4dd2418fc2fd0f69">setNext</a> (<a class="el" href="classerpc_1_1_message_logger.html">MessageLogger</a> *next)</td></tr>
 <tr class="memdesc:a3412c1f44a61311a4dd2418fc2fd0f69"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set next logger.  <a href="#a3412c1f44a61311a4dd2418fc2fd0f69">More...</a><br /></td></tr>
 <tr class="separator:a3412c1f44a61311a4dd2418fc2fd0f69"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab5cdcfa90519253aec1fe77a37cadfa3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classerpc_1_1_transport.html">Transport</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_message_logger.html#ab5cdcfa90519253aec1fe77a37cadfa3">getLogger</a> ()</td></tr>
-<tr class="memdesc:ab5cdcfa90519253aec1fe77a37cadfa3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns next transport object used for logging messages.  <a href="#ab5cdcfa90519253aec1fe77a37cadfa3">More...</a><br /></td></tr>
-<tr class="separator:ab5cdcfa90519253aec1fe77a37cadfa3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:accf9c20389fce9d539dfbd3309cef9be"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classerpc_1_1_transport.html">Transport</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_message_logger.html#accf9c20389fce9d539dfbd3309cef9be">getLogger</a> (void)</td></tr>
+<tr class="memdesc:accf9c20389fce9d539dfbd3309cef9be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns next transport object used for logging messages.  <a href="#accf9c20389fce9d539dfbd3309cef9be">More...</a><br /></td></tr>
+<tr class="separator:accf9c20389fce9d539dfbd3309cef9be"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -154,8 +158,10 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:aba0b24b5a0b7389ced55c92a82fba087"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classerpc_1_1_transport.html">Transport</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_message_logger.html#aba0b24b5a0b7389ced55c92a82fba087">m_transport</a></td></tr>
 <tr class="separator:aba0b24b5a0b7389ced55c92a82fba087"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a23692e8dd45f1ad968fb06346700f28e"></a>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Logging messages objects used for logging sent/received messages. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a2837865cc28ee772501fe4d1c81886ae"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -165,6 +171,7 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="memname"><a class="el" href="classerpc_1_1_message_logger.html">MessageLogger</a>* erpc::MessageLogger::getNext </td>
           <td>(</td>
+          <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
@@ -213,7 +220,7 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ab5cdcfa90519253aec1fe77a37cadfa3"></a>
+<a class="anchor" id="accf9c20389fce9d539dfbd3309cef9be"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -223,6 +230,7 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="memname"><a class="el" href="classerpc_1_1_transport.html">Transport</a>* erpc::MessageLogger::getLogger </td>
           <td>(</td>
+          <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
@@ -283,7 +291,7 @@ Protected Attributes</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li><a class="el" href="message__loggers_8h_source.html">message_loggers.h</a></li>
+<li><a class="el" href="erpc__message__loggers_8h_source.html">erpc_message_loggers.h</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

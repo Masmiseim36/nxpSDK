@@ -1,6 +1,6 @@
 /*
  * The Clear BSD License
- * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
@@ -125,7 +125,7 @@ bool process_host_command(
 int main(void)
 {
     int32_t status;
-    uint8_t bannerLength, bannerString[128];
+    uint8_t bannerLength, bannerString[256];
 
     ARM_DRIVER_USART *pUartDriver = &HOST_S_DRIVER;
     GENERIC_DRIVER_GPIO *pGpioDriver = &Driver_GPIO_KSDK;

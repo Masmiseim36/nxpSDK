@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC Generator (erpcgen)
-   &#160;<span id="projectnumber">Rev. 1.5.0</span>
+   &#160;<span id="projectnumber">Rev. 1.7.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -131,15 +131,17 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:ade0993f91706126db53501c14658918e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ade0993f91706126db53501c14658918e"></a>
-typedef std::map&lt; std::string, <a class="el" href="classerpcgen_1_1_symbol.html">Symbol</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>symbol_map_t</b></td></tr>
+<tr class="memitem:ade0993f91706126db53501c14658918e"><td class="memItemLeft" align="right" valign="top">typedef std::map&lt; std::string, <a class="el" href="classerpcgen_1_1_symbol.html">Symbol</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol_scope.html#ade0993f91706126db53501c14658918e">symbol_map_t</a></td></tr>
 <tr class="separator:ade0993f91706126db53501c14658918e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abc05dfb794b203bf06075776dd430f1a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abc05dfb794b203bf06075776dd430f1a"></a>
-typedef std::vector&lt; <a class="el" href="classerpcgen_1_1_symbol.html">Symbol</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>symbol_vector_t</b></td></tr>
+<tr class="memitem:abc05dfb794b203bf06075776dd430f1a"><td class="memItemLeft" align="right" valign="top">typedef std::vector&lt; <a class="el" href="classerpcgen_1_1_symbol.html">Symbol</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol_scope.html#abc05dfb794b203bf06075776dd430f1a">symbol_vector_t</a></td></tr>
 <tr class="separator:abc05dfb794b203bf06075776dd430f1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a727ff41c893a043e295c7c1eeaffce84"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a727ff41c893a043e295c7c1eeaffce84"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol_scope.html#a727ff41c893a043e295c7c1eeaffce84">SymbolScope</a> ()</td></tr>
+<tr class="memdesc:a727ff41c893a043e295c7c1eeaffce84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor. <br /></td></tr>
+<tr class="separator:a727ff41c893a043e295c7c1eeaffce84"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa6e6f9ed5494233710e5138fbd13780d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa6e6f9ed5494233710e5138fbd13780d"></a>
 virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol_scope.html#aa6e6f9ed5494233710e5138fbd13780d">~SymbolScope</a> ()</td></tr>
 <tr class="memdesc:aa6e6f9ed5494233710e5138fbd13780d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
@@ -178,10 +180,10 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <tr class="separator:ac218822927764b4e97cc80542921f44e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad8bc35f9038134ad31ece81cfafb6832"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classerpcgen_1_1_symbol_scope_1_1typed__iterator.html">typed_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol_scope.html#ad8bc35f9038134ad31ece81cfafb6832">tend</a> (<a class="el" href="classerpcgen_1_1_symbol.html#a41dbbe424222a8e9b4b73c390cf06775">Symbol::symbol_type_t</a> predicateType)</td></tr>
 <tr class="separator:ad8bc35f9038134ad31ece81cfafb6832"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a57d278b24988d3e7555399e3813e9d84"><td class="memItemLeft" align="right" valign="top">symbol_vector_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol_scope.html#a57d278b24988d3e7555399e3813e9d84">getSymbolsOfType</a> (<a class="el" href="classerpcgen_1_1_symbol.html#a41dbbe424222a8e9b4b73c390cf06775">Symbol::symbol_type_t</a> predicateType)</td></tr>
+<tr class="memitem:a57d278b24988d3e7555399e3813e9d84"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classerpcgen_1_1_symbol_scope.html#abc05dfb794b203bf06075776dd430f1a">symbol_vector_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol_scope.html#a57d278b24988d3e7555399e3813e9d84">getSymbolsOfType</a> (<a class="el" href="classerpcgen_1_1_symbol.html#a41dbbe424222a8e9b4b73c390cf06775">Symbol::symbol_type_t</a> predicateType)</td></tr>
 <tr class="memdesc:a57d278b24988d3e7555399e3813e9d84"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns symbol vector with symbols.  <a href="#a57d278b24988d3e7555399e3813e9d84">More...</a><br /></td></tr>
 <tr class="separator:a57d278b24988d3e7555399e3813e9d84"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa46fcc4dc1f9d97dfdb4c9cb9d3a9a01"><td class="memItemLeft" align="right" valign="top">symbol_vector_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol_scope.html#aa46fcc4dc1f9d97dfdb4c9cb9d3a9a01">getSymbolVector</a> ()</td></tr>
+<tr class="memitem:aa46fcc4dc1f9d97dfdb4c9cb9d3a9a01"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classerpcgen_1_1_symbol_scope.html#abc05dfb794b203bf06075776dd430f1a">symbol_vector_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol_scope.html#aa46fcc4dc1f9d97dfdb4c9cb9d3a9a01">getSymbolVector</a> ()</td></tr>
 <tr class="memdesc:aa46fcc4dc1f9d97dfdb4c9cb9d3a9a01"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns symbol vector.  <a href="#aa46fcc4dc1f9d97dfdb4c9cb9d3a9a01">More...</a><br /></td></tr>
 <tr class="separator:aa46fcc4dc1f9d97dfdb4c9cb9d3a9a01"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a58441c72b0d42da17a182f34c56f748e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol_scope.html#a58441c72b0d42da17a182f34c56f748e">dump</a> ()</td></tr>
@@ -194,16 +196,43 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:afa85b7509f8796e12078070b81c88bd9"><td class="memItemLeft" align="right" valign="top">symbol_map_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol_scope.html#afa85b7509f8796e12078070b81c88bd9">m_symbolMap</a></td></tr>
+<tr class="memitem:afa85b7509f8796e12078070b81c88bd9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classerpcgen_1_1_symbol_scope.html#ade0993f91706126db53501c14658918e">symbol_map_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol_scope.html#afa85b7509f8796e12078070b81c88bd9">m_symbolMap</a></td></tr>
 <tr class="separator:afa85b7509f8796e12078070b81c88bd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a70bd77c5e4d69529252dece2b30a6b0c"><td class="memItemLeft" align="right" valign="top">symbol_vector_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol_scope.html#a70bd77c5e4d69529252dece2b30a6b0c">m_symbolVector</a></td></tr>
+<tr class="memitem:a70bd77c5e4d69529252dece2b30a6b0c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classerpcgen_1_1_symbol_scope.html#abc05dfb794b203bf06075776dd430f1a">symbol_vector_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol_scope.html#a70bd77c5e4d69529252dece2b30a6b0c">m_symbolVector</a></td></tr>
 <tr class="separator:a70bd77c5e4d69529252dece2b30a6b0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a85b468ab0a65570b60f62dfbd883d35f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classerpcgen_1_1_symbol_scope.html">SymbolScope</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol_scope.html#a85b468ab0a65570b60f62dfbd883d35f">m_parent</a></td></tr>
 <tr class="separator:a85b468ab0a65570b60f62dfbd883d35f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A scoped namespace containing symbols. </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
+</div><h2 class="groupheader">Member Typedef Documentation</h2>
+<a class="anchor" id="ade0993f91706126db53501c14658918e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef std::map&lt;std::string, <a class="el" href="classerpcgen_1_1_symbol.html">Symbol</a> *&gt; <a class="el" href="classerpcgen_1_1_symbol_scope.html#ade0993f91706126db53501c14658918e">erpcgen::SymbolScope::symbol_map_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Map symbol name to symbol type. </p>
+
+</div>
+</div>
+<a class="anchor" id="abc05dfb794b203bf06075776dd430f1a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef std::vector&lt;<a class="el" href="classerpcgen_1_1_symbol.html">Symbol</a> *&gt; <a class="el" href="classerpcgen_1_1_symbol_scope.html#abc05dfb794b203bf06075776dd430f1a">erpcgen::SymbolScope::symbol_vector_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Vector of symbol types. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="ad6f6456fc5ade11b91ecc2aa627d7b05"></a>
 <div class="memitem">
 <div class="memproto">
@@ -285,25 +314,25 @@ void <a class="el" href="classerpcgen_1_1_symbol_scope.html#a2c3bd345058aef148a7
 </div><div class="memdoc">
 
 <p>This function show debug description about the all symbols. </p>
-<dl class="section see"><dt>See also</dt><dd>std::string <a class="el" href="classerpcgen_1_1_interface.html#ade63c1971950aa637c43e44adb627686" title="This function returns description about the interface. ">Interface::getDescription() const</a> </dd>
+<dl class="section see"><dt>See also</dt><dd>std::string <a class="el" href="classerpcgen_1_1_interface.html#ad799dd9e9c759102652c69086467f73b" title="This function returns description about the interface. ">Interface::getDescription() const</a> </dd>
 <dd>
-std::string <a class="el" href="classerpcgen_1_1_function.html#af39ae0adaa0ebbc0600adffabae6f7a3" title="This function returns description about the interface function. ">Function::getDescription() const</a> </dd>
+std::string <a class="el" href="classerpcgen_1_1_function.html#ac08e8cc2245d28b872d271f2d0b62bcc" title="This function returns description about the interface function. ">Function::getDescription() const</a> </dd>
 <dd>
-std::string <a class="el" href="classerpcgen_1_1_alias_type.html#a1dcefef6c4e73b429ebfddc13d056d9c" title="This function returns description about the alias. ">AliasType::getDescription() const</a> </dd>
+std::string <a class="el" href="classerpcgen_1_1_alias_type.html#af67a4592991def524769acb6280a7d92" title="This function returns description about the alias. ">AliasType::getDescription() const</a> </dd>
 <dd>
-std::string <a class="el" href="classerpcgen_1_1_enum_member.html#a72f031925bbc83f049e07fd04bd16abe" title="This function returns description about the enum member. ">EnumMember::getDescription() const</a> </dd>
+std::string <a class="el" href="classerpcgen_1_1_enum_member.html#a64ce4b33dfa9c10635ac2fd64089a4f1" title="This function returns description about the enum member. ">EnumMember::getDescription() const</a> </dd>
 <dd>
-std::string <a class="el" href="classerpcgen_1_1_enum_type.html#a7b1138290c55479bfd939a61eaceb392" title="This function returns description about the enum. ">EnumType::getDescription() const</a> </dd>
+std::string <a class="el" href="classerpcgen_1_1_enum_type.html#ab95b28ad62ecb25638468b2ba7783921" title="This function returns description about the enum. ">EnumType::getDescription() const</a> </dd>
 <dd>
-std::string <a class="el" href="classerpcgen_1_1_struct_member.html#a839ee493aa6fafaac3dda9ec292ed1dd" title="This function returns description about the struct member. ">StructMember::getDescription() const</a> </dd>
+std::string <a class="el" href="classerpcgen_1_1_struct_member.html#a35caff93a725d1a34e961cafc2a09085" title="This function returns description about the struct member. ">StructMember::getDescription() const</a> </dd>
 <dd>
-std::string <a class="el" href="classerpcgen_1_1_struct_type.html#a78421cc24d8632d9eb95b76e2e68dbbe" title="This function returns description about the struct. ">StructType::getDescription() const</a> </dd>
+std::string <a class="el" href="classerpcgen_1_1_struct_type.html#a399c40208f97e0d72d3a4d526596b097" title="This function returns description about the struct. ">StructType::getDescription() const</a> </dd>
 <dd>
 std::string <a class="el" href="classerpcgen_1_1_void_type.html#a329b76a4ef8e30637e7607883772b0e3" title="This function returns description about the void. ">VoidType::getDescription() const</a> </dd>
 <dd>
-std::string <a class="el" href="classerpcgen_1_1_array_type.html#a1c5a4e6413834ed1d286ae56d4566f85" title="This function returns description about the array. ">ArrayType::getDescription() const</a> </dd>
+std::string <a class="el" href="classerpcgen_1_1_array_type.html#a2f24b1e2e72bda762761a4bc2f03eaae" title="This function returns description about the array. ">ArrayType::getDescription() const</a> </dd>
 <dd>
-std::string <a class="el" href="classerpcgen_1_1_list_type.html#acd69b19dae89b94123a97cbfad33ba0c" title="This function returns description about the list. ">ListType::getDescription() const</a> </dd></dl>
+std::string <a class="el" href="classerpcgen_1_1_list_type.html#a360f3a198f4f48067dbf79b0c9fd71c3" title="This function returns description about the list. ">ListType::getDescription() const</a> </dd></dl>
 
 </div>
 </div>
@@ -439,7 +468,7 @@ void <a class="el" href="classerpcgen_1_1_symbol_scope.html#a2c3bd345058aef148a7
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">SymbolScope::symbol_vector_t SymbolScope::getSymbolsOfType </td>
+          <td class="memname"><a class="el" href="classerpcgen_1_1_symbol_scope.html#abc05dfb794b203bf06075776dd430f1a">SymbolScope::symbol_vector_t</a> SymbolScope::getSymbolsOfType </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classerpcgen_1_1_symbol.html#a41dbbe424222a8e9b4b73c390cf06775">Symbol::symbol_type_t</a>&#160;</td>
           <td class="paramname"><em>predicateType</em></td><td>)</td>
@@ -468,7 +497,7 @@ void <a class="el" href="classerpcgen_1_1_symbol_scope.html#a2c3bd345058aef148a7
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">symbol_vector_t erpcgen::SymbolScope::getSymbolVector </td>
+          <td class="memname"><a class="el" href="classerpcgen_1_1_symbol_scope.html#abc05dfb794b203bf06075776dd430f1a">symbol_vector_t</a> erpcgen::SymbolScope::getSymbolVector </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -713,7 +742,7 @@ bool <a class="el" href="classerpcgen_1_1_symbol_scope.html#a0a2f5172c058ac07bdc
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">symbol_map_t erpcgen::SymbolScope::m_symbolMap</td>
+          <td class="memname"><a class="el" href="classerpcgen_1_1_symbol_scope.html#ade0993f91706126db53501c14658918e">symbol_map_t</a> erpcgen::SymbolScope::m_symbolMap</td>
         </tr>
       </table>
   </td>
@@ -734,7 +763,7 @@ bool <a class="el" href="classerpcgen_1_1_symbol_scope.html#a0a2f5172c058ac07bdc
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">symbol_vector_t erpcgen::SymbolScope::m_symbolVector</td>
+          <td class="memname"><a class="el" href="classerpcgen_1_1_symbol_scope.html#abc05dfb794b203bf06075776dd430f1a">symbol_vector_t</a> erpcgen::SymbolScope::m_symbolVector</td>
         </tr>
       </table>
   </td>

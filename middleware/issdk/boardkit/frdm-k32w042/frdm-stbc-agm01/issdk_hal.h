@@ -1,6 +1,7 @@
 /*
  * The Clear BSD License
- * Copyright 2017 NXP
+ * Copyright (c) 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016-2017 NXP
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,

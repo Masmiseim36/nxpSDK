@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['int_5fsize_5ft',['int_size_t',['../class_sized_integer_value.html#a038ad11ad0a7b75a0d043b89459c3ede',1,'SizedIntegerValue']]]
+  ['int_5ftype_5ft',['int_type_t',['../class_integer_value.html#acb6f6bfc4690be410499df6fe6b746d4',1,'IntegerValue']]]
 ];

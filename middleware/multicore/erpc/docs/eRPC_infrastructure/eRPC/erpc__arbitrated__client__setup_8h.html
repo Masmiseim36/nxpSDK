@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC API Reference
-   &#160;<span id="projectnumber">Rev. 1.5.0</span>
+   &#160;<span id="projectnumber">Rev. 1.7.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -51,7 +51,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="modules.html"><span>API&#160;Reference</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -108,8 +107,6 @@ $(document).ready(function(){initNavTree('erpc__arbitrated__client__setup_8h.htm
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle">
 <div class="title">erpc_arbitrated_client_setup.h File Reference<div class="ingroups"><a class="el" href="group__setup.html">Setup API</a> &raquo; <a class="el" href="group__client__setup.html">Client Setup</a></div></div>  </div>
 </div><!--header-->
@@ -117,6 +114,7 @@ $(document).ready(function(){initNavTree('erpc__arbitrated__client__setup_8h.htm
 <div class="textblock"><code>#include &quot;erpc_common.h&quot;</code><br />
 <code>#include &quot;erpc_config_internal.h&quot;</code><br />
 <code>#include &quot;<a class="el" href="erpc__mbf__setup_8h_source.html">erpc_mbf_setup.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="erpc__client__manager_8h_source.html">erpc_client_manager.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="erpc__transport__setup_8h_source.html">erpc_transport_setup.h</a>&quot;</code><br />
 <code>#include &lt;stdint.h&gt;</code><br />
 </div><div class="textblock"><div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
@@ -124,26 +122,24 @@ $(document).ready(function(){initNavTree('erpc__arbitrated__client__setup_8h.htm
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" frameborder="0" src="erpc__arbitrated__client__setup_8h__incl.svg" width="516" height="276"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+<div class="center"><iframe scrolling="no" frameborder="0" src="erpc__arbitrated__client__setup_8h__incl.svg" width="803" height="500"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
 </div>
 <p><a href="erpc__arbitrated__client__setup_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:gab7dcc8461d2301b2ae32448b0f69ef85"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__client__setup.html#gab7dcc8461d2301b2ae32448b0f69ef85">client_error_handler_t</a>) (<a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a> err)</td></tr>
-<tr class="separator:gab7dcc8461d2301b2ae32448b0f69ef85"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Arbitrated client setup</div></td></tr>
 <tr class="memitem:gad9d2c46ec314b6a5b0a2010b82e6ff07"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__transport__setup.html#ga925aa73c3fc0da2a6f94ee65c4b108c0">erpc_transport_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__client__setup.html#gad9d2c46ec314b6a5b0a2010b82e6ff07">erpc_arbitrated_client_init</a> (<a class="el" href="group__transport__setup.html#ga925aa73c3fc0da2a6f94ee65c4b108c0">erpc_transport_t</a> transport, <a class="el" href="group__message__buffer__factory__setup.html#ga73f8fbab58ca7553109bc98b28e72bf5">erpc_mbf_t</a> message_buffer_factory)</td></tr>
 <tr class="memdesc:gad9d2c46ec314b6a5b0a2010b82e6ff07"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a client that shares its transport with the server.  <a href="group__client__setup.html#gad9d2c46ec314b6a5b0a2010b82e6ff07">More...</a><br /></td></tr>
 <tr class="separator:gad9d2c46ec314b6a5b0a2010b82e6ff07"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaed9d0f4e2c3a22bde5a4f1077c54f04e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__client__setup.html#gaed9d0f4e2c3a22bde5a4f1077c54f04e">erpc_client_set_error_handler</a> (<a class="el" href="group__client__setup.html#gab7dcc8461d2301b2ae32448b0f69ef85">client_error_handler_t</a> error_handler)</td></tr>
-<tr class="memdesc:gaed9d0f4e2c3a22bde5a4f1077c54f04e"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function set error handler function.  <a href="group__client__setup.html#gaed9d0f4e2c3a22bde5a4f1077c54f04e">More...</a><br /></td></tr>
-<tr class="separator:gaed9d0f4e2c3a22bde5a4f1077c54f04e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafc448a5457fea8c7b580451c80d40371"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__client__setup.html#gafc448a5457fea8c7b580451c80d40371">erpc_arbitrated_client_set_error_handler</a> (<a class="el" href="group__infra__client.html#ga2e6094cc3ec774c5a1e2b2e57879f3b1">client_error_handler_t</a> error_handler)</td></tr>
+<tr class="memdesc:gafc448a5457fea8c7b580451c80d40371"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function sets error handler function.  <a href="group__client__setup.html#gafc448a5457fea8c7b580451c80d40371">More...</a><br /></td></tr>
+<tr class="separator:gafc448a5457fea8c7b580451c80d40371"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae767b4ea7f79a7f77420af7bccfde648"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__client__setup.html#gae767b4ea7f79a7f77420af7bccfde648">erpc_arbitrated_client_set_crc</a> (uint32_t crcStart)</td></tr>
+<tr class="memdesc:gae767b4ea7f79a7f77420af7bccfde648"><td class="mdescLeft">&#160;</td><td class="mdescRight">Can be used to set own crcStart number.  <a href="group__client__setup.html#gae767b4ea7f79a7f77420af7bccfde648">More...</a><br /></td></tr>
+<tr class="separator:gae767b4ea7f79a7f77420af7bccfde648"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1c84c85b6ffe5da7312840516386de49"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__client__setup.html#ga1c84c85b6ffe5da7312840516386de49">erpc_arbitrated_client_deinit</a> (void)</td></tr>
 <tr class="memdesc:ga1c84c85b6ffe5da7312840516386de49"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function de-initializes client.  <a href="group__client__setup.html#ga1c84c85b6ffe5da7312840516386de49">More...</a><br /></td></tr>
 <tr class="separator:ga1c84c85b6ffe5da7312840516386de49"><td class="memSeparator" colspan="2">&#160;</td></tr>

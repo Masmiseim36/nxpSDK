@@ -9,14 +9,14 @@ The tool can be found on [eRPC releases](https://github.com/EmbeddedRPC/erpc/rel
 
 ## How to create an eRPC generator tool
 * The _erpcgen_ source files are located in the ``erpc/erpcgen/src`` directory.
-* On the Windows operating system, users can use Visual Studio Express 2013 or higher (steps for using Visual Studio are in the ``erpc/erpcgen/VisualStudio_v12/ReadMe.txt`` file).
+* On the Windows operating system, users can use Visual Studio Express 2017 or higher (steps for using Visual Studio are in the ``erpc/erpcgen/VisualStudio_v14/ReadMe.txt`` file).
 * To build the _erpcgen_ application on Linux OS or macOS, the compiler (gcc, g++), make, flex/bison applications, and boost libraries are needed.
 * If you are using the Linux OS or macOS, build the application using the command (which must be executed in the ``erpc/`` directory):
 ```
 make erpcgen
 ```
 
-The output _erpcgen_ applicaton is located in the ``erpc/Debug/<os_type>/erpcgen/`` folder. The ``<os_type>`` is set automatically, based on which build system is used.
+The output _erpcgen_ application is located in the ``erpc/Debug/<os_type>/erpcgen/`` folder. The ``<os_type>`` is set automatically, based on which build system is used.
 
 ## How to use an eRPC generator tool
 When the _erpcgen_ application is available, you can run it from the command line using the appropriate command line options. Pre-built applications are located in the

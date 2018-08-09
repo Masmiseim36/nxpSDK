@@ -58,7 +58,6 @@ var hierarchy =
     [ "PathSearcher", "class_path_searcher.html", null ],
     [ "Log::SetOutputLevel", "class_log_1_1_set_output_level.html", null ],
     [ "smart_ptr< T, delete_policy >", "classsmart__ptr.html", null ],
-    [ "smart_ptr< Value >", "classsmart__ptr.html", null ],
     [ "smart_ptr_delete< T >", "structsmart__ptr__delete.html", null ],
     [ "smart_ptr_delete_array< T >", "structsmart__ptr__delete__array.html", null ],
     [ "smart_ptr_free< T >", "structsmart__ptr__free.html", null ],
@@ -90,9 +89,7 @@ var hierarchy =
     [ "erpcgen::UniqueIdChecker", "classerpcgen_1_1_unique_id_checker.html", null ],
     [ "Value", "class_value.html", [
       [ "FloatValue", "class_float_value.html", null ],
-      [ "IntegerValue", "class_integer_value.html", [
-        [ "SizedIntegerValue", "class_sized_integer_value.html", null ]
-      ] ],
+      [ "IntegerValue", "class_integer_value.html", null ],
       [ "StringValue", "class_string_value.html", null ]
     ] ],
     [ "yyFlexLexer", null, [

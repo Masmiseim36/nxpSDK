@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC API Reference
-   &#160;<span id="projectnumber">Rev. 1.5.0</span>
+   &#160;<span id="projectnumber">Rev. 1.7.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -51,7 +51,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="modules.html"><span>API&#160;Reference</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -124,7 +123,7 @@ $(document).ready(function(){initNavTree('classerpc_1_1_t_c_p_transport.html',''
 <p>Client side of TCP/IP transport.  
  <a href="classerpc_1_1_t_c_p_transport.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="tcp__transport_8h_source.html">tcp_transport.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="erpc__tcp__transport_8h_source.html">erpc_tcp_transport.h</a>&gt;</code></p>
 <div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Inheritance diagram for erpc::TCPTransport:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
@@ -150,28 +149,28 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ac2f9d1dc1d6aecf85e6672656c8ad487"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_t_c_p_transport.html#ac2f9d1dc1d6aecf85e6672656c8ad487">TCPTransport</a> (const char *host, uint16_t port, bool isServer)</td></tr>
 <tr class="memdesc:ac2f9d1dc1d6aecf85e6672656c8ad487"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#ac2f9d1dc1d6aecf85e6672656c8ad487">More...</a><br /></td></tr>
 <tr class="separator:ac2f9d1dc1d6aecf85e6672656c8ad487"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac7ac3fba583c8cb75dbccdef444df964"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac7ac3fba583c8cb75dbccdef444df964"></a>
-virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_t_c_p_transport.html#ac7ac3fba583c8cb75dbccdef444df964">~TCPTransport</a> ()</td></tr>
-<tr class="memdesc:ac7ac3fba583c8cb75dbccdef444df964"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classerpc_1_1_t_c_p_transport.html" title="Client side of TCP/IP transport. ">TCPTransport</a> destructor. <br /></td></tr>
-<tr class="separator:ac7ac3fba583c8cb75dbccdef444df964"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad56ac5ecade7c28d44b60530f001c636"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad56ac5ecade7c28d44b60530f001c636"></a>
+virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_t_c_p_transport.html#ad56ac5ecade7c28d44b60530f001c636">~TCPTransport</a> (void)</td></tr>
+<tr class="memdesc:ad56ac5ecade7c28d44b60530f001c636"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classerpc_1_1_t_c_p_transport.html" title="Client side of TCP/IP transport. ">TCPTransport</a> destructor. <br /></td></tr>
+<tr class="separator:ad56ac5ecade7c28d44b60530f001c636"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9cb91952fa78e3d6489b2de9c1f8613e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_t_c_p_transport.html#a9cb91952fa78e3d6489b2de9c1f8613e">configure</a> (const char *host, uint16_t port)</td></tr>
 <tr class="memdesc:a9cb91952fa78e3d6489b2de9c1f8613e"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function set host and port of this transport layer.  <a href="#a9cb91952fa78e3d6489b2de9c1f8613e">More...</a><br /></td></tr>
 <tr class="separator:a9cb91952fa78e3d6489b2de9c1f8613e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6c75df91564321a96a411163387d96d1"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_t_c_p_transport.html#a6c75df91564321a96a411163387d96d1">open</a> ()</td></tr>
-<tr class="memdesc:a6c75df91564321a96a411163387d96d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function will create host on server side, or connect client to the server.  <a href="#a6c75df91564321a96a411163387d96d1">More...</a><br /></td></tr>
-<tr class="separator:a6c75df91564321a96a411163387d96d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae7e4b4e92c50023654ee03abb724cb76"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_t_c_p_transport.html#ae7e4b4e92c50023654ee03abb724cb76">close</a> ()</td></tr>
-<tr class="memdesc:ae7e4b4e92c50023654ee03abb724cb76"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function disconnects client or stop server host.  <a href="#ae7e4b4e92c50023654ee03abb724cb76">More...</a><br /></td></tr>
-<tr class="separator:ae7e4b4e92c50023654ee03abb724cb76"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af43c66b7123b3845d37a7e3478ef98fd"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_t_c_p_transport.html#af43c66b7123b3845d37a7e3478ef98fd">open</a> (void)</td></tr>
+<tr class="memdesc:af43c66b7123b3845d37a7e3478ef98fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function will create host on server side, or connect client to the server.  <a href="#af43c66b7123b3845d37a7e3478ef98fd">More...</a><br /></td></tr>
+<tr class="separator:af43c66b7123b3845d37a7e3478ef98fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a163a9cd6d14167297e4160cbf9bf3269"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_t_c_p_transport.html#a163a9cd6d14167297e4160cbf9bf3269">close</a> (void)</td></tr>
+<tr class="memdesc:a163a9cd6d14167297e4160cbf9bf3269"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function disconnects client or stop server host.  <a href="#a163a9cd6d14167297e4160cbf9bf3269">More...</a><br /></td></tr>
+<tr class="separator:a163a9cd6d14167297e4160cbf9bf3269"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classerpc_1_1_framed_transport"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classerpc_1_1_framed_transport')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classerpc_1_1_framed_transport.html">erpc::FramedTransport</a></td></tr>
-<tr class="memitem:a30aff85f5ba0c8dc96ec372f94c1995b inherit pub_methods_classerpc_1_1_framed_transport"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a30aff85f5ba0c8dc96ec372f94c1995b"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_framed_transport.html#a30aff85f5ba0c8dc96ec372f94c1995b">FramedTransport</a> ()</td></tr>
-<tr class="memdesc:a30aff85f5ba0c8dc96ec372f94c1995b inherit pub_methods_classerpc_1_1_framed_transport"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor. <br /></td></tr>
-<tr class="separator:a30aff85f5ba0c8dc96ec372f94c1995b inherit pub_methods_classerpc_1_1_framed_transport"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1c256e694803a2d47f013230b947d312 inherit pub_methods_classerpc_1_1_framed_transport"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1c256e694803a2d47f013230b947d312"></a>
-virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_framed_transport.html#a1c256e694803a2d47f013230b947d312">~FramedTransport</a> ()</td></tr>
-<tr class="memdesc:a1c256e694803a2d47f013230b947d312 inherit pub_methods_classerpc_1_1_framed_transport"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classerpc_1_1_codec.html" title="Abstract serialization encoder/decoder interface. ">Codec</a> destructor. <br /></td></tr>
-<tr class="separator:a1c256e694803a2d47f013230b947d312 inherit pub_methods_classerpc_1_1_framed_transport"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5cfed6f7b88aae9d017b4a1053acebc3 inherit pub_methods_classerpc_1_1_framed_transport"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5cfed6f7b88aae9d017b4a1053acebc3"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_framed_transport.html#a5cfed6f7b88aae9d017b4a1053acebc3">FramedTransport</a> (void)</td></tr>
+<tr class="memdesc:a5cfed6f7b88aae9d017b4a1053acebc3 inherit pub_methods_classerpc_1_1_framed_transport"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor. <br /></td></tr>
+<tr class="separator:a5cfed6f7b88aae9d017b4a1053acebc3 inherit pub_methods_classerpc_1_1_framed_transport"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a05359d9edebfc10848c15179d977699a inherit pub_methods_classerpc_1_1_framed_transport"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a05359d9edebfc10848c15179d977699a"></a>
+virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_framed_transport.html#a05359d9edebfc10848c15179d977699a">~FramedTransport</a> (void)</td></tr>
+<tr class="memdesc:a05359d9edebfc10848c15179d977699a inherit pub_methods_classerpc_1_1_framed_transport"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classerpc_1_1_codec.html" title="Abstract serialization encoder/decoder interface. ">Codec</a> destructor. <br /></td></tr>
+<tr class="separator:a05359d9edebfc10848c15179d977699a inherit pub_methods_classerpc_1_1_framed_transport"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a206f88e12844d6650c1611eefbec2fe3 inherit pub_methods_classerpc_1_1_framed_transport"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_framed_transport.html#a206f88e12844d6650c1611eefbec2fe3">receive</a> (<a class="el" href="classerpc_1_1_message_buffer.html">MessageBuffer</a> *message)</td></tr>
 <tr class="memdesc:a206f88e12844d6650c1611eefbec2fe3 inherit pub_methods_classerpc_1_1_framed_transport"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receives an entire message.  <a href="#a206f88e12844d6650c1611eefbec2fe3">More...</a><br /></td></tr>
 <tr class="separator:a206f88e12844d6650c1611eefbec2fe3 inherit pub_methods_classerpc_1_1_framed_transport"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -179,36 +178,36 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <tr class="memdesc:afe8eaf84d24d64ce7515c6d9fe6c5085 inherit pub_methods_classerpc_1_1_framed_transport"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to send prepared message.  <a href="#afe8eaf84d24d64ce7515c6d9fe6c5085">More...</a><br /></td></tr>
 <tr class="separator:afe8eaf84d24d64ce7515c6d9fe6c5085 inherit pub_methods_classerpc_1_1_framed_transport"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad67bbd6aa37a610abdeb0280da260729 inherit pub_methods_classerpc_1_1_framed_transport"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_framed_transport.html#ad67bbd6aa37a610abdeb0280da260729">setCrc16</a> (<a class="el" href="classerpc_1_1_crc16.html">Crc16</a> *crcImpl)</td></tr>
-<tr class="memdesc:ad67bbd6aa37a610abdeb0280da260729 inherit pub_methods_classerpc_1_1_framed_transport"><td class="mdescLeft">&#160;</td><td class="mdescRight">This functions sets thre CRC-16 implementation.  <a href="#ad67bbd6aa37a610abdeb0280da260729">More...</a><br /></td></tr>
+<tr class="memdesc:ad67bbd6aa37a610abdeb0280da260729 inherit pub_methods_classerpc_1_1_framed_transport"><td class="mdescLeft">&#160;</td><td class="mdescRight">This functions sets the CRC-16 implementation.  <a href="#ad67bbd6aa37a610abdeb0280da260729">More...</a><br /></td></tr>
 <tr class="separator:ad67bbd6aa37a610abdeb0280da260729 inherit pub_methods_classerpc_1_1_framed_transport"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classerpc_1_1_transport"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classerpc_1_1_transport')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classerpc_1_1_transport.html">erpc::Transport</a></td></tr>
-<tr class="memitem:a895a468f9810eba023c68197edefb301 inherit pub_methods_classerpc_1_1_transport"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a895a468f9810eba023c68197edefb301"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_transport.html#a895a468f9810eba023c68197edefb301">Transport</a> ()</td></tr>
-<tr class="memdesc:a895a468f9810eba023c68197edefb301 inherit pub_methods_classerpc_1_1_transport"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor. <br /></td></tr>
-<tr class="separator:a895a468f9810eba023c68197edefb301 inherit pub_methods_classerpc_1_1_transport"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac75843918e2fbe211430cf5973caac47 inherit pub_methods_classerpc_1_1_transport"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac75843918e2fbe211430cf5973caac47"></a>
-virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_transport.html#ac75843918e2fbe211430cf5973caac47">~Transport</a> ()</td></tr>
-<tr class="memdesc:ac75843918e2fbe211430cf5973caac47 inherit pub_methods_classerpc_1_1_transport"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classerpc_1_1_transport.html" title="Abstract interface for transport layer. ">Transport</a> destructor. <br /></td></tr>
-<tr class="separator:ac75843918e2fbe211430cf5973caac47 inherit pub_methods_classerpc_1_1_transport"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abee09d5af8f4a38ae83891afc6472066 inherit pub_methods_classerpc_1_1_transport"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_transport.html#abee09d5af8f4a38ae83891afc6472066">hasMessage</a> ()</td></tr>
-<tr class="memdesc:abee09d5af8f4a38ae83891afc6472066 inherit pub_methods_classerpc_1_1_transport"><td class="mdescLeft">&#160;</td><td class="mdescRight">Poll for an incoming message.  <a href="#abee09d5af8f4a38ae83891afc6472066">More...</a><br /></td></tr>
-<tr class="separator:abee09d5af8f4a38ae83891afc6472066 inherit pub_methods_classerpc_1_1_transport"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0b6b9c50d238f99de90ccd8b6050c91 inherit pub_methods_classerpc_1_1_transport"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af0b6b9c50d238f99de90ccd8b6050c91"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_transport.html#af0b6b9c50d238f99de90ccd8b6050c91">Transport</a> (void)</td></tr>
+<tr class="memdesc:af0b6b9c50d238f99de90ccd8b6050c91 inherit pub_methods_classerpc_1_1_transport"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor. <br /></td></tr>
+<tr class="separator:af0b6b9c50d238f99de90ccd8b6050c91 inherit pub_methods_classerpc_1_1_transport"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0cb1c4441873bce62f2ef455a6136888 inherit pub_methods_classerpc_1_1_transport"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0cb1c4441873bce62f2ef455a6136888"></a>
+virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_transport.html#a0cb1c4441873bce62f2ef455a6136888">~Transport</a> (void)</td></tr>
+<tr class="memdesc:a0cb1c4441873bce62f2ef455a6136888 inherit pub_methods_classerpc_1_1_transport"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classerpc_1_1_transport.html" title="Abstract interface for transport layer. ">Transport</a> destructor. <br /></td></tr>
+<tr class="separator:a0cb1c4441873bce62f2ef455a6136888 inherit pub_methods_classerpc_1_1_transport"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea4a3b77e476397c2f665e7c9449839a inherit pub_methods_classerpc_1_1_transport"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_transport.html#aea4a3b77e476397c2f665e7c9449839a">hasMessage</a> (void)</td></tr>
+<tr class="memdesc:aea4a3b77e476397c2f665e7c9449839a inherit pub_methods_classerpc_1_1_transport"><td class="mdescLeft">&#160;</td><td class="mdescRight">Poll for an incoming message.  <a href="#aea4a3b77e476397c2f665e7c9449839a">More...</a><br /></td></tr>
+<tr class="separator:aea4a3b77e476397c2f665e7c9449839a inherit pub_methods_classerpc_1_1_transport"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:ac3fe39a38de9be4f21947cf9ad3cacba"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_t_c_p_transport.html#ac3fe39a38de9be4f21947cf9ad3cacba">connectClient</a> ()</td></tr>
-<tr class="memdesc:ac3fe39a38de9be4f21947cf9ad3cacba"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function connect client to the server.  <a href="#ac3fe39a38de9be4f21947cf9ad3cacba">More...</a><br /></td></tr>
-<tr class="separator:ac3fe39a38de9be4f21947cf9ad3cacba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5eb8f5ed0b9d7a8691cf09aa962ec82a"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_t_c_p_transport.html#a5eb8f5ed0b9d7a8691cf09aa962ec82a">connectClient</a> (void)</td></tr>
+<tr class="memdesc:a5eb8f5ed0b9d7a8691cf09aa962ec82a"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function connect client to the server.  <a href="#a5eb8f5ed0b9d7a8691cf09aa962ec82a">More...</a><br /></td></tr>
+<tr class="separator:a5eb8f5ed0b9d7a8691cf09aa962ec82a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad8d68b7622a84df194ed952c4bfbd2a4"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_t_c_p_transport.html#ad8d68b7622a84df194ed952c4bfbd2a4">underlyingReceive</a> (uint8_t *data, uint32_t size)</td></tr>
 <tr class="memdesc:ad8d68b7622a84df194ed952c4bfbd2a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function read data.  <a href="#ad8d68b7622a84df194ed952c4bfbd2a4">More...</a><br /></td></tr>
 <tr class="separator:ad8d68b7622a84df194ed952c4bfbd2a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3775372dfa7de5fe614c02d635cac05a"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_t_c_p_transport.html#a3775372dfa7de5fe614c02d635cac05a">underlyingSend</a> (const uint8_t *data, uint32_t size)</td></tr>
 <tr class="memdesc:a3775372dfa7de5fe614c02d635cac05a"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function writes data.  <a href="#a3775372dfa7de5fe614c02d635cac05a">More...</a><br /></td></tr>
 <tr class="separator:a3775372dfa7de5fe614c02d635cac05a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac58d3ad8191589fd33ddc9ca904c33ed"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac58d3ad8191589fd33ddc9ca904c33ed"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_t_c_p_transport.html#ac58d3ad8191589fd33ddc9ca904c33ed">serverThread</a> ()</td></tr>
-<tr class="memdesc:ac58d3ad8191589fd33ddc9ca904c33ed"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classerpc_1_1_server.html" title="Based server functionality. ">Server</a> thread function. <br /></td></tr>
-<tr class="separator:ac58d3ad8191589fd33ddc9ca904c33ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a90b1d79a66b352b70751600e66e0a610"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a90b1d79a66b352b70751600e66e0a610"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_t_c_p_transport.html#a90b1d79a66b352b70751600e66e0a610">serverThread</a> (void)</td></tr>
+<tr class="memdesc:a90b1d79a66b352b70751600e66e0a610"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classerpc_1_1_server.html" title="Based server functionality. ">Server</a> thread function. <br /></td></tr>
+<tr class="separator:a90b1d79a66b352b70751600e66e0a610"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-static-methods"></a>
 Static Protected Member Functions</h2></td></tr>
@@ -349,7 +348,7 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a6c75df91564321a96a411163387d96d1"></a>
+<a class="anchor" id="af43c66b7123b3845d37a7e3478ef98fd"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -359,6 +358,7 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="memname"><a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a> TCPTransport::open </td>
           <td>(</td>
+          <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
@@ -382,7 +382,7 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ae7e4b4e92c50023654ee03abb724cb76"></a>
+<a class="anchor" id="a163a9cd6d14167297e4160cbf9bf3269"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -392,6 +392,7 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="memname"><a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a> TCPTransport::close </td>
           <td>(</td>
+          <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
@@ -413,7 +414,7 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ac3fe39a38de9be4f21947cf9ad3cacba"></a>
+<a class="anchor" id="a5eb8f5ed0b9d7a8691cf09aa962ec82a"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -423,6 +424,7 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="memname"><a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a> TCPTransport::connectClient </td>
           <td>(</td>
+          <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
@@ -574,7 +576,7 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p><a class="el" href="classerpc_1_1_thread.html" title="Simple thread class. ">Thread</a> entry point. </p>
-<p>Control is passed to the <a class="el" href="classerpc_1_1_t_c_p_transport.html#ac58d3ad8191589fd33ddc9ca904c33ed" title="Server thread function. ">serverThread()</a> method of the <a class="el" href="classerpc_1_1_t_c_p_transport.html" title="Client side of TCP/IP transport. ">TCPTransport</a> instance pointed to by the <code>arg</code> parameter.</p>
+<p>Control is passed to the <a class="el" href="classerpc_1_1_t_c_p_transport.html#a90b1d79a66b352b70751600e66e0a610" title="Server thread function. ">serverThread()</a> method of the <a class="el" href="classerpc_1_1_t_c_p_transport.html" title="Client side of TCP/IP transport. ">TCPTransport</a> instance pointed to by the <code>arg</code> parameter.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">arg</td><td><a class="el" href="classerpc_1_1_thread.html" title="Simple thread class. ">Thread</a> argument. The pointer to the <a class="el" href="classerpc_1_1_t_c_p_transport.html" title="Client side of TCP/IP transport. ">TCPTransport</a> instance is passed through this argument. </td></tr>
@@ -712,8 +714,8 @@ Protected Attributes</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li><a class="el" href="tcp__transport_8h_source.html">tcp_transport.h</a></li>
-<li>tcp_transport.cpp</li>
+<li><a class="el" href="erpc__tcp__transport_8h_source.html">erpc_tcp_transport.h</a></li>
+<li>erpc_tcp_transport.cpp</li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

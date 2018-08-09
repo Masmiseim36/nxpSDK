@@ -16,7 +16,7 @@
 </g>
 <!-- Node2 -->
 <g id="node2" class="node"><title>Node2</title>
-<g id="a_node2"><a xlink:href="classerpc_1_1_r_p_msg_base_transport.html" target="_top" xlink:title="Transport that other RPMsg transports inherts. ">
+<g id="a_node2"><a xlink:href="classerpc_1_1_r_p_msg_base_transport.html" target="_top" xlink:title="Transport that other RPMsg transports inherits. ">
 <polygon fill="white" stroke="black" points="123.5,-72 123.5,-91 260.5,-91 260.5,-72 123.5,-72"/>
 <text text-anchor="middle" x="192" y="-79" font-family="Helvetica,sans-Serif" font-size="10.00">erpc::RPMsgBaseTransport</text>
 </a>

@@ -1,6 +1,6 @@
 /*
  * The Clear BSD License
- * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
@@ -65,12 +65,20 @@
 // Macros
 //-----------------------------------------------------------------------
 #define MAG3110_DATA_SIZE 6         /* 2 byte X,Y,Z Axis Data each. */
-#define MAG3110_STREAM_DATA_SIZE 10 /* 6 byte Data */
+#define MAG3110_STREAM_DATA_SIZE 12 /* 6 byte Data */
 
 /*! @brief Unique Name for this application which should match the target GUI pkg name. */
-#define APPLICATION_NAME "MAG3110"
+#define APPLICATION_NAME "MAG3110 Magnetometer Demo"
 /*! @brief Version to distinguish between instances the same application based on target Shield and updates. */
-#define APPLICATION_VERSION "1.0"
+#define APPLICATION_VERSION "2.5"
+
+/*! @brief This structure defines the mag3110 data buffer.*/
+typedef struct
+{
+    uint32_t timestamp; /*!< Time stamp value in micro-seconds. */
+    int16_t mag[3];     /*!< Sensor Magnetic Strength output: signed 16-bits. */
+    int16_t temp;   /*!< The INTSRC data */
+} mag3110_magdataUser_t;
 
 //-----------------------------------------------------------------------
 // Constants
@@ -79,9 +87,10 @@
 const registerwritelist_t cMag3110ConfigNormal[] = {
     /* Set Ouput Rate @10HZ (ODR = 2 and OSR = 32). */
     {MAG3110_CTRL_REG1, MAG3110_CTRL_REG1_DR_ODR_2 | MAG3110_CTRL_REG1_OS_OSR_32,
-     MAG3110_CTRL_REG1_DR_MASK | MAG3110_CTRL_REG1_OS_MASK},
+                        MAG3110_CTRL_REG1_DR_MASK | MAG3110_CTRL_REG1_OS_MASK},
     /* Set Auto Magnetic Sensor Reset. */
-    {MAG3110_CTRL_REG2, MAG3110_CTRL_REG2_AUTO_MSRT_EN_EN, MAG3110_CTRL_REG2_AUTO_MSRT_EN_MASK},
+    {MAG3110_CTRL_REG2, MAG3110_CTRL_REG2_MAG_RST_EN | MAG3110_CTRL_REG2_AUTO_MSRT_EN_EN | MAG3110_CTRL_REG2_RAW_RAW,
+                        MAG3110_CTRL_REG2_MAG_RST_MASK | MAG3110_CTRL_REG2_AUTO_MSRT_EN_MASK | MAG3110_CTRL_REG2_RAW_MASK},
     __END_WRITE_DATA__};
 
 /*! @brief Address of Status Register. */
@@ -89,6 +98,9 @@ const registerreadlist_t cMag3110Status[] = {{.readFrom = MAG3110_DR_STATUS, .nu
 
 /*! @brief Address and size of Raw Pressure+Temperature Data in Normal Mode. */
 const registerreadlist_t cMag3110OutputNormal[] = {{.readFrom = MAG3110_OUT_X_MSB, .numBytes = MAG3110_DATA_SIZE},
+                                                   __END_READ_DATA__};
+/*! @brief Address and size of Temperature Data in Normal Mode. */
+const registerreadlist_t cMag3110TempOut[] = {{.readFrom = MAG3110_DIE_TEMP, .numBytes = 1},
                                                    __END_READ_DATA__};
 
 //-----------------------------------------------------------------------
@@ -98,6 +110,7 @@ char boardString[ADS_MAX_STRING_LENGTH] = {0}, shieldString[ADS_MAX_STRING_LENGT
      embAppName[ADS_MAX_STRING_LENGTH] = {0};
 volatile bool bStreamingEnabled = false, bMag3110Ready = false;
 uint8_t gStreamID; /* The auto assigned Stream ID. */
+int32_t gSystick;
 GENERIC_DRIVER_GPIO *pGpioDriver = &Driver_GPIO_KSDK;
 
 //-----------------------------------------------------------------------
@@ -162,6 +175,7 @@ bool process_host_command(
             case HOST_CMD_START:
                 if (hostCommand[1] == gStreamID && bMag3110Ready && bStreamingEnabled == false)
                 {
+                    BOARD_SystickStart(&gSystick);
                     bStreamingEnabled = true;
                     success = true;
                 }
@@ -188,11 +202,11 @@ bool process_host_command(
  */
 int main(void)
 {
-    int32_t status, systick;
-    uint8_t dataReady, data[MAG3110_DATA_SIZE], streamingPacket[STREAMING_HEADER_LEN + MAG3110_STREAM_DATA_SIZE];
+    int32_t status;
+    uint8_t tempdata, dataReady, data[MAG3110_DATA_SIZE], streamingPacket[STREAMING_HEADER_LEN + MAG3110_STREAM_DATA_SIZE];
 
     mag3110_i2c_sensorhandle_t mag3110Driver;
-    mag3110_magdata_t rawData = {.timestamp = 0};
+    mag3110_magdataUser_t rawData = {.timestamp = 0};
 
     ARM_DRIVER_I2C *pI2cDriver = &I2C_S_DRIVER;
     ARM_DRIVER_USART *pUartDriver = &HOST_S_DRIVER;
@@ -283,7 +297,6 @@ int main(void)
     {
         /*! Populate streaming header. */
         Host_IO_Add_ISO_Header(gStreamID, streamingPacket, MAG3110_STREAM_DATA_SIZE);
-        BOARD_SystickStart(&systick);
         pGpioDriver->clr_pin(&GREEN_LED); /* Set LED to indicate application is ready. */
     }
 
@@ -316,12 +329,17 @@ int main(void)
         }
 
         /* Update timestamp from Systick framework. */
-        rawData.timestamp += BOARD_SystickElapsedTime_us(&systick);
+        rawData.timestamp += BOARD_SystickElapsedTime_us(&gSystick);
 
         /*! Convert the raw sensor data to signed 32-bit and 16-bit containers for display to the debug port. */
         rawData.mag[0] = ((int16_t)data[0] << 8) | data[1];
         rawData.mag[1] = ((int16_t)data[2] << 8) | data[3];
         rawData.mag[2] = ((int16_t)data[4] << 8) | data[5];
+
+	MAG3110_CalibrateHardIronOffset(&rawData.mag[0], &rawData.mag[1], &rawData.mag[2]);
+        /*! Read TEMP_SRC 0x0F from MAG3110. */
+        status = MAG3110_I2C_ReadData(&mag3110Driver, cMag3110TempOut, &tempdata);
+        rawData.temp = tempdata;
 
         /* Copy Raw samples to Streaming Buffer. */
         memcpy(streamingPacket + STREAMING_HEADER_LEN, &rawData, MAG3110_STREAM_DATA_SIZE);

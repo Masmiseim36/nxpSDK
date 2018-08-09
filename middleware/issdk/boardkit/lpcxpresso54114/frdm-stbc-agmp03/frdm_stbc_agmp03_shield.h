@@ -1,5 +1,6 @@
 /*
  * The Clear BSD License
+ * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
@@ -31,7 +32,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/*! File: frdm_stbc_agmp03_shield.h
+/*! @file: frdm_stbc_agmp03_shield.h
 * @brief The frdm_stbc_agmp03_shield.h file declares mapping of the Kinetis
          Device peripherals to the lpcxpresso54114 and frmd-stbc-agmp03 shield.
 */
@@ -54,6 +55,8 @@
 // FXAS21002 Sensor Information
 #define FXAS21002_I2C_ADDR 0x20
 #define FXAS21002_INT1 D8
+#define FXAS21002_INT2 A2
+#define FXAS21002_CS A1
 
 // MPL3115 Sensor Information
 #define MPL3115_I2C_ADDR 0x60

@@ -4,7 +4,7 @@ var classerpcgen_1_1_enum_type =
     [ "EnumType", "classerpcgen_1_1_enum_type.html#a36448a5e34e4a4ce526518c3f688e8b9", null ],
     [ "EnumType", "classerpcgen_1_1_enum_type.html#a26cc67a6270d6d4b1325b6e845c2dc9c", null ],
     [ "addMember", "classerpcgen_1_1_enum_type.html#a4c97d8257933bcc596c79cb72d948444", null ],
-    [ "getDescription", "classerpcgen_1_1_enum_type.html#a7b1138290c55479bfd939a61eaceb392", null ],
+    [ "getDescription", "classerpcgen_1_1_enum_type.html#ab95b28ad62ecb25638468b2ba7783921", null ],
     [ "getMember", "classerpcgen_1_1_enum_type.html#a8c218f5df40c18eb9856ec51387d71c4", null ],
     [ "getMembers", "classerpcgen_1_1_enum_type.html#a3937f8b85c8a02780bb6e0ddbd945a03", null ],
     [ "getNextValue", "classerpcgen_1_1_enum_type.html#a6a9782db4697448eb895f2b48afa0200", null ],

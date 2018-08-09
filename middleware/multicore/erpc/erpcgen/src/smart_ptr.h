@@ -73,7 +73,7 @@ public:
     typedef T &ref_type;
     typedef const T &const_ref_type;
 
-    //! Default constuctor. Initialises with no pointer set.
+    //! Default constructor. Initializes with no pointer set.
     smart_ptr()
     : _p(nullptr)
     {

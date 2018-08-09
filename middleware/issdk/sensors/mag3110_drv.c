@@ -1,6 +1,6 @@
 /*
  * The Clear BSD License
- * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright (c) 2015-2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
@@ -185,4 +185,23 @@ int32_t MAG3110_I2C_DeInit(mag3110_i2c_sensorhandle_t *pSensorHandle)
     }
 
     return SENSOR_ERROR_NONE;
+}
+
+void MAG3110_CalibrateHardIronOffset(int16_t* xValue, int16_t* yValue, int16_t* zValue)
+{
+    static int16_t xOffsetMax = 0x8000, yOffsetMax = 0x8000, zOffsetMax = 0x8000,
+                   xOffsetMin = 0x7FFF, yOffsetMin = 0x7FFF, zOffsetMin = 0x7FFF;
+
+    xOffsetMax = (*xValue > xOffsetMax)?(*xValue):(xOffsetMax);
+    xOffsetMin = (*xValue < xOffsetMin)?(*xValue):(xOffsetMin);
+
+    yOffsetMax = (*yValue > yOffsetMax)?(*yValue):(yOffsetMax);
+    yOffsetMin = (*yValue < yOffsetMin)?(*yValue):(yOffsetMin);
+
+    zOffsetMax = (*zValue > zOffsetMax)?(*zValue):(zOffsetMax);
+    zOffsetMin = (*zValue < zOffsetMin)?(*zValue):(zOffsetMin);
+
+    *xValue -= (xOffsetMax+xOffsetMin)/2;
+    *yValue -= (yOffsetMax+yOffsetMin)/2;
+    *zValue -= (zOffsetMax+zOffsetMin)/2;
 }

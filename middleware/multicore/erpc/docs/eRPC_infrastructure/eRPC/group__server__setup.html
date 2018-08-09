@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC API Reference
-   &#160;<span id="projectnumber">Rev. 1.5.0</span>
+   &#160;<span id="projectnumber">Rev. 1.7.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -51,7 +51,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li class="current"><a href="modules.html"><span>API&#160;Reference</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -147,6 +146,9 @@ Server setup</h2></td></tr>
 <tr class="memitem:gab4a3e4d15e49a871f3528040cdac1d7e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__server__setup.html#gab4a3e4d15e49a871f3528040cdac1d7e">erpc_add_service_to_server</a> (void *service)</td></tr>
 <tr class="memdesc:gab4a3e4d15e49a871f3528040cdac1d7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function adds service to server.  <a href="#gab4a3e4d15e49a871f3528040cdac1d7e">More...</a><br /></td></tr>
 <tr class="separator:gab4a3e4d15e49a871f3528040cdac1d7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadbe047d1e39e0401f0d97780c7e75fc8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__server__setup.html#gadbe047d1e39e0401f0d97780c7e75fc8">erpc_server_set_crc</a> (uint32_t crcStart)</td></tr>
+<tr class="memdesc:gadbe047d1e39e0401f0d97780c7e75fc8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Can be used to set own crcStart number.  <a href="#gadbe047d1e39e0401f0d97780c7e75fc8">More...</a><br /></td></tr>
+<tr class="separator:gadbe047d1e39e0401f0d97780c7e75fc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Server control</h2></td></tr>
@@ -229,6 +231,31 @@ Server control</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">service</td><td>Service which contains implementations of functions called from client to server. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gadbe047d1e39e0401f0d97780c7e75fc8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void erpc_server_set_crc </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>crcStart</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Can be used to set own crcStart number. </p>
+<p>For example can be used generated crc from erpcgen which is providing when  annotation is used. Accessed can be through 'extern const uint32_t erpc_generated_crc;'</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">crcStart</td><td>Set start number for crc. </td></tr>
   </table>
   </dd>
 </dl>

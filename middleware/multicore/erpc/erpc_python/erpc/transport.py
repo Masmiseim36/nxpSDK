@@ -43,7 +43,7 @@ try:
     RpmsgEndpointReady = True
 except ImportError:
     RpmsgEndpointReady = False
-    
+
 ##
 # @brief Base transport class.
 class Transport(object):
@@ -63,6 +63,7 @@ class FramedTransport(Transport):
         super(FramedTransport, self).__init__()
         self._sendLock = threading.Lock()
         self._receiveLock = threading.Lock()
+        self._Crc16 = Crc16()
 
     @property
     def crc_16(self):
@@ -212,5 +213,5 @@ class RpmsgTransport(Transport):
                 return ret[1]
             else:
                 time.sleep(0.001)
-        return ret[1] 
+        return ret[1]
 

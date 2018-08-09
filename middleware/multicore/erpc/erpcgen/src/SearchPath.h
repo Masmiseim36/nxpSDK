@@ -53,10 +53,10 @@ public:
     {
         kFindFile,
         kFindDirectory
-    };
+    }; /*!< Type of searched item. */
 
     //!
-    typedef enum _target_type target_type_t;
+    typedef enum _target_type target_type_t; /*!< Type of searched item. */
 
 protected:
     //! Global search object singleton.

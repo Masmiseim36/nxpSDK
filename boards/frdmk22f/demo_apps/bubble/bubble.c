@@ -36,7 +36,6 @@
 #include "board.h"
 #include "math.h"
 #include "fsl_fxos.h"
-#include "fsl_i2c.h"
 #include "fsl_ftm.h"
 
 #include "fsl_common.h"
@@ -53,7 +52,6 @@
 /* Get source clock for TPM driver */
 #define BOARD_TIMER_SOURCE_CLOCK CLOCK_GetFreq(kCLOCK_BusClk)
 /* I2C source clock */
-#define ACCEL_I2C_CLK_SRC I2C0_CLK_SRC
 #define I2C_BAUDRATE 100000U
 
 #define I2C_RELEASE_SDA_PORT PORTB
@@ -75,7 +73,6 @@ void BOARD_I2C_ReleaseBus(void);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-i2c_master_handle_t g_MasterHandle;
 /* FXOS device address */
 const uint8_t g_accel_address[] = {0x1CU, 0x1DU, 0x1EU, 0x1FU};
 
@@ -195,10 +192,10 @@ int main(void)
 {
     fxos_handle_t fxosHandle = {0};
     fxos_data_t sensorData = {0};
-    i2c_master_config_t i2cConfig = {0};
+    fxos_config_t config = {0}; 
+    status_t result; 
     uint8_t sensorRange = 0;
     uint8_t dataScale = 0;
-    uint32_t i2cSourceClock = 0;
     int16_t xData = 0;
     int16_t yData = 0;
     int16_t xAngle = 0;
@@ -206,9 +203,7 @@ int main(void)
     int16_t xDuty = 0;
     int16_t yDuty = 0;
     uint8_t i = 0;
-    uint8_t regResult = 0;
     uint8_t array_addr_size = 0;
-    bool foundDevice = false;
 
     /* Board pin, clock, debug console init */
     BOARD_InitPins();
@@ -219,42 +214,28 @@ int main(void)
 
     LED_GREEN_INIT(LOGIC_LED_OFF);
 
-    i2cSourceClock = CLOCK_GetFreq(ACCEL_I2C_CLK_SRC);
-    fxosHandle.base = BOARD_ACCEL_I2C_BASEADDR;
-    fxosHandle.i2cHandle = &g_MasterHandle;
+    /* I2C initialize */
+    BOARD_Accel_I2C_Init();
+    /* Configure the I2C function */
+    config.I2C_SendFunc = BOARD_Accel_I2C_Send;
+    config.I2C_ReceiveFunc = BOARD_Accel_I2C_Receive;
 
-    /*
-     * i2cConfig.baudRate_Bps = 100000U;
-     * i2cConfig.enableStopHold = false;
-     * i2cConfig.glitchFilterWidth = 0U;
-     * i2cConfig.enableMaster = true;
-     */
-    I2C_MasterGetDefaultConfig(&i2cConfig);
-    I2C_MasterInit(BOARD_ACCEL_I2C_BASEADDR, &i2cConfig, i2cSourceClock);
-    I2C_MasterTransferCreateHandle(BOARD_ACCEL_I2C_BASEADDR, &g_MasterHandle, NULL, NULL);
-
-    /* Find sensor devices */
+    /* Initialize sensor devices */
     array_addr_size = sizeof(g_accel_address) / sizeof(g_accel_address[0]);
     for (i = 0; i < array_addr_size; i++)
     {
-        fxosHandle.xfer.slaveAddress = g_accel_address[i];
-        if (FXOS_ReadReg(&fxosHandle, WHO_AM_I_REG, &regResult, 1) == kStatus_Success)
+        config.slaveAddress = g_accel_address[i];
+        /* Initialize accelerometer sensor */
+        result = FXOS_Init(&fxosHandle, &config);
+        if (result == kStatus_Success)
         {
-            foundDevice = true;
             break;
-        }
-        if ((i == (array_addr_size - 1)) && (!foundDevice))
-        {
-            PRINTF("\r\nSensor device not found\r\n");
-            while (1)
-            {
-            };
         }
     }
 
-    /* Init accelerometer sensor */
-    if (FXOS_Init(&fxosHandle) != kStatus_Success)
+    if (result != kStatus_Success)
     {
+        PRINTF("\r\nSensor device initialize failed!\r\n");
         return -1;
     }
     /* Get sensor range */

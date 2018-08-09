@@ -45,7 +45,7 @@ The eRPC files are organized using a top folder (directory) and subfolders under
 [[images/eRPC_directory.png|alt=RPC system]]
 
 * ``erpc``: Contains all important files for the eRPC project layer, like primary ``Makefile``.
-  * ``doc``: Contains eRPC documentation.
+  * ``docs``: Contains eRPC documentation.
   * ``doxygen``: Contains doxygen configuration files for generating doxygen documentations.
   * ``erpc_c``: Contains source C/C++-code for the eRPC infrastructure.
      * ``config``: Contains the eRPC configuration files.
@@ -56,8 +56,11 @@ The eRPC files are organized using a top folder (directory) and subfolders under
   * ``erpc_python``: Holds source PY-code for the eRPC infrastructure.
   * ``erpcgen``: Holds source code for erpcgen and makefiles, project files for Visual Studio
 to build erpcgen on Windows OS, Linux OS, and OS X. This folder also contains the test folder for testing the generated code.
+  * ``erpcsniffer``: Holds source code for erpcsniffer and makefiles to build erpcsniffer on Linux OS.
+  * ``examples``: Contains IDL examples.
   * ``mk``: Contains makefiles, which contain the settings necessary for building the eRPC generator under different environments.
   * ``test``: Each ``test_xxx/`` subdirectory contains acceptance tests. These tests can be built on Linux OS or OS X with gcc using makefiles.
+  * ``utilities``: Contains utilities which bring additional benefit to eRPC apps developers.
 
 # How to create the IDL file
 This section describes how to create an Interface Definition Language (IDL) file for the eRPC generator, and what the expected output looks like.

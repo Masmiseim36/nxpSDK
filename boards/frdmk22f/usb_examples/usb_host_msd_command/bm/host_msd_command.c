@@ -1,7 +1,7 @@
 /*
  * The Clear BSD License
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016, 2018 NXP
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -36,6 +36,7 @@
 #include "usb_host.h"
 #include "usb_host_msd.h"
 #include "host_msd_command.h"
+#include "app.h"
 
 /*******************************************************************************
  * Definitions
@@ -122,10 +123,10 @@ static void USB_HostMsdControlCallback(void *param, uint8_t *data, uint32_t data
 {
     usb_host_msd_command_instance_t *msdCommandInstance = (usb_host_msd_command_instance_t *)param;
 
-    if (msdCommandInstance->runWaitState == kRunWaitSetInterface) /* set interface finish */
+    if (msdCommandInstance->runWaitState == kUSB_HostMsdRunWaitSetInterface) /* set interface finish */
     {
-        msdCommandInstance->runWaitState = kRunIdle;
-        msdCommandInstance->runState = kRunMassStorageTest;
+        msdCommandInstance->runWaitState = kUSB_HostMsdRunIdle;
+        msdCommandInstance->runState = kUSB_HostMsdRunMassStorageTest;
     }
 }
 
@@ -504,12 +505,12 @@ void USB_HostMsdTask(void *arg)
                     usb_echo("usb host msd init fail\r\n");
                     return;
                 }
-                msdCommandInstance->runState = kRunSetInterface;
+                msdCommandInstance->runState = kUSB_HostMsdRunSetInterface;
                 break;
 
             case kStatus_DEV_Detached: /* device is detached */
                 msdCommandInstance->deviceState = kStatus_DEV_Idle;
-                msdCommandInstance->runState = kRunIdle;
+                msdCommandInstance->runState = kUSB_HostMsdRunIdle;
                 USB_HostMsdDeinit(msdCommandInstance->deviceHandle,
                                   msdCommandInstance->classHandle); /* msd class de-initialization */
                 msdCommandInstance->classHandle = NULL;
@@ -525,12 +526,12 @@ void USB_HostMsdTask(void *arg)
     /* run state */
     switch (msdCommandInstance->runState)
     {
-        case kRunIdle:
+        case kUSB_HostMsdRunIdle:
             break;
 
-        case kRunSetInterface: /* set msd interface */
-            msdCommandInstance->runState = kRunIdle;
-            msdCommandInstance->runWaitState = kRunWaitSetInterface;
+        case kUSB_HostMsdRunSetInterface: /* set msd interface */
+            msdCommandInstance->runState = kUSB_HostMsdRunIdle;
+            msdCommandInstance->runWaitState = kUSB_HostMsdRunWaitSetInterface;
             status = USB_HostMsdSetInterface(msdCommandInstance->classHandle, msdCommandInstance->interfaceHandle, 0,
                                              USB_HostMsdControlCallback, msdCommandInstance);
             if (status != kStatus_USB_Success)
@@ -539,9 +540,9 @@ void USB_HostMsdTask(void *arg)
             }
             break;
 
-        case kRunMassStorageTest:                       /* set interface succeed */
+        case kUSB_HostMsdRunMassStorageTest:            /* set interface succeed */
             USB_HostMsdCommandTest(msdCommandInstance); /* test msd device */
-            msdCommandInstance->runState = kRunIdle;
+            msdCommandInstance->runState = kUSB_HostMsdRunIdle;
             break;
 
         default:

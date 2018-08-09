@@ -52,6 +52,8 @@ SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -mfloat-abi=hard")
 
 SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -mfpu=fpv4-sp-d16")
 
+SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -DNDEBUG")
+
 SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -D__STARTUP_CLEAR_BSS")
 
 SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -Wall")
@@ -77,6 +79,8 @@ SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -mcpu=cortex-m4")
 SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -mfloat-abi=hard")
 
 SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -mfpu=fpv4-sp-d16")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DDEBUG")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -D_DEBUG=1")
 
@@ -115,6 +119,8 @@ SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -mfpu=fpv4-sp-d16")
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -MMD")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -MP")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DNDEBUG")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -D_DEBUG=0")
 
@@ -189,6 +195,8 @@ SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -mfpu=fpv4-sp-d16")
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -MMD")
 
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -MP")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DNDEBUG")
 
 SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DCPU_MK22FN512VLH12")
 
@@ -390,7 +398,17 @@ add_executable(dev_composite_hid_audio_lite_bm.elf
 "${ProjDirPath}/../../../../../../devices/MK22F51212/utilities/fsl_debug_console_conf.h"
 "${ProjDirPath}/../../../../../../devices/MK22F51212/drivers/fsl_smc.h"
 "${ProjDirPath}/../../../../../../devices/MK22F51212/drivers/fsl_smc.c"
-"${ProjDirPath}/../../../../../../devices/MK22F51212/drivers/fsl_flash.c"
+"${ProjDirPath}/../../../../../../devices/MK22F51212/drivers/fsl_ftfx_adapter.h"
+"${ProjDirPath}/../../../../../../devices/MK22F51212/drivers/fsl_ftfx_utilities.h"
+"${ProjDirPath}/../../../../../../devices/MK22F51212/drivers/fsl_ftfx_features.h"
+"${ProjDirPath}/../../../../../../devices/MK22F51212/drivers/fsl_ftfx_controller.c"
+"${ProjDirPath}/../../../../../../devices/MK22F51212/drivers/fsl_ftfx_controller.h"
+"${ProjDirPath}/../../../../../../devices/MK22F51212/drivers/fsl_ftfx_flash.c"
+"${ProjDirPath}/../../../../../../devices/MK22F51212/drivers/fsl_ftfx_flash.h"
+"${ProjDirPath}/../../../../../../devices/MK22F51212/drivers/fsl_ftfx_cache.c"
+"${ProjDirPath}/../../../../../../devices/MK22F51212/drivers/fsl_ftfx_cache.h"
+"${ProjDirPath}/../../../../../../devices/MK22F51212/drivers/fsl_ftfx_flexnvm.c"
+"${ProjDirPath}/../../../../../../devices/MK22F51212/drivers/fsl_ftfx_flexnvm.h"
 "${ProjDirPath}/../../../../../../devices/MK22F51212/drivers/fsl_flash.h"
 "${ProjDirPath}/../../../../../../devices/MK22F51212/system_MK22F51212.c"
 "${ProjDirPath}/../../../../../../devices/MK22F51212/system_MK22F51212.h"

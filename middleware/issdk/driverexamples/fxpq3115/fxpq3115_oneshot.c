@@ -1,6 +1,6 @@
 /*
  * The Clear BSD License
- * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
@@ -145,7 +145,7 @@ int main(void)
      *  Instead we directly write register settings for One-Shot Mode... */
     deviceInfo.deviceInstance = I2C_S_DEVICE_INDEX;
     deviceInfo.functionParam = SMC;
-    deviceInfo.idleFunction = (registeridlefunction_t)SMC_SetPowerModeVlpr;
+    deviceInfo.idleFunction = (registeridlefunction_t)SMC_SetPowerModeWait;
     status = Sensor_I2C_Write(fxpq3115Driver.pCommDrv, &deviceInfo, fxpq3115Driver.slaveAddress, B3115ConfigAltitude);
     if (ARM_DRIVER_OK != status)
     {

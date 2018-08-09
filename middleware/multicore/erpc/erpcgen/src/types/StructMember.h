@@ -53,7 +53,6 @@ enum _param_direction
 {
     kInDirection,
     kOutDirection,
-    kOutDirectionByref,
     kInoutDirection,
     kReturn
 };

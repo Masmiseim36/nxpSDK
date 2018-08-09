@@ -55,7 +55,7 @@
 //!
 //! Example usage:
 //! \code
-//!		throw std::runtime_error(format_string("error on line %d", line));
+//!     throw std::runtime_error(format_string("error on line %d", line));
 //! \endcode
 //!
 //! \param fmt Format string using printf-style format markers.

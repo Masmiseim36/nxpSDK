@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC Generator (erpcgen)
-   &#160;<span id="projectnumber">Rev. 1.5.0</span>
+   &#160;<span id="projectnumber">Rev. 1.7.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -162,9 +162,8 @@ $(document).ready(function(){initNavTree('functions_g.html','');});
 <li>generateCommonFile()
 : <a class="el" href="classerpcgen_1_1_python_generator.html#a72086513216a45445c5a5a8c4a76c46f">erpcgen::PythonGenerator</a>
 </li>
-<li>generateCrcFile()
-: <a class="el" href="classerpcgen_1_1_generator.html#abe1c0aed088fa3cec53ec38d587a42df">erpcgen::Generator</a>
-, <a class="el" href="classerpcgen_1_1_python_generator.html#a6c4a0d986f8a30e52c8296fef3402610">erpcgen::PythonGenerator</a>
+<li>generateGlobalInitFile()
+: <a class="el" href="classerpcgen_1_1_python_generator.html#a9eacc3582abb3ecba72ad9acbf3320d3">erpcgen::PythonGenerator</a>
 </li>
 <li>generateGroupOutputFiles()
 : <a class="el" href="classerpcgen_1_1_generator.html#a67802d9fd67f2a5b3b12c2c7f9c95769">erpcgen::Generator</a>
@@ -186,22 +185,29 @@ $(document).ready(function(){initNavTree('functions_g.html','');});
 : <a class="el" href="classerpcgen_1_1_python_generator.html#a93a809338bbbf64d52d77a356571ac98">erpcgen::PythonGenerator</a>
 </li>
 <li>Generator()
-: <a class="el" href="classerpcgen_1_1_generator.html#a3da898eb739a7284aeb07400a4040358">erpcgen::Generator</a>
+: <a class="el" href="classerpcgen_1_1_generator.html#a20b0c4225f24c61fb9d1ba5bfae3308d">erpcgen::Generator</a>
 </li>
 <li>get()
-: <a class="el" href="classsmart__ptr.html#ae6d32c0876260a672fc0348baf8ed1b9">smart_ptr&lt; T, delete_policy &gt;</a>
+: <a class="el" href="classsmart__ptr.html#ad0c2a080cd6a6e5f4196fa847b93e28e">smart_ptr&lt; T, delete_policy &gt;</a>
+</li>
+<li>getAnnotationLang()
+: <a class="el" href="classerpcgen_1_1_generator.html#a0d5a57e18b09ac92a911616a569c58d4">erpcgen::Generator</a>
+, <a class="el" href="classerpcgen_1_1_symbol_scanner.html#a4f057799d26c58ecbbced59e208aa314">erpcgen::SymbolScanner</a>
 </li>
 <li>getAnnotations()
-: <a class="el" href="classerpcgen_1_1_symbol.html#a8ac0fa46b91ae20ff49c62cfab29a810">erpcgen::Symbol</a>
+: <a class="el" href="classerpcgen_1_1_generator.html#a3847622cf2e371f720d18f442be9e987">erpcgen::Generator</a>
+, <a class="el" href="classerpcgen_1_1_symbol.html#acc5781b006ddfee4823e33698f9b65a6">erpcgen::Symbol</a>
 </li>
 <li>getAnnotationValue()
 : <a class="el" href="classerpcgen_1_1_symbol_scanner.html#ae54de042f4e6cb0c6882e5a937edba48">erpcgen::SymbolScanner</a>
 </li>
 <li>getAnnStringValue()
-: <a class="el" href="classerpcgen_1_1_symbol.html#ad1fd4ff5335298c0192832550c26e76f">erpcgen::Symbol</a>
+: <a class="el" href="classerpcgen_1_1_generator.html#aaada1d3103c40f5273aa99dd8d469df6">erpcgen::Generator</a>
+, <a class="el" href="classerpcgen_1_1_symbol.html#a44d832e6e7934e13f6d6ab1d8799cbdf">erpcgen::Symbol</a>
 </li>
 <li>getAnnValue()
-: <a class="el" href="classerpcgen_1_1_symbol.html#a73cbbdf49a7871529f147d5f987c5097">erpcgen::Symbol</a>
+: <a class="el" href="classerpcgen_1_1_generator.html#a9cfcd2a2294e23a2a318ebd6906cc80a">erpcgen::Generator</a>
+, <a class="el" href="classerpcgen_1_1_symbol.html#a6935af23ecdcd2f9fb2a02f92ebae1f9">erpcgen::Symbol</a>
 </li>
 <li>getAst()
 : <a class="el" href="classerpcgen_1_1_interface_definition.html#a9bc3ebd4a3083d22f7df6b281f8f8943">erpcgen::InterfaceDefinition</a>
@@ -213,7 +219,7 @@ $(document).ready(function(){initNavTree('functions_g.html','');});
 : <a class="el" href="classerpcgen_1_1_builtin_type.html#a2f067a043464e7157495a8f29d62899e">erpcgen::BuiltinType</a>
 </li>
 <li>getBuiltinTypename()
-: <a class="el" href="classerpcgen_1_1_python_generator.html#a7fa7069b3fc9bba5f5210b24a8fa5d92">erpcgen::PythonGenerator</a>
+: <a class="el" href="classerpcgen_1_1_python_generator.html#a8cc74c4d08efa3629983131b0037f085">erpcgen::PythonGenerator</a>
 </li>
 <li>getCallbackFuns()
 : <a class="el" href="classerpcgen_1_1_function_type.html#a671559bb774ffbff5125024dfd448189">erpcgen::FunctionType</a>
@@ -230,6 +236,9 @@ $(document).ready(function(){initNavTree('functions_g.html','');});
 <li>getChild()
 : <a class="el" href="classerpcgen_1_1_ast_node.html#a651cbcd73e0c4c0b75b8c21334bf3bbd">erpcgen::AstNode</a>
 </li>
+<li>getCodecType()
+: <a class="el" href="classerpcgen_1_1_interface_definition.html#a2a45c0e81d8bd7a4dca963c537d48aa6">erpcgen::InterfaceDefinition</a>
+</li>
 <li>getContainList()
 : <a class="el" href="classerpcgen_1_1_struct_member.html#a3f05e701c6e4c01957a16b671eab3f80">erpcgen::StructMember</a>
 </li>
@@ -245,22 +254,22 @@ $(document).ready(function(){initNavTree('functions_g.html','');});
 : <a class="el" href="classerpcgen_1_1_symbol_scanner.html#acde41fe4095aea2af8c986cb58df3ad3">erpcgen::SymbolScanner</a>
 </li>
 <li>getDescription()
-: <a class="el" href="classerpcgen_1_1_alias_type.html#a1dcefef6c4e73b429ebfddc13d056d9c">erpcgen::AliasType</a>
-, <a class="el" href="classerpcgen_1_1_array_type.html#a1c5a4e6413834ed1d286ae56d4566f85">erpcgen::ArrayType</a>
-, <a class="el" href="classerpcgen_1_1_ast_node.html#ab2dfef2691fc7d9acaa2731732cb7e6f">erpcgen::AstNode</a>
-, <a class="el" href="classerpcgen_1_1_enum_member.html#a72f031925bbc83f049e07fd04bd16abe">erpcgen::EnumMember</a>
-, <a class="el" href="classerpcgen_1_1_enum_type.html#a7b1138290c55479bfd939a61eaceb392">erpcgen::EnumType</a>
-, <a class="el" href="classerpcgen_1_1_function.html#af39ae0adaa0ebbc0600adffabae6f7a3">erpcgen::Function</a>
+: <a class="el" href="classerpcgen_1_1_alias_type.html#af67a4592991def524769acb6280a7d92">erpcgen::AliasType</a>
+, <a class="el" href="classerpcgen_1_1_array_type.html#a2f24b1e2e72bda762761a4bc2f03eaae">erpcgen::ArrayType</a>
+, <a class="el" href="classerpcgen_1_1_ast_node.html#a814dc8085d1ac2fe4290200f514fdece">erpcgen::AstNode</a>
+, <a class="el" href="classerpcgen_1_1_enum_member.html#a64ce4b33dfa9c10635ac2fd64089a4f1">erpcgen::EnumMember</a>
+, <a class="el" href="classerpcgen_1_1_enum_type.html#ab95b28ad62ecb25638468b2ba7783921">erpcgen::EnumType</a>
+, <a class="el" href="classerpcgen_1_1_function.html#ac08e8cc2245d28b872d271f2d0b62bcc">erpcgen::Function</a>
 , <a class="el" href="classerpcgen_1_1_function_base.html#a535db6d15974e5f0db15f895564a5f49">erpcgen::FunctionBase</a>
-, <a class="el" href="classerpcgen_1_1_function_type.html#affe03350244bc8f6ede31e6369110b9e">erpcgen::FunctionType</a>
-, <a class="el" href="classerpcgen_1_1_group.html#a396702a049b014919b3bf19b5ba02b26">erpcgen::Group</a>
-, <a class="el" href="classerpcgen_1_1_interface.html#ade63c1971950aa637c43e44adb627686">erpcgen::Interface</a>
-, <a class="el" href="classerpcgen_1_1_list_type.html#acd69b19dae89b94123a97cbfad33ba0c">erpcgen::ListType</a>
-, <a class="el" href="classerpcgen_1_1_struct_member.html#a839ee493aa6fafaac3dda9ec292ed1dd">erpcgen::StructMember</a>
-, <a class="el" href="classerpcgen_1_1_struct_type.html#a78421cc24d8632d9eb95b76e2e68dbbe">erpcgen::StructType</a>
+, <a class="el" href="classerpcgen_1_1_function_type.html#a1ba160e75431f90aa118b0306a4c0a5e">erpcgen::FunctionType</a>
+, <a class="el" href="classerpcgen_1_1_group.html#ae73097061031208b54465344b5454b90">erpcgen::Group</a>
+, <a class="el" href="classerpcgen_1_1_interface.html#ad799dd9e9c759102652c69086467f73b">erpcgen::Interface</a>
+, <a class="el" href="classerpcgen_1_1_list_type.html#a360f3a198f4f48067dbf79b0c9fd71c3">erpcgen::ListType</a>
+, <a class="el" href="classerpcgen_1_1_struct_member.html#a35caff93a725d1a34e961cafc2a09085">erpcgen::StructMember</a>
+, <a class="el" href="classerpcgen_1_1_struct_type.html#a399c40208f97e0d72d3a4d526596b097">erpcgen::StructType</a>
 , <a class="el" href="classerpcgen_1_1_symbol.html#a84732dc398fd0cbf64d53d45db1cc8c5">erpcgen::Symbol</a>
-, <a class="el" href="classerpcgen_1_1_union_case.html#a7320ae973aa328691dda768227d3cbe5">erpcgen::UnionCase</a>
-, <a class="el" href="classerpcgen_1_1_union_type.html#ae8ca991afd47858d15e1cea0a37f27b5">erpcgen::UnionType</a>
+, <a class="el" href="classerpcgen_1_1_union_case.html#a2cbe4d615ff794dff0ac49d0f5376f38">erpcgen::UnionCase</a>
+, <a class="el" href="classerpcgen_1_1_union_type.html#aeea76b2bae97a5f2c86fb352279a205e">erpcgen::UnionType</a>
 , <a class="el" href="classerpcgen_1_1_void_type.html#a329b76a4ef8e30637e7607883772b0e3">erpcgen::VoidType</a>
 </li>
 <li>getDirection()
@@ -280,9 +289,6 @@ $(document).ready(function(){initNavTree('functions_g.html','');});
 <li>getEnumMembersTemplateData()
 : <a class="el" href="classerpcgen_1_1_python_generator.html#a2af3aec5e6e3fee1417287f4c12c5cfc">erpcgen::PythonGenerator</a>
 </li>
-<li>getErrorHandlingChecksType()
-: <a class="el" href="classerpcgen_1_1_interface_definition.html#abea5734bd3b08db5fe988ec1e1653a1d">erpcgen::InterfaceDefinition</a>
-</li>
 <li>getFileName()
 : <a class="el" href="classerpcgen_1_1_erpc_lexer.html#a73c80263e93bd44e21b47a5d05a83ec3">erpcgen::ErpcLexer</a>
 </li>
@@ -294,14 +300,17 @@ $(document).ready(function(){initNavTree('functions_g.html','');});
 , <a class="el" href="classerpcgen_1_1_token.html#a6d939b79bd2f8e11ef4699ba388128f7">erpcgen::Token</a>
 </li>
 <li>getFunctionPrototype()
-: <a class="el" href="classerpcgen_1_1_python_generator.html#a17395cf9ce0091195739d7424e07afa5">erpcgen::PythonGenerator</a>
+: <a class="el" href="classerpcgen_1_1_python_generator.html#a82835df27d6dce465b6cbd77d97476ae">erpcgen::PythonGenerator</a>
 </li>
 <li>getFunctions()
 : <a class="el" href="classerpcgen_1_1_interface.html#a08a3aa3a3ef86cc8be10a85ececa37e0">erpcgen::Interface</a>
 </li>
 <li>getFunctionTemplateData()
-: <a class="el" href="classerpcgen_1_1_generator.html#a900dee408c54f0567571349379663f16">erpcgen::Generator</a>
-, <a class="el" href="classerpcgen_1_1_python_generator.html#a6229d5597a22d8400fe725fe75bd67de">erpcgen::PythonGenerator</a>
+: <a class="el" href="classerpcgen_1_1_generator.html#aaea7b9a3157ee0246e97ec78cbd88d23">erpcgen::Generator</a>
+, <a class="el" href="classerpcgen_1_1_python_generator.html#a17c8b058c824888e052cee0476659ef7">erpcgen::PythonGenerator</a>
+</li>
+<li>getFunctionType()
+: <a class="el" href="classerpcgen_1_1_function.html#ace460284b7ce58fafdae393e7361bcf2">erpcgen::Function</a>
 </li>
 <li>getGlobals()
 : <a class="el" href="classerpcgen_1_1_interface_definition.html#a75ea44989d648f061e056a0860c6b006">erpcgen::InterfaceDefinition</a>
@@ -314,6 +323,7 @@ $(document).ready(function(){initNavTree('functions_g.html','');});
 </li>
 <li>getIdlCrc16()
 : <a class="el" href="classerpcgen_1_1_erpc_lexer.html#a366677220c0e46869acfb8c0cae9d33c">erpcgen::ErpcLexer</a>
+, <a class="el" href="classerpcgen_1_1_interface_definition.html#a7bd623bb9995c6fbb279a2a6819331bb">erpcgen::InterfaceDefinition</a>
 </li>
 <li>getIlComment()
 : <a class="el" href="classerpcgen_1_1_symbol.html#acec60e332ab5bf223e8c5d92f9a732f0">erpcgen::Symbol</a>
@@ -324,14 +334,23 @@ $(document).ready(function(){initNavTree('functions_g.html','');});
 <li>getIndexOfChild()
 : <a class="el" href="classerpcgen_1_1_ast_node.html#aed311b11f950bd3cf65e1a66e96a3cc1">erpcgen::AstNode</a>
 </li>
+<li>getInterface()
+: <a class="el" href="classerpcgen_1_1_function.html#a66a0253a01ca7f5755fec1900d6aae3a">erpcgen::Function</a>
+</li>
 <li>getInterfaces()
 : <a class="el" href="classerpcgen_1_1_group.html#aa5e3e1667ee8648a1929c3b8679e8aa4">erpcgen::Group</a>
 </li>
 <li>getIntExprValue()
-: <a class="el" href="classerpcgen_1_1_symbol_scanner.html#aa92bcf3194cca555ec59bc7f5ecc2eb6">erpcgen::SymbolScanner</a>
+: <a class="el" href="classerpcgen_1_1_symbol_scanner.html#aaa9bd6c469f7755fec6f8e3c01b2eb17">erpcgen::SymbolScanner</a>
+</li>
+<li>getIntType()
+: <a class="el" href="class_integer_value.html#a92478d34306651088346be0c2a70b7d6">IntegerValue</a>
 </li>
 <li>getIntValue()
-: <a class="el" href="classerpcgen_1_1_token.html#aed83235df1cf776ad8bf02cd495add8b">erpcgen::Token</a>
+: <a class="el" href="classerpcgen_1_1_token.html#ad983496804eaabab6dec14114660ca5c">erpcgen::Token</a>
+</li>
+<li>getLang()
+: <a class="el" href="classerpcgen_1_1_annotation.html#a27eb307f1958958e917648122c2a5f58">erpcgen::Annotation</a>
 </li>
 <li>getLastLine()
 : <a class="el" href="classerpcgen_1_1_symbol.html#a00bb74bbfea291f784e65484bf54664b">erpcgen::Symbol</a>
@@ -392,6 +411,9 @@ $(document).ready(function(){initNavTree('functions_g.html','');});
 <li>getParentStruct()
 : <a class="el" href="classerpcgen_1_1_union_type.html#a6f25e14871e1ff00a579a09b255c746f">erpcgen::UnionType</a>
 </li>
+<li>getProgram()
+: <a class="el" href="classerpcgen_1_1_symbol_scanner.html#aa61b156bcdf5f78b56c4f4ba6bda1edb">erpcgen::SymbolScanner</a>
+</li>
 <li>getProgramName()
 : <a class="el" href="classerpcgen_1_1_interface_definition.html#a3db153cb26de7b9e86d6b5d4dc3fb822">erpcgen::InterfaceDefinition</a>
 </li>
@@ -409,16 +431,22 @@ $(document).ready(function(){initNavTree('functions_g.html','');});
 , <a class="el" href="classerpcgen_1_1_struct_type.html#aefdf672a209ed84db6a7f55fd8d84d9b">erpcgen::StructType</a>
 </li>
 <li>getSize()
-: <a class="el" href="class_sized_integer_value.html#a5f562780ec677f1221400942b19350ab">SizedIntegerValue</a>
+: <a class="el" href="class_float_value.html#ac876b12bbbeb1b4d35029e177f2e1cef">FloatValue</a>
+, <a class="el" href="class_integer_value.html#a795a4b606a977b42644565ffa7916e22">IntegerValue</a>
+, <a class="el" href="class_string_value.html#ab26d799942f124dabdab4189e0123fb8">StringValue</a>
+, <a class="el" href="class_value.html#ad2a8b55277e7b066cb41959625f94dab">Value</a>
+</li>
+<li>getString()
+: <a class="el" href="class_string_value.html#ad0702f5cc63317d7ade7d77b64f255e4">StringValue</a>
 </li>
 <li>getStringValue()
-: <a class="el" href="classerpcgen_1_1_token.html#a529bcbe793ece2b890f087ad294768cc">erpcgen::Token</a>
+: <a class="el" href="classerpcgen_1_1_token.html#aaa3ccd8987e4ff406e9adf4eb9432a70">erpcgen::Token</a>
 </li>
 <li>getSymbol()
 : <a class="el" href="classerpcgen_1_1_symbol_scope.html#a307cfc7cdbb201f06062fddf48b4948a">erpcgen::SymbolScope</a>
 </li>
 <li>getSymbolDirections()
-: <a class="el" href="classerpcgen_1_1_group.html#ae1ab8125204fc716dd25636738d80b8e">erpcgen::Group</a>
+: <a class="el" href="classerpcgen_1_1_group.html#a2a601a71e96f8280afcbb368c038f243">erpcgen::Group</a>
 </li>
 <li>getSymbolPos()
 : <a class="el" href="classerpcgen_1_1_symbol_scope.html#a7384e2d0f0b23f936cb4d6ca9b4cc516">erpcgen::SymbolScope</a>
@@ -439,7 +467,7 @@ $(document).ready(function(){initNavTree('functions_g.html','');});
 : <a class="el" href="classerpcgen_1_1_group.html#a2e5bec8a442cc88231eeb81a50b0e568">erpcgen::Group</a>
 </li>
 <li>getTime()
-: <a class="el" href="classerpcgen_1_1_generator.html#a8074117561e53454365caf7ff9a359af">erpcgen::Generator</a>
+: <a class="el" href="classerpcgen_1_1_generator.html#a4d3777837dd875dd3d462ced226b3e30">erpcgen::Generator</a>
 </li>
 <li>getToken()
 : <a class="el" href="classerpcgen_1_1_ast_node.html#a4644802709f33aabbeed7450d0f5ee1f">erpcgen::AstNode</a>
@@ -460,8 +488,17 @@ $(document).ready(function(){initNavTree('functions_g.html','');});
 <li>getTrueDataType()
 : <a class="el" href="classerpcgen_1_1_data_type.html#a5a996dbde6578d38f035695c6a567bab">erpcgen::DataType</a>
 </li>
+<li>getType()
+: <a class="el" href="class_value.html#afa67d20e19fb0a4d81b4caddb1d4ac11">Value</a>
+</li>
 <li>getTypeInfo()
-: <a class="el" href="classerpcgen_1_1_python_generator.html#a0de3310fe219907a4d8905424ad837a6">erpcgen::PythonGenerator</a>
+: <a class="el" href="classerpcgen_1_1_python_generator.html#ab2c05b210c26321b3c8d3596a6bbb63d">erpcgen::PythonGenerator</a>
+</li>
+<li>getTypeName()
+: <a class="el" href="class_float_value.html#abbdfbb94dc2fe1fbfcba330653e74e54">FloatValue</a>
+, <a class="el" href="class_integer_value.html#adb9a314b752afcf81f61aa4f2f891113">IntegerValue</a>
+, <a class="el" href="class_string_value.html#ad45db0a0ce599d42b4f9cddb1e4b057c">StringValue</a>
+, <a class="el" href="class_value.html#a4dd8c49629bdbd9b0313889e5dd7bae6">Value</a>
 </li>
 <li>getUnionMemberDeclaration()
 : <a class="el" href="classerpcgen_1_1_union_case.html#ac49bff6bd8c8d74426e46b19f6e81394">erpcgen::UnionCase</a>
@@ -480,7 +517,9 @@ $(document).ready(function(){initNavTree('functions_g.html','');});
 <li>getValue()
 : <a class="el" href="classerpcgen_1_1_const_type.html#acc814b59dd3d5bf544767e377d6323c1">erpcgen::ConstType</a>
 , <a class="el" href="classerpcgen_1_1_enum_member.html#a52c61d8869f285868244250bf00e0a7e">erpcgen::EnumMember</a>
-, <a class="el" href="classerpcgen_1_1_token.html#a62502955d98b6828f9b63c6ea93d1b69">erpcgen::Token</a>
+, <a class="el" href="classerpcgen_1_1_token.html#a213d689ce3fcb060954b9fde5c5ffb47">erpcgen::Token</a>
+, <a class="el" href="class_float_value.html#a6616d18ba23a63054c029fc8b871012a">FloatValue</a>
+, <a class="el" href="class_integer_value.html#ac0c3aaac1e07df21bdfecb525c29a6ed">IntegerValue</a>
 </li>
 <li>getValueForConst()
 : <a class="el" href="classerpcgen_1_1_symbol_scanner.html#a9ac20033318390d892f89e6b979c9cf6">erpcgen::SymbolScanner</a>
@@ -490,9 +529,6 @@ $(document).ready(function(){initNavTree('functions_g.html','');});
 </li>
 <li>getValueObject()
 : <a class="el" href="classerpcgen_1_1_annotation.html#ac907c227156887ae849bb1ae64989dd5">erpcgen::Annotation</a>
-</li>
-<li>getWordSizeMask()
-: <a class="el" href="class_sized_integer_value.html#a7d762ebed81251fa584b5e77cfc8d32a">SizedIntegerValue</a>
 </li>
 <li>Group()
 : <a class="el" href="classerpcgen_1_1_group.html#af76d5c887e66fe0b796e0fe431821834">erpcgen::Group</a>

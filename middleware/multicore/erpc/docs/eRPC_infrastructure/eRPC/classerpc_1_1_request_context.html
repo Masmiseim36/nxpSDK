@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC API Reference
-   &#160;<span id="projectnumber">Rev. 1.5.0</span>
+   &#160;<span id="projectnumber">Rev. 1.7.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -51,7 +51,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="modules.html"><span>API&#160;Reference</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -122,7 +121,7 @@ $(document).ready(function(){initNavTree('classerpc_1_1_request_context.html',''
 <p>Encapsulates all information about a request.  
  <a href="classerpc_1_1_request_context.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="client__manager_8h_source.html">client_manager.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="erpc__client__manager_8h_source.html">erpc_client_manager.h</a>&gt;</code></p>
 <div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Collaboration diagram for erpc::RequestContext:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
@@ -134,18 +133,18 @@ $(document).ready(function(){initNavTree('classerpc_1_1_request_context.html',''
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ae48f8baa20da5d4ac5da77e83758e6a5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_request_context.html#ae48f8baa20da5d4ac5da77e83758e6a5">RequestContext</a> (uint32_t sequence, <a class="el" href="classerpc_1_1_codec.html">Codec</a> *codec, bool <a class="el" href="classerpc_1_1_request_context.html#a717418b0a8461c283537f5545442d5ae">isOneway</a>)</td></tr>
+<tr class="memitem:ae48f8baa20da5d4ac5da77e83758e6a5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_request_context.html#ae48f8baa20da5d4ac5da77e83758e6a5">RequestContext</a> (uint32_t sequence, <a class="el" href="classerpc_1_1_codec.html">Codec</a> *codec, bool <a class="el" href="classerpc_1_1_request_context.html#a4b48b9fa139619990fbbd7995788372c">isOneway</a>)</td></tr>
 <tr class="memdesc:ae48f8baa20da5d4ac5da77e83758e6a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#ae48f8baa20da5d4ac5da77e83758e6a5">More...</a><br /></td></tr>
 <tr class="separator:ae48f8baa20da5d4ac5da77e83758e6a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab0fd6166ed575ec17f2ec0f81ff08a8c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classerpc_1_1_codec.html">Codec</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_request_context.html#ab0fd6166ed575ec17f2ec0f81ff08a8c">getCodec</a> ()</td></tr>
-<tr class="memdesc:ab0fd6166ed575ec17f2ec0f81ff08a8c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get inout codec (for writing).  <a href="#ab0fd6166ed575ec17f2ec0f81ff08a8c">More...</a><br /></td></tr>
-<tr class="separator:ab0fd6166ed575ec17f2ec0f81ff08a8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9311a2ad7d10de7d3589383319acdf3c"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_request_context.html#a9311a2ad7d10de7d3589383319acdf3c">getSequence</a> () const </td></tr>
-<tr class="memdesc:a9311a2ad7d10de7d3589383319acdf3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get sequence number (be sure that reply belong to current request).  <a href="#a9311a2ad7d10de7d3589383319acdf3c">More...</a><br /></td></tr>
-<tr class="separator:a9311a2ad7d10de7d3589383319acdf3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a717418b0a8461c283537f5545442d5ae"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_request_context.html#a717418b0a8461c283537f5545442d5ae">isOneway</a> () const </td></tr>
-<tr class="memdesc:a717418b0a8461c283537f5545442d5ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns information if request context is oneway or not.  <a href="#a717418b0a8461c283537f5545442d5ae">More...</a><br /></td></tr>
-<tr class="separator:a717418b0a8461c283537f5545442d5ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0908f33c7475d2a370dca60bf0341d75"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classerpc_1_1_codec.html">Codec</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_request_context.html#a0908f33c7475d2a370dca60bf0341d75">getCodec</a> (void)</td></tr>
+<tr class="memdesc:a0908f33c7475d2a370dca60bf0341d75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get inout codec (for writing).  <a href="#a0908f33c7475d2a370dca60bf0341d75">More...</a><br /></td></tr>
+<tr class="separator:a0908f33c7475d2a370dca60bf0341d75"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a893ef5c5b1cef2f9dd5e131370bb85e2"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_request_context.html#a893ef5c5b1cef2f9dd5e131370bb85e2">getSequence</a> (void) const </td></tr>
+<tr class="memdesc:a893ef5c5b1cef2f9dd5e131370bb85e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get sequence number (be sure that reply belong to current request).  <a href="#a893ef5c5b1cef2f9dd5e131370bb85e2">More...</a><br /></td></tr>
+<tr class="separator:a893ef5c5b1cef2f9dd5e131370bb85e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b48b9fa139619990fbbd7995788372c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_request_context.html#a4b48b9fa139619990fbbd7995788372c">isOneway</a> (void) const </td></tr>
+<tr class="memdesc:a4b48b9fa139619990fbbd7995788372c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns information if request context is oneway or not.  <a href="#a4b48b9fa139619990fbbd7995788372c">More...</a><br /></td></tr>
+<tr class="separator:a4b48b9fa139619990fbbd7995788372c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1d9608d02c606de0edf488c86a382743"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_request_context.html#a1d9608d02c606de0edf488c86a382743">setIsOneway</a> (bool oneway)</td></tr>
 <tr class="memdesc:a1d9608d02c606de0edf488c86a382743"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set request context to be oneway type (only send data).  <a href="#a1d9608d02c606de0edf488c86a382743">More...</a><br /></td></tr>
 <tr class="separator:a1d9608d02c606de0edf488c86a382743"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -220,7 +219,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="ab0fd6166ed575ec17f2ec0f81ff08a8c"></a>
+<a class="anchor" id="a0908f33c7475d2a370dca60bf0341d75"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -230,6 +229,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
         <tr>
           <td class="memname"><a class="el" href="classerpc_1_1_codec.html">Codec</a>* erpc::RequestContext::getCodec </td>
           <td>(</td>
+          <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
@@ -246,7 +246,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 </div>
 </div>
-<a class="anchor" id="a9311a2ad7d10de7d3589383319acdf3c"></a>
+<a class="anchor" id="a893ef5c5b1cef2f9dd5e131370bb85e2"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -256,6 +256,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
         <tr>
           <td class="memname">uint32_t erpc::RequestContext::getSequence </td>
           <td>(</td>
+          <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
         </tr>
@@ -272,7 +273,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 </div>
 </div>
-<a class="anchor" id="a717418b0a8461c283537f5545442d5ae"></a>
+<a class="anchor" id="a4b48b9fa139619990fbbd7995788372c"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -282,6 +283,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
         <tr>
           <td class="memname">bool erpc::RequestContext::isOneway </td>
           <td>(</td>
+          <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
         </tr>
@@ -331,7 +333,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li><a class="el" href="client__manager_8h_source.html">client_manager.h</a></li>
+<li><a class="el" href="erpc__client__manager_8h_source.html">erpc_client_manager.h</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

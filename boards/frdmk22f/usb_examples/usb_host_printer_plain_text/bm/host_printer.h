@@ -1,7 +1,7 @@
 /*
  * The Clear BSD License
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016, 2018 NXP
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -43,30 +43,22 @@
 #define USB_HOST_PRINTER_APP_ONEMS_COUNT (200)
 #define USB_HOST_PRINTER_APP_BUFFER_SIZE (300)
 
-/*! @brief host app device attach/detach status */
-typedef enum _usb_host_printer_app_state
-{
-    kStatus_DEV_Idle = 0, /*!< there is no device attach/detach */
-    kStatus_DEV_Attached, /*!< device is attached */
-    kStatus_DEV_Detached, /*!< device is detached */
-} usb_host_printer_app_state_t;
-
 /*! @brief host app run status */
 typedef enum _usb_host_printer_run_state
 {
-    kRunIdle = 0,            /*!< idle */
-    kRunSetInterface,        /*!< execute set interface code */
-    kRunWaitSetInterface,    /*!< wait set interface done */
-    kRunGetDeviceId,         /*!< get device id, get all the string */
-    kRunWaitGetDeviceId,     /*!< wait get device id callback */
-    kRunGetDeviceIdDone,     /*!< get device id success */
-    kRunWaitGetDeviceIdAll,  /*!< get whole device id */
-    kRunGetDeviceIdAllDone,  /*!< get whole device id done */
-    kRunGetDeviceIdAllError, /*!< get whole device id error */
-    kRunPrinterTest,         /*!< test the device printer */
-    kRunPrimeReceive,        /*!< prime receive */
-    kRunDataReceived,        /*!< receive data done */
-    kRunParseDeviceId,       /*!< parse device id */
+    kUSB_HostPrinterRunIdle = 0,            /*!< idle */
+    kUSB_HostPrinterRunSetInterface,        /*!< execute set interface code */
+    kUSB_HostPrinterRunWaitSetInterface,    /*!< wait set interface done */
+    kUSB_HostPrinterRunGetDeviceId,         /*!< get device id, get all the string */
+    kUSB_HostPrinterRunWaitGetDeviceId,     /*!< wait get device id callback */
+    kUSB_HostPrinterRunGetDeviceIdDone,     /*!< get device id success */
+    kUSB_HostPrinterRunWaitGetDeviceIdAll,  /*!< get whole device id */
+    kUSB_HostPrinterRunGetDeviceIdAllDone,  /*!< get whole device id done */
+    kUSB_HostPrinterRunGetDeviceIdAllError, /*!< get whole device id error */
+    kUSB_HostPrinterRunPrinterTest,         /*!< test the device printer */
+    kUSB_HostPrinterRunPrimeReceive,        /*!< prime receive */
+    kUSB_HostPrinterRunDataReceived,        /*!< receive data done */
+    kUSB_HostPrinterRunParseDeviceId,       /*!< parse device id */
 } usb_host_printer_run_state_t;
 
 typedef enum _usb_host_printer_device_type

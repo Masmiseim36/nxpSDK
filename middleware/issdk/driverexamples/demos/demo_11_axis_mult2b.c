@@ -1,5 +1,6 @@
 /*
  * The Clear BSD License
+ * Copyright (c) 2017, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
@@ -81,9 +82,9 @@
      MPL3115_PADDING_SIZE)
 
 /*! @brief Unique Name for this application which should match the target GUI pkg name. */
-#define APPLICATION_NAME "11_AXIS_DEMO"
+#define APPLICATION_NAME "11 Axis Sensor Demo"
 /*! @brief Version to distinguish between instances the same application based on target Shield and updates. */
-#define APPLICATION_VERSION "1.0"
+#define APPLICATION_VERSION "2.5"
 
 /* FF_MT freefall counter register values for High resolution Mode and ODR = 100Hz.
  * These values have been derived based on the MMA865x DataSheet and Application Note AN4070 for MMA8451 (the same is
@@ -136,12 +137,13 @@ const registerreadlist_t cMma865xFreeFallEvent[] = {{.readFrom = MMA865x_FF_MT_S
 const registerwritelist_t cMag3110ConfigNormal[] = {
     /* Set Ouput Rate @40HZ (ODR = 1 and OSR = 16). */
     {MAG3110_CTRL_REG1, MAG3110_CTRL_REG1_DR_ODR_1 | MAG3110_CTRL_REG1_OS_OSR_16,
-     MAG3110_CTRL_REG1_DR_MASK | MAG3110_CTRL_REG1_OS_MASK},
+                        MAG3110_CTRL_REG1_DR_MASK | MAG3110_CTRL_REG1_OS_MASK},
     /* Set Auto Magnetic Sensor Reset. */
-    {MAG3110_CTRL_REG2, MAG3110_CTRL_REG2_AUTO_MSRT_EN_EN, MAG3110_CTRL_REG2_AUTO_MSRT_EN_MASK},
+    {MAG3110_CTRL_REG2, MAG3110_CTRL_REG2_MAG_RST_EN | MAG3110_CTRL_REG2_AUTO_MSRT_EN_EN | MAG3110_CTRL_REG2_RAW_RAW,
+                        MAG3110_CTRL_REG2_MAG_RST_MASK | MAG3110_CTRL_REG2_AUTO_MSRT_EN_MASK | MAG3110_CTRL_REG2_RAW_MASK},
     __END_WRITE_DATA__};
 
-/*! @brief Address and size of Raw Pressure+Temperature Data in Normal Mode. */
+/*! @brief Address and size of Raw Magnetic Data in Normal Mode. */
 const registerreadlist_t cMag3110OutputNormal[] = {{.readFrom = MAG3110_OUT_X_MSB, .numBytes = MAG3110_DATA_SIZE},
                                                    __END_READ_DATA__};
 
@@ -183,6 +185,7 @@ char boardString[ADS_MAX_STRING_LENGTH] = {0}, shieldString[ADS_MAX_STRING_LENGT
 volatile bool bStreamingEnabled = false, bFxas21002DataReady = false, bMult2bReady = false, bMma865xEventReady = false,
               bMpl3115EventReady = false;
 uint8_t gStreamID; /* The auto assigned Stream ID. */
+int32_t gSystick;
 GENERIC_DRIVER_GPIO *pGpioDriver = &Driver_GPIO_KSDK;
 
 //-----------------------------------------------------------------------
@@ -265,6 +268,7 @@ bool process_host_command(
             case HOST_CMD_START:
                 if (hostCommand[1] == gStreamID && bMult2bReady && bStreamingEnabled == false)
                 {
+                    BOARD_SystickStart(&gSystick);
                     bStreamingEnabled = true;
                     success = true;
                 }
@@ -291,7 +295,7 @@ bool process_host_command(
  */
 int main(void)
 {
-    int32_t status, systick;
+    int32_t status;
     uint8_t eventReady = 0, eventPacket[STREAMING_HEADER_LEN + EVENT_PAYLOAD_LEN], secondaryStreamID1,
             secondaryStreamID2, secondaryStreamID3, /* Auto assigned StreamIDs not to be used for streaming. */
         streamingPacket[STREAMING_HEADER_LEN + STREAMING_PAYLOAD_LEN],
@@ -330,8 +334,8 @@ int main(void)
     pGpioDriver->pin_init(&MMA8652_INT1, GPIO_DIRECTION_IN, NULL, &mma865x_int_event_ready_callback, NULL);
 
     /*! Initialize INT1 MAG3110 used on FRDM board.
-     *  INT1 MPL3115 pin on MULT2B is PTA0 of K64F which is mapped to OpenSDA CLK.
-     *  We will jump wire INT1 MPL3115 to INT_MAG */
+     *  NOTE: INT1 of MPL3115 pin on MULT2B maps to PTA0 of K64F which is used as OpenSDA CLK.
+     *  Hence, we will wire connect INT1_MPL3115 to INT_MAG (J5_Pin3 to J3_Pin2) and use INT1_MAG3110 handle instead. */
     pGpioDriver->pin_init(&MAG3110_INT1, GPIO_DIRECTION_IN, NULL, &mpl3115_int_event_ready_callback, NULL);
 
     /*! Initialize RGB LED pin used by FRDM board */
@@ -472,8 +476,7 @@ int main(void)
     if (true == bMult2bReady)
     {
         *((uint32_t *)&streamingPacket[STREAMING_HEADER_LEN]) = 0; /* Initialize time stamp field. */
-        BOARD_SystickStart(&systick);
-        pGpioDriver->clr_pin(&GREEN_LED); /* Set LED to indicate application is ready. */
+        pGpioDriver->clr_pin(&GREEN_LED);                          /* Set LED to indicate application is ready. */
         /*! Populate streaming header. */
         Host_IO_Add_ISO_Header(gStreamID, streamingPacket, STREAMING_PAYLOAD_LEN);
         /*! Populate event header. */
@@ -524,7 +527,7 @@ int main(void)
         }
 
         /* Read timestamp from Systick framework. */
-        *((uint32_t *)&streamingPacket[STREAMING_HEADER_LEN]) += BOARD_SystickElapsedTime_us(&systick);
+        *((uint32_t *)&streamingPacket[STREAMING_HEADER_LEN]) += BOARD_SystickElapsedTime_us(&gSystick);
 
         /*! Read new raw sensor data from the MMA865x. */
         status = MMA865x_I2C_ReadData(&mma865xDriver, cMma865xOutputValues, data);
@@ -557,6 +560,8 @@ int main(void)
         rawData_mag3110.mag[1] = ((int16_t)data[8] << 8) | data[9];
         rawData_mag3110.mag[2] = ((int16_t)data[10] << 8) | data[11];
 
+		MAG3110_CalibrateHardIronOffset(&rawData_mag3110.mag[0], &rawData_mag3110.mag[1], &rawData_mag3110.mag[2]);
+		
         /* Copy Raw samples to Streaming Buffer. */
         memcpy(streamingPacket + STREAMING_HEADER_LEN + STREAMING_PKT_TIMESTAMP_LEN + MMA865x_DATA_SIZE,
                &rawData_mag3110.mag, sizeof(rawData_mag3110.mag));

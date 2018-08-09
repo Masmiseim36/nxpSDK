@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC Generator (erpcgen)
-   &#160;<span id="projectnumber">Rev. 1.5.0</span>
+   &#160;<span id="projectnumber">Rev. 1.7.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -124,17 +124,13 @@ $(document).ready(function(){initNavTree('classerpcgen_1_1_interface_definition.
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a0d78d69d72326b555ccc7ba944eb1a73"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0d78d69d72326b555ccc7ba944eb1a73"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>_error_handling_checks</b> { <br />
-&#160;&#160;<b>kAll</b>, 
+<tr class="memitem:a3f41bc1d1fd7a8e563c1a8637ef1e204"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3f41bc1d1fd7a8e563c1a8637ef1e204"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>codec_t</b> { <br />
+&#160;&#160;<b>kNotSpecified</b>, 
 <br />
-&#160;&#160;<b>kInfraErrors</b>, 
-<br />
-&#160;&#160;<b>kAllocErrors</b>, 
-<br />
-&#160;&#160;<b>kNone</b>
+&#160;&#160;<b>kBasicCodec</b>
 <br />
  }</td></tr>
-<tr class="separator:a0d78d69d72326b555ccc7ba944eb1a73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:a3f41bc1d1fd7a8e563c1a8637ef1e204"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -149,18 +145,18 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <tr class="memitem:a8606a673f88a995913d7e80ded615898"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_interface_definition.html#a8606a673f88a995913d7e80ded615898">init</a> ()</td></tr>
 <tr class="memdesc:a8606a673f88a995913d7e80ded615898"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function initialize symbol scope variable m_globals.  <a href="#a8606a673f88a995913d7e80ded615898">More...</a><br /></td></tr>
 <tr class="separator:a8606a673f88a995913d7e80ded615898"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6c5cbde79e39249a456e47df42371bef"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_interface_definition.html#a6c5cbde79e39249a456e47df42371bef">parse</a> (const char *inputFile)</td></tr>
-<tr class="memdesc:a6c5cbde79e39249a456e47df42371bef"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function parse given IDL file.  <a href="#a6c5cbde79e39249a456e47df42371bef">More...</a><br /></td></tr>
-<tr class="separator:a6c5cbde79e39249a456e47df42371bef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada87017de8bdd523d35c6f6c4c91ac00"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_interface_definition.html#ada87017de8bdd523d35c6f6c4c91ac00">parse</a> (const char *inputFile)</td></tr>
+<tr class="memdesc:ada87017de8bdd523d35c6f6c4c91ac00"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function parse given IDL file.  <a href="#ada87017de8bdd523d35c6f6c4c91ac00">More...</a><br /></td></tr>
+<tr class="separator:ada87017de8bdd523d35c6f6c4c91ac00"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9bc3ebd4a3083d22f7df6b281f8f8943"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classerpcgen_1_1_ast_node.html">AstNode</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_interface_definition.html#a9bc3ebd4a3083d22f7df6b281f8f8943">getAst</a> ()</td></tr>
 <tr class="memdesc:a9bc3ebd4a3083d22f7df6b281f8f8943"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns node belong to this object.  <a href="#a9bc3ebd4a3083d22f7df6b281f8f8943">More...</a><br /></td></tr>
 <tr class="separator:a9bc3ebd4a3083d22f7df6b281f8f8943"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a75ea44989d648f061e056a0860c6b006"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classerpcgen_1_1_symbol_scope.html">SymbolScope</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_interface_definition.html#a75ea44989d648f061e056a0860c6b006">getGlobals</a> ()</td></tr>
 <tr class="memdesc:a75ea44989d648f061e056a0860c6b006"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns global symbol scope.  <a href="#a75ea44989d648f061e056a0860c6b006">More...</a><br /></td></tr>
 <tr class="separator:a75ea44989d648f061e056a0860c6b006"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0458349b3230e4ea11b672629fd6ec5c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_interface_definition.html#a0458349b3230e4ea11b672629fd6ec5c">setProgramInfo</a> (const std::string &amp;fileName, const std::string &amp;outputFilePath)</td></tr>
-<tr class="memdesc:a0458349b3230e4ea11b672629fd6ec5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function sets program information.  <a href="#a0458349b3230e4ea11b672629fd6ec5c">More...</a><br /></td></tr>
-<tr class="separator:a0458349b3230e4ea11b672629fd6ec5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac147f25fdfe081c05a5065ad376f9f5d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_interface_definition.html#ac147f25fdfe081c05a5065ad376f9f5d">setProgramInfo</a> (const std::string &amp;fileName, const std::string &amp;outputFilePath, codec_t codec)</td></tr>
+<tr class="memdesc:ac147f25fdfe081c05a5065ad376f9f5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function sets program information.  <a href="#ac147f25fdfe081c05a5065ad376f9f5d">More...</a><br /></td></tr>
+<tr class="separator:ac147f25fdfe081c05a5065ad376f9f5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af57c74feee09035914cea20cf7e8596d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_interface_definition.html#af57c74feee09035914cea20cf7e8596d">setProgramName</a> (const std::string &amp;programName)</td></tr>
 <tr class="memdesc:af57c74feee09035914cea20cf7e8596d"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function sets program name.  <a href="#af57c74feee09035914cea20cf7e8596d">More...</a><br /></td></tr>
 <tr class="separator:af57c74feee09035914cea20cf7e8596d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -182,14 +178,12 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <tr class="memitem:abd6d7f87727f2a0df1f64b17b01ef3cc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classerpcgen_1_1_program.html">Program</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_interface_definition.html#abd6d7f87727f2a0df1f64b17b01ef3cc">getProgramSymbol</a> ()</td></tr>
 <tr class="memdesc:abd6d7f87727f2a0df1f64b17b01ef3cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns program symbol.  <a href="#abd6d7f87727f2a0df1f64b17b01ef3cc">More...</a><br /></td></tr>
 <tr class="separator:abd6d7f87727f2a0df1f64b17b01ef3cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae93b43715fe4b0184fbb2c069060699a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae93b43715fe4b0184fbb2c069060699a"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_interface_definition.html#ae93b43715fe4b0184fbb2c069060699a">setErrorHandlingChecksType</a> ()</td></tr>
-<tr class="memdesc:ae93b43715fe4b0184fbb2c069060699a"><td class="mdescLeft">&#160;</td><td class="mdescRight">This functions sets type of checks which should be present in generated file. <br /></td></tr>
-<tr class="separator:ae93b43715fe4b0184fbb2c069060699a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abea5734bd3b08db5fe988ec1e1653a1d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abea5734bd3b08db5fe988ec1e1653a1d"></a>
-_error_handling_checks&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_interface_definition.html#abea5734bd3b08db5fe988ec1e1653a1d">getErrorHandlingChecksType</a> ()</td></tr>
-<tr class="memdesc:abea5734bd3b08db5fe988ec1e1653a1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">This functions returns type of checks which should be present in generated file. <br /></td></tr>
-<tr class="separator:abea5734bd3b08db5fe988ec1e1653a1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2a45c0e81d8bd7a4dca963c537d48aa6"><td class="memItemLeft" align="right" valign="top">codec_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_interface_definition.html#a2a45c0e81d8bd7a4dca963c537d48aa6">getCodecType</a> ()</td></tr>
+<tr class="memdesc:a2a45c0e81d8bd7a4dca963c537d48aa6"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns used codec type in eRPC application.  <a href="#a2a45c0e81d8bd7a4dca963c537d48aa6">More...</a><br /></td></tr>
+<tr class="separator:a2a45c0e81d8bd7a4dca963c537d48aa6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7bd623bb9995c6fbb279a2a6819331bb"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_interface_definition.html#a7bd623bb9995c6fbb279a2a6819331bb">getIdlCrc16</a> ()</td></tr>
+<tr class="memdesc:a7bd623bb9995c6fbb279a2a6819331bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns crc16 of all used IDL files.  <a href="#a7bd623bb9995c6fbb279a2a6819331bb">More...</a><br /></td></tr>
+<tr class="separator:a7bd623bb9995c6fbb279a2a6819331bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Collects all definitions from an IDL. </p>
@@ -221,6 +215,39 @@ _error_handling_checks&#160;</td><td class="memItemRight" valign="bottom"><a cla
 
 </div>
 </div>
+<a class="anchor" id="a2a45c0e81d8bd7a4dca963c537d48aa6"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">codec_t erpcgen::InterfaceDefinition::getCodecType </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>This function returns used codec type in eRPC application. </p>
+<p>This information can bring more optimized code into generated output files.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kNotSpecified</td><td>No optimization. </td></tr>
+    <tr><td class="paramname">kBasicCodec</td><td>BasicCodec type optimization. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="a75ea44989d648f061e056a0860c6b006"></a>
 <div class="memitem">
 <div class="memproto">
@@ -244,6 +271,32 @@ _error_handling_checks&#160;</td><td class="memItemRight" valign="bottom"><a cla
 
 <p>This function returns global symbol scope. </p>
 <p>return <a class="el" href="classerpcgen_1_1_symbol_scope.html" title="A scoped namespace containing symbols. ">SymbolScope</a> &amp; Global symbol scope. </p>
+
+</div>
+</div>
+<a class="anchor" id="a7bd623bb9995c6fbb279a2a6819331bb"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t erpcgen::InterfaceDefinition::getIdlCrc16 </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>This function returns crc16 of all used IDL files. </p>
+<dl class="section return"><dt>Returns</dt><dd>Crc16 of all used IDL files. </dd></dl>
 
 </div>
 </div>
@@ -385,12 +438,12 @@ _error_handling_checks&#160;</td><td class="memItemRight" valign="bottom"><a cla
 
 </div>
 </div>
-<a class="anchor" id="a6c5cbde79e39249a456e47df42371bef"></a>
+<a class="anchor" id="ada87017de8bdd523d35c6f6c4c91ac00"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t InterfaceDefinition::parse </td>
+          <td class="memname">void InterfaceDefinition::parse </td>
           <td>(</td>
           <td class="paramtype">const char *&#160;</td>
           <td class="paramname"><em>inputFile</em></td><td>)</td>
@@ -407,7 +460,6 @@ _error_handling_checks&#160;</td><td class="memItemRight" valign="bottom"><a cla
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Crc16 of all used IDL files.</dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
     <tr><td class="paramname">std::runtime_error</td><td>Thrown if is bad return result for parse function or no ast node three is created. </td></tr>
@@ -441,7 +493,7 @@ _error_handling_checks&#160;</td><td class="memItemRight" valign="bottom"><a cla
 
 </div>
 </div>
-<a class="anchor" id="a0458349b3230e4ea11b672629fd6ec5c"></a>
+<a class="anchor" id="ac147f25fdfe081c05a5065ad376f9f5d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -455,7 +507,13 @@ _error_handling_checks&#160;</td><td class="memItemRight" valign="bottom"><a cla
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>outputFilePath</em>&#160;</td>
+          <td class="paramname"><em>outputFilePath</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">codec_t&#160;</td>
+          <td class="paramname"><em>codec</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -471,6 +529,7 @@ _error_handling_checks&#160;</td><td class="memItemRight" valign="bottom"><a cla
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">fileName</td><td>Necessary for output files names. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">outputFilePath</td><td>Path to directory, where files will be generated. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">codec</td><td>Used codec type in eRPC application. </td></tr>
   </table>
   </dd>
 </dl>

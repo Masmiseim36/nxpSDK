@@ -1,6 +1,6 @@
 /*
  * The Clear BSD License
- * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
@@ -65,9 +65,9 @@
 #define MMA9553_STREAM_DATA_SIZE (10)
 
 /*! @brief Unique Name for this application which should match the target GUI pkg name. */
-#define APPLICATION_NAME "MMA9553L"
+#define APPLICATION_NAME "MMA9553 Pedometer Demo"
 /*! @brief Version to distinguish between instances the same application based on target Shield and updates. */
-#define APPLICATION_VERSION "1.0"
+#define APPLICATION_VERSION "2.5"
 
 /*******************************************************************************
  * Constants
@@ -91,6 +91,7 @@ char boardString[ADS_MAX_STRING_LENGTH] = {0}, shieldString[ADS_MAX_STRING_LENGT
      embAppName[ADS_MAX_STRING_LENGTH] = {0};
 volatile bool bStreamingEnabled = false, bMma9553DataReady = false, bMma9553Ready = false;
 uint8_t gStreamID; /* The auto assigned Stream ID. */
+int32_t gSystick;
 GENERIC_DRIVER_GPIO *pGpioDriver = &Driver_GPIO_KSDK;
 
 /*******************************************************************************
@@ -162,6 +163,7 @@ bool process_host_command(
             case HOST_CMD_START:
                 if (hostCommand[1] == gStreamID && bMma9553Ready && bStreamingEnabled == false)
                 {
+                    BOARD_SystickStart(&gSystick);
                     bStreamingEnabled = true;
                     success = true;
                 }
@@ -188,7 +190,7 @@ bool process_host_command(
  */
 int main(void)
 {
-    int32_t status, systick;
+    int32_t status;
     uint8_t streamingPacket[STREAMING_HEADER_LEN + MMA9553_STREAM_DATA_SIZE];
 
     lptmr_config_t lptmrConfig;
@@ -290,7 +292,6 @@ int main(void)
     {
         /*! Populate streaming header. */
         Host_IO_Add_ISO_Header(gStreamID, streamingPacket, MMA9553_STREAM_DATA_SIZE);
-        BOARD_SystickStart(&systick);
         pGpioDriver->clr_pin(&GREEN_LED);
     }
 
@@ -319,7 +320,7 @@ int main(void)
         }
 
         /* Update timestamp from Systick framework. */
-        rawData.timestamp += BOARD_SystickElapsedTime_us(&systick);
+        rawData.timestamp += BOARD_SystickElapsedTime_us(&gSystick);
 
         /* Copy Raw samples to Streaming Buffer. */
         memcpy(streamingPacket + STREAMING_HEADER_LEN, &rawData, MMA9553_STREAM_DATA_SIZE);

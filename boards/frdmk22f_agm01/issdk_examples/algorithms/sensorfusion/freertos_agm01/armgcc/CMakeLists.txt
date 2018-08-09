@@ -52,6 +52,8 @@ SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -mfloat-abi=hard")
 
 SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -mfpu=fpv4-sp-d16")
 
+SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -DNDEBUG")
+
 SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -D__STARTUP_CLEAR_BSS")
 
 SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -Wall")
@@ -202,6 +204,8 @@ SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -MMD")
 
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -MP")
 
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DNDEBUG")
+
 SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DCPU_MK22FN512VLH12")
 
 SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Os")
@@ -324,7 +328,7 @@ SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mfpu=fpv4
 
 include_directories(${ProjDirPath}/..)
 
-include_directories(${ProjDirPath}/../../../../../../../rtos/freertos/Source/portable/GCC/ARM_CM4F)
+include_directories(${ProjDirPath}/../../../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/GCC/ARM_CM4F)
 
 include_directories(${ProjDirPath}/../../../../../../../CMSIS/Include)
 
@@ -336,7 +340,9 @@ include_directories(${ProjDirPath}/../../../../../../frdmk22f)
 
 include_directories(${ProjDirPath}/../../../../..)
 
-include_directories(${ProjDirPath}/../../../../../../../rtos/freertos/Source/include)
+include_directories(${ProjDirPath}/../../../../../../../rtos/amazon-freertos/lib/include)
+
+include_directories(${ProjDirPath}/../../../../../../../rtos/amazon-freertos/lib/include/private)
 
 include_directories(${ProjDirPath}/../../../../../../../devices/MK22F51212/drivers)
 
@@ -381,7 +387,17 @@ add_executable(sensorfusion_freertos_agm01.elf
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../../../../../../../devices/MK22F51212/drivers/fsl_clock.h"
 "${ProjDirPath}/../../../../../../../devices/MK22F51212/drivers/fsl_clock.c"
-"${ProjDirPath}/../../../../../../../devices/MK22F51212/drivers/fsl_flash.c"
+"${ProjDirPath}/../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_adapter.h"
+"${ProjDirPath}/../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_utilities.h"
+"${ProjDirPath}/../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_features.h"
+"${ProjDirPath}/../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_controller.c"
+"${ProjDirPath}/../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_controller.h"
+"${ProjDirPath}/../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_flash.c"
+"${ProjDirPath}/../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_flash.h"
+"${ProjDirPath}/../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_cache.c"
+"${ProjDirPath}/../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_cache.h"
+"${ProjDirPath}/../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_flexnvm.c"
+"${ProjDirPath}/../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_flexnvm.h"
 "${ProjDirPath}/../../../../../../../devices/MK22F51212/drivers/fsl_flash.h"
 "${ProjDirPath}/../../../../../../../devices/MK22F51212/drivers/fsl_common.h"
 "${ProjDirPath}/../../../../../../../devices/MK22F51212/drivers/fsl_common.c"
@@ -411,8 +427,6 @@ add_executable(sensorfusion_freertos_agm01.elf
 "${ProjDirPath}/../../../../../../../devices/MK22F51212/drivers/fsl_uart_edma.c"
 "${ProjDirPath}/../../../../../../../devices/MK22F51212/drivers/fsl_edma.h"
 "${ProjDirPath}/../../../../../../../devices/MK22F51212/drivers/fsl_edma.c"
-"${ProjDirPath}/../../../../../../../devices/MK22F51212/drivers/fsl_dmamux.h"
-"${ProjDirPath}/../../../../../../../devices/MK22F51212/drivers/fsl_dmamux.c"
 "${ProjDirPath}/../../../../../../../devices/MK22F51212/cmsis_drivers/fsl_uart_cmsis.h"
 "${ProjDirPath}/../../../../../../../devices/MK22F51212/cmsis_drivers/fsl_uart_cmsis.c"
 "${ProjDirPath}/../../../../../../../CMSIS/Driver/Include/Driver_USART.h"
@@ -423,38 +437,38 @@ add_executable(sensorfusion_freertos_agm01.elf
 "${ProjDirPath}/../../../../../../../devices/MK22F51212/drivers/fsl_i2c_edma.h"
 "${ProjDirPath}/../../../../../../../devices/MK22F51212/drivers/fsl_i2c_freertos.h"
 "${ProjDirPath}/../../../../../../../devices/MK22F51212/drivers/fsl_i2c_freertos.c"
-"${ProjDirPath}/../../../../../../../rtos/freertos/FreeRTOS_for_Kinetis_SDK_v2.0.txt"
-"${ProjDirPath}/../../../../../../../rtos/freertos/License/license.txt"
-"${ProjDirPath}/../../../../../../../rtos/freertos/Source/include/croutine.h"
-"${ProjDirPath}/../../../../../../../rtos/freertos/Source/include/event_groups.h"
-"${ProjDirPath}/../../../../../../../rtos/freertos/Source/include/FreeRTOS.h"
-"${ProjDirPath}/../../../../../../../rtos/freertos/Source/include/list.h"
-"${ProjDirPath}/../../../../../../../rtos/freertos/Source/include/mpu_wrappers.h"
-"${ProjDirPath}/../../../../../../../rtos/freertos/Source/include/portable.h"
-"${ProjDirPath}/../../../../../../../rtos/freertos/Source/include/projdefs.h"
-"${ProjDirPath}/../../../../../../../rtos/freertos/Source/include/queue.h"
-"${ProjDirPath}/../../../../../../../rtos/freertos/Source/include/semphr.h"
-"${ProjDirPath}/../../../../../../../rtos/freertos/Source/include/StackMacros.h"
-"${ProjDirPath}/../../../../../../../rtos/freertos/Source/include/stdint.readme"
-"${ProjDirPath}/../../../../../../../rtos/freertos/Source/include/task.h"
-"${ProjDirPath}/../../../../../../../rtos/freertos/Source/include/timers.h"
-"${ProjDirPath}/../../../../../../../rtos/freertos/Source/include/deprecated_definitions.h"
-"${ProjDirPath}/../../../../../../../rtos/freertos/Source/include/freertos_tasks_c_additions.h"
-"${ProjDirPath}/../../../../../../../rtos/freertos/Source/croutine.c"
-"${ProjDirPath}/../../../../../../../rtos/freertos/Source/list.c"
-"${ProjDirPath}/../../../../../../../rtos/freertos/Source/queue.c"
-"${ProjDirPath}/../../../../../../../rtos/freertos/Source/readme.txt"
-"${ProjDirPath}/../../../../../../../rtos/freertos/Source/tasks.c"
-"${ProjDirPath}/../../../../../../../rtos/freertos/Source/timers.c"
-"${ProjDirPath}/../../../../../../../rtos/freertos/Source/event_groups.c"
-"${ProjDirPath}/../../../../../../../rtos/freertos/Source/portable/readme.txt"
-"${ProjDirPath}/../../../../../../../rtos/freertos/Source/portable/GCC/ARM_CM4F/fsl_tickless_generic.h"
-"${ProjDirPath}/../../../../../../../rtos/freertos/Source/portable/GCC/ARM_CM4F/fsl_tickless_systick.c"
-"${ProjDirPath}/../../../../../../../rtos/freertos/Source/portable/GCC/ARM_CM4F/port.c"
-"${ProjDirPath}/../../../../../../../rtos/freertos/Source/portable/GCC/ARM_CM4F/portmacro.h"
+"${ProjDirPath}/../../../../../../../rtos/amazon-freertos/LICENSE"
+"${ProjDirPath}/../../../../../../../rtos/amazon-freertos/lib/include/event_groups.h"
+"${ProjDirPath}/../../../../../../../rtos/amazon-freertos/lib/include/FreeRTOS.h"
+"${ProjDirPath}/../../../../../../../rtos/amazon-freertos/lib/include/message_buffer.h"
+"${ProjDirPath}/../../../../../../../rtos/amazon-freertos/lib/include/queue.h"
+"${ProjDirPath}/../../../../../../../rtos/amazon-freertos/lib/include/semphr.h"
+"${ProjDirPath}/../../../../../../../rtos/amazon-freertos/lib/include/stream_buffer.h"
+"${ProjDirPath}/../../../../../../../rtos/amazon-freertos/lib/include/task.h"
+"${ProjDirPath}/../../../../../../../rtos/amazon-freertos/lib/include/timers.h"
+"${ProjDirPath}/../../../../../../../rtos/amazon-freertos/lib/include/freertos_tasks_c_additions.h"
+"${ProjDirPath}/../../../../../../../rtos/amazon-freertos/lib/include/private/deprecated_definitions.h"
+"${ProjDirPath}/../../../../../../../rtos/amazon-freertos/lib/include/private/list.h"
+"${ProjDirPath}/../../../../../../../rtos/amazon-freertos/lib/include/private/mpu_wrappers.h"
+"${ProjDirPath}/../../../../../../../rtos/amazon-freertos/lib/include/private/portable.h"
+"${ProjDirPath}/../../../../../../../rtos/amazon-freertos/lib/include/private/projdefs.h"
+"${ProjDirPath}/../../../../../../../rtos/amazon-freertos/lib/include/private/stack_macros.h"
+"${ProjDirPath}/../../../../../../../rtos/amazon-freertos/lib/FreeRTOS/event_groups.c"
+"${ProjDirPath}/../../../../../../../rtos/amazon-freertos/lib/FreeRTOS/list.c"
+"${ProjDirPath}/../../../../../../../rtos/amazon-freertos/lib/FreeRTOS/queue.c"
+"${ProjDirPath}/../../../../../../../rtos/amazon-freertos/lib/FreeRTOS/stream_buffer.c"
+"${ProjDirPath}/../../../../../../../rtos/amazon-freertos/lib/FreeRTOS/tasks.c"
+"${ProjDirPath}/../../../../../../../rtos/amazon-freertos/lib/FreeRTOS/timers.c"
+"${ProjDirPath}/../../../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/readme.txt"
+"${ProjDirPath}/../../../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/GCC/ARM_CM4F/fsl_tickless_generic.h"
+"${ProjDirPath}/../../../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/GCC/ARM_CM4F/fsl_tickless_systick.c"
+"${ProjDirPath}/../../../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/GCC/ARM_CM4F/port.c"
+"${ProjDirPath}/../../../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/GCC/ARM_CM4F/portmacro.h"
 "${ProjDirPath}/../../../../../../../devices/MK22F51212/cmsis_drivers/fsl_i2c_cmsis.h"
 "${ProjDirPath}/../../../../../../../devices/MK22F51212/cmsis_drivers/fsl_i2c_cmsis.c"
 "${ProjDirPath}/../../../../../../../CMSIS/Driver/Include/Driver_I2C.h"
+"${ProjDirPath}/../../../../../../../devices/MK22F51212/drivers/fsl_dmamux.h"
+"${ProjDirPath}/../../../../../../../devices/MK22F51212/drivers/fsl_dmamux.c"
 "${ProjDirPath}/../../../../../../../devices/MK22F51212/drivers/fsl_dspi.h"
 "${ProjDirPath}/../../../../../../../devices/MK22F51212/drivers/fsl_dspi.c"
 "${ProjDirPath}/../../../../../../../devices/MK22F51212/drivers/fsl_dspi_edma.h"
@@ -522,7 +536,7 @@ add_executable(sensorfusion_freertos_agm01.elf
 "${ProjDirPath}/../../../../../../../middleware/issdk/sensors/mpl3115.h"
 "${ProjDirPath}/../../../../../../../middleware/issdk/sensors/mpl3115_drv.h"
 "${ProjDirPath}/../../../../../../../middleware/issdk/sensors/mpl3115_drv.c"
-"${ProjDirPath}/../../../../../../../rtos/freertos/Source/portable/MemMang/heap_1.c"
+"${ProjDirPath}/../../../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/MemMang/heap_1.c"
 )
 
 

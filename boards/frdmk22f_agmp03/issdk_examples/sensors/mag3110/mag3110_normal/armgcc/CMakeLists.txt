@@ -52,6 +52,8 @@ SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -mfloat-abi=hard")
 
 SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -mfpu=fpv4-sp-d16")
 
+SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -DNDEBUG")
+
 SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -D__STARTUP_CLEAR_BSS")
 
 SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -Wall")
@@ -197,6 +199,8 @@ SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -mfpu=fpv4-sp-d16")
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -MMD")
 
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -MP")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DNDEBUG")
 
 SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DCPU_MK22FN512VLH12")
 
@@ -354,7 +358,7 @@ include_directories(${ProjDirPath}/../../../../../../../middleware/issdk/drivers
 
 include_directories(${ProjDirPath}/../../../../../../../middleware/issdk/sensors)
 
-add_executable(mag3110_normal.elf 
+add_executable(k22f_agmp03_mag3110_normal.elf 
 "${ProjDirPath}/../../../../../frdm_k22f.c"
 "${ProjDirPath}/../../../../../frdm_k22f.h"
 "${ProjDirPath}/../../../../../frdm_stbc_agmp03_shield.h"
@@ -369,7 +373,17 @@ add_executable(mag3110_normal.elf
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../../../../../../../devices/MK22F51212/drivers/fsl_clock.h"
 "${ProjDirPath}/../../../../../../../devices/MK22F51212/drivers/fsl_clock.c"
-"${ProjDirPath}/../../../../../../../devices/MK22F51212/drivers/fsl_flash.c"
+"${ProjDirPath}/../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_adapter.h"
+"${ProjDirPath}/../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_utilities.h"
+"${ProjDirPath}/../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_features.h"
+"${ProjDirPath}/../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_controller.c"
+"${ProjDirPath}/../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_controller.h"
+"${ProjDirPath}/../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_flash.c"
+"${ProjDirPath}/../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_flash.h"
+"${ProjDirPath}/../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_cache.c"
+"${ProjDirPath}/../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_cache.h"
+"${ProjDirPath}/../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_flexnvm.c"
+"${ProjDirPath}/../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_flexnvm.h"
 "${ProjDirPath}/../../../../../../../devices/MK22F51212/drivers/fsl_flash.h"
 "${ProjDirPath}/../../../../../../../devices/MK22F51212/drivers/fsl_common.h"
 "${ProjDirPath}/../../../../../../../devices/MK22F51212/drivers/fsl_common.c"
@@ -401,12 +415,12 @@ add_executable(mag3110_normal.elf
 "${ProjDirPath}/../../../../../../../devices/MK22F51212/drivers/fsl_i2c_edma.h"
 "${ProjDirPath}/../../../../../../../devices/MK22F51212/drivers/fsl_edma.h"
 "${ProjDirPath}/../../../../../../../devices/MK22F51212/drivers/fsl_edma.c"
-"${ProjDirPath}/../../../../../../../devices/MK22F51212/drivers/fsl_dmamux.h"
-"${ProjDirPath}/../../../../../../../devices/MK22F51212/drivers/fsl_dmamux.c"
 "${ProjDirPath}/../../../../../../../devices/MK22F51212/cmsis_drivers/fsl_i2c_cmsis.h"
 "${ProjDirPath}/../../../../../../../devices/MK22F51212/cmsis_drivers/fsl_i2c_cmsis.c"
 "${ProjDirPath}/../../../../../../../CMSIS/Driver/Include/Driver_I2C.h"
 "${ProjDirPath}/../../../../../../../CMSIS/Driver/Include/Driver_Common.h"
+"${ProjDirPath}/../../../../../../../devices/MK22F51212/drivers/fsl_dmamux.h"
+"${ProjDirPath}/../../../../../../../devices/MK22F51212/drivers/fsl_dmamux.c"
 "${ProjDirPath}/../../../../../../../devices/MK22F51212/drivers/fsl_dspi.h"
 "${ProjDirPath}/../../../../../../../devices/MK22F51212/drivers/fsl_dspi.c"
 "${ProjDirPath}/../../../../../../../devices/MK22F51212/drivers/fsl_dspi_edma.h"
@@ -446,24 +460,24 @@ set(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -T${ProjDirPat
 
 set(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -T${ProjDirPath}/MK22FN512xxx12_flash.ld -static")
 
-TARGET_LINK_LIBRARIES(mag3110_normal.elf -Wl,--start-group)
-target_link_libraries(mag3110_normal.elf debug m)
+TARGET_LINK_LIBRARIES(k22f_agmp03_mag3110_normal.elf -Wl,--start-group)
+target_link_libraries(k22f_agmp03_mag3110_normal.elf debug m)
 
-target_link_libraries(mag3110_normal.elf debug c)
+target_link_libraries(k22f_agmp03_mag3110_normal.elf debug c)
 
-target_link_libraries(mag3110_normal.elf debug gcc)
+target_link_libraries(k22f_agmp03_mag3110_normal.elf debug gcc)
 
-target_link_libraries(mag3110_normal.elf debug nosys)
+target_link_libraries(k22f_agmp03_mag3110_normal.elf debug nosys)
 
-target_link_libraries(mag3110_normal.elf optimized m)
+target_link_libraries(k22f_agmp03_mag3110_normal.elf optimized m)
 
-target_link_libraries(mag3110_normal.elf optimized c)
+target_link_libraries(k22f_agmp03_mag3110_normal.elf optimized c)
 
-target_link_libraries(mag3110_normal.elf optimized gcc)
+target_link_libraries(k22f_agmp03_mag3110_normal.elf optimized gcc)
 
-target_link_libraries(mag3110_normal.elf optimized nosys)
+target_link_libraries(k22f_agmp03_mag3110_normal.elf optimized nosys)
 
-TARGET_LINK_LIBRARIES(mag3110_normal.elf -Wl,--end-group)
+TARGET_LINK_LIBRARIES(k22f_agmp03_mag3110_normal.elf -Wl,--end-group)
 
-ADD_CUSTOM_COMMAND(TARGET mag3110_normal.elf POST_BUILD COMMAND ${CMAKE_OBJCOPY}
--Obinary ${EXECUTABLE_OUTPUT_PATH}/mag3110_normal.elf ${EXECUTABLE_OUTPUT_PATH}/K22F-AGMP03-MAG3110-NORMAL.bin)
+ADD_CUSTOM_COMMAND(TARGET k22f_agmp03_mag3110_normal.elf POST_BUILD COMMAND ${CMAKE_OBJCOPY}
+-Obinary ${EXECUTABLE_OUTPUT_PATH}/k22f_agmp03_mag3110_normal.elf ${EXECUTABLE_OUTPUT_PATH}/K22F-AGMP03-MAG3110-NORMAL.bin)

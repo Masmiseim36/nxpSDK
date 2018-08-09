@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC API Reference
-   &#160;<span id="projectnumber">Rev. 1.5.0</span>
+   &#160;<span id="projectnumber">Rev. 1.7.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -51,7 +51,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="modules.html"><span>API&#160;Reference</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -93,7 +92,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="functions.html#index_a"><span>a</span></a></li>
       <li><a href="functions_c.html#index_c"><span>c</span></a></li>
       <li><a href="functions_d.html#index_d"><span>d</span></a></li>
-      <li><a href="functions_e.html#index_e"><span>e</span></a></li>
       <li><a href="functions_f.html#index_f"><span>f</span></a></li>
       <li class="current"><a href="functions_g.html#index_g"><span>g</span></a></li>
       <li><a href="functions_h.html#index_h"><span>h</span></a></li>
@@ -146,46 +144,62 @@ $(document).ready(function(){initNavTree('functions_g.html','');});
 
 <h3><a class="anchor" id="index_g"></a>- g -</h3><ul>
 <li>get()
-: <a class="el" href="classerpc_1_1_message_buffer_1_1_cursor.html#aab4d7097dfd02bf98c094a82caddd2f2">erpc::MessageBuffer::Cursor</a>
-, <a class="el" href="classerpc_1_1_message_buffer.html#aca6e73cdfa0ee1b44b9a24795d726cee">erpc::MessageBuffer</a>
+: <a class="el" href="classerpc_1_1_message_buffer_1_1_cursor.html#a63d96e45fb73f509b40c9692734b77c8">erpc::MessageBuffer::Cursor</a>
+, <a class="el" href="classerpc_1_1_message_buffer.html#aab101146fdec5df33e7bdf7608dddcef">erpc::MessageBuffer</a>
+, <a class="el" href="classerpc_1_1_semaphore.html#a616d55bf3880b4135745ef3c47f6a886">erpc::Semaphore</a>
 , <a class="el" href="classerpc_1_1_static_queue.html#a50621cf1d1676983bbf95c7dbf178229">erpc::StaticQueue&lt; T, elementCount &gt;</a>
 </li>
 <li>get_rpmsg_lite_instance()
-: <a class="el" href="classerpc_1_1_r_p_msg_base_transport.html#a8eb7b6366277ae23fd3963d87aaf066b">erpc::RPMsgBaseTransport</a>
+: <a class="el" href="classerpc_1_1_r_p_msg_base_transport.html#ad5a3b7702d944d7c497ad4590364002f">erpc::RPMsgBaseTransport</a>
 </li>
 <li>getBuffer()
-: <a class="el" href="classerpc_1_1_codec.html#a45709c93c094b3429facb6962827892e">erpc::Codec</a>
+: <a class="el" href="classerpc_1_1_codec.html#a1ffdc810b2381805a0ab4e92201f72d3">erpc::Codec</a>
 </li>
 <li>getCodec()
-: <a class="el" href="classerpc_1_1_request_context.html#ab0fd6166ed575ec17f2ec0f81ff08a8c">erpc::RequestContext</a>
+: <a class="el" href="classerpc_1_1_request_context.html#a0908f33c7475d2a370dca60bf0341d75">erpc::RequestContext</a>
 </li>
-<li>getErrorHandler()
-: <a class="el" href="classerpc_1_1_client_manager.html#a0977d17a96daccb35496edb01e3d59ad">erpc::ClientManager</a>
+<li>getCount()
+: <a class="el" href="classerpc_1_1_semaphore.html#a19fa4fe7ab2e2adf7387ba8eddac998a">erpc::Semaphore</a>
+</li>
+<li>getCurrentThread()
+: <a class="el" href="classerpc_1_1_thread.html#af2628d839ac1a6000f82cc03124df7cb">erpc::Thread</a>
+</li>
+<li>getCurrentThreadId()
+: <a class="el" href="classerpc_1_1_thread.html#a0dffdcfac14c0689620172a624ad4bbb">erpc::Thread</a>
 </li>
 <li>getFree()
-: <a class="el" href="classerpc_1_1_message_buffer.html#af83a725b03371d97b636765ede86b184">erpc::MessageBuffer</a>
+: <a class="el" href="classerpc_1_1_message_buffer.html#a7432d37f64b91d65a8df06016cec22e1">erpc::MessageBuffer</a>
 </li>
 <li>getLength()
-: <a class="el" href="classerpc_1_1_message_buffer.html#a00a45ec75a5c502c6a4d387dc341b319">erpc::MessageBuffer</a>
+: <a class="el" href="classerpc_1_1_message_buffer.html#a064fda9eef763265dd9de81142011e33">erpc::MessageBuffer</a>
 </li>
 <li>getLogger()
-: <a class="el" href="classerpc_1_1_message_logger.html#ab5cdcfa90519253aec1fe77a37cadfa3">erpc::MessageLogger</a>
+: <a class="el" href="classerpc_1_1_message_logger.html#accf9c20389fce9d539dfbd3309cef9be">erpc::MessageLogger</a>
+</li>
+<li>getName()
+: <a class="el" href="classerpc_1_1_thread.html#a0a7bea50b487914f2f2383d731b4306e">erpc::Thread</a>
 </li>
 <li>getNext()
-: <a class="el" href="classerpc_1_1_message_logger.html#a23692e8dd45f1ad968fb06346700f28e">erpc::MessageLogger</a>
-, <a class="el" href="classerpc_1_1_service.html#acb1ffd32374c6ee56158178771190e5a">erpc::Service</a>
+: <a class="el" href="classerpc_1_1_message_logger.html#a2837865cc28ee772501fe4d1c81886ae">erpc::MessageLogger</a>
+, <a class="el" href="classerpc_1_1_service.html#a791ba1d5aea06d35035dab162ed60630">erpc::Service</a>
 </li>
 <li>getRemaining()
-: <a class="el" href="classerpc_1_1_message_buffer_1_1_cursor.html#a278f9e0126b9b6b062b1855fe5516896">erpc::MessageBuffer::Cursor</a>
+: <a class="el" href="classerpc_1_1_message_buffer_1_1_cursor.html#a6f3dff599ef13d4ffca7e5d559a50afa">erpc::MessageBuffer::Cursor</a>
 </li>
 <li>getSequence()
-: <a class="el" href="classerpc_1_1_request_context.html#a9311a2ad7d10de7d3589383319acdf3c">erpc::RequestContext</a>
+: <a class="el" href="classerpc_1_1_request_context.html#a893ef5c5b1cef2f9dd5e131370bb85e2">erpc::RequestContext</a>
 </li>
 <li>getServiceId()
-: <a class="el" href="classerpc_1_1_service.html#a6b3706517467b41930f851448369b4b3">erpc::Service</a>
+: <a class="el" href="classerpc_1_1_service.html#a6a53f31f19ce52a29c14f903b873b4f2">erpc::Service</a>
+</li>
+<li>getThreadId()
+: <a class="el" href="classerpc_1_1_thread.html#a220ea24e7e421b0a84736c0818fbe59b">erpc::Thread</a>
 </li>
 <li>getUsed()
-: <a class="el" href="classerpc_1_1_message_buffer.html#add0dea93d5d72418413ba2cdbaac68be">erpc::MessageBuffer</a>
+: <a class="el" href="classerpc_1_1_message_buffer.html#aa0aa4b6ee452d083cbaaf0ce5fe6517f">erpc::MessageBuffer</a>
+</li>
+<li>Guard()
+: <a class="el" href="classerpc_1_1_mutex_1_1_guard.html#a0e882875ad2764ef2c9402dba23b9e62">erpc::Mutex::Guard</a>
 </li>
 </ul>
 </div><!-- contents -->

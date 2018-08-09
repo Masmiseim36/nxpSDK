@@ -707,6 +707,7 @@ static void _USB_HostKhciProcessTrCallback(usb_host_controller_handle controller
         }
     }
 
+    /* callback function is different from the current condition */
     transfer->callbackFn(transfer->callbackParam, transfer, status);
 }
 
@@ -1225,6 +1226,7 @@ void _USB_HostKhciTransferClearUp(usb_host_controller_handle controllerHandle)
     while (trCancel != NULL)
     {
         _USB_HostKhciUnlinkTrRequestFromList(controllerHandle, trCancel);
+        /* callback function is different from the current condition */
         trCancel->callbackFn(trCancel->callbackParam, trCancel, kStatus_USB_TransferCancel);
         USB_HostKhciLock();
         trCancel = usbHostPointer->periodicListPointer;
@@ -1237,6 +1239,7 @@ void _USB_HostKhciTransferClearUp(usb_host_controller_handle controllerHandle)
     while (trCancel != NULL)
     {
         _USB_HostKhciUnlinkTrRequestFromList(controllerHandle, trCancel);
+        /* callback function is different from the current condition */
         trCancel->callbackFn(trCancel->callbackParam, trCancel, kStatus_USB_TransferCancel);
         USB_HostKhciLock();
         trCancel = usbHostPointer->asyncListPointer;
@@ -1960,6 +1963,7 @@ static usb_status_t _USB_HostKhciCancelPipe(usb_host_controller_handle handle,
             ((trPointer == NULL) || (trPointer == temptr)))
         {
             _USB_HostKhciUnlinkTrRequestFromList(handle, temptr);
+            /* callback function is different from the current condition */
             temptr->callbackFn(temptr->callbackParam, temptr, kStatus_USB_TransferCancel);
             return kStatus_USB_Success;
         }

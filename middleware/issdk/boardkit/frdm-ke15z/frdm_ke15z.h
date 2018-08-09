@@ -1,5 +1,6 @@
 /*
  * The Clear BSD License
+ * Copyright (c) 2017, Freescale Semiconductor, Inc.
  * Copyright 2017 NXP
  * All rights reserved.
  *
@@ -72,7 +73,7 @@ extern gpioHandleKSDK_t D3;
 extern gpioHandleKSDK_t D4;
 extern gpioHandleKSDK_t D5;
 extern gpioHandleKSDK_t D6;
-extern gpioHandleKSDK_t D6;
+extern gpioHandleKSDK_t D7;
 extern gpioHandleKSDK_t D8;
 extern gpioHandleKSDK_t D9;
 extern gpioHandleKSDK_t D10;
@@ -119,7 +120,7 @@ extern gpioHandleKSDK_t RST_A;
 #define HOST_S_SIGNAL_EVENT HOST_SignalEvent_t
 
 // Bluetooth: Driver information for default UART to communicate with HOST PC.
-#define HOST_B_DRIVER Driver_USART0
+#define HOST_B_DRIVER Driver_USART1
 #define HOST_B_SIGNAL_EVENT HOST_SignalEvent_t
 
 // On-Board FXOS8700 Sensor Information

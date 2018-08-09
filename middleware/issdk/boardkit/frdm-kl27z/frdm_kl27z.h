@@ -1,6 +1,6 @@
 /*
  * The Clear BSD License
- * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
@@ -64,10 +64,12 @@ extern gpioHandleKSDK_t D0;
 extern gpioHandleKSDK_t D1;
 
 // FRDM-KL27Z Arduino Connector Pin Defintion
+extern gpioHandleKSDK_t A0;
 extern gpioHandleKSDK_t A1;
 extern gpioHandleKSDK_t A2;
 extern gpioHandleKSDK_t A3;
 extern gpioHandleKSDK_t D2;
+extern gpioHandleKSDK_t D3;
 extern gpioHandleKSDK_t D4;
 extern gpioHandleKSDK_t D5;
 extern gpioHandleKSDK_t D6;
@@ -131,9 +133,9 @@ extern gpioHandleKSDK_t INT2;
 #define MAG3110_I2C_ADDR 0x0E
 
 // Set GPIO pin for handling the gpio interrupt using PORTB_PORTC_PORTD_PORTE_IRQHandler
-// By default, GPIO Pin set to GPIOC
-#define GPIO_TYPE GPIOC
-#define GPIO_PORT_NUM PORTC_NUM
+// By default, GPIO Pin set to GPIOE
+#define GPIO_TYPE GPIOE
+#define GPIO_PORT_NUM PORTE_NUM
 
 /* @brief  Ask use input to resume after specified samples have been processed. */
 #define ASK_USER_TO_RESUME(x)                                                          \

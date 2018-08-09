@@ -1,6 +1,6 @@
 /*
  * The Clear BSD License
- * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
@@ -65,35 +65,73 @@
 // Macros
 //-----------------------------------------------------------------------
 #define MMA865x_ACCEL_DATA_SIZE 6 /* 2 byte X,Y,Z Axis Data each. */
-#define MMA865x_STREAM_DATA_SIZE 10
+#define MMA865x_STREAM_DATA_SIZE 11
 
 /*! @brief Unique Name for this application which should match the target GUI pkg name. */
-#define APPLICATION_NAME "MMA8652FC"
+#define APPLICATION_NAME "MMA8652 Accelerometer Demo"
 /*! @brief Version to distinguish between instances the same application based on target Shield and updates. */
-#define APPLICATION_VERSION "1.0"
+#define APPLICATION_VERSION "2.5"
+
+typedef struct
+{
+    uint32_t timestamp; /*!< Time stamp value in micro-seconds. */
+    int16_t accel[3];   /*!< The accel data */
+    uint8_t intsrc;
+} mma865x_acceluserdata_t;
 
 //-----------------------------------------------------------------------
 // Constants
 //-----------------------------------------------------------------------
 /*! Prepare the register write list to configure MMA865x in non-FIFO and ISR mode. */
 const registerwritelist_t cMma865xConfigInterrupt[] =
-    {/*! Configure the MMA865x to set FS Range as 2g. */
-     {MMA865x_XYZ_DATA_CFG, MMA865x_XYZ_DATA_CFG_FS_2G, MMA865x_XYZ_DATA_CFG_FS_MASK},
-     /*! Configure the MMA865x to set ODR to 6.25Hz. */
-     {MMA865x_CTRL_REG1, MMA865x_CTRL_REG1_DR_6_25HZ, MMA865x_CTRL_REG1_DR_MASK},
-     /*! Configure the MMA865x to set High Resolution mode. */
-     {MMA865x_CTRL_REG2, MMA865x_CTRL_REG2_MODS_HR, MMA865x_CTRL_REG2_MODS_MASK},
-     /*! Configure the MMA865x to set interrupt polarity as Active High. */
-     {MMA865x_CTRL_REG3, MMA865x_CTRL_REG3_IPOL_ACTIVE_HIGH, MMA865x_CTRL_REG3_IPOL_MASK},
-     /*! Configure the MMA865x to enable Interrupts for Data Ready. */
-     {MMA865x_CTRL_REG4, MMA865x_CTRL_REG4_INT_EN_DRDY_EN, MMA865x_CTRL_REG4_INT_EN_DRDY_MASK},
-     /*! Configure the MMA865x to route Data Ready Interrupts to INT1. */
-     {MMA865x_CTRL_REG5, MMA865x_CTRL_REG5_INT_CFG_DRDY_INT1, MMA865x_CTRL_REG5_INT_CFG_DRDY_MASK},
-     __END_WRITE_DATA__};
+{   /*! Clear F_SETUP. */
+	{MMA865x_F_SETUP, 0x00, 0},
+    /*! Configure the MMA865x to set FS Range as 2g. */
+	{MMA865x_XYZ_DATA_CFG, MMA865x_XYZ_DATA_CFG_FS_2G, MMA865x_XYZ_DATA_CFG_FS_MASK},
+	/*! Configure the MMA865x to set ODR to 100Hz. */
+	{MMA865x_CTRL_REG1, MMA865x_CTRL_REG1_DR_100HZ, MMA865x_CTRL_REG1_DR_MASK},
+	/*! Configure the MMA865x to set High Resolution mode. */
+	{MMA865x_CTRL_REG2, MMA865x_CTRL_REG2_MODS_HR, MMA865x_CTRL_REG2_MODS_MASK},
+	/*! Configure the MMA865x to set interrupt polarity as Active High. */
+	{MMA865x_CTRL_REG3, MMA865x_CTRL_REG3_IPOL_ACTIVE_HIGH, MMA865x_CTRL_REG3_IPOL_MASK},
+	/*! Configure the MMA865x to set interrupt polarity as Active High. */
+	{MMA865x_PL_CFG, MMA865x_PL_CFG_PL_EN_EN|MMA865x_PL_CFG_DBCNTM_CLEAR, 0},
+	/*! Configure the MMA865x to set interrupt polarity as Active High. */
+	{MMA865x_PL_COUNT, 0xFF, 0},
+	/*! Configure the MMA865x to set interrupt polarity as Active High. */
+	{MMA865x_FF_MT_CFG, MMA865x_FF_MT_CFG_OAE_FREEFALL|MMA865x_FF_MT_CFG_ZEFE_EN|MMA865x_FF_MT_CFG_YEFE_EN|MMA865x_FF_MT_CFG_XEFE_EN, 0},
+	/*! Configure the MMA865x to set interrupt polarity as Active High. */
+	{MMA865x_FF_MT_COUNT, 0x01, 0},
+	/*! Configure the MMA865x to set interrupt polarity as Active High. */
+	{MMA865x_FF_MT_THS, MMA865x_FF_MT_THS_DBCNTM_INC_CLR|0x02, 0},
+	/*! Configure the MMA865x to set interrupt polarity as Active High. */
+	{MMA865x_TRANSIENT_CFG,MMA865x_TRANSIENT_CFG_ZTEFE_EN|MMA865x_TRANSIENT_CFG_YTEFE_EN|MMA865x_TRANSIENT_CFG_XTEFE_EN, 0},
+	{MMA865x_TRANSIENT_THS, MMA865x_TRANSIENT_THS_DBCNTM_INC_CLR|0x10, 0},
+	{MMA865x_TRANSIENT_COUNT, 0x0C, 0},
+	/*! Configure the MMA865x to set interrupt polarity as Active High. */
+	{MMA865x_PULSE_CFG, MMA865x_PULSE_CFG_XSPEFE_EN|MMA865x_PULSE_CFG_YSPEFE_EN|MMA865x_PULSE_CFG_ZSPEFE_EN, 0},
+	{MMA865x_PULSE_THSX, 0x37, 0},
+	/*! Configure the MMA865x to set interrupt polarity as Active High. */
+	{MMA865x_PULSE_THSY, 0x37, 0},
+	/*! Configure the MMA865x to set interrupt polarity as Active High. */
+	{MMA865x_PULSE_THSZ, 0x52, 0},
+	/*! Configure the MMA865x to set interrupt polarity as Active High. */
+	{MMA865x_PULSE_TMLT, 0x30, 0},
+	/*! Configure the MMA865x to set interrupt polarity as Active High. */
+	{MMA865x_PULSE_LTCY, 0x3C, 0},
+	/*! Configure the MMA865x to enable Interrupts for Data Ready. */
+	{MMA865x_CTRL_REG4, MMA865x_CTRL_REG4_INT_EN_DRDY_EN|MMA865x_CTRL_REG4_INT_EN_LNDPRT_EN|MMA865x_CTRL_REG4_INT_EN_FF_MT_EN|MMA865x_CTRL_REG4_INT_EN_TRANS_EN|MMA865x_CTRL_REG4_INT_EN_PULSE_EN, 0},
+	/*! Configure the MMA865x to route Data Ready Interrupts to INT1. */
+	{MMA865x_CTRL_REG5, MMA865x_CTRL_REG5_INT_CFG_DRDY_INT1, 0},
+	__END_WRITE_DATA__};
 
 /*! Prepare the register read list to read the raw Accel data from MMA865x. */
 const registerreadlist_t cMma865xOutputValues[] = {{.readFrom = MMA865x_OUT_X_MSB, .numBytes = MMA865x_ACCEL_DATA_SIZE},
                                                    __END_READ_DATA__};
+/*! Prepare the register read for INT Status Register. */
+const registerreadlist_t cMma8652qStatus[] = {{.readFrom = MMA865x_INT_SOURCE, .numBytes = 1}, __END_READ_DATA__};
+/*! Prepare the register read for PL Status Register. */
+const registerreadlist_t cMma8652qPLStatus[] = {{.readFrom = MMA865x_PL_STATUS, .numBytes = 1}, __END_READ_DATA__};
 
 //-----------------------------------------------------------------------
 // Global Variables
@@ -102,6 +140,7 @@ char boardString[ADS_MAX_STRING_LENGTH] = {0}, shieldString[ADS_MAX_STRING_LENGT
      embAppName[ADS_MAX_STRING_LENGTH] = {0};
 volatile bool bStreamingEnabled = false, bMma865xDataReady = false, bMma865xReady = false;
 uint8_t gStreamID; /* The auto assigned Stream ID. */
+int32_t gSystick;
 GENERIC_DRIVER_GPIO *pGpioDriver = &Driver_GPIO_KSDK;
 
 //-----------------------------------------------------------------------
@@ -172,6 +211,7 @@ bool process_host_command(
             case HOST_CMD_START:
                 if (hostCommand[1] == gStreamID && bMma865xReady && bStreamingEnabled == false)
                 {
+                    BOARD_SystickStart(&gSystick);
                     bStreamingEnabled = true;
                     success = true;
                 }
@@ -198,11 +238,11 @@ bool process_host_command(
  */
 int main(void)
 {
-    int32_t status, systick;
-    uint8_t data[MMA865x_ACCEL_DATA_SIZE], streamingPacket[STREAMING_HEADER_LEN + MMA865x_STREAM_DATA_SIZE];
+    int32_t status;
+    uint8_t data[MMA865x_ACCEL_DATA_SIZE], intsrcdata, PLstatusdata, streamingPacket[STREAMING_HEADER_LEN + MMA865x_STREAM_DATA_SIZE];
 
     mma865x_i2c_sensorhandle_t mma865xDriver;
-    mma865x_acceldata_t rawData = {.timestamp = 0};
+    mma865x_acceluserdata_t rawData = {.timestamp = 0};
 
     ARM_DRIVER_I2C *pI2Cdriver = &I2C_S_DRIVER;
     ARM_DRIVER_USART *pUartDriver = &HOST_S_DRIVER;
@@ -296,7 +336,6 @@ int main(void)
     {
         /*! Populate streaming header. */
         Host_IO_Add_ISO_Header(gStreamID, streamingPacket, MMA865x_STREAM_DATA_SIZE);
-        BOARD_SystickStart(&systick);
         pGpioDriver->clr_pin(&GREEN_LED);
     }
 
@@ -326,7 +365,7 @@ int main(void)
         }
 
         /* Update timestamp from Systick framework. */
-        rawData.timestamp += BOARD_SystickElapsedTime_us(&systick);
+        rawData.timestamp += BOARD_SystickElapsedTime_us(&gSystick);
 
         /*! Convert the raw sensor data to signed 16-bit container for display to the debug port. */
         rawData.accel[0] = ((int16_t)data[0] << 8) | data[1];
@@ -335,6 +374,13 @@ int main(void)
         rawData.accel[1] /= 16;
         rawData.accel[2] = ((int16_t)data[4] << 8) | data[5];
         rawData.accel[2] /= 16;
+
+        /*! Read INT_SRC 0x0C from MMA865x. */
+        status = MMA865x_I2C_ReadData(&mma865xDriver, cMma8652qStatus, &intsrcdata);
+        /*! Read PL_STATUS 0x10 from MMA865x. */
+        status = MMA865x_I2C_ReadData(&mma865xDriver, cMma8652qPLStatus, &PLstatusdata);
+           /* Send INTSRC */
+        rawData.intsrc = intsrcdata;
 
         /* Copy Raw samples to Streaming Buffer. */
         memcpy(streamingPacket + STREAMING_HEADER_LEN, &rawData, MMA865x_STREAM_DATA_SIZE);

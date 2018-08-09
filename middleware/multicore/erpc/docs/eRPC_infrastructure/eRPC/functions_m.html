@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC API Reference
-   &#160;<span id="projectnumber">Rev. 1.5.0</span>
+   &#160;<span id="projectnumber">Rev. 1.7.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -51,7 +51,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="modules.html"><span>API&#160;Reference</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -93,7 +92,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="functions.html#index_a"><span>a</span></a></li>
       <li><a href="functions_c.html#index_c"><span>c</span></a></li>
       <li><a href="functions_d.html#index_d"><span>d</span></a></li>
-      <li><a href="functions_e.html#index_e"><span>e</span></a></li>
       <li><a href="functions_f.html#index_f"><span>f</span></a></li>
       <li><a href="functions_g.html#index_g"><span>g</span></a></li>
       <li><a href="functions_h.html#index_h"><span>h</span></a></li>
@@ -160,6 +158,9 @@ $(document).ready(function(){initNavTree('functions_m.html','');});
 <li>m_buffer
 : <a class="el" href="classerpc_1_1_codec.html#a003c4d8420239b9a347b46554ebeb903">erpc::Codec</a>
 </li>
+<li>m_buffers
+: <a class="el" href="class_static_message_buffer_factory.html#a6dafb179b9126f5ae07a328bdd933d11">StaticMessageBufferFactory</a>
+</li>
 <li>m_capacity
 : <a class="el" href="classerpc_1_1_static_queue.html#a0c43f1fba589c88fbb22a0e8b237d58c">erpc::StaticQueue&lt; T, elementCount &gt;</a>
 </li>
@@ -204,6 +205,9 @@ $(document).ready(function(){initNavTree('functions_m.html','');});
 <li>m_firstService
 : <a class="el" href="classerpc_1_1_server.html#a758abab3fa00e692cbfde60f45eb6939">erpc::Server</a>
 </li>
+<li>m_freeBufferBitmap
+: <a class="el" href="class_static_message_buffer_factory.html#afce5f72b00938dd99931ae25dfe11195">StaticMessageBufferFactory</a>
+</li>
 <li>m_head
 : <a class="el" href="classerpc_1_1_static_queue.html#aa5b8df6fb776578ca3d8ddf5b4187af2">erpc::StaticQueue&lt; T, elementCount &gt;</a>
 </li>
@@ -219,6 +223,9 @@ $(document).ready(function(){initNavTree('functions_m.html','');});
 </li>
 <li>m_isServerOn
 : <a class="el" href="classerpc_1_1_simple_server.html#a2d72700efd180999dd0d09e448132b6a">erpc::SimpleServer</a>
+</li>
+<li>m_isValid
+: <a class="el" href="structerpc_1_1_transport_arbitrator_1_1_pending_client_info.html#a40000e3305c76ababdeb97975eb211be">erpc::TransportArbitrator::PendingClientInfo</a>
 </li>
 <li>m_logger
 : <a class="el" href="classerpc_1_1_message_loggers.html#afa59675c94a72e77218291d74c995693">erpc::MessageLoggers</a>
@@ -242,6 +249,7 @@ $(document).ready(function(){initNavTree('functions_m.html','');});
 <li>m_next
 : <a class="el" href="classerpc_1_1_message_logger.html#a63cd552ff6c619644879b9311a01374f">erpc::MessageLogger</a>
 , <a class="el" href="classerpc_1_1_service.html#aac1ddd21edb74c3c41c4808f28c59b32">erpc::Service</a>
+, <a class="el" href="structerpc_1_1_transport_arbitrator_1_1_pending_client_info.html#a99f1766517eb648d5aa2708ab6e350d6">erpc::TransportArbitrator::PendingClientInfo</a>
 </li>
 <li>m_oneway
 : <a class="el" href="classerpc_1_1_request_context.html#a40897d6c28314b53771f9f21626d1794">erpc::RequestContext</a>
@@ -255,6 +263,9 @@ $(document).ready(function(){initNavTree('functions_m.html','');});
 <li>m_receiveLock
 : <a class="el" href="classerpc_1_1_framed_transport.html#acd338c7149151c832c2932156dc100ca">erpc::FramedTransport</a>
 , <a class="el" href="classerpc_1_1_m_u_transport.html#ac6d0b82f41b743f76fd85a71a8a5bc9f">erpc::MUTransport</a>
+</li>
+<li>m_request
+: <a class="el" href="structerpc_1_1_transport_arbitrator_1_1_pending_client_info.html#a7c46f1d764b01b86ec0696f162a2ab07">erpc::TransportArbitrator::PendingClientInfo</a>
 </li>
 <li>m_rpmsg
 : <a class="el" href="class_r_p_msg_message_buffer_factory.html#a6c5a8426772d5f53ffb09a4687365382">RPMsgMessageBufferFactory</a>
@@ -286,6 +297,12 @@ $(document).ready(function(){initNavTree('functions_m.html','');});
 </li>
 <li>m_rxSemaphore
 : <a class="el" href="classerpc_1_1_m_u_transport.html#a3e2698860cf93ece52fc9359143bd2a5">erpc::MUTransport</a>
+</li>
+<li>m_sem
+: <a class="el" href="structerpc_1_1_transport_arbitrator_1_1_pending_client_info.html#a9d63e620c4869c57f26e0bc970d01eb2">erpc::TransportArbitrator::PendingClientInfo</a>
+</li>
+<li>m_semaphore
+: <a class="el" href="class_static_message_buffer_factory.html#a3cb47dc31bea70681a87e127c6be4c07">StaticMessageBufferFactory</a>
 </li>
 <li>m_sendLock
 : <a class="el" href="classerpc_1_1_framed_transport.html#a8dfd9730202307529a072ad1bc86a49a">erpc::FramedTransport</a>
@@ -319,6 +336,9 @@ $(document).ready(function(){initNavTree('functions_m.html','');});
 , <a class="el" href="classerpc_1_1_spi_master_transport.html#a10d3ddf6da300518e63c3785e4f21428">erpc::SpiMasterTransport</a>
 , <a class="el" href="classerpc_1_1_spi_slave_transport.html#ac3375047645ccbcc8176f42c6bd5ebf2">erpc::SpiSlaveTransport</a>
 </li>
+<li>m_status
+: <a class="el" href="classerpc_1_1_codec.html#aa1f493b99584ed6e75a0e4ea06a1d14a">erpc::Codec</a>
+</li>
 <li>m_storage
 : <a class="el" href="classerpc_1_1_manually_constructed.html#a6d220c46013cfd6f7713013c3a77e592">erpc::ManuallyConstructed&lt; T &gt;</a>
 , <a class="el" href="classerpc_1_1_static_queue.html#ad10392812527307c0f7b411fd5ceb8ee">erpc::StaticQueue&lt; T, elementCount &gt;</a>
@@ -350,22 +370,22 @@ $(document).ready(function(){initNavTree('functions_m.html','');});
 : <a class="el" href="classerpc_1_1_message_buffer.html#a7785b972a2ed8719a7afcd8f15c1b3ca">erpc::MessageBuffer</a>
 </li>
 <li>MessageBufferFactory()
-: <a class="el" href="classerpc_1_1_message_buffer_factory.html#a9897093c65b390b0c7f1595384ad9029">erpc::MessageBufferFactory</a>
+: <a class="el" href="classerpc_1_1_message_buffer_factory.html#a619ed494036f760b0394b43815f2a086">erpc::MessageBufferFactory</a>
 </li>
 <li>MessageLogger()
 : <a class="el" href="classerpc_1_1_message_logger.html#ae6317cf8f4c10faa57b5ba834d136fe6">erpc::MessageLogger</a>
 </li>
 <li>MessageLoggers()
-: <a class="el" href="classerpc_1_1_message_loggers.html#acaf906ad354f31bdd240ba6f41816126">erpc::MessageLoggers</a>
+: <a class="el" href="classerpc_1_1_message_loggers.html#ac1fcb4e780a1868303e31422ae2d3d0c">erpc::MessageLoggers</a>
 </li>
-<li>mu_rx_full_irq_callback()
-: <a class="el" href="classerpc_1_1_m_u_transport.html#adb675b50a3d04f360f3a4dda6e666c9b">erpc::MUTransport</a>
+<li>mu_irq_callback()
+: <a class="el" href="classerpc_1_1_m_u_transport.html#aa2cc9aad8e99fb873ef142426d10a7be">erpc::MUTransport</a>
 </li>
-<li>mu_tx_empty_irq_callback()
-: <a class="el" href="classerpc_1_1_m_u_transport.html#a6fa214ea19522def2966dd4a7f9ece65">erpc::MUTransport</a>
+<li>Mutex()
+: <a class="el" href="classerpc_1_1_mutex.html#a00b2ff557451955a905ecdca2855389b">erpc::Mutex</a>
 </li>
 <li>MUTransport()
-: <a class="el" href="classerpc_1_1_m_u_transport.html#af07563a55db6589c3e562259a9d114d5">erpc::MUTransport</a>
+: <a class="el" href="classerpc_1_1_m_u_transport.html#a27300b08ba409b3d249055f80544ac13">erpc::MUTransport</a>
 </li>
 </ul>
 </div><!-- contents -->

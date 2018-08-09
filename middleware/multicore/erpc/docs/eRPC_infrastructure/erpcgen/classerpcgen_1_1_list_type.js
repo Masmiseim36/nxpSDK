@@ -1,7 +1,7 @@
 var classerpcgen_1_1_list_type =
 [
     [ "ListType", "classerpcgen_1_1_list_type.html#ae0c134bbafa69e4f15df22ae2033d0d5", null ],
-    [ "getDescription", "classerpcgen_1_1_list_type.html#acd69b19dae89b94123a97cbfad33ba0c", null ],
+    [ "getDescription", "classerpcgen_1_1_list_type.html#a360f3a198f4f48067dbf79b0c9fd71c3", null ],
     [ "getElementType", "classerpcgen_1_1_list_type.html#a4a6243a52627f44bc40761b794c3d17b", null ],
     [ "getLengthVariableName", "classerpcgen_1_1_list_type.html#aec9df9fe871c9013f7a22d785f428f5a", null ],
     [ "hasLengthVariable", "classerpcgen_1_1_list_type.html#a1f9fca1bf6527da9a97f410eb3d96ce0", null ],

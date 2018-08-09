@@ -1,6 +1,6 @@
 /*
  * The Clear BSD License
- * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
@@ -91,8 +91,6 @@ static const pedometer_config_t pedo_config = {
     .frequency = PEDO_FREQHZ_DEFAULT, // It is 50 HZ
 
 };
-// Command definition to read the WHO_AM_I value.
-const registerreadlist_t FXOS8700_WHO_AM_I_READ[] = {{.readFrom = FXOS8700_WHO_AM_I, .numBytes = 1}, __END_READ_DATA__};
 
 /*! Command definition to read the Data Ready Status */
 const registerreadlist_t FXOS8700_STATUS_READ[] = {{.readFrom = FXOS8700_STATUS, .numBytes = 1}, __END_READ_DATA__};
@@ -159,10 +157,10 @@ int main(void)
         PRINTF("\r\n Sensor Initialization Failed\r\n");
         return -1;
     }
-    PRINTF("\r\n Successfully Initiliazed Sensor\r\n");
+    PRINTF("\r\n Successfully Initialized Sensor\r\n");
 
     /*!  Set the task to be executed while waiting for I2C transactions to complete. */
-    FXOS8700_I2C_SetIdleTask(&FXOS8700drv, (registeridlefunction_t)SMC_SetPowerModeWait, SMC);
+    FXOS8700_I2C_SetIdleTask(&FXOS8700drv, (registeridlefunction_t)SMC_SetPowerModeVlpr, SMC);
 
     /*! Configure the fxos8700 sensor driver. */
     status = FXOS8700_I2C_Configure(&FXOS8700drv, fxos8700_Config);

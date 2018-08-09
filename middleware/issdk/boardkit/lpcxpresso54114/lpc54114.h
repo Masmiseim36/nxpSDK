@@ -1,5 +1,6 @@
 /*
  * The Clear BSD License
+ * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
@@ -144,7 +145,8 @@ extern gpioHandleKSDK_t BLUE_LED;
 
 /* @brief Kinetis style Wrapper API for Power Mode Wait (Wait for Interrupt). */
 status_t SMC_SetPowerModeWait(void *);
-/* @brief Kinetis style Wrapper API for Power Mode VLPR (Wait for Interrupt). */
+
+/* @brief Kinetis style Wrapper API for Power Mode Wait (Vlpr for Interrupt). */
 status_t SMC_SetPowerModeVlpr(void *);
 
 ///@name Miscellaneous Hardware Configuration Parameters

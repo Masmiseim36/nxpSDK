@@ -1,7 +1,7 @@
 /*
  * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016, 2018 NXP
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -45,21 +45,13 @@
 /*! @brief 0 - execute normal fatfs test code; 1 - execute throughput test code */
 #define MSD_FATFS_THROUGHPUT_TEST_ENABLE (0U)
 
-/*! @brief host app device attach/detach status */
-typedef enum _usb_host_msd_app_state
-{
-    kStatus_DEV_Idle = 0, /*!< there is no device attach/detach */
-    kStatus_DEV_Attached, /*!< device is attached */
-    kStatus_DEV_Detached, /*!< device is detached */
-} usb_host_msd_app_state_t;
-
 /*! @brief host app run status */
 typedef enum _usb_host_msd_run_state
 {
-    kRunIdle = 0,         /*!< idle */
-    kRunSetInterface,     /*!< execute set interface code */
-    kRunWaitSetInterface, /*!< wait set interface done */
-    kRunMassStorageTest   /*!< execute mass storage test code */
+    kUSB_HostMsdRunIdle = 0,         /*!< idle */
+    kUSB_HostMsdRunSetInterface,     /*!< execute set interface code */
+    kUSB_HostMsdRunWaitSetInterface, /*!< wait set interface done */
+    kUSB_HostMsdRunMassStorageTest   /*!< execute mass storage test code */
 } usb_host_msd_run_state_t;
 
 /*! @brief USB host msd fatfs instance structure */

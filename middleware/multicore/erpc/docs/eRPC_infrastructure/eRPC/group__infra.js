@@ -6,6 +6,7 @@ var group__infra =
     [ "Client", "group__infra__client.html", "group__infra__client" ],
     [ "Serialization", "group__infra__codec.html", "group__infra__codec" ],
     [ "ERPC_VERSION", "group__infra.html#ga7530bff63dda78bc0cd733b88f231db8", null ],
+    [ "ERPC_VERSION_NUMBER", "group__infra.html#ga312ffbcfacb37ab75ceac0d182721b18", null ],
     [ "erpc_status_t", "group__infra.html#ga5f8872e58f09a16d192bf664f9898651", null ],
     [ "_erpc_status", "group__infra.html#gacf5d3df9e7a78f29bc823b71f1529752", [
       [ "kErpcStatus_Success", "group__infra.html#ggacf5d3df9e7a78f29bc823b71f1529752aad3aa76a604b7bd6c3828c50b33dca33", null ],

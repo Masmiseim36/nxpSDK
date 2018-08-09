@@ -1,5 +1,6 @@
 /*
  * The Clear BSD License
+ * Copyright (c) 2017, Freescale Semiconductor, Inc.
  * Copyright 2017 NXP
  * All rights reserved.
  *
@@ -67,20 +68,20 @@
 #define DIFF_P_STREAM_DATA_SIZE (7) /* 7 byte Data */
 
 /*! @brief Unique Name for this application which should match the target GUI pkg name. */
-#define APPLICATION_NAME "DIFF-P"
+#define APPLICATION_NAME "NPS300x Differential Pressure Demo"
 /*! @brief Version to distinguish between instances the same application based on target Shield and updates. */
-#define APPLICATION_VERSION "1.0"
+#define APPLICATION_VERSION "2.5"
 
 //-----------------------------------------------------------------------
 // Constants
 //-----------------------------------------------------------------------
 /*! @brief Register settings for Normal (non buffered) mode. */
 const registerwritelist_t cDiffPConfigNormal[] = {
-    {DIFF_P_CTRL_REG2, DIFF_P_CTRL_REG2_ODR_ODR0P781, DIFF_P_CTRL_REG2_ODR_MASK},
+    {DIFF_P_CTRL_REG2, DIFF_P_CTRL_REG2_ODR_ODR6P25, DIFF_P_CTRL_REG2_ODR_MASK},
+    {DIFF_P_CTRL_REG1, DIFF_P_CTRL_REG1_OSR_OSR512, DIFF_P_CTRL_REG1_OSR_MASK},
     {DIFF_P_INT_MASK0, DIFF_P_INT_MASK0_TDR_INT_EN | DIFF_P_INT_MASK0_PDR_INT_EN,
      DIFF_P_INT_MASK0_TDR_MASK | DIFF_P_INT_MASK0_PDR_MASK},
-    {DIFF_P_CTRL_REG3, DIFF_P_CTRL_REG3_IPOL1_ACTIVE_HIGH | DIFF_P_CTRL_REG3_PP_OD1_OPENDRAIN,
-     DIFF_P_CTRL_REG3_IPOL1_MASK | DIFF_P_CTRL_REG3_PP_OD1_MASK},
+    {DIFF_P_CTRL_REG3, DIFF_P_CTRL_REG3_IPOL1_ACTIVE_HIGH, DIFF_P_CTRL_REG3_IPOL1_MASK},
     __END_WRITE_DATA__};
 
 /*! @brief Register settings for Clearing Pressure and Temperature Data Ready Bits. */
@@ -101,6 +102,7 @@ char boardString[ADS_MAX_STRING_LENGTH] = {0}, shieldString[ADS_MAX_STRING_LENGT
      embAppName[ADS_MAX_STRING_LENGTH] = {0};
 volatile bool bStreamingEnabled = false, bDiffPDataReady = false, bDiffPReady = false;
 uint8_t gStreamID; /* The auto assigned Stream ID. */
+int32_t gSystick;
 GENERIC_DRIVER_GPIO *pGpioDriver = &Driver_GPIO_KSDK;
 
 //-----------------------------------------------------------------------
@@ -171,6 +173,7 @@ bool process_host_command(
             case HOST_CMD_START:
                 if (hostCommand[1] == gStreamID && bDiffPReady && bStreamingEnabled == false)
                 {
+                    BOARD_SystickStart(&gSystick);
                     bStreamingEnabled = true;
                     success = true;
                 }
@@ -197,7 +200,7 @@ bool process_host_command(
  */
 int main(void)
 {
-    int32_t status, systick;
+    int32_t status;
     uint8_t dataReady, data[DIFF_P_DATA_SIZE], streamingPacket[STREAMING_HEADER_LEN + DIFF_P_STREAM_DATA_SIZE];
 
     diff_p_i2c_sensorhandle_t diffpDriver;
@@ -319,7 +322,6 @@ int main(void)
     {
         /*! Populate streaming header. */
         Host_IO_Add_ISO_Header(gStreamID, streamingPacket, DIFF_P_STREAM_DATA_SIZE);
-        BOARD_SystickStart(&systick);
         pGpioDriver->clr_pin(&GREEN_LED); /* Set LED to indicate application is ready. */
     }
 
@@ -369,11 +371,11 @@ int main(void)
         status = DIFF_P_I2C_ReadData(&diffpDriver, cDiffPOutputNormal, data);
         if (ARM_DRIVER_OK != status)
         { /* Loop, if sample read failed. */
-            continue;
+            return -1;
         }
 
         /* Update timestamp from Systick framework. */
-        rawData.timestamp += BOARD_SystickElapsedTime_us(&systick);
+        rawData.timestamp += BOARD_SystickElapsedTime_us(&gSystick);
 
         /*! Process the sample and convert the raw sensor data. */
         rawData.pressure = ((int16_t)(data[1]) << 8) | data[0];

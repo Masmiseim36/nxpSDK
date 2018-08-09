@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC Generator (erpcgen)
-   &#160;<span id="projectnumber">Rev. 1.5.0</span>
+   &#160;<span id="projectnumber">Rev. 1.7.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -126,37 +126,212 @@ Inheritance diagram for Value:</div>
  <div class="center">
   <img src="class_value.png" usemap="#Value_map" alt=""/>
   <map id="Value_map" name="Value_map">
-<area href="class_float_value.html" title="Double floating point value. " alt="FloatValue" shape="rect" coords="0,56,115,80"/>
-<area href="class_integer_value.html" title="32-bit unsigned integer value. " alt="IntegerValue" shape="rect" coords="125,56,240,80"/>
-<area href="class_string_value.html" title="String value. " alt="StringValue" shape="rect" coords="250,56,365,80"/>
-<area href="class_sized_integer_value.html" title="Adds a word size attribute to IntegerValue. " alt="SizedIntegerValue" shape="rect" coords="125,112,240,136"/>
+<area href="class_float_value.html" title="Double floating point value. " alt="FloatValue" shape="rect" coords="0,56,84,80"/>
+<area href="class_integer_value.html" title="64-bit integer value. " alt="IntegerValue" shape="rect" coords="94,56,178,80"/>
+<area href="class_string_value.html" title="String value. " alt="StringValue" shape="rect" coords="188,56,272,80"/>
 </map>
  </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aeae5b32fd20812506e28077c55435015"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aeae5b32fd20812506e28077c55435015"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Value</b> (value_type_t theType)</td></tr>
+<tr class="memitem:aeae5b32fd20812506e28077c55435015"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_value.html#aeae5b32fd20812506e28077c55435015">Value</a> (value_type_t theType)</td></tr>
+<tr class="memdesc:aeae5b32fd20812506e28077c55435015"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#aeae5b32fd20812506e28077c55435015">More...</a><br /></td></tr>
 <tr class="separator:aeae5b32fd20812506e28077c55435015"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afa67d20e19fb0a4d81b4caddb1d4ac11"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afa67d20e19fb0a4d81b4caddb1d4ac11"></a>
-virtual value_type_t&#160;</td><td class="memItemRight" valign="bottom"><b>getType</b> () const </td></tr>
+<tr class="memitem:aceb26b90be781020c0c71ae5d16ca06f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aceb26b90be781020c0c71ae5d16ca06f"></a>
+virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_value.html#aceb26b90be781020c0c71ae5d16ca06f">~Value</a> ()</td></tr>
+<tr class="memdesc:aceb26b90be781020c0c71ae5d16ca06f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
+<tr class="separator:aceb26b90be781020c0c71ae5d16ca06f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa67d20e19fb0a4d81b4caddb1d4ac11"><td class="memItemLeft" align="right" valign="top">virtual value_type_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_value.html#afa67d20e19fb0a4d81b4caddb1d4ac11">getType</a> () const </td></tr>
+<tr class="memdesc:afa67d20e19fb0a4d81b4caddb1d4ac11"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get <a class="el" href="class_value.html" title="Abstract base class for values of arbitrary types. ">Value</a> type.  <a href="#afa67d20e19fb0a4d81b4caddb1d4ac11">More...</a><br /></td></tr>
 <tr class="separator:afa67d20e19fb0a4d81b4caddb1d4ac11"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4dd8c49629bdbd9b0313889e5dd7bae6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4dd8c49629bdbd9b0313889e5dd7bae6"></a>
-virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><b>getTypeName</b> () const  =0</td></tr>
+<tr class="memitem:a4dd8c49629bdbd9b0313889e5dd7bae6"><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_value.html#a4dd8c49629bdbd9b0313889e5dd7bae6">getTypeName</a> () const  =0</td></tr>
+<tr class="memdesc:a4dd8c49629bdbd9b0313889e5dd7bae6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get <a class="el" href="class_value.html" title="Abstract base class for values of arbitrary types. ">Value</a> type name.  <a href="#a4dd8c49629bdbd9b0313889e5dd7bae6">More...</a><br /></td></tr>
 <tr class="separator:a4dd8c49629bdbd9b0313889e5dd7bae6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad2a8b55277e7b066cb41959625f94dab"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad2a8b55277e7b066cb41959625f94dab"></a>
-virtual size_t&#160;</td><td class="memItemRight" valign="bottom"><b>getSize</b> () const  =0</td></tr>
+<tr class="memitem:ad2a8b55277e7b066cb41959625f94dab"><td class="memItemLeft" align="right" valign="top">virtual size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_value.html#ad2a8b55277e7b066cb41959625f94dab">getSize</a> () const  =0</td></tr>
+<tr class="memdesc:ad2a8b55277e7b066cb41959625f94dab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get <a class="el" href="class_value.html" title="Abstract base class for values of arbitrary types. ">Value</a> type size.  <a href="#ad2a8b55277e7b066cb41959625f94dab">More...</a><br /></td></tr>
 <tr class="separator:ad2a8b55277e7b066cb41959625f94dab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8ed8e61ea6e50d3252e0279ed28c1fbb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8ed8e61ea6e50d3252e0279ed28c1fbb"></a>
-virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><b>toString</b> () const  =0</td></tr>
+<tr class="memitem:a8ed8e61ea6e50d3252e0279ed28c1fbb"><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_value.html#a8ed8e61ea6e50d3252e0279ed28c1fbb">toString</a> () const  =0</td></tr>
+<tr class="memdesc:a8ed8e61ea6e50d3252e0279ed28c1fbb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get <a class="el" href="class_value.html" title="Abstract base class for values of arbitrary types. ">Value</a> type string representation.  <a href="#a8ed8e61ea6e50d3252e0279ed28c1fbb">More...</a><br /></td></tr>
 <tr class="separator:a8ed8e61ea6e50d3252e0279ed28c1fbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6c71eea2c1a4bb61da14e54848e126b4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6c71eea2c1a4bb61da14e54848e126b4"></a>
-virtual <a class="el" href="class_value.html">Value</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>clone</b> () const  =0</td></tr>
+<tr class="memitem:a6c71eea2c1a4bb61da14e54848e126b4"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="class_value.html">Value</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_value.html#a6c71eea2c1a4bb61da14e54848e126b4">clone</a> () const  =0</td></tr>
+<tr class="memdesc:a6c71eea2c1a4bb61da14e54848e126b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clone <a class="el" href="class_value.html" title="Abstract base class for values of arbitrary types. ">Value</a>.  <a href="#a6c71eea2c1a4bb61da14e54848e126b4">More...</a><br /></td></tr>
 <tr class="separator:a6c71eea2c1a4bb61da14e54848e126b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Abstract base class for values of arbitrary types. </p>
-</div><hr/>The documentation for this class was generated from the following file:<ul>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="aeae5b32fd20812506e28077c55435015"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Value::Value </td>
+          <td>(</td>
+          <td class="paramtype">value_type_t&#160;</td>
+          <td class="paramname"><em>theType</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">theType</td><td><a class="el" href="class_value.html" title="Abstract base class for values of arbitrary types. ">Value</a> type. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a6c71eea2c1a4bb61da14e54848e126b4"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="class_value.html">Value</a>* Value::clone </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Clone <a class="el" href="class_value.html" title="Abstract base class for values of arbitrary types. ">Value</a>. </p>
+<dl class="section return"><dt>Returns</dt><dd>Cloned <a class="el" href="class_value.html" title="Abstract base class for values of arbitrary types. ">Value</a>. </dd></dl>
+
+<p>Implemented in <a class="el" href="class_string_value.html#a083b758359900580ba5077b71ec0aa92">StringValue</a>, <a class="el" href="class_float_value.html#af8ec4a198b615fe23b7c283c59d706c9">FloatValue</a>, and <a class="el" href="class_integer_value.html#a4b76d7076a97491aaa9c4d03eeafc862">IntegerValue</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad2a8b55277e7b066cb41959625f94dab"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual size_t Value::getSize </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get <a class="el" href="class_value.html" title="Abstract base class for values of arbitrary types. ">Value</a> type size. </p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_value.html" title="Abstract base class for values of arbitrary types. ">Value</a> type size. </dd></dl>
+
+<p>Implemented in <a class="el" href="class_string_value.html#ab26d799942f124dabdab4189e0123fb8">StringValue</a>, <a class="el" href="class_float_value.html#ac876b12bbbeb1b4d35029e177f2e1cef">FloatValue</a>, and <a class="el" href="class_integer_value.html#a795a4b606a977b42644565ffa7916e22">IntegerValue</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="afa67d20e19fb0a4d81b4caddb1d4ac11"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual value_type_t Value::getType </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get <a class="el" href="class_value.html" title="Abstract base class for values of arbitrary types. ">Value</a> type. </p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_value.html" title="Abstract base class for values of arbitrary types. ">Value</a> type. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a4dd8c49629bdbd9b0313889e5dd7bae6"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual std::string Value::getTypeName </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get <a class="el" href="class_value.html" title="Abstract base class for values of arbitrary types. ">Value</a> type name. </p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_value.html" title="Abstract base class for values of arbitrary types. ">Value</a> type name. </dd></dl>
+
+<p>Implemented in <a class="el" href="class_string_value.html#ad45db0a0ce599d42b4f9cddb1e4b057c">StringValue</a>, <a class="el" href="class_float_value.html#abbdfbb94dc2fe1fbfcba330653e74e54">FloatValue</a>, and <a class="el" href="class_integer_value.html#adb9a314b752afcf81f61aa4f2f891113">IntegerValue</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a8ed8e61ea6e50d3252e0279ed28c1fbb"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual std::string Value::toString </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get <a class="el" href="class_value.html" title="Abstract base class for values of arbitrary types. ">Value</a> type string representation. </p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_value.html" title="Abstract base class for values of arbitrary types. ">Value</a> type string representation. </dd></dl>
+
+<p>Implemented in <a class="el" href="class_string_value.html#a240cc4c219ada24c9f90193948c9ed46">StringValue</a>, <a class="el" href="class_float_value.html#a88345ce35f323cabc4d6d0e338c9116d">FloatValue</a>, and <a class="el" href="class_integer_value.html#ae4f9e9b14957e0e09c2c60822ae7386f">IntegerValue</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
 <li><a class="el" href="_value_8h_source.html">Value.h</a></li>
 </ul>
 </div><!-- contents -->

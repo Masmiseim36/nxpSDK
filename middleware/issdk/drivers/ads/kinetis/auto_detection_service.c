@@ -1,6 +1,6 @@
 /*
  * The Clear BSD License
- * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
@@ -81,6 +81,12 @@
 #define FXLS8962_SS_ACTIVE_VALUE SPI_SS_ACTIVE_LOW
 
 /*!
+* @brief These variables are specific to SPI access to the DIFF_P for ADS.
+*/
+#define DIFF_P_SPI_CMD_LEN (1)
+#define DIFF_P_SS_ACTIVE_VALUE SPI_SS_ACTIVE_LOW
+
+/*!
 * @brief These variables are specific to MMA8491Q which does not have a Who Am I register.
 */
 #define MMA8491Q_WHO_AM_I (MMA8491Q_STATUS)
@@ -109,7 +115,7 @@ const mcuSDID_t ADS_ValidSDIDValues[] = {
     {6, 2, 0, 4, 8, ADS_FRDM_K64F},      // FRDM-K64F Note: SubFamily reads 2 instead of expected 4 (known errata)
     {1, 5, 2, 0, 10, ADS_FRDM_KE15Z},    // FRDM-KE15Z
     {0, 1, 5, 4, 4, ADS_FRDM_KW41Z},     // FRDM-KW41Z
-    {0, 4, 5, 0, 8, ADS_FRDM_K32W042},   // FRDM-K32W042
+    //{0, 4, 5, 0, 8, ADS_FRDM_K32W042},    FRDM-K32W042
 };
 
 /*!
@@ -118,6 +124,7 @@ const mcuSDID_t ADS_ValidSDIDValues[] = {
 const sensorAccess_t ADS_SensorQueryList[] = {
     {ADS_SPI_DEV, FXLS8471, FXLS8471Q_WHO_AM_I, FXLS8471Q_WHO_AM_I_WHOAMI_VALUE, 0xFF},
     {ADS_SPI_DEV, FXLS8962, FXLS8962_WHO_AM_I, FXLS8962_WHOAMI_VALUE, 0xFF},
+    {ADS_SPI_DEV, DIFF_P, DIFF_P_WHO_AM_I, DIFF_P_NPS3000VV_WHOAMI_VALUE, 0xFC},
     {ADS_I2C_EXT, FXLS8962_I2C_ADDR, FXLS8962_WHO_AM_I, FXLS8962_WHOAMI_VALUE, 0xFF},
     {ADS_I2C_EXT, FXAS21002_I2C_ADDR, FXAS21002_WHO_AM_I, FXAS21002_WHO_AM_I_WHOAMI_PROD_VALUE, 0xFF},
     {ADS_I2C_EXT, FXLC95000, ADS_NO_WHO_AM_I, ADS_NO_WHO_AM_I, 0xFF},
@@ -140,6 +147,7 @@ const ADS_Status_t gADS_QueryMap[][ADS_QUERY_NUM] = {
         // FRDM-STBC-AGM01
         ADS_FAIL, // FXLS8471
         ADS_FAIL, // FXLS8962
+        ADS_FAIL, // DIFF-P
         ADS_FAIL, // FXLS8962
         ADS_OK,   // FXAS21002
         ADS_FAIL, // FXLC95000
@@ -157,6 +165,7 @@ const ADS_Status_t gADS_QueryMap[][ADS_QUERY_NUM] = {
         //  FRDM-STBC-SA9500
         ADS_FAIL, // FXLS8471
         ADS_FAIL, // FXLS8962
+        ADS_FAIL, // DIFF-P
         ADS_FAIL, // FXLS8962
         ADS_FAIL, // FXAS21002
         ADS_OK,   // FXLC95000
@@ -174,6 +183,7 @@ const ADS_Status_t gADS_QueryMap[][ADS_QUERY_NUM] = {
         //  FRDMSTBC-A8471
         ADS_OK,   // FXLS8471
         ADS_FAIL, // FXLS8962
+        ADS_FAIL, // DIFF-P
         ADS_FAIL, // FXLS8962
         ADS_FAIL, // FXAS21002
         ADS_FAIL, // FXLC95000
@@ -191,6 +201,7 @@ const ADS_Status_t gADS_QueryMap[][ADS_QUERY_NUM] = {
         //  FRDMSTBC-A8491
         ADS_FAIL, // FXLS8471
         ADS_FAIL, // FXLS8962
+        ADS_FAIL, // DIFF-P
         ADS_FAIL, // FXLS8962
         ADS_FAIL, // FXAS21002
         ADS_FAIL, // FXLC95000
@@ -208,6 +219,7 @@ const ADS_Status_t gADS_QueryMap[][ADS_QUERY_NUM] = {
         //  FRDMSTBC-P3115
         ADS_FAIL, // FXLS8471
         ADS_FAIL, // FXLS8962
+        ADS_FAIL, // DIFF-P
         ADS_FAIL, // FXLS8962
         ADS_FAIL, // FXAS21002
         ADS_FAIL, // FXLC95000
@@ -222,9 +234,28 @@ const ADS_Status_t gADS_QueryMap[][ADS_QUERY_NUM] = {
         ADS_NULL, // MMA845x
     },
     {
-        //  FRDMSTBC-DIFF-P
+        //  FRDMSTBC-DIFF-P SPI
         ADS_FAIL, // FXLS8471
         ADS_FAIL, // FXLS8962
+        ADS_OK,   // DIFF-P
+        ADS_FAIL, // FXLS8962
+        ADS_FAIL, // FXAS21002
+        ADS_FAIL, // FXLC95000
+        ADS_FAIL, // FXOS8700
+        ADS_FAIL, // FXPQ3115
+        ADS_FAIL, // MAG3110
+        ADS_FAIL, // MMA8491
+        ADS_FAIL, // MMA865x
+        ADS_FAIL, // MMA9553
+        ADS_FAIL, // DIFF-P
+        ADS_FAIL, // MPL3115
+        ADS_NULL, // MMA845x
+    },
+    {
+        //  FRDMSTBC-DIFF-P I2C
+        ADS_FAIL, // FXLS8471
+        ADS_FAIL, // FXLS8962
+        ADS_FAIL, // DIFF-P
         ADS_FAIL, // FXLS8962
         ADS_FAIL, // FXAS21002
         ADS_FAIL, // FXLC95000
@@ -242,6 +273,7 @@ const ADS_Status_t gADS_QueryMap[][ADS_QUERY_NUM] = {
         //  FRDMSTBC-B3115
         ADS_FAIL, // FXLS8471
         ADS_FAIL, // FXLS8962
+        ADS_FAIL, // DIFF-P
         ADS_FAIL, // FXLS8962
         ADS_FAIL, // FXAS21002
         ADS_FAIL, // FXLC95000
@@ -259,6 +291,7 @@ const ADS_Status_t gADS_QueryMap[][ADS_QUERY_NUM] = {
         //  FRDM-FXS-MULT2-B
         ADS_OK,   // FXLS8471
         ADS_FAIL, // FXLS8962
+        ADS_FAIL, // DIFF-P
         ADS_FAIL, // FXLS8962
         ADS_OK,   // FXAS21002
         ADS_FAIL, // FXLC95000
@@ -273,26 +306,10 @@ const ADS_Status_t gADS_QueryMap[][ADS_QUERY_NUM] = {
         ADS_NULL, // MMA845x
     },
     {
-        //  RD-KL25-AGMP01
-        ADS_FAIL, // FXLS8471
-        ADS_FAIL, // FXLS8962
-        ADS_FAIL, // FXLS8962
-        ADS_OK,   // FXAS21002
-        ADS_FAIL, // FXLC95000
-        ADS_OK,   // FXOS8700
-        ADS_FAIL, // FXPQ3115
-        ADS_FAIL, // MAG3110
-        ADS_FAIL, // MMA8491
-        ADS_FAIL, // MMA865x
-        ADS_FAIL, // MMA9553
-        ADS_FAIL, // DIFF-P
-        ADS_OK,   // MPL3115
-        ADS_NULL, // MMA845x
-    },
-    {
         //  FRDM-STBC-AGMP03 over SPI
         ADS_FAIL, // FXLS8471
         ADS_OK,   // FXLS8962
+        ADS_FAIL, // DIFF-P
         ADS_FAIL, // FXLS8962
         ADS_FAIL, // FXAS21002
         ADS_FAIL, // FXLC95000
@@ -310,6 +327,7 @@ const ADS_Status_t gADS_QueryMap[][ADS_QUERY_NUM] = {
         //  FRDM-STBC-AGMP03 over I2C
         ADS_FAIL, // FXLS8471
         ADS_FAIL, // FXLS8962
+        ADS_FAIL, // DIFF-P
         ADS_OK,   // FXLS8962
         ADS_OK,   // FXAS21002
         ADS_FAIL, // FXLC95000
@@ -327,6 +345,7 @@ const ADS_Status_t gADS_QueryMap[][ADS_QUERY_NUM] = {
         //  FRDM-STBC-AGM04
         ADS_FAIL, // FXLS8471
         ADS_FAIL, // FXLS8962
+        ADS_FAIL, // DIFF-P
         ADS_FAIL, // FXLS8962
         ADS_OK,   // FXAS21002
         ADS_FAIL, // FXLC95000
@@ -344,6 +363,7 @@ const ADS_Status_t gADS_QueryMap[][ADS_QUERY_NUM] = {
         //   ON BOARD SENSORS (MMA8451)
         ADS_FAIL, // FXLS8471
         ADS_FAIL, // FXLS8962
+        ADS_FAIL, // DIFF-P
         ADS_FAIL, // FXLS8962
         ADS_FAIL, // FXAS21002
         ADS_FAIL, // FXLC95000
@@ -357,6 +377,24 @@ const ADS_Status_t gADS_QueryMap[][ADS_QUERY_NUM] = {
         ADS_FAIL, // MPL3115
         ADS_OK,   // MMA845x
     },
+    {
+        //  RD-KL25-AGMP01
+        ADS_FAIL, // FXLS8471
+        ADS_FAIL, // FXLS8962
+        ADS_FAIL, // DIFF-P
+        ADS_FAIL, // FXLS8962
+        ADS_OK,   // FXAS21002
+        ADS_FAIL, // FXLC95000
+        ADS_OK,   // FXOS8700
+        ADS_FAIL, // FXPQ3115
+        ADS_FAIL, // MAG3110
+        ADS_FAIL, // MMA8491
+        ADS_FAIL, // MMA865x
+        ADS_FAIL, // MMA9553
+        ADS_FAIL, // DIFF-P
+        ADS_OK,   // MPL3115
+        ADS_NULL, // MMA845x
+    },
 };
 
 /*******************************************************************************
@@ -368,9 +406,10 @@ const ADS_Status_t gADS_QueryMap[][ADS_QUERY_NUM] = {
 ADS_Status_t gADS_QueryResults[ADS_QUERY_NUM];
 
 char ADS_ShieldList[][ADS_MAX_STRING_LENGTH] = {
-    "FRDM-STBC-AGM01",  "FRDM-STBC-SA9500", "FRDMSTBC-A8471",   "FRDMSTBC-A8491", "FRDMSTBC-P3115",
-    "FRDMSTBI-DP300x",  "FRDMSTBC-B3115",   "FRDM-FXS-MULT2-B", "OnBoard",        "FRDM-STBC-AGMP03",
-    "FRDM-STBC-AGMP03", "FRDM-STBC-AGM04",  "OnBoard",
+    "FRDM-STBC-AGM01",  "FRDM-STBC-SA9500", "FRDMSTBC-A8471",   "FRDMSTBC-A8491",
+    "FRDMSTBC-P3115",   "FRDMSTBI-DP300x",  "FRDMSTBI-DP300x",  "FRDMSTBI-B3115",
+    "FRDM-FXS-MULT2-B", "FRDM-STBC-AGMP03", "FRDM-STBC-AGMP03",	"FRDM-STBC-AGM04",
+    "OnBoard",          "OnBoard",
 };
 
 /*!
@@ -383,6 +422,7 @@ GENERIC_DRIVER_GPIO *pGPIODriver = &Driver_GPIO_KSDK;
 
 spiSlaveSpecificParams_t spiParams_8471;
 spiSlaveSpecificParams_t spiParams_8962;
+spiSlaveSpecificParams_t spiParams_diff_p;
 uint8_t spiRead_CmdBuffer[SPI_MAX_MSG_SIZE] = {0};
 uint8_t spiRead_DataBuffer[SPI_MAX_MSG_SIZE] = {0};
 uint8_t spiWrite_CmdDataBuffer[SPI_MAX_MSG_SIZE] = {0};
@@ -542,6 +582,81 @@ ADS_Status_t ADS_FXLS8962Query(uint8_t whoAmiAddr, uint8_t whoAmi)
 }
 
 /*******************************************************************************
+* DIFF-P SPI Specific Functions
+*****************************************************************************/
+void ADS_DIFF_P_SPI_ReadPreprocess(void *pCmdOut, uint32_t offset, uint32_t size)
+{
+    spiCmdParams_t *pSlaveCmd = pCmdOut;
+
+    uint8_t *pWBuff = spiRead_CmdBuffer;
+    uint8_t *pRBuff = spiRead_DataBuffer;
+
+    /* Formatting for Read command of DIFF-P SENSOR. */
+    *(pWBuff) = offset & 0x7F; /* offset is the internal register address of the sensor at which write is performed. */
+
+    // Create the slave read command.
+    pSlaveCmd->size = size + DIFF_P_SPI_CMD_LEN;
+    pSlaveCmd->pWriteBuffer = pWBuff;
+    pSlaveCmd->pReadBuffer = pRBuff;
+}
+
+void ADS_DIFF_P_SPI_WritePreprocess(void *pCmdOut, uint32_t offset, uint32_t size, void *pWritebuffer)
+{
+    spiCmdParams_t *pSlaveCmd = pCmdOut;
+
+    uint8_t *pWBuff = spiWrite_CmdDataBuffer;
+    uint8_t *pRBuff = spiWrite_CmdDataBuffer + size + DIFF_P_SPI_CMD_LEN;
+
+    /* Formatting for Write command of DIFF-P SENSOR. */
+    *(pWBuff) = offset | 0x80; /* offset is the internal register address of the sensor at which write is performed. */
+
+    /* Copy the slave write command */
+    memcpy(pWBuff + DIFF_P_SPI_CMD_LEN, pWritebuffer, size);
+
+    /* Create the slave command. */
+    pSlaveCmd->size = size + DIFF_P_SPI_CMD_LEN;
+    pSlaveCmd->pWriteBuffer = pWBuff;
+    pSlaveCmd->pReadBuffer = pRBuff;
+}
+
+void ADS_InitSPI_DIFF_P()
+{
+    spiParams_diff_p.pReadPreprocessFN = ADS_DIFF_P_SPI_ReadPreprocess;
+    spiParams_diff_p.pWritePreprocessFN = ADS_DIFF_P_SPI_WritePreprocess;
+    spiParams_diff_p.pTargetSlavePinID = &DIFF_P_SPI_CS;
+    spiParams_diff_p.spiCmdLen = DIFF_P_SPI_CMD_LEN;
+    spiParams_diff_p.ssActiveValue = DIFF_P_SS_ACTIVE_VALUE;
+
+    /* Initialize the Slave Select Pin. */
+    pGPIODriver->pin_init(&DIFF_P_SPI_CS, GPIO_DIRECTION_OUT, NULL, NULL, NULL);
+    if (spiParams_diff_p.ssActiveValue == SPI_SS_ACTIVE_LOW)
+    {
+        pGPIODriver->set_pin(&DIFF_P_SPI_CS);
+    }
+    else
+    {
+        pGPIODriver->clr_pin(&DIFF_P_SPI_CS);
+    }
+};
+
+ADS_Status_t ADS_DIFF_PQuery(uint8_t whoAmiAddr, uint8_t whoAmi)
+{
+    int32_t status;
+    uint8_t reg;
+    registerDeviceInfo_t deviceInfo = {
+        .deviceInstance = SPI_S_DEVICE_INDEX, .functionParam = NULL, .idleFunction = NULL};
+
+    /*!  Read and store the device's WHO_AM_I.*/
+    status = Register_SPI_Read(SPIdrv, &deviceInfo, &spiParams_diff_p, whoAmiAddr, 1, &reg);
+    if ((ARM_DRIVER_OK != status) || (whoAmi != reg))
+    {
+        return ADS_FAIL;
+    }
+
+    return ADS_OK;
+}
+
+/*******************************************************************************
 * FXLC95000 Specific Functions
 *****************************************************************************/
 ADS_Status_t ADS_FXLC95000Query()
@@ -668,7 +783,7 @@ int ADS_InitSPIBus()
     }
 
     /*! Set the SPI Slave speed. */
-    status = SPIdrv->Control(ARM_SPI_MODE_MASTER | ARM_SPI_CPOL1_CPHA0, SPI_S_BAUDRATE);
+    status = SPIdrv->Control(ARM_SPI_MODE_MASTER | ARM_SPI_CPOL0_CPHA0, SPI_S_BAUDRATE);
     if (ARM_DRIVER_OK != status)
     {
         return ARM_DRIVER_ERROR;
@@ -742,6 +857,13 @@ int ADS_DetectShield(char *pShieldString, size_t bufferLength)
                 ADS_InitSPI_FXLS8471();
                 gADS_QueryResults[i] =
                     ADS_FXLS8471Query(ADS_SensorQueryList[i].whoAmIAddr, ADS_SensorQueryList[i].whoAmIValue);
+                continue;
+            }
+            if (DIFF_P == ADS_SensorQueryList[i].slaveAddr)
+            {
+                ADS_InitSPI_DIFF_P();
+                gADS_QueryResults[i] =
+                    ADS_DIFF_PQuery(ADS_SensorQueryList[i].whoAmIAddr, ADS_SensorQueryList[i].whoAmIValue);
                 continue;
             }
         }
@@ -851,7 +973,7 @@ int ADS_DetectShield(char *pShieldString, size_t bufferLength)
     return status;
 }
 
-// Private function to detect the MCU and derive FRDM from that.
+// Private function to detect the MCU.
 int ADS_DetectFRDM(char *pBoardString, size_t bufferLength)
 {
     int32_t status;
@@ -888,8 +1010,7 @@ int ADS_DetectFRDM(char *pBoardString, size_t bufferLength)
 
     MCUInfo.mcuPinId = ((SIM->SDID) & SIM_SDID_PINID_MASK) >> SIM_SDID_PINID_SHIFT;
 
-    //	Compare the values extracted to the static table and return a null terminated string representing the FRDM
-    // development board.
+    // Compare the values extracted to the static table and return detected board.
     for (uint32_t i = 0; i < (sizeof(ADS_ValidSDIDValues) / sizeof(mcuSDID_t)); i++)
     {
         if ((MCUInfo.mcuFamilyId == ADS_ValidSDIDValues[i].mcuFamilyId) &&
@@ -907,9 +1028,6 @@ int ADS_DetectFRDM(char *pBoardString, size_t bufferLength)
     // Translate the result into the string.
     switch (MCUInfo.board)
     {
-        case ADS_FRDM_K32W042:
-            strncpy(pBoardString, "FRDM-K32W042", bufferLength);
-            break;
         case ADS_FRDM_KW41Z:
             strncpy(pBoardString, "FRDM-KW41Z", bufferLength);
             break;
@@ -993,7 +1111,7 @@ ADS_Status_t ADS_FlashUpdate(char *pResultString)
         if (kStatus_FLASH_Success == result)
         {
             // Write the ADS Record to the Flash.
-            result = FLASH_Program(&s_flashDriver, ADS_NVM_ADDR, (uint32_t *)&flashRecord,
+            result = FLASH_Program(&s_flashDriver, ADS_NVM_ADDR, (uint8_t *)&flashRecord,
                                    sizeof(flashRecord)); // Note: Flash write needs to be 32-bit word aligned in length
             if (kStatus_FLASH_Success == result)
             {

@@ -835,7 +835,16 @@ uint32_t CLOCK_GetOsc0ErClkUndivFreq(void);
  *
  * @return Clock frequency in Hz.
  */
+
 uint32_t CLOCK_GetOsc0ErClkFreq(void);
+
+/*!
+ * @brief Get the OSC0 external reference divided clock frequency.
+ *
+ * @return Clock frequency in Hz.
+ */
+uint32_t CLOCK_GetOsc0ErClkDivFreq(void);
+
 
 /*!
  * @brief Set the clock configure in SIM module.

@@ -56,13 +56,11 @@ namespace erpcgen {
 class InterfaceDefinition
 {
 public:
-    enum _error_handling_checks
+    enum codec_t
     {
-        kAll,
-        kInfraErrors,
-        kAllocErrors,
-        kNone
-    };
+        kNotSpecified,
+        kBasicCodec,
+    }; /*!< Used codec type. */
 
     /*!
      * @brief Default constructor.
@@ -89,11 +87,9 @@ public:
      *
      * @param[in] inputFile File, which is parsed.
      *
-     * @return Crc16 of all used IDL files.
-     *
      * @exception std::runtime_error Thrown if is bad return result for parse function or no ast node three is created.
      */
-    uint16_t parse(const char *inputFile);
+    void parse(const char *inputFile);
 
     /*!
      * @brief This function returns node belong to this object.
@@ -117,8 +113,9 @@ public:
      *
      * @param[in] fileName Necessary for output files names.
      * @param[in] outputFilePath Path to directory, where files will be generated.
+     * @param[in] codec Used codec type in eRPC application.
      */
-    void setProgramInfo(const std::string &fileName, const std::string &outputFilePath);
+    void setProgramInfo(const std::string &fileName, const std::string &outputFilePath, codec_t codec);
 
     /*!
      * @brief This function sets program name.
@@ -171,41 +168,38 @@ public:
     Program *getProgramSymbol();
 
     /*!
-     * @brief This functions sets type of checks which should be present in generated file.
+     * @brief This function returns used codec type in eRPC application.
+     *
+     * This information can bring more optimized code into generated output files.
+     *
+     * @retval kNotSpecified No optimization.
+     * @retval kBasicCodec BasicCodec type optimization.
      */
-    void setErrorHandlingChecksType();
+    codec_t getCodecType() { return m_codec; }
 
     /*!
-     * @brief This functions returns type of checks which should be present in generated file.
+     * @brief This function returns crc16 of all used IDL files.
+     *
+     * @return Crc16 of all used IDL files.
      */
-    _error_handling_checks getErrorHandlingChecksType() { return m_error_handling_check; }
+    uint16_t getIdlCrc16() { return m_idlCrc16; }
 
 private:
     /* Instance Variables */
-    AstNode *m_ast;                                /*!< Root of AstNode tree. */
-    SymbolScope m_globals;                         /*!< Symbol scope data. */
-    std::string m_programName;                     /*!< Program name set via parsed file. */
-    std::string m_outputFilename;                  /*!< Output file name. */
-    boost::filesystem::path m_outputDirectory;     /*!< Output file path. */
-    _error_handling_checks m_error_handling_check; /*!< Type of generated error checks */
+    AstNode *m_ast;                            /*!< Root of AstNode tree. */
+    SymbolScope m_globals;                     /*!< Symbol scope data. */
+    Program *m_program;                        /*!< Program symbol.*/
+    std::string m_programName;                 /*!< Program name set via parsed file. */
+    std::string m_outputFilename;              /*!< Output file name. */
+    boost::filesystem::path m_outputDirectory; /*!< Output file path. */
+    codec_t m_codec;                           /*!< Used codec type. */
+    uint16_t m_idlCrc16;                       /*!< Crc16 of IDL files. */
 
     /* Private Functions */
     /*!
      * @brief This function add builtin types into symbol scope variable m_globals.
      */
     void createBuiltinTypes();
-
-    /*!
-     * @brief Sets the output directory for generated erpc files.
-     *
-     * This function is used to initialize the outputDirectory instance
-     * variable for the program. It uses the output directory
-     * given on the command line, if any, and then appends the output
-     * directory given by a program annotation, if any.
-     *
-     * @param[in] outputDir Output directory from command line args.
-     */
-    void setOutputDirectory(const std::string &outputDir);
 };
 
 } // namespace erpcgen

@@ -3,10 +3,10 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
+ *  that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -166,14 +166,7 @@ static void ADC16_Configuration(void)
 
 #if defined(FSL_FEATURE_ADC16_HAS_CALIBRATION) && FSL_FEATURE_ADC16_HAS_CALIBRATION
     /* Auto calibration */
-    if (kStatus_Success == ADC16_DoAutoCalibration(DEMO_ADC16_BASEADDR))
-    {
-        PRINTF("ADC16_DoAutoCalibration() Done.\r\n");
-    }
-    else
-    {
-        PRINTF("ADC16_DoAutoCalibration() Failed.\r\n");
-    }
+    ADC16_DoAutoCalibration(DEMO_ADC16_BASEADDR);
 #endif
 
     adcChnConfig.channelNumber = DEMO_ADC16_CHANNEL;

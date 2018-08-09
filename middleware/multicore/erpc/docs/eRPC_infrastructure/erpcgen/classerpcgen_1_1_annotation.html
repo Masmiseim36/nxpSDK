@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC Generator (erpcgen)
-   &#160;<span id="projectnumber">Rev. 1.5.0</span>
+   &#160;<span id="projectnumber">Rev. 1.7.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -109,6 +109,7 @@ $(document).ready(function(){initNavTree('classerpcgen_1_1_annotation.html','');
 
 <div class="header">
   <div class="summary">
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classerpcgen_1_1_annotation-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -121,11 +122,23 @@ $(document).ready(function(){initNavTree('classerpcgen_1_1_annotation.html','');
 
 <p><code>#include &lt;<a class="el" href="_annotation_8h_source.html">Annotation.h</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:a5ec95669ec43fe71abdeac66d8e2da1b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5ec95669ec43fe71abdeac66d8e2da1b"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>program_lang_t</b> { <br />
+&#160;&#160;<b>kAll</b>, 
+<br />
+&#160;&#160;<b>kC</b>, 
+<br />
+&#160;&#160;<b>kPython</b>
+<br />
+ }</td></tr>
+<tr class="separator:a5ec95669ec43fe71abdeac66d8e2da1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ab798a293e491bf62c2f54e8c8ec53dac"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_annotation.html#ab798a293e491bf62c2f54e8c8ec53dac">Annotation</a> (const <a class="el" href="classerpcgen_1_1_token.html">Token</a> &amp;token, <a class="el" href="class_value.html">Value</a> *val)</td></tr>
-<tr class="memdesc:ab798a293e491bf62c2f54e8c8ec53dac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#ab798a293e491bf62c2f54e8c8ec53dac">More...</a><br /></td></tr>
-<tr class="separator:ab798a293e491bf62c2f54e8c8ec53dac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e01ad3e229cbcd55877420a27a399b0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_annotation.html#a8e01ad3e229cbcd55877420a27a399b0">Annotation</a> (const <a class="el" href="classerpcgen_1_1_token.html">Token</a> &amp;token, <a class="el" href="class_value.html">Value</a> *val, program_lang_t lang)</td></tr>
+<tr class="memdesc:a8e01ad3e229cbcd55877420a27a399b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a8e01ad3e229cbcd55877420a27a399b0">More...</a><br /></td></tr>
+<tr class="separator:a8e01ad3e229cbcd55877420a27a399b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeaa03b81e72b64279bf91374761b7363"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_annotation.html#aeaa03b81e72b64279bf91374761b7363">Annotation</a> (const <a class="el" href="classerpcgen_1_1_token.html">Token</a> &amp;token)</td></tr>
 <tr class="memdesc:aeaa03b81e72b64279bf91374761b7363"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#aeaa03b81e72b64279bf91374761b7363">More...</a><br /></td></tr>
 <tr class="separator:aeaa03b81e72b64279bf91374761b7363"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -141,6 +154,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ac907c227156887ae849bb1ae64989dd5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_value.html">Value</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_annotation.html#ac907c227156887ae849bb1ae64989dd5">getValueObject</a> ()</td></tr>
 <tr class="memdesc:ac907c227156887ae849bb1ae64989dd5"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns annotation value.  <a href="#ac907c227156887ae849bb1ae64989dd5">More...</a><br /></td></tr>
 <tr class="separator:ac907c227156887ae849bb1ae64989dd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a27eb307f1958958e917648122c2a5f58"><td class="memItemLeft" align="right" valign="top">program_lang_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_annotation.html#a27eb307f1958958e917648122c2a5f58">getLang</a> () const </td></tr>
+<tr class="memdesc:a27eb307f1958958e917648122c2a5f58"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns programming language type for which is annotation intended.  <a href="#a27eb307f1958958e917648122c2a5f58">More...</a><br /></td></tr>
+<tr class="separator:a27eb307f1958958e917648122c2a5f58"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a78189821380af354ecde579745673b4d"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_annotation.html#a78189821380af354ecde579745673b4d">toString</a> ()</td></tr>
 <tr class="memdesc:a78189821380af354ecde579745673b4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns toString representation.  <a href="#a78189821380af354ecde579745673b4d">More...</a><br /></td></tr>
 <tr class="separator:a78189821380af354ecde579745673b4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -151,7 +167,7 @@ Public Member Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="classerpcgen_1_1_annotation.html" title="Annotation class. ">Annotation</a> class. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="ab798a293e491bf62c2f54e8c8ec53dac"></a>
+<a class="anchor" id="a8e01ad3e229cbcd55877420a27a399b0"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -168,7 +184,13 @@ Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="class_value.html">Value</a> *&#160;</td>
-          <td class="paramname"><em>val</em>&#160;</td>
+          <td class="paramname"><em>val</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">program_lang_t&#160;</td>
+          <td class="paramname"><em>lang</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -189,6 +211,7 @@ Public Member Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">token</td><td><a class="el" href="classerpcgen_1_1_token.html" title="Encapsulates all information about a token. ">Token</a> contains annotation name and location in parsed file. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">val</td><td>Pointer to value. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">lang</td><td>Programming language for which is annotation intended. </td></tr>
   </table>
   </dd>
 </dl>
@@ -262,6 +285,32 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a27eb307f1958958e917648122c2a5f58"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">program_lang_t erpcgen::Annotation::getLang </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>This function returns programming language type for which is annotation intended. </p>
+<dl class="section return"><dt>Returns</dt><dd>Programming language type. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="aef0bc8ff519273c631b0b79213650e0b"></a>
 <div class="memitem">
 <div class="memproto">

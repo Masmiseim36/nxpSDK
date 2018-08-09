@@ -11,10 +11,10 @@ var group__transport__setup =
     [ "erpc_transport_dspi_slave_init", "group__transport__setup.html#gac616eb1f8e41b1ac4b14ebfb231c565e", null ],
     [ "erpc_transport_mu_init", "group__transport__setup.html#gaa5b2e0c4868c59f9210a8a43cc8feaac", null ],
     [ "erpc_transport_rpmsg_lite_master_init", "group__transport__setup.html#ga8350495e66922501e557574732dd1356", null ],
-    [ "erpc_transport_rpmsg_lite_remote_init", "group__transport__setup.html#ga4006b26ac82f5743d32d1dce20b04782", null ],
+    [ "erpc_transport_rpmsg_lite_remote_init", "group__transport__setup.html#ga9e5ca024890c3bb87c9f43ac6fe84e95", null ],
     [ "erpc_transport_rpmsg_lite_rtos_master_init", "group__transport__setup.html#ga58a3332ea60ae84478e14e01af451783", null ],
-    [ "erpc_transport_rpmsg_lite_rtos_remote_init", "group__transport__setup.html#ga08cfc42f815bfae1ca4b7f4a82b613fe", null ],
+    [ "erpc_transport_rpmsg_lite_rtos_remote_init", "group__transport__setup.html#gac64dd60de2b8a3120a7cdbafd3dba569", null ],
     [ "erpc_transport_rpmsg_lite_tty_rtos_remote_init", "group__transport__setup.html#ga83a356abab71852b09ebd3106541c3e4", null ],
     [ "erpc_transport_rpmsg_linux_init", "group__transport__setup.html#ga3c41e3f28a910416a17ba6e418e5771a", null ],
-    [ "erpc_transport_rpmsg_linux_deinit", "group__transport__setup.html#ga9afa65675c6620ca543138b475dc57e6", null ]
+    [ "erpc_transport_rpmsg_linux_deinit", "group__transport__setup.html#ga47ceb0fc19ed2d526711e5edb7857bfc", null ]
 ];

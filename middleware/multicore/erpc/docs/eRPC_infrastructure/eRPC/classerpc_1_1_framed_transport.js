@@ -4,8 +4,8 @@ var classerpc_1_1_framed_transport =
       [ "m_messageSize", "classerpc_1_1_framed_transport.html#a2d1167a8481639bb57198ee8e4470749", null ],
       [ "m_crc", "classerpc_1_1_framed_transport.html#aea0866f65f3441d290076833c9cdae19", null ]
     ] ],
-    [ "FramedTransport", "classerpc_1_1_framed_transport.html#a30aff85f5ba0c8dc96ec372f94c1995b", null ],
-    [ "~FramedTransport", "classerpc_1_1_framed_transport.html#a1c256e694803a2d47f013230b947d312", null ],
+    [ "FramedTransport", "classerpc_1_1_framed_transport.html#a5cfed6f7b88aae9d017b4a1053acebc3", null ],
+    [ "~FramedTransport", "classerpc_1_1_framed_transport.html#a05359d9edebfc10848c15179d977699a", null ],
     [ "receive", "classerpc_1_1_framed_transport.html#a206f88e12844d6650c1611eefbec2fe3", null ],
     [ "send", "classerpc_1_1_framed_transport.html#afe8eaf84d24d64ce7515c6d9fe6c5085", null ],
     [ "setCrc16", "classerpc_1_1_framed_transport.html#ad67bbd6aa37a610abdeb0280da260729", null ],

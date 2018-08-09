@@ -114,6 +114,10 @@
     #define ERPC_NESTED_CALLS (ERPC_NESTED_CALLS_DISABLED)
 #endif
 
+#if ERPC_NESTED_CALLS && !ERPC_THREADS
+    #error "Nested calls currently working only with Threads."
+#endif
+
 // Enabling nesting calls detection as default for debug.
 #if !defined(ERPC_NESTED_CALLS_DETECTION)
     #if defined(NDEBUG) || (ERPC_NESTED_CALLS == ERPC_NESTED_CALLS_ENABLED)
@@ -134,6 +138,22 @@
 #else
 #define THROW_BADALLOC
 #define THROW
+#endif
+
+#ifndef ERPC_TRANSPORT_MU_USE_MCMGR
+    #if defined(__has_include)
+        #if (__has_include("mcmgr.h"))
+            #define ERPC_TRANSPORT_MU_USE_MCMGR (ERPC_TRANSPORT_MU_USE_MCMGR_ENABLED)
+        #else
+            #define ERPC_TRANSPORT_MU_USE_MCMGR (ERPC_TRANSPORT_MU_USE_MCMGR_DISABLED)
+        #endif
+    #endif
+#else
+    #if defined(__has_include)
+        #if ((!(__has_include("mcmgr.h"))) && (ERPC_TRANSPORT_MU_USE_MCMGR == ERPC_TRANSPORT_MU_USE_MCMGR_ENABLED))
+            #error "Do not forget to add the MCMGR library into your project!"
+        #endif
+    #endif
 #endif
 
 /* clang-format on */

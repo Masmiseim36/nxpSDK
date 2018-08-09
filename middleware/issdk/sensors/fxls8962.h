@@ -1,6 +1,6 @@
 /*
  * The Clear BSD License
- * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
@@ -61,6 +61,13 @@ enum
     FXLS8962_OUT_Y_MSB = 0x07,
     FXLS8962_OUT_Z_LSB = 0x08,
     FXLS8962_OUT_Z_MSB = 0x09,
+    FXLS8962_BUF_STATUS = 0x0B,
+    FXLS8962_BUF_X_LSB = 0x0C,
+    FXLS8962_BUF_X_MSB = 0x0D,
+    FXLS8962_BUF_Y_LSB = 0x0E,
+    FXLS8962_BUF_Y_MSB = 0x0F,
+    FXLS8962_BUF_Z_LSB = 0x10,
+    FXLS8962_BUF_Z_MSB = 0x11,
     FXLS8962_PROD_REV = 0x12,
     FXLS8962_WHO_AM_I = 0x13,
     FXLS8962_SYS_MODE = 0x14,
@@ -80,6 +87,8 @@ enum
     FXLS8962_OFF_X = 0x22,
     FXLS8962_OFF_Y = 0x23,
     FXLS8962_OFF_Z = 0x24,
+    FXLS8962_BUF_CONFIG1 = 0x26,
+    FXLS8962_BUF_CONFIG2 = 0x27,
     FXLS8962_ORIENT_STATUS = 0x28,
     FXLS8962_ORIENT_CONFIG = 0x29,
     FXLS8962_ORIENT_DBCOUNT = 0x2A,
@@ -95,6 +104,8 @@ enum
     FXLS8962_SDCD_LTHS_MSB = 0x34,
     FXLS8962_SDCD_UTHS_LSB = 0x35,
     FXLS8962_SDCD_UTHS_MSB = 0x36,
+    FXLS8962_SELF_TEST_CONFIG1 = 0x37,
+    FXLS8962_SELF_TEST_CONFIG2 = 0x38,
 };
 
 #define FXLS8962_DEVICE_ADDRESS_SA0_0 (0x18) /*!< Device Address Value. */
@@ -122,7 +133,8 @@ typedef union
 
         uint8_t src_sdcd_ot : 1; /*  SDCD outside of threshold condition event flag.                            */
 
-        uint8_t _reserved_ : 1;
+        uint8_t src_buf : 1;/*  Output data buffer status event flag.                                     */
+
         uint8_t src_ovf : 1; /*  Output data overflow event flag.                                           */
 
         uint8_t src_drdy : 1; /*  Output data ready event flag.                                              */
@@ -148,6 +160,9 @@ typedef union
 
 #define FXLS8962_INT_STATUS_SRC_SDCD_OT_MASK ((uint8_t)0x10)
 #define FXLS8962_INT_STATUS_SRC_SDCD_OT_SHIFT ((uint8_t)4)
+
+#define FXLS8962_INT_STATUS_SRC_BUF_MASK ((uint8_t)0x20)
+#define FXLS8962_INT_STATUS_SRC_BUF_SHIFT ((uint8_t)5)
 
 #define FXLS8962_INT_STATUS_SRC_OVF_MASK ((uint8_t)0x40)
 #define FXLS8962_INT_STATUS_SRC_OVF_SHIFT ((uint8_t)6)
@@ -230,6 +245,92 @@ typedef uint8_t FXLS8962_OUT_Z_LSB_t;
 typedef uint8_t FXLS8962_OUT_Z_MSB_t;
 
 /*--------------------------------
+** Register: BUF_STATUS
+** Enum: FXLS8962_BUF_STATUS
+** --
+** Offset : 0x0B Buf status.
+** ------------------------------*/
+typedef union {
+    struct {
+        uint8_t                   buf_cnt : 6; /*  Count of the acceleration data samples   */
+
+        uint8_t                   buf_ovf : 1; /*  Buffer Overflow Event Flag               */
+
+        uint8_t                   buf_wmrk : 1; /*  Buffer Watermark Event Flag             */
+
+    } b;
+    uint8_t w;
+} FXLS8962_BUF_STATUS_t;
+
+
+/*
+** BUF_STATUS - Bit field mask definitions
+*/
+#define FXLS8962_BUF_STATUS_BUF_CNT_MASK    ((uint8_t) 0x3F)
+#define FXLS8962_BUF_STATUS_BUF_CNT_SHIFT   ((uint8_t)    0)
+
+#define FXLS8962_BUF_STATUS_BUF_OVF_MASK    ((uint8_t) 0x40)
+#define FXLS8962_BUF_STATUS_BUF_OVF_SHIFT   ((uint8_t)    6)
+
+#define FXLS8962_BUF_STATUS_BUF_WMRK_MASK   ((uint8_t) 0x80)
+#define FXLS8962_BUF_STATUS_BUF_WMRK_SHIFT  ((uint8_t)    7)
+
+
+
+/*--------------------------------
+** Register: BUF_X_LSB
+** Enum: FXLS8962_BUF_X_LSB
+** --
+** Offset : 0x0C LSB Head Tail output buffer buffer X axis.
+** ------------------------------*/
+typedef uint8_t FXLS8962_BUF_X_LSB_t;
+
+
+/*--------------------------------
+** Register: BUF_X_MSB
+** Enum: FXLS8962_BUF_X_MSB
+** --
+** Offset : 0x0D MSB Head Tail output buffer buffer Z axis.
+** ------------------------------*/
+typedef uint8_t FXLS8962_BUF_X_MSB_t;
+
+
+/*--------------------------------
+** Register: BUF_Y_LSB
+** Enum: FXLS8962_BUF_Y_LSB
+** --
+** Offset : 0x0E LSB Head Tail output buffer buffer Y axis.
+** ------------------------------*/
+typedef uint8_t FXLS8962_BUF_Y_LSB_t;
+
+
+/*--------------------------------
+** Register: BUF_Y_MSB
+** Enum: FXLS8962_BUF_Y_MSB
+** --
+** Offset : 0x0F MSB Head Tail output buffer buffer Y axis.
+** ------------------------------*/
+typedef uint8_t FXLS8962_BUF_Y_MSB_t;
+
+
+/*--------------------------------
+** Register: BUF_Z_LSB
+** Enum: FXLS8962_BUF_Z_LSB
+** --
+** Offset : 0x10 LSB Head Tail output buffer buffer Z axis.
+** ------------------------------*/
+typedef uint8_t FXLS8962_BUF_Z_LSB_t;
+
+
+/*--------------------------------
+** Register: BUF_Z_MSB
+** Enum: FXLS8962_BUF_Z_MSB
+** --
+** Offset : 0x11 MSB Head Tail output buffer buffer Z axis.
+** ------------------------------*/
+typedef uint8_t FXLS8962_BUF_Z_MSB_t;
+
+/*--------------------------------
 ** Register: PROD_REV
 ** Enum: FXLS8962_PROD_REV
 ** --
@@ -258,8 +359,6 @@ typedef union
 #define FXLS8962_PROD_REV_PROD_REV_MAJ_MASK ((uint8_t)0xF0)
 #define FXLS8962_PROD_REV_PROD_REV_MAJ_SHIFT ((uint8_t)4)
 
-/*------------------------------*/
-
 /*--------------------------------
 ** Register: WHO_AM_I
 ** Enum: FXLS8962_WHO_AM_I
@@ -280,6 +379,10 @@ typedef union
     {
         uint8_t sys_mode : 2; /*  Current System operating mode.                                             */
 
+        uint8_t buf_gate_cnt : 5; /*  number of OOR periods that have elapsed since the BUF _GATE_ERR flag was asserted. */
+
+        uint8_t buf_gate_error : 1; /*  Buffer gate error flag.                                             */
+
     } b;
     uint8_t w;
 } FXLS8962_SYS_MODE_t;
@@ -287,12 +390,20 @@ typedef union
 /*
 ** SYS_MODE - Bit field mask definitions
 */
-#define FXLS8962_SYS_MODE_SYS_MODE_MASK ((uint8_t)0x03)
-#define FXLS8962_SYS_MODE_SYS_MODE_SHIFT ((uint8_t)0)
+#define FXLS8962_SYS_MODE_BUF_GATE_ERROR_MASK ((uint8_t)0x03)
+#define FXLS8962_SYS_MODE_BUF_GATE_ERROR_SHIFT ((uint8_t)0)
+
+#define FXLS8962_SYS_MODE_BUF_GATE_CNT_MASK ((uint8_t)0x7C)
+#define FXLS8962_SYS_MODE_BUF_GATE_CNT_SHIFT ((uint8_t)2)
+
+#define FXLS8962_SYS_MODE_SYS_MODE_MASK ((uint8_t)0x80)
+#define FXLS8962_SYS_MODE_SYS_MODE_SHIFT ((uint8_t)7)
 
 /*
 ** SYS_MODE - Bit field value definitions
 */
+#define FXLS8962_SYS_MODE_BUF_GARE_ERROR_NO ((uint8_t)0x00) /*  Not Detected.                                       */
+#define FXLS8962_SYS_MODE_BUF_GARE_ERROR_YES ((uint8_t)0x80)/*  Detected.                                          */
 #define FXLS8962_SYS_MODE_SYS_MODE_STANDBY ((uint8_t)0x00)  /*  Standby Mode.                                       */
 #define FXLS8962_SYS_MODE_SYS_MODE_WAKE ((uint8_t)0x01)     /*  Wake Mode.                                          */
 #define FXLS8962_SYS_MODE_SYS_MODE_SLEEP ((uint8_t)0x02)    /*  Sleep Mode.                                         */
@@ -728,7 +839,7 @@ typedef union
 
         uint8_t sdcd_ot_en : 1; /*  SDCD outside of thresholds interrupt output enable.                        */
 
-        uint8_t _reserved_ : 1;
+        uint8_t buf_en : 1; /*  Output data buffer interrupt output enable                                        */
         uint8_t drdy_en : 1; /*  Data Ready interrupt output enable.                                        */
 
     } b;
@@ -756,6 +867,9 @@ typedef union
 #define FXLS8962_INT_EN_SDCD_OT_EN_MASK ((uint8_t)0x20)
 #define FXLS8962_INT_EN_SDCD_OT_EN_SHIFT ((uint8_t)5)
 
+#define FXLS8962_INT_EN_BUF_EN_MASK ((uint8_t)0x40)
+#define FXLS8962_INT_EN_BUF_EN_SHIFT ((uint8_t)6)
+
 #define FXLS8962_INT_EN_DRDY_EN_MASK ((uint8_t)0x80)
 #define FXLS8962_INT_EN_DRDY_EN_SHIFT ((uint8_t)7)
 
@@ -764,6 +878,8 @@ typedef union
 */
 #define FXLS8962_INT_EN_DRDY_EN_DIS ((uint8_t)0x00)     /*  Interrupt is disabled.                                */
 #define FXLS8962_INT_EN_DRDY_EN_EN ((uint8_t)0x80)      /*  Interrupt enabled.                                    */
+#define FXLS8962_INT_EN_BUF_EN_DIS ((uint8_t)0x00)      /*  Interrupt is disabled.                                */
+#define FXLS8962_INT_EN_BUF_EN_EN ((uint8_t)0x40)       /*  Interrupt enabled.                                    */
 #define FXLS8962_INT_EN_SDCD_OT_EN_DIS ((uint8_t)0x00)  /*  Interrupt is disabled.                                */
 #define FXLS8962_INT_EN_SDCD_OT_EN_EN ((uint8_t)0x20)   /*  Interrupt is routed to either the INT1 or INT2.       */
 #define FXLS8962_INT_EN_SDCD_WT_EN_DIS ((uint8_t)0x00)  /*  Interrupt is disabled.                                */
@@ -806,7 +922,8 @@ typedef union
 
         uint8_t sdcd_ot_int2 : 1; /*  SDCD outside of thresholds event interrupt routing.                        */
 
-        uint8_t _reserved_ : 1;
+        uint8_t buf_int2 : 1; /* Output buffer interrupt routing. */
+
         uint8_t drdy_int2 : 1; /*  Data Ready interrupt routing.                                              */
 
     } b;
@@ -834,6 +951,9 @@ typedef union
 #define FXLS8962_INT_PIN_SEL_SDCD_OT_INT2_MASK ((uint8_t)0x20)
 #define FXLS8962_INT_PIN_SEL_SDCD_OT_INT2_SHIFT ((uint8_t)5)
 
+#define FXLS8962_INT_PIN_SEL_BUF_INT2_MASK ((uint8_t)0x40)
+#define FXLS8962_INT_PIN_SEL_BUF_INT2_SHIFT ((uint8_t)6)
+
 #define FXLS8962_INT_PIN_SEL_DRDY_INT2_MASK ((uint8_t)0x80)
 #define FXLS8962_INT_PIN_SEL_DRDY_INT2_SHIFT ((uint8_t)7)
 
@@ -844,6 +964,10 @@ typedef union
                                                               /*  enabled.                                         */
 #define FXLS8962_INT_PIN_SEL_DRDY_INT2_EN ((uint8_t)0x80)     /*  Interrupt signal is routed to INT2 pin if it is  */
                                                               /*  enabled.                                         */
+#define FXLS8962_INT_PIN_SEL_BUF_INT2_DIS ((uint8_t)0x00)    /*  Interrupt signal is routed to INT1 pin if it is  */
+                                                              /*  enabled.                                         */
+#define FXLS8962_INT_PIN_SEL_BUF_INT2_EN ((uint8_t)0x40)     /*  Interrupt signal is routed to INT2 pin if it is  */
+                                                              /*  enabled.                                        */
 #define FXLS8962_INT_PIN_SEL_SDCD_OT_INT2_DIS ((uint8_t)0x00) /*  Interrupt signal is routed to INT1 pin if it is  */
                                                               /*  enabled.                                         */
 #define FXLS8962_INT_PIN_SEL_SDCD_OT_INT2_EN ((uint8_t)0x20)  /*  Interrupt signal is routed to INT2 pin if it is  */
@@ -893,6 +1017,120 @@ typedef uint8_t FXLS8962_OFF_Y_t;
 ** Offset : 0x24 Z-Acceleration zero-g offset.
 ** ------------------------------*/
 typedef uint8_t FXLS8962_OFF_Z_t;
+
+
+
+/*--------------------------------
+** Register: BUF_CONFIG1
+** Enum: FXLS8962_BUF_CONFIG1
+** --
+** Offset : 0x26 Buf configuration1.
+** ------------------------------*/
+typedef union {
+    struct {
+        uint8_t            trg_orient : 1; /*  Orientation change event trigger enable                                    */
+
+        uint8_t _reserved_            : 1;
+        uint8_t           trg_sdcd_ot : 1; /*  SDCD outside-of-thresholds event buffer trigger enable                     */
+
+        uint8_t           trg_sdcd_wt : 1; /*  SDCD within-thresholds event trigger enable                                */
+
+        uint8_t              buf_gate : 1; /*  Output data buffer gate enable                                             */
+
+        uint8_t              buf_mode : 2; /*  Buffer data collection mode                                                */
+
+        uint8_t              buf_type : 1; /*  Buffer data read out order                                                 */
+
+    } b;
+    uint8_t w;
+} FXLS8962_BUF_CONFIG1_t;
+
+
+/*
+** BUF_CONFIG1 - Bit field mask definitions
+*/
+#define FXLS8962_BUF_CONFIG1_TRG_ORIENT_MASK    ((uint8_t) 0x01)
+#define FXLS8962_BUF_CONFIG1_TRG_ORIENT_SHIFT   ((uint8_t)    0)
+
+#define FXLS8962_BUF_CONFIG1_TRG_SDCD_OT_MASK   ((uint8_t) 0x04)
+#define FXLS8962_BUF_CONFIG1_TRG_SDCD_OT_SHIFT  ((uint8_t)    2)
+
+#define FXLS8962_BUF_CONFIG1_TRG_SDCD_WT_MASK   ((uint8_t) 0x08)
+#define FXLS8962_BUF_CONFIG1_TRG_SDCD_WT_SHIFT  ((uint8_t)    3)
+
+#define FXLS8962_BUF_CONFIG1_BUF_GATE_MASK      ((uint8_t) 0x10)
+#define FXLS8962_BUF_CONFIG1_BUF_GATE_SHIFT     ((uint8_t)    4)
+
+#define FXLS8962_BUF_CONFIG1_BUF_MODE_MASK      ((uint8_t) 0x60)
+#define FXLS8962_BUF_CONFIG1_BUF_MODE_SHIFT     ((uint8_t)    5)
+
+#define FXLS8962_BUF_CONFIG1_BUF_TYPE_MASK      ((uint8_t) 0x80)
+#define FXLS8962_BUF_CONFIG1_BUF_TYPE_SHIFT     ((uint8_t)    7)
+
+
+/*
+** BUF_CONFIG1 - Bit field value definitions
+*/
+#define FXLS8962_BUF_CONFIG1_BUF_TYPE_FIFO         ((uint8_t) 0x00)  /*  In FIFO mode                                     */
+#define FXLS8962_BUF_CONFIG1_BUF_TYPE_FILO         ((uint8_t) 0x80)  /*  First In Last Out (FILO)                         */
+#define FXLS8962_BUF_CONFIG1_BUF_MODE_DIS          ((uint8_t) 0x00)  /*  Buffer is disabled                               */
+#define FXLS8962_BUF_CONFIG1_BUF_MODE_STREAM_MODE  ((uint8_t) 0x20)  /*  Stream Mode                                   */
+#define FXLS8962_BUF_CONFIG1_BUF_MODE_STOP_MODE    ((uint8_t) 0x40)  /*  Stop mode                                        */
+#define FXLS8962_BUF_CONFIG1_BUF_MODE_TRIGGER_MODE ((uint8_t) 0x60)  /*  Trigger Mode                                     */
+#define FXLS8962_BUF_CONFIG1_BUF_GATE_BY_PASSED    ((uint8_t) 0x00)  /*  Buffer gate is bypassed.                         */
+#define FXLS8962_BUF_CONFIG1_BUF_GATE_ENABLED      ((uint8_t) 0x10)  /*  The Buffer gate input is enabled.                */
+#define FXLS8962_BUF_CONFIG1_TRG_SDCD_WT_DIS       ((uint8_t) 0x00)  /*  Trigger source is disabled.                      */
+#define FXLS8962_BUF_CONFIG1_TRG_SDCD_WT_EN        ((uint8_t) 0x08)  /*  Trigger source is enabled.                       */
+#define FXLS8962_BUF_CONFIG1_TRG_SDCD_OT_DIS       ((uint8_t) 0x00)  /*  Trigger source is disabled.                      */
+#define FXLS8962_BUF_CONFIG1_TRG_SDCD_OT_EN        ((uint8_t) 0x04)  /*  Trigger source is enabled.                       */
+#define FXLS8962_BUF_CONFIG1_TRG_ORIENT_DIS        ((uint8_t) 0x00)  /*  Trigger source is disabled.                      */
+#define FXLS8962_BUF_CONFIG1_TRG_ORIENT_EN         ((uint8_t) 0x01)  /*  Trigger source is enabled.                       */
+/*------------------------------*/
+
+
+
+/*--------------------------------
+** Register: BUF_CONFIG2
+** Enum: FXLS8962_BUF_CONFIG2
+** --
+** Offset : 0x27 buf configuration2.
+** ------------------------------*/
+typedef union {
+    struct {
+        uint8_t          buf_wmrk : 6; /*  Buffer sample count watermark                                              */
+
+        uint8_t          wake_src_buf : 1; /*  Buffer WAKE-to-SLEEP transition source enable                              */
+
+        uint8_t             buf_flush : 1; /*  Buffer flush enable                                                        */
+
+    } b;
+    uint8_t w;
+} FXLS8962_BUF_CONFIG2_t;
+
+
+/*
+** BUF_CONFIG2 - Bit field mask definitions
+*/
+#define FXLS8962_BUF_CONFIG2_BUF_WMRK_MASK       ((uint8_t) 0x3F)
+#define FXLS8962_BUF_CONFIG2_BUF_WMRK_SHIFT      ((uint8_t)    0)
+
+#define FXLS8962_BUF_CONFIG2_WAKE_SRC_BUF_MASK   ((uint8_t) 0x40)
+#define FXLS8962_BUF_CONFIG2_WAKE_SRC_BUF_SHIFT  ((uint8_t)    6)
+
+#define FXLS8962_BUF_CONFIG2_BUF_FLUSH_MASK      ((uint8_t) 0x80)
+#define FXLS8962_BUF_CONFIG2_BUF_FLUSH_SHIFT     ((uint8_t)    7)
+
+
+/*
+** BUF_CONFIG2 - Bit field value definitions
+*/
+#define FXLS8962_BUF_CONFIG2_BUF_FLUSH_COMPLETED   ((uint8_t) 0x00)  /*  Buffer flush operation not pending/completed.    */
+#define FXLS8962_BUF_CONFIG2_BUF_FLUSH_EN          ((uint8_t) 0x80)  /*  Buffer flush enable.                             */
+#define FXLS8962_BUF_CONFIG2_WAKE_SRC_BUF_IGNORED  ((uint8_t) 0x00)  /*  BUF_WMRK and BUF_OVF and event flags are ignored */
+                                                                     /*  by the auto-WAKE/SLEEP function.                 */
+#define FXLS8962_BUF_CONFIG2_WAKE_SRC_BUF_EN       ((uint8_t) 0x40)  /*  BUF_WMRK and BUF_OVF event flags are used by the */
+                                                                     /*  auto-WAKE/SLEEP function                         */
+
 
 /*--------------------------------
 ** Register: ORIENT_STATUS
@@ -1497,4 +1735,68 @@ typedef uint8_t FXLS8962_SDCD_UTHS_LSB_t;
 ** ------------------------------*/
 typedef uint8_t FXLS8962_SDCD_UTHS_MSB_t;
 
-#endif /* FXLS8962_H_ */ 
+
+/*--------------------------------
+** Register: SELF_TEST_CONFIG1
+** Enum: FXLS8962_SELF_TEST_CONFIG1
+** --
+** Offset : 0x37 Self Test Configuration function 1 register.
+** ------------------------------*/
+typedef union
+{
+    struct
+    {
+        uint8_t st_idle : 5; /*  Self-Test Idle phase duration.                        */
+
+    } b;
+    uint8_t w;
+} FXLS8962_SELF_TEST_CONFIG1_t;
+
+/*
+** SELF_TEST_CONFIG1 - Bit field mask definitions
+*/
+#define FXLS8962_SELF_TEST_CONFIG1_ST_IDLE_MASK ((uint8_t)0x1f)
+#define FXLS8962_SELF_TEST_CONFIG1_ST_IDLE_SHIFT ((uint8_t)0)
+
+
+/*--------------------------------
+** Register: SELF_TEST_CONFIG2
+** Enum: FXLS8962_SELF_TEST_CONFIG2
+** --
+** Offset : 0x38 Self Test Configuration function 2 register.
+** ------------------------------*/
+typedef union
+{
+    struct
+    {
+        uint8_t st_dec : 4; /*  Self-Test measurement phase decimation factor.                        */
+
+    } b;
+    uint8_t w;
+} FXLS8962_SELF_TEST_CONFIG2_t;
+
+/*
+** SELF_TEST_CONFIG2 - Bit field mask definitions
+*/
+#define FXLS8962_SELF_TEST_CONFIG2_ST_DEC_MASK ((uint8_t)0x0f)
+#define FXLS8962_SELF_TEST_CONFIG2_ST_DEC_SHIFT ((uint8_t)0)
+
+/*
+** SELF_TEST_CONFIG2 - Bit field value definitions
+*/
+#define FXLS8962_SELF_TEST_CONFIG2_ST_DEC_1    ((uint8_t)0x00)
+#define FXLS8962_SELF_TEST_CONFIG2_ST_DEC_2    ((uint8_t)0x01)
+#define FXLS8962_SELF_TEST_CONFIG2_ST_DEC_4    ((uint8_t)0x02)
+#define FXLS8962_SELF_TEST_CONFIG2_ST_DEC_8    ((uint8_t)0x03)
+#define FXLS8962_SELF_TEST_CONFIG2_ST_DEC_16   ((uint8_t)0x04)
+#define FXLS8962_SELF_TEST_CONFIG2_ST_DEC_32   ((uint8_t)0x05)
+#define FXLS8962_SELF_TEST_CONFIG2_ST_DEC_64   ((uint8_t)0x06)
+#define FXLS8962_SELF_TEST_CONFIG2_ST_DEC_128  ((uint8_t)0x07)
+#define FXLS8962_SELF_TEST_CONFIG2_ST_DEC_256  ((uint8_t)0x08)
+#define FXLS8962_SELF_TEST_CONFIG2_ST_DEC_512  ((uint8_t)0x09)
+#define FXLS8962_SELF_TEST_CONFIG2_ST_DEC_1024 ((uint8_t)0x0a)
+#define FXLS8962_SELF_TEST_CONFIG2_ST_DEC_2048 ((uint8_t)0x0b)
+#define FXLS8962_SELF_TEST_CONFIG2_ST_DEC_4096 ((uint8_t)0x0c)
+
+
+#endif /* FXLS8962_H_ */

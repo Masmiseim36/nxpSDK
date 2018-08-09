@@ -108,8 +108,8 @@
 
 //! @def ERPC_MESSAGE_LOGGING
 //!
-//! Enable eRPC message logging code through the eRPC. Take look into "message_logging.h". Can be used for base printing messages,
-//! or sending data to another system for data analysis. Default set to ERPC_MESSAGE_LOGGING_DISABLED.
+//! Enable eRPC message logging code through the eRPC. Take look into "message_logging.h". Can be used for base printing
+//! messages, or sending data to another system for data analysis. Default set to ERPC_MESSAGE_LOGGING_DISABLED.
 //!
 //! Uncomment for using logging feature.
 //#define ERPC_MESSAGE_LOGGING (ERPC_MESSAGE_LOGGING_ENABLED)

@@ -1,6 +1,6 @@
 /*
  * The Clear BSD License
- * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
@@ -97,7 +97,6 @@ typedef enum ADS_Sensor
  */
 typedef enum
 {
-    ADS_FRDM_K32W042,
     ADS_FRDM_KW41Z,
     ADS_FRDM_KE15Z,
     ADS_FRDM_KL25Z,

@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC Generator (erpcgen)
-   &#160;<span id="projectnumber">Rev. 1.5.0</span>
+   &#160;<span id="projectnumber">Rev. 1.7.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -125,17 +125,13 @@ $(document).ready(function(){initNavTree('classerpcgen_1_1_ast_node.html','');})
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a3457e8079d80158047cee1294926c63f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3457e8079d80158047cee1294926c63f"></a>
-typedef std::map&lt; std::string, <a class="el" href="class_value.html">Value</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>attribute_map_t</b></td></tr>
+<tr class="memitem:a3457e8079d80158047cee1294926c63f"><td class="memItemLeft" align="right" valign="top">typedef std::map&lt; std::string, <a class="el" href="class_value.html">Value</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_ast_node.html#a3457e8079d80158047cee1294926c63f">attribute_map_t</a></td></tr>
 <tr class="separator:a3457e8079d80158047cee1294926c63f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a053e9217ba8ff1e13b506953e831254d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a053e9217ba8ff1e13b506953e831254d"></a>
-typedef std::vector&lt; <a class="el" href="classerpcgen_1_1_ast_node.html">AstNode</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>child_list_t</b></td></tr>
+<tr class="memitem:a053e9217ba8ff1e13b506953e831254d"><td class="memItemLeft" align="right" valign="top">typedef std::vector&lt; <a class="el" href="classerpcgen_1_1_ast_node.html">AstNode</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_ast_node.html#a053e9217ba8ff1e13b506953e831254d">child_list_t</a></td></tr>
 <tr class="separator:a053e9217ba8ff1e13b506953e831254d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6a1e32ead902f4832fe77bf0fea9b85d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6a1e32ead902f4832fe77bf0fea9b85d"></a>
-typedef child_list_t::iterator&#160;</td><td class="memItemRight" valign="bottom"><b>iterator</b></td></tr>
+<tr class="memitem:a6a1e32ead902f4832fe77bf0fea9b85d"><td class="memItemLeft" align="right" valign="top">typedef child_list_t::iterator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_ast_node.html#a6a1e32ead902f4832fe77bf0fea9b85d">iterator</a></td></tr>
 <tr class="separator:a6a1e32ead902f4832fe77bf0fea9b85d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a37e7c745e3e23d65fc18cf3038c997ee"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a37e7c745e3e23d65fc18cf3038c997ee"></a>
-typedef child_list_t::const_iterator&#160;</td><td class="memItemRight" valign="bottom"><b>const_iterator</b></td></tr>
+<tr class="memitem:a37e7c745e3e23d65fc18cf3038c997ee"><td class="memItemLeft" align="right" valign="top">typedef child_list_t::const_iterator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_ast_node.html#a37e7c745e3e23d65fc18cf3038c997ee">const_iterator</a></td></tr>
 <tr class="separator:a37e7c745e3e23d65fc18cf3038c997ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -161,9 +157,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:af340a5e5babee2b8abd6c264af0f288f"><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_ast_node.html#af340a5e5babee2b8abd6c264af0f288f">nodeName</a> () const </td></tr>
 <tr class="memdesc:af340a5e5babee2b8abd6c264af0f288f"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns name of this node.  <a href="#af340a5e5babee2b8abd6c264af0f288f">More...</a><br /></td></tr>
 <tr class="separator:af340a5e5babee2b8abd6c264af0f288f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab2dfef2691fc7d9acaa2731732cb7e6f"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_ast_node.html#ab2dfef2691fc7d9acaa2731732cb7e6f">getDescription</a> () const </td></tr>
-<tr class="memdesc:ab2dfef2691fc7d9acaa2731732cb7e6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns string description of the node.  <a href="#ab2dfef2691fc7d9acaa2731732cb7e6f">More...</a><br /></td></tr>
-<tr class="separator:ab2dfef2691fc7d9acaa2731732cb7e6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a814dc8085d1ac2fe4290200f514fdece"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_ast_node.html#a814dc8085d1ac2fe4290200f514fdece">getDescription</a> () const </td></tr>
+<tr class="memdesc:a814dc8085d1ac2fe4290200f514fdece"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns string description of the node.  <a href="#a814dc8085d1ac2fe4290200f514fdece">More...</a><br /></td></tr>
+<tr class="separator:a814dc8085d1ac2fe4290200f514fdece"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Token</div></td></tr>
 <tr class="memitem:a4644802709f33aabbeed7450d0f5ee1f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classerpcgen_1_1_token.html">Token</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_ast_node.html#a4644802709f33aabbeed7450d0f5ee1f">getToken</a> ()</td></tr>
 <tr class="memdesc:a4644802709f33aabbeed7450d0f5ee1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns token of this node.  <a href="#a4644802709f33aabbeed7450d0f5ee1f">More...</a><br /></td></tr>
@@ -236,16 +232,16 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a007f4478774729c7dcaba8c79a63c4df"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Child iterators</div></td></tr>
 <tr class="memitem:a813291b3ed60d2ebf6cc9236943c36a5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a813291b3ed60d2ebf6cc9236943c36a5"></a>
-iterator&#160;</td><td class="memItemRight" valign="bottom"><b>begin</b> ()</td></tr>
+<a class="el" href="classerpcgen_1_1_ast_node.html#a6a1e32ead902f4832fe77bf0fea9b85d">iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><b>begin</b> ()</td></tr>
 <tr class="separator:a813291b3ed60d2ebf6cc9236943c36a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa8b0b74b8dce33c9086ebec9ca6318f2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa8b0b74b8dce33c9086ebec9ca6318f2"></a>
-iterator&#160;</td><td class="memItemRight" valign="bottom"><b>end</b> ()</td></tr>
+<a class="el" href="classerpcgen_1_1_ast_node.html#a6a1e32ead902f4832fe77bf0fea9b85d">iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><b>end</b> ()</td></tr>
 <tr class="separator:aa8b0b74b8dce33c9086ebec9ca6318f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac9618963cb0194865801ac50dfabddb1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac9618963cb0194865801ac50dfabddb1"></a>
-const_iterator&#160;</td><td class="memItemRight" valign="bottom"><b>begin</b> () const </td></tr>
+<a class="el" href="classerpcgen_1_1_ast_node.html#a37e7c745e3e23d65fc18cf3038c997ee">const_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><b>begin</b> () const </td></tr>
 <tr class="separator:ac9618963cb0194865801ac50dfabddb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1256929971e46c6b71298b3aa0ed3e37"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1256929971e46c6b71298b3aa0ed3e37"></a>
-const_iterator&#160;</td><td class="memItemRight" valign="bottom"><b>end</b> () const </td></tr>
+<a class="el" href="classerpcgen_1_1_ast_node.html#a37e7c745e3e23d65fc18cf3038c997ee">const_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><b>end</b> () const </td></tr>
 <tr class="separator:a1256929971e46c6b71298b3aa0ed3e37"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
@@ -254,15 +250,68 @@ Protected Attributes</h2></td></tr>
 <tr class="separator:a8709501b1d20303735df9cb03b8b5e3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6b1ce2ea174015570a48d8ca394e00fd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classerpcgen_1_1_ast_node.html">AstNode</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_ast_node.html#a6b1ce2ea174015570a48d8ca394e00fd">m_parent</a></td></tr>
 <tr class="separator:a6b1ce2ea174015570a48d8ca394e00fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac0915f962b3997e08228ae38a61d935d"><td class="memItemLeft" align="right" valign="top">attribute_map_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_ast_node.html#ac0915f962b3997e08228ae38a61d935d">m_attributes</a></td></tr>
+<tr class="memitem:ac0915f962b3997e08228ae38a61d935d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classerpcgen_1_1_ast_node.html#a3457e8079d80158047cee1294926c63f">attribute_map_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_ast_node.html#ac0915f962b3997e08228ae38a61d935d">m_attributes</a></td></tr>
 <tr class="separator:ac0915f962b3997e08228ae38a61d935d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac333a0951760389cbfbf0cac7d613d10"><td class="memItemLeft" align="right" valign="top">child_list_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_ast_node.html#ac333a0951760389cbfbf0cac7d613d10">m_children</a></td></tr>
+<tr class="memitem:ac333a0951760389cbfbf0cac7d613d10"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classerpcgen_1_1_ast_node.html#a053e9217ba8ff1e13b506953e831254d">child_list_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_ast_node.html#ac333a0951760389cbfbf0cac7d613d10">m_children</a></td></tr>
 <tr class="separator:ac333a0951760389cbfbf0cac7d613d10"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Homogeneous AST node class. </p>
 <p>This class is meant to represent arbitrary AST nodes. Each node optionally has a <a class="el" href="classerpcgen_1_1_token.html" title="Encapsulates all information about a token. ">Token</a> object associated with it. It has an ordered list of child nodes and a pointer to its parent. Named attribute values can be set on a node. The attribute values are members of the <a class="el" href="class_value.html" title="Abstract base class for values of arbitrary types. ">Value</a> class hierarchy of boxed types. </p>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+</div><h2 class="groupheader">Member Typedef Documentation</h2>
+<a class="anchor" id="a3457e8079d80158047cee1294926c63f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef std::map&lt;std::string, <a class="el" href="class_value.html">Value</a> *&gt; <a class="el" href="classerpcgen_1_1_ast_node.html#a3457e8079d80158047cee1294926c63f">erpcgen::AstNode::attribute_map_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Map type of named attributes. </p>
+
+</div>
+</div>
+<a class="anchor" id="a053e9217ba8ff1e13b506953e831254d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef std::vector&lt;<a class="el" href="classerpcgen_1_1_ast_node.html">AstNode</a> *&gt; <a class="el" href="classerpcgen_1_1_ast_node.html#a053e9217ba8ff1e13b506953e831254d">erpcgen::AstNode::child_list_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Vector of <a class="el" href="classerpcgen_1_1_ast_node.html" title="Homogeneous AST node class. ">AstNode</a> children. </p>
+
+</div>
+</div>
+<a class="anchor" id="a37e7c745e3e23d65fc18cf3038c997ee"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef child_list_t::const_iterator <a class="el" href="classerpcgen_1_1_ast_node.html#a37e7c745e3e23d65fc18cf3038c997ee">erpcgen::AstNode::const_iterator</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Constant iterator of <a class="el" href="classerpcgen_1_1_ast_node.html" title="Homogeneous AST node class. ">AstNode</a> children vector. </p>
+
+</div>
+</div>
+<a class="anchor" id="a6a1e32ead902f4832fe77bf0fea9b85d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef child_list_t::iterator <a class="el" href="classerpcgen_1_1_ast_node.html#a6a1e32ead902f4832fe77bf0fea9b85d">erpcgen::AstNode::iterator</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Iterator of <a class="el" href="classerpcgen_1_1_ast_node.html" title="Homogeneous AST node class. ">AstNode</a> children vector. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="af93e5482a8c032afb73a0443bdfb8c10"></a>
 <div class="memitem">
 <div class="memproto">
@@ -571,12 +620,12 @@ size_t <a class="el" href="classerpcgen_1_1_ast_node.html#aed311b11f950bd3cf65e1
 
 </div>
 </div>
-<a class="anchor" id="ab2dfef2691fc7d9acaa2731732cb7e6f"></a>
+<a class="anchor" id="a814dc8085d1ac2fe4290200f514fdece"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string AstNode::getDescription </td>
+          <td class="memname">string AstNode::getDescription </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -693,7 +742,7 @@ size_t <a class="el" href="classerpcgen_1_1_ast_node.html#aed311b11f950bd3cf65e1
 
 <p>This function returns token of this node. </p>
 <dl class="section return"><dt>Returns</dt><dd>Node token.</dd></dl>
-<dl class="section see"><dt>See also</dt><dd>const <a class="el" href="classerpcgen_1_1_token.html" title="Encapsulates all information about a token. ">Token</a> * <a class="el" href="classerpcgen_1_1_ast_node.html#a4644802709f33aabbeed7450d0f5ee1f" title="This function returns token of this node. ">getToken()</a> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd>const <a class="el" href="classerpcgen_1_1_token.html" title="Encapsulates all information about a token. ">Token</a> &amp; <a class="el" href="classerpcgen_1_1_ast_node.html#a4644802709f33aabbeed7450d0f5ee1f" title="This function returns token of this node. ">getToken()</a> </dd></dl>
 
 </div>
 </div>
@@ -720,7 +769,7 @@ size_t <a class="el" href="classerpcgen_1_1_ast_node.html#aed311b11f950bd3cf65e1
 
 <p>This function returns constant token of this node. </p>
 <dl class="section return"><dt>Returns</dt><dd>Node constant token pointer.</dd></dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="classerpcgen_1_1_token.html" title="Encapsulates all information about a token. ">Token</a> * <a class="el" href="classerpcgen_1_1_ast_node.html#a4644802709f33aabbeed7450d0f5ee1f" title="This function returns token of this node. ">getToken()</a> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="classerpcgen_1_1_token.html" title="Encapsulates all information about a token. ">Token</a> &amp; <a class="el" href="classerpcgen_1_1_ast_node.html#a4644802709f33aabbeed7450d0f5ee1f" title="This function returns token of this node. ">getToken()</a> </dd></dl>
 
 </div>
 </div>
@@ -1163,7 +1212,7 @@ void <a class="el" href="classerpcgen_1_1_ast_node.html#abd2e5d91497abeab14f18bd
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">attribute_map_t erpcgen::AstNode::m_attributes</td>
+          <td class="memname"><a class="el" href="classerpcgen_1_1_ast_node.html#a3457e8079d80158047cee1294926c63f">attribute_map_t</a> erpcgen::AstNode::m_attributes</td>
         </tr>
       </table>
   </td>
@@ -1184,7 +1233,7 @@ void <a class="el" href="classerpcgen_1_1_ast_node.html#abd2e5d91497abeab14f18bd
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">child_list_t erpcgen::AstNode::m_children</td>
+          <td class="memname"><a class="el" href="classerpcgen_1_1_ast_node.html#a053e9217ba8ff1e13b506953e831254d">child_list_t</a> erpcgen::AstNode::m_children</td>
         </tr>
       </table>
   </td>

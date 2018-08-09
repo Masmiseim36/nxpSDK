@@ -4,7 +4,7 @@
   <Header>### uVision Project, (C) Keil Software</Header>
   <Targets>
     <Target>
-      <TargetName>fxos8700_fifo Debug</TargetName>
+      <TargetName>fxos8700_fifo debug</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <TargetOption>
@@ -77,7 +77,7 @@
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>fromelf.exe --m32combined  --output  "$L@L.bin"  "#L"</UserProg1Name>
+            <UserProg1Name>fromelf.exe --output "$L@L.bin" --bincombined "#L"</UserProg1Name>
             <UserProg2Name/>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -409,7 +409,7 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>board</GroupName>
+          <GroupName>board-src</GroupName>
           <Files>
             <File>
               <FileName>frdm_k22f.c</FileName>
@@ -435,16 +435,6 @@
               <FileName>RTE_Device.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../RTE_Device.h</FilePath>
-            </File>
-            <File>
-              <FileName>pin_mux.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../pin_mux.c</FilePath>
-            </File>
-            <File>
-              <FileName>pin_mux.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../pin_mux.h</FilePath>
             </File>
             <File>
               <FileName>clock_config.c</FileName>
@@ -479,6 +469,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>board</GroupName>
+          <Files>
+            <File>
+              <FileName>pin_mux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../pin_mux.c</FilePath>
+            </File>
+            <File>
+              <FileName>pin_mux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../pin_mux.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>doc</GroupName>
           <Files>
             <File>
@@ -502,9 +507,59 @@
               <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_flash.c</FileName>
+              <FileName>fsl_ftfx_adapter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_adapter.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_utilities.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_utilities.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_features.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_features.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_controller.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_flash.c</FilePath>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_controller.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_controller.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_controller.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_flash.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flash.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_flash.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_cache.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_cache.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_cache.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_cache.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flexnvm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_flexnvm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flexnvm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_flexnvm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_flash.h</FileName>
@@ -597,16 +652,6 @@
               <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_edma.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_dmamux.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_dmamux.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_dmamux.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_dmamux.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_i2c_cmsis.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MK22F51212/cmsis_drivers/fsl_i2c_cmsis.h</FilePath>
@@ -615,6 +660,16 @@
               <FileName>fsl_i2c_cmsis.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MK22F51212/cmsis_drivers/fsl_i2c_cmsis.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dmamux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_dmamux.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dmamux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_dmamux.c</FilePath>
             </File>
             <File>
               <FileName>fsl_dspi.h</FileName>
@@ -751,16 +806,6 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MK22F51212/utilities/fsl_assert.c</FilePath>
             </File>
-            <File>
-              <FileName>systick_utils.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/issdk/drivers/systick/systick_utils.c</FilePath>
-            </File>
-            <File>
-              <FileName>systick_utils.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/issdk/drivers/systick/systick_utils.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -789,7 +834,22 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>gpio_driver</GroupName>
+          <GroupName>utilities-src</GroupName>
+          <Files>
+            <File>
+              <FileName>systick_utils.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/issdk/drivers/systick/systick_utils.c</FilePath>
+            </File>
+            <File>
+              <FileName>systick_utils.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/issdk/drivers/systick/systick_utils.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>gpio_driver-src</GroupName>
           <Files>
             <File>
               <FileName>gpio_driver_irq.c</FileName>
@@ -814,7 +874,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>interfaces</GroupName>
+          <GroupName>interfaces-src</GroupName>
           <Files>
             <File>
               <FileName>register_io_i2c.c</FileName>
@@ -864,7 +924,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>sensors</GroupName>
+          <GroupName>sensors-src</GroupName>
           <Files>
             <File>
               <FileName>fxos8700.h</FileName>
@@ -886,7 +946,7 @@
       </Groups>
     </Target>
     <Target>
-      <TargetName>fxos8700_fifo Release</TargetName>
+      <TargetName>fxos8700_fifo release</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <TargetOption>
@@ -959,7 +1019,7 @@
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>fromelf.exe --m32combined  --output  "$L@L.bin"  "#L"</UserProg1Name>
+            <UserProg1Name>fromelf.exe --output "$L@L.bin" --bincombined "#L"</UserProg1Name>
             <UserProg2Name/>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -1264,7 +1324,7 @@
             <useXO>0</useXO>
             <VariousControls>
               <MiscControls/>
-              <Define/>
+              <Define>NDEBUG</Define>
               <Undefine/>
               <IncludePath/>
             </VariousControls>
@@ -1291,7 +1351,7 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>board</GroupName>
+          <GroupName>board-src</GroupName>
           <Files>
             <File>
               <FileName>frdm_k22f.c</FileName>
@@ -1317,16 +1377,6 @@
               <FileName>RTE_Device.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../RTE_Device.h</FilePath>
-            </File>
-            <File>
-              <FileName>pin_mux.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../pin_mux.c</FilePath>
-            </File>
-            <File>
-              <FileName>pin_mux.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../pin_mux.h</FilePath>
             </File>
             <File>
               <FileName>clock_config.c</FileName>
@@ -1361,6 +1411,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>board</GroupName>
+          <Files>
+            <File>
+              <FileName>pin_mux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../pin_mux.c</FilePath>
+            </File>
+            <File>
+              <FileName>pin_mux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../pin_mux.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>doc</GroupName>
           <Files>
             <File>
@@ -1384,9 +1449,59 @@
               <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_flash.c</FileName>
+              <FileName>fsl_ftfx_adapter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_adapter.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_utilities.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_utilities.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_features.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_features.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_controller.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_flash.c</FilePath>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_controller.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_controller.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_controller.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_flash.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flash.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_flash.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_cache.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_cache.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_cache.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_cache.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flexnvm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_flexnvm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flexnvm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_flexnvm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_flash.h</FileName>
@@ -1479,16 +1594,6 @@
               <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_edma.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_dmamux.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_dmamux.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_dmamux.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_dmamux.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_i2c_cmsis.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MK22F51212/cmsis_drivers/fsl_i2c_cmsis.h</FilePath>
@@ -1497,6 +1602,16 @@
               <FileName>fsl_i2c_cmsis.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MK22F51212/cmsis_drivers/fsl_i2c_cmsis.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dmamux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_dmamux.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dmamux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_dmamux.c</FilePath>
             </File>
             <File>
               <FileName>fsl_dspi.h</FileName>
@@ -1633,16 +1748,6 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MK22F51212/utilities/fsl_assert.c</FilePath>
             </File>
-            <File>
-              <FileName>systick_utils.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/issdk/drivers/systick/systick_utils.c</FilePath>
-            </File>
-            <File>
-              <FileName>systick_utils.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/issdk/drivers/systick/systick_utils.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -1671,7 +1776,22 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>gpio_driver</GroupName>
+          <GroupName>utilities-src</GroupName>
+          <Files>
+            <File>
+              <FileName>systick_utils.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/issdk/drivers/systick/systick_utils.c</FilePath>
+            </File>
+            <File>
+              <FileName>systick_utils.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/issdk/drivers/systick/systick_utils.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>gpio_driver-src</GroupName>
           <Files>
             <File>
               <FileName>gpio_driver_irq.c</FileName>
@@ -1696,7 +1816,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>interfaces</GroupName>
+          <GroupName>interfaces-src</GroupName>
           <Files>
             <File>
               <FileName>register_io_i2c.c</FileName>
@@ -1746,7 +1866,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>sensors</GroupName>
+          <GroupName>sensors-src</GroupName>
           <Files>
             <File>
               <FileName>fxos8700.h</FileName>

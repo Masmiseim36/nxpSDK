@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC API Reference
-   &#160;<span id="projectnumber">Rev. 1.5.0</span>
+   &#160;<span id="projectnumber">Rev. 1.7.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -51,7 +51,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="modules.html"><span>API&#160;Reference</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -111,6 +110,7 @@ $(document).ready(function(){initNavTree('structerpc_1_1_transport_arbitrator_1_
 
 <div class="header">
   <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="structerpc_1_1_transport_arbitrator_1_1_pending_client_info-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -121,7 +121,7 @@ $(document).ready(function(){initNavTree('structerpc_1_1_transport_arbitrator_1_
 <p>Request info for a client trying to receive a response.  
  <a href="structerpc_1_1_transport_arbitrator_1_1_pending_client_info.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="transport__arbitrator_8h_source.html">transport_arbitrator.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="erpc__transport__arbitrator_8h_source.html">erpc_transport_arbitrator.h</a>&gt;</code></p>
 <div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Collaboration diagram for erpc::TransportArbitrator::PendingClientInfo:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
@@ -131,26 +131,86 @@ $(document).ready(function(){initNavTree('structerpc_1_1_transport_arbitrator_1_
 </div>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a69e14bb61dc75bd28f2ed71081b3b3db"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a69e14bb61dc75bd28f2ed71081b3b3db"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structerpc_1_1_transport_arbitrator_1_1_pending_client_info.html#a69e14bb61dc75bd28f2ed71081b3b3db">PendingClientInfo</a> (void)</td></tr>
+<tr class="memdesc:a69e14bb61dc75bd28f2ed71081b3b3db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor. <br /></td></tr>
+<tr class="separator:a69e14bb61dc75bd28f2ed71081b3b3db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a15be4295b73da5849e5dc62bc8df17c4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a15be4295b73da5849e5dc62bc8df17c4"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structerpc_1_1_transport_arbitrator_1_1_pending_client_info.html#a15be4295b73da5849e5dc62bc8df17c4">~PendingClientInfo</a> (void)</td></tr>
+<tr class="memdesc:a15be4295b73da5849e5dc62bc8df17c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
+<tr class="separator:a15be4295b73da5849e5dc62bc8df17c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a7c46f1d764b01b86ec0696f162a2ab07"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7c46f1d764b01b86ec0696f162a2ab07"></a>
-<a class="el" href="classerpc_1_1_request_context.html">RequestContext</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>m_request</b></td></tr>
+<tr class="memitem:a7c46f1d764b01b86ec0696f162a2ab07"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classerpc_1_1_request_context.html">RequestContext</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structerpc_1_1_transport_arbitrator_1_1_pending_client_info.html#a7c46f1d764b01b86ec0696f162a2ab07">m_request</a></td></tr>
 <tr class="separator:a7c46f1d764b01b86ec0696f162a2ab07"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9d63e620c4869c57f26e0bc970d01eb2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9d63e620c4869c57f26e0bc970d01eb2"></a>
-<a class="el" href="classerpc_1_1_semaphore.html">Semaphore</a>&#160;</td><td class="memItemRight" valign="bottom"><b>m_sem</b></td></tr>
+<tr class="memitem:a9d63e620c4869c57f26e0bc970d01eb2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classerpc_1_1_semaphore.html">Semaphore</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structerpc_1_1_transport_arbitrator_1_1_pending_client_info.html#a9d63e620c4869c57f26e0bc970d01eb2">m_sem</a></td></tr>
 <tr class="separator:a9d63e620c4869c57f26e0bc970d01eb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a40000e3305c76ababdeb97975eb211be"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a40000e3305c76ababdeb97975eb211be"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>m_isValid</b></td></tr>
+<tr class="memitem:a40000e3305c76ababdeb97975eb211be"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structerpc_1_1_transport_arbitrator_1_1_pending_client_info.html#a40000e3305c76ababdeb97975eb211be">m_isValid</a></td></tr>
 <tr class="separator:a40000e3305c76ababdeb97975eb211be"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a99f1766517eb648d5aa2708ab6e350d6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a99f1766517eb648d5aa2708ab6e350d6"></a>
-<a class="el" href="structerpc_1_1_transport_arbitrator_1_1_pending_client_info.html">PendingClientInfo</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>m_next</b></td></tr>
+<tr class="memitem:a99f1766517eb648d5aa2708ab6e350d6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structerpc_1_1_transport_arbitrator_1_1_pending_client_info.html">PendingClientInfo</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structerpc_1_1_transport_arbitrator_1_1_pending_client_info.html#a99f1766517eb648d5aa2708ab6e350d6">m_next</a></td></tr>
 <tr class="separator:a99f1766517eb648d5aa2708ab6e350d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Request info for a client trying to receive a response. </p>
-</div><hr/>The documentation for this struct was generated from the following files:<ul>
-<li><a class="el" href="transport__arbitrator_8h_source.html">transport_arbitrator.h</a></li>
-<li>transport_arbitrator.cpp</li>
+</div><h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="a7c46f1d764b01b86ec0696f162a2ab07"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classerpc_1_1_request_context.html">RequestContext</a>* erpc::TransportArbitrator::PendingClientInfo::m_request</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Client request context. </p>
+
+</div>
+</div>
+<a class="anchor" id="a9d63e620c4869c57f26e0bc970d01eb2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classerpc_1_1_semaphore.html">Semaphore</a> erpc::TransportArbitrator::PendingClientInfo::m_sem</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Client semaphore. </p>
+
+</div>
+</div>
+<a class="anchor" id="a40000e3305c76ababdeb97975eb211be"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool erpc::TransportArbitrator::PendingClientInfo::m_isValid</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This struct validation. </p>
+
+</div>
+</div>
+<a class="anchor" id="a99f1766517eb648d5aa2708ab6e350d6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structerpc_1_1_transport_arbitrator_1_1_pending_client_info.html">PendingClientInfo</a>* erpc::TransportArbitrator::PendingClientInfo::m_next</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Next client pending information. </p>
+
+</div>
+</div>
+<hr/>The documentation for this struct was generated from the following files:<ul>
+<li><a class="el" href="erpc__transport__arbitrator_8h_source.html">erpc_transport_arbitrator.h</a></li>
+<li>erpc_transport_arbitrator.cpp</li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

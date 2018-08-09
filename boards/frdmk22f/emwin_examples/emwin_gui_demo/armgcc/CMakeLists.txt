@@ -52,6 +52,8 @@ SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -mfloat-abi=hard")
 
 SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -mfpu=fpv4-sp-d16")
 
+SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -DNDEBUG")
+
 SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -D__STARTUP_CLEAR_BSS")
 
 SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -Wall")
@@ -193,6 +195,8 @@ SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -mfpu=fpv4-sp-d16")
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -MMD")
 
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -MP")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DNDEBUG")
 
 SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DCPU_MK22FN512VLH12")
 
@@ -385,7 +389,17 @@ add_executable(emwin_gui_demo.elf
 "${ProjDirPath}/../../../../../devices/MK22F51212/cmsis_drivers/fsl_i2c_cmsis.h"
 "${ProjDirPath}/../../../../../devices/MK22F51212/cmsis_drivers/fsl_i2c_cmsis.c"
 "${ProjDirPath}/../../../../../CMSIS/Driver/Include/Driver_I2C.h"
-"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_flash.c"
+"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_ftfx_adapter.h"
+"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_ftfx_utilities.h"
+"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_ftfx_features.h"
+"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_ftfx_controller.c"
+"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_ftfx_controller.h"
+"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_ftfx_flash.c"
+"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_ftfx_flash.h"
+"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_ftfx_cache.c"
+"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_ftfx_cache.h"
+"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_ftfx_flexnvm.c"
+"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_ftfx_flexnvm.h"
 "${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_flash.h"
 "${ProjDirPath}/../../../../../devices/MK22F51212/system_MK22F51212.c"
 "${ProjDirPath}/../../../../../devices/MK22F51212/system_MK22F51212.h"

@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC API Reference
-   &#160;<span id="projectnumber">Rev. 1.5.0</span>
+   &#160;<span id="projectnumber">Rev. 1.7.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -51,7 +51,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li class="current"><a href="modules.html"><span>API&#160;Reference</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -133,6 +132,10 @@ Threading model options</h2></td></tr>
 #define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__config.html#ga495d2109c2e80b0f81dd87206227bbef">ERPC_THREADS_FREERTOS</a></td></tr>
 <tr class="memdesc:ga495d2109c2e80b0f81dd87206227bbef"><td class="mdescLeft">&#160;</td><td class="mdescRight">FreeRTOS. <br /></td></tr>
 <tr class="separator:ga495d2109c2e80b0f81dd87206227bbef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf95f61991be1c2ad5c24825b2d6feed4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaf95f61991be1c2ad5c24825b2d6feed4"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__config.html#gaf95f61991be1c2ad5c24825b2d6feed4">ERPC_THREADS_ZEPHYR</a></td></tr>
+<tr class="memdesc:gaf95f61991be1c2ad5c24825b2d6feed4"><td class="mdescLeft">&#160;</td><td class="mdescRight">ZEPHYR. <br /></td></tr>
+<tr class="separator:gaf95f61991be1c2ad5c24825b2d6feed4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1940cf01227ad6e0a6481a19a3b1eb08"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga1940cf01227ad6e0a6481a19a3b1eb08"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__config.html#ga1940cf01227ad6e0a6481a19a3b1eb08">ERPC_NOEXCEPT_DISABLED</a></td></tr>
 <tr class="memdesc:ga1940cf01227ad6e0a6481a19a3b1eb08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disabling noexcept feature. <br /></td></tr>
@@ -165,6 +168,14 @@ Threading model options</h2></td></tr>
 #define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__config.html#ga3eebaaef3f4ef8712d9a83ea8dc7141c">ERPC_MESSAGE_LOGGING_ENABLED</a></td></tr>
 <tr class="memdesc:ga3eebaaef3f4ef8712d9a83ea8dc7141c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Trace functions enabled. <br /></td></tr>
 <tr class="separator:ga3eebaaef3f4ef8712d9a83ea8dc7141c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga80f86b98f08e652cef6559fd735493e0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga80f86b98f08e652cef6559fd735493e0"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__config.html#ga80f86b98f08e652cef6559fd735493e0">ERPC_TRANSPORT_MU_USE_MCMGR_DISABLED</a></td></tr>
+<tr class="memdesc:ga80f86b98f08e652cef6559fd735493e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Do not use MCMGR for MU ISR management. <br /></td></tr>
+<tr class="separator:ga80f86b98f08e652cef6559fd735493e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga756377c015b4b551b1c5ad8862053ded"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga756377c015b4b551b1c5ad8862053ded"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__config.html#ga756377c015b4b551b1c5ad8862053ded">ERPC_TRANSPORT_MU_USE_MCMGR_ENABLED</a></td></tr>
+<tr class="memdesc:ga756377c015b4b551b1c5ad8862053ded"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use MCMGR for MU ISR management. <br /></td></tr>
+<tr class="separator:ga756377c015b4b551b1c5ad8862053ded"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Configuration options</h2></td></tr>
@@ -211,7 +222,7 @@ Configuration options</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Count of buffers allocated by <a class="el" href="class_static_message_buffer_factory.html" title="Static Message buffer factory. ">StaticMessageBufferFactory</a>. </p>
-<p>Uncomment to change the count of buffers allocated by one of staticly allocated messages. Default value is set to 2. </p>
+<p>Uncomment to change the count of buffers allocated by one of statically allocated messages. Default value is set to 2. </p>
 
 </div>
 </div>

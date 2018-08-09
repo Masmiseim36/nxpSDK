@@ -58,13 +58,13 @@ uint8_t g_UsbDeviceHidMouseReportDescriptor[] = {
     0x19U, 0x01U, /* Usage Minimum (01U) */
     0x29U, 0x03U, /* Usage Maximum (03U) */
 
-    0x15U, 0x00U, /* logical Minimum (0U) */
-    0x25U, 0x01U, /* logical Maximum (1U) */
+    0x15U, 0x00U, /* Logical Minimum (0U) */
+    0x25U, 0x01U, /* Logical Maximum (1U) */
     0x95U, 0x03U, /* Report Count (3U) */
     0x75U, 0x01U, /* Report Size (1U) */
 
     0x81U, 0x02U, /* Input(Data, Variable, Absolute) 3U button bit fields */
-    0x95U, 0x01U, /* Report count (1U) */
+    0x95U, 0x01U, /* Report Count (1U) */
     0x75U, 0x05U, /* Report Size (5U) */
     0x81U, 0x01U, /* Input (Constant), 5U constant field */
 
@@ -78,9 +78,9 @@ uint8_t g_UsbDeviceHidMouseReportDescriptor[] = {
     0x75U, 0x08U, /* Report Size (8U) */
     0x95U, 0x03U, /* Report Count (3U) */
 
-    0x81U, 0x06U, /* Input(Data, Variable, Relative), three position bytes (X & Y & Z)*/
-    0xC0U,        /* end collection, Close Pointer collection*/
-    0xC0U         /* end collection, Close Mouse collection */
+    0x81U, 0x06U, /* Input(Data, Variable, Relative), Three position bytes (X & Y & Z)*/
+    0xC0U,        /* End collection, Close Pointer collection*/
+    0xC0U         /* End collection, Close Mouse collection */
 };
 
 /* Define device descriptor */

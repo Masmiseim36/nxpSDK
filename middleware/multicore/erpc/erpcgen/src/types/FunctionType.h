@@ -56,7 +56,7 @@ namespace erpcgen {
 class FunctionType : public FunctionBase, public DataType
 {
 public:
-    typedef std::vector<Function *> c_function_list_t; /* List type of callback functions. */
+    typedef std::vector<Function *> c_function_list_t; /*!< List type of callback functions. */
 
     /*!
      * @brief Constructor.

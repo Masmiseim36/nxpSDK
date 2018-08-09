@@ -1,6 +1,6 @@
 /*
  * The Clear BSD License
- * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
@@ -30,13 +30,6 @@
  * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
-/**
- * @file fxlc95000.h
- * @brief The fxlc95000.h contains the FXLC95000L Digital Accelerometer command definitions and access macros.
- *        The commands and definitions are valid only when ISF1P195K GetAccelDataWithCI is running on FXLC95000.
- *        Refer to Section 2 of FXLC95000CL Data Sheet for details on ISF and associated ISF1P195K_SW_REFERENCE_RM for
- *        ISF1P195K software.
  */
 #ifndef FXLC95000_H_
 #define FXLC95000_H_

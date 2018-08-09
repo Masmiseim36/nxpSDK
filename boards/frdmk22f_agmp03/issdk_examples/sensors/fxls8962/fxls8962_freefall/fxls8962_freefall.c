@@ -1,6 +1,6 @@
 /*
  * The Clear BSD License
- * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
@@ -101,7 +101,7 @@ const registerwritelist_t cFxls8962ConfigFreeFall[] = {
     {FXLS8962_SDCD_UTHS_MSB, SDCD_UTHS_MSB, 0},
     __END_WRITE_DATA__};
 
-/*! @brief Address of Free-Fall Status Register. */
+/*! @brief Address of SDCD Status Register. */
 const registerreadlist_t cFxls8962FreeFallEvent[] = {{.readFrom = FXLS8962_SDCD_INT_SRC2, .numBytes = 1},
                                                      __END_READ_DATA__};
 

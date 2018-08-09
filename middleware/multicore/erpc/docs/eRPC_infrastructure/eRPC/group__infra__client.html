@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC API Reference
-   &#160;<span id="projectnumber">Rev. 1.5.0</span>
+   &#160;<span id="projectnumber">Rev. 1.7.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -51,7 +51,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li class="current"><a href="modules.html"><span>API&#160;Reference</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -104,7 +103,6 @@ $(document).ready(function(){initNavTree('group__infra__client.html','');});
 <div class="header">
   <div class="summary">
 <a href="#files">Files</a> &#124;
-<a href="#namespaces">Namespaces</a> &#124;
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle">
@@ -128,15 +126,9 @@ $(document).ready(function(){initNavTree('group__infra__client.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="files"></a>
 Files</h2></td></tr>
-<tr class="memitem:arbitrated__client__manager_8h"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arbitrated__client__manager_8h.html">arbitrated_client_manager.h</a></td></tr>
+<tr class="memitem:erpc__arbitrated__client__manager_8h"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="erpc__arbitrated__client__manager_8h.html">erpc_arbitrated_client_manager.h</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:client__manager_8h"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="client__manager_8h.html">client_manager.h</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
-Namespaces</h2></td></tr>
-<tr class="memitem:namespaceerpc"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceerpc.html">erpc</a></td></tr>
-<tr class="memdesc:namespaceerpc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logging messages objects used for logging sent/received messages. <br /></td></tr>
+<tr class="memitem:erpc__client__manager_8h"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="erpc__client__manager_8h.html">erpc_client_manager.h</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
@@ -153,16 +145,16 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:gab7dcc8461d2301b2ae32448b0f69ef85"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__infra__client.html#gab7dcc8461d2301b2ae32448b0f69ef85">client_error_handler_t</a>) (<a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a> err)</td></tr>
-<tr class="separator:gab7dcc8461d2301b2ae32448b0f69ef85"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2e6094cc3ec774c5a1e2b2e57879f3b1"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__infra__client.html#ga2e6094cc3ec774c5a1e2b2e57879f3b1">client_error_handler_t</a>) (<a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a> err, uint32_t functionID)</td></tr>
+<tr class="separator:ga2e6094cc3ec774c5a1e2b2e57879f3b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Typedef Documentation</h2>
-<a class="anchor" id="gab7dcc8461d2301b2ae32448b0f69ef85"></a>
+<a class="anchor" id="ga2e6094cc3ec774c5a1e2b2e57879f3b1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef void(* client_error_handler_t) (<a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a> err)</td>
+          <td class="memname">typedef void(* client_error_handler_t) (<a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a> err, uint32_t functionID)</td>
         </tr>
       </table>
 </div><div class="memdoc">

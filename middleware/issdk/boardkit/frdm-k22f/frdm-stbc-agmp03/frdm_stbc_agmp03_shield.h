@@ -1,6 +1,6 @@
 /*
  * The Clear BSD License
- * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
@@ -55,6 +55,7 @@
 // FXAS21002 Sensor Information
 #define FXAS21002_I2C_ADDR 0x20
 #define FXAS21002_INT1 D8
+#define FXAS21002_INT2 A2
 #define FXAS21002_CS A1
 
 // MPL3115 Sensor Information

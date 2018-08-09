@@ -1,6 +1,6 @@
 /*
  * The Clear BSD License
- * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright (c) 2015-2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
@@ -133,5 +133,18 @@ int32_t MAG3110_I2C_ReadData(mag3110_i2c_sensorhandle_t *pSensorHandle,
  *  @return      ::MAG3110_I2C_DeInit() returns the status.
  */
 int32_t MAG3110_I2C_DeInit(mag3110_i2c_sensorhandle_t *pSensorHandle);
+
+/*!
+*  @brief        Calibrates the magnetometer reading by determining the current hard iron offset.
+*  @details      This function must be periodically called during the program execution to constantly
+*                calibrate the magnetometer sensor.
+*  @param [in/out] xValue    Magnetometer X-axis reading.
+*  @param [in/out] yValue    Magnetometer Y-Axis reading.
+*  @param [in/out] zValue    Magnetometer Z-Axis reading.
+*  @constraints This function should be called after each ODR on acquired data.
+*  @reeentrant  No
+* @return void
+*/
+void MAG3110_CalibrateHardIronOffset(int16_t* xValue, int16_t* yValue, int16_t* zValue);
 
 #endif // MAG3110_FI_H_

@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC API Reference
-   &#160;<span id="projectnumber">Rev. 1.5.0</span>
+   &#160;<span id="projectnumber">Rev. 1.7.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -51,7 +51,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="modules.html"><span>API&#160;Reference</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -118,10 +117,10 @@ $(document).ready(function(){initNavTree('classerpc_1_1_r_p_msg_linux_transport.
 </div><!--header-->
 <div class="contents">
 
-<p>RPMSG linux transport to send/receive messages through RPMSG endpoints based on <a href="https://github.com/NXPmicro/rpmsg-sysfs/tree/0aa1817545a765c200b1b2f9b6680a420dcf9171">https://github.com/NXPmicro/rpmsg-sysfs/tree/0aa1817545a765c200b1b2f9b6680a420dcf9171</a> implementation.  
+<p>RPMSG Linux transport to send/receive messages through RPMSG endpoints based on <a href="https://github.com/codeauroraforum/rpmsg-sysfs/tree/0aa1817545a765c200b1b2f9b6680a420dcf9171">https://github.com/codeauroraforum/rpmsg-sysfs/tree/0aa1817545a765c200b1b2f9b6680a420dcf9171</a> implementation.  
  <a href="classerpc_1_1_r_p_msg_linux_transport.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="rpmsg__linux__transport_8h_source.html">rpmsg_linux_transport.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="erpc__rpmsg__linux__transport_8h_source.html">erpc_rpmsg_linux_transport.h</a>&gt;</code></p>
 <div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Inheritance diagram for erpc::RPMsgLinuxTransport:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
@@ -145,52 +144,93 @@ Public Member Functions</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_r_p_msg_linux_transport.html#adbf0409a3a387c522f4f3e0d421be7a8">RPMsgLinuxTransport</a> (RPMsgEndpoint *endPoint, int16_t remote)</td></tr>
 <tr class="memdesc:adbf0409a3a387c522f4f3e0d421be7a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor to set RPMsg endpoint and remote address. <br /></td></tr>
 <tr class="separator:adbf0409a3a387c522f4f3e0d421be7a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af253c25ee23d7df968ee32c306fede34"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_r_p_msg_linux_transport.html#af253c25ee23d7df968ee32c306fede34">init</a> ()</td></tr>
-<tr class="memdesc:af253c25ee23d7df968ee32c306fede34"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function initializes Linux enviroment for sending and receving messages.  <a href="#af253c25ee23d7df968ee32c306fede34">More...</a><br /></td></tr>
-<tr class="separator:af253c25ee23d7df968ee32c306fede34"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab9114a1b32d06872a065884598bb9f38"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_r_p_msg_linux_transport.html#ab9114a1b32d06872a065884598bb9f38">init</a> (void)</td></tr>
+<tr class="memdesc:ab9114a1b32d06872a065884598bb9f38"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function initializes Linux environment for sending and receiving messages.  <a href="#ab9114a1b32d06872a065884598bb9f38">More...</a><br /></td></tr>
+<tr class="separator:ab9114a1b32d06872a065884598bb9f38"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac18d51ff2ba19c8373f5f9dd9f7ca8fe"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_r_p_msg_linux_transport.html#ac18d51ff2ba19c8373f5f9dd9f7ca8fe">receive</a> (<a class="el" href="classerpc_1_1_message_buffer.html">MessageBuffer</a> *message)</td></tr>
 <tr class="memdesc:ac18d51ff2ba19c8373f5f9dd9f7ca8fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function receives the eRPC messages.  <a href="#ac18d51ff2ba19c8373f5f9dd9f7ca8fe">More...</a><br /></td></tr>
 <tr class="separator:ac18d51ff2ba19c8373f5f9dd9f7ca8fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5dc1aa6f8d38fce9382993393d163e3f"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_r_p_msg_linux_transport.html#a5dc1aa6f8d38fce9382993393d163e3f">send</a> (<a class="el" href="classerpc_1_1_message_buffer.html">MessageBuffer</a> *message)</td></tr>
 <tr class="memdesc:a5dc1aa6f8d38fce9382993393d163e3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function sends the eRPC messages.  <a href="#a5dc1aa6f8d38fce9382993393d163e3f">More...</a><br /></td></tr>
 <tr class="separator:a5dc1aa6f8d38fce9382993393d163e3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac290afe1b395c7c44379aeeb8363aea"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aac290afe1b395c7c44379aeeb8363aea"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_r_p_msg_linux_transport.html#aac290afe1b395c7c44379aeeb8363aea">RPMsgLinuxTransport</a> (RPMsgEndpoint *endPoint, int16_t remote)</td></tr>
+<tr class="memdesc:aac290afe1b395c7c44379aeeb8363aea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor to set RPMsg endpoint and remote address. <br /></td></tr>
+<tr class="separator:aac290afe1b395c7c44379aeeb8363aea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14794bbf63dc62914381693f002c43de"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_r_p_msg_linux_transport.html#a14794bbf63dc62914381693f002c43de">init</a> (void)</td></tr>
+<tr class="memdesc:a14794bbf63dc62914381693f002c43de"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function initializes Linux environment for sending and receiving messages.  <a href="#a14794bbf63dc62914381693f002c43de">More...</a><br /></td></tr>
+<tr class="separator:a14794bbf63dc62914381693f002c43de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a815ffde0c2489598bd0db7658d3c11bf"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_r_p_msg_linux_transport.html#a815ffde0c2489598bd0db7658d3c11bf">receive</a> (<a class="el" href="classerpc_1_1_message_buffer.html">MessageBuffer</a> *message)</td></tr>
+<tr class="memdesc:a815ffde0c2489598bd0db7658d3c11bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function receives the eRPC messages.  <a href="#a815ffde0c2489598bd0db7658d3c11bf">More...</a><br /></td></tr>
+<tr class="separator:a815ffde0c2489598bd0db7658d3c11bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1cb7508d618884bf7cbeb9c19237fae9"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_r_p_msg_linux_transport.html#a1cb7508d618884bf7cbeb9c19237fae9">send</a> (<a class="el" href="classerpc_1_1_message_buffer.html">MessageBuffer</a> *message)</td></tr>
+<tr class="memdesc:a1cb7508d618884bf7cbeb9c19237fae9"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function sends the eRPC messages.  <a href="#a1cb7508d618884bf7cbeb9c19237fae9">More...</a><br /></td></tr>
+<tr class="separator:a1cb7508d618884bf7cbeb9c19237fae9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac290afe1b395c7c44379aeeb8363aea"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aac290afe1b395c7c44379aeeb8363aea"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_r_p_msg_linux_transport.html#aac290afe1b395c7c44379aeeb8363aea">RPMsgLinuxTransport</a> (RPMsgEndpoint *endPoint, int16_t remote)</td></tr>
+<tr class="memdesc:aac290afe1b395c7c44379aeeb8363aea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor to set RPMsg endpoint and remote address. <br /></td></tr>
+<tr class="separator:aac290afe1b395c7c44379aeeb8363aea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7a909498a2fc751a4115f687ef13c88a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_r_p_msg_linux_transport.html#a7a909498a2fc751a4115f687ef13c88a">init</a> ()</td></tr>
+<tr class="memdesc:a7a909498a2fc751a4115f687ef13c88a"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function initializes Linux enviroment for sending and receving messages.  <a href="#a7a909498a2fc751a4115f687ef13c88a">More...</a><br /></td></tr>
+<tr class="separator:a7a909498a2fc751a4115f687ef13c88a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a815ffde0c2489598bd0db7658d3c11bf"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_r_p_msg_linux_transport.html#a815ffde0c2489598bd0db7658d3c11bf">receive</a> (<a class="el" href="classerpc_1_1_message_buffer.html">MessageBuffer</a> *message)</td></tr>
+<tr class="memdesc:a815ffde0c2489598bd0db7658d3c11bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function receives the eRPC messages.  <a href="#a815ffde0c2489598bd0db7658d3c11bf">More...</a><br /></td></tr>
+<tr class="separator:a815ffde0c2489598bd0db7658d3c11bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1cb7508d618884bf7cbeb9c19237fae9"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_r_p_msg_linux_transport.html#a1cb7508d618884bf7cbeb9c19237fae9">send</a> (<a class="el" href="classerpc_1_1_message_buffer.html">MessageBuffer</a> *message)</td></tr>
+<tr class="memdesc:a1cb7508d618884bf7cbeb9c19237fae9"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function sends the eRPC messages.  <a href="#a1cb7508d618884bf7cbeb9c19237fae9">More...</a><br /></td></tr>
+<tr class="separator:a1cb7508d618884bf7cbeb9c19237fae9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac290afe1b395c7c44379aeeb8363aea"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aac290afe1b395c7c44379aeeb8363aea"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_r_p_msg_linux_transport.html#aac290afe1b395c7c44379aeeb8363aea">RPMsgLinuxTransport</a> (RPMsgEndpoint *endPoint, int16_t remote)</td></tr>
+<tr class="memdesc:aac290afe1b395c7c44379aeeb8363aea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor to set RPMsg endpoint and remote address. <br /></td></tr>
+<tr class="separator:aac290afe1b395c7c44379aeeb8363aea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14794bbf63dc62914381693f002c43de"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_r_p_msg_linux_transport.html#a14794bbf63dc62914381693f002c43de">init</a> (void)</td></tr>
+<tr class="memdesc:a14794bbf63dc62914381693f002c43de"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function initializes Linux environment for sending and receiving messages.  <a href="#a14794bbf63dc62914381693f002c43de">More...</a><br /></td></tr>
+<tr class="separator:a14794bbf63dc62914381693f002c43de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a815ffde0c2489598bd0db7658d3c11bf"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_r_p_msg_linux_transport.html#a815ffde0c2489598bd0db7658d3c11bf">receive</a> (<a class="el" href="classerpc_1_1_message_buffer.html">MessageBuffer</a> *message)</td></tr>
+<tr class="memdesc:a815ffde0c2489598bd0db7658d3c11bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function receives the eRPC messages.  <a href="#a815ffde0c2489598bd0db7658d3c11bf">More...</a><br /></td></tr>
+<tr class="separator:a815ffde0c2489598bd0db7658d3c11bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1cb7508d618884bf7cbeb9c19237fae9"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_r_p_msg_linux_transport.html#a1cb7508d618884bf7cbeb9c19237fae9">send</a> (<a class="el" href="classerpc_1_1_message_buffer.html">MessageBuffer</a> *message)</td></tr>
+<tr class="memdesc:a1cb7508d618884bf7cbeb9c19237fae9"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function sends the eRPC messages.  <a href="#a1cb7508d618884bf7cbeb9c19237fae9">More...</a><br /></td></tr>
+<tr class="separator:a1cb7508d618884bf7cbeb9c19237fae9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classerpc_1_1_transport"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classerpc_1_1_transport')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classerpc_1_1_transport.html">erpc::Transport</a></td></tr>
-<tr class="memitem:a895a468f9810eba023c68197edefb301 inherit pub_methods_classerpc_1_1_transport"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a895a468f9810eba023c68197edefb301"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_transport.html#a895a468f9810eba023c68197edefb301">Transport</a> ()</td></tr>
-<tr class="memdesc:a895a468f9810eba023c68197edefb301 inherit pub_methods_classerpc_1_1_transport"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor. <br /></td></tr>
-<tr class="separator:a895a468f9810eba023c68197edefb301 inherit pub_methods_classerpc_1_1_transport"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac75843918e2fbe211430cf5973caac47 inherit pub_methods_classerpc_1_1_transport"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac75843918e2fbe211430cf5973caac47"></a>
-virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_transport.html#ac75843918e2fbe211430cf5973caac47">~Transport</a> ()</td></tr>
-<tr class="memdesc:ac75843918e2fbe211430cf5973caac47 inherit pub_methods_classerpc_1_1_transport"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classerpc_1_1_transport.html" title="Abstract interface for transport layer. ">Transport</a> destructor. <br /></td></tr>
-<tr class="separator:ac75843918e2fbe211430cf5973caac47 inherit pub_methods_classerpc_1_1_transport"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abee09d5af8f4a38ae83891afc6472066 inherit pub_methods_classerpc_1_1_transport"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_transport.html#abee09d5af8f4a38ae83891afc6472066">hasMessage</a> ()</td></tr>
-<tr class="memdesc:abee09d5af8f4a38ae83891afc6472066 inherit pub_methods_classerpc_1_1_transport"><td class="mdescLeft">&#160;</td><td class="mdescRight">Poll for an incoming message.  <a href="#abee09d5af8f4a38ae83891afc6472066">More...</a><br /></td></tr>
-<tr class="separator:abee09d5af8f4a38ae83891afc6472066 inherit pub_methods_classerpc_1_1_transport"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0b6b9c50d238f99de90ccd8b6050c91 inherit pub_methods_classerpc_1_1_transport"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af0b6b9c50d238f99de90ccd8b6050c91"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_transport.html#af0b6b9c50d238f99de90ccd8b6050c91">Transport</a> (void)</td></tr>
+<tr class="memdesc:af0b6b9c50d238f99de90ccd8b6050c91 inherit pub_methods_classerpc_1_1_transport"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor. <br /></td></tr>
+<tr class="separator:af0b6b9c50d238f99de90ccd8b6050c91 inherit pub_methods_classerpc_1_1_transport"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0cb1c4441873bce62f2ef455a6136888 inherit pub_methods_classerpc_1_1_transport"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0cb1c4441873bce62f2ef455a6136888"></a>
+virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_transport.html#a0cb1c4441873bce62f2ef455a6136888">~Transport</a> (void)</td></tr>
+<tr class="memdesc:a0cb1c4441873bce62f2ef455a6136888 inherit pub_methods_classerpc_1_1_transport"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classerpc_1_1_transport.html" title="Abstract interface for transport layer. ">Transport</a> destructor. <br /></td></tr>
+<tr class="separator:a0cb1c4441873bce62f2ef455a6136888 inherit pub_methods_classerpc_1_1_transport"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea4a3b77e476397c2f665e7c9449839a inherit pub_methods_classerpc_1_1_transport"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_transport.html#aea4a3b77e476397c2f665e7c9449839a">hasMessage</a> (void)</td></tr>
+<tr class="memdesc:aea4a3b77e476397c2f665e7c9449839a inherit pub_methods_classerpc_1_1_transport"><td class="mdescLeft">&#160;</td><td class="mdescRight">Poll for an incoming message.  <a href="#aea4a3b77e476397c2f665e7c9449839a">More...</a><br /></td></tr>
+<tr class="separator:aea4a3b77e476397c2f665e7c9449839a inherit pub_methods_classerpc_1_1_transport"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a077e72c8afa8caa483220faf45df62c6 inherit pub_methods_classerpc_1_1_transport"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_transport.html#a077e72c8afa8caa483220faf45df62c6">setCrc16</a> (<a class="el" href="classerpc_1_1_crc16.html">Crc16</a> *crcImpl)</td></tr>
-<tr class="memdesc:a077e72c8afa8caa483220faf45df62c6 inherit pub_methods_classerpc_1_1_transport"><td class="mdescLeft">&#160;</td><td class="mdescRight">This functions sets thre CRC-16 implementation.  <a href="#a077e72c8afa8caa483220faf45df62c6">More...</a><br /></td></tr>
+<tr class="memdesc:a077e72c8afa8caa483220faf45df62c6 inherit pub_methods_classerpc_1_1_transport"><td class="mdescLeft">&#160;</td><td class="mdescRight">This functions sets the CRC-16 implementation.  <a href="#a077e72c8afa8caa483220faf45df62c6">More...</a><br /></td></tr>
 <tr class="separator:a077e72c8afa8caa483220faf45df62c6 inherit pub_methods_classerpc_1_1_transport"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>RPMSG linux transport to send/receive messages through RPMSG endpoints based on <a href="https://github.com/NXPmicro/rpmsg-sysfs/tree/0aa1817545a765c200b1b2f9b6680a420dcf9171">https://github.com/NXPmicro/rpmsg-sysfs/tree/0aa1817545a765c200b1b2f9b6680a420dcf9171</a> implementation. </p>
+<div class="textblock"><p>RPMSG Linux transport to send/receive messages through RPMSG endpoints based on <a href="https://github.com/codeauroraforum/rpmsg-sysfs/tree/0aa1817545a765c200b1b2f9b6680a420dcf9171">https://github.com/codeauroraforum/rpmsg-sysfs/tree/0aa1817545a765c200b1b2f9b6680a420dcf9171</a> implementation. </p>
+<p>RPMSG linux transport to send/receive messages through RPMSG endpoints based on <a href="https://github.com/codeauroraforum/rpmsg-sysfs/tree/0aa1817545a765c200b1b2f9b6680a420dcf9171">https://github.com/codeauroraforum/rpmsg-sysfs/tree/0aa1817545a765c200b1b2f9b6680a420dcf9171</a> implementation. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="af253c25ee23d7df968ee32c306fede34"></a>
+<a class="anchor" id="ab9114a1b32d06872a065884598bb9f38"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a> RPMsgLinuxTransport::init </td>
           <td>(</td>
+          <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>This function initializes Linux enviroment for sending and receving messages. </p>
+<p>This function initializes Linux environment for sending and receiving messages. </p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">kErpcStatus_Success</td><td>When enviroment was set successfuly. </td></tr>
-    <tr><td class="paramname">kErpcStatus_Fail</td><td>When enviroment wasn't set successfuly. </td></tr>
+    <tr><td class="paramname">kErpcStatus_Success</td><td>When environment was set successfully. </td></tr>
+    <tr><td class="paramname">kErpcStatus_Fail</td><td>When environment wasn't set successfully. </td></tr>
   </table>
   </dd>
 </dl>
@@ -228,8 +268,8 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">kErpcStatus_Success</td><td>When message was received successfuly. </td></tr>
-    <tr><td class="paramname">kErpcStatus_Fail</td><td>When message wasn't received successfuly. </td></tr>
+    <tr><td class="paramname">kErpcStatus_Success</td><td>When message was received successfully. </td></tr>
+    <tr><td class="paramname">kErpcStatus_Fail</td><td>When message wasn't received successfully. </td></tr>
   </table>
   </dd>
 </dl>
@@ -269,6 +309,219 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
+    <tr><td class="paramname">kErpcStatus_Success</td><td>When message was sent successfully. </td></tr>
+    <tr><td class="paramname">kErpcStatus_Fail</td><td>When message wasn't sent successfully. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="classerpc_1_1_transport.html#a4ede71b16625cba746818294148f9aba">erpc::Transport</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a14794bbf63dc62914381693f002c43de"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a> erpc::RPMsgLinuxTransport::init </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This function initializes Linux environment for sending and receiving messages. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kErpcStatus_Success</td><td>When environment was set successfully. </td></tr>
+    <tr><td class="paramname">kErpcStatus_Fail</td><td>When environment wasn't set successfully. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a815ffde0c2489598bd0db7658d3c11bf"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a> erpc::RPMsgLinuxTransport::receive </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classerpc_1_1_message_buffer.html">MessageBuffer</a> *&#160;</td>
+          <td class="paramname"><em>message</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>This function receives the eRPC messages. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">message</td><td>Message to receive.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kErpcStatus_Success</td><td>When message was received successfully. </td></tr>
+    <tr><td class="paramname">kErpcStatus_Fail</td><td>When message wasn't received successfully. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="classerpc_1_1_transport.html#a3f886733620e1a2fe00d12f36711dde5">erpc::Transport</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a1cb7508d618884bf7cbeb9c19237fae9"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a> erpc::RPMsgLinuxTransport::send </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classerpc_1_1_message_buffer.html">MessageBuffer</a> *&#160;</td>
+          <td class="paramname"><em>message</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>This function sends the eRPC messages. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">message</td><td>Message to send.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kErpcStatus_Success</td><td>When message was sent successfully. </td></tr>
+    <tr><td class="paramname">kErpcStatus_Fail</td><td>When message wasn't sent successfully. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="classerpc_1_1_transport.html#a4ede71b16625cba746818294148f9aba">erpc::Transport</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a7a909498a2fc751a4115f687ef13c88a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a> erpc::RPMsgLinuxTransport::init </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This function initializes Linux enviroment for sending and receving messages. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kErpcStatus_Success</td><td>When enviroment was set successfuly. </td></tr>
+    <tr><td class="paramname">kErpcStatus_Fail</td><td>When enviroment wasn't set successfuly. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a815ffde0c2489598bd0db7658d3c11bf"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a> erpc::RPMsgLinuxTransport::receive </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classerpc_1_1_message_buffer.html">MessageBuffer</a> *&#160;</td>
+          <td class="paramname"><em>message</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>This function receives the eRPC messages. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">message</td><td>Message to receive.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kErpcStatus_Success</td><td>When message was received successfuly. </td></tr>
+    <tr><td class="paramname">kErpcStatus_Fail</td><td>When message wasn't received successfuly. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="classerpc_1_1_transport.html#a3f886733620e1a2fe00d12f36711dde5">erpc::Transport</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a1cb7508d618884bf7cbeb9c19237fae9"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a> erpc::RPMsgLinuxTransport::send </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classerpc_1_1_message_buffer.html">MessageBuffer</a> *&#160;</td>
+          <td class="paramname"><em>message</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>This function sends the eRPC messages. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">message</td><td>Message to send.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
     <tr><td class="paramname">kErpcStatus_Success</td><td>When message was sent successfuly. </td></tr>
     <tr><td class="paramname">kErpcStatus_Fail</td><td>When message wasn't sent successfuly. </td></tr>
   </table>
@@ -279,9 +532,119 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 
 </div>
 </div>
+<a class="anchor" id="a14794bbf63dc62914381693f002c43de"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a> erpc::RPMsgLinuxTransport::init </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This function initializes Linux environment for sending and receiving messages. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kErpcStatus_Success</td><td>When environment was set successfully. </td></tr>
+    <tr><td class="paramname">kErpcStatus_Fail</td><td>When environment wasn't set successfully. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a815ffde0c2489598bd0db7658d3c11bf"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a> erpc::RPMsgLinuxTransport::receive </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classerpc_1_1_message_buffer.html">MessageBuffer</a> *&#160;</td>
+          <td class="paramname"><em>message</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>This function receives the eRPC messages. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">message</td><td>Message to receive.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kErpcStatus_Success</td><td>When message was received successfully. </td></tr>
+    <tr><td class="paramname">kErpcStatus_Fail</td><td>When message wasn't received successfully. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="classerpc_1_1_transport.html#a3f886733620e1a2fe00d12f36711dde5">erpc::Transport</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a1cb7508d618884bf7cbeb9c19237fae9"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a> erpc::RPMsgLinuxTransport::send </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classerpc_1_1_message_buffer.html">MessageBuffer</a> *&#160;</td>
+          <td class="paramname"><em>message</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>This function sends the eRPC messages. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">message</td><td>Message to send.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kErpcStatus_Success</td><td>When message was sent successfully. </td></tr>
+    <tr><td class="paramname">kErpcStatus_Fail</td><td>When message wasn't sent successfully. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="classerpc_1_1_transport.html#a4ede71b16625cba746818294148f9aba">erpc::Transport</a>.</p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li><a class="el" href="rpmsg__linux__transport_8h_source.html">rpmsg_linux_transport.h</a></li>
-<li>rpmsg_linux_transport.cpp</li>
+<li><a class="el" href="erpc__rpmsg__linux__transport_8h_source.html">erpc_rpmsg_linux_transport.h</a></li>
+<li><a class="el" href="rpmsg__linux__transport_8h_8_b_a_s_e_8h_source.html">rpmsg_linux_transport.h.BASE.h</a></li>
+<li><a class="el" href="rpmsg__linux__transport_8h_8_l_o_c_a_l_8h_source.html">rpmsg_linux_transport.h.LOCAL.h</a></li>
+<li><a class="el" href="rpmsg__linux__transport_8h_8_r_e_m_o_t_e_8h_source.html">rpmsg_linux_transport.h.REMOTE.h</a></li>
+<li>erpc_rpmsg_linux_transport.cpp</li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

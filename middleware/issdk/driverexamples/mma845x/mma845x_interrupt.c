@@ -1,6 +1,6 @@
 /*
  * The Clear BSD License
- * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
@@ -68,7 +68,7 @@ const registerwritelist_t mma845x_Config_Isr[] = {
     /*! Configure the MMA845x to disable FIFO */
     {MMA845x_F_SETUP, MMA845x_F_SETUP_F_MODE_FIFODISABLED, 0},
     /*! Configure the MMA845x CTRL_REG2 to set the Oversampling mode to High Resolution. */
-    {MMA845x_CTRL_REG2, MMA845x_CTRL_REG2_SMODS_HIGHRES, 0},
+    {MMA845x_CTRL_REG2, MMA845x_CTRL_REG2_MODS_HIGHRES, 0},
     /*! Configure the MMA845x CTRL_REG3 to set the Interrupt polarity to ACTIVE high. */
     {MMA845x_CTRL_REG3, MMA845x_CTRL_REG3_IPOL_HIGH, 0},
     /*! Configure the MMA845x CTRL_REG4 to enable the data ready interrupt. */

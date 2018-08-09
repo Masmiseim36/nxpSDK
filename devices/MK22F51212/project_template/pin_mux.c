@@ -38,7 +38,7 @@
 !!GlobalInfo
 product: Pins v3.0
 processor: MK22FN512xxx12
-package_id: MK22FN512VMP12
+
 mcu_data: ksdk2_0
 processor_version: 0.0.8
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********

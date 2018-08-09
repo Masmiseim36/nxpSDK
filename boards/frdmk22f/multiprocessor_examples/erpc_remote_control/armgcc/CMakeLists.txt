@@ -52,6 +52,8 @@ SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -mfloat-abi=hard")
 
 SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -mfpu=fpv4-sp-d16")
 
+SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -DNDEBUG")
+
 SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -D__STARTUP_CLEAR_BSS")
 
 SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -Wall")
@@ -85,6 +87,8 @@ SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DCPU_MK22FN512VLH12")
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DFRDM_K22F")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DFREEDOM")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DSDK_I2C_BASED_COMPONENT_USED=1")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DFSL_RTOS_FREE_RTOS")
 
@@ -127,6 +131,8 @@ SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DCPU_MK22FN512VLH12")
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DFRDM_K22F")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DFREEDOM")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DSDK_I2C_BASED_COMPONENT_USED=1")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DFSL_RTOS_FREE_RTOS")
 
@@ -197,6 +203,8 @@ SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -mfpu=fpv4-sp-d16")
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -MMD")
 
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -MP")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DNDEBUG")
 
 SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DCPU_MK22FN512VLH12")
 
@@ -326,13 +334,17 @@ include_directories(${ProjDirPath}/../../../../../CMSIS/Driver/Include)
 
 include_directories(${ProjDirPath}/../../..)
 
-include_directories(${ProjDirPath}/../../../../../rtos/freertos/Source/portable/GCC/ARM_CM4F)
+include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/GCC/ARM_CM4F)
 
 include_directories(${ProjDirPath}/../../../../../CMSIS/Include)
 
 include_directories(${ProjDirPath}/../../../../../devices)
 
-include_directories(${ProjDirPath}/../../../../../rtos/freertos/Source/include)
+include_directories(${ProjDirPath}/../../erpc_common)
+
+include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include)
+
+include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private)
 
 include_directories(${ProjDirPath}/../../../../../devices/MK22F51212/drivers)
 
@@ -356,13 +368,16 @@ include_directories(${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc
 
 include_directories(${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/transports)
 
+include_directories(${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c)
+
 add_executable(erpc_remote_control.elf 
 "${ProjDirPath}/../../../../../CMSIS/Driver/Include/Driver_Common.h"
 "${ProjDirPath}/../../../../../CMSIS/Driver/Include/Driver_USART.h"
 "${ProjDirPath}/../remote_control.c"
 "${ProjDirPath}/../FreeRTOSConfig.h"
 "${ProjDirPath}/../erpc_config.h"
-"${ProjDirPath}/../service/erpc_crc16.h"
+"${ProjDirPath}/../../erpc_common/erpc_error_handler.h"
+"${ProjDirPath}/../../erpc_common/erpc_error_handler.cpp"
 "${ProjDirPath}/../service/erpc_remote_control.erpc"
 "${ProjDirPath}/../service/erpc_remote_control.h"
 "${ProjDirPath}/../service/erpc_remote_control_app_0.h"
@@ -379,8 +394,6 @@ add_executable(erpc_remote_control.elf
 "${ProjDirPath}/../clock_config.h"
 "${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_edma.h"
 "${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_edma.c"
-"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_dmamux.h"
-"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_dmamux.c"
 "${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_common.h"
 "${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_common.c"
 "${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_clock.h"
@@ -397,7 +410,17 @@ add_executable(erpc_remote_control.elf
 "${ProjDirPath}/../../../../../devices/MK22F51212/cmsis_drivers/fsl_uart_cmsis.c"
 "${ProjDirPath}/../../../../../CMSIS/Driver/Include/Driver_USART.h"
 "${ProjDirPath}/../../../../../CMSIS/Driver/Include/Driver_Common.h"
-"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_flash.c"
+"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_ftfx_adapter.h"
+"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_ftfx_utilities.h"
+"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_ftfx_features.h"
+"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_ftfx_controller.c"
+"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_ftfx_controller.h"
+"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_ftfx_flash.c"
+"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_ftfx_flash.h"
+"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_ftfx_cache.c"
+"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_ftfx_cache.h"
+"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_ftfx_flexnvm.c"
+"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_ftfx_flexnvm.h"
 "${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_flash.h"
 "${ProjDirPath}/../../../../../devices/MK22F51212/system_MK22F51212.c"
 "${ProjDirPath}/../../../../../devices/MK22F51212/system_MK22F51212.h"
@@ -423,76 +446,76 @@ add_executable(erpc_remote_control.elf
 "${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_i2c.c"
 "${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_adc16.c"
 "${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_adc16.h"
-"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/arbitrated_client_manager.h"
-"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/arbitrated_client_manager.cpp"
-"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/client_manager.h"
-"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/client_manager.cpp"
+"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_dmamux.h"
+"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_dmamux.c"
+"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_arbitrated_client_manager.h"
+"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_arbitrated_client_manager.cpp"
+"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_client_manager.h"
+"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_client_manager.cpp"
 "${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_arbitrated_client_setup.h"
 "${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_arbitrated_client_setup.cpp"
-"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/simple_server.h"
-"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/simple_server.cpp"
-"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/server.h"
-"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/server.cpp"
+"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_simple_server.h"
+"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_simple_server.cpp"
+"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_server.h"
+"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_server.cpp"
 "${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_server_setup.h"
 "${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_server_setup.cpp"
-"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/transport_arbitrator.h"
-"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/transport_arbitrator.cpp"
+"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_transport_arbitrator.h"
+"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_transport_arbitrator.cpp"
 "${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/port/erpc_threading.h"
 "${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/port/erpc_threading_freertos.cpp"
 "${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_version.h"
-"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/codec.h"
-"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/basic_codec.h"
-"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/transport.h"
-"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/message_buffer.h"
-"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/message_loggers.h"
+"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_codec.h"
+"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_basic_codec.h"
+"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_transport.h"
+"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_buffer.h"
+"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_loggers.h"
 "${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_common.h"
 "${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_transport_setup.h"
 "${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_mbf_setup.h"
-"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/manually_constructed.h"
-"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/crc16.h"
-"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/basic_codec.cpp"
-"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/message_buffer.cpp"
-"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/message_loggers.cpp"
-"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/crc16.cpp"
+"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_manually_constructed.h"
+"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_crc16.h"
+"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_basic_codec.cpp"
+"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_buffer.cpp"
+"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_loggers.cpp"
+"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_crc16.cpp"
 "${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/port/erpc_port.h"
 "${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/port/erpc_port_freertos.cpp"
 "${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/port/erpc_config_internal.h"
-"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/transports/uart_cmsis_transport.h"
-"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/transports/uart_cmsis_transport.cpp"
-"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/framed_transport.h"
-"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/framed_transport.cpp"
+"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_uart_cmsis_transport.h"
+"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_uart_cmsis_transport.cpp"
+"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_framed_transport.h"
+"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_framed_transport.cpp"
 "${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_setup_uart_cmsis.cpp"
 "${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_setup_mbf_dynamic.cpp"
-"${ProjDirPath}/../../../../../rtos/freertos/Source/portable/MemMang/heap_4.c"
-"${ProjDirPath}/../../../../../rtos/freertos/FreeRTOS_for_Kinetis_SDK_v2.0.txt"
-"${ProjDirPath}/../../../../../rtos/freertos/License/license.txt"
-"${ProjDirPath}/../../../../../rtos/freertos/Source/include/croutine.h"
-"${ProjDirPath}/../../../../../rtos/freertos/Source/include/event_groups.h"
-"${ProjDirPath}/../../../../../rtos/freertos/Source/include/FreeRTOS.h"
-"${ProjDirPath}/../../../../../rtos/freertos/Source/include/list.h"
-"${ProjDirPath}/../../../../../rtos/freertos/Source/include/mpu_wrappers.h"
-"${ProjDirPath}/../../../../../rtos/freertos/Source/include/portable.h"
-"${ProjDirPath}/../../../../../rtos/freertos/Source/include/projdefs.h"
-"${ProjDirPath}/../../../../../rtos/freertos/Source/include/queue.h"
-"${ProjDirPath}/../../../../../rtos/freertos/Source/include/semphr.h"
-"${ProjDirPath}/../../../../../rtos/freertos/Source/include/StackMacros.h"
-"${ProjDirPath}/../../../../../rtos/freertos/Source/include/stdint.readme"
-"${ProjDirPath}/../../../../../rtos/freertos/Source/include/task.h"
-"${ProjDirPath}/../../../../../rtos/freertos/Source/include/timers.h"
-"${ProjDirPath}/../../../../../rtos/freertos/Source/include/deprecated_definitions.h"
-"${ProjDirPath}/../../../../../rtos/freertos/Source/include/freertos_tasks_c_additions.h"
-"${ProjDirPath}/../../../../../rtos/freertos/Source/croutine.c"
-"${ProjDirPath}/../../../../../rtos/freertos/Source/list.c"
-"${ProjDirPath}/../../../../../rtos/freertos/Source/queue.c"
-"${ProjDirPath}/../../../../../rtos/freertos/Source/readme.txt"
-"${ProjDirPath}/../../../../../rtos/freertos/Source/tasks.c"
-"${ProjDirPath}/../../../../../rtos/freertos/Source/timers.c"
-"${ProjDirPath}/../../../../../rtos/freertos/Source/event_groups.c"
-"${ProjDirPath}/../../../../../rtos/freertos/Source/portable/readme.txt"
-"${ProjDirPath}/../../../../../rtos/freertos/Source/portable/GCC/ARM_CM4F/fsl_tickless_generic.h"
-"${ProjDirPath}/../../../../../rtos/freertos/Source/portable/GCC/ARM_CM4F/fsl_tickless_systick.c"
-"${ProjDirPath}/../../../../../rtos/freertos/Source/portable/GCC/ARM_CM4F/port.c"
-"${ProjDirPath}/../../../../../rtos/freertos/Source/portable/GCC/ARM_CM4F/portmacro.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/MemMang/heap_4.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/LICENSE"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/event_groups.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/FreeRTOS.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/message_buffer.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/queue.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/semphr.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/stream_buffer.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/task.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/timers.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/freertos_tasks_c_additions.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/deprecated_definitions.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/list.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/mpu_wrappers.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/portable.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/projdefs.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/stack_macros.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/event_groups.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/list.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/queue.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/stream_buffer.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/tasks.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/timers.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/readme.txt"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/GCC/ARM_CM4F/fsl_tickless_generic.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/GCC/ARM_CM4F/fsl_tickless_systick.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/GCC/ARM_CM4F/port.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/GCC/ARM_CM4F/portmacro.h"
 )
 
 

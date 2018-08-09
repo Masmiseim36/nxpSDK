@@ -70,7 +70,7 @@ using namespace std;
 namespace erpcgen {
 
 /*!
- * @brief This class contains necessary information about analysed file.
+ * @brief This class contains necessary information about analyzed file.
  */
 class CurrentFileInfo
 {
@@ -81,8 +81,8 @@ public:
      * This function set default values to object variables. Pointer to file ifstream,
      * file name and current folder path are given as function parameters.
      *
-     * @param[in] savedFile Pointer to analysed file.
-     * @param[in] fileName Name of analysed file.
+     * @param[in] savedFile Pointer to analyzed file.
+     * @param[in] fileName Name of analyzed file.
      * @param[in] currentFolderPath Path to folder of current file.
      */
     CurrentFileInfo(std::ifstream *savedFile, std::string fileName, std::string currentFolderPath)

@@ -629,6 +629,7 @@ usb_status_t USB_DeviceMscDiskConfigureEndpointStatus(usb_device_handle handle, 
             if (mscHandle->inEndpointStallFlag == 0)
             {
                 mscHandle->inEndpointStallFlag = 1;
+                mscHandle->cswPrimeFlag = 0;
                 error = USB_DeviceStallEndpoint(handle, ep);
             }
         }
@@ -638,6 +639,7 @@ usb_status_t USB_DeviceMscDiskConfigureEndpointStatus(usb_device_handle handle, 
             if (mscHandle->outEndpointStallFlag == 0)
             {
                 mscHandle->outEndpointStallFlag = 1;
+                mscHandle->cbwPrimeFlag = 0;
                 error = USB_DeviceStallEndpoint(handle, ep);
             }
         }
@@ -657,6 +659,7 @@ usb_status_t USB_DeviceMscDiskConfigureEndpointStatus(usb_device_handle handle, 
             if (mscHandle->inEndpointStallFlag == 1)
             {
                 mscHandle->inEndpointStallFlag = 0;
+                mscHandle->cswPrimeFlag = 0;
                 error = USB_DeviceUnstallEndpoint(handle, ep);
             }
         }
@@ -666,6 +669,7 @@ usb_status_t USB_DeviceMscDiskConfigureEndpointStatus(usb_device_handle handle, 
             if (mscHandle->outEndpointStallFlag == 1)
             {
                 mscHandle->outEndpointStallFlag = 0;
+                mscHandle->cbwPrimeFlag = 0;
                 error = USB_DeviceUnstallEndpoint(handle, ep);
             }
         }

@@ -1,6 +1,6 @@
 /*
  * The Clear BSD License
- * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright (c) 2015-2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
@@ -66,7 +66,8 @@
 /*! @brief Register settings for Magnetic Strength readings in One-Shot mode. */
 const registerwritelist_t cMag3110ConfigOneShot[] = {
     /* Set Auto Magnetic Sensor Reset. */
-    {MAG3110_CTRL_REG2, MAG3110_CTRL_REG2_AUTO_MSRT_EN_EN, MAG3110_CTRL_REG2_AUTO_MSRT_EN_MASK},
+    {MAG3110_CTRL_REG2, MAG3110_CTRL_REG2_MAG_RST_EN | MAG3110_CTRL_REG2_AUTO_MSRT_EN_EN | MAG3110_CTRL_REG2_RAW_RAW,
+                        MAG3110_CTRL_REG2_MAG_RST_MASK | MAG3110_CTRL_REG2_AUTO_MSRT_EN_MASK | MAG3110_CTRL_REG2_RAW_MASK},
     __END_WRITE_DATA__};
 
 /*! @brief Register settings for Triggring One-Shot Sampling. */
@@ -143,7 +144,7 @@ int main(void)
      *  Instead we directly write register settings for One-Shot Mode... */
     deviceInfo.deviceInstance = I2C_S_DEVICE_INDEX;
     deviceInfo.functionParam = SMC;
-    deviceInfo.idleFunction = (registeridlefunction_t)SMC_SetPowerModeVlpr;
+    deviceInfo.idleFunction = (registeridlefunction_t)SMC_SetPowerModeWait;
     status = Sensor_I2C_Write(mag3110Driver.pCommDrv, &deviceInfo, mag3110Driver.slaveAddress, cMag3110ConfigOneShot);
     if (ARM_DRIVER_OK != status)
     {

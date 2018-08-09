@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC Generator (erpcgen)
-   &#160;<span id="projectnumber">Rev. 1.5.0</span>
+   &#160;<span id="projectnumber">Rev. 1.7.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -237,9 +237,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a8007b6e666199f3798fd337c3393a5b3"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_builtin_type.html#a8007b6e666199f3798fd337c3393a5b3">isBuiltin</a> () const </td></tr>
 <tr class="memdesc:a8007b6e666199f3798fd337c3393a5b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function return "true" value for identify builtin type.  <a href="#a8007b6e666199f3798fd337c3393a5b3">More...</a><br /></td></tr>
 <tr class="separator:a8007b6e666199f3798fd337c3393a5b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abdeaaab765db6146f0599adab08ca99b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abdeaaab765db6146f0599adab08ca99b"></a>
-virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_builtin_type.html#abdeaaab765db6146f0599adab08ca99b">isScalar</a> () const </td></tr>
-<tr class="memdesc:abdeaaab765db6146f0599adab08ca99b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns whether the type is a scalar builtin type. <br /></td></tr>
+<tr class="memitem:abdeaaab765db6146f0599adab08ca99b"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_builtin_type.html#abdeaaab765db6146f0599adab08ca99b">isScalar</a> () const </td></tr>
+<tr class="memdesc:abdeaaab765db6146f0599adab08ca99b"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function return "true" value for identify scalar type.  <a href="#abdeaaab765db6146f0599adab08ca99b">More...</a><br /></td></tr>
 <tr class="separator:abdeaaab765db6146f0599adab08ca99b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aefe3eb8ff9c15466fad1568058daf72d"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_builtin_type.html#aefe3eb8ff9c15466fad1568058daf72d">isInt</a> () const </td></tr>
 <tr class="memdesc:aefe3eb8ff9c15466fad1568058daf72d"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function return "true" value for identify int type.  <a href="#aefe3eb8ff9c15466fad1568058daf72d">More...</a><br /></td></tr>
@@ -322,9 +321,6 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <tr class="memitem:a84c290b9cf7672b0f94aea9ff27acf1f inherit pub_methods_classerpcgen_1_1_symbol"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol.html#a84c290b9cf7672b0f94aea9ff27acf1f">getName</a> () const </td></tr>
 <tr class="memdesc:a84c290b9cf7672b0f94aea9ff27acf1f inherit pub_methods_classerpcgen_1_1_symbol"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns symbol name.  <a href="#a84c290b9cf7672b0f94aea9ff27acf1f">More...</a><br /></td></tr>
 <tr class="separator:a84c290b9cf7672b0f94aea9ff27acf1f inherit pub_methods_classerpcgen_1_1_symbol"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8f96db9d57dda1612b86863618b4b190 inherit pub_methods_classerpcgen_1_1_symbol"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8f96db9d57dda1612b86863618b4b190"></a>
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>getOutputName</b> ()</td></tr>
-<tr class="separator:a8f96db9d57dda1612b86863618b4b190 inherit pub_methods_classerpcgen_1_1_symbol"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af3a2dbfad1b23fbdfa3ef6e3812ad357 inherit pub_methods_classerpcgen_1_1_symbol"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol.html#af3a2dbfad1b23fbdfa3ef6e3812ad357">setName</a> (const std::string &amp;newName)</td></tr>
 <tr class="memdesc:af3a2dbfad1b23fbdfa3ef6e3812ad357 inherit pub_methods_classerpcgen_1_1_symbol"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function set symbol name.  <a href="#af3a2dbfad1b23fbdfa3ef6e3812ad357">More...</a><br /></td></tr>
 <tr class="separator:af3a2dbfad1b23fbdfa3ef6e3812ad357 inherit pub_methods_classerpcgen_1_1_symbol"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -346,24 +342,24 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>getOutputName<
 <tr class="memitem:a828866509c0ee041aaf7e31ab18cf2da inherit pub_methods_classerpcgen_1_1_symbol"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol.html#a828866509c0ee041aaf7e31ab18cf2da">addAnnotation</a> (const <a class="el" href="classerpcgen_1_1_annotation.html">Annotation</a> &amp;a)</td></tr>
 <tr class="memdesc:a828866509c0ee041aaf7e31ab18cf2da inherit pub_methods_classerpcgen_1_1_symbol"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function add annotation to vector of symbol annotations.  <a href="#a828866509c0ee041aaf7e31ab18cf2da">More...</a><br /></td></tr>
 <tr class="separator:a828866509c0ee041aaf7e31ab18cf2da inherit pub_methods_classerpcgen_1_1_symbol"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa3f9fe166df63e096228de582e87248b inherit pub_methods_classerpcgen_1_1_symbol"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol.html#aa3f9fe166df63e096228de582e87248b">printAnnotations</a> ()</td></tr>
-<tr class="memdesc:aa3f9fe166df63e096228de582e87248b inherit pub_methods_classerpcgen_1_1_symbol"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns description about annotation.  <a href="#aa3f9fe166df63e096228de582e87248b">More...</a><br /></td></tr>
-<tr class="separator:aa3f9fe166df63e096228de582e87248b inherit pub_methods_classerpcgen_1_1_symbol"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a674a1dff60207fa512a2a2b7b7146c3b inherit pub_methods_classerpcgen_1_1_symbol"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classerpcgen_1_1_annotation.html">Annotation</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol.html#a674a1dff60207fa512a2a2b7b7146c3b">findAnnotation</a> (std::string name)</td></tr>
-<tr class="memdesc:a674a1dff60207fa512a2a2b7b7146c3b inherit pub_methods_classerpcgen_1_1_symbol"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find annotation in the annotation list.  <a href="#a674a1dff60207fa512a2a2b7b7146c3b">More...</a><br /></td></tr>
-<tr class="separator:a674a1dff60207fa512a2a2b7b7146c3b inherit pub_methods_classerpcgen_1_1_symbol"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8ac0fa46b91ae20ff49c62cfab29a810 inherit pub_methods_classerpcgen_1_1_symbol"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="classerpcgen_1_1_annotation.html">Annotation</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol.html#a8ac0fa46b91ae20ff49c62cfab29a810">getAnnotations</a> (std::string name)</td></tr>
-<tr class="memdesc:a8ac0fa46b91ae20ff49c62cfab29a810 inherit pub_methods_classerpcgen_1_1_symbol"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find annotations matching name in the annotation list.  <a href="#a8ac0fa46b91ae20ff49c62cfab29a810">More...</a><br /></td></tr>
-<tr class="separator:a8ac0fa46b91ae20ff49c62cfab29a810 inherit pub_methods_classerpcgen_1_1_symbol"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af62148192831515bdb2a451ac2b29bba inherit pub_methods_classerpcgen_1_1_symbol"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol.html#af62148192831515bdb2a451ac2b29bba">printAnnotations</a> ()</td></tr>
+<tr class="memdesc:af62148192831515bdb2a451ac2b29bba inherit pub_methods_classerpcgen_1_1_symbol"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns description about annotation.  <a href="#af62148192831515bdb2a451ac2b29bba">More...</a><br /></td></tr>
+<tr class="separator:af62148192831515bdb2a451ac2b29bba inherit pub_methods_classerpcgen_1_1_symbol"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a883f6744741ad9076cb427c39c3783a4 inherit pub_methods_classerpcgen_1_1_symbol"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classerpcgen_1_1_annotation.html">Annotation</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol.html#a883f6744741ad9076cb427c39c3783a4">findAnnotation</a> (std::string name, Annotation::program_lang_t lang)</td></tr>
+<tr class="memdesc:a883f6744741ad9076cb427c39c3783a4 inherit pub_methods_classerpcgen_1_1_symbol"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find annotation in the annotation list.  <a href="#a883f6744741ad9076cb427c39c3783a4">More...</a><br /></td></tr>
+<tr class="separator:a883f6744741ad9076cb427c39c3783a4 inherit pub_methods_classerpcgen_1_1_symbol"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc5781b006ddfee4823e33698f9b65a6 inherit pub_methods_classerpcgen_1_1_symbol"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="classerpcgen_1_1_annotation.html">Annotation</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol.html#acc5781b006ddfee4823e33698f9b65a6">getAnnotations</a> (std::string name, Annotation::program_lang_t lang)</td></tr>
+<tr class="memdesc:acc5781b006ddfee4823e33698f9b65a6 inherit pub_methods_classerpcgen_1_1_symbol"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find annotations matching name in the annotation list.  <a href="#acc5781b006ddfee4823e33698f9b65a6">More...</a><br /></td></tr>
+<tr class="separator:acc5781b006ddfee4823e33698f9b65a6 inherit pub_methods_classerpcgen_1_1_symbol"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3bcd445c92c9ae8c225ac053809a590e inherit pub_methods_classerpcgen_1_1_symbol"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; <a class="el" href="classerpcgen_1_1_annotation.html">Annotation</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol.html#a3bcd445c92c9ae8c225ac053809a590e">getAnnotations</a> () const </td></tr>
-<tr class="memdesc:a3bcd445c92c9ae8c225ac053809a590e inherit pub_methods_classerpcgen_1_1_symbol"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find annotations matching name in the annotation list.  <a href="#a3bcd445c92c9ae8c225ac053809a590e">More...</a><br /></td></tr>
+<tr class="memdesc:a3bcd445c92c9ae8c225ac053809a590e inherit pub_methods_classerpcgen_1_1_symbol"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return all <a class="el" href="classerpcgen_1_1_symbol.html" title="Base class for all named declarations in the IDL. ">Symbol</a> annotations.  <a href="#a3bcd445c92c9ae8c225ac053809a590e">More...</a><br /></td></tr>
 <tr class="separator:a3bcd445c92c9ae8c225ac053809a590e inherit pub_methods_classerpcgen_1_1_symbol"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a73cbbdf49a7871529f147d5f987c5097 inherit pub_methods_classerpcgen_1_1_symbol"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_value.html">Value</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol.html#a73cbbdf49a7871529f147d5f987c5097">getAnnValue</a> (const std::string annName)</td></tr>
-<tr class="memdesc:a73cbbdf49a7871529f147d5f987c5097 inherit pub_methods_classerpcgen_1_1_symbol"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function search and returns <a class="el" href="class_value.html" title="Abstract base class for values of arbitrary types. ">Value</a> object for given annotation name.  <a href="#a73cbbdf49a7871529f147d5f987c5097">More...</a><br /></td></tr>
-<tr class="separator:a73cbbdf49a7871529f147d5f987c5097 inherit pub_methods_classerpcgen_1_1_symbol"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad1fd4ff5335298c0192832550c26e76f inherit pub_methods_classerpcgen_1_1_symbol"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol.html#ad1fd4ff5335298c0192832550c26e76f">getAnnStringValue</a> (const std::string annName)</td></tr>
-<tr class="memdesc:ad1fd4ff5335298c0192832550c26e76f inherit pub_methods_classerpcgen_1_1_symbol"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function search and returns string for given annotation name.  <a href="#ad1fd4ff5335298c0192832550c26e76f">More...</a><br /></td></tr>
-<tr class="separator:ad1fd4ff5335298c0192832550c26e76f inherit pub_methods_classerpcgen_1_1_symbol"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6935af23ecdcd2f9fb2a02f92ebae1f9 inherit pub_methods_classerpcgen_1_1_symbol"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_value.html">Value</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol.html#a6935af23ecdcd2f9fb2a02f92ebae1f9">getAnnValue</a> (const std::string annName, Annotation::program_lang_t lang)</td></tr>
+<tr class="memdesc:a6935af23ecdcd2f9fb2a02f92ebae1f9 inherit pub_methods_classerpcgen_1_1_symbol"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function search and returns <a class="el" href="class_value.html" title="Abstract base class for values of arbitrary types. ">Value</a> object for given annotation name.  <a href="#a6935af23ecdcd2f9fb2a02f92ebae1f9">More...</a><br /></td></tr>
+<tr class="separator:a6935af23ecdcd2f9fb2a02f92ebae1f9 inherit pub_methods_classerpcgen_1_1_symbol"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44d832e6e7934e13f6d6ab1d8799cbdf inherit pub_methods_classerpcgen_1_1_symbol"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol.html#a44d832e6e7934e13f6d6ab1d8799cbdf">getAnnStringValue</a> (const std::string annName, Annotation::program_lang_t lang)</td></tr>
+<tr class="memdesc:a44d832e6e7934e13f6d6ab1d8799cbdf inherit pub_methods_classerpcgen_1_1_symbol"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function search and returns string for given annotation name.  <a href="#a44d832e6e7934e13f6d6ab1d8799cbdf">More...</a><br /></td></tr>
+<tr class="separator:a44d832e6e7934e13f6d6ab1d8799cbdf inherit pub_methods_classerpcgen_1_1_symbol"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a85fc3b86b1d1935f3017f8d5db3a2111 inherit pub_methods_classerpcgen_1_1_symbol"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol.html#a85fc3b86b1d1935f3017f8d5db3a2111">getMlComment</a> ()</td></tr>
 <tr class="memdesc:a85fc3b86b1d1935f3017f8d5db3a2111 inherit pub_methods_classerpcgen_1_1_symbol"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns multiline comment for this symbol declared in IDL file.  <a href="#a85fc3b86b1d1935f3017f8d5db3a2111">More...</a><br /></td></tr>
 <tr class="separator:a85fc3b86b1d1935f3017f8d5db3a2111 inherit pub_methods_classerpcgen_1_1_symbol"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -536,6 +532,8 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
+<p>Reimplemented from <a class="el" href="classerpcgen_1_1_data_type.html#a808605c3d694c3fa2ef896bc1cdecf60">erpcgen::DataType</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a8007b6e666199f3798fd337c3393a5b3"></a>
@@ -632,6 +630,40 @@ Protected Attributes</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a class="anchor" id="abdeaaab765db6146f0599adab08ca99b"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bool erpcgen::BuiltinType::isScalar </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>This function return "true" value for identify scalar type. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>When builtin type is integer, float or boolean. </td></tr>
+    <tr><td class="paramname">false</td><td>When builtin type isn't integer, float or boolean. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Reimplemented from <a class="el" href="classerpcgen_1_1_data_type.html#a90cb8b73955d9b97853b3d4cfb765de8">erpcgen::DataType</a>.</p>
 
 </div>
 </div>

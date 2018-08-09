@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC API Reference
-   &#160;<span id="projectnumber">Rev. 1.5.0</span>
+   &#160;<span id="projectnumber">Rev. 1.7.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -51,7 +51,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="modules.html"><span>API&#160;Reference</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -126,31 +125,110 @@ $(document).ready(function(){initNavTree('classerpc_1_1_semaphore.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aca1661adbce12634d2fa9d7e0c09d121"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aca1661adbce12634d2fa9d7e0c09d121"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Semaphore</b> (int count=0)</td></tr>
+<tr class="memitem:aca1661adbce12634d2fa9d7e0c09d121"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_semaphore.html#aca1661adbce12634d2fa9d7e0c09d121">Semaphore</a> (int count=0)</td></tr>
+<tr class="memdesc:aca1661adbce12634d2fa9d7e0c09d121"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#aca1661adbce12634d2fa9d7e0c09d121">More...</a><br /></td></tr>
 <tr class="separator:aca1661adbce12634d2fa9d7e0c09d121"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3f4cf74d488ec755744ff43cd1569e75"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3f4cf74d488ec755744ff43cd1569e75"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>put</b> ()</td></tr>
-<tr class="separator:a3f4cf74d488ec755744ff43cd1569e75"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acc9eb9784a80e05822735dbbb872ca3c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acc9eb9784a80e05822735dbbb872ca3c"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>putFromISR</b> ()</td></tr>
-<tr class="separator:acc9eb9784a80e05822735dbbb872ca3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a616d55bf3880b4135745ef3c47f6a886"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a616d55bf3880b4135745ef3c47f6a886"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>get</b> (uint32_t timeout=kWaitForever)</td></tr>
+<tr class="memitem:a34155a38ef17920113a3d01f799ad076"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a34155a38ef17920113a3d01f799ad076"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_semaphore.html#a34155a38ef17920113a3d01f799ad076">~Semaphore</a> (void)</td></tr>
+<tr class="memdesc:a34155a38ef17920113a3d01f799ad076"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
+<tr class="separator:a34155a38ef17920113a3d01f799ad076"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0e5a7ea7ccad9e7424c1b23eda77baab"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0e5a7ea7ccad9e7424c1b23eda77baab"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_semaphore.html#a0e5a7ea7ccad9e7424c1b23eda77baab">put</a> (void)</td></tr>
+<tr class="memdesc:a0e5a7ea7ccad9e7424c1b23eda77baab"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function puts semaphore. <br /></td></tr>
+<tr class="separator:a0e5a7ea7ccad9e7424c1b23eda77baab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a616d55bf3880b4135745ef3c47f6a886"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_semaphore.html#a616d55bf3880b4135745ef3c47f6a886">get</a> (uint32_t timeout=<a class="el" href="classerpc_1_1_semaphore.html#a2f8418d5b20e94a577caa0d0e428c441">kWaitForever</a>)</td></tr>
+<tr class="memdesc:a616d55bf3880b4135745ef3c47f6a886"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function get semaphore.  <a href="#a616d55bf3880b4135745ef3c47f6a886">More...</a><br /></td></tr>
 <tr class="separator:a616d55bf3880b4135745ef3c47f6a886"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0d0a1689d8e855661793b34b8f3fe11a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0d0a1689d8e855661793b34b8f3fe11a"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>getCount</b> () const </td></tr>
-<tr class="separator:a0d0a1689d8e855661793b34b8f3fe11a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19fa4fe7ab2e2adf7387ba8eddac998a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_semaphore.html#a19fa4fe7ab2e2adf7387ba8eddac998a">getCount</a> (void) const </td></tr>
+<tr class="memdesc:a19fa4fe7ab2e2adf7387ba8eddac998a"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns semaphore count number.  <a href="#a19fa4fe7ab2e2adf7387ba8eddac998a">More...</a><br /></td></tr>
+<tr class="separator:a19fa4fe7ab2e2adf7387ba8eddac998a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
 <tr class="memitem:a2f8418d5b20e94a577caa0d0e428c441"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2f8418d5b20e94a577caa0d0e428c441"></a>
-static const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>kWaitForever</b></td></tr>
+static const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_semaphore.html#a2f8418d5b20e94a577caa0d0e428c441">kWaitForever</a></td></tr>
+<tr class="memdesc:a2f8418d5b20e94a577caa0d0e428c441"><td class="mdescLeft">&#160;</td><td class="mdescRight">Variable for semaphore to wait forever. <br /></td></tr>
 <tr class="separator:a2f8418d5b20e94a577caa0d0e428c441"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Simple semaphore class. </p>
-</div><hr/>The documentation for this class was generated from the following files:<ul>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="aca1661adbce12634d2fa9d7e0c09d121"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Semaphore::Semaphore </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>count</em> = <code>0</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">count</td><td><a class="el" href="classerpc_1_1_semaphore.html" title="Simple semaphore class. ">Semaphore</a> number. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a616d55bf3880b4135745ef3c47f6a886"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Semaphore::get </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>timeout</em> = <code><a class="el" href="classerpc_1_1_semaphore.html#a2f8418d5b20e94a577caa0d0e428c441">kWaitForever</a></code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This function get semaphore. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">timeout</td><td>Time how long can wait for getting semaphore.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>When semaphore got successfully. </td></tr>
+    <tr><td class="paramname">false</td><td>When mutex didn't get. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a19fa4fe7ab2e2adf7387ba8eddac998a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Semaphore::getCount </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This function returns semaphore count number. </p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classerpc_1_1_semaphore.html" title="Simple semaphore class. ">Semaphore</a> count number. </dd></dl>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li><a class="el" href="erpc__threading_8h_source.html">erpc_threading.h</a></li>
 <li>erpc_threading_pthreads.cpp</li>
 </ul>

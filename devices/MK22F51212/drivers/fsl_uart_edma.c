@@ -6,7 +6,7 @@
  *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
+ *  that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -37,6 +37,11 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.uart_edma"
+#endif
 
 /* Array of UART handle. */
 #if (defined(UART5))
@@ -82,7 +87,7 @@ enum _uart_edma_tansfer_states
 };
 
 /*******************************************************************************
- * Definitions
+ * Variables
  ******************************************************************************/
 
 /*<! Private handle only used for internally. */
@@ -113,14 +118,6 @@ static void UART_SendEDMACallback(edma_handle_t *handle, void *param, bool trans
  * @param param Callback function parameter.
  */
 static void UART_ReceiveEDMACallback(edma_handle_t *handle, void *param, bool transferDone, uint32_t tcds);
-
-/*!
- * @brief Get the UART instance from peripheral base address.
- *
- * @param base UART peripheral base address.
- * @return UART instance.
- */
-extern uint32_t UART_GetInstance(UART_Type *base);
 
 /*******************************************************************************
  * Code

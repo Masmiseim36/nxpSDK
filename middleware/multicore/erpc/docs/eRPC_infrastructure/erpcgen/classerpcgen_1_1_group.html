@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC Generator (erpcgen)
-   &#160;<span id="projectnumber">Rev. 1.5.0</span>
+   &#160;<span id="projectnumber">Rev. 1.7.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -124,14 +124,11 @@ $(document).ready(function(){initNavTree('classerpcgen_1_1_group.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a6958e110daf1a2f2b67c8495fd93779c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6958e110daf1a2f2b67c8495fd93779c"></a>
-typedef std::vector&lt; <a class="el" href="classerpcgen_1_1_interface.html">Interface</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>interface_list_t</b></td></tr>
+<tr class="memitem:a6958e110daf1a2f2b67c8495fd93779c"><td class="memItemLeft" align="right" valign="top">typedef std::vector&lt; <a class="el" href="classerpcgen_1_1_interface.html">Interface</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_group.html#a6958e110daf1a2f2b67c8495fd93779c">interface_list_t</a></td></tr>
 <tr class="separator:a6958e110daf1a2f2b67c8495fd93779c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a445d27f77f14b9577850ed5ac2252ced"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a445d27f77f14b9577850ed5ac2252ced"></a>
-typedef std::vector&lt; <a class="el" href="classerpcgen_1_1_symbol.html">Symbol</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>symbols_list_t</b></td></tr>
+<tr class="memitem:a445d27f77f14b9577850ed5ac2252ced"><td class="memItemLeft" align="right" valign="top">typedef std::vector&lt; <a class="el" href="classerpcgen_1_1_symbol.html">Symbol</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_group.html#a445d27f77f14b9577850ed5ac2252ced">symbols_list_t</a></td></tr>
 <tr class="separator:a445d27f77f14b9577850ed5ac2252ced"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3b4750210cd8a7976f1173059a24fa7f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3b4750210cd8a7976f1173059a24fa7f"></a>
-typedef std::map&lt; <a class="el" href="classerpcgen_1_1_symbol.html">Symbol</a> *, std::set&lt; _param_direction &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>symbol_directions_map_t</b></td></tr>
+<tr class="memitem:a3b4750210cd8a7976f1173059a24fa7f"><td class="memItemLeft" align="right" valign="top">typedef std::map&lt; <a class="el" href="classerpcgen_1_1_symbol.html">Symbol</a> *, std::set&lt; _param_direction &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_group.html#a3b4750210cd8a7976f1173059a24fa7f">symbol_directions_map_t</a></td></tr>
 <tr class="separator:a3b4750210cd8a7976f1173059a24fa7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -145,16 +142,16 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a81dcba5930c77239b675580dbd072fd8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_group.html#a81dcba5930c77239b675580dbd072fd8">addInterface</a> (<a class="el" href="classerpcgen_1_1_interface.html">Interface</a> *iface)</td></tr>
 <tr class="memdesc:a81dcba5930c77239b675580dbd072fd8"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function will add pointer to interface into vector of group interfaces.  <a href="#a81dcba5930c77239b675580dbd072fd8">More...</a><br /></td></tr>
 <tr class="separator:a81dcba5930c77239b675580dbd072fd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa5e3e1667ee8648a1929c3b8679e8aa4"><td class="memItemLeft" align="right" valign="top">const interface_list_t &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_group.html#aa5e3e1667ee8648a1929c3b8679e8aa4">getInterfaces</a> () const </td></tr>
+<tr class="memitem:aa5e3e1667ee8648a1929c3b8679e8aa4"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classerpcgen_1_1_group.html#a6958e110daf1a2f2b67c8495fd93779c">interface_list_t</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_group.html#aa5e3e1667ee8648a1929c3b8679e8aa4">getInterfaces</a> () const </td></tr>
 <tr class="memdesc:aa5e3e1667ee8648a1929c3b8679e8aa4"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns vector with pointers to interfaces belonging to the group.  <a href="#aa5e3e1667ee8648a1929c3b8679e8aa4">More...</a><br /></td></tr>
 <tr class="separator:aa5e3e1667ee8648a1929c3b8679e8aa4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a47b4d062b82dc4f60698ae208fe12b9d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_group.html#a47b4d062b82dc4f60698ae208fe12b9d">addDirToSymbolsMap</a> (<a class="el" href="classerpcgen_1_1_symbol.html">Symbol</a> *symbol, _param_direction dir)</td></tr>
 <tr class="memdesc:a47b4d062b82dc4f60698ae208fe12b9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function will add direction for specified symbol held in a symbol map.  <a href="#a47b4d062b82dc4f60698ae208fe12b9d">More...</a><br /></td></tr>
 <tr class="separator:a47b4d062b82dc4f60698ae208fe12b9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae1ab8125204fc716dd25636738d80b8e"><td class="memItemLeft" align="right" valign="top">const std::set&lt; _param_direction &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_group.html#ae1ab8125204fc716dd25636738d80b8e">getSymbolDirections</a> (<a class="el" href="classerpcgen_1_1_symbol.html">Symbol</a> *symbol) const </td></tr>
-<tr class="memdesc:ae1ab8125204fc716dd25636738d80b8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns set with symbol directions.  <a href="#ae1ab8125204fc716dd25636738d80b8e">More...</a><br /></td></tr>
-<tr class="separator:ae1ab8125204fc716dd25636738d80b8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6b1d2e14f40455a7fa91b406479b2585"><td class="memItemLeft" align="right" valign="top">const symbols_list_t &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_group.html#a6b1d2e14f40455a7fa91b406479b2585">getSymbols</a> () const </td></tr>
+<tr class="memitem:a2a601a71e96f8280afcbb368c038f243"><td class="memItemLeft" align="right" valign="top">const std::set&lt; _param_direction &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_group.html#a2a601a71e96f8280afcbb368c038f243">getSymbolDirections</a> (<a class="el" href="classerpcgen_1_1_symbol.html">Symbol</a> *symbol) const </td></tr>
+<tr class="memdesc:a2a601a71e96f8280afcbb368c038f243"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns set with symbol directions.  <a href="#a2a601a71e96f8280afcbb368c038f243">More...</a><br /></td></tr>
+<tr class="separator:a2a601a71e96f8280afcbb368c038f243"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b1d2e14f40455a7fa91b406479b2585"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classerpcgen_1_1_group.html#a445d27f77f14b9577850ed5ac2252ced">symbols_list_t</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_group.html#a6b1d2e14f40455a7fa91b406479b2585">getSymbols</a> () const </td></tr>
 <tr class="memdesc:a6b1d2e14f40455a7fa91b406479b2585"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns vector with symbols.  <a href="#a6b1d2e14f40455a7fa91b406479b2585">More...</a><br /></td></tr>
 <tr class="separator:a6b1d2e14f40455a7fa91b406479b2585"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a99bacd4f6dcfb74a0608b7ad8807cbe3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_group.html#a99bacd4f6dcfb74a0608b7ad8807cbe3">setTemplate</a> (<a class="el" href="classcpptempl_1_1data__map.html">cpptempl::data_map</a> groupTemplate)</td></tr>
@@ -163,13 +160,53 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a2e5bec8a442cc88231eeb81a50b0e568"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classcpptempl_1_1data__map.html">cpptempl::data_map</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_group.html#a2e5bec8a442cc88231eeb81a50b0e568">getTemplate</a> ()</td></tr>
 <tr class="memdesc:a2e5bec8a442cc88231eeb81a50b0e568"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns group template.  <a href="#a2e5bec8a442cc88231eeb81a50b0e568">More...</a><br /></td></tr>
 <tr class="separator:a2e5bec8a442cc88231eeb81a50b0e568"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a396702a049b014919b3bf19b5ba02b26"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_group.html#a396702a049b014919b3bf19b5ba02b26">getDescription</a> () const </td></tr>
-<tr class="memdesc:a396702a049b014919b3bf19b5ba02b26"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns description about the interface.  <a href="#a396702a049b014919b3bf19b5ba02b26">More...</a><br /></td></tr>
-<tr class="separator:a396702a049b014919b3bf19b5ba02b26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae73097061031208b54465344b5454b90"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_group.html#ae73097061031208b54465344b5454b90">getDescription</a> () const </td></tr>
+<tr class="memdesc:ae73097061031208b54465344b5454b90"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns description about the interface.  <a href="#ae73097061031208b54465344b5454b90">More...</a><br /></td></tr>
+<tr class="separator:ae73097061031208b54465344b5454b90"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>An interface that contains functions. </p>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+</div><h2 class="groupheader">Member Typedef Documentation</h2>
+<a class="anchor" id="a6958e110daf1a2f2b67c8495fd93779c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef std::vector&lt;<a class="el" href="classerpcgen_1_1_interface.html">Interface</a> *&gt; <a class="el" href="classerpcgen_1_1_group.html#a6958e110daf1a2f2b67c8495fd93779c">erpcgen::Group::interface_list_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Vector of interfaces belongs to group. </p>
+
+</div>
+</div>
+<a class="anchor" id="a3b4750210cd8a7976f1173059a24fa7f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef std::map&lt;<a class="el" href="classerpcgen_1_1_symbol.html">Symbol</a> *, std::set&lt;_param_direction&gt; &gt; <a class="el" href="classerpcgen_1_1_group.html#a3b4750210cd8a7976f1173059a24fa7f">erpcgen::Group::symbol_directions_map_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Map symbol with direction in which is used in current group. </p>
+
+</div>
+</div>
+<a class="anchor" id="a445d27f77f14b9577850ed5ac2252ced"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef std::vector&lt;<a class="el" href="classerpcgen_1_1_symbol.html">Symbol</a> *&gt; <a class="el" href="classerpcgen_1_1_group.html#a445d27f77f14b9577850ed5ac2252ced">erpcgen::Group::symbols_list_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Vector of symbols belongs to group. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="af76d5c887e66fe0b796e0fe431821834"></a>
 <div class="memitem">
 <div class="memproto">
@@ -193,10 +230,9 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Constructor. </p>
-<p>This function set symbol token to given token.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">tok</td><td>Given token. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">name</td><td><a class="el" href="classerpcgen_1_1_group.html" title="An interface that contains functions. ">Group</a> name. </td></tr>
   </table>
   </dd>
 </dl>
@@ -263,12 +299,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a396702a049b014919b3bf19b5ba02b26"></a>
+<a class="anchor" id="ae73097061031208b54465344b5454b90"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string Group::getDescription </td>
+          <td class="memname">string Group::getDescription </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -278,23 +314,23 @@ Public Member Functions</h2></td></tr>
 
 <p>This function returns description about the interface. </p>
 <dl class="section return"><dt>Returns</dt><dd>String description about interface.</dd></dl>
-<dl class="section see"><dt>See also</dt><dd>std::string <a class="el" href="classerpcgen_1_1_function.html#af39ae0adaa0ebbc0600adffabae6f7a3" title="This function returns description about the interface function. ">Function::getDescription() const</a> </dd>
+<dl class="section see"><dt>See also</dt><dd>std::string <a class="el" href="classerpcgen_1_1_function.html#ac08e8cc2245d28b872d271f2d0b62bcc" title="This function returns description about the interface function. ">Function::getDescription() const</a> </dd>
 <dd>
-std::string <a class="el" href="classerpcgen_1_1_alias_type.html#a1dcefef6c4e73b429ebfddc13d056d9c" title="This function returns description about the alias. ">AliasType::getDescription() const</a> </dd>
+std::string <a class="el" href="classerpcgen_1_1_alias_type.html#af67a4592991def524769acb6280a7d92" title="This function returns description about the alias. ">AliasType::getDescription() const</a> </dd>
 <dd>
-std::string <a class="el" href="classerpcgen_1_1_enum_member.html#a72f031925bbc83f049e07fd04bd16abe" title="This function returns description about the enum member. ">EnumMember::getDescription() const</a> </dd>
+std::string <a class="el" href="classerpcgen_1_1_enum_member.html#a64ce4b33dfa9c10635ac2fd64089a4f1" title="This function returns description about the enum member. ">EnumMember::getDescription() const</a> </dd>
 <dd>
-std::string <a class="el" href="classerpcgen_1_1_enum_type.html#a7b1138290c55479bfd939a61eaceb392" title="This function returns description about the enum. ">EnumType::getDescription() const</a> </dd>
+std::string <a class="el" href="classerpcgen_1_1_enum_type.html#ab95b28ad62ecb25638468b2ba7783921" title="This function returns description about the enum. ">EnumType::getDescription() const</a> </dd>
 <dd>
-std::string <a class="el" href="classerpcgen_1_1_struct_member.html#a839ee493aa6fafaac3dda9ec292ed1dd" title="This function returns description about the struct member. ">StructMember::getDescription() const</a> </dd>
+std::string <a class="el" href="classerpcgen_1_1_struct_member.html#a35caff93a725d1a34e961cafc2a09085" title="This function returns description about the struct member. ">StructMember::getDescription() const</a> </dd>
 <dd>
-std::string <a class="el" href="classerpcgen_1_1_struct_type.html#a78421cc24d8632d9eb95b76e2e68dbbe" title="This function returns description about the struct. ">StructType::getDescription() const</a> </dd>
+std::string <a class="el" href="classerpcgen_1_1_struct_type.html#a399c40208f97e0d72d3a4d526596b097" title="This function returns description about the struct. ">StructType::getDescription() const</a> </dd>
 <dd>
 std::string <a class="el" href="classerpcgen_1_1_void_type.html#a329b76a4ef8e30637e7607883772b0e3" title="This function returns description about the void. ">VoidType::getDescription() const</a> </dd>
 <dd>
-std::string <a class="el" href="classerpcgen_1_1_array_type.html#a1c5a4e6413834ed1d286ae56d4566f85" title="This function returns description about the array. ">ArrayType::getDescription() const</a> </dd>
+std::string <a class="el" href="classerpcgen_1_1_array_type.html#a2f24b1e2e72bda762761a4bc2f03eaae" title="This function returns description about the array. ">ArrayType::getDescription() const</a> </dd>
 <dd>
-std::string <a class="el" href="classerpcgen_1_1_list_type.html#acd69b19dae89b94123a97cbfad33ba0c" title="This function returns description about the list. ">ListType::getDescription() const</a> </dd></dl>
+std::string <a class="el" href="classerpcgen_1_1_list_type.html#a360f3a198f4f48067dbf79b0c9fd71c3" title="This function returns description about the list. ">ListType::getDescription() const</a> </dd></dl>
 
 </div>
 </div>
@@ -306,7 +342,7 @@ std::string <a class="el" href="classerpcgen_1_1_list_type.html#acd69b19dae89b94
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const interface_list_t&amp; erpcgen::Group::getInterfaces </td>
+          <td class="memname">const <a class="el" href="classerpcgen_1_1_group.html#a6958e110daf1a2f2b67c8495fd93779c">interface_list_t</a>&amp; erpcgen::Group::getInterfaces </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -350,12 +386,12 @@ std::string <a class="el" href="classerpcgen_1_1_list_type.html#acd69b19dae89b94
 
 </div>
 </div>
-<a class="anchor" id="ae1ab8125204fc716dd25636738d80b8e"></a>
+<a class="anchor" id="a2a601a71e96f8280afcbb368c038f243"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const std::set&lt; _param_direction &gt; Group::getSymbolDirections </td>
+          <td class="memname">const set&lt; _param_direction &gt; Group::getSymbolDirections </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classerpcgen_1_1_symbol.html">Symbol</a> *&#160;</td>
           <td class="paramname"><em>symbol</em></td><td>)</td>
@@ -383,7 +419,7 @@ std::string <a class="el" href="classerpcgen_1_1_list_type.html#acd69b19dae89b94
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const symbols_list_t&amp; erpcgen::Group::getSymbols </td>
+          <td class="memname">const <a class="el" href="classerpcgen_1_1_group.html#a445d27f77f14b9577850ed5ac2252ced">symbols_list_t</a>&amp; erpcgen::Group::getSymbols </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>

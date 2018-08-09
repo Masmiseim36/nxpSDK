@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC API Reference
-   &#160;<span id="projectnumber">Rev. 1.5.0</span>
+   &#160;<span id="projectnumber">Rev. 1.7.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -51,7 +51,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="modules.html"><span>API&#160;Reference</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -129,8 +128,7 @@ $(document).ready(function(){initNavTree('globals.html','');});
 
 <h3><a class="anchor" id="index_c"></a>- c -</h3><ul>
 <li>client_error_handler_t
-: <a class="el" href="group__infra__client.html#gab7dcc8461d2301b2ae32448b0f69ef85">client_manager.h</a>
-, <a class="el" href="group__client__setup.html#gab7dcc8461d2301b2ae32448b0f69ef85">erpc_arbitrated_client_setup.h</a>
+: <a class="el" href="group__infra__client.html#ga2e6094cc3ec774c5a1e2b2e57879f3b1">erpc_client_manager.h</a>
 </li>
 </ul>
 
@@ -145,14 +143,23 @@ $(document).ready(function(){initNavTree('globals.html','');});
 <li>erpc_arbitrated_client_init()
 : <a class="el" href="group__client__setup.html#gad9d2c46ec314b6a5b0a2010b82e6ff07">erpc_arbitrated_client_setup.h</a>
 </li>
+<li>erpc_arbitrated_client_set_crc()
+: <a class="el" href="group__client__setup.html#gae767b4ea7f79a7f77420af7bccfde648">erpc_arbitrated_client_setup.h</a>
+</li>
+<li>erpc_arbitrated_client_set_error_handler()
+: <a class="el" href="group__client__setup.html#gafc448a5457fea8c7b580451c80d40371">erpc_arbitrated_client_setup.h</a>
+</li>
 <li>erpc_client_deinit()
 : <a class="el" href="group__client__setup.html#ga0031e29227c42bbd3889e380b3a271cd">erpc_client_setup.h</a>
 </li>
 <li>erpc_client_init()
 : <a class="el" href="group__client__setup.html#gaf3f29e558eadfae73ff3f20ab11d0200">erpc_client_setup.h</a>
 </li>
+<li>erpc_client_set_crc()
+: <a class="el" href="group__client__setup.html#ga11d832323f8dadcbb56686211a9df075">erpc_client_setup.h</a>
+</li>
 <li>erpc_client_set_error_handler()
-: <a class="el" href="group__client__setup.html#gaed9d0f4e2c3a22bde5a4f1077c54f04e">erpc_arbitrated_client_setup.h</a>
+: <a class="el" href="group__client__setup.html#gaed9d0f4e2c3a22bde5a4f1077c54f04e">erpc_client_setup.h</a>
 </li>
 <li>erpc_free()
 : <a class="el" href="group__port__mem.html#ga632c588d467eb5183c62c9959564b160">erpc_port.h</a>
@@ -211,6 +218,9 @@ $(document).ready(function(){initNavTree('globals.html','');});
 <li>erpc_server_run()
 : <a class="el" href="group__server__setup.html#gae753560d144b00a1926a3f653baea132">erpc_server_setup.h</a>
 </li>
+<li>erpc_server_set_crc()
+: <a class="el" href="group__server__setup.html#gadbe047d1e39e0401f0d97780c7e75fc8">erpc_server_setup.h</a>
+</li>
 <li>erpc_server_stop()
 : <a class="el" href="group__server__setup.html#ga325256462d7c6e0e864d3637e99e1d55">erpc_server_setup.h</a>
 </li>
@@ -226,6 +236,9 @@ $(document).ready(function(){initNavTree('globals.html','');});
 <li>ERPC_THREADS_PTHREADS
 : <a class="el" href="group__config.html#ga249c8ba8309397b48bdaa5225ff9d6e3">erpc_config.h</a>
 </li>
+<li>ERPC_THREADS_ZEPHYR
+: <a class="el" href="group__config.html#gaf95f61991be1c2ad5c24825b2d6feed4">erpc_config.h</a>
+</li>
 <li>erpc_transport_cmsis_uart_init()
 : <a class="el" href="group__transport__setup.html#gadd5c1658590ea80c4c777c872ac4dd94">erpc_transport_setup.h</a>
 </li>
@@ -238,8 +251,14 @@ $(document).ready(function(){initNavTree('globals.html','');});
 <li>erpc_transport_mu_init()
 : <a class="el" href="group__transport__setup.html#gaa5b2e0c4868c59f9210a8a43cc8feaac">erpc_transport_setup.h</a>
 </li>
+<li>ERPC_TRANSPORT_MU_USE_MCMGR_DISABLED
+: <a class="el" href="group__config.html#ga80f86b98f08e652cef6559fd735493e0">erpc_config.h</a>
+</li>
+<li>ERPC_TRANSPORT_MU_USE_MCMGR_ENABLED
+: <a class="el" href="group__config.html#ga756377c015b4b551b1c5ad8862053ded">erpc_config.h</a>
+</li>
 <li>erpc_transport_rpmsg_linux_deinit()
-: <a class="el" href="group__transport__setup.html#ga9afa65675c6620ca543138b475dc57e6">erpc_transport_setup.h</a>
+: <a class="el" href="group__transport__setup.html#ga47ceb0fc19ed2d526711e5edb7857bfc">erpc_transport_setup.h</a>
 </li>
 <li>erpc_transport_rpmsg_linux_init()
 : <a class="el" href="group__transport__setup.html#ga3c41e3f28a910416a17ba6e418e5771a">erpc_transport_setup.h</a>
@@ -248,13 +267,13 @@ $(document).ready(function(){initNavTree('globals.html','');});
 : <a class="el" href="group__transport__setup.html#ga8350495e66922501e557574732dd1356">erpc_transport_setup.h</a>
 </li>
 <li>erpc_transport_rpmsg_lite_remote_init()
-: <a class="el" href="group__transport__setup.html#ga4006b26ac82f5743d32d1dce20b04782">erpc_transport_setup.h</a>
+: <a class="el" href="group__transport__setup.html#ga9e5ca024890c3bb87c9f43ac6fe84e95">erpc_transport_setup.h</a>
 </li>
 <li>erpc_transport_rpmsg_lite_rtos_master_init()
 : <a class="el" href="group__transport__setup.html#ga58a3332ea60ae84478e14e01af451783">erpc_transport_setup.h</a>
 </li>
 <li>erpc_transport_rpmsg_lite_rtos_remote_init()
-: <a class="el" href="group__transport__setup.html#ga08cfc42f815bfae1ca4b7f4a82b613fe">erpc_transport_setup.h</a>
+: <a class="el" href="group__transport__setup.html#gac64dd60de2b8a3120a7cdbafd3dba569">erpc_transport_setup.h</a>
 </li>
 <li>erpc_transport_rpmsg_lite_tty_rtos_remote_init()
 : <a class="el" href="group__transport__setup.html#ga83a356abab71852b09ebd3106541c3e4">erpc_transport_setup.h</a>
@@ -276,7 +295,7 @@ $(document).ready(function(){initNavTree('globals.html','');});
 
 <h3><a class="anchor" id="index_m"></a>- m -</h3><ul>
 <li>MU_REG_COUNT
-: <a class="el" href="group__mu__transport.html#gaa82790221f23bdec962980cdefd23108">mu_transport.h</a>
+: <a class="el" href="group__mu__transport.html#gaa82790221f23bdec962980cdefd23108">erpc_mu_transport.h</a>
 </li>
 </ul>
 

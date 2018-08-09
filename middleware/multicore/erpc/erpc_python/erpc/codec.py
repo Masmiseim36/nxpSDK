@@ -66,9 +66,6 @@ class Codec(object):
     def start_write_message(self, msgInfo):
         raise NotImplementedError()
 
-    def end_write_message(self):
-        raise NotImplementedError()
-
     def write_bool(self, value):
         raise NotImplementedError()
 
@@ -111,19 +108,7 @@ class Codec(object):
     def start_write_list(self, length):
         raise NotImplementedError()
 
-    def end_write_list(self):
-        raise NotImplementedError()
-
-    def start_write_struct(self):
-        raise NotImplementedError()
-
-    def end_write_struct(self):
-        raise NotImplementedError()
-
     def start_write_union(self, discriminator):
-        raise NotImplementedError()
-
-    def end_write_union(self):
         raise NotImplementedError()
 
     def write_null_flag(self, flag):
@@ -132,9 +117,6 @@ class Codec(object):
     ##
     # @return MessageInfo object.
     def start_read_message(self):
-        raise NotImplementedError()
-
-    def end_read_message(self):
         raise NotImplementedError()
 
     def read_bool(self):
@@ -181,21 +163,9 @@ class Codec(object):
     def start_read_list(self):
         raise NotImplementedError()
 
-    def end_read_list(self):
-        raise NotImplementedError()
-
-    def start_read_struct(self):
-        raise NotImplementedError()
-
-    def end_read_struct(self):
-        raise NotImplementedError()
-
     ##
     # @return Int of union discriminator.
-    def start_read_list(self):
-        raise NotImplementedError()
-
-    def end_read_list(self):
+    def start_read_union(self):
         raise NotImplementedError()
 
     def read_null_flag(self):

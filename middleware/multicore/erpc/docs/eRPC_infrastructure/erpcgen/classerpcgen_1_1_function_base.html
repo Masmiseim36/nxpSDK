@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC Generator (erpcgen)
-   &#160;<span id="projectnumber">Rev. 1.5.0</span>
+   &#160;<span id="projectnumber">Rev. 1.7.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -134,8 +134,9 @@ Inheritance diagram for erpcgen::FunctionBase:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ad713a2fa70593eb081524643f82d828d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_function_base.html#ad713a2fa70593eb081524643f82d828d">FunctionBase</a> ()</td></tr>
-<tr class="memdesc:ad713a2fa70593eb081524643f82d828d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#ad713a2fa70593eb081524643f82d828d">More...</a><br /></td></tr>
+<tr class="memitem:ad713a2fa70593eb081524643f82d828d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad713a2fa70593eb081524643f82d828d"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_function_base.html#ad713a2fa70593eb081524643f82d828d">FunctionBase</a> ()</td></tr>
+<tr class="memdesc:ad713a2fa70593eb081524643f82d828d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor. <br /></td></tr>
 <tr class="separator:ad713a2fa70593eb081524643f82d828d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab8a6e2492aa75830427d2ed324729fd8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classerpcgen_1_1_struct_type.html">StructType</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_function_base.html#ab8a6e2492aa75830427d2ed324729fd8">getParameters</a> ()</td></tr>
 <tr class="memdesc:ab8a6e2492aa75830427d2ed324729fd8"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns function parameters.  <a href="#ab8a6e2492aa75830427d2ed324729fd8">More...</a><br /></td></tr>
@@ -171,40 +172,7 @@ Protected Attributes</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="classerpcgen_1_1_function.html" title="Function declaration. ">Function</a> base declaration. </p>
 <p>The function's parameters are represented by a <a class="el" href="classerpcgen_1_1_struct_type.html" title="Structure data type. ">StructType</a> object. </p>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="ad713a2fa70593eb081524643f82d828d"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">erpcgen::FunctionBase::FunctionBase </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Constructor. </p>
-<p>This function set symbol token to given token.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">tok</td><td>Given token. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<h2 class="groupheader">Member Function Documentation</h2>
+</div><h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="a535db6d15974e5f0db15f895564a5f49"></a>
 <div class="memitem">
 <div class="memproto">
@@ -228,23 +196,23 @@ Protected Attributes</h2></td></tr>
 
 <p>This function returns description about the interface function. </p>
 <dl class="section return"><dt>Returns</dt><dd>String description about interface function.</dd></dl>
-<dl class="section see"><dt>See also</dt><dd>std::string <a class="el" href="classerpcgen_1_1_alias_type.html#a1dcefef6c4e73b429ebfddc13d056d9c" title="This function returns description about the alias. ">AliasType::getDescription() const</a> </dd>
+<dl class="section see"><dt>See also</dt><dd>std::string <a class="el" href="classerpcgen_1_1_alias_type.html#af67a4592991def524769acb6280a7d92" title="This function returns description about the alias. ">AliasType::getDescription() const</a> </dd>
 <dd>
-std::string <a class="el" href="classerpcgen_1_1_enum_member.html#a72f031925bbc83f049e07fd04bd16abe" title="This function returns description about the enum member. ">EnumMember::getDescription() const</a> </dd>
+std::string <a class="el" href="classerpcgen_1_1_enum_member.html#a64ce4b33dfa9c10635ac2fd64089a4f1" title="This function returns description about the enum member. ">EnumMember::getDescription() const</a> </dd>
 <dd>
-std::string <a class="el" href="classerpcgen_1_1_enum_type.html#a7b1138290c55479bfd939a61eaceb392" title="This function returns description about the enum. ">EnumType::getDescription() const</a> </dd>
+std::string <a class="el" href="classerpcgen_1_1_enum_type.html#ab95b28ad62ecb25638468b2ba7783921" title="This function returns description about the enum. ">EnumType::getDescription() const</a> </dd>
 <dd>
-std::string <a class="el" href="classerpcgen_1_1_struct_member.html#a839ee493aa6fafaac3dda9ec292ed1dd" title="This function returns description about the struct member. ">StructMember::getDescription() const</a> </dd>
+std::string <a class="el" href="classerpcgen_1_1_struct_member.html#a35caff93a725d1a34e961cafc2a09085" title="This function returns description about the struct member. ">StructMember::getDescription() const</a> </dd>
 <dd>
-std::string <a class="el" href="classerpcgen_1_1_struct_type.html#a78421cc24d8632d9eb95b76e2e68dbbe" title="This function returns description about the struct. ">StructType::getDescription() const</a> </dd>
+std::string <a class="el" href="classerpcgen_1_1_struct_type.html#a399c40208f97e0d72d3a4d526596b097" title="This function returns description about the struct. ">StructType::getDescription() const</a> </dd>
 <dd>
 std::string <a class="el" href="classerpcgen_1_1_void_type.html#a329b76a4ef8e30637e7607883772b0e3" title="This function returns description about the void. ">VoidType::getDescription() const</a> </dd>
 <dd>
-std::string <a class="el" href="classerpcgen_1_1_array_type.html#a1c5a4e6413834ed1d286ae56d4566f85" title="This function returns description about the array. ">ArrayType::getDescription() const</a> </dd>
+std::string <a class="el" href="classerpcgen_1_1_array_type.html#a2f24b1e2e72bda762761a4bc2f03eaae" title="This function returns description about the array. ">ArrayType::getDescription() const</a> </dd>
 <dd>
-std::string <a class="el" href="classerpcgen_1_1_list_type.html#acd69b19dae89b94123a97cbfad33ba0c" title="This function returns description about the list. ">ListType::getDescription() const</a> </dd></dl>
+std::string <a class="el" href="classerpcgen_1_1_list_type.html#a360f3a198f4f48067dbf79b0c9fd71c3" title="This function returns description about the list. ">ListType::getDescription() const</a> </dd></dl>
 
-<p>Implemented in <a class="el" href="classerpcgen_1_1_function.html#af39ae0adaa0ebbc0600adffabae6f7a3">erpcgen::Function</a>, and <a class="el" href="classerpcgen_1_1_function_type.html#affe03350244bc8f6ede31e6369110b9e">erpcgen::FunctionType</a>.</p>
+<p>Implemented in <a class="el" href="classerpcgen_1_1_function.html#ac08e8cc2245d28b872d271f2d0b62bcc">erpcgen::Function</a>, and <a class="el" href="classerpcgen_1_1_function_type.html#a1ba160e75431f90aa118b0306a4c0a5e">erpcgen::FunctionType</a>.</p>
 
 </div>
 </div>

@@ -20,6 +20,7 @@ var classerpcgen_1_1erpcgen_tool =
     [ "setVerboseLogging", "classerpcgen_1_1erpcgen_tool.html#abd926b2405ea43c2c1a458c534a10113", null ],
     [ "m_argc", "classerpcgen_1_1erpcgen_tool.html#a87a21aec266b7d41a093856d317022dc", null ],
     [ "m_argv", "classerpcgen_1_1erpcgen_tool.html#acf0f0bd02dd0fb614615e47609c53ad6", null ],
+    [ "m_codec", "classerpcgen_1_1erpcgen_tool.html#a90adef0cb996f0bb4df3092315c1d5a1", null ],
     [ "m_ErpcFile", "classerpcgen_1_1erpcgen_tool.html#a7f026b5a3af0d88ab5e17a0ce22770b2", null ],
     [ "m_logger", "classerpcgen_1_1erpcgen_tool.html#ae85916aa15bc6b40bbfba1200cf3f791", null ],
     [ "m_outputFilePath", "classerpcgen_1_1erpcgen_tool.html#ae6648f09df35b3de810795266d0e14a5", null ],

@@ -1,4 +1,4 @@
-## Identifiers, literals, whitespace
+﻿## Identifiers, literals, whitespace
 #### Identifiers
 Follow the same rules as in C/C++. Identifiers must start with an alphabetic character or underscore, and may include alphanumeric characters and underscores.
 #### Literals
@@ -40,14 +40,21 @@ The _string_ contains just the name, or the name-contained file path to the IDL 
 Annotations provide a way to inform the eRPC generator about specific requests for some parts of the code.
 * Unrecognized annotations are ignored by code generators.
 * Each annotation starts with the “``@``” character.
-* It is followed by the annotation name; for example, ``@external``.
+* Then optionally can be inserted program language specifier followed with colon  “``c:``”. Currently supported program language specifiers are ``c`` ( for C), ``py`` ( for Python). **Do not use with function/interface id annotation.**
+* Then it is followed by the annotation name; for example, ``@external``.
 
 This is enough for one type of annotation (when you want to only inform the eRPC generator about a specific attribute of the code). The second type of annotation is extended using the “( )” parentheses. A specific parameter can be placed inside parentheses. This can be a number, text, or other things.
 
 #### Supported annotations:
 
+##### ``@crc``
+When this annotation is used, then crc value is generated based on eRPC version and IDL file. User can access this value through _extern const uint32_t erpc_generated_crc;_. This value can be then set to eRPC tranport. Thanks to this transport checks if client and server have same eRPC version and IDL files without adding any execution code.  Project need include "erpc_crc16.h" header file.
+
 ##### ``@discriminator(string)``
 When non-encapsulated unions are used, discriminator needs be specified with using this annotation.
+
+##### ``@dynamic_services``
+Service objects will be dynamically allocated otherwise statically.
 
 ##### ``@error_return(value)``
 When the annotation ``@error_return`` is set, then this _value _ is used for the return value from the client-side called function, when the error will occur inside.
@@ -84,9 +91,6 @@ Annotation ``@max_length`` sets the maximum size of the string value. This size 
 
 ##### ``@name(string)``
 Annotation ``@name`` sets data type, function's param or structure's member name. This is invented for cases when the erpcgen is complaining about using IDL's reserved words, but for selected output programming language these are not reserved words.
-
-##### ``@nested``
-This annotation helps identify functions, which are calling another eRPC function in their implementations. The server object needs to be set to the client.
 
 ##### ``@no_alloc_errors``
 Generated files have a default-enabled generating _error checking code_ for catching errors from bad allocations. For disabling generating _errors checking code_ for bad allocation just add ``@no_alloc_errors``.
@@ -130,6 +134,8 @@ The ``program`` statement does not cause any code to generate by itself. It is u
 
 ### Supported annotations
 ```
+@crc
+@dynamic_services
 @include(string)
 @no_alloc_errors
 @no_const_param
@@ -184,7 +190,6 @@ Supported annotations are used _before a function declaration_.
 @external
 @id(number)
 @name(string)
-@nested
 ```
 
 ### Functions parameters annotations
@@ -210,7 +215,7 @@ The IDL type representation for this is: ``type _aliasName_ = _originalType_``
 IDL definition | C definition |
 ---|---
 type _aliasName_ = int32 | typedef int32_t _aliasName_;
-type _aliasName_ = list<int32> | typedef list_0 _aliasName_;
+type _aliasName_ = list<int32> | typedef list_int32_1_t _aliasName_;
 type _aliasName_ = int32[20] | typedef int32_t _aliasName_[20];
 
 ### Built-in types
@@ -364,7 +369,7 @@ union unionType
 {
     int32_t a;
     float b;
-    list_0 c;
+    list_int32_1_t c;
     struct {
         int32_t x;
         int32_t y;
@@ -431,7 +436,7 @@ struct A {
     {
         int32_t a;
         float b;
-        list_0 c;
+        list_int32_1_t c;
         struct {
             int32_t x;
             int32_t y;
@@ -458,14 +463,14 @@ Because the C language does not have a built-in list type, the generator must sy
 
 The conversion is very straightforward. For ``list<int32>``, this code is generated:
 ```C
-struct list_0_t {
+struct list_int32_1_t {
     int32_t * elements;
     uint32_t elementsCount;
 };
 ```
 Type definitions for the list structures are generated in a separate _forward declarations_ section of the output file.
 
-For simplicity, the names of the synthesized list structures are currently set to "list_x", where x is a unique integer. It is recommended to create a type alias to define a user-friendly name for the list structure. The issue is that the list structure names _that include an element type description_ could potentially become excessively long.
+For simplicity, the names of the synthesized list structures are currently set to "list_x_y_t", where x is base type and  y is a unique integer. It is recommended to create a type alias to define a user-friendly name for the list structure. The issue is that the list structure names _that include an element type description_ could potentially become excessively long.
 
 #### Supported annotations
 ```
@@ -509,7 +514,7 @@ interface Core0Interface
 {
     oneway myFun(in callback1_t pCallback1_t)
 
-    @include("callbacks1.h") 
+    @include("callbacks1.h")
     callback1_t callback1; // Function declaration
 }
 ```
@@ -553,7 +558,7 @@ Data type | in | out | inout | Returns |
 **string** | char *param | _char *param_ | char *param | _Not supported_
 **enum** | B param | B *param | B *param | B
 **struct** | const A *param | A *param | A *param | _Not supported_
-**list** | const list_0 *param | list_0 *param | list_0 *param | _Not supported_
+**list** | const list_int32_1_t *param | list_int32_1_t *param | list_int32_1_t *param | _Not supported_
 **array** | const int32 param[5] | int32 param[5] | int32 param[5] | _Not supported_
 
 If a type definition is used, then all pointers are generated as shown in the two previous tables. Instead of these types, the type definition name is used.

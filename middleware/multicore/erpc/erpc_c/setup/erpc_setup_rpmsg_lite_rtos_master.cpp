@@ -32,9 +32,9 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+#include "erpc_manually_constructed.h"
+#include "erpc_rpmsg_lite_rtos_transport.h"
 #include "erpc_transport_setup.h"
-#include "manually_constructed.h"
-#include "rpmsg_lite_rtos_transport.h"
 
 using namespace erpc;
 
@@ -63,8 +63,7 @@ static ManuallyConstructed<RPMsgRTOSTransport> s_transport;
 // Code
 ////////////////////////////////////////////////////////////////////////////////
 
-erpc_transport_t erpc_transport_rpmsg_lite_rtos_master_init(unsigned long src_addr,
-                                                            unsigned long dst_addr,
+erpc_transport_t erpc_transport_rpmsg_lite_rtos_master_init(unsigned long src_addr, unsigned long dst_addr,
                                                             int rpmsg_link_id)
 {
     s_transport.construct();

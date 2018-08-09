@@ -1,7 +1,7 @@
 /*
  * The Clear BSD License
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2018 NXP
  * All rights reserved.
  *
  *
@@ -51,6 +51,7 @@
 #define ERPC_THREADS_NONE (0)     //!< No threads.
 #define ERPC_THREADS_PTHREADS (1) //!< POSIX pthreads.
 #define ERPC_THREADS_FREERTOS (2) //!< FreeRTOS.
+#define ERPC_THREADS_ZEPHYR (3)   //!< ZEPHYR.
 
 #define ERPC_NOEXCEPT_DISABLED (0) //!< Disabling noexcept feature.
 #define ERPC_NOEXCEPT_ENABLED (1)  //!<  Enabling noexcept feature.
@@ -63,6 +64,9 @@
 
 #define ERPC_MESSAGE_LOGGING_DISABLED (0) //!< Trace functions disabled.
 #define ERPC_MESSAGE_LOGGING_ENABLED (1)  //!< Trace functions enabled.
+
+#define ERPC_TRANSPORT_MU_USE_MCMGR_DISABLED (0) //!< Do not use MCMGR for MU ISR management.
+#define ERPC_TRANSPORT_MU_USE_MCMGR_ENABLED (1)  //!< Use MCMGR for MU ISR management.
 //@}
 
 //! @name Configuration options
@@ -88,7 +92,7 @@
 
 //! @def ERPC_DEFAULT_BUFFERS_COUNT
 //!
-//! Uncomment to change the count of buffers allocated by one of staticly allocated messages.
+//! Uncomment to change the count of buffers allocated by one of statically allocated messages.
 //! Default value is set to 2.
 //#define ERPC_DEFAULT_BUFFERS_COUNT (2)
 
@@ -116,12 +120,26 @@
 
 //! @def ERPC_MESSAGE_LOGGING
 //!
-//! Enable eRPC message logging code through the eRPC. Take look into "message_logging.h". Can be used for base printing messages,
-//! or sending data to another system for data analysis. Default set to ERPC_MESSAGE_LOGGING_DISABLED.
+//! Enable eRPC message logging code through the eRPC. Take look into "message_logging.h". Can be used for base printing
+//! messages, or sending data to another system for data analysis. Default set to ERPC_MESSAGE_LOGGING_DISABLED.
 //!
 //! Uncomment for using logging feature.
 //#define ERPC_MESSAGE_LOGGING (ERPC_MESSAGE_LOGGING_ENABLED)
 
+//! @def ERPC_TRANSPORT_MU_USE_MCMGR
+//!
+//! @brief MU transport layer configuration.
+//!
+//! Set to one of the @c ERPC_TRANSPORT_MU_USE_MCMGR_x macros to configure the MCMGR usage in MU transport layer.
+//!
+//! MU transport layer could leverage the Multicore Manager (MCMGR) component for Inter-Core
+//! interrupts / MU interrupts management or the Inter-Core interrupts can be managed by itself (MUX_IRQHandler
+//! overloading). By default, ERPC_TRANSPORT_MU_USE_MCMGR is set to ERPC_TRANSPORT_MU_USE_MCMGR_ENABLED when mcmgr.h
+//! is part of the project, otherwise the ERPC_TRANSPORT_MU_USE_MCMGR_DISABLED option is used. This settings can be
+//! overwritten from the erpc_config.h by uncommenting the ERPC_TRANSPORT_MU_USE_MCMGR macro definition. Do not forget
+//! to add the MCMGR library into your project when ERPC_TRANSPORT_MU_USE_MCMGR_ENABLED option is used! See the
+//! mu_transport.h for additional MU settings.
+//#define ERPC_TRANSPORT_MU_USE_MCMGR ERPC_TRANSPORT_MU_USE_MCMGR_DISABLED
 //@}
 
 /*! @} */

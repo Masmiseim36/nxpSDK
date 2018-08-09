@@ -1,6 +1,6 @@
 /*
  * The Clear BSD License
- * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
@@ -107,5 +107,6 @@
 
 // DIFF-P Sensor Information
 #define DIFF_P_I2C_ADDR 0x60
+#define DIFF_P_SPI_CS D10
 
 #endif /* _ADS_DETECTION_SHIELD_H_ */

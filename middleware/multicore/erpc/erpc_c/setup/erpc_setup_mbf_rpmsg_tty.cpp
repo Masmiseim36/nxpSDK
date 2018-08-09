@@ -34,12 +34,12 @@
  */
 
 #include "erpc_config_internal.h"
+#include "erpc_framed_transport.h"
+#include "erpc_manually_constructed.h"
 #include "erpc_mbf_setup.h"
-#include "framed_transport.h"
-#include "manually_constructed.h"
-#include "message_buffer.h"
+#include "erpc_message_buffer.h"
+#include "erpc_rpmsg_lite_base_transport.h"
 #include "rpmsg_lite.h"
-#include "rpmsg_lite_base_transport.h"
 #include <assert.h>
 
 using namespace erpc;
@@ -57,26 +57,23 @@ class RPMsgTTYMessageBufferFactory : public MessageBufferFactory
 {
 public:
     /*!
-   * @brief Constructor.
-   *
-   * @param [in] rpmsg Pointer to instance of RPMSG lite.
-   */
-    RPMsgTTYMessageBufferFactory(struct rpmsg_lite_instance *rpmsg)
-    {
-        m_rpmsg = rpmsg;
-    }
+     * @brief Constructor.
+     *
+     * @param [in] rpmsg Pointer to instance of RPMSG lite.
+     */
+    RPMsgTTYMessageBufferFactory(struct rpmsg_lite_instance *rpmsg) { m_rpmsg = rpmsg; }
 
     /*!
-   * @brief Destructor
-   */
-    virtual ~RPMsgTTYMessageBufferFactory() {}
+     * @brief Destructor
+     */
+    virtual ~RPMsgTTYMessageBufferFactory(void) {}
 
     /*!
-   * @brief This function creates new message buffer.
-   *
-   * @return MessageBuffer New created MessageBuffer.
-   */
-    virtual MessageBuffer create()
+     * @brief This function creates new message buffer.
+     *
+     * @return MessageBuffer New created MessageBuffer.
+     */
+    virtual MessageBuffer create(void)
     {
         void *buf = NULL;
         unsigned long size = 0;
@@ -88,10 +85,10 @@ public:
     }
 
     /*!
-   * @brief This function disposes message buffer.
-   *
-   * @param[in] buf MessageBuffer to dispose.
-   */
+     * @brief This function disposes message buffer.
+     *
+     * @param[in] buf MessageBuffer to dispose.
+     */
     virtual void dispose(MessageBuffer *buf)
     {
         assert(buf);
@@ -99,9 +96,7 @@ public:
         if (tmp)
         {
             int ret;
-            ret = rpmsg_lite_release_rx_buffer(
-                m_rpmsg,
-                (void *)(((uint8_t *)tmp) - sizeof(FramedTransport::Header)));
+            ret = rpmsg_lite_release_rx_buffer(m_rpmsg, (void *)(((uint8_t *)tmp) - sizeof(FramedTransport::Header)));
             if (ret != RL_SUCCESS)
             {
                 // error
@@ -123,11 +118,10 @@ public:
         }
     }
 
-    virtual bool createServerBuffer() { return false; }
+    virtual bool createServerBuffer(void) { return false; }
 
 protected:
-    struct rpmsg_lite_instance
-        *m_rpmsg; /*!< Pointer to instance of RPMSG lite. */
+    struct rpmsg_lite_instance *m_rpmsg; /*!< Pointer to instance of RPMSG lite. */
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -138,7 +132,6 @@ static ManuallyConstructed<RPMsgTTYMessageBufferFactory> s_msgFactory;
 
 erpc_mbf_t erpc_mbf_rpmsg_tty_init(erpc_transport_t transport)
 {
-    s_msgFactory.construct(reinterpret_cast<RPMsgBaseTransport *>(transport)
-                               ->get_rpmsg_lite_instance());
+    s_msgFactory.construct(reinterpret_cast<RPMsgBaseTransport *>(transport)->get_rpmsg_lite_instance());
     return reinterpret_cast<erpc_mbf_t>(s_msgFactory.get());
 }

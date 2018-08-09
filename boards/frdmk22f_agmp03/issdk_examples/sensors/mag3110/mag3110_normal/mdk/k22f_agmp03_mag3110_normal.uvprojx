@@ -4,13 +4,13 @@
   <Header>### uVision Project, (C) Keil Software</Header>
   <Targets>
     <Target>
-      <TargetName>k22f_agmp03_mag3110_normal Debug</TargetName>
+      <TargetName>k22f_agmp03_mag3110_normal debug</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MK22FN512xxx12</Device>
-          <Vendor>Freescale</Vendor>
+          <Device>MK22FN512VLH12</Device>
+          <Vendor>NXP</Vendor>
           <PackID>Keil.Kinetis_K20_DFP.1.1.0</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>CPUTYPE("Cortex-M4") FPU2</Cpu>
@@ -77,7 +77,7 @@
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>fromelf.exe --m32combined  --output  "$L@L.bin"  "#L"</UserProg1Name>
+            <UserProg1Name>fromelf.exe --output "$L@L.bin" --bincombined "#L"</UserProg1Name>
             <UserProg2Name/>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -367,7 +367,7 @@
 </MiscControls>
               <Define>DEBUG, CPU_MK22FN512VLH12, FRDM_K22F, FREEDOM, PRINTF_ADVANCED_ENABLE</Define>
               <Undefine/>
-              <IncludePath>../../../../../../../CMSIS/Include;../../../../../../../devices;../../../../../../../platform/drivers;../../../../../../../middleware/issdk_1.5/drivers/gpio;../../../../../../../middleware/issdk_1.5/drivers/systick;../../../../../../../CMSIS/Driver/Include;../../../../../../../middleware/issdk_1.5/sensors;../../../../..;..;../../../../../../frdmk22f;../../../../../../../devices/MK22F51212/drivers;../../../../../../../devices/MK22F51212/cmsis_drivers;../../../../../../../devices/MK22F51212/utilities;../../../../../../../devices/MK22F51212</IncludePath>
+              <IncludePath>../../../../../../../CMSIS/Include;../../../../../../../devices;../../../../../../../platform/drivers;../../../../../../frdmk22f;../../../../..;..;../../../../../../../devices/MK22F51212/drivers;../../../../../../../devices/MK22F51212;../../../../../../../devices/MK22F51212/utilities/io;../../../../../../../devices/MK22F51212/utilities/str;../../../../../../../devices/MK22F51212/utilities/log;../../../../../../../devices/MK22F51212/utilities;../../../../../../../devices/MK22F51212/cmsis_drivers;../../../../../../../CMSIS/Driver/Include;../../../../../../../middleware/issdk/drivers/systick;../../../../../../../middleware/issdk/drivers/gpio;../../../../../../../middleware/issdk/drivers/gpio/kinetis;../../../../../../../middleware/issdk/sensors</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -409,37 +409,7 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>startup</GroupName>
-          <Files>
-            <File>
-              <FileName>startup_MK22F51212.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../../devices/MK22F51212/arm/startup_MK22F51212.s</FilePath>
-            </File>
-            <File>
-              <FileName>system_MK22F51212.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MK22F51212/system_MK22F51212.c</FilePath>
-            </File>
-            <File>
-              <FileName>system_MK22F51212.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MK22F51212/system_MK22F51212.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>doc</GroupName>
-          <Files>
-            <File>
-              <FileName>readme.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>board</GroupName>
+          <GroupName>board-src</GroupName>
           <Files>
             <File>
               <FileName>frdm_k22f.c</FileName>
@@ -467,14 +437,14 @@
               <FilePath>../../../../../RTE_Device.h</FilePath>
             </File>
             <File>
-              <FileName>pin_mux.c</FileName>
+              <FileName>clock_config.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../pin_mux.c</FilePath>
+              <FilePath>../clock_config.c</FilePath>
             </File>
             <File>
-              <FileName>pin_mux.h</FileName>
+              <FileName>clock_config.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../pin_mux.h</FilePath>
+              <FilePath>../clock_config.h</FilePath>
             </File>
             <File>
               <FileName>board.c</FileName>
@@ -486,121 +456,126 @@
               <FileType>5</FileType>
               <FilePath>../board.h</FilePath>
             </File>
-            <File>
-              <FileName>clock_config.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../clock_config.c</FilePath>
-            </File>
-            <File>
-              <FileName>clock_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../clock_config.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>sensors</GroupName>
+          <GroupName>source</GroupName>
           <Files>
             <File>
               <FileName>mag3110_normal.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/issdk_1.5/driverexamples/mag3110/mag3110_normal.c</FilePath>
-            </File>
-            <File>
-              <FileName>mag3110.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/issdk_1.5/sensors/mag3110.h</FilePath>
-            </File>
-            <File>
-              <FileName>mag3110_drv.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/issdk_1.5/sensors/mag3110_drv.h</FilePath>
-            </File>
-            <File>
-              <FileName>mag3110_drv.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/issdk_1.5/sensors/mag3110_drv.c</FilePath>
+              <FilePath>../mag3110_normal.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>interface</GroupName>
+          <GroupName>board</GroupName>
           <Files>
             <File>
-              <FileName>sensor_drv.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/issdk_1.5/sensors/sensor_drv.h</FilePath>
-            </File>
-            <File>
-              <FileName>register_io_i2c.c</FileName>
+              <FileName>pin_mux.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/issdk_1.5/sensors/register_io_i2c.c</FilePath>
+              <FilePath>../pin_mux.c</FilePath>
             </File>
             <File>
-              <FileName>register_io_i2c.h</FileName>
+              <FileName>pin_mux.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/issdk_1.5/sensors/register_io_i2c.h</FilePath>
-            </File>
-            <File>
-              <FileName>sensor_io_i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/issdk_1.5/sensors/sensor_io_i2c.c</FilePath>
-            </File>
-            <File>
-              <FileName>sensor_io_i2c.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/issdk_1.5/sensors/sensor_io_i2c.h</FilePath>
-            </File>
-            <File>
-              <FileName>register_io_spi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/issdk_1.5/sensors/register_io_spi.c</FilePath>
-            </File>
-            <File>
-              <FileName>register_io_spi.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/issdk_1.5/sensors/register_io_spi.h</FilePath>
-            </File>
-            <File>
-              <FileName>sensor_io_spi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/issdk_1.5/sensors/sensor_io_spi.c</FilePath>
-            </File>
-            <File>
-              <FileName>sensor_io_spi.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/issdk_1.5/sensors/sensor_io_spi.h</FilePath>
+              <FilePath>../pin_mux.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>utilities</GroupName>
+          <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>systick_utils.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/issdk_1.5/drivers/systick/systick_utils.c</FilePath>
-            </File>
-            <File>
-              <FileName>systick_utils.h</FileName>
+              <FileName>readme.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/issdk_1.5/drivers/systick/systick_utils.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MK22F51212/utilities/fsl_debug_console.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MK22F51212/utilities/fsl_debug_console.h</FilePath>
+              <FilePath>../readme.txt</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>drivers</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_clock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_clock.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_clock.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_adapter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_adapter.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_utilities.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_utilities.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_features.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_features.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_controller.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_controller.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_controller.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_controller.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_flash.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flash.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_flash.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_cache.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_cache.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_cache.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_cache.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flexnvm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_flexnvm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flexnvm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_flexnvm.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_flash.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_flash.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_common.c</FilePath>
+            </File>
             <File>
               <FileName>fsl_uart.h</FileName>
               <FileType>5</FileType>
@@ -627,6 +602,16 @@
               <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_port.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_smc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_smc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_smc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_smc.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_gpio.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_gpio.h</FilePath>
@@ -647,14 +632,14 @@
               <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_i2c.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_smc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_smc.h</FilePath>
+              <FileName>fsl_i2c_edma.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_i2c_edma.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_smc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_smc.c</FilePath>
+              <FileName>fsl_i2c_edma.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_i2c_edma.h</FilePath>
             </File>
             <File>
               <FileName>fsl_edma.h</FileName>
@@ -667,6 +652,16 @@
               <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_edma.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_i2c_cmsis.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/cmsis_drivers/fsl_i2c_cmsis.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_i2c_cmsis.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/cmsis_drivers/fsl_i2c_cmsis.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_dmamux.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_dmamux.h</FilePath>
@@ -677,24 +672,44 @@
               <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_dmamux.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_i2c_edma.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_i2c_edma.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_i2c_edma.h</FileName>
+              <FileName>fsl_dspi.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_i2c_edma.h</FilePath>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_dspi.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_i2c_cmsis.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MK22F51212/cmsis_drivers/fsl_i2c_cmsis.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_i2c_cmsis.c</FileName>
+              <FileName>fsl_dspi.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MK22F51212/cmsis_drivers/fsl_i2c_cmsis.c</FilePath>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_dspi.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dspi_edma.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_dspi_edma.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dspi_edma.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_dspi_edma.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dspi_cmsis.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/cmsis_drivers/fsl_dspi_cmsis.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dspi_cmsis.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/cmsis_drivers/fsl_dspi_cmsis.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_pit.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_pit.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_pit.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_pit.h</FilePath>
             </File>
             <File>
               <FileName>fsl_uart_edma.h</FileName>
@@ -716,73 +731,228 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MK22F51212/cmsis_drivers/fsl_uart_cmsis.c</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>startup</GroupName>
+          <Files>
             <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
+              <FileName>system_MK22F51212.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_common.c</FilePath>
+              <FilePath>../../../../../../../devices/MK22F51212/system_MK22F51212.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_flash.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_flash.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_flash.h</FileName>
+              <FileName>system_MK22F51212.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_flash.h</FilePath>
+              <FilePath>../../../../../../../devices/MK22F51212/system_MK22F51212.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_clock.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_clock.c</FilePath>
+              <FileName>startup_MK22F51212.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/arm/startup_MK22F51212.s</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>gpio_driver</GroupName>
+          <GroupName>utilities</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_io.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/utilities/io/fsl_io.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_io.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/utilities/io/fsl_io.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_log.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/utilities/log/fsl_log.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_log.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/utilities/log/fsl_log.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/utilities/fsl_debug_console.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/utilities/fsl_debug_console.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console_conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/utilities/fsl_debug_console_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/utilities/fsl_assert.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS_driver</GroupName>
+          <Files>
+            <File>
+              <FileName>Driver_I2C.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_I2C.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_Common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_SPI.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_SPI.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_USART.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_USART.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>utilities-src</GroupName>
+          <Files>
+            <File>
+              <FileName>systick_utils.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/issdk/drivers/systick/systick_utils.c</FilePath>
+            </File>
+            <File>
+              <FileName>systick_utils.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/issdk/drivers/systick/systick_utils.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>gpio_driver-src</GroupName>
           <Files>
             <File>
               <FileName>gpio_driver_irq.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/issdk_1.5/drivers/gpio/gpio_driver_irq.c</FilePath>
+              <FilePath>../../../../../../../middleware/issdk/drivers/gpio/kinetis/gpio_driver_irq.c</FilePath>
             </File>
             <File>
               <FileName>gpio_driver.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/issdk_1.5/drivers/gpio/gpio_driver.c</FilePath>
+              <FilePath>../../../../../../../middleware/issdk/drivers/gpio/kinetis/gpio_driver.c</FilePath>
             </File>
             <File>
               <FileName>gpio_driver.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/issdk_1.5/drivers/gpio/gpio_driver.h</FilePath>
+              <FilePath>../../../../../../../middleware/issdk/drivers/gpio/kinetis/gpio_driver.h</FilePath>
             </File>
             <File>
               <FileName>Driver_GPIO.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/issdk_1.5/drivers/gpio/Driver_GPIO.h</FilePath>
+              <FilePath>../../../../../../../middleware/issdk/drivers/gpio/Driver_GPIO.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>interfaces-src</GroupName>
+          <Files>
+            <File>
+              <FileName>register_io_i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/issdk/sensors/register_io_i2c.c</FilePath>
+            </File>
+            <File>
+              <FileName>register_io_spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/issdk/sensors/register_io_spi.c</FilePath>
+            </File>
+            <File>
+              <FileName>sensor_io_spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/issdk/sensors/sensor_io_spi.c</FilePath>
+            </File>
+            <File>
+              <FileName>sensor_io_i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/issdk/sensors/sensor_io_i2c.c</FilePath>
+            </File>
+            <File>
+              <FileName>register_io_i2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/issdk/sensors/register_io_i2c.h</FilePath>
+            </File>
+            <File>
+              <FileName>register_io_spi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/issdk/sensors/register_io_spi.h</FilePath>
+            </File>
+            <File>
+              <FileName>sensor_io_spi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/issdk/sensors/sensor_io_spi.h</FilePath>
+            </File>
+            <File>
+              <FileName>sensor_io_i2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/issdk/sensors/sensor_io_i2c.h</FilePath>
+            </File>
+            <File>
+              <FileName>sensor_drv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/issdk/sensors/sensor_drv.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>sensors-src</GroupName>
+          <Files>
+            <File>
+              <FileName>mag3110.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/issdk/sensors/mag3110.h</FilePath>
+            </File>
+            <File>
+              <FileName>mag3110_drv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/issdk/sensors/mag3110_drv.h</FilePath>
+            </File>
+            <File>
+              <FileName>mag3110_drv.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/issdk/sensors/mag3110_drv.c</FilePath>
             </File>
           </Files>
         </Group>
       </Groups>
     </Target>
     <Target>
-      <TargetName>k22f_agmp03_mag3110_normal Release</TargetName>
+      <TargetName>k22f_agmp03_mag3110_normal release</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MK22FN512xxx12</Device>
-          <Vendor>Freescale</Vendor>
+          <Device>MK22FN512VLH12</Device>
+          <Vendor>NXP</Vendor>
           <PackID>Keil.Kinetis_K20_DFP.1.1.0</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>CPUTYPE("Cortex-M4") FPU2</Cpu>
@@ -849,7 +1019,7 @@
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>fromelf.exe --m32combined  --output  "$L@L.bin"  "#L"</UserProg1Name>
+            <UserProg1Name>fromelf.exe --output "$L@L.bin" --bincombined "#L"</UserProg1Name>
             <UserProg2Name/>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -1139,7 +1309,7 @@
 </MiscControls>
               <Define>NDEBUG, CPU_MK22FN512VLH12, FRDM_K22F, FREEDOM, PRINTF_ADVANCED_ENABLE</Define>
               <Undefine/>
-              <IncludePath>../../../../../../../CMSIS/Include;../../../../../../../devices;../../../../../../../platform/drivers;../../../../../../../middleware/issdk_1.5/drivers/gpio;../../../../../../../middleware/issdk_1.5/drivers/systick;../../../../../../../CMSIS/Driver/Include;../../../../../../../middleware/issdk_1.5/sensors;../../../../..;..;../../../../../../frdmk22f;../../../../../../../devices/MK22F51212/drivers;../../../../../../../devices/MK22F51212/cmsis_drivers;../../../../../../../devices/MK22F51212/utilities;../../../../../../../devices/MK22F51212</IncludePath>
+              <IncludePath>../../../../../../../CMSIS/Include;../../../../../../../devices;../../../../../../../platform/drivers;../../../../../../frdmk22f;../../../../..;..;../../../../../../../devices/MK22F51212/drivers;../../../../../../../devices/MK22F51212;../../../../../../../devices/MK22F51212/utilities/io;../../../../../../../devices/MK22F51212/utilities/str;../../../../../../../devices/MK22F51212/utilities/log;../../../../../../../devices/MK22F51212/utilities;../../../../../../../devices/MK22F51212/cmsis_drivers;../../../../../../../CMSIS/Driver/Include;../../../../../../../middleware/issdk/drivers/systick;../../../../../../../middleware/issdk/drivers/gpio;../../../../../../../middleware/issdk/drivers/gpio/kinetis;../../../../../../../middleware/issdk/sensors</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1154,7 +1324,7 @@
             <useXO>0</useXO>
             <VariousControls>
               <MiscControls/>
-              <Define/>
+              <Define>NDEBUG</Define>
               <Undefine/>
               <IncludePath/>
             </VariousControls>
@@ -1181,37 +1351,7 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>startup</GroupName>
-          <Files>
-            <File>
-              <FileName>startup_MK22F51212.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../../devices/MK22F51212/arm/startup_MK22F51212.s</FilePath>
-            </File>
-            <File>
-              <FileName>system_MK22F51212.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MK22F51212/system_MK22F51212.c</FilePath>
-            </File>
-            <File>
-              <FileName>system_MK22F51212.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MK22F51212/system_MK22F51212.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>doc</GroupName>
-          <Files>
-            <File>
-              <FileName>readme.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>board</GroupName>
+          <GroupName>board-src</GroupName>
           <Files>
             <File>
               <FileName>frdm_k22f.c</FileName>
@@ -1239,14 +1379,14 @@
               <FilePath>../../../../../RTE_Device.h</FilePath>
             </File>
             <File>
-              <FileName>pin_mux.c</FileName>
+              <FileName>clock_config.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../pin_mux.c</FilePath>
+              <FilePath>../clock_config.c</FilePath>
             </File>
             <File>
-              <FileName>pin_mux.h</FileName>
+              <FileName>clock_config.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../pin_mux.h</FilePath>
+              <FilePath>../clock_config.h</FilePath>
             </File>
             <File>
               <FileName>board.c</FileName>
@@ -1258,121 +1398,126 @@
               <FileType>5</FileType>
               <FilePath>../board.h</FilePath>
             </File>
-            <File>
-              <FileName>clock_config.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../clock_config.c</FilePath>
-            </File>
-            <File>
-              <FileName>clock_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../clock_config.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>sensors</GroupName>
+          <GroupName>source</GroupName>
           <Files>
             <File>
               <FileName>mag3110_normal.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/issdk_1.5/driverexamples/mag3110/mag3110_normal.c</FilePath>
-            </File>
-            <File>
-              <FileName>mag3110.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/issdk_1.5/sensors/mag3110.h</FilePath>
-            </File>
-            <File>
-              <FileName>mag3110_drv.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/issdk_1.5/sensors/mag3110_drv.h</FilePath>
-            </File>
-            <File>
-              <FileName>mag3110_drv.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/issdk_1.5/sensors/mag3110_drv.c</FilePath>
+              <FilePath>../mag3110_normal.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>interface</GroupName>
+          <GroupName>board</GroupName>
           <Files>
             <File>
-              <FileName>sensor_drv.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/issdk_1.5/sensors/sensor_drv.h</FilePath>
-            </File>
-            <File>
-              <FileName>register_io_i2c.c</FileName>
+              <FileName>pin_mux.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/issdk_1.5/sensors/register_io_i2c.c</FilePath>
+              <FilePath>../pin_mux.c</FilePath>
             </File>
             <File>
-              <FileName>register_io_i2c.h</FileName>
+              <FileName>pin_mux.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/issdk_1.5/sensors/register_io_i2c.h</FilePath>
-            </File>
-            <File>
-              <FileName>sensor_io_i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/issdk_1.5/sensors/sensor_io_i2c.c</FilePath>
-            </File>
-            <File>
-              <FileName>sensor_io_i2c.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/issdk_1.5/sensors/sensor_io_i2c.h</FilePath>
-            </File>
-            <File>
-              <FileName>register_io_spi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/issdk_1.5/sensors/register_io_spi.c</FilePath>
-            </File>
-            <File>
-              <FileName>register_io_spi.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/issdk_1.5/sensors/register_io_spi.h</FilePath>
-            </File>
-            <File>
-              <FileName>sensor_io_spi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/issdk_1.5/sensors/sensor_io_spi.c</FilePath>
-            </File>
-            <File>
-              <FileName>sensor_io_spi.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/issdk_1.5/sensors/sensor_io_spi.h</FilePath>
+              <FilePath>../pin_mux.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>utilities</GroupName>
+          <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>systick_utils.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/issdk_1.5/drivers/systick/systick_utils.c</FilePath>
-            </File>
-            <File>
-              <FileName>systick_utils.h</FileName>
+              <FileName>readme.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/issdk_1.5/drivers/systick/systick_utils.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MK22F51212/utilities/fsl_debug_console.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MK22F51212/utilities/fsl_debug_console.h</FilePath>
+              <FilePath>../readme.txt</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>drivers</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_clock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_clock.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_clock.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_adapter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_adapter.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_utilities.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_utilities.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_features.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_features.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_controller.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_controller.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_controller.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_controller.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_flash.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flash.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_flash.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_cache.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_cache.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_cache.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_cache.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flexnvm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_flexnvm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flexnvm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_ftfx_flexnvm.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_flash.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_flash.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_common.c</FilePath>
+            </File>
             <File>
               <FileName>fsl_uart.h</FileName>
               <FileType>5</FileType>
@@ -1399,6 +1544,16 @@
               <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_port.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_smc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_smc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_smc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_smc.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_gpio.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_gpio.h</FilePath>
@@ -1419,14 +1574,14 @@
               <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_i2c.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_smc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_smc.h</FilePath>
+              <FileName>fsl_i2c_edma.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_i2c_edma.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_smc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_smc.c</FilePath>
+              <FileName>fsl_i2c_edma.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_i2c_edma.h</FilePath>
             </File>
             <File>
               <FileName>fsl_edma.h</FileName>
@@ -1439,6 +1594,16 @@
               <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_edma.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_i2c_cmsis.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/cmsis_drivers/fsl_i2c_cmsis.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_i2c_cmsis.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/cmsis_drivers/fsl_i2c_cmsis.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_dmamux.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_dmamux.h</FilePath>
@@ -1449,24 +1614,44 @@
               <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_dmamux.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_i2c_edma.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_i2c_edma.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_i2c_edma.h</FileName>
+              <FileName>fsl_dspi.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_i2c_edma.h</FilePath>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_dspi.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_i2c_cmsis.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MK22F51212/cmsis_drivers/fsl_i2c_cmsis.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_i2c_cmsis.c</FileName>
+              <FileName>fsl_dspi.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MK22F51212/cmsis_drivers/fsl_i2c_cmsis.c</FilePath>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_dspi.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dspi_edma.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_dspi_edma.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dspi_edma.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_dspi_edma.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dspi_cmsis.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/cmsis_drivers/fsl_dspi_cmsis.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dspi_cmsis.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/cmsis_drivers/fsl_dspi_cmsis.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_pit.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_pit.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_pit.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_pit.h</FilePath>
             </File>
             <File>
               <FileName>fsl_uart_edma.h</FileName>
@@ -1488,60 +1673,215 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MK22F51212/cmsis_drivers/fsl_uart_cmsis.c</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>startup</GroupName>
+          <Files>
             <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
+              <FileName>system_MK22F51212.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_common.c</FilePath>
+              <FilePath>../../../../../../../devices/MK22F51212/system_MK22F51212.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_flash.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_flash.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_flash.h</FileName>
+              <FileName>system_MK22F51212.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_flash.h</FilePath>
+              <FilePath>../../../../../../../devices/MK22F51212/system_MK22F51212.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_clock.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MK22F51212/drivers/fsl_clock.c</FilePath>
+              <FileName>startup_MK22F51212.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/arm/startup_MK22F51212.s</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>gpio_driver</GroupName>
+          <GroupName>utilities</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_io.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/utilities/io/fsl_io.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_io.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/utilities/io/fsl_io.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_log.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/utilities/log/fsl_log.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_log.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/utilities/log/fsl_log.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/utilities/fsl_debug_console.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/utilities/fsl_debug_console.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console_conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/utilities/fsl_debug_console_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MK22F51212/utilities/fsl_assert.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS_driver</GroupName>
+          <Files>
+            <File>
+              <FileName>Driver_I2C.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_I2C.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_Common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_SPI.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_SPI.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_USART.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_USART.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>utilities-src</GroupName>
+          <Files>
+            <File>
+              <FileName>systick_utils.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/issdk/drivers/systick/systick_utils.c</FilePath>
+            </File>
+            <File>
+              <FileName>systick_utils.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/issdk/drivers/systick/systick_utils.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>gpio_driver-src</GroupName>
           <Files>
             <File>
               <FileName>gpio_driver_irq.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/issdk_1.5/drivers/gpio/gpio_driver_irq.c</FilePath>
+              <FilePath>../../../../../../../middleware/issdk/drivers/gpio/kinetis/gpio_driver_irq.c</FilePath>
             </File>
             <File>
               <FileName>gpio_driver.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/issdk_1.5/drivers/gpio/gpio_driver.c</FilePath>
+              <FilePath>../../../../../../../middleware/issdk/drivers/gpio/kinetis/gpio_driver.c</FilePath>
             </File>
             <File>
               <FileName>gpio_driver.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/issdk_1.5/drivers/gpio/gpio_driver.h</FilePath>
+              <FilePath>../../../../../../../middleware/issdk/drivers/gpio/kinetis/gpio_driver.h</FilePath>
             </File>
             <File>
               <FileName>Driver_GPIO.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/issdk_1.5/drivers/gpio/Driver_GPIO.h</FilePath>
+              <FilePath>../../../../../../../middleware/issdk/drivers/gpio/Driver_GPIO.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>interfaces-src</GroupName>
+          <Files>
+            <File>
+              <FileName>register_io_i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/issdk/sensors/register_io_i2c.c</FilePath>
+            </File>
+            <File>
+              <FileName>register_io_spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/issdk/sensors/register_io_spi.c</FilePath>
+            </File>
+            <File>
+              <FileName>sensor_io_spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/issdk/sensors/sensor_io_spi.c</FilePath>
+            </File>
+            <File>
+              <FileName>sensor_io_i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/issdk/sensors/sensor_io_i2c.c</FilePath>
+            </File>
+            <File>
+              <FileName>register_io_i2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/issdk/sensors/register_io_i2c.h</FilePath>
+            </File>
+            <File>
+              <FileName>register_io_spi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/issdk/sensors/register_io_spi.h</FilePath>
+            </File>
+            <File>
+              <FileName>sensor_io_spi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/issdk/sensors/sensor_io_spi.h</FilePath>
+            </File>
+            <File>
+              <FileName>sensor_io_i2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/issdk/sensors/sensor_io_i2c.h</FilePath>
+            </File>
+            <File>
+              <FileName>sensor_drv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/issdk/sensors/sensor_drv.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>sensors-src</GroupName>
+          <Files>
+            <File>
+              <FileName>mag3110.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/issdk/sensors/mag3110.h</FilePath>
+            </File>
+            <File>
+              <FileName>mag3110_drv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/issdk/sensors/mag3110_drv.h</FilePath>
+            </File>
+            <File>
+              <FileName>mag3110_drv.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/issdk/sensors/mag3110_drv.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -75,9 +75,8 @@ void BOARD_InitPins(void) {
 }
 
 
-
-#define PIN8_IDX                         8u   /*!< Pin number for pin 8 in a port */
-#define PIN9_IDX                         9u   /*!< Pin number for pin 9 in a port */
+#define PIN0_IDX                         0u   /*!< Pin number for pin 0 in a port */
+#define PIN1_IDX                         1u   /*!< Pin number for pin 1 in a port */
 
 /*
  * TEXT BELOW IS USED AS SETTING FOR THE PINS TOOL *****************************
@@ -96,15 +95,15 @@ LPUART0_InitPins:
  *
  *END**************************************************************************/
 void LPUART0_InitPins(void) {
-  CLOCK_EnableClock(kCLOCK_PortC);                           /* Clock Control: 0x01u */
+  CLOCK_EnableClock(kCLOCK_PortB);                           /* Clock Control: 0x01u */
 
-  PORT_SetPinMux(PORTC, PIN8_IDX, kPORT_MuxAlt2);            /* PORTC8 (pin 54) is configured as LPUART0_RX */
-  PORT_SetPinMux(PORTC, PIN9_IDX, kPORT_MuxAlt2);            /* PORTC9 (pin 53) is configured as LPUART0_TX */
+  PORT_SetPinMux(PORTB, PIN0_IDX, kPORT_MuxAlt2);            /* PORTB0 (pin 54) is configured as LPUART0_RX */
+  PORT_SetPinMux(PORTB, PIN1_IDX, kPORT_MuxAlt2);            /* PORTB1 (pin 53) is configured as LPUART0_TX */
 }
 
 
-#define PIN8_IDX                         8u   /*!< Pin number for pin 8 in a port */
-#define PIN9_IDX                         9u   /*!< Pin number for pin 9 in a port */
+#define PIN0_IDX                         0u   /*!< Pin number for pin 0 in a port */
+#define PIN1_IDX                         1u   /*!< Pin number for pin 1 in a port */
 /*
  * TEXT BELOW IS USED AS SETTING FOR THE PINS TOOL *****************************
 LPUART0_DeinitPins:
@@ -122,15 +121,17 @@ LPUART0_DeinitPins:
  *
  *END**************************************************************************/
 void LPUART0_DeinitPins(void) {
-  CLOCK_EnableClock(kCLOCK_PortC);                           /* Clock Control: 0x01u */
+  CLOCK_EnableClock(kCLOCK_PortB);                           /* Clock Control: 0x01u */
 
-  PORT_SetPinMux(PORTC, PIN8_IDX, kPORT_PinDisabledOrAnalog); /* PORTC8 (pin 54) is configured as ADC0_SE4 */
-  PORT_SetPinMux(PORTC, PIN9_IDX, kPORT_PinDisabledOrAnalog); /* PORTC9 (pin 53) is configured as ADC0_SE5 */
+  PORT_SetPinMux(PORTB, PIN0_IDX, kPORT_PinDisabledOrAnalog); /* PORTB0 (pin 54) is configured as ADC0_SE4 */
+  PORT_SetPinMux(PORTB, PIN1_IDX, kPORT_PinDisabledOrAnalog); /* PORTB1 (pin 53) is configured as ADC0_SE5 */
 }
 
 
 #define PIN6_IDX                         6u   /*!< Pin number for pin 6 in a port */
 #define PIN7_IDX                         7u   /*!< Pin number for pin 7 in a port */
+#define PIN8_IDX                         8u   /*!< Pin number for pin 8 in a port */
+#define PIN9_IDX                         9u   /*!< Pin number for pin 9 in a port */
 
 /*
  * TEXT BELOW IS USED AS SETTING FOR THE PINS TOOL *****************************
@@ -150,14 +151,20 @@ LPUART1_InitPins:
  *END**************************************************************************/
 void LPUART1_InitPins(void) {
   CLOCK_EnableClock(kCLOCK_PortC);                           /* Clock Control: 0x01u */
-
+#ifndef USE_BLUETOOTH_PORT
   PORT_SetPinMux(PORTC, PIN6_IDX, kPORT_MuxAlt2);            /* PORTC6 (pin 81) is configured as LPUART1_RX */
   PORT_SetPinMux(PORTC, PIN7_IDX, kPORT_MuxAlt2);            /* PORTC7 (pin 80) is configured as LPUART1_TX */
+#else
+  PORT_SetPinMux(PORTC, PIN8_IDX, kPORT_MuxAlt2);            /* PORTC8 (pin 54) is configured as ADC0_SE4 */
+  PORT_SetPinMux(PORTC, PIN9_IDX, kPORT_MuxAlt2);            /* PORTC9 (pin 53) is configured as ADC0_SE5 */
+#endif
 }
 
 
 #define PIN6_IDX                         6u   /*!< Pin number for pin 6 in a port */
 #define PIN7_IDX                         7u   /*!< Pin number for pin 7 in a port */
+#define PIN8_IDX                         8u   /*!< Pin number for pin 8 in a port */
+#define PIN9_IDX                         9u   /*!< Pin number for pin 9 in a port */
 /*
  * TEXT BELOW IS USED AS SETTING FOR THE PINS TOOL *****************************
 LPUART1_DeinitPins:
@@ -176,9 +183,13 @@ LPUART1_DeinitPins:
  *END**************************************************************************/
 void LPUART1_DeinitPins(void) {
   CLOCK_EnableClock(kCLOCK_PortC);                           /* Clock Control: 0x01u */
-
+#ifndef USE_BLUETOOTH_PORT
   PORT_SetPinMux(PORTC, PIN6_IDX, kPORT_PinDisabledOrAnalog); /* PORTC6 (pin 81) is configured as ADC1_SE4 */
   PORT_SetPinMux(PORTC, PIN7_IDX, kPORT_PinDisabledOrAnalog); /* PORTC7 (pin 80) is configured as ADC1_SE5 */
+#else
+  PORT_SetPinMux(PORTC, PIN8_IDX, kPORT_PinDisabledOrAnalog); /* PORTC8 (pin 54) is configured as ADC0_SE4 */
+  PORT_SetPinMux(PORTC, PIN9_IDX, kPORT_PinDisabledOrAnalog); /* PORTC9 (pin 53) is configured as ADC0_SE5 */
+#endif
 }
 
 

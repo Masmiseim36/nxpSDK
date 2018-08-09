@@ -1,6 +1,6 @@
 /*
  * The Clear BSD License
- * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
@@ -64,32 +64,88 @@
 //-----------------------------------------------------------------------
 // Macros
 //-----------------------------------------------------------------------
-#define FXLS8471_STREAM_DATA_SIZE 10
-
+#define FXLS8471_STREAM_DATA_SIZE 11
 /*! @brief Unique Name for this application which should match the target GUI pkg name. */
-#define APPLICATION_NAME "FXLS8471Q"
+#define APPLICATION_NAME "FXLS8471 Accelerometer Demo"
 /*! @brief Version to distinguish between instances the same application based on target Shield and updates. */
-#define APPLICATION_VERSION "1.0"
+#define APPLICATION_VERSION "2.5"
+
+typedef struct
+{
+    uint32_t timestamp; /*! The time, this sample was recorded.  */
+    int16_t accel[3];   /*!< The accel data */
+    uint8_t intsrc;
+} fxls8471q_acceldataUser_t;
 
 //-----------------------------------------------------------------------
 // Constants
 //-----------------------------------------------------------------------
 /*! Prepare the register write list to configure FXLS8471Q in non-FIFO mode. */
 const registerwritelist_t cFxls8471q_Config_Isr[] = {
-    /*! Configure CTRL_REG1 register to put FXLS8471Q to 12.5Hz sampling rate. */
-    {FXLS8471Q_CTRL_REG1, FXLS8471Q_CTRL_REG1_DR_12DOT5HZ, FXLS8471Q_CTRL_REG1_DR_MASK},
+    /*! Clear F_SETUP. */
+    {FXLS8471Q_F_SETUP, 0x00, 0x00},
+    /*! Set FS Range 2G. */
+    {FXLS8471Q_XYZ_DATA_CFG, FXLS8471Q_XYZ_DATA_CFG_FS_FS_RANGE_2G, FXLS8471Q_XYZ_DATA_CFG_FS_MASK},
+    /*! Configure CTRL_REG1 register to put FXLS8471Q to 100Hz sampling rate. */
+    {FXLS8471Q_CTRL_REG1, FXLS8471Q_CTRL_REG1_DR_100HZ , FXLS8471Q_CTRL_REG1_DR_MASK},
+    /*! Configure CTRL_REG2 register to put FXLS8471Q to High Resolution mode. */
+    {FXLS8471Q_CTRL_REG2, FXLS8471Q_CTRL_REG2_MODS_HIGHRES, FXLS8471Q_CTRL_REG2_MODS_MASK},	
     /*! Configure settings for interrupt notification. */
     /*! Active High, Push-Pull */
     {FXLS8471Q_CTRL_REG3, FXLS8471Q_CTRL_REG3_IPOL_HIGH | FXLS8471Q_CTRL_REG3_PP_OD_PUSHPULL,
-     FXLS8471Q_CTRL_REG3_IPOL_MASK | FXLS8471Q_CTRL_REG3_PP_OD_MASK},
-    {FXLS8471Q_CTRL_REG4, FXLS8471Q_CTRL_REG4_INT_EN_DRDY_ENABLED,
-     FXLS8471Q_CTRL_REG4_INT_EN_DRDY_MASK}, /*! Data Ready Event. */
+                          FXLS8471Q_CTRL_REG3_IPOL_MASK | FXLS8471Q_CTRL_REG3_PP_OD_MASK},
+    //{FXLS8471Q_CTRL_REG4, FXLS8471Q_CTRL_REG4_INT_EN_DRDY_ENABLED,
+    //                      FXLS8471Q_CTRL_REG4_INT_EN_DRDY_MASK}, /*! Data Ready Event. */
     {FXLS8471Q_CTRL_REG5, FXLS8471Q_CTRL_REG5_INT_CFG_DRDY_INT1, FXLS8471Q_CTRL_REG5_INT_CFG_DRDY_MASK}, /*! INT1 Pin */
+    {FXLS8471Q_CTRL_REG4,255,0x00},
+
+    //PL registers
+    {FXLS8471Q_PL_CFG,FXLS8471Q_PL_CFG_DBCNTM_CLR ,FXLS8471Q_PL_CFG_DBCNTM_MASK},
+    {FXLS8471Q_PL_CFG,FXLS8471Q_PL_CFG_PL_EN_ENABLED  ,FXLS8471Q_PL_CFG_PL_EN_MASK },
+    {FXLS8471Q_PL_COUNT, 0x40, 0x00},//FF
+    {FXLS8471Q_PL_BF_ZCOMP,4 ,FXLS8471Q_PL_BF_ZCOMP_ZLOCK_MASK},
+    {FXLS8471Q_PL_BF_ZCOMP,2 ,FXLS8471Q_PL_BF_ZCOMP_BKFR_MASK},
+    {FXLS8471Q_PL_THS_REG,132,0x00},
+
+
+    //Freefall registers
+    {FXLS8471Q_A_FFMT_CFG,FXLS8471Q_A_FFMT_CFG_ELE_ENABLED    ,FXLS8471Q_A_FFMT_CFG_ELE_MASK },
+    {FXLS8471Q_A_FFMT_CFG,FXLS8471Q_A_FFMT_CFG_OAE_FREEFALL   ,FXLS8471Q_A_FFMT_CFG_OAE_MASK  },
+    {FXLS8471Q_A_FFMT_CFG,FXLS8471Q_A_FFMT_CFG_XEFE_ENABLED   ,FXLS8471Q_A_FFMT_CFG_XEFE_MASK  },
+    {FXLS8471Q_A_FFMT_CFG,FXLS8471Q_A_FFMT_CFG_YEFE_ENABLED   ,FXLS8471Q_A_FFMT_CFG_YEFE_MASK  },
+    {FXLS8471Q_A_FFMT_CFG,FXLS8471Q_A_FFMT_CFG_ZEFE_ENABLED   ,FXLS8471Q_A_FFMT_CFG_ZEFE_MASK  },
+    {FXLS8471Q_A_FFMT_THS,3,FXLS8471Q_A_FFMT_THS_THS_MASK},//2
+    //{FXLS8471Q_A_FFMT_THS,FXLS8471Q_A_FFMT_THS_DBCNTM_CLR,FXLS8471Q_A_FFMT_THS_THS_MASK},
+    {FXLS8471Q_A_FFMT_COUNT,6,0x00},//2
+
+    //Pulse registers
+    {FXLS8471Q_PULSE_CFG,21,0x00},
+    {FXLS8471Q_PULSE_TMLT,80,0x00},//48
+    {FXLS8471Q_PULSE_LTCY,240,0x00},
+    {FXLS8471Q_PULSE_THSX,55,0x00},
+    {FXLS8471Q_PULSE_THSY,55,0x00},
+    {FXLS8471Q_PULSE_THSZ,82,0x00},
+
+    //VECM
+    { FXLS8471Q_A_VECM_CNT,15,0x00},
+    { FXLS8471Q_A_VECM_THS_LSB,88,0x00},
+    { FXLS8471Q_A_VECM_CFG,72,0x00},
+    { FXLS8471Q_A_VECM_THS_MSB,1, FXLS8471Q_A_VECM_THS_MSB_A_VECM_DBCNTM_MASK},
+    { FXLS8471Q_A_VECM_THS_MSB,27, FXLS8471Q_A_VECM_THS_MSB_A_VECM_THS_MASK },
     __END_WRITE_DATA__};
 
 /*! Prepare the register read list to read the raw accel data from the FXLS8471Q. */
 const registerreadlist_t cFxls8471q_Output_Values[] = {
     {.readFrom = FXLS8471Q_OUT_X_MSB, .numBytes = FXLS8471Q_ACCEL_DATA_SIZE}, __END_READ_DATA__};
+
+const registerreadlist_t cFxls8471q_int_src[] = {
+    {.readFrom = FXLS8471Q_INT_SOURCE, .numBytes = 1}, __END_READ_DATA__};
+
+const registerreadlist_t cFxls8471q_ffmt_src[] = {
+    {.readFrom = FXLS8471Q_A_FFMT_SRC , .numBytes = 1}, __END_READ_DATA__};
+
+const registerreadlist_t cFxls8471q_pl_status[] = {
+    {.readFrom = FXLS8471Q_PL_STATUS, .numBytes = 1}, __END_READ_DATA__};
 
 //-----------------------------------------------------------------------
 // Global Variables
@@ -98,6 +154,7 @@ char boardString[ADS_MAX_STRING_LENGTH] = {0}, shieldString[ADS_MAX_STRING_LENGT
      embAppName[ADS_MAX_STRING_LENGTH] = {0};
 volatile bool bStreamingEnabled = false, bFxls8471DataReady = false, bFxls8471Ready = false;
 uint8_t gStreamID; /* The auto assigned Stream ID. */
+int32_t gSystick;
 GENERIC_DRIVER_GPIO *pGpioDriver = &Driver_GPIO_KSDK;
 
 //-----------------------------------------------------------------------
@@ -168,6 +225,7 @@ bool process_host_command(
             case HOST_CMD_START:
                 if (hostCommand[1] == gStreamID && bFxls8471Ready && bStreamingEnabled == false)
                 {
+                    BOARD_SystickStart(&gSystick);
                     bStreamingEnabled = true;
                     success = true;
                 }
@@ -194,11 +252,10 @@ bool process_host_command(
  */
 int main(void)
 {
-    int32_t status, systick;
-    uint8_t data[FXLS8471Q_ACCEL_DATA_SIZE], streamingPacket[STREAMING_HEADER_LEN + FXLS8471_STREAM_DATA_SIZE];
-
+    int32_t status;
+    uint8_t regdata, data[FXLS8471Q_ACCEL_DATA_SIZE], streamingPacket[STREAMING_HEADER_LEN + FXLS8471_STREAM_DATA_SIZE];
     fxls8471q_spi_sensorhandle_t fxls8471Driver;
-    fxls8471q_acceldata_t rawData = {.timestamp = 0};
+    fxls8471q_acceldataUser_t rawData = {.timestamp = 0};
 
     ARM_DRIVER_SPI *pSPIdriver = &SPI_S_DRIVER;
     ARM_DRIVER_USART *pUartDriver = &HOST_S_DRIVER;
@@ -292,7 +349,6 @@ int main(void)
     {
         /*! Populate streaming header. */
         Host_IO_Add_ISO_Header(gStreamID, streamingPacket, FXLS8471_STREAM_DATA_SIZE);
-        BOARD_SystickStart(&systick);
         pGpioDriver->clr_pin(&GREEN_LED);
     }
 
@@ -322,7 +378,7 @@ int main(void)
         }
 
         /* Update timestamp from Systick framework. */
-        rawData.timestamp += BOARD_SystickElapsedTime_us(&systick);
+        rawData.timestamp += BOARD_SystickElapsedTime_us(&gSystick);
 
         /*! Convert the raw sensor data to signed 16-bit container for display to the debug port. */
         rawData.accel[0] = ((int16_t)data[0] << 8) | (int16_t)data[1];
@@ -331,6 +387,30 @@ int main(void)
         rawData.accel[1] /= 4;
         rawData.accel[2] = ((int16_t)data[4] << 8) | (int16_t)data[5];
         rawData.accel[2] /= 4;
+
+        status = FXLS8471Q_SPI_ReadData(&fxls8471Driver, cFxls8471q_int_src, &regdata);
+
+        // The following condition checks for multiple interrupts occurring at the same time and sends only one out as per occurrence order.
+        // Check for Free-fall interrupt
+        if((regdata & 0x04) == 0x04)
+        {
+            rawData.intsrc = 0x04;
+        }
+        // Check for Vector Magnitude change interrupt
+        else if((regdata & 0x02) == 0x02)
+        {
+            rawData.intsrc = 0x02;
+        }
+        // Else send other interrupts
+        else
+        {
+            rawData.intsrc = regdata;
+        }
+
+        // read FFMT/PL/interrupt source registers to clear flags
+        status = FXLS8471Q_SPI_ReadData(&fxls8471Driver, cFxls8471q_int_src, &regdata);
+        status = FXLS8471Q_SPI_ReadData(&fxls8471Driver, cFxls8471q_ffmt_src, &regdata);
+        status = FXLS8471Q_SPI_ReadData(&fxls8471Driver, cFxls8471q_pl_status, &regdata);
 
         /* Copy Raw samples to Streaming Buffer. */
         memcpy(streamingPacket + STREAMING_HEADER_LEN, &rawData, FXLS8471_STREAM_DATA_SIZE);

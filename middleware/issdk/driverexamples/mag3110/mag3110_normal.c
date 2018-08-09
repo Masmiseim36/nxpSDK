@@ -1,6 +1,6 @@
 /*
  * The Clear BSD License
- * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright (c) 2015-2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
@@ -69,9 +69,10 @@
 const registerwritelist_t cMag3110ConfigNormal[] = {
     /* Set Ouput Rate @10HZ (ODR = 2 and OSR = 32). */
     {MAG3110_CTRL_REG1, MAG3110_CTRL_REG1_DR_ODR_2 | MAG3110_CTRL_REG1_OS_OSR_32,
-     MAG3110_CTRL_REG1_DR_MASK | MAG3110_CTRL_REG1_OS_MASK},
+                        MAG3110_CTRL_REG1_DR_MASK | MAG3110_CTRL_REG1_OS_MASK},
     /* Set Auto Magnetic Sensor Reset. */
-    {MAG3110_CTRL_REG2, MAG3110_CTRL_REG2_AUTO_MSRT_EN_EN, MAG3110_CTRL_REG2_AUTO_MSRT_EN_MASK},
+    {MAG3110_CTRL_REG2, MAG3110_CTRL_REG2_MAG_RST_EN | MAG3110_CTRL_REG2_AUTO_MSRT_EN_EN | MAG3110_CTRL_REG2_RAW_RAW,
+                        MAG3110_CTRL_REG2_MAG_RST_MASK | MAG3110_CTRL_REG2_AUTO_MSRT_EN_MASK | MAG3110_CTRL_REG2_RAW_MASK},
     __END_WRITE_DATA__};
 
 /*! @brief Address of Status Register. */
@@ -171,6 +172,8 @@ int main(void)
         rawData.mag[1] = ((int16_t)data[2] << 8) | data[3];
         rawData.mag[2] = ((int16_t)data[4] << 8) | data[5];
 
+		MAG3110_CalibrateHardIronOffset(&rawData.mag[0], &rawData.mag[1], &rawData.mag[2]);
+		
         /* NOTE: PRINTF is relatively expensive in terms of CPU time, specially when used with-in execution loop. */
         PRINTF("\r\n Mag  X = %d  Y = %d  Z = %d\r\n", rawData.mag[0], rawData.mag[1], rawData.mag[2]);
         ASK_USER_TO_RESUME(100); /* Ask for user input after processing 10 samples. */

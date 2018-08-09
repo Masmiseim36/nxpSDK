@@ -1,6 +1,6 @@
 /*
  * The Clear BSD License
- * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
@@ -70,9 +70,9 @@
 #define FXLC95000_SAMPLE_SIZE 10                /* 4-Byte timestamp and 2-Byte X,Y,Z Data each. */
 
 /*! @brief Unique Name for this application which should match the target GUI pkg name. */
-#define APPLICATION_NAME "FXLC95000CL"
+#define APPLICATION_NAME "FXLC95000 Accelerometer Demo"
 /*! @brief Version to distinguish between instances the same application based on target Shield and updates. */
-#define APPLICATION_VERSION "1.0"
+#define APPLICATION_VERSION "2.5"
 
 //-----------------------------------------------------------------------
 // Constants

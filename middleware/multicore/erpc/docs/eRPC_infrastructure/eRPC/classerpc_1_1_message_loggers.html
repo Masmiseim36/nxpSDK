@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC API Reference
-   &#160;<span id="projectnumber">Rev. 1.5.0</span>
+   &#160;<span id="projectnumber">Rev. 1.7.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -51,7 +51,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="modules.html"><span>API&#160;Reference</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -123,7 +122,7 @@ $(document).ready(function(){initNavTree('classerpc_1_1_message_loggers.html',''
 <p>Logging messages functionality.  
  <a href="classerpc_1_1_message_loggers.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="message__loggers_8h_source.html">message_loggers.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="erpc__message__loggers_8h_source.html">erpc_message_loggers.h</a>&gt;</code></p>
 <div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Collaboration diagram for erpc::MessageLoggers:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
@@ -135,22 +134,22 @@ $(document).ready(function(){initNavTree('classerpc_1_1_message_loggers.html',''
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:acaf906ad354f31bdd240ba6f41816126"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acaf906ad354f31bdd240ba6f41816126"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_message_loggers.html#acaf906ad354f31bdd240ba6f41816126">MessageLoggers</a> ()</td></tr>
-<tr class="memdesc:acaf906ad354f31bdd240ba6f41816126"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor. <br /></td></tr>
-<tr class="separator:acaf906ad354f31bdd240ba6f41816126"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5efc688df15bbaa7449446a20f2836ec"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5efc688df15bbaa7449446a20f2836ec"></a>
-virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_message_loggers.html#a5efc688df15bbaa7449446a20f2836ec">~MessageLoggers</a> ()</td></tr>
-<tr class="memdesc:a5efc688df15bbaa7449446a20f2836ec"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classerpc_1_1_transport.html" title="Abstract interface for transport layer. ">Transport</a> destructor. <br /></td></tr>
-<tr class="separator:a5efc688df15bbaa7449446a20f2836ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac1fcb4e780a1868303e31422ae2d3d0c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac1fcb4e780a1868303e31422ae2d3d0c"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_message_loggers.html#ac1fcb4e780a1868303e31422ae2d3d0c">MessageLoggers</a> (void)</td></tr>
+<tr class="memdesc:ac1fcb4e780a1868303e31422ae2d3d0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor. <br /></td></tr>
+<tr class="separator:ac1fcb4e780a1868303e31422ae2d3d0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae8d7f337794e2ded5acb47307bd0bf9a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae8d7f337794e2ded5acb47307bd0bf9a"></a>
+virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_message_loggers.html#ae8d7f337794e2ded5acb47307bd0bf9a">~MessageLoggers</a> (void)</td></tr>
+<tr class="memdesc:ae8d7f337794e2ded5acb47307bd0bf9a"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classerpc_1_1_transport.html" title="Abstract interface for transport layer. ">Transport</a> destructor. <br /></td></tr>
+<tr class="separator:ae8d7f337794e2ded5acb47307bd0bf9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a90133479f038b8f73f44753a07c5a21c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_message_loggers.html#a90133479f038b8f73f44753a07c5a21c">addMessageLogger</a> (<a class="el" href="classerpc_1_1_transport.html">Transport</a> *transport)</td></tr>
-<tr class="memdesc:a90133479f038b8f73f44753a07c5a21c"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function add given transport to newly created <a class="el" href="classerpc_1_1_message_logger.html">MessageLogger</a> object.  <a href="#a90133479f038b8f73f44753a07c5a21c">More...</a><br /></td></tr>
+<tr class="memdesc:a90133479f038b8f73f44753a07c5a21c"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function add given transport to newly created <a class="el" href="classerpc_1_1_message_logger.html" title="Logging messages objects used for logging sent/received messages. ">MessageLogger</a> object.  <a href="#a90133479f038b8f73f44753a07c5a21c">More...</a><br /></td></tr>
 <tr class="separator:a90133479f038b8f73f44753a07c5a21c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:ad6c78c02e2288688103e66e73fd9d1b8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_message_loggers.html#ad6c78c02e2288688103e66e73fd9d1b8">logMessage</a> (<a class="el" href="classerpc_1_1_message_buffer.html">MessageBuffer</a> *msg)</td></tr>
-<tr class="memdesc:ad6c78c02e2288688103e66e73fd9d1b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function add given transport to newly created <a class="el" href="classerpc_1_1_message_logger.html">MessageLogger</a> object.  <a href="#ad6c78c02e2288688103e66e73fd9d1b8">More...</a><br /></td></tr>
+<tr class="memdesc:ad6c78c02e2288688103e66e73fd9d1b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function add given transport to newly created <a class="el" href="classerpc_1_1_message_logger.html" title="Logging messages objects used for logging sent/received messages. ">MessageLogger</a> object.  <a href="#ad6c78c02e2288688103e66e73fd9d1b8">More...</a><br /></td></tr>
 <tr class="separator:ad6c78c02e2288688103e66e73fd9d1b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
@@ -175,7 +174,7 @@ Protected Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>This function add given transport to newly created <a class="el" href="classerpc_1_1_message_logger.html">MessageLogger</a> object. </p>
+<p>This function add given transport to newly created <a class="el" href="classerpc_1_1_message_logger.html" title="Logging messages objects used for logging sent/received messages. ">MessageLogger</a> object. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">transport</td><td><a class="el" href="classerpc_1_1_transport.html" title="Abstract interface for transport layer. ">Transport</a> used for logging messages</td></tr>
@@ -184,7 +183,7 @@ Protected Attributes</h2></td></tr>
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">True</td><td>When transport was succesfully added. </td></tr>
+    <tr><td class="paramname">True</td><td>When transport was successfully added. </td></tr>
     <tr><td class="paramname">False</td><td>When transport wasn't added. </td></tr>
   </table>
   </dd>
@@ -214,10 +213,10 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>This function add given transport to newly created <a class="el" href="classerpc_1_1_message_logger.html">MessageLogger</a> object. </p>
+<p>This function add given transport to newly created <a class="el" href="classerpc_1_1_message_logger.html" title="Logging messages objects used for logging sent/received messages. ">MessageLogger</a> object. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname"><a class="el" href="classerpc_1_1_message_buffer.html" title="Represents a memory buffer containing a message. ">MessageBuffer</a></td><td>Buffer which will be logged.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">msg</td><td>Buffer which will be logged.</td></tr>
   </table>
   </dd>
 </dl>
@@ -248,8 +247,8 @@ Protected Attributes</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li><a class="el" href="message__loggers_8h_source.html">message_loggers.h</a></li>
-<li>message_loggers.cpp</li>
+<li><a class="el" href="erpc__message__loggers_8h_source.html">erpc_message_loggers.h</a></li>
+<li>erpc_message_loggers.cpp</li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

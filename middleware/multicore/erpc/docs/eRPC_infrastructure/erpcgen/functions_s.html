@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC Generator (erpcgen)
-   &#160;<span id="projectnumber">Rev. 1.5.0</span>
+   &#160;<span id="projectnumber">Rev. 1.7.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -170,6 +170,9 @@ $(document).ready(function(){initNavTree('functions_s.html','');});
 <li>search()
 : <a class="el" href="class_path_searcher.html#a32c8f23e9994995e464722ea07bd0529">PathSearcher</a>
 </li>
+<li>semantic_error()
+: <a class="el" href="classerpcgen_1_1semantic__error.html#a06bf6c295a4d52f0458b101fc49e0e78">erpcgen::semantic_error</a>
+</li>
 <li>set()
 : <a class="el" href="classsmart__ptr.html#a0caae3f1c3cf11d2a63435473b10891d">smart_ptr&lt; T, delete_policy &gt;</a>
 </li>
@@ -203,11 +206,11 @@ $(document).ready(function(){initNavTree('functions_s.html','');});
 , <a class="el" href="classerpcgen_1_1_array_type.html#a0ee9f668c6bece69f27522fbd5952288">erpcgen::ArrayType</a>
 , <a class="el" href="classerpcgen_1_1_list_type.html#ad19321980d03fc291b678c6709da6058">erpcgen::ListType</a>
 </li>
-<li>setErrorHandlingChecksType()
-: <a class="el" href="classerpcgen_1_1_interface_definition.html#ae93b43715fe4b0184fbb2c069060699a">erpcgen::InterfaceDefinition</a>
-</li>
 <li>setFilterLevel()
 : <a class="el" href="class_logger.html#a86a9875a4e4aae6670f16237e651ba3a">Logger</a>
+</li>
+<li>setFunctionType()
+: <a class="el" href="classerpcgen_1_1_function.html#a15cadf7e82780d688a1df39d6ca5662b">erpcgen::Function</a>
 </li>
 <li>setIlComment()
 : <a class="el" href="classerpcgen_1_1_symbol.html#a9cf5481c123404b46a6574135ff6631e">erpcgen::Symbol</a>
@@ -254,7 +257,7 @@ $(document).ready(function(){initNavTree('functions_s.html','');});
 : <a class="el" href="classerpcgen_1_1_union_type.html#aa582892d62ea3855f3fb9fabf0e6de0a">erpcgen::UnionType</a>
 </li>
 <li>setProgramInfo()
-: <a class="el" href="classerpcgen_1_1_interface_definition.html#a0458349b3230e4ea11b672629fd6ec5c">erpcgen::InterfaceDefinition</a>
+: <a class="el" href="classerpcgen_1_1_interface_definition.html#ac147f25fdfe081c05a5065ad376f9f5d">erpcgen::InterfaceDefinition</a>
 </li>
 <li>setProgramName()
 : <a class="el" href="classerpcgen_1_1_interface_definition.html#af57c74feee09035914cea20cf7e8596d">erpcgen::InterfaceDefinition</a>
@@ -298,31 +301,64 @@ $(document).ready(function(){initNavTree('functions_s.html','');});
 : <a class="el" href="class_options.html#a455ec724e9fbd8a18cb85284a58774b5a42e2f53fb3e419dd5db83870b4982981">Options</a>
 </li>
 <li>smart_ptr()
-: <a class="el" href="classsmart__ptr.html#a1939a7eb7371eea65408e19d8ab7eeff">smart_ptr&lt; T, delete_policy &gt;</a>
+: <a class="el" href="classsmart__ptr.html#af63ba73813022a51c264fce36e6e5a62">smart_ptr&lt; T, delete_policy &gt;</a>
+</li>
+<li>startWalk()
+: <a class="el" href="classerpcgen_1_1_ast_walker.html#a2069c2eade111406176330e8c5491ae1">erpcgen::AstWalker</a>
+</li>
+<li>StdoutLogger()
+: <a class="el" href="class_stdout_logger.html#af2204f094477dfbed6af3cf55ac60ccf">StdoutLogger</a>
 </li>
 <li>string_list_t
 : <a class="el" href="class_path_searcher.html#a63744c70ba23ec6b7ba57e8cc6ea2fea">PathSearcher</a>
 </li>
+<li>string_vector_t
+: <a class="el" href="classerpcgen_1_1erpcgen_tool.html#ab9ed3d07de22a3b0114028d69554430c">erpcgen::erpcgenTool</a>
+</li>
+<li>StringValue()
+: <a class="el" href="class_string_value.html#a08426d55e6ec55e2c56473f1a25c6267">StringValue</a>
+</li>
 <li>stripExtension()
-: <a class="el" href="classerpcgen_1_1_generator.html#a111e87a8de322f64f79dbc5e56233d56">erpcgen::Generator</a>
+: <a class="el" href="classerpcgen_1_1_generator.html#a3fa9381d8ade2e8b19d076f9ee515b4b">erpcgen::Generator</a>
 </li>
 <li>stripWhitespace()
-: <a class="el" href="classerpcgen_1_1_python_generator.html#ab97d050c3a25fbcb4e06fea09d79788d">erpcgen::PythonGenerator</a>
+: <a class="el" href="classerpcgen_1_1_python_generator.html#a9ce867132a8c720f8aae4090ab51f0cd">erpcgen::PythonGenerator</a>
 </li>
 <li>StructMember()
 : <a class="el" href="classerpcgen_1_1_struct_member.html#ace6424c6111ee561b213e27553367eb3">erpcgen::StructMember</a>
 </li>
 <li>StructType()
-: <a class="el" href="classerpcgen_1_1_struct_type.html#aa2307028a8514fc53e498645c5c0f8e0">erpcgen::StructType</a>
+: <a class="el" href="classerpcgen_1_1_struct_type.html#a50c5670f348bdcf41d9abbd802f7b8a7">erpcgen::StructType</a>
 </li>
 <li>Symbol()
-: <a class="el" href="classerpcgen_1_1_symbol.html#ac969b4105dddf248d163cdb10385efe1">erpcgen::Symbol</a>
+: <a class="el" href="classerpcgen_1_1_symbol.html#a3274ccd412cc221e15976cc93c71b95d">erpcgen::Symbol</a>
+</li>
+<li>symbol_directions_map_t
+: <a class="el" href="classerpcgen_1_1_group.html#a3b4750210cd8a7976f1173059a24fa7f">erpcgen::Group</a>
+</li>
+<li>symbol_map_t
+: <a class="el" href="classerpcgen_1_1_symbol_scope.html#ade0993f91706126db53501c14658918e">erpcgen::SymbolScope</a>
 </li>
 <li>symbol_type_t
 : <a class="el" href="classerpcgen_1_1_symbol.html#a41dbbe424222a8e9b4b73c390cf06775">erpcgen::Symbol</a>
 </li>
+<li>symbol_vector_t
+: <a class="el" href="classerpcgen_1_1_symbol_scope.html#abc05dfb794b203bf06075776dd430f1a">erpcgen::SymbolScope</a>
+</li>
+<li>symbols_list_t
+: <a class="el" href="classerpcgen_1_1_group.html#a445d27f77f14b9577850ed5ac2252ced">erpcgen::Group</a>
+</li>
 <li>SymbolScanner()
-: <a class="el" href="classerpcgen_1_1_symbol_scanner.html#a60718d30940b8eb98a7fbc5cb1fd0172">erpcgen::SymbolScanner</a>
+: <a class="el" href="classerpcgen_1_1_symbol_scanner.html#a34c988ade06d9265c796dd7147e4b877">erpcgen::SymbolScanner</a>
+</li>
+<li>SymbolScope()
+: <a class="el" href="classerpcgen_1_1_symbol_scope.html#a727ff41c893a043e295c7c1eeaffce84">erpcgen::SymbolScope</a>
+</li>
+<li>syntax_error()
+: <a class="el" href="classerpcgen_1_1syntax__error.html#a7730b0c9c500c0c5315bf9a28976b799">erpcgen::syntax_error</a>
+</li>
+<li>syntax_error2()
+: <a class="el" href="classerpcgen_1_1syntax__error2.html#ab3a9111a1058e9159be13df3a20a99eb">erpcgen::syntax_error2</a>
 </li>
 </ul>
 </div><!-- contents -->

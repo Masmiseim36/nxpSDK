@@ -6,7 +6,7 @@ This chapter describes how to get and use the eRPC sniffer tool (_erpcsniffer_),
 The tool can be found on [eRPC releases](https://github.com/EmbeddedRPC/erpc/releases) section on github page.
 
 ## How to create an eRPC sniffer tool
-* The _erpcsniffer_ specific source files are located in the ``erpc/erpcsniffer/src`` directory. The tool is using source files also from ``erpc/erpcerpcgen/src`` and ``erpc/erpc_c`` directories.
+* The _erpcsniffer_ specific source files are located in the ``erpc/erpcsniffer/src`` directory. The tool is using source files also from ``erpc/erpcgen/src`` and ``erpc/erpc_c`` directories.
 * To build the _erpcsniffer_ application on Linux OS, the compiler (gcc, g++), make, flex/bison applications, and boost libraries are needed.
 * On the Linux OS, build the application using the command (which must be executed in the ``erpc/`` directory):
 
@@ -14,7 +14,7 @@ The tool can be found on [eRPC releases](https://github.com/EmbeddedRPC/erpc/rel
 make erpcsniffer
 ```
 
-The output _erpcsniffer_ applicaton is located in the ``erpc/Debug/<os_type>/erpcsniffer/`` folder. The ``<os_type>`` is set automatically, based on which build system is used.
+The output _erpcsniffer_ application is located in the ``erpc/Debug/<os_type>/erpcsniffer/`` folder. The ``<os_type>`` is set automatically, based on which build system is used.
 
 ## How to use an eRPC sniffer tool
 When the _erpcsniffer_ application is available, you can run it from the command line using the appropriate command line options.

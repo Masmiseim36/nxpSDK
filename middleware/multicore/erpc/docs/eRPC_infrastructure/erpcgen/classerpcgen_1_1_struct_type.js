@@ -7,7 +7,7 @@ var classerpcgen_1_1_struct_type =
     [ "containByrefMember", "classerpcgen_1_1_struct_type.html#a76de8b5c1e42400b0f0345f911cc8638", null ],
     [ "containListMember", "classerpcgen_1_1_struct_type.html#af67edc2e176ab14f76c18eac7b3167cc", null ],
     [ "containStringMember", "classerpcgen_1_1_struct_type.html#a1b43e056dbd07702397a14400ae45fd0", null ],
-    [ "getDescription", "classerpcgen_1_1_struct_type.html#a78421cc24d8632d9eb95b76e2e68dbbe", null ],
+    [ "getDescription", "classerpcgen_1_1_struct_type.html#a399c40208f97e0d72d3a4d526596b097", null ],
     [ "getMembers", "classerpcgen_1_1_struct_type.html#a741c0d4973fc315ef82adc4d13dfd9f0", null ],
     [ "getScope", "classerpcgen_1_1_struct_type.html#aefdf672a209ed84db6a7f55fd8d84d9b", null ],
     [ "isStruct", "classerpcgen_1_1_struct_type.html#a840aa2dea297e8eb3abc15ed453fbb6b", null ],

@@ -1,6 +1,6 @@
 /*
  * The Clear BSD License
- * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
@@ -92,9 +92,9 @@
 #define nmi_handler NMI_Handler
 
 /*! @brief Unique Name for this application which should match the target GUI pkg name. */
-#define APPLICATION_NAME "GENERIC-DATA-LOGGER"
+#define APPLICATION_NAME "Generic Data Logger Demo"
 /*! @brief Version to distinguish between instances the same application based on target Shield and updates. */
-#define APPLICATION_VERSION "1.0"
+#define APPLICATION_VERSION "2.5"
 
 //-----------------------------------------------------------------------
 // Constants
@@ -104,11 +104,10 @@ const registerwritelist_t fxos8700_Config_Hybrid[] = {
     /*! System and Control registers. */
     /*! Configure the FXOS8700 to 200Hz sampling rate. */
     {FXOS8700_CTRL_REG1, FXOS8700_CTRL_REG1_DR_HYBRID_200_HZ, FXOS8700_CTRL_REG1_DR_MASK},
-    {FXOS8700_M_CTRL_REG1, FXOS8700_M_CTRL_REG1_M_HMS_HYBRID_MODE,
-     FXOS8700_M_CTRL_REG1_M_HMS_MASK}, /*! Enable the Hybrid Mode. */
-    {FXOS8700_M_CTRL_REG2,             /*! Enable the Data read with Hybrid Mode. */
-     FXOS8700_M_CTRL_REG2_M_AUTOINC_HYBRID_MODE | FXOS8700_M_CTRL_REG2_M_RST_CNT_DISABLE,
-     FXOS8700_M_CTRL_REG2_M_AUTOINC_MASK | FXOS8700_M_CTRL_REG2_M_RST_CNT_MASK},
+    {FXOS8700_M_CTRL_REG1, FXOS8700_M_CTRL_REG1_M_ACAL_EN | FXOS8700_M_CTRL_REG1_M_HMS_HYBRID_MODE,
+                           FXOS8700_M_CTRL_REG1_M_ACAL_MASK | FXOS8700_M_CTRL_REG1_M_HMS_MASK}, /*! Enable the Hybrid Mode. */
+    {FXOS8700_M_CTRL_REG2, FXOS8700_M_CTRL_REG2_M_AUTOINC_HYBRID_MODE | FXOS8700_M_CTRL_REG2_M_RST_CNT_DISABLE,
+                           FXOS8700_M_CTRL_REG2_M_AUTOINC_MASK | FXOS8700_M_CTRL_REG2_M_RST_CNT_MASK}, /*! Enable the Data read with Hybrid Mode. */
     __END_WRITE_DATA__};
 
 /*! Command definition to read the Accel + Mag Data */
@@ -149,6 +148,7 @@ char boardString[ADS_MAX_STRING_LENGTH] = {0}, shieldString[ADS_MAX_STRING_LENGT
      embAppName[ADS_MAX_STRING_LENGTH] = {0};
 volatile bool bStreamingEnabled = false, bFxas21002DataReady = false, bDataLoggerReady = false;
 uint8_t gPrimaryStreamID; /* The auto assigned Stream ID to be used to stream complete data. */
+int32_t gSystick;
 GENERIC_DRIVER_GPIO *pGpioDriver = &Driver_GPIO_KSDK;
 
 //-----------------------------------------------------------------------
@@ -225,6 +225,7 @@ bool process_host_command(
             case HOST_CMD_START:
                 if (hostCommand[1] == gPrimaryStreamID && bDataLoggerReady && bStreamingEnabled == false)
                 {
+                    BOARD_SystickStart(&gSystick);
                     bStreamingEnabled = true;
                     success = true;
                 }
@@ -252,7 +253,7 @@ bool process_host_command(
 int main(void)
 {
     size_t payLoadLen;
-    int32_t status, systick;
+    int32_t status;
     uint8_t secondaryStreamID1, secondaryStreamID2, /* The auto assigned Stream ID not to be used to stream data. */
         dataReady_3115, toggle_pin = 0,             /* The MPL3115 sensor data ready flag and LED Toggle Counter. */
         data[FXOS8700_DATA_SIZE + FXAS21002_DATA_SIZE + MPL3115_DATA_SIZE],
@@ -406,8 +407,7 @@ int main(void)
     if (true == bDataLoggerReady)
     {
         *((uint32_t *)&streamingPacket[STREAMING_HEADER_LEN]) = 0; /* Initialize time stamp field. */
-        BOARD_SystickStart(&systick);
-        pGpioDriver->clr_pin(&LED_GREEN); /* Set LED to indicate application is ready. */
+        pGpioDriver->clr_pin(&LED_GREEN);                          /* Set LED to indicate application is ready. */
     }
 
     for (;;) /* Forever loop */
@@ -428,7 +428,7 @@ int main(void)
         }
 
         /* Read timestamp from Systick framework. */
-        *((uint32_t *)&streamingPacket[STREAMING_HEADER_LEN]) += BOARD_SystickElapsedTime_us(&systick);
+        *((uint32_t *)&streamingPacket[STREAMING_HEADER_LEN]) += BOARD_SystickElapsedTime_us(&gSystick);
 
         /*! Read the raw sensor data from the fxos8700. */
         status = FXOS8700_I2C_ReadData(&fxos8700Driver, fxos8700_Output_values, data);

@@ -1,0 +1,10 @@
+<map id="erpc_codec.h" name="erpc_codec.h">
+<area shape="rect" id="node2" href="$erpc__client__manager_8h.html" title="erpc_client_manager.h" alt="" coords="248,80,401,107"/>
+<area shape="rect" id="node4" href="$erpc__transport__arbitrator_8h.html" title="erpc_transport_arbitrator.h" alt="" coords="5,162,180,189"/>
+<area shape="rect" id="node7" href="$erpc__basic__codec_8h.html" title="erpc_basic_codec.h" alt="" coords="426,80,565,107"/>
+<area shape="rect" id="node8" href="$erpc__server_8h.html" title="erpc_server.h" alt="" coords="682,80,781,107"/>
+<area shape="rect" id="node3" href="$erpc__arbitrated__client__manager_8h.html" title="erpc_arbitrated_client\l_manager.h" alt="" coords="205,155,351,196"/>
+<area shape="rect" id="node5" href="$erpc__arbitrated__client__setup_8h.html" title="erpc_arbitrated_client\l_setup.h" alt="" coords="375,155,522,196"/>
+<area shape="rect" id="node6" href="$erpc__client__setup_8h.html" title="erpc_client_setup.h" alt="" coords="547,162,681,189"/>
+<area shape="rect" id="node9" href="$erpc__simple__server_8h.html" title="erpc_simple_server.h" alt="" coords="706,162,850,189"/>
+</map>

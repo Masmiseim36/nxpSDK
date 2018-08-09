@@ -1,7 +1,7 @@
 var classerpcgen_1_1_array_type =
 [
     [ "ArrayType", "classerpcgen_1_1_array_type.html#ae9be055464db237a7bc48f9a87a0a19e", null ],
-    [ "getDescription", "classerpcgen_1_1_array_type.html#a1c5a4e6413834ed1d286ae56d4566f85", null ],
+    [ "getDescription", "classerpcgen_1_1_array_type.html#a2f24b1e2e72bda762761a4bc2f03eaae", null ],
     [ "getElementCount", "classerpcgen_1_1_array_type.html#a7fa9b165e478e946a467d7f26a57a91f", null ],
     [ "getElementType", "classerpcgen_1_1_array_type.html#abc461583752e7f1218d7f966457b9b5c", null ],
     [ "isArray", "classerpcgen_1_1_array_type.html#a8dfe8f3d9c4e3999afe14397ad779e0b", null ],

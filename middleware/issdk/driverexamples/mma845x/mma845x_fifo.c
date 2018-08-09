@@ -1,6 +1,6 @@
 /*
  * The Clear BSD License
- * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
@@ -73,7 +73,7 @@ const registerwritelist_t mma845x_Config_Fifo[] = {
     /*! Configure the MMA845x F_SETUP to set FIFO mode to STOP, set the watermark size to FIFO_SIZE. */
     {MMA845x_F_SETUP, MMA845x_F_SETUP_F_MODE_FIFOSTOP | FIFO_SIZE, 0},
     /*! Configure the MMA845x CTRL_REG2 to set the Oversampling mode to High Resolution. */
-    {MMA845x_CTRL_REG2, MMA845x_CTRL_REG2_SMODS_HIGHRES, 0},
+    {MMA845x_CTRL_REG2, MMA845x_CTRL_REG2_MODS_HIGHRES, 0},
     __END_WRITE_DATA__};
 
 /*! Prepare the register read list to read the FIFO event from MMA845x. */

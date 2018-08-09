@@ -1,6 +1,6 @@
 /*
  * The Clear BSD License
- * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
@@ -64,7 +64,7 @@ byte NVM_SetBlockFlash(uint8_t *Source, uint32_t Dest, uint16_t Count)
         result = FLASH_Erase(&flashDriver, Dest, pflashSectorSize,  FLASH_ERASE_KEY);
 
         if (kStatus_FLASH_Success == result) {
-            result = FLASH_Program(&flashDriver, Dest, (uint32_t*) Source, Count);
+            result = FLASH_Program(&flashDriver, Dest, Source, Count);
             if (kStatus_FLASH_Success == result)  retVal=SUCCESS;
         }
     }
@@ -72,7 +72,7 @@ byte NVM_SetBlockFlash(uint8_t *Source, uint32_t Dest, uint16_t Count)
 }
 #else
 byte checkIAPStatus(status_t result) {
-    byte retVal;
+    byte retVal=0;
       switch (result) {
       case kStatus_FLASHIAP_Success:
         retVal = SUCCESS;

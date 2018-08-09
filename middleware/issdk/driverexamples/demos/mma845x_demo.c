@@ -1,6 +1,6 @@
 /*
  * The Clear BSD License
- * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
@@ -64,28 +64,68 @@
 //-----------------------------------------------------------------------
 // Macros
 //-----------------------------------------------------------------------
-#define MMA845x_STREAM_DATA_SIZE 10 /* 6 byte Data */
+#define MMA845x_STREAM_DATA_SIZE 11 /* 6+1 byte Data */
 
 /*! @brief Unique Name for this application which should match the target GUI pkg name. */
-#define APPLICATION_NAME "MMA8451Q"
+#define APPLICATION_NAME "MMA845x Accelerometer Demo"
 /*! @brief Version to distinguish between instances the same application based on target Shield and updates. */
-#define APPLICATION_VERSION "1.0"
+#define APPLICATION_VERSION "2.5"
+
+typedef struct
+{
+    uint32_t timestamp; /*!< Time stamp value in micro-seconds. */
+    int16_t accel[3];   /*!< The accel data */
+    uint8_t intsrc;
+} mma845x_acceluserdata_t;
 
 //-----------------------------------------------------------------------
 // Constants
 //-----------------------------------------------------------------------
 /*! Prepare the register write list to configure MMA845x in non-FIFO and ISR mode. */
 const registerwritelist_t mma845x_Config_Isr[] = {
-    /*! Configure the MMA845x CTRL_REG1 to set mode to STANDBY and odr to 12.5Hz. */
-    {MMA845x_CTRL_REG1, MMA845x_CTRL_REG1_MODE_STANDBY | MMA845x_CTRL_REG1_DR_12DOT5HZ, 0},
     /*! Configure the MMA845x to disable FIFO */
-    {MMA845x_F_SETUP, MMA845x_F_SETUP_F_MODE_FIFODISABLED, 0},
+    {MMA845x_F_SETUP, 0x00, 0},
+	/*! Configure the MMA845x XYZ_DATA_CFG to set FS Range 2G. */
+	{ MMA845x_XYZ_DATA_CFG, MMA845x_XYZ_DATA_CFG_FS_FS_RANGE_2G, MMA845x_XYZ_DATA_CFG_FS_MASK},
+    /*! Configure the MMA845x CTRL_REG1 to set ODR to 100Hz. */
+    {MMA845x_CTRL_REG1, MMA845x_CTRL_REG1_DR_100HZ, MMA845x_CTRL_REG1_DR_MASK},
     /*! Configure the MMA845x CTRL_REG2 to set the Oversampling mode to High Resolution. */
-    {MMA845x_CTRL_REG2, MMA845x_CTRL_REG2_SMODS_HIGHRES, 0},
+    {MMA845x_CTRL_REG2, MMA845x_CTRL_REG2_MODS_HIGHRES, 0},
     /*! Configure the MMA845x CTRL_REG3 to set the Interrupt polarity to ACTIVE high. */
     {MMA845x_CTRL_REG3, MMA845x_CTRL_REG3_IPOL_HIGH, 0},
     /*! Configure the MMA845x CTRL_REG4 to enable the data ready interrupt. */
-    {MMA845x_CTRL_REG4, MMA845x_CTRL_REG4_INT_EN_DRDY_ENABLED, 0},
+    /*! Configure the MMA845x to set interrupt polarity as Active High. */
+    {MMA845x_PL_CFG, MMA845x_PL_CFG_PL_EN_ENABLED|MMA845x_PL_CFG_DBCNTM_CLR, 0},
+    /*! Configure the MMA845x to set interrupt polarity as Active High. */
+    {MMA845x_PL_COUNT, 0xFF, 0},
+    /*! Configure the MMA845x to set interrupt polarity as Active High. */
+    {MMA845x_FF_MT_CFG, MMA845x_FF_MT_CFG_OAE_FREEFALL|MMA845x_FF_MT_CFG_XEFE_ENABLED|MMA845x_FF_MT_CFG_YEFE_ENABLED|MMA845x_FF_MT_CFG_ZEFE_ENABLED, 0},
+    /*! Configure the MMA845x to set interrupt polarity as Active High. */
+    {MMA845x_FF_MT_COUNT, 0x02, 0},
+    /*! Configure the MMA845x to set interrupt polarity as Active High. */
+    {MMA845x_FF_MT_THS, MMA845x_FF_MT_THS_DBCNTM_CLR|0x02, 0},
+    /*! Configure the MMA845x to set interrupt polarity as Active High. */
+    {MMA845x_TRANSIENT_CFG, MMA845x_TRANSIENT_CFG_XTEFE_ENABLED|MMA845x_TRANSIENT_CFG_YTEFE_ENABLED|MMA845x_TRANSIENT_CFG_ZTEFE_ENABLED, 0},
+    /*! Configure the MMA845x to set interrupt polarity as Active High. */
+    {MMA845x_TRANSIENT_THS, MMA845x_TRANSIENT_THS_DBCNTM_CLR|0x10, 0},
+    /*! Configure the MMA845x to set interrupt polarity as Active High. */
+    {MMA845x_TRANSIENT_COUNT, 0x0C, 0},
+    /*! Configure the MMA845x to set interrupt polarity as Active High. */
+    {MMA845x_PULSE_CFG, MMA845x_PULSE_CFG_XSPEFE_ENABLED|MMA845x_PULSE_CFG_YSPEFE_ENABLED|MMA845x_PULSE_CFG_ZSPEFE_ENABLED, 0},
+    /*! Configure the MMA845x to set interrupt polarity as Active High. */
+    {MMA845x_PULSE_THSX, 0x37, 0},
+    /*! Configure the MMA845x to set interrupt polarity as Active High. */
+    {MMA845x_PULSE_THSY, 0x37, 0},
+    /*! Configure the MMA845x to set interrupt polarity as Active High. */
+    {MMA845x_PULSE_THSZ, 0x52, 0},
+    /*! Configure the MMA845x to set interrupt polarity as Active High. */
+    {MMA845x_PULSE_TMLT, 0x30, 0},
+    /*! Configure the MMA845x to set interrupt polarity as Active High. */
+    {MMA845x_PULSE_LTCY, 0xF0, 0},
+    /*! Configure the MMA845x to set interrupt polarity as Active High. */
+    {MMA845x_PULSE_WIND, 0x3C, 0},
+    /*! Configure the MMA845x to enable Interrupts for Data Ready. */
+    {MMA845x_CTRL_REG4, MMA845x_CTRL_REG4_INT_EN_DRDY_ENABLED|MMA845x_CTRL_REG4_INT_EN_LNDPRT_ENABLED|MMA845x_CTRL_REG4_INT_EN_FF_MT_ENABLED|MMA845x_CTRL_REG4_INT_EN_TRANS_ENABLED|MMA845x_CTRL_REG4_INT_EN_PULSE_ENABLED, 0},
     /*! Configure the MMA845x CTRL_REG5 to route Interrupt to INT1 pin. */
     {MMA845x_CTRL_REG5, MMA845x_CTRL_REG5_INT_CFG_DRDY_INT1, 0},
     __END_WRITE_DATA__};
@@ -93,6 +133,11 @@ const registerwritelist_t mma845x_Config_Isr[] = {
 /*! Prepare the register read list to read the raw Accel data from MMA845x. */
 const registerreadlist_t mma845x_Output_Values[] = {
     {.readFrom = MMA845x_OUT_X_MSB, .numBytes = MMA845x_ACCEL_DATA_SIZE}, __END_READ_DATA__};
+/*! Prepare the register read for Status Register. */
+const registerreadlist_t cMma845xqStatus[] = {
+    {.readFrom = MMA845x_INT_SOURCE, .numBytes = 1}, __END_READ_DATA__};
+const registerreadlist_t cMma845xqPLStatus[] = {
+    {.readFrom = MMA845x_PL_STATUS, .numBytes = 1}, __END_READ_DATA__};
 
 //-----------------------------------------------------------------------
 // Global Variables
@@ -101,6 +146,7 @@ char boardString[ADS_MAX_STRING_LENGTH] = {0}, shieldString[ADS_MAX_STRING_LENGT
      embAppName[ADS_MAX_STRING_LENGTH] = {0};
 volatile bool bStreamingEnabled = false, bMma845xDataReady = false, bMma845xReady = false;
 uint8_t gStreamID; /* The auto assigned Stream ID. */
+int32_t gSystick;
 GENERIC_DRIVER_GPIO *pGpioDriver = &Driver_GPIO_KSDK;
 
 //-----------------------------------------------------------------------
@@ -171,6 +217,7 @@ bool process_host_command(
             case HOST_CMD_START:
                 if (hostCommand[1] == gStreamID && bMma845xReady && bStreamingEnabled == false)
                 {
+                    BOARD_SystickStart(&gSystick);
                     bStreamingEnabled = true;
                     success = true;
                 }
@@ -197,11 +244,11 @@ bool process_host_command(
  */
 int main(void)
 {
-    int32_t status, systick;
-    uint8_t data[MMA845x_ACCEL_DATA_SIZE], streamingPacket[STREAMING_HEADER_LEN + MMA845x_STREAM_DATA_SIZE];
+    int32_t status;
+    uint8_t data[MMA845x_ACCEL_DATA_SIZE], intsrcdata, PLstatusdata, streamingPacket[STREAMING_HEADER_LEN + MMA845x_STREAM_DATA_SIZE];
 
     mma845x_i2c_sensorhandle_t mma845xDriver;
-    mma845x_acceldata_t rawData = {.timestamp = 0};
+    mma845x_acceluserdata_t rawData = {.timestamp = 0};
 
     ARM_DRIVER_I2C *pI2cDriver = &I2C_S_DRIVER;
     ARM_DRIVER_USART *pUartDriver = &HOST_S_DRIVER;
@@ -295,7 +342,6 @@ int main(void)
     {
         /*! Populate streaming header. */
         Host_IO_Add_ISO_Header(gStreamID, streamingPacket, MMA845x_STREAM_DATA_SIZE);
-        BOARD_SystickStart(&systick);
         pGpioDriver->clr_pin(&GREEN_LED); /* Set LED to indicate application is ready. */
     }
 
@@ -325,7 +371,7 @@ int main(void)
         }
 
         /* Update timestamp from Systick framework. */
-        rawData.timestamp += BOARD_SystickElapsedTime_us(&systick);
+        rawData.timestamp += BOARD_SystickElapsedTime_us(&gSystick);
 
         /*! Convert the raw sensor data to signed 32-bit and 16-bit containers for display to the debug port. */
         rawData.accel[0] = ((int16_t)data[0] << 8) | data[1];
@@ -334,6 +380,12 @@ int main(void)
         rawData.accel[1] /= 4;
         rawData.accel[2] = ((int16_t)data[4] << 8) | data[5];
         rawData.accel[2] /= 4;
+
+        /*! Read INT_SRC 0x0C from MMA845x. */
+        status = MMA845x_I2C_ReadData(&mma845xDriver, cMma845xqStatus, &intsrcdata);
+        status = MMA845x_I2C_ReadData(&mma845xDriver, cMma845xqPLStatus, &PLstatusdata);
+        /* Send INTSRC */
+        rawData.intsrc = intsrcdata;
 
         /* Copy Raw samples to Streaming Buffer. */
         memcpy(streamingPacket + STREAMING_HEADER_LEN, &rawData, MMA845x_STREAM_DATA_SIZE);

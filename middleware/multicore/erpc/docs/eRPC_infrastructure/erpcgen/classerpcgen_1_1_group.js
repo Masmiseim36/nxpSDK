@@ -6,10 +6,10 @@ var classerpcgen_1_1_group =
     [ "Group", "classerpcgen_1_1_group.html#af76d5c887e66fe0b796e0fe431821834", null ],
     [ "addDirToSymbolsMap", "classerpcgen_1_1_group.html#a47b4d062b82dc4f60698ae208fe12b9d", null ],
     [ "addInterface", "classerpcgen_1_1_group.html#a81dcba5930c77239b675580dbd072fd8", null ],
-    [ "getDescription", "classerpcgen_1_1_group.html#a396702a049b014919b3bf19b5ba02b26", null ],
+    [ "getDescription", "classerpcgen_1_1_group.html#ae73097061031208b54465344b5454b90", null ],
     [ "getInterfaces", "classerpcgen_1_1_group.html#aa5e3e1667ee8648a1929c3b8679e8aa4", null ],
     [ "getName", "classerpcgen_1_1_group.html#a810a3143fbce8fa25199c0f315af4b84", null ],
-    [ "getSymbolDirections", "classerpcgen_1_1_group.html#ae1ab8125204fc716dd25636738d80b8e", null ],
+    [ "getSymbolDirections", "classerpcgen_1_1_group.html#a2a601a71e96f8280afcbb368c038f243", null ],
     [ "getSymbols", "classerpcgen_1_1_group.html#a6b1d2e14f40455a7fa91b406479b2585", null ],
     [ "getTemplate", "classerpcgen_1_1_group.html#a2e5bec8a442cc88231eeb81a50b0e568", null ],
     [ "setTemplate", "classerpcgen_1_1_group.html#a99bacd4f6dcfb74a0608b7ad8807cbe3", null ]

@@ -38,6 +38,10 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.clock"
+#endif
 
 /* Macro definition remap workaround. */
 #if (defined(MCG_C2_EREFS_MASK) && !(defined(MCG_C2_EREFS0_MASK)))
@@ -194,10 +198,6 @@ static uint32_t CLOCK_GetPll0RefFreq(void);
  */
 static uint8_t CLOCK_GetOscRangeFromFreq(uint32_t freq);
 
-/*******************************************************************************
- * Code
- ******************************************************************************/
-
 #ifndef MCG_USER_CONFIG_FLL_STABLE_DELAY_EN
 /*!
  * @brief Delay function to wait FLL stable.
@@ -205,7 +205,15 @@ static uint8_t CLOCK_GetOscRangeFromFreq(uint32_t freq);
  * Delay function to wait FLL stable in FEI mode or FEE mode, should wait at least
  * 1ms. Every time changes FLL setting, should wait this time for FLL stable.
  */
-void CLOCK_FllStableDelay(void)
+static void CLOCK_FllStableDelay(void);
+#endif
+
+/*******************************************************************************
+ * Code
+ ******************************************************************************/
+
+#ifndef MCG_USER_CONFIG_FLL_STABLE_DELAY_EN
+static void CLOCK_FllStableDelay(void)
 {
     /*
        Should wait at least 1ms. Because in these modes, the core clock is 100MHz
@@ -1739,7 +1747,7 @@ status_t CLOCK_SetMcgConfig(const mcg_config_t *config)
         if (kMCG_FllSrcExternal == MCG_S_IREFST_VAL)
         {
             CLOCK_ExternalModeToFbeModeQuick();
-            CLOCK_SetFeiMode(config->dmx32, config->drs, (void (*)(void))0);
+            CLOCK_SetFeiMode(config->dmx32, config->drs, NULL);
         }
 
         CLOCK_SetExternalRefClkConfig(config->oscsel);
@@ -1773,10 +1781,10 @@ status_t CLOCK_SetMcgConfig(const mcg_config_t *config)
                 status = CLOCK_SetFeeMode(config->frdiv, config->dmx32, config->drs, CLOCK_FllStableDelay);
                 break;
             case kMCG_ModeFBI:
-                status = CLOCK_SetFbiMode(config->dmx32, config->drs, (void (*)(void))0);
+                status = CLOCK_SetFbiMode(config->dmx32, config->drs, NULL);
                 break;
             case kMCG_ModeFBE:
-                status = CLOCK_SetFbeMode(config->frdiv, config->dmx32, config->drs, (void (*)(void))0);
+                status = CLOCK_SetFbeMode(config->frdiv, config->dmx32, config->drs, NULL);
                 break;
             case kMCG_ModeBLPI:
                 status = CLOCK_SetBlpiMode();

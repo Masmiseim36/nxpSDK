@@ -1,7 +1,7 @@
 var classerpc_1_1_r_p_msg_t_t_y_r_t_o_s_transport =
 [
-    [ "RPMsgTTYRTOSTransport", "classerpc_1_1_r_p_msg_t_t_y_r_t_o_s_transport.html#a456cd1fe26ebf83492fab432a379b2d2", null ],
-    [ "~RPMsgTTYRTOSTransport", "classerpc_1_1_r_p_msg_t_t_y_r_t_o_s_transport.html#ab4a7389d7a6c8aed6e2edbfa0ea4557e", null ],
+    [ "RPMsgTTYRTOSTransport", "classerpc_1_1_r_p_msg_t_t_y_r_t_o_s_transport.html#a1e4b22999bd5dd423973050e4175a420", null ],
+    [ "~RPMsgTTYRTOSTransport", "classerpc_1_1_r_p_msg_t_t_y_r_t_o_s_transport.html#a91ea7a1a66c2f3fb8028296f9874a914", null ],
     [ "init", "classerpc_1_1_r_p_msg_t_t_y_r_t_o_s_transport.html#a31a5dbb8c9356bd8905b40d1d6aee56a", null ],
     [ "init", "classerpc_1_1_r_p_msg_t_t_y_r_t_o_s_transport.html#af8131bcc5c17fe0d31177ad219356bbf", null ],
     [ "receive", "classerpc_1_1_r_p_msg_t_t_y_r_t_o_s_transport.html#ab3e7d041fb640421c52236918c1698d5", null ],

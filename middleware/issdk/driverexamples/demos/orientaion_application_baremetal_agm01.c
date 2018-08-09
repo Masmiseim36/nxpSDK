@@ -1,5 +1,6 @@
 /*
  * The Clear BSD License
+ * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
@@ -86,9 +87,9 @@
 #define BUILDNAME_SIZE           (2)                             /* Orientation Packet: BuildInfo field size */
 #define SYSTICKINFO_SIZE         (2)                             /* Orientation Packet: SysTick field size */
 /*! @brief Unique Name for this application which should match the target GUI pkg name. */
-#define APPLICATION_NAME "AGM01 ORIENTATION DEMO"                /* Orientation Application Name */
+#define APPLICATION_NAME "9 Axis Orientation Sensor Demo"                /* Orientation Application Name */
 /*! @brief Version to distinguish between instances the same application based on target Shield and updates. */
-#define APPLICATION_VERSION "1.0"
+#define APPLICATION_VERSION "2.5"
 
 /* Orientation Streaming Packet Payload Size */
 #define STREAMING_PAYLOAD_LEN \

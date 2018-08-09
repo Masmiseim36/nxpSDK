@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC Generator (erpcgen)
-   &#160;<span id="projectnumber">Rev. 1.5.0</span>
+   &#160;<span id="projectnumber">Rev. 1.7.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -156,17 +156,41 @@ $(document).ready(function(){initNavTree('functions_func_o.html','');});
 <li>operator bool()
 : <a class="el" href="classsmart__ptr.html#a0b0290ca9165026a0e1563d1f8be7237">smart_ptr&lt; T, delete_policy &gt;</a>
 </li>
+<li>operator const char *()
+: <a class="el" href="class_string_value.html#a43300a0978285d3bc1d74191aed9f5fd">StringValue</a>
+</li>
+<li>operator const std::string &amp;()
+: <a class="el" href="class_string_value.html#ad931c8f06b174c4f3cc9a1ed5e8c7893">StringValue</a>
+</li>
+<li>operator const std::string *()
+: <a class="el" href="class_string_value.html#a13a1e4c7e7812152d21bf2301f91e93d">StringValue</a>
+</li>
 <li>operator const_ptr_type()
 : <a class="el" href="classsmart__ptr.html#a7f326a731cdfd9a84a880c846ad9a054">smart_ptr&lt; T, delete_policy &gt;</a>
 </li>
 <li>operator const_ref_type()
 : <a class="el" href="classsmart__ptr.html#a3226dfaa179ce3499a4b794a0ce1fddf">smart_ptr&lt; T, delete_policy &gt;</a>
 </li>
+<li>operator double()
+: <a class="el" href="class_float_value.html#a3b47909d1cbd3a78f16d8b20dd1583c7">FloatValue</a>
+</li>
+<li>operator float()
+: <a class="el" href="class_float_value.html#a5906d198e67e7b844f3458dbd7923eb1">FloatValue</a>
+</li>
 <li>operator ptr_type()
 : <a class="el" href="classsmart__ptr.html#af5971f1c29161330f75e850b0ae217ca">smart_ptr&lt; T, delete_policy &gt;</a>
 </li>
 <li>operator ref_type()
 : <a class="el" href="classsmart__ptr.html#a80f82227c8333fa9b3831bc359751d3f">smart_ptr&lt; T, delete_policy &gt;</a>
+</li>
+<li>operator std::string &amp;()
+: <a class="el" href="class_string_value.html#a7a98dbfe5227e1e3cb2f9235282afcad">StringValue</a>
+</li>
+<li>operator std::string *()
+: <a class="el" href="class_string_value.html#a35b3fce70c6182e9cc2dc36427c24bf5">StringValue</a>
+</li>
+<li>operator uint64_t()
+: <a class="el" href="class_integer_value.html#aef785b5235ec4c6e14334d652193d261">IntegerValue</a>
 </li>
 <li>operator()()
 : <a class="el" href="class_opt_argv_iter.html#a99914f7a15d154f4aab85229142ca8de">OptArgvIter</a>
@@ -177,15 +201,19 @@ $(document).ready(function(){initNavTree('functions_func_o.html','');});
 , <a class="el" href="class_opt_str_tok_iter.html#a567cea49a789e8ad7c8c4099e54f5905">OptStrTokIter</a>
 </li>
 <li>operator-&gt;()
-: <a class="el" href="classsmart__ptr.html#a133c9877c1e23183b84cd3c64eb029a5">smart_ptr&lt; T, delete_policy &gt;</a>
+: <a class="el" href="classsmart__ptr.html#ae1aec2e35f454774cc148ce2c0b6dd89">smart_ptr&lt; T, delete_policy &gt;</a>
 </li>
 <li>operator=()
 : <a class="el" href="classerpcgen_1_1_ast_node.html#a0953078572b027d3fe1a0b013ea14318">erpcgen::AstNode</a>
 , <a class="el" href="classerpcgen_1_1_token.html#a2788c9bd29f5f33690c007d74035d774">erpcgen::Token</a>
-, <a class="el" href="classsmart__ptr.html#ad8065bdb1227bacb641ba9ea4297d09b">smart_ptr&lt; T, delete_policy &gt;</a>
+, <a class="el" href="structerpcgen_1_1token__loc__t.html#a4c6d47a960b0a3b419a9c420c6838956">erpcgen::token_loc_t</a>
+, <a class="el" href="class_float_value.html#ad6d6479d5200c5263f6b4aa3f61b0e3e">FloatValue</a>
+, <a class="el" href="class_integer_value.html#aa0ff18dfddea6434440598796485b399">IntegerValue</a>
+, <a class="el" href="classsmart__ptr.html#a50125e782b484e9d3965de2cfbe38ba2">smart_ptr&lt; T, delete_policy &gt;</a>
+, <a class="el" href="class_string_value.html#afecb62664356808acebfbce6a41bf3b6">StringValue</a>
 </li>
 <li>operator[]()
-: <a class="el" href="classerpcgen_1_1_ast_node.html#a007f4478774729c7dcaba8c79a63c4df">erpcgen::AstNode</a>
+: <a class="el" href="classerpcgen_1_1_ast_node.html#a378dcdd292eb8b68be6e453871de8754">erpcgen::AstNode</a>
 </li>
 </ul>
 </div><!-- contents -->

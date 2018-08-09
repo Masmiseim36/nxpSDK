@@ -57,7 +57,7 @@
  * Most use of the logger classes is expected to be through the Log
  * class. It provides static logging methods that call through to a global
  * singleton logger instance. There is also a Log::SetOutputLevel utility
- * class that makes it extremely easiy to temporarily change the default
+ * class that makes it extremely easily to temporarily change the default
  * output logging level.
  *
  * Of all the overloaded log() methods in this class, none of them are
@@ -261,6 +261,7 @@ public:
 class StdoutLogger : public Logger
 {
 public:
+    //! \brief Default constructor.
     StdoutLogger(Logger::log_level_t stderrLevel = Logger::kWarning)
     : m_stderrLevel(stderrLevel)
     {

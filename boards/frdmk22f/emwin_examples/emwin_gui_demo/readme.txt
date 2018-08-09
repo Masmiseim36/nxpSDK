@@ -5,11 +5,10 @@ The example demonstrates graphical widgets of the emWin library.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench 8.11.3
-- Keil MDK 5.23
-- GCC ARM Embedded 6-2017-q2
-- Kinetis Development Studio IDE 3.2.0
-- MCUXpresso10.1.0
+- Keil MDK 5.24a
+- IAR embedded Workbench 8.22.2
+- GCC ARM Embedded 7-2017-q4-major
+- MCUXpresso10.2.0
 
 Hardware requirements
 =====================
@@ -31,7 +30,12 @@ Prepare the Demo
 
 Running the demo
 ================
-When the demo runs successfully, the object on the LCD screen react to your touch.
+Known issue:
+The MCU is not able to generate hardware reset of the LCD due to hardware limitation of the boards interconnection.
+Because of this the LCD may not get initialized (stays blank) following a cold start (power on) of the board even if the demo was
+correctly programmed to the FLASH memory. In such a case simply press the reset button to restart the demo.
+Supported board revisions:
+FRDM-K22F REV A is not supported, the example is validated on REV C and D.
 Customization options
 =====================
 

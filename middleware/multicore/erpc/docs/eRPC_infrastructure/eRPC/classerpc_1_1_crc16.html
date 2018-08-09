@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC API Reference
-   &#160;<span id="projectnumber">Rev. 1.5.0</span>
+   &#160;<span id="projectnumber">Rev. 1.7.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -51,7 +51,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="modules.html"><span>API&#160;Reference</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -118,26 +117,60 @@ $(document).ready(function(){initNavTree('classerpc_1_1_crc16.html','');});
 <div class="title">erpc::Crc16 Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Class for compute crc16.  
+ <a href="classerpc_1_1_crc16.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="erpc__crc16_8h_source.html">erpc_crc16.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a1dcfbd64a612d594dca8f7e3402a05a4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1dcfbd64a612d594dca8f7e3402a05a4"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_crc16.html#a1dcfbd64a612d594dca8f7e3402a05a4">Crc16</a> (uint32_t crcStart)</td></tr>
-<tr class="memdesc:a1dcfbd64a612d594dca8f7e3402a05a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor. <br /></td></tr>
+<tr class="memitem:a1dcfbd64a612d594dca8f7e3402a05a4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_crc16.html#a1dcfbd64a612d594dca8f7e3402a05a4">Crc16</a> (uint32_t crcStart)</td></tr>
+<tr class="memdesc:a1dcfbd64a612d594dca8f7e3402a05a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a1dcfbd64a612d594dca8f7e3402a05a4">More...</a><br /></td></tr>
 <tr class="separator:a1dcfbd64a612d594dca8f7e3402a05a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8f0c89afbc8deaf690b0c22d9203ff03"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8f0c89afbc8deaf690b0c22d9203ff03"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_crc16.html#a8f0c89afbc8deaf690b0c22d9203ff03">~Crc16</a> ()</td></tr>
-<tr class="memdesc:a8f0c89afbc8deaf690b0c22d9203ff03"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classerpc_1_1_codec.html" title="Abstract serialization encoder/decoder interface. ">Codec</a> destructor. <br /></td></tr>
-<tr class="separator:a8f0c89afbc8deaf690b0c22d9203ff03"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c88ccea12e2212095a1853dbeca37d1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5c88ccea12e2212095a1853dbeca37d1"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_crc16.html#a5c88ccea12e2212095a1853dbeca37d1">~Crc16</a> (void)</td></tr>
+<tr class="memdesc:a5c88ccea12e2212095a1853dbeca37d1"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classerpc_1_1_codec.html" title="Abstract serialization encoder/decoder interface. ">Codec</a> destructor. <br /></td></tr>
+<tr class="separator:a5c88ccea12e2212095a1853dbeca37d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8a12a46cd5b081fe6e76f0344c649c46"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_crc16.html#a8a12a46cd5b081fe6e76f0344c649c46">computeCRC16</a> (const uint8_t *data, uint32_t lengthInBytes)</td></tr>
 <tr class="memdesc:a8a12a46cd5b081fe6e76f0344c649c46"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute a ITU-CCITT CRC-16 over the provided data.  <a href="#a8a12a46cd5b081fe6e76f0344c649c46">More...</a><br /></td></tr>
 <tr class="separator:a8a12a46cd5b081fe6e76f0344c649c46"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa19b43d4b57413518c2e43cb346ee63"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_crc16.html#aaa19b43d4b57413518c2e43cb346ee63">setCrcStart</a> (uint32_t crcStart)</td></tr>
+<tr class="memdesc:aaa19b43d4b57413518c2e43cb346ee63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set crc start number.  <a href="#aaa19b43d4b57413518c2e43cb346ee63">More...</a><br /></td></tr>
+<tr class="separator:aaa19b43d4b57413518c2e43cb346ee63"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
 <tr class="memitem:acb3e6a1b8947a0d530d57d2d26481cf3"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_crc16.html#acb3e6a1b8947a0d530d57d2d26481cf3">m_crcStart</a></td></tr>
 <tr class="separator:acb3e6a1b8947a0d530d57d2d26481cf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Class for compute crc16. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a1dcfbd64a612d594dca8f7e3402a05a4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Crc16::Crc16 </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>crcStart</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">crcStart</td><td>Start value for crc function. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="a8a12a46cd5b081fe6e76f0344c649c46"></a>
 <div class="memitem">
@@ -168,7 +201,31 @@ Protected Attributes</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">data</td><td>Pointer to data used for crc16. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">dataLength</td><td>Data length. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">lengthInBytes</td><td>Data length. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="aaa19b43d4b57413518c2e43cb346ee63"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Crc16::setCrcStart </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>crcStart</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set crc start number. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">crcStart</td><td>Crc start number. </td></tr>
   </table>
   </dd>
 </dl>
@@ -198,8 +255,8 @@ Protected Attributes</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li><a class="el" href="crc16_8h_source.html">crc16.h</a></li>
-<li>crc16.cpp</li>
+<li><a class="el" href="erpc__crc16_8h_source.html">erpc_crc16.h</a></li>
+<li>erpc_crc16.cpp</li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

@@ -34,17 +34,21 @@
 
 #include <assert.h>
 #include <string.h>
-
 #include "fsl_sdspi.h"
 
 /*******************************************************************************
  * Definitons
  ******************************************************************************/
-#define IS_BLOCK_ACCESS(x) ((x)->flags & kSDSPI_SupportHighCapacityFlag)
-
-/* Card command maximum timeout value */
-#define FSL_SDSPI_TIMEOUT (1000U)
-
+/*! @brief Card command maximum retry times value */
+#define SDSPI_TRANSFER_RETRY_TIMES (20000U)
+/*! @brief define SDSPI command code length */
+#define SDSPI_COMMAND_CODE_BYTE_LEN (6U)
+#define SDSPI_COMMAND_FORMAT_GET_INDEX(command) ((command >> 8U) & 0xFFU)
+#define SDSPI_COMMAND_FORMAT_GET_RESPONSE_TYPE(command) (command & 0xFFU)
+#define SDSPI_COMMAND_IDLE_CRC (0x95U)
+#define SDSPI_COMMAND_SEND_INTERFACE_CRC (0x87U)
+/*! @brief Reverse byte sequence in uint32_t */
+#define SWAP_WORD_BYTE_SEQUENCE(x) (__REV(x))
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -53,13 +57,13 @@
  * @brief Wait card to be ready state.
  *
  * @param host Host state.
- * @param milliseconds Timeout time in millseconds.
  * @retval kStatus_SDSPI_ExchangeFailed Exchange data over SPI failed.
  * @retval kStatus_SDSPI_ResponseError Response is error.
  * @retval kStatus_Success Operate successfully.
  */
-static status_t SDSPI_WaitReady(sdspi_host_t *host, uint32_t milliseconds);
+static status_t SDSPI_WaitReady(sdspi_host_t *host);
 
+#if SDSPI_CARD_CRC_PROTECTION_ENABLE
 /*!
  * @brief Calculate CRC7
  *
@@ -69,20 +73,22 @@ static status_t SDSPI_WaitReady(sdspi_host_t *host, uint32_t milliseconds);
  * @return Generated CRC7.
  */
 static uint32_t SDSPI_GenerateCRC7(uint8_t *buffer, uint32_t length, uint32_t crc);
+#endif
 
 /*!
  * @brief Send command.
  *
  * @param host Host state.
  * @param command The command to be wrote.
- * @param timeout The timeout value.
+ * @param arg command argument
+ * @param response response buffer
  * @retval kStatus_SDSPI_WaitReadyFailed Wait ready failed.
  * @retval kStatus_SDSPI_ExchangeFailed Exchange data over SPI failed.
  * @retval kStatus_SDSPI_ResponseError Response is error.
  * @retval kStatus_Fail Send command failed.
  * @retval kStatus_Success Operate successfully.
  */
-static status_t SDSPI_SendCommand(sdspi_host_t *host, sdspi_command_t *command, uint32_t timeout);
+static status_t SDSPI_SendCommand(sdspi_host_t *host, uint32_t command, uint32_t arg, uint8_t *response);
 
 /*!
  * @brief Send GO_IDLE command.
@@ -102,12 +108,11 @@ static status_t SDSPI_GoIdle(sdspi_card_t *card);
  * whether it supports voltage.
  *
  * @param card Card descriptor.
- * @param pattern The check pattern.
- * @param response Buffer to save the command response.
+ * @param flags The Host Capacity Support flag
  * @retval kStatus_SDSPI_SendCommandFailed Send command failed.
  * @retval kStatus_Success Operate successfully.
  */
-static status_t SDSPI_SendInterfaceCondition(sdspi_card_t *card, uint8_t pattern, uint8_t *response);
+static status_t SDSPI_SendInterfaceCondition(sdspi_card_t *card, uint32_t *flags);
 
 /*!
  * @brief Send SEND_APPLICATION_COMMAND command.
@@ -124,11 +129,10 @@ static status_t SDSPI_SendApplicationCmd(sdspi_card_t *card);
  *
  * @param card Card descriptor.
  * @param argument Operation condition.
- * @param response Buffer to save command response.
  * @retval kStatus_Timeout Timeout.
  * @retval kStatus_Success Operate successfully.
  */
-static status_t SDSPI_ApplicationSendOperationCondition(sdspi_card_t *card, uint32_t argument, uint8_t *response);
+static status_t SDSPI_ApplicationSendOperationCondition(sdspi_card_t *card, uint32_t argument);
 
 /*!
  * @brief Send READ_OCR command to get OCR register content.
@@ -183,38 +187,13 @@ static void SDSPI_DecodeCsd(sdspi_card_t *card, uint8_t *rawCsd);
 static status_t SDSPI_SendCsd(sdspi_card_t *card);
 
 /*!
- * @brief Set card to max frequence in normal mode.
- *
- * @param card Card descriptor.
- * @retval kStatus_SDSPI_SetFrequencyFailed Set frequency failed.
- * @retval kStatus_Success Operate successfully.
- */
-static status_t SDSPI_SetMaxFrequencyNormalMode(sdspi_card_t *card);
-
-/*!
- * @brief Check the capacity of the card
- *
- * @param card Card descriptor.
- */
-static void SDSPI_CheckCapacity(sdspi_card_t *card);
-
-/*!
  * @brief Decode raw CID register.
- *
+ * In our sdspi init function, this function is removed for better code size, if id information
+ * is needed, you can call it after the init function directly.
  * @param card Card descriptor.
  * @param rawCid Raw CID register content.
  */
 static void SDSPI_DecodeCid(sdspi_card_t *card, uint8_t *rawCid);
-
-/*!
- * @brief Send GET-CID command
- *
- * @param card Card descriptor.
- * @retval kStatus_SDSPI_SendCommandFailed Send command failed.
- * @retval kStatus_SDSPI_ReadFailed Read data blocks failed.
- * @retval kStatus_Success Operate successfully.
- */
-static status_t SDSPI_SendCid(sdspi_card_t *card);
 
 /*!
  * @brief Decode SCR register.
@@ -258,32 +237,49 @@ static status_t SDSPI_StopTransmission(sdspi_card_t *card);
  */
 static status_t SDSPI_Write(sdspi_host_t *host, uint8_t *buffer, uint32_t size, uint8_t token);
 
+/*!
+ * @brief select function.
+ *
+ * @param card card descriptor.
+ * @param group function group.
+ * @param function function name.
+ */
+static status_t SDSPI_SelectFunction(sdspi_card_t *card, uint32_t group, uint32_t function);
+
+/*!
+ * @brief Send SWITCH_FUNCTION command to switch the card function group.
+ *
+ * @param card card descriptor.
+ * @param mode 0 to check function group, 1 to switch function group.
+ * @param group function group.
+ * @param number function name.
+ * @status buffer to recieve function status.
+ */
+static status_t SDSPI_SwitchFunction(
+    sdspi_card_t *card, uint32_t mode, uint32_t group, uint32_t number, uint32_t *status);
+
+/*!
+ * @brief Erase data for the given block range..
+ *
+ * @param card card descriptor.
+ * @param startBlock start block address.
+ * @param blockCount the number of block to be erase.
+ */
+static status_t SDSPI_Erase(sdspi_card_t *card, uint32_t startBlock, uint32_t blockCount);
+
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-/* Rate unit(divided by 1000) of transfer speed in non-high-speed mode. */
-static const uint32_t g_transferSpeedRateUnit[] = {
-    /* 100Kbps, 1Mbps, 10Mbps, 100Mbps*/
-    100U, 1000U, 10000U, 100000U,
-};
-
-/* Multiplier factor(multiplied by 1000) of transfer speed in non-high-speed mode. */
-static const uint32_t g_transferSpeedMultiplierFactor[] = {
-    0U, 1000U, 1200U, 1300U, 1500U, 2000U, 2500U, 3000U, 3500U, 4000U, 4500U, 5000U, 5500U, 6000U, 7000U, 8000U,
-};
 
 /*******************************************************************************
  * Code
  ******************************************************************************/
-static status_t SDSPI_WaitReady(sdspi_host_t *host, uint32_t milliseconds)
+static status_t SDSPI_WaitReady(sdspi_host_t *host)
 {
     uint8_t response;
     uint8_t timingByte = 0xFFU; /* The byte need to be sent as read/write data block timing requirement */
-    uint32_t startTime;
-    uint32_t currentTime;
-    uint32_t elapsedTime;
+    uint32_t retryCount = SDSPI_TRANSFER_RETRY_TIMES;
 
-    startTime = host->getCurrentMilliseconds();
     do
     {
         if (kStatus_Success != host->exchange(&timingByte, &response, 1U))
@@ -291,9 +287,7 @@ static status_t SDSPI_WaitReady(sdspi_host_t *host, uint32_t milliseconds)
             return kStatus_SDSPI_ExchangeFailed;
         }
 
-        currentTime = host->getCurrentMilliseconds();
-        elapsedTime = (currentTime - startTime);
-    } while ((response != 0xFFU) && (elapsedTime < milliseconds));
+    } while ((response != 0xFFU) && (--retryCount));
 
     /* Response 0xFF means card is still busy. */
     if (response != 0xFFU)
@@ -304,6 +298,7 @@ static status_t SDSPI_WaitReady(sdspi_host_t *host, uint32_t milliseconds)
     return kStatus_Success;
 }
 
+#if SDSPI_CARD_CRC_PROTECTION_ENABLE
 static uint32_t SDSPI_GenerateCRC7(uint8_t *buffer, uint32_t length, uint32_t crc)
 {
     uint32_t index;
@@ -326,29 +321,58 @@ static uint32_t SDSPI_GenerateCRC7(uint8_t *buffer, uint32_t length, uint32_t cr
     return (crc & 0x7FU);
 }
 
-static status_t SDSPI_SendCommand(sdspi_host_t *host, sdspi_command_t *command, uint32_t timeout)
+static uint16_t SDSPI_GenerateCRC16(uint8_t *buffer, uint32_t length, uint16_t crc)
+{
+    while (length)
+    {
+        crc = (uint8_t)(crc >> 8U) | (crc << 8U);
+        crc ^= *buffer++;
+        crc ^= (uint8_t)(crc & 0xffU) >> 4U;
+        crc ^= (crc << 8U) << 4U;
+        crc ^= ((crc & 0xffU) << 4U) << 1U;
+        length--;
+    }
+
+    return (crc >> 8U) | (crc << 8U);
+}
+#endif
+
+static status_t SDSPI_SendCommand(sdspi_host_t *host, uint32_t command, uint32_t arg, uint8_t *response)
 {
     assert(host);
-    assert(command);
+    assert(response);
 
-    uint8_t buffer[6U];
-    uint8_t response;
-    uint8_t i;
+    uint32_t i;
     uint8_t timingByte = 0xFFU; /* The byte need to be sent as read/write data block timing requirement */
+    uint8_t buffer[SDSPI_COMMAND_CODE_BYTE_LEN] = {0U};
+    uint32_t responseType = SDSPI_COMMAND_FORMAT_GET_RESPONSE_TYPE(command);
+    uint8_t index = SDSPI_COMMAND_FORMAT_GET_INDEX(command);
 
-    if ((kStatus_Success != SDSPI_WaitReady(host, timeout)) && (command->index != kSDMMC_GoIdleState))
+    if ((kStatus_Success != SDSPI_WaitReady(host)) && (index != kSDMMC_GoIdleState))
     {
         return kStatus_SDSPI_WaitReadyFailed;
     }
 
     /* Send command. */
-    buffer[0U] = (command->index | 0x40U);
-    buffer[1U] = ((command->argument >> 24U) & 0xFFU);
-    buffer[2U] = ((command->argument >> 16U) & 0xFFU);
-    buffer[3U] = ((command->argument >> 8U) & 0xFFU);
-    buffer[4U] = (command->argument & 0xFFU);
+    buffer[0U] = (index | 0x40U);
+    buffer[1U] = ((arg >> 24U) & 0xFFU);
+    buffer[2U] = ((arg >> 16U) & 0xFFU);
+    buffer[3U] = ((arg >> 8U) & 0xFFU);
+    buffer[4U] = (arg & 0xFFU);
+#if SDSPI_CARD_CRC_PROTECTION_ENABLE
     buffer[5U] = ((SDSPI_GenerateCRC7(buffer, 5U, 0U) << 1U) | 1U);
-    if (host->exchange(buffer, NULL, sizeof(buffer)))
+#else
+    if (index == kSDMMC_GoIdleState)
+    {
+        buffer[5U] = SDSPI_COMMAND_IDLE_CRC;
+    }
+    else if (index == kSD_SendInterfaceCondition)
+    {
+        buffer[5U] = SDSPI_COMMAND_SEND_INTERFACE_CRC;
+    }
+#endif
+
+    if (host->exchange(buffer, NULL, SDSPI_COMMAND_CODE_BYTE_LEN))
     {
         return kStatus_SDSPI_ExchangeFailed;
     }
@@ -356,101 +380,126 @@ static status_t SDSPI_SendCommand(sdspi_host_t *host, sdspi_command_t *command, 
     /* Wait for the response coming, the left most bit which is transfered first in first response byte is 0 */
     for (i = 0U; i < 9U; i++)
     {
-        if (kStatus_Success != host->exchange(&timingByte, &response, 1U))
+        if (kStatus_Success != host->exchange(&timingByte, &response[0U], 1U))
         {
             return kStatus_SDSPI_ExchangeFailed;
         }
 
         /* Check if response 0 coming. */
-        if (!(response & 0x80U))
+        if (!(response[0U] & 0x80U))
         {
             break;
         }
     }
-    if (response & 0x80U) /* Max index byte is high means response comming. */
+
+    if (response[0U] & 0x80U) /* Max index byte is high means response comming. */
     {
         return kStatus_SDSPI_ResponseError;
     }
 
-    /* Receve all the response content. */
-    command->response[0U] = response;
-    switch (command->responseType)
+    if (responseType != kSDSPI_ResponseTypeR1)
     {
-        case kSDSPI_ResponseTypeR1:
-            break;
-        case kSDSPI_ResponseTypeR1b:
-            if (kStatus_Success != SDSPI_WaitReady(host, timeout))
+        if (responseType == kSDSPI_ResponseTypeR1b)
+        {
+            if (kStatus_Success != SDSPI_WaitReady(host))
             {
                 return kStatus_SDSPI_WaitReadyFailed;
             }
-            break;
-        case kSDSPI_ResponseTypeR2:
-            if (kStatus_Success != host->exchange(&timingByte, &(command->response[1U]), 1U))
+        }
+        else if (responseType == kSDSPI_ResponseTypeR2)
+        {
+            if (kStatus_Success != host->exchange(&timingByte, &(response[1U]), 1U))
             {
                 return kStatus_SDSPI_ExchangeFailed;
             }
-            break;
-        case kSDSPI_ResponseTypeR3:
-        case kSDSPI_ResponseTypeR7:
+        }
+        else if ((responseType == kSDSPI_ResponseTypeR3) || (responseType == kSDSPI_ResponseTypeR7))
+        {
             /* Left 4 bytes in response type R3 and R7(total 5 bytes in SPI mode) */
-            if (kStatus_Success != host->exchange(&timingByte, &(command->response[1U]), 4U))
+            if (kStatus_Success != host->exchange(&timingByte, &(response[1U]), 4U))
             {
                 return kStatus_SDSPI_ExchangeFailed;
             }
-            break;
-        default:
-            return kStatus_Fail;
+        }
     }
 
     return kStatus_Success;
 }
+
+#if SDSPI_CARD_CRC_PROTECTION_ENABLE
+status_t SDSPI_CommandCrc(sdspi_card_t *card, bool enable)
+{
+    uint8_t response = 0U;
+
+    if (kStatus_Success != SDSPI_SendCommand(card->host, kSDSPI_CmdCrc, enable, &response))
+    {
+        return kStatus_SDSPI_SendCommandFailed;
+    }
+
+    return kStatus_Success;
+}
+#endif
 
 static status_t SDSPI_GoIdle(sdspi_card_t *card)
 {
     assert(card);
     assert(card->host);
 
-    sdspi_host_t *host;
-    sdspi_command_t command = {0};
-    uint32_t retryCount = 200U;
+    uint8_t response = 0U;
+    uint32_t retryCount = SDSPI_TRANSFER_RETRY_TIMES;
 
-    host = card->host;
     /* SD card will enter SPI mode if the CS is asserted (negative) during the reception of the reset command (CMD0)
     and the card will be IDLE state. */
-    while (retryCount--)
+    do
     {
-        command.index = kSDMMC_GoIdleState;
-        command.responseType = kSDSPI_ResponseTypeR1;
-        if ((kStatus_Success == SDSPI_SendCommand(host, &command, FSL_SDSPI_TIMEOUT)) &&
-            (command.response[0U] == kSDSPI_R1InIdleStateFlag))
+        if ((kStatus_Success == SDSPI_SendCommand(card->host, kSDSPI_CmdGoIdle, 0U, &response)) &&
+            (response == kSDSPI_R1InIdleStateFlag))
         {
             break;
         }
-    }
+    } while (--retryCount);
 
     return kStatus_Success;
 }
 
-static status_t SDSPI_SendInterfaceCondition(sdspi_card_t *card, uint8_t pattern, uint8_t *response)
+static status_t SDSPI_SendInterfaceCondition(sdspi_card_t *card, uint32_t *flags)
 {
     assert(card);
     assert(card->host);
 
-    sdspi_command_t command = {0};
-    sdspi_host_t *host;
+    uint8_t response[5U] = {0U};
+    uint32_t i = SDSPI_TRANSFER_RETRY_TIMES;
 
-    host = card->host;
-    command.index = kSD_SendInterfaceCondition;
-    command.argument = (0x100U | (pattern & 0xFFU));
-    command.responseType = kSDSPI_ResponseTypeR7;
-    if (kStatus_Success != SDSPI_SendCommand(host, &command, FSL_SDSPI_TIMEOUT))
+    do
     {
-        return kStatus_SDSPI_SendCommandFailed;
-    }
+        /* CMD8 is used to check if the card accept the current supply voltage and check if
+        the card support CMD8 */
+        if (kStatus_Success == SDSPI_SendCommand(card->host, kSDSPI_CmdSendInterfaceCondition, 0x1AAU, response))
+        {
+            /* not support CMD8, clear hcs flag */
+            if (response[0U] & kSDSPI_R1IllegalCommandFlag)
+            {
+                return kStatus_Success;
+            }
+            /* if VCA is set and pattern is match, then break */
+            if ((response[3U] == 0x1U) && (response[4U] == 0xAAU))
+            {
+                *flags |= kSD_OcrHostCapacitySupportFlag;
+                return kStatus_Success;
+            }
+            /* if VCA in the reponse not set, then the card not support current voltage, return fail */
+            else if (response[3U] == 0U)
+            {
+                return kStatus_SDSPI_InvalidVoltage;
+            }
+        }
+        else
+        {
+            return kStatus_SDSPI_SendCommandFailed;
+        }
+    } while (--i);
 
-    memcpy(response, command.response, sizeof(command.response));
-
-    return kStatus_Success;
+    return kStatus_Fail;
 }
 
 static status_t SDSPI_SendApplicationCmd(sdspi_card_t *card)
@@ -458,18 +507,14 @@ static status_t SDSPI_SendApplicationCmd(sdspi_card_t *card)
     assert(card);
     assert(card->host);
 
-    sdspi_host_t *host;
-    sdspi_command_t command = {0};
+    uint8_t response = 0U;
 
-    host = card->host;
-    command.index = kSDMMC_ApplicationCommand;
-    command.responseType = kSDSPI_ResponseTypeR1;
-    if (kStatus_Success != SDSPI_SendCommand(host, &command, FSL_SDSPI_TIMEOUT))
+    if (kStatus_Success != SDSPI_SendCommand(card->host, kSDSPI_CmdApplicationCmd, 0U, &response))
     {
         return kStatus_SDSPI_SendCommandFailed;
     }
 
-    if ((command.response[0U]) && (!(command.response[0U] & kSDSPI_R1InIdleStateFlag)))
+    if (response && (!(response & kSDSPI_R1InIdleStateFlag)))
     {
         return kStatus_SDSPI_ResponseError;
     }
@@ -477,50 +522,31 @@ static status_t SDSPI_SendApplicationCmd(sdspi_card_t *card)
     return kStatus_Success;
 }
 
-static status_t SDSPI_ApplicationSendOperationCondition(sdspi_card_t *card, uint32_t argument, uint8_t *response)
+static status_t SDSPI_ApplicationSendOperationCondition(sdspi_card_t *card, uint32_t argument)
 {
     assert(card);
     assert(card->host);
-    assert(response);
 
-    sdspi_command_t command = {0};
-    uint32_t startTime;
-    uint32_t currentTime;
-    uint32_t elapsedTime = 0U;
-    sdspi_host_t *host;
+    uint8_t response = 0U;
+    uint32_t i = SDSPI_TRANSFER_RETRY_TIMES;
 
-    host = card->host;
-    command.index = kSD_ApplicationSendOperationCondition;
-    command.argument = argument;
-    command.responseType = kSDSPI_ResponseTypeR1;
-    startTime = host->getCurrentMilliseconds();
     do
     {
         if (kStatus_Success == SDSPI_SendApplicationCmd(card))
         {
-            if (kStatus_Success == SDSPI_SendCommand(host, &command, FSL_SDSPI_TIMEOUT))
+            if (kStatus_Success ==
+                SDSPI_SendCommand(card->host, kSDSPI_CmdAppSendOperationCondition, argument, &response))
             {
-                if (!command.response[0U])
+                if ((response & kSDSPI_R1InIdleStateFlag) == 0U)
                 {
-                    break;
+                    return kStatus_Success;
                 }
             }
         }
 
-        currentTime = host->getCurrentMilliseconds();
-        elapsedTime = (currentTime - startTime);
-    } while (elapsedTime < FSL_SDSPI_TIMEOUT);
+    } while (--i);
 
-    if (response)
-    {
-        memcpy(response, command.response, sizeof(command.response));
-    }
-    if (elapsedTime < FSL_SDSPI_TIMEOUT)
-    {
-        return kStatus_Success;
-    }
-
-    return kStatus_Timeout;
+    return kStatus_Fail;
 }
 
 static status_t SDSPI_ReadOcr(sdspi_card_t *card)
@@ -528,19 +554,15 @@ static status_t SDSPI_ReadOcr(sdspi_card_t *card)
     assert(card);
     assert(card->host);
 
-    uint32_t i;
-    sdspi_host_t *host;
-    sdspi_command_t command = {0};
+    uint32_t i = 0U;
+    uint8_t response[5U] = {0U};
 
-    host = card->host;
-    command.index = kSDMMC_ReadOcr;
-    command.responseType = kSDSPI_ResponseTypeR3;
-    if (kStatus_Success != SDSPI_SendCommand(host, &command, FSL_SDSPI_TIMEOUT))
+    if (kStatus_Success != SDSPI_SendCommand(card->host, kSDSPI_CmdReadOcr, 0U, response))
     {
         return kStatus_SDSPI_SendCommandFailed;
     }
 
-    if (command.response[0U])
+    if (response[0U])
     {
         return kStatus_SDSPI_ResponseError;
     }
@@ -549,7 +571,12 @@ static status_t SDSPI_ReadOcr(sdspi_card_t *card)
     card->ocr = 0U;
     for (i = 4U; i > 0U; i--)
     {
-        card->ocr |= (uint32_t)command.response[i] << ((4U - i) * 8U);
+        card->ocr |= (uint32_t)response[i] << ((4U - i) * 8U);
+    }
+
+    if (card->ocr & kSD_OcrCardCapacitySupportFlag)
+    {
+        card->flags |= kSDSPI_SupportHighCapacityFlag;
     }
 
     return kStatus_Success;
@@ -560,66 +587,11 @@ static status_t SDSPI_SetBlockSize(sdspi_card_t *card, uint32_t blockSize)
     assert(card);
     assert(card->host);
 
-    sdspi_command_t command = {0};
-    sdspi_host_t *host;
+    uint8_t response = 0U;
 
-    host = card->host;
-    command.index = kSDMMC_SetBlockLength;
-    command.argument = blockSize;
-    command.responseType = kSDSPI_ResponseTypeR1;
-    if (kStatus_Success != SDSPI_SendCommand(host, &command, FSL_SDSPI_TIMEOUT))
+    if (kStatus_Success != SDSPI_SendCommand(card->host, kSDSPI_CmdSetBlockLength, blockSize, &response))
     {
         return kStatus_SDSPI_SendCommandFailed;
-    }
-
-    return kStatus_Success;
-}
-
-static status_t SDSPI_Read(sdspi_host_t *host, uint8_t *buffer, uint32_t size)
-{
-    assert(host);
-    assert(host->exchange);
-    assert(buffer);
-    assert(size);
-
-    uint32_t startTime;
-    uint32_t currentTime;
-    uint32_t elapsedTime;
-    uint8_t response, i;
-    uint8_t timingByte = 0xFFU; /* The byte need to be sent as read/write data block timing requirement */
-
-    memset(buffer, 0xFFU, size);
-
-    /* Wait data token comming */
-    startTime = host->getCurrentMilliseconds();
-    do
-    {
-        if (kStatus_Success != host->exchange(&timingByte, &response, 1U))
-        {
-            return kStatus_SDSPI_ExchangeFailed;
-        }
-
-        currentTime = host->getCurrentMilliseconds();
-        elapsedTime = (currentTime - startTime);
-    } while ((response == 0xFFU) && (elapsedTime < 100U));
-
-    /* Check data token and exchange data. */
-    if (response != kSDSPI_DataTokenBlockRead)
-    {
-        return kStatus_SDSPI_ResponseError;
-    }
-    if (host->exchange(buffer, buffer, size))
-    {
-        return kStatus_SDSPI_ExchangeFailed;
-    }
-
-    /* Get 16 bit CRC */
-    for (i = 0U; i < 2U; i++)
-    {
-        if (kStatus_Success != host->exchange(&timingByte, &response, 1U))
-        {
-            return kStatus_SDSPI_ExchangeFailed;
-        }
     }
 
     return kStatus_Success;
@@ -630,9 +602,8 @@ static void SDSPI_DecodeCsd(sdspi_card_t *card, uint8_t *rawCsd)
     assert(rawCsd);
     assert(card);
 
-    sd_csd_t *csd;
+    sd_csd_t *csd = &(card->csd);
 
-    csd = &(card->csd);
     csd->csdStructure = (rawCsd[0U] >> 6U);
     csd->dataReadAccessTime1 = rawCsd[1U];
     csd->dataReadAccessTime2 = rawCsd[2U];
@@ -666,14 +637,18 @@ static void SDSPI_DecodeCsd(sdspi_card_t *card, uint8_t *rawCsd)
         csd->writeCurrentVddMin = ((rawCsd[9U] >> 5U) & 7U);
         csd->writeCurrentVddMax = (rawCsd[9U] >> 2U);
         csd->deviceSizeMultiplier = (((rawCsd[9U] & 3U) << 1U) | (rawCsd[10U] >> 7U));
+
         card->blockCount = (csd->deviceSize + 1U) << (csd->deviceSizeMultiplier + 2U);
         card->blockSize = (1U << (csd->readBlockLength));
+
         if (card->blockSize != FSL_SDSPI_DEFAULT_BLOCK_SIZE)
         {
             card->blockCount = (card->blockCount * card->blockSize);
             card->blockSize = FSL_SDSPI_DEFAULT_BLOCK_SIZE;
             card->blockCount = (card->blockCount / card->blockSize);
         }
+        /* CSD V1.0 support SDSC card only */
+        card->flags |= kSDSPI_SupportSdscFlag;
     }
     else if (csd->csdStructure == 1U) /* Decode the bits when CSD structure is version 2.0 */
     {
@@ -683,6 +658,10 @@ static void SDSPI_DecodeCsd(sdspi_card_t *card, uint8_t *rawCsd)
         if (csd->deviceSize >= 0xFFFFU)
         {
             card->flags |= kSDSPI_SupportSdxcFlag;
+        }
+        else
+        {
+            card->flags |= kSDSPI_SupportSdhcFlag;
         }
         card->blockCount = ((csd->deviceSize + 1U) * 1024U);
     }
@@ -730,18 +709,14 @@ static status_t SDSPI_SendCsd(sdspi_card_t *card)
     assert(card);
     assert(card->host);
 
-    sdspi_command_t command = {0};
-    sdspi_host_t *host;
+    uint8_t response = 0U;
 
-    host = card->host;
-    command.index = kSDMMC_SendCsd;
-    command.responseType = kSDSPI_ResponseTypeR1;
-    if (kStatus_Success != SDSPI_SendCommand(host, &command, FSL_SDSPI_TIMEOUT))
+    if (kStatus_Success != SDSPI_SendCommand(card->host, kSDSPI_CmdSendCsd, 0U, &response))
     {
         return kStatus_SDSPI_SendCommandFailed;
     }
 
-    if (kStatus_Success != SDSPI_Read(host, card->rawCsd, sizeof(card->rawCsd)))
+    if (kStatus_Success != SDSPI_Read(card->host, card->rawCsd, sizeof(card->rawCsd)))
     {
         return kStatus_SDSPI_ReadFailed;
     }
@@ -749,69 +724,6 @@ static status_t SDSPI_SendCsd(sdspi_card_t *card)
     SDSPI_DecodeCsd(card, card->rawCsd);
 
     return kStatus_Success;
-}
-
-static status_t SDSPI_SetMaxFrequencyNormalMode(sdspi_card_t *card)
-{
-    uint32_t maxFrequency;
-
-    /* Calculate max frequency card supported in non-high-speed mode. */
-    maxFrequency = g_transferSpeedRateUnit[SD_RD_TRANSFER_SPEED_RATE_UNIT(card->csd)] *
-                   g_transferSpeedMultiplierFactor[SD_RD_TRANSFER_SPEED_TIME_VALUE(card->csd)];
-    if (maxFrequency > card->host->busBaudRate)
-    {
-        maxFrequency = card->host->busBaudRate;
-    }
-
-    if (kStatus_Success != card->host->setFrequency(maxFrequency))
-    {
-        return kStatus_SDSPI_SetFrequencyFailed;
-    }
-
-    return kStatus_Success;
-}
-
-static void SDSPI_CheckCapacity(sdspi_card_t *card)
-{
-    uint32_t deviceSize;
-    uint32_t deviceSizeMultiplier;
-    uint32_t readBlockLength;
-
-    if (card->csd.csdStructure)
-    {
-        /* SD CSD structure v2.xx */
-        deviceSize = card->csd.deviceSize;
-        if (deviceSize >= 0xFFFFU) /* Bigger than 32GB */
-        {
-            /* extended capacity */
-            card->flags |= kSDSPI_SupportSdxcFlag;
-        }
-        else
-        {
-            card->flags |= kSDSPI_SupportSdhcFlag;
-        }
-        deviceSizeMultiplier = 10U;
-        deviceSize += 1U;
-        readBlockLength = 9U;
-    }
-    else
-    {
-        /* SD CSD structure v1.xx */
-        deviceSize = (card->csd.deviceSize + 1U);
-        deviceSizeMultiplier = (card->csd.deviceSizeMultiplier + 2U);
-        readBlockLength = card->csd.readBlockLength;
-        /* Card maximum capacity is 2GB when CSD structure version is 1.0 */
-        card->flags |= kSDSPI_SupportSdscFlag;
-    }
-    if (readBlockLength != 9U)
-    {
-        /* Force to use 512-byte length block */
-        deviceSizeMultiplier += (readBlockLength - 9U);
-        readBlockLength = 9U;
-    }
-
-    card->blockSize = (1U << readBlockLength);
-    card->blockCount = (deviceSize << deviceSizeMultiplier);
 }
 
 static void SDSPI_DecodeCid(sdspi_card_t *card, uint8_t *rawCid)
@@ -829,23 +741,19 @@ static void SDSPI_DecodeCid(sdspi_card_t *card, uint8_t *rawCid)
     cid->manufacturerData = ((((uint32_t)rawCid[13U] & 0x0FU) << 8U) | ((uint32_t)rawCid[14U]));
 }
 
-static status_t SDSPI_SendCid(sdspi_card_t *card)
+status_t SDSPI_SendCid(sdspi_card_t *card)
 {
     assert(card);
     assert(card->host);
 
-    sdspi_command_t command = {0};
-    sdspi_host_t *host;
+    uint8_t response = 0U;
 
-    host = card->host;
-    command.index = kSDMMC_SendCid;
-    command.responseType = kSDSPI_ResponseTypeR1;
-    if (kStatus_Success != SDSPI_SendCommand(host, &command, FSL_SDSPI_TIMEOUT))
+    if (kStatus_Success != SDSPI_SendCommand(card->host, kSDSPI_CmdSendCid, 0U, &response))
     {
         return kStatus_SDSPI_SendCommandFailed;
     }
 
-    if (kStatus_Success != (SDSPI_Read(host, card->rawCid, sizeof(card->rawCid))))
+    if (kStatus_Success != (SDSPI_Read(card->host, card->rawCid, sizeof(card->rawCid))))
     {
         return kStatus_SDSPI_ReadFailed;
     }
@@ -875,8 +783,6 @@ static void SDSPI_DecodeScr(sdspi_card_t *card, uint8_t *rawScr)
     }
     scr->extendedSecurity = ((rawScr[2U] & 0x78U) >> 3U);
     scr->commandSupport = (rawScr[3U] & 0x03U);
-    scr->reservedForManufacturer = (((uint32_t)rawScr[4U] << 24U) | ((uint32_t)rawScr[5U] << 16U) |
-                                    ((uint32_t)rawScr[6U] << 8U) | (uint32_t)rawScr[7U]);
 }
 
 static status_t SDSPI_SendScr(sdspi_card_t *card)
@@ -884,23 +790,19 @@ static status_t SDSPI_SendScr(sdspi_card_t *card)
     assert(card);
     assert(card->host);
 
-    sdspi_command_t command = {0};
-    sdspi_host_t *host;
+    uint8_t response = 0U;
 
-    host = card->host;
     if (kStatus_Success != SDSPI_SendApplicationCmd(card))
     {
         return kStatus_SDSPI_SendApplicationCommandFailed;
     }
 
-    command.index = kSD_ApplicationSendScr;
-    command.responseType = kSDSPI_ResponseTypeR1;
-    if (kStatus_Success != SDSPI_SendCommand(host, &command, FSL_SDSPI_TIMEOUT))
+    if (kStatus_Success != SDSPI_SendCommand(card->host, kSDSPI_CmdSendScr, 0U, &response))
     {
         return kStatus_SDSPI_SendCommandFailed;
     }
 
-    if (kStatus_Success != (SDSPI_Read(host, card->rawScr, sizeof(card->rawScr))))
+    if (kStatus_Success != (SDSPI_Read(card->host, card->rawScr, sizeof(card->rawScr))))
     {
         return kStatus_SDSPI_ReadFailed;
     }
@@ -912,13 +814,9 @@ static status_t SDSPI_SendScr(sdspi_card_t *card)
 
 static status_t SDSPI_StopTransmission(sdspi_card_t *card)
 {
-    sdspi_command_t command = {0};
-    sdspi_host_t *host;
+    uint8_t response = 0U;
 
-    host = card->host;
-    command.index = kSDMMC_StopTransmission;
-    command.responseType = kSDSPI_ResponseTypeR1b;
-    if (kStatus_Success != SDSPI_SendCommand(host, &command, FSL_SDSPI_TIMEOUT))
+    if (kStatus_Success != SDSPI_SendCommand(card->host, kSDSPI_CmdStopTransfer, 0U, &response))
     {
         return kStatus_SDSPI_SendCommandFailed;
     }
@@ -932,10 +830,9 @@ static status_t SDSPI_Write(sdspi_host_t *host, uint8_t *buffer, uint32_t size, 
     assert(host->exchange);
 
     uint8_t response;
-    uint8_t i;
-    uint8_t timingByte = 0xFFU; /* The byte need to be sent as read/write data block timing requirement */
+    uint16_t timingByte = 0xFFFFU; /* The byte need to be sent as read/write data block timing requirement */
 
-    if (kStatus_Success != SDSPI_WaitReady(host, FSL_SDSPI_TIMEOUT))
+    if (kStatus_Success != SDSPI_WaitReady(host))
     {
         return kStatus_SDSPI_WaitReadyFailed;
     }
@@ -961,17 +858,17 @@ static status_t SDSPI_Write(sdspi_host_t *host, uint8_t *buffer, uint32_t size, 
         return kStatus_SDSPI_ExchangeFailed;
     }
 
-    /* Get the last two bytes CRC */
-    for (i = 0U; i < 2U; i++)
-    {
-        if (host->exchange(&timingByte, NULL, 1U))
-        {
-            return kStatus_SDSPI_ExchangeFailed;
-        }
-    }
+#if SDSPI_CARD_CRC_PROTECTION_ENABLE
+    timingByte = SDSPI_GenerateCRC16(buffer, size, 0U);
+#endif
 
+    /* Get the last two bytes CRC */
+    if (host->exchange((uint8_t *)&timingByte, NULL, 2U))
+    {
+        return kStatus_SDSPI_ExchangeFailed;
+    }
     /* Get the response token. */
-    if (host->exchange(&timingByte, &response, 1U))
+    if (host->exchange((uint8_t *)&timingByte, &response, 1U))
     {
         return kStatus_SDSPI_ExchangeFailed;
     }
@@ -983,26 +880,200 @@ static status_t SDSPI_Write(sdspi_host_t *host, uint8_t *buffer, uint32_t size, 
     return kStatus_Success;
 }
 
+static status_t SDSPI_Read(sdspi_host_t *host, uint8_t *buffer, uint32_t size)
+{
+    assert(host);
+    assert(host->exchange);
+    assert(buffer);
+    assert(size);
+
+    uint8_t response;
+    uint32_t i = SDSPI_TRANSFER_RETRY_TIMES;
+    uint16_t timingByte = 0xFFFFU; /* The byte need to be sent as read/write data block timing requirement */
+    uint16_t crc = 0U;
+
+    memset(buffer, 0xFFU, size);
+
+    /* Wait data token comming */
+    do
+    {
+        if (kStatus_Success != host->exchange((uint8_t *)&timingByte, &response, 1U))
+        {
+            return kStatus_SDSPI_ExchangeFailed;
+        }
+
+    } while ((response == 0xFFU) && (--i));
+
+    /* Check data token and exchange data. */
+    if (response != kSDSPI_DataTokenBlockRead)
+    {
+        return kStatus_SDSPI_ResponseError;
+    }
+    if (host->exchange(buffer, buffer, size))
+    {
+        return kStatus_SDSPI_ExchangeFailed;
+    }
+
+    /* Get 16 bit CRC */
+    if (kStatus_Success != host->exchange((uint8_t *)&timingByte, (uint8_t *)&crc, 2U))
+    {
+        return kStatus_SDSPI_ExchangeFailed;
+    }
+
+    return kStatus_Success;
+}
+
+static status_t SDSPI_Erase(sdspi_card_t *card, uint32_t startBlock, uint32_t blockCount)
+{
+    assert(card);
+    assert(blockCount);
+
+    uint8_t response = 0U;
+    uint32_t eraseBlockStart;
+    uint32_t eraseBlockEnd;
+
+    if (kStatus_Success != SDSPI_WaitReady(card->host))
+    {
+        return kStatus_SDSPI_WaitReadyFailed;
+    }
+
+    eraseBlockStart =
+        (card->flags & kSDSPI_SupportHighCapacityFlag) == 0U ? (startBlock * card->blockSize) : startBlock;
+    eraseBlockEnd = eraseBlockStart +
+                    ((card->flags & kSDSPI_SupportHighCapacityFlag) == 0U ? card->blockSize : 1U) * (blockCount - 1U);
+
+    /* set erase start address */
+    if (kStatus_Success != SDSPI_SendCommand(card->host, kSDSPI_CmdWrBlkEraseStart, eraseBlockStart, &response))
+    {
+        return kStatus_SDSPI_SendCommandFailed;
+    }
+    /* set erase end address */
+    if (kStatus_Success != SDSPI_SendCommand(card->host, kSDSPI_CmdWrBlkEraseEnd, eraseBlockEnd, &response))
+    {
+        return kStatus_SDSPI_SendCommandFailed;
+    }
+    /* start erase */
+    if (kStatus_Success != SDSPI_SendCommand(card->host, kSDSPI_CmdWrBlkErase, 0U, &response))
+    {
+        return kStatus_SDSPI_SendCommandFailed;
+    }
+
+    return kStatus_Success;
+}
+
+static status_t SDSPI_SwitchFunction(
+    sdspi_card_t *card, uint32_t mode, uint32_t group, uint32_t number, uint32_t *status)
+{
+    assert(card);
+    assert(status);
+
+    uint8_t response = 0u;
+    uint32_t argument = 0U;
+
+    argument = (mode << 31U | 0x00FFFFFFU);
+    argument &= ~((uint32_t)(0xFU) << (group * 4U));
+    argument |= (number << (group * 4U));
+
+    if (kStatus_Success != SDSPI_SendCommand(card->host, kSDSPI_CmdSwitch, argument, &response))
+    {
+        return kStatus_SDSPI_SendCommandFailed;
+    }
+
+    if (kStatus_Success != (SDSPI_Read(card->host, (uint8_t *)status, 64U)))
+    {
+        return kStatus_SDSPI_ReadFailed;
+    }
+
+    return kStatus_Success;
+}
+
+static status_t SDSPI_SelectFunction(sdspi_card_t *card, uint32_t group, uint32_t function)
+{
+    assert(card);
+
+    uint32_t functionStatus[16U] = {0U};
+    uint16_t functionGroupInfo[6U] = {0};
+    uint32_t currentFunctionStatus = 0U;
+
+    /* check if card support CMD6 */
+    if (!(card->csd.cardCommandClass & kSDMMC_CommandClassSwitch))
+    {
+        return kStatus_SDSPI_NotSupportYet;
+    }
+
+    /* Check if card support high speed mode. */
+    if (kStatus_Success != SDSPI_SwitchFunction(card, kSD_SwitchCheck, group, function, functionStatus))
+    {
+        return kStatus_SDSPI_ExchangeFailed;
+    }
+    /* In little endian mode, SD bus byte transferred first is the byte stored in lowest byte position in
+    a word which will cause 4 byte's sequence in a word is not consistent with their original sequence from
+    card. So the sequence of 4 bytes received in a word should be converted. */
+    functionStatus[0U] = SWAP_WORD_BYTE_SEQUENCE(functionStatus[0U]);
+    functionStatus[1U] = SWAP_WORD_BYTE_SEQUENCE(functionStatus[1U]);
+    functionStatus[2U] = SWAP_WORD_BYTE_SEQUENCE(functionStatus[2U]);
+    functionStatus[3U] = SWAP_WORD_BYTE_SEQUENCE(functionStatus[3U]);
+    functionStatus[4U] = SWAP_WORD_BYTE_SEQUENCE(functionStatus[4U]);
+
+    /* -functionStatus[0U]---bit511~bit480;
+       -functionStatus[1U]---bit479~bit448;
+       -functionStatus[2U]---bit447~bit416;
+       -functionStatus[3U]---bit415~bit384;
+       -functionStatus[4U]---bit383~bit352;
+       According to the "switch function status[bits 511~0]" return by switch command in mode "check function":
+       -Check if function 1(high speed) in function group 1 is supported by checking if bit 401 is set;
+       -check if function 1 is ready and can be switched by checking if bits 379~376 equal value 1;
+     */
+    functionGroupInfo[5U] = (uint16_t)functionStatus[0U];
+    functionGroupInfo[4U] = (uint16_t)(functionStatus[1U] >> 16U);
+    functionGroupInfo[3U] = (uint16_t)(functionStatus[1U]);
+    functionGroupInfo[2U] = (uint16_t)(functionStatus[2U] >> 16U);
+    functionGroupInfo[1U] = (uint16_t)(functionStatus[2U]);
+    functionGroupInfo[0U] = (uint16_t)(functionStatus[3U] >> 16U);
+    currentFunctionStatus = ((functionStatus[3U] & 0xFFU) << 8U) | (functionStatus[4U] >> 24U);
+
+    /* check if function is support */
+    if (((functionGroupInfo[group] & (1 << function)) == 0U) ||
+        ((currentFunctionStatus >> (group * 4U)) & 0xFU) != function)
+    {
+        return kStatus_SDSPI_NotSupportYet;
+    }
+
+    /* Switch to high speed mode. */
+    if (kStatus_Success != SDSPI_SwitchFunction(card, kSD_SwitchSet, group, function, functionStatus))
+    {
+        return kStatus_SDSPI_ExchangeFailed;
+    }
+    /* In little endian mode is little endian, SD bus byte transferred first is the byte stored in lowest byte
+    position in a word which will cause 4 byte's sequence in a word is not consistent with their original
+    sequence from card. So the sequence of 4 bytes received in a word should be converted. */
+    functionStatus[3U] = SWAP_WORD_BYTE_SEQUENCE(functionStatus[3U]);
+    functionStatus[4U] = SWAP_WORD_BYTE_SEQUENCE(functionStatus[4U]);
+
+    /* According to the "switch function status[bits 511~0]" return by switch command in mode "set function":
+       -check if group 1 is successfully changed to function 1 by checking if bits 379~376 equal value 1;
+     */
+    currentFunctionStatus = ((functionStatus[3U] & 0xFFU) << 8U) | (functionStatus[4U] >> 24U);
+
+    if (((currentFunctionStatus >> (group * 4U)) & 0xFU) != function)
+    {
+        return kStatus_SDSPI_SwitchCmdFail;
+    }
+
+    return kStatus_Success;
+}
+
 status_t SDSPI_Init(sdspi_card_t *card)
 {
     assert(card);
     assert(card->host);
     assert(card->host->setFrequency);
     assert(card->host->exchange);
-    assert(card->host->getCurrentMilliseconds);
 
-    sdspi_host_t *host;
     uint32_t applicationCommand41Argument = 0U;
-    uint32_t startTime;
-    uint32_t currentTime;
-    uint32_t elapsedTime;
-    uint8_t response[5U];
-    uint8_t applicationCommand41Response[5U];
-    bool likelySdV1 = false;
 
-    host = card->host;
     /* Card must be initialized in 400KHZ. */
-    if (host->setFrequency(SDMMC_CLOCK_400KHZ))
+    if (card->host->setFrequency(SDMMC_CLOCK_400KHZ))
     {
         return kStatus_SDSPI_SetFrequencyFailed;
     }
@@ -1014,52 +1085,28 @@ status_t SDSPI_Init(sdspi_card_t *card)
     }
 
     /* Check the card's supported interface condition. */
-    if (kStatus_Success != SDSPI_SendInterfaceCondition(card, 0xAAU, response))
-    {
-        likelySdV1 = true;
-    }
-    else if ((response[3U] == 0x1U) || (response[4U] == 0xAAU))
-    {
-        applicationCommand41Argument |= kSD_OcrHostCapacitySupportFlag;
-    }
-    else
+    if (kStatus_Success != SDSPI_SendInterfaceCondition(card, &applicationCommand41Argument))
     {
         return kStatus_SDSPI_SendInterfaceConditionFailed;
     }
 
+#if SDSPI_CARD_CRC_PROTECTION_ENABLE
+    /* enable command crc protection. */
+    if (kStatus_Success != SDSPI_CommandCrc(card, true))
+    {
+        return kStatus_SDSPI_SwitchCmdFail;
+    }
+#endif
+
     /* Set card's interface condition according to host's capability and card's supported interface condition */
-    startTime = host->getCurrentMilliseconds();
-    do
+    if (kStatus_Success != SDSPI_ApplicationSendOperationCondition(card, applicationCommand41Argument))
     {
-        if (kStatus_Success !=
-            SDSPI_ApplicationSendOperationCondition(card, applicationCommand41Argument, applicationCommand41Response))
-        {
-            return kStatus_SDSPI_SendOperationConditionFailed;
-        }
+        return kStatus_SDSPI_SendOperationConditionFailed;
+    }
 
-        currentTime = host->getCurrentMilliseconds();
-        elapsedTime = (currentTime - startTime);
-        if (elapsedTime > 500U)
-        {
-            return kStatus_Timeout;
-        }
-
-        if (!applicationCommand41Response[0U])
-        {
-            break;
-        }
-    } while (applicationCommand41Response[0U] & kSDSPI_R1InIdleStateFlag);
-
-    if (!likelySdV1)
+    if (kStatus_Success != SDSPI_ReadOcr(card))
     {
-        if (kStatus_Success != SDSPI_ReadOcr(card))
-        {
-            return kStatus_SDSPI_ReadOcrFailed;
-        }
-        if (card->ocr & kSD_OcrCardCapacitySupportFlag)
-        {
-            card->flags |= kSDSPI_SupportHighCapacityFlag;
-        }
+        return kStatus_SDSPI_ReadOcrFailed;
     }
 
     /* Force to use 512-byte length block, no matter which version.  */
@@ -1073,18 +1120,15 @@ status_t SDSPI_Init(sdspi_card_t *card)
     }
 
     /* Set to max frequency according to the max frequency information in CSD register. */
-    SDSPI_SetMaxFrequencyNormalMode(card);
-
-    /* Save capacity, read only attribute and CID, SCR registers. */
-    SDSPI_CheckCapacity(card);
-    SDSPI_CheckReadOnly(card);
-    if (kStatus_Success != SDSPI_SendCid(card))
+    if (kStatus_Success !=
+        card->host->setFrequency(SD_CLOCK_25MHZ > card->host->busBaudRate ? card->host->busBaudRate : SD_CLOCK_25MHZ))
     {
-        return kStatus_SDSPI_SendCidFailed;
+        return kStatus_SDSPI_SetFrequencyFailed;
     }
+
     if (kStatus_Success != SDSPI_SendScr(card))
     {
-        return kStatus_SDSPI_SendCidFailed;
+        return kStatus_SDSPI_SendCsdFailed;
     }
 
     return kStatus_Success;
@@ -1116,52 +1160,31 @@ status_t SDSPI_ReadBlocks(sdspi_card_t *card, uint8_t *buffer, uint32_t startBlo
     assert(buffer);
     assert(blockCount);
 
-    uint32_t offset;
     uint32_t i;
-    sdspi_command_t command = {0};
-    sdspi_host_t *host;
+    uint8_t response = 0U;
 
-    offset = startBlock;
-    if (!IS_BLOCK_ACCESS(card))
+    /* send command */
+    if (kStatus_Success !=
+        SDSPI_SendCommand(
+            card->host, blockCount == 1U ? kSDSPI_CmdReadSigleBlock : kSDSPI_CmdReadMultiBlock,
+            ((card->flags & kSDSPI_SupportHighCapacityFlag) == 0U ? (startBlock * card->blockSize) : startBlock),
+            &response))
     {
-        offset *= card->blockSize;
+        return kStatus_SDSPI_SendCommandFailed;
     }
-
-    /* Send command and reads data. */
-    host = card->host;
-    command.argument = offset;
-    command.responseType = kSDSPI_ResponseTypeR1;
-    if (blockCount == 1U)
+    /* read data */
+    for (i = 0U; i < blockCount; i++)
     {
-        command.index = kSDMMC_ReadSingleBlock;
-        if (kStatus_Success != SDSPI_SendCommand(host, &command, FSL_SDSPI_TIMEOUT))
-        {
-            return kStatus_SDSPI_SendCommandFailed;
-        }
-
-        if (kStatus_Success != SDSPI_Read(host, buffer, card->blockSize))
+        if (kStatus_Success != SDSPI_Read(card->host, buffer, card->blockSize))
         {
             return kStatus_SDSPI_ReadFailed;
         }
+        buffer += card->blockSize;
     }
-    else
+
+    /* Write stop transmission command after the last data block. */
+    if (blockCount > 1U)
     {
-        command.index = kSDMMC_ReadMultipleBlock;
-        if (kStatus_Success != SDSPI_SendCommand(host, &command, FSL_SDSPI_TIMEOUT))
-        {
-            return kStatus_SDSPI_SendCommandFailed;
-        }
-
-        for (i = 0U; i < blockCount; i++)
-        {
-            if (kStatus_Success != SDSPI_Read(host, buffer, card->blockSize))
-            {
-                return kStatus_SDSPI_ReadFailed;
-            }
-            buffer += card->blockSize;
-        }
-
-        /* Write stop transmission command after the last data block. */
         if (kStatus_Success != SDSPI_StopTransmission(card))
         {
             return kStatus_SDSPI_StopTransmissionFailed;
@@ -1178,100 +1201,126 @@ status_t SDSPI_WriteBlocks(sdspi_card_t *card, uint8_t *buffer, uint32_t startBl
     assert(buffer);
     assert(blockCount);
 
-    uint32_t offset;
     uint32_t i;
-    sdspi_host_t *host;
-    sdspi_command_t command = {0};
+    uint8_t response = 0U;
 
     if (SDSPI_CheckReadOnly(card))
     {
         return kStatus_SDSPI_WriteProtected;
     }
 
-    offset = startBlock;
-    if (!IS_BLOCK_ACCESS(card))
+    /* send command */
+    if (kStatus_Success !=
+        SDSPI_SendCommand(
+            card->host, blockCount == 1U ? kSDSPI_CmdWriteSigleBlock : kSDSPI_CmdWriteMultiBlock,
+            ((card->flags & kSDSPI_SupportHighCapacityFlag) == 0U ? (startBlock * card->blockSize) : startBlock),
+            &response))
     {
-        offset *= card->blockSize;
+        return kStatus_SDSPI_SendCommandFailed;
     }
-
-    /* Send command and writes data. */
-    host = card->host;
-    if (blockCount == 1U)
+    /* check response */
+    if (response)
     {
-        command.index = kSDMMC_WriteSingleBlock;
-        command.argument = offset;
-        command.responseType = kSDSPI_ResponseTypeR1;
-        if (kStatus_Success != SDSPI_SendCommand(host, &command, FSL_SDSPI_TIMEOUT))
-        {
-            return kStatus_SDSPI_SendCommandFailed;
-        }
-
-        if (command.response[0U])
-        {
-            return kStatus_SDSPI_ResponseError;
-        }
-
-        if (kStatus_Success != SDSPI_Write(host, buffer, card->blockSize, kSDSPI_DataTokenSingleBlockWrite))
+        return kStatus_SDSPI_ResponseError;
+    }
+    /* write data */
+    for (i = 0U; i < blockCount; i++)
+    {
+        if (kStatus_Success !=
+            SDSPI_Write(card->host, buffer, card->blockSize,
+                        blockCount == 1U ? kSDSPI_DataTokenSingleBlockWrite : kSDSPI_DataTokenMultipleBlockWrite))
         {
             return kStatus_SDSPI_WriteFailed;
         }
+        buffer += card->blockSize;
     }
-    else
+    /* stop transfer */
+    if (blockCount > 1U)
     {
-#if defined FSL_SDSPI_ENABLE_PRE_ERASE_ON_WRITE
-        /* Pre-erase before writing data */
-        if (kStatus_Success != SDSPI_SendApplicationCmd(card))
-        {
-            return kStatus_SDSPI_SendApplicationCommandFailed;
-        }
-
-        command.index = kSDAppSetWrBlkEraseCount;
-        command.argument = blockCount;
-        command.responseType = kSDSPI_ResponseTypeR1;
-        if (kStatus_Success != SDSPI_SendCommand(host->base, &command, FSL_SDSPI_TIMEOUT))
-        {
-            return kStatus_SDSPI_SendCommandFailed;
-        }
-
-        if (req->response[0U])
-        {
-            return kStatus_SDSPI_ResponseError;
-        }
-#endif
-
-        memset(&command, 0U, sizeof(sdspi_command_t));
-        command.index = kSDMMC_WriteMultipleBlock;
-        command.argument = offset;
-        command.responseType = kSDSPI_ResponseTypeR1;
-        if (kStatus_Success != SDSPI_SendCommand(host, &command, FSL_SDSPI_TIMEOUT))
-        {
-            return kStatus_SDSPI_SendCommandFailed;
-        }
-
-        if (command.response[0U])
-        {
-            return kStatus_SDSPI_ResponseError;
-        }
-
-        for (i = 0U; i < blockCount; i++)
-        {
-            if (kStatus_Success != SDSPI_Write(host, buffer, card->blockSize, kSDSPI_DataTokenMultipleBlockWrite))
-            {
-                return kStatus_SDSPI_WriteFailed;
-            }
-            buffer += card->blockSize;
-        }
-        if (kStatus_Success != SDSPI_Write(host, 0U, 0U, kSDSPI_DataTokenStopTransfer))
+        if (kStatus_Success != SDSPI_Write(card->host, 0U, 0U, kSDSPI_DataTokenStopTransfer))
         {
             return kStatus_SDSPI_WriteFailed;
         }
 
         /* Wait the card programming end. */
-        if (kStatus_Success != SDSPI_WaitReady(host, FSL_SDSPI_TIMEOUT))
+        if (kStatus_Success != SDSPI_WaitReady(card->host))
         {
             return kStatus_SDSPI_WaitReadyFailed;
         }
     }
 
     return kStatus_Success;
+}
+
+status_t SDSPI_SendPreErase(sdspi_card_t *card, uint32_t blockCount)
+{
+    assert(blockCount > 1U);
+
+    uint8_t response = 0U;
+
+    /* Pre-erase before writing data */
+    if (kStatus_Success != SDSPI_SendApplicationCmd(card))
+    {
+        return kStatus_SDSPI_SendApplicationCommandFailed;
+    }
+
+    if (kStatus_Success != SDSPI_SendCommand(card->host, kSDSPI_CmdWrBlkEraseCount, blockCount, &response))
+    {
+        return kStatus_SDSPI_SendCommandFailed;
+    }
+
+    if (response)
+    {
+        return kStatus_SDSPI_ResponseError;
+    }
+
+    return kStatus_Success;
+}
+
+status_t SDSPI_EraseBlocks(sdspi_card_t *card, uint32_t startBlock, uint32_t blockCount)
+{
+    assert(card);
+    assert(blockCount);
+
+    uint32_t blockCountOneTime; /* The block count can be erased in one time sending ERASE_BLOCKS command. */
+    uint32_t blockDone = 0U;    /* The block count has been erased. */
+    uint32_t blockLeft;         /* Left block count to be erase. */
+
+    blockLeft = blockCount;
+    while (blockLeft)
+    {
+        if (blockLeft > (card->csd.eraseSectorSize + 1U))
+        {
+            blockCountOneTime = card->csd.eraseSectorSize + 1U;
+            blockLeft = blockLeft - blockCountOneTime;
+        }
+        else
+        {
+            blockCountOneTime = blockLeft;
+            blockLeft = 0U;
+        }
+
+        if (SDSPI_Erase(card, (startBlock + blockDone), blockCountOneTime) != kStatus_Success)
+        {
+            return kStatus_Fail;
+        }
+
+        blockDone += blockCountOneTime;
+    }
+
+    return kStatus_Success;
+}
+
+status_t SDSPI_SwitchToHighSpeed(sdspi_card_t *card)
+{
+    assert(card);
+
+    if (SDSPI_SelectFunction(card, kSD_GroupTimingMode, kSD_FunctionSDR25HighSpeed) == kStatus_Success)
+    {
+        card->host->setFrequency(SD_CLOCK_50MHZ > card->host->busBaudRate ? card->host->busBaudRate : SD_CLOCK_50MHZ);
+
+        return kStatus_Success;
+    }
+
+    return kStatus_Fail;
 }

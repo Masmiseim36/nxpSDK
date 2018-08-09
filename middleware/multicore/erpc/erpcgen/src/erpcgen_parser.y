@@ -395,16 +395,9 @@ const_def       :   "const" simple_data_type ident '=' const_expr
  */
 enum_def        :   "enum" name_opt[name] '{' enumerator_list_opt '}'
                         {
-                            if ($enumerator_list_opt == NULL)
-                            {
-                                throw semantic_error(format_string("Enum on the %d.line must have at least one member.", $1->getFirstLine()));
-                            }
-                            else
-                            {
-                                $$ = new AstNode(*$1);
-                                $$->appendChild($name);
-                                $$->appendChild($enumerator_list_opt);
-                            }
+                            $$ = new AstNode(*$1);
+                            $$->appendChild($name);
+                            $$->appendChild($enumerator_list_opt);
                         }
                 ;
 
@@ -1017,9 +1010,17 @@ annotation_list :   annotation
 /*
  * TOK_ANNOTATION -> ( ident const_expr )
  */
-annotation      :   '@' ident annotation_value_opt
+annotation      :   '@' ident[lang] ':' ident[ann] annotation_value_opt
                         {
                             $$ = new AstNode(Token(TOK_ANNOTATION));
+                            $$->appendChild($lang);
+                            $$->appendChild($ann);
+                            $$->appendChild($annotation_value_opt);
+                        }
+                |   '@' ident annotation_value_opt
+                        {
+                            $$ = new AstNode(Token(TOK_ANNOTATION));
+                            $$->appendChild(NULL);
                             $$->appendChild($ident);
                             $$->appendChild($annotation_value_opt);
                         }
@@ -1029,6 +1030,10 @@ annotation_value_opt
                 :   '(' const_expr ')'
                         {
                             $$ = $const_expr;
+                        }
+                |   '(' ')'
+                        {
+                            $$ = NULL;
                         }
                 |   /* empty */
                         {

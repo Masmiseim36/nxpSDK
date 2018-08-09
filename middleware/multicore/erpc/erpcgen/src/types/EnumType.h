@@ -53,7 +53,7 @@ namespace erpcgen {
 class EnumType : public DataType
 {
 public:
-    typedef std::vector<EnumMember *> member_vector_t; /*! Contains list of enum members */
+    typedef std::vector<EnumMember *> member_vector_t; /*!< Contains list of enum members */
 
     /*!
      * @brief Constructor.

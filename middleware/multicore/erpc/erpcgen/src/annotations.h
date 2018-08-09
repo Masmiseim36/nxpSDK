@@ -37,7 +37,13 @@
 #define _EMBEDDED_RPC__ANNOTATIONS_H_
 
 //! Define union discriminator name for non-encapsulated unions.
+#define CRC_ANNOTATION "crc"
+
+//! Define union discriminator name for non-encapsulated unions.
 #define DISCRIMINATOR_ANNOTATION "discriminator"
+
+//! Service objects will be dynamically allocated.
+#define DYNAMIC_SERVICES_ANNOTATION "dynamic_services"
 
 //! Set error value for provide error to client
 #define ERROR_RETURN_ANNOTATION "error_return"
@@ -62,9 +68,6 @@
 
 //! Specify the symbol name.
 #define NAME_ANNOTATION "name"
-
-//! Identify nested function call.
-#define NESTED_CALL "nested"
 
 //! Turn off error checking code for allocations in generated output
 #define NO_ALLOC_ERRORS_ANNOTATION "no_alloc_errors"

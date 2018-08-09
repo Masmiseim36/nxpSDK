@@ -54,7 +54,7 @@ namespace erpcgen {
 class StructType : public DataType
 {
 public:
-    typedef std::vector<StructMember *> member_vector_t;
+    typedef std::vector<StructMember *> member_vector_t; /*!< Vector of Struct members. */
 
     /*!
      * @brief Constructor.

@@ -3,10 +3,10 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
+ *  that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -35,11 +35,8 @@
 #define _FSL_FXOS_H_
 
 #include "fsl_common.h"
-#if defined(FSL_FEATURE_SOC_LPI2C_COUNT) && (FSL_FEATURE_SOC_LPI2C_COUNT > 0)
-#include "fsl_lpi2c.h"
-#else
-#include "fsl_i2c.h"
-#endif
+
+#define FXOS8700CQ_ACCEL_RESOLUTION_BITS  14
 
 /*
  *  STATUS Register
@@ -697,18 +694,21 @@
 #define A_TRAN_INIT_Y_LSB 0x7B
 #define A_TRAN_INIT_Z_LSB 0x7C
 
+/*! @brief Define I2C access function. */
+typedef status_t (*I2C_SendFunc_t)(uint8_t deviceAddress, uint32_t subAddress, uint8_t subaddressSize,
+                         uint32_t txBuff);
+typedef status_t (*I2C_ReceiveFunc_t)(uint8_t deviceAddress, uint32_t subAddress, uint8_t subaddressSize,
+                            uint8_t *rxBuff, uint8_t rxBuffSize);
+
 /*! @brief fxos8700cq configure definition. This structure should be global.*/
 typedef struct _fxos_handle
 {
-#if defined(FSL_FEATURE_SOC_LPI2C_COUNT) && (FSL_FEATURE_SOC_LPI2C_COUNT)
-    LPI2C_Type *base;
-    lpi2c_master_transfer_t xfer;
-    lpi2c_master_handle_t *i2cHandle;
-#else
-    I2C_Type *base;                 /*!< I2C base. */
-    i2c_master_handle_t *i2cHandle; /*!< I2C master transfer context */
-    i2c_master_transfer_t xfer;     /*!< I2C master xfer */
-#endif
+    /* Pointer to the user-defined I2C Send Data function. */
+    I2C_SendFunc_t I2C_SendFunc;
+    /* Pointer to the user-defined I2C Receive Data function. */
+    I2C_ReceiveFunc_t I2C_ReceiveFunc;
+    /* The I2C slave address . */ 
+    uint8_t slaveAddress;    
 } fxos_handle_t;
 
 typedef struct _fxos8700cq_data
@@ -727,6 +727,17 @@ typedef struct _fxos8700cq_data
     uint8_t magZLSB;
 } fxos_data_t;
 
+/*! @brief fxos8700cq configure structure.*/
+typedef struct _fxos_config
+{
+    /* Pointer to the user-defined I2C Send Data function. */
+    I2C_SendFunc_t I2C_SendFunc;
+    /* Pointer to the user-defined I2C Receive Data function. */
+    I2C_ReceiveFunc_t I2C_ReceiveFunc;
+    /* The I2C slave address . */ 
+    uint8_t slaveAddress;   
+} fxos_config_t;
+
 /*!
  * @addtogroup fxos_common
  * @{
@@ -740,10 +751,11 @@ extern "C" {
  * @brief Verify and initialize fxos_handleice: Hybrid mode with ODR=50Hz, Mag OSR=32, Acc OSR=Normal.
  *
  * @param fxos_handle The pointer to accel driver handle.
+ * @param config  The configuration structure pointer to accel.
  *
  * @return kStatus_Success if success or kStatus_Fail if error.
  */
-status_t FXOS_Init(fxos_handle_t *fxos_handle);
+status_t FXOS_Init(fxos_handle_t *fxos_handle, fxos_config_t *config);
 
 /*!
  * @brief Read data from sensors, assumes hyb_autoinc_mode is set in M_CTRL_REG2
@@ -777,6 +789,16 @@ status_t FXOS_WriteReg(fxos_handle_t *handle, uint8_t reg, uint8_t val);
  * @return kStatus_Success if success or kStatus_Fail if error.
  */
 status_t FXOS_ReadReg(fxos_handle_t *handle, uint8_t reg, uint8_t *val, uint8_t bytesNumber);
+
+/*!
+ * @brief Get device accelerator resolution bits.
+ *
+  * @return accelerator resolution bits.
+ */
+static inline uint8_t FXOS_GetResolutionBits(void)
+{
+    return FXOS8700CQ_ACCEL_RESOLUTION_BITS;
+}
 
 #if defined(__cplusplus)
 }

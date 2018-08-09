@@ -7,7 +7,7 @@ var classerpcgen_1_1_union_case =
     [ "caseMemberIsVoid", "classerpcgen_1_1_union_case.html#a241420156aafe313bac344b5f6ff61e0", null ],
     [ "getCaseName", "classerpcgen_1_1_union_case.html#a5ee69727cfb26572250e4dec49b09ef3", null ],
     [ "getCaseValue", "classerpcgen_1_1_union_case.html#ad4c2e99d6813b8e863ec1866f9c13b4a", null ],
-    [ "getDescription", "classerpcgen_1_1_union_case.html#a7320ae973aa328691dda768227d3cbe5", null ],
+    [ "getDescription", "classerpcgen_1_1_union_case.html#a2cbe4d615ff794dff0ac49d0f5376f38", null ],
     [ "getMemberDeclarationNames", "classerpcgen_1_1_union_case.html#ae8f2aa18dbb053b5c1573c5333887b44", null ],
     [ "getUnionMemberDeclaration", "classerpcgen_1_1_union_case.html#ac49bff6bd8c8d74426e46b19f6e81394", null ],
     [ "printUnionMembers", "classerpcgen_1_1_union_case.html#a645361d754db4e174f36af15028397a2", null ],

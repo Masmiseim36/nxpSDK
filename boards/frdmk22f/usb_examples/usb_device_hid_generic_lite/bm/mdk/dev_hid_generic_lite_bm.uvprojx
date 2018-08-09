@@ -4,7 +4,7 @@
   <Header>### uVision Project, (C) Keil Software</Header>
   <Targets>
     <Target>
-      <TargetName>dev_hid_generic_lite_bm Debug</TargetName>
+      <TargetName>dev_hid_generic_lite_bm debug</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <TargetOption>
@@ -365,7 +365,7 @@
 --diag_suppress=66,1296,186 
  
 </MiscControls>
-              <Define>_DEBUG=1, CPU_MK22FN512VLH12, USB_STACK_BM</Define>
+              <Define>DEBUG, _DEBUG=1, CPU_MK22FN512VLH12, USB_STACK_BM</Define>
               <Undefine/>
               <IncludePath>..;../../../..;../../../../../../CMSIS/Include;../../../../../../middleware/usb;../../../../../../middleware/usb/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../devices/MK22F51212/drivers;../../../../../../devices/MK22F51212/utilities/io;../../../../../../devices/MK22F51212/utilities/str;../../../../../../devices/MK22F51212/utilities/log;../../../../../../devices/MK22F51212/utilities;../../../../../../devices/MK22F51212</IncludePath>
             </VariousControls>
@@ -469,7 +469,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>board</GroupName>
+          <GroupName>board-src</GroupName>
           <Files>
             <File>
               <FileName>board.c</FileName>
@@ -637,9 +637,59 @@
               <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_smc.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_flash.c</FileName>
+              <FileName>fsl_ftfx_adapter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_ftfx_adapter.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_utilities.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_ftfx_utilities.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_features.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_ftfx_features.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_controller.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_flash.c</FilePath>
+              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_ftfx_controller.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_controller.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_ftfx_controller.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_ftfx_flash.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flash.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_ftfx_flash.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_cache.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_ftfx_cache.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_cache.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_ftfx_cache.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flexnvm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_ftfx_flexnvm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flexnvm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_ftfx_flexnvm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_flash.h</FileName>
@@ -756,7 +806,7 @@
       </Groups>
     </Target>
     <Target>
-      <TargetName>dev_hid_generic_lite_bm Release</TargetName>
+      <TargetName>dev_hid_generic_lite_bm release</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <TargetOption>
@@ -1117,7 +1167,7 @@
 --diag_suppress=66,1296,186 
  
 </MiscControls>
-              <Define>_DEBUG=0, CPU_MK22FN512VLH12, USB_STACK_BM</Define>
+              <Define>NDEBUG, _DEBUG=0, CPU_MK22FN512VLH12, USB_STACK_BM</Define>
               <Undefine/>
               <IncludePath>..;../../../..;../../../../../../CMSIS/Include;../../../../../../middleware/usb;../../../../../../middleware/usb/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../devices/MK22F51212/drivers;../../../../../../devices/MK22F51212/utilities/io;../../../../../../devices/MK22F51212/utilities/str;../../../../../../devices/MK22F51212/utilities/log;../../../../../../devices/MK22F51212/utilities;../../../../../../devices/MK22F51212</IncludePath>
             </VariousControls>
@@ -1134,7 +1184,7 @@
             <useXO>0</useXO>
             <VariousControls>
               <MiscControls/>
-              <Define/>
+              <Define>NDEBUG</Define>
               <Undefine/>
               <IncludePath/>
             </VariousControls>
@@ -1221,7 +1271,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>board</GroupName>
+          <GroupName>board-src</GroupName>
           <Files>
             <File>
               <FileName>board.c</FileName>
@@ -1389,9 +1439,59 @@
               <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_smc.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_flash.c</FileName>
+              <FileName>fsl_ftfx_adapter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_ftfx_adapter.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_utilities.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_ftfx_utilities.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_features.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_ftfx_features.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_controller.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_flash.c</FilePath>
+              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_ftfx_controller.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_controller.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_ftfx_controller.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_ftfx_flash.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flash.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_ftfx_flash.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_cache.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_ftfx_cache.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_cache.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_ftfx_cache.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flexnvm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_ftfx_flexnvm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flexnvm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_ftfx_flexnvm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_flash.h</FileName>

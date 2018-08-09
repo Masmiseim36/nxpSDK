@@ -3367,6 +3367,1886 @@ SOURCE=.\devices\MK28F15\system_MK28F15.c
 SOURCE=.\devices\MK28F15\system_MK28F15.h
 # End Source File
 # End Group
+# Begin Group "MK22"
+
+# PROP Default_Filter ""
+# Begin Group "MK22 CMSIS Driver"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\cmsis_drivers\fsl_dspi_cmsis.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\cmsis_drivers\fsl_dspi_cmsis.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\cmsis_drivers\fsl_i2c_cmsis.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\cmsis_drivers\fsl_i2c_cmsis.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\cmsis_drivers\fsl_lpuart_cmsis.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\cmsis_drivers\fsl_lpuart_cmsis.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\cmsis_drivers\fsl_uart_cmsis.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\cmsis_drivers\fsl_uart_cmsis.h
+# End Source File
+# End Group
+# Begin Group "MK22 Drivers"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_adc16.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_adc16.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_clock.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_clock.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_cmp.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_cmp.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_common.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_common.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_crc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_crc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_dac.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_dac.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_dmamux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_dmamux.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_dspi.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_dspi.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_dspi_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_dspi_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_dspi_freertos.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_dspi_freertos.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_ewm.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_ewm.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_flash.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_flash.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_flexbus.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_flexbus.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_ftfx_adapter.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_ftfx_cache.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_ftfx_cache.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_ftfx_controller.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_ftfx_controller.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_ftfx_features.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_ftfx_flash.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_ftfx_flash.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_ftfx_flexnvm.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_ftfx_flexnvm.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_ftfx_utilities.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_ftm.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_ftm.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_gpio.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_gpio.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_i2c.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_i2c.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_i2c_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_i2c_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_i2c_freertos.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_i2c_freertos.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_llwu.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_llwu.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_lptmr.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_lptmr.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_lpuart.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_lpuart.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_lpuart_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_lpuart_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_lpuart_freertos.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_lpuart_freertos.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_pdb.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_pdb.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_pit.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_pit.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_pmc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_pmc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_port.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_rcm.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_rcm.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_rnga.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_rnga.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_rtc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_rtc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_sai.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_sai.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_sai_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_sai_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_sim.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_sim.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_smc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_smc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_uart.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_uart.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_uart_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_uart_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_uart_freertos.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_uart_freertos.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_vref.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_vref.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_wdog.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\drivers\fsl_wdog.h
+# End Source File
+# End Group
+# Begin Group "Utils"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\utilities\fsl_assert.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\utilities\fsl_debug_console.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\utilities\fsl_debug_console.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\utilities\fsl_debug_console_conf.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\utilities\io\fsl_io.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\utilities\io\fsl_io.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\utilities\log\fsl_log.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\utilities\log\fsl_log.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\utilities\fsl_notifier.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\utilities\fsl_notifier.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\utilities\fsl_sbrk.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\utilities\fsl_shell.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\utilities\fsl_shell.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\utilities\str\fsl_str.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\utilities\str\fsl_str.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\utilities\io\swo\fsl_swo.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\utilities\io\swo\fsl_swo.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\utilities\usb_device_cdc_acm.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\utilities\usb_device_cdc_acm.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\utilities\usb_device_ch9.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\utilities\usb_device_ch9.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\utilities\usb_device_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\utilities\usb_device_descriptor.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\utilities\usb_device_descriptor.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\utilities\virtual_com.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\utilities\virtual_com.h
+# End Source File
+# End Group
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\fsl_device_registers.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\MK22F51212.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\MK22F51212_features.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\system_MK22F51212.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MK22F51212\system_MK22F51212.h
+# End Source File
+# End Group
+# Begin Group "MKV11"
+
+# PROP Default_Filter ""
+# Begin Group "MKV11 CMSIS Driver"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\cmsis_drivers\fsl_dspi_cmsis.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\cmsis_drivers\fsl_dspi_cmsis.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\cmsis_drivers\fsl_i2c_cmsis.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\cmsis_drivers\fsl_i2c_cmsis.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\cmsis_drivers\fsl_uart_cmsis.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\cmsis_drivers\fsl_uart_cmsis.h
+# End Source File
+# End Group
+# Begin Group "MKV11 Drivers"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\drivers\fsl_adc16.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\drivers\fsl_adc16.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\drivers\fsl_clock.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\drivers\fsl_clock.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\drivers\fsl_cmp.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\drivers\fsl_cmp.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\drivers\fsl_common.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\drivers\fsl_common.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\drivers\fsl_crc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\drivers\fsl_crc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\drivers\fsl_dac.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\drivers\fsl_dac.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\drivers\fsl_dmamux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\drivers\fsl_dmamux.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\drivers\fsl_dspi.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\drivers\fsl_dspi.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\drivers\fsl_dspi_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\drivers\fsl_dspi_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\drivers\fsl_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\drivers\fsl_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\drivers\fsl_ewm.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\drivers\fsl_ewm.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\drivers\fsl_flash.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\drivers\fsl_flash.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\drivers\fsl_flexcan.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\drivers\fsl_flexcan.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\drivers\fsl_flexcan_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\drivers\fsl_flexcan_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\drivers\fsl_ftm.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\drivers\fsl_ftm.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\drivers\fsl_gpio.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\drivers\fsl_gpio.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\drivers\fsl_i2c.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\drivers\fsl_i2c.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\drivers\fsl_i2c_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\drivers\fsl_i2c_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\drivers\fsl_llwu.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\drivers\fsl_llwu.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\drivers\fsl_lptmr.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\drivers\fsl_lptmr.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\drivers\fsl_mmdvsq.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\drivers\fsl_mmdvsq.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\drivers\fsl_pdb.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\drivers\fsl_pdb.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\drivers\fsl_pmc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\drivers\fsl_pmc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\drivers\fsl_port.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\drivers\fsl_rcm.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\drivers\fsl_rcm.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\drivers\fsl_sim.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\drivers\fsl_sim.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\drivers\fsl_smc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\drivers\fsl_smc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\drivers\fsl_uart.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\drivers\fsl_uart.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\drivers\fsl_uart_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\drivers\fsl_uart_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\drivers\fsl_wdog.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\drivers\fsl_wdog.h
+# End Source File
+# End Group
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\fsl_device_registers.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\MKV11Z7.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\MKV11Z7_features.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\system_MKV11Z7.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV11Z7\system_MKV11Z7.h
+# End Source File
+# End Group
+# Begin Group "MKV58F24"
+
+# PROP Default_Filter ""
+# Begin Group "MKV58F24 CMSIS Driver"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\cmsis_drivers\fsl_dspi_cmsis.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\cmsis_drivers\fsl_dspi_cmsis.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\cmsis_drivers\fsl_i2c_cmsis.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\cmsis_drivers\fsl_i2c_cmsis.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\cmsis_drivers\fsl_uart_cmsis.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\cmsis_drivers\fsl_uart_cmsis.h
+# End Source File
+# End Group
+# Begin Group "MKV58F24 Driver"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_adc16.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_adc16.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_aoi.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_aoi.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_clock.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_clock.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_cmp.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_cmp.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_common.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_common.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_crc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_crc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_dac.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_dac.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_dmamux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_dmamux.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_dspi.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_dspi.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_dspi_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_dspi_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_dspi_freertos.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_dspi_freertos.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_enc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_enc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_enet.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_enet.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_ewm.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_ewm.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_flash.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_flash.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_flexbus.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_flexbus.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_flexcan.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_flexcan.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_flexcan_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_flexcan_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_ftm.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_ftm.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_gpio.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_gpio.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_hsadc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_hsadc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_i2c.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_i2c.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_i2c_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_i2c_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_i2c_freertos.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_i2c_freertos.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_llwu.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_llwu.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_lptmr.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_lptmr.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_pdb.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_pdb.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_pit.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_pit.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_pmc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_pmc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_port.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_pwm.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_pwm.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_rcm.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_rcm.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_sim.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_sim.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_smc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_smc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_sysmpu.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_sysmpu.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_trng.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_trng.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_uart.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_uart.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_uart_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_uart_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_uart_freertos.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_uart_freertos.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_wdog.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_wdog.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_xbara.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_xbara.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_xbarb.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\drivers\fsl_xbarb.h
+# End Source File
+# End Group
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\fsl_device_registers.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\MKV58F24.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\MKV58F24_features.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\system_MKV58F24.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKV58F24\system_MKV58F24.h
+# End Source File
+# End Group
+# Begin Group "MKW31Z4"
+
+# PROP Default_Filter ""
+# Begin Group "MKW31Z4 CMSIS Driver"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_adc16.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_adc16.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_clock.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_clock.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_cmp.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_cmp.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_cmt.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_cmt.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_common.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_common.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_cop.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_cop.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_dac.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_dac.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_dcdc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_dcdc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_dmamux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_dmamux.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_dspi.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_dspi.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_dspi_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_dspi_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_dspi_freertos.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_dspi_freertos.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_flash.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_flash.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_gpio.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_gpio.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_i2c.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_i2c.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_i2c_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_i2c_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_i2c_freertos.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_i2c_freertos.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_llwu.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_llwu.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_lptmr.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_lptmr.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_lpuart.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_lpuart.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_lpuart_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_lpuart_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_lpuart_freertos.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_lpuart_freertos.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_ltc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_ltc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_ltc_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_ltc_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_pit.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_pit.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_pmc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_pmc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_port.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_rcm.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_rcm.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_rtc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_rtc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_sim.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_sim.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_smc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_smc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_tpm.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_tpm.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_trng.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_trng.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_tsi_v4.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_tsi_v4.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_vref.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\drivers\fsl_vref.h
+# End Source File
+# End Group
+# Begin Group "MKW31Z4 Driver"
+
+# PROP Default_Filter ""
+# End Group
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\fsl_device_registers.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\MKW31Z4.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\MKW31Z4_features.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\RTE_Device.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\system_MKW31Z4.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW31Z4\system_MKW31Z4.h
+# End Source File
+# End Group
+# Begin Group "MKW41Z4"
+
+# PROP Default_Filter ""
+# Begin Group "MKW41Z4 CMSIS Driver"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\cmsis_drivers\fsl_dspi_cmsis.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\cmsis_drivers\fsl_dspi_cmsis.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\cmsis_drivers\fsl_i2c_cmsis.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\cmsis_drivers\fsl_i2c_cmsis.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\cmsis_drivers\fsl_lpuart_cmsis.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\cmsis_drivers\fsl_lpuart_cmsis.h
+# End Source File
+# End Group
+# Begin Group "MKW41Z4 Driver"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_adc16.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_adc16.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_clock.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_clock.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_cmp.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_cmp.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_cmt.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_cmt.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_common.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_common.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_cop.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_cop.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_dac.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_dac.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_dcdc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_dcdc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_dmamux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_dmamux.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_dspi.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_dspi.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_dspi_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_dspi_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_dspi_freertos.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_dspi_freertos.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_flash.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_flash.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_gpio.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_gpio.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_i2c.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_i2c.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_i2c_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_i2c_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_i2c_freertos.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_i2c_freertos.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_llwu.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_llwu.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_lptmr.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_lptmr.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_lpuart.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_lpuart.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_lpuart_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_lpuart_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_lpuart_freertos.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_lpuart_freertos.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_ltc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_ltc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_ltc_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_ltc_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_pit.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_pit.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_pmc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_pmc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_port.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_rcm.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_rcm.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_rtc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_rtc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_sim.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_sim.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_smc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_smc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_tpm.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_tpm.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_trng.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_trng.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_tsi_v4.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_tsi_v4.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_vref.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\drivers\fsl_vref.h
+# End Source File
+# End Group
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\fsl_device_registers.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\MKW41Z4.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\MKW41Z4_features.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\system_MKW41Z4.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKW41Z4\system_MKW41Z4.h
+# End Source File
+# End Group
 # End Group
 # Begin Group "boards"
 
@@ -3374,7 +5254,7 @@ SOURCE=.\devices\MK28F15\system_MK28F15.h
 # Begin Group "frdmk64f"
 
 # PROP Default_Filter ""
-# Begin Group "demo"
+# Begin Group "K64 demo Apps"
 
 # PROP Default_Filter ""
 # Begin Group "adc16_low_power"
@@ -3520,6 +5400,102 @@ SOURCE=.\boards\frdmk64f\demo_apps\ecompass\pin_mux.c
 
 SOURCE=.\boards\frdmk64f\demo_apps\ecompass\pin_mux.h
 # End Source File
+# End Group
+# Begin Group "wifi_qca"
+
+# PROP Default_Filter ""
+# Begin Group "QCA Demo"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\demo_apps\wifi_qca\qca_demo\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\demo_apps\wifi_qca\qca_demo\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\demo_apps\wifi_qca\qca_demo\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\demo_apps\wifi_qca\qca_demo\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\demo_apps\wifi_qca\qca_demo\FreeRTOSConfig.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\demo_apps\wifi_qca\qca_demo\main.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\demo_apps\wifi_qca\qca_demo\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\demo_apps\wifi_qca\qca_demo\pin_mux.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\demo_apps\wifi_qca\qca_demo\wlan_qca400x.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\demo_apps\wifi_qca\qca_demo\wlan_qcom.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\demo_apps\wifi_qca\qca_demo\wlan_qcom.h
+# End Source File
+# End Group
+# Begin Group "QCA Throughput"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\demo_apps\wifi_qca\qca_throughput\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\demo_apps\wifi_qca\qca_throughput\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\demo_apps\wifi_qca\qca_throughput\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\demo_apps\wifi_qca\qca_throughput\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\demo_apps\wifi_qca\qca_throughput\FreeRTOSConfig.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\demo_apps\wifi_qca\qca_throughput\main.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\demo_apps\wifi_qca\qca_throughput\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\demo_apps\wifi_qca\qca_throughput\pin_mux.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\demo_apps\wifi_qca\qca_throughput\wlan_qca400x.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\demo_apps\wifi_qca\qca_throughput\wlan_qcom.h
+# End Source File
+# End Group
 # End Group
 # End Group
 # Begin Group "driver_examples"
@@ -4526,6 +6502,234 @@ SOURCE=.\boards\evkmimxrt1050\driver_examples\flexcan\interrupt_transfer\pin_mux
 # End Group
 # End Group
 # End Group
+# Begin Group "RTOS"
+
+# PROP Default_Filter ""
+# Begin Group "generic"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\rtos_examples\freertos_generic\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\rtos_examples\freertos_generic\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\rtos_examples\freertos_generic\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\rtos_examples\freertos_generic\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\rtos_examples\freertos_generic\freertos_generic.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\rtos_examples\freertos_generic\FreeRTOSConfig.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\rtos_examples\freertos_generic\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\rtos_examples\freertos_generic\pin_mux.h
+# End Source File
+# End Group
+# End Group
+# End Group
+# Begin Group "frdmk22f"
+
+# PROP Default_Filter ""
+# Begin Group "K22 Demo Apps"
+
+# PROP Default_Filter ""
+# Begin Group "ecompass Nr. 2"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\frdmk22f\demo_apps\ecompass\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk22f\demo_apps\ecompass\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk22f\demo_apps\ecompass\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk22f\demo_apps\ecompass\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk22f\demo_apps\ecompass\ecompass.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk22f\demo_apps\ecompass\fsl_fxos.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk22f\demo_apps\ecompass\fsl_fxos.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk22f\demo_apps\ecompass\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk22f\demo_apps\ecompass\pin_mux.h
+# End Source File
+# End Group
+# End Group
+# Begin Group "wifi_qca_examples"
+
+# PROP Default_Filter ""
+# Begin Group "qca_demo"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\frdmk22f\wifi_qca_examples\qca_demo\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk22f\wifi_qca_examples\qca_demo\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk22f\wifi_qca_examples\qca_demo\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk22f\wifi_qca_examples\qca_demo\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk22f\wifi_qca_examples\qca_demo\FreeRTOSConfig.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk22f\wifi_qca_examples\qca_demo\main.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk22f\wifi_qca_examples\qca_demo\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk22f\wifi_qca_examples\qca_demo\pin_mux.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk22f\wifi_qca_examples\qca_demo\wlan_qca400x.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk22f\wifi_qca_examples\qca_demo\wlan_qcom.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk22f\wifi_qca_examples\qca_demo\wlan_qcom.h
+# End Source File
+# End Group
+# Begin Group "qca_fwupdate"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\frdmk22f\wifi_qca_examples\qca_fwupdate\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk22f\wifi_qca_examples\qca_fwupdate\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk22f\wifi_qca_examples\qca_fwupdate\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk22f\wifi_qca_examples\qca_fwupdate\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk22f\wifi_qca_examples\qca_fwupdate\FreeRTOSConfig.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk22f\wifi_qca_examples\qca_fwupdate\fw_serial.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk22f\wifi_qca_examples\qca_fwupdate\main.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk22f\wifi_qca_examples\qca_fwupdate\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk22f\wifi_qca_examples\qca_fwupdate\pin_mux.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk22f\wifi_qca_examples\qca_fwupdate\wlan_qca400x.c
+# End Source File
+# End Group
+# Begin Group "qca_throughput"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\frdmk22f\wifi_qca_examples\qca_throughput\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk22f\wifi_qca_examples\qca_throughput\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk22f\wifi_qca_examples\qca_throughput\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk22f\wifi_qca_examples\qca_throughput\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk22f\wifi_qca_examples\qca_throughput\FreeRTOSConfig.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk22f\wifi_qca_examples\qca_throughput\main.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk22f\wifi_qca_examples\qca_throughput\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk22f\wifi_qca_examples\qca_throughput\pin_mux.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk22f\wifi_qca_examples\qca_throughput\wlan_qca400x.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk22f\wifi_qca_examples\qca_throughput\wlan_qcom.h
+# End Source File
+# End Group
+# End Group
 # End Group
 # End Group
 # Begin Group "Middleware"
@@ -4594,654 +6798,6 @@ SOURCE=.\middleware\sdmmc_2.1.2\inc\fsl_sdspi.h
 
 SOURCE=.\middleware\sdmmc_2.1.2\inc\fsl_specification.h
 # End Source File
-# End Group
-# Begin Group "lwip_2.0.0"
-
-# PROP Default_Filter ""
-# Begin Group "API"
-
-# PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\api\api_lib.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\api\api_msg.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\api\err.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\api\netbuf.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\api\netdb.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\api\netifapi.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\api\sockets.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\api\tcpip.c
-# End Source File
-# End Group
-# Begin Group "apps"
-
-# PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\apps\httpd\fs.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\apps\httpd\fsdata.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\apps\httpd\fsdata.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\apps\httpd\httpd.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\apps\httpd\httpd_structs.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\apps\httpsrv\httpsrv.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\apps\httpsrv\httpsrv.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\apps\httpsrv\httpsrv_base64.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\apps\httpsrv\httpsrv_base64.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\apps\httpsrv\httpsrv_config.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\apps\httpsrv\httpsrv_fs.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\apps\httpsrv\httpsrv_fs.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\apps\httpsrv\httpsrv_fs_data.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\apps\httpsrv\httpsrv_port.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\apps\httpsrv\httpsrv_prv.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\apps\httpsrv\httpsrv_script.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\apps\httpsrv\httpsrv_script.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\apps\httpsrv\httpsrv_sha1.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\apps\httpsrv\httpsrv_sha1.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\apps\httpsrv\httpsrv_supp.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\apps\httpsrv\httpsrv_supp.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\apps\httpsrv\httpsrv_task.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\apps\httpsrv\httpsrv_tls.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\apps\httpsrv\httpsrv_tls.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\apps\httpsrv\httpsrv_utf8.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\apps\httpsrv\httpsrv_utf8.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\apps\httpsrv\httpsrv_ws.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\apps\httpsrv\httpsrv_ws.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\apps\httpsrv\httpsrv_ws_api.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\apps\httpsrv\httpsrv_ws_prv.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\apps\lwiperf\lwiperf.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\apps\mdns\mdns.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\apps\netbiosns\netbiosns.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\apps\snmp\snmp_asn1.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\apps\snmp\snmp_asn1.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\apps\snmp\snmp_core.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\apps\snmp\snmp_core_priv.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\apps\snmp\snmp_mib2.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\apps\snmp\snmp_mib2_icmp.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\apps\snmp\snmp_mib2_interfaces.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\apps\snmp\snmp_mib2_ip.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\apps\snmp\snmp_mib2_snmp.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\apps\snmp\snmp_mib2_system.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\apps\snmp\snmp_mib2_tcp.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\apps\snmp\snmp_mib2_udp.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\apps\snmp\snmp_msg.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\apps\snmp\snmp_msg.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\apps\snmp\snmp_netconn.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\apps\snmp\snmp_pbuf_stream.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\apps\snmp\snmp_pbuf_stream.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\apps\snmp\snmp_raw.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\apps\snmp\snmp_scalar.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\apps\snmp\snmp_table.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\apps\snmp\snmp_threadsync.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\apps\snmp\snmp_traps.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\apps\snmp\snmpv3.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\apps\snmp\snmpv3_dummy.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\apps\snmp\snmpv3_mbedtls.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\apps\snmp\snmpv3_priv.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\apps\sntp\sntp.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\apps\tftp\tftp_server.c
-# End Source File
-# End Group
-# Begin Group "core"
-
-# PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\core\ipv4\autoip.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\core\def.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\core\ipv4\dhcp.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\core\dns.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\core\ipv4\etharp.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\core\ipv4\icmp.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\core\ipv4\igmp.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\core\inet_chksum.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\core\init.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\core\ip.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\core\ipv4\ip4.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\core\ipv4\ip4_addr.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\core\ipv4\ip4_frag.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\core\mem.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\core\memp.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\core\netif.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\core\pbuf.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\core\raw.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\core\stats.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\core\sys.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\core\tcp.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\core\tcp_in.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\core\tcp_out.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\core\timeouts.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\core\udp.c
-# End Source File
-# End Group
-# Begin Group "include"
-
-# PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\include\lwip\api.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\include\lwip\arch.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\include\lwip\autoip.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\include\lwip\debug.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\include\lwip\def.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\include\lwip\dhcp.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\include\lwip\dhcp6.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\include\lwip\dns.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\include\lwip\err.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\include\lwip\errno.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\include\posix\errno.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\include\lwip\etharp.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\include\netif\etharp.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\include\netif\ethernet.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\include\lwip\ethip6.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\include\lwip\icmp.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\include\lwip\icmp6.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\include\lwip\igmp.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\include\lwip\inet.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\include\lwip\inet_chksum.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\include\lwip\init.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\include\lwip\ip.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\include\lwip\ip4.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\include\lwip\ip4_addr.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\include\lwip\ip4_frag.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\include\lwip\ip6.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\include\lwip\ip6_addr.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\include\lwip\ip6_frag.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\include\lwip\ip_addr.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\include\netif\lowpan6.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\include\netif\lowpan6_opts.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\include\lwip\mem.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\include\lwip\memp.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\include\lwip\mld6.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\include\lwip\nd6.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\include\lwip\netbuf.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\include\lwip\netdb.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\include\posix\netdb.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\include\lwip\netif.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\include\lwip\netifapi.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\include\lwip\opt.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\include\lwip\pbuf.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\include\lwip\raw.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\include\lwip\sio.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\include\netif\slipif.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\include\lwip\snmp.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\include\lwip\sockets.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\include\lwip\stats.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\include\lwip\sys.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\include\lwip\tcp.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\include\lwip\tcpip.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\include\lwip\timeouts.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\include\lwip\udp.h
-# End Source File
-# End Group
-# Begin Group "netif"
-
-# PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\netif\ethernet.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\netif\ethernetif.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\netif\lowpan6.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\src\netif\slipif.c
-# End Source File
-# End Group
-# Begin Group "port"
-
-# PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\port\ethernetif.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\port\ethernetif.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\port\lwipopts.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\middleware\lwip_2.0.0\port\sys_arch.c
-# End Source File
-# End Group
 # End Group
 # Begin Group "lwip"
 
@@ -5463,6 +7019,374 @@ SOURCE=.\middleware\lwip\src\core\udp.c
 # End Source File
 # End Group
 # End Group
+# Begin Group "littlefs"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\middleware\littlefs\lfs.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\littlefs\lfs.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\littlefs\lfs_util.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\littlefs\lfs_util.h
+# End Source File
+# End Group
+# Begin Group "fatFS Nr. 1"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\middleware\fatfs\source\diskio.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\fatfs\source\diskio.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\fatfs\source\ff.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\fatfs\source\ff.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\fatfs\source\ffconf_template.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\fatfs\source\ffsystem.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\fatfs\source\ffunicode.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\fatfs\source\integer.h
+# End Source File
+# End Group
+# Begin Group "ntag_i2c_plus"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\middleware\ntag_i2c_plus\inc\global_types.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\ntag_i2c_plus\HAL_I2C\inc\HAL_I2C_driver.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\ntag_i2c_plus\HAL_I2C\inc\HAL_I2C_kinetis_fsl.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\ntag_i2c_plus\HAL_ISR\inc\HAL_ISR_callback_list.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\ntag_i2c_plus\HAL_ISR\inc\HAL_ISR_driver.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\ntag_i2c_plus\HAL_TMR\inc\HAL_timer_driver.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\ntag_i2c_plus\HAL_I2C\i2c_kinetis_fsl.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\ntag_i2c_plus\HAL_ISR\isr_common.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\ntag_i2c_plus\HAL_ISR\isr_driver_intern.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\ntag_i2c_plus\HAL_ISR\isr_kinetis.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\ntag_i2c_plus\HAL_ISR\isr_kinetis_intern.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\ntag_i2c_plus\inc\nfc_device.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\ntag_i2c_plus\HAL_NTAG\ntag_bridge.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\ntag_i2c_plus\HAL_NTAG\inc\ntag_bridge.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\ntag_i2c_plus\HAL_NTAG\inc\ntag_defines.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\ntag_i2c_plus\HAL_NTAG\inc\ntag_device_list.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\ntag_i2c_plus\HAL_NTAG\ntag_driver.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\ntag_i2c_plus\HAL_NTAG\inc\ntag_driver.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\ntag_i2c_plus\HAL_NTAG\ntag_driver_intern.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\ntag_i2c_plus\HAL_TMR\timer_kinetis.c
+# End Source File
+# End Group
+# Begin Group "issdk"
+
+# PROP Default_Filter ""
+# Begin Group "Board_K22F"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=".\middleware\issdk\boardkit\frdm-k22f\board.c"
+# End Source File
+# Begin Source File
+
+SOURCE=".\middleware\issdk\boardkit\frdm-k22f\board.h"
+# End Source File
+# Begin Source File
+
+SOURCE=".\middleware\issdk\boardkit\frdm-k22f\clock_config.c"
+# End Source File
+# Begin Source File
+
+SOURCE=".\middleware\issdk\boardkit\frdm-k22f\clock_config.h"
+# End Source File
+# Begin Source File
+
+SOURCE=".\middleware\issdk\boardkit\frdm-k22f\frdm_k22f.c"
+# End Source File
+# Begin Source File
+
+SOURCE=".\middleware\issdk\boardkit\frdm-k22f\frdm_k22f.h"
+# End Source File
+# Begin Source File
+
+SOURCE=".\middleware\issdk\boardkit\frdm-k22f\frdm-stbc-agm01\frdm_stbc_agm01_shield.h"
+# End Source File
+# Begin Source File
+
+SOURCE=".\middleware\issdk\boardkit\frdm-k22f\frdm-stbc-agmp03\frdm_stbc_agmp03_shield.h"
+# End Source File
+# Begin Source File
+
+SOURCE=".\middleware\issdk\boardkit\frdm-k22f\frdm-stbc-sa9500\frdm_stbc_sa9500_shield.h"
+# End Source File
+# Begin Source File
+
+SOURCE=".\middleware\issdk\boardkit\frdm-k22f\frdm-stbc-agm01\issdk_hal.h"
+# End Source File
+# Begin Source File
+
+SOURCE=".\middleware\issdk\boardkit\frdm-k22f\frdm-stbc-agmp03\issdk_hal.h"
+# End Source File
+# Begin Source File
+
+SOURCE=".\middleware\issdk\boardkit\frdm-k22f\frdm-stbc-sa9500\issdk_hal.h"
+# End Source File
+# Begin Source File
+
+SOURCE=".\middleware\issdk\boardkit\frdm-k22f\pin_mux.c"
+# End Source File
+# Begin Source File
+
+SOURCE=".\middleware\issdk\boardkit\frdm-k22f\pin_mux.h"
+# End Source File
+# Begin Source File
+
+SOURCE=".\middleware\issdk\boardkit\frdm-k22f\RTE_Device.h"
+# End Source File
+# End Group
+# Begin Source File
+
+SOURCE=.\middleware\issdk\algorithms\sensorfusion\sources\approximations.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\algorithms\sensorfusion\sources\approximations.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\algorithms\sensorfusion\sources\calibration_storage.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\algorithms\sensorfusion\sources\calibration_storage.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\algorithms\sensorfusion\sources\control.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\algorithms\sensorfusion\sources\control.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\algorithms\sensorfusion\sources\debug.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\algorithms\sensorfusion\sources\debug.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\algorithms\sensorfusion\sources\DecodeCommandBytes.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\algorithms\sensorfusion\sources\driver_FXAS21002.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\algorithms\sensorfusion\sources\driver_FXLS8962.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\algorithms\sensorfusion\sources\driver_FXOS8700.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\algorithms\sensorfusion\sources\driver_KSDK_NVM.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\algorithms\sensorfusion\sources\driver_KSDK_NVM.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\algorithms\sensorfusion\sources\driver_MAG3110.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\algorithms\sensorfusion\sources\driver_MMA8652.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\algorithms\sensorfusion\sources\driver_MPL3115.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\algorithms\sensorfusion\sources\driver_pit.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\algorithms\sensorfusion\sources\driver_pit.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\algorithms\sensorfusion\sources\driver_systick.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\algorithms\sensorfusion\sources\drivers.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\algorithms\sensorfusion\sources\fusion.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\algorithms\sensorfusion\sources\fusion.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\algorithms\sensorfusion\sources\hal_frdm_fxs_mult2_b.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\algorithms\pedometer\include\libinclude\KeynetikPedometer.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\algorithms\sensorfusion\sources\magnetic.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\algorithms\sensorfusion\sources\magnetic.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\algorithms\sensorfusion\sources\matrix.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\algorithms\sensorfusion\sources\matrix.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\algorithms\sensorfusion\sources\orientation.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\algorithms\sensorfusion\sources\orientation.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\algorithms\sensorfusion\sources\output_stream.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\algorithms\pedometer\source\pedometer.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\algorithms\pedometer\include\pedometer.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\algorithms\sensorfusion\sources\precisionAccelerometer.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\algorithms\sensorfusion\sources\precisionAccelerometer.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\algorithms\sensorfusion\sources\sensor_fusion.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\algorithms\sensorfusion\sources\sensor_fusion.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\algorithms\sensorfusion\sources\status.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\algorithms\sensorfusion\sources\status.h
+# End Source File
+# End Group
 # End Group
 # Begin Group "CMSIS"
 
@@ -5567,6 +7491,102 @@ SOURCE=.\CMSIS\Include\mpu_armv7.h
 
 SOURCE=.\CMSIS\Include\tz_context.h
 # End Source File
+# End Group
+# Begin Group "RTOS Nr. 1"
+
+# PROP Default_Filter ""
+# Begin Group "freertos_9.0.0"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\rtos\freertos_9.0.0\Source\croutine.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\rtos\freertos_9.0.0\Source\include\croutine.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\rtos\freertos_9.0.0\Source\include\deprecated_definitions.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\rtos\freertos_9.0.0\Source\event_groups.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\rtos\freertos_9.0.0\Source\include\event_groups.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\rtos\freertos_9.0.0\Source\include\FreeRTOS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\rtos\freertos_9.0.0\Source\include\freertos_tasks_c_additions.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\rtos\freertos_9.0.0\Source\list.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\rtos\freertos_9.0.0\Source\include\list.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\rtos\freertos_9.0.0\Source\include\mpu_prototypes.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\rtos\freertos_9.0.0\Source\include\mpu_wrappers.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\rtos\freertos_9.0.0\Source\include\portable.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\rtos\freertos_9.0.0\Source\include\projdefs.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\rtos\freertos_9.0.0\Source\queue.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\rtos\freertos_9.0.0\Source\include\queue.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\rtos\freertos_9.0.0\Source\include\semphr.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\rtos\freertos_9.0.0\Source\include\StackMacros.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\rtos\freertos_9.0.0\Source\include\task.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\rtos\freertos_9.0.0\Source\tasks.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\rtos\freertos_9.0.0\Source\timers.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\rtos\freertos_9.0.0\Source\include\timers.h
+# End Source File
+# End Group
+# Begin Group "amazon-freertos"
+
+# PROP Default_Filter ""
+# End Group
 # End Group
 # End Target
 # End Project

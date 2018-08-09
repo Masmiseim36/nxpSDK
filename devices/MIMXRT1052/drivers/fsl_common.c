@@ -42,6 +42,12 @@ typedef struct _mem_align_control_block
     uint16_t    offset;         /*!< offset from aligned adress to real address */
 } mem_align_cb_t;
 
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.common"
+#endif
+
+
 #ifndef __GIC_PRIO_BITS
 #if defined(ENABLE_RAM_VECTOR_TABLE)
 uint32_t InstallIRQHandler(IRQn_Type irq, uint32_t irqHandler)
@@ -103,30 +109,50 @@ uint32_t InstallIRQHandler(IRQn_Type irq, uint32_t irqHandler)
 
 void EnableDeepSleepIRQ(IRQn_Type interrupt)
 {
-    uint32_t index = 0;
     uint32_t intNumber = (uint32_t)interrupt;
-    while (intNumber >= 32u)
-    {
-        index++;
-        intNumber -= 32u;
-    }
 
-    SYSCON->STARTERSET[index] = 1u << intNumber;
+#if (defined(FSL_FEATURE_SYSCON_STARTER_DISCONTINUOUS) && (FSL_FEATURE_SYSCON_STARTER_DISCONTINUOUS == 1))
+    {
+        SYSCON->STARTERP1 = 1u << intNumber;
+    }
+#else
+    {
+        uint32_t index = 0;
+
+        while (intNumber >= 32u)
+        {
+            index++;
+            intNumber -= 32u;
+        }
+
+        SYSCON->STARTERSET[index] = 1u << intNumber;
+    }
+#endif                    /* FSL_FEATURE_STARTER_DISCONTINUOUS */
     EnableIRQ(interrupt); /* also enable interrupt at NVIC */
 }
 
 void DisableDeepSleepIRQ(IRQn_Type interrupt)
 {
-    uint32_t index = 0;
     uint32_t intNumber = (uint32_t)interrupt;
-    while (intNumber >= 32u)
-    {
-        index++;
-        intNumber -= 32u;
-    }
 
     DisableIRQ(interrupt); /* also disable interrupt at NVIC */
-    SYSCON->STARTERCLR[index] = 1u << intNumber;
+#if (defined(FSL_FEATURE_SYSCON_STARTER_DISCONTINUOUS) && (FSL_FEATURE_SYSCON_STARTER_DISCONTINUOUS == 1))
+    {
+        SYSCON->STARTERP1 &= ~(1u << intNumber);
+    }
+#else
+    {
+        uint32_t index = 0;
+
+        while (intNumber >= 32u)
+        {
+            index++;
+            intNumber -= 32u;
+        }
+
+        SYSCON->STARTERCLR[index] = 1u << intNumber;
+    }
+#endif /* FSL_FEATURE_STARTER_DISCONTINUOUS */
 }
 #endif /* FSL_FEATURE_SOC_SYSCON_COUNT */
 

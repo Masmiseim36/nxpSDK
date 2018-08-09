@@ -35,6 +35,12 @@
 
 #include "fsl_gpc.h"
 
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.gpc_1"
+#endif
+
+
 void GPC_EnableIRQ(GPC_Type *base, uint32_t irqId)
 {
     uint32_t irqRegNum = irqId / 32U;

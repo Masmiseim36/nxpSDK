@@ -3,7 +3,7 @@
  * Copyright 2017 NXP
  * All rights reserved.
  *
- * 
+ *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
  *  that the following conditions are met:
@@ -151,6 +151,10 @@
 #define SCANF_ADVANCED_ENABLE 0U
 #endif /* SCANF_ADVANCED_ENABLE */
 
+/*! @brief Definition to select virtual com(USB CDC) as the debug console. */
+#ifndef BOARD_USE_VIRTUALCOM
+#define BOARD_USE_VIRTUALCOM 0U
+#endif
 /*******************************************************************/
 
 #endif /* _FSL_DEBUG_CONSOLE_CONF_H_ */

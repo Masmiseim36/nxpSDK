@@ -34,6 +34,12 @@
 
 #include "fsl_cmp.h"
 
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.cmp"
+#endif
+
+
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/

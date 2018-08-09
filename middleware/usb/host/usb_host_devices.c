@@ -1,12 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
  * Copyright 2016 NXP
- * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
+ * are permitted provided that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -19,7 +16,6 @@
  *   contributors may be used to endorse or promote products derived from this
  *   software without specific prior written permission.
  *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -419,12 +415,14 @@ static usb_status_t USB_HostProcessCallback(usb_host_device_instance_t *deviceIn
     {
         case kStatus_DEV_GetDes8: /* process get 8 bytes descriptor result */
             pipe->maxPacketSize = deviceInstance->deviceDescriptor->bMaxPacketSize0;
+            /* the callbackFn is initialized in USB_HostGetControllerInterface */
             hostInstance->controllerTable->controllerIoctl(
                 hostInstance->controllerHandle, kUSB_HostUpdateControlPacketSize, deviceInstance->controlPipe);
             break;
 
         case kStatus_DEV_SetAddress: /* process set address result */
             deviceInstance->setAddress = deviceInstance->allocatedAddress;
+            /* the callbackFn is initialized in USB_HostGetControllerInterface */
             hostInstance->controllerTable->controllerIoctl(
                 hostInstance->controllerHandle, kUSB_HostUpdateControlEndpointAddress, deviceInstance->controlPipe);
             break;
@@ -549,8 +547,8 @@ static usb_status_t USB_HostNotifyDevice(usb_host_device_instance_t *deviceInsta
 
     if ((haveNoHub == 1) && (hostInstance->deviceCallback != NULL))
     {
-        status1 = hostInstance->deviceCallback(deviceInstance, &deviceInstance->configuration,
-                                               eventCode); /* notify application event */
+        /* call host callback function, function is initialized in USB_HostInit */
+        status1 = hostInstance->deviceCallback(deviceInstance, &deviceInstance->configuration, eventCode);
     }
     if (haveHub)
     {
@@ -573,8 +571,8 @@ static usb_status_t USB_HostNotifyDevice(usb_host_device_instance_t *deviceInsta
 #else
     if (hostInstance->deviceCallback != NULL)
     {
-        status1 = hostInstance->deviceCallback(deviceInstance, &deviceInstance->configuration,
-                                               eventCode); /* call host callback function */
+        /* call host callback function, function is initialized in USB_HostInit */
+        status1 = hostInstance->deviceCallback(deviceInstance, &deviceInstance->configuration, eventCode);
     }
 #endif
     return status1;
@@ -1203,7 +1201,7 @@ static usb_status_t USB_HostControlBus(usb_host_handle hostHandle, uint8_t contr
     {
         return kStatus_USB_InvalidHandle;
     }
-
+    /* the callbackFn is initialized in USB_HostGetControllerInterface */
     status = hostInstance->controllerTable->controllerIoctl(hostInstance->controllerHandle, kUSB_HostBusControl,
                                                             &controlType);
 

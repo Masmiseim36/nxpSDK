@@ -1,17 +1,26 @@
 Release Name: MCUXpresso Software Development Kit (SDK)
-Release Version: 2.3.0
+Release Version: 2.4.1
 
-AWS IoT                    version: 2.1.1                                    
-                           Location: /boards/evkmimxrt1050/demo_apps/lwip/lwi
-                           p_httpscli_mbedTLS/freertos                       
-                           Description: AWS C SDK for Internet of Things     
-                           Service                                           
-                           License: Apache License 2.0                       
-                           Author: Amazon Inc (http://www.amazon.com/)       
-                           name: AWS IoT                                     
+Amazon FreeRTOS            Author: Real Time Engineers, Ltd.                 
+                           Description: IoT operating system for             
+                           microcontrollers                                  
                            Format: source code                               
-                           URL: https://github.com/aws/aws-iot-device-sdk-   
-                           embedded-C                                        
+                           License: MIT. See ,<rootfolder>/rtos/amazon-      
+                           freertos/License.                                 
+                           Location: rtos/amazon-freertos                    
+                           name: Amazon FreeRTOS                             
+                           URL: https://aws.amazon.com/freertos/             
+                           version: 1.2.3                                    
+
+AwsRemoteControl           Location: boards/<board>/aws_examples/remote_contr
+                           ol_android/AwsRemoteControl.apk                   
+                           Description: AWS Remote Control example Android   
+                           application                                       
+                           License: Apache-2-Clause & BSD                    
+                           Author: Android Open Source Project & NXP         
+                           name: AWS Remote Control                          
+                           version: 1.0                                      
+                           Format: binary                                    
 
 CMSIS Core header files    Author: ARM                                       
                            parentversion: 5.0.1                              
@@ -59,18 +68,18 @@ FatFs                      Approved Open Source License: Yes
                            URL: http://elm-chan.org/fsw/ff/00index_e.html    
                            version: 0.12c                                    
 
-FreeRTOS(tm)               Author: Real Time Engineers, Ltd.                 
-                           Description: A real-time operating system(RTOS)   
-                           from Real Time Engineers, Ltd.                    
-                           Format: source code                               
-                           License: Modified GPLv2. See                      
-                           ,<rootfolder>/rtos/freertos/License/license.txt.  
-                           Location: rtos/freertos                           
-                           name: FreeRTOS(tm)                                
-                           URL: http://www.freertos.org                      
-                           version: 9.0.0                                    
+Gradle                     version: 4.1                                      
+                           Location: boards/<board>/aws_examples/remote_contr
+                           ol_android/gradle, boards/<board>/aws_examples/led
+                           _wifi_android/gradle                              
+                           Description: Gradle build tool                    
+                           License: Apache-2-Clause                          
+                           Author: Gradle Inc (https://gradle.org)           
+                           name: Gradle                                      
+                           Format: binary library                            
+                           URL: https://github.com/gradle/gradle             
 
-ISSDK                      version: 1.6                                      
+ISSDK                      version: 1.7                                      
                            Location: middleware/issdk                        
                            Description: Freescale IoT Sensing SDK. It        
                            combines a set of robust Sensor Drivers and       
@@ -79,6 +88,16 @@ ISSDK                      version: 1.6
                            Author: Freescale                                 
                            name: ISSDK                                       
                            Format: source code                               
+
+JSMN                       version: NA                                       
+                           Location: rtos/amazon-                            
+                           freertos/lib/third_party/jsmn                     
+                           Description: JSMN (Jasmine) JSON parser           
+                           License: MIT                                      
+                           Author: Serge A. Zaitsev                          
+                           name: JSMN                                        
+                           Format: source code                               
+                           URL: http://zserge.com/jsmn.html                  
 
 KSDK Peripheral Driver     Description: Peripheral drivers are designed for  
                            the most common use cases indentified for         
@@ -109,6 +128,25 @@ MBED TLS stack             Author: ARM
                            URL: https://tls.mbed.org/                        
                            version: 2.6.0                                    
 
+Pedometer Library          version: 1.0                                      
+                           Location:                                         
+                           middleware/issdk/algorithms/pedometer/lib         
+                           Description: Pedometer algorithm library for Arm  
+                           Cortex M0+ and M4 processors                      
+                           License: LA_OPT_Base_License                      
+                           Author: KEYnetik, Inc                             
+                           name: Pedometer Library                           
+                           Format: binary library                            
+
+Percepio Tracealyzer -     version: 3.0.9                                    
+Snapshot Demo              Location: boards/<board>/rtos_examples/visualizati
+                           on/freertos_percepio_snapshot                     
+                           Description: Percepio Tracealyzer                 
+                           License: Open Source - BSD-3-Clause               
+                           Author: Percepio                                  
+                           name: Percepio Tracealyzer - Snapshot Demo        
+                           Format: source code                               
+
 SD MMC Card middleware     name: SD MMC Card middleware                      
                            Location: middleware/sdmmc                        
                            License: Open Source - BSD-3-Clause Clear         
@@ -117,6 +155,25 @@ SD MMC Card middleware     name: SD MMC Card middleware
                            Author: Freescale                                 
                            version: 2.1.2                                    
                            Format: source code                               
+
+Segger SystemView Demo     version: 2.40a                                    
+                           Location: boards/<board>/rtos_examples/visualizati
+                           on/freertos_segger_sysview                        
+                           Description: Segger systemview demo               
+                           License: Open Source - BSD-3-Clause               
+                           Author: Segger                                    
+                           name: Segger SystemView Demo                      
+                           Format: source code                               
+
+TinyCBOR                   Author: Intel Corporation                         
+                           Description: TinyCBOR                             
+                           Format: source code                               
+                           License: MIT. See ,<rootfolder>/rtos/amazon-      
+                           freertos/lib/third_party/tinycbor/LICENSE         
+                           Location: rtos/amazon-                            
+                           freertos/lib/third_party/tinycbor                 
+                           name: TinyCBOR                                    
+                           version: NA                                       
 
 USB                        version: 1.6.3                                    
                            Location: middleware/usb                          
@@ -147,6 +204,54 @@ lwIP TCP/IP Stack          Author: Swedish Institute of Computer Science
                            URL: http://savannah.nongnu.org/projects/lwip     
                            version: 2.0.2                                    
 
+mmCAU S/W Library          Author: Freescale                                 
+                           Description: S/W library that works with the      
+                           memory-mapped cryptographic acceleration unit     
+                           present on some MCUXpresso SoCs                   
+                           Format: source code                               
+                           License: Open Source - BSD-3-Clause Clear         
+                           Location: middleware/mmcau                        
+                           name: mmCAU S/W Library                           
+                           version: 2.0.1                                    
+
+motor_control              Author: NXP                                       
+                           version: 1.1.0                                    
+                           name: motor_control                               
+                           Format: source code                               
+                           License: Open Source - BSD-3-Clause Clear         
+                           Location: middleware/motor_control                
+                           Description: Motor control examples for PMSM and  
+                           BLDC motors.                                      
+
+motor_control - JavaScript Author: jQuery Foundation, Inc.                   
+                           version: v1.11.1                                  
+                           name: motor_control                               
+                           Format: source code                               
+                           License: Open Source - MIT (jquery.org/license)   
+                           Location: middleware/motor_control/freemaster/fm_c
+                           ontrol/jquery-1.11.1.min.js                       
+                           Description: Cross-platform JavaScript library.   
+
+motor_control - jQuery     Author: jQWidgets                                 
+                           version: v3.7.1 (2015-Feb)                        
+                           name: motor_control                               
+                           Format: library                                   
+                           License: Commercial -                             
+                           http://www.jqwidgets.com/license/                 
+                           Location:                                         
+                           middleware/motor_control/freemaster/fm_control    
+                           Description: Advanced jQuery and HTML5 UI         
+                           framework.                                        
+
+rtcesl                     Author: NXP                                       
+                           version: 4.3                                      
+                           name: rtcesl                                      
+                           Format: object code & header files                
+                           License: Open Source - BSD-3-Clause Clear         
+                           Location: middleware/rtcesl                       
+                           Description: NXP Real Time Control Embedded       
+                           Software Library.                                 
+
 wifi_qca                   version: 2.0.0                                    
                            Location: middleware/wifi_qca                     
                            Description: Qualcomm Wi-Fi stack                 
@@ -162,8 +267,8 @@ wolfSSL                    Author: wolfSSL Inc.
                            library                                           
                            Format: source code                               
                            License: 3rd party evaluation. See <rootfolder>/mi
-                           ddleware/wolfssl_3.9.8/wolfSSL_cyaSSL_evaluation_l
-                           icense_agreement.pdf                              
+                           ddleware/wolfssl/wolfSSL_cyaSSL_evaluation_license
+                           _agreement.pdf                                    
                            Location: middleware/wolfssl                      
                            name: wolfSSL                                     
                            URL: https://www.wolfssl.com                      

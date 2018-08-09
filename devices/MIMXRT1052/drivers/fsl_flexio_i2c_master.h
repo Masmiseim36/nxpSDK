@@ -48,8 +48,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief FlexIO I2C master driver version 2.1.2. */
-#define FSL_FLEXIO_I2C_MASTER_DRIVER_VERSION (MAKE_VERSION(2, 1, 2))
+/*! @brief FlexIO I2C master driver version 2.1.5. */
+#define FSL_FLEXIO_I2C_MASTER_DRIVER_VERSION (MAKE_VERSION(2, 1, 5))
 /*@}*/
 
 /*! @brief  FlexIO I2C transfer status*/

@@ -3,7 +3,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
  *  that the following conditions are met:
@@ -38,6 +38,11 @@
  * Definitions
  ******************************************************************************/
 
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.lpuart_edma"
+#endif
+
 /*<! Structure definition for lpuart_edma_private_handle_t. The structure is private. */
 typedef struct _lpuart_edma_private_handle
 {
@@ -55,7 +60,7 @@ enum _lpuart_edma_tansfer_states
 };
 
 /*******************************************************************************
- * Definitions
+ * Variables
  ******************************************************************************/
 
 /* Array of LPUART handle. */
@@ -125,14 +130,6 @@ static void LPUART_SendEDMACallback(edma_handle_t *handle, void *param, bool tra
  * @param param Callback function parameter.
  */
 static void LPUART_ReceiveEDMACallback(edma_handle_t *handle, void *param, bool transferDone, uint32_t tcds);
-
-/*!
- * @brief Get the LPUART instance from peripheral base address.
- *
- * @param base LPUART peripheral base address.
- * @return LPUART instance.
- */
-extern uint32_t LPUART_GetInstance(LPUART_Type *base);
 
 /*******************************************************************************
  * Code

@@ -32,7 +32,7 @@
  
 /*
  * Copyright (c) 2013-2016, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016-2017 NXP
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -115,9 +115,6 @@ extern "C" {
 #endif /* __cplusplus */
 
 void sys_assert( char *msg );
-
-/* When using IGMP or IPv6, LWIP_RAND() needs to be defined to a random-function returning an u32_t random value*/
-u32_t lwip_rand(void);
 
 #if defined(__cplusplus)
 }

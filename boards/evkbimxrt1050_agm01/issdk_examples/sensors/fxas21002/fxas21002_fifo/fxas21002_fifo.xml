@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
+  <externalDefinitions>
+    <definition extID="com.nxp.mcuxpresso"/>
+    <definition extID="kits.EVKB-IMXRT1050-AGM01.MIMXRT1052"/>
+    <definition extID="middleware.issdk.drivers.gpio_imx.MIMXRT1052"/>
+    <definition extID="middleware.issdk.drivers.systick_utils.evkbimxrt1050.MIMXRT1052"/>
+    <definition extID="middleware.issdk.sensor.fxas21002.MIMXRT1052"/>
+    <definition extID="middleware.issdk.sensor.interface.common.MIMXRT1052"/>
+    <definition extID="platform.CMSIS_Driver_Include.Common_CMSISInclude.MIMXRT1052"/>
+    <definition extID="platform.CMSIS_Driver_Include.I2C_CMSISInclude.MIMXRT1052"/>
+    <definition extID="platform.CMSIS_Driver_Include.SPI_CMSISInclude.MIMXRT1052"/>
+    <definition extID="platform.CMSIS_Driver_Include.USART_CMSISInclude.MIMXRT1052"/>
+    <definition extID="platform.devices.MIMXRT1052_CMSIS.MIMXRT1052"/>
+    <definition extID="platform.devices.MIMXRT1052_startup.MIMXRT1052"/>
+    <definition extID="platform.drivers.clock.MIMXRT1052"/>
+    <definition extID="platform.drivers.common.MIMXRT1052"/>
+    <definition extID="platform.drivers.dmamux.MIMXRT1052"/>
+    <definition extID="platform.drivers.edma.MIMXRT1052"/>
+    <definition extID="platform.drivers.igpio.MIMXRT1052"/>
+    <definition extID="platform.drivers.iomuxc.MIMXRT1052"/>
+    <definition extID="platform.drivers.lpi2c.MIMXRT1052"/>
+    <definition extID="platform.drivers.lpi2c_cmsis.MIMXRT1052"/>
+    <definition extID="platform.drivers.lpi2c_edma.MIMXRT1052"/>
+    <definition extID="platform.drivers.lpspi.MIMXRT1052"/>
+    <definition extID="platform.drivers.lpspi_cmsis.MIMXRT1052"/>
+    <definition extID="platform.drivers.lpspi_edma.MIMXRT1052"/>
+    <definition extID="platform.drivers.lpuart.MIMXRT1052"/>
+    <definition extID="platform.drivers.lpuart_cmsis.MIMXRT1052"/>
+    <definition extID="platform.drivers.lpuart_edma.MIMXRT1052"/>
+    <definition extID="platform.drivers.xip.MIMXRT1052"/>
+    <definition extID="platform.utilities.assert.MIMXRT1052"/>
+    <definition extID="platform.utilities.debug_console.MIMXRT1052"/>
+    <definition extID="iar"/>
+    <definition extID="mdk"/>
+    <definition extID="mcuxpresso"/>
+    <definition extID="armgcc"/>
+  </externalDefinitions>
+  <example id="evkbimxrt1050_agm01_fxas21002_fifo" name="fxas21002_fifo" category="issdk/sensors" dependency="kits.EVKB-IMXRT1050-AGM01.MIMXRT1052 platform.drivers.clock.MIMXRT1052 platform.drivers.common.MIMXRT1052 platform.devices.MIMXRT1052_CMSIS.MIMXRT1052 platform.devices.MIMXRT1052_startup.MIMXRT1052 platform.drivers.lpuart.MIMXRT1052 platform.utilities.debug_console.MIMXRT1052 platform.drivers.iomuxc.MIMXRT1052 platform.utilities.assert.MIMXRT1052 platform.drivers.igpio.MIMXRT1052 platform.drivers.xip.MIMXRT1052 platform.drivers.edma.MIMXRT1052 platform.drivers.dmamux.MIMXRT1052 platform.drivers.lpi2c.MIMXRT1052 platform.drivers.lpi2c_edma.MIMXRT1052 platform.drivers.lpi2c_cmsis.MIMXRT1052 platform.CMSIS_Driver_Include.I2C_CMSISInclude.MIMXRT1052 platform.CMSIS_Driver_Include.Common_CMSISInclude.MIMXRT1052 platform.drivers.lpspi.MIMXRT1052 platform.drivers.lpspi_edma.MIMXRT1052 platform.drivers.lpspi_cmsis.MIMXRT1052 platform.CMSIS_Driver_Include.SPI_CMSISInclude.MIMXRT1052 platform.drivers.lpuart_edma.MIMXRT1052 platform.drivers.lpuart_cmsis.MIMXRT1052 platform.CMSIS_Driver_Include.USART_CMSISInclude.MIMXRT1052 middleware.issdk.drivers.systick_utils.evkbimxrt1050.MIMXRT1052 middleware.issdk.drivers.gpio_imx.MIMXRT1052 middleware.issdk.sensor.interface.common.MIMXRT1052 middleware.issdk.sensor.fxas21002.MIMXRT1052" toolchain="mdk iar armgcc mcuxpresso">
+    <projects>
+      <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
+    </projects>
+    <memory>
+      <memoryBlock addr="60000000" size="04000000" access="RO" type="ExtFlash" id="BOARD_FLASH_evkbimxrt1050_agm01" name="BOARD_FLASH"/>
+      <memoryBlock addr="20000000" size="00020000" access="RW" type="RAM" id="SRAM_DTC_evkbimxrt1050_agm01" name="SRAM_DTC"/>
+      <memoryBlock addr="00000000" size="00020000" access="RW" type="RAM" id="SRAM_ITC_evkbimxrt1050_agm01" name="SRAM_ITC"/>
+      <memoryBlock addr="80000000" size="02000000" access="RW" type="RAM" id="SDRAM_evkbimxrt1050_agm01" name="SDRAM"/>
+      <memoryBlock addr="20200000" size="00040000" access="RW" type="RAM" id="SRAM_OC_evkbimxrt1050_agm01" name="SRAM_OC"/>
+    </memory>
+    <toolchainSettings>
+      <toolchainSetting id_refs="com.nxp.mcuxpresso">
+        <option id="com.crt.advproject.gas.fpu" type="enum">
+          <value>com.crt.advproject.gas.fpu.fpv5dp.hard</value>
+        </option>
+        <option id="com.crt.advproject.gcc.fpu" type="enum">
+          <value>com.crt.advproject.gcc.fpu.fpv5dp.hard</value>
+        </option>
+        <option id="com.crt.advproject.c.misc.dialect" type="enum">
+          <value>com.crt.advproject.misc.dialect.gnu99</value>
+        </option>
+        <option id="com.crt.advproject.gcc.exe.debug.option.debugging.level" type="enum">
+          <value>gnu.c.debugging.level.default</value>
+        </option>
+        <option id="com.crt.advproject.gcc.exe.release.option.debugging.level" type="enum">
+          <value>gnu.c.debugging.level.default</value>
+        </option>
+        <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
+          <value>CPU_MIMXRT1052DVL6B</value>
+          <value>SDK_DEBUGCONSOLE=1</value>
+          <value>PRINTF_FLOAT_ENABLE=0</value>
+          <value>SCANF_FLOAT_ENABLE=0</value>
+          <value>PRINTF_ADVANCED_ENABLE=0</value>
+          <value>SCANF_ADVANCED_ENABLE=0</value>
+          <value>XIP_EXTERNAL_FLASH=1</value>
+          <value>XIP_BOOT_HEADER_ENABLE=1</value>
+          <value>XIP_BOOT_HEADER_DCD_ENABLE=1</value>
+          <value>PRINTF_ADVANCED_ENABLE</value>
+        </option>
+        <option id="gnu.c.compiler.option.optimization.flags" type="string">
+          <value>-fno-common</value>
+        </option>
+        <option id="gnu.c.compiler.option.misc.other" type="string">
+          <value>-c  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin</value>
+        </option>
+        <option id="com.crt.advproject.link.fpu" type="enum">
+          <value>com.crt.advproject.link.fpu.fpv5dp.hard</value>
+        </option>
+        <option id="gnu.c.link.option.nostdlibs" type="boolean">
+          <value>true</value>
+        </option>
+        <option id="com.crt.advproject.link.memory.heapAndStack" type="string">
+          <value>&amp;Heap:Default;Default;0x1000&amp;Stack:Default;Default;0x800</value>
+        </option>
+      </toolchainSetting>
+    </toolchainSettings>
+    <source path="boards/evkbimxrt1050_agm01/issdk_examples/sensors/fxas21002/fxas21002_fifo" target_path="board/src" type="c_include">
+      <files mask="board.h"/>
+      <files mask="clock_config.h"/>
+    </source>
+    <source path="boards/evkbimxrt1050_agm01/issdk_examples/sensors/fxas21002/fxas21002_fifo" target_path="board/src" type="src">
+      <files mask="board.c"/>
+      <files mask="clock_config.c"/>
+    </source>
+    <source path="boards/evkbimxrt1050_agm01/issdk_examples/sensors/fxas21002/fxas21002_fifo" target_path="board" type="c_include">
+      <files mask="pin_mux.h"/>
+    </source>
+    <source path="boards/evkbimxrt1050_agm01/issdk_examples/sensors/fxas21002/fxas21002_fifo" target_path="board" type="src">
+      <files mask="pin_mux.c"/>
+    </source>
+    <source path="boards/evkbimxrt1050_agm01/issdk_examples/sensors/fxas21002/fxas21002_fifo" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso">
+      <files mask="readme.txt"/>
+    </source>
+    <source path="boards/evkbimxrt1050_agm01/issdk_examples/sensors/fxas21002/fxas21002_fifo" target_path="source" type="src">
+      <files mask="fxas21002_fifo.c"/>
+    </source>
+    <source path="boards/evkbimxrt1050_agm01" target_path="board/src" type="c_include">
+      <files mask="RTE_Device.h"/>
+      <files mask="evkbimxrt1050.h"/>
+      <files mask="frdm_stbc_agm01_shield.h"/>
+      <files mask="issdk_hal.h"/>
+    </source>
+    <source path="boards/evkbimxrt1050_agm01" target_path="board/src" type="src">
+      <files mask="evkbimxrt1050.c"/>
+    </source>
+  </example>
+</ksdk:examples>

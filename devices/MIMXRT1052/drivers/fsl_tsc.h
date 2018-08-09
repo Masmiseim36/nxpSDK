@@ -545,11 +545,4 @@ void TSC_DebugEnableDetection(TSC_Type *base, tsc_detection_mode_t detectionMode
 * @param mode TSC port mode.(pull down, pull up and 200k-pull up)
 */
 void TSC_DebugSetPortMode(TSC_Type *base, tsc_port_source_t port, tsc_port_mode_t mode);
-
-#if defined(__cplusplus)
-}
-#endif /* __cplusplus*/
-
-/*! @}*/
-
 #endif /* _FSL_TSC_H_ */

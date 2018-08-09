@@ -46,6 +46,12 @@
  * Definitions
  ******************************************************************************/
 
+/*! @name Driver version */
+/*@{*/
+/*! @brief LPUART EDMA driver version 2.2.5. */
+#define FSL_LPUART_EDMA_DRIVER_VERSION (MAKE_VERSION(2, 2, 5))
+/*@}*/
+
 /* Forward declaration of the handle typedef. */
 typedef struct _lpuart_edma_handle lpuart_edma_handle_t;
 

@@ -47,8 +47,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief FlexIO driver version 2.0.1. */
-#define FSL_FLEXIO_DRIVER_VERSION (MAKE_VERSION(2, 0, 1))
+/*! @brief FlexIO driver version 2.0.2. */
+#define FSL_FLEXIO_DRIVER_VERSION (MAKE_VERSION(2, 0, 2))
 /*@}*/
 
 /*! @brief Calculate FlexIO timer trigger.*/
@@ -189,11 +189,11 @@ typedef enum _flexio_shifter_mode
     kFLEXIO_ShifterModeTransmit = 0x2U,        /*!< Transmit mode. */
     kFLEXIO_ShifterModeMatchStore = 0x4U,      /*!< Match store mode. */
     kFLEXIO_ShifterModeMatchContinuous = 0x5U, /*!< Match continuous mode. */
-#if defined(FSL_FEATURE_FLEXIO_HAS_STATE_MODE) && FSL_FEATURE_FLEXIO_HAS_STATE_MODE
+#if FSL_FEATURE_FLEXIO_HAS_STATE_MODE
     kFLEXIO_ShifterModeState = 0x6U, /*!< SHIFTBUF contents are used for storing
                                       programmable state attributes. */
 #endif                               /* FSL_FEATURE_FLEXIO_HAS_STATE_MODE */
-#if defined(FSL_FEATURE_FLEXIO_HAS_LOGIC_MODE) && FSL_FEATURE_FLEXIO_HAS_LOGIC_MODE
+#if FSL_FEATURE_FLEXIO_HAS_LOGIC_MODE
     kFLEXIO_ShifterModeLogic = 0x7U, /*!< SHIFTBUF contents are used for implementing
                                      programmable logic look up table. */
 #endif                               /* FSL_FEATURE_FLEXIO_HAS_LOGIC_MODE */
@@ -294,7 +294,7 @@ typedef struct _flexio_shifter_config
     flexio_pin_polarity_t pinPolarity; /*!< Shifter Pin Polarity. */
     /* Shifter. */
     flexio_shifter_mode_t shifterMode; /*!< Configures the mode of the Shifter. */
-#if defined(FSL_FEATURE_FLEXIO_HAS_PARALLEL_WIDTH) && FSL_FEATURE_FLEXIO_HAS_PARALLEL_WIDTH
+#if FSL_FEATURE_FLEXIO_HAS_PARALLEL_WIDTH
     uint32_t parallelWidth;                    /*!< Configures the parallel width when using parallel mode.*/
 #endif                                         /* FSL_FEATURE_FLEXIO_HAS_PARALLEL_WIDTH */
     flexio_shifter_input_source_t inputSource; /*!< Selects the input source for the shifter. */
@@ -305,6 +305,16 @@ typedef struct _flexio_shifter_config
 /*! @brief typedef for FlexIO simulated driver interrupt handler.*/
 typedef void (*flexio_isr_t)(void *base, void *handle);
 
+/*******************************************************************************
+ * Variables
+ ******************************************************************************/
+/*! @brief Pointers to flexio bases for each instance. */
+extern FLEXIO_Type *const s_flexioBases[];
+
+#if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
+/*! @brief Pointers to flexio clocks for each instance. */
+extern const clock_ip_name_t s_flexioClocks[];
+#endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
 /*******************************************************************************
  * API
  ******************************************************************************/
@@ -360,6 +370,13 @@ void FLEXIO_Init(FLEXIO_Type *base, const flexio_config_t *userConfig);
  * @param base FlexIO peripheral base address
 */
 void FLEXIO_Deinit(FLEXIO_Type *base);
+
+/*!
+ * @brief Get instance number for FLEXIO module.
+ *
+ * @param base FLEXIO peripheral base address.
+ */
+uint32_t FLEXIO_GetInstance(FLEXIO_Type *base);
 
 /* @} */
 

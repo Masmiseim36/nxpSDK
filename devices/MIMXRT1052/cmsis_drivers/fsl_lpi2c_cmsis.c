@@ -18,7 +18,6 @@
  * limitations under the License.
  */
 
-
 #include "fsl_lpi2c_cmsis.h"
 
 #if ((RTE_I2C0 && defined(LPI2C0)) || (RTE_I2C1 && defined(LPI2C1)) || (RTE_I2C2 && defined(LPI2C2)) || \
@@ -38,6 +37,11 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.lpi2c_cmsis"
+#endif
 
 /*! @brief Common sets of flags used by the driver. */
 enum _lpi2c_flag_constants
@@ -131,7 +135,7 @@ static ARM_I2C_CAPABILITIES LPI2Cx_GetCapabilities(void)
 
 #endif
 
-#if (RTE_I2C0_DMA_EN || RTE_I2C1_DMA_EN || RTE_I2C2_DMA_EN || RT_I2C3_DMA_EN || RTE_I2C4_DMA_EN || RTE_I2C5_DMA_EN || \
+#if (RTE_I2C0_DMA_EN || RTE_I2C1_DMA_EN || RTE_I2C2_DMA_EN || RTE_I2C3_DMA_EN || RTE_I2C4_DMA_EN || RTE_I2C5_DMA_EN || \
      RTE_I2C6_DMA_EN)
 
 #if (defined(FSL_FEATURE_SOC_EDMA_COUNT) && FSL_FEATURE_SOC_EDMA_COUNT)

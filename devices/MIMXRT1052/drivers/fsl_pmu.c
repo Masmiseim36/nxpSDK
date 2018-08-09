@@ -33,6 +33,12 @@
  */
 #include "fsl_pmu.h"
 
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.pmu"
+#endif
+
+
 uint32_t PMU_GetStatusFlags(PMU_Type *base)
 {
     uint32_t ret = 0U;

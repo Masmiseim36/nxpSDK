@@ -46,6 +46,12 @@
  * Definitions
  ******************************************************************************/
 
+/*! @name Driver version */
+/*@{*/
+/*! @brief FlexIO I2S EDMA driver version 2.1.4. */
+#define FSL_FLEXIO_I2S_EDMA_DRIVER_VERSION (MAKE_VERSION(2, 1, 4))
+/*@}*/
+
 typedef struct _flexio_i2s_edma_handle flexio_i2s_edma_handle_t;
 
 /*! @brief FlexIO I2S eDMA transfer callback function for finish and error */
@@ -159,7 +165,8 @@ status_t FLEXIO_I2S_TransferSendEDMA(FLEXIO_I2S_Type *base,
  * @brief Performs a non-blocking FlexIO I2S receive using eDMA.
  *
  * @note This interface returned immediately after transfer initiates. Users should call
- * FLEXIO_I2S_GetReceiveRemainingBytes to poll the transfer status and check whether the FlexIO I2S transfer is finished.
+ * FLEXIO_I2S_GetReceiveRemainingBytes to poll the transfer status and check whether the FlexIO I2S transfer is
+ * finished.
  *
  * @param base FlexIO I2S peripheral base address.
  * @param handle FlexIO I2S DMA handle pointer.

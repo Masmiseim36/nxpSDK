@@ -21,6 +21,12 @@
 
 #include "fsl_lpspi_cmsis.h"
 
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.lpspi_cmsis"
+#endif
+
+
 #if ((RTE_SPI0 && defined(LPSPI0)) || (RTE_SPI1 && defined(LPSPI1)) || (RTE_SPI2 && defined(LPSPI2)) || \
      (RTE_SPI3 && defined(LPSPI3)) || (RTE_SPI4 && defined(LPSPI4)) || (RTE_SPI5 && defined(LPSPI5)))
 

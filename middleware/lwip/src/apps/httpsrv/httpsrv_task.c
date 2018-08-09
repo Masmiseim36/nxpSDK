@@ -114,35 +114,49 @@ void httpsrv_server_task(void *arg)
                     session = httpsrv_ses_alloc(server, new_sock);
                     if (session)
                     {
-                        HTTPSRV_SES_TASK_PARAM ses_param;
+                        HTTPSRV_SES_TASK_PARAM *ses_param;
 
-                        if (ERR_OK == httpsrv_ses_init(server, session, new_sock))
+                        /* Allocate session task parameter */
+                        ses_param = httpsrv_mem_alloc_zero(sizeof(HTTPSRV_SES_TASK_PARAM));
+
+                        if (ses_param != NULL)
                         {
-                            /* Disable keep-alive for last session so we have at least one session free (not blocked by
-                             * keep-alive timeout) */
-                            if (i == server->params.max_ses - 1)
+                            if (ERR_OK == httpsrv_ses_init(server, session, new_sock))
                             {
-                                session->flags &= ~HTTPSRV_FLAG_KEEP_ALIVE_ENABLED;
+                                /* Disable keep-alive for last session so we have at least one session free (not blocked by
+                                 * keep-alive timeout) */
+                                if (i == server->params.max_ses - 1)
+                                {
+                                    session->flags &= ~HTTPSRV_FLAG_KEEP_ALIVE_ENABLED;
+                                }
+
+                                server->session[i] = session;
+
+                                ses_param->server = server;
+                                ses_param->session_p = &server->session[i];
+
+                                /* Try to create task for session */
+                                if (sys_thread_new(HTTPSRV_SESSION_TASK_NAME, httpsrv_session_task, ses_param,
+                            #if HTTPSRV_CFG_WOLFSSL_ENABLE || HTTPSRV_CFG_MBEDTLS_ENABLE 
+                                                    (server->tls_ctx != NULL) ? HTTPSRV_CFG_HTTPS_SESSION_STACK_SIZE : HTTPSRV_CFG_HTTP_SESSION_STACK_SIZE, 
+                            #else
+                                                    HTTPSRV_CFG_HTTP_SESSION_STACK_SIZE, 
+                            #endif
+                                                    server->params.task_prio) == NULL)
+                                {
+                                    httpsrv_ses_close(session);
+                                    httpsrv_ses_free(session);
+                                    server->session[i] = NULL;
+                                    sys_sem_signal(&server->ses_cnt);
+                                    httpsrv_mem_free(ses_param);
+                                }
                             }
-
-                            server->session[i] = session;
-
-                            ses_param.server = server;
-                            ses_param.session_p = &server->session[i];
-
-                            /* Try to create task for session */
-                            if (sys_thread_new(HTTPSRV_SESSION_TASK_NAME, httpsrv_session_task, &ses_param,
-                        #if HTTPSRV_CFG_WOLFSSL_ENABLE || HTTPSRV_CFG_MBEDTLS_ENABLE 
-                                                (server->tls_ctx != NULL) ? HTTPSRV_CFG_HTTPS_SESSION_STACK_SIZE : HTTPSRV_CFG_HTTP_SESSION_STACK_SIZE, 
-                        #else
-                                                HTTPSRV_CFG_HTTP_SESSION_STACK_SIZE, 
-                        #endif
-                                                server->params.task_prio) == NULL)
+                            else
                             {
                                 httpsrv_ses_close(session);
                                 httpsrv_ses_free(session);
-                                server->session[i] = NULL;
                                 sys_sem_signal(&server->ses_cnt);
+                                httpsrv_mem_free(ses_param);
                             }
                         }
                         else
@@ -179,8 +193,9 @@ void httpsrv_server_task(void *arg)
 */
 static void httpsrv_session_task(void *arg)
 {
-    HTTPSRV_STRUCT *server = ((HTTPSRV_SES_TASK_PARAM *)arg)->server;
-    HTTPSRV_SESSION_STRUCT *session = *((HTTPSRV_SES_TASK_PARAM *)arg)->session_p;
+    HTTPSRV_SES_TASK_PARAM *ses_param = (HTTPSRV_SES_TASK_PARAM *)arg;
+    HTTPSRV_STRUCT *server = ses_param->server;
+    HTTPSRV_SESSION_STRUCT *session = *ses_param->session_p;
 
     while (session->valid)
     {
@@ -190,9 +205,10 @@ static void httpsrv_session_task(void *arg)
     }
     httpsrv_ses_close(session);
     httpsrv_ses_free(session);
-    *((HTTPSRV_SES_TASK_PARAM *)arg)->session_p = NULL;
+    *ses_param->session_p = NULL;
 
     /* Cleanup and end task */
+    httpsrv_mem_free(ses_param);
     sys_sem_signal(&server->ses_cnt);
     vTaskDelete(NULL);
 }

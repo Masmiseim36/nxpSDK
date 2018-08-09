@@ -3,7 +3,7 @@
  * Copyright (c) 2015-2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
  *  that the following conditions are met:
@@ -551,6 +551,14 @@ static inline void LPUART_EnableRxDMA(LPUART_Type *base, bool enable)
  * @name Bus Operations
  * @{
  */
+
+/*!
+ * @brief Get the LPUART instance from peripheral base address.
+ *
+ * @param base LPUART peripheral base address.
+ * @return LPUART instance.
+ */
+uint32_t LPUART_GetInstance(LPUART_Type *base);
 
 /*!
  * @brief Enables or disables the LPUART transmitter.

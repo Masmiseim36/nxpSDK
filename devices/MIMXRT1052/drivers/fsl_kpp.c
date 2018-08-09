@@ -36,6 +36,12 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.kpp"
+#endif
+
 #define KPP_KEYPAD_SCAN_TIMES (3U)
 /*******************************************************************************
  * Prototypes

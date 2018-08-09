@@ -49,8 +49,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief FlexIO SPI driver version 2.1.1. */
-#define FSL_FLEXIO_SPI_DRIVER_VERSION (MAKE_VERSION(2, 1, 1))
+/*! @brief FlexIO SPI driver version 2.1.3. */
+#define FSL_FLEXIO_SPI_DRIVER_VERSION (MAKE_VERSION(2, 1, 3))
 /*@}*/
 
 #ifndef FLEXIO_SPI_DUMMYDATA

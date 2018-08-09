@@ -177,6 +177,7 @@ static void _USB_HostAudioStreamIsoInPipeCallback(void *param, usb_host_transfer
 
     if (audioPtr->inCallbackFn != NULL)
     {
+        /* callback function is initialized in USB_HostAudioStreamRecv */
         audioPtr->inCallbackFn(audioPtr->inCallbackParam, transfer->transferBuffer, transfer->transferSofar, status);
     }
     USB_HostFreeTransfer(audioPtr->hostHandle, transfer);
@@ -195,6 +196,7 @@ static void _USB_HostAudioStreamIsoOutPipeCallback(void *param, usb_host_transfe
 
     if (audioPtr->outCallbackFn != NULL)
     {
+        /* callback function is initialized in USB_HostAudioStreamSend */
         audioPtr->outCallbackFn(audioPtr->outCallbackParam, transfer->transferBuffer, transfer->transferSofar, status);
     }
     USB_HostFreeTransfer(audioPtr->hostHandle, transfer);
@@ -214,6 +216,9 @@ static void _USB_HostAudioControlCallback(void *param, usb_host_transfer_t *tran
     audioPtr->controlTransfer = NULL;
     if (audioPtr->controlCallbackFn != NULL)
     {
+        /* callback to application, callback function is initialized in the _USB_HostAudioControl,
+        USB_HostAudioStreamSetInterface
+        or USB_HostAudioControlSetInterface, but is the same function */
         audioPtr->controlCallbackFn(audioPtr->controlCallbackParam, transfer->transferBuffer, transfer->transferSofar,
                                     status);
     }
@@ -413,6 +418,9 @@ static void _USB_HostAudioSetInterfaceCallback(void *param, usb_host_transfer_t 
 
     if (audioPtr->controlCallbackFn != NULL)
     {
+        /* callback to application, callback function is initialized in the _USB_HostAudioControl,
+        USB_HostAudioStreamSetInterface
+        or USB_HostAudioControlSetInterface, but is the same function */
         audioPtr->controlCallbackFn(audioPtr->controlCallbackParam, NULL, 0U, status);
     }
     USB_HostFreeTransfer(audioPtr->hostHandle, transfer);

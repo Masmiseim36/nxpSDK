@@ -34,6 +34,12 @@
 
 #include "fsl_elcdif.h"
 
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.elcdif"
+#endif
+
+
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -290,10 +296,6 @@ status_t ELCDIF_UpdateLut(
     for (i = 0; i < count; i++)
     {
         *regLutData = lutData[i];
-
-        for (volatile uint32_t j = 0; j < 0x80; j++)
-        {
-        }
     }
 
     return kStatus_Success;

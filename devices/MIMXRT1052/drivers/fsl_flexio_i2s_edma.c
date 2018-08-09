@@ -34,11 +34,17 @@
 
 #include "fsl_flexio_i2s_edma.h"
 
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.flexio_i2s_edma"
+#endif
+
+
 /*******************************************************************************
  * Definitations
  ******************************************************************************/
 /* Used for 32byte aligned */
-#define STCD_ADDR(address) (edma_tcd_t *)(((uint32_t)address + 32) & ~0x1FU)
+#define STCD_ADDR(address) (edma_tcd_t *)(((uint32_t)(address) + 32) & ~0x1FU)
 
 /*<! Structure definition for flexio_i2s_edma_private_handle_t. The structure is private. */
 typedef struct _flexio_i2s_edma_private_handle

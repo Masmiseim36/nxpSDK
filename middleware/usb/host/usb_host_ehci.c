@@ -2216,6 +2216,7 @@ static usb_status_t USB_HostEhciQhQtdListDeinit(usb_host_ehci_instance_t *ehciIn
         transfer->transferSofar = (transfer->transferLength < transfer->transferSofar) ?
                                       0 :
                                       (transfer->transferLength - transfer->transferSofar);
+        /* callback function is different from the current condition */
         transfer->callbackFn(transfer->callbackParam, transfer, kStatus_USB_TransferCancel);
         transfer = nextTransfer;
     }
@@ -2312,6 +2313,7 @@ static usb_status_t USB_HostEhciTransferQtdListDeinit(usb_host_ehci_instance_t *
                                    (usb_host_ehci_qtd_t *)(transfer->union2.unitTail));
     transfer->transferSofar =
         (transfer->transferLength < transfer->transferSofar) ? 0 : (transfer->transferLength - transfer->transferSofar);
+    /* callback function is different from the current condition */
     transfer->callbackFn(transfer->callbackParam, transfer, kStatus_USB_TransferCancel);
 
     /* start this qh schedule */
@@ -2778,7 +2780,7 @@ static usb_status_t USB_HostEhciSitdArrayDeinit(usb_host_ehci_instance_t *ehciIn
             transfer->transferLength - USB_HostEhciSitdArrayRelease(ehciInstance,
                                                                     (usb_host_ehci_sitd_t *)transfer->union1.unitHead,
                                                                     (usb_host_ehci_sitd_t *)transfer->union2.unitTail);
-        /* transfer callback */
+        /* callback function is different from the current condition */
         transfer->callbackFn(transfer->callbackParam, transfer, kStatus_USB_TransferCancel);
         /* next transfer */
         transfer = nextTransfer;
@@ -3063,6 +3065,7 @@ static usb_status_t USB_HostEhciItdArrayDeinit(usb_host_ehci_instance_t *ehciIns
             doneLength = transfer->transferLength;
         }
         transfer->transferSofar = doneLength;
+        /* callback function is different from the current condition */
         transfer->callbackFn(transfer->callbackParam, transfer, kStatus_USB_TransferCancel);
 
         /* next transfer */
@@ -3336,7 +3339,7 @@ static usb_status_t USB_HostEhciStartIP(usb_host_ehci_instance_t *ehciInstance)
     ehciInstance->ehciIpBase->USBCMD = USBHS_USBCMD_RS_MASK;
 
     /* set timer0 */
-    ehciInstance->ehciIpBase->GPTIMER0LD = (300 * 1000 - 1); /* 100ms */
+    ehciInstance->ehciIpBase->GPTIMER0LD = (100 * 1000 - 1); /* 100ms */
 
     /* enable interrupt (USB interrupt enable + USB error interrupt enable + port change detect enable + system error
      * enable + interrupt on async advance enable) + general purpos Timer 0 Interrupt enable */
@@ -3576,13 +3579,14 @@ void USB_HostEhciTransactionDone(usb_host_ehci_instance_t *ehciInstance)
                             }
                             if (qtdStatus & EHCI_HOST_QH_STATUS_NOSTALL_ERROR_MASK)
                             {
+                                /* callback function is different from the current condition */
                                 transfer->callbackFn(transfer->callbackParam, transfer,
                                                      kStatus_USB_TransferFailed); /* transfer fail */
                             }
                             else
                             {
-                                transfer->callbackFn(transfer->callbackParam, transfer,
-                                                     kStatus_USB_TransferStall); /* transfer stall */
+                                /* callback function is different from the current condition */
+                                transfer->callbackFn(transfer->callbackParam, transfer, kStatus_USB_TransferStall);
                             }
                         }
                         else
@@ -3618,6 +3622,7 @@ void USB_HostEhciTransactionDone(usb_host_ehci_instance_t *ehciInstance)
                                         ->transferOverlayResults[0] &= (~EHCI_HOST_QTD_DT_MASK);
                                 }
                             }
+                            /* callback function is different from the current condition */
                             transfer->callbackFn(transfer->callbackParam, transfer,
                                                  kStatus_USB_Success); /* transfer success */
                         }
@@ -3664,11 +3669,13 @@ void USB_HostEhciTransactionDone(usb_host_ehci_instance_t *ehciInstance)
                             vltQhPointer->timeOutValue = USB_HOST_EHCI_CONTROL_BULK_TIME_OUT_VALUE;
                             if (qtdStatus & EHCI_HOST_QH_STATUS_NOSTALL_ERROR_MASK)
                             {
+                                /* callback function is different from the current condition */
                                 transfer->callbackFn(transfer->callbackParam, transfer,
                                                      kStatus_USB_TransferFailed); /* transfer fail */
                             }
                             else
                             {
+                                /* callback function is different from the current condition */
                                 transfer->callbackFn(transfer->callbackParam, transfer,
                                                      kStatus_USB_TransferStall); /* transfer stall */
                             }
@@ -3712,6 +3719,7 @@ void USB_HostEhciTransactionDone(usb_host_ehci_instance_t *ehciInstance)
                                                                      (usb_host_ehci_itd_t *)transfer->union2.unitTail);
                             transfer->transferSofar = dataLength;
                             isoPointer->ehciTransferHead = transfer->next;
+                            /* callback function is different from the current condition */
                             transfer->callbackFn(transfer->callbackParam, transfer,
                                                  kStatus_USB_Success); /* transfer callback success */
                             /* TODO: iso callback error */
@@ -3736,6 +3744,7 @@ void USB_HostEhciTransactionDone(usb_host_ehci_instance_t *ehciInstance)
                                 (usb_host_ehci_sitd_t *)transfer->union2.unitTail);
                             transfer->transferSofar = dataLength;
                             isoPointer->ehciTransferHead = transfer->next;
+                            /* callback function is different from the current condition */
                             transfer->callbackFn(transfer->callbackParam, transfer,
                                                  kStatus_USB_Success); /* transfer callback success */
                             /* TODO: iso callback error */
@@ -3965,6 +3974,7 @@ static void USB_HostEhciTimer0(usb_host_ehci_instance_t *ehciInstance)
 
                         vltQhPointer->ehciTransferHead = transfer->next;
                         vltQhPointer->timeOutValue = USB_HOST_EHCI_CONTROL_BULK_TIME_OUT_VALUE;
+                        /* callback function is different from the current condition */
                         transfer->callbackFn(transfer->callbackParam, transfer, kStatus_USB_TransferFailed);
                     }
                 }

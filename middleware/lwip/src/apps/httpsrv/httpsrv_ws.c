@@ -418,7 +418,7 @@ static uint32_t ws_process_api_calls(WS_CONTEXT_STRUCT *context)
         timeout.tv_usec = 1;
 
         /* Wait for any activity on socket - received data or exception. */
-        active = select(2, &readset, NULL, &exceptset, &timeout);
+        active = select(context->session->sock + 1, &readset, NULL, &exceptset, &timeout);
         if (active == -1)
         {
             retval = WS_ERR_FAIL;

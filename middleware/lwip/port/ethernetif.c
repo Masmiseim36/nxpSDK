@@ -113,6 +113,8 @@
 #define kENET_TxEvent kENET_TxIntEvent
 #endif
 
+#define ENET_RING_NUM 1U
+
 typedef uint8_t rx_buffer_t[SDK_SIZEALIGN(ENET_RXBUFF_SIZE, FSL_ENET_BUFF_ALIGNMENT)];
 typedef uint8_t tx_buffer_t[SDK_SIZEALIGN(ENET_TXBUFF_SIZE, FSL_ENET_BUFF_ALIGNMENT)];
 
@@ -159,6 +161,8 @@ static void ethernet_callback(ENET_Type *base, enet_handle_t *handle, enet_event
 {
     struct netif *netif = (struct netif *)param;
     struct ethernetif *ethernetif = netif->state;
+    BaseType_t xResult;
+    
 
     switch (event)
     {
@@ -175,8 +179,8 @@ static void ethernet_callback(ENET_Type *base, enet_handle_t *handle, enet_event
             if (__get_IPSR())
 #endif 
             {
-                xEventGroupSetBitsFromISR(ethernetif->enetTransmitAccessEvent, ethernetif->txFlag, &taskToWake);
-                if (pdTRUE == taskToWake)
+                xResult = xEventGroupSetBitsFromISR(ethernetif->enetTransmitAccessEvent, ethernetif->txFlag, &taskToWake);
+                if ((pdPASS == xResult) && (pdTRUE == taskToWake))
                 {
                     portYIELD_FROM_ISR(taskToWake);
                 }
@@ -288,27 +292,33 @@ static void enet_init(struct netif *netif, struct ethernetif *ethernetif,
 {
     enet_config_t config;
     uint32_t sysClock;
+    status_t status;
     bool link = false;
     phy_speed_t speed;
     phy_duplex_t duplex;
     uint32_t count = 0;
-    enet_buffer_config_t buffCfg;
+    enet_buffer_config_t buffCfg[ENET_RING_NUM];
 
     /* prepare the buffer configuration. */
-    buffCfg.rxBdNumber = ENET_RXBD_NUM;                      /* Receive buffer descriptor number. */
-    buffCfg.txBdNumber = ENET_TXBD_NUM;                      /* Transmit buffer descriptor number. */
-    buffCfg.rxBuffSizeAlign = sizeof(rx_buffer_t);           /* Aligned receive data buffer size. */
-    buffCfg.txBuffSizeAlign = sizeof(tx_buffer_t);           /* Aligned transmit data buffer size. */
-    buffCfg.rxBdStartAddrAlign = &(ethernetif->RxBuffDescrip[0]); /* Aligned receive buffer descriptor start address. */
-    buffCfg.txBdStartAddrAlign = &(ethernetif->TxBuffDescrip[0]); /* Aligned transmit buffer descriptor start address. */
-    buffCfg.rxBufferAlign = &(ethernetif->RxDataBuff[0][0]); /* Receive data buffer start address. */
-    buffCfg.txBufferAlign = &(ethernetif->TxDataBuff[0][0]); /* Transmit data buffer start address. */
+    buffCfg[0].rxBdNumber = ENET_RXBD_NUM;                      /* Receive buffer descriptor number. */
+    buffCfg[0].txBdNumber = ENET_TXBD_NUM;                      /* Transmit buffer descriptor number. */
+    buffCfg[0].rxBuffSizeAlign = sizeof(rx_buffer_t);           /* Aligned receive data buffer size. */
+    buffCfg[0].txBuffSizeAlign = sizeof(tx_buffer_t);           /* Aligned transmit data buffer size. */
+    buffCfg[0].rxBdStartAddrAlign = &(ethernetif->RxBuffDescrip[0]); /* Aligned receive buffer descriptor start address. */
+    buffCfg[0].txBdStartAddrAlign = &(ethernetif->TxBuffDescrip[0]); /* Aligned transmit buffer descriptor start address. */
+    buffCfg[0].rxBufferAlign = &(ethernetif->RxDataBuff[0][0]); /* Receive data buffer start address. */
+    buffCfg[0].txBufferAlign = &(ethernetif->TxDataBuff[0][0]); /* Transmit data buffer start address. */
 
     sysClock = CLOCK_GetFreq(ethernetifConfig->clockName);
 
     ENET_GetDefaultConfig(&config);
+    config.ringNum = ENET_RING_NUM;
 
-    PHY_Init(ethernetif->base, ethernetifConfig->phyAddress, sysClock);
+    status = PHY_Init(ethernetif->base, ethernetifConfig->phyAddress, sysClock);
+    if (kStatus_Success != status)
+    {
+        LWIP_ASSERT("\r\nCannot initialize PHY.\r\n", 0);
+    }
 
     while ((count < ENET_ATONEGOTIATION_TIMEOUT) && (!link))
     {
@@ -376,7 +386,7 @@ static void enet_init(struct netif *netif, struct ethernetif *ethernetif,
 #endif /* USE_RTOS */
 
     /* Initialize the ENET module.*/
-    ENET_Init(ethernetif->base, &ethernetif->handle, &config, &buffCfg, netif->hwaddr, sysClock);
+    ENET_Init(ethernetif->base, &ethernetif->handle, &config, &buffCfg[0], netif->hwaddr, sysClock);
 
 #if USE_RTOS && defined(FSL_RTOS_FREE_RTOS)
     ENET_SetCallback(&ethernetif->handle, ethernet_callback, netif);
@@ -389,12 +399,13 @@ static void enet_init(struct netif *netif, struct ethernetif *ethernetif,
                       const ethernetif_config_t *ethernetifConfig)
 {
     enet_config_t config;
+    status_t status;
     uint32_t sysClock;
     bool link = false;
     phy_speed_t speed;
     phy_duplex_t duplex;
     uint32_t count = 0;
-    enet_buffer_config_t buffCfg;
+    enet_buffer_config_t buffCfg[ENET_RING_NUM];
     uint32_t rxBufferStartAddr[ENET_RXBD_NUM];
     uint32_t i;
 
@@ -405,20 +416,25 @@ static void enet_init(struct netif *netif, struct ethernetif *ethernetif,
     }
 
     /* prepare the buffer configuration. */
-    buffCfg.rxRingLen = ENET_RXBD_NUM;                          /* The length of receive buffer descriptor ring. */
-    buffCfg.txRingLen = ENET_TXBD_NUM;                          /* The length of transmit buffer descriptor ring. */
-    buffCfg.txDescStartAddrAlign = get_tx_desc(ethernetif, 0U); /* Aligned transmit descriptor start address. */
-    buffCfg.txDescTailAddrAlign = get_tx_desc(ethernetif, 0U);  /* Aligned transmit descriptor tail address. */
-    buffCfg.rxDescStartAddrAlign = get_rx_desc(ethernetif, 0U); /* Aligned receive descriptor start address. */
-    buffCfg.rxDescTailAddrAlign = get_rx_desc(ethernetif, ENET_RXBD_NUM); /* Aligned receive descriptor tail address. */
-    buffCfg.rxBufferStartAddr = rxBufferStartAddr;              /* Start addresses of the rx buffers. */
-    buffCfg.rxBuffSizeAlign = sizeof(rx_buffer_t);              /* Aligned receive data buffer size. */
+    buffCfg[0].rxRingLen = ENET_RXBD_NUM;                          /* The length of receive buffer descriptor ring. */
+    buffCfg[0].txRingLen = ENET_TXBD_NUM;                          /* The length of transmit buffer descriptor ring. */
+    buffCfg[0].txDescStartAddrAlign = get_tx_desc(ethernetif, 0U); /* Aligned transmit descriptor start address. */
+    buffCfg[0].txDescTailAddrAlign = get_tx_desc(ethernetif, 0U);  /* Aligned transmit descriptor tail address. */
+    buffCfg[0].rxDescStartAddrAlign = get_rx_desc(ethernetif, 0U); /* Aligned receive descriptor start address. */
+    buffCfg[0].rxDescTailAddrAlign = get_rx_desc(ethernetif, ENET_RXBD_NUM); /* Aligned receive descriptor tail address. */
+    buffCfg[0].rxBufferStartAddr = rxBufferStartAddr;              /* Start addresses of the rx buffers. */
+    buffCfg[0].rxBuffSizeAlign = sizeof(rx_buffer_t);              /* Aligned receive data buffer size. */
 
     sysClock = CLOCK_GetFreq(ethernetifConfig->clockName);
 
     ENET_GetDefaultConfig(&config);
+    config.multiqueueCfg = NULL;
 
-    PHY_Init(ethernetif->base, ethernetifConfig->phyAddress, sysClock);
+    status = PHY_Init(ethernetif->base, ethernetifConfig->phyAddress, sysClock);
+    if (kStatus_Success != status)
+    {
+        LWIP_ASSERT("\r\nCannot initialize PHY.\r\n", 0);
+    }
 
     while ((count < ENET_ATONEGOTIATION_TIMEOUT) && (!link))
     {
@@ -460,10 +476,10 @@ static void enet_init(struct netif *netif, struct ethernetif *ethernetif,
 /* Create the handler. */
 #if USE_RTOS && defined(FSL_RTOS_FREE_RTOS)
     ENET_EnableInterrupts(ethernetif->base, kENET_DmaTx | kENET_DmaRx);
-    ENET_CreateHandler(ethernetif->base, &ethernetif->handle, &config, &buffCfg, ethernet_callback, netif);
+    ENET_CreateHandler(ethernetif->base, &ethernetif->handle, &config, &buffCfg[0], ethernet_callback, netif);
 #endif
 
-    ENET_DescriptorInit(ethernetif->base, &config, &buffCfg);
+    ENET_DescriptorInit(ethernetif->base, &config, &buffCfg[0]);
 
     /* Active TX/RX. */
     ENET_StartRxTx(ethernetif->base, 1, 1);

@@ -3,7 +3,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
  *  that the following conditions are met:
@@ -56,7 +56,7 @@
 #define DMA_DCHPRI_INDEX(channel) (((channel) & ~0x03U) | (3 - ((channel)&0x03U)))
 
 /*! @brief Get the pointer of DCHPRIn */
-#define DMA_DCHPRIn(base, channel) ((volatile uint8_t *)&(base->DCHPRI3))[DMA_DCHPRI_INDEX(channel)]
+#define DMA_DCHPRIn(base, channel) ((volatile uint8_t *)&((base)->DCHPRI3))[DMA_DCHPRI_INDEX(channel)]
 
 /*! @brief eDMA transfer configuration */
 typedef enum _edma_transfer_size
@@ -247,7 +247,24 @@ typedef struct _edma_tcd
 /*! @brief Callback for eDMA */
 struct _edma_handle;
 
-/*! @brief Define callback function for eDMA. */
+/*! @brief Define callback function for eDMA.
+ *
+ * This callback function is called in the EDMA interrupt handle.
+ * In normal mode, run into callback function means the transfer users need is done.
+ * In scatter gather mode, run into callback function means a transfer control block (tcd) is finished. Not
+ * all transfer finished, users can get the finished tcd numbers using interface EDMA_GetUnusedTCDNumber.
+ *
+ * @param handle EDMA handle pointer, users shall not touch the values inside.
+ * @param userData The callback user paramter pointer. Users can use this paramter to involve things users need to
+ *                 change in EDMA callback function.
+ * @param transferDone If the current loaded transfer done. In normal mode it means if all transfer done. In scatter
+ *                     gather mode, this paramter shows is the current transfer block in EDMA regsiter is done. As the
+ *                     load of core is different, it will be different if the new tcd loaded into EDMA registers while
+ *                     this callback called. If true, it always means new tcd still not loaded into registers, while
+ *                     false means new tcd already loaded into registers.
+ * @param tcds How many tcds are done from the last callback. This parameter only used in scatter gather mode. It
+ *             tells user how many tcds are finished between the last callback and this.
+ */
 typedef void (*edma_callback)(struct _edma_handle *handle, void *userData, bool transferDone, uint32_t tcds);
 
 /*! @brief eDMA transfer handle structure */
@@ -707,7 +724,7 @@ static inline void EDMA_TriggerChannelStart(DMA_Type *base, uint32_t channel)
  * @brief Gets the remaining major loop count from the eDMA current channel TCD.
  *
  * This function checks the TCD (Task Control Descriptor) status for a specified
- * eDMA channel and returns the the number of major loop count that has not finished.
+ * eDMA channel and returns the number of major loop count that has not finished.
  *
  * @param base eDMA peripheral base address.
  * @param channel eDMA channel number.
@@ -779,7 +796,10 @@ void EDMA_CreateHandle(edma_handle_t *handle, DMA_Type *base, uint32_t channel);
 /*!
  * @brief Installs the TCDs memory pool into the eDMA handle.
  *
- * This function is called after the EDMA_CreateHandle to use scatter/gather feature.
+ * This function is called after the EDMA_CreateHandle to use scatter/gather feature. This function shall only be used
+ * while users need to use scatter gather mode. Scatter gather mode enables EDMA to load a new transfer control block
+ * (tcd) in hardware, and automatically reconfigure that DMA channel for a new transfer.
+ * Users need to preapre tcd memory and also configure tcds using interface EDMA_SubmitTransfer.
  *
  * @param handle eDMA handle pointer.
  * @param tcdPool A memory pool to store TCDs. It must be 32 bytes aligned.
@@ -791,7 +811,7 @@ void EDMA_InstallTCDMemory(edma_handle_t *handle, edma_tcd_t *tcdPool, uint32_t 
  * @brief Installs a callback function for the eDMA transfer.
  *
  * This callback is called in the eDMA IRQ handler. Use the callback to do something after
- * the current major loop transfer completes.
+ * the current major loop transfer completes. This function will be called every time one tcd finished transfer.
  *
  * @param handle eDMA handle pointer.
  * @param callback eDMA callback function pointer.
@@ -829,8 +849,8 @@ void EDMA_PrepareTransfer(edma_transfer_config_t *config,
  * @brief Submits the eDMA transfer request.
  *
  * This function submits the eDMA transfer request according to the transfer configuration structure.
- * If submitting the transfer request repeatedly, this function packs an unprocessed request as
- * a TCD and enables scatter/gather feature to process it in the next time.
+ * In scatter gather mode, call this function will add a configured tcd to the circular list of tcd pool.
+ * The tcd pools is setup by call function EDMA_InstallTCDMemory before.
  *
  * @param handle eDMA handle pointer.
  * @param config Pointer to eDMA transfer configuration structure.

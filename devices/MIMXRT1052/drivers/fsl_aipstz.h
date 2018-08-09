@@ -3,7 +3,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2017 NXP
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
  *  that the following conditions are met:
@@ -70,9 +70,9 @@ typedef enum _aipstz_master {
 /*! @brief List of AIPSTZ peripheral access control configuration.*/
 typedef enum _aipstz_peripheral_access_control {
     kAIPSTZ_PeripheralAllowUntrustedMaster = 1U,
-    kAIPSTZ_PeripheralWriteProtected = (1U < 1),
-    kAIPSTZ_PeripheralRequireSupervisor = (1U < 2),
-    kAIPSTZ_PeripheralAllowBufferedWrite = (1U < 2)
+    kAIPSTZ_PeripheralWriteProtected = (1U << 1),
+    kAIPSTZ_PeripheralRequireSupervisor = (1U << 2),
+    kAIPSTZ_PeripheralAllowBufferedWrite = (1U << 3)
 } aipstz_peripheral_access_control_t;
 
 /*! @brief List of AIPSTZ peripherals. Organized by register offset for higher 32 bits, width for the 8-15 bits and shift for lower 8 bits.*/

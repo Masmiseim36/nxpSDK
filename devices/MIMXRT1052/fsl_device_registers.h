@@ -1,7 +1,7 @@
 /*
  * The Clear BSD License
  * Copyright 2014-2016 Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2018 NXP
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -43,7 +43,8 @@
  *
  * The CPU macro should be declared in the project or makefile.
  */
-#if (defined(CPU_MIMXRT1052CVL5A) || defined(CPU_MIMXRT1052DVL6A))
+#if (defined(CPU_MIMXRT1052CVJ5B) || defined(CPU_MIMXRT1052CVL5B) || defined(CPU_MIMXRT1052DVJ6B) || \
+    defined(CPU_MIMXRT1052DVL6B))
 
 #define MIMXRT1052_SERIES
 

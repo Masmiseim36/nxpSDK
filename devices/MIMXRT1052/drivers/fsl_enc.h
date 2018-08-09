@@ -307,6 +307,22 @@ void ENC_DoSoftwareLoadInitialPositionValue(ENC_Type *base);
  */
 void ENC_SetSelfTestConfig(ENC_Type *base, const enc_self_test_config_t *config);
 
+/*!
+ * @brief Enable watchdog for ENC module.
+ *
+ * @param base ENC peripheral base address
+ * @param enable Enables or disables the watchdog
+ */
+void ENC_EnableWatchdog(ENC_Type *base, bool enable);
+
+/*!
+ * @brief Set initial position value for ENC module.
+ *
+ * @param base ENC peripheral base address
+ * @param value Positive initial value
+ */
+void ENC_SetInitialPositionValue(ENC_Type *base, uint32_t value);
+
 /* @} */
 
 /*!

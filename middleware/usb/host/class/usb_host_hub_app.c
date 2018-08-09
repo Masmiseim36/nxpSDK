@@ -759,12 +759,14 @@ static void USB_HostHubProcessPortDetach(usb_host_hub_instance_t *hubInstance)
             if ((1 << PORT_SUSPEND) & specStatus)
             {
                 portInstance->portStatus = kPortRunPortSuspended; /* update as next state */
+                /* call host callback function, function is initialized in USB_HostInit */
                 hostPointer->deviceCallback(hostPointer->suspendedDevice, NULL,
                                             kUSB_HostEventSuspended); /* call host callback function */
             }
             else
             {
                 portInstance->portStatus = kPortRunPortAttached; /* update as next state */
+                /* call host callback function, function is initialized in USB_HostInit */
                 hostPointer->deviceCallback(hostPointer->suspendedDevice, NULL,
                                             kUSB_HostEventResumed); /* call host callback function */
                 hostPointer->suspendedDevice = NULL;
@@ -923,11 +925,13 @@ static void USB_HostSetHubRequestCallback(void *param, usb_host_transfer_t *tran
 
     if (kStatus_USB_Success == status)
     {
+        /* call host callback function, function is initialized in USB_HostInit */
         hostInstance->deviceCallback(hostInstance->suspendedDevice, NULL,
                                      kUSB_HostEventSuspended); /* call host callback function */
     }
     else
     {
+        /* call host callback function, function is initialized in USB_HostInit */
         hostInstance->deviceCallback(hostInstance->suspendedDevice, NULL,
                                      kUSB_HostEventNotSuspended); /* call host callback function */
     }
@@ -1017,8 +1021,8 @@ static void USB_HostHubRemoteWakeupCallback(void *param, usb_host_transfer_t *tr
     }
     if (kStatus_USB_Success != status)
     {
-        hostInstance->deviceCallback(hostInstance->suspendedDevice, NULL,
-                                     kUSB_HostEventNotSuspended); /* call host callback function */
+        /* call host callback function, function is initialized in USB_HostInit */
+        hostInstance->deviceCallback(hostInstance->suspendedDevice, NULL, kUSB_HostEventNotSuspended);
         return;
     }
     if (NULL == hubInstance)
@@ -1028,6 +1032,7 @@ static void USB_HostHubRemoteWakeupCallback(void *param, usb_host_transfer_t *tr
         if (NULL == deviceInstance)
         {
             usb_host_bus_control_t type = kUSB_HostBusSuspend;
+            /* the callbackFn is initialized in USB_HostGetControllerInterface */
             status = hostInstance->controllerTable->controllerIoctl(hostInstance->controllerHandle, kUSB_HostBusControl,
                                                                     &type);
             if (kStatus_USB_Success != status)
@@ -1058,8 +1063,8 @@ static void USB_HostHubRemoteWakeupCallback(void *param, usb_host_transfer_t *tr
         }
         if (kStatus_USB_Success != status)
         {
-            hostInstance->deviceCallback(hostInstance->suspendedDevice, NULL,
-                                         kUSB_HostEventNotSuspended); /* call host callback function */
+            /* call host callback function, function is initialized in USB_HostInit */
+            hostInstance->deviceCallback(hostInstance->suspendedDevice, NULL, kUSB_HostEventNotSuspended);
             return;
         }
     }
@@ -1547,6 +1552,7 @@ usb_status_t USB_HostHubSuspendDevice(usb_host_handle hostHandle)
     if (NULL == hubInstance)
     {
         usb_host_bus_control_t type = kUSB_HostBusSuspend;
+        /* the callbackFn is initialized in USB_HostGetControllerInterface */
         status =
             hostInstance->controllerTable->controllerIoctl(hostInstance->controllerHandle, kUSB_HostBusControl, &type);
         if (kStatus_USB_Success != status)
@@ -1579,6 +1585,7 @@ usb_status_t USB_HostHubSuspendDevice(usb_host_handle hostHandle)
         if (NULL == deviceInstance)
         {
             usb_host_bus_control_t type = kUSB_HostBusSuspend;
+            /* the callbackFn is initialized in USB_HostGetControllerInterface */
             status = hostInstance->controllerTable->controllerIoctl(hostInstance->controllerHandle, kUSB_HostBusControl,
                                                                     &type);
             if (kStatus_USB_Success != status)

@@ -49,8 +49,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief FlexIO UART driver version 2.1.2. */
-#define FSL_FLEXIO_UART_DRIVER_VERSION (MAKE_VERSION(2, 1, 2))
+/*! @brief FlexIO UART driver version 2.1.4. */
+#define FSL_FLEXIO_UART_DRIVER_VERSION (MAKE_VERSION(2, 1, 4))
 /*@}*/
 
 /*! @brief Error codes for the UART driver. */

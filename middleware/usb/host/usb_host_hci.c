@@ -317,7 +317,7 @@ usb_status_t USB_HostInit(uint8_t controllerId, usb_host_handle *hostHandle, hos
         transferPrev = transferPrev->next;
     }
 
-    /* controller create */
+    /* controller create, the callbackFn is initialized in USB_HostGetControllerInterface */
     status =
         hostInstance->controllerTable->controllerCreate(controllerId, hostInstance, &(hostInstance->controllerHandle));
     if ((status != kStatus_USB_Success) || (hostInstance->controllerHandle == NULL))
@@ -353,7 +353,7 @@ usb_status_t USB_HostDeinit(usb_host_handle hostHandle)
         USB_HostDetachDeviceInternal(hostHandle, deviceInstance);
     }
 
-    /* controller instance destory */
+    /* controller instance destory, the callbackFn is initialized in USB_HostGetControllerInterface */
     status = hostInstance->controllerTable->controllerDestory(hostInstance->controllerHandle);
     hostInstance->controllerHandle = NULL;
     if (status != kStatus_USB_Success)
@@ -386,7 +386,7 @@ usb_status_t USB_HostOpenPipe(usb_host_handle hostHandle,
         return kStatus_USB_InvalidHandle;
     }
 
-    /* call controller open pipe interface */
+    /* call controller open pipe interface, the callbackFn is initialized in USB_HostGetControllerInterface */
     status = hostInstance->controllerTable->controllerOpenPipe(hostInstance->controllerHandle, pipeHandle, pipeInit);
 
     return status;
@@ -402,7 +402,7 @@ usb_status_t USB_HostClosePipe(usb_host_handle hostHandle, usb_host_pipe_handle 
         return kStatus_USB_InvalidHandle;
     }
 
-    /* call controller close pipe interface */
+    /* call controller close pipe interface, the callbackFn is initialized in USB_HostGetControllerInterface */
     status = hostInstance->controllerTable->controllerClosePipe(hostInstance->controllerHandle, pipeHandle);
 
     return status;
@@ -439,6 +439,7 @@ usb_status_t USB_HostSend(usb_host_handle hostHandle, usb_host_pipe_handle pipeH
         DCACHE_CleanByRange((uint32_t)transfer->transferBuffer, transfer->transferLength);
     }
 #endif
+    /* the callbackFn is initialized in USB_HostGetControllerInterface */
     status = hostInstance->controllerTable->controllerWritePipe(hostInstance->controllerHandle, pipeHandle, transfer);
 
     USB_HostUnlock();
@@ -488,6 +489,7 @@ usb_status_t USB_HostSendSetup(usb_host_handle hostHandle,
         DCACHE_CleanInvalidateByRange((uint32_t)transfer->transferBuffer, transfer->transferLength);
     }
 #endif
+    /* the callbackFn is initialized in USB_HostGetControllerInterface */
     status = hostInstance->controllerTable->controllerWritePipe(hostInstance->controllerHandle, pipeHandle, transfer);
 
     USB_HostUnlock();
@@ -525,6 +527,7 @@ usb_status_t USB_HostRecv(usb_host_handle hostHandle, usb_host_pipe_handle pipeH
         DCACHE_CleanInvalidateByRange((uint32_t)transfer->transferBuffer, transfer->transferLength);
     }
 #endif
+    /* the callbackFn is initialized in USB_HostGetControllerInterface */
     status = hostInstance->controllerTable->controllerReadPipe(hostInstance->controllerHandle, pipeHandle, transfer);
 
     USB_HostUnlock();
@@ -549,6 +552,7 @@ usb_status_t USB_HostCancelTransfer(usb_host_handle hostHandle,
     cancelParam.transfer = transfer;
 
     /* USB_HostLock(); This api can be called by host task and app task */
+    /* the callbackFn is initialized in USB_HostGetControllerInterface */
     status = hostInstance->controllerTable->controllerIoctl(hostInstance->controllerHandle, kUSB_HostCancelTransfer,
                                                             &cancelParam);
     /* USB_HostUnlock(); */
@@ -853,6 +857,7 @@ usb_status_t USB_HostSuspendDeviceResquest(usb_host_handle hostHandle, usb_devic
 #if ((defined USB_HOST_CONFIG_HUB) && (USB_HOST_CONFIG_HUB))
         status = USB_HostHubSuspendDevice(hostInstance);
 #else
+        /* the callbackFn is initialized in USB_HostGetControllerInterface */
         status =
             hostInstance->controllerTable->controllerIoctl(hostInstance->controllerHandle, kUSB_HostBusControl, &type);
 #endif
@@ -866,6 +871,7 @@ usb_status_t USB_HostSuspendDeviceResquest(usb_host_handle hostHandle, usb_devic
 #endif
             if (hostInstance->deviceList == deviceHandle)
             {
+                /* the callbackFn is initialized in USB_HostGetControllerInterface */
                 status = hostInstance->controllerTable->controllerIoctl(hostInstance->controllerHandle,
                                                                         kUSB_HostBusControl, &type);
             }
@@ -909,6 +915,7 @@ usb_status_t USB_HostResumeDeviceResquest(usb_host_handle hostHandle, usb_device
 
     if (NULL == deviceHandle)
     {
+        /* the callbackFn is initialized in USB_HostGetControllerInterface */
         status =
             hostInstance->controllerTable->controllerIoctl(hostInstance->controllerHandle, kUSB_HostBusControl, &type);
     }
@@ -921,6 +928,7 @@ usb_status_t USB_HostResumeDeviceResquest(usb_host_handle hostHandle, usb_device
 #endif
             if (hostInstance->deviceList == deviceHandle)
             {
+                /* the callbackFn is initialized in USB_HostGetControllerInterface */
                 status = hostInstance->controllerTable->controllerIoctl(hostInstance->controllerHandle,
                                                                         kUSB_HostBusControl, &type);
             }
@@ -961,6 +969,7 @@ usb_status_t USB_HostL1SleepDeviceResquest(usb_host_handle hostHandle,
         /*#if ((defined USB_HOST_CONFIG_HUB) && (USB_HOST_CONFIG_HUB))*/
         /*To do, implete hub L1 suspend device*/
         /*#else*/
+        /* the callbackFn is initialized in USB_HostGetControllerInterface */
         status =
             hostInstance->controllerTable->controllerIoctl(hostInstance->controllerHandle, kUSB_HostBusControl, &type);
         /*#endif*/
@@ -972,6 +981,7 @@ usb_status_t USB_HostL1SleepDeviceResquest(usb_host_handle hostHandle,
 #endif
         if (hostInstance->deviceList == deviceHandle)
         {
+            /* the callbackFn is initialized in USB_HostGetControllerInterface */
             status = hostInstance->controllerTable->controllerIoctl(hostInstance->controllerHandle, kUSB_HostBusControl,
                                                                     &type);
         }
@@ -993,7 +1003,7 @@ usb_status_t USB_HostL1SleepDeviceResquestConfig(usb_host_handle hostHandle, uin
         return kStatus_USB_InvalidHandle;
     }
     hostInstance = (usb_host_instance_t *)hostHandle;
-
+    /* the callbackFn is initialized in USB_HostGetControllerInterface */
     status =
         hostInstance->controllerTable->controllerIoctl(hostInstance->controllerHandle, kUSB_HostL1Config, lpmParam);
 
@@ -1018,6 +1028,7 @@ usb_status_t USB_HostL1ResumeDeviceResquest(usb_host_handle hostHandle,
 
     if (1U == sleepType)
     {
+        /* the callbackFn is initialized in USB_HostGetControllerInterface */
         status =
             hostInstance->controllerTable->controllerIoctl(hostInstance->controllerHandle, kUSB_HostBusControl, &type);
     }
@@ -1029,6 +1040,7 @@ usb_status_t USB_HostL1ResumeDeviceResquest(usb_host_handle hostHandle,
 #endif
         if (hostInstance->deviceList == deviceHandle)
         {
+            /* the callbackFn is initialized in USB_HostGetControllerInterface */
             status = hostInstance->controllerTable->controllerIoctl(hostInstance->controllerHandle, kUSB_HostBusControl,
                                                                     &type);
         }

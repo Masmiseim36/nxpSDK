@@ -49,6 +49,12 @@
  * Definitions
  ******************************************************************************/
 
+/*! @name Driver version */
+/*@{*/
+/*! @brief LPI2C freertos driver version 2.1.5. */
+#define FSL_LPI2C_FREERTOS_DRIVER_VERSION (MAKE_VERSION(2, 1, 5))
+/*@}*/
+
 /*!
  * @cond RTOS_PRIVATE
  * @brief LPI2C FreeRTOS handle

@@ -3,7 +3,7 @@
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * All rights reserved.
  *
- * 
+ *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
  *  that the following conditions are met:
@@ -730,7 +730,7 @@ status_t SPDIF_TransferGetReceiveCount(SPDIF_Type *base, spdif_handle_t *handle,
 void SPDIF_TransferAbortSend(SPDIF_Type *base, spdif_handle_t *handle);
 
 /*!
- * @brief Aborts the the current IRQ receive.
+ * @brief Aborts the current IRQ receive.
  *
  * @note This API can be called when an interrupt non-blocking transfer initiates
  * to abort the transfer early.

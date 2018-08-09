@@ -38,6 +38,12 @@
 /*******************************************************************************
  * Definitions
  *******************************************************************************/
+
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.trng"
+#endif
+
 /* Default values for user configuration structure.*/
 #if (defined(KW40Z4_SERIES) || defined(KW41Z4_SERIES) || defined(KW31Z4_SERIES) || defined(KW21Z4_SERIES) || \
      defined(MCIMX7U5_M4_SERIES) || defined(KW36Z4_SERIES))
@@ -1246,7 +1252,7 @@ status_t TRNG_GetDefaultConfig(trng_config_t *userConfig)
 {
     status_t result;
 
-    if (userConfig != 0)
+    if (userConfig != NULL)
     {
         userConfig->lock = TRNG_USER_CONFIG_DEFAULT_LOCK;
         userConfig->clockMode = kTRNG_ClockModeRingOscillator;
@@ -1523,7 +1529,7 @@ status_t TRNG_Init(TRNG_Type *base, const trng_config_t *userConfig)
     status_t result;
 
     /* Check input parameters.*/
-    if ((base != 0) && (userConfig != 0))
+    if ((base != NULL) && (userConfig != NULL))
     {
 #if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
         /* Enable the clock gate. */

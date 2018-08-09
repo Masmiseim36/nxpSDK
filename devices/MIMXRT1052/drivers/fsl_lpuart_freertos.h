@@ -48,6 +48,13 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+
+/*! @name Driver version */
+/*@{*/
+/*! @brief LPUART freertos driver version 2.2.5. */
+#define FSL_LPUART_FREERTOS_DRIVER_VERSION (MAKE_VERSION(2, 2, 5))
+/*@}*/
+
 /*! @brief LPUART RTOS configuration structure. */
 typedef struct _lpuart_rtos_config
 {

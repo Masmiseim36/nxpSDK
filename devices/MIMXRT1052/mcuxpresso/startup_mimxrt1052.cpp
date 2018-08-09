@@ -1,11 +1,11 @@
 //*****************************************************************************
 // MIMXRT1052 startup code for use with MCUXpresso IDE
 //
-// Version : 081217
+// Version : 090518
 //*****************************************************************************
 //
 // The Clear BSD License
-// Copyright 2016-2017 NXP
+// Copyright 2016-2018 NXP
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -641,19 +641,19 @@ void (* const g_pfnVectors[])(void) = {
 //*****************************************************************************
 __attribute__ ((section(".after_vectors.init_data")))
 void data_init(unsigned int romstart, unsigned int start, unsigned int len) {
-	unsigned int *pulDest = (unsigned int*) start;
-	unsigned int *pulSrc = (unsigned int*) romstart;
-	unsigned int loop;
-	for (loop = 0; loop < len; loop = loop + 4)
-		*pulDest++ = *pulSrc++;
+    unsigned int *pulDest = (unsigned int*) start;
+    unsigned int *pulSrc = (unsigned int*) romstart;
+    unsigned int loop;
+    for (loop = 0; loop < len; loop = loop + 4)
+        *pulDest++ = *pulSrc++;
 }
 
 __attribute__ ((section(".after_vectors.init_bss")))
 void bss_init(unsigned int start, unsigned int len) {
-	unsigned int *pulDest = (unsigned int*) start;
-	unsigned int loop;
-	for (loop = 0; loop < len; loop = loop + 4)
-		*pulDest++ = 0;
+    unsigned int *pulDest = (unsigned int*) start;
+    unsigned int loop;
+    for (loop = 0; loop < len; loop = loop + 4)
+        *pulDest++ = 0;
 }
 
 //*****************************************************************************
@@ -701,27 +701,27 @@ void ResetISR(void) {
     //
     // Copy the data sections from flash to SRAM.
     //
-	unsigned int LoadAddr, ExeAddr, SectionLen;
-	unsigned int *SectionTableAddr;
+    unsigned int LoadAddr, ExeAddr, SectionLen;
+    unsigned int *SectionTableAddr;
 
-	// Load base address of Global Section Table
-	SectionTableAddr = &__data_section_table;
+    // Load base address of Global Section Table
+    SectionTableAddr = &__data_section_table;
 
     // Copy the data sections from flash to SRAM.
-	while (SectionTableAddr < &__data_section_table_end) {
-		LoadAddr = *SectionTableAddr++;
-		ExeAddr = *SectionTableAddr++;
-		SectionLen = *SectionTableAddr++;
-		data_init(LoadAddr, ExeAddr, SectionLen);
-	}
+    while (SectionTableAddr < &__data_section_table_end) {
+        LoadAddr = *SectionTableAddr++;
+        ExeAddr = *SectionTableAddr++;
+        SectionLen = *SectionTableAddr++;
+        data_init(LoadAddr, ExeAddr, SectionLen);
+    }
 
-	// At this point, SectionTableAddr = &__bss_section_table;
-	// Zero fill the bss segment
-	while (SectionTableAddr < &__bss_section_table_end) {
-		ExeAddr = *SectionTableAddr++;
-		SectionLen = *SectionTableAddr++;
-		bss_init(ExeAddr, SectionLen);
-	}
+    // At this point, SectionTableAddr = &__bss_section_table;
+    // Zero fill the bss segment
+    while (SectionTableAddr < &__bss_section_table_end) {
+        ExeAddr = *SectionTableAddr++;
+        SectionLen = *SectionTableAddr++;
+        bss_init(ExeAddr, SectionLen);
+    }
 
 #if !defined (__USE_CMSIS)
 // Assume that if __USE_CMSIS defined, then CMSIS SystemInit code
@@ -748,18 +748,18 @@ void ResetISR(void) {
     __asm volatile ("cpsie i");
 
 #if defined (__REDLIB__)
-	// Call the Redlib library, which in turn calls main()
-	__main();
+    // Call the Redlib library, which in turn calls main()
+    __main();
 #else
-	main();
+    main();
 #endif
 
-	//
-	// main() shouldn't return, but if it does, we'll just enter an infinite loop
-	//
-	while (1) {
-		;
-	}
+    //
+    // main() shouldn't return, but if it does, we'll just enter an infinite loop
+    //
+    while (1) {
+        ;
+    }
 }
 
 //*****************************************************************************

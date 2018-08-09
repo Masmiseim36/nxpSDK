@@ -3,7 +3,7 @@
  * Copyright 2017 NXP
  * All rights reserved.
  *
- * 
+ *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
  *  that the following conditions are met:
@@ -55,7 +55,8 @@
 #define DEBUG_CONSOLE_IO_LPSCI
 #endif
 
-#if ((defined(FSL_FEATURE_SOC_USB_COUNT) && (FSL_FEATURE_SOC_USB_COUNT != 0)) && defined(BOARD_USE_VIRTUALCOM))
+#if ((defined(FSL_FEATURE_SOC_USB_COUNT) && (FSL_FEATURE_SOC_USB_COUNT != 0)) && \
+     (defined(BOARD_USE_VIRTUALCOM) && (BOARD_USE_VIRTUALCOM != 0)))
 #define DEBUG_CONSOLE_IO_USBCDC
 #endif
 
@@ -65,6 +66,16 @@
 
 #if (defined(FSL_FEATURE_SOC_VFIFO_COUNT) && (FSL_FEATURE_SOC_VFIFO_COUNT != 0))
 #define DEBUG_CONSOLE_IO_VUSART
+#endif
+
+/* If none of above io is supported, enable the swo for debug console, or swo can be enabled by define
+ * DEBUG_CONSOLE_IO_SWO directly */
+#if (!defined(DEBUG_CONSOLE_IO_SWO) && !defined(DEBUG_CONSOLE_IO_UART) && !defined(DEBUG_CONSOLE_IO_IUART) && \
+!defined(DEBUG_CONSOLE_IO_LPUART) &&   \
+     !defined(DEBUG_CONSOLE_IO_LPSCI) && !defined(DEBUG_CONSOLE_IO_USBCDC) && \
+!defined(DEBUG_CONSOLE_IO_FLEXCOMM) && \
+     !defined(DEBUG_CONSOLE_IO_VUSART))
+#define DEBUG_CONSOLE_IO_SWO
 #endif
 
 /* configuration for debug console device */
@@ -106,6 +117,10 @@ static lpsci_handle_t s_ioLpsciHandler;
 static usart_handle_t s_ioUsartHandler;
 #endif /* DEBUG_CONSOLE_TRANSFER_NON_BLOCKING */
 #endif /* defined DEBUG_CONSOLE_IO_FLEXCOMM) || (defined DEBUG_CONSOLE_IO_VUSART */
+
+#if defined DEBUG_CONSOLE_IO_SWO
+#include "fsl_swo.h"
+#endif
 
 /*******************************************************************************
  * Variables
@@ -360,6 +375,12 @@ void IO_Init(io_state_t *io, uint32_t baudRate, uint32_t clkSrcFreq, uint8_t *ri
         }
         break;
 #endif
+
+#if defined DEBUG_CONSOLE_IO_SWO
+        case DEBUG_CONSOLE_DEVICE_TYPE_SWO:
+            SWO_Init((uint32_t)s_debugConsoleIO.ioBase, baudRate, clkSrcFreq);
+            break;
+#endif
         default:
             break;
     }
@@ -424,6 +445,13 @@ status_t IO_Deinit(void)
             /* deinit IO */
             USART_Deinit((USART_Type *)s_debugConsoleIO.ioBase);
 
+            break;
+#endif
+
+#if defined DEBUG_CONSOLE_IO_SWO
+
+        case DEBUG_CONSOLE_DEVICE_TYPE_SWO:
+            SWO_Deinit((uint32_t)s_debugConsoleIO.ioBase);
             break;
 #endif
         default:
@@ -595,6 +623,12 @@ status_t IO_Transfer(uint8_t *ch, size_t size, bool tx)
         }
         break;
 #endif
+
+#if defined DEBUG_CONSOLE_IO_SWO
+        case DEBUG_CONSOLE_DEVICE_TYPE_SWO:
+            status = SWO_SendBlocking((uint32_t)s_debugConsoleIO.ioBase, ch, size);
+            break;
+#endif
         default:
             break;
     }
@@ -763,6 +797,12 @@ status_t IO_Transfer(uint8_t *ch, size_t size, bool tx)
             }
         }
         break;
+#endif
+
+#if defined DEBUG_CONSOLE_IO_SWO
+        case DEBUG_CONSOLE_DEVICE_TYPE_SWO:
+            status = SWO_SendBlocking((uint32_t)s_debugConsoleIO.ioBase, ch, size);
+            break;
 #endif
         default:
             status = kStatus_Fail;

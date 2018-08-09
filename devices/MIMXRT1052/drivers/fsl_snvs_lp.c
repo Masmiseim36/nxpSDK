@@ -1,7 +1,7 @@
 /*
  * The Clear BSD License
- * Copyright (c) 2017, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright (c) 2016, Freescale Semiconductor, Inc.
+ * Copyright (c) 2017, NXP
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without modification,
@@ -37,6 +37,12 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.snvs_lp"
+#endif
+
 #define SECONDS_IN_A_DAY (86400U)
 #define SECONDS_IN_A_HOUR (3600U)
 #define SECONDS_IN_A_MINUTE (60U)
@@ -408,37 +414,13 @@ uint32_t SNVS_LP_SRTC_GetStatusFlags(SNVS_Type *base)
     return flags;
 }
 
-void SNVS_LP_SRTC_ClearStatusFlags(SNVS_Type *base, uint32_t mask)
-{
-    if (mask & kSNVS_SRTC_AlarmInterruptFlag)
-    {
-        base->LPSR |= SNVS_LPSR_LPTA_MASK;
-    }
-}
-
-void SNVS_LP_SRTC_EnableInterrupts(SNVS_Type *base, uint32_t mask)
-{
-    if (mask & kSNVS_SRTC_AlarmInterruptEnable)
-    {
-        base->LPCR |= SNVS_LPCR_LPTA_EN_MASK;
-    }
-}
-
-void SNVS_LP_SRTC_DisableInterrupts(SNVS_Type *base, uint32_t mask)
-{
-    if (mask & kSNVS_SRTC_AlarmInterruptEnable)
-    {
-        base->LPCR &= ~SNVS_LPCR_LPTA_EN_MASK;
-    }
-}
-
 uint32_t SNVS_LP_SRTC_GetEnabledInterrupts(SNVS_Type *base)
 {
     uint32_t val = 0U;
 
     if (base->LPCR & SNVS_LPCR_LPTA_EN_MASK)
     {
-        val |= kSNVS_SRTC_AlarmInterruptFlag;
+        val |= kSNVS_SRTC_AlarmInterrupt;
     }
 
     return val;

@@ -37,7 +37,13 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#if (FSL_FEATURE_SOC_L2CACHEC_COUNT > 0)
+
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.cache_armv7_m7"
+#endif
+
+#if defined(FSL_FEATURE_SOC_L2CACHEC_COUNT) && FSL_FEATURE_SOC_L2CACHEC_COUNT
 #define L2CACHE_OPERATION_TIMEOUT 0xFFFFFU
 #define L2CACHE_8WAYS_MASK 0xFFU
 #define L2CACHE_16WAYS_MASK 0xFFFFU
@@ -130,7 +136,7 @@ static void L2CACHE_SetAndWaitBackGroundOperate(uint32_t auxCtlReg, uint32_t reg
     /* Set the opeartion for all ways/entries of the cache. */
     *(uint32_t *)regAddr = mask;
     /* Waiting for until the operation is complete. */
-    while ((*(uint32_t *)regAddr & mask) && timeout)
+    while ((*(volatile uint32_t *)regAddr & mask) && timeout)
     {
         __ASM("nop");
         timeout--;
@@ -401,7 +407,7 @@ void L2CACHE_LockdownByWayEnable(uint32_t masterId, uint32_t mask, bool enable)
         L2CACHEC->LOCKDOWN[masterId].REG9_I_LOCKDOWN = istrReg & ~mask;
     }
 }
-#endif  /* FSL_FEATURE_SOC_L2CACHEC_COUNT > 0 */
+#endif  /* FSL_FEATURE_SOC_L2CACHEC_COUNT */
 
 void L1CACHE_InvalidateICacheByRange(uint32_t address, uint32_t size_byte)
 {
@@ -424,41 +430,41 @@ void L1CACHE_InvalidateICacheByRange(uint32_t address, uint32_t size_byte)
 
 void ICACHE_InvalidateByRange(uint32_t address, uint32_t size_byte)
 {
-#if (FSL_FEATURE_SOC_L2CACHEC_COUNT > 0)
+#if defined(FSL_FEATURE_SOC_L2CACHEC_COUNT) && FSL_FEATURE_SOC_L2CACHEC_COUNT
 #if defined(FSL_SDK_DISBLE_L2CACHE_PRESENT) && !FSL_SDK_DISBLE_L2CACHE_PRESENT
     L2CACHE_InvalidateByRange(address, size_byte);
 #endif /* !FSL_SDK_DISBLE_L2CACHE_PRESENT */
-#endif /* FSL_FEATURE_SOC_L2CACHEC_COUNT > 0 */
+#endif /* FSL_FEATURE_SOC_L2CACHEC_COUNT */
 
    L1CACHE_InvalidateICacheByRange(address, size_byte);
 }
 
 void DCACHE_InvalidateByRange(uint32_t address, uint32_t size_byte)
 {
-#if (FSL_FEATURE_SOC_L2CACHEC_COUNT > 0)
+#if defined(FSL_FEATURE_SOC_L2CACHEC_COUNT) && FSL_FEATURE_SOC_L2CACHEC_COUNT
 #if defined(FSL_SDK_DISBLE_L2CACHE_PRESENT) && !FSL_SDK_DISBLE_L2CACHE_PRESENT
     L2CACHE_InvalidateByRange(address, size_byte);
 #endif /* !FSL_SDK_DISBLE_L2CACHE_PRESENT */
-#endif /* FSL_FEATURE_SOC_L2CACHEC_COUNT > 0 */
+#endif /* FSL_FEATURE_SOC_L2CACHEC_COUNT */
     L1CACHE_InvalidateDCacheByRange(address, size_byte);
 }
 
 void DCACHE_CleanByRange(uint32_t address, uint32_t size_byte)
 {
     L1CACHE_CleanDCacheByRange(address, size_byte);
-#if (FSL_FEATURE_SOC_L2CACHEC_COUNT > 0)
+#if defined(FSL_FEATURE_SOC_L2CACHEC_COUNT) && FSL_FEATURE_SOC_L2CACHEC_COUNT
 #if defined(FSL_SDK_DISBLE_L2CACHE_PRESENT) && !FSL_SDK_DISBLE_L2CACHE_PRESENT
     L2CACHE_CleanByRange(address, size_byte);
 #endif /* !FSL_SDK_DISBLE_L2CACHE_PRESENT */
-#endif /* FSL_FEATURE_SOC_L2CACHEC_COUNT > 0 */
+#endif /* FSL_FEATURE_SOC_L2CACHEC_COUNT */
 }
 
 void DCACHE_CleanInvalidateByRange(uint32_t address, uint32_t size_byte)
 {
     L1CACHE_CleanInvalidateDCacheByRange(address, size_byte);
-#if (FSL_FEATURE_SOC_L2CACHEC_COUNT > 0)
+#if defined(FSL_FEATURE_SOC_L2CACHEC_COUNT) && FSL_FEATURE_SOC_L2CACHEC_COUNT
 #if defined(FSL_SDK_DISBLE_L2CACHE_PRESENT) && !FSL_SDK_DISBLE_L2CACHE_PRESENT
     L2CACHE_CleanInvalidateByRange(address, size_byte);
 #endif /* !FSL_SDK_DISBLE_L2CACHE_PRESENT */
-#endif /* FSL_FEATURE_SOC_L2CACHEC_COUNT > 0 */
+#endif /* FSL_FEATURE_SOC_L2CACHEC_COUNT */
 }

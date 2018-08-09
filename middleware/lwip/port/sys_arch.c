@@ -354,12 +354,13 @@ unsigned long ulReturn;
  * Routine:  sys_sem_new
  *---------------------------------------------------------------------------*
  * Description:
- *      Creates and returns a new semaphore. The "ucCount" argument specifies
- *      the initial state of the semaphore.
- *      NOTE: Currently this routine only creates counts of 1 or 0
+ *      Creates and returns a new semaphore. If the value of "ucCount" argument
+ *      is 0, maximum count of semaphore is 1 and the initial state is 0.
+ *      Otherwise the "ucCount" argument specifies both initial state and
+ *      maximum count of the semaphore.
  * Inputs:
  *      sys_mbox_t mbox         -- Handle of mailbox
- *      u8_t ucCount              -- Initial ucCount of semaphore (1 or 0)
+ *      u8_t ucCount            -- Initial ucCount of semaphore
  * Outputs:
  *      sys_sem_t               -- Created semaphore or 0 if could not create.
  *---------------------------------------------------------------------------*/
@@ -367,7 +368,14 @@ err_t sys_sem_new( sys_sem_t *pxSemaphore, u8_t ucCount )
 {
 err_t xReturn = ERR_MEM;
 
-    vSemaphoreCreateBinary( ( *pxSemaphore ) );
+    if( ucCount > 1U )
+    {
+        *pxSemaphore = xSemaphoreCreateCounting( ucCount, ucCount );
+    }
+    else
+    {
+        vSemaphoreCreateBinary( ( *pxSemaphore ) );
+    }
 
     if( *pxSemaphore != NULL )
     {
@@ -532,7 +540,7 @@ void sys_init(void)
 
 u32_t sys_now(void)
 {
-    return xTaskGetTickCount();
+    return xTaskGetTickCount() * portTICK_PERIOD_MS;
 }
 
 /*---------------------------------------------------------------------------*

@@ -58,7 +58,7 @@ static volatile uint32_t g_eventCardDetect;
 static volatile uint32_t g_eventTransferComplete;
 
 /*! @brief Time variable unites as milliseconds. */
-static volatile uint32_t g_eventTimeMilliseconds;
+volatile uint32_t g_eventTimeMilliseconds;
 
 /*******************************************************************************
  * Code

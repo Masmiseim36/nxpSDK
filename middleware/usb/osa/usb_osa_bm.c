@@ -41,7 +41,7 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define USB_OSA_BM_EVENT_COUNT (2U)
+#define USB_OSA_BM_EVENT_COUNT (4U)
 #define USB_OSA_BM_SEM_COUNT (1U)
 #define USB_OSA_BM_MSGQ_COUNT (1U)
 #define USB_OSA_BM_MSG_COUNT (8U)

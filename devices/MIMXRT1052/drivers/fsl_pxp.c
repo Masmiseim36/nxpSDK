@@ -37,6 +37,12 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.pxp"
+#endif
+
 /* The CSC2 coefficient is ###.####_#### */
 #define PXP_CSC2_COEF_INT_WIDTH 2
 #define PXP_CSC2_COEF_FRAC_WIDTH 8

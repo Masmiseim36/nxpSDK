@@ -235,9 +235,11 @@ typedef enum _flexspi_command_type
 
 typedef struct _flexspi_ahbBuffer_config
 {
-    uint8_t priority;
-    uint8_t masterIndex;
-    uint16_t bufferSize;
+    uint8_t priority;    /*!< This priority for AHB Master Read which this AHB RX Buffer is assigned. */
+    uint8_t masterIndex; /*!< AHB Master ID the AHB RX Buffer is assigned. */
+    uint16_t bufferSize; /*!< AHB buffer size in byte. */
+    bool enablePrefetch; /*!< AHB Read Prefetch Enable for current AHB RX Buffer corresponding Master, allows
+                          prefetch disable/enable seperately for each master. */
 } flexspi_ahbBuffer_config_t;
 
 /*! @brief FLEXSPI configuration structure. */
@@ -273,6 +275,8 @@ typedef struct _flexspi_config
         flexspi_ahbBuffer_config_t buffer[FSL_FEATURE_FLEXSPI_AHB_BUFFER_COUNT]; /*!< AHB buffer size. */
         bool enableClearAHBBufferOpt; /*!< Enable/disable automatically clean AHB RX Buffer and TX Buffer
                                        when FLEXSPI returns STOP mode ACK. */
+        bool enableReadAddressOpt;    /*!< Enable/disable remove AHB read burst start address alignment limitation.
+                                       when eanble, there is no AHB read burst start address alignment limitation. */
         bool enableAHBPrefetch;       /*!< Enable/disable AHB read prefetch feature, when enabled, FLEXSPI
                                        will fetch more data than current AHB burst. */
         bool enableAHBBufferable;     /*!< Enable/disable AHB bufferable write access support, when enabled,

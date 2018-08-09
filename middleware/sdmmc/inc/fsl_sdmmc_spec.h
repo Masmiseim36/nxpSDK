@@ -55,7 +55,7 @@
 /*! @brief MMC card bus frequency 2 in high-speed mode */
 #define MMC_CLOCK_52MHZ (52000000U)
 /*! @brief MMC card bus frequency  in high-speed DDR52 mode */
-#define MMC_CLOCK_DDR52 (104000000U)
+#define MMC_CLOCK_DDR52 (52000000U)
 /*! @brief MMC card bus frequency  in high-speed HS200 mode */
 #define MMC_CLOCK_HS200 (200000000U)
 /*! @brief MMC card bus frequency  in high-speed HS400 mode */
@@ -196,6 +196,12 @@ typedef enum _sd_command
     kSD_EraseWriteBlockEnd = 33U,    /*!< Write Block End */
     kSD_SendTuningBlock = 19U,       /*!< Send Tuning Block */
 } sd_command_t;
+
+/*! @brief SDSPI individual commands */
+typedef enum _sdspi_command
+{
+    kSDSPI_CommandCrc = 59U, /*!< Command crc protection on/off */
+} sdspi_command_t;
 
 /*! @brief SD card individual application commands */
 typedef enum _sd_application_command

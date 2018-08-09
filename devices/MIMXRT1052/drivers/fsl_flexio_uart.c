@@ -38,6 +38,12 @@
  * Definitions
  ******************************************************************************/
 
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.flexio_uart"
+#endif
+
+
 /*<! @brief uart transfer state. */
 enum _flexio_uart_transfer_states
 {
@@ -47,17 +53,9 @@ enum _flexio_uart_transfer_states
     kFLEXIO_UART_RxBusy  /* RX busy. */
 };
 
-#if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
-extern const clock_ip_name_t s_flexioClocks[];
-#endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
-
-extern FLEXIO_Type *const s_flexioBases[];
-
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-
-extern uint32_t FLEXIO_GetInstance(FLEXIO_Type *base);
 
 /*!
  * @brief Get the length of received data in RX ring buffer.
@@ -80,7 +78,7 @@ static bool FLEXIO_UART_TransferIsRxRingBufferFull(flexio_uart_handle_t *handle)
  * Codes
  ******************************************************************************/
 
-uint32_t FLEXIO_UART_GetInstance(FLEXIO_UART_Type *base)
+static uint32_t FLEXIO_UART_GetInstance(FLEXIO_UART_Type *base)
 {
     return FLEXIO_GetInstance(base->flexioBase);
 }

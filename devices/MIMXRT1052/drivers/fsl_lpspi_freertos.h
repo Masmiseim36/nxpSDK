@@ -49,6 +49,12 @@
  * Definitions
  *********************************************************************************************************************/
 
+/*! @name Driver version */
+/*@{*/
+/*! @brief LPSPI freertos driver version 2.0.2. */
+#define FSL_LPSPI_FREERTOS_DRIVER_VERSION (MAKE_VERSION(2, 0, 2))
+/*@}*/
+
 /*!
  * @cond RTOS_PRIVATE
  * @brief LPSPI FreeRTOS handle

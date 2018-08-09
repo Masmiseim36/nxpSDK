@@ -34,6 +34,12 @@
 
 #include "fsl_src.h"
 
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.src"
+#endif
+
+
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/

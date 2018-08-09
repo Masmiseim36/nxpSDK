@@ -48,8 +48,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief FlexIO I2S driver version 2.1.1. */
-#define FSL_FLEXIO_I2S_DRIVER_VERSION (MAKE_VERSION(2, 1, 2))
+/*! @brief FlexIO I2S driver version 2.1.4. */
+#define FSL_FLEXIO_I2S_DRIVER_VERSION (MAKE_VERSION(2, 1, 4))
 /*@}*/
 
 /*! @brief FlexIO I2S transfer status */

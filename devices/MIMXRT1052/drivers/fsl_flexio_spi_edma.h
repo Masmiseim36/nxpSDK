@@ -46,6 +46,12 @@
  * Definitions
  ******************************************************************************/
 
+/*! @name Driver version */
+/*@{*/
+/*! @brief FlexIO SPI EDMA driver version 2.1.3. */
+#define FSL_FLEXIO_SPI_EDMA_DRIVER_VERSION (MAKE_VERSION(2, 1, 3))
+/*@}*/
+
 /*! @brief  typedef for flexio_spi_master_edma_handle_t in advance. */
 typedef struct _flexio_spi_master_edma_handle flexio_spi_master_edma_handle_t;
 
@@ -92,7 +98,8 @@ extern "C" {
 /*!
  * @brief Initializes the FlexIO SPI master eDMA handle.
  *
- * This function initializes the FlexIO SPI master eDMA handle which can be used for other FlexIO SPI master transactional
+ * This function initializes the FlexIO SPI master eDMA handle which can be used for other FlexIO SPI master
+ * transactional
  * APIs.
  * For a specified FlexIO SPI instance, call this API once to get the initialized handle.
  *

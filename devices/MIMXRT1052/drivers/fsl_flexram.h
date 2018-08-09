@@ -48,8 +48,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief Driver version 2.0.1. */
-#define FSL_FLEXRAM_DRIVER_VERSION (MAKE_VERSION(2U, 0U, 1U))
+/*! @brief Driver version 2.0.2. */
+#define FSL_FLEXRAM_DRIVER_VERSION (MAKE_VERSION(2U, 0U, 2U))
 /*@}*/
 
 /*! @brief flexram write read sel */

@@ -19,7 +19,6 @@
  *   contributors may be used to endorse or promote products derived from this
  *   software without specific prior written permission.
  *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -39,7 +38,6 @@
  */
 
 /* Standard C Includes */
-#include <stdlib.h>
 #include <string.h>
 
 /* ISSDK Includes */
@@ -167,7 +165,7 @@ int32_t Register_I2C_BlockWrite(ARM_DRIVER_I2C *pCommDrv,
                                 uint8_t bytesToWrite)
 {
     int32_t status;
-    uint8_t *buffer = malloc(bytesToWrite + 1);
+    uint8_t buffer[SENSOR_MAX_REGISTER_COUNT];
 
     buffer[0] = offset;
     memcpy(buffer + 1, pBuffer, bytesToWrite);
@@ -199,7 +197,6 @@ int32_t Register_I2C_BlockWrite(ARM_DRIVER_I2C *pCommDrv,
         }
     }
 
-    free(buffer);
     return status;
 }
 
@@ -227,6 +224,14 @@ int32_t Register_I2C_Write(ARM_DRIVER_I2C *pCommDrv,
             /* Wait for completion without calling idle function */
             while (!b_I2C_CompletionFlag[devInfo->deviceInstance])
             {
+                if (devInfo->idleFunction)
+                {
+                    devInfo->idleFunction(devInfo->functionParam);
+                }
+                else
+                {
+                    __NOP();
+                }
             };
             if (g_I2C_ErrorEvent[devInfo->deviceInstance] == ARM_I2C_EVENT_TRANSFER_INCOMPLETE)
             {
@@ -330,6 +335,14 @@ int32_t Register_I2C_Read(ARM_DRIVER_I2C *pCommDrv,
         /* Wait for completion without calling idle function. */
         while (!b_I2C_CompletionFlag[devInfo->deviceInstance])
         {
+            if (devInfo->idleFunction)
+            {
+                devInfo->idleFunction(devInfo->functionParam);
+            }
+            else
+            {
+                __NOP();
+            }
         };
         if (g_I2C_ErrorEvent[devInfo->deviceInstance] == ARM_I2C_EVENT_TRANSFER_INCOMPLETE)
         {

@@ -3,7 +3,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
  *  that the following conditions are met:
@@ -39,6 +39,11 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.lpi2c_edma"
+#endif
 
 /* @brief Mask to align an address to 32 bytes. */
 #define ALIGN_32_MASK (0x1fU)
@@ -99,12 +104,6 @@ typedef void (*lpi2c_isr_t)(LPI2C_Type *base, void *handle);
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-
-/* Defined in fsl_lpi2c.c. */
-extern status_t LPI2C_CheckForBusyBus(LPI2C_Type *base);
-
-/* Defined in fsl_lpi2c.c. */
-extern status_t LPI2C_MasterCheckAndClearError(LPI2C_Type *base, uint32_t status);
 
 static uint32_t LPI2C_GenerateCommands(lpi2c_master_edma_handle_t *handle);
 
@@ -450,13 +449,15 @@ status_t LPI2C_MasterTransferAbortEDMA(LPI2C_Type *base, lpi2c_master_edma_handl
 static void LPI2C_MasterEDMACallback(edma_handle_t *dmaHandle, void *userData, bool isTransferDone, uint32_t tcds)
 {
     lpi2c_master_edma_handle_t *handle = (lpi2c_master_edma_handle_t *)userData;
+    bool hasReceiveData;
 
     if (!handle)
     {
         return;
     }
 
-    bool hasReceiveData = (handle->transfer.direction == kLPI2C_Read) && (handle->transfer.dataSize);
+    hasReceiveData = (handle->transfer.direction == kLPI2C_Read) && (handle->transfer.dataSize);
+
     if (hasReceiveData && !FSL_FEATURE_LPI2C_HAS_SEPARATE_DMA_RX_TX_REQn(base))
     {
         if (EDMA_GetNextTCDAddress(handle->tx) != 0)

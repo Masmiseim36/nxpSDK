@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
+  <externalDefinitions>
+    <definition extID="com.nxp.mcuxpresso"/>
+    <definition extID="middleware.fatfs.MIMXRT1052"/>
+    <definition extID="middleware.fatfs.sd.MIMXRT1052"/>
+    <definition extID="middleware.sdmmc.common.MIMXRT1052"/>
+    <definition extID="middleware.sdmmc.sd.MIMXRT1052"/>
+    <definition extID="platform.CMSIS_DSP_Lib.arm_cortexM7lfsp_math.MIMXRT1052"/>
+    <definition extID="platform.devices.MIMXRT1052_CMSIS.MIMXRT1052"/>
+    <definition extID="platform.devices.MIMXRT1052_startup.MIMXRT1052"/>
+    <definition extID="platform.drivers.cache_armv7_m7.MIMXRT1052"/>
+    <definition extID="platform.drivers.clock.MIMXRT1052"/>
+    <definition extID="platform.drivers.common.MIMXRT1052"/>
+    <definition extID="platform.drivers.dmamux.MIMXRT1052"/>
+    <definition extID="platform.drivers.edma.MIMXRT1052"/>
+    <definition extID="platform.drivers.igpio.MIMXRT1052"/>
+    <definition extID="platform.drivers.iomuxc.MIMXRT1052"/>
+    <definition extID="platform.drivers.lpi2c.MIMXRT1052"/>
+    <definition extID="platform.drivers.lpuart.MIMXRT1052"/>
+    <definition extID="platform.drivers.sai.MIMXRT1052"/>
+    <definition extID="platform.drivers.sai_edma.MIMXRT1052"/>
+    <definition extID="platform.drivers.usdhc.MIMXRT1052"/>
+    <definition extID="platform.drivers.xip.MIMXRT1052"/>
+    <definition extID="platform.utilities.assert.MIMXRT1052"/>
+    <definition extID="platform.utilities.debug_console.MIMXRT1052"/>
+    <definition extID="iar"/>
+    <definition extID="mdk"/>
+    <definition extID="mcuxpresso"/>
+    <definition extID="armgcc"/>
+  </externalDefinitions>
+  <example id="evkbimxrt1050_sai" name="sai" category="demo_apps" dependency="platform.drivers.lpi2c.MIMXRT1052 platform.drivers.common.MIMXRT1052 platform.drivers.clock.MIMXRT1052 platform.CMSIS_DSP_Lib.arm_cortexM7lfsp_math.MIMXRT1052 platform.drivers.usdhc.MIMXRT1052 middleware.fatfs.sd.MIMXRT1052 middleware.fatfs.MIMXRT1052 middleware.sdmmc.sd.MIMXRT1052 middleware.sdmmc.common.MIMXRT1052 platform.drivers.cache_armv7_m7.MIMXRT1052 platform.devices.MIMXRT1052_CMSIS.MIMXRT1052 platform.devices.MIMXRT1052_startup.MIMXRT1052 platform.drivers.lpuart.MIMXRT1052 platform.utilities.debug_console.MIMXRT1052 platform.drivers.iomuxc.MIMXRT1052 platform.utilities.assert.MIMXRT1052 platform.drivers.igpio.MIMXRT1052 platform.drivers.xip.MIMXRT1052 platform.drivers.sai.MIMXRT1052 platform.drivers.sai_edma.MIMXRT1052 platform.drivers.dmamux.MIMXRT1052 platform.drivers.edma.MIMXRT1052" toolchain="mdk iar armgcc mcuxpresso">
+    <projects>
+      <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
+    </projects>
+    <memory>
+      <memoryBlock addr="60000000" size="04000000" access="RO" type="ExtFlash" id="BOARD_FLASH_evkbimxrt1050" name="BOARD_FLASH"/>
+      <memoryBlock addr="20000000" size="00020000" access="RW" type="RAM" id="SRAM_DTC_evkbimxrt1050" name="SRAM_DTC"/>
+      <memoryBlock addr="00000000" size="00020000" access="RW" type="RAM" id="SRAM_ITC_evkbimxrt1050" name="SRAM_ITC"/>
+      <memoryBlock addr="20200000" size="00040000" access="RW" type="RAM" id="SRAM_OC_evkbimxrt1050" name="SRAM_OC"/>
+      <memoryBlock addr="80000000" size="02000000" access="RW" type="RAM" id="BOARD_SDRAM_evkbimxrt1050" name="BOARD_SDRAM"/>
+    </memory>
+    <toolchainSettings>
+      <toolchainSetting id_refs="com.nxp.mcuxpresso">
+        <option id="com.crt.advproject.gas.fpu" type="enum">
+          <value>com.crt.advproject.gas.fpu.fpv5dp.hard</value>
+        </option>
+        <option id="com.crt.advproject.gcc.fpu" type="enum">
+          <value>com.crt.advproject.gcc.fpu.fpv5dp.hard</value>
+        </option>
+        <option id="com.crt.advproject.c.misc.dialect" type="enum">
+          <value>com.crt.advproject.misc.dialect.gnu99</value>
+        </option>
+        <option id="com.crt.advproject.gcc.exe.debug.option.debugging.level" type="enum">
+          <value>gnu.c.debugging.level.default</value>
+        </option>
+        <option id="com.crt.advproject.gcc.exe.release.option.debugging.level" type="enum">
+          <value>gnu.c.debugging.level.default</value>
+        </option>
+        <option id="com.crt.advproject.gcc.exe.debug.option.optimization.level" type="enum">
+          <value>gnu.c.optimization.level.optimize</value>
+        </option>
+        <option id="com.crt.advproject.gcc.exe.release.option.optimization.level" type="enum">
+          <value>gnu.c.optimization.level.optimize</value>
+        </option>
+        <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
+          <value>ARM_MATH_CM7</value>
+          <value>ARM_MATH_CM4</value>
+          <value>CPU_MIMXRT1052DVL6B</value>
+          <value>SDK_DEBUGCONSOLE=1</value>
+          <value>PRINTF_FLOAT_ENABLE=0</value>
+          <value>SCANF_FLOAT_ENABLE=0</value>
+          <value>PRINTF_ADVANCED_ENABLE=0</value>
+          <value>SCANF_ADVANCED_ENABLE=0</value>
+          <value>XIP_EXTERNAL_FLASH=1</value>
+          <value>XIP_BOOT_HEADER_ENABLE=1</value>
+          <value>XIP_BOOT_HEADER_DCD_ENABLE=1</value>
+          <value>PRINTF_FLOAT_ENABLE=1</value>
+          <value>SDK_I2C_BASED_COMPONENT_USED=1</value>
+          <value>BOARD_USE_CODEC=1</value>
+        </option>
+        <option id="gnu.c.compiler.option.optimization.flags" type="string">
+          <value>-fno-common</value>
+        </option>
+        <option id="gnu.c.compiler.option.misc.other" type="string">
+          <value>-c  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin</value>
+        </option>
+        <option id="com.crt.advproject.link.fpu" type="enum">
+          <value>com.crt.advproject.link.fpu.fpv5dp.hard</value>
+        </option>
+        <option id="gnu.c.link.option.nostdlibs" type="boolean">
+          <value>true</value>
+        </option>
+        <option id="com.crt.advproject.link.memory.sections" type="stringList">
+          <value>isd=*(NonCacheable.init);region=SRAM_DTC;type=.data</value>
+          <value>isd=*(NonCacheable);region=SRAM_DTC;type=.bss</value>
+        </option>
+      </toolchainSetting>
+    </toolchainSettings>
+    <source path="boards/evkbimxrt1050/demo_apps/sai" target_path="board/src" type="c_include">
+      <files mask="board.h"/>
+      <files mask="clock_config.h"/>
+    </source>
+    <source path="boards/evkbimxrt1050/demo_apps/sai" target_path="board/src" type="src">
+      <files mask="board.c"/>
+      <files mask="clock_config.c"/>
+    </source>
+    <source path="boards/evkbimxrt1050/demo_apps/sai" target_path="board" type="c_include">
+      <files mask="pin_mux.h"/>
+    </source>
+    <source path="boards/evkbimxrt1050/demo_apps/sai" target_path="board" type="src">
+      <files mask="pin_mux.c"/>
+    </source>
+    <source path="boards/evkbimxrt1050/demo_apps/sai" target_path="codec" type="c_include">
+      <files mask="fsl_codec_common.h"/>
+      <files mask="fsl_wm8960.h"/>
+    </source>
+    <source path="boards/evkbimxrt1050/demo_apps/sai" target_path="codec" type="src">
+      <files mask="fsl_codec_common.c"/>
+      <files mask="fsl_wm8960.c"/>
+    </source>
+    <source path="boards/evkbimxrt1050/demo_apps/sai" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso">
+      <files mask="readme.txt"/>
+    </source>
+    <source path="boards/evkbimxrt1050/demo_apps/sai" target_path="sdmmc/port" type="c_include">
+      <files mask="fsl_sdmmc_event.h"/>
+    </source>
+    <source path="boards/evkbimxrt1050/demo_apps/sai" target_path="sdmmc/port" type="src">
+      <files mask="fsl_sdmmc_event.c"/>
+      <files mask="fsl_sdmmc_host.c"/>
+    </source>
+    <source path="boards/evkbimxrt1050/demo_apps/sai" target_path="source" type="c_include">
+      <files mask="ffconf.h"/>
+      <files mask="sai.h"/>
+    </source>
+    <source path="boards/evkbimxrt1050/demo_apps/sai" target_path="source" type="src">
+      <files mask="playbackSineWave.c"/>
+      <files mask="recordPlayback.c"/>
+      <files mask="recordtoSdcard.c"/>
+      <files mask="sai.c"/>
+    </source>
+    <source path="CMSIS/Lib/GCC" type="lib" method="copy" target_path="libs" toolchain="mcuxpresso">
+      <files mask="libarm_cortexM7lfdp_math.a"/>
+    </source>
+    <source path="CMSIS/Lib/GCC" type="lib" method="copy" target_path="libs" toolchain="armgcc">
+      <files mask="libarm_cortexM7lfdp_math.a"/>
+    </source>
+    <source path="CMSIS/Lib/GCC" type="lib" method="copy" target_path="libs" toolchain="mcuxpresso">
+      <files mask="libarm_cortexM7lfdp_math.a"/>
+    </source>
+  </example>
+</ksdk:examples>

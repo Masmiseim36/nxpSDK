@@ -46,6 +46,12 @@
  * Definitions
  ******************************************************************************/
 
+/*! @name Driver version */
+/*@{*/
+/*! @brief FlexIO UART EDMA driver version 2.1.4. */
+#define FSL_FLEXIO_UART_EDMA_DRIVER_VERSION (MAKE_VERSION(2, 1, 4))
+/*@}*/
+
 /* Forward declaration of the handle typedef. */
 typedef struct _flexio_uart_edma_handle flexio_uart_edma_handle_t;
 

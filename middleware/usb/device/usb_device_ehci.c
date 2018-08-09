@@ -214,7 +214,7 @@ static void USB_DeviceEhciSetDefaultState(usb_device_ehci_state_struct_t *ehciSt
     ehciState->registerBase->OTGSC |= USBHS_OTGSC_BSVIE_MASK;
 #endif /* USB_DEVICE_CONFIG_DETACH_ENABLE */
 
-    /* Enable reset, sof, token, stall interrupt */
+    /* Enable USB Interrupt, USB Error Interrupt, Port Change detect Interrupt, USB-Reset Interrupt*/
     ehciState->registerBase->USBINTR =
         (USBHS_USBINTR_UE_MASK | USBHS_USBINTR_UEE_MASK | USBHS_USBINTR_PCE_MASK | USBHS_USBINTR_URE_MASK
 #if (defined(USB_DEVICE_CONFIG_LOW_POWER_MODE) && (USB_DEVICE_CONFIG_LOW_POWER_MODE > 0U))
@@ -264,7 +264,7 @@ static usb_status_t USB_DeviceEhciEndpointInit(usb_device_ehci_state_struct_t *e
             maxPacketSize = USB_DEVICE_MAX_HS_ISO_MAX_PACKET_SIZE;
         }
         ehciState->qh[index].capabilttiesCharacteristicsUnion.capabilttiesCharacteristicsBitmap.mult =
-            1U + ((maxPacketSize & USB_DESCRIPTOR_ENDPOINT_MAXPACKETSIZE_MULT_TRANSACTIONS_MASK) >>
+            1U + ((epInit->maxPacketSize & USB_DESCRIPTOR_ENDPOINT_MAXPACKETSIZE_MULT_TRANSACTIONS_MASK) >>
                   USB_DESCRIPTOR_ENDPOINT_MAXPACKETSIZE_MULT_TRANSACTIONS_SHFIT);
     }
     else
@@ -422,7 +422,9 @@ static usb_status_t USB_DeviceEhciEndpointUnstall(usb_device_ehci_state_struct_t
         ehciState->registerBase->EPCR[endpoint - 1U] &= ~(direction ? USBHS_EPCR_TXS_MASK : USBHS_EPCR_RXS_MASK);
         ehciState->registerBase->EPCR[endpoint - 1U] |= (direction ? USBHS_EPCR_TXR_MASK : USBHS_EPCR_RXR_MASK);
     }
-
+    /* Cancel the transfer of the endpoint */
+    USB_DeviceEhciCancel(ehciState, ep);
+    
     return kStatus_USB_Success;
 }
 

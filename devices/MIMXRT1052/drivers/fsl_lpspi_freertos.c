@@ -34,6 +34,12 @@
 
 #include "fsl_lpspi_freertos.h"
 
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.lpspi_freertos"
+#endif
+
+
 static void LPSPI_RTOS_Callback(LPSPI_Type *base, lpspi_master_handle_t *drv_handle, status_t status, void *userData)
 {
     lpspi_rtos_handle_t *handle = (lpspi_rtos_handle_t *)userData;

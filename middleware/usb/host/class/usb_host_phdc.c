@@ -123,7 +123,7 @@ static void USB_HostPhdcClearInHaltCallback(void *param, usb_host_transfer_t *tr
     phdcInstance->numberTransferBulkIn = 0U;
     if (phdcInstance->inCallbackFn != NULL)
     {
-        /* callback to application */
+        /* callback to application, the callback function is initialized in USB_HostPhdcRecv */
         phdcInstance->inCallbackFn(phdcInstance->inCallbackParam, phdcInstance->stallDataBuffer,
                                    phdcInstance->stallDataLength, kStatus_USB_TransferStall);
     }
@@ -137,7 +137,7 @@ static void USB_HostPhdcClearOutHaltCallback(void *param, usb_host_transfer_t *t
     phdcInstance->controlTransfer = NULL;
     if (phdcInstance->outCallbackFn != NULL)
     {
-        /* callback to application */
+        /* callback to application, callback function is initialized in USB_HostPhdcSend */
         phdcInstance->outCallbackFn(phdcInstance->outCallbackParam, phdcInstance->stallDataBuffer,
                                     phdcInstance->stallDataLength, kStatus_USB_TransferStall);
     }
@@ -218,6 +218,7 @@ static void USB_HostPhdcControlPipeCallback(void *param, usb_host_transfer_t *tr
     }
     if (NULL != phdcInstance->controlCallbackFn)
     {
+        /* callback function is initialized in USB_HostPhdcSetInterface */
         phdcInstance->controlCallbackFn(phdcInstance->controlCallbackParam, transfer->transferBuffer,
                                         transfer->transferSofar, status);
     }
@@ -273,7 +274,7 @@ static void USB_HostPhdcSetClearFeatureEndpointHaltCallback(void *param,
     }
     if (NULL != phdcInstance->controlCallbackFn)
     {
-        /* Notify to application the status of request */
+        /* Notify to application the status of request, callback function is initialized in USB_HostPhdcSetInterface */
         phdcInstance->controlCallbackFn(phdcInstance->controlCallbackParam, transfer->transferBuffer,
                                         transfer->transferSofar, status);
     }
@@ -306,6 +307,7 @@ static void USB_HostPhdcInterruptPipeCallback(void *param, usb_host_transfer_t *
 #endif
     if (NULL != phdcInstance->inCallbackFn)
     {
+        /* callback to application, the callback function is initialized in USB_HostPhdcRecv */
         phdcInstance->inCallbackFn(phdcInstance->inCallbackParam, transfer->transferBuffer, transfer->transferSofar,
                                    status);
     }
@@ -412,6 +414,7 @@ static void USB_HostPhdcBulkInPipeCallback(void *param, usb_host_transfer_t *tra
     }
     if (NULL != phdcInstance->inCallbackFn)
     {
+        /* callback to application, the callback function is initialized in USB_HostPhdcRecv */
         phdcInstance->inCallbackFn(phdcInstance->inCallbackParam, transfer->transferBuffer, transfer->transferSofar,
                                    status);
     }
@@ -444,6 +447,7 @@ static void USB_HostPhdcBulkOutPipeCallback(void *param, usb_host_transfer_t *tr
 #endif
     if (NULL != phdcInstance->outCallbackFn)
     {
+        /* callback to application, callback function is initialized in USB_HostPhdcSend */
         phdcInstance->outCallbackFn(phdcInstance->outCallbackParam, transfer->transferBuffer, transfer->transferSofar,
                                     status);
     }
@@ -614,7 +618,8 @@ static void USB_HostPhdcSetInterfaceCallback(void *param, usb_host_transfer_t *t
 
     if (NULL != phdcInstance->controlCallbackFn)
     {
-        /* Notify to application the status of set interface request */
+        /* Notify to application the status of set interface request, callback function is initialized in
+         * USB_HostPhdcSetInterface */
         phdcInstance->controlCallbackFn(phdcInstance->controlCallbackParam, NULL, 0U, status);
     }
     USB_HostFreeTransfer(phdcInstance->hostHandle, transfer);

@@ -38,6 +38,12 @@
  * Definitions
  ******************************************************************************/
 
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.flexio_i2c_master"
+#endif
+
+
 /*! @brief  FLEXIO I2C transfer state */
 enum _flexio_i2c_master_transfer_states
 {
@@ -49,17 +55,9 @@ enum _flexio_i2c_master_transfer_states
     kFLEXIO_I2C_ReceiveData = 0x5U,      /*!< Receive data transfer phase*/
 };
 
-#if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
-extern const clock_ip_name_t s_flexioClocks[];
-#endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
-
-extern FLEXIO_Type *const s_flexioBases[];
-
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-
-extern uint32_t FLEXIO_GetInstance(FLEXIO_Type *base);
 
 /*!
  * @brief Set up master transfer, send slave address and decide the initial
@@ -101,7 +99,7 @@ static void FLEXIO_I2C_MasterTransferComplete(FLEXIO_I2C_Type *base,
  * Codes
  ******************************************************************************/
 
-uint32_t FLEXIO_I2C_GetInstance(FLEXIO_I2C_Type *base)
+static uint32_t FLEXIO_I2C_GetInstance(FLEXIO_I2C_Type *base)
 {
     return FLEXIO_GetInstance(base->flexioBase);
 }

@@ -1,30 +1,35 @@
 /*!
 @page middleware_log Middleware Change Log
  
-@section mbedtls mbedTLS for KSDK
-  Current version of mbedTLS for KSDK is based on mbedTLS 2.6.0 released 2017-Aug-10
+@section mbedtls mbedTLS for MCUXpresso SDK.
+  The current version of mbedTLS is based on mbedTLS 2.6.0 released 2017-Aug-10.
+ 
+ - 2.6.0_rev1
+    - Bug fixes:
+      - ksdk_mbedtls.c bignum functions now read sign of input mbedtls_mpi at beginning of functions to properly support in place computations
+        (when output bignum is the same as one of input bignums). Affected functions: mbedtls_mpi_mul_mpi(), mbedtls_mpi_mod_mpi(), ecp_mul_comb().
  
  - 2.6.0
-    - New Features:
-      - Ported mbedTLS 2.6.0 to KSDK
+    - New features:
+      - Ported mbedTLS 2.6.0 to KSDK.
       - Added MBEDTLS_FREESCALE_FREERTOS_CALLOC_ALT to allow alternate implementation of pvPortCalloc() when using \middleware\mbedtls\port\ksdk\ksdk_mbedtls.c.
 
  - 2.5.1_rev1
-    - New Features:
-      - Add support for DCP driver.
+    - New features:
+      - Added support for DCP driver.
 
  - 2.5.1
-    - New Features:
-      - Ported mbedTLS 2.5.1 to KSDK
+    - New features:
+      - Ported mbedTLS 2.5.1 to KSDK.
  
  - 2.4.2_rev2
-    - New Features:
-      - Add Curve25519 support for CAU3.
+    - New features:
+      - Added Curve25519 support for CAU3.
       - Added MBEDTLS_ECP_MUL_MXZ_ALT configuration parameter enabling overloading of ecp_mul_mxz().
 
  - 2.4.2_rev1
-    - New Features:
-      - Add support for CAU3 driver.
+    - New features:
+      - Added support for CAU3 driver.
       - Added new files:
       - \middleware\mbedtls\port\ksdk\des_alt.c - contains regular software implementation of DES algorithm with added MBEDTLS_DES3_SETKEY_DEC_ALT and MBEDTLS_DES3_SETKEY_ENC_ALT config parameters.
       - \middleware\mbedtls\port\ksdk\des_alt.h - contains modified mbedtls_des_context and mbedtls_des3_context structures.
@@ -32,26 +37,26 @@
       - Added MBEDTLS_DES3_SETKEY_ENC_ALT configuration parameter enabling reloading of mbedtls_des3_set2key_enc() and mbedtls_des3_set3key_enc(). 
 
  - 2.4.2
-    - New Features:
+    - New features:
       - Ported mbedTLS 2.4.2 to KSDK 2.0.0.
       - Added CRYPTO_InitHardware() function.
       - Added new file:
-      - \middleware\mbedtls\port\ksdk\ksdk_mbedtls.h - contains declaration of CRYPTO_InitHardware() function and should be included in applications.
+        - \middleware\mbedtls\port\ksdk\ksdk_mbedtls.h - contains declaration of CRYPTO_InitHardware() function and should be included in applications.
 
  - 2.3.0_rev1
-    - New Features:
-      - Add support for CAAM driver. 
-      - In LTC specific wrapper, allocate temporary integers from heap in one large block.
+    - New features:
+      - Added support for CAAM driver. 
+      - In LTC-specific wrapper, allocate temporary integers from heap in one large block.
  
  - 2.3.0
-    - New Features:
+    - New features:
       - Ported mbedTLS 2.3.0 to KSDK 2.0.0.
 
   - 2.2.1
-    - New Features:
+    - New features:
       - Ported mbedTLS 2.2.1 to KSDK 2.0.0.
-      - Added support of MMCAU cryptographic acceleration module. Accelerated MD5, SHA, AES and DES.
-      - Added support of LTC cryptographic acceleration module. Accelerated AES, DES and PKHA.
+      - Added support of MMCAU cryptographic acceleration module. Accelerated MD5, SHA, AES, and DES.
+      - Added support of LTC cryptographic acceleration module. Accelerated AES, DES, and PKHA.
       - Added new files:
       - \middleware\mbedtls\port\ksdk\ksdk_mbedtls.c - alternative implementation of cryptographic algorithm functions using LTC and MMCAU   module drivers.
       - \middleware\mbedtls\port\ksdk\ksdk_mbedtls_config.h - configuration settings used by mbedTLS KSDK bare metal examples.

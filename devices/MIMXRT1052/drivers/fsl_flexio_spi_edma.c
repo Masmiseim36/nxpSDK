@@ -35,8 +35,14 @@
 #include "fsl_flexio_spi_edma.h"
 
 /*******************************************************************************
- * Definitons
+ * Definitions
  ******************************************************************************/
+
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.flexio_spi_edma"
+#endif
+
 /*<! Structure definition for spi_edma_private_handle_t. The structure is private. */
 typedef struct _flexio_spi_master_edma_private_handle
 {

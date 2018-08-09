@@ -49,22 +49,13 @@
 uint32_t g_ovf_stamp;
 volatile uint32_t g_ovf_counter = 0;
 
-#if !defined(FSL_RTOS_FREE_RTOS) && !defined(ISSDK_USE_BLE_STACK)
+#ifndef FSL_RTOS_FREE_RTOS
 // SDK specific SysTick Interrupt Handler
 void SysTick_Handler(void)
 {
     g_ovf_counter += 1;
 }
 #endif
-
-uint32_t SysTick_GetOVFCount(void)
-{
-#ifdef ISSDK_USE_BLE_STACK
-    return OSA_TimeGetMsec();
-#else
-    return g_ovf_counter;
-#endif
-}
 
 // ARM-core specific function to enable systicks.
 void BOARD_SystickEnable(void)
@@ -79,7 +70,7 @@ void BOARD_SystickEnable(void)
 void BOARD_SystickStart(int32_t *pStart)
 {
     // Store the 24 bit systick timer.
-    g_ovf_stamp = SysTick_GetOVFCount();
+    g_ovf_stamp = g_ovf_counter;
     *pStart = SYST_CVR & 0x00FFFFFF;
 }
 
@@ -90,7 +81,7 @@ int32_t BOARD_SystickElapsedTicks(int32_t *pStart)
 
     // Subtract the stored start ticks and check for wraparound down through zero.
     elapsed = *pStart - (SYST_CVR & 0x00FFFFFF);
-    elapsed += SYST_RVR * (SysTick_GetOVFCount() - g_ovf_stamp);
+    elapsed += SYST_RVR * (g_ovf_counter - g_ovf_stamp);
 
     return elapsed;
 }
@@ -116,12 +107,11 @@ uint32_t BOARD_SystickElapsedTime_us(int32_t *pStart)
 void BOARD_DELAY_ms(uint32_t delay_ms)
 {
     int32_t start, elapsed;
-    uint32_t systemCoreClock;
+    uint32_t systemCoreClock = CLOCK_GetFreq(kCLOCK_CoreSysClk);
 
     BOARD_SystickStart(&start);
     do // Loop for requested number of ms.
     {
         elapsed = BOARD_SystickElapsedTicks(&start);
-        systemCoreClock = CLOCK_GetFreq(kCLOCK_CoreSysClk);
     } while(COUNT_TO_MSEC(elapsed, systemCoreClock) < delay_ms);
 }

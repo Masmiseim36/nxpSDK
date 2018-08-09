@@ -33,7 +33,7 @@
 
 /*
  * Copyright (c) 2013-2016, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016-2017 NXP
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -69,22 +69,27 @@
 #define LWIP_NO_INTTYPES_H 1
 #endif
 
-#define BYTE_ORDER LITTLE_ENDIAN
+#if defined(LWIP_TIMEVAL_PRIVATE) && (LWIP_TIMEVAL_PRIVATE == 0)
+#include <sys/time.h>
+#endif
+
+#ifndef LWIP_NO_STDINT_H
+#define LWIP_NO_STDINT_H 0
+#endif
 
 // Typedefs for the types used by lwip
-
-typedef unsigned   char    u8_t;
-typedef signed     char    s8_t;
-typedef unsigned   short   u16_t;
-typedef signed     short   s16_t;
-typedef unsigned   int    u32_t;
-typedef signed     int    s32_t;
-typedef u32_t mem_ptr_t;
+#if LWIP_NO_STDINT_H
+typedef unsigned char  u8_t;
+typedef signed   char  s8_t;
+typedef unsigned short u16_t;
+typedef signed   short s16_t;
+typedef unsigned int   u32_t;
+typedef signed   int   s32_t;
+typedef u32_t          mem_ptr_t;
+#endif
 
 // Compiler hints for packing lwip's structures
 //FSL: very important at high optimization level
-/* */
-
 
 #if __GNUC__
 #define PACK_STRUCT_BEGIN

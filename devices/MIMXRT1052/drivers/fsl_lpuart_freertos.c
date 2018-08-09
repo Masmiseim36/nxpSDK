@@ -37,6 +37,12 @@
 #include <event_groups.h>
 #include <semphr.h>
 
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.lpuart_freertos"
+#endif
+
+
 static void LPUART_RTOS_Callback(LPUART_Type *base, lpuart_handle_t *state, status_t status, void *param)
 {
     lpuart_rtos_handle_t *handle = (lpuart_rtos_handle_t *)param;

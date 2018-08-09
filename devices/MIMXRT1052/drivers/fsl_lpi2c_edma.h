@@ -41,6 +41,12 @@
  * Definitions
  ******************************************************************************/
 
+/*! @name Driver version */
+/*@{*/
+/*! @brief LPI2C EDMA driver version 2.1.5. */
+#define FSL_LPI2C_EDMA_DRIVER_VERSION (MAKE_VERSION(2, 1, 5))
+/*@}*/
+
 /*!
  * @addtogroup lpi2c_master_edma_driver
  * @{

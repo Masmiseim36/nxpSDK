@@ -284,6 +284,8 @@ static void USB_HostMsdResetDone(usb_host_msd_instance_t *msdInstance, usb_statu
     {
         if (msdInstance->controlCallbackFn != NULL)
         {
+            /* callback to application, callback function is initialized in the USB_HostMsdControl,
+            or USB_HostMsdSetInterface, but is the same function */
             msdInstance->controlCallbackFn(msdInstance->controlCallbackParam, NULL, 0,
                                            status); /* callback to application */
         }
@@ -350,6 +352,8 @@ static void USB_HostMsdControlCallback(void *param, usb_host_transfer_t *transfe
     msdInstance->controlTransfer = NULL;
     if (msdInstance->controlCallbackFn != NULL)
     {
+        /* callback to application, callback function is initialized in the USB_HostMsdControl,
+        or USB_HostMsdSetInterface, but is the same function */
         msdInstance->controlCallbackFn(msdInstance->controlCallbackParam, transfer->transferBuffer,
                                        transfer->transferSofar, status); /* callback to application */
     }
@@ -360,7 +364,7 @@ static void USB_HostMsdCommandDone(usb_host_msd_instance_t *msdInstance, usb_sta
 {
     if (msdInstance->commandCallbackFn != NULL)
     {
-        /* callback to application */
+        /* callback to application, the callback function is initialized in USB_HostMsdCommand */
         msdInstance->commandCallbackFn(msdInstance->commandCallbackParam, msdInstance->msdCommand.dataBuffer,
                                        msdInstance->msdCommand.dataSofar, status);
     }
@@ -898,6 +902,8 @@ static void USB_HostMsdSetInterfaceCallback(void *param, usb_host_transfer_t *tr
 
     if (msdInstance->controlCallbackFn != NULL)
     {
+        /* callback to application, callback function is initialized in the USB_HostMsdControl,
+        or USB_HostMsdSetInterface, but is the same function */
         msdInstance->controlCallbackFn(msdInstance->controlCallbackParam, NULL, 0,
                                        status); /* callback to application */
     }

@@ -1,7 +1,7 @@
 /*
  * The Clear BSD License
  * Copyright (c) 2015-2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2018 NXP
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without modification,
@@ -50,16 +50,18 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief TRNG driver version 2.0.1. 
+/*! @brief TRNG driver version 2.0.2. 
  *
- * Current version: 2.0.1
+ * Current version: 2.0.2
  *
  * Change log:
+ * - Version 2.0.2
+ *   - fix MISRA issues
  * - Version 2.0.1
  *   - add support for KL8x and KL28Z
  *   - update default OSCDIV for K81 to divide by 2
  */
-#define FSL_TRNG_DRIVER_VERSION (MAKE_VERSION(2, 0, 1))
+#define FSL_TRNG_DRIVER_VERSION (MAKE_VERSION(2, 0, 2))
 /*@}*/
 
 /*! @brief TRNG sample mode. Used by trng_config_t. */

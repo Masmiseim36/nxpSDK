@@ -38,6 +38,12 @@
  * Definitions
  ******************************************************************************/
 
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.flexio_uart_edma"
+#endif
+
+
 /*<! Structure definition for uart_edma_private_handle_t. The structure is private. */
 typedef struct _flexio_uart_edma_private_handle
 {
@@ -55,8 +61,9 @@ enum _flexio_uart_edma_tansfer_states
 };
 
 /*******************************************************************************
- * Definitions
+ * Variables
  ******************************************************************************/
+
 /*< @brief user configurable flexio uart handle count. */
 #define FLEXIO_UART_HANDLE_COUNT 2
 

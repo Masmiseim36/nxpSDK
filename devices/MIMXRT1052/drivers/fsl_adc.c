@@ -34,6 +34,12 @@
 
 #include "fsl_adc.h"
 
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.adc_12b1msps_sar"
+#endif
+
+
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/

@@ -335,7 +335,7 @@ void httpsrv_destroy_server(HTTPSRV_STRUCT *server)
                 taskYIELD();
             } while (wait);
 
-            httpsrv_mem_free(server->session);
+            httpsrv_mem_free((void *)server->session);
             server->session = NULL;
         }
 

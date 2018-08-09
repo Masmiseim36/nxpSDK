@@ -131,7 +131,7 @@ static void USB_HostPrinterClearInHaltCallback(void *param, usb_host_transfer_t 
 
     if (printerInstance->inCallbackFn != NULL)
     {
-        /* callback to application */
+        /* callback to application, callback function is initialized in USB_HostPrinterRecv */
         printerInstance->inCallbackFn(printerInstance->outCallbackParam, printerInstance->stallDataBuffer,
                                       printerInstance->stallDataLength, kStatus_USB_TransferStall);
     }
@@ -144,7 +144,7 @@ static void USB_HostPrinterClearOutHaltCallback(void *param, usb_host_transfer_t
 
     if (printerInstance->outCallbackFn != NULL)
     {
-        /* callback to application */
+        /* callback to application, callback function is initialized in USB_HostPrinterSend */
         printerInstance->outCallbackFn(printerInstance->outCallbackParam, printerInstance->stallDataBuffer,
                                        printerInstance->stallDataLength, kStatus_USB_TransferStall);
     }
@@ -215,7 +215,7 @@ static void USB_HostPrinterInPipeCallback(void *param, usb_host_transfer_t *tran
 
     if (printerInstance->inCallbackFn != NULL)
     {
-        /* callback to application */
+        /* callback to application, callback function is initialized in USB_HostPrinterRecv */
         printerInstance->inCallbackFn(printerInstance->inCallbackParam, transfer->transferBuffer,
                                       transfer->transferSofar, status);
     }
@@ -241,7 +241,7 @@ static void USB_HostPrinterOutPipeCallback(void *param, usb_host_transfer_t *tra
 #endif
     if (printerInstance->outCallbackFn != NULL)
     {
-        /* callback to application */
+        /* callback to application, callback function is initialized in USB_HostPrinterSend */
         printerInstance->outCallbackFn(printerInstance->outCallbackParam, transfer->transferBuffer,
                                        transfer->transferSofar, status);
     }
@@ -255,7 +255,9 @@ static void USB_HostPrinterControlPipeCallback(void *param, usb_host_transfer_t 
     printerInstance->controlTransfer = NULL;
     if (printerInstance->controlCallbackFn != NULL)
     {
-        /* callback to application */
+        /* callback to application, callback to application, callback function is initialized in the
+        USB_HostPrinterControl,
+        USB_HostPrinterSetInterface or USB_HostHubClassRequestCommon, but is the same function */
         printerInstance->controlCallbackFn(printerInstance->controlCallbackParam, transfer->transferBuffer,
                                            transfer->transferSofar, status);
     }
@@ -372,7 +374,9 @@ static void USB_HostPrinterSetInterfaceCallback(void *param, usb_host_transfer_t
 
     if (printerInstance->controlCallbackFn != NULL)
     {
-        /* callback to application */
+        /* callback to application, callback to application, callback function is initialized in the
+        USB_HostPrinterControl,
+        USB_HostPrinterSetInterface or USB_HostHubClassRequestCommon, but is the same function */
         printerInstance->controlCallbackFn(printerInstance->controlCallbackParam, NULL, 0, status);
     }
     USB_HostFreeTransfer(printerInstance->hostHandle, transfer);

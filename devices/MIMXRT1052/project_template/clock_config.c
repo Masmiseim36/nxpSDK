@@ -1,9 +1,8 @@
 /*
  * The Clear BSD License
- * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2017-2018 NXP
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
  *  that the following conditions are met:
@@ -35,290 +34,372 @@
 /*
  * How to setup clock using clock driver functions:
  *
- * 1. CLOCK_SetSimSafeDivs, to make sure core clock, bus clock, flexbus clock
- *    and flash clock are in allowed range during clock mode switch.
+ * 1. Call CLOCK_InitXXXPLL() to configure corresponding PLL clock.
  *
- * 2. Call CLOCK_Osc0Init to setup OSC clock, if it is used in target mode.
+ * 2. Call CLOCK_InitXXXpfd() to configure corresponding PLL pfd clock.
  *
- * 3. Set MCG configuration, MCG includes three parts: FLL clock, PLL clock and
- *    internal reference clock(MCGIRCLK). Follow the steps to setup:
+ * 3. Call CLOCK_SetMux() to configure corresponding clock source for target clock out.
  *
- *    1). Call CLOCK_BootToXxxMode to set MCG to target mode.
+ * 4. Call CLOCK_SetDiv() to configure corresponding clock divider for target clock out.
  *
- *    2). If target mode is FBI/BLPI/PBI mode, the MCGIRCLK has been configured
- *        correctly. For other modes, need to call CLOCK_SetInternalRefClkConfig
- *        explicitly to setup MCGIRCLK.
+ * 5. Call CLOCK_SetXtalFreq() to set XTAL frequency based on board settings.
  *
- *    3). Don't need to configure FLL explicitly, because if target mode is FLL
- *        mode, then FLL has been configured by the function CLOCK_BootToXxxMode,
- *        if the target mode is not FLL mode, the FLL is disabled.
- *
- *    4). If target mode is PEE/PBE/PEI/PBI mode, then the related PLL has been
- *        setup by CLOCK_BootToXxxMode. In FBE/FBI/FEE/FBE mode, the PLL could
- *        be enabled independently, call CLOCK_EnablePll0 explicitly in this case.
- *
- * 4. Call CLOCK_SetSimConfig to set the clock configuration in SIM.
  */
 
-/* TEXT BELOW IS USED AS SETTING FOR THE CLOCKS TOOL *****************************
-!!ClocksProfile
-product: Clocks v1.0
-processor: MK64FN1M0xxx12
-package_id: MK64FN1M0VLL12
+/* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+!!GlobalInfo
+product: Clocks v4.1
+processor: MIMXRT1052xxxxB
+package_id: MIMXRT1052DVL6B
 mcu_data: ksdk2_0
-processor_version: 1.0.1
-board: FRDM-K64F
- * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR THE CLOCKS TOOL **/
+processor_version: 0.0.11
+board: IMXRT1050-EVKB
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 
-// #include "fsl_smc.h"
 #include "clock_config.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define MCG_PLL_DISABLE                                   0U  /*!< MCGPLLCLK disabled */
-#define OSC_CAP0P                                         0U  /*!< Oscillator 0pF capacitor load */
-#define OSC_ER_CLK_DISABLE                                0U  /*!< Disable external reference clock */
-#define SIM_OSC32KSEL_RTC32KCLK_CLK                       2U  /*!< OSC32KSEL select: RTC32KCLK clock (32.768kHz) */
-#define SIM_PLLFLLSEL_IRC48MCLK_CLK                       3U  /*!< PLLFLL select: IRC48MCLK clock */
-#define SIM_PLLFLLSEL_MCGPLLCLK_CLK                       1U  /*!< PLLFLL select: MCGPLLCLK clock */
 
 /*******************************************************************************
  * Variables
  ******************************************************************************/
 /* System clock frequency. */
-// extern uint32_t SystemCoreClock;
-
-/*******************************************************************************
- * Code
-******************************************************************************/
+extern uint32_t SystemCoreClock;
 
 /*******************************************************************************
  ************************ BOARD_InitBootClocks function ************************
  ******************************************************************************/
 void BOARD_InitBootClocks(void)
 {
-    // BOARD_BootClockRUN();
-}
-
-/*FUNCTION**********************************************************************
- *
- * Function Name : CLOCK_CONFIG_SetFllExtRefDiv
- * Description   : Configure FLL external reference divider (FRDIV).
- * Param frdiv   : The value to set FRDIV.
- *
- *END**************************************************************************/
-static void CLOCK_CONFIG_SetFllExtRefDiv(uint8_t frdiv)
-{
-    // MCG->C1 = ((MCG->C1 & ~MCG_C1_FRDIV_MASK) | MCG_C1_FRDIV(frdiv));
+    BOARD_BootClockRUN();
 }
 
 /*******************************************************************************
  ********************** Configuration BOARD_BootClockRUN ***********************
  ******************************************************************************/
-/* TEXT BELOW IS USED AS SETTING FOR THE CLOCKS TOOL *****************************
+/* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!Configuration
 name: BOARD_BootClockRUN
+called_from_default_init: true
 outputs:
-- {id: Bus_clock.outFreq, value: 60 MHz}
-- {id: Core_clock.outFreq, value: 120 MHz, locked: true, accuracy: '0.001'}
-- {id: Flash_clock.outFreq, value: 24 MHz}
-- {id: FlexBus_clock.outFreq, value: 40 MHz}
-- {id: LPO_clock.outFreq, value: 1 kHz}
-- {id: MCGFFCLK.outFreq, value: 1.5625 MHz}
-- {id: MCGIRCLK.outFreq, value: 32.768 kHz}
-- {id: OSCERCLK.outFreq, value: 50 MHz}
-- {id: PLLFLLCLK.outFreq, value: 120 MHz}
-- {id: System_clock.outFreq, value: 120 MHz}
+- {id: AHB_CLK_ROOT.outFreq, value: 600 MHz}
+- {id: CAN_CLK_ROOT.outFreq, value: 40 MHz}
+- {id: CKIL_SYNC_CLK_ROOT.outFreq, value: 32.768 kHz}
+- {id: CLK_1M.outFreq, value: 1 MHz}
+- {id: CLK_24M.outFreq, value: 24 MHz}
+- {id: CSI_CLK_ROOT.outFreq, value: 12 MHz}
+- {id: ENET_125M_CLK.outFreq, value: 2.4 MHz}
+- {id: ENET_25M_REF_CLK.outFreq, value: 1.2 MHz}
+- {id: FLEXIO1_CLK_ROOT.outFreq, value: 30 MHz}
+- {id: FLEXIO2_CLK_ROOT.outFreq, value: 30 MHz}
+- {id: FLEXSPI_CLK_ROOT.outFreq, value: 2880/11 MHz}
+- {id: IPG_CLK_ROOT.outFreq, value: 150 MHz}
+- {id: LCDIF_CLK_ROOT.outFreq, value: 67.5 MHz}
+- {id: LPI2C_CLK_ROOT.outFreq, value: 60 MHz}
+- {id: LPSPI_CLK_ROOT.outFreq, value: 105.6 MHz}
+- {id: LVDS1_CLK.outFreq, value: 1.2 GHz}
+- {id: PERCLK_CLK_ROOT.outFreq, value: 75 MHz}
+- {id: PLL7_MAIN_CLK.outFreq, value: 24 MHz}
+- {id: SAI1_CLK_ROOT.outFreq, value: 1080/17 MHz}
+- {id: SAI2_CLK_ROOT.outFreq, value: 1080/17 MHz}
+- {id: SAI3_CLK_ROOT.outFreq, value: 1080/17 MHz}
+- {id: SEMC_CLK_ROOT.outFreq, value: 75 MHz}
+- {id: SPDIF0_CLK_ROOT.outFreq, value: 30 MHz}
+- {id: TRACE_CLK_ROOT.outFreq, value: 352/3 MHz}
+- {id: UART_CLK_ROOT.outFreq, value: 80 MHz}
+- {id: USDHC1_CLK_ROOT.outFreq, value: 198 MHz}
+- {id: USDHC2_CLK_ROOT.outFreq, value: 198 MHz}
 settings:
-- {id: MCGMode, value: PEE}
-- {id: MCG.FCRDIV.scale, value: '1', locked: true}
-- {id: MCG.FRDIV.scale, value: '32'}
-- {id: MCG.IREFS.sel, value: MCG.FRDIV}
-- {id: MCG.PLLS.sel, value: MCG.PLL}
-- {id: MCG.PRDIV.scale, value: '20', locked: true}
-- {id: MCG.VDIV.scale, value: '48', locked: true}
-- {id: MCG_C1_IRCLKEN_CFG, value: Enabled}
-- {id: MCG_C2_RANGE0_CFG, value: Very_high}
-- {id: MCG_C2_RANGE0_FRDIV_CFG, value: Very_high}
-- {id: OSC_CR_ERCLKEN_CFG, value: Enabled}
-- {id: RTCCLKOUTConfig, value: 'yes'}
-- {id: RTC_CR_OSCE_CFG, value: Enabled}
-- {id: RTC_CR_OSC_CAP_LOAD_CFG, value: SC10PF}
-- {id: SIM.OSC32KSEL.sel, value: RTC.RTC32KCLK}
-- {id: SIM.OUTDIV2.scale, value: '2'}
-- {id: SIM.OUTDIV3.scale, value: '3'}
-- {id: SIM.OUTDIV4.scale, value: '5'}
-- {id: SIM.PLLFLLSEL.sel, value: MCG.MCGPLLCLK}
-- {id: SIM.RTCCLKOUTSEL.sel, value: RTC.RTC32KCLK}
-- {id: SIM.SDHCSRCSEL.sel, value: OSC.OSCERCLK}
-- {id: SIM.TIMESRCSEL.sel, value: OSC.OSCERCLK}
-- {id: SIM.USBDIV.scale, value: '5'}
-- {id: SIM.USBFRAC.scale, value: '2'}
-- {id: SIM.USBSRCSEL.sel, value: SIM.USBDIV}
+- {id: CCM.AHB_PODF.scale, value: '1', locked: true}
+- {id: CCM.ARM_PODF.scale, value: '2', locked: true}
+- {id: CCM.FLEXSPI_PODF.scale, value: '1', locked: true}
+- {id: CCM.FLEXSPI_SEL.sel, value: CCM_ANALOG.PLL3_PFD0_CLK}
+- {id: CCM.LPSPI_PODF.scale, value: '5', locked: true}
+- {id: CCM.PERCLK_PODF.scale, value: '2', locked: true}
+- {id: CCM.SEMC_PODF.scale, value: '8'}
+- {id: CCM.TRACE_PODF.scale, value: '3', locked: true}
+- {id: CCM_ANALOG.PLL1_BYPASS.sel, value: CCM_ANALOG.PLL1}
+- {id: CCM_ANALOG.PLL1_PREDIV.scale, value: '1', locked: true}
+- {id: CCM_ANALOG.PLL1_VDIV.scale, value: '50', locked: true}
+- {id: CCM_ANALOG.PLL2.denom, value: '1', locked: true}
+- {id: CCM_ANALOG.PLL2.div, value: '22'}
+- {id: CCM_ANALOG.PLL2.num, value: '0', locked: true}
+- {id: CCM_ANALOG.PLL2_BYPASS.sel, value: CCM_ANALOG.PLL2_OUT_CLK}
+- {id: CCM_ANALOG.PLL2_PFD0_BYPASS.sel, value: CCM_ANALOG.PLL2_PFD0}
+- {id: CCM_ANALOG.PLL2_PFD1_BYPASS.sel, value: CCM_ANALOG.PLL2_PFD1}
+- {id: CCM_ANALOG.PLL2_PFD2_BYPASS.sel, value: CCM_ANALOG.PLL2_PFD2}
+- {id: CCM_ANALOG.PLL2_PFD3_BYPASS.sel, value: CCM_ANALOG.PLL2_PFD3}
+- {id: CCM_ANALOG.PLL3_BYPASS.sel, value: CCM_ANALOG.PLL3}
+- {id: CCM_ANALOG.PLL3_PFD0_BYPASS.sel, value: CCM_ANALOG.PLL3_PFD0}
+- {id: CCM_ANALOG.PLL3_PFD0_DIV.scale, value: '33', locked: true}
+- {id: CCM_ANALOG.PLL3_PFD0_MUL.scale, value: '18', locked: true}
+- {id: CCM_ANALOG.PLL3_PFD1_BYPASS.sel, value: CCM_ANALOG.PLL3_PFD1}
+- {id: CCM_ANALOG.PLL3_PFD2_BYPASS.sel, value: CCM_ANALOG.PLL3_PFD2}
+- {id: CCM_ANALOG.PLL3_PFD3_BYPASS.sel, value: CCM_ANALOG.PLL3_PFD3}
+- {id: CCM_ANALOG.PLL4.denom, value: '50'}
+- {id: CCM_ANALOG.PLL4.div, value: '47'}
+- {id: CCM_ANALOG.PLL5.denom, value: '1'}
+- {id: CCM_ANALOG.PLL5.div, value: '40'}
+- {id: CCM_ANALOG.PLL5.num, value: '0'}
+- {id: CCM_ANALOG_PLL_ENET_POWERDOWN_CFG, value: 'Yes'}
+- {id: CCM_ANALOG_PLL_USB1_POWER_CFG, value: 'Yes'}
 sources:
-- {id: OSC.OSC.outFreq, value: 50 MHz, enabled: true}
- * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR THE CLOCKS TOOL **/
+- {id: XTALOSC24M.OSC.outFreq, value: 24 MHz, enabled: true}
+- {id: XTALOSC24M.RTC_OSC.outFreq, value: 32.768 kHz, enabled: true}
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 
 /*******************************************************************************
  * Variables for BOARD_BootClockRUN configuration
  ******************************************************************************/
-const mcg_config_t mcgConfig_BOARD_BootClockRUN =
+const clock_arm_pll_config_t armPllConfig_BOARD_BootClockRUN =
     {
-        .mcgMode = kMCG_ModePEE,                  /* PEE - PLL Engaged External */
-        .irclkEnableMode = kMCG_IrclkEnable,      /* MCGIRCLK enabled, MCGIRCLK disabled in STOP mode */
-        .ircs = kMCG_IrcSlow,                     /* Slow internal reference clock selected */
-        .fcrdiv = 0x0U,                           /* Fast IRC divider: divided by 1 */
-        .frdiv = 0x0U,                            /* FLL reference clock divider: divided by 32 */
-        .drs = kMCG_DrsLow,                       /* Low frequency range */
-        .dmx32 = kMCG_Dmx32Default,               /* DCO has a default range of 25% */
-        .oscsel = kMCG_OscselOsc,                 /* Selects System Oscillator (OSCCLK) */
-        .pll0Config =
-            {
-                .enableMode = MCG_PLL_DISABLE,    /* MCGPLLCLK disabled */
-                .prdiv = 0x13U,                   /* PLL Reference divider: divided by 20 */
-                .vdiv = 0x18U,                    /* VCO divider: multiplied by 48 */
-            },
+        .loopDivider = 100,                       /* PLL loop divider, Fout = Fin * 50 */
+        .src = 0,                                 /* Bypass clock source, 0 - OSC 24M, 1 - CLK1_P and CLK1_N */
     };
-const sim_clock_config_t simConfig_BOARD_BootClockRUN =
+const clock_sys_pll_config_t sysPllConfig_BOARD_BootClockRUN =
     {
-        .pllFllSel = SIM_PLLFLLSEL_MCGPLLCLK_CLK, /* PLLFLL select: MCGPLLCLK clock */
-        .er32kSrc = SIM_OSC32KSEL_RTC32KCLK_CLK,  /* OSC32KSEL select: RTC32KCLK clock (32.768kHz) */
-        .clkdiv1 = 0x1240000U,                    /* SIM_CLKDIV1 - OUTDIV1: /1, OUTDIV2: /2, OUTDIV3: /3, OUTDIV4: /5 */
+        .loopDivider = 1,                         /* PLL loop divider, Fout = Fin * ( 20 + loopDivider*2 + numerator / denominator ) */
+        .numerator = 0,                           /* 30 bit numerator of fractional loop divider */
+        .denominator = 1,                         /* 30 bit denominator of fractional loop divider */
+        .src = 0,                                 /* Bypass clock source, 0 - OSC 24M, 1 - CLK1_P and CLK1_N */
     };
-const osc_config_t oscConfig_BOARD_BootClockRUN =
+const clock_usb_pll_config_t usb1PllConfig_BOARD_BootClockRUN =
     {
-        .freq = 50000000U,                        /* Oscillator frequency: 50000000Hz */
-        .capLoad = (OSC_CAP0P),                   /* Oscillator capacity load: 0pF */
-        .workMode = kOSC_ModeExt,                 /* Use external clock */
-        .oscerConfig =
-            {
-                .enableMode = kOSC_ErClkEnable,   /* Enable external reference clock, disable external reference clock in STOP mode */
-            }
+        .loopDivider = 0,                         /* PLL loop divider, Fout = Fin * 20 */
+        .src = 0,                                 /* Bypass clock source, 0 - OSC 24M, 1 - CLK1_P and CLK1_N */
     };
-
 /*******************************************************************************
  * Code for BOARD_BootClockRUN configuration
  ******************************************************************************/
 void BOARD_BootClockRUN(void)
 {
-    // /* Set the system clock dividers in SIM to safe value. */
-    // CLOCK_SetSimSafeDivs();
-    // /* Initializes OSC0 according to board configuration. */
-    // CLOCK_InitOsc0(&oscConfig_BOARD_BootClockRUN);
-    // CLOCK_SetXtal0Freq(oscConfig_BOARD_BootClockRUN.freq);
-    // /* Configure the Internal Reference clock (MCGIRCLK). */
-    // CLOCK_SetInternalRefClkConfig(mcgConfig_BOARD_BootClockRUN.irclkEnableMode,
-                                  // mcgConfig_BOARD_BootClockRUN.ircs, 
-                                  // mcgConfig_BOARD_BootClockRUN.fcrdiv);
-    // /* Configure FLL external reference divider (FRDIV). */
-    // CLOCK_CONFIG_SetFllExtRefDiv(mcgConfig_BOARD_BootClockRUN.frdiv);
-    // /* Set MCG to PEE mode. */
-    // CLOCK_BootToPeeMode(mcgConfig_BOARD_BootClockRUN.oscsel,
-                        // kMCG_PllClkSelPll0,
-                        // &mcgConfig_BOARD_BootClockRUN.pll0Config);
-    // /* Set the clock configuration in SIM module. */
-    // CLOCK_SetSimConfig(&simConfig_BOARD_BootClockRUN);
-    // /* Set SystemCoreClock variable. */
-    // SystemCoreClock = BOARD_BOOTCLOCKRUN_CORE_CLOCK;
-}
-
-/*******************************************************************************
- ********************* Configuration BOARD_BootClockVLPR ***********************
- ******************************************************************************/
-/* TEXT BELOW IS USED AS SETTING FOR THE CLOCKS TOOL *****************************
-!!Configuration
-name: BOARD_BootClockVLPR
-outputs:
-- {id: Bus_clock.outFreq, value: 4 MHz}
-- {id: Core_clock.outFreq, value: 4 MHz, locked: true, accuracy: '0.001'}
-- {id: Flash_clock.outFreq, value: 800 kHz}
-- {id: FlexBus_clock.outFreq, value: 4 MHz}
-- {id: LPO_clock.outFreq, value: 1 kHz}
-- {id: MCGIRCLK.outFreq, value: 4 MHz}
-- {id: System_clock.outFreq, value: 4 MHz}
-settings:
-- {id: MCGMode, value: BLPI}
-- {id: powerMode, value: VLPR}
-- {id: MCG.CLKS.sel, value: MCG.IRCS}
-- {id: MCG.FCRDIV.scale, value: '1'}
-- {id: MCG.FRDIV.scale, value: '32'}
-- {id: MCG.IRCS.sel, value: MCG.FCRDIV}
-- {id: MCG_C1_IRCLKEN_CFG, value: Enabled}
-- {id: MCG_C2_RANGE0_CFG, value: Very_high}
-- {id: MCG_C2_RANGE0_FRDIV_CFG, value: Very_high}
-- {id: RTC_CR_OSCE_CFG, value: Enabled}
-- {id: RTC_CR_OSC_CAP_LOAD_CFG, value: SC10PF}
-- {id: SIM.OSC32KSEL.sel, value: RTC.RTC32KCLK}
-- {id: SIM.OUTDIV3.scale, value: '1'}
-- {id: SIM.OUTDIV4.scale, value: '5'}
-- {id: SIM.PLLFLLSEL.sel, value: IRC48M.IRC48MCLK}
-- {id: SIM.RTCCLKOUTSEL.sel, value: RTC.RTC32KCLK}
-sources:
-- {id: OSC.OSC.outFreq, value: 50 MHz}
- * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR THE CLOCKS TOOL **/
-
-/*******************************************************************************
- * Variables for BOARD_BootClockVLPR configuration
- ******************************************************************************/
-const mcg_config_t mcgConfig_BOARD_BootClockVLPR =
+    /* Init RTC OSC clock frequency. */
+    CLOCK_SetRtcXtalFreq(32768U);
+    /* Enable 1MHz clock output. */
+    XTALOSC24M->OSC_CONFIG2 |= XTALOSC24M_OSC_CONFIG2_ENABLE_1M_MASK;
+    /* Use free 1MHz clock output. */
+    XTALOSC24M->OSC_CONFIG2 &= ~XTALOSC24M_OSC_CONFIG2_MUX_1M_MASK;
+    /* Set XTAL 24MHz clock frequency. */
+    CLOCK_SetXtalFreq(24000000U);
+    /* Enable XTAL 24MHz clock source. */
+    CLOCK_InitExternalClk(0);
+    /* Enable internal RC. */
+    CLOCK_InitRcOsc24M();
+    /* Switch clock source to external OSC. */
+    CLOCK_SwitchOsc(kCLOCK_XtalOsc);
+    /* Set Oscillator ready counter value. */
+    CCM->CCR = (CCM->CCR & (~CCM_CCR_OSCNT_MASK)) | CCM_CCR_OSCNT(127);
+    /* Setting PeriphClk2Mux and PeriphMux to provide stable clock before PLLs are initialed */
+    CLOCK_SetMux(kCLOCK_PeriphClk2Mux, 1); /* Set PERIPH_CLK2 MUX to OSC */
+    CLOCK_SetMux(kCLOCK_PeriphMux, 1);     /* Set PERIPH_CLK MUX to PERIPH_CLK2 */
+    /* Setting the VDD_SOC to 1.5V. It is necessary to config AHB to 600Mhz. */
+    DCDC->REG3 = (DCDC->REG3 & (~DCDC_REG3_TRG_MASK)) | DCDC_REG3_TRG(0x12);
+    /* Waiting for DCDC_STS_DC_OK bit is asserted */
+    while (DCDC_REG0_STS_DC_OK_MASK != (DCDC_REG0_STS_DC_OK_MASK & DCDC->REG0))
     {
-        .mcgMode = kMCG_ModeBLPI,                 /* BLPI - Bypassed Low Power Internal */
-        .irclkEnableMode = kMCG_IrclkEnable,      /* MCGIRCLK enabled, MCGIRCLK disabled in STOP mode */
-        .ircs = kMCG_IrcFast,                     /* Fast internal reference clock selected */
-        .fcrdiv = 0x0U,                           /* Fast IRC divider: divided by 1 */
-        .frdiv = 0x0U,                            /* FLL reference clock divider: divided by 32 */
-        .drs = kMCG_DrsLow,                       /* Low frequency range */
-        .dmx32 = kMCG_Dmx32Default,               /* DCO has a default range of 25% */
-        .oscsel = kMCG_OscselOsc,                 /* Selects System Oscillator (OSCCLK) */
-        .pll0Config =
-            {
-                .enableMode = MCG_PLL_DISABLE,    /* MCGPLLCLK disabled */
-                .prdiv = 0x0U,                    /* PLL Reference divider: divided by 1 */
-                .vdiv = 0x0U,                     /* VCO divider: multiplied by 24 */
-            },
-    };
-const sim_clock_config_t simConfig_BOARD_BootClockVLPR =
-    {
-        .pllFllSel = SIM_PLLFLLSEL_IRC48MCLK_CLK, /* PLLFLL select: IRC48MCLK clock */
-        .er32kSrc = SIM_OSC32KSEL_RTC32KCLK_CLK,  /* OSC32KSEL select: RTC32KCLK clock (32.768kHz) */
-        .clkdiv1 = 0x40000U,                      /* SIM_CLKDIV1 - OUTDIV1: /1, OUTDIV2: /1, OUTDIV3: /1, OUTDIV4: /5 */
-    };
-const osc_config_t oscConfig_BOARD_BootClockVLPR =
-    {
-        .freq = 0U,                               /* Oscillator frequency: 0Hz */
-        .capLoad = (OSC_CAP0P),                   /* Oscillator capacity load: 0pF */
-        .workMode = kOSC_ModeExt,                 /* Use external clock */
-        .oscerConfig =
-            {
-                .enableMode = OSC_ER_CLK_DISABLE, /* Disable external reference clock */
-            }
-    };
-
-/*******************************************************************************
- * Code for BOARD_BootClockVLPR configuration
- ******************************************************************************/
-void BOARD_BootClockVLPR(void)
-{
-    /* Set the system clock dividers in SIM to safe value. */
-    // CLOCK_SetSimSafeDivs();
-    // /* Set MCG to BLPI mode. */
-    // CLOCK_BootToBlpiMode(mcgConfig_BOARD_BootClockVLPR.fcrdiv,
-                         // mcgConfig_BOARD_BootClockVLPR.ircs,
-                         // mcgConfig_BOARD_BootClockVLPR.irclkEnableMode);
-    // /* Set the clock configuration in SIM module. */
-    // CLOCK_SetSimConfig(&simConfig_BOARD_BootClockVLPR);
-    // /* Set VLPR power mode. */
-    // SMC_SetPowerModeProtection(SMC, kSMC_AllowPowerModeAll);
-// #if (defined(FSL_FEATURE_SMC_HAS_LPWUI) && FSL_FEATURE_SMC_HAS_LPWUI)
-    // SMC_SetPowerModeVlpr(SMC, false);
-// #else
-    // SMC_SetPowerModeVlpr(SMC);
-// #endif
-    // while (SMC_GetPowerModeState(SMC) != kSMC_PowerStateVlpr)
-    // {
-    // }
-    // /* Set SystemCoreClock variable. */
-    // SystemCoreClock = BOARD_BOOTCLOCKVLPR_CORE_CLOCK;
+    }
+    /* Init ARM PLL. */
+    CLOCK_InitArmPll(&armPllConfig_BOARD_BootClockRUN);
+    /* In SDK projects, SDRAM (configured by SEMC) will be initialized in either debug script or dcd.
+     * With this macro SKIP_SYSCLK_INIT, system pll (selected to be SEMC source clock in SDK projects) will be left unchanged.
+     * Note: If another clock source is selected for SEMC, user may want to avoid changing that clock as well.*/
+#ifndef SKIP_SYSCLK_INIT
+    /* Init System PLL. */
+    CLOCK_InitSysPll(&sysPllConfig_BOARD_BootClockRUN);
+    /* Init System pfd0. */
+    CLOCK_InitSysPfd(kCLOCK_Pfd0, 27);
+    /* Init System pfd1. */
+    CLOCK_InitSysPfd(kCLOCK_Pfd1, 16);
+    /* Init System pfd2. */
+    CLOCK_InitSysPfd(kCLOCK_Pfd2, 24);
+    /* Init System pfd3. */
+    CLOCK_InitSysPfd(kCLOCK_Pfd3, 16);
+    /* Disable pfd offset. */
+    CCM_ANALOG->PLL_SYS &= ~CCM_ANALOG_PLL_SYS_PFD_OFFSET_EN_MASK;
+#endif
+    /* In SDK projects, external flash (configured by FLEXSPI) will be initialized by dcd.
+     * With this macro XIP_EXTERNAL_FLASH, usb1 pll (selected to be FLEXSPI clock source in SDK projects) will be left unchanged.
+     * Note: If another clock source is selected for FLEXSPI, user may want to avoid changing that clock as well.*/
+#if !(defined(XIP_EXTERNAL_FLASH) && (XIP_EXTERNAL_FLASH == 1))
+    /* Init Usb1 PLL. */
+    CLOCK_InitUsb1Pll(&usb1PllConfig_BOARD_BootClockRUN);
+    /* Init Usb1 pfd0. */
+    CLOCK_InitUsb1Pfd(kCLOCK_Pfd0, 33);
+    /* Init Usb1 pfd1. */
+    CLOCK_InitUsb1Pfd(kCLOCK_Pfd1, 16);
+    /* Init Usb1 pfd2. */
+    CLOCK_InitUsb1Pfd(kCLOCK_Pfd2, 17);
+    /* Init Usb1 pfd3. */
+    CLOCK_InitUsb1Pfd(kCLOCK_Pfd3, 19);
+    /* Disable Usb1 PLL output for USBPHY1. */
+    CCM_ANALOG->PLL_USB1 &= ~CCM_ANALOG_PLL_USB1_EN_USB_CLKS_MASK;
+#endif
+    /* DeInit Audio PLL. */
+    CLOCK_DeinitAudioPll();
+    /* Bypass Audio PLL. */
+    CLOCK_SetPllBypass(CCM_ANALOG, kCLOCK_PllAudio, 1);
+    /* Set divider for Audio PLL. */
+    CCM_ANALOG->MISC2 &= ~CCM_ANALOG_MISC2_AUDIO_DIV_LSB_MASK;
+    CCM_ANALOG->MISC2 &= ~CCM_ANALOG_MISC2_AUDIO_DIV_MSB_MASK;
+    /* Enable Audio PLL output. */
+    CCM_ANALOG->PLL_AUDIO |= CCM_ANALOG_PLL_AUDIO_ENABLE_MASK;
+    /* DeInit Video PLL. */
+    CLOCK_DeinitVideoPll();
+    /* Bypass Video PLL. */
+    CCM_ANALOG->PLL_VIDEO |= CCM_ANALOG_PLL_VIDEO_BYPASS_MASK;
+    /* Set divider for Video PLL. */
+    CCM_ANALOG->MISC2 = (CCM_ANALOG->MISC2 & (~CCM_ANALOG_MISC2_VIDEO_DIV_MASK)) | CCM_ANALOG_MISC2_VIDEO_DIV(0);
+    /* Enable Video PLL output. */
+    CCM_ANALOG->PLL_VIDEO |= CCM_ANALOG_PLL_VIDEO_ENABLE_MASK;
+    /* DeInit Enet PLL. */
+    CLOCK_DeinitEnetPll();
+    /* Bypass Enet PLL. */
+    CLOCK_SetPllBypass(CCM_ANALOG, kCLOCK_PllEnet, 1);
+    /* Set Enet output divider. */
+    CCM_ANALOG->PLL_ENET = (CCM_ANALOG->PLL_ENET & (~CCM_ANALOG_PLL_ENET_DIV_SELECT_MASK)) | CCM_ANALOG_PLL_ENET_DIV_SELECT(1);
+    /* Enable Enet output. */
+    CCM_ANALOG->PLL_ENET |= CCM_ANALOG_PLL_ENET_ENABLE_MASK;
+    /* Enable Enet25M output. */
+    CCM_ANALOG->PLL_ENET |= CCM_ANALOG_PLL_ENET_ENET_25M_REF_EN_MASK;
+    /* DeInit Usb2 PLL. */
+    CLOCK_DeinitUsb2Pll();
+    /* Bypass Usb2 PLL. */
+    CLOCK_SetPllBypass(CCM_ANALOG, kCLOCK_PllUsb2, 1);
+    /* Enable Usb2 PLL output. */
+    CCM_ANALOG->PLL_USB2 |= CCM_ANALOG_PLL_USB2_ENABLE_MASK;
+    /* Set AHB_PODF. */
+    CLOCK_SetDiv(kCLOCK_AhbDiv, 0);
+    /* Set IPG_PODF. */
+    CLOCK_SetDiv(kCLOCK_IpgDiv, 3);
+    /* Set ARM_PODF. */
+    CLOCK_SetDiv(kCLOCK_ArmDiv, 1);
+    /* Set preperiph clock source. */
+    CLOCK_SetMux(kCLOCK_PrePeriphMux, 3);
+    /* Set periph clock source. */
+    CLOCK_SetMux(kCLOCK_PeriphMux, 0);
+    /* Set PERIPH_CLK2_PODF. */
+    CLOCK_SetDiv(kCLOCK_PeriphClk2Div, 0);
+    /* Set periph clock2 clock source. */
+    CLOCK_SetMux(kCLOCK_PeriphClk2Mux, 0);
+    /* Set PERCLK_PODF. */
+    CLOCK_SetDiv(kCLOCK_PerclkDiv, 1);
+    /* Set per clock source. */
+    CLOCK_SetMux(kCLOCK_PerclkMux, 0);
+    /* Set USDHC1_PODF. */
+    CLOCK_SetDiv(kCLOCK_Usdhc1Div, 1);
+    /* Set Usdhc1 clock source. */
+    CLOCK_SetMux(kCLOCK_Usdhc1Mux, 0);
+    /* Set USDHC2_PODF. */
+    CLOCK_SetDiv(kCLOCK_Usdhc2Div, 1);
+    /* Set Usdhc2 clock source. */
+    CLOCK_SetMux(kCLOCK_Usdhc2Mux, 0);
+    /* In SDK projects, SDRAM (configured by SEMC) will be initialized in either debug script or dcd.
+     * With this macro SKIP_SYSCLK_INIT, system pll (selected to be SEMC source clock in SDK projects) will be left unchanged.
+     * Note: If another clock source is selected for SEMC, user may want to avoid changing that clock as well.*/
+#ifndef SKIP_SYSCLK_INIT
+    /* Set SEMC_PODF. */
+    CLOCK_SetDiv(kCLOCK_SemcDiv, 7);
+    /* Set Semc alt clock source. */
+    CLOCK_SetMux(kCLOCK_SemcAltMux, 0);
+    /* Set Semc clock source. */
+    CLOCK_SetMux(kCLOCK_SemcMux, 0);
+#endif
+    /* In SDK projects, external flash (configured by FLEXSPI) will be initialized by dcd.
+     * With this macro XIP_EXTERNAL_FLASH, usb1 pll (selected to be FLEXSPI clock source in SDK projects) will be left unchanged.
+     * Note: If another clock source is selected for FLEXSPI, user may want to avoid changing that clock as well.*/
+#if !(defined(XIP_EXTERNAL_FLASH) && (XIP_EXTERNAL_FLASH == 1))
+    /* Set FLEXSPI_PODF. */
+    CLOCK_SetDiv(kCLOCK_FlexspiDiv, 0);
+    /* Set Flexspi clock source. */
+    CLOCK_SetMux(kCLOCK_FlexspiMux, 3);
+#endif
+    /* Set CSI_PODF. */
+    CLOCK_SetDiv(kCLOCK_CsiDiv, 1);
+    /* Set Csi clock source. */
+    CLOCK_SetMux(kCLOCK_CsiMux, 0);
+    /* Set LPSPI_PODF. */
+    CLOCK_SetDiv(kCLOCK_LpspiDiv, 4);
+    /* Set Lpspi clock source. */
+    CLOCK_SetMux(kCLOCK_LpspiMux, 2);
+    /* Set TRACE_PODF. */
+    CLOCK_SetDiv(kCLOCK_TraceDiv, 2);
+    /* Set Trace clock source. */
+    CLOCK_SetMux(kCLOCK_TraceMux, 2);
+    /* Set SAI1_CLK_PRED. */
+    CLOCK_SetDiv(kCLOCK_Sai1PreDiv, 3);
+    /* Set SAI1_CLK_PODF. */
+    CLOCK_SetDiv(kCLOCK_Sai1Div, 1);
+    /* Set Sai1 clock source. */
+    CLOCK_SetMux(kCLOCK_Sai1Mux, 0);
+    /* Set SAI2_CLK_PRED. */
+    CLOCK_SetDiv(kCLOCK_Sai2PreDiv, 3);
+    /* Set SAI2_CLK_PODF. */
+    CLOCK_SetDiv(kCLOCK_Sai2Div, 1);
+    /* Set Sai2 clock source. */
+    CLOCK_SetMux(kCLOCK_Sai2Mux, 0);
+    /* Set SAI3_CLK_PRED. */
+    CLOCK_SetDiv(kCLOCK_Sai3PreDiv, 3);
+    /* Set SAI3_CLK_PODF. */
+    CLOCK_SetDiv(kCLOCK_Sai3Div, 1);
+    /* Set Sai3 clock source. */
+    CLOCK_SetMux(kCLOCK_Sai3Mux, 0);
+    /* Set LPI2C_CLK_PODF. */
+    CLOCK_SetDiv(kCLOCK_Lpi2cDiv, 0);
+    /* Set Lpi2c clock source. */
+    CLOCK_SetMux(kCLOCK_Lpi2cMux, 0);
+    /* Set CAN_CLK_PODF. */
+    CLOCK_SetDiv(kCLOCK_CanDiv, 1);
+    /* Set Can clock source. */
+    CLOCK_SetMux(kCLOCK_CanMux, 2);
+    /* Set UART_CLK_PODF. */
+    CLOCK_SetDiv(kCLOCK_UartDiv, 0);
+    /* Set Uart clock source. */
+    CLOCK_SetMux(kCLOCK_UartMux, 0);
+    /* Set LCDIF_PRED. */
+    CLOCK_SetDiv(kCLOCK_LcdifPreDiv, 1);
+    /* Set LCDIF_CLK_PODF. */
+    CLOCK_SetDiv(kCLOCK_LcdifDiv, 3);
+    /* Set Lcdif pre clock source. */
+    CLOCK_SetMux(kCLOCK_LcdifPreMux, 5);
+    /* Set SPDIF0_CLK_PRED. */
+    CLOCK_SetDiv(kCLOCK_Spdif0PreDiv, 1);
+    /* Set SPDIF0_CLK_PODF. */
+    CLOCK_SetDiv(kCLOCK_Spdif0Div, 7);
+    /* Set Spdif clock source. */
+    CLOCK_SetMux(kCLOCK_SpdifMux, 3);
+    /* Set FLEXIO1_CLK_PRED. */
+    CLOCK_SetDiv(kCLOCK_Flexio1PreDiv, 1);
+    /* Set FLEXIO1_CLK_PODF. */
+    CLOCK_SetDiv(kCLOCK_Flexio1Div, 7);
+    /* Set Flexio1 clock source. */
+    CLOCK_SetMux(kCLOCK_Flexio1Mux, 3);
+    /* Set FLEXIO2_CLK_PRED. */
+    CLOCK_SetDiv(kCLOCK_Flexio2PreDiv, 1);
+    /* Set FLEXIO2_CLK_PODF. */
+    CLOCK_SetDiv(kCLOCK_Flexio2Div, 7);
+    /* Set Flexio2 clock source. */
+    CLOCK_SetMux(kCLOCK_Flexio2Mux, 3);
+    /* Set Pll3 sw clock source. */
+    CLOCK_SetMux(kCLOCK_Pll3SwMux, 0);
+    /* Set lvds1 clock source. */
+    CCM_ANALOG->MISC1 = (CCM_ANALOG->MISC1 & (~CCM_ANALOG_MISC1_LVDS1_CLK_SEL_MASK)) | CCM_ANALOG_MISC1_LVDS1_CLK_SEL(0);
+    /* Set clock out1 divider. */
+    CCM->CCOSR = (CCM->CCOSR & (~CCM_CCOSR_CLKO1_DIV_MASK)) | CCM_CCOSR_CLKO1_DIV(0);
+    /* Set clock out1 source. */
+    CCM->CCOSR = (CCM->CCOSR & (~CCM_CCOSR_CLKO1_SEL_MASK)) | CCM_CCOSR_CLKO1_SEL(1);
+    /* Set clock out2 divider. */
+    CCM->CCOSR = (CCM->CCOSR & (~CCM_CCOSR_CLKO2_DIV_MASK)) | CCM_CCOSR_CLKO2_DIV(0);
+    /* Set clock out2 source. */
+    CCM->CCOSR = (CCM->CCOSR & (~CCM_CCOSR_CLKO2_SEL_MASK)) | CCM_CCOSR_CLKO2_SEL(18);
+    /* Set clock out1 drives clock out1. */
+    CCM->CCOSR &= ~CCM_CCOSR_CLK_OUT_SEL_MASK;
+    /* Disable clock out1. */
+    CCM->CCOSR &= ~CCM_CCOSR_CLKO1_EN_MASK;
+    /* Disable clock out2. */
+    CCM->CCOSR &= ~CCM_CCOSR_CLKO2_EN_MASK;
+    /* Set SystemCoreClock variable. */
+    SystemCoreClock = BOARD_BOOTCLOCKRUN_CORE_CLOCK;
 }
 

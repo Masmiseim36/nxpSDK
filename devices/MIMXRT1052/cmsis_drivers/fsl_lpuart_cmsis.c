@@ -21,6 +21,12 @@
 
 #include "fsl_lpuart_cmsis.h"
 
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.lpuart_cmsis"
+#endif
+
+
 /* Re-mapping for LPUART & UART indexing. */
 #if (FSL_FEATURE_SOC_LPUART_COUNT == 1) && FSL_FEATURE_SOC_UART_COUNT
 

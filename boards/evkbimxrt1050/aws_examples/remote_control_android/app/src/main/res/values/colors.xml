@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="nxpColourPrimary">#fcac16</color>
+    <color name="nxpColourSecondary">#6dacde</color>
+    <color name="nxpColourTertiary">#bfd730</color>
+</resources>

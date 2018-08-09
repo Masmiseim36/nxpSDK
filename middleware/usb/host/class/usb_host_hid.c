@@ -133,7 +133,7 @@ static void USB_HostHidClearInHaltCallback(void *param, usb_host_transfer_t *tra
     hidInstance->controlTransfer = NULL;
     if (hidInstance->inCallbackFn != NULL)
     {
-        /* callback to application */
+        /* callback to application, callback function is initialized in the USB_HostHidRecv */
         hidInstance->inCallbackFn(hidInstance->inCallbackParam, hidInstance->stallDataBuffer,
                                   hidInstance->stallDataLength, kStatus_USB_TransferStall);
     }
@@ -147,7 +147,7 @@ static void USB_HostHidClearOutHaltCallback(void *param, usb_host_transfer_t *tr
     hidInstance->controlTransfer = NULL;
     if (hidInstance->outCallbackFn != NULL)
     {
-        /* callback to application */
+        /* callback to application, callback function is initialized in USB_HostHidSend */
         hidInstance->outCallbackFn(hidInstance->outCallbackParam, hidInstance->stallDataBuffer,
                                    hidInstance->stallDataLength, kStatus_USB_TransferStall);
     }
@@ -216,8 +216,9 @@ static void USB_HostHidInPipeCallback(void *param, usb_host_transfer_t *transfer
 #endif
     if (hidInstance->inCallbackFn != NULL)
     {
+        /* callback to application, callback function is initialized in the USB_HostHidRecv */
         hidInstance->inCallbackFn(hidInstance->inCallbackParam, transfer->transferBuffer, transfer->transferSofar,
-                                  status); /* callback to application */
+                                  status);
     }
     USB_HostFreeTransfer(hidInstance->hostHandle, transfer);
 }
@@ -240,6 +241,7 @@ static void USB_HostHidOutPipeCallback(void *param, usb_host_transfer_t *transfe
 #endif
     if (hidInstance->outCallbackFn != NULL)
     {
+        /* callback to application, callback function is initialized in USB_HostHidSend */
         hidInstance->outCallbackFn(hidInstance->outCallbackParam, transfer->transferBuffer, transfer->transferSofar,
                                    status); /* callback to application */
     }
@@ -253,8 +255,10 @@ static void USB_HostHidControlCallback(void *param, usb_host_transfer_t *transfe
     hidInstance->controlTransfer = NULL;
     if (hidInstance->controlCallbackFn != NULL)
     {
+        /* callback to application, callback function is initialized in the USB_HostHidSetInterface
+        or USB_HostHidControl, but is the same function */
         hidInstance->controlCallbackFn(hidInstance->controlCallbackParam, transfer->transferBuffer,
-                                       transfer->transferSofar, status); /* callback to application */
+                                       transfer->transferSofar, status);
     }
     USB_HostFreeTransfer(hidInstance->hostHandle, transfer);
 }
@@ -369,8 +373,9 @@ static void USB_HostHidSetInterfaceCallback(void *param, usb_host_transfer_t *tr
 
     if (hidInstance->controlCallbackFn != NULL)
     {
-        hidInstance->controlCallbackFn(hidInstance->controlCallbackParam, NULL, 0,
-                                       status); /* callback to application */
+        /* callback to application, callback function is initialized in the USB_HostHidSetInterface
+        or USB_HostHidControl, but is the same function */
+        hidInstance->controlCallbackFn(hidInstance->controlCallbackParam, NULL, 0, status);
     }
     USB_HostFreeTransfer(hidInstance->hostHandle, transfer);
 }

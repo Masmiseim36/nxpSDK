@@ -171,7 +171,7 @@ void XBARA_SetSignalsConnection(XBARA_Type *base, xbar_input_signal_t input, xba
 uint32_t XBARA_GetStatusFlags(XBARA_Type *base);
 
 /*!
- * @brief Clears the the edge detection status flags of relative mask.
+ * @brief Clears the edge detection status flags of relative mask.
  *
  * @param base XBARA peripheral address.
  * @param mask the status flags to clear.

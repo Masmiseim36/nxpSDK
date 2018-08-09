@@ -2269,8 +2269,6 @@ static int ssl_parse_server_key_exchange( mbedtls_ssl_context *ssl )
         ssl->state++;
         return( 0 );
     }
-    ((void) p);
-    ((void) end);
 #endif
 
 #if defined(MBEDTLS_KEY_EXCHANGE_ECDH_RSA_ENABLED) || \
@@ -2290,8 +2288,6 @@ static int ssl_parse_server_key_exchange( mbedtls_ssl_context *ssl )
         ssl->state++;
         return( 0 );
     }
-    ((void) p);
-    ((void) end);
 #endif /* MBEDTLS_KEY_EXCHANGE_ECDH_RSA_ENABLED ||
           MBEDTLS_KEY_EXCHANGE_ECDH_ECDSA_ENABLED */
 

@@ -219,15 +219,15 @@ typedef struct httpsrv_plugin_msg
 */
 typedef struct httpsrv_struct
 {
-    HTTPSRV_PARAM_STRUCT params;      /* server parameters */
-    volatile int sock;                /* listening socket*/
-    HTTPSRV_SESSION_STRUCT **session; /* array of pointers to sessions */
-    volatile uint32_t valid;          /* Any value different than HTTPSRV_VALID means session is invalid */
-    volatile sys_thread_t server_tid; /* Server task ID */
-    void *script_msgq;                /* Message queue for CGI */
-    sys_sem_t ses_cnt;                /* Session counter */
+    HTTPSRV_PARAM_STRUCT params;               /* server parameters */
+    volatile int sock;                         /* listening socket*/
+    HTTPSRV_SESSION_STRUCT *volatile *session; /* array of pointers to sessions */
+    volatile uint32_t valid;                   /* Any value different than HTTPSRV_VALID means session is invalid */
+    volatile sys_thread_t server_tid;          /* Server task ID */
+    void *script_msgq;                         /* Message queue for CGI */
+    sys_sem_t ses_cnt;                         /* Session counter */
 #if HTTPSRV_CFG_WOLFSSL_ENABLE || HTTPSRV_CFG_MBEDTLS_ENABLE
-    httpsrv_tls_ctx_t   tls_ctx;      /* TLS context.*/
+    httpsrv_tls_ctx_t   tls_ctx;               /* TLS context.*/
 #endif
 } HTTPSRV_STRUCT;
 
@@ -237,7 +237,7 @@ typedef struct httpsrv_struct
 typedef struct httpsrv_ses_task_param
 {
     HTTPSRV_STRUCT *server; /* Pointer to server structure */
-    HTTPSRV_SESSION_STRUCT **session_p;
+    HTTPSRV_SESSION_STRUCT *volatile *session_p;
 } HTTPSRV_SES_TASK_PARAM;
 
 /*

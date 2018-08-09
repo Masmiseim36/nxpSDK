@@ -1,6 +1,6 @@
 /*
  * The Clear BSD License
- * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
+ * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
@@ -63,6 +63,9 @@ enum ESensorErrors
     SENSOR_ERROR_WRITE,
     SENSOR_ERROR_READ,
 };
+
+/* The MAXIMUM number of Sensor Registers possible. */
+#define SENSOR_MAX_REGISTER_COUNT 128 /* As per 7-Bit address. */
 
 /* Used with the RegisterWriteList types as a list terminator */
 #define __END_WRITE_DATA__            \

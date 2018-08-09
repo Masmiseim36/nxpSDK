@@ -111,6 +111,9 @@ static void USB_HostHubControlCallback(void *param, usb_host_transfer_t *transfe
     hubInstance->controlTransfer = NULL;
     if (hubInstance->controlCallbackFn)
     {
+        /* callback to application, callback function is initialized in the USB_HostPrinterControl,
+        USB_HostPrinterSetInterface
+        or USB_HostHubClassRequestCommon, but is the same function */
         hubInstance->controlCallbackFn(hubInstance->controlCallbackParam, transfer->transferBuffer,
                                        transfer->transferSofar, status); /* callback to application */
     }
@@ -123,6 +126,7 @@ static void USB_HostHubInPipeCallback(void *param, usb_host_transfer_t *transfer
 
     if (hubInstance->inCallbackFn)
     {
+        /* callback to application, callback function is initialized in the USB_HostHubInterruptRecv */
         hubInstance->inCallbackFn(hubInstance->inCallbackParam, transfer->transferBuffer, transfer->transferSofar,
                                   status); /* callback to application */
     }

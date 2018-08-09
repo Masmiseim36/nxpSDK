@@ -32,8 +32,9 @@
 #include MBEDTLS_CONFIG_FILE
 #endif
 
-#if defined(MBEDTLS_ECDH_C)
 
+#if defined(MBEDTLS_ECDH_C)
+#if !defined(MBEDTLS_ECDH_ALT)
 #include "mbedtls/ecdh.h"
 
 #include <string.h>
@@ -261,4 +262,6 @@ int mbedtls_ecdh_calc_secret( mbedtls_ecdh_context *ctx, size_t *olen,
     return mbedtls_mpi_write_binary( &ctx->z, buf, *olen );
 }
 
+
+#endif /*#if !defined(MBEDTLS_ECDH_ALT) */
 #endif /* MBEDTLS_ECDH_C */

@@ -34,6 +34,12 @@
 
 #include "fsl_lpi2c_freertos.h"
 
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.lpi2c_freertos"
+#endif
+
+
 static void LPI2C_RTOS_Callback(LPI2C_Type *base, lpi2c_master_handle_t *drv_handle, status_t status, void *userData)
 {
     lpi2c_rtos_handle_t *handle = (lpi2c_rtos_handle_t *)userData;

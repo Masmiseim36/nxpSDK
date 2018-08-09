@@ -38,6 +38,12 @@
  * Definitions
  ******************************************************************************/
 
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.dcp"
+#endif
+
+
 /*! Compile time sizeof() check */
 #define BUILD_ASSURE(condition, msg) extern int msg[1 - 2 * (!(condition))] __attribute__((unused))
 
@@ -165,7 +171,7 @@ static status_t dcp_get_channel_status(DCP_Type *base, dcp_channel_t channel)
 
 static void dcp_clear_status(DCP_Type *base)
 {
-    volatile uint32_t *dcpStatClrPtr = &(&base->STAT)[2];
+    volatile uint32_t *dcpStatClrPtr = &base->STAT + 2u;
     *dcpStatClrPtr = 0xFFu;
 }
 
@@ -175,22 +181,22 @@ static void dcp_clear_channel_status(DCP_Type *base, uint32_t mask)
 
     if (mask & kDCP_Channel0)
     {
-        chStatClrPtr = &(&base->CH0STAT)[2];
+        chStatClrPtr = &base->CH0STAT + 2u;
         *chStatClrPtr = 0xFFu;
     }
     if (mask & kDCP_Channel1)
     {
-        chStatClrPtr = &(&base->CH1STAT)[2];
+        chStatClrPtr = &base->CH1STAT + 2u;
         *chStatClrPtr = 0xFFu;
     }
     if (mask & kDCP_Channel2)
     {
-        chStatClrPtr = &(&base->CH2STAT)[2];
+        chStatClrPtr = &base->CH2STAT + 2u;
         *chStatClrPtr = 0xFFu;
     }
     if (mask & kDCP_Channel3)
     {
-        chStatClrPtr = &(&base->CH3STAT)[2];
+        chStatClrPtr = &base->CH3STAT + 2u;
         *chStatClrPtr = 0xFFu;
     }
 }

@@ -38,6 +38,11 @@
  * Definitions
  ******************************************************************************/
 
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.flexram"
+#endif
+
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -160,8 +165,8 @@ static status_t FLEXRAM_SetTCMSize(uint8_t itcmBankNum, uint8_t dtcmBankNum)
     /* dtcm configuration */
     if (dtcmBankNum != 0U)
     {
-        IOMUXC_GPR->GPR14 &= ~IOMUXC_GPR_GPR14_CM7_MX6RT_CFGDTCMSZ_MASK;
-        IOMUXC_GPR->GPR14 |= IOMUXC_GPR_GPR14_CM7_MX6RT_CFGDTCMSZ(FLEXRAM_MapTcmSizeToRegister(dtcmBankNum));
+        IOMUXC_GPR->GPR14 &= ~IOMUXC_GPR_GPR14_CM7_CFGDTCMSZ_MASK;
+        IOMUXC_GPR->GPR14 |= IOMUXC_GPR_GPR14_CM7_CFGDTCMSZ(FLEXRAM_MapTcmSizeToRegister(dtcmBankNum));
         IOMUXC_GPR->GPR16 |= IOMUXC_GPR_GPR16_INIT_DTCM_EN_MASK;
     }
     else
@@ -171,8 +176,8 @@ static status_t FLEXRAM_SetTCMSize(uint8_t itcmBankNum, uint8_t dtcmBankNum)
     /* itcm configuration */
     if (itcmBankNum != 0U)
     {
-        IOMUXC_GPR->GPR14 &= ~IOMUXC_GPR_GPR14_CM7_MX6RT_CFGITCMSZ_MASK;
-        IOMUXC_GPR->GPR14 |= IOMUXC_GPR_GPR14_CM7_MX6RT_CFGITCMSZ(FLEXRAM_MapTcmSizeToRegister(itcmBankNum));
+        IOMUXC_GPR->GPR14 &= ~IOMUXC_GPR_GPR14_CM7_CFGITCMSZ_MASK;
+        IOMUXC_GPR->GPR14 |= IOMUXC_GPR_GPR14_CM7_CFGITCMSZ(FLEXRAM_MapTcmSizeToRegister(itcmBankNum));
         IOMUXC_GPR->GPR16 |= IOMUXC_GPR_GPR16_INIT_ITCM_EN_MASK;
     }
     else

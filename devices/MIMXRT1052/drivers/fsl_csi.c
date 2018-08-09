@@ -38,6 +38,12 @@
  * Definitions
  ******************************************************************************/
 
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.csi"
+#endif
+
+
 /* Two frame buffer loaded to CSI register at most. */
 #define CSI_MAX_ACTIVE_FRAME_NUM 2
 

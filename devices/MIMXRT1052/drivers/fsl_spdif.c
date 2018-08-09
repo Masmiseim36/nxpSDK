@@ -34,6 +34,12 @@
 
 #include "fsl_spdif.h"
 
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.spdif"
+#endif
+
+
 /*******************************************************************************
  * Definitations
  ******************************************************************************/
@@ -228,7 +234,7 @@ uint32_t SPDIF_GetRxSampleRate(SPDIF_Type *base, uint32_t clockSourceFreq_Hz)
     /* Get the measure value */
     measure = base->SRFM;
     temp = (uint64_t)measure * (uint64_t)clockSourceFreq_Hz;
-    temp /= (uint64_t)(1024 * 1024 * 128 * (uint64_t)gain);
+    temp /= (uint64_t)(1024 * 1024 * 128 * gain);
     sampleRate = (uint32_t)temp;
 
     return sampleRate;

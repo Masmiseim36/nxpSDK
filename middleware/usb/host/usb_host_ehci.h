@@ -175,7 +175,7 @@
  */
 #define USB_HOST_EHCI_ISO_BOUNCE_UFRAME_NUMBER (16U)
 /*! @brief Control or bulk transaction timeout value (unit: 100 ms) */
-#define USB_HOST_EHCI_CONTROL_BULK_TIME_OUT_VALUE (20U)
+#define USB_HOST_EHCI_CONTROL_BULK_TIME_OUT_VALUE (50U)
 
 #if ((defined(USB_HOST_CONFIG_LOW_POWER_MODE)) && (USB_HOST_CONFIG_LOW_POWER_MODE > 0U))
 typedef enum _bus_ehci_suspend_request_state

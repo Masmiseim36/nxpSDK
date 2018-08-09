@@ -38,6 +38,12 @@
  * Definitions
  ******************************************************************************/
 
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.flexio_spi"
+#endif
+
+
 /*! @brief FLEXIO SPI transfer state, which is used for SPI transactiaonl APIs' internal state. */
 enum _flexio_spi_transfer_states
 {
@@ -45,17 +51,9 @@ enum _flexio_spi_transfer_states
     kFLEXIO_SPI_Busy,        /*!< Transmiter/Receive's queue is not finished. */
 };
 
-#if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
-extern const clock_ip_name_t s_flexioClocks[];
-#endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
-
-extern FLEXIO_Type *const s_flexioBases[];
-
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-
-extern uint32_t FLEXIO_GetInstance(FLEXIO_Type *base);
 
 /*!
  * @brief Send a piece of data for SPI.
@@ -89,7 +87,7 @@ static void FLEXIO_SPI_TransferReceiveTransaction(FLEXIO_SPI_Type *base, flexio_
  * Codes
  ******************************************************************************/
 
-uint32_t FLEXIO_SPI_GetInstance(FLEXIO_SPI_Type *base)
+static uint32_t FLEXIO_SPI_GetInstance(FLEXIO_SPI_Type *base)
 {
     return FLEXIO_GetInstance(base->flexioBase);
 }

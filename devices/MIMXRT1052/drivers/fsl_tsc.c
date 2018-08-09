@@ -34,6 +34,12 @@
 
 #include "fsl_tsc.h"
 
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.tsc"
+#endif
+
+
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -115,7 +121,7 @@ void TSC_GetDefaultConfig(tsc_config_t *config)
 
 uint32_t TSC_GetMeasureValue(TSC_Type *base, tsc_corrdinate_value_selection_t selection)
 {
-    uint32_t tmp32 = 0U;
+    uint32_t tmp32 = 0;
 
     if (selection == kTSC_XCoordinateValueSelection)
     {

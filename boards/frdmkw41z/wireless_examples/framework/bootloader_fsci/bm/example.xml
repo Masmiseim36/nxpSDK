@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<example name="bm" category="wireless_examples/framework/bootloader_fsci" board_ref="FRDM_KW41Z" version="1.0.0" format_version="2.1">
+  <source path="CMSIS/Include" target_path="CMSIS/Include" type="c_include">
+    <files mask="arm_common_tables.h"/>
+    <files mask="arm_const_structs.h"/>
+    <files mask="arm_math.h"/>
+    <files mask="cmsis_armcc.h"/>
+    <files mask="cmsis_armcc_V6.h"/>
+    <files mask="cmsis_gcc.h"/>
+    <files mask="core_cm0.h"/>
+    <files mask="core_cm0plus.h"/>
+    <files mask="core_cm3.h"/>
+    <files mask="core_cm4.h"/>
+    <files mask="core_cm7.h"/>
+    <files mask="core_cmFunc.h"/>
+    <files mask="core_cmInstr.h"/>
+    <files mask="core_cmSimd.h"/>
+    <files mask="core_sc000.h"/>
+    <files mask="core_sc300.h"/>
+  </source>
+  <source path="boards/frdmkw41z/wireless_examples/framework/bootloader_fsci/bm" target_path="sources" type="c_include">
+    <files mask="frdmkw41z_cfg.h"/>
+  </source>
+  <source path="boards/frdmkw41z/wireless_examples/framework/bootloader_fsci/src/bootloader" target_path="sources" type="c_include">
+    <files mask="FsciBootloader.h"/>
+    <files mask="main.h"/>
+  </source>
+  <source path="boards/frdmkw41z/wireless_examples/framework/bootloader_fsci/src/bootloader" target_path="sources" type="src">
+    <files mask="FsciBootloader.c"/>
+    <files mask="main.c"/>
+  </source>
+  <source path="boards/frdmkw41z/wireless_examples/framework/bootloader_fsci/src/eeprom" target_path="sources" type="c_include">
+    <files mask="Eeprom_Boot.h"/>
+  </source>
+  <source path="boards/frdmkw41z/wireless_examples/framework/bootloader_fsci/src/eeprom" target_path="sources" type="src">
+    <files mask="Eeprom_Boot_AT45DB041E.c"/>
+  </source>
+  <source path="boards/frdmkw41z/wireless_examples/framework/bootloader_fsci/src/flash" target_path="sources" type="c_include">
+    <files mask="flash_boot_kinetis.h"/>
+  </source>
+  <source path="boards/frdmkw41z/wireless_examples/framework/bootloader_fsci/src/flash" target_path="sources" type="src">
+    <files mask="flash_boot_kinetis.c"/>
+  </source>
+  <source path="boards/frdmkw41z/wireless_examples/framework/bootloader_fsci/src/spi" target_path="sources" type="c_include">
+    <files mask="SPI.h"/>
+  </source>
+  <source path="boards/frdmkw41z/wireless_examples/framework/bootloader_fsci/src/spi" target_path="sources" type="src">
+    <files mask="SPI.c"/>
+  </source>
+  <source path="boards/frdmkw41z/wireless_examples/framework/bootloader_fsci/src/timer" target_path="sources" type="c_include">
+    <files mask="timer.h"/>
+  </source>
+  <source path="boards/frdmkw41z/wireless_examples/framework/bootloader_fsci/src/timer" target_path="sources" type="src">
+    <files mask="timer.c"/>
+  </source>
+  <source path="boards/frdmkw41z/wireless_examples/framework/bootloader_fsci/src/uart" target_path="sources" type="c_include">
+    <files mask="UART.h"/>
+  </source>
+  <source path="boards/frdmkw41z/wireless_examples/framework/bootloader_fsci/src/uart" target_path="sources" type="src">
+    <files mask="UART.c"/>
+  </source>
+  <source path="boards/frdmkw41z/wireless_examples/framework/bootloader_fsci" target_path="doc" type="doc">
+    <files mask="readme.txt"/>
+  </source>
+  <source path="devices/MKW41Z4/drivers" target_path="drivers" type="c_include">
+    <files mask="fsl_clock.h"/>
+    <files mask="fsl_common.h"/>
+    <files mask="fsl_flash.h"/>
+    <files mask="fsl_lpuart.h"/>
+    <files mask="fsl_smc.h"/>
+  </source>
+  <source path="devices/MKW41Z4/drivers" target_path="drivers" type="src">
+    <files mask="fsl_clock.c"/>
+    <files mask="fsl_common.c"/>
+    <files mask="fsl_flash.c"/>
+    <files mask="fsl_lpuart.c"/>
+    <files mask="fsl_smc.c"/>
+  </source>
+  <source path="devices/MKW41Z4/utilities" target_path="utilities" type="c_include">
+    <files mask="fsl_debug_console.h"/>
+  </source>
+  <source path="devices/MKW41Z4/utilities" target_path="utilities" type="src">
+    <files mask="fsl_debug_console.c"/>
+  </source>
+  <source path="devices/MKW41Z4" target_path="devices" type="c_include">
+    <files mask="MKW41Z4.h"/>
+    <files mask="MKW41Z4_features.h"/>
+    <files mask="fsl_device_registers.h"/>
+  </source>
+  <source path="middleware/wireless/framework_5.3.5/Common" target_path="wireless/framework/Common" type="c_include">
+    <files mask="EmbeddedTypes.h"/>
+  </source>
+  <include_paths>
+    <include path="CMSIS/Include"/>
+    <include path="devices"/>
+    <include path="drivers"/>
+    <include path="sources"/>
+    <include path="utilities"/>
+    <include path="wireless/framework/Common"/>
+  </include_paths>
+</example>

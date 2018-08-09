@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="CoAP LED Example"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-88C359A8-0738-4471-9315-5F2E63573254.html"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-33441E37-94D2-42B5-8ADF-07AFC9E9B809"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>CoAP LED Example</title>
+</head>
+<body id="GUID-33441E37-94D2-42B5-8ADF-07AFC9E9B809">
+
+
+    <h1 class="title topictitle1">CoAP LED Example</h1>
+
+    <div class="body">
+        <p class="p">The Constrained Application Protocol (CoAP) is a web transfer protocol used
+            on resource-constrained nodes and networks. This application layer protocol is one of
+            the most used protocols for Machine to Machine (M2M) communication in home automation
+            deployments, part of the Internet of Things ecosystem.</p>
+
+        <p class="p">CoAP is based on a Representational State Transfer (ReST) model similar to
+            the client-server model of HTTP. It uses the same HTTP verbs for retrieving and sending
+            data, such as GET, POST, PUT and DELETE. It runs over a UDP transport layer. Some of the
+            main features that make this protocol the best pick for a wireless sensor network
+            are:</p>
+
+        <ul class="ul">
+            <li class="li">Low overhead and parsing complexity</li>
+
+            <li class="li">Support for discovery of resources (usually multicast)</li>
+
+            <li class="li">URI support</li>
+
+            <li class="li">Support for selection of data models (XML, JSON, and others)</li>
+
+            </ul>
+
+        <p class="p">CoAP also defines four types of messages: Confirmable, Non-confirmable, Acknowledgement and Reset.</p>
+
+        <p class="p">The SDK provides a high-level CoAP over UDP module, with a demo
+            functionality of modifying the configuration of the RGB LED on the boards. The resource
+            is identified by the /led URI. The peer devices can POST messages to this resource to
+            change the state of the LED to on, off, toggle, flash and rgb.</p>
+
+        <p class="p">To initialize the module, the following API must be called. The function
+            initializes a callback configuration structure and registers services to the CoAP
+            modules by creating the CoAP instance. In our example, this module is called by the
+            Network IP Manager.</p>
+
+        <pre class="pre codeblock">
+            void APP_InitCoap(void)
+{
+   coapRegCbParams_t cbParams[] =  {{APP_CoapLedCb,  (coapUriPath_t*)&amp;gAPP_LED_URI_PATH}};
+   /* Register Services in COAP */
+   coapStartUnsecParams_t coapParams = {COAP_DEFAULT_PORT, AF_INET6};
+   mCoapInstId = COAP_CreateInstance(NULL, &amp;coapParams, gIpIfSlp0_c,
+       (coapRegCbParams_t*)cbParams, NumberOfElements(cbParams));
+}
+            </pre>
+
+        <p class="p">The callback function processes the POST command and sends an acknowledgement back:</p>
+
+        <pre class="pre codeblock">
+            static void APP_CoapLedCb
+(
+    coapSessionStatus_t sessionStatus,
+    void *pData,
+    coapSession_t *pSession,
+    uint32_t dataLen
+)
+{
+    /* Process the command only if it is a POST method */
+    if ((pData) &amp;&amp; (sessionStatus == gCoapSuccess_c) &amp;&amp; (pSession-&gt;code == gCoapPOST_c))
+    {
+        APP_ProcessLedCmd(pData, dataLen);
+    }
+
+    /* Send the reply if the status is Success or Duplicate */
+    if ((gCoapFailure_c != sessionStatus) &amp;&amp; (gCoapConfirmable_c == pSession-&gt;msgType))
+    {
+        /* Send CoAP ACK */
+        COAP_Send(pSession, gCoapMsgTypeAckSuccessChanged_c, NULL, 0);
+    }
+}
+
+            </pre>
+
+        <p class="p">The functionality is exercised in the Shell Network IP module. For more information, please read the Kinetis Thread Stack Application Development Guide and the Kinetis Thread Stack API Reference Manual.</p>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-88C359A8-0738-4471-9315-5F2E63573254.html">Network IP Manager and Protocol Wrappers APIs</a></div>
+</div>
+</div>
+
+</body>
+</html>

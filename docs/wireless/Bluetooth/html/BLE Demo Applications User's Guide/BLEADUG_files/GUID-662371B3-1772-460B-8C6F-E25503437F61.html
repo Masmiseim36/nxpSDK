@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Usage with test tool for Connectivity products"/>
+<meta name="abstract" content=""/>
+<meta name="description" content=""/>
+<meta name="DC.Relation" scheme="URI" content="GUID-1494FED7-7DDB-4D3A-BA98-891523F88506.html"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-662371B3-1772-460B-8C6F-E25503437F61"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Usage with test tool for Connectivity products</title>
+</head>
+<body id="GUID-662371B3-1772-460B-8C6F-E25503437F61">
+
+
+  <h1 class="title topictitle1">Usage with test tool for Connectivity products</h1>
+
+  
+  <div class="body"><p class="shortdesc"/>
+
+    <p class="p">This is a list of requirements.</p>
+
+<ul class="ul">
+<li class="li">Test Tool for Connectivity Products 12.5.0 or newer – Test Tool on www.nxp.com</li>
+
+<li class="li">Serial COM port drivers – these are board-specific</li>
+
+</ul>
+
+<p class="p">These are the steps to run the application.</p>
+
+<ol class="ol">
+<li class="li">Flash the OTAP Server onto a KW4x board, and the OTAP Bootloader and the OTAP Client to another KW4x board. Make sure the board running the 
+OTAP Server is connected to your PC and your PC has appropriate drivers for the USB to serial device on that board.
+<div class="note note"><span class="notetitle">Note:</span> 
+The OTAP Bootloader must be programmed separately into the MCU, before programming the OTAP Client application.
+</div>
+</li>
+
+<li class="li">Create the application to send over the air. The executable must be provided in the .srec or .bin format. The .srec format executable can be 
+obtained by using the IAR Output Converter and setting the output format to Motorola as shown below. The created .srec application image must be offset to 
+begin after the Bootloader region. To offset the application copy the settings from the Linker-&gt;Config tab of the otap_client_l2cap_credit or otap_client_att example 
+applications project properties. For more details, see the <em class="ph i">BLE Application Developer’s Guide</em> (BLEADG).
+
+<div class="fig fignone" id="GUID-662371B3-1772-460B-8C6F-E25503437F61__BLEDAUG3016"><span class="figcap">Figure 1. Output Converter Dialog</span>
+          
+          
+          <img class="image" src="GUID-AC8F8C8B-189F-469E-B26B-D3F4810740E9-high.jpg"/>
+        </div>
+
+
+<div class="note note"><span class="notetitle">Note:</span> For the .bin file format the Binary option must be selected from the Output format drop-down menu.</div>
+</li>
+
+<li class="li">Start the Test Tool application. If you have the proper drivers installed and the OTAP Server board is connected to the PC, then its corresponding serial port shows up in the
+ USB/UART Active devices view on the Start Page of the Test Tool software as shown below.
+
+<div class="fig fignone" id="GUID-662371B3-1772-460B-8C6F-E25503437F61__BLEDAUG3017"><span class="figcap">Figure 2. Test Tool Start Page - OTAP Server USB/UART</span>
+          
+          
+          <img class="image" src="GUID-01BA80EC-4B91-41D2-A2BC-DC718C5F3BA0-high.jpg" height="272" width="507"/>
+        </div>
+</li>
+
+
+
+<li class="li">Go to the OTA Updates menu in Test Tool and choose the OTAP BLE option to open the BLE over-the-air update window.
+
+<div class="fig fignone" id="GUID-662371B3-1772-460B-8C6F-E25503437F61__BLEDAUG3018"><span class="figcap">Figure 3. Test Tool OTAP BLE</span>
+          
+          
+          <img class="image" src="GUID-AD222CC9-1A2C-4CE8-B0B5-9011DF32F6F0-high.jpg" height="133" width="549"/>
+        </div>
+</li>
+
+
+<li class="li">Load the image file into the application and configure the image file header and start the OTAP Server
+<ul class="ul">
+<li class="li">In the Image File Information box of the OTAP BLE application from Test Tool press the “Browse” button and go to the .srec or .bin file containing the image to be sent to the OTAP Client. 
+The .srec or .bin file and the OTA Header configuration options from the same box is used by the application to build the OTAP Image File which is sent over-the-air. The default values of the 
+OTA Header configuration work out of the box for the OTAP demo applications. For details about these configuration options, see the BLE Application Developer’s Guide document (BLEADG). 
+After the .srec or .bin file is chosen a pop-up window asks to choose the target processor (this is used to correctly
+configure the Sector Bitmap sub-element of the OTAP Image File). Choose the correct processor and press “OK”.
+
+
+<div class="fig fignone" id="GUID-662371B3-1772-460B-8C6F-E25503437F61__BLEDAUG3019"><span class="figcap">Figure 4. Test Tool OTAP BLE Processor Selection</span>
+          
+          
+          <img class="image" src="GUID-6C5DC317-9C49-4426-B6FD-4AC5511260E0-high.jpg"/>
+        </div>
+</li>
+
+<li class="li">After the image is loaded go to the OTA Server Image Loading box, select the correct COM Port for the OTAP Server board and the default baudrate of 115200 and press the “Connect to 
+OTAP Server Device” button. If the connection is successful then the Message Log shows this. If the image is loaded before connecting to the OATP Server COM Port, then the application’s OTAP 
+Server starts automatically. If the connection to the COM Port is established before the image is loaded, then the “Start OTAP” button needs to be pressed to start the application’s OTAP Server. 
+For details, see the annotated screenshot below.
+<div class="fig fignone" id="GUID-662371B3-1772-460B-8C6F-E25503437F61__BLEDAUG3020"><span class="figcap">Figure 5. Test Tool BLE OTAP Application Overview</span>
+          
+          
+          <img class="image" src="GUID-EEE9B67C-D02E-4B11-926F-53E909855A89-high.jpg" height="520" width="512"/>
+        </div>
+</li>
+
+<li class="li">Before starting the image transfer process, the data rate must be configured for each transfer method (ATT or L2CAP CoC). The image chunks of a block are sent over the 
+serial interface and over-the-air without waiting for confirmation and if the data rate is not configured correctly errors can appear in the transfer process which can slow it down significantly. 
+The optimal data rate depends on multiple factors like: distance between boards, type of antenna, performance of the RF circuitry between the radio and antenna, type and level of noise in the 
+environment, speed of the storage medium in which the image is saved on the OTAP Client, serial driver delay between PC and OTAP Server board and other factors. If the data rate is too high, 
+then the OTAP Client receives a new chunk before it can process the previous one and it sends an “Unexpected Chunk Sequence Number” error and restart the transfer of the current block from 
+where it left off. If the channel is too noisy the transmitter can be flooded and some chunks may not
+reach the client triggering a similar type of error. The default data rate values should work for most configurations.</li>
+
+</ul>
+</li>
+
+<li class="li">Start the embedded applications by pressing SW4 first on the OTAP Client and then on the OTAP Server. The transfer progress and transfer-related messages and/or errors are 
+shown in the application window. The duration of the transfer depends on the size of the image and the chosen data rate and transfer method.
+
+<div class="fig fignone" id="GUID-662371B3-1772-460B-8C6F-E25503437F61__BLEDAUG3021"><span class="figcap">Figure 6. Test Tool OTAP BLE Image Transfer in Progress</span>
+          
+          
+          <img class="image" src="GUID-0FD6DA7B-E24D-46F5-BBF0-22626B31DE06-high.jpg" height="262" width="436"/>
+        </div>
+</li>
+
+
+<li class="li">After all the blocks are sent the OTAP Client send an Image Transfer Complete command to the OTAP Server. When this command is received by the PC Application, it displays a 
+“Sent Image with Success” message in the log window.
+
+<div class="fig fignone" id="GUID-662371B3-1772-460B-8C6F-E25503437F61__BLEDAUG3022"><span class="figcap">Figure 7. Test Tool OTAP BLE Image Transfer Completed</span>
+          
+          
+          <img class="image" src="GUID-D9B15837-F1AD-4ED0-AA17-D3473354CD54-high.jpg" height="117" width="436"/>
+        </div>
+</li>
+
+
+
+<li class="li">After the image transfer is complete the OTAP Client triggers the bootloader and resets the MCU. The bootloader takes about 30 seconds to flash a 512 KB image on a FRDM-KW41 platform. 
+After this time passes the MCU resets again and runs the new image.</li>
+
+
+
+</ol>
+
+  </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-1494FED7-7DDB-4D3A-BA98-891523F88506.html">Over the Air Programming (OTAP)</a></div>
+</div>
+</div>
+
+</body>
+</html>

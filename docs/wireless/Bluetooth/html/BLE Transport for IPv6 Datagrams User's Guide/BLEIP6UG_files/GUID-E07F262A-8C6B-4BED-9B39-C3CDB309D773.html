@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Socket Data API"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-88C359A8-0738-4471-9315-5F2E63573254.html"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-E07F262A-8C6B-4BED-9B39-C3CDB309D773"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Socket Data API</title>
+</head>
+<body id="GUID-E07F262A-8C6B-4BED-9B39-C3CDB309D773">
+
+
+    <h1 class="title topictitle1">Socket Data API</h1>
+
+    <div class="body">
+        <p class="p">The socket API enables users to create generic BSD/POSIX-style IP sockets
+            over the IPv6 network and also to exterior network destinations.</p>
+
+        <p class="p">The following code block shows the creation of a UDP socket and binding it
+            to any local IPv6 address and port:</p>
+
+        <pre class="pre codeblock">
+            static void APP_InitSocketServer(void)
+{
+    /* Socket storage information used for RX */
+    sockaddrIn6_t mSsRx = {{{0}}};
+    
+    if(mSockfd != -1)
+    {
+        /* socket already initialised */
+        return;
+    }
+
+    /* Create a socket for global IP address */
+    /* Set local information */
+
+    mSsRx.sin6_family = AF_INET6;
+    mSsRx.sin6_port = UDP_PORT;
+    IP_AddrCopy(&amp;mSsRx.sin6_addr, &amp;in6addr_any);
+
+    /* Create socket */
+    mSockfd = socket(mSsRx.sin6_family, SOCK_DGRAM, IPPROTO_UDP);
+
+    /* Bind socket to local information */
+    bind(mSockfd, (sockaddrStorage_t*)&amp;mSsRx, sizeof(sockaddrStorage_t));
+
+    /* Initializes the Session task*/
+    Session_Init();
+
+    Session_RegisterCb(mSockfd, APP_SocketClientRxCallback, pmAppSockThreadMsgQueue);
+}
+            </pre>
+
+        
+        <p class="p">This function is called to initialize the wrapper module. To send a generic
+            Socket application request the following API is called:</p>
+
+        <pre class="pre codeblock">
+            bool_t App_SocketSendAsync(appSockCmdParams_t* pAppSockCmdParams);
+            </pre>
+
+        <p class="p">The functionality is exercised in the Shell Network IP module. For more information, please read the Kinetis Thread Stack Application Development Guide and the Kinetis Thread Stack API Reference Manual.</p>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-88C359A8-0738-4471-9315-5F2E63573254.html">Network IP Manager and Protocol Wrappers APIs</a></div>
+</div>
+</div>
+
+</body>
+</html>

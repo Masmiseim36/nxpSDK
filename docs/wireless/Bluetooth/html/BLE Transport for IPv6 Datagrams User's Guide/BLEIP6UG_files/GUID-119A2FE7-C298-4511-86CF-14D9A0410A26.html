@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Network IP RTOS Prerequisites"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-88C359A8-0738-4471-9315-5F2E63573254.html"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-119A2FE7-C298-4511-86CF-14D9A0410A26"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Network IP RTOS Prerequisites</title>
+</head>
+<body id="GUID-119A2FE7-C298-4511-86CF-14D9A0410A26">
+
+
+    <h1 class="title topictitle1">Network IP RTOS Prerequisites</h1>
+
+    <div class="body">
+        <p class="p">The nwk_ip_init module contains the RTOS initialization part of the IP Task. To initialize the task, the application must call the following API, at startup (usually this is done in BleApp_Init):</p>
+
+        <pre class="pre codeblock">
+            osaStatus_t NwkIpManager_TaskInit(void)
+            </pre>
+
+        <p class="p">The task size and priority shall be configured in nwk_ip_init.h:</p>
+
+        <pre class="pre codeblock">
+            #ifndef gIpStack_TaskStackSize_c
+#define gIpStack_TaskStackSize_c 3000
+#endif
+
+#ifndef gIpStack_TaskPriority_c
+#define gIpStack_TaskPriority_c  5
+#endif
+            </pre>
+
+        <p class="p">The IP Task is signaled by the NWKU_GENERIC_MSG_EVENT event flag and uses
+            three queues for 6LoBle layer, IP layer, and Network IP wrapper layer (including ECHO
+            ICMPv6 or UDP, Sockets or CoAP).</p>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-88C359A8-0738-4471-9315-5F2E63573254.html">Network IP Manager and Protocol Wrappers APIs</a></div>
+</div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,72 @@
+Host Setup
+==========
+
+[hsdk] $ make; sudo make install
+[hsdk/demo] $ make; cd bin/
+[hsdk/demo] $ ./FsciBootloader
+    Usage: # ./FsciBootloader serial_port binary_file [-e] [-d] [-s value]
+        serial_port - Kinetis-W system device node.
+        binary_file - The binary file to be written.
+        -e - Erase the non-volatile memory.
+        -d - Disable the CRC check on commit image.
+        -s - Push chunks this large (in bytes). Defaults to 2048, Max 2048.
+
+
+FRDM-KW41Z FSCI Bootloader Embedded Setup
+=========================================
+
+1. Flash the bootloader binary. Use one of the following:
+    a) Prebuilt binary C:\NXP\Thread_1.0.1.17\Thread\framework\Bootloader\Bin\Bootloader_FSCI_frdmkw41z_IAR.bin
+    b) Prebuilt binary C:\NXP\Thread_1.0.1.17\Thread\framework\Bootloader\Bin\Bootloader_FSCI_frdmkw41z_GCC.bin
+    c) IAR Project C:\NXP\Thread_1.0.1.17\Thread\framework\Bootloader\bootloader_fsci\frdmkw41z\build\iar\Bootloader_FSCI.eww
+    d) KDS Project C:\NXP\Thread_1.0.1.17\Thread\framework\Bootloader\bootloader_fsci\frdmkw41z\build\kds\.project
+
+
+FRDM-KW41Z Embedded Setup for i.MX6UL-EVK on UART
+=================================================
+
+1. Create a Thread application binary with bootloader offset. Use one of the following:
+
+    a) IAR Project C:\NXP\Thread_1.0.1.17\Thread\examples\host_controlled_device\kw4x\frdmkw41z\freertos\iar\host_controlled_device.eww
+        i) Navigate to Options... -> Linker -> Config Tab: change gUseBootloaderLink_d=1
+        ii) Navigate to Options... -> Output Converter: Output format: binary
+        iii) Make
+        iv) The binary can be found under:
+            examples\host_controlled_device\kw4x\frdmkw41z\freertos\iar\debug\host_controlled_device.bin
+            This image will be one of the inputs for the Linux flasher program.
+
+    b) KDS Project C:\NXP\Thread_1.0.1.17\Thread\examples\host_controlled_device\kw4x\frdmkw41z\freertos\kds\.project
+        i) Navigate to Properties -> C/C++ Build -> Build Variables: change gUseBootloaderLink_d=1
+        ii) Navigate to Properties -> C/C++ Build -> Settings -> Tool Settings Tab -> Cross ARM GNU Create Flash Image:
+            change Output file format to Raw binary
+        iii) Build Project
+        iv) The binary can be found under:
+            examples\host_controlled_device\kw4x\frdmkw41z\freertos\kds\debug\host_controlled_device.bin
+            This image will be one of the inputs for the Linux flasher program.
+
+2. [hsdk/demo] # ./FsciBootloader /dev/ttymxc1 host_controlled_device.bin
+
+
+FRDM-KW41Z Embedded Setup for i.MX6UL-EVK on SPI
+================================================
+
+Our current kernel configuration for the i.MX6UL-EVK only allows interaction on SPI with FRDM-KW24D devices.
+The FSCI bootloader over SPI, in collaboration with FRDM-KW41Z, may be exercised only when a J-Link debugger
+is connected and running. This is because the location of the SPI data-available pin (DAP) changed from KW24D -
+on KW41Z this pin is used as the clock source for the debugger. Thus, SPI interrupts in Linux will only occur when
+the debugger is connected.
+Please follow 1.a) from the previous section and change in
+    middleware/wireless/nwk_ip_1.2.0/examples/host_controlled_device/config/config.h:
+        #define THCI_UART_ENABLE                                0
+        #endif
+        #define THCI_SPI_ENABLE                                 1
+To flash use:
+[hsdk/demo] # ./FsciBootloader /dev/spidev3.0 host_controlled_device.bin
+
+
+FRDM-KW41Z Embedded Setup for a general Linux machine
+=====================================================
+
+1. Please follow the same steps as in section *FRDM-KW41Z Embedded Setup for i.MX6UL-EVK on UART*.
+
+2. [hsdk/demo] # ./FsciBootloader /dev/ttyACMx host_controlled_device.bin

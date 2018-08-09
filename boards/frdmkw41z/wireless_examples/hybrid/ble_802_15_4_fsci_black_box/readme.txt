@@ -1,0 +1,1 @@
+The application implements a hybrid Bluetooh Low Energy and 802.15.4 MAC FSCI Black Box. The example works on the FRDM-KW41Z board. For more information, please consult the BLE Demo Applications User's Guide.

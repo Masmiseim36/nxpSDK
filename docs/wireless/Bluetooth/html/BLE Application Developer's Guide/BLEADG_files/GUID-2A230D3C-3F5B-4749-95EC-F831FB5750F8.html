@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Introduction"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Creator" content=""/>
+<meta name="DC.Publisher" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-2A230D3C-3F5B-4749-95EC-F831FB5750F8"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Introduction</title>
+</head>
+<body id="GUID-2A230D3C-3F5B-4749-95EC-F831FB5750F8">
+
+
+    <h1 class="title topictitle1">Introduction</h1>
+
+    <div class="body">
+        <p class="p">This document explains how to integrate the Bluetooth® Low Energy (BLE) Host
+            Stack in a BLE application and provides detailed explanation of the most commonly used
+            APIs and code examples.</p>
+
+        <p class="p">The document also sets out the prerequisites and the initialization of the BLE Host
+            Stack, followed by the presentation of APIs grouped by layers and by application role,
+            as described below.</p>
+
+        <p class="p">First, the Generic Access Profile (GAP) layer is divided into two sections according to
+            the GAP role of the device: Central and Peripheral.</p>
+
+        <p class="p">The basic setup of two such devices is explained with code examples, such as how to
+            prepare the devices for connections, how to connect them together, and pairing and
+            bonding processes.</p>
+
+        <p class="p">Next, the Generic Attribute Profile (GATT) layer introduces the APIs required for data
+            transfer between the two connected devices. Again, the chapter is divided into two
+            sections according to the GATT role of the device: Client and Server.</p>
+
+        <p class="p">The document further describes the usage of the GATT Database APIs in the application to
+            manipulate the data in the GATT server database.</p>
+
+        <p class="p">Then, the document shows a user-friendly method to statically build a GATT Database. The
+            method involves the use of a predefined set of macros that the application may include
+            to build the database at application compile-time.</p>
+
+        <p class="p">The following section contains instructions on how to build a custom profile. The
+            subsequent section is dedicated to the structure of the typical application.</p>
+
+        <p class="p">Additionally, the document has a chapter dedicated to low-power management and how the
+            low-power modes of the hardware of the software can be used by an application.</p>
+
+        <p class="p">The next section contains a description of the Over The Air Programming (OTAP)
+            capabilities offered by the Host Stack via a dedicated Service/Profile and how to use
+            them in an application. This section also contains a detailed description of the
+            components of the Framework involved in the OTAP process and the Bootloader application,
+            which does the actual upgrade of the image on a device.</p>
+
+        <p class="p">Finally, the document has a section, which describes how to build a BLE application when
+            the Host Stack is running on a separate processor.</p>
+
+    </div>
+
+
+</body>
+</html>

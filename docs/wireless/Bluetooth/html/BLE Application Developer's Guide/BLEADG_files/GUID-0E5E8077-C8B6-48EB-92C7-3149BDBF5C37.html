@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Image block request command"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-F67FF9FB-8021-4C91-8D9E-24DE7A9CF6B8.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Creator" content=""/>
+<meta name="DC.Publisher" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-0E5E8077-C8B6-48EB-92C7-3149BDBF5C37"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Image block request command</title>
+</head>
+<body id="GUID-0E5E8077-C8B6-48EB-92C7-3149BDBF5C37">
+
+
+    <h1 class="title topictitle1">Image block request command</h1>
+
+    <div class="body">
+        <p class="p">This command is sent by the OTAP Client to the OTAP Server to request a part of the
+            upgrade image after it has determined the OTAP Server has an upgrade image
+            available.</p>
+
+        <p class="p">When an OTAP Server Receives this command it should stop any image file chunk transfer
+            sequences in progress.</p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-0E5E8077-C8B6-48EB-92C7-3149BDBF5C37__TABLE_YCW_Y3M_CY" class="table" frame="border" border="1" rules="all"><caption><span class="tablecap">Table 1. Image Block Request Command Parameters</span></caption>
+                
+                
+                
+                
+                
+                
+                
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top">CmdId</td>
+
+                        <td class="entry" valign="top">Name</td>
+
+                        <td class="entry" valign="top">Dir</td>
+
+                        <td class="entry" valign="top">Parameters</td>
+
+                        <td class="entry" valign="top">
+                            <p class="p">Param Size</p>
+
+                            <p class="p"> (Bytes)</p>
+
+                        </td>
+
+                        <td class="entry" valign="top">Description</td>
+
+                        <td class="entry" valign="top">Total Size (CmdId+Payload)</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" rowspan="6" valign="top">0x04</td>
+
+                        <td class="entry" rowspan="6" valign="top">Image Block Request</td>
+
+                        <td class="entry" rowspan="6" valign="top">C-&gt;S</td>
+
+                        <td class="entry" valign="top">ImageId</td>
+
+                        <td class="entry" valign="top">2</td>
+
+                        <td class="entry" valign="top">Image Id</td>
+
+                        <td class="entry" rowspan="6" valign="top">16</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">StartPosition</td>
+
+                        <td class="entry" valign="top">4</td>
+
+                        <td class="entry" valign="top">Start position of the image block to be transferred.</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">BlockSize</td>
+
+                        <td class="entry" valign="top">4</td>
+
+                        <td class="entry" valign="top">Requested total block size in bytes.</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">ChunkSize</td>
+
+                        <td class="entry" valign="top">2</td>
+
+                        <td class="entry" valign="top">Should be optimized to the TransferChannel type. The maximum number
+                            of chunks per block is 256. Value is in bytes.</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">TransferMethod</td>
+
+                        <td class="entry" valign="top">1</td>
+
+                        <td class="entry" valign="top">
+                            <p class="p">0x00 - ATT</p>
+
+                            <p class="p"> 0x01 – L2CAP PSM Credit based channel</p>
+
+                        </td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">L2capChannelOrPsm</td>
+
+                        <td class="entry" valign="top">2</td>
+
+                        <td class="entry" valign="top">
+                            <p class="p">0x0004 - ATT</p>
+
+                            <p class="p"> Other values – PSM for credit based channels</p>
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p">The <em class="ph i">ImageId</em> parameter contains the ID of the upgrade image.</p>
+
+        <p class="p">The <em class="ph i">StartPosition</em> parameter specifies the location in the image upgrade file at
+            which the requested block starts.</p>
+
+        <p class="p">The <em class="ph i">BlockSize</em> and <em class="ph i">ChunkSize</em> parameters specify the size in bytes of the
+            block to be transferred and the size of the chunks into which a block is separated. The
+                <em class="ph i">ChunkSize</em> value must be chosen in such a way that the total number of chunks
+            can be represented by the <em class="ph i">SeqNumber</em> parameter of the Image Chunk Command. At the
+            moment this parameter is 1 byte in size so there are a maximum of 256 chunks per block.
+            The chunk sequence number goes from 0 to 255 (0x00 to 0xFF). If this condition is not
+            met or the requested block is not entirely into the image file bounds an error is sent
+            to the OTAP Client when the OTAP Server receives this misconfigured Image Block Request
+            Command.</p>
+
+        <p class="p">The maximum value of the <em class="ph i">ChunkSize</em> parameter depends on the maximum ATT_MTU and
+            L2CAP_MTU supported by the BLE stack version and implementation.</p>
+
+        <p class="p">The <em class="ph i">TransferMethod</em> parameter is used to select the transfer method which can be
+            ATT or L2CAP PSM CoC. The <em class="ph i">L2capChannelOrPsm</em> parameter must contain the value
+            0x0004 for the ATT transfer method and another value representing the chosen PSM for the
+            L2CAP PSM transfer method. The default PSM for the BLE OTAP demo applications is 0x004F
+            for both the OTAP Server and the OTAP Client although the specification allows different
+            values at the 2 ends of the L2CAP PSM connection. The PSM must be in the range reserved
+            by the Bluetooth specification which is 0x0040 to 0x007F.</p>
+
+        <p class="p">The optimal value of the <em class="ph i">ChunkSize</em> parameter depends on the chosen transfer method
+            and the Link Layer payload size. Ideally it must be chosen in such a way that full
+            packets are sent for every chunk in the block.</p>
+
+        <p class="p">The default Link Layer payload is 27 bytes form which we subtract 4 for the L2CAP layer
+            and 3 for the ATT layer (1 for the ATT Cmd Opcode and 2 for the Handle) leaving us with
+            a 20 byte OTAP protocol payload. From these 20 bytes we subtract 1 for the OTAP CmdId
+            and 1 for the chunk sequence number leaving us with an optimum chink size of 18 for the
+            ATT transfer method – which is the default in the demo applications. For the L2CAP PSM
+            transfer method the chosen default chunk size is 111. This was chosen so as a chunk fits
+            exactly 5 link layer packets. The default L2CAP payload of 23 (27 - 4) multiplied by 5
+            gives us 115 from which we subtract 2 bytes for the SDU Length (which is only sent in
+            the first packet), 1 byte for the OTAP CmdId and 1 byte for the chunk sequence number
+            which leaves exactly 111 bytes for the actual payload.</p>
+
+        <p class="p">If the Link layer supports Long Frames feature then the chunk size should be set
+            according to the negotiated ATT MTU for the ATT transfer method. From the negotiated ATT
+            MTU (<em class="ph i">att_mtu</em>) substract 3 bytes for the ATT layer (1 for the ATT Cmd Opcode and 2
+            for the Handle) then substract 2 bytes for the OTAP protocol (1 for the CmdId and 1 for
+            the chunk sequence number) to determine the optimum chunk size
+                (<em class="ph i">optimum_att_chunk_size = att_mtu – 3 – 2)</em>. For the L2CAP PSM transfer method
+            the chunk size can be set based on the maximum L2CAP SDU size
+            (<em class="ph i">max_l2cap_sdu_size</em>) from which 4 bytes should be subtracted, 2 for the SDU
+            Length and 2 for the OTAP protocol (<em class="ph i">optimum_l2cap_chunk_size = max_l2cap_sdu_size – 3
+                – 2</em>). In some particular cases reducing the L2CAP chunk size could lead to
+            better performance. If the L2CAP chunk size needs to be reduced it should be reduced so
+            it fits exactly a number of link layer packets. An example of how to compute an optimal
+            reduced L2CAP chunk size is given in the previous paragraph.</p>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-F67FF9FB-8021-4C91-8D9E-24DE7A9CF6B8.html">BLE OTAP commands</a></div>
+</div>
+</div>
+
+</body>
+</html>

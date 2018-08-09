@@ -1,0 +1,1403 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="System Timer API primitives"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-8A8C68B5-7B1A-44A2-80BE-6427AD0835FE.html"/>
+<meta name="prodname" content=""/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Creator" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-8CAD0BC2-05CB-4C5C-9BEE-7A820FFA0AEE"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>System Timer API primitives</title>
+</head>
+<body id="GUID-8CAD0BC2-05CB-4C5C-9BEE-7A820FFA0AEE">
+
+
+    <h1 class="title topictitle1">System Timer API primitives</h1>
+
+    <div class="body">
+        <p class="p"><strong class="ph b"><span class="ph" id="GUID-8CAD0BC2-05CB-4C5C-9BEE-7A820FFA0AEE___TOC346017080">TMR_Init()</span></strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">void TMR_Init
+(
+    void
+);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong></p>
+
+        <p class="p">This function initializes the system timer module. It must be called before the module is
+            used. Internally, the function creates the timer task, calls the low level driver
+            initialization function, configures and starts the hardware timer, and initializes
+            module internal variables.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        <p class="p">None.</p>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">None.</p>
+
+        <p class="p"><strong class="ph b"><span class="ph" id="GUID-8CAD0BC2-05CB-4C5C-9BEE-7A820FFA0AEE___TOC346017081">TMR_AllocateTimer()</span></strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">tmrTimerID_t TMR_AllocateTimer
+(
+    void
+);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong></p>
+
+        <p class="p">This function is used to allocate a timer. Before staring or stopping a timer, the timer
+            must be allocated first. After the timer is allocated, its internal status is set to
+            inactive.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        <p class="p">None.</p>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">This function returns the allocated timer ID or <em class="ph i">gTmrInvalidTimerID</em> if no timers
+            are available. The returned timer ID must be used by the application for all further
+            interactions with the allocated timer until the timer is freed.</p>
+
+        <p class="p"><strong class="ph b"><span class="ph" id="GUID-8CAD0BC2-05CB-4C5C-9BEE-7A820FFA0AEE___TOC346017082">TMR_FreeTimer()</span></strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">tmrErrCode_t TMR_FreeTimer
+(
+    tmrTimerID_t timerID
+);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong></p>
+
+        <p class="p">The function frees the specified timer if the application no longer needs it.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-8CAD0BC2-05CB-4C5C-9BEE-7A820FFA0AEE__TABLE_SDR_H5K_2Z" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d47541e149"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d47541e153"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d47541e157"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d47541e161"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d47541e149 ">timerID</td>
+
+                        <td class="entry" valign="top" headers="d47541e153 ">tmrTimerID_t</td>
+
+                        <td class="entry" valign="top" headers="d47541e157 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d47541e161 ">The ID of the timer to be freed.</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">The error code.</p>
+
+        <p class="p"><strong class="ph b"><span class="ph" id="GUID-8CAD0BC2-05CB-4C5C-9BEE-7A820FFA0AEE___TOC346017083">TMR_StartTimer()</span></strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">tmrErrCode_t TMR_StartTimer
+(
+    tmrTimerID_t timerID,
+    tmrTimerType_t timerType,
+    tmrTimeInMilliseconds_t timeInMilliseconds,
+    void (*pfTimerCallBack)(void *),
+    void *param
+);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong></p>
+
+        <p class="p">The function is used by the application to set up and start a (pre-) allocated timer. If
+            the specified timer is already running, calling this function stops the timer and
+            reconfigures it with new parameters.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-8CAD0BC2-05CB-4C5C-9BEE-7A820FFA0AEE__TABLE_Y3Q_N4L_2Z" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d47541e235"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d47541e239"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d47541e243"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d47541e247"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d47541e235 ">timerID</td>
+
+                        <td class="entry" valign="top" headers="d47541e239 ">tmrTimerID_t</td>
+
+                        <td class="entry" valign="top" headers="d47541e243 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d47541e247 ">The ID of the timer to be started</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d47541e235 ">timerType</td>
+
+                        <td class="entry" valign="top" headers="d47541e239 ">tmrTimerType_t</td>
+
+                        <td class="entry" valign="top" headers="d47541e243 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d47541e247 ">The type of the timer to be started</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d47541e235 ">timeInMilliseconds</td>
+
+                        <td class="entry" valign="top" headers="d47541e239 ">tmrTimeInMilliseconds_t</td>
+
+                        <td class="entry" valign="top" headers="d47541e243 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d47541e247 ">Timer counting interval expressed in system ticks</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d47541e235 ">pfTimerCallBack</td>
+
+                        <td class="entry" valign="top" headers="d47541e239 ">void (*)(void *)</td>
+
+                        <td class="entry" valign="top" headers="d47541e243 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d47541e247 ">Pointer to the callback function</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d47541e235 ">param</td>
+
+                        <td class="entry" valign="top" headers="d47541e239 ">void *</td>
+
+                        <td class="entry" valign="top" headers="d47541e243 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d47541e247 ">Parameter to be passed to the callback function.</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">The error code.</p>
+
+        <p class="p"><strong class="ph b"><span class="ph" id="GUID-8CAD0BC2-05CB-4C5C-9BEE-7A820FFA0AEE___TOC346017084">TMR_StopTimer()</span></strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">tmrErrCode_t TMR_StopTimer
+(
+    tmrTimerID_t timerID
+);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong></p>
+
+        <p class="p">The function is used by the application to stop a pre-allocated running timer. If the
+            specified timer is already stopped, calling this function doesn’t do anything. Stopping
+            a timer doesn’t automatically free it. After it is stopped, the specified timer timeout
+            events are deactivated until the timer is restarted.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-8CAD0BC2-05CB-4C5C-9BEE-7A820FFA0AEE__TABLE_FM2_S4L_2Z" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d47541e382"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d47541e386"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d47541e390"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d47541e394"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d47541e382 ">timerID</td>
+
+                        <td class="entry" valign="top" headers="d47541e386 ">tmrTimerID_t</td>
+
+                        <td class="entry" valign="top" headers="d47541e390 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d47541e394 ">The ID of the timer to be stopped</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">The error code.</p>
+
+        <p class="p"><strong class="ph b"><span class="ph" id="GUID-8CAD0BC2-05CB-4C5C-9BEE-7A820FFA0AEE___TOC346017085">TMR_IsTimerActive</span></strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">bool_t TMR_IsTimerActive
+(
+    tmrTimerID_t timerID
+);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong></p>
+
+        <p class="p">This function checks whether the specified timer is active.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-8CAD0BC2-05CB-4C5C-9BEE-7A820FFA0AEE__TABLE_X3X_Y4L_2Z" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d47541e468"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d47541e472"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d47541e476"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d47541e480"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d47541e468 ">timerID</td>
+
+                        <td class="entry" valign="top" headers="d47541e472 ">tmrTimerID_t</td>
+
+                        <td class="entry" valign="top" headers="d47541e476 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d47541e480 ">The ID of the timer to be checked</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">TRUE if the timer is active, FALSE otherwise.</p>
+
+        <p class="p"><strong class="ph b"><span class="ph" id="GUID-8CAD0BC2-05CB-4C5C-9BEE-7A820FFA0AEE___TOC346017086">TMR_GetRemainingTime</span></strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">uint32_t TMR_GetRemainingTime
+(
+    tmrTimerID_t tmrID
+);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong></p>
+
+        <p class="p">This function returns the time (in milliseconds) until the specified timer expires (times
+            out) or 0 if the timer is inactive or already expired.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-8CAD0BC2-05CB-4C5C-9BEE-7A820FFA0AEE__TABLE_LBB_HPL_2Z" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d47541e555"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d47541e559"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d47541e563"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d47541e567"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d47541e555 ">tmrID</td>
+
+                        <td class="entry" valign="top" headers="d47541e559 ">tmrTimerID_t</td>
+
+                        <td class="entry" valign="top" headers="d47541e563 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d47541e567 ">The ID of the timer</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">The remaining time in milliseconds until the timer expires. The function also returns 0
+            if the tmrId is invalid.</p>
+
+        <p class="p"><strong class="ph b">TMR_GetFirstExpireTime</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">uint32_t TMR_GetFirstExpireTime
+(
+    tmrTimerType_t timerType
+);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong></p>
+
+        <p class="p">The function returns the time in milliseconds until the first timer of the specified type
+            expires (times out) or 0xFFFFFFFF if the specified timer type is not found.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-8CAD0BC2-05CB-4C5C-9BEE-7A820FFA0AEE__TABLE_MSK_MPL_2Z" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d47541e640"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d47541e644"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d47541e648"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d47541e652"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d47541e640 ">timerType</td>
+
+                        <td class="entry" valign="top" headers="d47541e644 ">tmrTimerType_t</td>
+
+                        <td class="entry" valign="top" headers="d47541e648 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d47541e652 ">Bitmask of timer types</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">The remaining time in milliseconds.</p>
+
+        <p class="p"><strong class="ph b"><span class="ph" id="GUID-8CAD0BC2-05CB-4C5C-9BEE-7A820FFA0AEE___TOC346017087">TMR_EnableTimer</span></strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">void TMR_EnableTimer
+(
+    tmrTimerID_t tmrID
+);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong></p>
+
+        <p class="p">This function is used to enable the specified timer.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-8CAD0BC2-05CB-4C5C-9BEE-7A820FFA0AEE__TABLE_CTW_SPL_2Z" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d47541e727"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d47541e731"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d47541e735"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d47541e739"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d47541e727 ">tmrID</td>
+
+                        <td class="entry" valign="top" headers="d47541e731 ">tmrTimerID_t</td>
+
+                        <td class="entry" valign="top" headers="d47541e735 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d47541e739 ">The ID of the timer to be enabled</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">None.</p>
+
+        <p class="p"><strong class="ph b"><span class="ph" id="GUID-8CAD0BC2-05CB-4C5C-9BEE-7A820FFA0AEE___TOC346017088">TMR_AreAllTimersOff</span></strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">bool_t TMR_AreAllTimersOff
+(
+    void
+);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong></p>
+
+        <p class="p">Checks if all timers except the low-power timers are OFF.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        <p class="p">None.</p>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">TRUE if there are no active non-low-power timers, FALSE otherwise.</p>
+
+        <p class="p"><strong class="ph b"><span class="ph" id="GUID-8CAD0BC2-05CB-4C5C-9BEE-7A820FFA0AEE___TOC346017089">TMR_IsTimer</span>Ready</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">bool_t TMR_IsTimerReady
+(
+    tmrTimerID_t timerID
+);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong></p>
+
+        <p class="p">Checks if a specified timer is ready. </p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-8CAD0BC2-05CB-4C5C-9BEE-7A820FFA0AEE__TABLE_CJW_JQL_2Z" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d47541e849"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d47541e853"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d47541e857"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d47541e861"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d47541e849 ">timerID</td>
+
+                        <td class="entry" valign="top" headers="d47541e853 ">tmrTimerID_t</td>
+
+                        <td class="entry" valign="top" headers="d47541e857 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d47541e861 ">The ID of the timer to be enabled</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">TRUE if the timer (specified by the timerID) is ready, FALSE otherwise.</p>
+
+        <p class="p"><strong class="ph b">TMR_StartLowPowerTimer</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">tmrErrCode_t TMR_StartLowPowerTimer
+(
+    tmrTimerID_t timerId,
+    tmrTimerType_t timerType,
+    uint32_t timeIn,
+    void (*pfTmrCallBack)(void *),
+    void *param
+);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong></p>
+
+        <p class="p">Starts a low-power timer. When the timer goes OFF, call the callback function in a
+            non-interrupt context. If the timer is running when this function is called, it is
+            stopped and restarted.</p>
+
+        <p class="p">Start the timer with the following timer types:</p>
+
+        <ul class="ul" id="GUID-8CAD0BC2-05CB-4C5C-9BEE-7A820FFA0AEE__UL_CW2_LQL_2Z">
+            <li class="li"> gTmrLowPowerMinuteTimer_c</li>
+
+            <li class="li"> gTmrLowPowerSecondTimer_c</li>
+
+            <li class="li"> gTmrLowPowerSingleShotMillisTimer_c</li>
+
+            <li class="li"> gTmrLowPowerIntervalMillisTimer_c</li>
+
+        </ul>
+
+        <p class="p">The MCU can enter the low-power mode if there are only active low-power timers. </p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-8CAD0BC2-05CB-4C5C-9BEE-7A820FFA0AEE__TABLE_YGX_QQL_2Z" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d47541e956"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d47541e960"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d47541e964"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d47541e968"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d47541e956 ">timerID</td>
+
+                        <td class="entry" valign="top" headers="d47541e960 ">tmrTimerID_t</td>
+
+                        <td class="entry" valign="top" headers="d47541e964 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d47541e968 ">The ID of the timer</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d47541e956 ">timerType</td>
+
+                        <td class="entry" valign="top" headers="d47541e960 ">tmrTimerType_t</td>
+
+                        <td class="entry" valign="top" headers="d47541e964 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d47541e968 ">The type of the timer</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d47541e956 ">timeIn</td>
+
+                        <td class="entry" valign="top" headers="d47541e960 ">uint32_t</td>
+
+                        <td class="entry" valign="top" headers="d47541e964 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d47541e968 ">Time in ticks</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d47541e956 ">pfTimerCallBack</td>
+
+                        <td class="entry" valign="top" headers="d47541e960 ">void (*)(void *)</td>
+
+                        <td class="entry" valign="top" headers="d47541e964 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d47541e968 ">Pointer to the callback function</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d47541e956 ">param</td>
+
+                        <td class="entry" valign="top" headers="d47541e960 ">void *</td>
+
+                        <td class="entry" valign="top" headers="d47541e964 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d47541e968 ">Parameter to be passed to the callback function.</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">The error code.</p>
+
+        <p class="p"><strong class="ph b">TMR_StartMinuteTimer</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">tmrErrCode_t TMR_StartMinuteTimer
+(
+    tmrTimerID_t timerId,
+    tmrTimeInMinutes_t timeInMinutes,
+    void (*pfTmrCallBack)(void *),
+    void *param
+);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong></p>
+
+        <p class="p">Starts a minute timer. </p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-8CAD0BC2-05CB-4C5C-9BEE-7A820FFA0AEE__TABLE_FP3_VQL_2Z" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d47541e1101"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d47541e1105"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d47541e1109"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d47541e1113"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d47541e1101 ">timerID</td>
+
+                        <td class="entry" valign="top" headers="d47541e1105 ">tmrTimerID_t</td>
+
+                        <td class="entry" valign="top" headers="d47541e1109 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d47541e1113 ">The ID of the timer</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d47541e1101 ">timeInMinutes</td>
+
+                        <td class="entry" valign="top" headers="d47541e1105 ">tmrTimeInMinutes_t</td>
+
+                        <td class="entry" valign="top" headers="d47541e1109 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d47541e1113 ">Time in minutes</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d47541e1101 ">pfTmrCallBack</td>
+
+                        <td class="entry" valign="top" headers="d47541e1105 ">void (*)(void *)</td>
+
+                        <td class="entry" valign="top" headers="d47541e1109 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d47541e1113 ">Pointer to the callback function</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d47541e1101 ">param</td>
+
+                        <td class="entry" valign="top" headers="d47541e1105 ">void *</td>
+
+                        <td class="entry" valign="top" headers="d47541e1109 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d47541e1113 ">Parameter to be passed to the callback function.</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">The error code.</p>
+
+        <p class="p"> </p>
+
+        <p class="p"><strong class="ph b">TMR_StartSecondTimer</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">tmrErrCode_t TMR_StartMinuteTimer
+(
+    tmrTimerID_t timerId,
+    tmrTimeInSeconds_t timeInSeconds,
+    void (*pfTmrCallBack)(void *),
+    void *param
+);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong></p>
+
+        <p class="p">Starts a second timer. </p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-8CAD0BC2-05CB-4C5C-9BEE-7A820FFA0AEE__TABLE_GCZ_1RL_2Z" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d47541e1235"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d47541e1239"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d47541e1243"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d47541e1247"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d47541e1235 ">timerID</td>
+
+                        <td class="entry" valign="top" headers="d47541e1239 ">tmrTimerID_t</td>
+
+                        <td class="entry" valign="top" headers="d47541e1243 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d47541e1247 ">The ID of the timer</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d47541e1235 ">timeInSeconds</td>
+
+                        <td class="entry" valign="top" headers="d47541e1239 ">tmrTimeInSeconds_t</td>
+
+                        <td class="entry" valign="top" headers="d47541e1243 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d47541e1247 ">Time in seconds</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d47541e1235 ">pfTmrCallBack</td>
+
+                        <td class="entry" valign="top" headers="d47541e1239 ">void (*)(void *)</td>
+
+                        <td class="entry" valign="top" headers="d47541e1243 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d47541e1247 ">Pointer to the callback function</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d47541e1235 ">param</td>
+
+                        <td class="entry" valign="top" headers="d47541e1239 ">void *</td>
+
+                        <td class="entry" valign="top" headers="d47541e1243 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d47541e1247 ">Parameter to be passed to the callback function.</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">The error code.</p>
+
+        <p class="p"><strong class="ph b">TMR_StartIntervalTimer</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">tmrErrCode_t TMR_StartIntervalTimer
+(
+    tmrTimerID_t timerId,
+    tmrTimeInMilliseconds_t timeInMilliseconds,
+    void (*pfTmrCallBack)(void *),
+    void *param
+);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong></p>
+
+        <p class="p">Starts an interval timer. </p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-8CAD0BC2-05CB-4C5C-9BEE-7A820FFA0AEE__TABLE_ZSB_FRL_2Z" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d47541e1365"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d47541e1369"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d47541e1373"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d47541e1377"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d47541e1365 ">timerID</td>
+
+                        <td class="entry" valign="top" headers="d47541e1369 ">tmrTimerID_t</td>
+
+                        <td class="entry" valign="top" headers="d47541e1373 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d47541e1377 ">The ID of the timer</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d47541e1365 ">timeInMilliseconds</td>
+
+                        <td class="entry" valign="top" headers="d47541e1369 ">tmrTimeInMilliseconds_t</td>
+
+                        <td class="entry" valign="top" headers="d47541e1373 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d47541e1377 ">Time in milliseconds</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d47541e1365 ">pfTmrCallBack</td>
+
+                        <td class="entry" valign="top" headers="d47541e1369 ">void (*)(void *)</td>
+
+                        <td class="entry" valign="top" headers="d47541e1373 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d47541e1377 ">Pointer to the callback function</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d47541e1365 ">param</td>
+
+                        <td class="entry" valign="top" headers="d47541e1369 ">void *</td>
+
+                        <td class="entry" valign="top" headers="d47541e1373 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d47541e1377 ">Parameter to be passed to the callback function.</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">The error code.</p>
+
+        <p class="p"><strong class="ph b">TMR_StartSingleShotTimer</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">tmrErrCode_t TMR_StartIntervalTimer
+(
+    tmrTimerID_t timerId,
+    tmrTimeInMilliseconds_t timeInMilliseconds,
+    void (*pfTmrCallBack)(void *),
+    void *param
+);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong></p>
+
+        <p class="p">Starts a single-shot timer. </p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-8CAD0BC2-05CB-4C5C-9BEE-7A820FFA0AEE__TABLE_ALP_LRL_2Z" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d47541e1496"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d47541e1500"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d47541e1504"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d47541e1508"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d47541e1496 ">timerID</td>
+
+                        <td class="entry" valign="top" headers="d47541e1500 ">tmrTimerID_t</td>
+
+                        <td class="entry" valign="top" headers="d47541e1504 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d47541e1508 ">The ID of the timer</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d47541e1496 ">timeInMilliseconds</td>
+
+                        <td class="entry" valign="top" headers="d47541e1500 ">tmrTimeInMilliseconds_t</td>
+
+                        <td class="entry" valign="top" headers="d47541e1504 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d47541e1508 ">Time in milliseconds</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d47541e1496 ">pfTmrCallBack</td>
+
+                        <td class="entry" valign="top" headers="d47541e1500 ">void (*)(void *)</td>
+
+                        <td class="entry" valign="top" headers="d47541e1504 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d47541e1508 ">Pointer to the callback function</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d47541e1496 ">param</td>
+
+                        <td class="entry" valign="top" headers="d47541e1500 ">void *</td>
+
+                        <td class="entry" valign="top" headers="d47541e1504 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d47541e1508 ">Parameter to be passed to the callback function</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">The error code.</p>
+
+        <p class="p"><strong class="ph b">TMR_TimestampInit()</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">void TMR_TimeStampInit
+(
+    void
+);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong></p>
+
+        <p class="p">The function initializes the RTC or PIT HW to enable the timestamp functionality.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        <p class="p">None.</p>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">None.</p>
+
+        <p class="p"><strong class="ph b">TMR_GetTimestamp()</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">uint64_t TMR_GetTimestamp
+(
+    void
+);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong></p>
+
+        <p class="p">Returns the absolute time at the moment of the call.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        <p class="p">None.</p>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">Timestamp (in ms).</p>
+
+        <p class="p"><strong class="ph b">TMR_RTCInit()</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">void TMR_RTCInit
+(
+    void
+);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong></p>
+
+        <p class="p">The function initializes the RTC HW.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        <p class="p">None.</p>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">None.</p>
+
+        <p class="p"><strong class="ph b">TMR_RTCGetTimestamp()</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">uint64_t TMR_RTCGetTimestamp
+(
+    void
+);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong></p>
+
+        <p class="p">Returns the absolute time at the moment of the call, using the RTC.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        <p class="p">None</p>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">Timestamp (in µs).</p>
+
+        <p class="p"><strong class="ph b">TMR_RTCSetTime</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">void TMR_RTCSetTime
+(
+    uint64_t microseconds
+);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong></p>
+
+        <p class="p">Sets the absolute time. </p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-8CAD0BC2-05CB-4C5C-9BEE-7A820FFA0AEE__TABLE_DBL_NSL_2Z" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d47541e1760"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d47541e1764"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d47541e1768"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d47541e1772"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d47541e1760 ">microseconds</td>
+
+                        <td class="entry" valign="top" headers="d47541e1764 ">uint64_t</td>
+
+                        <td class="entry" valign="top" headers="d47541e1768 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d47541e1772 ">Time in microseconds</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">None.</p>
+
+        <p class="p"><strong class="ph b">TMR_RTCSetAlarm</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">void TMR_RTCSetAlarm
+(
+    uint64_t seconds,
+    pfTmrCallBack_t callback,
+    void *param
+);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong></p>
+
+        <p class="p">Sets the alarm in absolute time. </p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-8CAD0BC2-05CB-4C5C-9BEE-7A820FFA0AEE__TABLE_JGP_XSL_2Z" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d47541e1846"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d47541e1850"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d47541e1854"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d47541e1858"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d47541e1846 ">seconds</td>
+
+                        <td class="entry" valign="top" headers="d47541e1850 ">uint64_t</td>
+
+                        <td class="entry" valign="top" headers="d47541e1854 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d47541e1858 ">Time in seconds</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d47541e1846 ">callback</td>
+
+                        <td class="entry" valign="top" headers="d47541e1850 ">pfTmrCallBack_t</td>
+
+                        <td class="entry" valign="top" headers="d47541e1854 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d47541e1858 ">Pointer to the callback function</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d47541e1846 ">param</td>
+
+                        <td class="entry" valign="top" headers="d47541e1850 ">void *</td>
+
+                        <td class="entry" valign="top" headers="d47541e1854 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d47541e1858 ">Parameter to be passed to the callback function</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">None.</p>
+
+        <p class="p"><strong class="ph b">TMR_RTCSetAlarmRelative</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">void TMR_RTCSetAlarmRelative
+(
+    uint32_t seconds, 
+    pfTmrCallBack_t callback, 
+    void *param
+);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong></p>
+
+        <p class="p">Sets the alarm in relative time. </p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-8CAD0BC2-05CB-4C5C-9BEE-7A820FFA0AEE__TABLE_LRG_DTL_2Z" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d47541e1961"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d47541e1965"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d47541e1969"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d47541e1973"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d47541e1961 ">seconds</td>
+
+                        <td class="entry" valign="top" headers="d47541e1965 ">uint32_t</td>
+
+                        <td class="entry" valign="top" headers="d47541e1969 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d47541e1973 ">Time in seconds</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d47541e1961 ">callback</td>
+
+                        <td class="entry" valign="top" headers="d47541e1965 ">pfTmrCallBack_t</td>
+
+                        <td class="entry" valign="top" headers="d47541e1969 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d47541e1973 ">Pointer to the callback function</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d47541e1961 ">param</td>
+
+                        <td class="entry" valign="top" headers="d47541e1965 ">void *</td>
+
+                        <td class="entry" valign="top" headers="d47541e1969 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d47541e1973 ">Parameter to be passed to the callback function</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">None.</p>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-8A8C68B5-7B1A-44A2-80BE-6427AD0835FE.html">Timers’ Manager</a></div>
+</div>
+</div>
+
+</body>
+</html>

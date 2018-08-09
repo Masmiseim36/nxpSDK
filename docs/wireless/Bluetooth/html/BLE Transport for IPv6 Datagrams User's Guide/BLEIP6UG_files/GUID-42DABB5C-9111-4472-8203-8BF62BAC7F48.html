@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Configuration files"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-ACEEA2C0-2E84-43D9-A5EA-D2E58D8391A7.html"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-42DABB5C-9111-4472-8203-8BF62BAC7F48"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Configuration files</title>
+</head>
+<body id="GUID-42DABB5C-9111-4472-8203-8BF62BAC7F48">
+
+
+    <h1 class="title topictitle1">Configuration files</h1>
+
+    <div class="body">
+        <p class="p">The user can configure the Network IP stack and Manager by using the two
+            configuration files namely app_stack_config.h and nwk_ip_config.h.</p>
+
+        <p class="p">app_stack_config.h is used to configure variables declared in the globals
+            section described earlier, like the number of sockets, UDP connections or compression
+            contexts, as shown in the following code:</p>
+
+        
+        <pre class="pre codeblock">
+            /*! The maximum number of UDP connections that can be opened at one time. MUST not be greater than
+ * BSDS_MAX_SOCKETS */
+#ifndef MAX_UDP_CONNECTIONS
+    #define MAX_UDP_CONNECTIONS                 10
+#endif
+            </pre>
+
+        <p class="p">nwk_ip_config.h is used to configure variables used by the Network IP
+            Manager like the ND PIB or the initial global prefix. The configuration of an IPv6
+            Router is shown in the following code:</p>
+
+        <pre class="pre codeblock">
+            #define GLOBAL_PREFIX_INIT \
+        {0x20, 0x01, 0x0d, 0xb8, 0x00, 0x00, 0x00, 0x00, \
+         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}                
+
+#define GLOBAL_PREFIX_INIT_LEN  64
+            </pre>
+
+        <p class="p">The user should add any other configurations in these header files.</p>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-ACEEA2C0-2E84-43D9-A5EA-D2E58D8391A7.html">Applications Structure and APIs</a></div>
+</div>
+</div>
+
+</body>
+</html>

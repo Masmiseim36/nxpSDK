@@ -1,0 +1,874 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Supported FSCI commands"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-9EE283E7-E36D-420A-86E6-9D2159B9A820.html"/>
+<meta name="prodname" content=""/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Creator" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-96B2FE59-6831-4FCC-AFCD-7DCEE8BD47B7"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Supported FSCI commands</title>
+</head>
+<body id="GUID-96B2FE59-6831-4FCC-AFCD-7DCEE8BD47B7">
+
+
+    <h1 class="title topictitle1">Supported FSCI commands</h1>
+
+    <div class="body">
+        <p class="p"><strong class="ph b">FSCI-CPUReset.Request</strong></p>
+
+        <p class="p"><strong class="ph b">Direction:</strong> Host to Bootloader</p>
+
+        <p class="p"><strong class="ph b">Description: </strong>This command resets the MCU. No confirmation is sent.</p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-96B2FE59-6831-4FCC-AFCD-7DCEE8BD47B7__TABLE_XFQ_YML_GZ" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d56682e65">Parameter</th>
+
+                        <th class="entry" valign="top" id="d56682e68">Size (bytes)</th>
+
+                        <th class="entry" valign="top" id="d56682e71">Comments</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d56682e65 ">OpGroup</td>
+
+                        <td class="entry" valign="top" headers="d56682e68 ">1</td>
+
+                        <td class="entry" valign="top" headers="d56682e71 ">0xA3</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d56682e65 ">OpCode</td>
+
+                        <td class="entry" valign="top" headers="d56682e68 ">1</td>
+
+                        <td class="entry" valign="top" headers="d56682e71 ">0x08</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d56682e65 ">Length</td>
+
+                        <td class="entry" valign="top" headers="d56682e68 ">2/1</td>
+
+                        <td class="entry" valign="top" headers="d56682e71 ">0x00 – This request does not have any payload.</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">FSCI-Error.Indication</strong></p>
+
+        <p class="p"><strong class="ph b">Direction:</strong> Bootloader to Host</p>
+
+        <p class="p"><strong class="ph b">Description: </strong>Indicates that the last received command caused an error.</p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-96B2FE59-6831-4FCC-AFCD-7DCEE8BD47B7__TABLE_HRQ_YML_GZ" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d56682e146">Parameter</th>
+
+                        <th class="entry" valign="top" id="d56682e149">Size (bytes)</th>
+
+                        <th class="entry" valign="top" id="d56682e152">Comments</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d56682e146 ">OpGroup</td>
+
+                        <td class="entry" valign="top" headers="d56682e149 ">1</td>
+
+                        <td class="entry" valign="top" headers="d56682e152 ">0xA3</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d56682e146 ">OpCode</td>
+
+                        <td class="entry" valign="top" headers="d56682e149 ">1</td>
+
+                        <td class="entry" valign="top" headers="d56682e152 ">0xFE</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d56682e146 ">Length</td>
+
+                        <td class="entry" valign="top" headers="d56682e149 ">2/1</td>
+
+                        <td class="entry" valign="top" headers="d56682e152 ">0x01</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d56682e146 ">Error code</td>
+
+                        <td class="entry" valign="top" headers="d56682e149 ">1</td>
+
+                        <td class="entry" valign="top" headers="d56682e152 ">
+                            <p class="p">0xF7 – Unknown OpGroup</p>
+
+                            <p class="p">0xFD – Unknown OpCode</p>
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">FSCI-StartImage.Request</strong></p>
+
+        <p class="p"><strong class="ph b">Direction:</strong> Host to Bootloader</p>
+
+        <p class="p"><strong class="ph b">Description: </strong>Start the image upgrade process. If the upgrade process is already
+            started, an error code is returned in the following confirmation.</p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-96B2FE59-6831-4FCC-AFCD-7DCEE8BD47B7__TABLE_CCR_YML_GZ" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d56682e245">Parameter</th>
+
+                        <th class="entry" valign="top" id="d56682e248">Size (bytes)</th>
+
+                        <th class="entry" valign="top" id="d56682e251">Comments</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">                  
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d56682e245 ">OpGroup</td>
+
+                        <td class="entry" valign="top" headers="d56682e248 ">1</td>
+
+                        <td class="entry" valign="top" headers="d56682e251 ">0xA3</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d56682e245 ">OpCode</td>
+
+                        <td class="entry" valign="top" headers="d56682e248 ">1</td>
+
+                        <td class="entry" valign="top" headers="d56682e251 ">0x29</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d56682e245 ">Length</td>
+
+                        <td class="entry" valign="top" headers="d56682e248 ">2/1</td>
+
+                        <td class="entry" valign="top" headers="d56682e251 ">Payload size</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d56682e245 ">Image Length</td>
+
+                        <td class="entry" valign="top" headers="d56682e248 ">4</td>
+
+                        <td class="entry" valign="top" headers="d56682e251 ">Number of bytes to be downloaded.</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">FSCI-StartImage.Confirm</strong></p>
+
+        <p class="p"><strong class="ph b">Direction:</strong> Bootloader to Host</p>
+
+        <p class="p"><strong class="ph b">Description: </strong>Returns the status of the FSCI-StartImage.Request.</p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-96B2FE59-6831-4FCC-AFCD-7DCEE8BD47B7__TABLE_NNR_YML_GZ" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d56682e337">Parameter</th>
+
+                        <th class="entry" valign="top" id="d56682e340">Size (bytes)</th>
+
+                        <th class="entry" valign="top" id="d56682e343">Comments</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d56682e337 ">OpGroup</td>
+
+                        <td class="entry" valign="top" headers="d56682e340 ">1</td>
+
+                        <td class="entry" valign="top" headers="d56682e343 ">0xA4</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d56682e337 ">OpCode</td>
+
+                        <td class="entry" valign="top" headers="d56682e340 ">1</td>
+
+                        <td class="entry" valign="top" headers="d56682e343 ">0x29</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d56682e337 ">Length</td>
+
+                        <td class="entry" valign="top" headers="d56682e340 ">2/1</td>
+
+                        <td class="entry" valign="top" headers="d56682e343 ">Payload length</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d56682e337 ">Status</td>
+
+                        <td class="entry" valign="top" headers="d56682e340 ">1</td>
+
+                        <td class="entry" valign="top" headers="d56682e343 ">
+                            <p class="p">0x00 – Success</p>
+
+                            <p class="p">0x05 – Invalid parameter</p>
+
+                            <p class="p">0x06 – Invalid Operation</p>
+
+                        </td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d56682e337 ">Version</td>
+
+                        <td class="entry" valign="top" headers="d56682e340 ">1</td>
+
+                        <td class="entry" valign="top" headers="d56682e343 ">Protocol version implemented in the Bootloader</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d56682e337 ">External Memory Supported</td>
+
+                        <td class="entry" valign="top" headers="d56682e340 ">1</td>
+
+                        <td class="entry" valign="top" headers="d56682e343 ">
+                            <p class="p">0x00 – External memory not available</p>
+
+                            <p class="p">0x01 – External memory support available</p>
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">FSCI-CancelImage.Request</strong></p>
+
+        <p class="p"><strong class="ph b">Direction:</strong> Host to Bootloader</p>
+
+        <p class="p"><strong class="ph b">Description: </strong>Terminates the image upgrade process.</p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-96B2FE59-6831-4FCC-AFCD-7DCEE8BD47B7__TABLE_HYR_YML_GZ" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d56682e470">Parameter</th>
+
+                        <th class="entry" valign="top" id="d56682e473">Size (bytes)</th>
+
+                        <th class="entry" valign="top" id="d56682e476">Comments</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d56682e470 ">OpGroup</td>
+
+                        <td class="entry" valign="top" headers="d56682e473 ">1</td>
+
+                        <td class="entry" valign="top" headers="d56682e476 ">0xA3</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d56682e470 ">OpCode</td>
+
+                        <td class="entry" valign="top" headers="d56682e473 ">1</td>
+
+                        <td class="entry" valign="top" headers="d56682e476 ">0x2C</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d56682e470 ">Length</td>
+
+                        <td class="entry" valign="top" headers="d56682e473 ">2/1</td>
+
+                        <td class="entry" valign="top" headers="d56682e476 ">0x00</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">FSCI-CancelImage.Confirm</strong></p>
+
+        <p class="p"><strong class="ph b">Direction:</strong> Bootloader to Host</p>
+
+        <p class="p"><strong class="ph b">Description: </strong>Confirms that the image upgrade process has been terminated.</p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-96B2FE59-6831-4FCC-AFCD-7DCEE8BD47B7__TABLE_CJS_YML_GZ" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d56682e551">Parameter</th>
+
+                        <th class="entry" valign="top" id="d56682e554">Size (bytes)</th>
+
+                        <th class="entry" valign="top" id="d56682e557">Comments</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d56682e551 ">OpGroup</td>
+
+                        <td class="entry" valign="top" headers="d56682e554 ">1</td>
+
+                        <td class="entry" valign="top" headers="d56682e557 ">0xA4</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d56682e551 ">OpCode</td>
+
+                        <td class="entry" valign="top" headers="d56682e554 ">1</td>
+
+                        <td class="entry" valign="top" headers="d56682e557 ">0x2C</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d56682e551 ">Length</td>
+
+                        <td class="entry" valign="top" headers="d56682e554 ">2/1</td>
+
+                        <td class="entry" valign="top" headers="d56682e557 ">0x01</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d56682e551 ">status</td>
+
+                        <td class="entry" valign="top" headers="d56682e554 ">1</td>
+
+                        <td class="entry" valign="top" headers="d56682e557 ">0x00 - Success</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">FSCI-SetMode.Request</strong></p>
+
+        <p class="p"><strong class="ph b">Direction:</strong> Host to Bootloader</p>
+
+        <p class="p"><strong class="ph b">Description: </strong>Sets the upgrade mode. Reserved for feature use.</p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-96B2FE59-6831-4FCC-AFCD-7DCEE8BD47B7__TABLE_CHT_YML_GZ" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d56682e643">Parameter</th>
+
+                        <th class="entry" valign="top" id="d56682e646">Size (bytes)</th>
+
+                        <th class="entry" valign="top" id="d56682e649">Comments</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d56682e643 ">OpGroup</td>
+
+                        <td class="entry" valign="top" headers="d56682e646 ">1</td>
+
+                        <td class="entry" valign="top" headers="d56682e649 ">0xA3</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d56682e643 ">OpCode</td>
+
+                        <td class="entry" valign="top" headers="d56682e646 ">1</td>
+
+                        <td class="entry" valign="top" headers="d56682e649 ">0x28</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d56682e643 ">Length</td>
+
+                        <td class="entry" valign="top" headers="d56682e646 ">2/1</td>
+
+                        <td class="entry" valign="top" headers="d56682e649 ">Payload length</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d56682e643 ">Upgrade mode</td>
+
+                        <td class="entry" valign="top" headers="d56682e646 ">1</td>
+
+                        <td class="entry" valign="top" headers="d56682e649 ">Reserved</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">FSCI-SetMode.Confirm</strong></p>
+
+        <p class="p"><strong class="ph b">Direction:</strong> Bootloader to Host</p>
+
+        <p class="p"><strong class="ph b">Description: </strong>Always returns success.</p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-96B2FE59-6831-4FCC-AFCD-7DCEE8BD47B7__TABLE_XRT_YML_GZ" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d56682e736">Parameter</th>
+
+                        <th class="entry" valign="top" id="d56682e739">Size (bytes)</th>
+
+                        <th class="entry" valign="top" id="d56682e742">Comments</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d56682e736 ">OpGroup</td>
+
+                        <td class="entry" valign="top" headers="d56682e739 ">1</td>
+
+                        <td class="entry" valign="top" headers="d56682e742 ">0xA4</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d56682e736 ">OpCode</td>
+
+                        <td class="entry" valign="top" headers="d56682e739 ">1</td>
+
+                        <td class="entry" valign="top" headers="d56682e742 ">0x28</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d56682e736 ">Length</td>
+
+                        <td class="entry" valign="top" headers="d56682e739 ">2/1</td>
+
+                        <td class="entry" valign="top" headers="d56682e742 ">0x01</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d56682e736 ">Status</td>
+
+                        <td class="entry" valign="top" headers="d56682e739 ">1</td>
+
+                        <td class="entry" valign="top" headers="d56682e742 ">0x00 - Success</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">FSCI-PushImageChunk.Request</strong></p>
+
+        <p class="p"><strong class="ph b">Direction:</strong> Host to Bootloader</p>
+
+        <p class="p"><strong class="ph b">Description: </strong>Sends the next image chunk to be written to flash. Image chunks must
+            be consecutive.</p>
+
+        <p class="p">If the <em class="ph i">gFsciBootUseSeqNo_c</em> is enabled, the first byte of the payload, represents
+            the <em class="ph i">SeqNo</em>.</p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-96B2FE59-6831-4FCC-AFCD-7DCEE8BD47B7__TABLE_CC5_YML_GZ" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d56682e838">Parameter</th>
+
+                        <th class="entry" valign="top" id="d56682e841">Size (bytes)</th>
+
+                        <th class="entry" valign="top" id="d56682e844">Comments</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d56682e838 ">OpGroup</td>
+
+                        <td class="entry" valign="top" headers="d56682e841 ">1</td>
+
+                        <td class="entry" valign="top" headers="d56682e844 ">0xA3</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d56682e838 ">OpCode</td>
+
+                        <td class="entry" valign="top" headers="d56682e841 ">1</td>
+
+                        <td class="entry" valign="top" headers="d56682e844 ">0x2A</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d56682e838 ">Length</td>
+
+                        <td class="entry" valign="top" headers="d56682e841 ">2/1</td>
+
+                        <td class="entry" valign="top" headers="d56682e844 ">Payload length</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d56682e838 ">SeqNo</td>
+
+                        <td class="entry" valign="top" headers="d56682e841 ">1/0</td>
+
+                        <td class="entry" valign="top" headers="d56682e844 ">
+                            <p class="p">Optional, can be disabled from SW.</p>
+
+                            <p class="p">The sequence number of the current image chunk.</p>
+
+                        </td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d56682e838 ">Image Chunk</td>
+
+                        <td class="entry" valign="top" headers="d56682e841 ">variable</td>
+
+                        <td class="entry" valign="top" headers="d56682e844 ">Binary image data</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">FSCI-PushImageChunk.Confirm</strong></p>
+
+        <p class="p"><strong class="ph b">Direction:</strong> Bootloader to Host</p>
+
+        <p class="p"><strong class="ph b">Description: </strong>Status of the flash programming operation.</p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-96B2FE59-6831-4FCC-AFCD-7DCEE8BD47B7__TABLE_NN5_YML_GZ" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d56682e948">Parameter</th>
+
+                        <th class="entry" valign="top" id="d56682e951">Size (bytes)</th>
+
+                        <th class="entry" valign="top" id="d56682e954">Comments</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d56682e948 ">OpGroup</td>
+
+                        <td class="entry" valign="top" headers="d56682e951 ">1</td>
+
+                        <td class="entry" valign="top" headers="d56682e954 ">0xA4</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d56682e948 ">OpCode</td>
+
+                        <td class="entry" valign="top" headers="d56682e951 ">1</td>
+
+                        <td class="entry" valign="top" headers="d56682e954 ">0x2A</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d56682e948 ">Length</td>
+
+                        <td class="entry" valign="top" headers="d56682e951 ">2/1</td>
+
+                        <td class="entry" valign="top" headers="d56682e954 ">0x01</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d56682e948 ">Status</td>
+
+                        <td class="entry" valign="top" headers="d56682e951 ">1</td>
+
+                        <td class="entry" valign="top" headers="d56682e954 ">
+                            <p class="p">0x00 – Success</p>
+
+                            <p class="p">0x03 – Unexpected SeqNo</p>
+
+                            <p class="p">0x06 – Invalid Operation</p>
+
+                            <p class="p">0x08 – MCU flash error</p>
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">FSCI-CommitImage.Request</strong></p>
+
+        <p class="p"><strong class="ph b">Direction:</strong> Host to Bootloader</p>
+
+        <p class="p"><strong class="ph b">Description: </strong>Marks the upgrade process completed. The CRC field is ignored if the
+                <em class="ph i">gFsciUseCRC_c</em> macro is not enabled.</p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-96B2FE59-6831-4FCC-AFCD-7DCEE8BD47B7__TABLE_HY5_YML_GZ" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d56682e1056">Parameter</th>
+
+                        <th class="entry" valign="top" id="d56682e1059">Size (bytes)</th>
+
+                        <th class="entry" valign="top" id="d56682e1062">Comments</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d56682e1056 ">OpGroup</td>
+
+                        <td class="entry" valign="top" headers="d56682e1059 ">1</td>
+
+                        <td class="entry" valign="top" headers="d56682e1062 ">0xA3</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d56682e1056 ">OpCode</td>
+
+                        <td class="entry" valign="top" headers="d56682e1059 ">1</td>
+
+                        <td class="entry" valign="top" headers="d56682e1062 ">0x2B</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d56682e1056 ">Length</td>
+
+                        <td class="entry" valign="top" headers="d56682e1059 ">2/1</td>
+
+                        <td class="entry" valign="top" headers="d56682e1062 ">0x00</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d56682e1056 ">CRC</td>
+
+                        <td class="entry" valign="top" headers="d56682e1059 ">0/2</td>
+
+                        <td class="entry" valign="top" headers="d56682e1062 ">The CRC of the new image (Optional)</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">FSCI-CommitImage.Confirm</strong></p>
+
+        <p class="p"><strong class="ph b">Direction:</strong> Bootloader to Host</p>
+
+        <p class="p"><strong class="ph b">Description: </strong>Returns the status of the FSCI-CommitImage.Request. The Host must
+            reset the MCU after this confirmation is received to run the new application.</p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-96B2FE59-6831-4FCC-AFCD-7DCEE8BD47B7__TABLE_DJV_YML_GZ" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d56682e1149">Parameter</th>
+
+                        <th class="entry" valign="top" id="d56682e1152">Size (bytes)</th>
+
+                        <th class="entry" valign="top" id="d56682e1155">Comments</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d56682e1149 ">OpGroup</td>
+
+                        <td class="entry" valign="top" headers="d56682e1152 ">1</td>
+
+                        <td class="entry" valign="top" headers="d56682e1155 ">0xA4</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d56682e1149 ">OpCode</td>
+
+                        <td class="entry" valign="top" headers="d56682e1152 ">1</td>
+
+                        <td class="entry" valign="top" headers="d56682e1155 ">0x2B</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d56682e1149 ">Length</td>
+
+                        <td class="entry" valign="top" headers="d56682e1152 ">2/1</td>
+
+                        <td class="entry" valign="top" headers="d56682e1155 ">0x01</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d56682e1149 ">Status</td>
+
+                        <td class="entry" valign="top" headers="d56682e1152 ">1</td>
+
+                        <td class="entry" valign="top" headers="d56682e1155 ">
+                            <p class="p">0x00 – Success</p>
+
+                            <p class="p">0x04 – CRC mismatch</p>
+
+                            <p class="p">0x06 – Invalid Operation</p>
+
+                            <p class="p">0x08 – MCU flash error</p>
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-9EE283E7-E36D-420A-86E6-9D2159B9A820.html">FSCI Bootloader</a></div>
+</div>
+</div>
+
+</body>
+</html>

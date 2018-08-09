@@ -1,0 +1,59 @@
+# from env, e.g. $ export IPQ_TOOLCHAIN=/home/b46368/dk07_toolchain/qsdk/staging_dir/toolchain-arm_cortex-a7_gcc-4.8-linaro_uClibc-1.0.14_eabi
+
+export PATH := $(IPQ_TOOLCHAIN)/initial/bin:$(PATH)
+
+CC=arm-openwrt-linux-uclibcgnueabi-gcc
+CFLAGS=-Os -Wall -Wundef -Wno-unused-function -mcpu=cortex-a7 -mfloat-abi=soft -mfpu=neon-vfpv4
+
+PROJROOT=$(shell pwd)
+HSDK_ROOT=$(PROJROOT)/..
+BUILDDIR=$(PROJROOT)/build
+BINDIR=$(PROJROOT)/bin/dk07/
+
+SYS_INC=-I$(HSDK_ROOT)/include/sys
+PHY_INC=-I$(HSDK_ROOT)/include/physical
+UART_INC=-I$(HSDK_ROOT)/include/physical/UART
+PCAP_INC=-I$(HSDK_ROOT)/include/physical/PCAP
+SPI_INC=-I$(HSDK_ROOT)/include/physical/SPI
+PROTO_INC=-I$(HSDK_ROOT)/include/protocol
+FSCI_INC=-I$(HSDK_ROOT)/include/protocol/FSCI
+TOOLCHAIN_INC=-I$(IPQ_TOOLCHAIN)/include
+
+BUILDFLAGS=-c $(SYS_INC) $(PHY_INC) $(UART_INC) $(PCAP_INC) $(SPI_INC) $(PROTO_INC) $(FSCI_INC) $(TOOLCHAIN_INC) -std=c99
+HSDK_LIBS=-Lbin/dk07/ -lframer -lfsci -lpthread -lphysical -lrt -lspi -luart -lsys
+
+UNAME := $(shell uname)
+SPI?=yes
+
+ifeq ($(UNAME), Linux)
+	LDFLAGS=-lpthread -lrt
+
+	ifeq ($(SPI), yes)
+		HSDK_LIBS += -lspi
+		CFLAGS += -D__linux__spi__
+	endif
+
+endif
+
+ifeq ($(UNAME), Darwin)
+	LDFLAGS=-lpthread
+endif
+
+ifeq ($(ARMHF), yes)
+	CC=arm-linux-gnueabihf-gcc
+endif
+
+build: clean pre-build Thread_Shell
+
+pre-build:
+	mkdir -p $(BUILDDIR)
+	mkdir -p $(BINDIR)
+
+Thread_Shell: Thread_Shell.o
+	$(CC) $(BUILDDIR)/$^ -o $(BINDIR)/$@ $(HSDK_LIBS)
+Thread_Shell.o: Thread_Shell.c
+	$(CC) $(CFLAGS) $(BUILDFLAGS) $^ -o $(BUILDDIR)/$@
+
+clean:
+	rm -f $(BUILDDIR)/*
+	rm -f $(BINDIR)/Thread_Shell

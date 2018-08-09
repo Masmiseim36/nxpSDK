@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Border routers overview"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-D754C8BB-1268-4F07-AD06-F4E8485DAFC2.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Publisher" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-DAC1EFC3-C4FD-4D4C-969F-70CEAFF53867"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Border routers overview</title>
+</head>
+<body id="GUID-DAC1EFC3-C4FD-4D4C-969F-70CEAFF53867">
+
+
+    <h1 class="title topictitle1">Border routers overview</h1>
+
+    <div class="body">
+        <p class="p">The border router demo applications and network scenarios allows users to establish and
+            verify connectivity to Thread devices over the Thread IP subnet boundary from IP
+            applications or devices on external networks. The following scenarios are described:</p>
+
+        <ul class="ul" id="GUID-DAC1EFC3-C4FD-4D4C-969F-70CEAFF53867__UL_UG3_BB3_3Z">
+            <li class="li">Using the on-chip USB features of KW2xD to emulate a RNDIS “Ethernet over USB”
+                emulated Network Interface Card for a PC running a host OS such as Windows OS. IPv6
+                capable applications running on the host traverses the Thread network boundary to
+                address Thread network devices end-to end at the IP layer.</li>
+
+            <li class="li">Using the USB-KW41Z board with K22F running rndis_bridge application to
+                emulate a RNDIS "Ethernet over USB", emulated a Network Interface Card for a PC
+                running a host OS such as Windows OS. K22F and KW41Z are connected through FSCI
+                using SPI Serial Interface. IPv6 capable applications running on the host traverses
+                the Thread network boundary to address Thread network devices end-to-end at the IP
+                layer. The rndis_bridge project can be found in
+                &lt;Connectivity_Software_Installation, for example,
+                C:\NXP\SDK_2.2_MKW41Z512xxx4&gt;:
+                \boards\usbkw41z_k22f\wireless_examples\framework\rndis_bridge\FreeRTOS\</li>
+
+            <li class="li">Using the Ethernet port of the FRDM-K64F motherboard to create a direct
+                Ethernet link to a PC running a host OS such as Windows OS. IPv6 capable
+                applications running on the host traverses the Thread network boundary to address
+                Thread network devices end to end at the IP layer.</li>
+
+            <li class="li">Using the Ethernet port of the FRDM-K64F motherboard to plug into an Ethernet port
+                of a Wi-Fi Home Access Point or Router provisioned with an IPv6 and DHCPv6-PD
+                capable firmware such as OpenWRT. IPv6 capable devices on the local area network and
+                as configured to the Access Point from upstream IP infrastructure provides Thread
+                network external prefix addresses.</li>
+
+        </ul>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-D754C8BB-1268-4F07-AD06-F4E8485DAFC2.html">Running Border Router Application Scenarios</a></div>
+</div>
+</div>
+
+</body>
+</html>

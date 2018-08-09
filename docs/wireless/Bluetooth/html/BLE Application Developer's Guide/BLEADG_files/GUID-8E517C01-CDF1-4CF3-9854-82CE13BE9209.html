@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="OTAP server"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-4B517935-2861-4399-92FE-54173654BA21.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Creator" content=""/>
+<meta name="DC.Publisher" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-8E517C01-CDF1-4CF3-9854-82CE13BE9209"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>OTAP server</title>
+</head>
+<body id="GUID-8E517C01-CDF1-4CF3-9854-82CE13BE9209">
+
+
+    <h1 class="title topictitle1">OTAP server</h1>
+
+    <div class="body">
+        <p class="p">Before any OTAP transactions can be done the application which acts as an OTAP Server
+            must connect to a peer device and perform ATT service and characteristic discovery. Once
+            the handles of the OTAP Service, OTAP Control Point and OTAP Data characteristics and
+            their descriptors are found then OTAP communication can begin.</p>
+
+        <p class="p">A good starting point for OTAP transactions for both the OTAP Server and The OTAP client
+            is the moment the Server writes the OTAP Control Point CCCD to receive ATT Indications
+            from the OTAP Client. At that point the Server can send a New Image Notification to the
+            Client if it finds out what kind of device the client is through other means than the
+            OTAP server. How this can be done is entirely application-specific. If the OTAP Server
+            does not know exactly what kind of device is the OTAP Client it can wait for the Client
+            to send a New Image Info Request. Again, the best behavior depends on application
+            requirements.</p>
+
+        <p class="p">Once OTAP communication begins then the OTAP Server just has to wait for commands from
+            the OTAP Client and answer them. This behavior is almost completely stateless. An
+            example state diagram for the OTAP Server application is shown below.</p>
+
+        <div class="fig fignone" id="GUID-8E517C01-CDF1-4CF3-9854-82CE13BE9209__FIG_LZD_DZM_CY"><span class="figcap">Figure 1. OTAP Server Example State Diagram</span>
+            
+            <img class="image" id="GUID-8E517C01-CDF1-4CF3-9854-82CE13BE9209__IMAGE_DLG_GZM_CY" src="GUID-2D165C17-65D5-4529-A3C2-12D338176A28-high.png"/>
+        </div>
+
+        <p class="p">The OTAP Server waits in an idle state until a valid Image Block Request command is
+            received and then moves to a pseudo-state and starts sending the requested block. The
+            transfer can be interrupted by some commands (Error Notification, Stop Image Transfer,
+            and so on) or other events (disconnection, user interruption, and so on).</p>
+
+        <p class="p">The <em class="ph i">otap_interface.h</em> file contains infrastructure for sending and receiving OTAP
+            Commands and parsing OTAP image files. Packed structure types are defined for all OTAP
+            commands and type enumerations are defined for command parameter values and some
+            configuration values like the data payloads for the different transfer methods.</p>
+
+        <p class="p">To receive ATT Indications and ATT Write Confirmations from the OTAP Client the OTAP
+            Server application registers a set of callbacks in the stack. This is done in the
+                <em class="ph i">BleApp_Config()</em> function.</p>
+
+        <pre class="pre codeblock">App_RegisterGattClientProcedureCallback (BleApp_GattClientCallback);
+App_RegisterGattClientIndicationCallback (BleApp_GattIndicationCallback);</pre>
+
+        <p class="p">This <em class="ph i">BleApp_GattIndicationCallback()</em> function is called when any attribute is
+            indicated so the handle of the indicated attribute must be checked against a list of
+            expected handles. In our case we are looking for the OTAP Control Point handle which was
+            obtained during the discovery procedure.</p>
+
+        <p class="p">The <em class="ph i">BleApp_GattIndicationCallback()</em> function from the demo calls an
+            application-specific function called <em class="ph i">BleApp_AttributeIndicated()</em> in which the
+            OTAP Commands are handled.</p>
+
+        <pre class="pre codeblock"><strong class="ph b">static</strong><strong class="ph b">void</strong> BleApp_AttributeIndicated 
+(
+    deviceId_t     deviceId,
+    uint16_t       handle,
+    uint8_t*       pValue,
+    uint16_t       length
+)
+{
+    <strong class="ph b">if</strong> (handle == mPeerInformation.customInfo.otapServerConfig.hControlPoint)
+    {
+        /* Handle OTAP Commands here */
+        otapCommand_t* pOtaCmd = (otapCommand_t*)pValue;
+
+        App_HandleOtapCmd (pOtaCmd-&gt;cmdId,
+                            (uint8_t*)(&amp;(pOtaCmd-&gt;cmd)),
+                            length);
+    }
+    <strong class="ph b">else</strong><strong class="ph b">if</strong> (handle == otherHandle)
+    {
+        /* Handle other attribute indications here */
+        /* ... Missing code here ... */
+    }
+    <strong class="ph b">else</strong>
+    {
+        /*! A GATT Client is trying to GATT Indicate an unknown attribute value.
+         * This should not happen. Disconnect the link. */
+        Gap_Disconnect (deviceId);
+    }
+}</pre>
+
+        <p class="p">The <em class="ph i">App_HandleOtapCmd()</em> function is the one which deals with the received command,
+            sending responses if necessary or starting an image block transfer.</p>
+
+        <p class="p">To send OTAP Commands to the OTAP Client the application running the OTAP Server calls
+            the <em class="ph i">OtapServer_SendCommandToOtapClient()</em> function which performs an ATT Write
+            operation on the OTAP Control Point attribute.</p>
+
+        <pre class="pre codeblock"><strong class="ph b">static</strong><strong class="ph b">void</strong> OtapServer_SendCommandToOtapClient (deviceId_t otapClientDevId,
+                                                                        <strong class="ph b">void</strong>*    pCommand,
+                                                                        uint16_t        cmdLength)
+{
+    /* GATT Characteristic to be written - OTAP Client Control Point */
+    gattCharacteristic_t otapCtrlPointChar;
+    bleResult_t bleResult;
+
+    /* Only the value handle element of this structure is relevant for this operation. */
+    otapCtrlPointChar.value.handle =
+                            mPeerInformation.customInfo.otapServerConfig.hControlPoint;
+
+    bleResult = GattClient_SimpleCharacteristicWrite (mPeerInformation.deviceId,
+                                                        &amp;otapCtrlPointChar,
+                                                        cmdLength,
+                                                        pCommand);
+
+    <strong class="ph b">if</strong> (gBleSuccess_c == bleResult)
+    {
+        otapServerData.lastCmdSentToOtapClient =
+                            (otapCmdIdt_t)(((otapCommand_t*)pCommand)-&gt;cmdId);
+    }
+    <strong class="ph b">else</strong>
+    {
+        /*! A BLE error has occured - Disconnect */
+        Gap_Disconnect (otapClientDevId);
+    }
+}</pre>
+
+        <p class="p">The ATT Confirmation for the ATT Write is received in the
+                <em class="ph i">BleApp_GattClientCallback()</em> set up earlier which receives a GATT procedure
+            success message for a <em class="ph i">gGattProcWriteCharacteristicValue_c</em> procedure type.</p>
+
+        <pre class="pre codeblock"><strong class="ph b">static</strong><strong class="ph b">void</strong> BleApp_GattClientCallback (deviceId_t             serverDeviceId,
+                                                                gattProcedureType_t    procedureType,
+                                                                gattProcedureResult_t  procedureResult,
+                                                                bleResult_t            error)
+{
+    <strong class="ph b">if</strong> (procedureResult == gGattProcError_c)
+    { 
+        attErrorCode_t attError = (attErrorCode_t) (error &amp; 0xFF);
+        <strong class="ph b">if</strong> (attError == gAttErrCodeInsufficientEncryption_c ||
+            attError == gAttErrCodeInsufficientAuthorization_c ||
+            attError == gAttErrCodeInsufficientAuthentication_c)
+        {
+            /* Start Pairing Procedure */ 
+            Gap_Pair(serverDeviceId, &amp;gPairingParams);
+        }
+
+        BleApp_StateMachineHandler(serverDeviceId, mAppEvt_GattProcError_c);
+    }
+
+    <strong class="ph b">else</strong><strong class="ph b">if</strong> (procedureResult == gGattProcSuccess_c)
+    { 
+        <strong class="ph b">switch</strong>(procedureType)
+        {
+
+            /* ... Missing code here... */
+
+            <strong class="ph b">case</strong> gGattProcWriteCharacteristicValue_c:
+                BleApp_HandleValueWriteConfirmations (serverDeviceId);
+                <strong class="ph b">break</strong>;
+
+            <strong class="ph b">default</strong>:
+                <strong class="ph b">break</strong>;
+        } 
+
+        BleApp_StateMachineHandler(serverDeviceId, mAppEvt_GattProcComplete_c);
+    }
+}</pre>
+
+        <p class="p">The <em class="ph i">BleApp_HandleValueWriteConfirmations()</em> function deals with ATT Write
+            Confirmations based on the requirements of the application.</p>
+
+        <p class="p">There are 2 possible transfer methods for Image Chunks, the ATT transfer method and the
+            L2CAP transfer method. The OTAP server is prepared to handle both, as requested by the
+            OTAP Client.</p>
+
+        <p class="p">To be able to use the L2CAP transfer method the OTAP Server application must register a
+            L2CAP LE PSM and 2 callbacks: a data callback and a control callback. This is done in
+            the <em class="ph i">BleApp_Config()</em> function.</p>
+
+        <pre class="pre codeblock">  /* Register OTAP L2CAP PSM */
+    L2ca_RegisterLePsm (gOtap_L2capLePsm_c,
+                        gOtapCmdImageChunkCocLength_c); /*!&lt; The negotiated MTU must be higher than the biggest data chunk that will be sent fragmented */
+...
+    App_RegisterLeCbCallbacks(BleApp_L2capPsmDataCallback, BleApp_L2capPsmControlCallback);</pre>
+
+        <p class="p">The data callback <em class="ph i">BleApp_L2capPsmDataCallback()</em> is not used by the OTAP
+            Server.</p>
+
+        <p class="p">The control callback is used to handle L2CAP LE PSM connection requests from the OTAP
+            Client and other events: PSM disconnections, No peer credits, and so on. The OTAP Client
+            must initiate the L2CAP PSM connection if it wants to use the L2CAP transfer method.</p>
+
+        <pre class="pre codeblock"><strong class="ph b">static</strong><strong class="ph b">void</strong><strong class="ph b">BleApp_L2capPsmControlCallback</strong>(l2capControlMessageType_t messageType,
+                                                                          <strong class="ph b">void</strong>*              pMessage)
+{
+    <strong class="ph b">switch</strong> (messageType)
+    {
+        <strong class="ph b">case</strong><em class="ph i">gL2ca_LePsmConnectRequest_c</em>:
+        {
+            l2caLeCbConnectionRequest_t *pConnReq = ( l2caLeCbConnectionRequest_t *)pMessage;
+
+            /* Respond to the peer L2CAP CB Connection request - send a connection response. */
+            L2ca_ConnectLePsm (gOtap_L2capLePsm_c,
+                               pConnReq-&gt; deviceId,
+                               mAppLeCbInitialCredits_c);
+            <strong class="ph b">break</strong>;
+        } 
+        <strong class="ph b">case</strong><em class="ph i">gL2ca_LePsmConnectionComplete_c</em>:
+        {
+            l2caLeCbConnectionComplete_t *pConnComplete = ( l2caLeCbConnectionComplete_t *)pMessage;
+
+            <strong class="ph b">if</strong> (pConnComplete-&gt;result == <em class="ph i">gSuccessful_c</em>)
+            {
+                /* Set the application L2CAP PSM Connection flag to TRUE beacuse there is no gL2ca_LePsmConnectionComplete_c
+                 * event on the responder of the PSM connection. */
+                otapServerData. l2capPsmConnected = TRUE;
+                otapServerData. l2capPsmChannelId = pConnComplete-&gt;cId;
+            }
+            <strong class="ph b">break</strong>;
+        }
+        <strong class="ph b">case</strong><em class="ph i">gL2ca_LePsmDisconnectNotification_c</em>:
+        {
+            l2caLeCbDisconnection_t *pCbDisconnect = ( l2caLeCbDisconnection_t *)pMessage;
+
+            /* Call App State Machine */
+            BleApp_StateMachineHandler (pCbDisconnect-&gt; deviceId, <em class="ph i">mAppEvt_CbDisconnected_c</em>);
+
+            otapServerData. l2capPsmConnected = FALSE;
+            <strong class="ph b">break</strong>;
+        }
+        <strong class="ph b">case</strong><em class="ph i">gL2ca_NoPeerCredits_c</em>:
+        {
+            l2caLeCbNoPeerCredits_t *pCbNoPeerCredits = ( l2caLeCbNoPeerCredits_t *)pMessage;
+            L2ca_SendLeCredit (pCbNoPeerCredits-&gt; deviceId,
+                               otapServerData. l2capPsmChannelId,
+                               mAppLeCbInitialCredits_c);
+            <strong class="ph b">break</strong>;
+        }
+        <strong class="ph b">case</strong><em class="ph i">gL2ca_LocalCreditsNotification_c</em>:
+        {
+            l2caLeCbLocalCreditsNotification_t *pMsg = ( l2caLeCbLocalCreditsNotification_t *)pMessage;
+
+            <strong class="ph b">break</strong>;
+        }
+        <strong class="ph b">default</strong>:
+            <strong class="ph b">break</strong>;
+    }
+}</pre>
+
+        <p class="p">The ATT transfer method is supported by default but the L2CAP transfer method only works
+            if the OTAP Client opens an L2CAP PSM credit oriented channel.</p>
+
+        <p class="p">To send data chunks to the OTAP Client the OTAP Server application calls the
+                <em class="ph i">OtapServer_SendCImgChunkToOtapClient()</em> function which delivers the chunk via
+            the selected transfer method. For the ATT transfer method the chunk is sent via the
+                <em class="ph i">GattClient_CharacteristicWriteWithoutResponse()</em> function and for the L2CAP
+            transfer method the chunk is sent via the <em class="ph i">L2ca_SendLeCbData()</em> function.</p>
+
+        <pre class="pre codeblock"><strong class="ph b">static</strong><strong class="ph b">void</strong> OtapServer_SendCImgChunkToOtapClient (deviceId_t otapClientDevId,
+                                                 <strong class="ph b">void</strong>*      pChunk,
+                                                 uint16_t   chunkCmdLength)
+{
+    bleResult_t bleResult = gBleSuccess_c;
+
+    <strong class="ph b">if</strong> (otapServerData.transferMethod == gOtapTransferMethodAtt_c)
+    {
+        /* GATT Characteristic to be written without response - OTAP Client Data */
+        gattCharacteristic_t otapDataChar;
+
+        /* Only the value handle element of this structure is relevant for this operation. */
+        otapDataChar.value.handle = mPeerInformation.customInfo.otapServerConfig.hData;
+
+        bleResult = GattClient_CharacteristicWriteWithoutResponse
+                                                (mPeerInformation.deviceId,
+                                                 &amp;otapDataChar,
+                                                 chunkCmdLength,
+                                                 pChunk);
+    }
+    <strong class="ph b">else</strong><strong class="ph b">if</strong> (otapServerData.transferMethod == gOtapTransferMethodL2capCoC_c)
+    {
+        bleResult = L2ca_SendLeCbData (mPeerInformation.deviceId,
+                                       otapServerData.l2capPsmChannelId,
+                                       pChunk,
+                                       chunkCmdLength);
+    }
+
+    <strong class="ph b">if</strong> (gBleSuccess_c != bleResult)
+    {
+        /*! A BLE error has occured - Disconnect */
+        Gap_Disconnect (otapClientDevId);
+    }
+}</pre>
+
+        <p class="p">The OTAP Server demo application relays all commands received from the OTAP Client to a
+            PC through the FSCI type protocol running over a serial interface. It also directly
+            relays all responses from the PC back to the OTAP Client.</p>
+
+        <p class="p">Other implementations can bring the image to an external memory through other means of
+            communication and directly respond to the OTAP Client requests.</p>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-4B517935-2861-4399-92FE-54173654BA21.html">BLE OTAP application integration</a></div>
+</div>
+</div>
+
+</body>
+</html>

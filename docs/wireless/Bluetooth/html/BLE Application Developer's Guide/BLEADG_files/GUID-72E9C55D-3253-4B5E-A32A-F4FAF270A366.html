@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Attribute write notifications"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-021F778A-964A-4AC2-8DE3-F3E86B89F94F.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Creator" content=""/>
+<meta name="DC.Publisher" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-72E9C55D-3253-4B5E-A32A-F4FAF270A366"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Attribute write notifications</title>
+</head>
+<body id="GUID-72E9C55D-3253-4B5E-A32A-F4FAF270A366">
+
+
+    <h1 class="title topictitle1">Attribute write notifications</h1>
+
+    <div class="body">
+        <p class="p">When the GATT Client reads and writes values from/into the Server’s GATT Database, it
+            uses ATT Requests.</p>
+
+        <p class="p">The GATT Server module implementation manages these requests and, according to the
+            database security settings and the Client’s security status (authenticated, authorized,
+            and so on), automatically sends the ATT Responses without notifying the application.</p>
+
+        <p class="p">There are however some situations where the application needs to be informed of ATT
+            packet exchanges. For example, a lot of standard profiles define, for certain Services,
+            some, so-called, Control-Point Characteristics. These are Characteristics whose values
+            are only of immediate significance to the application. Writing these Characteristics
+            usually triggers specific actions.</p>
+
+        <p class="p">For example, consider a fictitious Smart Lamp. It has BLE connectivity in the Peripheral
+            role and it contains a small GATT Database with a Lamp Service (among other Services).
+            The Lamp Service contains two Characteristics: the Lamp State Characteristic (LSC) and
+            the Lamp Action Characteristic (LAC).</p>
+
+        <p class="p">LSC is a “normal” Characteristic with Read and Write properties. Its value is either 0,
+            lamp off, or 1, lamp on). Writing the value sets the lamp in the desired state. Reading
+            it provides its current state, which is only useful when passing the information
+            remotely.</p>
+
+        <p class="p">The LAC has only one property, which is Write Without Response. The user can use the
+            Write Without Response procedure to write only the value 0x01 (all other values are
+            invalid). Whenever the user writes 0x01 in LAC, the lamp switches its state.</p>
+
+        <p class="p">The LAC is a good example of a Control-Point Characteristic for these reasons:</p>
+
+        <ul class="ul" id="GUID-72E9C55D-3253-4B5E-A32A-F4FAF270A366__UL_CQZ_BP3_BY">
+            <li class="li">Writing a certain value (in this case 0x01) triggers an action on the lamp.</li>
+
+            <li class="li">The value the user writes has immediate significance only (“0x01 switches the lamp”)
+                and is never used again in the future. For this reason, it does not need to be
+                stored in the database.</li>
+
+        </ul>
+
+        <p class="p">Obviously, whenever a Control-Point Characteristic is written, the application must be
+            notified to trigger some application-specific action.</p>
+
+        <p class="p">The GATT Server allows the application to register a set of attribute handles as
+            “write-notifiable”, in other words, the application wants to receive an event each time
+            any of these attributes is written by the peer Client.</p>
+
+        <p class="p">All Control-Point Characteristics in the GATT Database must have their Value handle
+            registered. In fact, the application may register any other handle for write
+            notifications for its own purposes with the following API:</p>
+
+        <pre class="pre codeblock">bleResult_t<strong class="ph b">GattServer_RegisterHandlesForWriteNotifications</strong>
+(
+    uint8_t         handleCount,
+    uint16_t *      aAttributeHandles
+);</pre>
+
+        <p class="p">The <em class="ph i">handleCount</em> is the size of the <em class="ph i">aAttributeHandles</em> array and it cannot
+            exceed <em class="ph i">gcGattMaxHandleCountForWriteNotifications_c</em>.</p>
+
+        <p class="p">After an attribute handle has been registered with this function, whenever the Client
+            attempts to write its value, the GATT Server Callback is triggered with one of the
+            following event types:</p>
+
+        <ul class="ul" id="GUID-72E9C55D-3253-4B5E-A32A-F4FAF270A366__UL_EY5_KP3_BY">
+            <li class="li"><em class="ph i">gEvtAttributeWritten_c</em> is triggered when the attribute is written with a
+                Write procedure (ATT Write Request). In this instance, the application has to decide
+                whether the written value is valid and whether it must be written in the database,
+                and, if so, the application must write the value with the
+                    <em class="ph i">GattDb_WriteAttribute</em>, see Chapter 6. At this point, the GATT Server
+                module does not automatically send the ATT Write Response over the air. Instead, it
+                waits for the application to call this function:</li>
+
+        </ul>
+
+        <pre class="pre codeblock">bleResult_t<strong class="ph b">GattServer_SendAttributeWrittenStatus</strong>
+(
+    deviceId_t     deviceId,
+    uint16_t       attributeHandle,
+    uint8_t        status
+);</pre>
+
+        <p class="p">The value of the <em class="ph i">status</em> parameter is interpreted as an ATT Error Code. It must be
+            equal to the <em class="ph i">gAttErrCodeNoError_c</em> (0x00) if the value is valid and it is
+            successfully processed by the application. Otherwise, it must be equal to a
+            profile-specific error code (in interval 0xE0-0xFF) or an application-specific error
+            code (in interval 0x80-0x9F).</p>
+
+        <ul class="ul" id="GUID-72E9C55D-3253-4B5E-A32A-F4FAF270A366__UL_DVD_SP3_BY">
+            <li class="li"><em class="ph i">gEvtAttributeWrittenWithoutResponse_c</em> is triggered when the attribute is
+                written with a Write Without Response procedure (ATT Write Command). Because this
+                procedure expects no response, the application may process it and, if necessary,
+                write it in the database. Regardless of whether the value is valid or not, no
+                response is needed from the application.</li>
+
+            <li class="li"><em class="ph i">gEvtLongCharacteristicWritten_c</em> is triggered when the Client has completed
+                writing a Long Characteristic value; the event data includes the handle of the
+                Characteristic Value attribute and a pointer to its value in the database.</li>
+
+        </ul>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-021F778A-964A-4AC2-8DE3-F3E86B89F94F.html">Server APIs</a></div>
+</div>
+</div>
+
+</body>
+</html>

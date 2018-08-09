@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Using CoAP with copper Firefox extension"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-D4D7209B-AA8D-4DE3-84FB-C14DA0517ED9.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Publisher" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-2319C896-AB35-433E-8494-7551DC0EDCA7"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Using CoAP with copper Firefox extension</title>
+</head>
+<body id="GUID-2319C896-AB35-433E-8494-7551DC0EDCA7">
+
+
+    <h1 class="title topictitle1">Using CoAP with copper Firefox extension</h1>
+
+    <div class="body">
+        <p class="p">This continuation of the RNDIS Border Router scenario tests the CoAP implementation by
+            sending messages from the web browser to the Thread-only NodeB.</p>
+
+        <p class="p"> </p>
+
+        <ul class="ul" id="GUID-2319C896-AB35-433E-8494-7551DC0EDCA7__UL_JF5_HC3_3Z">
+            <li class="li">In a Firefox browser, install the Copper extension: <a class="xref" href="https://addons.mozilla.org/en-US/firefox/addon/copper-270430/" target="_blank">addons.mozilla.org/en-US/firefox/addon/copper-270430/</a></li>
+
+            <li class="li">After installing the extension, in the browser enter a CoAP URI and then press
+                    enter.<ul class="ul" id="GUID-2319C896-AB35-433E-8494-7551DC0EDCA7__UL_OG5_HC3_3Z">
+                    <li class="li">For example, for sending a LED CoAP command write: </li>
+
+                    <li class="li">coap://[fd01::3ead:f090:6ea6:2bc9:d99]:5683/led</li>
+
+                    <li class="li">Where <strong class="ph b">fd01::3ead:f090:6ea6:2bc9:d99 </strong>is the IPv6 address of the border
+                        router and it must be put between brackets and <strong class="ph b">5683 </strong>is the CoAP
+                        default port.</li>
+
+                    <li class="li">After the destination address and port, the URI-path of the
+                        CoAP message is inserted. </li>
+
+                </ul>
+</li>
+
+            <li class="li">The payload of the message goes in the <em class="ph i">Outgoing</em> tab:</li>
+
+        </ul>
+
+        <img class="image" id="GUID-2319C896-AB35-433E-8494-7551DC0EDCA7__IMAGE_IDG_MC3_3Z" src="GUID-673AAB78-5B00-494B-BF30-4AF1F5DFE949-high.jpg"/>
+        <div class="fig fignone" id="GUID-2319C896-AB35-433E-8494-7551DC0EDCA7__FIG_UDC_3C3_3Z"><span class="figcap">Figure 1. Outgoing tab</span>
+            
+        </div>
+
+        <ul class="ul" id="GUID-2319C896-AB35-433E-8494-7551DC0EDCA7__UL_ZJH_NC3_3Z">
+            <li class="li">Finally, for sending the message, click POST.</li>
+
+        </ul>
+
+        <img class="image" id="GUID-2319C896-AB35-433E-8494-7551DC0EDCA7__IMAGE_MCV_QC3_3Z" src="GUID-0E121249-6969-4A51-89D3-D1A08646CA3A-high.jpg"/>
+        <div class="fig fignone" id="GUID-2319C896-AB35-433E-8494-7551DC0EDCA7__FIG_QML_PC3_3Z"><span class="figcap">Figure 2. Send message</span>
+            
+        </div>
+
+        <ul class="ul" id="GUID-2319C896-AB35-433E-8494-7551DC0EDCA7__UL_WGK_SC3_3Z">
+            <li class="li">If the message was successfully sent, and an ACK was received, the status of the
+                received message and the round trip time are displayed.</li>
+
+        </ul>
+
+        <p class="p"> </p>
+
+        <ul class="ul" id="GUID-2319C896-AB35-433E-8494-7551DC0EDCA7__UL_MHK_SC3_3Z">
+            <li class="li">When sending a GET temp message, the incoming payload is shown in the
+                    <em class="ph i">Incoming</em> tab.</li>
+
+        </ul>
+
+        <img class="image" id="GUID-2319C896-AB35-433E-8494-7551DC0EDCA7__IMAGE_TWQ_WC3_3Z" src="GUID-A7A16A0D-9C2B-44F8-8900-B4F0A8ED2919-high.jpg"/>
+        <div class="fig fignone" id="GUID-2319C896-AB35-433E-8494-7551DC0EDCA7__FIG_MNZ_SC3_3Z"><span class="figcap">Figure 3. Incoming tab</span>
+            
+        </div>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-D4D7209B-AA8D-4DE3-84FB-C14DA0517ED9.html">External routing with Ethernet emulation over USB (RNDIS) on Kinetis KW2xD and USB_KW41Z boards</a></div>
+</div>
+</div>
+
+</body>
+</html>

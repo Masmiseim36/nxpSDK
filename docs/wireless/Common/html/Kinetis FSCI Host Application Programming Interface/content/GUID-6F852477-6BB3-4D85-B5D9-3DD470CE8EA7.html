@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="TUN/TAP"/>
+<meta name="abstract" content=""/>
+<meta name="description" content=""/>
+<meta name="DC.Relation" scheme="URI" content="GUID-63987A0A-9DBD-4AB7-A046-6AE38C019A75.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="4"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-6F852477-6BB3-4D85-B5D9-3DD470CE8EA7"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>TUN/TAP</title>
+</head>
+<body id="GUID-6F852477-6BB3-4D85-B5D9-3DD470CE8EA7">
+
+
+  <h1 class="title topictitle1">TUN/TAP</h1>
+
+  
+  <div class="body"><p class="shortdesc"/>
+
+    <p class="p">In computer networking, TUN/TAP devices are virtual network adapters that are
+      not backed up by a physical interface. TUN represents a virtual layer-3 device which can
+      operate with IP packets. TAP describes virtual layer 2 devices which usually handle Ethernet
+      frames. </p>
+
+    <p class="p">On Linux OS, the kernel modules which handle TUN/TAP are usually built in. If
+      not, these can be easily compiled from the Linux OS source, by enabling Universal TUN/TAP
+      device driver when issuing make menuconfig, or by enabling CONFIG_TUN=y or m in the build
+      system .config file. If the kernel module is built as an external module, insmod tun.ko
+      enables the functionality in the system.</p>
+
+    <p class="p">After ensuring that the Linux OS enables this component, a new file with path
+      /dev/net/tun appears in the filesystem. Any operations that involve a virtual TUN/TAP
+      interface open this file and any subsequent read or write is to be done with respect to this
+      file. Creating a new virtual TUN/TAP interface and configuring it can be done with basic
+      iproute2 commands:</p>
+
+    <pre class="pre codeblock">$ sudo ip tuntap add mode tun threadtun0
+$ ip link show threadtun0
+5: threadtun0: &lt;POINTOPOINT,MULTICAST,NOARP&gt; mtu 1500 qdisc noop state DOWN mode DEFAULT qlen 500
+    link/none
+$ sudo ip -6 addr add FD01::2 dev threadtun0
+$ ip address show threadtun0
+5: threadtun0: &lt;POINTOPOINT,MULTICAST,NOARP&gt; mtu 1500 qdisc noop state DOWN qlen 500
+    link/none 
+    inet6 fd01::2/128 scope global 
+       valid_lft forever preferred_lft forever
+</pre>
+
+    <p class="p">Note the DOWN state of the interface. A virtual TUN or TAP interface becomes UP as soon as a userspace program attaches to it, as in opening the special /dev/net/tun file. For the Thread stack integration scenario, the userspace is the FSCI encapsulator/decapsulator from the above diagrams.</p>
+
+    <p class="p">After all the modules are connected, the userspace program can read packets
+      injected by the kernel into the TUN/TAP interface, encapsulate it as a FSCI packet and send it
+      to the development board. On the return path, the program can read data coming from the board,
+      extract the Ethernet/IPv6 packet and write it to the TUN/TAP file descriptor, reaching back
+      into the kernel IP stack.</p>
+
+  </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-63987A0A-9DBD-4AB7-A046-6AE38C019A75.html">Thread Integration with Linux OS Host on Serial (UART) Tunnel Interface</a></div>
+</div>
+</div>
+
+</body>
+</html>

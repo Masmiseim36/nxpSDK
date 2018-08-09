@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="CoAP"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-021CCB0C-991C-496B-957E-2E7A582EC382.html"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-021B37B5-A20D-47E0-AD9F-78B85F4E5711"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>CoAP</title>
+</head>
+<body id="GUID-021B37B5-A20D-47E0-AD9F-78B85F4E5711">
+
+
+    <h1 class="title topictitle1">CoAP</h1>
+
+    <div class="body">
+        <p class="p">This example sends a packet over the air using CoAP. When sending a CoAP
+            message, all command parameters are mandatory. One has to specify the type of the
+            message either CON (confirmable message, waits for ACK) or NON (does not wait for any
+            ACK), the request code, the IPv6 destination address, the URI-path options included in
+            the message, and payload. </p>
+
+        <div class="note note"><span class="notetitle">Note:</span> URI-path options must be separated by /. Also the / separator is expected before the first URI-path option.</div>
+
+        <p class="p">The shell commands available for the socket demo application are displayed after typing help coap in console:</p>
+
+        <pre class="pre codeblock">
+            BLE IPv6 Node&gt;help coap
+coap - Send CoAP message
+   coap &lt;reqtype: CON/NON&gt; &lt;reqcode (GET/POST/PUT/DELETE)&gt; &lt;IP addr dest&gt; &lt;URI path&gt; &lt;payload ASCII&gt;
+Example: coap CON POST 2001::1 /led on
+         coap CON POST 2001::1 /led off
+         coap CON POST 2001::1 /led toggle
+         coap CON POST 2001::1 /led flash
+         coap CON POST 2001::1 /led rgb r255 g255 b255
+         
+            </pre>
+
+        <p class="p">To send a CoAP POST message form the IPv6 Node to the IPv6 Router, enter the following:</p>
+
+        <pre class="pre codeblock">
+            BLE IPv6 Node&gt;coap CON POST 2001:db8::204:9fff:fe00:c /led flash
+coap rsp from 2001:db8::204:9fff:fe00:c ACK
+            </pre>
+
+        <p class="p">The RGB LED on the IPv6 Router should start flashing. If no ACK for the CoAP
+            message is received after four retransmissions, an error message is displayed.</p>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-021CCB0C-991C-496B-957E-2E7A582EC382.html">Running the IPv6 over Bluetooth Example</a></div>
+</div>
+</div>
+
+</body>
+</html>

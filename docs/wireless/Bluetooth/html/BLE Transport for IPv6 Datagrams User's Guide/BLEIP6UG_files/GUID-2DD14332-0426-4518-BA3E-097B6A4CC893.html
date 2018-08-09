@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Node Configuration and Registration"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-82FE6618-DF5B-4E4D-8149-74A98B1A3C5E.html"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-2DD14332-0426-4518-BA3E-097B6A4CC893"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Node Configuration and Registration</title>
+</head>
+<body id="GUID-2DD14332-0426-4518-BA3E-097B6A4CC893">
+
+
+    <h1 class="title topictitle1">Node Configuration and Registration</h1>
+
+    <div class="body">
+        <p class="p">After a Bluetooth Link is established between the GAP Central and the GAP
+            Peripheral, the 6LBR tries to open an L2CAP Credit Based Channel. After the channel is
+            created, the devices open the 6LoWPAN interfaces and assigns an IPv6 link-local address
+            based on the Bluetooth link layer address. This procedure is called Stateless Address
+            Autoconfiguration (SLAAC) and is done in two steps:</p>
+
+        <ul class="ul">
+            <li class="li">A 64-bit Interface Identifier (IID) is formed from the 48-bit Bluetooth
+                device address by inserting 0xFFFE in the middle of the 48 bits. According to
+                RFC2373, when creating an IID, the universal/local bit (“u” bit) is set to one (1)
+                when it indicates a global scope (for Bluetooth public addresses) and to zero (0) to
+                indicate local scope (when using Bluetooth random addresses)</li>
+
+            <li class="li">The IPv6 link-layer address is created by prepending the FE80::/64
+                prefix</li>
+
+        </ul>
+
+        <p class="p">For example, let us take a device with a Bluetooth public address of:</p>
+
+        <div class="fig fignone">
+            <img class="image" src="GUID-08B01E81-F31F-4522-A6C5-808EEC4DB9A1-high.png"/>
+            </div>
+
+        <p class="p">Adding the 0xFFFE, and setting the “u” bit to 1, yields:</p>
+
+        <div class="fig fignone">
+            <img class="image" src="GUID-A222DC86-F839-402B-8DBD-0ABB61B23F82-high.png"/>
+        </div>
+
+        <p class="p">After prepending the predefined prefix, the IPv6 address is created:</p>
+
+        <div class="fig fignone">
+            <img class="image" src="GUID-D1EA59A4-93A8-42A1-A1AF-FED42D0C0ED4-high.png"/>
+        </div>
+
+        <p class="p">After the 6LN has a link-local IPv6 address, it will start router discovery
+            by sending an ICMPv6 Router Solicitation message (RS). The router discovered will always
+            be the 6LBR which responds with an ICMPv6 Router Advertisement (RA) containing the
+            following information, depending on the configuration:</p>
+
+        <ul class="ul">
+            <li class="li">Prefix Information Option (PIO): Contains a Global or Unique Local
+                Prefix configured on the router</li>
+
+            <li class="li">6CO: 6LoWPAN Context Option: It carries prefix information for header compression</li>
+
+            <li class="li">On-link flag (“L”) is set to zero to signal the 6LN to send packets to
+                the 6LBR</li>
+
+                  
+            </ul>
+
+        <p class="p">After receiving the RA, the 6LN configures a global IPv6 address by using
+            the same SLAAC procedure but with the received global prefix, instead of the link-local
+            one. After creating the address, it will register it at the router by sending an ICMPv6
+            Neighbor Solicitation (NS) with an Address Registration Option (ARO) containing the
+            64-bit Extended Unique Identifier (EUI-64). The 6LBR responds with an ICMPv6 Neighbor
+            Advertisement with the ARO field containing a status field that describes the
+            registration result.</p>
+
+        <p class="p">The procedure is detailed in Figure 3:</p>
+
+        <div class="fig fignone"><span class="figcap">Figure 1. 6LN Configuration and Registration</span>
+            
+            <img class="image" src="GUID-7E652B39-D63F-48AF-82EF-1FFB26568F15-high.png"/>
+            </div>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-82FE6618-DF5B-4E4D-8149-74A98B1A3C5E.html">IPv6 over Bluetooth Overview</a></div>
+</div>
+</div>
+
+</body>
+</html>

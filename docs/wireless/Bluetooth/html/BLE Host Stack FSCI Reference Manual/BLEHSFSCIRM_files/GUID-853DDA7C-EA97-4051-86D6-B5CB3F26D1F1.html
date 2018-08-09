@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="GAP-ConnectionEventPairingResponse.Indication"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-22E596EB-8A19-41E5-B540-EFE0BC6B281F.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Publisher" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-853DDA7C-EA97-4051-86D6-B5CB3F26D1F1"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>GAP-ConnectionEventPairingResponse.Indication</title>
+</head>
+<body id="GUID-853DDA7C-EA97-4051-86D6-B5CB3F26D1F1">
+
+
+    <h1 class="title topictitle1">GAP-ConnectionEventPairingResponse.Indication</h1>
+
+    <div class="body">
+        <p class="p"><strong class="ph b">Description</strong></p>
+
+        <p class="p">A pairing response has been received from the peer Slave.</p>
+
+        <p class="p"><strong class="ph b">Parameters</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-853DDA7C-EA97-4051-86D6-B5CB3F26D1F1__TABLE_AYJ_J55_4Y" class="table" frame="border" border="1" rules="all"><caption><span class="tablecap">Table 1. GAP-ConnectionEventPairingResponse.Indication Parameters</span></caption>
+                
+                
+                
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top"><strong class="ph b">Parameter</strong></td>
+
+                        <td class="entry" valign="top"><strong class="ph b">Size (bytes)</strong></td>
+
+                        <td class="entry" valign="top"><strong class="ph b">Comments</strong></td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">OpGroup</td>
+
+                        <td class="entry" valign="top">1</td>
+
+                        <td class="entry" valign="top">0x47</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">OpCode</td>
+
+                        <td class="entry" valign="top">1</td>
+
+                        <td class="entry" valign="top">0xA0</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">Length</td>
+
+                        <td class="entry" valign="top">1</td>
+
+                        <td class="entry" valign="top">Length in bytes of the following parameters</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">DeviceId</td>
+
+                        <td class="entry" valign="top">1</td>
+
+                        <td class="entry" valign="top">Device ID identifying the connection</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">PairingParameters</td>
+
+                        <td class="entry" valign="top">Variable</td>
+
+                        <td class="entry" valign="top">
+                            <p class="p">Pairing parameters</p>
+
+                            <p class="p">Structure type parameter. See the detailed table below
+                                for parameter structure.</p>
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-853DDA7C-EA97-4051-86D6-B5CB3F26D1F1__TABLE_EP2_L55_4Y" class="table" frame="border" border="1" rules="all"><caption><span class="tablecap">Table 2. PairingParameters Parameter Structure</span></caption>
+                
+                
+                
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top"><strong class="ph b">Structure Parameter</strong></td>
+
+                        <td class="entry" valign="top"><strong class="ph b">Size (bytes)</strong></td>
+
+                        <td class="entry" valign="top"><strong class="ph b">Comments</strong></td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">WithBonding</td>
+
+                        <td class="entry" valign="top">1</td>
+
+                        <td class="entry" valign="top">TRUE if this device is able to and wants to bond after
+                            pairing, FALSE otherwise</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">SecurityModeAndLevel</td>
+
+                        <td class="entry" valign="top">1</td>
+
+                        <td class="entry" valign="top">
+                            <p class="p">The desired security mode-level</p>
+
+                            <p class="p">Possible values: </p>
+
+                            <p class="p">0x10: gMode1Level1_c (Mode 1 Level 1 - No Security)</p>
+
+                            <p class="p">0x11: gMode1Level2_c (Mode 1 Level 2 - Encryption without
+                                authentication)</p>
+
+                            <p class="p">0x12: gMode1Level3_c (Mode 1 Level 3 - Encryption with
+                                authentication)</p>
+
+                            <p class="p">0x13: gMode1Level4_c (Mode 1 Level 4 - Encryption with
+                                LE Secure Connections pairing (BLE 4.2 only))</p>
+
+                            <p class="p">0x21: gMode2Level1_c (Mode 2 Level 1 - Data Signing
+                                without authentication)</p>
+
+                            <p class="p">0x22: gMode2Level2_c (Mode 2 Level 2 - Data Signing with
+                                authentication)</p>
+
+                            <p class="p"> </p>
+
+                        </td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">MaxEncryptionKeySize</td>
+
+                        <td class="entry" valign="top">1</td>
+
+                        <td class="entry" valign="top">Maximum LTK size supported by the device</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">LocalIoCapabilities</td>
+
+                        <td class="entry" valign="top">1</td>
+
+                        <td class="entry" valign="top">
+                            <p class="p">I/O capabilities used to determine the pairing
+                                method</p>
+
+                            <p class="p">Possible values: </p>
+
+                            <p class="p">0x00: gIoDisplayOnly_c (May display a PIN, no input)</p>
+
+                            <p class="p">0x01: gIoDisplayYesNo_c (May display a PIN and has a
+                                binary input (for example, YES and NO buttons))</p>
+
+                            <p class="p">0x02: gIoKeyboardOnly_c (Has keyboard input, no
+                                display)</p>
+
+                            <p class="p">0x03: gIoNone_c (No input and no display)</p>
+
+                            <p class="p">0x04: gIoKeyboardDisplay_c (Has keyboard input and
+                                display)</p>
+
+                            <p class="p"> </p>
+
+                        </td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">OobAvailable</td>
+
+                        <td class="entry" valign="top">1</td>
+
+                        <td class="entry" valign="top">TRUE if this device has Out-of-Band data that can be used
+                            for authenticated pairing, FALSE otherwise</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">CentralKeys</td>
+
+                        <td class="entry" valign="top">1</td>
+
+                        <td class="entry" valign="top">
+                            <p class="p">SMP keys to be distributed by the Central</p>
+
+                            <p class="p">Possible values: </p>
+
+                            <p class="p">0x00: gNoKeys_c (No key can be distributed)</p>
+
+                            <p class="p">0x01: gLtk_c (Long Term Key)</p>
+
+                            <p class="p">0x02: gIrk_c (Identity Resolving Key)</p>
+
+                            <p class="p">0x04: gCsrk_c (Connection Signature Resolving Key)</p>
+
+                            <p class="p"> </p>
+
+                        </td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">PeripheralKeys</td>
+
+                        <td class="entry" valign="top">1</td>
+
+                        <td class="entry" valign="top">
+                            <p class="p">SMP keys to be distributed by the Peripheral</p>
+
+                            <p class="p">Possible values: </p>
+
+                            <p class="p">0x00: gNoKeys_c (No key can be distributed)</p>
+
+                            <p class="p">0x01: gLtk_c (Long Term Key)</p>
+
+                            <p class="p">0x02: gIrk_c (Identity Resolving Key)</p>
+
+                            <p class="p">0x04: gCsrk_c (Connection Signature Resolving Key)</p>
+
+                            <p class="p"> </p>
+
+                        </td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">LeSecureConnectionSupported</td>
+
+                        <td class="entry" valign="top">1</td>
+
+                        <td class="entry" valign="top">indicates if device supports LE Secure Connections
+                            pairing</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">UseKeypressNotifications</td>
+
+                        <td class="entry" valign="top">1</td>
+
+                        <td class="entry" valign="top">Indicates if device supports Keypress Notification PDUs
+                            during Passkey Entry pairing</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-22E596EB-8A19-41E5-B540-EFE0BC6B281F.html">GAP Messages</a></div>
+</div>
+</div>
+
+</body>
+</html>

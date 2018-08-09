@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="DNS Client"/>
+<meta name="abstract" content=""/>
+<meta name="description" content=""/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-51F8EA5D-8D39-4EEB-9DBC-2F979123B2A9"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>DNS Client</title>
+</head>
+<body id="GUID-51F8EA5D-8D39-4EEB-9DBC-2F979123B2A9">
+
+
+  <h1 class="title topictitle1">DNS Client</h1>
+
+  
+  <div class="body"><p class="shortdesc"/>
+
+    <p class="p">DNS commands allow testing a simple DNS client in a Thread node. To enable this functionality, set the DNS_ENABLED macro definition to 1. Note that this application is disabled by default. </p>
+
+    <p class="p">To initiate a DNS request, a DNS server must be advertised in Thread network. Therefore, a border router that is connected to a DNS server should propagate to Thread nodes the IPv6 address of the DNS server and the user can trigger a DNS request for resolving a domain name. </p>
+
+    <p class="p">For example, if a border router is connected through Ethernet or RNDIS to DNS server, network data may be updated by using the following shell commands:</p>
+
+    <pre class="pre codeblock">$ thr nwkdata add dnsserver fd01::e211:a00:27ff:fe87:a104
+ Success!
+$ thr sync nwkdata
+ Success!
+</pre>
+
+    <p class="p">where the IPv6 address is the DNS server’s.</p>
+
+    <p class="p">All Thread nodes will update their information about the address where the DNS server is found.</p>
+
+    <p class="p">Therefore, if a DNS request will be initiated from any of the nodes of the Thread network, the message will be forwarded by the border router to the DNS server and back.</p>
+
+    <p class="p">In order to trigger a DNS request message, use the shell command dnsrequest and the URL to be resolved:</p>
+
+    <pre class="pre codeblock">$ dnsrequest kinetisthread.local
+kinetisthread.local is at 2003::3ead
+</pre>
+
+    <p class="p">To remove the information about the DNS server from the Thread network, remove it from network data as follows:</p>
+
+  <pre class="pre codeblock">$ thr nwkdata remove dnsserver fd01::e211:a00:27ff:fe87:a104
+ Success!
+$ thr sync nwkdata
+ Success!
+</pre>
+
+  </div>
+
+
+</body>
+</html>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Sockets"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-021CCB0C-991C-496B-957E-2E7A582EC382.html"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-B639AAB2-B6A5-4E48-B5D6-FD64D6FC8D10"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Sockets</title>
+</head>
+<body id="GUID-B639AAB2-B6A5-4E48-B5D6-FD64D6FC8D10">
+
+
+    <h1 class="title topictitle1">Sockets</h1>
+
+    <div class="body">
+        <p class="p">The shell commands available for the socket demo application are displayed after typing help socket in console:</p>
+
+        
+       <pre class="pre codeblock">
+           BLE IPv6 Node&gt;help socket
+socket - IP Stack BSD Sockets commands
+   socket open &lt;protocol&gt; &lt;remote ip addr&gt; &lt;remote port&gt;
+   socket send &lt;socket id&gt; &lt;payload&gt;
+   socket close &lt;socket id&gt;
+           </pre>
+
+        <p class="p">These commands are valid for opening a socket as a client. In this example, at the Ipv6 Node, an UDP socket is opened and connected to the remote address 2001:db8::204:9fff:fe00:c, port 1234. Port 1234 is created by default on both devices:</p>
+
+        <pre class="pre codeblock">
+            BLE IPv6 Node&gt;socket open udp 2001:db8::204:9fff:fe00:c 1234 6
+Opening Socket... OK
+Socket id is: 0
+            </pre>
+
+        <p class="p">To send data, enter the socket id and the data value:</p>
+
+        <pre class="pre codeblock">
+            BLE IPv6 Node&gt;socket send 0 HelloWorld!
+Socket Data Sent
+            </pre>
+
+        <p class="p">On the IPv6 Router, the console outputs the string received on the socket:</p>
+
+        <pre class="pre codeblock">
+            HelloWorld! From IPv6 Address: 2001:db8::204:9fff:fe00:b
+            </pre>
+
+        <p class="p">To close the socket on the IPv6 Node, enter the socket id:</p>
+
+        <pre class="pre codeblock">
+            BLE IPv6 Node&gt;socket close 0
+Socket 0 was closed
+            </pre>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-021CCB0C-991C-496B-957E-2E7A582EC382.html">Running the IPv6 over Bluetooth Example</a></div>
+</div>
+</div>
+
+</body>
+</html>

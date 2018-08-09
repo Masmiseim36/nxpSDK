@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="OTAP service and characteristics"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-B9E38DA5-7319-418C-B210-A32FEAF55EE3.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Creator" content=""/>
+<meta name="DC.Publisher" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-1CC3C660-4B7B-4B6C-BB68-E5C69AF1DD99"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>OTAP service and characteristics</title>
+</head>
+<body id="GUID-1CC3C660-4B7B-4B6C-BB68-E5C69AF1DD99">
+
+
+    <h1 class="title topictitle1">OTAP service and characteristics</h1>
+
+    <div class="body">
+        <p class="p">The OTAP Service has a custom 128-bit UUID which is shown below. The UUID is based on a
+            base 128-bit UUID used for BLE custom services and characteristics. These are shown in
+            the tables below.</p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-1CC3C660-4B7B-4B6C-BB68-E5C69AF1DD99__TABLE_OHH_DNL_CY" class="table" frame="border" border="1" rules="all"><caption><span class="tablecap">Table 1. Base BLE 128-bit UUID</span></caption>
+                
+                
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top">Base BLE 128-bit UUID</td>
+
+                        <td class="entry" valign="top">00000000 -ba5e-f4ee-5ca1-eb1e5e4b1ce0</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p">The OTAP Service custom 128-bit UUID is built using the base UUID by replacing the most
+            significant 4 bytes which are 0 with a value specific to the OTAP Service which is
+            01FF5550 in hexadecimal format.</p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-1CC3C660-4B7B-4B6C-BB68-E5C69AF1DD99__TABLE_VLB_GNL_CY" class="table" frame="border" border="1" rules="all"><caption><span class="tablecap">Table 2. BLE OTAP Service UUID</span></caption>
+                
+                
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top">Service</td>
+
+                        <td class="entry" valign="top">UUID (128-bit)</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">BLE OTAP Service</td>
+
+                        <td class="entry" valign="top">01ff5550 -ba5e-f4ee-5ca1-eb1e5e4b1ce0</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p">The BLE OTAP Service Characteristics UUIDs are built the same as the BLE OTAP Service
+            UUID starting from the base 128-bit UUID but using other values for the most significant
+            4 bytes.</p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-1CC3C660-4B7B-4B6C-BB68-E5C69AF1DD99__TABLE_OCR_3NL_CY" class="table" frame="border" border="1" rules="all"><caption><span class="tablecap">Table 3. BLE OTAP Service Characteristics</span></caption>
+                
+                
+                
+                
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top">Characteristic</td>
+
+                        <td class="entry" valign="top">UUID (128-bit)</td>
+
+                        <td class="entry" valign="top">Properties</td>
+
+                        <td class="entry" valign="top">Descriptors</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">BLE OTAP Control Point</td>
+
+                        <td class="entry" valign="top">01ff5551 -ba5e-f4ee-5ca1-eb1e5e4b1ce0</td>
+
+                        <td class="entry" valign="top">Write, Indicate</td>
+
+                        <td class="entry" valign="top">CCC</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">BLE OTAP Data</td>
+
+                        <td class="entry" valign="top">01ff5552 -ba5e-f4ee-5ca1-eb1e5e4b1ce0</td>
+
+                        <td class="entry" valign="top">Write Without Response</td>
+
+                        <td class="entry" valign="top">-</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p">Both characteristics are implemented as variable length characteristics.</p>
+
+        <p class="p">The BLE OTAP Control Point Characteristic is used for exchanging OTAP commands between
+            the OTAP Server and the OTAP Client. The OTAP Client sends commands to the OTAP Server
+            using ATT Notifications for this characteristic and the OTAP Server sends commands to
+            the OTAP Client by making ATT Write Requests to this characteristic. Both ATT Writes and
+            ATT Notifications are acknowledged operations via ATT Write Responses and ATT
+            Confirmations.</p>
+
+        <p class="p">The BLE OTAP Data characteristic is used by the OTAP Server to send parts of the OTAP
+            image file to the OTAP Client when the ATT transfer method is chosen by the application.
+            The ATT Write Commands (GATT Write Without Response operation) is not an acknowledged
+            operation.</p>
+
+        <p class="p">The BLE OTAP service and characteristics 128-bit UUIDs are defined in the
+                <em class="ph i">gatt_uuid128.h</em> just as shown below.</p>
+
+        <pre class="pre codeblock">UUID128(uuid_service_otap, 0xE0, 0x1C, 0x4B, 0x5E, 0x1E, 0xEB, 0xA1, 0x5C, 0xEE, 0xF4, 0x5E, 0xBA, 0x50, 0x55, 0xFF, 0x01)
+UUID128(uuid_char_otap_control_point, 0xE0, 0x1C, 0x4B, 0x5E, 0x1E, 0xEB, 0xA1, 0x5C, 0xEE, 0xF4, 0x5E, 0xBA, 0x51, 0x55, 0xFF, 0x01)
+UUID128(uuid_char_otap_data, 0xE0, 0x1C, 0x4B, 0x5E, 0x1E, 0xEB, 0xA1, 0x5C, 0xEE, 0xF4, 0x5E, 0xBA, 0x52, 0x55, 0xFF, 0x01)</pre>
+
+        <p class="p">The service is included into the GATT database of the device. It is declared in the
+                <em class="ph i">gatt_db.h</em> file as shown below.</p>
+
+        <pre class="pre codeblock">PRIMARY_SERVICE_UUID128(service_otap, uuid_service_otap)
+CHARACTERISTIC_UUID128(char_otap_control_point, uuid_char_otap_control_point, (gGattCharPropWrite_c | gGattCharPropIndicate_c))
+VALUE_UUID128_VARLEN(value_otap_control_point, uuid_char_otap_control_point, (gPermissionFlagWritable_c), 16, 16, 0x00)
+CCCD(cccd_otap_control_point)
+CHARACTERISTIC_UUID128(char_otap_data, uuid_char_otap_data, (gGattCharPropWriteWithoutRsp_c))
+VALUE_UUID128_VARLEN(value_otap_data, uuid_char_otap_data, (gPermissionFlagWritable_c), gAttMaxMtu_c - 3, gAttMaxMtu_c - 3, 0x00)</pre>
+
+        <p class="p">The BLE OTAP Control Point characteristic should be large enough for the longest command
+            which can be exchanged between the OTAP Server and The OTAP Client.</p>
+
+        <p class="p">The BLE OTAP Data characteristic should be large enough for the longest data chunk
+            command the OTAP Client expects from the OTAP Server to be sent via ATT. The maximum
+            length of the OTAP Data Characteristic value is ATT_MTU- 3. 1 byte is used for the ATT
+            OpCode and 2 bytes are used for the Attribute Handle when performing a Write Without
+            Response, the only operation permitted for this characteristic value.</p>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-B9E38DA5-7319-418C-B210-A32FEAF55EE3.html">BLE OTAP service-profile</a></div>
+</div>
+</div>
+
+</body>
+</html>

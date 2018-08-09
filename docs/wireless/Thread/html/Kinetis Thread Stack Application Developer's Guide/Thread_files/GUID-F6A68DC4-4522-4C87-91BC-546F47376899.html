@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Short PAN identifier (16-bit PAN ID)"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-540FED20-C2CC-41A3-86B2-8EA8DE7703CE.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="4"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-F6A68DC4-4522-4C87-91BC-546F47376899"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Short PAN identifier (16-bit PAN ID)</title>
+</head>
+<body id="GUID-F6A68DC4-4522-4C87-91BC-546F47376899">
+
+
+    <h1 class="title topictitle1">Short PAN identifier (16-bit PAN ID)</h1>
+
+    <div class="body">
+        <p class="p">The short format for the PAN (Personal Area Network) identifier is a 16-bit value that is
+            required by the IEEE 802.15.4 link layer in order to allow communicating nodes based on
+            their short 16-bit address within a PAN. As such, nodes are sending messages to each
+            other using 4 bytes: the 16-bit PANID followed by the 16-bit short address. In Thread,
+            the network layer is managing both short PAN ID and short node addresses. Within the
+            same Thread network entity regarded as a PAN, all nodes are using the same PAN ID and
+            different PAN IDs in messages indicate different Thread networks.</p>
+
+        <p class="p">It is recommended that the application does not change the default settings where the PAN
+            ID is pre-set to 0xFFFF, indicating generation of a random PAN ID at network creation by
+            the initial Leader, and otherwise for Joiners to not filter networks to join based on
+            this field.</p>
+
+        <div class="p"><pre class="pre codeblock">#define THR_PAN_ID                                  0xFFFF</pre>
+</div>
+
+        <p class="p">For development and testing purposes the PAN ID can be set to a specific value, different from 0xFFFF. If the PAN ID is set to a specific value, the initial Leader specifically chooses this ID when creating a network. Nodes do not join or interact with existing network because they have different PAN IDs.</p>
+
+   <div class="p"><pre class="pre codeblock">#define THR_PAN_ID                                  0xCAFE</pre>
+</div>
+
+        <p class="p">To set the PAN ID at runtime (before creating or joining a network):</p>
+
+        <div class="p"><pre class="pre codeblock">instanceId_t thrInstId = 0;
+uint32_t aIndex = 0;
+
+uint16_t panId = 0xCAFE;
+THR_SetAttr(thrInstId, gNwkAttrId_PanId_c, aIndex, sizeof(uint16_t), panId);
+</pre>
+</div>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-540FED20-C2CC-41A3-86B2-8EA8DE7703CE.html">General network settings</a></div>
+</div>
+</div>
+
+</body>
+</html>

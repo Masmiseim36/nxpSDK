@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Run time bootstrapping and initialization"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-F84F0C4F-BFAE-482E-AD35-1C6080D9E9F3.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="4"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-25EABA94-F32B-4F02-A88C-EEC9B306FFCA"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Run time bootstrapping and initialization</title>
+</head>
+<body id="GUID-25EABA94-F32B-4F02-A88C-EEC9B306FFCA">
+
+
+	<h1 class="title topictitle1">Run time bootstrapping and initialization</h1>
+
+	<div class="body">
+		<p class="p">Once the Thread example application runs, FreeRTOS OS bootstraps the system and
+			eventually run the default <strong class="ph b">main_task</strong> function defined in
+				<strong class="ph b">\middleware\wireless\nwk_ip_1.2.4\examples\common\app_init.c</strong> . The function
+			represents the default FreeRTOS application-level task. This function initializes all
+			other systems and IP stack modules by calling in turn their specific initializer
+			functions. Notably, the call from main_task to Thread and IP stack initializer function
+			THR_Init initializes the core Thread stack modules and create a new FreeRTOS OS task
+			which runs the stack functionality, state machine, and message processing. At Thread
+			initialization, a unique device ID is read which is used by default as a vendor assigned
+			suffix of the factory EUI64 used on the Thread interface. Function THR_Init is defined
+			in application module </p>
+
+		<p class="p"><strong class="ph b">\middleware\wireless\nwk_ip_1.2.4\examples\common\app_thread_init.c</strong></p>
+
+		<p class="p">As part of their initialization other system modules such as the IEEE 802.15.4 MACPHY link layer or the blocking Serial Manager which handles serial interfaces communication (UART, USB, SPI and IIC) communication creates a new FreeRTOS OS task to allow non-blocking asynchronous processing. Each of the new system module RTOS tasks enter an infinite while(1) loop waiting on event signaling to the task via the OS Abstraction module EventWait API ( OSA_EventWait). This is in order to be able to handle event and message processing for the respective module indefinitely while the system is running.</p>
+
+		<p class="p">After it accomplishes all initializations, the main_task call enters its own while(1) loop where it repeatedly calls <strong class="ph b">APP_Handler</strong> to serve high-level application events and functionality as well as allow entering low power state on idle for Low Power configurations, execute the pendding operations of the non volatile memory module and resetting a watchdog.</p>
+
+	</div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-F84F0C4F-BFAE-482E-AD35-1C6080D9E9F3.html">Application Architecture</a></div>
+</div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,443 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="GATT.Confirm"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-F7637E9D-14D9-489C-B6E2-F6B4E711EADC.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Publisher" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-C0633BD7-36D3-4E5C-B947-0AD573041E24"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>GATT.Confirm</title>
+</head>
+<body id="GUID-C0633BD7-36D3-4E5C-B947-0AD573041E24">
+
+
+    <h1 class="title topictitle1">GATT.Confirm</h1>
+
+    <div class="body">
+        <p class="p"><strong class="ph b">Description</strong></p>
+
+        <p class="p">Status of the GATT request.</p>
+
+        <p class="p"><strong class="ph b">Parameters</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-C0633BD7-36D3-4E5C-B947-0AD573041E24__TABLE_YL5_HGM_CY" class="table" frame="border" border="1" rules="all"><caption><span class="tablecap">Table 1. GATT.Confirm Parameters</span></caption>
+                
+                
+                
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top"><strong class="ph b">Parameter</strong></td>
+
+                        <td class="entry" valign="top"><strong class="ph b">Size (bytes)</strong></td>
+
+                        <td class="entry" valign="top"><strong class="ph b">Comments</strong></td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">OpGroup</td>
+
+                        <td class="entry" valign="top">1</td>
+
+                        <td class="entry" valign="top">0x44</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">OpCode</td>
+
+                        <td class="entry" valign="top">1</td>
+
+                        <td class="entry" valign="top">0x80</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">Length</td>
+
+                        <td class="entry" valign="top">1</td>
+
+                        <td class="entry" valign="top">Length in bytes of the following parameters</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">Status</td>
+
+                        <td class="entry" valign="top">2</td>
+
+                        <td class="entry" valign="top">
+                            <p class="p">The status of the GATT request</p>
+
+                            <p class="p">Possible values: </p>
+
+                            <p class="p">0x0000: gBleSuccess_c</p>
+
+                            <p class="p">0x0001: gBleInvalidParameter_c</p>
+
+                            <p class="p">0x0002: gBleOverflow_c</p>
+
+                            <p class="p">0x0003: gBleUnavailable_c</p>
+
+                            <p class="p">0x0004: gBleFeatureNotSupported_c</p>
+
+                            <p class="p">0x0005: gBleOutOfMemory_c</p>
+
+                            <p class="p">0x0006: gBleAlreadyInitialized_c</p>
+
+                            <p class="p">0x0007: gBleOsError_c</p>
+
+                            <p class="p">0x0008: gBleUnexpectedError_c</p>
+
+                            <p class="p">0x0009: gBleInvalidState_c</p>
+
+                            <p class="p">0x0101: gHciUnknownHciCommand_c</p>
+
+                            <p class="p">0x0102: gHciUnknownConnectionIdentifier_c</p>
+
+                            <p class="p">0x0103: gHciHardwareFailure_c</p>
+
+                            <p class="p">0x0104: gHciPageTimeout_c</p>
+
+                            <p class="p">0x0105: gHciAuthenticationFailure_c</p>
+
+                            <p class="p">0x0106: gHciPinOrKeyMissing_c</p>
+
+                            <p class="p">0x0107: gHciMemoryCapacityExceeded_c</p>
+
+                            <p class="p">0x0108: gHciConnectionTimeout_c</p>
+
+                            <p class="p">0x0109: gHciConnectionLimitExceeded_c</p>
+
+                            <p class="p">0x010A:
+                                gHciSynchronousConnectionLimitToADeviceExceeded_c</p>
+
+                            <p class="p">0x010B: gHciAclConnectionAlreadyExists_c</p>
+
+                            <p class="p">0x010C: gHciCommandDisallowed_c</p>
+
+                            <p class="p">0x010D:
+                                gHciConnectionRejectedDueToLimitedResources_c</p>
+
+                            <p class="p">0x010E: gHciConnectionRejectedDueToSecurityReasons_c</p>
+
+                            <p class="p">0x010F:
+                                gHciConnectionRejectedDueToUnacceptableBdAddr_c</p>
+
+                            <p class="p">0x0110: gHciConnectionAcceptTimeoutExceeded_c</p>
+
+                            <p class="p">0x0111: gHciUnsupportedFeatureOrParameterValue_c</p>
+
+                            <p class="p">0x0112: gHciInvalidHciCommandParameters_c</p>
+
+                            <p class="p">0x0113: gHciRemoteUserTerminatedConnection_c</p>
+
+                            <p class="p">0x0114:
+                                gHciRemoteDeviceTerminatedConnectionLowResources_c</p>
+
+                            <p class="p">0x0115:
+                                gHciRemoteDeviceTerminatedConnectionPowerOff_c</p>
+
+                            <p class="p">0x0116: gHciConnectionTerminatedByLocalHost_c</p>
+
+                            <p class="p">0x0117: gHciRepeatedAttempts_c</p>
+
+                            <p class="p">0x0118: gHciPairingNotAllowed_c</p>
+
+                            <p class="p">0x0119: gHciUnknownLpmPdu_c</p>
+
+                            <p class="p">0x011A: gHciUnsupportedRemoteFeature_c</p>
+
+                            <p class="p">0x011B: gHciScoOffsetRejected_c</p>
+
+                            <p class="p">0x011C: gHciScoIntervalRejected_c</p>
+
+                            <p class="p">0x011D: gHciScoAirModeRejected_c</p>
+
+                            <p class="p">0x011E: gHciInvalidLpmParameters_c</p>
+
+                            <p class="p">0x011F: gHciUnspecifiedError_c</p>
+
+                            <p class="p">0x0120: gHciUnsupportedLpmParameterValue_c</p>
+
+                            <p class="p">0x0121: gHciRoleChangeNotAllowed_c</p>
+
+                            <p class="p">0x0122: gHciLLResponseTimeout_c</p>
+
+                            <p class="p">0x0123: gHciLmpErrorTransactionCollision_c</p>
+
+                            <p class="p">0x0124: gHciLmpPduNotAllowed_c</p>
+
+                            <p class="p">0x0125: gHciEncryptionModeNotAcceptable_c</p>
+
+                            <p class="p">0x0126: gHciLinkKeyCannotBeChanged_c</p>
+
+                            <p class="p">0x0127: gHciRequestedQosNotSupported_c</p>
+
+                            <p class="p">0x0128: gHciInstantPassed_c</p>
+
+                            <p class="p">0x0129: gHciPairingWithUnitKeyNotSupported_c</p>
+
+                            <p class="p">0x012A: gHciDifferentTransactionCollision_c</p>
+
+                            <p class="p">0x012B: gHciReserved_0x2B_c</p>
+
+                            <p class="p">0x012C: gHciQosNotAcceptableParameter_c</p>
+
+                            <p class="p">0x012D: gHciQosRejected_c</p>
+
+                            <p class="p">0x012E: gHciChannelClassificationNotSupported_c</p>
+
+                            <p class="p">0x012F: gHciInsufficientSecurity_c</p>
+
+                            <p class="p">0x0130: gHciParameterOutOfMandatoryRange_c</p>
+
+                            <p class="p">0x0131: gHciReserved_0x31_c</p>
+
+                            <p class="p">0x0132: gHciRoleSwitchPending_c</p>
+
+                            <p class="p">0x0133: gHciReserved_0x33_c</p>
+
+                            <p class="p">0x0134: gHciReservedSlotViolation_c</p>
+
+                            <p class="p">0x0135: gHciRoleSwitchFailed_c</p>
+
+                            <p class="p">0x0136: gHciExtendedInquiryResponseTooLarge_c</p>
+
+                            <p class="p">0x0137: gHciSecureSimplePairingNotSupportedByHost_c</p>
+
+                            <p class="p">0x0138: gHciHostBusyPairing_c</p>
+
+                            <p class="p">0x0139:
+                                gHciConnectionRejectedDueToNoSuitableChannelFound_c</p>
+
+                            <p class="p">0x013A: gHciControllerBusy_c</p>
+
+                            <p class="p">0x013B: gHciUnacceptableConnectionParameters_c</p>
+
+                            <p class="p">0x013C: gHciDirectedAdvertisingTimeout_c</p>
+
+                            <p class="p">0x013D: gHciConnectionTerminatedDueToMicFailure_c</p>
+
+                            <p class="p">0x013E: gHciConnectionFailedToBeEstablished_c</p>
+
+                            <p class="p">0x013F: gHciMacConnectionFailed_c</p>
+
+                            <p class="p">0x0140: gHciCoarseClockAdjustmentRejected_c</p>
+
+                            <p class="p">0x01A0: gHciAlreadyInit_c</p>
+
+                            <p class="p">0x01A1: gHciInvalidParameter_c</p>
+
+                            <p class="p">0x01A2: gHciCallbackNotInstalled_c</p>
+
+                            <p class="p">0x01A3: gHciCallbackAlreadyInstalled_c</p>
+
+                            <p class="p">0x01A4: gHciCommandNotSupported_c</p>
+
+                            <p class="p">0x01A5: gHciEventNotSupported_c</p>
+
+                            <p class="p">0x01A6: gHciTransportError_c</p>
+
+                            <p class="p">0x03F0: gL2caAlreadyInit_c</p>
+
+                            <p class="p">0x03F1: gL2caInsufficientResources_c</p>
+
+                            <p class="p">0x03F2: gL2caCallbackNotInstalled_c</p>
+
+                            <p class="p">0x03F3: gL2caCallbackAlreadyInstalled_c</p>
+
+                            <p class="p">0x03F4: gL2caLePsmInvalid_c</p>
+
+                            <p class="p">0x03F5: gL2caLePsmAlreadyRegistered_c</p>
+
+                            <p class="p">0x03F6: gL2caLePsmNotRegistered_c</p>
+
+                            <p class="p">0x03F7: gL2caLePsmInsufficientResources_c</p>
+
+                            <p class="p">0x03F8: gL2caChannelInvalid_c</p>
+
+                            <p class="p">0x03F9: gL2caChannelClosed_c</p>
+
+                            <p class="p">0x03FA: gL2caChannelAlreadyConnected_c</p>
+
+                            <p class="p">0x03FB: gL2caConnectionParametersRejected_c</p>
+
+                            <p class="p">0x03FC: gL2caChannelBusy_c</p>
+
+                            <p class="p">0x03FE: gL2caInvalidParameter_c</p>
+
+                            <p class="p">0x03FF: gL2caError_c</p>
+
+                            <p class="p">0x0401: gSmNullCBFunction_c</p>
+
+                            <p class="p">0x0402: gSmCommandNotSupported_c</p>
+
+                            <p class="p">0x0403: gSmUnexpectedCommand_c</p>
+
+                            <p class="p">0x0404: gSmInvalidCommandCode_c</p>
+
+                            <p class="p">0x0405: gSmInvalidCommandLength_c</p>
+
+                            <p class="p">0x0406: gSmInvalidCommandParameter_c</p>
+
+                            <p class="p">0x0407: gSmInvalidDeviceId_c</p>
+
+                            <p class="p">0x0408: gSmInvalidInternalOperation_c</p>
+
+                            <p class="p">0x0409: gSmInvalidConnectionHandle_c</p>
+
+                            <p class="p">0x040A: gSmInproperKeyDistributionField_c</p>
+
+                            <p class="p">0x040B: gSmUnexpectedKeyType_c</p>
+
+                            <p class="p">0x040C: gSmUnexpectedPairingTerminationReason_c</p>
+
+                            <p class="p">0x040D: gSmUnexpectedKeyset_c</p>
+
+                            <p class="p">0x040E: gSmSmpTimeoutOccurred_c</p>
+
+                            <p class="p">0x040F: gSmUnknownSmpPacketType_c</p>
+
+                            <p class="p">0x0410: gSmInvalidSmpPacketLength_c</p>
+
+                            <p class="p">0x0411: gSmInvalidSmpPacketParameter_c</p>
+
+                            <p class="p">0x0412: gSmReceivedUnexpectedSmpPacket_c</p>
+
+                            <p class="p">0x0413: gSmReceivedSmpPacketFromUnknownDevice_c</p>
+
+                            <p class="p">0x0414: gSmReceivedUnexpectedHciEvent_c</p>
+
+                            <p class="p">0x0415: gSmReceivedHciEventFromUnknownDevice_c</p>
+
+                            <p class="p">0x0416: gSmInvalidHciEventParameter_c</p>
+
+                            <p class="p">0x0417: gSmLlConnectionEncryptionInProgress_c</p>
+
+                            <p class="p">0x0418: gSmLlConnectionEncryptionFailure_c</p>
+
+                            <p class="p">0x0419: gSmInsufficientResources_c</p>
+
+                            <p class="p">0x041A: gSmOobDataAddressMismatch_c</p>
+
+                            <p class="p">0x041A: gSmSmpPacketReceivedAfterTimeoutOccurred_c</p>
+
+                            <p class="p">0x0431: gSmPairingErrorPasskeyEntryFailed_c</p>
+
+                            <p class="p">0x0432: gSmPairingErrorConfirmValueFailed_c</p>
+
+                            <p class="p">0x0433: gSmPairingErrorCommandNotSupported_c</p>
+
+                            <p class="p">0x0434: gSmPairingErrorInvalidParameters_c</p>
+
+                            <p class="p">0x0435: gSmPairingErrorUnknownReason_c</p>
+
+                            <p class="p">0x0460: gSmTbResolvableAddressDoesNotMatchIrk_c</p>
+
+                            <p class="p">0x0461: gSmTbInvalidDataSignature_c</p>
+
+                            <p class="p">0x0501: gAttInvalidHandle_c</p>
+
+                            <p class="p">0x0502: gAttReadNotPermitted_c</p>
+
+                            <p class="p">0x0503: gAttWriteNotPermitted_c</p>
+
+                            <p class="p">0x0504: gAttInvalidPdu_c</p>
+
+                            <p class="p">0x0505: gAttInsufficientAuthentication_c</p>
+
+                            <p class="p">0x0506: gAttRequestNotSupported_c</p>
+
+                            <p class="p">0x0507: gAttInvalidOffset_c</p>
+
+                            <p class="p">0x0508: gAttInsufficientAuthorization_c</p>
+
+                            <p class="p">0x0509: gAttPrepareQueueFull_c</p>
+
+                            <p class="p">0x050A: gAttAttributeNotFound_c</p>
+
+                            <p class="p">0x050B: gAttAttributeNotLong_c</p>
+
+                            <p class="p">0x050C: gAttInsufficientEncryptionKeySize_c</p>
+
+                            <p class="p">0x050D: gAttInvalidAttributeValueLength_c</p>
+
+                            <p class="p">0x050E: gAttUnlikelyor_c</p>
+
+                            <p class="p">0x050F: gAttInsufficientEncryption_c</p>
+
+                            <p class="p">0x0510: gAttUnsupportedGroupType_c</p>
+
+                            <p class="p">0x0511: gAttInsufficientResources_c</p>
+
+                            <p class="p">0x0601: gGattAnotherProcedureInProgress_c</p>
+
+                            <p class="p">0x0602: gGattLongAttributePacketsCorrupted_c</p>
+
+                            <p class="p">0x0603: gGattMultipleAttributesOverflow_c</p>
+
+                            <p class="p">0x0604: gGattUnexpectedReadMultipleResponseLength_c</p>
+
+                            <p class="p">0x0605: gGattInvalidValueLength_c</p>
+
+                            <p class="p">0x0606: gGattServerTimeout_c</p>
+
+                            <p class="p">0x0607: gGattIndicationAlreadyInProgress_c</p>
+
+                            <p class="p">0x0608: gGattClientConfirmationTimeout_c</p>
+
+                            <p class="p">0x0701: gGapAdvDataTooLong_c</p>
+
+                            <p class="p">0x0702: gGapScanRspDataTooLong_c</p>
+
+                            <p class="p">0x0703: gGapDeviceNotBonded_c</p>
+
+                            <p class="p">0x0801: gDevDbCccdLimitReached_c</p>
+
+                            <p class="p">0x0802: gDevDbCccdNotFound_c</p>
+
+                            <p class="p">0x0901: gGattDbInvalidHandle_c</p>
+
+                            <p class="p">0x0902: gGattDbCharacteristicNotFound_c</p>
+
+                            <p class="p">0x0903: gGattDbCccdNotFound_c</p>
+
+                            <p class="p">0x0904: gGattDbServiceNotFound_c</p>
+
+                            <p class="p">0x0905: gGattDbDescriptorNotFound_c</p>
+
+                            <p class="p"> </p>
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-F7637E9D-14D9-489C-B6E2-F6B4E711EADC.html">GATT Messages</a></div>
+</div>
+</div>
+
+</body>
+</html>

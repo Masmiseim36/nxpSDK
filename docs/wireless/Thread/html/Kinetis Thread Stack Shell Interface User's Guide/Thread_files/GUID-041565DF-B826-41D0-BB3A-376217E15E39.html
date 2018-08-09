@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Thread Network-Specific Commands"/>
+<meta name="abstract" content=""/>
+<meta name="description" content=""/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-041565DF-B826-41D0-BB3A-376217E15E39"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Thread Network-Specific Commands</title>
+</head>
+<body id="GUID-041565DF-B826-41D0-BB3A-376217E15E39">
+
+
+	<h1 class="title topictitle1">Thread Network-Specific Commands</h1>
+
+	
+	<div class="body"><p class="shortdesc"/>
+
+		<p class="p"><samp class="ph codeph">thr</samp> - Commands for configuring a Thread network.</p>
+
+		<pre class="pre codeblock">$ help thr
+thr - Commands for Thread Network
+   thr create
+   thr join
+   thr scan [active|energy|both]
+   thr detach
+   thr commissioner [start|stop]
+   thr joiner add &lt;psk&gt; &lt;eui&gt;
+   thr joiner remove &lt;eui&gt;
+   thr joiner removeall
+   thr joiner view
+   thr sync steering
+   thr sync nwkdata
+   thr get attributes - displays a list of all Thread attributes available for getting/setting
+   thr get &lt;ATTRNAME/TABLENAME&gt; - displays the value for the specified attribute
+   thr set &lt;ATTRNAME&gt; &lt;value&gt; - changes the value of the attribute with the specified value
+   thr nwkdata add slaac -p &lt;Prefix&gt; - len &lt;prefixLength&gt; -t &lt;lifetime in seconds&gt;
+   thr nwkdata add dhcpserver -p &lt;Prefix&gt; - len &lt;prefixLength&gt; -t &lt;lifetime in seconds&gt;
+   thr nwkdata add extroute -p &lt;Prefix&gt; - len &lt;prefixLength&gt; -t &lt;lifetime in seconds&gt;
+   thr nwkdata remove -p &lt;Prefix&gt; - len &lt;prefixLength&gt;
+   thr nwkdata removeall
+   thr mgmt gettlv- displays a list of all TLV names available for get/set 
+   thr mgmt activeset &lt;addr&gt; &lt;tlvname&gt; &lt;value&gt; 
+   thr mgmt activeget &lt;addr&gt; &lt;tlvname&gt; 
+   thr mgmt pendset &lt;addr&gt; &lt;tlvname&gt; &lt;value&gt; 
+   thr mgmt pendget &lt;addr&gt; &lt;tlvname&gt; 
+   thr mgmt commset &lt;addr&gt; &lt;tlvname&gt; &lt;value&gt; 
+   thr mgmt commget &lt;addr&gt; &lt;tlvname&gt; 
+   thr mgmt query &lt;addr&gt; &lt;tlvname&gt; &lt;value&gt; </pre>
+
+		<div class="p"><div class="note note"><span class="notetitle">Note:</span> thr mgmt commands are available if SHELL_DUT_COMMISSIONER is TRUE</div>
+</div>
+
+		<p class="p"><samp class="ph codeph">thr create</samp> - The device automatically becomes the leader of a new Thread Network.</p>
+
+		<pre class="pre codeblock">$ thr create
+Creating network...
+$
+Node has taken the Leader role
+Created a new Thread network on channel 20 and PAN ID:0x7fe5
+
+Interface 0: 6LoWPAN
+        Mesh local address (ML64): fd40:d301:ca5b::cdcb:33fb:ebe4:e264
+        Mesh local address (ML16): fd40:d301:ca5b::ff:fe00:0
+</pre>
+
+		<p class="p"><samp class="ph codeph">thr join</samp> - The device joins an existing Thread network.</p>
+
+		<pre class="pre codeblock">$ thr join
+Joining network...
+Commissioning successful
+Attaching to Thread network...
+Attached to network with PAN ID: 0x18c
+Requesting to become Active Router...
+Success
+
+Interface 0: 6LoWPAN
+        Mesh local address (ML64): fd39:8b1:5f1f::b085:d477:7e95:1a2e
+        Mesh local address (ML16): fd39:8b1:5f1f::ff:fe00:400
+</pre>
+
+		<p class="p"><samp class="ph codeph">thr detach</samp> - The device detaches from the current Thread network.</p>
+
+		<pre class="pre codeblock">$ thr detach
+Detaching from network...
+
+$  Success!
+</pre>
+
+		<p class="p"><samp class="ph codeph">thr commissioner</samp> - Command set used for starting/stopping a commissioner. If there is already a commissioner started in the network, an error message is displayed.</p>
+
+		<pre class="pre codeblock">$ thr commissioner start
+(Local) Commissioner Started
+
+$ thr commissioner stop
+
+</pre>
+
+		<p class="p"><samp class="ph codeph">thr joiner</samp> - Command set used for configuring joiners in Thread Commissioning. For adding a joiner, the PSKc and the joiner’s extended address are needed. After adding the joiner data, <samp class="ph codeph">thr sync steering</samp> is needed to add the joiner to the bloom filter used for steering new devices onto the network. If the sync succeeded, a data response is propagated with the updated bloom filter in Thread network.</p>
+
+		<pre class="pre codeblock">$ thr joiner add kinetis 0x146E0A0000000002
+ Success!
+$ thr sync steering
+</pre>
+
+		<p class="p"><samp class="ph codeph">thr get </samp> - Command used for displaying attributes of the Thread network. A list of all attributes available is shown by the command <samp class="ph codeph">thr get attributes</samp>.</p>
+
+		<pre class="pre codeblock">$ thr get channel
+channel: 17
+$ thr get panid
+panid: 0x18c0
+$ thr get masterkey
+masterkey: 0x00112233445566778899AABBCCDDEEFF
+</pre>
+
+		<p class="p"><samp class="ph codeph">thr get</samp> commands also displays neighbor table, routing table, detailed information about a specific neighbor or parent.</p>
+
+		<p class="p"><samp class="ph codeph">thr get neighbors</samp> - Displays the neighbors of the current device, along with several information about each neighbor: the extended MAC address, the short address, number of seconds since the last communication with the neighbor, the link reported in the last communication, and whether the neighbor is one of the children.</p>
+
+		<pre class="pre codeblock">$ thr get neighbors
+Index Extended Address     ShortAddr  LastTime LinkMargin   Child
+0     0xA3EE39B029C01FA7   0x0000     1        58            no
+</pre>
+
+		<p class="p">For detailed information about a specific neighbor, the command <samp class="ph codeph"><strong class="ph b">thr get neighborinfo &lt;index&gt; </strong></samp>is used, where the index for each neighbor is the index from neighbor table.</p>
+
+		<pre class="pre codeblock">$ thr get neighbor 0
+Extended Address: 0xA3EE39B029C01FA7
+Short Address:    0x0000
+Last communication: 49 seconds ago
+Attach Timestamp: 0
+InLinkMargin: 58
+Device Timeout value: 0 seconds
+</pre>
+
+		<p class="p"><samp class="ph codeph">thr get routes</samp> - Displays the routing table of the current device, the ID sequence and the routing ID mask at the moment of the interrogation, along with several information about each entry, such as the router ID, the short address, next hop, cost, neighbor out link quality, and neighbor in link quality.</p>
+
+		<pre class="pre codeblock">$ thr get routes
+ID Sequence: 38
+Router ID Mask: A000000000000000
+RouterID    Short Address    Next Hop    Cost    NOut    NIn
+0           0x0000           0x0000      1       3       3
+</pre>
+
+		<p class="p"><samp class="ph codeph">thr get parent</samp> - Displays the short and extended address of the parent node.</p>
+
+		<pre class="pre codeblock">$ thr get parent
+Parent short address: 0x0000
+Parent extended address: 0xA3EE39B029C01FA7
+</pre>
+
+		<p class="p"><samp class="ph codeph">thr set</samp> - Command used for modifying the values of the attributes.</p>
+
+		<div class="note note"><span class="notetitle">Note:</span> To check the attributes that can modified from shell, please enter "thr get
+			attributes"</div>
+
+		<pre class="pre codeblock">$ thr set iscommissioned 0
+ Success!
+</pre>
+
+		<p class="p"><samp class="ph codeph">thr nwkdata</samp> - Performs Thread Network Data operations.</p>
+
+		<p class="p">To add a DHCPv6 server, SLAAC server or external route, use the parameters, such as the length of the prefix or lifetime that can be set. The default values for prefix length is 64 and for lifetime is THR_NWK_DATA_MIN_STABLE_LIFETIME. The prefix is mandatory for adding network data.</p>
+
+		<p class="p">Adding a dhcpserver prefix from the shell interface enables that device to become a
+			DHCPv6 server in the Thread network. The device is able to assign IPv6 addresses to the
+			other devices in the network. This is called a stateful autoconfiguration. Using a SLAAC
+			prefix enables the device to compute an IPv6 address using the prefix and the EUI-64
+			address. This method is called the stateless autoconfiguration. Devices are also capable
+			of having external routes for destination prefixes that need to get routed outside of
+			the Thread network. Border Routers advertise such routes in Thread Network Data in
+			tuples (destination prefix, RLOC16 address of the Border Router), hence egress traffic
+			to the destination prefix is sent to the border router and it is forwarded to the
+			external interface, via Ethernet/RNDIS/Serial TUN/TAP, depending on the
+			capabilities.</p>
+
+		<p class="p">After adding the prefixes, <samp class="ph codeph">thr sync nwkdata</samp> propagates network data in the Thread network.</p>
+
+		<pre class="pre codeblock">$ thr nwkdata add dhcpserver -p 2001::1
+ Success!
+$ thr nwkdata add slaac -p 2001::2 -t 120
+ Success!
+$ thr nwkdata add extroute -p 2001:2002::0 -len 48 -t 120
+ Success!
+$ thr sync nwkdata
+ Success!
+</pre>
+
+		<p class="p"><samp class="ph codeph">thr nwkdata remove</samp> - Removes one prefix.</p>
+
+		<p class="p"><samp class="ph codeph">thr nwkdata removeall</samp> - Removes all network data from the current device.</p>
+
+		<p class="p"><samp class="ph codeph">thr sync nwkdata</samp> is needed after removing network data to propagate the updated information.</p>
+
+		<pre class="pre codeblock">$ thr nwkdata remove -p 2001::1
+ Success!
+$ thr sync nwkdata
+ Success!
+</pre>
+
+		<p class="p"><samp class="ph codeph">thr mgmt</samp> - Performs Thread management commands that allow nodes to read and set network attributes. This set of commands is by default disabled, to enable it set SHELL_DUT_COMMISSIONER on TRUE.</p>
+
+		<p class="p"><samp class="ph codeph">thr mgmt gettlvs</samp> - displays a list of all network attribute names that can be set/get with thr mgmt commands.</p>
+
+		<p class="p"><samp class="ph codeph">ch</samp> - Channel TLV expressed as a decimal value (e.g. ch 12)</p>
+
+		<p class="p"><samp class="ph codeph">pan</samp> - PAN ID TLV expressed as a 2 bytes hexadecimal value (e.g. pan 0xafce)</p>
+
+		<p class="p"><samp class="ph codeph">xpan</samp> - Extended PAN ID TLV expressed as an 8 bytes hexadecimal value (e.g. xpan 0x1122334455667788)</p>
+
+		<p class="p"><samp class="ph codeph">nwkname</samp> - Network Name TLV expressed as a string of maximum 32 characters (e.g. nwkname threadtest)</p>
+
+		<p class="p"><samp class="ph codeph">pskc</samp> - PSKc TLV expressed as a 16 bytes hexadecimal value (e.g. pskc 0x7468726561646a70616b657465737400)</p>
+
+		<p class="p"><samp class="ph codeph">masterkey</samp> - Network Master Key TLV expressed as a 16 bytes hexadecimal value (e.g. masterkey 0x00112233445566778899aabbccddeeff) </p>
+
+		<p class="p"><samp class="ph codeph">mlprefix</samp> - Network Mesh-Local Prefix TLV expressed as an 8 bytes hexadecimal value (e.g. mlprefix 0xfd000db800000000)</p>
+
+		<p class="p"><samp class="ph codeph">steering</samp> - Steering Data TLV expressed as a hexadecimal value of maximum 16 bytes in length (e.g. steering 0x113320440000) </p>
+
+		<p class="p"><samp class="ph codeph">brloc</samp> - Border Agent Locator TLV expressed as a 2 bytes hexadecimal value (e.g. brloc 0x0400) </p>
+
+		<p class="p"><samp class="ph codeph">sid</samp> - Commissioner Session ID TLV expressed as a 2 bytes hexadecimal value (e.g. sid 0xffff). This TLV is added by default with a valid session ID. This TLV can be added only when Test Harness requires an invalid value. </p>
+
+		<p class="p"><samp class="ph codeph">secpol</samp> - Security Policy TLV has two: the rotation time expressed as a decimal value and the security policy bits expressed in hexadecimal (e.g. secpol 3600 0xc7) </p>
+
+		<p class="p"><samp class="ph codeph">activets</samp> - Active Timestamp TLV expressed in decimal value, in seconds (e.g. activets 101) </p>
+
+		<p class="p"><samp class="ph codeph">pendts</samp> - Pending Timestamp TLV expressed in decimal value, in seconds (e.g. pendts 101) </p>
+
+		<p class="p"><samp class="ph codeph">delaytmr</samp> - Delay Timer TLV expressed in decimal value (e.g. delaytmr 3000) </p>
+
+		<p class="p"><samp class="ph codeph">chmsk</samp> - Channel Mask TLV expressed as a 4 bytes hexadecimal value (e.g. chmsk 0x001fffe0) </p>
+
+		<p class="p"><samp class="ph codeph">scan</samp> - Scan Duration TLV is used only with get commands. The current implementation does not support setting a value for this TLV. </p>
+
+		<p class="p"><samp class="ph codeph">energylist</samp> - Energy List TLV is used only with get commands. The current implementation does not support setting a value for this TLV. </p>
+
+		<p class="p"><samp class="ph codeph">future</samp> – This is an unknown TLV value used for negative testing.
+			No value should follow this TLV name in a set command. </p>
+
+		<p class="p"><samp class="ph codeph">thr mgmt activeset</samp> – this command sent from Commissioner or other Thread devices may provide a new Active Operational Dataset to the Leader. The arguments of this command are the IPv6 destination address and all attributes that need to be set followed by their value. </p>
+
+		<div class="note note"><span class="notetitle">Note:</span> All attribute names are followed by their value, exception makes “secpol”, Steering Data TLV, which is followed by two parameters: rotation interval (decimal value) and policy flags (hexadecimal value). After sending the command, the recipient will send an acknowledgment message with the status: Accept, Reject or Pending. </div>
+
+		<pre class="pre codeblock">
+	        $ thr mgmt activeset fd00:db8::ff:fe00:0 activets 107 chmsk 0x001fffe0 
+            xpan 0x000db70000000000 nwkname GRL pskc 
+            0x7468726561646a70616b657465737400 secpol 3600 0xc7 steering 
+            0x113320440000 future 
+             Success! 
+            $ Received state: Reject        
+	        </pre>
+
+		<div class="note note"><span class="notetitle">Note:</span> The same behavior applies to thr mgmt pendset and thr mgmt commset commands</div>
+
+		<p class="p"><samp class="ph codeph">thr mgmt activeget</samp> – this command sent from Commissioner or other Thread devices may retrieve Active Operational Dataset values from the Leader. The arguments of this command are the a list of all attribute names to be retrieved. </p>
+
+		<pre class="pre codeblock">
+	        $ thr mgmt activeget fd00:db8::ff:fe00:0 ch pan xpan nwkname pskc 
+	        masterkey mlprefix steering brloc sid secpol activets pendts delaytmr chmsk
+	        Success! 
+            $ ch: 14 
+            pan: 0xface 
+            xpan: 0x000DB70000000000 
+            nwkname: GRL 
+            pskc: 0x7468726561646A70616B657465737400 
+            masterkey: 0x00112233445566778899AABBCCDDEEFF 
+            mlprefix: 0xFD000DB800000000 
+            secpol: 3600, 0xc7 
+            activets: 107 sec,  0 ticks 
+    	        </pre>
+
+		<div class="note note"><span class="notetitle">Note:</span> The same behavior applies to thr mgmt pendget and thr mgmt commget commands. </div>
+
+		<p class="p"><samp class="ph codeph">thr mgmt query</samp> – this command is sent from Commissioner to request one or more devices to perform an IEEE 802.15.4 Active Scan and determine if a specific PAN ID value is in use. The arguments of this command are the IPv6 destination address, the pan ID and the channel mask. </p>
+
+		<pre class="pre codeblock">
+	        $ thr mgmt query fd00:db8::ff:fe00:0 chmsk 0x001fffe0 pan 0xAFCE  
+	        Success! 
+	        $ 
+     	        </pre>
+
+		<p class="p"><samp class="ph codeph">thr scan active</samp> - Scans all channels for active Thread networks.</p>
+
+		<p class="p"><samp class="ph codeph">thr scan energy</samp> - Performs energy detection on all channels, from
+			11 to 26. The output of the commnd contains a byte for each scanned channel.</p>
+
+		<p class="p"><samp class="ph codeph">thr scan both</samp> - Performs both types of scanning, active and energy.</p>
+
+		<pre class="pre codeblock"> $ thr scan active
+Thread Network: 0
+    PAN ID: 0xface
+    Channel: 11
+    LQI: 135
+    Received beacons: 2
+Thread Network: 1
+    PAN ID: 0xbdb9
+    Channel: 22
+    LQI: 121
+    Received beacons: 1
+
+$ thr scan energy
+Energy on channel 11 to 26: 0x38442480FF2064FF00FF30FFFFFF58FF
+
+$ thr scan both
+
+$
+Energy on channel 11 to 26: 0x00FF4CFF00FFFF28FFFF386CFF082000
+Thread Network: 0
+    PAN ID: 0xface
+    Channel: 11
+    LQI: 121
+    Received beacons: 2
+</pre>
+
+	</div>
+
+
+</body>
+</html>

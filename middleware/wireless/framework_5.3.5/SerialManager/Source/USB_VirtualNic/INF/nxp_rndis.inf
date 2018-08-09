@@ -1,0 +1,71 @@
+; Windows NXP RNDIS Setup File
+; Copyright (c) 2000 Microsoft Corporation
+
+[Version]
+Signature = "$Windows NT$"
+Class = Net
+ClassGUID = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider = %COMPANY%
+DriverVer = 09/14/2015,6.0.6000.16384
+CatalogFile = nxp_rndis.cat
+
+[Manufacturer]
+%COMPANY% = RndisDevices,NTx86,NTamd64,NTia64
+
+; Decoration for x86 architecture
+[RndisDevices.NTx86]
+%RNDISDEV% = RNDIS.NT.5.1, USB\VID_15A2&PID_0301, USB\VID_15A2&PID_0302,  USB\VID_1FC9&PID_0301,  USB\VID_1FC9&PID_0302
+
+; Decoration for x64 architecture
+[RndisDevices.NTamd64]
+%RNDISDEV% = RNDIS.NT.5.1, USB\VID_15A2&PID_0301, USB\VID_15A2&PID_0302,  USB\VID_1FC9&PID_0301,  USB\VID_1FC9&PID_0302
+
+; Decoration for ia64 architecture
+[RndisDevices.NTia64]
+%RNDISDEV% = RNDIS.NT.5.1, USB\VID_15A2&PID_0301, USB\VID_15A2&PID_0302,  USB\VID_1FC9&PID_0301,  USB\VID_1FC9&PID_0302
+
+;@@@ This is the common setting for setup
+[ControlFlags]
+ExcludeFromSelect=*
+
+
+; DDInstall section
+; References the in-build Netrndis.inf
+[RNDIS.NT.5.1]
+Characteristics = 0x84 ; NCF_PHYSICAL + NCF_HAS_UI
+BusType = 15
+; NEVER REMOVE THE FOLLOWING REFERENCE FOR NETRNDIS.INF
+include = netrndis.inf
+needs = Usb_Rndis.ndi
+;AddReg = Rndis_AddReg_Vista
+AddReg          = Rndis_AddReg
+
+; DDInstal.Services section
+[RNDIS.NT.5.1.Services]
+include = netrndis.inf
+needs = Usb_Rndis.ndi.Services
+
+; Registry settings (advanced configuration)
+[Rndis_AddReg]
+HKR, NDI\params\ieee802154channel, ParamDesc,  0, %ieee802154channel%
+HKR, NDI\params\ieee802154channel, type,       0, "dword"
+HKR, NDI\params\ieee802154channel, optional,   0, "0"
+HKR, NDI\params\ieee802154channel, default,    0, "11"
+HKR, NDI\params\ieee802154channel, min,        0, "11"
+HKR, NDI\params\ieee802154channel, max,        0, "26"
+HKR, NDI\params\ieee802154channel, step,       0, "1"
+;HKR, NDI\params\command, ParamDesc,  0, %command%
+;HKR, NDI\params\command, type,       0, "edit"
+;HKR, NDI\params\command, optional,   0, "1"
+;HKR, NDI\params\command, default,    0, ""
+;HKR, NDI\params\command, LimitText,  0, "16"
+;HKR, NDI\params\command, UpperCase,  0, "0"
+; No sys copyfiles - the sys files are already in-build
+; (part of the operating system).
+
+; Modify these strings for your device as needed.
+[Strings]
+COMPANY="NXP"
+RNDISDEV="NXP USB RNDIS"
+ieee802154channel     = "IEEE 802.15.4 Channel"
+#command               = "Special Command"

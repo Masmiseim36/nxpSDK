@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="L2CAP and GATT Prerequisites"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-9EA15C7F-5D90-4A78-A44E-2C8D5E531EF4.html"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-2F049A9E-3C53-4C4D-AF9B-35F51148E87F"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>L2CAP and GATT Prerequisites</title>
+</head>
+<body id="GUID-2F049A9E-3C53-4C4D-AF9B-35F51148E87F">
+
+
+    <h1 class="title topictitle1">L2CAP and GATT Prerequisites</h1>
+
+    <div class="body">
+        <p class="p">The transport of IPv6 datagrams is made over L2CAP Credit Based channels. To
+            set up this feature, the user will first register the IPSP Protocol/Service
+            Multiplexer(PSM) after the Bluetooth stack is initialized:</p>
+
+        <pre class="pre codeblock">
+            static void BleApp_Config()
+{
+...
+    /* Register IPSP PSM */
+    L2ca_RegisterLePsm(gL2ca_Le_Psm_Ipsp_c, gL2capMtu_d);  
+}
+            </pre>
+
+        <p class="p">The link between the L2CAP layer and the 6LoBLE layer is done by registering
+            the data and control callbacks. Also, bleAbsReq contains function pointers that are
+            called by the 6LoBLE layer to send data over the BLE medium or query Bluetooth addresses
+            or maximum SDU.</p>
+
+        <pre class="pre codeblock">
+            bleAbsRequests_t* BleApp_RegisterBleCallbacks(instanceId_t instanceId)
+{
+    mSixLoBleInstanceId = instanceId;
+    L2ca_RegisterLeCbCallbacks(BleApp_IpspDataCallback, BleApp_IpspControlCallback); 
+    return (void *)&amp;bleAbsReq;
+}
+            </pre>
+
+        <p class="p">The data callback creates a data indication message that is sent to the
+            6LoBLE layer for processing:</p>
+
+        <pre class="pre codeblock">
+            static void BleApp_IpspDataCallback(deviceId_t deviceId, uint16_t channelId, uint8_t* pPacket, uint16_t packetLength)
+{
+    bleDataInd_t* pBleDataInd = NULL;
+    
+    pBleDataInd = MEM_BufferAlloc(sizeof(bleDataInd_t));
+
+    /* Create the BLE Data indication */
+    if (pBleDataInd != NULL)
+    {
+        pBleDataInd-&gt;pSdu = MEM_BufferAlloc(packetLength);
+        
+        if (pBleDataInd-&gt;pSdu)
+        {
+            pBleDataInd-&gt;instanceId = mSixLoBleInstanceId;
+            BleApp_GetBleAddress(pBleDataInd-&gt;dstAddr);
+            BleApp_GetPeerBleAddress(deviceId, pBleDataInd-&gt;srcAddr);
+            pBleDataInd-&gt;sduLength = packetLength;
+            FLib_MemCpy(pBleDataInd-&gt;pSdu, pPacket, packetLength);
+            
+            /* Send message to 6lo */
+            SixLoBle_DataIndCB(pBleDataInd);
+        }
+        else
+        {
+            MEM_BufferFree(pBleDataInd);
+        }
+    }  
+            </pre>
+
+        <p class="p">The GATT database of the IPv6 Node includes the Internet Protocol Support
+            Service (IPSS):</p>
+
+        <pre class="pre codeblock">
+            PRIMARY_SERVICE(service_ipss, gBleSig_IpsService_d)
+            </pre>
+
+        
+        <p class="p">After it establishes the GAP connection, the IPv6 Router will firstl
+            discover the IPSS Service:</p>
+
+        <pre class="pre codeblock">
+            uint16_t uuid = gBleSig_IpsService_d;
+/* Start Service Discovery */
+BleServDisc_FindService(peerDeviceId, gBleUuidType16_c, (bleUuid_t*) &amp;uuid);
+            </pre>
+
+        <p class="p">If the IPv6 Router discovers the service on the peer, it will then initiate an L2CAP connection on the IPSP PSM:</p>
+
+        <pre class="pre codeblock">
+            Ipsp_Connect(&amp;mIpspRouterConfig, peerDeviceId);
+            </pre>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-9EA15C7F-5D90-4A78-A44E-2C8D5E531EF4.html">IPv6 Network Setup</a></div>
+</div>
+</div>
+
+</body>
+</html>

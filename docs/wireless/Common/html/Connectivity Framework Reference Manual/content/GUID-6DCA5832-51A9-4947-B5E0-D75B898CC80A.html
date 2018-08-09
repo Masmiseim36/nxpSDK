@@ -1,0 +1,723 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Message management API primitives"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-BB703972-DFED-40CA-8819-300614D6430A.html"/>
+<meta name="prodname" content=""/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Creator" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-6DCA5832-51A9-4947-B5E0-D75B898CC80A"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Message management API primitives</title>
+</head>
+<body id="GUID-6DCA5832-51A9-4947-B5E0-D75B898CC80A">
+
+
+    <h1 class="title topictitle1">Message management API primitives</h1>
+
+    <div class="body">
+        <p class="p"><strong class="ph b">MSG_Queue</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">#define MSG_Queue(anchor, element) ListAddTailMsg((anchor), (element))</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>Puts a message into the message queue.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-6DCA5832-51A9-4947-B5E0-D75B898CC80A__TABLE_BSN_NX2_2Z" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d37294e74"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d37294e78"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d37294e82"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d37294e86"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d37294e74 ">anchor</td>
+
+                        <td class="entry" valign="top" headers="d37294e78 ">msgQueue_t</td>
+
+                        <td class="entry" valign="top" headers="d37294e82 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d37294e86 ">Pointer to the message queue.</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d37294e74 ">element</td>
+
+                        <td class="entry" valign="top" headers="d37294e78 ">void *</td>
+
+                        <td class="entry" valign="top" headers="d37294e82 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d37294e86 ">Buffer allocated with the Memory manager.</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">None.</p>
+
+        <p class="p"><strong class="ph b">MSG_DeQueue</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">#define MSG_DeQueue(anchor) ListRemoveHeadMsg(anchor)</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>Dequeues a message from the message queue.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-6DCA5832-51A9-4947-B5E0-D75B898CC80A__TABLE_HDL_RX2_2Z" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d37294e172"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d37294e176"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d37294e180"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d37294e184"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d37294e172 ">anchor</td>
+
+                        <td class="entry" valign="top" headers="d37294e176 ">msgQueue_t</td>
+
+                        <td class="entry" valign="top" headers="d37294e180 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d37294e184 ">Pointer to the message queue.</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">Pointer to the message buffer.</p>
+
+        <p class="p"><strong class="ph b">MSG_Pending</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">#define MSG_Pending(anchor) ((anchor)-&gt;head != 0)</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>Checks if a message is pending in the queue.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-6DCA5832-51A9-4947-B5E0-D75B898CC80A__TABLE_RBL_5X2_2Z" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d37294e255"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d37294e259"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d37294e263"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d37294e267"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d37294e255 ">anchor</td>
+
+                        <td class="entry" valign="top" headers="d37294e259 ">msgQueue_t</td>
+
+                        <td class="entry" valign="top" headers="d37294e263 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d37294e267 ">Pointer to the message queue.</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">Returns TRUE if there are any pending messages; FALSE otherwise.</p>
+
+        <p class="p"><strong class="ph b">MSG_InitQueue</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">#define MSG_InitQueue(anchor) ListInitMsg(anchor)</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>Initializes a message queue.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-6DCA5832-51A9-4947-B5E0-D75B898CC80A__TABLE_W44_WX2_2Z" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d37294e339"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d37294e343"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d37294e347"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d37294e351"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d37294e339 ">anchor</td>
+
+                        <td class="entry" valign="top" headers="d37294e343 ">msgQueue_t</td>
+
+                        <td class="entry" valign="top" headers="d37294e347 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d37294e351 ">Pointer to the message queue.</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">None.</p>
+
+        <p class="p"><strong class="ph b">List_ClearAnchor</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">#define List_ClearAnchor(anchor) ListInitMsg(anchor)</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>Resets a message queue.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-6DCA5832-51A9-4947-B5E0-D75B898CC80A__TABLE_KCY_YX2_2Z" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d37294e422"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d37294e426"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d37294e430"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d37294e434"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d37294e422 ">Anchor</td>
+
+                        <td class="entry" valign="top" headers="d37294e426 ">msgQueue_t</td>
+
+                        <td class="entry" valign="top" headers="d37294e430 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d37294e434 ">Pointer to the message queue.</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">None.</p>
+
+        <p class="p"><strong class="ph b">MSG_Alloc</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">#define MSG_Alloc(element) MEM_BufferAlloc(element)</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>Allocates a message.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-6DCA5832-51A9-4947-B5E0-D75B898CC80A__TABLE_WVW_BY2_2Z" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d37294e505"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d37294e509"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d37294e513"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d37294e517"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d37294e505 ">element</td>
+
+                        <td class="entry" valign="top" headers="d37294e509 ">uint32_t</td>
+
+                        <td class="entry" valign="top" headers="d37294e513 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d37294e517 ">Size of the buffer to be allocated by the Memory manager.</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">Pointer to the newly allocated block or NULL if failed.</p>
+
+        <p class="p"><strong class="ph b">MSG_AllocType</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">#define MSG_AllocType(type) MEM_BufferAlloc(sizeof(type))</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>Allocates a data type.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-6DCA5832-51A9-4947-B5E0-D75B898CC80A__TABLE_WVF_2Y2_2Z" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d37294e589"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d37294e593"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d37294e597"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d37294e601"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d37294e589 ">type</td>
+
+                        <td class="entry" valign="top" headers="d37294e593 ">–</td>
+
+                        <td class="entry" valign="top" headers="d37294e597 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d37294e601 ">Data type to be allocated.</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">Pointer to the newly allocated block or NULL if failed.</p>
+
+        <p class="p"><strong class="ph b">MSG_Free</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">#define MSG_Free(element) MEM_BufferFree(element)</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>Frees a message.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-6DCA5832-51A9-4947-B5E0-D75B898CC80A__TABLE_GXB_GY2_2Z" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d37294e672"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d37294e676"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d37294e680"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d37294e684"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d37294e672 ">element</td>
+
+                        <td class="entry" valign="top" headers="d37294e676 ">void *</td>
+
+                        <td class="entry" valign="top" headers="d37294e680 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d37294e684 ">Pointer to the buffer to free.</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">Status of the freeing operation.</p>
+
+        <p class="p"><strong class="ph b">ListInitMsg</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">#define ListInitMsg(listPtr) ListInit((listPtr), 0)</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>Initializes a list.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-6DCA5832-51A9-4947-B5E0-D75B898CC80A__TABLE_CPK_JY2_2Z" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d37294e755"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d37294e759"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d37294e763"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d37294e767"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d37294e755 ">listPtr</td>
+
+                        <td class="entry" valign="top" headers="d37294e759 ">listHandle_t</td>
+
+                        <td class="entry" valign="top" headers="d37294e763 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d37294e767 ">Pointer to the list.</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">None.</p>
+
+        <p class="p"><strong class="ph b">ListAddTailMsg</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">void ListAddTailMsg ( listHandle_t list, void* buffer );</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>Adds a buffer to the end of the list.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-6DCA5832-51A9-4947-B5E0-D75B898CC80A__TABLE_EGY_LY2_2Z" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d37294e839"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d37294e843"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d37294e847"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d37294e851"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d37294e839 ">list</td>
+
+                        <td class="entry" valign="top" headers="d37294e843 ">listHandle_t</td>
+
+                        <td class="entry" valign="top" headers="d37294e847 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d37294e851 ">Pointer to the list.</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d37294e839 ">buffer</td>
+
+                        <td class="entry" valign="top" headers="d37294e843 ">void *</td>
+
+                        <td class="entry" valign="top" headers="d37294e847 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d37294e851 ">Pointer to the buffer.</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">None.</p>
+
+        <p class="p"><strong class="ph b">ListRemoveHeadMsg</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">void *ListRemoveHeadMsg( listHandle_t list );</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>Removes a buffer from the head of the list.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-6DCA5832-51A9-4947-B5E0-D75B898CC80A__TABLE_O5Q_4Y2_2Z" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d37294e937"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d37294e941"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d37294e945"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d37294e949"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d37294e937 ">list</td>
+
+                        <td class="entry" valign="top" headers="d37294e941 ">listHandle_t</td>
+
+                        <td class="entry" valign="top" headers="d37294e945 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d37294e949 ">Pointer to the list.</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">Pointer to the removed buffer.</p>
+
+        <p class="p"><strong class="ph b">ListGetHeadMsg</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">void *ListGetHeadMsg ( listHandle_t list );</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>Gets a buffer from the head of the list without removing it.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-6DCA5832-51A9-4947-B5E0-D75B898CC80A__TABLE_WSD_RY2_2Z" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d37294e1020"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d37294e1024"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d37294e1028"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d37294e1032"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d37294e1020 ">list</td>
+
+                        <td class="entry" valign="top" headers="d37294e1024 ">listHandle_t</td>
+
+                        <td class="entry" valign="top" headers="d37294e1028 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d37294e1032 ">Pointer to the list.</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">Pointer to the head buffer.</p>
+
+        <p class="p"><strong class="ph b">ListGetNextMsg</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">void *ListGetNextMsg ( void* buffer );</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>Gets the next linked buffer.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-6DCA5832-51A9-4947-B5E0-D75B898CC80A__TABLE_GKF_5Y2_2Z" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d37294e1104"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d37294e1108"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d37294e1112"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d37294e1116"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d37294e1104 ">buffer</td>
+
+                        <td class="entry" valign="top" headers="d37294e1108 ">void *</td>
+
+                        <td class="entry" valign="top" headers="d37294e1112 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d37294e1116 ">Pointer to a list element.</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">Pointer to the next buffer.</p>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-BB703972-DFED-40CA-8819-300614D6430A.html">Message management</a></div>
+</div>
+</div>
+
+</body>
+</html>

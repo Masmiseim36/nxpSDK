@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Creating service functionality"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-144FB86B-666D-4549-A3A4-925C9BA256F0.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Creator" content=""/>
+<meta name="DC.Publisher" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-DECDBD5C-6B7B-4025-B1BE-60E632867173"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Creating service functionality</title>
+</head>
+<body id="GUID-DECDBD5C-6B7B-4025-B1BE-60E632867173">
+
+
+    <h1 class="title topictitle1">Creating service functionality</h1>
+
+    <div class="body">
+        <p class="p">All defined services in the SDK have a common template which helps the application to act
+            accordingly.</p>
+
+        <p class="p">The service locally stores the device identification for the connected client. This value
+            is changed on subscription and non-subscription events.</p>
+
+        <pre class="pre codeblock">/*! Temperature Service - Subscribed Client*/
+<strong class="ph b">static</strong> deviceId_t mTms_SubscribedClientId;</pre>
+
+        <p class="p">The service is initialized and changed by the application through a service configuration
+            structure. It usually contains the service handle, initialication values for the service
+            (for example, the initial temperature for the Temperature Service) and in some cases
+            user-specific structures that can store saved measurements (for example, the Blood
+            Pressure Service). Below is an example for the custom Temperature Service:</p>
+
+        <pre class="pre codeblock">/*! Temperature Service - Configuration */
+<strong class="ph b">typedef</strong><strong class="ph b">struct</strong> tmsConfig_tag
+{
+    uint16_t serviceHandle ;
+    int16_t initialTemperature ; 
+} tmsConfig_t ;</pre>
+
+        <p class="p">The initialization of the service is made by calling the start procedure. The function
+            requires as input a pointer to the service configuration structure. This function is
+            usually called when the application is initialized. It resets the static device
+            identification for the subscribed client and initializes both dynamic and static
+            characteristic values. An example for the Temperature Service (TMS) is shown below:</p>
+
+        <pre class="pre codeblock">bleResult_t<strong class="ph b">Tms_Start</strong> ( tmsConfig_t *pServiceConfig)
+{ 
+    mTms_SubscribedClientId = gInvalidDeviceId_c;
+
+    <strong class="ph b">return</strong> Tms_RecordTemperatureMeasurement (pServiceConfig-&gt; serviceHandle , 
+                                                    pServiceConfig-&gt; initialTemperature );
+}</pre>
+
+        <p class="p">The service subscription is triggered when a device connects to the server. It requires
+            the peer device identification as an input parameter to update the local variable. On
+            disconnect, the unsubscribe function is called to reset the device identification. For
+            the Temperature Service:</p>
+
+        <pre class="pre codeblock">bleResult_t<strong class="ph b">Tms_Subscribe</strong> ( deviceId_t deviceId)
+{
+    mTms_SubscribedClientId = deviceId;
+    <strong class="ph b">return</strong> gBleSuccess_c;
+}
+ 
+bleResult_t<strong class="ph b">Tms_Unsubscribe</strong> (void)
+{
+    mTms_SubscribedClientId = gInvalidDeviceId_c;
+    <strong class="ph b">return</strong> gBleSuccess_c;
+}</pre>
+
+        <p class="p">Depending on the complexity of the service, the API implements additional functions. For
+            the Temperature Service, there is only a temperature characteristic that is notifiable
+            by the server. The API implements the record measurement function which saves the new
+            measured value in the GATT database and send the notification to the client device if
+            possible. The function needs the service handle and the new temperature value as input
+            parameters:</p>
+
+        <pre class="pre codeblock">bleResult_t<strong class="ph b">Tms_RecordTemperatureMeasurement</strong> ( uint16_t serviceHandle, int16_t temperature)
+{
+    uint16_t handle;
+    bleResult_t result;
+    bleUuid_t uuid = Uuid16(gBleSig_Temperature_d);
+
+    /* Get handle of Temperature characteristic */
+    result = GattDb_FindCharValueHandleInService(serviceHandle,
+        gBleUuidType16_c, &amp;uuid, &amp;handle);
+
+    <strong class="ph b">if</strong> (result != gBleSuccess_c)
+        <strong class="ph b">return</strong> result;
+
+    /* Update characteristic value */
+    result = GattDb_WriteAttribute(handle, <strong class="ph b">sizeof</strong>( uint16_t ), ( uint8_t *)&amp;temperature);
+
+    <strong class="ph b">if</strong> (result != gBleSuccess_c)
+        <strong class="ph b">return</strong> result;
+
+    Hts_SendTemperatureMeasurementNotification(handle);
+
+    <strong class="ph b">return</strong> gBleSuccess_c;
+}</pre>
+
+        <p class="p">To accommodate some use cases where the service is reset, the stop function is called.
+            The reset also implies a service unsubscribe. Below is an example for the Temperature
+            Service:</p>
+
+        <pre class="pre codeblock">bleResult_t<strong class="ph b">Tms_Stop</strong> ( tmsConfig_t *pServiceConfig)
+{
+    <strong class="ph b">return</strong> Tms_Unsubscribe();
+}</pre>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-144FB86B-666D-4549-A3A4-925C9BA256F0.html">Creating a Custom Profile</a></div>
+</div>
+</div>
+
+</body>
+</html>

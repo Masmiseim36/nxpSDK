@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Non-Volatile Memory (NVM) access"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-787C2839-9165-473A-B6E1-98731DAF3188.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Creator" content=""/>
+<meta name="DC.Publisher" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-C8396924-53E8-4E64-886F-17BFE6F3737F"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Non-Volatile Memory (NVM) access</title>
+</head>
+<body id="GUID-C8396924-53E8-4E64-886F-17BFE6F3737F">
+
+
+	<h1 class="title topictitle1">Non-Volatile Memory (NVM) access </h1>
+
+	<div class="body">
+		<p class="p">The Host Stack contains an internal device information management that relies on accessing the Non-Volatile Memory for storing and loading bonded devices data.</p>
+
+		<p class="p">The application developers determine the NVM access mechanism through the definition of three functions and one variable. The functions must first preprocess the information and then perform standard NVM operations (erase, write, read). The declarations are as follows:</p>
+
+		<pre class="pre codeblock"><strong class="ph b">extern</strong><strong class="ph b"> void </strong><strong class="ph b">App_NvmErase</strong>
+(
+    <strong class="ph b">uint8_t </strong>mEntryIdx
+);
+<strong class="ph b"/><strong class="ph b"><strong class="ph b">extern </strong><strong class="ph b">void </strong><strong class="ph b">App_NvmWrite</strong>
+(
+    <strong class="ph b">uint8_t</strong> </strong>mEntryIdx,
+    <strong class="ph b">void* </strong>  pBondHeader 
+<strong class="ph b">    void*</strong>   pBondDataDynamic,
+    <strong class="ph b">void*</strong>   pBondDataStatic,
+    <strong class="ph b">void</strong>*   pBondDataDeviceInfo,<strong class="ph b">    </strong><strong class="ph b">
+    void*   </strong>pBondDataDescriptor<strong class="ph b">,
+</strong> <strong class="ph b">   uint8_t</strong> mDescriptorIndex
+<strong class="ph b">};</strong><strong class="ph b"><strong class="ph b">
+extern </strong><strong class="ph b">void </strong><strong class="ph b">App_NvmRead</strong>
+(
+    <strong class="ph b">uint8_t</strong> </strong>mEntryIdx,
+    <strong class="ph b">void* </strong>  pBondHeader 
+<strong class="ph b">    void*</strong>   pBondDataDynamic,
+    <strong class="ph b">void*</strong>   pBondDataStatic,
+    <strong class="ph b">void</strong>*   pBondDataDeviceInfo,<strong class="ph b">    </strong><strong class="ph b"> 
+    void*   </strong>pBondDataDescriptor<strong class="ph b">,
+</strong> <strong class="ph b">   uint8_t</strong> mDescriptorIndex
+<strong class="ph b">};</strong></pre>
+
+		<p class="p">The device information is divided into several components to ensure that even software wear leveling mechanisms can be used optimally. The components sizes are fixed (defined in <em class="ph i"> ble_constants.h</em>) and have the following meaning:</p>
+
+		
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-C8396924-53E8-4E64-886F-17BFE6F3737F__GUID-21432218-EC26-4CFB-9B44-2C36EECC7C18" class="table" frame="border" border="1" rules="all">
+				
+				
+				
+				<tbody class="tbody">
+					<tr class="row">
+						<td class="entry" valign="top">API pointer to bond component</td>
+
+						<td class="entry" valign="top">Component size (<em class="ph i">ble_constants.h</em>)</td>
+
+						<td class="entry" valign="top">Description</td>
+
+					</tr>
+
+					<tr class="row">
+						<td class="entry" valign="top"><strong class="ph b">pBondHeader</strong>: points to a bleBondIdentityHeaderBlob_t element</td>
+
+						<td class="entry" valign="top">gBleBondIdentityHeaderSize_c </td>
+
+						<td class="entry" valign="top">Bonding information which is sufficient to identify a bonded device.</td>
+
+					</tr>
+
+					<tr class="row">
+						<td class="entry" valign="top"><strong class="ph b">pBondDataDynamic:</strong> points to a bleBondDataDynamicBlob_t element</td>
+
+						<td class="entry" valign="top">gBleBondDataDynamicSize_c</td>
+
+						<td class="entry" valign="top">Bonding information that might change frequently.</td>
+
+					</tr>
+
+					<tr class="row">
+						<td class="entry" valign="top"><strong class="ph b">pBondDataStatic</strong>: points to a bleBondDataStaticBlob_t element</td>
+
+						<td class="entry" valign="top">gBleBondDataStaticSize_c</td>
+
+						<td class="entry" valign="top">Bonding information that is unlikely to change frequently.</td>
+
+					</tr>
+
+					<tr class="row">
+						<td class="entry" valign="top"><strong class="ph b">pBondDataDeviceInfo</strong>: points to a bleBondDataDeviceInfoBlob_t element</td>
+
+						<td class="entry" valign="top">gBleBondDataDeviceInfoSize_c</td>
+
+						<td class="entry" valign="top">Additional bonding information that can be accessed using the host stack API.</td>
+
+					</tr>
+
+					<tr class="row">
+						<td class="entry" valign="top"><strong class="ph b">pBondDataDescriptor</strong>: points to a bleBondDataDescriptorBlob_t element</td>
+
+						<td class="entry" valign="top">gBleBondDataDescriptorSize_c</td>
+
+						<td class="entry" valign="top">Bonding information used to store one CCCD.</td>
+
+					</tr>
+
+				</tbody>
+
+			</table>
+</div>
+
+		<p class="p">The application developer need not care about the format of the bonding information as this is handled by the host stack. Each bonding data slot must contain one bonding header blob, one dynamic data blob, one static data blob, one device information blob and an array of descriptor blobs equal to <em class="ph i">gcGapMaximumSavedCccds_c </em>(<em class="ph i">ble_constants.h</em>). A slot is uniquely identified by the <em class="ph i">mEntryIdx</em> parameter. A descriptor is uniquely identified by the pair <em class="ph i">mEntryIdx - mDescriptorIndex</em>.</p>
+
+		<p class="p">If one or more pointers passed as parameters are NULL, the read from or write to the corresponding blob of the bonding slot must be ignored. The erase function must clear the entire bonding data slot specified by the entry index.</p>
+
+		<p class="p">The current implementation of the aforementioned functions  use either the framework NVM module or a RAM buffer . Additional details about the NVM configuration and functionality can be found in the <em class="ph i">Connectivity Framework Reference Manual</em>.</p>
+
+		<p class="p">To enable the NVM mechanism make sure:</p>
+
+		<ul class="ul" id="GUID-C8396924-53E8-4E64-886F-17BFE6F3737F__UL_VDN_G5T_1Y">
+			<li class="li"><em class="ph i">gAppUseNvm_d</em> (<em class="ph i">app_preinclude.h</em>) is set to 1 and</li>
+
+			<li class="li">gUseNVMLink_d=1 in the linker options of the toolchain.</li>
+
+		</ul>
+
+		<p class="p">If <em class="ph i">gAppUseNvm_d</em> is set to 0 then  all bonding data will be stored in RAM and will be accesible until reset or power cycle.</p>
+
+		<div class="note note"><span class="notetitle">Note:</span>  <p class="p">The default NVM module configurations are applied in the <em class="ph i">app_preinclude.h</em> file if <em class="ph i">gAppUseNvm_d</em> is set to 1.</p>
+ </div>
+
+	</div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-787C2839-9165-473A-B6E1-98731DAF3188.html">Prerequisites</a></div>
+</div>
+</div>
+
+</body>
+</html>

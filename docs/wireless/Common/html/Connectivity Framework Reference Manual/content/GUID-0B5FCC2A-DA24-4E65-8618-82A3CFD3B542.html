@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Application Integration Example"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-9EE283E7-E36D-420A-86E6-9D2159B9A820.html"/>
+<meta name="prodname" content=""/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Creator" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-0B5FCC2A-DA24-4E65-8618-82A3CFD3B542"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Application Integration Example</title>
+</head>
+<body id="GUID-0B5FCC2A-DA24-4E65-8618-82A3CFD3B542">
+
+
+    <h1 class="title topictitle1">Application Integration Example</h1>
+
+    <div class="body">
+        <p class="p">The first step to integrate the FSCI bootloader with an application involves the linker
+            file considerations described in the “Overview” section and are common for all the
+            bootloader variants.</p>
+
+        <p class="p">The second step pertains to the interaction of the application and the bootloader through
+            first eight bytes of the last bootloader sector. </p>
+
+        <p class="p">For a regular Connectivity application, any flash write/erase function implementation is
+            suitable. The recommended API is the FlashAdapter from the Kinetis Connectivity
+            Framework, found in the <em class="ph i">ConnSw\framework\Flash\Internal</em>\ folder and distributed
+            in Kinetis connectivity software packages. The main functions are:</p>
+
+        <pre class="pre codeblock"><strong class="ph b">uint32_t</strong><strong class="ph b">NV_FlashEraseSector</strong>(
+    <strong class="ph b">uint32_t</strong> dest,
+    <strong class="ph b">uint32_t</strong> size
+    );
+ 
+<strong class="ph b">uint32_t</strong><strong class="ph b">NV_FlashProgram</strong>(
+    <strong class="ph b">uint32_t</strong> dest,
+    <strong class="ph b">uint32_t</strong> size,
+    <strong class="ph b">uint8_t</strong>* pData
+    );</pre>
+
+        <p class="p">For applications of the FSCI Black Box type, the command to write/erase the respective
+            bytes needs to be invoked from a host processor through an FSCI remote procedure call.
+            For this purpose, a dedicated bootloader mode FSCI command needs to be created and
+            integrated in the respective Black Box application’s FSCI command set. First, the opcode
+            needs to be defined for the respective command in the enumeration of the supported FSCI
+            commands of the Black Box application.</p>
+
+        <pre class="pre codeblock">mFsciEnableFsciBootloaderReq_c = 0xCF,</pre>
+
+        <p class="p">Next, define the opcode associated with the handler function in the FSCI function pointer
+            table specific to the respective application.</p>
+
+        <pre class="pre codeblock">{mFsciEnableFsciBootloaderReq_c, FSCI_EnableFsciBootloaderFunc},</pre>
+
+        <p class="p">Finally, define the handler function. An example for this function is listed below:</p>
+
+        <pre class="pre codeblock">bool_t FSCI_EnableFsciBootloaderFunc(void* pData, uint32_t fsciInterface)
+{
+    uint32_t sectorAddress = 0x3800;
+    uint64_t flag = 0;
+ 
+    NvProgramFlash(sectorAddress, sizeof(flag), &amp;flag);
+    ResetMCU();
+    return FALSE;
+}</pre>
+
+        <p class="p">See the FSCI and flash sections of this document for more information about the invoked
+            functions.</p>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-9EE283E7-E36D-420A-86E6-9D2159B9A820.html">FSCI Bootloader</a></div>
+</div>
+</div>
+
+</body>
+</html>

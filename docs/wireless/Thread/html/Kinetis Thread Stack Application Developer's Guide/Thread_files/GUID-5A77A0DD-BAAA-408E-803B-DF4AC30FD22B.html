@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="CoAP observe server"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-BC4DBD1E-1C61-4BEF-8C72-C9245613B4B7.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="4"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-5A77A0DD-BAAA-408E-803B-DF4AC30FD22B"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>CoAP observe server</title>
+</head>
+<body id="GUID-5A77A0DD-BAAA-408E-803B-DF4AC30FD22B">
+
+
+    <h1 class="title topictitle1">CoAP observe server</h1>
+
+    <div class="body">
+        <p class="p"/>
+
+        
+        <div class="p"> <pre class="pre codeblock">uint8_t COAP_Server_InitObserve(ipIfUniqueId_t ipIfId, coapStartUnsecParams_t
+                *pCoapStartUnsecParams, coapRegCbParams_t* pCallbacksStruct, uint32_t nbOfCallbacks)</pre>
+
+            </div>
+
+        
+        <p class="p">This function starts a CoAP Observe server that runs on a given IP interface. It also
+            creates the CoAP instance and registers a callback function for incoming messages with a
+            specific resource.</p>
+
+        <p class="p">The callback and the resource are defined as follows.</p>
+
+        <div class="p"><pre class="pre codeblock">#define URI_OBSERVE_RESOURCE "/number"
+        const coapUriPath_t gURI_OBSERVE_RESOURCE = {SizeOfString(URI_OBSERVE_RESOURCE),
+            URI_OBSERVE_RESOURCE}; 
+        #define COAP_OBSERVE_RESOURCE \
+         {\
+        {APP_ObserveServerRcvReqCb, (coapUriPath_t*)&amp;gURI_OBSERVE_RESOURCE}\
+        }</pre>
+</div>
+
+        <p class="p">The server should keep a sequence number that must be incremented each time the resource
+            is updated. </p>
+
+        
+        <div class="p"><pre class="pre codeblock">void COAP_Server_NotifyObservers(coapUriPath_t* pResource, coapMessageTypes_t
+                coapMsgType, uint8_t sequenceId, uint8_t* pValue, uint8_t valueLen)</pre>
+ </div>
+
+        
+        <p class="p"> This function notifies all clients from the subscriber list for the specified resource.
+            It sends a CoAP message (CON/NON) with the given payload, represented by the new value
+            of the resource.</p>
+
+        
+        <div class="p"><pre class="pre codeblock">bool_t COAP_Server_AddObserver(coapSession_t* pSession, coapUriPath_t*
+                pResource)</pre>
+</div>
+
+        
+        <p class="p">Adds an observer to the list of observers.</p>
+
+       
+            <div class="p"><pre class="pre codeblock">bool_t COAP_Server_RemoveObserver(coapSession_t* pSession, coapUriPath_t* pResource
+                )</pre>
+</div>
+
+                    
+        <p class="p">Removes an observer from the list of observers.</p>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-BC4DBD1E-1C61-4BEF-8C72-C9245613B4B7.html">APIs for CoAP observe</a></div>
+</div>
+</div>
+
+</body>
+</html>

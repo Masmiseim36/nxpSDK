@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Running the scenario"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-B80036AD-4519-4CCB-8E0E-4CF6627965E8.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Publisher" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-56F125B5-2C32-4DE9-B1BA-0E2294A4F319"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Running the scenario</title>
+</head>
+<body id="GUID-56F125B5-2C32-4DE9-B1BA-0E2294A4F319">
+
+
+	<h1 class="title topictitle1">Running the scenario</h1>
+
+	<div class="body">
+		<ul class="ul" id="GUID-56F125B5-2C32-4DE9-B1BA-0E2294A4F319__UL_MDJ_MD3_3Z">
+			<li class="li">For <strong class="ph b">Node A</strong>, connect an Ethernet cable direct to the Ethernet port on the FRDM-K64F</li>
+
+			<li class="li">For <strong class="ph b">Node A</strong>, check the network card is configured by the <ul class="ul" id="GUID-56F125B5-2C32-4DE9-B1BA-0E2294A4F319__UL_HFJ_MD3_3Z">
+				<li class="li">check Ethernet card properties</li>
+
+				<li class="li">in the details window, double click and check that <strong class="ph b">FD01:</strong> IPv6 addresses have been provisioned to the adapter. </li>
+
+				<li class="li">If FD01: addresses are not provisioned, try deselecting any 3rd party hooks such as Virtual Machine drivers</li>
+
+			</ul>
+</li>
+
+			<li class="li">On <strong class="ph b">Node A</strong>, also open a shell on the OpenSDA / OpenLink USB port, to create a new Thread network enter:</li>
+
+		</ul>
+
+		<p class="p"><strong class="ph b">$ thr create</strong></p>
+
+		<p class="p">Note the status messages in the shell indicating the network parameters. Note a Commissioner instance also starts on Node A</p>
+
+		<ul class="ul" id="GUID-56F125B5-2C32-4DE9-B1BA-0E2294A4F319__UL_XFJ_MD3_3Z">
+			<li class="li">On <strong class="ph b">Node B</strong> shell initiate joining with the default PSKd (<strong class="ph b"><em class="ph i">THREAD</em></strong>):</li>
+
+		</ul>
+
+		<p class="p"><strong class="ph b">$ thr join</strong></p>
+
+		<p class="p">Note the status messages in the shell indicating the joining results. </p>
+
+		<ul class="ul" id="GUID-56F125B5-2C32-4DE9-B1BA-0E2294A4F319__UL_CHJ_MD3_3Z">
+			<li class="li">On <strong class="ph b">Node B</strong>, enter the <strong class="ph b">ifconfig</strong> command to view IP address information<strong class="ph b">:</strong></li>
+
+		</ul>
+
+		<p class="p"><strong class="ph b">$ ifconfig</strong></p>
+
+		<p class="p"><strong class="ph b">Interface 0: 6LoWPAN </strong></p>
+
+		<p class="p"><strong class="ph b"> Link local address (LL64): fe80::1885:ba8e:d82a:6fad </strong></p>
+
+		<p class="p"><strong class="ph b"> Mesh local address (ML64): fd4f:12be:69d2::9c67:fec9:9306:4791 </strong></p>
+
+		<p class="p"><strong class="ph b"> Mesh local address (ML16): fd4f:12be:69d2::ff:fe00:400 </strong></p>
+
+		<p class="p"><strong class="ph b"> Unique local address: fd01::</strong><strong class="ph b"> 3ead:18ef:f459:d754:ae31</strong></p>
+
+		<p class="p"><strong class="ph b"> Link local all Thread Nodes(MCast): ff32:40:fd4f:12be:69d2::01</strong></p>
+
+		<p class="p"><strong class="ph b"> Realm local all Thread Nodes(MCast): ff33:40:fd4f:12be:69d2::01</strong></p>
+
+		<ul class="ul" id="GUID-56F125B5-2C32-4DE9-B1BA-0E2294A4F319__UL_X3J_MD3_3Z">
+			<li class="li">On the <strong class="ph b">Host PC</strong>, launch a terminal window (<strong class="ph b">cmd </strong>on Windows OS) and ping the FD01::3EAD based address of NodeB:</li>
+
+		</ul>
+
+		<p class="p"><strong class="ph b">C:\&gt;ping fd01::3ead:18ef:f459:d754:ae31 </strong></p>
+
+		<p class="p"><strong class="ph b">Pinging fd01:: 3ead:18ef:f459:d754:ae31 with 32 bytes of data:</strong></p>
+
+		<p class="p"><strong class="ph b">Reply from fd01::3ead:18ef:f459:d754:ae31: time=980ms </strong></p>
+
+		<p class="p"><strong class="ph b">Reply from fd01::3ead:18ef:f459:d754:ae31: time=25ms </strong></p>
+
+		<p class="p"><strong class="ph b">Reply from fd01::3ead:18ef:f459:d754:ae31: time=20ms</strong></p>
+
+		<p class="p">Note applications on the Host PC now have IP layer connectivity to Thread nodes.</p>
+
+	</div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-B80036AD-4519-4CCB-8E0E-4CF6627965E8.html">External routing via Ethernet on FRDM-K64F – ND6 router mode</a></div>
+</div>
+</div>
+
+</body>
+</html>

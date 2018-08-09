@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="IPv6 Datagram Transport Details"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-82FE6618-DF5B-4E4D-8149-74A98B1A3C5E.html"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-B8525899-15F2-4E48-8002-F461A0F822D5"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>IPv6 Datagram Transport Details</title>
+</head>
+<body id="GUID-B8525899-15F2-4E48-8002-F461A0F822D5">
+
+
+    <h1 class="title topictitle1">IPv6 Datagram Transport Details</h1>
+
+    <div class="body">
+        <p class="p">Due to the nature of the Bluetooth Link Layer and topology, there are some
+            specific rules that apply to this IPv6 adaptation.</p>
+
+        <p class="p">The 6LN node will always send the IPv6 packet to its 6LBR peer.</p>
+
+        <p class="p">Traffic between the nodes is always unicast. Therefore, multicast from a 6LN
+            is transformed in a unicast to the 6LBR and multicast form 6LBR is transformed in
+            multiple unicast frames sent to connected 6LNs that have registered for multicast.</p>
+
+        <p class="p">Header compression is realized by following the guidelines from RFC 6282, which specifies the compression format for IPv6 datagrams on top of IEEE 802.15.4.The efficiency of the compression increases when:</p>
+
+        <ul class="ul">
+            <li class="li">An RA with 6LoWPAN Context Option (<strong class="ph b">6CO</strong>) matching each <strong class="ph b">PIO</strong> is received, or</li>
+
+            <li class="li">Address registration with (<strong class="ph b">ARO</strong>) is done</li>
+
+            </ul>
+
+        <p class="p">Elision of source IPv6 address, destination IPv6 address or both translates in saving:</p>
+
+        <ul class="ul">
+            <li class="li">Full IP Address (on link-local or last registered) – 128 bits</li>
+
+            <li class="li">Prefix when compression context available – 64 bits</li>
+
+            <li class="li">IID – 48 bits</li>
+
+            </ul>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-82FE6618-DF5B-4E4D-8149-74A98B1A3C5E.html">IPv6 over Bluetooth Overview</a></div>
+</div>
+</div>
+
+</body>
+</html>

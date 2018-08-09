@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="In-band commissioning network selection callback"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-B8F6243B-C0B6-4C62-88E3-4742E0F3E10E.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="4"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-3EE3A492-CA34-4C0A-8671-9F2A72245D5E"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>In-band commissioning network selection callback</title>
+</head>
+<body id="GUID-3EE3A492-CA34-4C0A-8671-9F2A72245D5E">
+
+
+    <h1 class="title topictitle1">In-band commissioning network selection callback</h1>
+
+    <div class="body">
+        <p class="p">Beyond setting specific attributes for a Joiner, the application may also need a granular
+            control over how scanning for parent routers in existing networks is done for in-band
+            commissioning by the Joiner node.</p>
+
+        <p class="p">For that purpose, the Thread stack provides a callback function which must
+            be implemented by the application to steer the stack during in-band commissioning
+            network scanning. The callback is APP_JoinerDiscoveryRespCb and a reference
+            implementation is showcased in file
+                <strong class="ph b">\middleware\wireless\nwk_ip_1.2.4\examples\common\app_thread_callbacks.c</strong>.</p>
+
+        <p class="p">The callback receives three types of events as follows.</p>
+
+        <ul class="ul" id="GUID-3EE3A492-CA34-4C0A-8671-9F2A72245D5E__UL_M1B_BRP_HZ">
+            <li class="li">Scan initialization: gThrDiscoveryStarted_c – at this point the application can
+                perform further purging of the discovery table from previous scans, or allocating
+                memory to handle incoming indication of networks and routers</li>
+
+            <li class="li">Indication for each Discovery Response packet received from a router which
+                represents a candidate: gThrDiscoveryRespRcv_c – the Discovery Response attributes
+                are found in pDiscoveryRespInfo argument</li>
+
+            <li class="li">Scan completion: gThrDiscoveryStopped_c – at this point the application can process
+                the potential parent list and call API THR_NwkJoinWithCommissioning which expects
+                the application to provide a filter list of the Discovery Responses from networks to
+                join</li>
+
+        </ul>
+
+        <p class="p">The reference implementation for APP_JoinerDiscoveryRespCb is provided below:</p>
+
+        <div class="p"><pre class="pre codeblock">void APP_JoinerDiscoveryRespCb
+(
+    instanceId_t thrInstId,
+    thrDiscoveryEvent_t event,
+    uint8_t lqi,
+    thrDiscoveryRespInfo_t* pDiscoveryRespInfo,
+    meshcopDiscoveryRespTlvs_t *pDiscoveryRespTlvs
+)
+{
+    bool_t addToJoiningList = FALSE;
+
+    if (event == gThrDiscoveryStarted_c)
+    {
+        const uint16_t maxSize  = THR_MAX_NWK_JOINING_ENTRIES * sizeof(thrNwkJoiningEntry_t);
+        gNbOfNwkJoiningEntries = 0;
+        if(gpNwkJoiningList == NULL)
+        {
+            gpNwkJoiningList = MEM_BufferAlloc(maxSize);
+        }
+        if(gpNwkJoiningList)
+        {
+            /* Reset the Network Joining list */
+            FLib_MemSet(gpNwkJoiningList, 0, maxSize);
+        }
+    }
+    else if ((event == gThrDiscoveryRespRcv_c) &amp;&amp; gpNwkJoiningList)
+    {
+        thrNwkJoiningEntry_t joinerEntry = {0};
+        joinerEntry.steeringMatch = gMeshcopSteeringMatchNA_c;
+        joinerEntry.channel = pDiscoveryRespInfo-&gt;channel;
+        joinerEntry.panId = pDiscoveryRespInfo-&gt;panId;
+        FLib_MemCpy(joinerEntry.euiAddr, pDiscoveryRespInfo-&gt;aEui, 8);
+        FLib_MemCpy(joinerEntry.aXpanId, pDiscoveryRespTlvs-&gt;pXpanIdTlv-&gt;xPanId,
+            pDiscoveryRespTlvs-&gt;pXpanIdTlv-&gt;len);
+
+        if(pDiscoveryRespTlvs-&gt;pCommissionerUdpPortTlv)
+        {
+            joinerEntry.commissionerUDPPort = ntohas(pDiscoveryRespTlvs-&gt;pCommissionerUdpPortTlv-&gt;aPort);
+        }
+        if(pDiscoveryRespTlvs-&gt;pJoinerUdpPortTlv)
+        {
+            joinerEntry.joinerUDPPort = ntohas(pDiscoveryRespTlvs-&gt;pJoinerUdpPortTlv-&gt;aPort);
+        }
+
+        /* Joiner case */
+        if(gMeshcopCommissionerMode != gThrCommissionerModeNative_c)
+        {
+            if(THR_DISC_RSP_VER_GET(pDiscoveryRespTlvs-&gt;pDiscRespTlv-&gt;verFlags) ==  THR_PROTOCOL_VERSION)
+            {
+                if (THR_GetAttr_IsDevCommissioned(thrInstId) == TRUE)
+                {
+                    addToJoiningList = TRUE;
+                }
+                else
+                {
+                    joinerEntry.steeringMatch = MESHCOP_CheckSteeringData(pDiscoveryRespTlvs-&gt;pSteeringDataTlv);
+                    if(joinerEntry.steeringMatch != gMeshcopSteeringMatchNone_c)
+                    {
+                        addToJoiningList = TRUE;
+                    }
+                }
+            }
+        }
+        /* Native Commissioner case */
+        else
+        {
+            /* Join as a Native Commissioner. Add filters here.*/
+            if(
+                (THR_DISC_RSP_VER_GET(pDiscoveryRespTlvs-&gt;pDiscRespTlv-&gt;verFlags) == THR_PROTOCOL_VERSION) &amp;&amp;
+                (THR_DISC_RSP_N_GET(pDiscoveryRespTlvs-&gt;pDiscRespTlv-&gt;verFlags) == 1)
+                )
+            {
+                addToJoiningList = TRUE;
+            }
+        }
+
+        if(addToJoiningList)
+        {
+            addToJoiningList = APP_JoinerNwkListAdd(&amp;joinerEntry, thrInstId);
+        }
+    }
+    else if ((event == gThrDiscoveryStopped_c) &amp;&amp; gpNwkJoiningList)
+    {
+        /* Start the joining process. The list will be freed by the function. */
+        MESHCOP_NwkJoinWithCommissioning(thrInstId, gpNwkJoiningList, gNbOfNwkJoiningEntries);
+        gpNwkJoiningList = NULL;
+        gNbOfNwkJoiningEntries=0;
+    }
+}
+</pre>
+</div>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-B8F6243B-C0B6-4C62-88E3-4742E0F3E10E.html">Joining a network with in-band commissioning</a></div>
+</div>
+</div>
+
+</body>
+</html>

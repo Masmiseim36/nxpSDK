@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Data type definitions"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-3FD8C291-2FBB-4F7E-BD7E-46391627537E.html"/>
+<meta name="prodname" content=""/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Creator" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-0B529247-3C3C-457B-9993-B96EAD9F871D"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Data type definitions</title>
+</head>
+<body id="GUID-0B529247-3C3C-457B-9993-B96EAD9F871D">
+
+
+    <h1 class="title topictitle1">Data type definitions</h1>
+
+    <div class="body">
+        <p class="p"><strong class="ph b">Name:</strong></p>
+
+        <pre class="pre codeblock">typedef enum
+{
+    gDCDC_PSwStatus_Low_c,
+    gDCDC_PSwStatus_High_c
+}dcdcPSwStatus_t;</pre>
+
+        <p class="p"><strong class="ph b">Description: </strong></p>
+
+        <p class="p">Defines the status of the power switch used to start the DCDC in Buck mode.</p>
+
+        <p class="p"><strong class="ph b">Location:</strong></p>
+
+        <p class="p">DCDC.h</p>
+
+        <p class="p"> </p>
+
+        <p class="p"><strong class="ph b">Name:</strong></p>
+
+        <pre class="pre codeblock">typedef enum
+{
+    gDCDC_PSwIntEdge_Rising_c = 1,
+    gDCDC_PSwIntEdge_Falling_c,
+    gDCDC_PSwIntEdge_All_c
+}dcdcPSwIntEdge_t;</pre>
+
+        <p class="p"><strong class="ph b">Description: </strong></p>
+
+        <p class="p">Defines the edges of power switch input that can be chosen to generate an interrupt.</p>
+
+        <p class="p"><strong class="ph b">Location:</strong></p>
+
+        <p class="p">DCDC.h</p>
+
+        <p class="p"> </p>
+
+        <p class="p"><strong class="ph b">Name:</strong></p>
+
+        <pre class="pre codeblock">typedef void (*pfDCDCPSwitchCallback_t)(dcdcPSwStatus_t);</pre>
+
+        <p class="p"><strong class="ph b">Description: </strong></p>
+
+        <p class="p">Defines the callback function type to be called from the power switch interrupt.</p>
+
+        <p class="p"><strong class="ph b">Location:</strong></p>
+
+        <p class="p">DCDC.h</p>
+
+        <p class="p"> </p>
+
+        <p class="p"><strong class="ph b">Name:</strong></p>
+
+        <pre class="pre codeblock">typedef enum 
+{
+    gDCDC_Mode_Bypass_c,
+    gDCDC_Mode_Buck_c,
+    gDCDC_Mode_Boost_c
+}dcdcMode_t;</pre>
+
+        <p class="p"><strong class="ph b">Description: </strong></p>
+
+        <p class="p">Defines the DCDC operation modes. The DCDC operation mode is hardware-configured through
+            jumpers and the driver must be notified about the selected configuration.</p>
+
+        <p class="p"><strong class="ph b">Location:</strong></p>
+
+        <p class="p">DCDC.h</p>
+
+        <p class="p"> </p>
+
+        <p class="p"><strong class="ph b">Name:</strong></p>
+
+        <pre class="pre codeblock">typedef enum 
+{
+    gDCDC_Event_NoEvent_c = 0x0,
+    gDCDC_Event_VBatOutOfRange_c = 0x1,
+    gDCDC_Event_McuV_OutputTargetChange_c = 0x2,
+    gDCDC_Event_1P8OutputTargetChange_c = 0x4 
+}dcdcEvent_t;</pre>
+
+        <p class="p"><strong class="ph b">Description: </strong></p>
+
+        <p class="p">Defines the events that the DCDC driver notifies the application about:</p>
+
+        <ul class="ul" id="GUID-0B529247-3C3C-457B-9993-B96EAD9F871D__UL_ULS_LMK_GZ">
+            <li class="li"> gDCDC_Event_VBatOutOfRange_c: VDCDC_IN (battery voltage) is no longer in range
+                defined by the user in the DCDC configuration structure passed as a parameter to the
+                DCDC_Init function. </li>
+
+            <li class="li"> gDCDC_Event_McuV_OutputTargetChange_c: VDDMCU power line output target value
+                changed since the last application notification.</li>
+
+            <li class="li"> gDCDC_Event_1P8OutputTargetChange_c: 1.8 power line output target value changed
+                since the last application notification.</li>
+
+        </ul>
+
+        <p class="p"><strong class="ph b">Location:</strong></p>
+
+        <p class="p">DCDC.h</p>
+
+        <p class="p"> </p>
+
+        <p class="p"><strong class="ph b">Name:</strong></p>
+
+        <pre class="pre codeblock">typedef enum 
+{
+    gDCDC_McuV_OutputTargetVal_1_275_c = 0,
+    gDCDC_McuV_OutputTargetVal_1_300_c,
+    gDCDC_McuV_OutputTargetVal_1_325_c,
+    gDCDC_McuV_OutputTargetVal_1_350_c,
+    gDCDC_McuV_OutputTargetVal_1_375_c,
+    gDCDC_McuV_OutputTargetVal_1_400_c,
+    gDCDC_McuV_OutputTargetVal_1_425_c,
+    gDCDC_McuV_OutputTargetVal_1_450_c,
+    gDCDC_McuV_OutputTargetVal_1_475_c,
+    gDCDC_McuV_OutputTargetVal_1_500_c,
+    gDCDC_McuV_OutputTargetVal_1_525_c,
+    gDCDC_McuV_OutputTargetVal_1_550_c,
+    gDCDC_McuV_OutputTargetVal_1_575_c,
+    gDCDC_McuV_OutputTargetVal_1_600_c,
+    gDCDC_McuV_OutputTargetVal_1_625_c,
+    gDCDC_McuV_OutputTargetVal_1_650_c,
+    gDCDC_McuV_OutputTargetVal_1_675_c,
+    gDCDC_McuV_OutputTargetVal_1_700_c,
+    gDCDC_McuV_OutputTargetVal_1_725_c,
+    gDCDC_McuV_OutputTargetVal_1_750_c,
+    gDCDC_McuV_OutputTargetVal_1_775_c,
+    gDCDC_McuV_OutputTargetVal_1_800_c
+}dcdcMcuVOutputTargetVal_t;</pre>
+
+        <p class="p"><strong class="ph b">Description: </strong></p>
+
+        <p class="p">Defines the output target values for the VDDMCU power line. In Buck mode this value is
+            limited at 1.65 V (gDCDC_McuV_OutputTargetVal_1_650_c).</p>
+
+        <p class="p"><strong class="ph b">Location:</strong></p>
+
+        <p class="p">DCDC.h</p>
+
+        <p class="p"> </p>
+
+        <p class="p"><strong class="ph b">Name:</strong></p>
+
+        <pre class="pre codeblock">typedef enum 
+{
+    gDCDC_1P8OutputTargetVal_1_650_c = 0,
+    gDCDC_1P8OutputTargetVal_1_675_c,
+    gDCDC_1P8OutputTargetVal_1_700_c,
+    gDCDC_1P8OutputTargetVal_1_725_c,
+    gDCDC_1P8OutputTargetVal_1_750_c,
+    gDCDC_1P8OutputTargetVal_1_775_c,
+    gDCDC_1P8OutputTargetVal_1_800_c,
+    gDCDC_1P8OutputTargetVal_1_825_c,
+    gDCDC_1P8OutputTargetVal_1_850_c,
+    gDCDC_1P8OutputTargetVal_1_875_c,
+    gDCDC_1P8OutputTargetVal_1_900_c,
+    gDCDC_1P8OutputTargetVal_1_925_c,
+    gDCDC_1P8OutputTargetVal_1_950_c,
+    gDCDC_1P8OutputTargetVal_1_975_c,
+    gDCDC_1P8OutputTargetVal_2_000_c,
+    gDCDC_1P8OutputTargetVal_2_025_c,
+    gDCDC_1P8OutputTargetVal_2_050_c,
+    gDCDC_1P8OutputTargetVal_2_075_c,
+    gDCDC_1P8OutputTargetVal_2_100_c,
+    gDCDC_1P8OutputTargetVal_2_150_c,
+    gDCDC_1P8OutputTargetVal_2_200_c,
+    gDCDC_1P8OutputTargetVal_2_250_c,
+    gDCDC_1P8OutputTargetVal_2_300_c,
+    gDCDC_1P8OutputTargetVal_2_350_c,
+    gDCDC_1P8OutputTargetVal_2_400_c,
+    gDCDC_1P8OutputTargetVal_2_450_c,
+    gDCDC_1P8OutputTargetVal_2_500_c,
+    gDCDC_1P8OutputTargetVal_2_550_c,
+    gDCDC_1P8OutputTargetVal_2_600_c,
+    gDCDC_1P8OutputTargetVal_2_650_c,
+    gDCDC_1P8OutputTargetVal_2_700_c,
+    gDCDC_1P8OutputTargetVal_2_750_c,
+    gDCDC_1P8OutputTargetVal_2_800_c = 0x20,
+    gDCDC_1P8OutputTargetVal_2_825_c,
+    gDCDC_1P8OutputTargetVal_2_850_c,
+    gDCDC_1P8OutputTargetVal_2_875_c,
+    gDCDC_1P8OutputTargetVal_2_900_c,
+    gDCDC_1P8OutputTargetVal_2_925_c,
+    gDCDC_1P8OutputTargetVal_2_950_c,
+    gDCDC_1P8OutputTargetVal_2_975_c,
+    gDCDC_1P8OutputTargetVal_3_000_c,
+    gDCDC_1P8OutputTargetVal_3_025_c,
+    gDCDC_1P8OutputTargetVal_3_050_c,
+    gDCDC_1P8OutputTargetVal_3_075_c,
+    gDCDC_1P8OutputTargetVal_3_100_c,
+    gDCDC_1P8OutputTargetVal_3_125_c,
+    gDCDC_1P8OutputTargetVal_3_150_c,
+    gDCDC_1P8OutputTargetVal_3_175_c,
+    gDCDC_1P8OutputTargetVal_3_200_c,
+    gDCDC_1P8OutputTargetVal_3_225_c,
+    gDCDC_1P8OutputTargetVal_3_250_c,
+    gDCDC_1P8OutputTargetVal_3_275_c,
+    gDCDC_1P8OutputTargetVal_3_300_c,
+    gDCDC_1P8OutputTargetVal_3_325_c,
+    gDCDC_1P8OutputTargetVal_3_350_c,
+    gDCDC_1P8OutputTargetVal_3_375_c,
+    gDCDC_1P8OutputTargetVal_3_400_c,
+    gDCDC_1P8OutputTargetVal_3_425_c,
+    gDCDC_1P8OutputTargetVal_3_450_c,
+    gDCDC_1P8OutputTargetVal_3_475_c,
+    gDCDC_1P8OutputTargetVal_3_500_c,
+    gDCDC_1P8OutputTargetVal_3_525_c,
+    gDCDC_1P8OutputTargetVal_3_550_c,
+    gDCDC_1P8OutputTargetVal_3_575_c
+}dcdc1P8OutputTargetVal_t;</pre>
+
+        <p class="p"><strong class="ph b">Description: </strong></p>
+
+        <p class="p">Defines the output target values for the DCDC 1.8 V power line. </p>
+
+        <p class="p"><strong class="ph b">Location:</strong></p>
+
+        <p class="p">DCDC.h</p>
+
+        <p class="p"><strong class="ph b">Name:</strong></p>
+
+        <pre class="pre codeblock">typedef struct dcdcCalbackParam_tag
+{
+    dcdcEvent_t dcdcEvent;
+    dcdcMcuVOutputTargetVal_t dcdcMcuVOutputTargetVal;
+    dcdc1P8OutputTargetVal_t dcdc1P8OutputTargetVal;
+    uint16_t dcdc1P8OutputMeasuredVal;
+    uint16_t dcdcVbatMeasuredVal;
+}dcdcCallbackParam_t;</pre>
+
+        <p class="p"><strong class="ph b">Description: </strong></p>
+
+        <p class="p">Defines the parameter type the application callback provides to the user. The structure
+            contains a notification event, the current output target values for the VDDMCU and 1.8
+            power lines, the measured value in mV of the 1.8 V power line and the measured value in
+            mV of the VDCDC_IN (battery voltage).</p>
+
+        <p class="p"><strong class="ph b">Location:</strong></p>
+
+        <p class="p">DCDC.h</p>
+
+        <p class="p"> </p>
+
+        <p class="p"><strong class="ph b">Name:</strong></p>
+
+        <pre class="pre codeblock">typedef void (*pfDCDCAppCallback_t)(const dcdcCallbackParam_t*);</pre>
+
+        <p class="p"><strong class="ph b">Description: </strong></p>
+
+        <p class="p">Defines the application callback type. The application callback is passed to the DCDC
+            driver in the DCDC configuration structure passed as a parameter to the DCDC_Init
+            function.</p>
+
+        <p class="p"><strong class="ph b">Location:</strong></p>
+
+        <p class="p">DCDC.h</p>
+
+        <p class="p"> </p>
+
+        <p class="p"><strong class="ph b">Name:</strong></p>
+
+        <pre class="pre codeblock">typedef struct dcdcConfig_tag
+{
+    uint16_t vbatMin;
+    uint16_t vbatMax;
+    dcdcMode_t dcdcMode;
+    uint32_t vBatMonitorIntervalMs;
+    pfDCDCAppCallback_t pfDCDCAppCallback; 
+    dcdcMcuVOutputTargetVal_t dcdcMcuVOutputTargetVal;
+    dcdc1P8OutputTargetVal_t dcdc1P8OutputTargetVal;
+}dcdcConfig_t;</pre>
+
+        <p class="p"><strong class="ph b">Description: </strong></p>
+
+        <p class="p">Defines the DCDC configuration structure type. A pointer to a DCDC configuration
+            structure is passed as a parameter to the DCDC_Init function. The structure contains the
+            operating range for the VDCDC_IN (battery voltage), the hardware configured DCDC mode of
+            operation, the time interval in milliseconds, at which the VDCDC_IN (battery voltage) is
+            monitored and an application callback is called, the application callback address, and
+            the desired output target values for the VDDMCU and 1.8 V power lines.</p>
+
+        <p class="p"><strong class="ph b">Location:</strong></p>
+
+        <p class="p">DCDC.h</p>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-3FD8C291-2FBB-4F7E-BD7E-46391627537E.html">Kinetis MKW4xZ DCDC Driver Reference</a></div>
+</div>
+</div>
+
+</body>
+</html>

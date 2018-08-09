@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="GATT database"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-7140E8F9-B4EB-4B9D-85B4-489C65E9D85F.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Creator" content=""/>
+<meta name="DC.Publisher" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-BE45A081-9140-4745-A16F-A7147B2C6725"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>GATT database</title>
+</head>
+<body id="GUID-BE45A081-9140-4745-A16F-A7147B2C6725">
+
+
+    <h1 class="title topictitle1">GATT database</h1>
+
+    <div class="body">
+        <p class="p">The <em class="ph i">gatt_db</em> contains a set of header files grouped in the
+                <em class="ph i">macros</em> subfolder. These macros are used for static code generation for the
+            GATT Database by expanding the contents of the <em class="ph i">gatt_db.h</em> file in different ways.
+                <a class="xref" href="GUID-C9D692A7-076C-4A9B-BEB3-74E17F41C5A7.html#GUID-C9D692A7-076C-4A9B-BEB3-74E17F41C5A7">Creating GATT database</a> explains how to write the <em class="ph i">gatt_db.h</em> file using user-friendly
+            macros that define the GATT Database. </p>
+
+        <p class="p">At application compile-time, the <em class="ph i">gatt_database.c</em> file is populated
+            with enumerations, structures and initialization code used to allocate and properly
+            populate the GATT Database. In this way, the the <em class="ph i">gattDatabase</em>array and the
+                <em class="ph i">gGattDbAttributeCount_c</em> variable (see <a class="xref" href="GUID-4CD0561B-52CC-471B-BFF8-E935E3E2F24A.html#GUID-4CD0561B-52CC-471B-BFF8-E935E3E2F24A">GATT database</a>) are created and properly initialized.</p>
+
+        <div class="note note"><span class="notetitle">Note:</span> Do not modify any of the file contained in the <em class="ph i">gatt_db</em> folder and its
+            subfolder.</div>
+
+        <p class="p">To complete the GATT Database initialization, this demo application includes the required
+            gatt_db.h and gatt_uuid128.h files in its specific application folder, along with other
+            profile-specific configuration and code files.</p>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-7140E8F9-B4EB-4B9D-85B4-489C65E9D85F.html">Application Structure</a></div>
+</div>
+</div>
+
+</body>
+</html>

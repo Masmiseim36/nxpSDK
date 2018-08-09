@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="API Primitives"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-527211A2-8C56-4E3B-B09D-CAD52CCD1C75.html"/>
+<meta name="prodname" content=""/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Creator" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-0986D59F-59DA-4388-84DE-6D6EC064CA2C"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>API Primitives</title>
+</head>
+<body id="GUID-0986D59F-59DA-4388-84DE-6D6EC064CA2C">
+
+
+    <h1 class="title topictitle1">API Primitives</h1>
+
+    <div class="body">
+        <p class="p"><strong class="ph b">NV_ReadHWParameters</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">uint32_t NV_ReadHWParameters
+(
+    hardwareParameters_t *pHwParams
+);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong></p>
+
+        <p class="p">Verifies that the dedicated flash area starts with the identification information and
+            that data is valid using a CRC. If any of the checks fail, it fills the RAM data
+            structure with <em class="ph i">0xFF</em>, otherwise it loads the hardware-dependent information into
+            it. </p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-0986D59F-59DA-4388-84DE-6D6EC064CA2C__TABLE_XLY_XSR_2Z" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d998e79"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d998e83"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d998e87"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d998e91"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d998e79 ">pHwParams</td>
+
+                        <td class="entry" valign="top" headers="d998e83 ">hardwareParameters _t*</td>
+
+                        <td class="entry" valign="top" headers="d998e87 ">[OUT]</td>
+
+                        <td class="entry" valign="top" headers="d998e91 ">Pointer to a RAM location where the information will be
+                            stored</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">The error code.</p>
+
+        <p class="p"><strong class="ph b">NV_WriteHWParameters</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">uint32_t NV_WriteHWParameters
+(
+    hardwareParameters_t *pHwParams
+);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong></p>
+
+        <p class="p">Stores the hardware-dependent information into flash. Copies the identification
+            information, calculates and updates the CRC value. It is recommended to use a
+            read-modify-write sequence when hardware-specific data needs to be updated. </p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-0986D59F-59DA-4388-84DE-6D6EC064CA2C__TABLE_TYM_DTR_2Z" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d998e164"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d998e168"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d998e172"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d998e176"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d998e164 ">pHwParams</td>
+
+                        <td class="entry" valign="top" headers="d998e168 ">hardwareParameters _t*</td>
+
+                        <td class="entry" valign="top" headers="d998e172 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d998e176 ">Pointer to a data structure containing hardware-dependent information
+                            to be written to flash</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">The error code.</p>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-527211A2-8C56-4E3B-B09D-CAD52CCD1C75.html">Production Data Storage</a></div>
+</div>
+</div>
+
+</body>
+</html>

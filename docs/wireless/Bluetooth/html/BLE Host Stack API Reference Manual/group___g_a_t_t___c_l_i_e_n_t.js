@@ -1,0 +1,47 @@
+var group___g_a_t_t___c_l_i_e_n_t =
+[
+    [ "gatt_client_interface.h", "gatt__client__interface_8h.html", null ],
+    [ "GattClient_SimpleCharacteristicWrite", "group___g_a_t_t___c_l_i_e_n_t.html#gafa4cd56993420107ff11a423b5e670cd", null ],
+    [ "GattClient_CharacteristicWriteWithoutResponse", "group___g_a_t_t___c_l_i_e_n_t.html#ga40b2ac5152d9343b4468abe9b62f61f2", null ],
+    [ "GattClient_CharacteristicSignedWrite", "group___g_a_t_t___c_l_i_e_n_t.html#ga9ca69641591d3968a20cbb22c5ec0e33", null ],
+    [ "gattClientProcedureCallback_t", "group___g_a_t_t___c_l_i_e_n_t.html#ga4664e0c41451027e910a52c5a1ad7243", null ],
+    [ "gattClientNotificationCallback_t", "group___g_a_t_t___c_l_i_e_n_t.html#gab82b416c60eae780c6ead3e89d63dab7", null ],
+    [ "gattClientIndicationCallback_t", "group___g_a_t_t___c_l_i_e_n_t.html#ga0ef4aa36d76f77f3eb20baf24fd08b91", null ],
+    [ "gattProcedureType_t", "group___g_a_t_t___c_l_i_e_n_t.html#gae7e6e741fdd877f16a2a23e78f31a4e7", [
+      [ "gGattProcExchangeMtu_c", "group___g_a_t_t___c_l_i_e_n_t.html#ggae7e6e741fdd877f16a2a23e78f31a4e7af8cef0e2be3eeb04da76e608dba8f3eb", null ],
+      [ "gGattProcDiscoverAllPrimaryServices_c", "group___g_a_t_t___c_l_i_e_n_t.html#ggae7e6e741fdd877f16a2a23e78f31a4e7a2b8606507a69054fcccaccc5b507ff0b", null ],
+      [ "gGattProcDiscoverPrimaryServicesByUuid_c", "group___g_a_t_t___c_l_i_e_n_t.html#ggae7e6e741fdd877f16a2a23e78f31a4e7a943eb3e22a82f5109863d763e8018699", null ],
+      [ "gGattProcFindIncludedServices_c", "group___g_a_t_t___c_l_i_e_n_t.html#ggae7e6e741fdd877f16a2a23e78f31a4e7ae51d61b499fca39d0b7f48fae4fc5a57", null ],
+      [ "gGattProcDiscoverAllCharacteristics_c", "group___g_a_t_t___c_l_i_e_n_t.html#ggae7e6e741fdd877f16a2a23e78f31a4e7a7f30531cb46bdbd0ee3531d74e6bdd07", null ],
+      [ "gGattProcDiscoverCharacteristicByUuid_c", "group___g_a_t_t___c_l_i_e_n_t.html#ggae7e6e741fdd877f16a2a23e78f31a4e7a3f7100feea70b38940341310617c07cf", null ],
+      [ "gGattProcDiscoverAllCharacteristicDescriptors_c", "group___g_a_t_t___c_l_i_e_n_t.html#ggae7e6e741fdd877f16a2a23e78f31a4e7a371bc76f40e3c8515177b3e05d9f3e10", null ],
+      [ "gGattProcReadCharacteristicValue_c", "group___g_a_t_t___c_l_i_e_n_t.html#ggae7e6e741fdd877f16a2a23e78f31a4e7a7eaac41b7ba80d5a54b69915bc015f3a", null ],
+      [ "gGattProcReadUsingCharacteristicUuid_c", "group___g_a_t_t___c_l_i_e_n_t.html#ggae7e6e741fdd877f16a2a23e78f31a4e7a79f3b1e58d0e2dd3937db1bb6c24c048", null ],
+      [ "gGattProcReadMultipleCharacteristicValues_c", "group___g_a_t_t___c_l_i_e_n_t.html#ggae7e6e741fdd877f16a2a23e78f31a4e7aa2c017ab08bfb1f4cff4fb62449ceed6", null ],
+      [ "gGattProcWriteCharacteristicValue_c", "group___g_a_t_t___c_l_i_e_n_t.html#ggae7e6e741fdd877f16a2a23e78f31a4e7a91b3503a279fe654f588ddc554d1da92", null ],
+      [ "gGattProcReadCharacteristicDescriptor_c", "group___g_a_t_t___c_l_i_e_n_t.html#ggae7e6e741fdd877f16a2a23e78f31a4e7a1872f0cae37078f4495a665a31f380ff", null ],
+      [ "gGattProcWriteCharacteristicDescriptor_c", "group___g_a_t_t___c_l_i_e_n_t.html#ggae7e6e741fdd877f16a2a23e78f31a4e7aa4b9aa15735382e64970f97cfcfe97ed", null ]
+    ] ],
+    [ "gattProcedureResult_t", "group___g_a_t_t___c_l_i_e_n_t.html#ga0f7e3da765036d86c2402aeb27fc3905", [
+      [ "gGattProcSuccess_c", "group___g_a_t_t___c_l_i_e_n_t.html#gga0f7e3da765036d86c2402aeb27fc3905aa41c0e5039f76a2fed40d335cc0d3b2b", null ],
+      [ "gGattProcError_c", "group___g_a_t_t___c_l_i_e_n_t.html#gga0f7e3da765036d86c2402aeb27fc3905a64bcff29fdf8300d012bbae67247b419", null ]
+    ] ],
+    [ "GattClient_Init", "group___g_a_t_t___c_l_i_e_n_t.html#ga3ca67735c333ce3b6fb0a81e91edbaa2", null ],
+    [ "GattClient_ResetProcedure", "group___g_a_t_t___c_l_i_e_n_t.html#ga3bd9d119a34b48446649e5823af68dd4", null ],
+    [ "GattClient_RegisterProcedureCallback", "group___g_a_t_t___c_l_i_e_n_t.html#ga8dc3dd02b0a9c757838c635d7236e3eb", null ],
+    [ "GattClient_RegisterNotificationCallback", "group___g_a_t_t___c_l_i_e_n_t.html#ga05abd4d2523b6b41dffb80816b084a4d", null ],
+    [ "GattClient_RegisterIndicationCallback", "group___g_a_t_t___c_l_i_e_n_t.html#gab3bae03c03e2a395050bc702fed62793", null ],
+    [ "GattClient_ExchangeMtu", "group___g_a_t_t___c_l_i_e_n_t.html#gaf40da750ad9e7d5196ab25faa3c6b7c6", null ],
+    [ "GattClient_DiscoverAllPrimaryServices", "group___g_a_t_t___c_l_i_e_n_t.html#gaa89ff32fa4f926161a67076506a455b3", null ],
+    [ "GattClient_DiscoverPrimaryServicesByUuid", "group___g_a_t_t___c_l_i_e_n_t.html#ga5cbe3741c3bb04f9599d2d1de18c0028", null ],
+    [ "GattClient_FindIncludedServices", "group___g_a_t_t___c_l_i_e_n_t.html#gae039dcdd81ba7647b0bb4c42d4cb88d5", null ],
+    [ "GattClient_DiscoverAllCharacteristicsOfService", "group___g_a_t_t___c_l_i_e_n_t.html#gae710aa0199d7ceeb74d2b660c38b3b23", null ],
+    [ "GattClient_DiscoverCharacteristicOfServiceByUuid", "group___g_a_t_t___c_l_i_e_n_t.html#ga81a4e83d5f86d95e66eee687acb91ff1", null ],
+    [ "GattClient_DiscoverAllCharacteristicDescriptors", "group___g_a_t_t___c_l_i_e_n_t.html#gaca8f333a6ce18e19658f2df531dbbbdf", null ],
+    [ "GattClient_ReadCharacteristicValue", "group___g_a_t_t___c_l_i_e_n_t.html#gacab92d146b7579b1071ab3e27f028e9e", null ],
+    [ "GattClient_ReadUsingCharacteristicUuid", "group___g_a_t_t___c_l_i_e_n_t.html#ga25611c7c8e17eba9160b266ffab51e65", null ],
+    [ "GattClient_ReadMultipleCharacteristicValues", "group___g_a_t_t___c_l_i_e_n_t.html#ga4075332e66e2e32a2589913e96bc42fd", null ],
+    [ "GattClient_WriteCharacteristicValue", "group___g_a_t_t___c_l_i_e_n_t.html#gac9d3f7594b9a81f5a5881106f2a01a2c", null ],
+    [ "GattClient_ReadCharacteristicDescriptor", "group___g_a_t_t___c_l_i_e_n_t.html#ga019fcab7e495e510bfcde4260c7bea82", null ],
+    [ "GattClient_WriteCharacteristicDescriptor", "group___g_a_t_t___c_l_i_e_n_t.html#gab87a5975e40d121e2c5235255b83e3bb", null ]
+];

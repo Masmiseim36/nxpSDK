@@ -1,0 +1,609 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="OTAP client"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-4B517935-2861-4399-92FE-54173654BA21.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Creator" content=""/>
+<meta name="DC.Publisher" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-29CA4780-D9BA-4544-8CA9-1FD2461CA891"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>OTAP client</title>
+</head>
+<body id="GUID-29CA4780-D9BA-4544-8CA9-1FD2461CA891">
+
+
+    <h1 class="title topictitle1">OTAP client</h1>
+
+    <div class="body">
+        <p class="p">An application running an OTAP Client, before doing any OTAP-related operations, must
+            wait for and OTAP Server to connect and perform service and characteristic discovery.
+            OTAP transactions can begin only after the OTAP Server writes the OTAP Control point CCC
+            Descriptor to receive ATT Notifications. This is the point when bidirectional
+            communication is established between the OTAP Server and Client and it is a good point
+            to start OTAP transactions.</p>
+
+        <p class="p">The OTAP Client can advertise the OATP Service (which is done in the demo application) or
+            the OTAP Server may already know the advertising device has an OTAP Service based on
+            application-specific means. In both situations the OTAP Server must discover the handles
+            of the OTAP Service and its characteristics.</p>
+
+        <p class="p">Besides the OTAP Service instantiated in the GATT Database the OTAP Client needs to have
+            some storage capabilities for the downloaded image file and a bootloader which writes
+            the image received over-the-air to the flash memory.</p>
+
+        <p class="p">How to put the OTAP Service in the GATT Database is described in the <em class="ph i">The OTAP Service
+                and Characteristics</em> section of this document.</p>
+
+        <p class="p">The upgrade image storage capabilities in the demo OTAP Client applications are handled
+            by the <em class="ph i">OtaSupport</em> module from the Framework which contains support modules and
+            drivers. The <em class="ph i">OtaSupport</em> module has support for both internal storage (a part of
+            the internal flash memory is reserved for storing the upgrade image) and external
+            storage (a SPI flash memory chip). The demo applications use external storage. The
+            internal storage is viable only if there is enough space in the internal flash for the
+            upgrade image – the flash in this case should be at least twice the size of the largest
+            application. The <em class="ph i">OtaSupport</em> module also needs the <em class="ph i">Eeprom</em> module from the
+            Framework to work correctly.</p>
+
+        <p class="p">A bootloader is also provided as a separate application which is available in both source
+            code and executable form. The OTAP Bootloader executable resides in the
+                <em class="ph i">\tools\wireless\binaries</em> folder for each board, and has the following format:
+                <em class="ph i">bootloader_otap_&lt;BOARD&gt;.bin.</em></p>
+
+        <p class="p">The OTAP Bootloader project resides in the
+                <em class="ph i">\boards\&lt;board&gt;\wireless_examples\framework\bootloader_otap</em> folder,
+            where &lt;BOARD&gt; is one of the following:</p>
+
+        <ul class="ul" id="GUID-29CA4780-D9BA-4544-8CA9-1FD2461CA891__UL_A3C_JNN_CY">
+            <li class="li">FRDMKW40Z</li>
+
+            <li class="li">USBKW40Z</li>
+
+            <li class="li">FRDMKW41Z</li>
+
+            <li class="li">USBKW41Z</li>
+
+        </ul>
+
+        <p class="p">The details of the OTAP Bootloader are discussed in a separate section.</p>
+
+        <p class="p">To use the <em class="ph i">OtaSupport</em> module and the OTAP Bootloader several configuration options
+            must be set up in both the source files and the linker options of the toolchain.</p>
+
+        <p class="p">First, the <em class="ph i">OTASupport</em> and <em class="ph i">Eeprom</em> module files must be included in the
+            project. To configure the type of storage used the <em class="ph i">gEepromType_d</em> preprocessor
+            definition must be given a value. </p>
+
+        <p class="p">To use external storage set the <em class="ph i">gEepromType_d </em>value to the appropriate type of
+            EEPROM present on the board. The correct value for KW40Z4 demo boards is
+                <em class="ph i">gEepromDevice_AT45DB021E_c</em> and the correct value for KW41Z4 demo boards is
+                <em class="ph i">gEepromDevice_AT45DB041E_c</em>.</p>
+
+        <p class="p">The valid <em class="ph i">gEepromType_d </em> options can be found in the <em class="ph i">Eeprom.h</em> file:</p>
+
+        <pre class="pre codeblock">/* List of the EEPROM devices used on each of the FSL development boards */
+<strong class="ph b">#define</strong> gEepromDevice_None_c 0
+<strong class="ph b">#define</strong> gEepromDevice_InternalFlash_c 1
+<strong class="ph b">#define</strong> gEepromDevice_AT45DB161E_c 2 /* TWR-KW2x */
+<strong class="ph b">#define</strong> gEepromDevice_AT26DF081A_c 3 /* TWR-MEM */
+<strong class="ph b">#define</strong> gEepromDevice_AT45DB021E_c 4 /* FRDM-KW40 */
+<strong class="ph b">#define</strong> gEepromDevice_AT45DB041E_c 5 /* FRDM-KW41 */</pre>
+
+        <p class="p">The setting of the EEPROM type is done in the <em class="ph i">app_preinclude.h</em> file for the demo
+            applications:</p>
+
+        <pre class="pre codeblock">/* Specifies the type of EEPROM available on the target board */
+<strong class="ph b">#define</strong> gEepromType_d gEepromDevice_AT45DB041E_c</pre>
+
+        <p class="p">To use internal storage set up the <em class="ph i">gUseInternalStorageLink_d=1</em> symbol in the
+            linker configuration window (Linker-&gt;Config tab in the IAR project properties) and
+            set the <em class="ph i">gEepromType_d</em> value to <em class="ph i">gEepromDevice_InternalFlash_c</em> in the
+                <em class="ph i">app_preinclude.h </em>file:</p>
+
+        <pre class="pre codeblock">/* Specifies the type of EEPROM available on the target board */
+<strong class="ph b">#define</strong> gEepromType_d gEepromDevice_InternalFlash_c</pre>
+
+        <p class="p">The OTAP demo applications for the IAR EW IDE have some settings in the Linker options
+            tab which must be configured to use <em class="ph i">OtaSupport</em> and the OTAP Bootloader. </p>
+
+        <p class="p">In the <em class="ph i">Project Target Options-&gt;Linker-&gt;Config</em> tab, 3 symbols must be
+            correctly defined. To use NVM storage the <em class="ph i">gUseNVMLink_d </em> symbol must be set to 1.
+            The <em class="ph i">gUseInternalStorageLink_d</em> symbol must be set to 0 when OTAP external storage
+            is used and to 1 when internal storage is used. To enable the OTAP Bootloader linking
+            the <em class="ph i">gUseBootloaderLink_d</em> symbol must be set to 1 to offset the application. An
+            example configuration window is shown below.</p>
+
+        <div class="fig fignone" id="GUID-29CA4780-D9BA-4544-8CA9-1FD2461CA891__FIG_HMX_VNN_CY"><span class="figcap">Figure 1. Linker Config IAR EW IDE - OTAP Client External Storage and Bootloader
+                Configuration</span>
+            
+            <img class="image" id="GUID-29CA4780-D9BA-4544-8CA9-1FD2461CA891__IMAGE_VYJ_YNN_CY" src="GUID-D0C0A5BB-3D43-4D67-897A-A66729C1924E-high.png"/>
+        </div>
+
+        <p class="p">The OTAP demo applications for the KDS IDE also have some settings in the project
+            properties which must be configured to use <em class="ph i">OtaSupport</em> and the OTAP
+            Bootloader.</p>
+
+        <p class="p">First, some Eclipse Build Variables must be set up just as shown in the screenshot below
+            in the Project Properties -&gt; C/C++ Build -&gt; Build Variables tab.</p>
+
+        <div class="fig fignone" id="GUID-29CA4780-D9BA-4544-8CA9-1FD2461CA891__FIG_KGC_14N_CY"><span class="figcap">Figure 2. KDS Build Variables - OTAP Client External Storage and Bootloader
+                Configuration</span>
+            
+            <img class="image" id="GUID-29CA4780-D9BA-4544-8CA9-1FD2461CA891__IMAGE_TT2_C4N_CY" src="GUID-779AA51C-A765-4571-ABE5-725181642555-high.png"/>
+        </div>
+
+        <p class="p">After the Build Variables, are set up they must be passed as options to the Compiler and
+            Linker command lines.</p>
+
+        <p class="p">For the Compiler go to the Project Properties -&gt; C/C++ Build -&gt; Settings -&gt;
+            Build Steps -&gt; Pre-build steps -&gt; Command text box and add
+                <em class="ph i">-DgUseBootloaderLink_d=${gUseBootloaderLink_d}
+                -DgUseInternalStorageLink_d=${gUseInternalStorageLink_d}</em> if you want to add the
+                <em class="ph i">gUseInternalStorageLink_d </em> and the <em class="ph i">gUseBootloaderLink_d </em>variables. The
+            preprocessor definitions with the same name as the Eclipse Build Variables are passed to
+            the Compiler in the command line with the value of the Eclipse Build Variables.</p>
+
+        <p class="p">For the Linker go to the Project Properties -&gt; C/C++ Build -&gt; Settings -&gt; Tool
+            Settings -&gt; Cross ARM C Linker -&gt; Miscellaneous -&gt; Other Linker Flags box and
+            add <em class="ph i">-Xlinker -defsym -Xlinker gUseBootloaderLink_d=${gUseBootloaderLink_d} -Xlinker
+                -defsym -Xlinker gUseInternalStorageLink_d=${gUseInternalStorageLink_d}</em> if you
+            want to add the <em class="ph i">gUseInternalStorageLink_d </em> and the <em class="ph i">gUseBootloaderLink_d
+            </em>variables. The Linker Symbols with the same name as the Eclipse Build Variables are
+            passed to the Linker in the command line with the value of the Eclipse Build
+            Variables.</p>
+
+        <p class="p">Once the application starts and bidirectional OTAP communication is established via the
+            OTAP Service then the OTAP Client must determine if the connected OTAP Server has a
+            newer image than the one currently present on the device. This can be done in two ways.
+            Either the OTAP Server knows by some application-specific means that it has a newer
+            image and sends a New Image Notification to the OTAP Client or the OTAP Client sends a
+            New Image Info Request to the OTAP Server and waits for a response. The example
+            application uses the second method. The New Image Info Request contains enough
+            information about the currently running image to allow the OTAP Server to determine if
+            it has a newer image for the requesting device. The New Image Info Response contains
+            enough information for the OTAP Client to determine that de “advertised” image is newer
+            and it wants to download it. The best method is entirely dependent on application
+            requirements.</p>
+
+        <p class="p">An example function which checks if an <em class="ph i">ImageVerison</em> field from a New Image
+            Notification or a New Image Info Response corresponds to a newer image (based on the
+            suggested format of this field) is provided in the OTAP Client demo applications. The
+            function is called <em class="ph i">OtapClient_IsRemoteImageNewer()</em>.</p>
+
+        <p class="p">The OTAP Client application is a little more complicated than the OTAP Server application
+            because more state information needs to be handled (current image position, current
+            chink sequence number, image file parsing information, and so on). An example state
+            diagram for the OTAP Client is shown below. Note that some of the states may not be
+            explicitly present in the demo applications, this diagram is meant to emphasize the
+            steps of the image download process.</p>
+
+        <div class="fig fignone" id="GUID-29CA4780-D9BA-4544-8CA9-1FD2461CA891__FIG_GKR_D4N_CY"><span class="figcap">Figure 3. OTAP Client Example State Diagram</span>
+            
+            <img class="image" id="GUID-29CA4780-D9BA-4544-8CA9-1FD2461CA891__IMAGE_J3M_G4N_CY" src="GUID-9ABE8F68-9659-411E-92D8-28688FC2A531-high.png"/>
+        </div>
+
+        <p class="p">After the OTAP Client determines that the peer OTAP Server has a suitable upgrade image
+            available it can start the download process. This is done by sending multiple Image
+            Block Request messages and waiting for the Image Chunks via the selected transfer
+            method. </p>
+
+        <p class="p">While receiving the image file blocks the OTAP Client application parses the image file
+            and if any parameter of an image file sub-element is invalid or the image file format is
+            invalid it sends an Error Notification to the OTAP Server and tries to restart the
+            download process from the beginning or a known good position.</p>
+
+        <p class="p">When an Image Chunk received its sequence number is checked and its content is parsed in
+            the context of the image file format. If the sequence number is not as expected then the
+            block transfer is restarted from the last known good position. When all chunks of an
+            Image Block are received ne next block is requested if there are more blocks to
+            download. When the last Image Block in an Image File is received then the image
+            integrity is checked (the received CRC from the Image File CRC sub-element is compared
+            to the computed CRC). The computed image integrity initialization and intermediary value
+            must be reset to 0 before starting the download of an image and when restarting the
+            download of an image. If the image integrity check fails then the image download process
+            is restarted from the beginning. If the image integrity check is successful then the
+            Bootloader is triggered, an Image Download Complete message is sent to the OTAP Server
+            and the MCU is restarted. After the restart the bootloader kicks in and writes the new
+            image to the flash memory and gives CPU control to the newly installed application.</p>
+
+        <p class="p">If at any time during the download process a Link Layer disconnection occurs then the
+            image download process is restarted from the last known good position when the link is
+            reestablished.</p>
+
+        <p class="p">As noted earlier the OTAP Client application needs to handle a lot of state information.
+            In the demo application all this information is held in the <em class="ph i">otapClientData</em>
+            structure of the <em class="ph i">otapClientAppData_t</em> type. The type is defined and the structure
+            is initialized in the <em class="ph i">app.c</em> file of the application. This structure is defined
+            and initialized differently for the OTAP Client ATT and L2CAP example applications.
+            Mainly the <em class="ph i">transferMethod</em> member of the structure is constant and has different
+            values for the two example applications and the L2CAP application structure has an extra
+            member.</p>
+
+        <p class="p">To receive write notifications when the OTAP Server writes the OTAP Control Point
+            attribute and ATT Confirmations when it indicates the OTAP Control Point attribute, the
+            OTAP Client application must register a GATT Server callback and enable write
+            notifications for the OTAP Control Point attribute. This is done in the
+                <em class="ph i">BleApp_Config()</em> function in the <em class="ph i">app.c</em> file.</p>
+
+        <pre class="pre codeblock"><strong class="ph b">static</strong> uint16_t otapWriteNotifHandles[] = {value_otap_control_point,
+                                                             value_otap_data};
+...
+<strong class="ph b">static</strong><strong class="ph b">void</strong> BleApp_Config()
+{
+...
+/* Register for callbacks*/
+App_RegisterGattServerCallback (BleApp_GattServerCallback);
+GattServer_RegisterHandlesForWriteNotifications (<strong class="ph b">sizeof</strong>(otapWriteNotifHandles)/<strong class="ph b">sizeof</strong>(otapWriteNotifHandles[0]),
+                                                                                                                otapWriteNotifHandles);
+..
+}</pre>
+
+        <p class="p">The <em class="ph i">BleApp_GattServerCallback()</em> function handles all incoming communication from
+            the OTAP Server.</p>
+
+        <pre class="pre codeblock"><strong class="ph b">static</strong><strong class="ph b">void</strong> BleApp_GattServerCallback (deviceId_t deviceId,
+                                                                gattServerEvent_t* pServerEvent)
+{
+    <strong class="ph b">switch</strong> (pServerEvent-&gt;eventType)
+    {
+    <strong class="ph b">case</strong> gEvtCharacteristicCccdWritten_c:
+                    BleApp_CccdWritten (...) ;
+        <strong class="ph b">break</strong>;
+
+    <strong class="ph b">case</strong> gEvtAttributeWritten_c:
+                       BleApp_AttributeWritten (...);
+        <strong class="ph b">break</strong>;
+
+    <strong class="ph b">case</strong> gEvtAttributeWrittenWithoutResponse_c:
+                    BleApp_AttributeWrittenWithoutResponse (...);
+        <strong class="ph b">break</strong>;
+
+    <strong class="ph b">case</strong> gEvtHandleValueConfirmation_c:
+                    BleApp_HandleValueConfirmation (...);
+        <strong class="ph b">break</strong>;
+
+    <strong class="ph b">default</strong>:
+        <strong class="ph b">break</strong>;
+    }
+}</pre>
+
+        <p class="p">When the OTAP Server Writes a CCCD the <em class="ph i">BleApp_GattServerCallback()</em> function calls
+            the <em class="ph i">BleApp_CccdWritten()</em> function which sends a New Image Info Request when the
+            OTAP Control Point CCCD is written it – this is the starting point of OATP transactions
+            in the demo applications.</p>
+
+        <p class="p">When an ATT Write Request is made by the OTAP Server the the
+                <em class="ph i">BleApp_GattServerCallback()</em> function calls the
+                <em class="ph i">BleApp_AttributeWritten()</em> function which handles the data as an OTAP command.
+            Only writes to the OTAP Control Point are handled as OTAP commands. For each command
+            received from the OTAP Server there is a separate handler function which performs
+            required OTAP operations. These are: </p>
+
+        <ul class="ul" id="GUID-29CA4780-D9BA-4544-8CA9-1FD2461CA891__UL_D5H_K5S_CY">
+            <li class="li"><em class="ph i">OtapClient_HandleNewImageNotification()</em></li>
+
+            <li class="li"><em class="ph i">OtapClient_HandleNewImageInfoResponse()</em></li>
+
+            <li class="li"><em class="ph i">OtapClient_HandleErrorNotification()</em></li>
+
+        </ul>
+
+        <p class="p">When an ATT Write Command (GATT Write Without Response) is sent by the OTAP Server the
+                <em class="ph i">BleApp_GattServerCallback()</em> function calls the
+                <em class="ph i">BleApp_AttributeWrittenWithoutResponse()</em> function which handles Data Chunks
+            if the selected transfer method is ATT and returns an error if any problems are
+            encountered. Data chunks are handled by the <em class="ph i">OtapClient_HandleDataChunk()</em>
+            function.</p>
+
+        <pre class="pre codeblock"><strong class="ph b">static</strong><strong class="ph b">void</strong> BleApp_AttributeWrittenWithoutResponse (deviceId_t deviceId,
+                                                                             uint16_t handle,
+                                                                             uint16_t length,
+                                                                             uint8_t* pValue)
+{
+    /* ... Missing code here ... */
+    <strong class="ph b">if</strong> (handle == value_otap_data)
+    {
+        /* ... Missing code here ... */
+        <strong class="ph b">if</strong> (otapClientData.transferMethod == gOtapTransferMethodAtt_c)
+        {
+            <strong class="ph b">if</strong> (((otapCommand_t*)pValue)-&gt;cmdId == gOtapCmdIdImageChunk_c)
+            {
+                OtapClient_HandleDataChunk (deviceId,
+                                            length,
+                                            pValue);
+            }
+        }
+        /* ... Missing code here ... */
+    }
+    /* ... Missing code here ... */
+}</pre>
+
+        <p class="p">Finally, when an ATT Confirmation is received for a previously sent ATT Indication the
+                <em class="ph i">BleApp_GattServerCallback()</em> function calls the <em class="ph i">BleApp_</em><em class="ph i">
+                HandleValueConfirmation()</em> function which based on the last sent command to the
+            OTAP Server performs the necessary OTAP operations. This is done using separate
+            confirmation handling functions for each command that is sent to the OTAP Server. These
+            functions are:</p>
+
+        <ul class="ul" id="GUID-29CA4780-D9BA-4544-8CA9-1FD2461CA891__UL_KS4_V5S_CY">
+            <li class="li"><em class="ph i">OtapClient_HandleNewImageInfoRequestConfirmation()</em></li>
+
+            <li class="li"><em class="ph i">OtapClient_HandleImageBlockRequestConfirmation()</em></li>
+
+            <li class="li"><em class="ph i">OtapClient_HandleImageTransferCompleteConfirmation()</em></li>
+
+            <li class="li"><em class="ph i">OtapClient_HandleErrorNotificationConfirmation()</em></li>
+
+            <li class="li"><em class="ph i">OtapClient_HandleStopImageTransferConfirmation()</em></li>
+
+        </ul>
+
+        <p class="p">Outgoing communication from the OTAP Client to the OTAP Server are done using the
+                <em class="ph i">OtapCS_SendCommandToOtapServer() </em> function. This function writes the value to
+            be indicated to the OTAP Control Point attribute in the GATT database and then calls the
+                <em class="ph i">OtapCS_SendControlPointIndication() </em>which checks if indications are enabled
+            for the target device and sends the actual ATT Indication. Both functions are
+            implemented in the <em class="ph i">otap_service.c</em> file.</p>
+
+        <pre class="pre codeblock">bleResult_t OtapCS_SendCommandToOtapServer (uint16_t serviceHandle,
+                                                       <strong class="ph b">void</strong>* pCommand,
+                                                       uint16_t cmdLength)
+{
+    uint16_t handle;
+    bleUuid_t* pUuid = (bleUuid_t*)&amp;uuid_char_otap_control_point;
+
+    /* Get handle of OTAP Control Point characteristic */
+    GattDb_FindCharValueHandleInService (pUuid, &amp;handle, ...);
+
+    /* Write characteristic value */
+    GattDb_WriteAttribute (...);
+
+    /* Send Command to the OTAP Server via ATT Indication */
+    <strong class="ph b">return</strong> OtapCS_SendControlPointIndication (handle);
+}
+
+<strong class="ph b">static</strong> bleResult_t OtapCS_SendControlPointIndication (uint16_t handle)
+{
+    uint16_t     hCccd;
+    bool_t       isIndicationActive;
+
+    /* Get handle of CCCD */
+    GattDb_FindCccdHandleForCharValueHandle (handle, &amp;hCccd);
+    Gap_CheckIndicationStatus (...);
+
+    <strong class="ph b">return</strong> GattServer_SendIndication (...);
+}</pre>
+
+        <p class="p">The <em class="ph i">otap_interface.h</em> file contains all the necessary information for parsing and
+            building OTAP commands (packed command structures type definitions, command parameters
+            enumerations, and so on).</p>
+
+        <p class="p">For the two possible image transfer methods (ATT and L2CAP) there are two separate demo
+            applications. To be able to use the L2CAP transfer method the OATP Client application
+            must register a L2CAP LE PSM and 2 callbacks: a data callback and a control callback.
+            This is done in the <em class="ph i">BleApp_Config()</em> function.</p>
+
+        <pre class="pre codeblock">/* Register OTAP L2CAP PSM */
+L2ca_RegisterLePsm (gOtap_L2capLePsm_c,
+gOtapCmdImageChunkCocLength_c); /*!&lt; The negotiated MTU must be higher than the biggest data chunk that will be sent fragmented */
+...
+App_RegisterLeCbCallbacks(BleApp_L2capPsmDataCallback, BleApp_L2capPsmControlCallback);</pre>
+
+        <p class="p">The control callback is used to handle L2CAP LE PSM-related events: PSM disconnections,
+            PSM Connection Complete, No peer credits, and so on.</p>
+
+        <pre class="pre codeblock"><strong class="ph b">static</strong><strong class="ph b">void</strong> BleApp_L2capPsmControlCallback(l2capControlMessageType_t     messageType,
+                                                                    <strong class="ph b">void</strong>*                 pMessage)
+{
+    <strong class="ph b">switch</strong> (messageType)
+    {
+        <strong class="ph b">case</strong> gL2ca_LePsmConnectRequest_c:
+        {
+            l2caLeCbConnectionRequest_t *pConnReq =
+                            (l2caLeCbConnectionRequest_t *)pMessage;
+
+            /* This message is unexpected on the OTAP Client, the OTAP Client sends L2CAP
+             * PSM connection requests and expects L2CAP PSM connection responses.
+             * Disconnect the peer. */
+            Gap_Disconnect (pConnReq-&gt;deviceId);
+
+            <strong class="ph b">break</strong>;
+        }
+        <strong class="ph b">case</strong> gL2ca_LePsmConnectionComplete_c:
+        {
+            l2caLeCbConnectionComplete_t *pConnComplete =
+                             (l2caLeCbConnectionComplete_t *)pMessage;
+
+            /* Call the application PSM connection complete handler. */
+            OtapClient_HandlePsmConnectionComplete (pConnComplete);
+
+        <strong class="ph b">break</strong>;
+    }
+    <strong class="ph b">case</strong> gL2ca_LePsmDisconnectNotification_c:
+    {
+        l2caLeCbDisconnection_t *pCbDisconnect = (l2caLeCbDisconnection_t *)pMessage;
+
+        /* Call the application PSM disconnection handler. */
+        OtapClient_HandlePsmDisconnection (pCbDisconnect);
+
+        <strong class="ph b">break</strong>;
+    }
+    <strong class="ph b">case</strong> gL2ca_NoPeerCredits_c:
+    {
+        l2caLeCbNoPeerCredits_t *pCbNoPeerCredits =
+                        (l2caLeCbNoPeerCredits_t *)pMessage;
+        L2ca_SendLeCredit (pCbNoPeerCredits-&gt;deviceId,
+                           otapClientData.l2capPsmChannelId,
+                           mAppLeCbInitialCredits_c);
+        <strong class="ph b">break</strong>;
+    }
+    <strong class="ph b">case</strong> gL2ca_LocalCreditsNotification_c:
+    {
+        l2caLeCbLocalCreditsNotification_t *pMsg =
+                           (l2caLeCbLocalCreditsNotification_t *)pMessage;
+
+        <strong class="ph b">break</strong>;
+    }
+    <strong class="ph b">default</strong>:
+        <strong class="ph b">break</strong>;
+    }
+}</pre>
+
+        <p class="p">The OTAP Client must initiate the L2CAP PSM connection if it wants to use the L2CAP
+            transfer method. This is done using the <em class="ph i">L2ca_ConnectLePsm()</em> function which is
+            called by the <em class="ph i">OtapClient_ContinueImageDownload()</em> if the transfer method is L2CAP
+            and the PSM is found to be disconnected.</p>
+
+        <pre class="pre codeblock"><strong class="ph b">static</strong><strong class="ph b">void</strong> OtapClient_ContinueImageDownload (deviceId_t deviceId)
+{
+    /* ... Missing code here ... */
+
+    /* Check if the L2CAP OTAP PSM is connected and if not try to connect and exit immediately. */
+    <strong class="ph b">if</strong> ((otapClientData.l2capPsmConnected == FALSE) &amp;&amp;
+                (otapClientData.state != mOtapClientStateImageDownloadComplete_c))
+    {
+        L2ca_ConnectLePsm (gOtap_L2capLePsm_c,
+                           deviceId,
+                           mAppLeCbInitialCredits_c);
+        <strong class="ph b">return</strong>;
+    }
+    /* ... Missing code here ... */
+}</pre>
+
+        <p class="p">The PSM data callback <em class="ph i">BleApp_L2capPsmDataCallback()</em> is used by the OTAP Client to
+            handle incoming image file parts from the OTAP Server.</p>
+
+        <pre class="pre codeblock"><strong class="ph b">static</strong><strong class="ph b">void</strong> BleApp_L2capPsmDataCallback (deviceId_t  deviceId,
+                                                                  uint8_t*    pPacket,
+                                                                  uint16_t    packetLength)
+{
+    OtapClient_HandleDataChunk (deviceId,
+                                packetLength,
+                                pPacket);
+}</pre>
+
+        <p class="p">All data chunks regardless of their source (ATT or L2CAP) are handled by the
+                <em class="ph i">OtapClient_HandleDataChunk()</em> function. This function checks the validity of
+            Image Chunk messages, parses the image file, requests the continuation or restart of the
+            image download and triggers the bootloader when the image download is complete. </p>
+
+        <pre class="pre codeblock"><strong class="ph b">static</strong><strong class="ph b">void</strong>OtapClient_HandleDataChunk (deviceId_t deviceId,
+                                                                uint16_t length,
+                                                                uint8_t* pData);</pre>
+
+        <p class="p">The Image File CRC Value is computed on the fly as the image chunks are received using
+            the <em class="ph i">OTA_CrcCompute()</em> function from the <em class="ph i">OtaSupport</em> module which is called
+            by the <em class="ph i">OtapClient_HandleDataChunk()</em> function. The <em class="ph i">OTA_CrcCompute()</em>
+            function has a parameter for the intermediary CRC value which must be initialized to 0
+            every time a new image download is started.</p>
+
+        <p class="p">The actual write of the received image parts to the storage medium is also done in the
+                <em class="ph i">OtapClient_HandleDataChunk()</em> function using the <em class="ph i">OtaSupport</em> module.
+            This is achieved using the following functions:</p>
+
+        <ul class="ul" id="GUID-29CA4780-D9BA-4544-8CA9-1FD2461CA891__UL_QDT_GYS_CY">
+            <li class="li"><em class="ph i">OTA_StartImage()</em> – called before the start of writing a new image to the
+                storage medium. </li>
+
+            <li class="li"><em class="ph i">OTA_CancelImage()</em> – called whenever an error occurs and the image download
+                process needs to be stopped/restarted from the beginning.</li>
+
+            <li class="li"><em class="ph i">OTA_PushImageChunk()</em> – called to write a received image chunk to the storage
+                medium. Note that only the Upgrade Image Sub-element of the image file is actually
+                written to the storage medium.</li>
+
+            <li class="li"><em class="ph i">OTA_CommitImage()</em> - called to set up what parts of the downloaded image are
+                written to flash and other information for the bootloader. The Value field of the
+                Sector Bitmap Sub-element of the Image File is given as a parameter to this
+                function.</li>
+
+            <li class="li"><em class="ph i">OTA_SetNewImageFlag()</em> – called to set bootloader flags when a new image and
+                the sector bitmap write to the storage medium are complete. When the MCU is
+                restarted, the bootloader transfers the new image from the storage medium to the
+                program flash.</li>
+
+        </ul>
+
+        <p class="p">To continue the image download process after a block is transferred or to restart it
+            after an error has occurred the <em class="ph i">OtapClient_ContinueImageDownload()</em> function is
+            called. This function is used in multiple situations during the image download
+            process.</p>
+
+        <p class="p">To summarize, an outline of the steps required to perform the image download process is
+            shown below:</p>
+
+        <ul class="ul" id="GUID-29CA4780-D9BA-4544-8CA9-1FD2461CA891__UL_AMT_GYS_CY">
+            <li class="li">Wait for a connection from an OTAP Server</li>
+
+            <li class="li">Wait for the OTAP Server to write the OTAP Control Point CCCD</li>
+
+            <li class="li">Ask or wait for image information from the server</li>
+
+            <li class="li">If a new image is available on the server start the download process using the
+                    <em class="ph i">OtapClient_ContinueImageDownload()</em> function.<ul class="ul" id="GUID-29CA4780-D9BA-4544-8CA9-1FD2461CA891__UL_VTT_GYS_CY">
+                    <li class="li">If the transfer method is L2CAP CoC then initiate a PSM connection to the
+                        OTAP Server</li>
+
+                </ul>
+</li>
+
+            <li class="li">Repeat while image download is not complete<ul class="ul" id="GUID-29CA4780-D9BA-4544-8CA9-1FD2461CA891__UL_VWT_GYS_CY">
+                    <li class="li">Wait for image chunks</li>
+
+                    <li class="li"><em class="ph i">Call the OtapClient_HandleDataChunk()</em> function for all received image
+                        chunks regardless of the selected transfer method<ul class="ul" id="GUID-29CA4780-D9BA-4544-8CA9-1FD2461CA891__UL_LXT_GYS_CY">
+                            <li class="li">Check image file header integrity using the
+                                    <em class="ph i">OtapClient_IsImageFileHeaderValid()</em> function.</li>
+
+                            <li class="li">Write the Upgrade Image Sub-element to the storage medium using
+                                    <em class="ph i">OtaSupport</em> module functions.</li>
+
+                            <li class="li">When the download is complete check image integrity<ul class="ul" id="GUID-29CA4780-D9BA-4544-8CA9-1FD2461CA891__UL_AYT_GYS_CY">
+                                    <li class="li">If the integrity check is successful commit the image using
+                                        the Sector Bitmap Sub-element and trigger the
+                                        bootloader</li>
+
+                                    <li class="li">If integrity check fails restart the image download from the
+                                        beginning</li>
+
+                                </ul>
+</li>
+
+                            <li class="li">If the download is not complete ask for a new image chunk</li>
+
+                        </ul>
+</li>
+
+                    <li class="li">If any error occurred during the processing of the image chunk restart the
+                        download form the last known good position</li>
+
+                </ul>
+</li>
+
+            <li class="li">If an image was successfully downloaded and transferred to the storage medium and
+                the bootloader triggered then reset the MCU to start the flashing process of the new
+                image.</li>
+
+        </ul>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-4B517935-2861-4399-92FE-54173654BA21.html">BLE OTAP application integration</a></div>
+</div>
+</div>
+
+</body>
+</html>

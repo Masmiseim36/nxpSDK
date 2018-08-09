@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Creating the network"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-021CCB0C-991C-496B-957E-2E7A582EC382.html"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-964A7006-57EE-4CF5-92B7-94A4D8FA9B4D"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Creating the network</title>
+</head>
+<body id="GUID-964A7006-57EE-4CF5-92B7-94A4D8FA9B4D">
+
+
+    <h1 class="title topictitle1">Creating the network</h1>
+
+    <div class="body">
+        <p class="p">To start the scanning of devices, press the SW4 button on the router board.
+            GAP Discoverable Mode can be entered when we press the SW4 button on the node board. The
+            host connects with the board after it sees it advertise the IPSP service and connects to
+            it. A solid LED3 indicates a successful connection between the two devices. This is also
+            visible in the console, as shown below.</p>
+
+        <p class="p">The IPv6 Node shows connected and has established a credit-based
+            channel.</p>
+
+        <pre class="pre codeblock">
+            Advertising...
+Connected!
+
+LE Credit Based Connection Complete!
+   Device Id: 0
+   Channel Id: 64
+   Peer MTU: 1280
+   Peer MPS: 251
+   Credits: 50
+            </pre>
+
+        <p class="p">As shown on the console, the IPv6 Router scans the IPv6 Node, connects to it, discovers the IPSS, initiates LE Credit Based Connection and establishes one.</p>
+
+        <pre class="pre codeblock">
+            Scanning...
+
+Found device: IPv6_NODE 0x00049F00000B
+Connecting...
+Connected! Device Id: 0
+Discovering IPSS...
+Initiating LE Credit Based Connection request...
+LE Credit Based Connection Complete!
+   Device Id: 0
+   Channel Id: 64
+   Peer MTU: 1280
+   Peer MPS: 251
+   Credits: 50
+            </pre>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-021CCB0C-991C-496B-957E-2E7A582EC382.html">Running the IPv6 over Bluetooth Example</a></div>
+</div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,2268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="API primitives"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-64F118B0-5E9C-49DA-BB84-8E43AFE80446.html"/>
+<meta name="prodname" content=""/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Creator" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-6DAB5F7E-4397-4744-B332-FA04180C0EEA"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>API primitives</title>
+</head>
+<body id="GUID-6DAB5F7E-4397-4744-B332-FA04180C0EEA">
+
+
+    <h1 class="title topictitle1">API primitives</h1>
+
+    <div class="body">
+        <p class="p"><strong class="ph b">AES_128_Encrypt ()</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">void AES_128_Encrypt
+(
+uint8_t* pInput, 
+uint8_t* pKey, 
+uint8_t* pOutput
+);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>This function performs AES-128 encryption on a 16-byte block.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-6DAB5F7E-4397-4744-B332-FA04180C0EEA__TABLE_NZN_R5P_FZ" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d28314e74"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d28314e78"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d28314e82"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d28314e86"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e74 "><strong class="ph b">pInput</strong></td>
+
+                        <td class="entry" valign="top" headers="d28314e78 ">uint8_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e82 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e86 ">Pointer to the location of the 16-byte plain text block</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e74 "><strong class="ph b">pKey</strong></td>
+
+                        <td class="entry" valign="top" headers="d28314e78 ">uint8_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e82 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e86 ">Pointer to the location of the 128-bit key</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e74 "><strong class="ph b">pOutput</strong></td>
+
+                        <td class="entry" valign="top" headers="d28314e78 ">uint8_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e82 ">[OUT]</td>
+
+                        <td class="entry" valign="top" headers="d28314e86 ">Pointer to the location to store the 16‑byte ciphered output</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"/>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">None.</p>
+
+        <p class="p"><strong class="ph b">AES_128_Decrypt ()</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">void AES_128_Decrypt
+(
+uint8_t* pInput, 
+uint8_t* pKey, 
+uint8_t* pOutput
+);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>This function performs AES-128 decryption on a 16-byte block.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-6DAB5F7E-4397-4744-B332-FA04180C0EEA__TABLE_Y24_R5P_FZ" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d28314e192"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d28314e196"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d28314e200"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d28314e204"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e192 ">pInput</td>
+
+                        <td class="entry" valign="top" headers="d28314e196 ">uint8_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e200 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e204 ">Pointer to the location of the 16-byte ciphered text block</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e192 ">pKey</td>
+
+                        <td class="entry" valign="top" headers="d28314e196 ">uint8_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e200 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e204 ">Pointer to the location of the 128-bit key</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e192 ">pOutput</td>
+
+                        <td class="entry" valign="top" headers="d28314e196 ">uint8_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e200 ">[OUT]</td>
+
+                        <td class="entry" valign="top" headers="d28314e204 ">Pointer to the location to store the 16-byte plain text
+                            output</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">None.</p>
+
+        <p class="p"><strong class="ph b">AES_128_ECB_Encrypt ()</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">void AES_128_ECB_Encrypt
+(
+uint8_t* pInput, 
+uint32_t inputLen, 
+uint8_t* pKey,
+uint8_t* pOutput
+);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>This function performs AES-128-ECB encryption on a message block.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-6DAB5F7E-4397-4744-B332-FA04180C0EEA__TABLE_IK4_R5P_FZ" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d28314e305"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d28314e309"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d28314e313"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d28314e317"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e305 ">pInput</td>
+
+                        <td class="entry" valign="top" headers="d28314e309 ">uint8_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e313 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e317 ">Pointer to the location of the input message</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e305 ">inputLen</td>
+
+                        <td class="entry" valign="top" headers="d28314e309 ">uint32_t</td>
+
+                        <td class="entry" valign="top" headers="d28314e313 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e317 ">Input message length in bytes</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e305 ">pKey</td>
+
+                        <td class="entry" valign="top" headers="d28314e309 ">uint8_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e313 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e317 ">Pointer to the location of the 128-bit key</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e305 ">pOutput</td>
+
+                        <td class="entry" valign="top" headers="d28314e309 ">uint8_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e313 ">[OUT]</td>
+
+                        <td class="entry" valign="top" headers="d28314e317 ">Pointer to the location to store the ciphered output to</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">None.</p>
+
+        <p class="p"><strong class="ph b">AES_128_ECB_Block_Encrypt ()</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">void AES_128_ECB_Block_Encrypt
+(
+uint8_t* pInput, 
+uint32_t numBlocks, 
+uint8_t* pKey, 
+uint8_t* pOutput
+);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>This function performs AES-128-ECB encryption on a message block.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-6DAB5F7E-4397-4744-B332-FA04180C0EEA__TABLE_SP4_R5P_FZ" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d28314e434"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d28314e438"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d28314e442"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d28314e446"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e434 ">pInput</td>
+
+                        <td class="entry" valign="top" headers="d28314e438 ">uint8_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e442 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e446 ">Pointer to the location of the input message</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e434 ">numBlocks</td>
+
+                        <td class="entry" valign="top" headers="d28314e438 ">uint32_t</td>
+
+                        <td class="entry" valign="top" headers="d28314e442 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e446 ">Input message number of 16-byte blocks</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e434 ">pKey</td>
+
+                        <td class="entry" valign="top" headers="d28314e438 ">uint8_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e442 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e446 ">Pointer to the location of the 128-bit key</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e434 ">pOutput</td>
+
+                        <td class="entry" valign="top" headers="d28314e438 ">uint8_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e442 ">[OUT]</td>
+
+                        <td class="entry" valign="top" headers="d28314e446 ">Pointer to the location to store the ciphered output to</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">None.</p>
+
+        <p class="p"><strong class="ph b">AES_128_CBC_Encrypt ()</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">void AES_128_CBC_Encrypt
+(
+uint8_t* pInput, 
+uint32_t inputLen,
+uint8_t* pInitVector, 
+uint8_t* pKey, 
+uint8_t* pOutput
+);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>This function performs AES-128-CBC encryption on a message block.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-6DAB5F7E-4397-4744-B332-FA04180C0EEA__TABLE_YNZ_WVP_FZ" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d28314e562"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d28314e566"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d28314e570"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d28314e574"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e562 ">pInput</td>
+
+                        <td class="entry" valign="top" headers="d28314e566 ">uint8_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e570 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e574 ">Pointer to the location of the input message</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e562 ">inputLen</td>
+
+                        <td class="entry" valign="top" headers="d28314e566 ">uint32_t</td>
+
+                        <td class="entry" valign="top" headers="d28314e570 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e574 ">Input message length in octets</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e562 ">pInitVector</td>
+
+                        <td class="entry" valign="top" headers="d28314e566 ">uint8_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e570 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e574 ">Pointer to the location of the 128-bit initialization vector</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e562 ">pKey</td>
+
+                        <td class="entry" valign="top" headers="d28314e566 ">uint8_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e570 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e574 ">Pointer to the location of the 128-bit key</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e562 ">pOutput</td>
+
+                        <td class="entry" valign="top" headers="d28314e566 ">uint8_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e570 ">[OUT]</td>
+
+                        <td class="entry" valign="top" headers="d28314e574 ">Pointer to the location to store the ciphered output to</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">None.</p>
+
+        <p class="p"><strong class="ph b">AES_128_CTR ()</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">void AES_128_CTR
+(
+uint8_t* pInput, 
+uint32_t inputLen,
+uint8_t* pCounter, 
+uint8_t* pKey, 
+uint8_t* pOutput
+);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>This function performs AES-128-CTR encryption on a message block.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-6DAB5F7E-4397-4744-B332-FA04180C0EEA__TABLE_DYZ_WVP_FZ" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d28314e705"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d28314e709"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d28314e713"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d28314e717"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e705 ">pInput</td>
+
+                        <td class="entry" valign="top" headers="d28314e709 ">uint8_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e713 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e717 ">Pointer to the location of the input message</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e705 ">inputLen</td>
+
+                        <td class="entry" valign="top" headers="d28314e709 ">uint32_t</td>
+
+                        <td class="entry" valign="top" headers="d28314e713 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e717 ">Input message length in bytes</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e705 ">pCounter</td>
+
+                        <td class="entry" valign="top" headers="d28314e709 ">uint8_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e713 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e717 ">Pointer to the location of the 128-bit counter</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e705 ">pKey</td>
+
+                        <td class="entry" valign="top" headers="d28314e709 ">uint8_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e713 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e717 ">Pointer to the location of the 128-bit key</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e705 ">pOutput</td>
+
+                        <td class="entry" valign="top" headers="d28314e709 ">uint8_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e713 ">[OUT]</td>
+
+                        <td class="entry" valign="top" headers="d28314e717 ">Pointer to the location to store the ciphered output to</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">None.</p>
+
+        <p class="p"><strong class="ph b">AES_128_OFB ()</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">void AES-128-OFB
+(
+uint8_t* pInput, 
+uint32_t inputLen,
+uint8_t* pInitVector, 
+uint8_t* pKey, 
+uint8_t* pOutput
+);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>This function performs AES-128-OFB encryption on a message block.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-6DAB5F7E-4397-4744-B332-FA04180C0EEA__TABLE_Y31_XVP_FZ" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d28314e849"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d28314e853"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d28314e857"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d28314e861"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e849 ">pInput</td>
+
+                        <td class="entry" valign="top" headers="d28314e853 ">uint8_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e857 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e861 ">Pointer to the location of the input message</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e849 ">inputLen</td>
+
+                        <td class="entry" valign="top" headers="d28314e853 ">int32_t</td>
+
+                        <td class="entry" valign="top" headers="d28314e857 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e861 ">Input message length in bytes</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e849 ">pInitVector</td>
+
+                        <td class="entry" valign="top" headers="d28314e853 ">uint8_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e857 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e861 ">Pointer to the location of the 128-bit initialization vector</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e849 ">pKey</td>
+
+                        <td class="entry" valign="top" headers="d28314e853 ">uint8_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e857 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e861 ">Pointer to the location of the 128-bit key</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e849 ">pOutput</td>
+
+                        <td class="entry" valign="top" headers="d28314e853 ">uint8_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e857 ">[OUT]</td>
+
+                        <td class="entry" valign="top" headers="d28314e861 ">Pointer to the location to store the ciphered output to</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">None.</p>
+
+        <p class="p"><strong class="ph b">AES_128_CMAC ()</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">void AES_128_CMAC
+(
+uint8_t* pInput, 
+uint32_t inputLen, 
+uint8_t* pKey, 
+uint8_t* pOutput
+);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>This function performs AES-128-CMAC on a message block.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-6DAB5F7E-4397-4744-B332-FA04180C0EEA__TABLE_ST1_XVP_FZ" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d28314e992"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d28314e996"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d28314e1000"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d28314e1004"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e992 ">pInput</td>
+
+                        <td class="entry" valign="top" headers="d28314e996 ">uint8_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e1000 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e1004 ">Pointer to the message block</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e992 ">inputLen</td>
+
+                        <td class="entry" valign="top" headers="d28314e996 ">uint32_t</td>
+
+                        <td class="entry" valign="top" headers="d28314e1000 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e1004 ">Length of the input message in bytes</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e992 ">pKey</td>
+
+                        <td class="entry" valign="top" headers="d28314e996 ">uint8_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e1000 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e1004 ">Pointer to the location of the 128-bit key</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e992 ">pOutput</td>
+
+                        <td class="entry" valign="top" headers="d28314e996 ">uint8_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e1000 ">[OUT]</td>
+
+                        <td class="entry" valign="top" headers="d28314e1004 ">Pointer to the location to store the 16 byte authentication code
+                            to</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">None.</p>
+
+        <p class="p"><strong class="ph b">AES_128_EAX_Encrypt ()</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">typedef enum
+{
+    gSuccess_c,
+    gSecurityError_c
+} resultType_t;
+ 
+resultType_t AES_128_EAX_Encrypt
+(
+uint8_t* pInput, 
+uint32_t inputLen,
+uint8_t* pNonce,
+uint32_t nonceLen,
+uint8_t* pHeader,
+uint8_t headerLen, 
+uint8_t* pKey, 
+uint8_t* pOutput
+uint8_t* pTag
+);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>This function performs AES-128-EAX encryption on a message block.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-6DAB5F7E-4397-4744-B332-FA04180C0EEA__TABLE_GHK_NWP_FZ" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d28314e1120"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d28314e1124"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d28314e1128"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d28314e1132"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e1120 ">pInput</td>
+
+                        <td class="entry" valign="top" headers="d28314e1124 ">uint8_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e1128 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e1132 ">Pointer to the location of the input message</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e1120 ">inputLen</td>
+
+                        <td class="entry" valign="top" headers="d28314e1124 ">uint32_t</td>
+
+                        <td class="entry" valign="top" headers="d28314e1128 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e1132 ">Input message length in bytes</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e1120 ">pNonce</td>
+
+                        <td class="entry" valign="top" headers="d28314e1124 ">uint8_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e1128 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e1132 ">Pointer to the location of the nonce</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e1120 ">nonceLen</td>
+
+                        <td class="entry" valign="top" headers="d28314e1124 ">uint32_t</td>
+
+                        <td class="entry" valign="top" headers="d28314e1128 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e1132 ">Nonce length in bytes</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e1120 ">pHeader</td>
+
+                        <td class="entry" valign="top" headers="d28314e1124 ">uint8_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e1128 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e1132 ">Pointer to the location of header</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e1120 ">headerLen</td>
+
+                        <td class="entry" valign="top" headers="d28314e1124 ">uint32_t</td>
+
+                        <td class="entry" valign="top" headers="d28314e1128 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e1132 ">Header length in bytes</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e1120 ">pKey</td>
+
+                        <td class="entry" valign="top" headers="d28314e1124 ">uint8_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e1128 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e1132 ">Pointer to the location of the 128-bit key</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e1120 ">pOutput</td>
+
+                        <td class="entry" valign="top" headers="d28314e1124 ">uint8_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e1128 ">[OUT]</td>
+
+                        <td class="entry" valign="top" headers="d28314e1132 ">Pointer to the location to store the ciphered output to</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e1120 ">pTag</td>
+
+                        <td class="entry" valign="top" headers="d28314e1124 ">uint8_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e1128 ">[OUT]</td>
+
+                        <td class="entry" valign="top" headers="d28314e1132 ">Pointer to the location to store the 128-bit tag to</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">Operation status.</p>
+
+        <p class="p"><strong class="ph b">AES_128_EAX_Decrypt ()</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">typedef enum
+{
+    gSuccess_c,
+    gSecurityError_c
+} resultType_t;
+ 
+resultType_t AES_128_EAX_Decrypt
+(
+uint8_t* pInput, 
+uint32_t inputLen,
+uint8_t* pNonce,
+uint32_t nonceLen,
+uint8_t* pHeader,
+uint8_t headerLen, 
+uint8_t* pKey, 
+uint8_t* pOutput
+uint8_t* pTag
+);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>This function performs AES-128-EAX decryption on a message block.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-6DAB5F7E-4397-4744-B332-FA04180C0EEA__TABLE_YYX_TWP_FZ" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d28314e1325"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d28314e1329"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d28314e1333"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d28314e1337"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e1325 ">pInput</td>
+
+                        <td class="entry" valign="top" headers="d28314e1329 ">uint8_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e1333 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e1337 ">Pointer to the location of the input message</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e1325 ">inputLen</td>
+
+                        <td class="entry" valign="top" headers="d28314e1329 ">uint32_t</td>
+
+                        <td class="entry" valign="top" headers="d28314e1333 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e1337 ">Input message length in bytes</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e1325 ">pNonce</td>
+
+                        <td class="entry" valign="top" headers="d28314e1329 ">uint8_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e1333 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e1337 ">Pointer to the location of the nonce</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e1325 ">nonceLen</td>
+
+                        <td class="entry" valign="top" headers="d28314e1329 ">uint32_t</td>
+
+                        <td class="entry" valign="top" headers="d28314e1333 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e1337 ">Nonce length in bytes</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e1325 ">pHeader</td>
+
+                        <td class="entry" valign="top" headers="d28314e1329 ">uint8_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e1333 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e1337 ">Pointer to the location of header</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e1325 ">headerLen</td>
+
+                        <td class="entry" valign="top" headers="d28314e1329 ">uint32_t</td>
+
+                        <td class="entry" valign="top" headers="d28314e1333 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e1337 ">Header length in bytes</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e1325 ">pKey</td>
+
+                        <td class="entry" valign="top" headers="d28314e1329 ">uint8_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e1333 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e1337 ">Pointer to the location of the 128-bit key</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e1325 ">pOutput</td>
+
+                        <td class="entry" valign="top" headers="d28314e1329 ">uint8_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e1333 ">[OUT]</td>
+
+                        <td class="entry" valign="top" headers="d28314e1337 ">Pointer to the location to store the ciphered output to</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e1325 ">pTag</td>
+
+                        <td class="entry" valign="top" headers="d28314e1329 ">uint8_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e1333 ">[OUT]</td>
+
+                        <td class="entry" valign="top" headers="d28314e1337 ">Pointer to the location to store the 128‑bit tag to</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">Operation status.</p>
+
+        <p class="p"><strong class="ph b">AES_128_CCM ()</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">uint8_t AES_128_CCM(uint8_t* pInput,
+    uint16_t inputLen,
+    uint8_t* pAuthData,
+    uint16_t authDataLen,
+    uint8_t* pNonce,
+    uint8_t nonceSize,
+    uint8_t* pKey,
+    uint8_t* pOutput,
+    uint8_t* pCbcMac,
+    uint8_t macSize,
+    uint32_t flags);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>This function performs AES-128-CCM on a message block.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-6DAB5F7E-4397-4744-B332-FA04180C0EEA__TABLE_UTX_BXP_FZ" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d28314e1529">Name</th>
+
+                        <th class="entry" valign="top" id="d28314e1532">Type</th>
+
+                        <th class="entry" valign="top" id="d28314e1535">Direction</th>
+
+                        <th class="entry" valign="top" id="d28314e1538">Description</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e1529 ">pInput</td>
+
+                        <td class="entry" valign="top" headers="d28314e1532 ">uint8_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e1535 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e1538 ">Pointer to the location of the input message.</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e1529 ">inputLen</td>
+
+                        <td class="entry" valign="top" headers="d28314e1532 ">uint16_t</td>
+
+                        <td class="entry" valign="top" headers="d28314e1535 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e1538 ">Input message length in bytes.</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e1529 ">pAuthData</td>
+
+                        <td class="entry" valign="top" headers="d28314e1532 ">uint8_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e1535 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e1538 ">Pointer to the additional authentication data</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e1529 ">authDataLen</td>
+
+                        <td class="entry" valign="top" headers="d28314e1532 ">Uint16_t</td>
+
+                        <td class="entry" valign="top" headers="d28314e1535 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e1538 ">The length of the additional authentication data.</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e1529 ">pNonce</td>
+
+                        <td class="entry" valign="top" headers="d28314e1532 ">uint8_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e1535 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e1538 ">Pointer to the Nonce</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e1529 ">nonceSize</td>
+
+                        <td class="entry" valign="top" headers="d28314e1532 ">uint8_t</td>
+
+                        <td class="entry" valign="top" headers="d28314e1535 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e1538 ">The length of the Nonce in bytes</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e1529 ">pKey</td>
+
+                        <td class="entry" valign="top" headers="d28314e1532 ">uint8_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e1535 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e1538 ">Pointer to the location of the 128-bit key.</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e1529 ">pOutput</td>
+
+                        <td class="entry" valign="top" headers="d28314e1532 ">uint8_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e1535 ">[OUT]</td>
+
+                        <td class="entry" valign="top" headers="d28314e1538 ">Pointer to the location to store the ciphered output.</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e1529 ">pCbcMac</td>
+
+                        <td class="entry" valign="top" headers="d28314e1532 ">uint8_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e1535 ">[IN/OUT]</td>
+
+                        <td class="entry" valign="top" headers="d28314e1538 ">
+                            <p class="p">Encryption: pointer to the location to store the authentication
+                                code.</p>
+
+                            <p class="p">Decryption: pointer to the location of the received authentication
+                                code</p>
+
+                        </td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e1529 ">macSize</td>
+
+                        <td class="entry" valign="top" headers="d28314e1532 ">uint8_t</td>
+
+                        <td class="entry" valign="top" headers="d28314e1535 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e1538 ">The length of the MAC in bytes</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e1529 ">flags</td>
+
+                        <td class="entry" valign="top" headers="d28314e1532 ">uint32_t</td>
+
+                        <td class="entry" valign="top" headers="d28314e1535 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e1538 ">Bit0 – 0 encrypt / 1 decrypt</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">If the decryption failed (MAC check failed), it returns an error code. Otherwise, it
+            returns success.</p>
+
+        <p class="p"><strong class="ph b">SecLib_XorN ()</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">void SecLib_XorN
+(
+uint8_t* pDst,
+uint8_t* pSrc, 
+uint8_t len
+);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>This function performs XOR between pDst and pSrc and stores the result
+            at pDst.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-6DAB5F7E-4397-4744-B332-FA04180C0EEA__TABLE_URZ_3XP_FZ" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d28314e1765">Name</th>
+
+                        <th class="entry" valign="top" id="d28314e1768">Type</th>
+
+                        <th class="entry" valign="top" id="d28314e1771">Direction</th>
+
+                        <th class="entry" valign="top" id="d28314e1774">Description</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e1765 ">pDst</td>
+
+                        <td class="entry" valign="top" headers="d28314e1768 ">uint8_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e1771 ">[IN/OUT]</td>
+
+                        <td class="entry" valign="top" headers="d28314e1774 ">Pointer to the input / output data</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e1765 ">pSrc</td>
+
+                        <td class="entry" valign="top" headers="d28314e1768 ">uint8_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e1771 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e1774 ">Pointer to the input data</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e1765 ">len</td>
+
+                        <td class="entry" valign="top" headers="d28314e1768 ">uint8_t</td>
+
+                        <td class="entry" valign="top" headers="d28314e1771 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e1774 ">Data length in bytes</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">None.</p>
+
+        <p class="p"><strong class="ph b">SHA1_Init ()</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">void SHA1_Init
+(
+sha1Context_t* context
+);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>This function performs SHA1 initialization. </p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-6DAB5F7E-4397-4744-B332-FA04180C0EEA__TABLE_UJ1_JXP_FZ" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d28314e1875">Name</th>
+
+                        <th class="entry" valign="top" id="d28314e1878">Type</th>
+
+                        <th class="entry" valign="top" id="d28314e1881">Direction</th>
+
+                        <th class="entry" valign="top" id="d28314e1884">Description</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e1875 ">context</td>
+
+                        <td class="entry" valign="top" headers="d28314e1878 ">sha1Context_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e1881 ">[IN/OUT]</td>
+
+                        <td class="entry" valign="top" headers="d28314e1884 ">Pointer to the SHA1 context</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">None.</p>
+
+        <p class="p"><strong class="ph b">SHA1_HashUpdate ()</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">void SHA1_HashUpdate
+(
+sha1Context_t* context, 
+uint8_t* pData, 
+uint32_t numBytes
+);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>This function performs SHA1 algorithm.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-6DAB5F7E-4397-4744-B332-FA04180C0EEA__TABLE_YGS_RXP_FZ" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d28314e1954">Name</th>
+
+                        <th class="entry" valign="top" id="d28314e1957">Type</th>
+
+                        <th class="entry" valign="top" id="d28314e1960">Direction</th>
+
+                        <th class="entry" valign="top" id="d28314e1963">Description</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e1954 ">context</td>
+
+                        <td class="entry" valign="top" headers="d28314e1957 ">sha1Context_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e1960 ">[IN/OUT]</td>
+
+                        <td class="entry" valign="top" headers="d28314e1963 ">Pointer to the SHA1 context</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e1954 ">pData</td>
+
+                        <td class="entry" valign="top" headers="d28314e1957 ">uint8_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e1960 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e1963 ">Pointer to the plain text</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e1954 ">numBytes</td>
+
+                        <td class="entry" valign="top" headers="d28314e1957 ">uint32_t</td>
+
+                        <td class="entry" valign="top" headers="d28314e1960 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e1963 ">Number of bytes</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">None.</p>
+
+        <p class="p"><strong class="ph b">SHA1_HashFinish ()</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <p class="p">void SHA1_HashFinish</p>
+
+        <p class="p">(</p>
+
+        <p class="p">sha1Context_t* context, </p>
+
+        <p class="p">uint8_t* pData, </p>
+
+        <p class="p">uint32_t numBytes</p>
+
+        <p class="p">);</p>
+
+        <p class="p"><strong class="ph b">Description:</strong>This function performs the final part of the SHA1 algorithm. The final
+            hash is stored in the context structure.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-6DAB5F7E-4397-4744-B332-FA04180C0EEA__TABLE_V1T_RXP_FZ" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d28314e2079">Name</th>
+
+                        <th class="entry" valign="top" id="d28314e2082">Type</th>
+
+                        <th class="entry" valign="top" id="d28314e2085">Direction</th>
+
+                        <th class="entry" valign="top" id="d28314e2088">Description</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e2079 ">context</td>
+
+                        <td class="entry" valign="top" headers="d28314e2082 ">sha1Context_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e2085 ">[IN/OUT]</td>
+
+                        <td class="entry" valign="top" headers="d28314e2088 ">Pointer to the SHA1 context</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e2079 ">pData</td>
+
+                        <td class="entry" valign="top" headers="d28314e2082 ">uint8_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e2085 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e2088 ">Pointer to the plain text</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e2079 ">numBytes</td>
+
+                        <td class="entry" valign="top" headers="d28314e2082 ">uint32_t</td>
+
+                        <td class="entry" valign="top" headers="d28314e2085 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e2088 ">Number of bytes</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">None.</p>
+
+        <p class="p"><strong class="ph b">SHA1_Hash ()</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">void SHA1_Hash
+(
+sha1Context_t* context, 
+uint8_t* pData, 
+uint32_t numBytes
+);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>This function performs the entire SHA1 algorithm (initialize, update,
+            finish) over the imput data. The final hash is stored in the context structure.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-6DAB5F7E-4397-4744-B332-FA04180C0EEA__TABLE_QQD_WXP_FZ" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d28314e2189">Name</th>
+
+                        <th class="entry" valign="top" id="d28314e2192">Type</th>
+
+                        <th class="entry" valign="top" id="d28314e2195">Direction</th>
+
+                        <th class="entry" valign="top" id="d28314e2198">Description</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e2189 ">context</td>
+
+                        <td class="entry" valign="top" headers="d28314e2192 ">sha1Context_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e2195 ">[IN/OUT]</td>
+
+                        <td class="entry" valign="top" headers="d28314e2198 ">Pointer to the SHA1 context</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e2189 ">pData</td>
+
+                        <td class="entry" valign="top" headers="d28314e2192 ">uint8_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e2195 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e2198 ">Pointer to the plain text</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e2189 ">numBytes</td>
+
+                        <td class="entry" valign="top" headers="d28314e2192 ">uint32_t</td>
+
+                        <td class="entry" valign="top" headers="d28314e2195 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e2198 ">Number of bytes</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">None.</p>
+
+        <p class="p"><strong class="ph b">SHA256_Init ()</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">void SHA256_Init
+(
+Sha256Context_t* context
+);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>This function performs SHA256 initialization. </p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-6DAB5F7E-4397-4744-B332-FA04180C0EEA__TABLE_KN2_WXP_FZ" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d28314e2298">Name</th>
+
+                        <th class="entry" valign="top" id="d28314e2301">Type</th>
+
+                        <th class="entry" valign="top" id="d28314e2304">Direction</th>
+
+                        <th class="entry" valign="top" id="d28314e2307">Description</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e2298 ">context</td>
+
+                        <td class="entry" valign="top" headers="d28314e2301 ">Sha256Context_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e2304 ">[IN/OUT]</td>
+
+                        <td class="entry" valign="top" headers="d28314e2307 ">Pointer to the SHA256 context</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">None.</p>
+
+        <p class="p"><strong class="ph b">SHA256_HashUpdate ()</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">void SHA256_HashUpdate
+(
+Sha256Context_t* context, 
+uint8_t* pData, 
+uint32_t numBytes
+);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>This function performs SHA256 algorithm.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-6DAB5F7E-4397-4744-B332-FA04180C0EEA__TABLE_I4G_DYP_FZ" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d28314e2377">Name</th>
+
+                        <th class="entry" valign="top" id="d28314e2380">Type</th>
+
+                        <th class="entry" valign="top" id="d28314e2383">Direction</th>
+
+                        <th class="entry" valign="top" id="d28314e2386">Description</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e2377 ">Context</td>
+
+                        <td class="entry" valign="top" headers="d28314e2380 ">Sha256Context_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e2383 ">[IN/OUT]</td>
+
+                        <td class="entry" valign="top" headers="d28314e2386 ">Pointer to the SHA256 context</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e2377 ">pData</td>
+
+                        <td class="entry" valign="top" headers="d28314e2380 ">uint8_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e2383 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e2386 ">Pointer to the plain text</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e2377 ">numBytes</td>
+
+                        <td class="entry" valign="top" headers="d28314e2380 ">uint32_t</td>
+
+                        <td class="entry" valign="top" headers="d28314e2383 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e2386 ">Number of bytes</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">None.</p>
+
+        <p class="p"><strong class="ph b">SHA256_HashFinish ()</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">void SHA256_HashFinish
+(
+Sha256Context_t* context, 
+uint8_t* pData, 
+uint32_t numBytes
+);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>This function performs the final part of the SHA256 algorithm. The
+            final hash is stored in the context structure.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-6DAB5F7E-4397-4744-B332-FA04180C0EEA__TABLE_IMH_DYP_FZ" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d28314e2487">Name</th>
+
+                        <th class="entry" valign="top" id="d28314e2490">Type</th>
+
+                        <th class="entry" valign="top" id="d28314e2493">Direction</th>
+
+                        <th class="entry" valign="top" id="d28314e2496">Description</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e2487 ">Context</td>
+
+                        <td class="entry" valign="top" headers="d28314e2490 ">Sha256Context_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e2493 ">[IN/OUT]</td>
+
+                        <td class="entry" valign="top" headers="d28314e2496 ">Pointer to the SHA256 context</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e2487 ">pData</td>
+
+                        <td class="entry" valign="top" headers="d28314e2490 ">uint8_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e2493 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e2496 ">Pointer to the plain text</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e2487 ">numBytes</td>
+
+                        <td class="entry" valign="top" headers="d28314e2490 ">uint32_t</td>
+
+                        <td class="entry" valign="top" headers="d28314e2493 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e2496 ">Number of bytes</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">None.</p>
+
+        <p class="p"><strong class="ph b">SHA256_Hash ()</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">void SHA256_Hash
+(
+Sha256Context_t* context, 
+uint8_t* pData, 
+uint32_t numBytes
+);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>This function performs the entire SHA256 algorithm (initialize,
+            update, finish) over the imput data. The final hash is stored in the context
+            structure.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-6DAB5F7E-4397-4744-B332-FA04180C0EEA__TABLE_PJJ_QYP_FZ" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d28314e2596">Name</th>
+
+                        <th class="entry" valign="top" id="d28314e2599">Type</th>
+
+                        <th class="entry" valign="top" id="d28314e2602">Direction</th>
+
+                        <th class="entry" valign="top" id="d28314e2605">Description</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e2596 ">context</td>
+
+                        <td class="entry" valign="top" headers="d28314e2599 ">Sha256Context_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e2602 ">[IN/OUT]</td>
+
+                        <td class="entry" valign="top" headers="d28314e2605 ">Pointer to the SHA256 context</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e2596 ">pData</td>
+
+                        <td class="entry" valign="top" headers="d28314e2599 ">uint8_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e2602 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e2605 ">Pointer to the plain text</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e2596 ">numBytes</td>
+
+                        <td class="entry" valign="top" headers="d28314e2599 ">uint32_t</td>
+
+                        <td class="entry" valign="top" headers="d28314e2602 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e2605 ">Number of bytes</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">None.</p>
+
+        <p class="p"><strong class="ph b">HMAC_SHA256_Init ()</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">void HMAC_SHA256_Init
+(
+HMAC_SHA256_context_t* ctx, 
+uint8_t* pKey, 
+uint32_t keyLen
+);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>This function performs HMAC initialization. </p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-6DAB5F7E-4397-4744-B332-FA04180C0EEA__TABLE_AKK_QYP_FZ" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d28314e2705">Name</th>
+
+                        <th class="entry" valign="top" id="d28314e2708">Type</th>
+
+                        <th class="entry" valign="top" id="d28314e2711">Direction</th>
+
+                        <th class="entry" valign="top" id="d28314e2714">Description</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e2705 ">ctx</td>
+
+                        <td class="entry" valign="top" headers="d28314e2708 ">HMAC_SHA256_context_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e2711 ">[IN/OUT]</td>
+
+                        <td class="entry" valign="top" headers="d28314e2714 ">Pointer to the HMAC context</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e2705 ">pKey</td>
+
+                        <td class="entry" valign="top" headers="d28314e2708 ">uint8_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e2711 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e2714 ">Pointer to the HMAC key</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e2705 ">keyLen</td>
+
+                        <td class="entry" valign="top" headers="d28314e2708 ">uint32_t</td>
+
+                        <td class="entry" valign="top" headers="d28314e2711 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e2714 ">Length of the key</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">None.</p>
+
+        <p class="p"><strong class="ph b">HMAC_SHA256_Update ()</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">void HMAC_SHA256_Update
+(
+HMAC_SHA256_context_t* ctx, 
+uint8_t* pData, 
+uint32_t numBytes
+);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>This function performs HMAC algorithm based on SHA256.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-6DAB5F7E-4397-4744-B332-FA04180C0EEA__TABLE_AN1_YYP_FZ" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d28314e2815">Name</th>
+
+                        <th class="entry" valign="top" id="d28314e2818">Type</th>
+
+                        <th class="entry" valign="top" id="d28314e2821">Direction</th>
+
+                        <th class="entry" valign="top" id="d28314e2824">Description</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e2815 ">ctx</td>
+
+                        <td class="entry" valign="top" headers="d28314e2818 ">HMAC_SHA256_context_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e2821 ">[IN/OUT]</td>
+
+                        <td class="entry" valign="top" headers="d28314e2824 ">Pointer to the HMAC context</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e2815 ">pData</td>
+
+                        <td class="entry" valign="top" headers="d28314e2818 ">uint8_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e2821 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e2824 ">Pointer to the plain text</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e2815 ">numBytes</td>
+
+                        <td class="entry" valign="top" headers="d28314e2818 ">uint32_t</td>
+
+                        <td class="entry" valign="top" headers="d28314e2821 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e2824 ">Number of bytes</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">None.</p>
+
+        <p class="p"><strong class="ph b">HMAC_SHA256_Finish ()</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">void HMAC_SHA256_Finish
+(
+HMAC_SHA256_context_t* ctx, 
+uint8_t* pData, 
+uint32_t numBytes
+);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>This function performs the final part of the HMAC algorithm. The final
+            hash is stored in the context structure.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-6DAB5F7E-4397-4744-B332-FA04180C0EEA__TABLE_FPB_YYP_FZ" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d28314e2924">Name</th>
+
+                        <th class="entry" valign="top" id="d28314e2927">Type</th>
+
+                        <th class="entry" valign="top" id="d28314e2930">Direction</th>
+
+                        <th class="entry" valign="top" id="d28314e2933">Description</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e2924 ">ctx</td>
+
+                        <td class="entry" valign="top" headers="d28314e2927 ">HMAC_SHA256_context_t</td>
+
+                        <td class="entry" valign="top" headers="d28314e2930 ">[IN/OUT]</td>
+
+                        <td class="entry" valign="top" headers="d28314e2933 ">Pointer to the HMAC context</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e2924 ">pData</td>
+
+                        <td class="entry" valign="top" headers="d28314e2927 ">uint8_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e2930 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e2933 ">Pointer to the plain text</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e2924 ">numBytes</td>
+
+                        <td class="entry" valign="top" headers="d28314e2927 ">uint32_t</td>
+
+                        <td class="entry" valign="top" headers="d28314e2930 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e2933 ">Number of block of bytes</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">None.</p>
+
+        <p class="p"><strong class="ph b">HMAC_SHA256 ()</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">void HMAC_SHA256
+(
+HMAC_SHA256_context_t* ctx, 
+uint8_t* pKey, 
+uint32_t keyLen, 
+uint8_t* pMsg,
+uint32_t msgLen
+);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>This function performs the entire HMAC algorithm (initialize, update,
+            finish) over the input data. The final hash is stored in the context structure.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-6DAB5F7E-4397-4744-B332-FA04180C0EEA__TABLE_I2Q_HZP_FZ" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d28314e3033">Name</th>
+
+                        <th class="entry" valign="top" id="d28314e3036">Type</th>
+
+                        <th class="entry" valign="top" id="d28314e3039">Direction</th>
+
+                        <th class="entry" valign="top" id="d28314e3042">Description</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e3033 ">context</td>
+
+                        <td class="entry" valign="top" headers="d28314e3036 ">HMAC_SHA256_context_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e3039 ">[IN/OUT]</td>
+
+                        <td class="entry" valign="top" headers="d28314e3042 ">Pointer to the HMAC context</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e3033 ">pKey</td>
+
+                        <td class="entry" valign="top" headers="d28314e3036 ">uint8_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e3039 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e3042 ">Pointer to the HMAC key</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e3033 ">keyLen</td>
+
+                        <td class="entry" valign="top" headers="d28314e3036 ">uint32_t</td>
+
+                        <td class="entry" valign="top" headers="d28314e3039 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e3042 ">Length of the key</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e3033 ">pMsg</td>
+
+                        <td class="entry" valign="top" headers="d28314e3036 ">uint8_t*</td>
+
+                        <td class="entry" valign="top" headers="d28314e3039 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e3042 ">Pointer to the plain text</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d28314e3033 ">numBytes</td>
+
+                        <td class="entry" valign="top" headers="d28314e3036 ">uint32_t</td>
+
+                        <td class="entry" valign="top" headers="d28314e3039 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d28314e3042 ">Number of block of bytes</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">None.</p>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-64F118B0-5E9C-49DA-BB84-8E43AFE80446.html">Security Library</a></div>
+</div>
+</div>
+
+</body>
+</html>

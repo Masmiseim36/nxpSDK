@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Application code"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-7140E8F9-B4EB-4B9D-85B4-489C65E9D85F.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Creator" content=""/>
+<meta name="DC.Publisher" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-6D64B63C-19D9-4E8B-95BA-7C45A20EA258"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Application code</title>
+</head>
+<body id="GUID-6D64B63C-19D9-4E8B-95BA-7C45A20EA258">
+
+
+    <h1 class="title topictitle1">Application code</h1>
+
+    <div class="body">
+        <p class="p">The application folder (<em class="ph i">ConnSw/app</em>)contains the commonfolder and the application
+            folder.The application folder contains the following modules:</p>
+
+        <ul class="ul" id="GUID-6D64B63C-19D9-4E8B-95BA-7C45A20EA258__UL_QGC_5VF_CY">
+            <li class="li"><em class="ph i">app.c</em> and <em class="ph i">app.h</em>. This module stores the application-specific
+                functionality (APIs for specific triggers, handling of peripherals, callbacks from
+                the stack, handling of low-power, and so on).</li>
+
+        </ul>
+
+        <p class="p">Before initializing the BLE Host stack, the main task calls <em class="ph i">BleApp_Init</em>. This
+            functions can store initializations of modules that work independently of the host
+            stack. For example, the Temeprature Sensor application initializes the temperature
+            sensor driver:</p>
+
+        <pre class="pre codeblock"><strong class="ph b">void</strong><strong class="ph b">BleApp_Init</strong>(<strong class="ph b">void</strong>)
+{
+    TempSensor_Init();
+}</pre>
+
+        <p class="p">After the stack is initialized, the generic callback the application calls
+                <em class="ph i">BleApp_Config</em>. The function contains configurations made to the host stack
+            after the initialization. This includes registering callbacks, seting securityfor
+            services, starting services, allocating timers, adding devices to white list, and so on.
+            For example, the temperature sensor configures the following:</p>
+
+        <pre class="pre codeblock"><strong class="ph b">static</strong><strong class="ph b">void</strong><strong class="ph b">BleApp_Config</strong>()
+{
+    /* Configure as GAP peripheral */
+    BleConnManager_GapPeripheralConfig();
+
+    /* Register for <u class="ph u">callbacks</u> */
+    App_RegisterGattServerCallback(BleApp_GattServerCallback);
+
+    mAdvState. advOn = FALSE;
+    
+    /* Start services */
+    tmsServiceConfig. initialTemperature = 100 * BOARD_GetTemperature();
+    Tms_Start(&amp;tmsServiceConfig);
+
+    basServiceConfig. batteryLevel = BOARD_GetBatteryLevel();
+    Bas_Start(&amp;basServiceConfig);
+    Dis_Start(&amp;disServiceConfig);
+
+    /* Allocate <u class="ph u">aplication</u> timer */
+    appTimerId = TMR_AllocateTimer();
+
+<strong class="ph b">#if</strong> (cPWR_UsePowerDownMode) 
+     PWR_ChangeDeepSleepMode(3);
+     PWR_AllowDeviceToSleep(); 
+<strong class="ph b">#endif</strong> 
+}</pre>
+
+        <p class="p">To start the application functionality, BleApp_Start is called. This function usually
+            contains code to start advertising for sensor nodes or scanning for central devices. In
+            the example of the Temperature Sensor, the function is the following:</p>
+
+        <pre class="pre codeblock"><strong class="ph b">void</strong><strong class="ph b">BleApp_Start</strong>(<strong class="ph b">void</strong>)
+{
+    Led1On();
+    
+    <strong class="ph b">if</strong> (mPeerDeviceId == gInvalidDeviceId_c)
+    {
+        /* Device is not connected and not advertising*/
+        <strong class="ph b">if</strong> (!mAdvState. advOn )
+        {
+            BleApp_Advertise();
+        }
+    }
+    <strong class="ph b">else</strong>
+    {
+        BleApp_SendTemperature();
+    }
+}</pre>
+
+        <ul class="ul" id="GUID-6D64B63C-19D9-4E8B-95BA-7C45A20EA258__UL_XLV_11G_CY">
+            <li class="li"><em class="ph i">app_config.c.</em> This file contains data structures that are used to configure
+                the stack. </li>
+
+        </ul>
+
+        <p class="p">This includes advertising data, scanning data, connection parameters, advertising
+            parameters, SMP keys, security requirements, and so on.</p>
+
+        <ul class="ul" id="GUID-6D64B63C-19D9-4E8B-95BA-7C45A20EA258__UL_CNV_11G_CY">
+            <li class="li"><em class="ph i">app_preinclude.h</em>. </li>
+
+        </ul>
+
+        <p class="p">This header file contains macros to override the default configuration of any module in
+            the application. It is added as a preinclude file in the preprocessor command line in
+            IAR:</p>
+
+        <div class="fig fignone" id="GUID-6D64B63C-19D9-4E8B-95BA-7C45A20EA258__FIG_YHS_G1G_CY"><span class="figcap">Figure 1. Preinclude file</span>
+            
+            <img class="image" src="GUID-5B962577-C134-4836-AE63-B379E1D6AE11-high.png"/>
+        </div>
+
+        <ul class="ul">
+            <li class="li"><em class="ph i">gatt_db.h</em> and <em class="ph i">gatt_uuid128.h</em>. The two header files contain
+                the definition of the GATT database and the custom UUIDs used by the application.
+                See <a class="xref" href="GUID-C9D692A7-076C-4A9B-BEB3-74E17F41C5A7.html#GUID-C9D692A7-076C-4A9B-BEB3-74E17F41C5A7">Creating GATT database</a> for more information.</li>
+
+        </ul>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-7140E8F9-B4EB-4B9D-85B4-489C65E9D85F.html">Application Structure</a></div>
+</div>
+</div>
+
+</body>
+</html>

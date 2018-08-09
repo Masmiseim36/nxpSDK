@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Thread Integration with Linux OS Host on RNDIS Interface"/>
+<meta name="abstract" content=""/>
+<meta name="description" content=""/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="4"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-D249C01A-0ACC-4A23-95A6-9466398CC530"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Thread Integration with Linux OS Host on RNDIS Interface</title>
+</head>
+<body id="GUID-D249C01A-0ACC-4A23-95A6-9466398CC530">
+
+
+  <h1 class="title topictitle1">Thread Integration with Linux OS Host on RNDIS Interface</h1>
+
+  
+  <div class="body"><p class="shortdesc"/>
+
+    <div class="note note"><span class="notetitle">Note:</span> THCI over RNDIS is enabled by default only in the configuration border_router on
+      usbkw41z_kw41z. To ensure that THCI over RNDIS works on different platforms, set the
+      THREAD_USE_THCI, gFsciIncluded_c and THCI_USBENET_ENABLE macro definitions to 1 and
+      THREAD_USE_SHELL macro definition to 0 in
+      middleware\wireless\nwk_ip_&lt;ver&gt;\examples\border_router\config \config.h. Modify/place the
+      definitions in the correct conditional group for the tested board.</div>
+
+    <p class="p">The Kinetis Thread Stack introduces the KW2xD/KW41Z configuration in the <samp class="ph codeph">border_router</samp> example which acts as a ND_ROUTER at the IPv6 level on the emulated Ethernet over USB link, and supporting THCI management commands over RNDIS. The Remote Network Driver Interface Specification is a protocol used mostly on top of USB which provides a virtual Ethernet link to the operating system. In Linux OS, the handling of these links is assigned to the <samp class="ph codeph">rndis_host</samp> driver. Following the connection of the RNDIS interface, the Linux OS kernel logs describe the creation of a new network interface:</p>
+
+    <pre class="pre codeblock">[692568.101376] usb 1-1.4: new full-speed USB device number 44 using ehci-pci 
+[692568.196601] usb 1-1.4: New USB device found, idVendor=1fc9, idProduct=0301 
+[692568.196606] usb 1-1.4: New USB device strings: Mfr=1, Product=2, SerialNumber=3 
+[692568.196609] usb 1-1.4: Product: KINETIS REMOTE NDIS 
+[692568.196612] usb 1-1.4: Manufacturer: NXP SEMICONDUCTORS 
+[692568.196614] usb 1-1.4: SerialNumber: 00000001 
+[692568.199363] rndis_host 1-1.4:1.0 eth1: register 'rndis_host' at usb-0000:00:1a.0-1.4, RNDIS device, 00:60:37:44:4d:04 
+[692568.213493] systemd-udevd[21269]: renamed network interface eth1 to eth6
+</pre>
+
+    <p class="p">Inspecting the newly created interface:</p>
+
+    <pre class="pre codeblock">$ ip address show dev eth6
+eth3: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UNKNOWN group default qlen 1000
+    link/ether 00:60:37:44:4d:04 brd ff:ff:ff:ff:ff:ff
+    inet6 fd01::420a:d72:3ba6:5273:a05c/64 scope global temporary dynamic
+       valid_lft 604478sec preferred_lft 85478sec
+    inet6 fd01::420a:260:37ff:fe44:4d04/64 scope global dynamic
+       valid_lft forever preferred_lft forever
+    inet6 fe80::260:37ff:fe44:4d04/64 scope link
+       valid_lft forever preferred_lft forever
+</pre>
+
+    <p class="p">The interface is auto-configured with its IPv6 addresses because of enabling ND_ROUTER nature
+      of the Thread device. From this point on, the IPv6-based operations are like others performed
+      on IP media interfaces such as Ethernet. However, a different type of physical layer needs to
+      be implemented to maintain compatibility with the previously described FSCI layer.</p>
+
+    <p class="p">The Host SDK implements two physical layers for transporting THCI: UART for direct UART, USB
+      CDC, and PCAP for RNDIS. The UART layer handles sending and receiving THCI frames over a
+      serial interface. This layer was the underlying basis for all previously discussed examples,
+      but it is not suitable for networking operations mainly because it does not provide support
+      for Ethernet headers and network packet injection.</p>
+
+    <p class="p">The implementation using the PCAP layer attempts to maintain the compatibility with the upper
+      THCI framing module, while being capable of network interface binding, packet injection and
+      Ethernet header manipulation. To achieve these, the well-known third party library libpcap is
+      used. Through <em class="ph i">libpcap</em>, the user can send THCI frames that get delivered to the board on
+      a special EtherType value: 0x88B5. This Ethertype value is available for public use for
+      prototype and vendor-specific protocol development, as defined in Amendment 802a to IEEE Std
+      802.</p>
+
+    <div class="fig fignone"><span class="figcap">Figure 1. Host injects a packet over RNDIS. Data represents a Thread Create Network Request frame.</span><img class="image" src="GUID-1A604794-D4B9-4E0F-8166-49C1292845EB-high.png"/></div>
+
+    <div class="fig fignone"><span class="figcap">Figure 2. Board replies. Data represents a Thread Create Network Confirmation frame.</span><img class="image" src="GUID-2FF50D59-C938-42EB-80E1-4BDDA12CAD53-high.png"/></div>
+
+    <p class="p">Sample code is provided in <samp class="ph codeph">hsdk/demo/PCAPTest.c</samp>.</p>
+
+  </div>
+
+
+</body>
+</html>

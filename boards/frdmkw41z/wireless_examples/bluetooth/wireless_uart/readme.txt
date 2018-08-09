@@ -1,0 +1,1 @@
+The application implements a custom GATT based Wireless UART Profile that emulates UART over BLE. The example works on the FRDM-KW41Z board. For more information, please consult the BLE Demo Applications User's Guide.

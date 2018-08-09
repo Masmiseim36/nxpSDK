@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Initiating joining"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-2EC2CC6F-3980-48D3-8C79-13394E7C0C40.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="4"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-41D7F07C-B11A-4DB9-A899-44FDAA14B65D"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Initiating joining</title>
+</head>
+<body id="GUID-41D7F07C-B11A-4DB9-A899-44FDAA14B65D">
+
+
+    <h1 class="title topictitle1">Initiating joining</h1>
+
+    <div class="body">
+        <p class="p">To initiate network joining, applications must simply call the THR_NwkJoin API:</p>
+
+        <div class="p"><pre class="pre codeblock">instanceId_t thrInstId = 0;
+thrJoinDiscoveryMethod_t discMethod = gUseThreadDiscovery_c;
+
+ (void)THR_NwkJoin(thrInstId, discMethod);
+</pre>
+</div>
+
+        <p class="p">Joining is initiated with either in-band or out-of-band commissioning depending on
+            compile time flag THR_DEV_IS_OUT_OF_BAND_CONFIGURED and then at runtime by the value of
+            the stack attribute having identifier gNwkAttrId_IsDevCommissisoned_c.</p>
+
+        <p class="p">In all use cases (either for in-band or out-of-band commissioning), the result of the
+            joining process is received by means of the callback system for Join events describe in
+            the previous section.</p>
+
+        <p class="p">Application can influence and make options during the joining state machine
+            (for example, select which network to join by implementing specific callbacks with
+            reference implementations shown in file
+                <strong class="ph b">\middleware\wireless\nwk_ip_1.2.4\examples\common\app_thread_callbacks.c</strong>.</p>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-2EC2CC6F-3980-48D3-8C79-13394E7C0C40.html">Joining a network</a></div>
+</div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Usage"/>
+<meta name="abstract" content=""/>
+<meta name="description" content=""/>
+<meta name="DC.Relation" scheme="URI" content="GUID-69DCE941-B29B-445D-AF65-13DA7D71E88A.html"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-6A79DC36-EEB9-4649-BEB4-A226B5AD42D8"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Usage</title>
+</head>
+<body id="GUID-6A79DC36-EEB9-4649-BEB4-A226B5AD42D8">
+
+
+  <h1 class="title topictitle1">Usage</h1>
+
+  
+  <div class="body"><p class="shortdesc"/>
+
+    <p class="p">The application is built to work with any other BLE device. To showcase the functionality, two FRDM-KW41 platforms are used in the following setup.</p>
+
+    <ol class="ol">
+      <li class="li">Open a serial port terminal and connect them to the two boards, in the same manner described in section 5.1.3. The start screen is displayed after the board is reset. 
+        All LEDs are flashing on both devices.</li>
+
+      <li class="li">Configure one of the devices as a GAP peripheral and a Heart Rate server. Change name to HRS. Start advertising on this device.
+      <pre class="pre codeblock">
+Kinetis BLE Shell&gt;gap devicename HRS
+--&gt; GATTDB Event: Attribute Written
+HRS&gt;gap advdata 1 6
+--&gt; GAP Event: Advertising data successfully set.
+HRSvgap advdata 8 HRS
+--&gt; GAP Event: Advertising data successfully set.
+HRS&gt;gap advstart
+--&gt; GAP Event: Advertising started.
+HRS&gt;gattdb addservice 0x180D
+--&gt; Heart Rate
+- Heart Rate Measurement Value Handle: 14
+- CCCD Handle: 15
+- Body Sensor Location Value Handle: 17
+- Heart Rate Control Point Value Handle: 19
+--&gt; GATTDB Event: Service Added in database.
+</pre>
+</li>
+
+      <li class="li">Configure the other device as a GAP central. Change name as Collector. Start scanning and connect to the HRS device by selecting the corresponding device index. 
+        In the example below, the HRS device is device number 2.
+      
+      <pre class="pre codeblock">
+Kinetis BLE Shell&gt;gap devicename Collector
+--&gt; GATTDB Event: Attribute Written
+Collector&gt;gap scanstart
+-&gt; GAP Event: Scan started.
+Collector&gt;
+--&gt; GAP Event: Found device 0 : 880F102F500E 0 dBm
+--&gt; GAP Event: Found device 1 : FSL_CSCS 00049F000006 0 dBm
+--&gt; GAP Event: Found device 2 : HRS 00049F0000FF 0 dBm
+Collector&gt;gap connect 2
+-&gt; GAP Event: Scan stopped.
+Collector&gt;
+--&gt; GAP Event: Connected
+</pre>
+</li>
+
+      
+      <li class="li">Optionally, the devices can be paired. On the collector initiate the pairing.
+      <pre class="pre codeblock">
+Collector&gt;gap pair
+--&gt; Pairing...
+--&gt; GAP Event: Passkey is 792910
+</pre>
+</li>
+
+      <li class="li">On the HRS, enter the pin displayed by the collector, as shown below.
+      <pre class="pre codeblock">
+HRS&gt;
+--&gt; GAP Event: PIN required
+HRS&gt;gap enterpin 792910
+--&gt; GAP Event: Device Paired.
+</pre>
+</li>
+
+      <li class="li">On the Collector, start service discovery. The device discovers the GAP, GATT and Heart Rate services.
+      <pre class="pre codeblock">
+Collector&gt;gatt discover -all
+--&gt; Discovered primary services: 3
+--&gt; Generic Access Start Handle: 1 End Handle: 7
+- Device Name Value Handle: 3
+- Appearance Value Handle: 5
+- Peripheral Preferred Connection Parameters Value Handle: 7
+--&gt; Generic Attribute Start Handle: 8 End Handle: 11
+- Service Changed Value Handle: 10
+- Client Characteristic Configuration Descriptor Handle: 11
+--&gt; Heart Rate Start Handle: 12 End Handle: 19
+- Heart Rate Measurement Value Handle: 14
+- Client Characteristic Configuration Descriptor Handle: 15
+- Body Sensor Location Value Handle: 17
+- Heart Rate Control Point Value Handle: 19
+</pre>
+</li>
+
+      <li class="li">Configure the HRS to send notifications by writing the CCCD from the Collector. Send a GATT write command with value 1 to the CCCD handle discovered, 15.
+      <pre class="pre codeblock">
+Collector&gt;gatt write 15 0x0001
+</pre>
+</li>
+
+      <li class="li">Send heart rate measurement notifications from the HRS device by using the value handle obtained after adding the service in the previous step.
+      <pre class="pre codeblock">
+HRS&gt;gatt notify 14
+</pre>
+</li>
+
+      <li class="li">A notification appears on the Collector console.
+      <pre class="pre codeblock">
+Collector&gt;
+--&gt; GATT Event: Received Notification
+Handle: 14
+Value: B400
+</pre>
+</li>
+
+      
+      
+      
+    </ol>
+
+    
+  </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-69DCE941-B29B-445D-AF65-13DA7D71E88A.html">BLE Shell</a></div>
+</div>
+</div>
+
+</body>
+</html>

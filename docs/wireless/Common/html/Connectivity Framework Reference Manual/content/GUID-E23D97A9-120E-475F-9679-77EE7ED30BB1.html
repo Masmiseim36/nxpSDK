@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="When/How to Enter Low-Power"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-BD32F550-7639-4241-A13E-03413ED8C5C3.html"/>
+<meta name="prodname" content=""/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Creator" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-E23D97A9-120E-475F-9679-77EE7ED30BB1"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>When/How to Enter Low-Power</title>
+</head>
+<body id="GUID-E23D97A9-120E-475F-9679-77EE7ED30BB1">
+
+
+    <h1 class="title topictitle1">When/How to Enter Low-Power</h1>
+
+    <div class="body">
+        <p class="p">The system should enter low-power when the entire system is idle and all software layers
+            agree on that. An idle task which must have the lowest priority in the system should be
+            defined and used to enter low-power. Therefore, the system enters low-power on idle
+            task, which runs only when there are no events for other tasks. The user must call the
+            function PWR_EnterLowPower in the idle task as shown here:</p>
+
+        <div class="example" id="GUID-E23D97A9-120E-475F-9679-77EE7ED30BB1__GUID-1F3A7E8D-8DB2-44D1-AD26-5664D0127874">
+            <pre class="pre codeblock">if (PWR_CheckIfDeviceCanGoToSleep())
+{
+    wakeupReason = PWR_EnterLowPower();
+}</pre>
+
+        </div>
+
+        <p class="p">Each software layer/entity running on the system can prevent it from entering low-power
+            by calling PWR_DisallowDeviceToSleep(). The system stays awake until all software layers
+            that called PWR_DisallowDeviceToSleep() call back PWR_AllowDeviceToSleep() and the idle
+            task starts running. The MCU enters either a sleep or a deep sleep state depending on
+            the type of the timers started. Low-power timers are the only timers that do not prevent
+            the system from entering a deep sleep. If any other timers are started, the MCU will
+            enter a sleep instead of a deep sleep state. Therefore, to enter deep sleep, stop all
+            timers except the low-power timers. Be aware that functions, such as the LED_StartFlash,
+            start timers which prevent the system from entering a deep sleep state. </p>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-BD32F550-7639-4241-A13E-03413ED8C5C3.html">Kinetis Wireless Dual Mode (Bluetooth LE and IEEE® 802.15.4) Microcontrollers Low-power Library Overview</a></div>
+</div>
+</div>
+
+</body>
+</html>

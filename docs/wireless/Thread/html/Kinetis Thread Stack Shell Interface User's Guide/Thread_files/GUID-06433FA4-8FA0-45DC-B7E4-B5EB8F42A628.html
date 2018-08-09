@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Generic Commands"/>
+<meta name="abstract" content=""/>
+<meta name="description" content=""/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-06433FA4-8FA0-45DC-B7E4-B5EB8F42A628"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Generic Commands</title>
+</head>
+<body id="GUID-06433FA4-8FA0-45DC-B7E4-B5EB8F42A628">
+
+
+  <h1 class="title topictitle1">Generic Commands</h1>
+
+  
+  <div class="body"><p class="shortdesc"/>
+
+    <div class="p"><samp class="ph codeph">ifconfig</samp> - Displays and updates address configuration for IP
+      interfaces.<pre class="pre codeblock">$ help ifconfig
+ifconfig - IP Stack interfaces configuration
+   ifconfig displays all interfaces and addresses configured on the device
+   ifconfig &lt;interface ID&gt; ip &lt;IP address&gt;</pre>
+</div>
+ 
+ 
+    <div class="p"><samp class="ph codeph">ifconfig</samp> - Displays all addresses configured on each interface available on
+      the device. The output for a device with a single interface is shown in the image
+      below:<pre class="pre codeblock">$ ifconfig
+Interface 0: 6LoWPAN
+        Link local address (LL64): fe80::e90c:5b95:d992:543b
+        Mesh local address (ML64): fd4a:8286:fade::2d14:f7d6:435a:967f
+        Mesh local address (ML16): fd4a:8286:fade::ff:fe00:0
+</pre>
+</div>
+
+    
+    <div class="p"><samp class="ph codeph"><strong class="ph b">ifconfig &lt;interface ID&gt; ip &lt;IP address&gt;</strong></samp> - Adds a new IPv6
+      address on the specified
+      interface.<pre class="pre codeblock">$ ifconfig 0 ip 2001::1
+interface configured
+</pre>
+</div>
+ 
+    
+    <div class="note note"><span class="notetitle">Note:</span> Users can check if the IP address assignment was correctly performed by typing the command <samp class="ph codeph">ifconfig</samp> and observing that the address has been added to the list.</div>
+
+    <div class="p"><samp class="ph codeph">mcastgroup</samp> - Set of commands for IP multicast group
+      management.<pre class="pre codeblock">$ help mcastgroup
+mcastgroup - Multicast groups management
+   mcastgroup show - displays all joined multicast groups
+   mcastgroup add &lt;IP group address&gt; &lt;interface id&gt;- joins to a new multicast group
+   mcastgroup leave &lt;IP group address&gt; &lt;interface id&gt;- leaves a multicast group
+Warning! Do not remove addresses that may affect stack's behaviour!
+</pre>
+</div>
+ 
+    
+    <div class="p"><samp class="ph codeph">mcastgroup show</samp> - Displays all the group addresses that the device is
+      currently part of, on each IP
+      interface.<pre class="pre codeblock">$ mcastgroup show
+
+Interface 0:
+Multicast Group: ff02::1
+Multicast Group: ff03::1
+Multicast Group: ff32:40:fd6e:8865:56d8::1
+Multicast Group: ff33:40:fd6e:8865:56d8::1
+Multicast Group: ff02::2
+Multicast Group: ff03::2
+Multicast Group: ff03::1:3
+</pre>
+</div>
+ 
+    
+    <div class="p"><samp class="ph codeph">mcastgroup add</samp> - Joins a new multicast
+      group.<pre class="pre codeblock">$ mcastgroup add ff05::3 0
+ Success!
+</pre>
+</div>
+ 
+    
+    <p class="p"><samp class="ph codeph">mcastgroup leave</samp> - Leaves a multicast group.</p>
+ 
+    <div class="note note"><span class="notetitle">Note:</span> Do not leave the multicast groups that might affect stack’s behavior!</div>
+
+    
+    <p class="p"><samp class="ph codeph">ping</samp> - Sends an ICMP Echo Request to the specified address.</p>
+
+<pre class="pre codeblock">$ help ping
+ &lt;interface&gt; -i &lt;timeout&gt; -c &lt;count&gt; -h &lt;hoplimit&gt; -s &lt;size&gt; -t &lt;continuous ping&gt; -S &lt;source IP address&gt;
+   Valid interfaces: 6LoWPAN, eth, serialtun, usbEnet</pre>
+
+    <pre class="pre codeblock">$ ping fe80::166e:a00:0:01 
+Pinging fe80::166e:a00:0:01 with 32 bytes of data
+Reply from fe80::166e:a00:0:01: bytes=32 time=21ms
+</pre>
+
+    <p class="p"><samp class="ph codeph">reboot</samp> - Resets the MCU.</p>
+
+    <p class="p"><samp class="ph codeph">factoryreset</samp> - Reverts all changes to attributes to factory settings.</p>
+
+    <p class="p"><samp class="ph codeph">identify</samp> - Blinks an LED on the device in order to correlate the shell terminal with the physical board. The LED blinks until user sends Ctrl+C to stop.</p>
+
+    
+  </div>
+
+
+</body>
+</html>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Declaring characteristic values"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-76A26B1B-FED9-426F-8200-730FDDC17380.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Creator" content=""/>
+<meta name="DC.Publisher" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-C4C20A01-4EBE-4C88-BFC9-2B5EF3F97F7E"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Declaring characteristic values</title>
+</head>
+<body id="GUID-C4C20A01-4EBE-4C88-BFC9-2B5EF3F97F7E">
+
+
+    <h1 class="title topictitle1">Declaring characteristic values</h1>
+
+    <div class="body">
+        <p class="p">The Characteristic Value declaration immediately follows the Characteristic declaration
+            and uses one of the following macros:</p>
+
+        <p class="p"> </p>
+
+        <ul class="ul" id="GUID-C4C20A01-4EBE-4C88-BFC9-2B5EF3F97F7E__UL_FQG_GF2_CY">
+            <li class="li"><em class="ph i">VALUE (name, uuid16, permissions, valueLength, valueByte1, valueByte2,
+                …)</em></li>
+
+            <li class="li"><em class="ph i">VALUE_UUID32 (name, uuid32, permissions, valueLength, valueByte1, valueByte2,
+                    …)</em></li>
+
+            <li class="li"><em class="ph i">VALUE _UUID128(name, uuid128, permissions, valueLength, valueByte1, valueByte2,
+                    …)</em><ul class="ul" id="GUID-C4C20A01-4EBE-4C88-BFC9-2B5EF3F97F7E__UL_LRG_GF2_CY">
+                    <li class="li"> See Service declaration for <em class="ph i">uuidXXX</em> parameter explanation.</li>
+
+                    <li class="li"> The <em class="ph i">permissions </em> parameter is a bit mask; the flags are defined in
+                            <em class="ph i">gattAttributePermissionsBitFields_t</em> .<ul class="ul" id="GUID-C4C20A01-4EBE-4C88-BFC9-2B5EF3F97F7E__UL_ASG_GF2_CY">
+                            <li class="li"> The <em class="ph i">valueLength </em> is the number of bytes to be allocated for
+                                the Characteristic Value. After this parameter, exactly
+                                    [<em class="ph i">valueLength</em> ] bytes follow in 0xZZ format, representing
+                                the initial value of this Characteristic.</li>
+
+                        </ul>
+</li>
+
+                </ul>
+</li>
+
+        </ul>
+
+        <p class="p">These macros are used to declare Characteristic Values of <em class="ph i">fixed lengths</em>.</p>
+
+        <p class="p">Some Characteristics have <em class="ph i">variable length values</em>. For those, the following macros
+            are used:</p>
+
+        <p class="p"> </p>
+
+        <ul class="ul" id="GUID-C4C20A01-4EBE-4C88-BFC9-2B5EF3F97F7E__UL_QSG_GF2_CY">
+            <li class="li"><em class="ph i">VALUE_VARLEN (name, uuid16, permissions, maximumValueLength, initialValueLength,
+                    valueByte1, valueByte2, …)</em></li>
+
+            <li class="li"><em class="ph i">VALUE_UUID32_VARLEN (name, uuid32, permissions, maximumValueLength,
+                    initialValueLength, valueByte1, valueByte2, …)</em></li>
+
+            <li class="li"><em class="ph i">VALUE_UUID128_VARLEN (name, uuid128, permissions, maximumValueLength,
+                    initialValueLength, valueByte1, valueByte2, …)</em><ul class="ul" id="GUID-C4C20A01-4EBE-4C88-BFC9-2B5EF3F97F7E__UL_VTG_GF2_CY">
+                    <li class="li"> The number of bytes allocated for this Characteristic Value is
+                            <em class="ph i">maximumValueLength</em> .</li>
+
+                    <li class="li"> The number of <em class="ph i">valueByteXXX</em> parameters shall be equal to
+                            <em class="ph i">initialValueLength</em> .</li>
+
+                </ul>
+</li>
+
+        </ul>
+
+        <p class="p">Obviously, <em class="ph i">initialValueLength</em> is, at most, equal to <em class="ph i">maximumValueLength</em>.</p>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-76A26B1B-FED9-426F-8200-730FDDC17380.html">Declaring a characteristic</a></div>
+</div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="L2CAP-LePsmConnectionComplete.Indication"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-87C421CF-53A6-4956-8DDE-EA30D34C9235.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Publisher" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-3EB2A97A-E91D-4DBA-8797-CAA5B85519AE"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>L2CAP-LePsmConnectionComplete.Indication</title>
+</head>
+<body id="GUID-3EB2A97A-E91D-4DBA-8797-CAA5B85519AE">
+
+
+    <h1 class="title topictitle1">L2CAP-LePsmConnectionComplete.Indication</h1>
+
+    <div class="body">
+        <p class="p"><strong class="ph b">Description</strong></p>
+
+        <p class="p">Credit Based - Connection complete event.</p>
+
+        <p class="p"><strong class="ph b">Parameters</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-3EB2A97A-E91D-4DBA-8797-CAA5B85519AE__TABLE_FCK_JVM_CY" class="table" frame="border" border="1" rules="all"><caption><span class="tablecap">Table 1. LePsmConnectionComplete.Indication Parameters</span></caption>
+                
+                
+                
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top"><strong class="ph b">Parameter</strong></td>
+
+                        <td class="entry" valign="top"><strong class="ph b">Size (bytes)</strong></td>
+
+                        <td class="entry" valign="top"><strong class="ph b">Comments</strong></td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">OpGroup</td>
+
+                        <td class="entry" valign="top">1</td>
+
+                        <td class="entry" valign="top">0x41</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">OpCode</td>
+
+                        <td class="entry" valign="top">1</td>
+
+                        <td class="entry" valign="top">0x84</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">Length</td>
+
+                        <td class="entry" valign="top">1</td>
+
+                        <td class="entry" valign="top">Length in bytes of the following parameters</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">InformationIncluded</td>
+
+                        <td class="entry" valign="top">1</td>
+
+                        <td class="entry" valign="top">Information is included or not</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">LeCbConnectionComplete</td>
+
+                        <td class="entry" valign="top">Variable</td>
+
+                        <td class="entry" valign="top">
+                            <p class="p">Connection complete event data</p>
+
+                            <p class="p">Structure type parameter. See the detailed table below for parameter
+                                structure.</p>
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-3EB2A97A-E91D-4DBA-8797-CAA5B85519AE__TABLE_KZJ_NVM_CY" class="table" frame="border" border="1" rules="all"><caption><span class="tablecap">Table 2. LeCbConnectionComplete Parameter Structure</span></caption>
+                
+                
+                
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top"><strong class="ph b">Structure Parameter</strong></td>
+
+                        <td class="entry" valign="top"><strong class="ph b">Size (bytes)</strong></td>
+
+                        <td class="entry" valign="top"><strong class="ph b">Comments</strong></td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">DeviceId</td>
+
+                        <td class="entry" valign="top">1</td>
+
+                        <td class="entry" valign="top">The DeviceId for which the command is intended</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">Channel Id</td>
+
+                        <td class="entry" valign="top">2</td>
+
+                        <td class="entry" valign="top">The L2CAP Channel Id assigned on the initiator</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">PeerMtu</td>
+
+                        <td class="entry" valign="top">2</td>
+
+                        <td class="entry" valign="top">Peer's MTU</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">PeerMps</td>
+
+                        <td class="entry" valign="top">2</td>
+
+                        <td class="entry" valign="top">Peer's MPS</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">InitialCredits</td>
+
+                        <td class="entry" valign="top">2</td>
+
+                        <td class="entry" valign="top">Initial credits</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">Result</td>
+
+                        <td class="entry" valign="top">2</td>
+
+                        <td class="entry" valign="top">
+                            <p class="p">Connection result</p>
+
+                            <p class="p">Possible values: </p>
+
+                            <p class="p">0x0000: gSuccessful_c</p>
+
+                            <p class="p">0x0002: gLePsmNotSupported_c</p>
+
+                            <p class="p">0x0004: gNoResourcesAvailable_c</p>
+
+                            <p class="p">0x0005: gInsufficientAuthentication_c</p>
+
+                            <p class="p">0x0006: gInsufficientAuthorization_c</p>
+
+                            <p class="p">0x0007: gInsufficientEncryptionKeySize_c</p>
+
+                            <p class="p">0x0008: gInsufficientEncryption_c</p>
+
+                            <p class="p">0x0009: gInvalidSourceCid_c</p>
+
+                            <p class="p">0x000A: gSourceCidAlreadyAllocated_c</p>
+
+                            <p class="p">0x0100: gCommandRejected_c</p>
+
+                            <p class="p">0xFFFE: gResponseTimeout_c</p>
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+    </div>
+
+    
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-87C421CF-53A6-4956-8DDE-EA30D34C9235.html">L2CAP CB Messages</a></div>
+</div>
+</div>
+
+</body>
+</html>

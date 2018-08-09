@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Implemented profile and services"/>
+<meta name="abstract" content=""/>
+<meta name="description" content=""/>
+<meta name="DC.Relation" scheme="URI" content="GUID-1494FED7-7DDB-4D3A-BA98-891523F88506.html"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-B23ED4DB-F2CD-4F33-955D-B6415F4034C1"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Implemented profile and services</title>
+</head>
+<body id="GUID-B23ED4DB-F2CD-4F33-955D-B6415F4034C1">
+
+
+  <h1 class="title topictitle1">Implemented profile and services</h1>
+
+  
+  <div class="body"><p class="shortdesc"/>
+
+    <p class="p">The BLE OTAP applications implement the GATT client and server for the custom BLE OTAP profile and service.</p>
+
+<ul class="ul">
+<li class="li">BLE OTAP Service (UUID: 01ff5550-ba5e-f4ee-5ca1-eb1e5e4b1ce0)</li>
+
+</ul>
+
+<p class="p">The BLE OTAP Service is a custom service which has 2 characteristics.</p>
+
+<ul class="ul">
+<li class="li">OTAP Control Point Characteristic (UUID: 01ff5551-ba5e-f4ee-5ca1-eb1e5e4b1ce0). This characteristic can be written and indicated to exchange OTAP Commands between the OTAP Server 
+and the OTAP Client. Data chunks are not transferred using this characteristic.</li>
+
+<li class="li">OTAP Data Characteristic (UUID: 01ff5552-ba5e-f4ee-5ca1-eb1e5e4b1ce0). This characteristic can be written without response by the OTAP Server to transfer image file data chunks to 
+the OTAP Client only when an image block transfer is requested via the ATT transfer method. Data chunks can also be transferred via the L2CAP credit based PSM channels method.</li>
+
+</ul>
+
+<p class="p">The demo runs using 4 applications: an OTAP Client embedded application, an OTAP Bootloader embedded application, an OTAP Server embedded application, and an OTAP Server PC application. 
+The OTAP Client embedded application has two versions, an ATT version and a L2CAP version each using a different transfer method.</p>
+
+<p class="p">The embedded OTAP Server application is a GAP Central application which scans for devices advertising the BLE OTAP service. After it finds one, it connects to it and 
+configures the OTAP Control Point CCC Descriptor to receive ATT Indications from the device then it waits for OTAP commands from this device.</p>
+
+<p class="p">Once commands start arriving from the OTAP Client via ATT Indications the OTAP Server relays them via serial interface to a PC application which responds. The responses 
+are then sent back to the OTAP Client by writing the OTAP Control Point Characteristic.
+The embedded OTAP Server application effectively acts as a relay between the OTAP Client to which the image is sent over the air and the OTAP Server PC application which 
+has an OTAP image file constructed using a binary .srec image or a .bin image.</p>
+
+<p class="p">The OTAP Client is a GAP Peripheral which advertises the BLE OTAP Service and waits for a connection from an OTAP Server. After an OTAP Server connects, the OTAP Client 
+waits for it to write the OTAP Control Point CCCD and then starts sending commands via ATT Indications. If the OTAP Client is configured to ask the data transfer via the
+ L2CAP CoC PSM, it registers and tries to connect a predetermined L2CAP PSM before sending any commands to the OTAP Server.</p>
+
+  </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-1494FED7-7DDB-4D3A-BA98-891523F88506.html">Over the Air Programming (OTAP)</a></div>
+</div>
+</div>
+
+</body>
+</html>

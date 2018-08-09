@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="API Primitives"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-BD32F550-7639-4241-A13E-03413ED8C5C3.html"/>
+<meta name="prodname" content=""/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Creator" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-82F0A478-B298-4AD7-A4A5-CB8623EB08C4"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>API Primitives</title>
+</head>
+<body id="GUID-82F0A478-B298-4AD7-A4A5-CB8623EB08C4">
+
+
+    <h1 class="title topictitle1">API Primitives</h1>
+
+    <div class="body">
+        <p class="p"><strong class="ph b">Prototype</strong></p>
+
+        <pre class="pre codeblock">void PWR_Init( void);</pre>
+
+        <p class="p"><strong class="ph b">Description</strong></p>
+
+        <p class="p">This function initializes all hardware modules involved in the low-power functionality.
+            It must be called prior to any other function in the module.</p>
+
+        <p class="p"><strong class="ph b">Parameters</strong></p>
+
+        <p class="p">None</p>
+
+        <p class="p"><strong class="ph b">Returns</strong></p>
+
+        <p class="p">None</p>
+
+        <p class="p"> </p>
+
+        <p class="p"><strong class="ph b">Prototype</strong></p>
+
+        <pre class="pre codeblock">bool_t PWR_ChangeDeepSleepMode(uint8_t dsMode);</pre>
+
+        <p class="p"><strong class="ph b">Description</strong></p>
+
+        <p class="p">Call this function to change the deep sleep mode at run time.</p>
+
+        <p class="p"><strong class="ph b">Parameters</strong></p>
+
+        <p class="p">uint8_t dsMode: New deep sleep mode to be set. The valid values are 0, 1, 2, 3, 4, 5, and
+            6. If 0 is chosen, the system doesn’t enter deep sleep.</p>
+
+        <p class="p"><strong class="ph b">Returns</strong></p>
+
+        <p class="p">The function returns FALSE if it receive as parameter a value above six; TRUE
+            otherwise.</p>
+
+        <p class="p"> </p>
+
+        <p class="p"><strong class="ph b">Prototype</strong></p>
+
+        <pre class="pre codeblock">uint8_t PWR_GetDeepSleepMode(void);</pre>
+
+        <p class="p"><strong class="ph b">Description</strong></p>
+
+        <p class="p">Call this function to get the current deep sleep mode. </p>
+
+        <p class="p"><strong class="ph b">Parameters</strong></p>
+
+        <p class="p">None</p>
+
+        <p class="p"><strong class="ph b">Returns</strong></p>
+
+        <p class="p">The function returns the current value of the deep sleep mode.</p>
+
+        <p class="p"/>
+
+        <p class="p"><strong class="ph b">Prototype</strong></p>
+
+        <pre class="pre codeblock">void PWR_AllowDeviceToSleep( void );
+void PWR_DisallowDeviceToSleep( void);</pre>
+
+        <p class="p"><strong class="ph b">Description</strong></p>
+
+        <p class="p">The low- power module maintains a global variable that enables/prevents the system to
+            enter deep sleep. The system is allowed to enter deep sleep only when this variable is
+            zero. Every software layer/entity, that needs to keep the system awake, calls
+            PWR_DisallowDeviceToSleep and the variable is incremented. As software layers/entities
+            decide that they can enter deep sleep, they call PWR_AllowDeviceToSleep and the variable
+            is decremented. Software layers/entities must not call PWR_AllowDeviceToSleep more times
+            than PWR_DisallowDeviceToSleep.</p>
+
+        <p class="p"><strong class="ph b">Parameters</strong></p>
+
+        <p class="p">None</p>
+
+        <p class="p"><strong class="ph b">Returns</strong></p>
+
+        <p class="p">None</p>
+
+        <p class="p"> </p>
+
+        <p class="p"><strong class="ph b">Prototype</strong></p>
+
+        <pre class="pre codeblock">bool_t PWR_CheckIfDeviceCanGoToSleep(void);</pre>
+
+        <p class="p"><strong class="ph b">Description</strong></p>
+
+        <p class="p">The function can be used to check if the system is allowed to enter deep sleep.</p>
+
+        <p class="p"><strong class="ph b">Parameters</strong></p>
+
+        <p class="p">None</p>
+
+        <p class="p"><strong class="ph b">Returns</strong></p>
+
+        <p class="p">The function returns TRUE if the system is allowed to enter deep sleep and false
+            otherwise.</p>
+
+        <p class="p"> </p>
+
+        <p class="p"><strong class="ph b">Prototype</strong></p>
+
+        <pre class="pre codeblock">PWRLib_WakeupReason_t PWR_EnterLowPower( void );</pre>
+
+        <p class="p"><strong class="ph b">Description</strong></p>
+
+        <p class="p">A call to this function must be placed in the idle task to put the system in low-power.
+            First, this function checks any non low-power timers are started. If there are, the
+            function tries to put the system to sleep. Otherwise, it tries to put the system to deep
+            sleep. The next step is to check if the system is allowed to enter sleep/deep sleep by
+            calling PWR_CheckIfDeviceCanGoToSleep. If the system is allowed to enter sleep/deep
+            sleep more protocol, specific checks are performed. If all conditions are met, the
+            system is put into sleep/deep sleep.</p>
+
+        <p class="p"><strong class="ph b">Parameters</strong></p>
+
+        <p class="p">None</p>
+
+        <p class="p"><strong class="ph b">Returns</strong></p>
+
+        <p class="p">If the system enters sleep, the function returns SleepTimeout field set in the
+            PWRLib_WakeupReason_t bitmap. If the system enters deep sleep and the deep sleep mode is
+            other than four or five, the function returns the wakeup source bitmap. If the wakeup
+            source is a timer, the DeepSleepTimeout field of the bitmap is also set. If any
+            interrupt occurs during function execution, the function fails to put the system in deep
+            sleep and returns 0 for all bitmap fields. If the deep sleep mode is 4 or 5 and the
+            function successfully puts the system in deep sleep, the system exits deep sleep through
+            reset sequence, so the function can’t return anything.</p>
+
+        <p class="p"> </p>
+
+        <p class="p"><strong class="ph b">Prototype</strong></p>
+
+        <pre class="pre codeblock">void PWR_BLE_EnterDSM(uint16_t wakeupInstant);</pre>
+
+        <p class="p"><strong class="ph b">Description</strong></p>
+
+        <p class="p">The function puts the BLE link layer in DSM immediately if it isn’t already in this
+            state. If it is, the function takes no action. First, the function sets the wakeup
+            instant received as a parameter in the BLE link layer and then commands it to enter DSM.
+            The function has meaning only if cPWR_BLE_LL_Enable is TRUE. Otherwise, it is empty. </p>
+
+        <p class="p"><strong class="ph b">Parameters</strong></p>
+
+        <p class="p">uint16_t wakeupInstant parameter represents the wakeup moment in regard to the BLE link
+            layer reference clock register (actually it wakes up earlier depending on the value of
+            cPWR_BLE_LL_OffsetToWakeupInstant and cPWR_BLE_LL_OscStartupDelay defines). It works as
+            a compare value. When the BLE link layer reference clock register reaches this value,
+            the BLE link layer wakes up and, if the MCU is in deep sleep also, it wakes up the
+            entire SoC. </p>
+
+        <p class="p"><strong class="ph b">Returns</strong></p>
+
+        <p class="p">None</p>
+
+        <p class="p"> </p>
+
+        <p class="p"><strong class="ph b">Prototype</strong></p>
+
+        <pre class="pre codeblock">uint16_t PWR_BLE_GetReferenceClock(void);</pre>
+
+        <p class="p"><strong class="ph b">Description</strong></p>
+
+        <p class="p">The function reads the BLE link layer reference clock register. The function has meaning
+            only if cPWR_BLE_LL_Enable is TRUE.</p>
+
+        <p class="p"><strong class="ph b">Parameters</strong></p>
+
+        <p class="p">None</p>
+
+        <p class="p"><strong class="ph b">Returns</strong></p>
+
+        <p class="p">The function returns the current value of the BLE link layer reference clock register. If
+            cPWR_BLE_LL_Enable is FALSE, the function returns 0.</p>
+
+        <p class="p"> </p>
+
+        <p class="p"><strong class="ph b">Prototype</strong></p>
+
+        <pre class="pre codeblock">void PWR_BLE_ExitDSM(void);</pre>
+
+        <p class="p"><strong class="ph b">Description</strong></p>
+
+        <p class="p">The function gets the BLE link layer out of DSM immediately. The function has meaning
+            only if cPWR_BLE_LL_Enable is TRUE. Otherwise, it is empty.</p>
+
+        <p class="p"><strong class="ph b">Parameters</strong></p>
+
+        <p class="p">None</p>
+
+        <p class="p"><strong class="ph b">Returns</strong></p>
+
+        <p class="p">None</p>
+
+        <p class="p"> </p>
+
+        <p class="p"><strong class="ph b">Prototype</strong></p>
+
+        <pre class="pre codeblock">void PWR_SetDeepSleepTimeInMs( uint32_t deepSleepTimeMs);</pre>
+
+        <p class="p"><strong class="ph b">Description</strong></p>
+
+        <p class="p">The function sets the value of deep sleep duration. The function has meaning only for
+            deep sleep mode 1, 2, 3, and 6.</p>
+
+        <p class="p"><strong class="ph b">Parameters</strong></p>
+
+        <p class="p">uint32_t deepSleepTimeMs: The new value of deep sleep duration. Upon entering deep sleep
+            the value is truncated in regard to the maximum deep sleep duration possible in each
+            mode.</p>
+
+        <p class="p"><strong class="ph b">Returns</strong></p>
+
+        <p class="p">None</p>
+
+        <p class="p"> </p>
+
+        <p class="p"><strong class="ph b">Prototype</strong></p>
+
+        <pre class="pre codeblock">void PWR_RegisterLowPowerEnterCallback( pfPWRCallBack_t lowPowerEnterCallback);</pre>
+
+        <p class="p"><strong class="ph b">Description</strong></p>
+
+        <p class="p">This function registers in the low-power module a function which is called just before
+            entering low-power modes 1, 2, 3, 4, and 5. The callback must call the DCDC function
+            DCDC_PrepareForPulsedMode but other low-power settings (LEDs off and other GPIO
+            configurations to minimize power consumption) can be made here as well.
+            DCDC_PrepareForPulsedMode should be the last function called from this callback.</p>
+
+        <p class="p"><strong class="ph b">Parameters</strong></p>
+
+        <p class="p">pfPWRCallBack_t lowPowerEnterCallback: The function to be called by the low-power module
+            just before entering low-power.</p>
+
+        <p class="p"><strong class="ph b">Returns</strong></p>
+
+        <p class="p">None</p>
+
+        <p class="p"> </p>
+
+        <p class="p"><strong class="ph b">Prototype</strong></p>
+
+        <pre class="pre codeblock">void PWR_RegisterLowPowerExitCallback( pfPWRCallBack_t lowPowerExitCallback);</pre>
+
+        <p class="p"><strong class="ph b">Description</strong></p>
+
+        <p class="p">This function registers in the low-power module a function which is called just after
+            exiting low-power modes 1, 2, 3, 4, and 5. For modes 4 and 5, it is called only if the
+            system fails to enter low-power. Otherwise, the system exits from these modes through
+            the reset sequence. The callback is mainly intended to call the DCDC function
+            DCDC_PrepareForContinuousMode but other run mode settings (get back to run mode settings
+            for LEDs and other GPIO, and so on) can be made here as well.
+            DCDC_PrepareForContinuousMode should be the first function called from this
+            callback.</p>
+
+        <p class="p"><strong class="ph b">Parameters</strong></p>
+
+        <p class="p">pfPWRCallBack_t lowPowerExitCallback: The function to be called by the low-power module
+            just after exiting low-power.</p>
+
+        <p class="p"><strong class="ph b">Returns</strong></p>
+
+        <p class="p">None</p>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-BD32F550-7639-4241-A13E-03413ED8C5C3.html">Kinetis Wireless Dual Mode (Bluetooth LE and IEEE® 802.15.4) Microcontrollers Low-power Library Overview</a></div>
+</div>
+</div>
+
+</body>
+</html>

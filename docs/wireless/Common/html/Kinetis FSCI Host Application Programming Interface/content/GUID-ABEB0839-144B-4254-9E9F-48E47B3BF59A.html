@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Python code sample – Thread ifconfig"/>
+<meta name="abstract" content=""/>
+<meta name="description" content=""/>
+<meta name="DC.Relation" scheme="URI" content="GUID-311FDFE5-CF7F-46BC-8A80-4EF3A080BA90.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="4"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-ABEB0839-144B-4254-9E9F-48E47B3BF59A"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Python code sample – Thread ifconfig</title>
+</head>
+<body id="GUID-ABEB0839-144B-4254-9E9F-48E47B3BF59A">
+
+
+  <h1 class="title topictitle1">Python code sample – Thread ifconfig</h1>
+
+  
+  <div class="body"><p class="shortdesc"/>
+
+   <pre class="pre codeblock"> [imports]
+
+def my_callback(response):
+    print ‘Received the Ifconfig Response. We can now inspect the frame fields.’
+    for interface in response.InterfaceList:
+        print interface.__dict__
+
+if __name__ == ‘__main__’:
+    com_port = ‘/dev/ttyACM0’  # COM of the KW device.
+    # Using Synchronous Requests, Leader creates the Thread network.
+    confirm_start = THR_CreateNwk(leader_port, InstanceID=0)
+    assert confirm_start.Status == ‘OK’
+
+    # Create the ifconfig request. This one does not possess fields.
+    request = NWKU_IfconfigAllRequest()
+    # Define the operation. Begin() automatically sends the request and adds a
+    # callback for execution upon the arrival of the Confirm or Response frame.
+    # Multiple callbacks can be added.
+    operation = NWKU_IfconfigAllOperation(com_port, request, [my_callback], protocol=Protocol.Thread).begin()
+
+-------------------------------------------------------------------------------------
+&gt;&gt;&gt;execfile(‘my_script.py’)
+Received the Ifconfig All Response. We can now inspect the frame fields.
+{'InterfaceID': 0, 'CountIpAddresses': 5, 'Addresses': ['fe80:0000:0000:0000:0c27:bc6f:152a:6cfd', 'fd4a:decc:39cb:0000:614a:a08d:21ae:aca9', 'fd4a:decc:39cb:0000:0000:00ff:fe00:0000', 'fd66:67b7:4126:00aa:0000:0000:0000:0000', 'fd4a:decc:39cb:0000:0000:00ff:fe00:fc02']}
+{'InterfaceID': 1, 'CountIpAddresses': 2, 'Addresses': ['fe80:0000:0000:0000:0204:9fff:fe00:fa5c', 'fd66:67b7:4126:0000:0204:9fff:fe00:fa5c']}
+Note: There are two interfaces displayed as the device has an additional TUN interface enabled.
+
+</pre>
+
+  </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-311FDFE5-CF7F-46BC-8A80-4EF3A080BA90.html">Code Samples</a></div>
+</div>
+</div>
+
+</body>
+</html>

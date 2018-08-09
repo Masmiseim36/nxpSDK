@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Testing method"/>
+<meta name="abstract" content=""/>
+<meta name="description" content=""/>
+<meta name="DC.Relation" scheme="URI" content="GUID-18273ABF-B59A-465C-AF18-061E0DEC68A3.html"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-41803BE1-2CE3-4B33-8737-8949FBFEAB93"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Testing method</title>
+</head>
+<body id="GUID-41803BE1-2CE3-4B33-8737-8949FBFEAB93">
+
+
+  <h1 class="title topictitle1">Testing method</h1>
+
+  
+  <div class="body"><p class="shortdesc"/>
+
+    <p class="p">The IEEE 802.15.4 Coordinator is basically a “MyWirelessApp Coordinator” demo (for more information check the 802154MPDAUG document), 
+and responds to requests from other IEEE 802.15.4 devices (Active Scan, Association, Data Requests). Any IEEE 802.15.4 sniffer can be used to observe 
+the over-the-air activity on the channel that the coordinator started.</p>
+
+<p class="p">At the same time, the BLE Heart Rate Sensor part of the application runs independently based on user interaction.
+The Heart Rate Sensor can be connected to any Bluetooth Smart Ready product available on the market.
+To make the Heart Rate Sensor visible, press the SW4 button to start sending advertisements, which causes LED3 to start flashing. The sensor name 
+“FSL_HYBRID_HRS” shows on the device when its scanning is active. A solid LED1 indicates a successful connection between the 2 devices. Hold the SW4 button pressed for 
+2-3 seconds anytime to get the sensor to initiate disconnect.</p>
+
+<p class="p">If configured, the sensor notifies the application with heart rate measurements every second. Also, the battery level and various device information is exposed for reading.
+The Kinetis BLE Toolbox can be used to showcase the Heart Rate profile functionality.</p>
+
+  </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-18273ABF-B59A-465C-AF18-061E0DEC68A3.html">Hybrid (Dual-Mode) Bluetooth Low Energy Heart Rate Sensor and IEEE 802.15.4 Coordinator Demo Application</a></div>
+</div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Demo Applications overview"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-3746C37B-3D92-4EAF-B21E-81ECBCE2A6A4.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Publisher" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-09EA6722-5F5E-42F6-B5C3-A160D1422846"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Demo Applications overview</title>
+</head>
+<body id="GUID-09EA6722-5F5E-42F6-B5C3-A160D1422846">
+
+
+	<h1 class="title topictitle1">Demo Applications overview</h1>
+
+	<div class="body">
+		<p class="p">The following table shows an overview of the features enabled by default within the demo applications configurations.</p>
+
+		
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-09EA6722-5F5E-42F6-B5C3-A160D1422846__TABLE_IGP_TXC_GZ" class="table" frame="border" border="1" rules="all"><caption><span class="tablecap">Table 1. Demo Applications overview</span></caption>
+				
+				
+				<tbody class="tbody">
+					<tr class="row">
+						<td class="entry" valign="top"><strong class="ph b">Example App </strong></td>
+
+						<td class="entry" valign="top"><strong class="ph b">Board: FRDM-KW41Z </strong></td>
+
+					</tr>
+
+					<tr class="row">
+						<td class="entry" valign="top"><strong class="ph b">router_eligible_device </strong>(template for <strong class="ph b">mains powered, always-on
+								products driven entirely by Kinetis</strong>: security control panels,
+							standalone sensor hubs, range extenders, smart plugs, some thermostats,
+							wall light switches, some light fixtures, some appliances) </td>
+
+						<td class="entry" valign="top"> <p class="p"><strong class="ph b">CoAP: </strong>led, temp, data sink </p>
+ <p class="p"><strong class="ph b">UART: </strong>shell </p>
+ <p class="p"><strong class="ph b">USB: </strong>N/A </p>
+ <p class="p"><strong class="ph b">Commission: </strong>auto-start collapsed commissioner on leader </p>
+ <p class="p"><strong class="ph b">Lib capability: </strong>leader, router, reed </p>
+ </td>
+
+					</tr>
+
+					<tr class="row">
+						<td class="entry" valign="top"><strong class="ph b">end_device </strong>(template for <strong class="ph b">mains powered </strong>or <strong class="ph b">high-cpapacity
+								battery products driven entirely by Kinetis </strong>which are <strong class="ph b">NOT
+								intended to be always-on</strong>: light fixtures, appliances, some door
+							locks, some thermostats, some resource constrained devices) </td>
+
+						<td class="entry" valign="top"> <p class="p"><strong class="ph b">CoAP: </strong>led, temp, data sink </p>
+ <p class="p"><strong class="ph b">UART: </strong>shell </p>
+ <p class="p"><strong class="ph b">USB: </strong>N/A </p>
+ <p class="p"><strong class="ph b">Other: </strong>rx on ed defaults </p>
+ <p class="p"><strong class="ph b">Lib capability: </strong>rx on ed </p>
+ </td>
+
+					</tr>
+
+					<tr class="row">
+						<td class="entry" valign="top"><strong class="ph b">low_power_end_device </strong>(template for <strong class="ph b">low-capacity battery Kinetis products</strong>: sensors, remote controls, door locks) </td>
+
+						<td class="entry" valign="top"> <p class="p"><strong class="ph b">CoAP: </strong>temp, data sink </p>
+ <p class="p"><strong class="ph b">UART: </strong>N/A </p>
+ <p class="p"><strong class="ph b">USB: </strong>N/A </p>
+ <p class="p"><strong class="ph b">LP: </strong>LP mode 3 </p>
+ <p class="p"><strong class="ph b">Lib capability: </strong>sed </p>
+ </td>
+
+					</tr>
+
+					<tr class="row">
+						<td class="entry" valign="top"><strong class="ph b">host_controlled_device </strong>(template for <strong class="ph b">products where a Kinetis running the Thread stack is hosted by an application processor </strong>over UART or SPI; use of Host SDK tools is recommended for HLOS UNIX host systems; serves as sub-component for advanced asymmetric multiple chip <strong class="ph b">border routers</strong>) </td>
+
+						<td class="entry" valign="top"> <p class="p"><strong class="ph b">CoAP</strong>: led, temp, data sink </p>
+ <p class="p"><strong class="ph b">UART</strong>: THCI over FSCI </p>
+ <p class="p"><strong class="ph b">Serial TUN</strong>: Enabled </p>
+ <p class="p"><strong class="ph b">USB</strong>: N/A </p>
+ <p class="p"><strong class="ph b">Lib capability</strong>: leader, router, reed, rx on ed, ipv4, nd. </p>
+ </td>
+
+					</tr>
+
+					<tr class="row">
+						<td class="entry" valign="top"><strong class="ph b">ble_thread_host_controlled_device </strong>(template for <strong class="ph b">products where a Kinetis running the dual mode Thread+BLE stack is hosted by an application processor </strong>over UART or SPI; use of the Host SDK tools is recommended for HLOS UNIX host systems; serves as sub-component for advanced assimetric multiple chip <strong class="ph b">border routers</strong>) </td>
+
+						<td class="entry" valign="top"> <p class="p"><strong class="ph b">CoAP</strong>: led, temp, data sink </p>
+ <p class="p"><strong class="ph b">UART</strong>: THCI over FSCI </p>
+ <p class="p"><strong class="ph b">Serial TUN</strong>: enabled </p>
+ <p class="p"><strong class="ph b">USB</strong>: N/A </p>
+ <p class="p"><strong class="ph b">Lib capability</strong>: leader, router, reed, rx on ed, ipv4, nd. </p>
+ <p class="p"><strong class="ph b">BLE</strong>: blackbox over FSCI </p>
+ </td>
+
+					</tr>
+
+					<tr class="row">
+						<td class="entry" valign="top"><strong class="ph b">ble_thread_router_wireless_uart </strong>(template for <strong class="ph b">products where the Kinetis KW41Z running the dual mode Thread + BLE stack is controlled by a BLE controller, such as the Kinetis BLE Toolbox Wireless UART </strong>to connect to the Thread stack and perform Thread network management operations) </td>
+
+						<td class="entry" valign="top"> <p class="p"><strong class="ph b">CoAP</strong>: led, temp, data sink </p>
+ <p class="p"><strong class="ph b">BLE: </strong>virtual shell </p>
+ <p class="p"><strong class="ph b">UART</strong>: N/A <strong class="ph b">USB</strong>: N/A </p>
+ <p class="p"><strong class="ph b">Lib capability</strong>: leader, router, reed </p>
+ <p class="p"><strong class="ph b">Commission: </strong>auto-start collapsed commissioner on leader </p>
+ </td>
+
+					</tr>
+
+					<tr class="row">
+						<td class="entry" valign="top"> <p class="p"><strong class="ph b"/></p>
+ <p class="p"/>
+ </td>
+
+						<td class="entry" valign="top"> <p class="p"><strong class="ph b"/></p>
+ <p class="p"/>
+ </td>
+
+					</tr>
+
+				</tbody>
+
+			</table>
+</div>
+
+		<p class="p"><strong class="ph b">CoAP: led -- </strong>The app has a CoAP callback which controls the LEDs on the board (also RGB pin mode with FTM on FRDM-KW24D) </p>
+
+		<p class="p">• <strong class="ph b">CoAP: temp -- </strong>The app has a CoAP API which sends the chip temperature over the air. </p>
+
+		<p class="p">• <strong class="ph b">CoAP: data sink -- </strong>The app has a CoAP API which advertises via multicast the node as a sensor data data sink, enabled LED and temperature data to be then sent unicast to the node. </p>
+
+		<p class="p">• <strong class="ph b">UART: shell -- </strong>Shell is enabled over UART (via OpenSDA chip on our boards) </p>
+
+		<p class="p">• <strong class="ph b">USB: shell -- </strong>Shell is enabled over direct USB CDC Virtual Serial Port stack on KW2xD </p>
+
+		<p class="p">• <strong class="ph b">UART/USB: N/A -- </strong>UART interface (via OpenSDA) or direct USB is disabled </p>
+
+		<p class="p">• <strong class="ph b">ETH: N/A -- </strong>Ethernet interface is disabled app. </p>
+
+		<p class="p">• <strong class="ph b">ETH: ND_ROUTER -- </strong>Ethernet interface enabled. Ethernet/Wi-Fi IPv6 Neighbor Discovery provides site-local prefix assignment over the Ethernet link. </p>
+
+		<p class="p">• <strong class="ph b">UART: THCI over FSCI -- </strong>Thread Host Control Interface (Thread logical host control protocol) over Serial Connectivity interface over UART (on OpenSDA chip) </p>
+
+		<p class="p">• <strong class="ph b">Serial TUN: enabled/disabled -- </strong>Serial tunnel feature over THCI/FSCI is disabled/enabled </p>
+
+		<p class="p">• <strong class="ph b">USB: ND_ROUTER over RNDIS, no THCI -- </strong>RNDIS (Virtual Ethernet over USB CDC) Interface enabled. Neighbor Discovery provides site-local prefix assignment over the virtual USB Virtual Ethernet (RNDIS) driver. THCI is not carried over RNDIS </p>
+
+		<p class="p">• <strong class="ph b">USB: ND_ROUTER over RNDIS, with THCI -- </strong>Same as above, but THCI is carried over a RNDIS subchannel, under IP under a different EtherType – works with the Linux Host SDK </p>
+
+		<p class="p">• <strong class="ph b">Commission: auto-start collapsed commissioner on leader -- </strong>A commissioner application auto-starts on the first Leader Router which creates the Thread network. It’s called collapsed as the Leader and Commissioner network roles are ‘collapsed’ on the same node. </p>
+
+		<p class="p">• <strong class="ph b">Lib Capability: leader -- </strong>Can become a Leader at runtime </p>
+
+		<p class="p">• <strong class="ph b">Lib Capability: router -- </strong>Can become a router at runtime </p>
+
+		<p class="p">• <strong class="ph b">Lib Capability: reed -- </strong>Can act as a router eligible End Device at runtime. </p>
+
+		<p class="p">• <strong class="ph b">Lib Capability: polling ed -- </strong>Includes the MAC polling mode for an End Device at runtime </p>
+
+		<p class="p">• <strong class="ph b">Lib Capability: sed -- </strong>Includes low-power end device capabilities (ability to enter low-power) </p>
+
+		<p class="p">• <strong class="ph b">Lib Capability: rx on ed -- </strong>Includes the MAC RXON mode for an end device at runtime </p>
+
+		<p class="p">• <strong class="ph b">Lib Capability: ipv4 -- </strong>Includes IPv4 and DHCPv4 client features </p>
+
+		<p class="p">• <strong class="ph b">Lib Capability: nd -- </strong>Includes IPv6 Ethernet/Wi-Fi Neighbor Discovery
+			features </p>
+
+		<p class="p">• <strong class="ph b">Other: rx on ed default -- </strong>The End device is RXON (non-polling) by default </p>
+
+		<p class="p">• <strong class="ph b">Low-power -- </strong>The End device has low-power (deep sleep) enabled by default (users can wake up the End Device via button press). </p>
+
+	</div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-3746C37B-3D92-4EAF-B21E-81ECBCE2A6A4.html">Kinetis Thread Stack Applications Overview</a></div>
+</div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="FSCI configuration and initialization"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-A0DB2E96-F0A9-4D84-A53B-D99CC149BBF5.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Creator" content=""/>
+<meta name="DC.Publisher" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-09EBE141-20D7-4F5E-BF4D-EA06E799C640"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>FSCI configuration and initialization</title>
+</head>
+<body id="GUID-09EBE141-20D7-4F5E-BF4D-EA06E799C640">
+
+
+    <h1 class="title topictitle1">FSCI configuration and initialization</h1>
+
+    <div class="body">
+        <p class="p">By default, the FSCI module is disabled. It must be enabled by setting
+                <em class="ph i">gFsciIncluded_c</em> to 1. Also, <em class="ph i">gFsciLenHas2Bytes_c</em> must set to 1 because
+            BLE Host Stack interface commands and events need serial packets bigger than 255
+            octets.</p>
+
+        <p class="p">For more information on the following configuration parameters refer to the
+            FSCI chapter of the <em class="ph i">Connectivity Framework Reference Manual</em> (document <a class="xref" href="http://www.nxp.com/doc/CONNFWKRM" target="_blank">CONNFWKRM</a>).</p>
+
+        <p class="p">To configure the FSCI module, the following parameters can be set on both the BLE
+            Application project and the BLE blackbox:</p>
+
+        <pre class="pre codeblock">/* Mandatory, enables support for FSCI Host functionality */
+<strong class="ph b">#define</strong> gFsciHostSupport_c         1
+/* Mandatory, enables support for FSCI functionality */
+<strong class="ph b">#define</strong> gFsciIncluded_c            1
+/* Mandatory, enables usage of 2 bytes FSCI packet length field */
+<strong class="ph b">#define</strong> gFsciLenHas2Bytes_c        1
+/* Recommended, enables FSCI Ack transmission for each FSCI received packet */
+<strong class="ph b">#define</strong> gFsciTxAck_c               1
+/* Recommended, enables FSCI Ack reception after each FSCI sent packet */
+<strong class="ph b">#define</strong> gFsciRxAck_c               1
+/* Recommended, enables FSCI reception restart if no bytes are received in due time */
+<strong class="ph b">#define</strong> gFsciRxTimeout_c           1 
+/* Optional, enables FSCI reception restart by polling, used on bare metal */
+<strong class="ph b">#define</strong> mFsciRxTimeoutUsePolling_c 1
+/* Optional, enables FSCI Rx of Ack by polling, used on bare metal */
+<strong class="ph b">#define</strong> gFsciRxAckTimeoutUseTmr_c  0</pre>
+
+        <p class="p">To perform the FSCI module initialization, the following code can be used:</p>
+
+        <pre class="pre codeblock"><strong class="ph b">#define</strong> gSerialMgrUseUart_c     1
+<strong class="ph b">#define</strong> gSerialMgrUseSPI_c                 0
+<strong class="ph b">#define</strong> gSerialMgrUseIIC_c                 0
+ 
+<strong class="ph b">#if</strong> gSerialMgrUseUart_c
+    <strong class="ph b">#define</strong> gAppFSCIHostInterfaceBaud_d     gUARTBaudRate115200_c
+    <strong class="ph b">#define</strong> gAppFSCIHostInterfaceType_d     gSerialMgrUart_c
+    <strong class="ph b">#define</strong> gAppFSCIHostInterfaceId_d       1
+<strong class="ph b">#elif</strong> gSerialMgrUseSPI_c
+    <strong class="ph b">#define</strong> gAppFSCIHostInterfaceBaud_d     gSPI_BaudRate_1000000_c
+    <strong class="ph b">#define</strong> gAppFSCIHostInterfaceType_d     gSerialMgrSPIMaster_c
+    <strong class="ph b">#define</strong> gAppFSCIHostInterfaceId_d       0
+<strong class="ph b">#elif</strong> gSerialMgrUseIIC_c
+    <strong class="ph b">#define</strong> gAppFSCIHostInterfaceBaud_d     gIIC_BaudRate_100000_c
+    <strong class="ph b">#define</strong> gAppFSCIHostInterfaceType_d     gSerialMgrIICMaster_c
+    <strong class="ph b">#define</strong> gAppFSCIHostInterfaceId_d       1
+<strong class="ph b">#endif</strong>
+
+/* FSCI serial configuration structure */
+<strong class="ph b">static</strong><strong class="ph b">const</strong>gFsciSerialConfig_t mFsciSerials[] = {
+    /* <u class="ph u">Baudrate</u> , interface type, channel No, virtual interface */
+    {gAppFSCIHostInterfaceBaud_d, gAppFSCIHostInterfaceType_d, gAppFSCIHostInterfaceId_d, 0},
+    { APP_SERIAL_INTERFACE_SPEED, APP_SERIAL_INTERFACE_TYPE, APP_SERIAL_INTERFACE_INSTANCE, 1},
+};
+
+/* Init FSCI */
+FSCI_Init((void*) mFsciSerials);</pre>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-A0DB2E96-F0A9-4D84-A53B-D99CC149BBF5.html">Serial manager and FSCI configuration</a></div>
+</div>
+</div>
+
+</body>
+</html>

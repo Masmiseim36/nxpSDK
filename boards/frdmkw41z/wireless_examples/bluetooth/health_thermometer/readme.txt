@@ -1,0 +1,1 @@
+The application implements a GATT based Health Thermometer Profile. The example works on the FRDM-KW41Z board. For more information, please consult the BLE Demo Applications User's Guide.

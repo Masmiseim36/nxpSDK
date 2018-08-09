@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Radio TX Power level"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-FB9F1A7C-ABFD-4702-95DD-8E96FE92DB15.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Creator" content=""/>
+<meta name="DC.Publisher" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-20E98A30-8C3C-400C-A30B-45E86EDD76D8"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Radio TX Power level</title>
+</head>
+<body id="GUID-20E98A30-8C3C-400C-A30B-45E86EDD76D8">
+
+
+    <h1 class="title topictitle1">Radio TX Power level</h1>
+
+    <div class="body">
+        <p class="p">The controller interface includes APIa that can be used to set the Radio TX Power to a
+            different level than default.</p>
+
+        <p class="p">The power level can be set differently for advertising and connection channels with the
+            following macros:</p>
+
+        <pre class="pre codeblock"><strong class="ph b">#define</strong> Controller_SetAdvertisingTxPowerLevel(level) \
+    Controller_SetTxPowerLevel(level,gAdvTxChannel_c)</pre>
+
+        <p class="p">and</p>
+
+        <pre class="pre codeblock"><strong class="ph b">#define</strong> Controller_SetConnectionTxPowerLevel(level) \
+    Controller_SetTxPowerLevel(level,gConnTxChannel_c)</pre>
+
+        <p class="p">The numeric power levels are distributed evenly between the minimum and maximum output
+            power values (in dBm). Please refer the silicon datasheet for more information.</p>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-FB9F1A7C-ABFD-4702-95DD-8E96FE92DB15.html">Host Stack Initialization and APIs</a></div>
+</div>
+</div>
+
+</body>
+</html>

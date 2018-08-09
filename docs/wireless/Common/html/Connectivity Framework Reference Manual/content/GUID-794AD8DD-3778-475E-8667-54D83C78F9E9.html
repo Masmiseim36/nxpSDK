@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Standard storage system"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-0E23C916-82C8-415A-8469-773251C6D3F3.html"/>
+<meta name="prodname" content=""/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Creator" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-794AD8DD-3778-475E-8667-54D83C78F9E9"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Standard storage system</title>
+</head>
+<body id="GUID-794AD8DD-3778-475E-8667-54D83C78F9E9">
+
+
+    <h1 class="title topictitle1">Standard storage system</h1>
+
+    <div class="body">
+        <div class="p">Most of the MCUs have only a standard flash memory that can be used by the
+            nonvolatile storage system. The amount of memory that the system uses for permanent
+            storage and its boundaries are defined in the linker configuration file. The reserved
+            memory consists of two virtual pages. The virtual pages are equally sized and each page
+            is using one or more physical flash sectors. Therefore, the smallest configuration is
+            using two physical sectors, one sector per virtual page. The Flash Management and
+            Non-Volatile Storage Module holds a pointer to a RAM table, where the upper layers
+            register information about data that must be saved and restored by the storage system. A
+            table entry contains a generic pointer to a contiguous RAM data structure, how many
+            elements the structure contains, the size of a single element, a table entry ID, and an
+            entry type.<div class="fig fignone" id="GUID-794AD8DD-3778-475E-8667-54D83C78F9E9__FIG_UCV_2ZQ_NZ"><span class="figcap">Figure 1. NV Table example</span>
+                
+                <img class="image" id="GUID-794AD8DD-3778-475E-8667-54D83C78F9E9__IMAGE_TST_JZQ_NZ" src="GUID-24BEF26D-B514-4678-807C-15F52F756341-high.png"/>
+            </div>
+</div>
+
+        <div class="p">A RAM table entry has the following structure: <div class="fig fignone"><span class="figcap">Figure 2. The structure of a NV table entry</span>
+                
+                <img class="image" id="GUID-794AD8DD-3778-475E-8667-54D83C78F9E9__IMAGE_Y2R_YZQ_NZ" src="GUID-DB644CAC-87F2-4C96-BCEF-ACDED43394F2-high.png"/>
+                <p class="p"/>
+
+                <ul class="ul" id="GUID-794AD8DD-3778-475E-8667-54D83C78F9E9__UL_MDY_L1R_NZ">
+                    <li class="li"><strong class="ph b">pData</strong> is a pointer to the RAM memory location where the dataset
+                        elements are stored</li>
+
+                    <li class="li"><strong class="ph b">elemCnt</strong> represents how many elements the dataset has</li>
+
+                    <li class="li"><strong class="ph b">elemSz</strong> is the size of a single element</li>
+
+                    <li class="li"><strong class="ph b">entryID</strong> is a 16-bit unique ID of the dataset </li>
+
+                    <li class="li"><strong class="ph b">dataEntryType</strong> is a 16-bit value representing the type of entry
+                        (mirrored/unmirrored/unmirrored auto restore)</li>
+
+                </ul>
+
+                <p class="p">For mirrored datasets, pData must point directly to the RAM data. For unmirrored
+                    datasets, it must be a double pointer to a vector of pointers. Each pointer in
+                    this table points to a RAM/FLASH area.</p>
+
+                <p class="p">Mirrored datasets require the data to be permanently kept in RAM, while
+                    unmirrored datasets have dataset entries either in flash or in RAM. If the
+                    unmirrored entries must be restored at the initialization,
+                    NotMirroredInRamAutoRestore should be used. Unmirrored entries must be enabled
+                    by the application by setting gUnmirroredFeatureSet_d to 1.</p>
+
+                <p class="p">The last entry in the RAM table must have the entryID set to gNvEndOfTableId_c. </p>
+
+                <div class="p">
+                    
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-794AD8DD-3778-475E-8667-54D83C78F9E9__TABLE_SYT_41R_NZ" class="table" frame="border" border="1" rules="all"><caption><span class="tablecap">Table 1. Mirrored data entry example</span></caption>
+                            
+                            
+                            <tbody class="tbody">
+                                <tr class="row">
+                                    <td class="entry" valign="top">pData</td>
+
+                                    <td class="entry" valign="top">0x1FFF8000</td>
+
+                                </tr>
+
+                                <tr class="row">
+                                    <td class="entry" valign="top">elemCnt</td>
+
+                                    <td class="entry" valign="top">4</td>
+
+                                </tr>
+
+                                <tr class="row">
+                                    <td class="entry" valign="top">elemSz</td>
+
+                                    <td class="entry" valign="top">10</td>
+
+                                </tr>
+
+                                <tr class="row">
+                                    <td class="entry" valign="top">entryID</td>
+
+                                    <td class="entry" valign="top">1</td>
+
+                                </tr>
+
+                                <tr class="row">
+                                    <td class="entry" valign="top">dataEntryType</td>
+
+                                    <td class="entry" valign="top">gNVM_MirroredInRam_c</td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+</div>
+
+                </div>
+
+                <div class="p">
+                    
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-794AD8DD-3778-475E-8667-54D83C78F9E9__TABLE_TRJ_Q1R_NZ" class="table" frame="border" border="1" rules="all"><caption><span class="tablecap">Table 2. pData</span></caption>
+                            
+                            
+                            
+                            
+                            <tbody class="tbody">
+                                <tr class="row">
+                                    <td class="entry" valign="top">10 bytes</td>
+
+                                    <td class="entry" valign="top">10 bytes</td>
+
+                                    <td class="entry" valign="top">10 bytes</td>
+
+                                    <td class="entry" valign="top">10 bytes</td>
+
+                                </tr>
+
+                                <tr class="row">
+                                    <td class="entry" valign="top">DATA1</td>
+
+                                    <td class="entry" valign="top">DATA2</td>
+
+                                    <td class="entry" valign="top">DATA3</td>
+
+                                    <td class="entry" valign="top">DATA4</td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-794AD8DD-3778-475E-8667-54D83C78F9E9__TABLE_HLD_R1R_NZ" class="table" frame="border" border="1" rules="all"><caption><span class="tablecap">Table 3. Unmirrored data entry example</span></caption>
+                
+                
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top">pData</td>
+
+                        <td class="entry" valign="top">0x1FFF8000</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">elemCnt</td>
+
+                        <td class="entry" valign="top">4</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">elemSz</td>
+
+                        <td class="entry" valign="top">10</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">entryID</td>
+
+                        <td class="entry" valign="top">1</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">dataEntryType</td>
+
+                        <td class="entry" valign="top">gNVM_NotMirroredInRam_c/ gNVM_NotMirroredInRamAutoRestore_c</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <div class="p"><div class="fig fignone"><span class="figcap">Figure 3. pData</span><img class="image" id="GUID-794AD8DD-3778-475E-8667-54D83C78F9E9__IMAGE_GQK_RBR_NZ" src="GUID-4D86CF4C-E4FB-416A-9AEC-435BFE87DB0F-high.png"/></div>
+</div>
+
+        <p class="p"/>
+
+        <p class="p">When the data pointed to by the table entry pointer (pData) has changed (entirely or just
+            a single element), the upper layers call the appropriate API function that requests the
+            storage system to save the modified data. All the save operations (except for the
+            synchronous save and atomic save) and the page erase and page copy operations are
+            performed on system idle task. The application must create a task that calls NvIdle in
+            an infinite loop. It should be created with OSA_PRIORITY_IDLE. However, the application
+            may choose another priority.</p>
+
+        <p class="p">The saves are done in one virtual page, which is the active page. After a save is
+            performed on an unmirrored dataset, pData points to a flash location and the RAM pointer
+            is freed. As a result, the effective data should always be allocated using the memory
+            management module. </p>
+
+        <p class="p">The active page contains information about the records and the records. The storage
+            system can save individual elements of a table entry or the entire table entry.
+            Unmirrored datasets can only have individual saves.</p>
+
+        <p class="p">On mirrored datasets, the save/restore functions must receive the pointer to RAM data.
+            For example, if the application must save the third element in the above vector, it
+            should send 0x1FFF8000 + 2 * elemSz.</p>
+
+        <p class="p">For unmirrored datasets, the application must send the pointer that points to the area
+            where the data is located. For example, if the application must save the third element
+            in the above vector, it should send 0x1FFF8000 + 2 * sizeof(void*).</p>
+
+        <p class="p">The page validity is guaranteed by the page counter. The page counter is a 32-bit value
+            and is written at the beginning and at the end of the active page. The values need to be
+            equal to consider the page a valid one. The value of the page counter is incremented
+            after each page copy operation. A page erase operation is performed when the system is
+            formatted or every time a page is full and a new record cannot be written into that
+            page. Before being erased, the full page is first copied (only the most recent saves)
+            and erased afterwards.</p>
+
+        <p class="p">The validity of the Meta Information Tag (MIT), and, therefore, of a record, is
+            guaranteed by the MIT start and stop validation bytes. These two bytes must be equal to
+            consider the record referred by the MIT valid. Furthermore, the value of these bytes
+            indicates the type of the record, whether it is a single element or an entire table
+            entry. </p>
+
+        <p class="p">The nonvolatile storage system allows dynamic changes of the table within the RAM memory,
+            as follows:</p>
+
+        <ul class="ul" id="GUID-794AD8DD-3778-475E-8667-54D83C78F9E9__UL_HSW_TBR_NZ">
+            <li class="li"> Remove table entry</li>
+
+            <li class="li"> Register table entry</li>
+
+        </ul>
+
+        <p class="p"/>
+
+        <p class="p">A new table entry can be successfully registered if there is at least one entry
+            previously removed or if the NV table contains uninitialized table entries, declared
+            explicitly to register new table entries at runtime. A new table entry can also replace
+            an existing one if the register table entry is called with an overwrite set to true.
+            This functionality is disabled by default and must be enabled by the application by
+            setting gNvUseExtendedFeatureSet_d to 1.</p>
+
+        <p class="p">The layout of an active page is shown below:</p>
+
+        <div class="p">
+            <div class="fig fignone"><span class="figcap">Figure 4. The layout of a flash active page</span>
+                
+                <img class="image" id="GUID-794AD8DD-3778-475E-8667-54D83C78F9E9__IMAGE_ST2_BCR_NZ" src="GUID-213A324F-EB66-4AA6-B50F-AD38DB6BF09B-high.png"/>
+            </div>
+
+        </div>
+
+        <div class="p">As shown above, the table stored in the RAM memory is copied into the flash active page,
+            just after the table version. The “table start” and “table end” are marked by the table
+            markers. The data pointers from RAM are not copied. A flash copy of a RAM table entry
+            has the following structure: <div class="fig fignone"><span class="figcap">Figure 5. The structure of the flash copy of a RAM table entry</span>
+                
+                <img class="image" id="GUID-794AD8DD-3778-475E-8667-54D83C78F9E9__IMAGE_UBW_HCR_NZ" src="GUID-4DE6A8DB-2B3B-4E3B-A533-107D05FDF0C7-high.png"/>
+            </div>
+
+        </div>
+
+        <div class="p">Where: • entryID is the ID of the table entry • entryType represents the type of the
+            entry (mirrored/unmirrored/unmirrored auto restore) • elemCnt is the elements count of
+            that entry • elemSz is the size of a single element This copy of the RAM table in flash
+            is used to determine whether the RAM table has changed. The table marker has a value of
+            0x4254 (“TB” if read as ASCII codes) and marks the beginning and end of the NV table
+            copy. <div class="fig fignone"><span class="figcap">Figure 6. Table Marker</span><img class="image" id="GUID-794AD8DD-3778-475E-8667-54D83C78F9E9__IMAGE_N12_5CR_NZ" src="GUID-A3512DD7-3911-4103-B9DB-2EE3289D9B1E-high.png"/></div>
+</div>
+
+        <div class="p">After the end of the RAM table copy, the Meta Information Tags (MITs) follow. Each MIT is
+            used to store information related to one record. An MIT has the following structure:<div class="fig fignone" id="GUID-794AD8DD-3778-475E-8667-54D83C78F9E9__FIG_FR1_WCR_NZ"><span class="figcap">Figure 7. Meta Information Tag</span><img class="image" id="GUID-794AD8DD-3778-475E-8667-54D83C78F9E9__IMAGE_HX3_XCR_NZ" src="GUID-B8DB7290-803D-4D81-BA3F-956013FBA94B-high.png"/></div>
+</div>
+
+        <p class="p">Where:</p>
+
+        <ul class="ul" id="GUID-794AD8DD-3778-475E-8667-54D83C78F9E9__UL_PPC_1DR_NZ">
+            <li class="li"><strong class="ph b">VSB</strong> is the <u class="ph u">v</u>alidation <u class="ph u">s</u>tart <u class="ph u">b</u>yte</li>
+
+            <li class="li"><strong class="ph b">entryID</strong> is the ID of the NV table entry</li>
+
+            <li class="li"><strong class="ph b">elemIdx</strong> is the element index</li>
+
+            <li class="li"><strong class="ph b">recordOffset</strong> is the offset of the record related to the start address of the
+                virtual page</li>
+
+            <li class="li"><strong class="ph b">VEB</strong> is the <u class="ph u">v</u>alidation <u class="ph u">e</u>nd <u class="ph u">b</u>yte</li>
+
+        </ul>
+
+        <p class="p">A valid MIT has a VSB equal to a VEB. If the MIT refers to a single-element record type,
+                <strong class="ph b">VSB=VEB=0xAA</strong>. If the MIT refers to a full table entry record type (all
+            elements from a table entry), <strong class="ph b">VSB=VEB=0x55</strong>.</p>
+
+        <p class="p">Because the records are written to the flash page, the available page space decreases. As
+            a result, the page becomes full and a new record does not have enough free space to be
+            copied into that page. In the example given below, the virtual page 1 is considered to
+            be full if a new save request is pending and the page free space is not sufficient to
+            copy the new record and the additional MIT. In this case, the latest saved datasets
+            (table entries) are copied to virtual page 2. </p>
+
+        <p class="p">In the following example, there are five datasets (one color for each dataset) with both
+            ‘full’ and ‘single’ record types.</p>
+
+        <ul class="ul" id="GUID-794AD8DD-3778-475E-8667-54D83C78F9E9__UL_CTC_1DR_NZ">
+            <li class="li"><strong class="ph b">R1</strong> is a ‘full’ record type (contains all the NV table entry elements),
+                whereas <strong class="ph b">R3</strong>, <strong class="ph b">R4</strong>, <strong class="ph b">R6 </strong>and <strong class="ph b">R11</strong> are ‘single’ record
+                types.</li>
+
+            <li class="li"><strong class="ph b">R2</strong> – full record type; <strong class="ph b">R15</strong> – single record type</li>
+
+            <li class="li"><strong class="ph b">R5</strong>, R<strong class="ph b">13</strong> – full record type; <strong class="ph b">R10</strong>, R<strong class="ph b">12</strong> – single record
+                type</li>
+
+            <li class="li"><strong class="ph b">R8</strong> – full record type</li>
+
+            <li class="li"><strong class="ph b">R7</strong>, <strong class="ph b">R9</strong>, <strong class="ph b">R14</strong>, <strong class="ph b">R16</strong> – full record type</li>
+
+        </ul>
+
+        <div class="fig fignone" id="GUID-794AD8DD-3778-475E-8667-54D83C78F9E9__FIG_L2B_2DR_NZ"><span class="figcap">Figure 8. Virtual page 1 free space is not large enough for saving a new dataset</span>
+            <img class="image" id="GUID-794AD8DD-3778-475E-8667-54D83C78F9E9__IMAGE_KJK_FDR_NZ" src="GUID-DA9DC356-463E-4F05-AA06-0DBE95617EE4-high.png"/></div>
+
+        <div class="p">As shown above, the <strong class="ph b">R3</strong>, <strong class="ph b">R4</strong>, <strong class="ph b">R6</strong>, and <strong class="ph b">R11</strong> are ‘single’ record
+            types, while <strong class="ph b">R1</strong> is a ‘full’ record type of the same dataset. When copied to
+            virtual page 2, a defragmentation process takes place. As a result, the record copied to
+            virtual page 2 has as much elements as <strong class="ph b">R1</strong>, but individual elements are taken from
+                <strong class="ph b">R3</strong>,<strong class="ph b"> R4</strong>, <strong class="ph b">R6</strong>, and <strong class="ph b">R11</strong>. After the copy process completes,
+            the virtual page 2 has five ‘full’ record types, one for each dataset.<div class="fig fignone" id="GUID-794AD8DD-3778-475E-8667-54D83C78F9E9__FIG_IND_HDR_NZ"><span class="figcap">Figure 9. Page Copy</span><img class="image" id="GUID-794AD8DD-3778-475E-8667-54D83C78F9E9__IMAGE_XXB_KDR_NZ" src="GUID-8559AB50-D99C-404A-A21F-2BB62595D2DD-high.png"/></div>
+</div>
+
+        <p class="p">Finally, the virtual page 2 is validated by writing the PC value and a request to erase
+            virtual page 1 is performed. The page is erased on an idle task, sector by sector where
+            only one sector is erased at a time when idle task is executed.</p>
+
+        <p class="p">If there are any difference between the RAM and flash tables, the application must call
+            RecoverNvEntry for each entry that is different from its RAM copy to recover the entry
+            data (ID, Type, ElemSz, ElemCnt) from flash before calling NvInit. The application must
+            allocate the pData and change the RAM entry. It can choose to ignore the flash entry if
+            the entry is not desired. If any entry from RAM differs from its flash equivalent at
+            initialization, a page copy is triggered that ignores the entries that are different. In
+            other words, data stored in those entries will be lost. </p>
+
+        <p class="p">The application can check if the RAM table was updated, in other words, if the MCU
+            program was changed and the RAM table was updated, using the function
+            GetFlashTableVersion and compare the result with the constant gNvFlashTableVersion_c. If
+            the versions are different, NvInit detects the update and automatically upgrades the
+            flash table. The upgrade process triggers a page copy that moves the flash data from the
+            active page to the other one. It keeps the entries that were not modified intact and it
+            moves the entries that had their elements count changed as follows:</p>
+
+        <ul class="ul" id="GUID-794AD8DD-3778-475E-8667-54D83C78F9E9__UL_XL4_LDR_NZ">
+            <li class="li">If the RAM element count is smaller than the flash element count, the upgrade only
+                copies as much elements as are in RAM</li>
+
+            <li class="li">If the RAM element count is larger than the flash element count, the upgrade copies
+                all data from flash and fills the remaining space with data from RAM</li>
+
+        </ul>
+
+        <p class="p">If the entry size is changed, the entry is not copied. Any entryIds that are present in
+            flash and not present in RAM are also not copied.</p>
+
+        <p class="p">This functionality is not supported if gNvUseExtendedFeatureSet_d is not set to 1.</p>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-0E23C916-82C8-415A-8469-773251C6D3F3.html">Flash Management and Non-Volatile Storage Module</a></div>
+</div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="API Primitives"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-3FD8C291-2FBB-4F7E-BD7E-46391627537E.html"/>
+<meta name="prodname" content=""/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Creator" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-BEA7E885-7E18-4204-8C8E-3802636A2956"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>API Primitives</title>
+</head>
+<body id="GUID-BEA7E885-7E18-4204-8C8E-3802636A2956">
+
+
+    <h1 class="title topictitle1">API Primitives</h1>
+
+    <div class="body">
+        <p class="p"><strong class="ph b">Prototype</strong></p>
+
+        <pre class="pre codeblock">bool_t DCDC_Init( const dcdcConfig_t * pDCDCConfig);</pre>
+
+        <p class="p"><strong class="ph b">Description</strong></p>
+
+        <p class="p">First, the function verifies the DCDC configuration structure parameters and, if they are
+            valid, keeps a pointer to the structure internally. If the DCDC configuration structure
+            mode in Bypass mode, the function takes no other action. Otherwise, the function
+            initializes the ADC driver, makes the appropriate DCDC settings, and initiates the
+            monitoring procedure by starting an interval low-power timer.</p>
+
+        <p class="p"><strong class="ph b">Parameters</strong></p>
+
+        <p class="p">const dcdcConfig_t * pDCDCConfig is a pointer to the DCDC configuration structure. The
+            configuration structure lifetime must be the entire program execution. </p>
+
+        <p class="p"><strong class="ph b">Returns</strong></p>
+
+        <p class="p">FALSE if one of the parameters is not valid, ADC driver initialization failed, low-power
+            interval timer could not be started.</p>
+
+        <p class="p">TRUE if all initialization steps succeeded. </p>
+
+        <p class="p"> </p>
+
+        <p class="p"><strong class="ph b">Prototype</strong></p>
+
+        <pre class="pre codeblock">bool_t DCDC_SetOutputVoltageTargets
+(
+dcdcMcuVOutputTargetVal_t dcdcMcuVOutputTargetVal,
+dcdc1P8OutputTargetVal_t dcdc1P8OutputTargetVal
+);</pre>
+
+        <p class="p"><strong class="ph b">Description</strong></p>
+
+        <p class="p">The function enables changing the desired output target voltages at run-time. The values
+            that are set in DCDC registers are the closest possible values to the desired values
+            with respect to the current battery voltage value. The desired values are kept
+            internally in the driver and are automatically set in the DCDC registers when the
+            battery voltage value allows it. If this function isn’t called, the driver uses the
+            output target values from the DCDC configuration structure.</p>
+
+        <p class="p"><strong class="ph b">Parameters</strong></p>
+
+        <p class="p">dcdcMcuVOutputTargetVal_t dcdcMcuVOutputTargetVal is the desired output target voltage
+            level for the VDDMCU power line.</p>
+
+        <p class="p">dcdc1P8OutputTargetVal_t dcdc1P8OutputTargetVal is the desired output target voltage
+            level for the 1.8 V power line.</p>
+
+        <p class="p"><strong class="ph b">Returns</strong></p>
+
+        <p class="p">FALSE if a parameter is not valid or if this function is called prior to the
+            DCDC_Init.</p>
+
+        <p class="p">TRUE if executed successfully.</p>
+
+        <p class="p"> </p>
+
+        <p class="p"><strong class="ph b">Prototype</strong></p>
+
+        <pre class="pre codeblock">uint16_t DCDC_McuVOutputTargetTomV(dcdcMcuVOutputTargetVal_t dcdcMcuVOutputTarget);</pre>
+
+        <p class="p"><strong class="ph b">Description</strong></p>
+
+        <p class="p">The function converts dcdcMcuVOutputTargetVal_t to millivolts.</p>
+
+        <p class="p"><strong class="ph b">Parameters</strong></p>
+
+        <p class="p">dcdcMcuVOutputTargetVal_t dcdcMcuVOutputTarget is the dcdcMcuVOutputTargetVal_t constant
+            to be converted to millivolts.</p>
+
+        <p class="p"><strong class="ph b"> Returns</strong></p>
+
+        <p class="p">The conversion result as uint16_t.</p>
+
+        <p class="p"> </p>
+
+        <p class="p"><strong class="ph b">Prototype</strong></p>
+
+        <pre class="pre codeblock">uint16_t DCDC_1P8OutputTargetTomV(dcdc1P8OutputTargetVal_t dcdc1P8OutputTarget);</pre>
+
+        <p class="p"><strong class="ph b">Description</strong></p>
+
+        <p class="p">The function converts the dcdc1P8OutputTargetVal_t to millivolts.</p>
+
+        <p class="p"><strong class="ph b">Parameters</strong></p>
+
+        <p class="p">dcdc1P8OutputTargetVal_t dcdc1P8OutputTarget is the dcdc1P8OutputTargetVal constant to be
+            converted in millivolts.</p>
+
+        <p class="p"><strong class="ph b">Returns</strong></p>
+
+        <p class="p">The conversion result as uint16_t.</p>
+
+        <p class="p"> </p>
+
+        <p class="p"><strong class="ph b">Prototype</strong></p>
+
+        <pre class="pre codeblock">bool_t DCDC_PrepareForPulsedMode(void);</pre>
+
+        <p class="p"><strong class="ph b">Description</strong></p>
+
+        <p class="p">The function makes the pulsed mode appropriate settings in the DCDC hardware. In the
+            Connectivity software system, the DCDC works in pulsed mode when the system enters
+            low-power (LLS, VLLS). This function should be called just before putting the system in
+            low-power if the DCDC operating mode is either Boost mode or Buck mode.</p>
+
+        <p class="p"><strong class="ph b">Parameters</strong></p>
+
+        <p class="p">None</p>
+
+        <p class="p"><strong class="ph b">Returns</strong></p>
+
+        <p class="p">FALSE if this function is called prior to the DCDC_Init.</p>
+
+        <p class="p">TRUE otherwise.</p>
+
+        <p class="p"> </p>
+
+        <p class="p"><strong class="ph b">Prototype</strong></p>
+
+        <pre class="pre codeblock">bool_t DCDC_PrepareForContinuousMode(void);</pre>
+
+        <p class="p"><strong class="ph b">Description</strong></p>
+
+        <p class="p">The function restores continuous mode settings in the DCDC hardware. In the Connectivity
+            software system, the DCDC works in a continuous mode except when the system enters
+            low-power (LLS, VLLS). This function should be called just after the system exits
+            low-power if the DCDC operates in either Boost or Buck modes and
+            DCDC_PrepareForPulsedMode was called before entering low-power.</p>
+
+        <p class="p"><strong class="ph b">Parameters</strong></p>
+
+        <p class="p">None</p>
+
+        <p class="p"><strong class="ph b">Returns</strong></p>
+
+        <p class="p">FALSE if this function is called prior to the DCDC_Init.</p>
+
+        <p class="p">TRUE otherwise.</p>
+
+        <p class="p"> </p>
+
+        <p class="p"><strong class="ph b">Prototype</strong></p>
+
+        <pre class="pre codeblock">bool_t DCDC_SetUpperLimitDutyCycle(uint8_t upperLimitDutyCycle);</pre>
+
+        <p class="p"><strong class="ph b">Description</strong></p>
+
+        <p class="p">The function limits the DCDC converter duty cycle in Buck or Boost modes.</p>
+
+        <p class="p"><strong class="ph b">Parameters</strong></p>
+
+        <p class="p">uint8_t upperLimitDutyCycle the maximum duty cycle to be set in hardware.</p>
+
+        <p class="p"><strong class="ph b">Returns</strong></p>
+
+        <p class="p">FALSE if this function is called prior to the DCDC_Init or if the parameter is
+            invalid.</p>
+
+        <p class="p">TRUE if the maximum duty cycle is set in hardware or if the DCDC is operating in bypass
+            mode.</p>
+
+        <p class="p"> </p>
+
+        <p class="p"><strong class="ph b">Prototype</strong></p>
+
+        <pre class="pre codeblock">bool_t DCDC_GetPowerSwitchStatus(dcdcPSwStatus_t* pDCDCPSwStatus);</pre>
+
+        <p class="p"><strong class="ph b">Description</strong></p>
+
+        <p class="p">The function sets the variable referenced by its parameter to the current value of the
+            DCDC power switch status.</p>
+
+        <p class="p"><strong class="ph b">Parameters</strong></p>
+
+        <p class="p">dcdcPSwStatus_t* pDCDCPSwStatus pointer to the variable to be set at DCDC power switch
+            status.</p>
+
+        <p class="p"><strong class="ph b">Returns</strong></p>
+
+        <p class="p">FALSE if this function is called prior to the DCDC_Init.</p>
+
+        <p class="p">TRUE if the variable value is set at the DCDC power switch status.</p>
+
+        <p class="p"> </p>
+
+        <p class="p"><strong class="ph b">Prototype</strong></p>
+
+        <pre class="pre codeblock">void DCDC_ShutDown(void);</pre>
+
+        <p class="p"><strong class="ph b">Description</strong></p>
+
+        <p class="p">The function stops the DCDC if it operates in Buck mode. If the function is called prior
+            to the DCDC_Init or if the DCDC operating mode is not Buck mode, the system returns from
+            this function. Otherwise the system, is shut down.</p>
+
+        <p class="p"><strong class="ph b">Parameters</strong></p>
+
+        <p class="p">None.</p>
+
+        <p class="p"><strong class="ph b">Returns</strong></p>
+
+        <p class="p">None.</p>
+
+        <p class="p"> </p>
+
+        <p class="p"><strong class="ph b">Prototype</strong></p>
+
+        <pre class="pre codeblock">bool_t DCDC_InstallPSwitchCallback(pfDCDCPSwitchCallback_t pfPSwCallback, dcdcPSwIntEdge_t pSwIntEdge);</pre>
+
+        <p class="p"><strong class="ph b">Description</strong></p>
+
+        <p class="p">The function behavior depends on the pfPSwCallback value as follows:</p>
+
+        <p class="p">If pfPSwCallback is not NULL, the function enables the DCDC interrupt in DCDC hardware
+            and NVIC and installs pfPSwCallback to be called when DCDC power switch interrupt
+            occurs.</p>
+
+        <p class="p">If pfPSwCallback is NULL, the function disables the DCDC interrupt in DCDC hardware and
+            NVIC.</p>
+
+        <p class="p">Note that the callback is called directly from the DCDC interrupt. </p>
+
+        <p class="p"><strong class="ph b">Parameters</strong></p>
+
+        <p class="p">pfDCDCPSwitchCallback_t pfPSwCallback is the callback to be called when the DCDC power
+            switch interrupt occurs.</p>
+
+        <p class="p">dcdcPSwIntEdge_t pSwIntEdge selects the edge on which the DCDC power switch interrupt
+            occurs.</p>
+
+        <p class="p"><strong class="ph b">Returns</strong></p>
+
+        <p class="p">FALSE if this function is called prior to the DCDC_Init.</p>
+
+        <p class="p">TRUE otherwise.</p>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-3FD8C291-2FBB-4F7E-BD7E-46391627537E.html">Kinetis MKW4xZ DCDC Driver Reference</a></div>
+</div>
+</div>
+
+</body>
+</html>

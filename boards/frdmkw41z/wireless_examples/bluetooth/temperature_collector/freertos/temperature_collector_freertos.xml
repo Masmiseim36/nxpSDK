@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
+  <externalDefinitions>
+    <definition extID="com.nxp.mcuxpresso"/>
+    <definition extID="middleware.framework.generic_lists.MKW41Z4"/>
+    <definition extID="middleware.freertos.MKW41Z4"/>
+    <definition extID="middleware.freertos.heap_4.MKW41Z4"/>
+    <definition extID="middleware.wireless.ble_appl_main.MKW41Z4"/>
+    <definition extID="middleware.wireless.ble_controller.MKW41Z4"/>
+    <definition extID="middleware.wireless.ble_gatt_db.MKW41Z4"/>
+    <definition extID="middleware.wireless.ble_gatt_service_discovery.MKW41Z4"/>
+    <definition extID="middleware.wireless.ble_hci_transport.MKW41Z4"/>
+    <definition extID="middleware.wireless.ble_host.MKW41Z4"/>
+    <definition extID="middleware.wireless.ble_profiles.battery_service.MKW41Z4"/>
+    <definition extID="middleware.wireless.ble_profiles.device_info_service.MKW41Z4"/>
+    <definition extID="middleware.wireless.ble_profiles.temperature.MKW41Z4"/>
+    <definition extID="middleware.wireless.framework.coexistence.MKW41Z4"/>
+    <definition extID="middleware.wireless.framework.common.MKW41Z4"/>
+    <definition extID="middleware.wireless.framework.dcdc.MKW41Z4"/>
+    <definition extID="middleware.wireless.framework.flash.internal.MKW41Z4"/>
+    <definition extID="middleware.wireless.framework.function_lib.MKW41Z4"/>
+    <definition extID="middleware.wireless.framework.gpio_adapter.MKW41Z4"/>
+    <definition extID="middleware.wireless.framework.keyboard.MKW41Z4"/>
+    <definition extID="middleware.wireless.framework.led.MKW41Z4"/>
+    <definition extID="middleware.wireless.framework.lpm_MKW41Z.MKW41Z4"/>
+    <definition extID="middleware.wireless.framework.lpm_ble_MKW41Z.MKW41Z4"/>
+    <definition extID="middleware.wireless.framework.mem_manager.MKW41Z4"/>
+    <definition extID="middleware.wireless.framework.messaging.MKW41Z4"/>
+    <definition extID="middleware.wireless.framework.module_info.MKW41Z4"/>
+    <definition extID="middleware.wireless.framework.nvm.MKW41Z4"/>
+    <definition extID="middleware.wireless.framework.osa.MKW41Z4"/>
+    <definition extID="middleware.wireless.framework.osa_freertos.MKW41Z4"/>
+    <definition extID="middleware.wireless.framework.panic.MKW41Z4"/>
+    <definition extID="middleware.wireless.framework.reset.MKW41Z4"/>
+    <definition extID="middleware.wireless.framework.rng.MKW41Z4"/>
+    <definition extID="middleware.wireless.framework.sec_lib.MKW41Z4"/>
+    <definition extID="middleware.wireless.framework.shell.MKW41Z4"/>
+    <definition extID="middleware.wireless.framework.smgr.MKW41Z4"/>
+    <definition extID="middleware.wireless.framework.smgr.uart_adapter.MKW41Z4"/>
+    <definition extID="middleware.wireless.framework.tmr.MKW41Z4"/>
+    <definition extID="middleware.wireless.xcvr_kw41z.MKW41Z4"/>
+    <definition extID="platform.devices.MKW41Z4_CMSIS.MKW41Z4"/>
+    <definition extID="platform.drivers.adc16.MKW41Z4"/>
+    <definition extID="platform.drivers.clock.MKW41Z4"/>
+    <definition extID="platform.drivers.common.MKW41Z4"/>
+    <definition extID="platform.drivers.dspi.MKW41Z4"/>
+    <definition extID="platform.drivers.flash.MKW41Z4"/>
+    <definition extID="platform.drivers.gpio.MKW41Z4"/>
+    <definition extID="platform.drivers.i2c.MKW41Z4"/>
+    <definition extID="platform.drivers.llwu.MKW41Z4"/>
+    <definition extID="platform.drivers.lptmr.MKW41Z4"/>
+    <definition extID="platform.drivers.lpuart.MKW41Z4"/>
+    <definition extID="platform.drivers.ltc.MKW41Z4"/>
+    <definition extID="platform.drivers.pmc.MKW41Z4"/>
+    <definition extID="platform.drivers.port.MKW41Z4"/>
+    <definition extID="platform.drivers.rtc.MKW41Z4"/>
+    <definition extID="platform.drivers.smc.MKW41Z4"/>
+    <definition extID="platform.drivers.tpm.MKW41Z4"/>
+    <definition extID="platform.drivers.trng.MKW41Z4"/>
+    <definition extID="platform.utilities.debug_console.MKW41Z4"/>
+    <definition extID="mcuxpresso"/>
+    <definition extID="iar"/>
+  </externalDefinitions>
+  <example id="frdmkw41z_wireless_examples_bluetooth_temperature_collector_freertos" name="freertos" category="wireless_examples/bluetooth/temperature_collector" dependency="middleware.freertos.heap_4.MKW41Z4 middleware.wireless.framework.osa_freertos.MKW41Z4 middleware.freertos.MKW41Z4 middleware.wireless.framework.flash.internal.MKW41Z4 middleware.wireless.framework.gpio_adapter.MKW41Z4 middleware.wireless.framework.keyboard.MKW41Z4 middleware.wireless.framework.led.MKW41Z4 middleware.wireless.framework.reset.MKW41Z4 middleware.wireless.framework.common.MKW41Z4 middleware.wireless.framework.mem_manager.MKW41Z4 middleware.wireless.framework.messaging.MKW41Z4 middleware.wireless.framework.lpm_MKW41Z.MKW41Z4 middleware.wireless.framework.lpm_ble_MKW41Z.MKW41Z4 middleware.wireless.framework.osa.MKW41Z4 middleware.wireless.framework.panic.MKW41Z4 middleware.wireless.framework.rng.MKW41Z4 middleware.wireless.framework.nvm.MKW41Z4 middleware.wireless.framework.smgr.MKW41Z4 middleware.wireless.framework.smgr.uart_adapter.MKW41Z4 middleware.wireless.framework.shell.MKW41Z4 middleware.wireless.framework.tmr.MKW41Z4 middleware.wireless.framework.module_info.MKW41Z4 middleware.wireless.framework.function_lib.MKW41Z4 middleware.framework.generic_lists.MKW41Z4 middleware.wireless.framework.sec_lib.MKW41Z4 middleware.wireless.ble_host.MKW41Z4 middleware.wireless.ble_controller.MKW41Z4 middleware.wireless.ble_appl_main.MKW41Z4 middleware.wireless.ble_hci_transport.MKW41Z4 middleware.wireless.ble_gatt_db.MKW41Z4 middleware.wireless.ble_gatt_service_discovery.MKW41Z4 middleware.wireless.ble_profiles.battery_service.MKW41Z4 middleware.wireless.ble_profiles.device_info_service.MKW41Z4 middleware.wireless.ble_profiles.temperature.MKW41Z4 middleware.wireless.framework.coexistence.MKW41Z4 platform.drivers.common.MKW41Z4 platform.drivers.trng.MKW41Z4 platform.drivers.flash.MKW41Z4 platform.drivers.lpuart.MKW41Z4 platform.drivers.gpio.MKW41Z4 platform.drivers.port.MKW41Z4 platform.drivers.tpm.MKW41Z4 platform.drivers.dspi.MKW41Z4 platform.drivers.i2c.MKW41Z4 platform.drivers.lptmr.MKW41Z4 platform.drivers.rtc.MKW41Z4 platform.drivers.llwu.MKW41Z4 platform.drivers.ltc.MKW41Z4 platform.drivers.pmc.MKW41Z4 platform.drivers.adc16.MKW41Z4 middleware.wireless.framework.dcdc.MKW41Z4 middleware.wireless.xcvr_kw41z.MKW41Z4 platform.drivers.smc.MKW41Z4 platform.drivers.clock.MKW41Z4 platform.devices.MKW41Z4_CMSIS.MKW41Z4 platform.utilities.debug_console.MKW41Z4" toolchain="iar mcuxpresso">
+    <projects>
+      <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
+    </projects>
+    <toolchainSettings>
+      <!-- Curently, mcux just supports one common settings set for both debug and release -->
+      <toolchainSetting id_refs="com.nxp.mcuxpresso">
+        <!-- asm compiler -->
+        <option id="com.crt.advproject.gas.fpu" type="enum">
+          <value>com.crt.advproject.gas.fpu.none</value>
+        </option>
+        <option id="gnu.both.asm.option.warnings.nowarn" type="boolean">
+          <value>false</value>
+        </option>
+        <!-- gcc compiler -->
+        <option id="com.crt.advproject.gcc.fpu" type="string">
+          <value>com.crt.advproject.gcc.fpu.none</value>
+        </option>
+        <option id="com.crt.advproject.c.misc.dialect" type="enum">
+          <value>com.crt.advproject.misc.dialect.gnu99</value>
+        </option>
+        <option id="com.crt.advproject.gcc.exe.debug.option.debugging.level" type="enum">
+          <value>gnu.c.debugging.level.default</value>
+        </option>
+        <option id="com.crt.advproject.gcc.exe.release.option.debugging.level" type="enum">
+          <value>gnu.c.debugging.level.default</value>
+        </option>
+        <option id="gnu.c.compiler.option.warnings.nowarn" type="boolean">
+          <value>false</value>
+        </option>
+        <option id="gnu.c.compiler.option.warnings.allwarn" type="boolean">
+          <value>true</value>
+        </option>
+        <option id="gnu.c.compiler.option.warnings.extrawarn" type="boolean">
+          <value>false</value>
+        </option>
+        <option id="gnu.c.compiler.option.warnings.wconversion" type="boolean">
+          <value>false</value>
+        </option>
+        <option id="gnu.c.compiler.option.warnings.toerrors" type="boolean">
+          <value>false</value>
+        </option>
+        <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
+          <value>DEBUG</value>
+          <value>CPU_MKW41Z512VHT4</value>
+          <value>FSL_RTOS_FREE_RTOS</value>
+          <value>FRDM_KW41Z</value>
+          <value>FREEDOM</value>
+        </option>
+        <option id="gnu.c.compiler.option.optimization.flags" type="string">
+          <value>-fno-common</value>
+        </option>
+        <option id="gnu.c.compiler.option.misc.other" type="string">
+          <value>-c  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin -imacros "${ProjDirPath}/source/app_preinclude.h"</value>
+        </option>
+        <option id="gnu.c.compiler.option.preprocessor.nostdinc" type="boolean">
+          <value>false</value>
+        </option>
+        <!-- gcc linker -->
+        <option id="com.crt.advproject.link.fpu" type="enum">
+          <value>com.crt.advproject.link.fpu.none</value>
+        </option>
+        <option id="gnu.c.link.option.nostart" type="boolean">
+          <value>false</value>
+        </option>
+        <option id="gnu.c.link.option.nodeflibs" type="boolean">
+          <value>false</value>
+        </option>
+        <option id="gnu.c.link.option.nostdlibs" type="boolean">
+          <value>false</value>
+        </option>
+        <option id="gnu.c.link.option.strip" type="boolean">
+          <value>false</value>
+        </option>
+        <option id="gnu.c.link.option.noshared" type="boolean">
+          <value>false</value>
+        </option>
+        <option id="gnu.c.link.option.other" type="stringList">
+          <value>--gc-sections</value>
+        </option>
+        <option id="gnu.c.link.option.libs" type="stringList">
+          <value>m</value>
+          <value>c</value>
+          <value>gcc</value>
+          <value>nosys</value>
+        </option>
+      </toolchainSetting>
+    </toolchainSettings>
+    <source path="boards/frdmkw41z/wireless_examples/bluetooth/temperature_collector/freertos" target_path="board" type="c_include">
+      <files mask="board.h"/>
+      <files mask="clock_config.h"/>
+      <files mask="gpio_pins.h"/>
+      <files mask="pin_mux.h"/>
+    </source>
+    <source path="boards/frdmkw41z/wireless_examples/bluetooth/temperature_collector/freertos" target_path="board" type="src">
+      <files mask="board.c"/>
+      <files mask="clock_config.c"/>
+      <files mask="gpio_pins.c"/>
+      <files mask="pin_mux.c"/>
+    </source>
+    <source path="boards/frdmkw41z/wireless_examples/bluetooth/temperature_collector/freertos" target_path="source" type="c_include">
+      <files mask="FreeRTOSConfig.h"/>
+      <files mask="app_preinclude.h"/>
+    </source>
+    <source path="boards/frdmkw41z/wireless_examples/bluetooth/temperature_collector/freertos" target_path="source" type="linker" toolchain="mcuxpresso">
+      <files mask="MKW41Z512xxx4_connectivity.ld"/>
+    </source>
+    <source path="boards/frdmkw41z/wireless_examples/bluetooth/temperature_collector" target_path="doc" type="doc">
+      <files mask="readme.txt"/>
+    </source>
+    <source path="boards/frdmkw41z/wireless_examples/bluetooth/temperature_collector" target_path="source" type="c_include">
+      <files mask="gatt_db.h"/>
+      <files mask="gatt_uuid128.h"/>
+      <files mask="temperature_collector.h"/>
+    </source>
+    <source path="boards/frdmkw41z/wireless_examples/bluetooth/temperature_collector" target_path="source" type="src">
+      <files mask="app_config.c"/>
+      <files mask="temperature_collector.c"/>
+    </source>
+    <source path="devices/MKW41Z4/gcc" target_path="startup" type="src" toolchain="mcuxpresso">
+      <files mask="startup_MKW41Z4.S"/>
+    </source>
+    <source path="middleware/wireless/bluetooth_1.2.5/controller/lib" type="lib" method="copy" toolchain="mcuxpresso">
+      <files mask="lib_ble_kw41z_controller.a"/>
+    </source>
+    <source path="middleware/wireless/bluetooth_1.2.5/host/lib" type="lib" method="copy" toolchain="mcuxpresso">
+      <files mask="lib_ble_4-2_host_central_cm0p.a"/>
+    </source>
+    <source path="middleware/wireless/framework_5.3.5/SecLib" type="lib" method="copy" toolchain="mcuxpresso">
+      <files mask="lib_crypto_m0.a"/>
+    </source>
+    <source path="middleware/wireless/bluetooth_1.2.5/controller/lib" type="lib" method="copy" toolchain="iar">
+      <files mask="lib_ble_kw41z_controller.a"/>
+    </source>
+    <source path="middleware/wireless/bluetooth_1.2.5/host/lib" type="lib" method="copy" toolchain="iar">
+      <files mask="lib_ble_4-2_host_central_cm0p.a"/>
+    </source>
+    <source path="middleware/wireless/framework_5.3.5/SecLib" type="lib" method="copy" toolchain="iar">
+      <files mask="lib_crypto_m0.a"/>
+    </source>
+  </example>
+</ksdk:examples>

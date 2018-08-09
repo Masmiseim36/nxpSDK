@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Implemented profile and services"/>
+<meta name="abstract" content=""/>
+<meta name="description" content=""/>
+<meta name="DC.Relation" scheme="URI" content="GUID-77E76719-2781-442F-A442-AA78D9069633.html"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-FEE59A46-D17C-4859-8256-74A874F47F5F"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Implemented profile and services</title>
+</head>
+<body id="GUID-FEE59A46-D17C-4859-8256-74A874F47F5F">
+
+
+  <h1 class="title topictitle1">Implemented profile and services</h1>
+
+  
+  <div class="body"><p class="shortdesc"/>
+
+    <p class="p">The WPT PRU and PTU applications implement a GATT server and a GATT client for the following profile and service:</p>
+
+<ul class="ul">
+<li class="li">A4WP Wireless Power Transfer System specification v1.3</li>
+
+<li class="li">Wireless Power Transfer (WPT) Service v1.3</li>
+
+</ul>
+
+
+<p class="p">The WPT PRU application behaves as a GAP peripheral node. It enters GAP Limited Discoverable Mode using as advertising data the WPT service UUID (0xFFFE) and the ATT database
+ handle corresponding to the service declaration.</p>
+
+
+<p class="p">The WPT PTU application behaves as a GAP central node. It scans for PRU devices by looking for the WPT Service UUID, it connects to a PRU device, performs a procedure known as device 
+registration and allows or disallows the device to start charging. The device registration procedure should take less than 500 milliseconds and for this reason the profile uses security mode 1,
+ level 1 and no service discovery is performed. All handles are computed using the offset handle found in the advertising data. Device charging state and other measurable values are simulated in 
+software using random numbers (except for device temperature included in the dynamic parameters).</p>
+
+
+<p class="p">Both application use pairing with bonding by default. Both applications require a terminal to output application specific information. A part of the application information is 
+provided using onboard LED’s. All actions are triggered using the push-button events. The events have the following meaning:</p>
+
+<ul class="ul">
+<li class="li">Short press: pressing a button and releasing it under 1 second.</li>
+
+<li class="li">Long press: pressing a button and releasing after 1 second, but before 8 seconds are passed.</li>
+
+<li class="li">Very long press: pressing a button and releasing it after 8 seconds.</li>
+
+</ul>
+
+
+  </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-77E76719-2781-442F-A442-AA78D9069633.html">Wireless Power Transfer System Receiving Unit and Transmitting Unit</a></div>
+</div>
+</div>
+
+</body>
+</html>

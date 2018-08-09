@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Reading IP Address Configuration"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="4"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-297BE15F-D64D-4C7C-B5F6-02E65FF86C49"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Reading IP Address Configuration</title>
+</head>
+<body id="GUID-297BE15F-D64D-4C7C-B5F6-02E65FF86C49">
+
+
+    <h1 class="title topictitle1">Reading IP Address Configuration</h1>
+
+    <div class="body">
+        <p class="p"/>
+
+        <p class="p">APIs defined in file
+                <strong class="ph b">\middleware\wireless\nwk_ip_1.2.4\core\interface\thread\thread_utils.h</strong> and
+            data definitions in
+                <strong class="ph b">\middleware\wireless\nwk_ip_1.2.4\core\interface\thread\thread_types.h</strong> can be
+            used to inspect the Thread IPv6 address configuration of a Thread node after the node is
+            part of a Thread network.</p>
+
+        <p class="p">The types of IPv6 addresses defined for a Thread are shown as part of the
+                <strong class="ph b">nwkIPAddrType_t</strong> definition below:</p>
+
+        <div class="p"><pre class="pre codeblock">typedef enum nwkIPAddrType_tag
+{
+    gLL64Addr_c = 0x00,         /*!&lt; Link-Local 64 address (the IID is MAC Extended address Which is not the factory-assigned IEEE EUI-64,)*/
+    gMLEIDAddr_c = 0x01,        /*!&lt; Mesh-Local Endpoint Identifier address (the IID is randmon) */
+    gRLOCAddr_c = 0x02,         /*!&lt; Routing Locator address (the IID encodes the Router and Child IDs.)*/
+    gGUAAddr_c  = 0x03,         /*!&lt; Global Unicast Address*/
+    gAnycastAddr_c = 0x04,      /*!&lt; Anycast IPv6 addresses */
+    gAnyIpv6_c = 0x05,          /*!&lt; All IPv6 address */
+    gAllThreadNodes_c = 0x06,   /*!&lt; All Thread nodes address */
+} nwkIPAddrType_t;</pre>
+</div>
+
+        <p class="p"/>
+
+        <p class="p">APIs defined in file
+                <strong class="ph b">\middleware\wireless\nwk_ip_1.2.4\core\interface\thread\thread_utils.h</strong> and
+            data definitions in
+                <strong class="ph b">\middleware\wireless\nwk_ip_1.2.4\core\interface\thread\thread_types.h</strong> can be
+            used to inspect the Thread IPv6 address configuration of a Thread node after the node is
+            part of a Thread network.</p>
+
+        <p class="p">The <strong class="ph b">THR_NumOfIP6Addr</strong> function returns the number of bound IPv6 address of a
+            specific type.</p>
+
+        <p class="p">The <strong class="ph b">THR_GetIP6Addr</strong> function returns the bound IPv6 addresses specified by IP
+            address type parameter. At pDstIPAddr location should be allocated enough memory space
+            to copy all the requested IPv6 addresses. Applications should use the
+                <strong class="ph b">THR_NumOfIP6Addr</strong> to find how much space is needed to get the requested IPv6
+            addresses.</p>
+
+        <p class="p">For inspecting address configuration for the IP media interface used by the
+            stack, applications may also use the advanced APIs in
+                <strong class="ph b">\middleware\wireless\nwk_ip_1.2.4\core\interface\modules\ip_if_management.h</strong>.</p>
+
+    </div>
+
+
+</body>
+</html>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="MCUXpresso IDE project options configuration"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-CAA69663-C4A6-4FC7-B499-3A0E0E84428F.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="4"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-32C3FA24-8AFB-46C5-ADD4-B63B5F078248"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>MCUXpresso IDE project options configuration</title>
+</head>
+<body id="GUID-32C3FA24-8AFB-46C5-ADD4-B63B5F078248">
+
+
+    <h1 class="title topictitle1">MCUXpresso IDE project options configuration</h1>
+
+    <div class="body">
+        <p class="p">The configuration settings are primarily contained in the <strong class="ph b">MCUXpresso
+                Project Settings panel</strong> and the *.h header files contained in
+                <strong class="ph b">\middleware\wireless\nwk_ip_1.2.4\examples\common</strong> and
+                <strong class="ph b">\middleware\wireless\nwk_ip_1.2.4\examples\&lt;application&gt;\config</strong> file
+            groups within a project.</p>
+
+        <p class="p">To see the configuration options set within the MCUXpresso Project Settings panel,
+            right-click on the application project and select the Properties option. </p>
+
+        <p class="p">The figure below shows the global Preprocessor options. These include the following:</p>
+
+        <ul class="ul" id="GUID-32C3FA24-8AFB-46C5-ADD4-B63B5F078248__UL_CTW_VCM_HZ">
+            <li class="li">Setting the file at
+                    <strong class="ph b">\middleware\wireless\nwk_ip_1.2.4\examples\&lt;application&gt;\config\
+                    config.h </strong>as a <strong class="ph b">Preinclude file </strong>which is included first by default
+                whenever a source module compilation is invoked</li>
+
+            <li class="li">Preprocessor <strong class="ph b">Defined symbols</strong> which consist in the main global settings for
+                the system and stack for the application project</li>
+
+        </ul>
+
+        <div class="fig fignone"><span class="figcap">Figure 1. MCUXpresso IDE project options configuration – C compiler preprocessor settings</span><img class="image" src="GUID-B7D09981-51B3-4B2A-BE81-7FB04C41EAD3-high.png"/></div>
+
+        <p class="p"/>
+
+        <p class="p">Compared to IAR the current MCUXpresso version does not support preprocessing the linker
+            file. The </p>
+
+        <p class="p">application settings which are applied when the binary executable is created are
+            contained inside the linker file which can e located from the Managed Linker Script
+            section. These include the following:</p>
+
+        <ul class="ul" id="GUID-32C3FA24-8AFB-46C5-ADD4-B63B5F078248__UL_SZV_JDM_HZ">
+            <li class="li">Symbol definitions which affect size of RTOS heap memory and whether an OTAP or
+                Serial (FSCI) bootloader is included in the firmware memory map.</li>
+
+        </ul>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-CAA69663-C4A6-4FC7-B499-3A0E0E84428F.html">MCUXpresso IDE compile time configuration</a></div>
+</div>
+</div>
+
+</body>
+</html>

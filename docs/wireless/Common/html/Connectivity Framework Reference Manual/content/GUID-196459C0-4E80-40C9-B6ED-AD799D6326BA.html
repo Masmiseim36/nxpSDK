@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Data type definitions"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-527211A2-8C56-4E3B-B09D-CAD52CCD1C75.html"/>
+<meta name="prodname" content=""/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Creator" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-196459C0-4E80-40C9-B6ED-AD799D6326BA"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Data type definitions</title>
+</head>
+<body id="GUID-196459C0-4E80-40C9-B6ED-AD799D6326BA">
+
+
+    <h1 class="title topictitle1">Data type definitions</h1>
+
+    <div class="body">
+        <p class="p"><strong class="ph b">Name:</strong></p>
+
+        <pre class="pre codeblock">typedef PACKED_STRUCT hardwareParameters_tag{
+    uint8_t identificationWord[10];
+    uint8_t reserved[32];
+    uint8_t ieee_802_15_4_address[8];
+    uint8_t bluetooth_address[6];
+    uint32_t xtalTrim;
+    uint32_t edCalibrationOffset;
+    uint32_t pllFstepOffset;
+    uint32_t gInternalStorageAddr;
+    uint16_t hardwareParamsCrc;
+}hardwareParameters_t;</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong></p>
+
+        <p class="p">Defines the structure of the hardware-dependent information.</p>
+
+        <div class="note note"><span class="notetitle">Note:</span> Some members of this structure may be ignored on a specific board/silicon
+            configuration. Also, new members may be added for implementation specific purposes and
+            the backwards compatibility must be maintained.</div>
+
+        <p class="p">The CRC calculation starts from the <em class="ph i">reserved</em> field of the <em class="ph i">hardwareParameters_t
+            </em>and ends before the <em class="ph i">hardwareParamsCrc</em> field. Additional members to this
+            structure may be added using the following methods:</p>
+
+        <ul class="ul" id="GUID-196459C0-4E80-40C9-B6ED-AD799D6326BA__UL_EHL_PSR_2Z">
+            <li class="li"> Add new fields between <em class="ph i">gInternalStorageAddr</em> and <em class="ph i">hardwareParamsCrc</em>
+                fields. This will cause a CRC fail at the next parameter read through the dedicated
+                function due to additional bytes fed to the CRC calculator. The user must fill a
+                    <em class="ph i">hardwareParameters_t </em> variable with the previous values (raw copy from
+                flash) and rewrite them to the flash memory using the dedicated function.</li>
+
+            <li class="li"> Add new fields before the <em class="ph i">gInternalStorageAddr </em> field. This method will not
+                cause a CRC fail, but the user must keep in mind to substract the total size of the
+                new fields from the size of the reserved field. For example, if a field of
+                    <em class="ph i">uint8_t size</em> is added using this method, the size of the reserved field
+                shall be changed to 31.</li>
+
+        </ul>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-527211A2-8C56-4E3B-B09D-CAD52CCD1C75.html">Production Data Storage</a></div>
+</div>
+</div>
+
+</body>
+</html>

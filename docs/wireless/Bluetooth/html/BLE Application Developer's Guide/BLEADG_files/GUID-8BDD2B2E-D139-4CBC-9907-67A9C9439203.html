@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Scanning"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-4DE3D2A8-4928-4AE2-8EC1-2EFF8A5275E0.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Creator" content=""/>
+<meta name="DC.Publisher" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-8BDD2B2E-D139-4CBC-9907-67A9C9439203"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Scanning</title>
+</head>
+<body id="GUID-8BDD2B2E-D139-4CBC-9907-67A9C9439203">
+
+
+    <h1 class="title topictitle1">Scanning</h1>
+
+    <div class="body">
+        <p class="p">The most basic setup for a Central device begins with scanning, which is performed by the
+            following function from <em class="ph i">gap_interface.h</em>:</p>
+
+        <pre class="pre codeblock">bleResult_t<strong class="ph b">Gap_StartScanning</strong>
+(
+    gapScanningParameters_t * pScanningParameters,
+    gapScanningCallback_t     scanningCallback
+);</pre>
+
+        <p class="p">If the <em class="ph i">pScanningParameters</em> pointer is NULL, the currently set parameters are used.
+            If no parameters have been set after a device power-up, the standard default values are
+            used:</p>
+
+        <pre class="pre codeblock"><strong class="ph b">#define</strong> gGapDefaultScanningParameters_d \
+{ \
+    /* type */             gGapScanTypePassive_c, \
+    /* interval */         gGapScanIntervalDefault_d, \
+    /* window */           gGapScanWindowDefault_d, \
+    /* ownAddressType */   gBleAddrTypePublic_c, \
+    /* filterPolicy */     gScanAll_c \
+}</pre>
+
+        <p class="p">The easiest way to define non-default scanning parameters is to initialize a
+                <em class="ph i">gapScanningParameters_t</em> structure with the above default and change only the
+            required fields.</p>
+
+        <p class="p">For example, to perform active scanning and only scan for devices in the White List, the
+            following code can be used:</p>
+
+        <pre class="pre codeblock">gapScanningParameters_t scanningParameters = gGapDefaultScanningParameters_d;
+scanningParameters.type = gGapScanTypeActive_c;
+scanningParameters.filterPolicy = gScanWhiteListOnly_c;
+Gap_StartScanning(&amp;scanningParameters, scanningCallback);</pre>
+
+        <p class="p">The <em class="ph i">scanningCallback</em> is triggered by the GAP layer to signal events related to
+            scanning.</p>
+
+        <p class="p">The most important event is the <em class="ph i">gDeviceScanned_c</em> event, which is
+            triggered each time an advertising device is scanned. This event’s data contains
+            information about the advertiser:</p>
+
+        <pre class="pre codeblock"><strong class="ph b">typedef</strong><strong class="ph b">struct</strong> gapScannedDevice_tag {
+    bleAddressType_t                 addressType ;
+    bleDeviceAddress_t               aAddress ;
+    int8_t                           rssi ;
+    uint8_t                          dataLength ;
+    uint8_t *                        data ;
+    bleAdvertisingReportEventType_t  advEventType ;
+} gapScannedDevice_t;</pre>
+
+        <p class="p">If this information signals a known Peripheral that the Central wants to connect to, the
+            latter must stop scanning and connect to the Peripheral.</p>
+
+        <p class="p">To stop scanning, call this function:</p>
+
+        <pre class="pre codeblock">bleResult_t<strong class="ph b">Gap_StopScanning</strong> (<strong class="ph b">void</strong>);</pre>
+
+        <p class="p">By default, the GAP layer is configured to report all scanned devices to the application
+            using the <em class="ph i">gDeviceScanned_c</em> event type. However, some use cases may require to
+            perform specific GAP Discovery Procedures in which the advertising reports have to be
+            filtered by the Flags AD value from the advertising data. Other use cases require the
+            Host stack to automatically initiate a connection when a specific device has been
+            scanned.</p>
+
+        <p class="p">To enable filtering based on the Flags AD value or to set device addresses for automatic
+            connections, the following function must be called before the scanning is started:</p>
+
+        <pre class="pre codeblock">bleResult_t<strong class="ph b">Gap_SetScanMode</strong>
+(
+    gapScanMode_t             scanMode,
+    gapAutoConnectParams_t*   pAutoConnectParams
+);</pre>
+
+        <p class="p">The default value for the scan mode is <em class="ph i">gNoDiscovery_c,</em> which reports all packets
+            regardless of their content and does not perform any automatic connection. </p>
+
+        <p class="p">To enable Limited Discovery, the <em class="ph i">gLimitedDiscovery_c</em> value must be used, while the
+                <em class="ph i">gGeneralDiscovery_c</em> value activates General Discovery.</p>
+
+        <p class="p">To enable automatic connection when specific devices are scanned, the
+                <em class="ph i">gAutoConnect_c</em> value must be set, in which case the <em class="ph i">pAutoConnectParams</em>
+            parameter must point to the structure that holds the target device addresses and the
+            connection parameters to be used by the Host for these devices.</p>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-4DE3D2A8-4928-4AE2-8EC1-2EFF8A5275E0.html">Central setup</a></div>
+</div>
+</div>
+
+</body>
+</html>

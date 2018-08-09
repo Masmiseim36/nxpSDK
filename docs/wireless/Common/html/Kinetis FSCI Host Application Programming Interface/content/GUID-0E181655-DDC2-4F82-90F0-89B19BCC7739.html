@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Linux OS"/>
+<meta name="abstract" content=""/>
+<meta name="description" content=""/>
+<meta name="DC.Relation" scheme="URI" content="GUID-0510D80F-487A-4BAA-9B21-E01F720D3935.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="4"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-0E181655-DDC2-4F82-90F0-89B19BCC7739"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Linux OS</title>
+</head>
+<body id="GUID-0E181655-DDC2-4F82-90F0-89B19BCC7739">
+
+
+  <h1 class="title topictitle1">Linux OS</h1>
+
+  
+  <div class="body"><p class="shortdesc"/>
+
+    <div class="p">Adding the source folder to the PYTHONPATH can be done by editing ~/.bashrc and adding the
+      following
+      line:<pre class="pre codeblock">export PYTHONPATH=$PYTHONPATH:/home/.../hsdk-python/src</pre>
+</div>
+
+    <p class="p">Most of the Python scripts operate on boards connected on a serial bus and superuser
+      privileges must be employed to access the ports. After running a command prefixed with sudo,
+      the environment paths become those of root, so the locally set PYTHONPATH is not visible
+      anymore. That is why /etc/sudoers is modified to keep the environment variable when changing
+      user.</p>
+
+    <div class="p">Edit /etc/sudoers with your favorite text editor.
+      Modify:<pre class="pre codeblock">Defaults env_reset -&gt; Defaults env_keep="PYTHONPATH"</pre>
+</div>
+
+    <div class="p">As an alternative to avoid modifying the <em class="ph i">:sudoers</em>  file, the PYTHONPATH can be
+      adjusted programmatically, as in the example
+      below:<pre class="pre codeblock">import sys
+if sys.platform.startswith('linux'):
+    sys.path.append(‘/home/user/hsdk-python/src’)
+</pre>
+</div>
+
+  </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-0510D80F-487A-4BAA-9B21-E01F720D3935.html">Platform setup</a></div>
+</div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Protocol Stack"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-82FE6618-DF5B-4E4D-8149-74A98B1A3C5E.html"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-D9B4642C-F343-4BBC-A70F-9C910F060C65"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Protocol Stack</title>
+</head>
+<body id="GUID-D9B4642C-F343-4BBC-A70F-9C910F060C65">
+
+
+    <h1 class="title topictitle1">Protocol Stack</h1>
+
+    <div class="body">
+        <p class="p">The IPv6 over Bluetooth solution protocol stack is presented in Figure 1.</p>
+
+        <div class="fig fignone"><span class="figcap">Figure 1. IPv6 over Bluetooth Protocol Stack</span>
+            
+            <img class="image" src="GUID-03B65B7D-F2C1-4497-B242-63A9F5ED16F1-high.png"/>
+            
+        </div>
+
+        <p class="p">The Bluetooth stack, depicted in blue, must implement a GATT-based profile
+            called Internet Protocol Support Profile (IPSP) that specifies the discovery and
+            connection of other supporting nodes. Furthermore, the transport of IPv6 datagrams is
+            done on L2CAP Credit Based channels. Therefore, a Bluetooth Host Stack version of 4.1
+            are above is required.</p>
+
+        <p class="p">The adaptation of IPv6 datagrams over the Bluetooth interface is done by
+            using 6LoWPAN techniques described in RFC 7668. The 6LoWPAN over BLE layer, presented in
+            green is also responsible for IP or UDP header compression of IPv6 packets, for
+            optimizations of neighbor discovery or multicast, as well as for Stateless Address
+            Autoconfiguration (SLAAC). This layer is named 6LoBLE inside the Network IP stack.</p>
+
+        <p class="p">The IPv6 layers are presented in red and comprise the Network IP stack. It
+            supports Internet Control Message Protocol (ICMPv6) and User Datagram Protocol (UDP) as
+            a transport layer. The SDK offers support for other Application layers like Sockets,
+            Constrained Application Protocol (CoAP), and Echo. Neighbor Discovery Protocol (ND) is
+            also implemented and is used for prefix dissemination and address registration.</p>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-82FE6618-DF5B-4E4D-8149-74A98B1A3C5E.html">IPv6 over Bluetooth Overview</a></div>
+</div>
+</div>
+
+</body>
+</html>

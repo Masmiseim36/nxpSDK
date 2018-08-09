@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Thread Integration with Linux OS Host on Serial (UART) Tunnel Interface"/>
+<meta name="abstract" content=""/>
+<meta name="description" content=""/>
+<meta name="DC.Relation" scheme="URI" content="GUID-6F852477-6BB3-4D85-B5D9-3DD470CE8EA7.html"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-C3CFCF65-5085-4A79-8E7E-0F048AE29059.html"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-EBC9AC32-0879-4E33-84F6-046C0D83A260.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="4"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-63987A0A-9DBD-4AB7-A046-6AE38C019A75"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Thread Integration with Linux OS Host on Serial (UART) Tunnel Interface</title>
+</head>
+<body id="GUID-63987A0A-9DBD-4AB7-A046-6AE38C019A75">
+
+
+  <h1 class="title topictitle1">Thread Integration with Linux OS Host on Serial (UART) Tunnel Interface</h1>
+
+  
+  <div class="body"><p class="shortdesc"/>
+
+    <div class="p">The Kinetis Thread stack implements a serial Tunnel media interface which can be
+      used to exchange FSCI encapsulated IPv6 packets with a host system. First, ensure that the
+      macro THR_SERIAL_TUN_ROUTER is enabled in the project
+      file:middleware\wireless\nwk_ip_&lt;ver&gt;\examples\host_controlled_device\config\config.h
+      <pre class="pre codeblock">#define THR_SERIAL_TUN_ROUTER                       1</pre>
+ and
+      then select the appropriate Neighbor Discovery (ND) setting for your setup in
+      app_serial_tun.h: ND host (default), ND router or disabled:
+      <pre class="pre codeblock">#define THR_SERIAL_TUN_ENABLE_ND_HOST       TRUE
+#define THR_SERIAL_TUN_ENABLE_ND_ROUTER     FALSE</pre>
+</div>
+
+    <p class="p">With ND turned off, the communication is network layer (layer-3) only (TUN mode). With ND turned on, link layer (layer-2) is also enabled and frames include an Ethernet header (TAP mode).</p>
+
+    <div class="note note"><span class="notetitle">Note:</span> Note that a Serial-TUN enabled device advertises itself as a default router
+      for prefix FD01::/64 (first 64 bits of <samp class="ph codeph">THR_SERIAL_TUN_DEFAULT_ADDRESS</samp>) when
+      ND is turned off. When multiple Serial-TUN capable nodes coexist in the same Thread network,
+      routing loops may occur if packets have either the source or destination address from this
+      prefix range. To fix this, either change <samp class="ph codeph">THR_SERIAL_TUN_DEFAULT_ADDRESS</samp> and
+      ensure this is unique throughout your setup or have only one Serial-TUN capable device in the
+      network.</div>
+
+    <p class="p">To provide connectivity to the host, there are 2 components needed: the TUN/TAP kernel
+      module, which allows the operating system to create virtual interfaces and a program that
+      knows to encapsulate/decapsulate IP packets to/from FSCI/THCI.</p>
+ 
+    <div class="fig fignone"><span class="figcap">Figure 1. Host-to-serial and Thread-device-to-host</span><img class="image" src="GUID-58F02A65-BBF4-45E9-B531-8DA689C1E47B-high.png"/></div>
+
+  </div>
+
+<div class="related-links">
+<ul class="ullinks">
+<li class="link ulchildlink"><strong><a href="GUID-6F852477-6BB3-4D85-B5D9-3DD470CE8EA7.html">TUN/TAP</a></strong><br/>
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-C3CFCF65-5085-4A79-8E7E-0F048AE29059.html">Userspace module in TUN mode</a></strong><br/>
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-EBC9AC32-0879-4E33-84F6-046C0D83A260.html">Userspace module in TAP mode and global addressing scheme</a></strong><br/>
+</li>
+</ul>
+</div>
+
+</body>
+</html>

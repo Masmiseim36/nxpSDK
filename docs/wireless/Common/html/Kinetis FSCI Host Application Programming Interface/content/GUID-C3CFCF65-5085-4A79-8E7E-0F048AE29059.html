@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Userspace module in TUN mode"/>
+<meta name="abstract" content=""/>
+<meta name="description" content=""/>
+<meta name="DC.Relation" scheme="URI" content="GUID-63987A0A-9DBD-4AB7-A046-6AE38C019A75.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="4"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-C3CFCF65-5085-4A79-8E7E-0F048AE29059"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Userspace module in TUN mode</title>
+</head>
+<body id="GUID-C3CFCF65-5085-4A79-8E7E-0F048AE29059">
+
+
+  <h1 class="title topictitle1">Userspace module in TUN mode</h1>
+
+  
+  <div class="body"><p class="shortdesc"/>
+
+    <p class="p">In this chapter, various references to a userspace demo program capable of
+      sending IPv6 packets to a Kinetis device over FSCI are made. This program is part of the
+      deliverable under the path: hsdk/demo/Thread_KW_Tun.c. This program operates by default on TUN
+      interfaces; set the define SERIAL_TAP to 1 in order to make it operate on TAP interfaces.</p>
+
+    <p class="p">The program can be compiled by calling make in the hsdk/demo directory, and the executable file can be found under hsdk/demo/bin directory.</p>
+
+    <p class="p">The program takes two mandatory arguments and three optional. These are,
+      respectively: the path of the Kinetis board port in the /dev file system, the name of the
+      serial TUN/TAP interface, whether a factory reset occurs at the start of the program, the
+      802.15.4 channel to be used and the baudrate for configuring the serial port. The path of the
+      Kinetis board port, depending on the operating system, should resemble /dev/ttyACMX on the
+      Linux OS. The second argument must be the name of the previously created virtual interface on
+      Linux OS (such as threadtun0 from the previous example). The first two optional arguments must
+      be numbers. A factory reset resembles a Boolean value where value of 1 resets the device and 0
+      does not change state. The 802.15.4 channel must be a number within 11 and 25 (25 is the
+      default value if none entered). The fifth and last parameter is the baudrate which should be
+      entered as a plain number, for example, 115200. Note that 115200 is the default baudrate used
+      if none entered.</p>
+
+    <p class="p">The program starts with configuring the device to create a Thread network on the
+      specified channel with commissioning capabilities. This behavior may be eliminated by setting
+      the PROVISION macro to 0. Afterwards it attaches to the virtual TUN/TAP interface and, in an
+      infinite loop, starts reading Ethernet/IPv6 packets coming from the kernel. It then
+      encapsulates them in the FSCI format, sends the packet and waits for packets on the return
+      path on a separate thread. The packets received are decapsulated and the Ethernet/IPv6
+      remainder is injected back into the TUN/TAP interface to be handled by the kernel. Both the
+      packets read from and injected back in the TUN/TAP interface are dumped to the console, having
+      either the transmit tags (data read is transmitted further to the device) or receive tags
+      respectively. Define DEBUG to 0 to disable the console output.</p>
+
+    <p class="p">Before using the interface, it must be configured for proper interaction with the
+      serial TUN media interface on the Kinetis device side. By default, the Kinetis side is
+      configured with the IPv6 address <samp class="ph codeph">FD01::1</samp>, when ND is turned off.</p>
+
+    <div class="p">The routers and end devices that further join the network have assigned a Thread
+      Unique Local Address in range <samp class="ph codeph">FD01:0000:0000:3EAD::/64</samp>. To adhere to these
+      requirements, in the hsdk/demo folder there is a script that automates the creation of the TUN
+      interface, while configuring it with the proper IPv6 addresses and
+      routes.<pre class="pre codeblock">$ cat make_tun.sh
+#!/bin/bash
+# Create a new TUN interface for Thread interaction.
+ip -6 tuntap add mode tun threadtun0
+# Assign it a global IPv6 address.
+ip -6 addr add FD01::2 dev threadtun0
+# Add route to default address of Serial TUN embedded interface.
+ip -6 route add FD01::1 dev threadtun0
+# Add route to Unique Local /64 Prefix via threadtun0.
+ip -6 route add FD01:0000:0000:3EAD::/64 dev threadtun0
+# The interface is ready.
+ip link set threadtun0 up
+
+# Enable IPv6 routing on host.
+sysctl -w net.ipv6.conf.all.forwarding=1
+$ chmod +x make_tun.sh
+$ sudo ./make_tun.sh
+</pre>
+</div>
+
+    <div class="p">After calling this script, the environment is prepared for sending native IPv6
+      packets to a Thread remote destination via an attached Thread Border Router. The script adds a
+      route to the IPv6 space of <samp class="ph codeph">FD01:0000:0000:3EAD::/64 </samp> and the host may now
+      reach remote Thread nodes on their Unique Local address. Other routes may be added in a
+      similar manner, depending on the application
+      requirements.<pre class="pre codeblock">$ ip address show dev threadtun0
+3: threadtun0: &lt;NO-CARRIER,POINTOPOINT,MULTICAST,NOARP,UP&gt; mtu 1500 qdisc pfifo_fast state DOWN qlen 500
+    link/none 
+    inet6 fd01::2 scope global 
+       valid_lft forever preferred_lft forever
+
+$ ip -6 route show
+[...]
+fd01:0:0:3ead::/64 dev threadtun0  metric 1024
+[...]
+</pre>
+</div>
+
+    <div class="p"><strong class="ph b">Example</strong>: Considering the following simple topology: a Thread Leader/Border Router
+      (project thread_host_controlled_device) connected to a Linux system (assigned /dev/ttyACM0)
+      and another Thread Router joined to the Leader. The assumption is that the Thread Router is a
+      thread_router_eligible_device, which exposes the management server over the USB/UART shell.
+      Its IPv6 addresses can be retrieved by issuing ‘ifconfig’ from screen/putty, which prints the
+      following to the
+      console:<pre class="pre codeblock">$ ifconfig
+Interface 0: 6LoWPAN
+        Link local address (LL64): fe80::a49d:71ab:5f12:b200
+        Mesh local address (ML16): fd2f:62d8:42f3::ff:fe00:400
+        Unique local address: fd01::3ead:7c16:37b5:e6ef:701a
+        Link local all Thread Nodes (MCast):  ff32:40:fd2f:62d8:42f3::01
+        Realm local all Thread Nodes (MCast): ff33:40:fd2f:62d8:42f3::01
+</pre>
+</div>
+
+    <div class="p">Afterwards, the Thread Router can be pinged directly from the Linux OS on its
+      Unique Local Address as shown
+      below:<pre class="pre codeblock">Terminal 1: $ sudo ./bin/Thread_KW_Tun /dev/ttyACM0 threadtun0
+Terminal 2: $ ping6 -c 1 fd01::3ead:7c16:37b5:e6ef:701a
+Output from terminal 1: hexdump of the TX/RX packets
+TX:
+  0000  68 00 60 00 00 00 00 40 3a 40 fd 01 00 00 00 00  h.`....@:@......
+  0010  00 00 00 00 00 00 00 00 00 02 fd 01 00 00 00 00  ................
+  0020  3e ad 7c 16 37 b5 e6 ef 70 1a 80 00 f2 93 15 d8  &gt;.|.7...p.......
+  0030  00 01 1d 2a 01 56 00 00 00 00 51 3c 05 00 00 00  ...*.V....Q&lt;....
+  0040  00 00 10 11 12 13 14 15 16 17 18 19 1a 1b 1c 1d  ................
+  0050  1e 1f 20 21 22 23 24 25 26 27 28 29 2a 2b 2c 2d  .. !"#$%&amp;'()*+,-
+  0060  2e 2f 30 31 32 33 34 35 36 37                    ./01234567
+RX:
+  0000  60 00 00 00 00 40 3a 3e fd 01 00 00 00 00 3e ad  `....@:&gt;......&gt;.
+  0010  7c 16 37 b5 e6 ef 70 1a fd 01 00 00 00 00 00 00  |.7...p.........
+  0020  00 00 00 00 00 00 00 02 81 00 f1 93 15 d8 00 01  ................
+  0030  1d 2a 01 56 00 00 00 00 51 3c 05 00 00 00 00 00  .*.V....Q&lt;......
+  0040  10 11 12 13 14 15 16 17 18 19 1a 1b 1c 1d 1e 1f  ................
+  0050  20 21 22 23 24 25 26 27 28 29 2a 2b 2c 2d 2e 2f   !"#$%&amp;'()*+,-./
+  0060  30 31 32 33 34 35 36 37                          01234567
+
+</pre>
+</div>
+
+    <div class="p">Output from terminal 2:<pre class="pre codeblock">PING fd01::3ead:7c16:37b5:e6ef:701a(fd01::3ead:7c16:37b5:e6ef:701a) 56 data bytes
+64 bytes from fd01::3ead:7c16:37b5:e6ef:701a: icmp_seq=1 ttl=62 time=33 ms
+</pre>
+<div class="note note"><span class="notetitle">Note:</span> 
+        <p class="p">When the program starts with a factory reset of the device and the Linux OS re-enumerates
+          the port to the lowest available ttyACM number. Situations where /dev/ttyACM1 becomes
+          /dev/ttyACM0 are possible. However, the program does not handle them. Ensure that a ttyACM
+          device is used which does not get re-enumerated to a different number upon reset (for
+          example, /dev/ttyACM0 always re-enumerates to itself).</p>
+
+      </div>
+</div>
+
+  </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-63987A0A-9DBD-4AB7-A046-6AE38C019A75.html">Thread Integration with Linux OS Host on Serial (UART) Tunnel Interface</a></div>
+</div>
+</div>
+
+</body>
+</html>

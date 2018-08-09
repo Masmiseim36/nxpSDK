@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="BLE OTAP image file format"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-53C35DEE-9212-4685-BF1E-7B66CB5A3860.html"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-E4FD83E7-BF3E-401A-9A53-28FDA35E9760.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Creator" content=""/>
+<meta name="DC.Publisher" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-8D40488C-4DA8-40D3-8AD6-701BBFD80E65"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>BLE OTAP image file format</title>
+</head>
+<body id="GUID-8D40488C-4DA8-40D3-8AD6-701BBFD80E65">
+
+
+    <h1 class="title topictitle1">BLE OTAP image file format</h1>
+
+    <div class="body">
+        <p class="p">The BLE OTAP Image file has a binary file format. It is composed of a header followed by
+            a number of sub-elements. The header describes general information about the file. There
+            are some predefined sub-elements of a file but an end manufacturer could add
+            manufacturer-specific sub-elements. The header does not have details of the
+            sub-elements. Each element is described by its type.</p>
+
+        <p class="p">The general format of an image file is shown in the table below.</p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-8D40488C-4DA8-40D3-8AD6-701BBFD80E65__TABLE_O52_TSM_CY" class="table" frame="border" border="1" rules="all"><caption><span class="tablecap">Table 1. BLE OTAP Image File General Format</span></caption>
+                
+                
+                
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top">Image File Element</td>
+
+                        <td class="entry" valign="top">Value Field Length (bytes)</td>
+
+                        <td class="entry" valign="top">Description</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">Header</td>
+
+                        <td class="entry" valign="top">Variable</td>
+
+                        <td class="entry" valign="top">The header contains general information about the image file.</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">Upgrade Image Sub-element</td>
+
+                        <td class="entry" valign="top">Variable</td>
+
+                        <td class="entry" valign="top">This sub-element contains the actual binary executable image which is
+                            copied into the flash memory of the target device. The maximum size of
+                            this sub-element depends on the target hardware.</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">Sector Bitmap Sub-element</td>
+
+                        <td class="entry" valign="top">32</td>
+
+                        <td class="entry" valign="top">
+                            <p class="p">This sub-element contains a sector bitmap of the flash memory of the
+                                target device which tells the bootloader which sectors to overwrite
+                                and which to leave intact. The Bootloader can be configured not to
+                                overwrite itself regardless of the sector bitmap settings of the
+                                flash area it resides in. The size and granularity of this
+                                sub-element are target hardware dependent.</p>
+
+                            <p class="p">The format of this field is least significant byte first and least
+                                significant bit first for each byte with the least significant bytes
+                                and bits standing for the lowest memory sections of the flash.</p>
+
+                        </td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">Image File CRC Sub-element</td>
+
+                        <td class="entry" valign="top">2</td>
+
+                        <td class="entry" valign="top">This is a 16 bit CCITT type CRC which is calculated over all elements
+                            of the image file with the exception of the Image File CRC sub-element
+                            itself. This must be the last sub-element in an image file.</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p">Each sub-element in a BLE OTAP Image File has a Type-Length-Value (TLV) format. The type
+            identifier provides forward and backward compatibility as new sub-elements are
+            introduced. Existing devices that do not understand newer sub-elements may ignore the
+            data.</p>
+
+        <p class="p">The following table shows the general format of a BLE Image File sub-element.</p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-8D40488C-4DA8-40D3-8AD6-701BBFD80E65__TABLE_LZL_WSM_CY" class="table" frame="border" border="1" rules="all"><caption><span class="tablecap">Table 2. BLE OTAP IMage File Sub-element Format</span></caption>
+                
+                
+                
+                
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top">Subfield</td>
+
+                        <td class="entry" valign="top">Size (Bytes)</td>
+
+                        <td class="entry" valign="top">Format</td>
+
+                        <td class="entry" valign="top">Description</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">Type</td>
+
+                        <td class="entry" valign="top">2</td>
+
+                        <td class="entry" valign="top">uint16</td>
+
+                        <td class="entry" valign="top">Type Identifier – determines the format of the data contained in the
+                            value field.</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">Length</td>
+
+                        <td class="entry" valign="top">4</td>
+
+                        <td class="entry" valign="top">uint32</td>
+
+                        <td class="entry" valign="top">Length of the <em class="ph i">Value</em> field of the sub-element.</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">Value</td>
+
+                        <td class="entry" valign="top">var.</td>
+
+                        <td class="entry" valign="top">uint8[]</td>
+
+                        <td class="entry" valign="top">Data payload.</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p">Some sub-element type identifiers are reserved while others are left for
+            manufacturer-specific use. The table below shows the reserved type identifiers and the
+            manufacturer-specific ranges.</p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-8D40488C-4DA8-40D3-8AD6-701BBFD80E65__TABLE_KRH_1TM_CY" class="table" frame="border" border="1" rules="all"><caption><span class="tablecap">Table 3. Sub-element Type Identifiers Ranges</span></caption>
+                
+                
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top">Type Identifiers</td>
+
+                        <td class="entry" valign="top">Description</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">0x0000</td>
+
+                        <td class="entry" valign="top">Upgrade Image</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">0x0001 – 0xefff</td>
+
+                        <td class="entry" valign="top">Reserved</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">0xf000 – 0xffff</td>
+
+                        <td class="entry" valign="top">Manufacturer-Specific Use</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p">The OTAP Demo applications use two of the manufacturer-specific sub-element type
+            identifiers while the rest remain free to use. The two are shown in the table below
+            along with a short description.</p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-8D40488C-4DA8-40D3-8AD6-701BBFD80E65__TABLE_A32_DTM_CY" class="table" frame="border" border="1" rules="all"><caption><span class="tablecap">Table 4. Manufacturer-Specific Sub-element Type Identifiers Used by OTAP Demo
+                Applications</span></caption>
+                
+                
+                
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top">Manufacturer-Specific Type Identifiers</td>
+
+                        <td class="entry" valign="top">Sub-Element Name</td>
+
+                        <td class="entry" valign="top">Notes</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">0xf000</td>
+
+                        <td class="entry" valign="top">Sector Bitmap</td>
+
+                        <td class="entry" valign="top">Bitmap signaling the bootloader which sectors of the internal flash
+                            to overwrite and which not.</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">0xf100</td>
+
+                        <td class="entry" valign="top">Image File CRC</td>
+
+                        <td class="entry" valign="top">16 bit CRC which is computed over the image file with the exception
+                            of the CRC sub-element itself.</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+    </div>
+
+<div class="related-links">
+<ul class="ullinks">
+<li class="link ulchildlink"><strong><a href="GUID-E4FD83E7-BF3E-401A-9A53-28FDA35E9760.html">BLE OTAP header</a></strong><br/>
+</li>
+</ul>
+
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-53C35DEE-9212-4685-BF1E-7B66CB5A3860.html">Over the Air Programming (OTAP)</a></div>
+</div>
+</div>
+
+</body>
+</html>

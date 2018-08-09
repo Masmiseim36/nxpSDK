@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="How to Reprogram a Device Using the FSCI Bootloader"/>
+<meta name="abstract" content=""/>
+<meta name="description" content=""/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="4"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-2FA6FFA3-DF0D-4418-87A8-929CE1CF50A6"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>How to Reprogram a Device Using the FSCI Bootloader</title>
+</head>
+<body id="GUID-2FA6FFA3-DF0D-4418-87A8-929CE1CF50A6">
+
+
+  <h1 class="title topictitle1">How to Reprogram a Device Using the FSCI Bootloader</h1>
+
+  
+  <div class="body"><p class="shortdesc"/>
+
+    <p class="p">For information on how to deploy a Thread image with FSCI bootloader support, see the document <em class="ph i">Kinetis Thread Stack and FSCI Bootloader Quick Start Guide</em>. There are two options to deploy a BLE application with FSCI bootloader support</p>
+
+    <ol class="ol">
+      <li class="li">Build the FSCI Bootloader application using an IDE from the projects located at
+        \middleware\wireless\framework_&lt;ver&gt;\Bootloader\bootloader_fsci\[frdm|usb]kw41z\build\
+        and flash it to the board using J-Link.</li>
+
+      <li class="li">Copy the FSCI Bootloader binary located at
+        \middleware\wireless\framework_&lt;ver&gt;\Bootloader\Bin to the J-Link mass storage device
+        emulated via OpenSDA or flash it using a SEGGER J-Link Tool.</li>
+
+    </ol>
+
+    <p class="p">The BLE application that is deployed via FSCI bootloader needs to be configured as a bootloader-compatible application. This is done by adding the gUseBootloaderLink_d=1 flag to the linker options of the application project and select the output of the build as binary. By default, the bootloader mode for a BLE application is entered by connecting the board while holding the reset switch (this is not needed for a Thread application).</p>
+
+    <p class="p">Host functionality is provided by the script:
+      \tools\wireless\host_sdk/hsdk-python/src/com/nxp/wireless_connectivity/test/bootloader/fsci_bootloader.py
+      providing as command line arguments the device serial port and a binary firmware file
+      compatible with the bootloader.</p>
+
+    <pre class="pre codeblock">$ python fsci_bootloader.py -h
+usage: fsci_bootloader.py [-h] [-s CHUNK_SIZE] [-d] [-e]
+                          serial_port binary_file
+Script to flash a binary file using the FSCI bootloader.
+positional arguments:
+  serial_port           Kinetis-W system device node.
+  binary_file           The binary file to be written.
+optional arguments:
+  -h, --help            show this help message and exit
+  -s CHUNK_SIZE, --chunk-size CHUNK_SIZE
+                        Push chunks this large (in bytes). Defaults to 2048.
+  -d, --disable-crc     Disable the CRC check on commit image.
+  -e, --erase-nvm       Erase the non-volatile memory.
+</pre>
+
+    <p class="p">For example,</p>
+
+    <pre class="pre codeblock">export PYTHONPATH=$PYTHONPATH:&lt;hsdk-path&gt;/hsdk-python/src/
+python fsci_bootloader.py /dev/ttyACM0 thread_host_controlled_device.bin -e
+</pre>
+
+    <p class="p">The script does the following:</p>
+
+    <ul class="ul">
+      <li class="li">Sends the THCI command for the device to reset, then enter and remain in bootloader mode.</li>
+
+      <li class="li">Sends the command to cancel an image as a safety check and to verify the bootloader is responsive.</li>
+
+      <li class="li">Sends the command to start firmware update for a new image.</li>
+
+      <li class="li">Pushes chunks of the firmware images file sequentially until the full firmware is programmed and display intermediate progress as percent of binary file content loaded.</li>
+
+      <li class="li">Sets the flags to commit the image as valid.</li>
+
+      <li class="li">Resets the device, so it boots to the new firmware.</li>
+
+    </ul>
+
+  </div>
+
+
+</body>
+</html>

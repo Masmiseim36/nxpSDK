@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Implemented profiles and services"/>
+<meta name="abstract" content=""/>
+<meta name="description" content=""/>
+<meta name="DC.Relation" scheme="URI" content="GUID-77546E2C-FDDD-4DAB-B291-41524FF1DCFE.html"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-482FC999-B199-4EBA-90F2-6150B55C545D"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Implemented profiles and services</title>
+</head>
+<body id="GUID-482FC999-B199-4EBA-90F2-6150B55C545D">
+
+
+  <h1 class="title topictitle1">Implemented profiles and services</h1>
+
+  
+  <div class="body"><p class="shortdesc"/>
+
+    <p class="p">The HID Device application implements a GATT server and the following profile and services.</p>
+
+<ul class="ul">
+<li class="li">HID over GATT Profile v1.0</li>
+
+<li class="li">Human Interface Device Service v1.0</li>
+
+<li class="li">Battery Service v1.0</li>
+
+<li class="li">Device Information Service v1.1</li>
+
+</ul>
+
+<p class="p">The application behaves as a GAP peripheral node. It enters GAP General Discoverable Mode and waits for a GAP central node to connect. Security on the services and bonding is 
+enabled on this device.</p>
+
+<p class="p">When the GATT client configures notification, the application starts sending HID reports every two seconds with the movement of the MOUSE_STEP. The demo moves the 
+cursor in a square pattern between AXIS_MIN and AXIS_MAX. The report contains 3 bytes, one for button status, one for X axis, and one for Y axis. The report descriptor
+ matches the example in chapter E.10 from the USB Device Class Definition for Human Interface Devices (USB HID Specification), Version 1.11.</p>
+
+  </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-77546E2C-FDDD-4DAB-B291-41524FF1DCFE.html">HID Device (Mouse)</a></div>
+</div>
+</div>
+
+</body>
+</html>

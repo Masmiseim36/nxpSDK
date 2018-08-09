@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Network IP Manager API"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-88C359A8-0738-4471-9315-5F2E63573254.html"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-4060F2CE-FFE0-4A13-AD27-DD7B294E59C4"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Network IP Manager API</title>
+</head>
+<body id="GUID-4060F2CE-FFE0-4A13-AD27-DD7B294E59C4">
+
+
+    <h1 class="title topictitle1">Network IP Manager API</h1>
+
+    <div class="body">
+        <p class="p">The Network IP Manager is the module that helps the application initialize
+            and configures the IPv6 layers inside the IP stack library or their respective wrappers.
+            It consists of 3 major APIs.</p>
+
+        <pre class="pre codeblock">
+            nwkStatus_t NwkIpManager_Init(void);  
+        </pre>
+
+        <p class="p">This API initializes common modules for both IPv6 Router and Node devices. It
+            initializes the 6LoBLE module and instance. It then registers the Bluetooth callbacks
+            needed by the module to send data on the bearer and links the media interface to the IP
+            layer. Finally it initializes the application wrappers for CoAP, Sockets, and UDP Echo.
+            It returns a status of gNwkStatusSuccess_c or an error.</p>
+
+        <pre class="pre codeblock">
+            nwkStatus_t NwkIpManager_StartNode(void);
+            </pre>
+
+        <p class="p">This API configures modules for IPv6 Node devices. It registers the unicast
+            forward procedure, opens the ND channel and sets the registration lifetime of the node.
+            It returns a status of gNwkStatusSuccess_c or an error.</p>
+
+        <pre class="pre codeblock">
+            nwkStatus_t NwkIpManager_StartRouter(void);
+            </pre>
+
+        <p class="p">This API configures modules for IPv6 Router devices. It registers the
+            unicast forward procedure, opens the ND channel, adds the initial global prefix to the
+            interface and in the context compression table. The node also configures as a default
+            router. It returns a status of gNwkStatusSuccess_c or an error.</p>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-88C359A8-0738-4471-9315-5F2E63573254.html">Network IP Manager and Protocol Wrappers APIs</a></div>
+</div>
+</div>
+
+</body>
+</html>

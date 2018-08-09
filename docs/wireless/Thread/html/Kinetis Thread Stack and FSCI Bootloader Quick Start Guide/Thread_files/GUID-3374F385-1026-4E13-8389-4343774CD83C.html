@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Building Thread applications binaries with bootloader offset with MCUXpresso"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-E5D6C5FF-6E04-4A9E-9E53-B3AF32BD7129.html"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-3374F385-1026-4E13-8389-4343774CD83C"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Building Thread applications binaries with bootloader offset with MCUXpresso</title>
+</head>
+<body id="GUID-3374F385-1026-4E13-8389-4343774CD83C">
+
+
+	<h1 class="title topictitle1">Building Thread applications binaries with bootloader offset with
+		MCUXpresso</h1>
+
+	<div class="body">
+		<p class="p">To build a Thread application in MCUXpresso IDE, which loads starting at the
+			second sector of the flash, making the binary compatible with the FSCI bootloader,
+			ensure the MCUXpresso Project Options for the Linker configuration match the settings
+			below.</p>
+
+		<p class="p">To build a bootloader-compatible application, for the Host Controlled Device, start with the workspace in: \boards\frdmkw41z\wireless_examples\thread\host_controlled_device\freertos\. Dynamic configuration of the linker files is not supported, thus one must use a predefined working .ld file of a bootloader-compatible application. The user is requested to overwrite MKW41Z512xxx4_connectivity.ld with the one under boards\frdmkw41z\wireless_examples\thread\reed_ota_client\freertos.</p>
+
+		<ul class="ul" id="GUID-3374F385-1026-4E13-8389-4343774CD83C__UL_HWL_1P4_FZ">
+			<li class="li">In the <strong class="ph b">Properties </strong><strong class="ph b">-&gt; C/C++ Build </strong><strong class="ph b">-&gt; Settings </strong><strong class="ph b">-&gt; Build Steps </strong><strong class="ph b">-&gt; Post-build steps </strong>click on <strong class="ph b">Edit… </strong>and uncomment the second line:</li>
+
+		</ul>
+
+		<img class="image" src="GUID-88352470-C4B4-4EE3-B8D2-8CF0021740D8-high.png"/>
+		<div class="fig fignone"><span class="figcap">Figure 1. Convert Image to Binary</span>
+			
+		</div>
+
+		<ul class="ul" id="GUID-3374F385-1026-4E13-8389-4343774CD83C__UL_W2T_BP4_FZ">
+			<li class="li">Build the project, the bootloader compatible *.bin file is generated in the workspace folder, for example, at: <strong class="ph b">\workspace\frdmkw41z_wireless_examples_thread_host_controlled_device_freertos\Debug</strong></li>
+
+		</ul>
+
+	</div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-E5D6C5FF-6E04-4A9E-9E53-B3AF32BD7129.html">Introduction</a></div>
+</div>
+</div>
+
+</body>
+</html>

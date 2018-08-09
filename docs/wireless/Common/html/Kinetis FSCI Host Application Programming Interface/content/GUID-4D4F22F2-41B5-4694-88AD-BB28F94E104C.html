@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Directory Tree"/>
+<meta name="abstract" content=""/>
+<meta name="description" content=""/>
+<meta name="DC.Relation" scheme="URI" content="GUID-3A7289DF-649E-4813-9A78-BC02A9101323.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="4"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-4D4F22F2-41B5-4694-88AD-BB28F94E104C"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Directory Tree</title>
+</head>
+<body id="GUID-4D4F22F2-41B5-4694-88AD-BB28F94E104C">
+
+
+  <h1 class="title topictitle1">Directory Tree</h1>
+
+  
+  <div class="body"><p class="shortdesc"/>
+
+   <pre class="pre codeblock">lib/                                                       Compiled host SDK libraries for Windows.
+├── README.md
+├── x64
+│   └── HSDK.dll
+└── x86
+    └── HSDK.dll
+
+src/
+├── com
+│   ├── nxp
+│   │   ├── wireless_connectivity
+│   │   │   ├── commands
+│   │   │   │   ├── ble                                             Generated files for BLE support.
+│   │   │   │   │   ├── ble_sig_defines.py
+│   │   │   │   │   ├── enums.py
+│   │   │   │   │   ├── events.py
+│   │   │   │   │   ├── frames.py
+│   │   │   │   │   ├── gatt_database_dynamic.py
+│   │   │   │   │   ├── heart_rate_interface.py
+│   │   │   │   │   ├── __init__.py
+│   │   │   │   │   ├── operations.py
+│   │   │   │   │   ├── spec.py
+│   │   │   │   │   └── sync_requests.py
+│   │   │   │   ├── comm.py
+│   │   │   │   ├── firmware                         Generated files for OTA/FSCI bootloader support.
+│   │   │   │   │   ├── enums.py
+│   │   │   │   │   ├── events.py
+│   │   │   │   │   ├── frames.py
+│   │   │   │   │   ├── __init__.py
+│   │   │   │   │   ├── operations.py
+│   │   │   │   │   ├── spec.py
+│   │   │   │   │   └── sync_requests.py
+│   │   │   │   ├── fsci_data_packet.py
+│   │   │   │   ├── fsci_frame_description.py
+│   │   │   │   ├── fsci_operation.py
+│   │   │   │   ├── fsci_parameter.py
+│   │   │   │   ├── __init__.py
+│   │   │   │   └── thread/zigbee          Generated files for THCI/ZigBee 3.0 support.
+│   │   │   │       ├── enums.py
+│   │   │   │       ├── events.py
+│   │   │   │       ├── frames.py
+│   │   │   │       ├── __init__.py
+│   │   │   │       ├── operations.py
+│   │   │   │       ├── spec.py
+│   │   │   │       └── sync_requests.py
+│   │   │   ├── hsdk
+│   │   │   │   ├── CFsciLibrary.py
+│           │   ├── config.py                    Configuration file for the Python Host SDK subsystem.
+│   │   │   │   ├── CUartLibrary.py
+│   │   │   │   ├── device
+│   │   │   │   │   ├── device_manager.py
+│   │   │   │   │   ├── __init__.py
+│   │   │   │   │   └── physical_device.py
+│   │   │   │   ├── framing
+│   │   │   │   │   ├── fsci_command.py
+│   │   │   │   │   ├── fsci_framer.py
+│   │   │   │   │   └── __init__.py
+│   │   │   │   ├── __init__.py
+│   │   │   │   ├── library_loader.py
+│   │   │   │   ├── ota_server.py
+│   │   │   │   ├── singleton.py
+│   │   │   │   ├── sniffer.py
+│   │   │   │   └── utils.py
+│   │   │   ├── __init__.py
+│   │   │   └── test                                               Test and proof of concept scripts.
+│   │   │       ├── bootloader
+│   │   │       │   ├── fsci_bootloader.py    More about this in <a class="xref" href="GUID-2FA6FFA3-DF0D-4418-87A8-929CE1CF50A6.html">How to Reprogram a Device Using the FSCI Bootloader</a>.
+│   │   │       │   └── __init__.py
+│   │   │       ├── border_router.py
+│   │   │       ├── coap_thci.py                               Demonstrates CoAP control via THCI.
+│   │   │       ├── commissioning_nfc.py    Demonstrates Commissioning Credential Exchange via NFC. To be used in collaboration with the Jabil i.MX 6 UltraLite-based gateway.
+│   │   │       ├── commissioning.py
+│   │   │       ├── get_neigh_ula.py      Presents two ways of obtaining a neighbor’s IPv6 ULA address.
+│   │   │       ├── getaddr.py
+│   │   │       ├── hrs.py                  Script which implements a BLE Heart Sensor profile. More about this in <a class="xref" href="GUID-2017C1BF-DB26-434A-B3E7-B3D497E850EC.html">How to Control Both the BLE and Thread Stacks</a>.
+│   │   │       ├── __init__.py
+│   │   │       ├── macfiltering.py
+│   │   │       ├── multimode.py      	     <a class="xref" href="GUID-2017C1BF-DB26-434A-B3E7-B3D497E850EC.html">How to Control Both the BLE and Thread Stacks</a>.
+│   │   │       ├── ota
+│   │   │       │   ├── __init__.py
+│   │   │       │   ├── README.txt
+│   │   │       │   ├── test_dongle_mode_coap.py
+│   │   │       │   ├── test_dongle_mode.py
+│   │   │       │   ├── test_standalone_mode.py
+│   │   │       │   └── VTun.py
+│   │   │       ├── rgb_led.py
+│   │   │       └── temp.py
+│   │   │       └── zb_simple_nwk.py     Simple script demonstrating formation of a ZigBee 3.0 network.
+│   │   └── __init__.py
+│   └── __init__.py
+└── __init__.py
+
+</pre>
+
+  </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-3A7289DF-649E-4813-9A78-BC02A9101323.html">Host API Python Bindings</a></div>
+</div>
+</div>
+
+</body>
+</html>

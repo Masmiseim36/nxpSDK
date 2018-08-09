@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="GAP-Connect.Request"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-22E596EB-8A19-41E5-B540-EFE0BC6B281F.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Publisher" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-79A31D1F-4F7B-4C82-8C61-22BD67DD2E9C"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>GAP-Connect.Request</title>
+</head>
+<body id="GUID-79A31D1F-4F7B-4C82-8C61-22BD67DD2E9C">
+
+
+    <h1 class="title topictitle1">GAP-Connect.Request</h1>
+
+    <div class="body">
+        <p class="p"><strong class="ph b">Description</strong></p>
+
+        <p class="p">Connects to a scanned device.</p>
+
+        <p class="p"><strong class="ph b">Parameters</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-79A31D1F-4F7B-4C82-8C61-22BD67DD2E9C__TABLE_BKJ_5L5_4Y" class="table" frame="border" border="1" rules="all"><caption><span class="tablecap">Table 1. GAP-Connect.Request Parameters</span></caption>
+                
+                
+                
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top"><strong class="ph b">Parameter</strong></td>
+
+                        <td class="entry" valign="top"><strong class="ph b">Size (bytes)</strong></td>
+
+                        <td class="entry" valign="top"><strong class="ph b">Comments</strong></td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">OpGroup</td>
+
+                        <td class="entry" valign="top">1</td>
+
+                        <td class="entry" valign="top">0x47</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">OpCode</td>
+
+                        <td class="entry" valign="top">1</td>
+
+                        <td class="entry" valign="top">0x1C</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">Length</td>
+
+                        <td class="entry" valign="top">1</td>
+
+                        <td class="entry" valign="top">Length in bytes of the following parameters</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">CreateConnectionParameters</td>
+
+                        <td class="entry" valign="top">Variable</td>
+
+                        <td class="entry" valign="top">
+                            <p class="p">Create connection command parameters</p>
+
+                            <p class="p">Structure type parameter. See the detailed table below for parameter
+                                structure.</p>
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-79A31D1F-4F7B-4C82-8C61-22BD67DD2E9C__TABLE_QSJ_WL5_4Y" class="table" frame="border" border="1" rules="all"><caption><span class="tablecap">Table 2. CreateConnectionParameters Parameter Structure</span></caption>
+                
+                
+                
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top"><strong class="ph b">Structure Parameter</strong></td>
+
+                        <td class="entry" valign="top"><strong class="ph b">Size (bytes)</strong></td>
+
+                        <td class="entry" valign="top"><strong class="ph b">Comments</strong></td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">ScanInterval</td>
+
+                        <td class="entry" valign="top">2</td>
+
+                        <td class="entry" valign="top">Scanning interval - default 10ms</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">ScanWindow</td>
+
+                        <td class="entry" valign="top">2</td>
+
+                        <td class="entry" valign="top">Scanning window - default 10ms</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">FilterPolicy</td>
+
+                        <td class="entry" valign="top">1</td>
+
+                        <td class="entry" valign="top">
+                            <p class="p">Indicates whether the connection request is issued for a specific
+                                device or for all the devices in the White List - default specific
+                                device</p>
+
+                            <p class="p">Possible values: </p>
+
+                            <p class="p">0x00: gUseDeviceAddress_c (Initiates a connection with a specific
+                                device identified by its address)</p>
+
+                            <p class="p">0x01: gUseWhiteList_c (Initiates connections with all the devices in
+                                the White List at the same time)</p>
+
+                            <p class="p"> </p>
+
+                        </td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">OwnAddressType</td>
+
+                        <td class="entry" valign="top">1</td>
+
+                        <td class="entry" valign="top">
+                            <p class="p">Indicates whether the address used in connection requests will be the
+                                public address or the random address - default public address</p>
+
+                            <p class="p">Possible values: </p>
+
+                            <p class="p">0x00: gPublic_c</p>
+
+                            <p class="p">0x01: gRandom_c</p>
+
+                            <p class="p"> </p>
+
+                        </td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">PeerAddressType</td>
+
+                        <td class="entry" valign="top">1</td>
+
+                        <td class="entry" valign="top">
+                            <p class="p">When connecting to a specific device, this indicates that device's
+                                address type - default public address</p>
+
+                            <p class="p">Possible values: </p>
+
+                            <p class="p">0x00: gPublic_c</p>
+
+                            <p class="p">0x01: gRandom_c</p>
+
+                            <p class="p"> </p>
+
+                        </td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">PeerAddress</td>
+
+                        <td class="entry" valign="top">6</td>
+
+                        <td class="entry" valign="top">When connecting to a specific device, this indicates that device's
+                            address</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">ConnIntervalMin</td>
+
+                        <td class="entry" valign="top">2</td>
+
+                        <td class="entry" valign="top">The minimum desired connection interval - default 100ms</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">ConnIntervalMax</td>
+
+                        <td class="entry" valign="top">2</td>
+
+                        <td class="entry" valign="top">The maximum desired connection interval - default 200ms</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">ConnLatency</td>
+
+                        <td class="entry" valign="top">2</td>
+
+                        <td class="entry" valign="top">The desired connection latency (the maximum number of consecutive
+                            connection events the Slave is allowed to ignore) - default 0</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">SupervisionTimeout</td>
+
+                        <td class="entry" valign="top">2</td>
+
+                        <td class="entry" valign="top">The maximum time interval between consecutive over-the-air packets;
+                            if this timer expires, the connection is dropped - default 10s</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">ConnEventLengthMin</td>
+
+                        <td class="entry" valign="top">2</td>
+
+                        <td class="entry" valign="top">The minimum desired connection event length - default 0ms</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">ConnEventLengthMax</td>
+
+                        <td class="entry" valign="top">2</td>
+
+                        <td class="entry" valign="top">The maximum desired connection event length - default maximum
+                            possible, ~41 s</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">usePeerIdentityAddress</td>
+
+                        <td class="entry" valign="top">1</td>
+
+                        <td class="entry" valign="top">TRUE if the address defined in the peerAddressType and peerAddress is
+                            an identity address</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-22E596EB-8A19-41E5-B540-EFE0BC6B281F.html">GAP Messages</a></div>
+</div>
+</div>
+
+</body>
+</html>

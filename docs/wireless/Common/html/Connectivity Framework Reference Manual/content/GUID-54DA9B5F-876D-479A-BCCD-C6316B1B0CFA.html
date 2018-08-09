@@ -1,0 +1,739 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="API primitives"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-8E90EC17-E290-46AE-A6FF-6C39BCD68E97.html"/>
+<meta name="prodname" content=""/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Creator" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-54DA9B5F-876D-479A-BCCD-C6316B1B0CFA"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>API primitives</title>
+</head>
+<body id="GUID-54DA9B5F-876D-479A-BCCD-C6316B1B0CFA">
+
+
+    <h1 class="title topictitle1">API primitives</h1>
+
+    <div class="body">
+        <p class="p"><strong class="ph b">ListInit</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">void ListInit
+(
+    listHandle_t list,
+    uint32_t max
+);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>Initializes the list descriptor.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-54DA9B5F-876D-479A-BCCD-C6316B1B0CFA__TABLE_V51_R2V_FZ" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d18712e74">Name</th>
+
+                        <th class="entry" valign="top" id="d18712e77">Type</th>
+
+                        <th class="entry" valign="top" id="d18712e80">Direction</th>
+
+                        <th class="entry" valign="top" id="d18712e83">Description</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d18712e74 ">list</td>
+
+                        <td class="entry" valign="top" headers="d18712e77 ">listHandle_t</td>
+
+                        <td class="entry" valign="top" headers="d18712e80 ">[OUT]</td>
+
+                        <td class="entry" valign="top" headers="d18712e83 ">Pointer to a list</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d18712e74 ">max</td>
+
+                        <td class="entry" valign="top" headers="d18712e77 ">uint32_t</td>
+
+                        <td class="entry" valign="top" headers="d18712e80 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d18712e83 ">Maximum number of elements in the list. 0 for unlimited</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">None.</p>
+
+        <p class="p"><strong class="ph b">ListGetList</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">listHandle_t ListGetList
+(
+    listElementHandle_t elementHandle
+);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>Gets the list that contains the given element.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-54DA9B5F-876D-479A-BCCD-C6316B1B0CFA__TABLE_F1B_R2V_FZ" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d18712e168">Name</th>
+
+                        <th class="entry" valign="top" id="d18712e171">Type</th>
+
+                        <th class="entry" valign="top" id="d18712e174">Direction</th>
+
+                        <th class="entry" valign="top" id="d18712e177">Description</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d18712e168 ">elementHandle</td>
+
+                        <td class="entry" valign="top" headers="d18712e171 ">listElementHandle_t</td>
+
+                        <td class="entry" valign="top" headers="d18712e174 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d18712e177 ">Pointer to an element</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">Pointer to the list descriptor. Returns NULL if the element is an orphan.</p>
+
+        <p class="p"><strong class="ph b">ListAddTail</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">listStatus_t ListAddTail
+(
+    listHandle_t list,
+    listElementHandle_t element
+);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>Inserts an element at the end of the list.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-54DA9B5F-876D-479A-BCCD-C6316B1B0CFA__TABLE_AFB_R2V_FZ" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d18712e247">Name</th>
+
+                        <th class="entry" valign="top" id="d18712e250">Type</th>
+
+                        <th class="entry" valign="top" id="d18712e253">Direction</th>
+
+                        <th class="entry" valign="top" id="d18712e256">Description</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d18712e247 ">list</td>
+
+                        <td class="entry" valign="top" headers="d18712e250 ">listHandle_t</td>
+
+                        <td class="entry" valign="top" headers="d18712e253 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d18712e256 ">Pointer to a list</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d18712e247 ">element</td>
+
+                        <td class="entry" valign="top" headers="d18712e250 ">listElementHandle_t</td>
+
+                        <td class="entry" valign="top" headers="d18712e253 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d18712e256 ">Pointer to an element</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">gListFull_c if list is full. gListOk_c if insertion was successful.</p>
+
+        <p class="p"><strong class="ph b">ListAddHead</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">listStatus_t ListAddHead
+(
+    listHandle_t list<strong class="ph b">,</strong>
+    listElementHandle_t element
+);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>Inserts an element at the start of the list.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-54DA9B5F-876D-479A-BCCD-C6316B1B0CFA__TABLE_VJB_R2V_FZ" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d18712e345">Name</th>
+
+                        <th class="entry" valign="top" id="d18712e348">Type</th>
+
+                        <th class="entry" valign="top" id="d18712e351">Direction</th>
+
+                        <th class="entry" valign="top" id="d18712e354">Description</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d18712e345 ">list</td>
+
+                        <td class="entry" valign="top" headers="d18712e348 ">listHandle_t</td>
+
+                        <td class="entry" valign="top" headers="d18712e351 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d18712e354 ">Pointer to a list</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d18712e345 ">element</td>
+
+                        <td class="entry" valign="top" headers="d18712e348 ">listElementHandle_t</td>
+
+                        <td class="entry" valign="top" headers="d18712e351 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d18712e354 ">Pointer to an element</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">gListFull_c if list is full, gListOk_c if insertion was successful.</p>
+
+        <p class="p"><strong class="ph b">ListRemoveHead</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">listElementHandle_t ListRemoveHead
+(
+    listHandle_t list
+);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>Unlinks an element from the head of the list.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-54DA9B5F-876D-479A-BCCD-C6316B1B0CFA__TABLE_RSZ_BFV_FZ" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d18712e439">Name</th>
+
+                        <th class="entry" valign="top" id="d18712e442">Type</th>
+
+                        <th class="entry" valign="top" id="d18712e445">Direction</th>
+
+                        <th class="entry" valign="top" id="d18712e448">Description</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d18712e439 ">list</td>
+
+                        <td class="entry" valign="top" headers="d18712e442 ">listHandle_t</td>
+
+                        <td class="entry" valign="top" headers="d18712e445 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d18712e448 ">Pointer to a list</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">NULL if list is empty, pointer to the element if removal was successful.</p>
+
+        <p class="p"><strong class="ph b">ListGetHead</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">listElementHandle_t ListGetHead
+(
+    listHandle_t list
+);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>Gets the head element of the list.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-54DA9B5F-876D-479A-BCCD-C6316B1B0CFA__TABLE_RYZ_BFV_FZ" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d18712e518">Name</th>
+
+                        <th class="entry" valign="top" id="d18712e521">Type</th>
+
+                        <th class="entry" valign="top" id="d18712e524">Direction</th>
+
+                        <th class="entry" valign="top" id="d18712e527">Description</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d18712e518 ">list</td>
+
+                        <td class="entry" valign="top" headers="d18712e521 ">listHandle_t</td>
+
+                        <td class="entry" valign="top" headers="d18712e524 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d18712e527 ">Pointer to a list</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">NULL if list is empty, pointer to the element if list is not empty.</p>
+
+        <p class="p"><strong class="ph b">ListGetNext</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">listElementHandle_t ListGetNext
+(
+    listElementHandle_t element
+);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>Gets the next element in the list.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-54DA9B5F-876D-479A-BCCD-C6316B1B0CFA__GUID-D15A9635-27E6-4DB5-A102-D37B600ED356" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d18712e598">Name</th>
+
+                        <th class="entry" valign="top" id="d18712e601">Type</th>
+
+                        <th class="entry" valign="top" id="d18712e604">Direction</th>
+
+                        <th class="entry" valign="top" id="d18712e607">Description</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d18712e598 ">element</td>
+
+                        <td class="entry" valign="top" headers="d18712e601 ">listElementHandle_t</td>
+
+                        <td class="entry" valign="top" headers="d18712e604 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d18712e607 ">Pointer to an element</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"/>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">NULL if given element is tail, pointer to the next element otherwise.</p>
+
+        <p class="p"><strong class="ph b">ListGetPrev</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">listElementHandle_t ListGetPrev
+(
+    listElementHandle_t element
+);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>Gets the previous element in the list.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-54DA9B5F-876D-479A-BCCD-C6316B1B0CFA__GUID-E1378C8C-DAE0-4D39-99E1-B64DE41C2029" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d18712e679">Name</th>
+
+                        <th class="entry" valign="top" id="d18712e682">Type</th>
+
+                        <th class="entry" valign="top" id="d18712e685">Direction</th>
+
+                        <th class="entry" valign="top" id="d18712e688">Description</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d18712e679 ">element</td>
+
+                        <td class="entry" valign="top" headers="d18712e682 ">listElementHandle_t</td>
+
+                        <td class="entry" valign="top" headers="d18712e685 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d18712e688 ">Pointer to an element</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">NULL if the given element is head, pointer to the previous element otherwise.</p>
+
+        <p class="p"><strong class="ph b">ListRemoveElement</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">listStatus_t ListRemoveElement
+(
+    listElementHandle_t element
+);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>Unlinks the given element from the list.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-54DA9B5F-876D-479A-BCCD-C6316B1B0CFA__GUID-1D5E1CB3-E999-443C-B436-D7F71CBEA650" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d18712e758">Name</th>
+
+                        <th class="entry" valign="top" id="d18712e761">Type</th>
+
+                        <th class="entry" valign="top" id="d18712e764">Direction</th>
+
+                        <th class="entry" valign="top" id="d18712e767">Description</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d18712e758 ">element</td>
+
+                        <td class="entry" valign="top" headers="d18712e761 ">listElementHandle_t</td>
+
+                        <td class="entry" valign="top" headers="d18712e764 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d18712e767 ">Pointer to an element</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">gOrphanElement_c if element is not part of any list, and gListOk_c if removal was
+            successful.</p>
+
+        <p class="p"><strong class="ph b">ListAddPrevElement</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">listStatus_t ListAddPrevElement
+(
+    listElementHandle_t element,
+    listElementHandle_t newElement
+);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>Links an element in the previous position relative to a given member
+            of the list.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-54DA9B5F-876D-479A-BCCD-C6316B1B0CFA__GUID-9EFAAFF2-EA33-4C0D-B3FF-CFAF7616199F" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d18712e838">Name</th>
+
+                        <th class="entry" valign="top" id="d18712e841">Type</th>
+
+                        <th class="entry" valign="top" id="d18712e844">Direction</th>
+
+                        <th class="entry" valign="top" id="d18712e847">Description</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d18712e838 ">element</td>
+
+                        <td class="entry" valign="top" headers="d18712e841 ">listElementHandle_t</td>
+
+                        <td class="entry" valign="top" headers="d18712e844 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d18712e847 ">Pointer to an element</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d18712e838 ">newElement</td>
+
+                        <td class="entry" valign="top" headers="d18712e841 ">listElementHandle_t</td>
+
+                        <td class="entry" valign="top" headers="d18712e844 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d18712e847 ">Pointer to the new element</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">gOrphanElement_c if element is not part of any list; gListOk_c if removal was
+            successful.</p>
+
+        <p class="p"><strong class="ph b">ListGetSize</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">uint32_t ListGetSize
+(
+    listHandle_t list
+);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>Gets the current size of the list.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-54DA9B5F-876D-479A-BCCD-C6316B1B0CFA__GUID-F4D13472-7104-4AF0-B77C-75B89806F34C" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d18712e932">Name</th>
+
+                        <th class="entry" valign="top" id="d18712e935">Type</th>
+
+                        <th class="entry" valign="top" id="d18712e938">Direction</th>
+
+                        <th class="entry" valign="top" id="d18712e941">Description</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d18712e932 ">list</td>
+
+                        <td class="entry" valign="top" headers="d18712e935 ">listHandle_t</td>
+
+                        <td class="entry" valign="top" headers="d18712e938 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d18712e941 ">Pointer to a list</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">The current size of the list.</p>
+
+        <p class="p"><strong class="ph b">ListGetAvailable</strong></p>
+
+        <p class="p"><strong class="ph b">Prototype:</strong></p>
+
+        <pre class="pre codeblock">uint32_t ListGetSize
+(
+    listHandle_t list
+);</pre>
+
+        <p class="p"><strong class="ph b">Description:</strong>Gets the number of free places in the list.</p>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-54DA9B5F-876D-479A-BCCD-C6316B1B0CFA__GUID-93D3C1B1-472E-4B7D-8766-1D5FA81FCA30" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d18712e1011">Name</th>
+
+                        <th class="entry" valign="top" id="d18712e1014">Type</th>
+
+                        <th class="entry" valign="top" id="d18712e1017">Direction</th>
+
+                        <th class="entry" valign="top" id="d18712e1020">Description</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d18712e1011 ">list</td>
+
+                        <td class="entry" valign="top" headers="d18712e1014 ">listHandle_t</td>
+
+                        <td class="entry" valign="top" headers="d18712e1017 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d18712e1020 ">Pointer to a list</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p"><strong class="ph b">Returns:</strong></p>
+
+        <p class="p">Available spaces in the list.</p>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-8E90EC17-E290-46AE-A6FF-6C39BCD68E97.html">Lists</a></div>
+</div>
+</div>
+
+</body>
+</html>

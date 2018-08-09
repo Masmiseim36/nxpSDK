@@ -1,0 +1,22 @@
+Prerequisites
+===================
+1. Python 2.7
+2. $ sudo apt-get install libudev-dev
+3. $ sudo apt-get install python-dev
+4. $ sudo pip install python-pytun
+5. (Optional) $ sudo pip install colorama
+
+Installation
+===================
+$ cd hsdk/
+$ make
+$ sudo make install
+
+Usage
+===================
+$ cd hsdk-python/misc/sniffer/
+$ sudo python tap_sniffer.py <device_node1> <channel1> [device_node2] [channel2]
+e.g.
+$ sudo python tap_sniffer.py /dev/ttyACM0 25
+
+Now open Wireshark and start sniffing on interface sniffer802154_0 and/or sniffer_802154_1.

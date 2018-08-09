@@ -1,0 +1,579 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Deep sleep modes for Kinetis MKW2xD and MCR20A transceiver-based platforms"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-4E58C6E2-CA0F-40BD-925D-94CC7C73AB87.html"/>
+<meta name="prodname" content=""/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Creator" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-98638652-CB07-4B95-AD63-C23B0C878F49"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Deep sleep modes for Kinetis MKW2xD and MCR20A transceiver-based platforms</title>
+</head>
+<body id="GUID-98638652-CB07-4B95-AD63-C23B0C878F49">
+
+
+    <h1 class="title topictitle1">Deep sleep modes for Kinetis MKW2xD and MCR20A transceiver-based platforms</h1>
+
+    <div class="body">
+        <ul class="ul" id="GUID-98638652-CB07-4B95-AD63-C23B0C878F49__UL_ML4_XFW_FZ">
+            <li class="li"> Mode 1<ul class="ul" id="GUID-98638652-CB07-4B95-AD63-C23B0C878F49__UL_MR4_XFW_FZ">
+                    <li class="li"> MCU / Radio low-power modes:<ul class="ul" id="GUID-98638652-CB07-4B95-AD63-C23B0C878F49__UL_CS4_XFW_FZ">
+                            <li class="li"> MCU sleep mode is the VLLS2 mode. Only portion of SRAM_U remains
+                                powered on. Wake-up goes through the Reset sequence.</li>
+
+                            <li class="li"> Radio sleep mode is hibernate mode.</li>
+
+                        </ul>
+</li>
+
+                    <li class="li"> Wake-up sources:<ul class="ul" id="GUID-98638652-CB07-4B95-AD63-C23B0C878F49__UL_DS4_XFW_FZ">
+                            <li class="li"> User push-button switches interrupt using low-leakage wake-up unit
+                                (LLWU) module.</li>
+
+                        </ul>
+</li>
+
+                </ul>
+</li>
+
+        </ul>
+
+        <ul class="ul" id="GUID-98638652-CB07-4B95-AD63-C23B0C878F49__UL_ES4_XFW_FZ">
+            <li class="li"> Mode 2<ul class="ul" id="GUID-98638652-CB07-4B95-AD63-C23B0C878F49__UL_CY4_XFW_FZ">
+                    <li class="li"> MCU/Radio low-power modes:<ul class="ul" id="GUID-98638652-CB07-4B95-AD63-C23B0C878F49__UL_HZ4_XFW_FZ">
+                            <li class="li"> MCU sleep mode is VLLS2 mode. Only a portion of the SRAM_U remains
+                                powered on. The w ake-up goes through the r eset sequence.</li>
+
+                            <li class="li"> Radio in hibernate mode.</li>
+
+                        </ul>
+</li>
+
+                    <li class="li"> Wake-up sources:<ul class="ul" id="GUID-98638652-CB07-4B95-AD63-C23B0C878F49__UL_IZ4_XFW_FZ">
+                            <li class="li"> Low-power timer (LPTMR) interrupt using low-leakage wake-up unit
+                                (LLWU) module.</li>
+
+                            <li class="li"> Low-power timer (LPTMR) wake-up timeout:
+                                    <em class="ph i">cPWR_DeepSleepDurationMs</em> by default . This value can be
+                                changed at run-time.</li>
+
+                            <li class="li"> Low-power timer (LPTMR) clock source: internal low-power oscillator
+                                (LPO).</li>
+
+                            <li class="li"> Low-power timer (LPTMR) resolution : modified at run time to meet
+                                timeout value.</li>
+
+                        </ul>
+</li>
+
+                </ul>
+</li>
+
+            <li class="li"> Mode 3<ul class="ul" id="GUID-98638652-CB07-4B95-AD63-C23B0C878F49__UL_JZ4_XFW_FZ">
+                    <li class="li"> MCU/Radio low-power modes:<ul class="ul" id="GUID-98638652-CB07-4B95-AD63-C23B0C878F49__UL_XZ4_XFW_FZ">
+                            <li class="li"> MCU sleep mode is VLLS2 mode. Only a portion of the SRAM_U remains
+                                powered on. The wake-up goes through the reset sequence.</li>
+
+                            <li class="li"> Radio in hibernate mode.</li>
+
+                        </ul>
+</li>
+
+                    <li class="li"> Wake-up sources:<ul class="ul" id="GUID-98638652-CB07-4B95-AD63-C23B0C878F49__UL_M1P_XFW_FZ">
+                            <li class="li"> Low-power timer (LPTMR) interrupt using low-leakage wake-up unit
+                                (LLWU) module.</li>
+
+                            <li class="li"> Low-power timer (LPTMR) wake-up timeout:
+                                    <em class="ph i">cPWR_DeepSleepDurationMs</em> by default . This value can be
+                                changed at run-time.</li>
+
+                            <li class="li"> Low-power timer (LPTMR) clock source: ERCLK32K (secondary external
+                                reference clock; 32.768 kHz crystal is connected to the RTC
+                                oscillator). </li>
+
+                            <li class="li"> Low-power timer (LPTMR) resolution : modified at run time to meet
+                                timeout value.</li>
+
+                        </ul>
+</li>
+
+                </ul>
+</li>
+
+            <li class="li"> Mode 4<ul class="ul" id="GUID-98638652-CB07-4B95-AD63-C23B0C878F49__UL_N1P_XFW_FZ">
+                    <li class="li"> MCU/Radio low-power modes:<ul class="ul" id="GUID-98638652-CB07-4B95-AD63-C23B0C878F49__UL_CBP_XFW_FZ">
+                            <li class="li"> MCU sleep mode is VLLS2 mode. Only a portion of the SRAM_U remains
+                                powered on. Wake-up goes through the r eset sequence.</li>
+
+                            <li class="li"> Radio in hibernate mode.</li>
+
+                        </ul>
+</li>
+
+                    <li class="li"> Wake-up sources:<ul class="ul" id="GUID-98638652-CB07-4B95-AD63-C23B0C878F49__UL_RBP_XFW_FZ">
+                            <li class="li"> Real-time clock (RTC) interrupt using low-leakage wake-up unit
+                                (LLWU) module.</li>
+
+                            <li class="li"> Real-time clock (RTC) wake-up timeout
+                                    :<em class="ph i">cPWR_DeepSleepDurationMs</em> by default . This value can be
+                                changed at run-time.</li>
+
+                            <li class="li"> Real-time clock (RTC) clock source – 32.768 kHz crystal connected
+                                to real-time clock (RTC) oscillator.</li>
+
+                            <li class="li"> Real-time clock (RTC) available resolutions: 1 s.</li>
+
+                        </ul>
+</li>
+
+                </ul>
+</li>
+
+        </ul>
+
+        <ul class="ul" id="GUID-98638652-CB07-4B95-AD63-C23B0C878F49__UL_SBP_XFW_FZ">
+            <li class="li"> Mode 5<ul class="ul" id="GUID-98638652-CB07-4B95-AD63-C23B0C878F49__UL_RHP_XFW_FZ">
+                    <li class="li"> MCU/Radio low-power modes:<ul class="ul" id="GUID-98638652-CB07-4B95-AD63-C23B0C878F49__UL_CKP_XFW_FZ">
+                            <li class="li"> MCU sleep mode is VLLS2 mode. Only a portion of the SRAM_U remains
+                                powered on. Wake-up goes through the Reset sequence.</li>
+
+                            <li class="li"> Radio in hibernate mode.</li>
+
+                        </ul>
+</li>
+
+                    <li class="li"> Wake-up sources:<ul class="ul" id="GUID-98638652-CB07-4B95-AD63-C23B0C878F49__UL_DKP_XFW_FZ">
+                            <li class="li"> User push-button switches interrupt using low-leakage wake-up unit
+                                (LLWU) module.</li>
+
+                            <li class="li"> Low-power timer (LPTMR) interrupt using low-leakage wake-up unit
+                                (LLWU) module.</li>
+
+                            <li class="li"> Low-power timer (LPTMR) wake-up timeout
+                                    :<em class="ph i">cPWR_DeepSleepDurationMs</em> by default . This value can be
+                                changed at run-time.</li>
+
+                            <li class="li"> Low-power timer (LPTMR) clock source – internal low-power
+                                oscillator (LPO).</li>
+
+                            <li class="li"> Low-power timer (LPTMR) resolution : modified at run time to meet
+                                timeout value.</li>
+
+                        </ul>
+</li>
+
+                </ul>
+</li>
+
+            <li class="li"> Mode 6<ul class="ul" id="GUID-98638652-CB07-4B95-AD63-C23B0C878F49__UL_EKP_XFW_FZ">
+                    <li class="li"> MCU/Radio low-power modes:<ul class="ul" id="GUID-98638652-CB07-4B95-AD63-C23B0C878F49__UL_MMP_XFW_FZ">
+                            <li class="li"> MCU sleep mode is VLLS2 mode. Only a portion of the SRAM_U remains
+                                powered on. Wake-up goes through the Reset sequence.</li>
+
+                            <li class="li"> Radio in hibernate mode.</li>
+
+                        </ul>
+</li>
+
+                    <li class="li"> Wake-up sources:<ul class="ul" id="GUID-98638652-CB07-4B95-AD63-C23B0C878F49__UL_NMP_XFW_FZ">
+                            <li class="li"> User push-button switches interrupt using low-leakage wake-up unit
+                                (LLWU) module.</li>
+
+                            <li class="li"> Low-power timer (LPTMR) interrupt using low-leakage wake-up unit
+                                (LLWU) module.</li>
+
+                            <li class="li"> Low-power timer (LPTMR) wake-up timeout:
+                                    <em class="ph i">cPWR_DeepSleepDurationMs</em> by default . This value can be
+                                changed at run-time.</li>
+
+                            <li class="li"> Low-power timer (LPTMR) clock source: ERCLK32K (secondary external
+                                reference clock - 32.768 kHz crystal connected to RTC
+                                oscillator).</li>
+
+                            <li class="li"> Low-power timer (LPTMR) resolution : modified at run time to meet
+                                timeout value.</li>
+
+                        </ul>
+</li>
+
+                </ul>
+</li>
+
+            <li class="li"> Mode 7<ul class="ul" id="GUID-98638652-CB07-4B95-AD63-C23B0C878F49__UL_OMP_XFW_FZ">
+                    <li class="li"> MCU/Radio low-power modes:<ul class="ul" id="GUID-98638652-CB07-4B95-AD63-C23B0C878F49__UL_X4P_XFW_FZ">
+                            <li class="li"> MCU sleep mode is VLLS2 mode. Only a portion of the SRAM_U remains
+                                powered on. Wake-up goes through the Reset sequence.</li>
+
+                            <li class="li"> Radio in hibernate mode.</li>
+
+                        </ul>
+</li>
+
+                    <li class="li"> Wake-up sources:<ul class="ul" id="GUID-98638652-CB07-4B95-AD63-C23B0C878F49__UL_Y4P_XFW_FZ">
+                            <li class="li"> User push-button switches interrupt using low-leakage wake-up unit
+                                (LLWU) module.</li>
+
+                            <li class="li"> Real-time clock (RTC) interrupt using low-leakage wake-up unit
+                                (LLWU) module.</li>
+
+                            <li class="li"> Real-time clock (RTC) wake-up timeout
+                                    :<em class="ph i">cPWR_DeepSleepDurationMs</em> by default . This value can be
+                                changed at run-time.</li>
+
+                            <li class="li"> Real-time clock (RTC) clock source – 32.768 kHz crystal connected
+                                to the real-time clock (RTC) oscillator.</li>
+
+                            <li class="li"> Real-time clock (RTC) possible resolutions: 1 s.</li>
+
+                        </ul>
+</li>
+
+                </ul>
+</li>
+
+            <li class="li"> Mode 8<ul class="ul" id="GUID-98638652-CB07-4B95-AD63-C23B0C878F49__UL_Z4P_XFW_FZ">
+                    <li class="li"> MCU/Radio low-power modes:<ul class="ul" id="GUID-98638652-CB07-4B95-AD63-C23B0C878F49__UL_HRP_XFW_FZ">
+                            <li class="li"> MCU sleep mode is VLLS2 mode. Only a portion of the SRAM_U remains
+                                powered on. Wake-up goes through the Reset sequence.</li>
+
+                            <li class="li"> Radio in hibernate mode.</li>
+
+                        </ul>
+</li>
+
+                    <li class="li"> Wake-up sources:<ul class="ul" id="GUID-98638652-CB07-4B95-AD63-C23B0C878F49__UL_IRP_XFW_FZ">
+                            <li class="li"> User push-button switches interrupt using low-leakage wake-up unit
+                                (LLWU) module.</li>
+
+                            <li class="li"> Low-power timer (LPTMR) interrupt using low-leakage wake-up unit
+                                (LLWU) module.</li>
+
+                            <li class="li"> Low-power timer (LPTMR) Wake-up timeout:
+                                    <em class="ph i">cPWR_DeepSleepDurationMs</em> by default . This value can be
+                                changed at run-time.</li>
+
+                            <li class="li"> Low-power timer (LPTMR) clock source: internal low-power oscillator
+                                (LPO).</li>
+
+                            <li class="li"> Low-power timer (LPTMR) resolution : modified at run time to meet
+                                timeout value.</li>
+
+                        </ul>
+</li>
+
+                </ul>
+</li>
+
+            <li class="li"> Mode 9<ul class="ul" id="GUID-98638652-CB07-4B95-AD63-C23B0C878F49__UL_JRP_XFW_FZ">
+                    <li class="li"> MCU/Radio low-power modes:<ul class="ul" id="GUID-98638652-CB07-4B95-AD63-C23B0C878F49__UL_RTP_XFW_FZ">
+                            <li class="li"> MCU sleep mode is low-leakage stop (LLS) mode.</li>
+
+                            <li class="li"> Radio in hibernate mode.</li>
+
+                        </ul>
+</li>
+
+                    <li class="li"> Wake-up sources:<ul class="ul" id="GUID-98638652-CB07-4B95-AD63-C23B0C878F49__UL_STP_XFW_FZ">
+                            <li class="li"> User push-button switches interrupt using low-leakage wake-up unit
+                                (LLWU) module.</li>
+
+                            <li class="li"> Low-power timer (LPTMR) interrupt using low-leakage wake-up unit
+                                (LLWU) module.</li>
+
+                            <li class="li"> Low-power timer (LPTMR) wake-up timeout:
+                                    <em class="ph i">cPWR_DeepSleepDurationMs</em> by default . This value can be
+                                changed at run-time.</li>
+
+                            <li class="li"> Low-power timer (LPTMR) clock source: internal low-power oscillator
+                                (LPO).</li>
+
+                            <li class="li"> Low-power timer (LPTMR) resolution : modified at run time to meet
+                                timeout value.</li>
+
+                        </ul>
+</li>
+
+                </ul>
+</li>
+
+            <li class="li"> Mode 10<ul class="ul" id="GUID-98638652-CB07-4B95-AD63-C23B0C878F49__UL_H5P_XFW_FZ">
+                    <li class="li"> MCU/Radio low-power modes:<ul class="ul" id="GUID-98638652-CB07-4B95-AD63-C23B0C878F49__UL_CWP_XFW_FZ">
+                            <li class="li"> MCU sleep mode is low-leakage stop (LLS) mode.</li>
+
+                            <li class="li"> Radio in hibernate mode.</li>
+
+                        </ul>
+</li>
+
+                    <li class="li"> Wake-up sources:<ul class="ul" id="GUID-98638652-CB07-4B95-AD63-C23B0C878F49__UL_DWP_XFW_FZ">
+                            <li class="li"> User push-button switches interrupt using low-leakage wake-up unit
+                                (LLWU) module.</li>
+
+                            <li class="li"> Low-power timer (LPTMR) interrupt using low-leakage wake-up unit
+                                (LLWU) module.</li>
+
+                            <li class="li"> Low-power timer (LPTMR) wake-up timeout:
+                                    <em class="ph i">cPWR_DeepSleepDurationMs</em> by default . This value can be
+                                changed at run-time.</li>
+
+                            <li class="li"> Low-power timer (LPTMR) clock source: ERCLK32K (secondary external
+                                reference clock; 32.768 kHz crystal connected to RTC
+                                oscillator).</li>
+
+                            <li class="li"> Low-power timer (LPTMR) resolution : modified at run time to meet
+                                timeout value.</li>
+
+                        </ul>
+</li>
+
+                </ul>
+</li>
+
+            <li class="li"> Mode 11<ul class="ul" id="GUID-98638652-CB07-4B95-AD63-C23B0C878F49__UL_RWP_XFW_FZ">
+                    <li class="li"> MCU/Radio low-power modes:<ul class="ul" id="GUID-98638652-CB07-4B95-AD63-C23B0C878F49__UL_MYP_XFW_FZ">
+                            <li class="li"> MCU sleep mode is low-leakage stop (LLS) mode.</li>
+
+                            <li class="li"> Radio in hibernate mode.</li>
+
+                        </ul>
+</li>
+
+                    <li class="li"> Wake-up sources:<ul class="ul" id="GUID-98638652-CB07-4B95-AD63-C23B0C878F49__UL_NYP_XFW_FZ">
+                            <li class="li"> User push-button switches interrupt using low-leakage wake-up unit
+                                (LLWU) module.</li>
+
+                            <li class="li"> Real-time clock (RTC) interrupt using low-leakage wake-up unit
+                                (LLWU) module.</li>
+
+                            <li class="li"> Real-time clock (RTC) wake-up timeout:
+                                    <em class="ph i">cPWR_DeepSleepDurationMs</em> by default . This value can be
+                                changed at run-time.</li>
+
+                            <li class="li"> Real-time clock (RTC) clock source: 32.768 kHz crystal connected to
+                                real-time clock (RTC) oscillator.</li>
+
+                            <li class="li"> Real-time clock (RTC) possible resolutions: 1 s.</li>
+
+                        </ul>
+</li>
+
+                </ul>
+</li>
+
+            <li class="li"> Mode 12<ul class="ul" id="GUID-98638652-CB07-4B95-AD63-C23B0C878F49__UL_CZP_XFW_FZ">
+                    <li class="li"> MCU/Radio low-power modes:<ul class="ul" id="GUID-98638652-CB07-4B95-AD63-C23B0C878F49__UL_X1Q_XFW_FZ">
+                            <li class="li"> MCU sleep mode is low-leakage stop (LLS) mode.</li>
+
+                            <li class="li"> Radio in hibernate mode.</li>
+
+                        </ul>
+</li>
+
+                    <li class="li"> Wake-up sources:<ul class="ul" id="GUID-98638652-CB07-4B95-AD63-C23B0C878F49__UL_Y1Q_XFW_FZ">
+                            <li class="li"> User push-button switches interrupt using low-leakage wake-up unit
+                                (LLWU) module.</li>
+
+                            <li class="li"> Low-power timer (LPTMR) interrupt using low-leakage wake-up unit
+                                (LLWU) module.</li>
+
+                            <li class="li"> Low-power timer (LPTMR) wake-up timeout:
+                                    <em class="ph i">cPWR_DeepSleepDurationMs</em> by default . This value can be
+                                changed at run-time.</li>
+
+                            <li class="li"> Low-power timer (LPTMR) clock source: internal low-power oscillator
+                                (LPO).</li>
+
+                            <li class="li"> Low-power timer (LPTMR) resolution : modified at run time to meet
+                                timeout value.</li>
+
+                        </ul>
+</li>
+
+                </ul>
+</li>
+
+            <li class="li"> Mode 13<ul class="ul" id="GUID-98638652-CB07-4B95-AD63-C23B0C878F49__UL_MBQ_XFW_FZ">
+                    <li class="li"> MCU/Radio low-power modes:<ul class="ul" id="GUID-98638652-CB07-4B95-AD63-C23B0C878F49__UL_HDQ_XFW_FZ">
+                            <li class="li"> MCU sleep mode is very-low-power stop (VLPS) mode.</li>
+
+                            <li class="li"> Radio in doze mode.</li>
+
+                        </ul>
+</li>
+
+                    <li class="li"> Wake-up sources:<ul class="ul" id="GUID-98638652-CB07-4B95-AD63-C23B0C878F49__UL_XDQ_XFW_FZ">
+                            <li class="li"> UART module interrupt.</li>
+
+                            <li class="li"> User push-button switches interrupt.</li>
+
+                            <li class="li"> Radio timer interrupt.</li>
+
+                            <li class="li"> Radio timer Wake-up timeout: <em class="ph i">cPWR_DeepSleepDurationMs</em> by
+                                default . This value can be changed at run-time.</li>
+
+                            <li class="li"> Radio timer possible resolutions: fixed to 16 m s (one 802.15.4 PHY
+                                symbol).</li>
+
+                            <li class="li"> Set <em class="ph i">gSerialMgrUseUart_c</em> to TRUE if UART module is used as
+                                wake-up source.</li>
+
+                            <li class="li"> Set <em class="ph i">gKeyBoardSupported_d</em> to TRUE if user push-button
+                                switches are used as wake-up source. Only the switches that are
+                                connected to the LLWU will wake up the MCU from the LLS modes.</li>
+
+                        </ul>
+</li>
+
+                </ul>
+</li>
+
+            <li class="li"> Mode 14<ul class="ul" id="GUID-98638652-CB07-4B95-AD63-C23B0C878F49__UL_YDQ_XFW_FZ">
+                    <li class="li"> MCU/Radio low-power modes:<ul class="ul" id="GUID-98638652-CB07-4B95-AD63-C23B0C878F49__UL_RFQ_XFW_FZ">
+                            <li class="li"> MCU in LLS mode. Wake-up goes through the Reset sequence.</li>
+
+                            <li class="li"> Radio in hibernate mode. </li>
+
+                        </ul>
+</li>
+
+                    <li class="li"> Wake-up sources:<ul class="ul" id="GUID-98638652-CB07-4B95-AD63-C23B0C878F49__UL_HGQ_XFW_FZ">
+                            <li class="li"> User push-button switches interrupt using low-leakage wake-up unit
+                                (LLWU) module.</li>
+
+                            <li class="li"> Low-power timer (LPTMR) interrupt using low-leakage wake-up unit
+                                (LLWU) module.</li>
+
+                            <li class="li"> LPTMR wake-up timeout: the shortest timeout period of any active
+                                Low-Power-Timer</li>
+
+                            <li class="li"> Low-power timer (LPTMR) resolution : modified at run time to meet
+                                timeout value.</li>
+
+                        </ul>
+</li>
+
+                </ul>
+</li>
+
+            <li class="li"> Mode 15<ul class="ul" id="GUID-98638652-CB07-4B95-AD63-C23B0C878F49__UL_IGQ_XFW_FZ">
+                    <li class="li"> MCU/Radio low-power modes:<ul class="ul" id="GUID-98638652-CB07-4B95-AD63-C23B0C878F49__UL_C3Q_XFW_FZ">
+                            <li class="li"> MCU in LLS mode. Wake-up goes through the Reset sequence.</li>
+
+                            <li class="li"> Radio power mode is managed by MAC.</li>
+
+                        </ul>
+</li>
+
+                    <li class="li"> Wakeup sources:<ul class="ul" id="GUID-98638652-CB07-4B95-AD63-C23B0C878F49__UL_D3Q_XFW_FZ">
+                            <li class="li"> User push-button switches interrupt using low-leakage wake-up unit
+                                (LLWU) module.</li>
+
+                            <li class="li"> Low-power timer (LPTMR) interrupt using low-leakage wake-up unit
+                                (LLWU) module.</li>
+
+                            <li class="li"> LPTMR wake-up timeout: the shortest timeout period of any active
+                                Low-Power-Timer</li>
+
+                            <li class="li"> Low-power timer (LPTMR) resolution : modified at run time to meet
+                                timeout value.</li>
+
+                        </ul>
+</li>
+
+                </ul>
+</li>
+
+        </ul>
+
+        <p class="p"><strong class="ph b"><span class="ph" id="GUID-98638652-CB07-4B95-AD63-C23B0C878F49__X_TOC160347732">cPWR_SleepMode</span></strong></p>
+
+        <p class="p">Leave the cPWR_SleepMode as TRUE (1). This option saves considerable power when the
+            system is running. It works by entering an MCU halt when the system enters the idle
+            task, and it wakes instantly when an interrupt occurs (UART, keyboard, timer expires,
+            and so on). This can save 30% of power at run-time. The radio enters the auto-doze mode
+            and the MCU is in WAIT mode. The clock on the radio is still running, but the
+            transceiver is disabled.</p>
+
+        <p class="p"><strong class="ph b">cPWR_LPTMRClockSource</strong></p>
+
+        <p class="p">The cPWR_LPTMRClockSource represents the low-power timer (LPTMR) clock source. The
+            cPWR_LPTMRClockSource can be set to one of the following values:</p>
+
+        <ul class="ul" id="GUID-98638652-CB07-4B95-AD63-C23B0C878F49__UL_HLD_CGW_FZ">
+            <li class="li"> cLPTMR_Source_Int_LPO_1KHz – internal 1 kHz low-power oscillator (LPO)</li>
+
+            <li class="li"> cLPTMR_Source_Ext_ERCLK32K – ERCLK32K (secondary external reference clock; 32.768
+                kHz crystal connected to the RTC oscillator).</li>
+
+        </ul>
+
+        <p class="p"><strong class="ph b">cPWR_DeepSleepDurationMs</strong></p>
+
+        <p class="p">The default deep sleep duration in milliseconds used by the LPM. For deep sleep modes 4,
+            7, 11, the value must be multiple of 1000 ms.</p>
+
+        <p class="p">The duration of sleep can be changed at runtime using <em class="ph i">PWR_SetDeepSleepTimeInMs()</em>
+            or <em class="ph i">PWR_SetDeepSleepTimeInSymbols()</em>.</p>
+
+        <p class="p"><strong class="ph b">cPWR_CallWakeupStackProcAfterDeepSleep</strong></p>
+
+        <p class="p">Enablement of external call to a procedure each time that DeepSleep is exited. The
+            application is responsible for implementing the <em class="ph i">DeepSleepWakeupStackProc()</em>
+            function:</p>
+
+        <p class="p">extern void DeepSleepWakeupStackProc(void);</p>
+
+        <p class="p"><strong class="ph b">gPWR_EnsureOscStabilized_d</strong></p>
+
+        <p class="p">This define configures whether to test if the RTC oscillator has started on entering
+            low-power for the low-power modes that use it.</p>
+
+        <p class="p"><strong class="ph b">cPWR_LVD_Enable</strong></p>
+
+        <p class="p">The use of low-voltage detection has the following possibilities:</p>
+
+        <ul class="ul" id="GUID-98638652-CB07-4B95-AD63-C23B0C878F49__UL_MSD_CGW_FZ">
+            <li class="li"> 0: Don’t use low-voltage detection at all</li>
+
+            <li class="li"> 1: Use polled =&gt; Check is made each time the function is called.</li>
+
+            <li class="li"> 2: A minutes software timer used for handling when to poll the LVD, according to
+                the cPWR_LVD_Ticks constant</li>
+
+            <li class="li"> 3: LVDRE are set to hold the MCU in reset while the VLVDL condition is
+                detected</li>
+
+        </ul>
+
+        <p class="p"><strong class="ph b">cPWR_LVD_Ticks</strong></p>
+
+        <p class="p">How often to check the LVD level when cPWR_LVD_Enable == 2. This is the number of minutes
+            before the voltage is checked (consumes current and time).</p>
+
+        <p class="p"><strong class="ph b">cPWR_CheckLowPowerTimers</strong></p>
+
+        <p class="p">If enabled, the Low-Power module searches for the first Low-Power-Timer to expire and
+            sets up the sleep duration as the minimum between the timer time-out value and the
+            requested sleep duration.</p>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-4E58C6E2-CA0F-40BD-925D-94CC7C73AB87.html">Low-power library properties</a></div>
+</div>
+</div>
+
+</body>
+</html>

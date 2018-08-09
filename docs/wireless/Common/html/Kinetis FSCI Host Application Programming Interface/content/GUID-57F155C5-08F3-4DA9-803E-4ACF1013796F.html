@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Host Software Overview"/>
+<meta name="abstract" content=""/>
+<meta name="description" content=""/>
+<meta name="DC.Relation" scheme="URI" content="GUID-1E9255AF-23FB-4DE5-A317-FDBE4BF97F6B.html"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-FD6C7E83-A989-4040-B627-7E2E593E6C7C.html"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-498551A8-E0BC-4293-A0B0-5254238858DC.html"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-F4A08E69-92DE-40E9-9153-CEE849440C08.html"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-2036C925-CAA5-4A1C-8D49-0EFAF242D9F2.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="4"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-57F155C5-08F3-4DA9-803E-4ACF1013796F"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Host Software Overview</title>
+</head>
+<body id="GUID-57F155C5-08F3-4DA9-803E-4ACF1013796F">
+
+
+  <h1 class="title topictitle1">Host Software Overview</h1>
+
+  
+  <div class="body"><p class="shortdesc"/>
+
+    <p class="p">The FSCI (Framework Serial Communication Interface - Connectivity Framework Reference Manual) module allows interfacing the Kinetis protocol stack with a host system or PC tool using a serial communication interface.</p>
+
+    <p class="p">FSCI can be demonstrated using various host software, one being the set of Linux OS libraries exposing the Host API described in this document. The NXP Test Tool for Connectivity Products PC application is another interfacing tool, running on the Windows OS. Both the Thread and BLE stacks make use of XML files which contain detailed meta-descriptors for commands and events transported over the FSCI.</p>
+
+    <p class="p">The FSCI module sends and receives messages as shown in the figure below. This structure is not specific to a serial interface and is designed to offer the best communication reliability. The device is expecting messages in little-endian format and responds with messages in little-endian format.</p>
+
+    <div class="fig fignone"><span class="figcap">Figure 1. Sending and receiving messages</span><img class="image" src="GUID-53534FD7-364A-4833-8234-93AECA734CAB-high.png"/></div>
+
+    
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-57F155C5-08F3-4DA9-803E-4ACF1013796F__GUID-942F35A7-2245-43B8-8E70-7AEE66268B2B" class="table" frame="border" border="1" rules="all"><caption><span class="tablecap">Table 1. FSCI send receive message formats</span></caption>
+       <tbody class="tbody">
+          <tr class="row">
+            <td class="entry" valign="top">FSCI Frame FormatSTX</td>
+
+            <td class="entry" valign="top">1</td>
+
+            <td class="entry" valign="top"><p class="p">Used for synchronization over the serial interface. </p>
+
+             <p class="p">The value is always 0x02.</p>
+ 
+            </td>
+
+          </tr>
+
+          <tr class="row">
+            <td class="entry" valign="top">Opcode Group</td>
+
+            <td class="entry" valign="top">1</td>
+
+            <td class="entry" valign="top">Distinguishes between different layers (for example, Thread Management, Thread Utils, MeshCoP, DTLS – Thread; GAP, GATT, GATTDB – BLE).</td>
+
+          </tr>
+
+          <tr class="row">
+            <td class="entry" valign="top">Message Type</td>
+
+            <td class="entry" valign="top">1</td>
+
+            <td class="entry" valign="top">Specifies the exact message opcode that is contained in the packet.</td>
+
+          </tr>
+
+          <tr class="row">
+            <td class="entry" valign="top">Length</td>
+
+            <td class="entry" valign="top">2</td>
+
+            <td class="entry" valign="top">The length of the packet payload, excluding the header and the checksum. The length field content shall be provided in little endian format.</td>
+
+          </tr>
+
+          <tr class="row">
+            <td class="entry" valign="top">Payload</td>
+
+            <td class="entry" valign="top">variable</td>
+
+            <td class="entry" valign="top">Payload of the actual message.</td>
+
+          </tr>
+
+          <tr class="row">
+            <td class="entry" valign="top">Checksum</td>
+
+            <td class="entry" valign="top">1/2</td>
+
+            <td class="entry" valign="top">Checksum field used to check the data integrity of the packet. When virtual interfaces are used to distinguish between the BLE and Thread stacks when both run concurrently on the same device, this field expands to two bytes to embed the virtual interface number.</td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+</div>
+
+    <p class="p">The Kinetis Wireless Host SDK consists in a set of cross-platform C language libraries which can be integrated into a variety of user defined applications for interacting with Kinetis Wireless microcontrollers. On top of these libraries, Python bindings provide easy development of user applications.</p>
+
+    <p class="p">The Kinetis Wireless Host SDK is meant to run on Windows OS, Linux OS, Apple OS X® and OpenWrt. This version of the document describes a subset of functionality related to interfacing with a Thread/BLE stack instance from a Linux OS system, with focus on Python language bindings.</p>
+
+    
+  </div>
+
+<div class="related-links">
+<ul class="ullinks">
+<li class="link ulchildlink"><strong><a href="GUID-1E9255AF-23FB-4DE5-A317-FDBE4BF97F6B.html">Kinetis wireless host software system block diagram</a></strong><br/>
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-FD6C7E83-A989-4040-B627-7E2E593E6C7C.html">Directory tree</a></strong><br/>
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-498551A8-E0BC-4293-A0B0-5254238858DC.html">Device detection</a></strong><br/>
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-F4A08E69-92DE-40E9-9153-CEE849440C08.html">Serial port configuration</a></strong><br/>
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-2036C925-CAA5-4A1C-8D49-0EFAF242D9F2.html">Logger</a></strong><br/>
+</li>
+</ul>
+</div>
+
+</body>
+</html>

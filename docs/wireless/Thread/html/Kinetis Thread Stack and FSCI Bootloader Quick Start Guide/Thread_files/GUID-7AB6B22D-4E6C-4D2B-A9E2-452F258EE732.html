@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Using the Host SDK sample with the FSCI bootloader"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-7AB6B22D-4E6C-4D2B-A9E2-452F258EE732"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Using the Host SDK sample with the FSCI bootloader</title>
+</head>
+<body id="GUID-7AB6B22D-4E6C-4D2B-A9E2-452F258EE732">
+
+
+    <h1 class="title topictitle1">Using the Host SDK sample with the FSCI bootloader</h1>
+
+    <div class="body">
+        <p class="p">To deploy the Host SDK to a host Linux system OS that works with the Thread
+            THCI (Host Control Interface/Device), follow the deployment procedure in the
+                \<strong class="ph b">docs\Kinetis FSCI Host Application Programming Interface.pdf</strong>, then run the
+            script at:
+                <strong class="ph b">\tools\wireless\host_sdk\hsdk-python\src\com\nxp\wireless_connectivity\test\bootloader
+                fsci_bootloader.py </strong>providing as command line arguments the device serial port
+            and a binary firmware file compatible with the bootloader that has been built as shown
+            in the section above. For example,</p>
+
+        <p class="p">#export PYTHONPATH=$PYTHONPATH:&lt;hsdk-path&gt;/hsdk-python/src/</p>
+
+        <p class="p">#python fsci_bootloader.py /dev/ttyACM0 thread_host_controlled_device.bin</p>
+
+        <p class="p"> </p>
+
+        <p class="p">The script does the following: </p>
+
+        <ul class="ul" id="GUID-7AB6B22D-4E6C-4D2B-A9E2-452F258EE732__UL_WZF_PP4_FZ">
+            <li class="li">Sends the THCI command for the device to reset, enter and remain in
+                bootloader mode.</li>
+
+            <li class="li">Sends the command to cancel an image as a safety check and to verify if
+                the bootloader is responsive.</li>
+
+            <li class="li">Sends the command to start firmware update for a new image.</li>
+
+            <li class="li">Pushes chunks of the firmware image file sequentially until the full
+                firmware is programmed and displays intermediate progress as percent of binary file
+                content loaded.</li>
+
+            <li class="li">Sets the flags to commit the image as valid.</li>
+
+            <li class="li">Resets the device to ensure it boots to the new firmware. Additionally, one may use
+                the C mirror of the script, located at <strong class="ph b">hsdk/demo/FsciBootloader.c</strong> . The
+                command line arguments are the same used for the Python script.</li>
+
+        </ul>
+
+    </div>
+
+
+</body>
+</html>

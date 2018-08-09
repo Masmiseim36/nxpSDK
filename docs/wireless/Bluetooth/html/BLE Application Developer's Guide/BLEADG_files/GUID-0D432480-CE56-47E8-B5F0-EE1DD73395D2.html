@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Discover included services"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-14EEED00-68AD-49E9-A4A6-220E857226B3.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Creator" content=""/>
+<meta name="DC.Publisher" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-0D432480-CE56-47E8-B5F0-EE1DD73395D2"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Discover included services</title>
+</head>
+<body id="GUID-0D432480-CE56-47E8-B5F0-EE1DD73395D2">
+
+
+    <h1 class="title topictitle1">Discover included services</h1>
+
+    <div class="body">
+        <p class="p"><a class="xref" href="GUID-30893DFA-475D-4F8B-ACAD-D362D384F5B2.html#GUID-30893DFA-475D-4F8B-ACAD-D362D384F5B2">Discover all primary services</a> shows how to discover Primary Services. However, a Server may also contain Secondary
+            Services, which are not meant to be used standalone and are usually included in the
+            Primary Services. The inclusion means that all the Secondary Service’s Characteristics
+            may be used by the profile that requires the Primary Service.</p>
+
+        <p class="p">Therefore, after a Primary Service has been discovered, the following procedure may be
+            used to discover services (usually Secondary Services) included in it:</p>
+
+        <pre class="pre codeblock">bleResult_t<strong class="ph b">GattClient_FindIncludedServices</strong>
+(
+    deviceId_t         deviceId,
+    gattService_t *    pIoService,
+    uint8_t            maxServiceCount
+);</pre>
+
+        <p class="p">The service structure that <em class="ph i">pIoService</em> points to must have the
+                <em class="ph i">aIncludedServices</em> field linked to an allocated array of services, of size
+                <em class="ph i">maxServiceCount</em>, chosen according to the expected number of included services
+            to be found. This is the application’s choice, usually following profile
+            specifications.</p>
+
+        <p class="p">Also, the service’s range must be set (the <em class="ph i">startHandle</em> and
+                <em class="ph i">endHandle</em> fields), which may have already been done by the previous Service
+            Discovery procedure (as described in <a class="xref" href="GUID-30893DFA-475D-4F8B-ACAD-D362D384F5B2.html#GUID-30893DFA-475D-4F8B-ACAD-D362D384F5B2">Discover all primary services</a> and <a class="xref" href="GUID-48BDDB4C-EEF2-4536-9536-AF1AE98BB6B5.html#GUID-48BDDB4C-EEF2-4536-9536-AF1AE98BB6B5">Discover primary services by UUID</a>).</p>
+
+        <p class="p">The number of discovered included services is written by the GATT module in the
+                <em class="ph i">cNumIncludedServices</em> field of the structure from <em class="ph i">pIoService</em>.
+            Obviously, a maximum of <em class="ph i">maxServiceCount</em> included services is discovered.</p>
+
+        <p class="p">The following example assumes the Heart Rate Service was discovered using
+            the code provided in <a class="xref" href="GUID-48BDDB4C-EEF2-4536-9536-AF1AE98BB6B5.html#GUID-48BDDB4C-EEF2-4536-9536-AF1AE98BB6B5">Discover primary services by UUID</a>.</p>
+
+        <pre class="pre codeblock">/* Finding services included in the Heart Rate Primary Service */
+gattService_t * pPrimaryService = &amp;heartRateService;
+ 
+<strong class="ph b">#define</strong> mxMaxIncludedServices_c 3
+<strong class="ph b">static </strong>gattService_t includedServices[mxMaxIncludedServices_c];
+ 
+/* Linking the array */
+pPrimaryService-&gt; aIncludedServices = includedServices;
+ 
+bleResult_t result = GattClient_FindIncludedServices
+(
+    deviceId,
+    pPrimaryService,
+    mxMaxIncludedServices_c
+);
+ 
+<strong class="ph b">if</strong> (<em class="ph i">gBleSuccess_c</em> != result)
+{
+    /* Treat error */
+}</pre>
+
+        <p class="p">When the Client Procedure Callback is triggered, if any included services are found, the
+            application can read their handle range and their UUIDs.</p>
+
+        <pre class="pre codeblock"><strong class="ph b">void</strong> gattClientProcedureCallback
+(
+    deviceId_t deviceId,
+    gattProcedureType_t procedureType,
+    gattProcedureResult_t procedureResult,
+    bleResult_t error
+)
+{
+    <strong class="ph b">switch</strong> (procedureType)
+    {
+        /* ... */
+        <strong class="ph b">case</strong> gGattProcFindIncludedServices_c:
+            <strong class="ph b">if</strong> (<em class="ph i">gGattProcSuccess_c</em> == procedureResult)
+            {
+                /* Read included services data */
+                PRINT( pPrimaryService-&gt; cNumIncludedServices );
+                <strong class="ph b">for</strong> (<strong class="ph b">int</strong> j = 0; j &lt; pPrimaryService-&gt; cNumIncludedServices ; j++)
+                {
+                    PRINT( pPrimaryService-&gt; aIncludedServices [j]. startHandle );
+                    PRINT( pPrimaryService-&gt; aIncludedServices [j]. endHandle );
+                    PRINT( pPrimaryService-&gt; aIncludedServices [j]. uuidType );
+                    PRINT( pPrimaryService-&gt; aIncludedServices [j]. uuid );
+                }
+            }
+            <strong class="ph b">else</strong>
+            {
+                /* Handle error */
+                PRINT( error );
+            }
+            <strong class="ph b">break</strong>;
+        /* ... */
+    }
+}</pre>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-14EEED00-68AD-49E9-A4A6-220E857226B3.html">Service and characteristic discovery</a></div>
+</div>
+</div>
+
+</body>
+</html>

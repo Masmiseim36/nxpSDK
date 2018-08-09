@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Implemented profile and services"/>
+<meta name="abstract" content=""/>
+<meta name="description" content=""/>
+<meta name="DC.Relation" scheme="URI" content="GUID-CC7E27F2-3E1D-47D7-8905-B56FEB09F490.html"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-0652C8C0-3837-4E45-A63B-A4AC26770C1F"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Implemented profile and services</title>
+</head>
+<body id="GUID-0652C8C0-3837-4E45-A63B-A4AC26770C1F">
+
+
+  <h1 class="title topictitle1">Implemented profile and services</h1>
+
+  
+  <div class="body"><p class="shortdesc"/>
+
+    <p class="p">The Proximity Reporter application implements a GATT server and the following profile and services.</p>
+
+<ul class="ul">
+<li class="li">Proximity Profile v1.0.1</li>
+
+<li class="li">Immediate Alert Service v1.0</li>
+
+<li class="li">TX Power Service v1.0</li>
+
+<li class="li">Link Loss Service v1.0.1</li>
+
+<li class="li">Battery Service v1.0</li>
+
+<li class="li">Device Information Service v1.1</li>
+
+</ul>
+
+<p class="p">The application behaves as a GAP peripheral node. It enters GAP General Discoverable Mode and waits for a GAP central node to connect.</p>
+
+<p class="p">The Immediate Alert Service shows the alert level control point. GATT clients can trigger an alert on the device.
+The TX Power Service exposes the TX Power level that is read from the BLE controller.
+The Link Loss Service exposes a configurable alert level. When the radio link with the central node is suddenly lost, the configured alert is triggered on the reporter node.</p>
+
+  </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-CC7E27F2-3E1D-47D7-8905-B56FEB09F490.html">Proximity Reporter</a></div>
+</div>
+</div>
+
+</body>
+</html>

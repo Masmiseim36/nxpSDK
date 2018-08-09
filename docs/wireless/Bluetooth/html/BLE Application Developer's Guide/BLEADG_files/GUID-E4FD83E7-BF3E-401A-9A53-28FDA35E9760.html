@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="BLE OTAP header"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-8D40488C-4DA8-40D3-8AD6-701BBFD80E65.html"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-5530B938-C279-4FC4-8AF5-C0E363FDE16D.html"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-6107A88A-BCB0-42F2-BC20-F40F16C30385.html"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-354451BD-9C21-4191-96FB-0C1BED15134A.html"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-FDA8AFFE-86CD-4CE8-9988-B3F3AD4FA45F.html"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-8C6F4820-8D65-43A4-B200-E9B631961005.html"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-F6B150E3-4003-48D9-B0B6-40CBCB7D7805.html"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-F96E8EF1-3A96-4F26-B509-D895AA2EFADF.html"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-F25936B6-C208-492B-ACED-D2C92CFF0165.html"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-C91594FF-94EF-43DF-8033-325179349943.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Creator" content=""/>
+<meta name="DC.Publisher" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-E4FD83E7-BF3E-401A-9A53-28FDA35E9760"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>BLE OTAP header</title>
+</head>
+<body id="GUID-E4FD83E7-BF3E-401A-9A53-28FDA35E9760">
+
+
+    <h1 class="title topictitle1">BLE OTAP header</h1>
+
+    <div class="body">
+        <p class="p">The format and fields of the BLE OTAP Header are summarized in the table below.</p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-E4FD83E7-BF3E-401A-9A53-28FDA35E9760__TABLE_SSW_Q5M_CY" class="table" frame="border" border="1" rules="all"><caption><span class="tablecap">Table 1. BLE OTAP Header Fields</span></caption>
+                
+                
+                
+                
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top">Octets</td>
+
+                        <td class="entry" valign="top">Data Types</td>
+
+                        <td class="entry" valign="top">Field Name</td>
+
+                        <td class="entry" valign="top">Mandatory/Optional</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">4</td>
+
+                        <td class="entry" valign="top">Unsigned 32-bit integer</td>
+
+                        <td class="entry" valign="top">Upgrade File Identifier</td>
+
+                        <td class="entry" valign="top">M</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">2</td>
+
+                        <td class="entry" valign="top">Unsigned 16-bit integer</td>
+
+                        <td class="entry" valign="top">Header Version</td>
+
+                        <td class="entry" valign="top">M</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">2</td>
+
+                        <td class="entry" valign="top">Unsigned 16-bit integer</td>
+
+                        <td class="entry" valign="top">Header Length</td>
+
+                        <td class="entry" valign="top">M</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">2</td>
+
+                        <td class="entry" valign="top">Unsigned 16-bit integer</td>
+
+                        <td class="entry" valign="top">Header Field Control</td>
+
+                        <td class="entry" valign="top">M</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">2</td>
+
+                        <td class="entry" valign="top">Unsigned 16-bit integer</td>
+
+                        <td class="entry" valign="top">Company Identifier</td>
+
+                        <td class="entry" valign="top">M</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">2</td>
+
+                        <td class="entry" valign="top">Unsigned 16-bit integer</td>
+
+                        <td class="entry" valign="top">Image ID</td>
+
+                        <td class="entry" valign="top">M</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">8</td>
+
+                        <td class="entry" valign="top">8 byte array</td>
+
+                        <td class="entry" valign="top">Image Version</td>
+
+                        <td class="entry" valign="top">M</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">32</td>
+
+                        <td class="entry" valign="top">Character string</td>
+
+                        <td class="entry" valign="top">Header String</td>
+
+                        <td class="entry" valign="top">M</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top">4</td>
+
+                        <td class="entry" valign="top">Unsigned 32-bit integer</td>
+
+                        <td class="entry" valign="top">
+                            <p class="p">Total Image File Size</p>
+
+                            <p class="p">(including header)</p>
+
+                        </td>
+
+                        <td class="entry" valign="top">M</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+        <p class="p">The fields are shown in the order they are placed in memory from the first location to
+            the last.</p>
+
+        <p class="p">The total size of the header without the optional fields (if defined by the <em class="ph i">Header
+                Field Control</em>) is 58 bytes.</p>
+
+        <p class="p">All the fields in the header have a little endian format with the exception of the
+                <em class="ph i">Header String</em> field which is an ASCII character string.</p>
+
+        <p class="p">A packed structure type definition for the contents of the BLE OTAP Header can be found
+            in the <em class="ph i">otap_interface.h </em>file.</p>
+
+    </div>
+
+<div class="related-links">
+<ul class="ullinks">
+<li class="link ulchildlink"><strong><a href="GUID-5530B938-C279-4FC4-8AF5-C0E363FDE16D.html">Upgrade file identifier</a></strong><br/>
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-6107A88A-BCB0-42F2-BC20-F40F16C30385.html">Header version</a></strong><br/>
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-354451BD-9C21-4191-96FB-0C1BED15134A.html">Header length</a></strong><br/>
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-FDA8AFFE-86CD-4CE8-9988-B3F3AD4FA45F.html">Header field control</a></strong><br/>
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-8C6F4820-8D65-43A4-B200-E9B631961005.html">Company identifier</a></strong><br/>
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-F6B150E3-4003-48D9-B0B6-40CBCB7D7805.html">Image ID</a></strong><br/>
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-F96E8EF1-3A96-4F26-B509-D895AA2EFADF.html">Image version</a></strong><br/>
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-F25936B6-C208-492B-ACED-D2C92CFF0165.html">Header string</a></strong><br/>
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-C91594FF-94EF-43DF-8033-325179349943.html">Total image file size</a></strong><br/>
+</li>
+</ul>
+
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-8D40488C-4DA8-40D3-8AD6-701BBFD80E65.html">BLE OTAP image file format</a></div>
+</div>
+</div>
+
+</body>
+</html>

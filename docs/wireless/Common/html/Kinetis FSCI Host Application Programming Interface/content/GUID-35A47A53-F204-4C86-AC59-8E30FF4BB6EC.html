@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="BLE application configuration"/>
+<meta name="abstract" content=""/>
+<meta name="description" content=""/>
+<meta name="DC.Relation" scheme="URI" content="GUID-CE002D9A-B163-43D3-B53B-0A9A32F5F83B.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="4"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-35A47A53-F204-4C86-AC59-8E30FF4BB6EC"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>BLE application configuration</title>
+</head>
+<body id="GUID-35A47A53-F204-4C86-AC59-8E30FF4BB6EC">
+
+
+  <h1 class="title topictitle1">BLE application configuration</h1>
+
+  
+  <div class="body"><p class="shortdesc"/>
+
+    <p class="p">To exercise the Host API, the BLE ‘black box’ firmware is required to be flashed on a
+      FRDM-KW41Z or USB-KW41Z platform. The BLE ‘black box’ is represented by the
+      ‘ble_fsci_black_box’ or the hybrid ‘ble_thread_host_controlled_device’ application firmware
+      that can be interfaced and configured with FSCI commands over the serial interface. One could
+      use the binary image provided in the package,
+        <samp class="ph codeph">tools\wireless\binaries\ble_fsci_blackbox.bin</samp>, which uses UART as serial
+      interface with 115200 baud rate.</p>
+
+    <p class="p">As an alternative, the user can compile the black box image of the ‘ble_fsci_black_box’ software application using IAR Embedded Workbench for ARM (EWARM) or MCUXpresso IDE. For information on how to build the application see additional documentation provided in the package.</p>
+
+    <div class="note note"><span class="notetitle">Note:</span> The default configuration of the BLE ‘black box’ application enables FSCI acknowledgement frames on both the transmission and reception paths. To use the ‘black box’ in conjunction with Host SDK, one needs to disable these in app_preinclude.h, i.e. set gFsciTxAck_c and gFsciRxAck_c to 0.</div>
+</div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-CE002D9A-B163-43D3-B53B-0A9A32F5F83B.html">Deploying Host Controlled Firmware</a></div>
+</div>
+</div>
+
+</body>
+</html>

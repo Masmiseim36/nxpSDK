@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project><qdid>74057</qdid><name>HIDH - HOGP_20150107-Updated</name>
+	<pics>
+		<profile>
+		<name>SUM ICS</name>
+			<item><table>21</table><row>13</row></item>
+			<item><table>31</table><row>15</row></item>
+			<item><table>33</table><row>1</row></item>
+			<item><table>33</table><row>2</row></item>
+			<item><table>51</table><row>1</row></item>
+			<item><table>52</table><row>1</row></item>
+		</profile>
+		<profile>
+		<name>PROD</name>
+			<item><table>1</table><row>6</row></item>
+		</profile>
+		<profile>
+		<name>HOGP</name>
+			<item><table>0</table><row>1</row></item>
+			<item><table>1</table><row>3</row></item>
+			<item><table>10</table><row>1</row></item>
+			<item><table>10</table><row>4</row></item>
+			<item><table>10</table><row>8</row></item>
+			<item><table>10</table><row>9</row></item>
+			<item><table>12</table><row>1</row></item>
+			<item><table>12</table><row>10</row></item>
+			<item><table>12</table><row>11</row></item>
+			<item><table>12</table><row>12</row></item>
+			<item><table>12</table><row>14</row></item>
+			<item><table>12</table><row>2</row></item>
+			<item><table>12</table><row>9</row></item>
+			<item><table>15</table><row>1</row></item>
+			<item><table>15</table><row>2</row></item>
+			<item><table>2</table><row>2</row></item>
+			<item><table>8</table><row>1</row></item>
+			<item><table>8</table><row>2</row></item>
+			<item><table>8</table><row>3</row></item>
+		</profile>
+	</pics>
+	</project>

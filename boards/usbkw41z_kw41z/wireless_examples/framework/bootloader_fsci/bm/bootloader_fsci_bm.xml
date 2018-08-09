@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
+  <externalDefinitions>
+    <definition extID="com.nxp.mcuxpresso"/>
+    <definition extID="middleware.wireless.framework.common.MKW41Z4"/>
+    <definition extID="platform.devices.MKW41Z4_CMSIS.MKW41Z4"/>
+    <definition extID="platform.drivers.clock.MKW41Z4"/>
+    <definition extID="platform.drivers.common.MKW41Z4"/>
+    <definition extID="platform.drivers.flash.MKW41Z4"/>
+    <definition extID="platform.drivers.lpuart.MKW41Z4"/>
+    <definition extID="platform.drivers.smc.MKW41Z4"/>
+    <definition extID="platform.utilities.debug_console.MKW41Z4"/>
+    <definition extID="mcuxpresso"/>
+    <definition extID="iar"/>
+  </externalDefinitions>
+  <example id="usbkw41z_kw41z_wireless_examples_framework_bootloader_fsci_bm" name="bm" category="wireless_examples/framework/bootloader_fsci" dependency="platform.drivers.common.MKW41Z4 platform.devices.MKW41Z4_CMSIS.MKW41Z4 platform.drivers.lpuart.MKW41Z4 middleware.wireless.framework.common.MKW41Z4 platform.drivers.smc.MKW41Z4 platform.drivers.flash.MKW41Z4 platform.drivers.clock.MKW41Z4 platform.utilities.debug_console.MKW41Z4" toolchain="iar mcuxpresso">
+    <projects>
+      <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
+    </projects>
+    <toolchainSettings>
+      <!-- Curently, mcux just supports one common settings set for both debug and release -->
+      <toolchainSetting id_refs="com.nxp.mcuxpresso">
+        <!-- asm compiler -->
+        <option id="com.crt.advproject.gas.fpu" type="enum">
+          <value>com.crt.advproject.gas.fpu.none</value>
+        </option>
+        <option id="gnu.both.asm.option.warnings.nowarn" type="boolean">
+          <value>false</value>
+        </option>
+        <!-- gcc compiler -->
+        <option id="com.crt.advproject.gcc.fpu" type="string">
+          <value>com.crt.advproject.gcc.fpu.none</value>
+        </option>
+        <option id="com.crt.advproject.c.misc.dialect" type="enum">
+          <value>com.crt.advproject.misc.dialect.gnu99</value>
+        </option>
+        <option id="com.crt.advproject.gcc.exe.debug.option.debugging.level" type="enum">
+          <value>gnu.c.debugging.level.default</value>
+        </option>
+        <option id="com.crt.advproject.gcc.exe.release.option.debugging.level" type="enum">
+          <value>gnu.c.debugging.level.default</value>
+        </option>
+        <option id="com.crt.advproject.gcc.exe.debug.option.optimization.level" type="enum">
+          <value>gnu.c.optimization.level.none</value>
+        </option>
+        <option id="com.crt.advproject.gcc.exe.release.option.optimization.level" type="enum">
+          <value>gnu.c.optimization.level.none</value>
+        </option>
+        <option id="gnu.c.compiler.option.warnings.nowarn" type="boolean">
+          <value>false</value>
+        </option>
+        <option id="gnu.c.compiler.option.warnings.allwarn" type="boolean">
+          <value>true</value>
+        </option>
+        <option id="gnu.c.compiler.option.warnings.extrawarn" type="boolean">
+          <value>false</value>
+        </option>
+        <option id="gnu.c.compiler.option.warnings.wconversion" type="boolean">
+          <value>false</value>
+        </option>
+        <option id="gnu.c.compiler.option.warnings.toerrors" type="boolean">
+          <value>false</value>
+        </option>
+        <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
+          <value>DEBUG</value>
+          <value>CPU_MKW41Z512VHT4</value>
+          <value>gEepromType_d=gEepromDevice_InternalFlash_c</value>
+          <value>gFsciIncluded_c=1</value>
+          <value>USB_KW41</value>
+          <value>FREEDOM</value>
+        </option>
+        <option id="gnu.c.compiler.option.optimization.flags" type="string">
+          <value>-fno-common</value>
+        </option>
+        <option id="gnu.c.compiler.option.misc.other" type="string">
+          <value>-c  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin</value>
+        </option>
+        <option id="gnu.c.compiler.option.preprocessor.nostdinc" type="boolean">
+          <value>false</value>
+        </option>
+        <!-- gcc linker -->
+        <option id="com.crt.advproject.link.fpu" type="enum">
+          <value>com.crt.advproject.link.fpu.none</value>
+        </option>
+        <option id="gnu.c.link.option.nostart" type="boolean">
+          <value>false</value>
+        </option>
+        <option id="gnu.c.link.option.nodeflibs" type="boolean">
+          <value>false</value>
+        </option>
+        <option id="gnu.c.link.option.nostdlibs" type="boolean">
+          <value>false</value>
+        </option>
+        <option id="gnu.c.link.option.strip" type="boolean">
+          <value>false</value>
+        </option>
+        <option id="gnu.c.link.option.noshared" type="boolean">
+          <value>false</value>
+        </option>
+        <option id="gnu.c.link.option.other" type="stringList">
+          <value>--gc-sections</value>
+        </option>
+        <option id="gnu.c.link.option.libs" type="stringList">
+          <value>m</value>
+          <value>c</value>
+          <value>gcc</value>
+          <value>nosys</value>
+        </option>
+      </toolchainSetting>
+    </toolchainSettings>
+    <source path="boards/usbkw41z_kw41z/wireless_examples/framework/bootloader_fsci/bm" target_path="source/config" type="c_include">
+      <files mask="usbkw41z_kw41z_cfg.h"/>
+    </source>
+    <source path="boards/usbkw41z_kw41z/wireless_examples/framework/bootloader_fsci/bm" target_path="source" type="linker" toolchain="mcuxpresso">
+      <files mask="Bootloader.ld"/>
+    </source>
+    <source path="boards/usbkw41z_kw41z/wireless_examples/framework/bootloader_fsci/src/bootloader" target_path="source" type="c_include">
+      <files mask="FsciBootloader.h"/>
+      <files mask="main.h"/>
+    </source>
+    <source path="boards/usbkw41z_kw41z/wireless_examples/framework/bootloader_fsci/src/bootloader" target_path="source" type="src">
+      <files mask="FsciBootloader.c"/>
+      <files mask="main.c"/>
+    </source>
+    <source path="boards/usbkw41z_kw41z/wireless_examples/framework/bootloader_fsci/src/eeprom" target_path="source/drivers/eeprom" type="c_include">
+      <files mask="Eeprom_Boot.h"/>
+    </source>
+    <source path="boards/usbkw41z_kw41z/wireless_examples/framework/bootloader_fsci/src/eeprom" target_path="source/drivers/eeprom" type="src">
+      <files mask="Eeprom_Boot_InternalFlash.c"/>
+    </source>
+    <source path="boards/usbkw41z_kw41z/wireless_examples/framework/bootloader_fsci/src/flash" target_path="source/drivers/flash" type="c_include">
+      <files mask="flash_boot_kinetis.h"/>
+    </source>
+    <source path="boards/usbkw41z_kw41z/wireless_examples/framework/bootloader_fsci/src/flash" target_path="source/drivers/flash" type="src">
+      <files mask="flash_boot_kinetis.c"/>
+    </source>
+    <source path="boards/usbkw41z_kw41z/wireless_examples/framework/bootloader_fsci/src/spi" target_path="source/drivers/spi" type="c_include">
+      <files mask="SPI.h"/>
+    </source>
+    <source path="boards/usbkw41z_kw41z/wireless_examples/framework/bootloader_fsci/src/spi" target_path="source/drivers/spi" type="src">
+      <files mask="SPI.c"/>
+    </source>
+    <source path="boards/usbkw41z_kw41z/wireless_examples/framework/bootloader_fsci/src/timer" target_path="source/drivers/timer" type="c_include">
+      <files mask="timer.h"/>
+    </source>
+    <source path="boards/usbkw41z_kw41z/wireless_examples/framework/bootloader_fsci/src/timer" target_path="source/drivers/timer" type="src">
+      <files mask="timer.c"/>
+    </source>
+    <source path="boards/usbkw41z_kw41z/wireless_examples/framework/bootloader_fsci/src/uart" target_path="source/drivers/uart" type="c_include">
+      <files mask="UART.h"/>
+    </source>
+    <source path="boards/usbkw41z_kw41z/wireless_examples/framework/bootloader_fsci/src/uart" target_path="source/drivers/uart" type="src">
+      <files mask="UART.c"/>
+    </source>
+    <source path="boards/usbkw41z_kw41z/wireless_examples/framework/bootloader_fsci" target_path="doc" type="doc">
+      <files mask="readme.txt"/>
+    </source>
+  </example>
+</ksdk:examples>

@@ -1,0 +1,1 @@
+The application implements a GATT based Heart Rate Profile and communicates via Serial Manager with a BLE Host Black Box. The example works on the K22F from the USB-KW41Z board. For more information, please consult the BLE Demo Applications User's Guide.

@@ -1,0 +1,1 @@
+The application implements a BLE node that proxies a connected GAP Peripheral for any connnected GAP Central and relays communication between the 2 active connections. The example works on the USB-KW41Z board. For more information, please consult the BLE Demo Applications User's Guide.

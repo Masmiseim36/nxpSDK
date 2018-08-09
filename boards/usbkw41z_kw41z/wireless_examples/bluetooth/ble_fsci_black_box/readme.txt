@@ -1,0 +1,1 @@
+The application implements a Bluetooth Low Energy Host Black Box. The example works on the USB-KW41Z board. For more information, please consult the BLE Demo Applications User's Guide.

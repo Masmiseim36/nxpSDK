@@ -2,7 +2,7 @@
 <project>
   <fileVersion>2</fileVersion>
   <configuration>
-    <name>Debug</name>
+    <name>debug</name>
     <toolchain>
       <name>ARM</name>
     </toolchain>
@@ -246,7 +246,7 @@
         <option>
           <name>CCAllowList</name>
           <version>1</version>
-          <state>00000000</state>
+          <state>00100000</state>
         </option>
         <option>
           <name>CCDebugInfo</name>
@@ -262,7 +262,7 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IExtraOptions</name>
@@ -314,14 +314,15 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../../../rtos/freertos/Source/portable/IAR/ARM_CM4F</state>
+          <state>$PROJ_DIR$/../../../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../../../platform/drivers</state>
           <state>$PROJ_DIR$/../../../../../../frdmk64f</state>
           <state>$PROJ_DIR$/../../../../..</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../../rtos/freertos/Source/include</state>
+          <state>$PROJ_DIR$/../../../../../../../rtos/amazon-freertos/lib/include</state>
+          <state>$PROJ_DIR$/../../../../../../../rtos/amazon-freertos/lib/include/private</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MK64F12/utilities/io</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MK64F12/utilities/str</state>
@@ -401,7 +402,7 @@
         </option>
         <option>
           <name>IccCppDialect</name>
-          <state>2</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccExceptions</name>
@@ -417,7 +418,7 @@
         </option>
         <option>
           <name>IccCppInlineSemantics</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccCmsis</name>
@@ -988,7 +989,7 @@
     </settings>
   </configuration>
   <configuration>
-    <name>Release</name>
+    <name>release</name>
     <toolchain>
       <name>ARM</name>
     </toolchain>
@@ -1248,7 +1249,7 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IExtraOptions</name>
@@ -1300,14 +1301,15 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../../../rtos/freertos/Source/portable/IAR/ARM_CM4F</state>
+          <state>$PROJ_DIR$/../../../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../../../platform/drivers</state>
           <state>$PROJ_DIR$/../../../../../../frdmk64f</state>
           <state>$PROJ_DIR$/../../../../..</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../../rtos/freertos/Source/include</state>
+          <state>$PROJ_DIR$/../../../../../../../rtos/amazon-freertos/lib/include</state>
+          <state>$PROJ_DIR$/../../../../../../../rtos/amazon-freertos/lib/include/private</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MK64F12/utilities/io</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MK64F12/utilities/str</state>
@@ -1387,7 +1389,7 @@
         </option>
         <option>
           <name>IccCppDialect</name>
-          <state>2</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccExceptions</name>
@@ -1403,7 +1405,7 @@
         </option>
         <option>
           <name>IccCppInlineSemantics</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccCmsis</name>
@@ -1486,6 +1488,7 @@
         </option>
         <option>
           <name>ADefines</name>
+          <state>NDEBUG</state>
         </option>
         <option>
           <name>AList</name>
@@ -1974,38 +1977,41 @@
   </configuration>
   <group>
     <name>board</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../frdm_k64f.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../frdm_k64f.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../frdm_stbc_agm01_shield.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../issdk_hal.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../RTE_Device.h</name>
-    </file>
+    <group>
+      <name>src</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../frdm_k64f.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../frdm_k64f.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../frdm_stbc_agm01_shield.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../issdk_hal.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../RTE_Device.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../clock_config.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../clock_config.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../board.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../board.h</name>
+      </file>
+    </group>
     <file>
       <name>$PROJ_DIR$/../pin_mux.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../pin_mux.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../clock_config.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../clock_config.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../board.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../board.h</name>
     </file>
   </group>
   <group>
@@ -2029,7 +2035,37 @@
   <group>
     <name>drivers</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_flash.c</name>
+      <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_ftfx_adapter.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_ftfx_utilities.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_ftfx_features.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_ftfx_controller.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_ftfx_controller.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_ftfx_flash.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_ftfx_flash.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_ftfx_cache.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_ftfx_cache.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_ftfx_flexnvm.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_ftfx_flexnvm.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_flash.h</name>
@@ -2080,12 +2116,6 @@
       <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_edma.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_dmamux.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_dmamux.c</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/cmsis_drivers/fsl_uart_cmsis.h</name>
     </file>
     <file>
@@ -2117,6 +2147,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/cmsis_drivers/fsl_i2c_cmsis.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_dmamux.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_dmamux.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_dspi.h</name>
@@ -2175,12 +2211,15 @@
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/utilities/fsl_assert.c</name>
     </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/systick/systick_utils.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/systick/systick_utils.h</name>
-    </file>
+    <group>
+      <name>src</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/systick/systick_utils.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/systick/systick_utils.h</name>
+      </file>
+    </group>
   </group>
   <group>
     <name>startup</name>
@@ -2210,291 +2249,300 @@
     </file>
   </group>
   <group>
-    <name>freertos</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../rtos/freertos/FreeRTOS_for_Kinetis_SDK_v2.0.txt</name>
-    </file>
+    <name>amazon-freertos</name>
     <group>
       <name>license</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../rtos/freertos/License/license.txt</name>
+        <name>$PROJ_DIR$/../../../../../../../rtos/amazon-freertos/LICENSE</name>
       </file>
     </group>
     <group>
       <name>include</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../rtos/freertos/Source/include/croutine.h</name>
+        <name>$PROJ_DIR$/../../../../../../../rtos/amazon-freertos/lib/include/event_groups.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../rtos/freertos/Source/include/event_groups.h</name>
+        <name>$PROJ_DIR$/../../../../../../../rtos/amazon-freertos/lib/include/FreeRTOS.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../rtos/freertos/Source/include/FreeRTOS.h</name>
+        <name>$PROJ_DIR$/../../../../../../../rtos/amazon-freertos/lib/include/message_buffer.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../rtos/freertos/Source/include/list.h</name>
+        <name>$PROJ_DIR$/../../../../../../../rtos/amazon-freertos/lib/include/queue.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../rtos/freertos/Source/include/mpu_wrappers.h</name>
+        <name>$PROJ_DIR$/../../../../../../../rtos/amazon-freertos/lib/include/semphr.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../rtos/freertos/Source/include/portable.h</name>
+        <name>$PROJ_DIR$/../../../../../../../rtos/amazon-freertos/lib/include/stream_buffer.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../rtos/freertos/Source/include/projdefs.h</name>
+        <name>$PROJ_DIR$/../../../../../../../rtos/amazon-freertos/lib/include/task.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../rtos/freertos/Source/include/queue.h</name>
+        <name>$PROJ_DIR$/../../../../../../../rtos/amazon-freertos/lib/include/timers.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../rtos/freertos/Source/include/semphr.h</name>
+        <name>$PROJ_DIR$/../../../../../../../rtos/amazon-freertos/lib/include/freertos_tasks_c_additions.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../rtos/freertos/Source/include/StackMacros.h</name>
+        <name>$PROJ_DIR$/../../../../../../../rtos/amazon-freertos/lib/include/private/deprecated_definitions.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../rtos/freertos/Source/include/stdint.readme</name>
+        <name>$PROJ_DIR$/../../../../../../../rtos/amazon-freertos/lib/include/private/list.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../rtos/freertos/Source/include/task.h</name>
+        <name>$PROJ_DIR$/../../../../../../../rtos/amazon-freertos/lib/include/private/mpu_wrappers.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../rtos/freertos/Source/include/timers.h</name>
+        <name>$PROJ_DIR$/../../../../../../../rtos/amazon-freertos/lib/include/private/portable.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../rtos/freertos/Source/include/deprecated_definitions.h</name>
+        <name>$PROJ_DIR$/../../../../../../../rtos/amazon-freertos/lib/include/private/projdefs.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../rtos/freertos/Source/include/freertos_tasks_c_additions.h</name>
+        <name>$PROJ_DIR$/../../../../../../../rtos/amazon-freertos/lib/include/private/stack_macros.h</name>
       </file>
     </group>
     <group>
-      <name>source</name>
+      <name>FreeRTOS</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../rtos/freertos/Source/croutine.c</name>
+        <name>$PROJ_DIR$/../../../../../../../rtos/amazon-freertos/lib/FreeRTOS/event_groups.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../rtos/freertos/Source/list.c</name>
+        <name>$PROJ_DIR$/../../../../../../../rtos/amazon-freertos/lib/FreeRTOS/list.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../rtos/freertos/Source/queue.c</name>
+        <name>$PROJ_DIR$/../../../../../../../rtos/amazon-freertos/lib/FreeRTOS/queue.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../rtos/freertos/Source/readme.txt</name>
+        <name>$PROJ_DIR$/../../../../../../../rtos/amazon-freertos/lib/FreeRTOS/stream_buffer.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../rtos/freertos/Source/tasks.c</name>
+        <name>$PROJ_DIR$/../../../../../../../rtos/amazon-freertos/lib/FreeRTOS/tasks.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../rtos/freertos/Source/timers.c</name>
+        <name>$PROJ_DIR$/../../../../../../../rtos/amazon-freertos/lib/FreeRTOS/timers.c</name>
       </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../rtos/freertos/Source/event_groups.c</name>
-      </file>
+      <group>
+        <name>portable</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/readme.txt</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM4F/port.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM4F/portasm.s</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM4F/portmacro.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/MemMang/heap_1.c</name>
+        </file>
+      </group>
     </group>
     <group>
       <name>portable</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../rtos/freertos/Source/portable/readme.txt</name>
+        <name>$PROJ_DIR$/../../../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM4F/fsl_tickless_systick.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../rtos/freertos/Source/portable/IAR/ARM_CM4F/fsl_tickless_systick.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../rtos/freertos/Source/portable/IAR/ARM_CM4F/fsl_tickless_generic.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../rtos/freertos/Source/portable/IAR/ARM_CM4F/port.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../rtos/freertos/Source/portable/IAR/ARM_CM4F/portasm.s</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../rtos/freertos/Source/portable/IAR/ARM_CM4F/portmacro.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../rtos/freertos/Source/portable/MemMang/heap_1.c</name>
+        <name>$PROJ_DIR$/../../../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM4F/fsl_tickless_generic.h</name>
       </file>
     </group>
   </group>
   <group>
     <name>gpio_driver</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio/kinetis/gpio_driver_irq.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio/kinetis/gpio_driver.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio/kinetis/gpio_driver.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio/Driver_GPIO.h</name>
-    </file>
+    <group>
+      <name>src</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio/kinetis/gpio_driver_irq.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio/kinetis/gpio_driver.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio/kinetis/gpio_driver.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio/Driver_GPIO.h</name>
+      </file>
+    </group>
   </group>
   <group>
     <name>sensor_fusion</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/approximations.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/approximations.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/calibration_storage.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/calibration_storage.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/control.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/control.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/debug.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/debug.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/DecodeCommandBytes.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/driver_FXAS21002.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/driver_FXOS8700.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/driver_MPL3115.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/driver_KSDK_NVM.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/driver_KSDK_NVM.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/driver_pit.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/driver_pit.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/driver_systick.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/drivers.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/fusion.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/fusion.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/hal_frdm_fxs_mult2_b.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/magnetic.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/magnetic.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/matrix.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/matrix.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/orientation.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/orientation.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/output_stream.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/precisionAccelerometer.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/precisionAccelerometer.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/sensor_fusion.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/sensor_fusion.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/status.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/status.h</name>
-    </file>
+    <group>
+      <name>src</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/approximations.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/approximations.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/calibration_storage.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/calibration_storage.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/control.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/control.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/debug.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/debug.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/DecodeCommandBytes.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/driver_FXAS21002.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/driver_FXOS8700.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/driver_MPL3115.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/driver_KSDK_NVM.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/driver_KSDK_NVM.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/driver_pit.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/driver_pit.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/driver_systick.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/drivers.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/fusion.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/fusion.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/hal_frdm_fxs_mult2_b.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/magnetic.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/magnetic.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/matrix.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/matrix.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/orientation.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/orientation.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/output_stream.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/precisionAccelerometer.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/precisionAccelerometer.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/sensor_fusion.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/sensor_fusion.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/status.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/sensorfusion/sources/status.h</name>
+      </file>
+    </group>
   </group>
   <group>
     <name>interfaces</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/register_io_i2c.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/register_io_spi.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/sensor_io_spi.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/sensor_io_i2c.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/register_io_i2c.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/register_io_spi.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/sensor_io_spi.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/sensor_io_i2c.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/sensor_drv.h</name>
-    </file>
+    <group>
+      <name>src</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/register_io_i2c.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/register_io_spi.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/sensor_io_spi.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/sensor_io_i2c.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/register_io_i2c.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/register_io_spi.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/sensor_io_spi.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/sensor_io_i2c.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/sensor_drv.h</name>
+      </file>
+    </group>
   </group>
   <group>
     <name>sensors</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/fxas21002.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/fxas21002_drv.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/fxas21002_drv.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/fxos8700.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/fxos8700_drv.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/fxos8700_drv.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/mpl3115.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/mpl3115_drv.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/mpl3115_drv.c</name>
-    </file>
+    <group>
+      <name>src</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/fxas21002.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/fxas21002_drv.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/fxas21002_drv.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/fxos8700.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/fxos8700_drv.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/fxos8700_drv.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/mpl3115.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/mpl3115_drv.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/mpl3115_drv.c</name>
+      </file>
+    </group>
   </group>
 </project>

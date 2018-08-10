@@ -38,6 +38,9 @@
 #include "queue.h"
 #include "semphr.h"
 
+/* Logging includes. */
+#include "aws_logging_task.h"
+
 /* Helper interface includes. */
 #include "aws_helper_secure_connect.h"
 #include "aws_ggd_config.h"

@@ -51,6 +51,7 @@
  * Definitions
  ******************************************************************************/
 #define BOARD_ENET_BASEADDR BOARD_GetExampleEnetBase()
+#define BOARD_PHY_SYS_CLOCK BOARD_GetPhySysClock()
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -59,7 +60,7 @@ void VNIC_EnetCallback(pbuf_t *pbuffer);
 void VNIC_EnetRxBufFree(pbuf_t *pbuf);
 uint8_t *VNIC_EnetRxBufAlloc(void);
 extern ENET_Type *BOARD_GetExampleEnetBase(void);
-
+extern uint32_t BOARD_GetPhySysClock(void);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
@@ -242,7 +243,6 @@ enet_err_t ENETIF_Init(void)
     enet_err_t result = ENET_OK;
     enet_config_t config;
     uint32_t count = 0;
-    uint32_t sysClock;
     phy_speed_t speed;
     phy_duplex_t duplex;
     bool link = false;
@@ -268,14 +268,8 @@ enet_err_t ENETIF_Init(void)
         &TxDataBuff[0][0],
     };
 
-#if defined(__GIC_PRIO_BITS)
-    sysClock = CLOCK_GetFreq(kCLOCK_AhbClk);
-#else
-    sysClock = CLOCK_GetFreq(kCLOCK_CoreSysClk);
-#endif
-
     ENET_GetDefaultConfig(&config);
-    PHY_Init(BOARD_ENET_BASEADDR, BOARD_ENET0_PHY_ADDRESS, sysClock);
+    PHY_Init(BOARD_ENET_BASEADDR, BOARD_ENET0_PHY_ADDRESS, BOARD_PHY_SYS_CLOCK);
 
     while ((count < ENET_PHY_TIMEOUT) && (!link))
     {
@@ -298,20 +292,10 @@ enet_err_t ENETIF_Init(void)
         usb_echo("\r\nPHY Link down, please check the cable connection.\r\n");
     }
 
-    ENET_Init(BOARD_ENET_BASEADDR, &g_handle, &config, &buffCfg, g_hwaddr, sysClock);
+    ENET_Init(BOARD_ENET_BASEADDR, &g_handle, &config, &buffCfg, g_hwaddr, BOARD_PHY_SYS_CLOCK);
     ENET_SetCallback(&g_handle, ENETIF_Callback, NULL);
 
     ENET_ActiveRead(BOARD_ENET_BASEADDR);
 
-#if defined(__GIC_PRIO_BITS)
-    GIC_SetPriority((IRQn_Type)EXAMPLE_ENET_IRQ, USB_DEVICE_INTERRUPT_PRIORITY - 1);
-#else
-    NVIC_SetPriority((IRQn_Type)ENET_Receive_IRQn, 6U);
-#endif
-
-#ifdef ENET_ENHANCEDBUFFERDESCRIPTOR_MODE
-    NVIC_SetPriority(ENET_Transmit_IRQn, 6U);
-    NVIC_SetPriority(ENET_1588_Timer_IRQn, 6U);
-#endif
     return result;
 }

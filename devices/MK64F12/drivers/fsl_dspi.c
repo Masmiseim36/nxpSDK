@@ -37,6 +37,12 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.dspi"
+#endif
+
 /*! @brief Typedef for master interrupt handler. */
 typedef void (*dspi_master_isr_t)(SPI_Type *base, dspi_master_handle_t *handle);
 
@@ -46,13 +52,6 @@ typedef void (*dspi_slave_isr_t)(SPI_Type *base, dspi_slave_handle_t *handle);
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-/*!
- * @brief Get instance number for DSPI module.
- *
- * @param base DSPI peripheral base address.
- */
-uint32_t DSPI_GetInstance(SPI_Type *base);
-
 /*!
  * @brief Configures the DSPI peripheral chip select polarity.
  *
@@ -142,7 +141,7 @@ static dspi_master_isr_t s_dspiMasterIsr;
 static dspi_slave_isr_t s_dspiSlaveIsr;
 
 /* @brief Dummy data for each instance. This data is used when user's tx buffer is NULL*/
-volatile uint8_t s_dummyData[ARRAY_SIZE(s_dspiBases)] = {0};
+volatile uint8_t g_dspiDummyData[ARRAY_SIZE(s_dspiBases)] = {0};
 /**********************************************************************************************************************
 * Code
 *********************************************************************************************************************/
@@ -167,7 +166,7 @@ uint32_t DSPI_GetInstance(SPI_Type *base)
 void DSPI_SetDummyData(SPI_Type *base, uint8_t dummyData)
 {
     uint32_t instance = DSPI_GetInstance(base);
-    s_dummyData[instance] = dummyData;
+    g_dspiDummyData[instance] = dummyData;
 }
 
 void DSPI_MasterInit(SPI_Type *base, const dspi_master_config_t *masterConfig, uint32_t srcClock_Hz)
@@ -597,7 +596,7 @@ status_t DSPI_MasterTransferBlocking(SPI_Type *base, dspi_transfer_t *transfer)
 
     uint16_t wordToSend = 0;
     uint16_t wordReceived = 0;
-    uint8_t dummyData = s_dummyData[DSPI_GetInstance(base)];
+    uint8_t dummyData = g_dspiDummyData[DSPI_GetInstance(base)];
     uint8_t bitsPerFrame;
 
     uint32_t command;
@@ -1095,7 +1094,7 @@ static void DSPI_MasterTransferFillUpTxFifo(SPI_Type *base, dspi_master_handle_t
     assert(handle);
 
     uint16_t wordToSend = 0;
-    uint8_t dummyData = s_dummyData[DSPI_GetInstance(base)];
+    uint8_t dummyData = g_dspiDummyData[DSPI_GetInstance(base)];
 
     /* If bits/frame is greater than one byte */
     if (handle->bitsPerFrame > 8)
@@ -1439,7 +1438,7 @@ static void DSPI_SlaveTransferFillUpTxFifo(SPI_Type *base, dspi_slave_handle_t *
     assert(handle);
 
     uint16_t transmitData = 0;
-    uint8_t dummyPattern = s_dummyData[DSPI_GetInstance(base)];
+    uint8_t dummyPattern = g_dspiDummyData[DSPI_GetInstance(base)];
 
     /* Service the transmitter, if transmit buffer provided, transmit the data,
     * else transmit dummy pattern
@@ -1573,7 +1572,7 @@ void DSPI_SlaveTransferHandleIRQ(SPI_Type *base, dspi_slave_handle_t *handle)
 {
     assert(handle);
 
-    uint8_t dummyPattern = s_dummyData[DSPI_GetInstance(base)];
+    uint8_t dummyPattern = g_dspiDummyData[DSPI_GetInstance(base)];
     uint32_t dataReceived;
     uint32_t dataSend = 0;
 

@@ -105,7 +105,6 @@
     <files mask="fsl_debug_console_conf.h"/>
   </source>
   <source path="devices/MK64F12/utilities" target_path="utilities" type="src">
-    <files mask="fsl_assert.c"/>
     <files mask="fsl_debug_console.c"/>
   </source>
   <source path="devices/MK64F12" target_path="devices" type="c_include">

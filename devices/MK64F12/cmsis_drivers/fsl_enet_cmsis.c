@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2013-2016 ARM Limited. All rights reserved.
- * Copyright 2017 NXP. Not a Contribution.
+ * Copyright (c) 2016, Freescale Semiconductor, Inc. Not a Contribution.
+ * Copyright 2016-2017 NXP. Not a Contribution.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -17,7 +18,14 @@
  * limitations under the License.
  */
 
+
 #include "fsl_enet_cmsis.h"
+
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.enet_cmsis"
+#endif
+
 
 #define ARM_ETH_MAC_DRV_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2, 0)
 

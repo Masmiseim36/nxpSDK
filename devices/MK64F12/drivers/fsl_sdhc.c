@@ -6,7 +6,7 @@
  *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
+ *  that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -37,6 +37,12 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.sdhc"
+#endif
+
 /*! @brief Clock setting */
 /* Max SD clock divisor from base clock */
 #define SDHC_MAX_DVS ((SDHC_SYSCTL_DVS_MASK >> SDHC_SYSCTL_DVS_SHIFT) + 1U)
@@ -891,7 +897,10 @@ uint32_t SDHC_SetSdClock(SDHC_Type *base, uint32_t srcClock_Hz, uint32_t busCloc
     uint32_t nearestFrequency = 0U;
 
     /* calucate total divisor first */
-    totalDiv = srcClock_Hz / busClock_Hz;
+    if ((totalDiv = srcClock_Hz / busClock_Hz) > (SDHC_MAX_CLKFS * SDHC_MAX_DVS))
+    {
+        return 0U;
+    }
 
     if (totalDiv != 0U)
     {
@@ -917,7 +926,8 @@ uint32_t SDHC_SetSdClock(SDHC_Type *base, uint32_t srcClock_Hz, uint32_t busCloc
             {
                 divisor++;
             }
-            nearestFrequency = srcClock_Hz / divisor / prescaler;
+
+            nearestFrequency = srcClock_Hz / (divisor == 0U ? 1U : divisor) / prescaler;
         }
         else
         {
@@ -1143,8 +1153,7 @@ status_t SDHC_SetAdmaTableConfig(SDHC_Type *base,
                             adma1EntryAddress[i] = ((uint32_t)(dataBytes - sizeof(uint32_t) * (startAddress - data))
                                                     << SDHC_ADMA1_DESCRIPTOR_LENGTH_SHIFT);
                             adma1EntryAddress[i] |= kSDHC_Adma1DescriptorTypeSetLength;
-                            adma1EntryAddress[i + 1U] =
-                                ((uint32_t)(startAddress) << SDHC_ADMA1_DESCRIPTOR_ADDRESS_SHIFT);
+                            adma1EntryAddress[i + 1U] = (uint32_t)(startAddress);
                             adma1EntryAddress[i + 1U] |=
                                 (kSDHC_Adma1DescriptorTypeTransfer | kSDHC_Adma1DescriptorEndFlag);
                         }

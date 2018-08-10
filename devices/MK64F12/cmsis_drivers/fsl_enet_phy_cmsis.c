@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2013-2016 ARM Limited. All rights reserved.
- * Copyright 2017 NXP. Not a Contribution.
+ * Copyright (c) 2016, Freescale Semiconductor, Inc. Not a Contribution.
+ * Copyright 2016-2017 NXP. Not a Contribution.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -16,6 +17,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 
 #include "fsl_enet_phy_cmsis.h"
 #include "fsl_phy.h"
@@ -147,7 +149,7 @@ int32_t PHY0_PowerControl(ARM_POWER_STATE state)
         {
             status = PHY_Init(ENETPHY0_State.resource->base, ENETPHY0_State.resource->phyAddr,
                               ENETPHY0_State.resource->GetFreq());
-            if ((status == kStatus_Success) || (status == kStatus_PHY_AutoNegotiateFail))
+            if (status & (kStatus_Success | kStatus_PHY_AutoNegotiateFail))
             {
                 status = ARM_DRIVER_OK;
             }
@@ -234,7 +236,7 @@ ARM_ETH_LINK_STATE PHY0_GetLinkState(void)
 
 ARM_ETH_LINK_INFO PHY0_GetLinkInfo(void)
 {
-    ARM_ETH_LINK_INFO linkInfo = {0};
+    ARM_ETH_LINK_INFO linkInfo;
     phy_speed_t speed;
     phy_duplex_t duplex;
     int32_t status;

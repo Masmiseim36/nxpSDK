@@ -473,6 +473,11 @@ static void enet_init(struct netif *netif, struct ethernetif *ethernetif,
 
     ENET_Init(ethernetif->base, &config, netif->hwaddr, sysClock);
 
+#if defined(LPC54018_SERIES)
+    /* Workaround for receive issue on lpc54018 */
+    ethernetif->base->MAC_FRAME_FILTER |= ENET_MAC_FRAME_FILTER_RA_MASK;
+#endif
+
 /* Create the handler. */
 #if USE_RTOS && defined(FSL_RTOS_FREE_RTOS)
     ENET_EnableInterrupts(ethernetif->base, kENET_DmaTx | kENET_DmaRx);

@@ -39,7 +39,8 @@
 
 /*******************************************************************************
  * Definitions
-******************************************************************************/
+ ******************************************************************************/
+#define BOARD_XTAL0_CLK_HZ                         50000000U  /*!< Board xtal0 frequency in Hz */
 
 /*******************************************************************************
  ************************ BOARD_InitBootClocks function ************************
@@ -59,15 +60,13 @@ void BOARD_InitBootClocks(void);
 }
 #endif /* __cplusplus*/
 
-#define BOARD_XTAL0_CLK_HZ 50000000U /*!< Board xtal0 frequency in Hz */
-
 /*******************************************************************************
  ********************** Configuration BOARD_BootClockRUN ***********************
  ******************************************************************************/
 /*******************************************************************************
  * Definitions for BOARD_BootClockRUN configuration
  ******************************************************************************/
-#define BOARD_BOOTCLOCKRUN_CORE_CLOCK 120000000U /*!< Core clock frequency: 120000000Hz */
+#define BOARD_BOOTCLOCKRUN_CORE_CLOCK             120000000U  /*!< Core clock frequency: 120000000Hz */
 
 /*! @brief MCG set for BOARD_BootClockRUN configuration.
  */
@@ -102,7 +101,7 @@ void BOARD_BootClockRUN(void);
 /*******************************************************************************
  * Definitions for BOARD_BootClockVLPR configuration
  ******************************************************************************/
-#define BOARD_BOOTCLOCKVLPR_CORE_CLOCK 4000000U /*!< Core clock frequency: 4000000Hz */
+#define BOARD_BOOTCLOCKVLPR_CORE_CLOCK              4000000U  /*!< Core clock frequency: 4000000Hz */
 
 /*! @brief MCG set for BOARD_BootClockVLPR configuration.
  */
@@ -132,3 +131,4 @@ void BOARD_BootClockVLPR(void);
 #endif /* __cplusplus*/
 
 #endif /* _CLOCK_CONFIG_H_ */
+

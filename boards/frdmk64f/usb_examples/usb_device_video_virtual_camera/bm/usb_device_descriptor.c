@@ -1,7 +1,7 @@
 /*
  * The Clear BSD License
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016 , 2018 NXP
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -651,8 +651,10 @@ usb_status_t USB_DeviceSetSpeed(usb_device_handle handle, uint8_t speed)
         {
             if (USB_SPEED_HIGH == speed)
             {
-                if (USB_VIDEO_VIRTUAL_CAMERA_STREAM_ENDPOINT_IN ==
-                    (descriptorHead->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK))
+                if ((USB_VIDEO_VIRTUAL_CAMERA_STREAM_ENDPOINT_IN ==
+                    (descriptorHead->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)) &&
+                    ((descriptorHead->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) ==
+                     USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_IN))
                 {
                     descriptorHead->endpoint.bInterval = HS_STREAM_IN_INTERVAL;
                     USB_SHORT_TO_LITTLE_ENDIAN_ADDRESS(HS_STREAM_IN_PACKET_SIZE,
@@ -667,8 +669,10 @@ usb_status_t USB_DeviceSetSpeed(usb_device_handle handle, uint8_t speed)
             }
             else
             {
-                if (USB_VIDEO_VIRTUAL_CAMERA_STREAM_ENDPOINT_IN ==
-                    (descriptorHead->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK))
+                if ((USB_VIDEO_VIRTUAL_CAMERA_STREAM_ENDPOINT_IN ==
+                    (descriptorHead->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)) &&
+                    ((descriptorHead->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) ==
+                     USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_IN))
                 {
                     descriptorHead->endpoint.bInterval = FS_STREAM_IN_INTERVAL;
                     USB_SHORT_TO_LITTLE_ENDIAN_ADDRESS(FS_STREAM_IN_PACKET_SIZE,

@@ -3,10 +3,10 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
+ *  that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -136,15 +136,17 @@ int main(void)
     PRINTF("\r\n ENET example start.\r\n");
 
     /* prepare the buffer configuration. */
-    enet_buffer_config_t buffConfig = {
-        ENET_RXBD_NUM,
-        ENET_TXBD_NUM,
-        SDK_SIZEALIGN(ENET_RXBUFF_SIZE, APP_ENET_BUFF_ALIGNMENT),
-        SDK_SIZEALIGN(ENET_TXBUFF_SIZE, APP_ENET_BUFF_ALIGNMENT),
-        &g_rxBuffDescrip[0],
-        &g_txBuffDescrip[0],
-        &g_rxDataBuff[0][0],
-        &g_txDataBuff[0][0],
+    enet_buffer_config_t buffConfig[] = {
+        {
+            ENET_RXBD_NUM,
+            ENET_TXBD_NUM,
+            SDK_SIZEALIGN(ENET_RXBUFF_SIZE, APP_ENET_BUFF_ALIGNMENT),
+            SDK_SIZEALIGN(ENET_TXBUFF_SIZE, APP_ENET_BUFF_ALIGNMENT),
+            &g_rxBuffDescrip[0],
+            &g_txBuffDescrip[0],
+            &g_rxDataBuff[0][0],
+            &g_txDataBuff[0][0],
+        }
     };
 
     /* Get default configuration. */
@@ -173,9 +175,9 @@ int main(void)
         /* Change the MII speed and duplex for actual link status. */
         config.miiSpeed = (enet_mii_speed_t)speed;
         config.miiDuplex = (enet_mii_duplex_t)duplex;
-    }    
+    }
 
-    ENET_Init(EXAMPLE_ENET, &g_handle, &config, &buffConfig, &g_macAddr[0], sysClock);
+    ENET_Init(EXAMPLE_ENET, &g_handle, &config, &buffConfig[0], &g_macAddr[0], sysClock);
     ENET_ActiveRead(EXAMPLE_ENET);
 
     /* Build broadcast for sending. */

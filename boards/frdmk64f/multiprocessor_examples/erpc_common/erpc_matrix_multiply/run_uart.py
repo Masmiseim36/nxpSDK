@@ -177,7 +177,6 @@ if __name__ == "__main__":
     try:
         # initialize UART transport layer
         transport = erpc.transport.SerialTransport(args.port, args.bd)
-        transport.crc_16 = service.ERPC_GENERATED_SHIM_CODE_CRC
         print('Selected UART port: %s, %s bd' % (args.port, args.bd))
 
         # run server/client with UART transport layer

@@ -107,7 +107,7 @@ extern TaskHandle_t g_usbWriteTaskHandle;
 SemaphoreHandle_t VcomIdle;
 
 /* USB device class information */
-usb_device_class_config_struct_t g_compositeDevice[2] = {
+usb_device_class_config_struct_t g_CompositeClassConfig[2] = {
     {
         USB_DeviceCdcVcomCallback, (class_handle_t)NULL, &g_UsbDeviceCdcVcomConfig,
     },
@@ -116,8 +116,8 @@ usb_device_class_config_struct_t g_compositeDevice[2] = {
     }};
 
 /* USB device class configuration information */
-usb_device_class_config_list_struct_t g_compositeDeviceConfigList = {
-    g_compositeDevice, USB_DeviceCallback, 2,
+usb_device_class_config_list_struct_t g_UsbDeviceCompositeConfigList = {
+    g_CompositeClassConfig, USB_DeviceCallback, 2,
 };
 
 /*******************************************************************************
@@ -160,11 +160,7 @@ void USB_DeviceIsrEnable(void)
     irqNumber = usbDeviceKhciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
 #endif
 /* Install isr, set priority, and enable IRQ. */
-#if defined(__GIC_PRIO_BITS)
-    GIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
-#else
     NVIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
-#endif
     EnableIRQ((IRQn_Type)irqNumber);
 }
 #if USB_DEVICE_CONFIG_USE_TASK
@@ -315,7 +311,7 @@ void USB_DeviceApplicationInit(void)
         return;
     }
     if (kStatus_USB_Success !=
-        USB_DeviceClassInit(CONTROLLER_ID, &g_compositeDeviceConfigList, &g_composite.deviceHandle))
+        USB_DeviceClassInit(CONTROLLER_ID, &g_UsbDeviceCompositeConfigList, &g_composite.deviceHandle))
     {
         usb_echo("USB device composite demo init failed\r\n");
         return;
@@ -323,8 +319,8 @@ void USB_DeviceApplicationInit(void)
     else
     {
         usb_echo("USB device composite demo\r\n");
-        g_composite.cdcVcom.cdcAcmHandle = g_compositeDeviceConfigList.config[0].classHandle;
-        g_composite.mscDisk.mscHandle = g_compositeDeviceConfigList.config[1].classHandle;
+        g_composite.cdcVcom.cdcAcmHandle = g_UsbDeviceCompositeConfigList.config[0].classHandle;
+        g_composite.mscDisk.mscHandle = g_UsbDeviceCompositeConfigList.config[1].classHandle;
 
         USB_DeviceCdcVcomInit(&g_composite);
         USB_DeviceMscDiskInit(&g_composite);

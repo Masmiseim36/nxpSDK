@@ -1,5 +1,5 @@
 /*
- * Amazon FreeRTOS Wi-Fi for NXP54018_IoT_Module V1.0.1
+ * Amazon FreeRTOS Wi-Fi for LPC54018 IoT Module V1.0.1
  * Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -25,21 +25,22 @@
 
 /**
  * @file aws_WIFI.c
- * @brief WiFi Interface.
+ * @brief Wi-Fi Interface.
  */
 
 #include <stdio.h>
+#include "FreeRTOS.h"
 #include "aws_wifi.h"
 #include "wifi_common.h"
 #include "qcom_api.h"
 #include "atheros_wifi.h"
 
 /* This is here because the maximum DNS name length is defined in aws_secure_sockets.h.
- * Wifi must not have a dependency on aws_secure_sockets.h
+ * Wi-Fi must not have a dependency on aws_secure_sockets.h
  */
 #define wifiMAX_DNS_NAME_LENGTH 253
 
-/* Only 1 WiFi module is present at the time */
+/* Only 1 Wi-Fi module is present at the time */
 static uint8_t g_devid = 0;
 
 /* NOTE: Could be located on stack */
@@ -51,15 +52,36 @@ static QCOM_PASSPHRASE g_passphr = {0};
 /* Semaphore for connection */
 static SemaphoreHandle_t g_connect_semaph;
 
+/* Semaphore for dhcp response */
+static SemaphoreHandle_t g_dhcp_semaph;
+
 /* Protect API */
 static SemaphoreHandle_t g_wifi_semaph;
 
-/* WiFi/HW hardware configuration */
+/* Wi-Fi/HW hardware configuration */
 QCA_CONTEXT_STRUCT g_wifi_ctx = {0};
+
+/* Wi-Fi status - turned on */
+static uint8_t g_wifi_is_on = 0;
+
+/* Wi-Fi status - turned on */
+static uint8_t g_connected = 0;
+
+/* What event is expected */
+enum expected_event {
+    expected_event_default,
+    expected_event_connect,
+    expected_event_disconnect,
+};
+
+enum expected_event g_expected_event = expected_event_default;
+
+/* Wi-Fi security */
+static WIFISecurity_t g_security = eWiFiSecurityNotSupported;
 
 extern const QCA_MAC_IF_STRUCT ATHEROS_WIFI_IF;
 
-/* WiFi interface object */
+/* Wi-Fi interface object */
 const QCA_IF_STRUCT g_wifi_if = {
     .MAC_IF         = &ATHEROS_WIFI_IF,
     .MAC_NUMBER     = 0,
@@ -67,7 +89,7 @@ const QCA_IF_STRUCT g_wifi_if = {
     .PHY_ADDRESS    = 0,
 };
 
-/* WiFi params */
+/* Wi-Fi params */
 const QCA_PARAM_STRUCT g_wifi_params = {
     .QCA_IF         = &g_wifi_if,
     .MODE           = Auto_Negotiate,
@@ -75,7 +97,7 @@ const QCA_PARAM_STRUCT g_wifi_params = {
     .NUM_RX_PCBS    = WLAN_CONFIG_NUM_PRE_ALLOC_RX_BUFFERS,
 };
 
-/* Singleton, provides WiFi context structure */
+/* Singleton, provides Wi-Fi context structure */
 QCA_CONTEXT_STRUCT *wlan_get_context(void)
 {
     return &g_wifi_ctx;
@@ -97,15 +119,113 @@ static void pxIPAddr_to_ip(uint8_t *pxIPAddr, uint32_t *ip32)
             (((pxIPAddr[3]) & 0xFF));
 }
 
+static BaseType_t post_semaph(SemaphoreHandle_t semaph)
+{
+    BaseType_t result = pdFALSE;
+    result = xSemaphoreGive(semaph);
+//    assert(pdPASS == result);
+    return result;
+}
+
 /* Invoked from 'driver_task', on SUCCESS post semaphore */
 static void aws_connect_cb(QCOM_ONCONNECT_EVENT event, uint8_t devid, QCOM_BSSID bssid, boolean bss_conn)
 {
+    if ((g_security == eWiFiSecurityWPA) || (g_security == eWiFiSecurityWPA2))
+    {
+        /* 4 -way handshake completed */
+        if (0x10 == (int)event)
+        {
+            g_connected = 1;
+            post_semaph(g_connect_semaph);
+        }
+        /* invalid profile, auth failed */
+        else if (0xa == (int)event)
+        {
+            g_connected = 0;
+            post_semaph(g_connect_semaph);
+        }
+        else if (QCOM_ONCONNECT_EVENT_SUCCESS == event)
+        {
+            /* Do nothing, wait for 4-way handshake */
+        }
+        else if (QCOM_ONCONNECT_EVENT_DISCONNECT == event)
+        {
+            g_connected = 0;
+            
+            /* Avoid situation when receive disconnect followed by connect */
+            if (expected_event_disconnect == g_expected_event)
+            {
+                post_semaph(g_connect_semaph);
+            }
+        }
+        else {
+            assert(0);
+        }
+    }
+    else
+    {
+        if (QCOM_ONCONNECT_EVENT_SUCCESS == event)
+        {
+            g_connected = 1;
+            post_semaph(g_connect_semaph);
+        }
+        else if (QCOM_ONCONNECT_EVENT_DISCONNECT == event)
+        {
+            g_connected = 0;
+            /* Avoid situation when receive disconnect followed by connect */
+            if (expected_event_disconnect == g_expected_event)
+            {
+                post_semaph(g_connect_semaph);
+            }
+        }
+        else
+        {
+            assert(0);
+        }
+    }
+}
+
+/* Current IP settings */
+static uint32_t g_ip4_addr = 0;
+static uint32_t g_ip4_mask = 0;
+static uint32_t g_ip4_gw = 0;
+
+static inline uint32_t IPs_are_valid(uint32_t ip4_addr, uint32_t ip4_mask, uint32_t ip4_gw)
+{
+    uint32_t bitval = 0, expected_bitval = 1;
+
+    /* not valid */
+    if (0 == ip4_mask)
+        return 0;
+
+    /* Check continuous 1 and 0 in BE format */
+    for (int8_t i = 31; i >= 0; i--)
+    {
+        bitval = (ip4_mask >> i) & 1;
+        if (0 == expected_bitval && 1 == bitval)
+        {
+            /* not valid */
+            return 0;
+        }
+        expected_bitval = bitval;
+    }
+
+    /* Not valid ip against gw */
+    return (ip4_addr != 0 && ((ip4_addr & ip4_mask) == (ip4_gw & ip4_mask)));
+}
+
+/* Receive DHCP response */
+static uint32_t aws_dhcpc_callback(uint32_t ip, uint32_t mask, uint32_t gw)
+{
     BaseType_t result = pdFALSE;
     (void)result;
-    if (QCOM_ONCONNECT_EVENT_SUCCESS == event)
-    {
-        result = xSemaphoreGive(g_connect_semaph);
-    }
+    /* Unify to BE format */
+    g_ip4_addr = A_CPU2BE32(ip);
+    g_ip4_mask = A_CPU2BE32(mask);
+    g_ip4_gw = A_CPU2BE32(gw);
+    result = xSemaphoreGive(g_dhcp_semaph);
+//    assert(pdPASS == result);
+    return 0;
 }
 
 static WIFIReturnCode_t conv_security_to_qcom(WIFISecurity_t api_sec, WLAN_AUTH_MODE *qcom_auth, WLAN_CRYPT_TYPE *qcom_crypt)
@@ -175,10 +295,10 @@ static WIFIReturnCode_t conv_mode_to_qcom(WIFIDeviceMode_t xDeviceMode, QCOM_WLA
 }
 
 /**
- * @brief Initializes the WiFi module.
+ * @brief Initializes the Wi-Fi module.
  *
  * This function must be called exactly once before any other
- * WiFi functions (including socket functions) can be used.
+ * Wi-Fi functions (including socket functions) can be used.
  *
  * @return eWiFiSuccess if everything succeeds, eWiFiFailure otherwise.
  */
@@ -186,7 +306,11 @@ WIFIReturnCode_t WIFI_On( void )
 {
     A_STATUS result;
 
-    /* Initialize WIFI shield */
+    /* Prevent re-initialization */
+    if (g_wifi_is_on)
+        return eWiFiFailure;
+
+    /* Initialize Wi-Fi shield */
     result = (A_STATUS)WIFISHIELD_Init();
     if (A_OK != result)
         return eWiFiFailure;
@@ -213,21 +337,27 @@ WIFIReturnCode_t WIFI_On( void )
     if (NULL == g_connect_semaph)
         return eWiFiFailure;
 
-    /* Wait for Wifi */
+    /* Create a dhcp semaphore, */
+    g_dhcp_semaph = xSemaphoreCreateBinary();
+    if (NULL == g_dhcp_semaph)
+        return eWiFiFailure;
+
+    /* Wait for Wi-Fi */
     vTaskDelay(MSEC_TO_TICK(100));
+    g_wifi_is_on = 1;
 
     return eWiFiSuccess;
 }
 
 WIFIReturnCode_t WIFI_Off( void )
 {
-	return eWiFiNotSupported;
+    return eWiFiNotSupported;
 }
 
 /**
  * @brief Connects to Access Point.
  *
- * @param[in] pxJoinAPParams Configuration to join AP.
+ * @param[in] pxNetworkParams Configuration to join AP.
  *
  * @return eWiFiSuccess if connection is successful, eWiFiFailure otherwise.
  */
@@ -236,7 +366,13 @@ WIFIReturnCode_t WIFI_ConnectAP( const WIFINetworkParams_t * const pxNetworkPara
     WLAN_AUTH_MODE auth_mode;
     WLAN_CRYPT_TYPE crypt_type;
     WIFIReturnCode_t status = eWiFiFailure;
-    const TickType_t xTimeout = pdMS_TO_TICKS( 20000UL );
+    const TickType_t connect_timeout = pdMS_TO_TICKS( 30000UL );
+    const TickType_t dhcp_timeout = pdMS_TO_TICKS( 20000UL );
+    uint32_t tmp_ip4_addr = 0, tmp_ip4_mask = 0, tmp_ip4_gw = 0;
+
+    /* Check initialization */
+    if (!g_wifi_is_on)
+        return eWiFiFailure;
 
     /* Check params */
     if (NULL == pxNetworkParams || NULL == pxNetworkParams->pcSSID || NULL == pxNetworkParams->pcPassword)
@@ -246,57 +382,146 @@ WIFIReturnCode_t WIFI_ConnectAP( const WIFINetworkParams_t * const pxNetworkPara
     if (xSemaphoreTake(g_wifi_semaph, portMAX_DELAY) == pdTRUE)
     {
         do {
-            /* Set WiFi to device mode */
+            /* Reset "connect" and "dhcp" semaphores */
+            g_expected_event = expected_event_default;
+            xQueueReset((void*)g_connect_semaph);
+            xQueueReset((void*)g_dhcp_semaph);
+            /* Disconnect Wi-Fi */
+            if (g_connected)
+            {
+                g_expected_event = expected_event_disconnect;
+                if (A_OK == qcom_disconnect(g_devid))
+                {
+                    /* Consider disconnected */
+                    g_connected = 0;
+                    /* Wait for callback, that is invoked from 'driver_task' context */
+                    if (pdTRUE != xSemaphoreTake(g_connect_semaph, connect_timeout))
+                    {
+                        break;
+                    }
+                    /* Workaround for ARP cache */
+                    if (0 != g_ip4_gw)
+                    {
+                        if (A_OK != qcom_ipconfig(g_devid, QCOM_IPCONFIG_STATIC, &g_ip4_gw, &g_ip4_mask, &g_ip4_gw))
+                        {
+                            break;
+                        }
+                        g_ip4_addr = g_ip4_mask = g_ip4_gw = 0;
+                    }
+                }
+                else
+                {
+                    break;
+                }
+            }
+            /* Set Wi-Fi to device mode */
             if (A_OK != (A_STATUS)qcom_op_set_mode(g_devid, QCOM_WLAN_DEV_MODE_STATION))
+            {
                 break;
+            }
 
             /* Set SSID, must be done before auth, cipher and passphrase */
-            strncpy(g_ssid.ssid, pxNetworkParams->pcSSID, sizeof(g_ssid));
+            strncpy(g_ssid.ssid, pxNetworkParams->pcSSID, sizeof(g_ssid.ssid));
             if (A_OK != (A_STATUS)qcom_set_ssid(g_devid, &g_ssid))
+            {
                 break;
+            }
 
+            g_security = pxNetworkParams->xSecurity;
             /* Convert 'WIFISecurity_t' to 'WLAN_AUTH_MODE', 'WLAN_CRYPT_TYPE' */
             if (eWiFiSuccess != conv_security_to_qcom(pxNetworkParams->xSecurity, &auth_mode, &crypt_type))
+            {
                 break;
+            }
 
             /* Set encyption mode */
             if (A_OK != (A_STATUS)qcom_sec_set_encrypt_mode(g_devid, crypt_type))
+            {
                 break;
+            }
 
             /* Set auth mode */
             if (A_OK != qcom_sec_set_auth_mode(g_devid, auth_mode))
+            {
                 break;
+            }
 
             /* Set passphrase */
-            strncpy(g_passphr.passphrase, pxNetworkParams->pcPassword, sizeof(g_passphr));
+            strncpy(g_passphr.passphrase, pxNetworkParams->pcPassword, sizeof(g_passphr.passphrase));
             if (A_OK != qcom_sec_set_passphrase(g_devid, &g_passphr))
+            {
                 break;
+            }
 
             /* Set channel */
             if (0 != pxNetworkParams->cChannel)
             {
                 if (A_OK != qcom_set_channel(g_devid, pxNetworkParams->cChannel))
-                  break;
+                {
+                    break;
+                }
             }
 
             /* Set connect_callback */
             if (A_OK != qcom_set_connect_callback(g_devid, (void *)aws_connect_cb))
+            {
                 break;
+            }
 
-            /* Commit settings to WiFi module */
+            g_expected_event = expected_event_connect;
+            /* Commit settings to Wi-Fi module */
             if (A_OK != qcom_commit(g_devid))
+            {
                 break;
+            }
 
             /* Wait for callback, that is invoked from 'driver_task' context */
-            if (pdTRUE != xSemaphoreTake(g_connect_semaph, xTimeout))
+            if (pdTRUE != xSemaphoreTake(g_connect_semaph, connect_timeout))
+            {
                 break;
+            }
 
-            /* Remove callback ?? */
-            if (A_OK != qcom_set_connect_callback(g_devid, NULL))
+            /* Register DHCP callback */
+            if (A_OK != qcom_dhcpc_register_cb(0, (void*)aws_dhcpc_callback))
+            {
                 break;
+            }
+
+            /* Try several attempts in worst case */
+            for (int i = 0; i < 10 && 0 == g_ip4_addr; i++)
+            {
+                /* Perform DHCP request */
+                if (A_OK != qcom_ipconfig(g_devid, QCOM_IPCONFIG_DHCP, &tmp_ip4_addr, &tmp_ip4_mask, &tmp_ip4_gw))
+                {
+                    break;
+                }
+
+                /* If DHCP response is not available immediately, wait for DHCP callback */
+                if (!IPs_are_valid(tmp_ip4_addr, tmp_ip4_mask, tmp_ip4_gw))
+                {
+                    /* Wait for DHCP response */
+                    if (pdTRUE != xSemaphoreTake(g_dhcp_semaph, dhcp_timeout))
+                    {
+                        break;
+                    }
+                }
+                else
+                {
+                    /* Valid IP of DHCP response */
+                    g_ip4_addr = tmp_ip4_addr;
+                    g_ip4_mask = tmp_ip4_mask;
+                    g_ip4_gw = tmp_ip4_gw;
+                }
+            }
+
+            /* Still not a valid IP, report error */
+            if (!IPs_are_valid(g_ip4_addr, g_ip4_mask, g_ip4_gw))
+            {
+                break;
+            }
 
             /* Everything is OK */
-            status = eWiFiSuccess;
+            status = g_connected ? eWiFiSuccess : eWiFiFailure;
         } while (0);
 
         /* Release semaphore */
@@ -314,15 +539,64 @@ WIFIReturnCode_t WIFI_ConnectAP( const WIFINetworkParams_t * const pxNetworkPara
  */
 WIFIReturnCode_t WIFI_Disconnect( void )
 {
-    //TODO: vSemaphoreDelete
-    //      wait for disconnect cb ??
+    const TickType_t connect_timeout = pdMS_TO_TICKS( 20000UL );
     WIFIReturnCode_t status = eWiFiFailure;
+
+    /* Check initialization */
+    if (!g_wifi_is_on)
+        return eWiFiFailure;
 
     /* Acquire semaphore */
     if (xSemaphoreTake(g_wifi_semaph, portMAX_DELAY) == pdTRUE)
     {
-        if (A_OK == qcom_disconnect(g_devid))
-            status = eWiFiSuccess;
+        do {
+            /* Reset connect semaphore */
+            g_expected_event = expected_event_default;
+            xQueueReset((void*)g_connect_semaph);
+
+            /* Connected to AP */
+            if (g_connected)
+            {
+                /* Register connect cb */
+                if (A_OK != qcom_set_connect_callback(g_devid, (void *)aws_connect_cb))
+                {
+                    break;
+                }
+
+                g_expected_event = expected_event_disconnect;
+                /* Make disconnect request */
+                if (A_OK != qcom_disconnect(g_devid))
+                {
+                    break;
+                }
+
+//                /* Consider disconnected, even if it's not yet confirmed by callback */
+//                g_connected = 0;
+
+                /* Wait for disconnect response */
+                if (pdTRUE != xSemaphoreTake(g_connect_semaph, connect_timeout))
+                {
+                    break;
+                }
+
+                /* Workaround for ARP cache */
+                if (0 != g_ip4_gw)
+                {
+                    if (A_OK != qcom_ipconfig(g_devid, QCOM_IPCONFIG_STATIC, &g_ip4_gw, &g_ip4_mask, &g_ip4_gw))
+                        break;
+                    g_ip4_addr = g_ip4_mask = g_ip4_gw = 0;
+                }
+
+                /* Consider OK */
+                status = eWiFiSuccess;
+            }
+            /* Disconnected from AP */
+            else
+            {
+                status = eWiFiSuccess;
+            }
+        } while(0);
+
         /* Release semaphore */
         xSemaphoreGive(g_wifi_semaph);
     }
@@ -330,7 +604,7 @@ WIFIReturnCode_t WIFI_Disconnect( void )
 }
 
 /**
- * @brief Resets the WiFi Module.
+ * @brief Resets the Wi-Fi Module.
  *
  * @param[in] None.
  *
@@ -342,7 +616,7 @@ WIFIReturnCode_t WIFI_Reset( void )
 }
 
 /**
- * @brief Sets wifi mode.
+ * @brief Sets Wi-Fi mode.
  *
  * @param[in] xDeviceMode - Mode of the device Station / Access Point /P2P.
  *
@@ -352,6 +626,10 @@ WIFIReturnCode_t WIFI_SetMode( WIFIDeviceMode_t xDeviceMode )
 {
     QCOM_WLAN_DEV_MODE dev_mode = QCOM_WLAN_DEV_MODE_INVALID;
     WIFIReturnCode_t status = eWiFiFailure;
+
+    /* Check initialization */
+    if (!g_wifi_is_on)
+        return eWiFiFailure;
 
     /* Acquire semaphore */
     if (xSemaphoreTake(g_wifi_semaph, portMAX_DELAY) == pdTRUE)
@@ -370,7 +648,7 @@ WIFIReturnCode_t WIFI_SetMode( WIFIDeviceMode_t xDeviceMode )
 }
 
 /**
- * @brief Gets wifi mode.
+ * @brief Gets Wi-Fi mode.
  *
  * @param[in] pxDeviceMode - return mode Station / Access Point /P2P
  *
@@ -383,6 +661,10 @@ WIFIReturnCode_t WIFI_GetMode( WIFIDeviceMode_t * pxDeviceMode )
 
     /* Check params */
     if (NULL == pxDeviceMode)
+        return eWiFiFailure;
+
+    /* Check initialization */
+    if (!g_wifi_is_on)
         return eWiFiFailure;
 
     /* Acquire semaphore */
@@ -402,9 +684,9 @@ WIFIReturnCode_t WIFI_GetMode( WIFIDeviceMode_t * pxDeviceMode )
 }
 
 /**
- * @brief WiFi Add Network profile.
+ * @brief Wi-Fi Add Network profile.
  *
- * Adds wifi network to network list in NV memory
+ * Adds Wi-Fi network to network list in non-volatile memory
  *
  * @param[in] pxNetworkProfile - network profile parameters
  * @param[out] pusIndex - network profile index
@@ -420,9 +702,9 @@ WIFIReturnCode_t WIFI_NetworkAdd(const WIFINetworkProfile_t * const pxNetworkPro
 
 
 /**
- * @brief WiFi Get Network profile .
+ * @brief Wi-Fi Get Network profile .
  *
- * Gets wifi network params at given index from network list in Non volatile memory
+ * Gets Wi-Fi network params at given index from network list in non-volatile memory
  *
  * @param[out] pxNetworkProfile - pointer to return network profile parameters
  * @param[in] usIndex - Index of the network profile, must be between 0 to wificonfigMAX_NETWORK_PROFILES
@@ -437,9 +719,9 @@ WIFIReturnCode_t WIFI_NetworkGet( WIFINetworkProfile_t * pxNetworkProfile,
 }
 
 /**
- * @brief WiFi Delete Network profile .
+ * @brief Wi-Fi Delete Network profile .
  *
- * Deletes wifi network from network list at given index in NV memory
+ * Deletes Wi-Fi network from network list at given index in non-volatile memory
  *
  * @param[in] usIndex - Index of the network profile, must be between 0 to wificonfigMAX_NETWORK_PROFILES
  *                      wificonfigMAX_NETWORK_PROFILES as index will delete all network profiles
@@ -459,7 +741,6 @@ WIFIReturnCode_t WIFI_NetworkDelete( uint16_t uxIndex )
  * @param[in] Number of times to ping
  * @param[in] Interval in mili seconds for ping operation
  *
- * @note 'WIFI_GetIP' must be invoked before
  * @return eWiFiSuccess if everything succeeds, failure code otherwise.
  */
 WIFIReturnCode_t WIFI_Ping( uint8_t * pxIPAddr,
@@ -468,6 +749,10 @@ WIFIReturnCode_t WIFI_Ping( uint8_t * pxIPAddr,
 {
     uint32_t failed_cnt = 0;
     uint32_t ip4_addr = 0;
+
+    /* Check initialization */
+    if (!g_wifi_is_on)
+        return eWiFiFailure;
 
     /* Check params */
     if ((NULL == pxIPAddr) || (0 == xCount))
@@ -494,7 +779,7 @@ WIFIReturnCode_t WIFI_Ping( uint8_t * pxIPAddr,
 }
 
 /**
- * @brief Retrieves the WiFi interface's IP address.
+ * @brief Retrieves the Wi-Fi interface's IP address.
  *
  * @param[in] IP Address buffer.
  *
@@ -502,54 +787,21 @@ WIFIReturnCode_t WIFI_Ping( uint8_t * pxIPAddr,
  */
 WIFIReturnCode_t WIFI_GetIP( uint8_t * pxIPAddr )
 {
-    uint32_t ip4_addr = 0, ip4_mask = 0, ip4_gw = 0;
-    WIFIReturnCode_t status = eWiFiFailure;
+    /* Check initialization */
+    if (!g_wifi_is_on)
+        return eWiFiFailure;
 
     /* Check params */
     if (NULL == pxIPAddr)
         return eWiFiFailure;
 
-    /* Acquire semaphore */
-    if (xSemaphoreTake(g_wifi_semaph, portMAX_DELAY) == pdTRUE)
-    {
-        for (uint32_t j = 0; j < 10; j++)
-        {
-            /* Call DHCP after connection */
-            if (A_OK != qcom_ipconfig(g_devid, QCOM_IPCONFIG_DHCP, &ip4_addr, &ip4_mask, &ip4_gw))
-                break;
-            /* Retrieve IP info. Perform several attempts because of bug in QCA FW 3.3.5 */
-            for (uint32_t attempt_i = 0; attempt_i < 30; attempt_i++)
-            {
-                if (A_OK != qcom_ipconfig(g_devid, QCOM_IPCONFIG_QUERY, &ip4_addr, &ip4_mask, &ip4_gw))
-                    break;
+    ip_to_pxIPAddr(g_ip4_addr, pxIPAddr);
 
-                if (0 == ip4_addr)
-                {
-                    /* Provide some delay to start next loop to retrieve IP data */
-                    vTaskDelay(MSEC_TO_TICK(110));
-                }
-                else
-                {
-                    /* Valid IP, terminate loop */
-                    status = eWiFiSuccess;
-                    break;
-                }
-            }
-            if (eWiFiSuccess == status)
-            {
-                /* Convert IP addr */
-                ip_to_pxIPAddr(ip4_addr, pxIPAddr);
-                break;
-            }
-        }
-        /* Release semaphore */
-        xSemaphoreGive(g_wifi_semaph);
-    }
-    return status;
+    return g_ip4_addr == 0 ? eWiFiFailure : eWiFiSuccess;
 }
 
 /**
- * @brief Retrieves the WiFi interface's MAC address.
+ * @brief Retrieves the Wi-Fi interface's MAC address.
  *
  * @param[in] MAC Address buffer.
  *
@@ -559,6 +811,10 @@ WIFIReturnCode_t WIFI_GetMAC( uint8_t * pxMac )
 {
     WIFIReturnCode_t status = eWiFiFailure;
     uint8_t mac_addr[ATH_MAC_LEN] = {0};
+
+    /* Check initialization */
+    if (!g_wifi_is_on)
+        return eWiFiFailure;
 
     /* Check params */
     if (NULL == pxMac)
@@ -596,6 +852,10 @@ WIFIReturnCode_t WIFI_GetHostIP( char * pxHost,
     IP_ADDR_T dns_ip = {0};
     uint32_t dns_servers[MAX_DNSADDRS] = {0};
     uint32_t dns_servers_num = 0;
+
+    /* Check initialization */
+    if (!g_wifi_is_on)
+        return eWiFiFailure;
 
     /* Check params */
     if ((NULL == pxIPAddr) || (NULL == pxHost))
@@ -653,50 +913,17 @@ WIFIReturnCode_t WIFI_GetHostIP( char * pxHost,
  */
 WIFIReturnCode_t WIFI_GetAccessPointIP( uint8_t * pxIPAddr )
 {
-    uint32_t ip4_addr = 0, ip4_mask = 0, ip4_gw = 0;
-    WIFIReturnCode_t status = eWiFiFailure;
+    /* Check initialization */
+    if (!g_wifi_is_on)
+        return eWiFiFailure;
 
     /* Check params */
     if (NULL == pxIPAddr)
         return eWiFiFailure;
 
-    /* Acquire semaphore */
-    if (xSemaphoreTake(g_wifi_semaph, portMAX_DELAY) == pdTRUE)
-    {
-        for (uint32_t j = 0; j < 10; j++)
-        {
-            /* Call DHCP after connection */
-            if (A_OK != qcom_ipconfig(g_devid, QCOM_IPCONFIG_DHCP, &ip4_addr, &ip4_mask, &ip4_gw))
-                break;
-            /* Retrieve IP info. Perform several attempts because of bug in QCA FW 3.3.5 */
-            for (uint32_t attempt_i = 0; attempt_i < 30; attempt_i++)
-            {
-                if (A_OK != qcom_ipconfig(g_devid, QCOM_IPCONFIG_QUERY, &ip4_addr, &ip4_mask, &ip4_gw))
-                    break;
+    ip_to_pxIPAddr(g_ip4_addr, pxIPAddr);
 
-                if (0 == ip4_addr)
-                {
-                    /* Provide some delay to start next loop to retrieve IP data */
-                    vTaskDelay(MSEC_TO_TICK(110));
-                }
-                else
-                {
-                    /* Valid IP, terminate loop */
-                    status = eWiFiSuccess;
-                    break;
-                }
-            }
-            if (eWiFiSuccess == status)
-            {
-                /* Convert IP addr */
-                ip_to_pxIPAddr(ip4_addr, pxIPAddr);
-                break;
-            }
-        }
-        /* Release semaphore */
-        xSemaphoreGive(g_wifi_semaph);
-    }
-    return status;
+    return g_ip4_addr == 0 ? eWiFiFailure : eWiFiSuccess;
 }
 
 /**
@@ -713,6 +940,10 @@ WIFIReturnCode_t WIFI_Scan( WIFIScanResult_t * pxBuffer,
     WIFIReturnCode_t status = eWiFiFailure;
     QCOM_BSS_SCAN_INFO *scan_result = NULL;
     int16_t scan_result_num = 0;
+
+    /* Check initialization */
+    if (!g_wifi_is_on)
+        return eWiFiFailure;
 
     /* Check params */
     if ((NULL == pxBuffer) || (0 == uxNumNetworks))
@@ -804,6 +1035,10 @@ WIFIReturnCode_t WIFI_ConfigureAP(const WIFINetworkParams_t * const pxNetworkPar
     WLAN_AUTH_MODE auth_mode = WLAN_AUTH_INVALID;
     WLAN_CRYPT_TYPE crypt_type = WLAN_CRYPT_INVALID;
 
+    /* Check initialization */
+    if (!g_wifi_is_on)
+        return eWiFiFailure;
+
     /* Check params */
     if (NULL == pxNetworkParams || NULL == pxNetworkParams->pcSSID || NULL == pxNetworkParams->pcPassword)
         return eWiFiFailure;
@@ -812,12 +1047,12 @@ WIFIReturnCode_t WIFI_ConfigureAP(const WIFINetworkParams_t * const pxNetworkPar
     if (xSemaphoreTake(g_wifi_semaph, portMAX_DELAY) == pdTRUE)
     {
         do {
-            /* Set WiFi to device mode */
+            /* Set Wi-Fi to device mode */
             if (A_OK != (A_STATUS)qcom_op_set_mode(g_devid, QCOM_WLAN_DEV_MODE_AP))
                 break;
 
             /* Set SSID, must be done before auth, cipher and passphrase */
-            strncpy(g_ssid.ssid, pxNetworkParams->pcSSID, sizeof(g_ssid));
+            strncpy(g_ssid.ssid, pxNetworkParams->pcSSID, sizeof(g_ssid.ssid));
             if (A_OK != (A_STATUS)qcom_set_ssid(g_devid, &g_ssid))
                 break;
 
@@ -834,7 +1069,7 @@ WIFIReturnCode_t WIFI_ConfigureAP(const WIFINetworkParams_t * const pxNetworkPar
                 break;
 
             /* Set passphrase */
-            strncpy(g_passphr.passphrase, pxNetworkParams->pcPassword, sizeof(g_passphr));
+            strncpy(g_passphr.passphrase, pxNetworkParams->pcPassword, sizeof(g_passphr.passphrase));
             if (A_OK != qcom_sec_set_passphrase(g_devid, &g_passphr))
                 break;
 
@@ -855,11 +1090,27 @@ WIFIReturnCode_t WIFI_ConfigureAP(const WIFINetworkParams_t * const pxNetworkPar
 WIFIReturnCode_t WIFI_SetPMMode( WIFIPMMode_t xPMModeType,
                                  const void * pvOptionValue )
 {
-	return eWiFiNotSupported;
+    return eWiFiNotSupported;
 }
 
 WIFIReturnCode_t WIFI_GetPMMode( WIFIPMMode_t * pxPMModeType,
                                  void * pvOptionValue )
 {
-	return eWiFiNotSupported;
+    return eWiFiNotSupported;
 }
+
+BaseType_t WIFI_IsConnected( void )
+{
+//    uint32_t ip4_addr = 0, ip4_mask = 0, ip4_gw = 0;
+    BaseType_t xIsConnected = pdFALSE;
+
+//    if (A_OK == qcom_ipconfig( g_devid, QCOM_IPCONFIG_DHCP, &ip4_addr, &ip4_mask, &ip4_gw ) )
+    if (1 == g_connected)
+    {
+        xIsConnected = pdTRUE;
+    }
+
+    return xIsConnected;
+}
+
+

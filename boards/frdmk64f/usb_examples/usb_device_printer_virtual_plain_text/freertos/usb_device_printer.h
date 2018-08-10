@@ -89,11 +89,17 @@ typedef struct _usb_device_printer_struct
     usb_device_handle deviceHandle;                 /*!< The device handle */
     usb_device_class_config_struct_t *classConfig;  /*!< The configuration of the class. */
     usb_device_interface_struct_t *interfaceHandle; /*!< Current interface handle */
+    uint8_t *bulkInPipeDataBuffer;             /*!< IN pipe data buffer backup when stall */
+    uint32_t bulkInPipeDataLen;                /*!< IN pipe data length backup when stall  */
+    uint8_t *bulkOutPipeDataBuffer;             /*!< OUT pipe data buffer backup when stall */
+    uint32_t bulkOutPipeDataLen;                /*!< OUT pipe data length backup when stall  */
     uint8_t configuration;                          /*!< Current configuration */
     uint8_t interfaceNumber;                        /*!< Interface number in the device descriptor */
     uint8_t alternate;                              /*!< Interface alternate value */
     uint8_t bulkInBusy;                             /*!< BULK IN pipe busy flag */
     uint8_t bulkOutBusy;                            /*!< BULK OUT pipe busy flag */
+    uint8_t bulkInPipeStall;                    /*!< bulk IN pipe stall flag */
+    uint8_t bulkOutPipeStall;                   /*!< bulk OUT pipe stall flag */
 } usb_device_printer_struct_t;
 
 /*******************************************************************************

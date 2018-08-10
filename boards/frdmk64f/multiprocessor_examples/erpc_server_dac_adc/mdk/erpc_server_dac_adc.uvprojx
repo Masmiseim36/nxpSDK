@@ -4,7 +4,7 @@
   <Header>### uVision Project, (C) Keil Software</Header>
   <Targets>
     <Target>
-      <TargetName>erpc_server_dac_adc Debug</TargetName>
+      <TargetName>erpc_server_dac_adc debug</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <TargetOption>
@@ -360,9 +360,9 @@
 --diag_suppress=66,1296,186 
  
 </MiscControls>
-              <Define>DEBUG, CPU_MK64FN1M0VLL12, FRDM_K64F, FREEDOM, PRINTF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1</Define>
+              <Define>DEBUG, CPU_MK64FN1M0VLL12, FRDM_K64F, FREEDOM, PRINTF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1</Define>
               <Undefine/>
-              <IncludePath>../../../../../CMSIS/Include;../../../../../devices;../../..;..;../service;../../erpc_common;../../../../../CMSIS/Driver/Include;../../../../../devices/MK64F12/drivers;../../../../../devices/MK64F12/cmsis_drivers;../../../../../devices/MK64F12/utilities/io;../../../../../devices/MK64F12/utilities/str;../../../../../devices/MK64F12/utilities/log;../../../../../devices/MK64F12/utilities;../../../../../devices/MK64F12;../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../middleware/multicore/erpc/erpc_c/transports</IncludePath>
+              <IncludePath>../../../../../CMSIS/Include;../../../../../devices;../../..;..;../service;../../erpc_common;../../../../../CMSIS/Driver/Include;../../../../../devices/MK64F12/drivers;../../../../../devices/MK64F12/cmsis_drivers;../../../../../devices/MK64F12/utilities/io;../../../../../devices/MK64F12/utilities/str;../../../../../devices/MK64F12/utilities/log;../../../../../devices/MK64F12/utilities;../../../../../devices/MK64F12;../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../middleware/multicore/erpc/erpc_c</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -405,7 +405,7 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>drivers</GroupName>
+          <GroupName>drivers-src</GroupName>
           <Files>
             <File>
               <FileName>Driver_Common.h</FileName>
@@ -416,141 +416,6 @@
               <FileName>Driver_USART.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Driver/Include/Driver_USART.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK64F12/drivers/fsl_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK64F12/drivers/fsl_uart.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK64F12/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK64F12/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK64F12/drivers/fsl_clock.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK64F12/drivers/fsl_clock.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_uart_edma.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK64F12/drivers/fsl_uart_edma.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_uart_edma.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK64F12/drivers/fsl_uart_edma.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_edma.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK64F12/drivers/fsl_edma.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_edma.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK64F12/drivers/fsl_edma.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_dmamux.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK64F12/drivers/fsl_dmamux.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_dmamux.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK64F12/drivers/fsl_dmamux.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_dac.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK64F12/drivers/fsl_dac.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_dac.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK64F12/drivers/fsl_dac.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_uart_cmsis.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK64F12/cmsis_drivers/fsl_uart_cmsis.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_uart_cmsis.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK64F12/cmsis_drivers/fsl_uart_cmsis.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_flash.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK64F12/drivers/fsl_flash.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_flash.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK64F12/drivers/fsl_flash.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK64F12/drivers/fsl_gpio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK64F12/drivers/fsl_gpio.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_port.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK64F12/drivers/fsl_port.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_smc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK64F12/drivers/fsl_smc.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_smc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK64F12/drivers/fsl_smc.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_i2c.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK64F12/drivers/fsl_i2c.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK64F12/drivers/fsl_i2c.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_adc16.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK64F12/drivers/fsl_adc16.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_adc16.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK64F12/drivers/fsl_adc16.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -608,11 +473,6 @@
           <GroupName>erpc-service</GroupName>
           <Files>
             <File>
-              <FileName>erpc_crc16.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../service/erpc_crc16.h</FilePath>
-            </File>
-            <File>
               <FileName>erpc_dac_adc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../service/erpc_dac_adc.h</FilePath>
@@ -647,6 +507,11 @@
               <FileType>5</FileType>
               <FilePath>../RTE_Device.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>board-src</GroupName>
+          <Files>
             <File>
               <FileName>board.c</FileName>
               <FileType>1</FileType>
@@ -676,6 +541,196 @@
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../readme.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>drivers</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_uart.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_clock.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_clock.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_uart_edma.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_uart_edma.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_uart_edma.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_uart_edma.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_edma.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_edma.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_edma.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_edma.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dac.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_dac.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dac.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_dac.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_uart_cmsis.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK64F12/cmsis_drivers/fsl_uart_cmsis.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_uart_cmsis.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK64F12/cmsis_drivers/fsl_uart_cmsis.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_adapter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_ftfx_adapter.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_utilities.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_ftfx_utilities.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_features.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_ftfx_features.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_controller.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_ftfx_controller.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_controller.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_ftfx_controller.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_ftfx_flash.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flash.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_ftfx_flash.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_cache.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_ftfx_cache.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_cache.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_ftfx_cache.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flexnvm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_ftfx_flexnvm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flexnvm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_ftfx_flexnvm.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_flash.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_flash.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_port.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_port.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_smc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_smc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_smc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_smc.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_i2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_i2c.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_i2c.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adc16.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_adc16.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adc16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_adc16.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dmamux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_dmamux.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dmamux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_dmamux.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -773,24 +828,24 @@
           <GroupName>erpc-infra</GroupName>
           <Files>
             <File>
-              <FileName>simple_server.h</FileName>
+              <FileName>erpc_simple_server.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/simple_server.h</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_simple_server.h</FilePath>
             </File>
             <File>
-              <FileName>simple_server.cpp</FileName>
+              <FileName>erpc_simple_server.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/simple_server.cpp</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_simple_server.cpp</FilePath>
             </File>
             <File>
-              <FileName>server.h</FileName>
+              <FileName>erpc_server.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/server.h</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_server.h</FilePath>
             </File>
             <File>
-              <FileName>server.cpp</FileName>
+              <FileName>erpc_server.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/server.cpp</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_server.cpp</FilePath>
             </File>
             <File>
               <FileName>erpc_version.h</FileName>
@@ -798,29 +853,29 @@
               <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_version.h</FilePath>
             </File>
             <File>
-              <FileName>codec.h</FileName>
+              <FileName>erpc_codec.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/codec.h</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_codec.h</FilePath>
             </File>
             <File>
-              <FileName>basic_codec.h</FileName>
+              <FileName>erpc_basic_codec.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/basic_codec.h</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_basic_codec.h</FilePath>
             </File>
             <File>
-              <FileName>transport.h</FileName>
+              <FileName>erpc_transport.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/transport.h</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_transport.h</FilePath>
             </File>
             <File>
-              <FileName>message_buffer.h</FileName>
+              <FileName>erpc_message_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/message_buffer.h</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_buffer.h</FilePath>
             </File>
             <File>
-              <FileName>message_loggers.h</FileName>
+              <FileName>erpc_message_loggers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/message_loggers.h</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_loggers.h</FilePath>
             </File>
             <File>
               <FileName>erpc_common.h</FileName>
@@ -828,44 +883,44 @@
               <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_common.h</FilePath>
             </File>
             <File>
-              <FileName>manually_constructed.h</FileName>
+              <FileName>erpc_manually_constructed.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/manually_constructed.h</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_manually_constructed.h</FilePath>
             </File>
             <File>
-              <FileName>crc16.h</FileName>
+              <FileName>erpc_crc16.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/crc16.h</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_crc16.h</FilePath>
             </File>
             <File>
-              <FileName>basic_codec.cpp</FileName>
+              <FileName>erpc_basic_codec.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/basic_codec.cpp</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_basic_codec.cpp</FilePath>
             </File>
             <File>
-              <FileName>message_buffer.cpp</FileName>
+              <FileName>erpc_message_buffer.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/message_buffer.cpp</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_buffer.cpp</FilePath>
             </File>
             <File>
-              <FileName>message_loggers.cpp</FileName>
+              <FileName>erpc_message_loggers.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/message_loggers.cpp</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_loggers.cpp</FilePath>
             </File>
             <File>
-              <FileName>crc16.cpp</FileName>
+              <FileName>erpc_crc16.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/crc16.cpp</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_crc16.cpp</FilePath>
             </File>
             <File>
-              <FileName>framed_transport.h</FileName>
+              <FileName>erpc_framed_transport.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/framed_transport.h</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_framed_transport.h</FilePath>
             </File>
             <File>
-              <FileName>framed_transport.cpp</FileName>
+              <FileName>erpc_framed_transport.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/framed_transport.cpp</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_framed_transport.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -908,14 +963,14 @@
           <GroupName>erpc-transports</GroupName>
           <Files>
             <File>
-              <FileName>uart_cmsis_transport.h</FileName>
+              <FileName>erpc_uart_cmsis_transport.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/transports/uart_cmsis_transport.h</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_uart_cmsis_transport.h</FilePath>
             </File>
             <File>
-              <FileName>uart_cmsis_transport.cpp</FileName>
+              <FileName>erpc_uart_cmsis_transport.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/transports/uart_cmsis_transport.cpp</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_uart_cmsis_transport.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -942,7 +997,7 @@
       </Groups>
     </Target>
     <Target>
-      <TargetName>erpc_server_dac_adc Release</TargetName>
+      <TargetName>erpc_server_dac_adc release</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <TargetOption>
@@ -1298,9 +1353,9 @@
 --diag_suppress=66,1296,186 
  
 </MiscControls>
-              <Define>NDEBUG, CPU_MK64FN1M0VLL12, FRDM_K64F, FREEDOM, PRINTF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1</Define>
+              <Define>NDEBUG, CPU_MK64FN1M0VLL12, FRDM_K64F, FREEDOM, PRINTF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1</Define>
               <Undefine/>
-              <IncludePath>../../../../../CMSIS/Include;../../../../../devices;../../..;..;../service;../../erpc_common;../../../../../CMSIS/Driver/Include;../../../../../devices/MK64F12/drivers;../../../../../devices/MK64F12/cmsis_drivers;../../../../../devices/MK64F12/utilities/io;../../../../../devices/MK64F12/utilities/str;../../../../../devices/MK64F12/utilities/log;../../../../../devices/MK64F12/utilities;../../../../../devices/MK64F12;../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../middleware/multicore/erpc/erpc_c/transports</IncludePath>
+              <IncludePath>../../../../../CMSIS/Include;../../../../../devices;../../..;..;../service;../../erpc_common;../../../../../CMSIS/Driver/Include;../../../../../devices/MK64F12/drivers;../../../../../devices/MK64F12/cmsis_drivers;../../../../../devices/MK64F12/utilities/io;../../../../../devices/MK64F12/utilities/str;../../../../../devices/MK64F12/utilities/log;../../../../../devices/MK64F12/utilities;../../../../../devices/MK64F12;../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../middleware/multicore/erpc/erpc_c</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1315,7 +1370,7 @@
             <useXO>0</useXO>
             <VariousControls>
               <MiscControls/>
-              <Define/>
+              <Define>NDEBUG</Define>
               <Undefine/>
               <IncludePath/>
             </VariousControls>
@@ -1343,7 +1398,7 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>drivers</GroupName>
+          <GroupName>drivers-src</GroupName>
           <Files>
             <File>
               <FileName>Driver_Common.h</FileName>
@@ -1354,141 +1409,6 @@
               <FileName>Driver_USART.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Driver/Include/Driver_USART.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK64F12/drivers/fsl_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK64F12/drivers/fsl_uart.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK64F12/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK64F12/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK64F12/drivers/fsl_clock.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK64F12/drivers/fsl_clock.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_uart_edma.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK64F12/drivers/fsl_uart_edma.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_uart_edma.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK64F12/drivers/fsl_uart_edma.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_edma.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK64F12/drivers/fsl_edma.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_edma.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK64F12/drivers/fsl_edma.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_dmamux.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK64F12/drivers/fsl_dmamux.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_dmamux.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK64F12/drivers/fsl_dmamux.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_dac.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK64F12/drivers/fsl_dac.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_dac.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK64F12/drivers/fsl_dac.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_uart_cmsis.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK64F12/cmsis_drivers/fsl_uart_cmsis.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_uart_cmsis.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK64F12/cmsis_drivers/fsl_uart_cmsis.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_flash.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK64F12/drivers/fsl_flash.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_flash.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK64F12/drivers/fsl_flash.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK64F12/drivers/fsl_gpio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK64F12/drivers/fsl_gpio.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_port.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK64F12/drivers/fsl_port.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_smc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK64F12/drivers/fsl_smc.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_smc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK64F12/drivers/fsl_smc.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_i2c.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK64F12/drivers/fsl_i2c.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK64F12/drivers/fsl_i2c.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_adc16.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK64F12/drivers/fsl_adc16.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_adc16.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK64F12/drivers/fsl_adc16.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1546,11 +1466,6 @@
           <GroupName>erpc-service</GroupName>
           <Files>
             <File>
-              <FileName>erpc_crc16.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../service/erpc_crc16.h</FilePath>
-            </File>
-            <File>
               <FileName>erpc_dac_adc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../service/erpc_dac_adc.h</FilePath>
@@ -1585,6 +1500,11 @@
               <FileType>5</FileType>
               <FilePath>../RTE_Device.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>board-src</GroupName>
+          <Files>
             <File>
               <FileName>board.c</FileName>
               <FileType>1</FileType>
@@ -1614,6 +1534,196 @@
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../readme.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>drivers</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_uart.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_clock.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_clock.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_uart_edma.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_uart_edma.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_uart_edma.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_uart_edma.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_edma.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_edma.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_edma.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_edma.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dac.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_dac.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dac.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_dac.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_uart_cmsis.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK64F12/cmsis_drivers/fsl_uart_cmsis.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_uart_cmsis.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK64F12/cmsis_drivers/fsl_uart_cmsis.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_adapter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_ftfx_adapter.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_utilities.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_ftfx_utilities.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_features.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_ftfx_features.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_controller.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_ftfx_controller.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_controller.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_ftfx_controller.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_ftfx_flash.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flash.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_ftfx_flash.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_cache.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_ftfx_cache.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_cache.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_ftfx_cache.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flexnvm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_ftfx_flexnvm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flexnvm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_ftfx_flexnvm.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_flash.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_flash.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_port.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_port.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_smc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_smc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_smc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_smc.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_i2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_i2c.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_i2c.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adc16.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_adc16.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adc16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_adc16.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dmamux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_dmamux.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dmamux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_dmamux.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1711,24 +1821,24 @@
           <GroupName>erpc-infra</GroupName>
           <Files>
             <File>
-              <FileName>simple_server.h</FileName>
+              <FileName>erpc_simple_server.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/simple_server.h</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_simple_server.h</FilePath>
             </File>
             <File>
-              <FileName>simple_server.cpp</FileName>
+              <FileName>erpc_simple_server.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/simple_server.cpp</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_simple_server.cpp</FilePath>
             </File>
             <File>
-              <FileName>server.h</FileName>
+              <FileName>erpc_server.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/server.h</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_server.h</FilePath>
             </File>
             <File>
-              <FileName>server.cpp</FileName>
+              <FileName>erpc_server.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/server.cpp</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_server.cpp</FilePath>
             </File>
             <File>
               <FileName>erpc_version.h</FileName>
@@ -1736,29 +1846,29 @@
               <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_version.h</FilePath>
             </File>
             <File>
-              <FileName>codec.h</FileName>
+              <FileName>erpc_codec.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/codec.h</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_codec.h</FilePath>
             </File>
             <File>
-              <FileName>basic_codec.h</FileName>
+              <FileName>erpc_basic_codec.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/basic_codec.h</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_basic_codec.h</FilePath>
             </File>
             <File>
-              <FileName>transport.h</FileName>
+              <FileName>erpc_transport.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/transport.h</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_transport.h</FilePath>
             </File>
             <File>
-              <FileName>message_buffer.h</FileName>
+              <FileName>erpc_message_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/message_buffer.h</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_buffer.h</FilePath>
             </File>
             <File>
-              <FileName>message_loggers.h</FileName>
+              <FileName>erpc_message_loggers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/message_loggers.h</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_loggers.h</FilePath>
             </File>
             <File>
               <FileName>erpc_common.h</FileName>
@@ -1766,44 +1876,44 @@
               <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_common.h</FilePath>
             </File>
             <File>
-              <FileName>manually_constructed.h</FileName>
+              <FileName>erpc_manually_constructed.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/manually_constructed.h</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_manually_constructed.h</FilePath>
             </File>
             <File>
-              <FileName>crc16.h</FileName>
+              <FileName>erpc_crc16.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/crc16.h</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_crc16.h</FilePath>
             </File>
             <File>
-              <FileName>basic_codec.cpp</FileName>
+              <FileName>erpc_basic_codec.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/basic_codec.cpp</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_basic_codec.cpp</FilePath>
             </File>
             <File>
-              <FileName>message_buffer.cpp</FileName>
+              <FileName>erpc_message_buffer.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/message_buffer.cpp</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_buffer.cpp</FilePath>
             </File>
             <File>
-              <FileName>message_loggers.cpp</FileName>
+              <FileName>erpc_message_loggers.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/message_loggers.cpp</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_loggers.cpp</FilePath>
             </File>
             <File>
-              <FileName>crc16.cpp</FileName>
+              <FileName>erpc_crc16.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/crc16.cpp</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_crc16.cpp</FilePath>
             </File>
             <File>
-              <FileName>framed_transport.h</FileName>
+              <FileName>erpc_framed_transport.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/framed_transport.h</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_framed_transport.h</FilePath>
             </File>
             <File>
-              <FileName>framed_transport.cpp</FileName>
+              <FileName>erpc_framed_transport.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/framed_transport.cpp</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_framed_transport.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -1846,14 +1956,14 @@
           <GroupName>erpc-transports</GroupName>
           <Files>
             <File>
-              <FileName>uart_cmsis_transport.h</FileName>
+              <FileName>erpc_uart_cmsis_transport.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/transports/uart_cmsis_transport.h</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_uart_cmsis_transport.h</FilePath>
             </File>
             <File>
-              <FileName>uart_cmsis_transport.cpp</FileName>
+              <FileName>erpc_uart_cmsis_transport.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/transports/uart_cmsis_transport.cpp</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_uart_cmsis_transport.cpp</FilePath>
             </File>
           </Files>
         </Group>

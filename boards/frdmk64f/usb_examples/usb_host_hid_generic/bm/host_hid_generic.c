@@ -1,7 +1,7 @@
 /*
  * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016 - 2017 NXP
+ * Copyright 2016 - 2018 NXP
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -36,6 +36,7 @@
 #include "usb_host.h"
 #include "usb_host_hid.h"
 #include "host_hid_generic.h"
+#include "app.h"
 
 /*******************************************************************************
  * Definitions
@@ -127,7 +128,7 @@ static void USB_HostHidControlCallback(void *param, uint8_t *data, uint32_t data
 {
     usb_host_hid_generic_instance_t *genericInstance = (usb_host_hid_generic_instance_t *)param;
 
-    if (kStatus_USB_TransferStall == status) 
+    if (kStatus_USB_TransferStall == status)
     {
         usb_echo("device don't support this ruquest \r\n");
     }
@@ -139,21 +140,22 @@ static void USB_HostHidControlCallback(void *param, uint8_t *data, uint32_t data
     {
     }
 
-    if (genericInstance->runWaitState == kRunWaitSetInterface) /* set interface finish */
+    if (genericInstance->runWaitState == kUSB_HostHidRunWaitSetInterface) /* set interface finish */
     {
-        genericInstance->runState = kRunSetInterfaceDone;
+        genericInstance->runState = kUSB_HostHidRunSetInterfaceDone;
     }
-    else if (genericInstance->runWaitState == kRunWaitSetIdle) /* hid set idle finish */
+    else if (genericInstance->runWaitState == kUSB_HostHidRunWaitSetIdle) /* hid set idle finish */
     {
-        genericInstance->runState = kRunSetIdleDone;
+        genericInstance->runState = kUSB_HostHidRunSetIdleDone;
     }
-    else if (genericInstance->runWaitState == kRunWaitGetReportDescriptor) /* hid get report descriptor finish */
+    else if (genericInstance->runWaitState ==
+             kUSB_HostHidRunWaitGetReportDescriptor) /* hid get report descriptor finish */
     {
-        genericInstance->runState = kRunGetReportDescriptorDone;
+        genericInstance->runState = kUSB_HostHidRunGetReportDescriptorDone;
     }
-    else if (genericInstance->runWaitState == kRunWaitSetProtocol) /* hid set protocol finish */
+    else if (genericInstance->runWaitState == kUSB_HostHidRunWaitSetProtocol) /* hid set protocol finish */
     {
-        genericInstance->runState = kRunSetProtocolDone;
+        genericInstance->runState = kUSB_HostHidRunSetProtocolDone;
     }
     else
     {
@@ -164,17 +166,17 @@ static void USB_HostHidInCallback(void *param, uint8_t *data, uint32_t dataLengt
 {
     usb_host_hid_generic_instance_t *genericInstance = (usb_host_hid_generic_instance_t *)param;
 
-    if (genericInstance->runWaitState == kRunWaitDataReceived)
+    if (genericInstance->runWaitState == kUSB_HostHidRunWaitDataReceived)
     {
         if (status == kStatus_USB_Success)
         {
-            genericInstance->runState = kRunDataReceived; /* go to process data */
+            genericInstance->runState = kUSB_HostHidRunDataReceived; /* go to process data */
         }
         else
         {
             if (genericInstance->deviceState == kStatus_DEV_Attached)
             {
-                genericInstance->runState = kRunPrimeDataReceive; /* go to prime next receiving */
+                genericInstance->runState = kUSB_HostHidRunPrimeDataReceive; /* go to prime next receiving */
             }
         }
     }
@@ -230,7 +232,7 @@ void USB_HostHidGenericTask(void *param)
                 break;
 
             case kStatus_DEV_Attached: /* deivce is attached and numeration is done */
-                genericInstance->runState = kRunSetInterface;
+                genericInstance->runState = kUSB_HostHidRunSetInterface;
                 if (USB_HostHidInit(genericInstance->deviceHandle, &genericInstance->classHandle) !=
                     kStatus_USB_Success)
                 {
@@ -245,7 +247,7 @@ void USB_HostHidGenericTask(void *param)
 
             case kStatus_DEV_Detached: /* device is detached */
                 genericInstance->deviceState = kStatus_DEV_Idle;
-                genericInstance->runState = kRunIdle;
+                genericInstance->runState = kUSB_HostHidRunIdle;
                 USB_HostHidDeinit(genericInstance->deviceHandle, genericInstance->classHandle);
                 genericInstance->classHandle = NULL;
                 usb_echo("hid generic detached\r\n");
@@ -259,12 +261,12 @@ void USB_HostHidGenericTask(void *param)
     /* run state */
     switch (genericInstance->runState)
     {
-        case kRunIdle:
+        case kUSB_HostHidRunIdle:
             break;
 
-        case kRunSetInterface: /* 1. set hid interface */
-            genericInstance->runWaitState = kRunWaitSetInterface;
-            genericInstance->runState = kRunIdle;
+        case kUSB_HostHidRunSetInterface: /* 1. set hid interface */
+            genericInstance->runWaitState = kUSB_HostHidRunWaitSetInterface;
+            genericInstance->runState = kUSB_HostHidRunIdle;
             if (USB_HostHidSetInterface(genericInstance->classHandle, genericInstance->interfaceHandle, 0,
                                         USB_HostHidControlCallback, genericInstance) != kStatus_USB_Success)
             {
@@ -272,15 +274,15 @@ void USB_HostHidGenericTask(void *param)
             }
             break;
 
-        case kRunSetInterfaceDone: /* 2. hid set idle */
+        case kUSB_HostHidRunSetInterfaceDone: /* 2. hid set idle */
             genericInstance->inMaxPacketSize =
                 USB_HostHidGetPacketsize(genericInstance->classHandle, USB_ENDPOINT_INTERRUPT, USB_IN);
             genericInstance->outMaxPacketSize =
                 USB_HostHidGetPacketsize(genericInstance->classHandle, USB_ENDPOINT_INTERRUPT, USB_OUT);
 
             /* first: set idle */
-            genericInstance->runWaitState = kRunWaitSetIdle;
-            genericInstance->runState = kRunIdle;
+            genericInstance->runWaitState = kUSB_HostHidRunWaitSetIdle;
+            genericInstance->runState = kUSB_HostHidRunIdle;
             if (USB_HostHidSetIdle(genericInstance->classHandle, 0, 0, USB_HostHidControlCallback, genericInstance) !=
                 kStatus_USB_Success)
             {
@@ -288,7 +290,7 @@ void USB_HostHidGenericTask(void *param)
             }
             break;
 
-        case kRunSetIdleDone: /* 3. hid get report descriptor */
+        case kUSB_HostHidRunSetIdleDone: /* 3. hid get report descriptor */
             /* get report descriptor's length */
             hidDescriptor = NULL;
             descriptor = (uint8_t *)((usb_host_interface_t *)genericInstance->interfaceHandle)->interfaceExtension;
@@ -326,20 +328,20 @@ void USB_HostHidGenericTask(void *param)
             if (hidReportLength > HID_GENERIC_IN_BUFFER_SIZE)
             {
                 usb_echo("hid buffer is too small\r\n");
-                genericInstance->runState = kRunIdle;
+                genericInstance->runState = kUSB_HostHidRunIdle;
                 return;
             }
 
-            genericInstance->runWaitState = kRunWaitGetReportDescriptor;
-            genericInstance->runState = kRunIdle;
+            genericInstance->runWaitState = kUSB_HostHidRunWaitGetReportDescriptor;
+            genericInstance->runState = kUSB_HostHidRunIdle;
             /* second: get report descriptor */
             USB_HostHidGetReportDescriptor(genericInstance->classHandle, genericInstance->genericInBuffer,
                                            hidReportLength, USB_HostHidControlCallback, genericInstance);
             break;
 
-        case kRunGetReportDescriptorDone: /* 4. hid set protocol */
-            genericInstance->runWaitState = kRunWaitSetProtocol;
-            genericInstance->runState = kRunIdle;
+        case kUSB_HostHidRunGetReportDescriptorDone: /* 4. hid set protocol */
+            genericInstance->runWaitState = kUSB_HostHidRunWaitSetProtocol;
+            genericInstance->runState = kUSB_HostHidRunIdle;
             /* third: set protocol */
             if (USB_HostHidSetProtocol(genericInstance->classHandle, USB_HOST_HID_REQUEST_PROTOCOL_REPORT,
                                        USB_HostHidControlCallback, genericInstance) != kStatus_USB_Success)
@@ -348,9 +350,9 @@ void USB_HostHidGenericTask(void *param)
             }
             break;
 
-        case kRunSetProtocolDone: /* 5. start to receive data and send data */
-            genericInstance->runWaitState = kRunWaitDataReceived;
-            genericInstance->runState = kRunIdle;
+        case kUSB_HostHidRunSetProtocolDone: /* 5. start to receive data and send data */
+            genericInstance->runWaitState = kUSB_HostHidRunWaitDataReceived;
+            genericInstance->runState = kUSB_HostHidRunIdle;
             if (USB_HostHidRecv(genericInstance->classHandle, genericInstance->genericInBuffer,
                                 genericInstance->inMaxPacketSize, USB_HostHidInCallback,
                                 genericInstance) != kStatus_USB_Success)
@@ -369,11 +371,11 @@ void USB_HostHidGenericTask(void *param)
             }
             break;
 
-        case kRunDataReceived: /* process received data, receive next data and send next data */
+        case kUSB_HostHidRunDataReceived: /* process received data, receive next data and send next data */
             USB_HostHidGenericProcessBuffer(genericInstance);
 
-            genericInstance->runWaitState = kRunWaitDataReceived;
-            genericInstance->runState = kRunIdle;
+            genericInstance->runWaitState = kUSB_HostHidRunWaitDataReceived;
+            genericInstance->runState = kUSB_HostHidRunIdle;
             if (USB_HostHidRecv(genericInstance->classHandle, genericInstance->genericInBuffer,
                                 genericInstance->inMaxPacketSize, USB_HostHidInCallback,
                                 genericInstance) != kStatus_USB_Success)
@@ -392,9 +394,9 @@ void USB_HostHidGenericTask(void *param)
             }
             break;
 
-        case kRunPrimeDataReceive: /* receive next data and send next data */
-            genericInstance->runWaitState = kRunWaitDataReceived;
-            genericInstance->runState = kRunIdle;
+        case kUSB_HostHidRunPrimeDataReceive: /* receive next data and send next data */
+            genericInstance->runWaitState = kUSB_HostHidRunWaitDataReceived;
+            genericInstance->runState = kUSB_HostHidRunIdle;
             if (USB_HostHidRecv(genericInstance->classHandle, genericInstance->genericInBuffer,
                                 genericInstance->inMaxPacketSize, USB_HostHidInCallback,
                                 genericInstance) != kStatus_USB_Success)

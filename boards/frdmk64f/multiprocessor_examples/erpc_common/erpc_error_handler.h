@@ -60,7 +60,7 @@ extern "C" {
  * This function prints a description of occurred error and sets bool variable g_erpc_error_occurred which is used for
  * determining if error occurred in user application on client side.
  */
-void erpc_error_handler(erpc_status_t err);
+void erpc_error_handler(erpc_status_t err, uint32_t functionID);
 
 //@}
 

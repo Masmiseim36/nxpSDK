@@ -323,6 +323,9 @@ Driver_ContextInit(void *pCxt)
     pDCxt->strrclState = STRRCL_ST_DISABLED;
     pDCxt->strrclBlock = false;
     pDCxt->wpsState = false;
+    pDCxt->apiMutex = xSemaphoreCreateMutex();
+    if (NULL == pDCxt->apiMutex)
+        return A_ERROR;
 
     /* Connection element for first device */
     pDCxt->conn[0].networkType = INFRA_NETWORK;

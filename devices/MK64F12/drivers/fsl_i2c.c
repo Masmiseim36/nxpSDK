@@ -3,10 +3,10 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
+ *  that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -36,6 +36,12 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.i2c"
+#endif
+
 
 /*! @brief i2c transfer state. */
 enum _i2c_transfer_states
@@ -71,13 +77,6 @@ typedef void (*i2c_isr_t)(I2C_Type *base, void *i2cHandle);
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-
-/*!
- * @brief Get instance number for I2C module.
- *
- * @param base I2C peripheral base address.
- */
-uint32_t I2C_GetInstance(I2C_Type *base);
 
 /*!
 * @brief Set SCL/SDA hold time, this API receives SCL stop hold time, calculate the
@@ -138,6 +137,9 @@ static void I2C_TransferCommonIRQHandler(I2C_Type *base, void *handle);
  * Variables
  ******************************************************************************/
 
+/*! @brief Pointers to i2c bases for each instance. */
+I2C_Type *const s_i2cBases[] = I2C_BASE_PTRS;
+
 /*! @brief Pointers to i2c handles for each instance. */
 static void *s_i2cHandle[FSL_FEATURE_SOC_I2C_COUNT] = {NULL};
 
@@ -147,9 +149,6 @@ static const uint16_t s_i2cDividerTable[] = {
     48,  56,  64,  72,   80,   88,   104,  128,  80,   96,   112,  128,  144,  160,  192,  240,
     160, 192, 224, 256,  288,  320,  384,  480,  320,  384,  448,  512,  576,  640,  768,  960,
     640, 768, 896, 1024, 1152, 1280, 1536, 1920, 1280, 1536, 1792, 2048, 2304, 2560, 3072, 3840};
-
-/*! @brief Pointers to i2c bases for each instance. */
-static I2C_Type *const s_i2cBases[] = I2C_BASE_PTRS;
 
 /*! @brief Pointers to i2c IRQ number for each instance. */
 static const IRQn_Type s_i2cIrqs[] = I2C_IRQS;
@@ -212,7 +211,7 @@ static void I2C_SetHoldTime(I2C_Type *base, uint32_t sclStopHoldTime_ns, uint32_
         for (i = 0u; i < sizeof(s_i2cDividerTable) / sizeof(s_i2cDividerTable[0]); ++i)
         {
             /* Assume SCL hold(stop) value = s_i2cDividerTable[i]/2. */
-            computedSclHoldTime = ((multiplier * s_i2cDividerTable[i]) * 500000000U) / sourceClock_Hz;
+            computedSclHoldTime = ((multiplier * s_i2cDividerTable[i]) * 500000U) / (sourceClock_Hz / 1000U);
             absError = sclStopHoldTime_ns > computedSclHoldTime ? (sclStopHoldTime_ns - computedSclHoldTime) :
                                                                   (computedSclHoldTime - sclStopHoldTime_ns);
 
@@ -1152,7 +1151,7 @@ status_t I2C_MasterTransferBlocking(I2C_Type *base, i2c_master_transfer_t *xfer)
                 return result;
             }
 
-        } while ((xfer->subaddressSize > 0) && (result == kStatus_Success));
+        } while (xfer->subaddressSize > 0);
 
         if (xfer->direction == kI2C_Read)
         {

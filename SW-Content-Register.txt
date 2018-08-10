@@ -1,5 +1,5 @@
 Release Name: MCUXpresso Software Development Kit (SDK)
-Release Version: 2.4.1
+Release Version: 2.4.2
 
 Amazon FreeRTOS            Author: Real Time Engineers, Ltd.                 
                            Description: IoT operating system for             
@@ -10,7 +10,17 @@ Amazon FreeRTOS            Author: Real Time Engineers, Ltd.
                            Location: rtos/amazon-freertos                    
                            name: Amazon FreeRTOS                             
                            URL: https://aws.amazon.com/freertos/             
-                           version: 1.2.3                                    
+                           version: 1.2.7                                    
+
+AwsRemoteControl           Location: boards/<board>/aws_examples/remote_contr
+                           ol_android/AwsRemoteControl.apk                   
+                           Description: AWS Remote Control example Android   
+                           application                                       
+                           License: Apache-2-Clause & BSD                    
+                           Author: Android Open Source Project & NXP         
+                           name: AWS Remote Control                          
+                           version: 1.0                                      
+                           Format: binary                                    
 
 C++ option-parser          version: NA                                       
                            Location:                                         
@@ -78,6 +88,17 @@ FatFs                      Approved Open Source License: Yes
                            URL: http://elm-chan.org/fsw/ff/00index_e.html    
                            version: 0.12c                                    
 
+Gradle                     version: 4.1                                      
+                           Location: boards/<board>/aws_examples/remote_contr
+                           ol_android/gradle, boards/<board>/aws_examples/led
+                           _wifi_android/gradle                              
+                           Description: Gradle build tool                    
+                           License: Apache-2-Clause                          
+                           Author: Gradle Inc (https://gradle.org)           
+                           name: Gradle                                      
+                           Format: binary library                            
+                           URL: https://github.com/gradle/gradle             
+
 ISSDK                      version: 1.7                                      
                            Location: middleware/issdk                        
                            Description: Freescale IoT Sensing SDK. It        
@@ -88,6 +109,16 @@ ISSDK                      version: 1.7
                            name: ISSDK                                       
                            Format: source code                               
 
+JSMN                       version: NA                                       
+                           Location: rtos/amazon-                            
+                           freertos/lib/third_party/jsmn                     
+                           Description: JSMN (Jasmine) JSON parser           
+                           License: MIT                                      
+                           Author: Serge A. Zaitsev                          
+                           name: JSMN                                        
+                           Format: source code                               
+                           URL: http://zserge.com/jsmn.html                  
+
 KSDK Peripheral Driver     Description: Peripheral drivers are designed for  
                            the most common use cases indentified for         
                            the underlying hardware block.                    
@@ -96,6 +127,18 @@ KSDK Peripheral Driver     Description: Peripheral drivers are designed for
                            License: Open Source - BSD-3-Clause Clear         
                            Format: source code                               
                            Location: devices/<device_name>/drivers           
+
+LittleFS                   version: 1.3                                      
+                           Location: middleware/littlefs                     
+                           Description: LittleFS - A little fail-safe        
+                           filesystem designed for microcontrollers          
+                           License: Apache License 2.0, See                  
+                           <rootfolder>/middleware/littlefs/LICENSE.md       
+                           Author: Christopher Haster                        
+                           (https://github.com/geky)                         
+                           name: LittleFS                                    
+                           Format: source code                               
+                           URL: https://github.com/geky/littlefs             
 
 MBED TLS stack             Author: ARM                                       
                            Description: Cryptographic and SSL/TLS Library    
@@ -142,6 +185,23 @@ Snapshot Demo              Location: boards/<board>/rtos_examples/visualizati
                            name: Percepio Tracealyzer - Snapshot Demo        
                            Format: source code                               
 
+SD MMC Card middleware     name: SD MMC Card middleware                      
+                           Location: middleware/sdmmc                        
+                           License: Open Source - BSD-3-Clause Clear         
+                           Description: A software component support SD card,
+                           eMMC card.                                        
+                           Author: Freescale                                 
+                           version: 2.1.2                                    
+                           Format: source code                               
+
+SE_hostlib                 version: KSDK-1.4.0.1                             
+                           Location: middleware/se_hostlib                   
+                           Description: Secure element host library          
+                           License: NXP proprietary license                  
+                           Author: NXP                                       
+                           name: se_hostlib                                  
+                           Format: source code                               
+
 Segger SystemView Demo     version: 2.40a                                    
                            Location: boards/<board>/rtos_examples/visualizati
                            on/freertos_segger_sysview                        
@@ -183,6 +243,14 @@ USB                        version: 1.6.3
                            name: USB                                         
                            Format: source code                               
 
+aml                        Author: NXP                                       
+                           version: 1.4.2                                    
+                           name: aml                                         
+                           Format: source code & header files                
+                           License: Open Source - BSD-3-Clause Clear         
+                           Location: middleware/aml                          
+                           Description: NXP Analog Middleware Layer          
+
 eRPC                       version: 4.5.0                                    
                            Location: middleware/multicore/erpc               
                            Description: Embedded Remote Procedure Call       
@@ -202,6 +270,23 @@ emWin                      version: 5.38
                            URL: http://www.nxp.com/pages/emwin-graphics-     
                            library:EMWIN-GRAPHICS-LIBRARY                    
 
+lvhb                       Author: NXP                                       
+                           version: 1.0.0                                    
+                           name: lvhb                                        
+                           Format: source code & header files                
+                           License: Open Source - BSD-3-Clause Clear         
+                           Location: middleware/lvhb                         
+                           Description: NXP Low Voltage H-Bridge driver      
+
+lwIP TCP/IP Stack          Author: Swedish Institute of Computer Science     
+                           Description: A light-weight TCP/IP stack          
+                           Format: source code                               
+                           License: Open Source - BSD-3-Clause               
+                           Location: middleware/lwip                         
+                           name: lwIP TCP/IP Stack                           
+                           URL: http://savannah.nongnu.org/projects/lwip     
+                           version: 2.0.2                                    
+
 mmCAU S/W Library          Author: Freescale                                 
                            Description: S/W library that works with the      
                            memory-mapped cryptographic acceleration unit     
@@ -211,6 +296,14 @@ mmCAU S/W Library          Author: Freescale
                            Location: middleware/mmcau                        
                            name: mmCAU S/W Library                           
                            version: 2.0.1                                    
+
+sigfox                     Author: NXP                                       
+                           version: 1.0.0                                    
+                           name: sigfox                                      
+                           Format: source code & header files                
+                           License: Open Source - BSD-3-Clause Clear         
+                           Location: middleware/sigfox                       
+                           Description: NXP Sigfox driver                    
 
 wifi_qca                   version: 2.0.0                                    
                            Location: middleware/wifi_qca                     

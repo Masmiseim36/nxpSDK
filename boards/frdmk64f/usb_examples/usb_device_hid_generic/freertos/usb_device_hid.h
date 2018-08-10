@@ -153,6 +153,10 @@ typedef struct _usb_device_hid_struct
     usb_device_handle handle;                       /*!< The device handle */
     usb_device_class_config_struct_t *configStruct; /*!< The configuration of the class. */
     usb_device_interface_struct_t *interfaceHandle; /*!< Current interface handle */
+    uint8_t *interruptInPipeDataBuffer;             /*!< IN pipe data buffer backup when stall */
+    uint32_t interruptInPipeDataLen;                /*!< IN pipe data length backup when stall  */
+    uint8_t *interruptOutPipeDataBuffer;             /*!< OUT pipe data buffer backup when stall */
+    uint32_t interruptOutPipeDataLen;                /*!< OUT pipe data length backup when stall  */
     uint8_t configuration;                          /*!< Current configuration */
     uint8_t interfaceNumber;                        /*!< The interface number of the class */
     uint8_t alternate;                              /*!< Current alternate setting of the interface */
@@ -160,6 +164,8 @@ typedef struct _usb_device_hid_struct
     uint8_t protocol;                               /*!< Current protocol */
     uint8_t interruptInPipeBusy;                    /*!< Interrupt IN pipe busy flag */
     uint8_t interruptOutPipeBusy;                   /*!< Interrupt OUT pipe busy flag */
+    uint8_t interruptInPipeStall;                    /*!< Interrupt IN pipe stall flag */
+    uint8_t interruptOutPipeStall;                   /*!< Interrupt OUT pipe stall flag */
 } usb_device_hid_struct_t;
 
 /*******************************************************************************

@@ -52,6 +52,8 @@ SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -mfloat-abi=hard")
 
 SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -mfpu=fpv4-sp-d16")
 
+SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -DNDEBUG")
+
 SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -D__STARTUP_CLEAR_BSS")
 
 SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -Wall")
@@ -193,6 +195,8 @@ SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -mfpu=fpv4-sp-d16")
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -MMD")
 
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -MP")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DNDEBUG")
 
 SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DCPU_MK64FN1M0VLL12")
 
@@ -342,7 +346,17 @@ add_executable(adc16_low_power.elf
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../clock_config.h"
-"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_flash.c"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_adapter.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_utilities.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_features.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_controller.c"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_controller.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_flash.c"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_flash.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_cache.c"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_cache.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_flexnvm.c"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_flexnvm.h"
 "${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_flash.h"
 "${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_gpio.h"
 "${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_gpio.c"

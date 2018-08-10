@@ -166,11 +166,7 @@ void USB_DeviceIsrEnable(void)
     irqNumber = usbDeviceKhciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
 #endif
 /* Install isr, set priority, and enable IRQ. */
-#if defined(__GIC_PRIO_BITS)
-    GIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
-#else
     NVIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
-#endif
     EnableIRQ((IRQn_Type)irqNumber);
 }
 #if USB_DEVICE_CONFIG_USE_TASK
@@ -1081,6 +1077,7 @@ usb_status_t USB_DeviceConfigureEndpointStatus(usb_device_handle handle, uint8_t
             if (g_mscHandle->inEndpointStallFlag == 0)
             {
                 g_mscHandle->inEndpointStallFlag = 1;
+                g_mscHandle->cswPrimeFlag = 0;
                 error = USB_DeviceStallEndpoint(handle, ep);
             }
         }
@@ -1089,6 +1086,7 @@ usb_status_t USB_DeviceConfigureEndpointStatus(usb_device_handle handle, uint8_t
             if (g_mscHandle->outEndpointStallFlag == 0)
             {
                 g_mscHandle->outEndpointStallFlag = 1;
+                g_mscHandle->cbwPrimeFlag = 0;
                 error = USB_DeviceStallEndpoint(handle, ep);
             }
         }
@@ -1107,6 +1105,7 @@ usb_status_t USB_DeviceConfigureEndpointStatus(usb_device_handle handle, uint8_t
             if (g_mscHandle->inEndpointStallFlag == 1)
             {
                 g_mscHandle->inEndpointStallFlag = 0;
+                g_mscHandle->cswPrimeFlag = 0;
                 error = USB_DeviceUnstallEndpoint(handle, ep);
             }
         }
@@ -1115,6 +1114,7 @@ usb_status_t USB_DeviceConfigureEndpointStatus(usb_device_handle handle, uint8_t
             if (g_mscHandle->outEndpointStallFlag == 1)
             {
                 g_mscHandle->outEndpointStallFlag = 0;
+                g_mscHandle->cbwPrimeFlag = 0;
                 error = USB_DeviceUnstallEndpoint(handle, ep);
             }
         }

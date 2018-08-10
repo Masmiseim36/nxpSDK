@@ -2,7 +2,7 @@
 <project>
   <fileVersion>2</fileVersion>
   <configuration>
-    <name>Debug</name>
+    <name>debug</name>
     <toolchain>
       <name>ARM</name>
     </toolchain>
@@ -231,7 +231,7 @@
         <option>
           <name>CCAllowList</name>
           <version>1</version>
-          <state>00000000</state>
+          <state>00100000</state>
         </option>
         <option>
           <name>CCDebugInfo</name>
@@ -247,11 +247,11 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state/>
+          <state>--enable_restrict</state>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -317,6 +317,7 @@
           <state>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/port</state>
           <state>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/setup</state>
           <state>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/transports</state>
+          <state>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -383,7 +384,7 @@
         </option>
         <option>
           <name>IccCppDialect</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccExceptions</name>
@@ -399,7 +400,7 @@
         </option>
         <option>
           <name>IccCppInlineSemantics</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccCmsis</name>
@@ -958,7 +959,7 @@
     </settings>
   </configuration>
   <configuration>
-    <name>Release</name>
+    <name>release</name>
     <toolchain>
       <name>ARM</name>
     </toolchain>
@@ -1207,11 +1208,11 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state/>
+          <state>--enable_restrict</state>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -1277,6 +1278,7 @@
           <state>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/port</state>
           <state>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/setup</state>
           <state>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/transports</state>
+          <state>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1343,7 +1345,7 @@
         </option>
         <option>
           <name>IccCppDialect</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccExceptions</name>
@@ -1359,7 +1361,7 @@
         </option>
         <option>
           <name>IccCppInlineSemantics</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccCmsis</name>
@@ -1442,6 +1444,7 @@
         </option>
         <option>
           <name>ADefines</name>
+          <state>NDEBUG</state>
         </option>
         <option>
           <name>AList</name>
@@ -1918,12 +1921,15 @@
   </configuration>
   <group>
     <name>drivers</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Driver/Include/Driver_Common.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Driver/Include/Driver_USART.h</name>
-    </file>
+    <group>
+      <name>src</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../CMSIS/Driver/Include/Driver_Common.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../CMSIS/Driver/Include/Driver_USART.h</name>
+      </file>
+    </group>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_uart.h</name>
     </file>
@@ -1955,19 +1961,43 @@
       <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_edma.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_dmamux.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_dmamux.c</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../devices/MK64F12/cmsis_drivers/fsl_uart_cmsis.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK64F12/cmsis_drivers/fsl_uart_cmsis.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_flash.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_ftfx_adapter.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_ftfx_utilities.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_ftfx_features.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_ftfx_controller.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_ftfx_controller.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_ftfx_flash.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_ftfx_flash.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_ftfx_cache.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_ftfx_cache.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_ftfx_flexnvm.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_ftfx_flexnvm.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_flash.h</name>
@@ -1986,6 +2016,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_smc.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_dmamux.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_dmamux.c</name>
     </file>
   </group>
   <group>
@@ -2008,9 +2044,6 @@
     <group>
       <name>service</name>
       <file>
-        <name>$PROJ_DIR$/../../erpc_common/erpc_matrix_multiply/service/erpc_crc16.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply.erpc</name>
       </file>
       <file>
@@ -2023,55 +2056,55 @@
     <group>
       <name>infra</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/client_manager.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_client_manager.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/client_manager.cpp</name>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_client_manager.cpp</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_version.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/codec.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_codec.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/basic_codec.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_basic_codec.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/transport.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_transport.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/message_buffer.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_buffer.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/message_loggers.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_loggers.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_common.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/manually_constructed.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_manually_constructed.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/crc16.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_crc16.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/basic_codec.cpp</name>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_basic_codec.cpp</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/message_buffer.cpp</name>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_buffer.cpp</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/message_loggers.cpp</name>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_loggers.cpp</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/crc16.cpp</name>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_crc16.cpp</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/framed_transport.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_framed_transport.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/framed_transport.cpp</name>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_framed_transport.cpp</name>
       </file>
     </group>
     <group>
@@ -2098,10 +2131,10 @@
     <group>
       <name>transports</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/transports/uart_cmsis_transport.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_uart_cmsis_transport.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/transports/uart_cmsis_transport.cpp</name>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_uart_cmsis_transport.cpp</name>
       </file>
     </group>
     <group>
@@ -2128,18 +2161,21 @@
     <file>
       <name>$PROJ_DIR$/../RTE_Device.h</name>
     </file>
-    <file>
-      <name>$PROJ_DIR$/../board.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../board.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../clock_config.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../clock_config.h</name>
-    </file>
+    <group>
+      <name>src</name>
+      <file>
+        <name>$PROJ_DIR$/../board.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../board.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../clock_config.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../clock_config.h</name>
+      </file>
+    </group>
   </group>
   <group>
     <name>doc</name>

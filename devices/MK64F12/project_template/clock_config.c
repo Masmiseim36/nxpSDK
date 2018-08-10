@@ -64,7 +64,6 @@
 !!ClocksProfile
 product: Clocks v1.0
 processor: MK64FN1M0xxx12
-package_id: MK64FN1M0VMD12
 mcu_data: ksdk2_0
 processor_version: 1.0.1
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR THE CLOCKS TOOL **/

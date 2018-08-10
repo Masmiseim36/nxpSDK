@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2013-2016 ARM Limited. All rights reserved.
- * Copyright 2017 NXP. Not a Contribution.
+ * Copyright (c) 2016, Freescale Semiconductor, Inc. Not a Contribution.
+ * Copyright 2016-2017 NXP. Not a Contribution.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -16,6 +17,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 
 #ifndef _FSL_ENET_CMSIS_H_
 #define _FSL_ENET_CMSIS_H_

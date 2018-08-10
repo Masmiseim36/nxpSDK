@@ -1,7 +1,7 @@
 /*
  * The Clear BSD License
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 - 2017 NXP
+ * Copyright 2016 - 2018 NXP
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -74,13 +74,13 @@ uint8_t g_UsbDeviceHidMouseReportDescriptor[] = {
     0x19U, 0x01U, /* Usage Minimum (01U) */
     0x29U, 0x03U, /* Usage Maximum (03U) */
 
-    0x15U, 0x00U, /* logical Minimum (0U) */
-    0x25U, 0x01U, /* logical Maximum (1U) */
+    0x15U, 0x00U, /* Logical Minimum (0U) */
+    0x25U, 0x01U, /* Logical Maximum (1U) */
     0x95U, 0x03U, /* Report Count (3U) */
     0x75U, 0x01U, /* Report Size (1U) */
 
     0x81U, 0x02U, /* Input(Data, Variable, Absolute) 3U button bit fields */
-    0x95U, 0x01U, /* Report count (1U) */
+    0x95U, 0x01U, /* Report Count (1U) */
     0x75U, 0x05U, /* Report Size (5U) */
     0x81U, 0x01U, /* Input (Constant), 5U constant field */
 
@@ -94,9 +94,9 @@ uint8_t g_UsbDeviceHidMouseReportDescriptor[] = {
     0x75U, 0x08U, /* Report Size (8U) */
     0x95U, 0x03U, /* Report Count (3U) */
 
-    0x81U, 0x06U, /* Input(Data, Variable, Relative), three position bytes (X & Y & Z)*/
-    0xC0U,        /* end collection, Close Pointer collection*/
-    0xC0U         /* end collection, Close Mouse collection */
+    0x81U, 0x06U, /* Input(Data, Variable, Relative), Three position bytes (X & Y & Z)*/
+    0xC0U,        /* End collection, Close Pointer collection*/
+    0xC0U         /* End collection, Close Mouse collection */
 };
 
 /* HID keyboard report descriptor */
@@ -115,30 +115,30 @@ uint8_t g_UsbDeviceHidKeyboardReportDescriptor[] = {
     0x25U, 0x01U, /* Logical Maximum (1U) */
     0x81U, 0x02U, /* Input(Data, Variable, Absolute) Modifier byte */
 
-    0x95U, 0x01U, /* Report count (1U) */
+    0x95U, 0x01U, /* Report Count (1U) */
     0x75U, 0x08U, /* Report Size (8U) */
     0x81U, 0x01U, /* Input (Constant), Reserved byte */
-    0x95U, 0x05U, /* Report count (5U) */
+    0x95U, 0x05U, /* Report Count (5U) */
     0x75U, 0x01U, /* Report Size (1U) */
 
     0x05U, 0x08U, /* Usage Page (Page# for LEDs) */
     0x19U, 0x01U, /* Usage Minimum (1U) */
     0x29U, 0x05U, /* Usage Maximum (5U) */
     0x91U, 0x02U, /* Output (Data, Variable, Absolute) LED report */
-    0x95U, 0x01U, /* Report count (1U) */
+    0x95U, 0x01U, /* Report Count (1U) */
     0x75U, 0x03U, /* Report Size (3U) */
     0x91U, 0x01U, /* Output (Constant), LED report padding */
 
-    0x95U, 0x06U, /* Report count (6U) */
+    0x95U, 0x06U, /* Report Count (6U) */
     0x75U, 0x08U, /* Report Size (8U) */
-    0x15U, 0x00U, /* logical Minimum (0U) */
-    0x25U, 0xFFU, /* logical Maximum (255U) */
+    0x15U, 0x00U, /* Logical Minimum (0U) */
+    0x25U, 0xFFU, /* Logical Maximum (255U) */
     0x05U, 0x07U, /* Usage Page (Key Codes) */
     0x19U, 0x00U, /* Usage Minimum (0U) */
     0x29U, 0xFFU, /* Usage Maximum (255U) */
 
     0x81U, 0x00U, /* Input(Data, Array), Key arrays(6U bytes)*/
-    0xC0U,        /* end collection */
+    0xC0U,        /* End collection */
 };
 
 USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
@@ -557,7 +557,7 @@ usb_status_t USB_DeviceSetSpeed(uint8_t speed)
         {
             if (USB_SPEED_HIGH == speed)
             {
-                if (((descriptorHead->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_IN) ==
+                if (((descriptorHead->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) ==
                      USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_IN) &&
                     (USB_HID_MOUSE_ENDPOINT_IN ==
                      (descriptorHead->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)))
@@ -566,7 +566,7 @@ usb_status_t USB_DeviceSetSpeed(uint8_t speed)
                     USB_SHORT_TO_LITTLE_ENDIAN_ADDRESS(HS_HID_MOUSE_INTERRUPT_IN_PACKET_SIZE,
                                                        descriptorHead->endpoint.wMaxPacketSize);
                 }
-                else if (((descriptorHead->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_IN) ==
+                else if (((descriptorHead->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) ==
                           USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_IN) &&
                          (USB_HID_KEYBOARD_ENDPOINT_IN ==
                           (descriptorHead->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)))
@@ -581,7 +581,7 @@ usb_status_t USB_DeviceSetSpeed(uint8_t speed)
             }
             else
             {
-                if (((descriptorHead->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_IN) ==
+                if (((descriptorHead->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) ==
                      USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_IN) &&
                     (USB_HID_MOUSE_ENDPOINT_IN ==
                      (descriptorHead->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)))
@@ -590,7 +590,7 @@ usb_status_t USB_DeviceSetSpeed(uint8_t speed)
                     USB_SHORT_TO_LITTLE_ENDIAN_ADDRESS(FS_HID_MOUSE_INTERRUPT_IN_PACKET_SIZE,
                                                        descriptorHead->endpoint.wMaxPacketSize);
                 }
-                else if (((descriptorHead->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_IN) ==
+                else if (((descriptorHead->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) ==
                           USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_IN) &&
                          (USB_HID_KEYBOARD_ENDPOINT_IN ==
                           (descriptorHead->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)))

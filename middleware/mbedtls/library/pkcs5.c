@@ -96,10 +96,8 @@ static int pkcs5_parse_pbkdf2_params( const mbedtls_asn1_buf *params,
     if( ( ret = mbedtls_asn1_get_alg_null( &p, end, &prf_alg_oid ) ) != 0 )
         return( MBEDTLS_ERR_PKCS5_INVALID_FORMAT + ret );
 
-    if( MBEDTLS_OID_CMP( MBEDTLS_OID_HMAC_SHA1, &prf_alg_oid ) != 0 )
+    if( mbedtls_oid_get_md_hmac( &prf_alg_oid, md_type ) != 0 )
         return( MBEDTLS_ERR_PKCS5_FEATURE_UNAVAILABLE );
-
-    *md_type = MBEDTLS_MD_SHA1;
 
     if( p != end )
         return( MBEDTLS_ERR_PKCS5_INVALID_FORMAT +
@@ -387,18 +385,18 @@ int mbedtls_pkcs5_self_test( int verbose )
             memcmp( result_key[i], key, key_len[i] ) != 0 )
         {
             if( verbose != 0 )
-                mbedtls_printf( "failed\r\n" );
+                mbedtls_printf( "failed\n\r" );
 
             ret = 1;
             goto exit;
         }
 
         if( verbose != 0 )
-            mbedtls_printf( "passed\r\n" );
+            mbedtls_printf( "passed\n\r" );
     }
 
     if( verbose != 0 )
-        mbedtls_printf( "\r\n" );
+        mbedtls_printf( "\n\r" );
 
 exit:
     mbedtls_md_free( &sha1_ctx );

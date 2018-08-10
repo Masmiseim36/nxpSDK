@@ -53,14 +53,14 @@ static const char clientcredentialMQTT_BROKER_ENDPOINT[] = "Paste AWS IoT Broker
 #define clientcredentialGREENGRASS_DISCOVERY_PORT 8443
 
 /*
- * WIFI network to join.
+ * Wi-Fi network to join.
  */
-#define clientcredentialWIFI_SSID       "Paste WiFi SSID here."
+#define clientcredentialWIFI_SSID       "Paste Wi-Fi SSID here."
 
 /*
- * Password needed to join WiFi network.
+ * Password needed to join Wi-Fi network.
  */
-#define clientcredentialWIFI_PASSWORD   "Paste WiFi password here."
+#define clientcredentialWIFI_PASSWORD   "Paste Wi-Fi password here."
 
 /**
  * @brief Security type

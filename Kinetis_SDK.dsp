@@ -7387,6 +7387,690 @@ SOURCE=.\middleware\issdk\algorithms\sensorfusion\sources\status.c
 SOURCE=.\middleware\issdk\algorithms\sensorfusion\sources\status.h
 # End Source File
 # End Group
+# Begin Group "wireless"
+
+# PROP Default_Filter ""
+# Begin Group "bluetooth_1.2.5"
+
+# PROP Default_Filter ""
+# Begin Group "application"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\nwk_ip\app_coap\app_coap.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\nwk_ip\app_coap\app_coap.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\nwk_ip\app_echo_udp\app_echo_udp.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\nwk_ip\app_echo_udp\app_echo_udp.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\nwk_ip\app_sockets\app_sockets.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\nwk_ip\app_sockets\app_sockets.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\ApplMain.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\hybrid\ApplMain.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\ApplMain.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\hybrid\ApplMain.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\ble_conn_manager.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\ble_conn_manager.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\ble_controller_task.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\ble_controller_task_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\ble_host_task_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\ble_host_tasks.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\ble_init.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\hybrid\ble_init.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\ble_init.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\hybrid\ble_init.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\ble_service_discovery.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\ble_service_discovery.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\fsci_host\fsci\fsci_ble.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\fsci_host\fsci\fsci_ble.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\fsci_host\fsci\fsci_ble_gap.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\fsci_host\fsci\fsci_ble_gap.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\fsci_host\fsci\fsci_ble_gap_types.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\fsci_host\fsci\fsci_ble_gap_types.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\fsci_host\fsci\fsci_ble_gatt.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\fsci_host\fsci\fsci_ble_gatt.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\fsci_host\fsci\fsci_ble_gatt_db_app.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\fsci_host\fsci\fsci_ble_gatt_db_app.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\fsci_host\fsci\fsci_ble_gatt_db_app_types.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\fsci_host\fsci\fsci_ble_gatt_db_app_types.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\fsci_host\fsci\fsci_ble_gatt_types.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\fsci_host\fsci\fsci_ble_gatt_types.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\fsci_host\fsci\fsci_ble_l2cap.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\fsci_host\fsci\fsci_ble_l2cap.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\fsci_host\fsci\fsci_ble_l2cap_types.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\fsci_host\fsci\fsci_ble_l2cap_types.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\fsci_host\fsci\fsci_ble_types.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\fsci_host\fsci\fsci_ble_types.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\gatt_db\macros\gatt_alloc_x.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\gatt_db\gatt_database.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\gatt_db\gatt_database_dynamic.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\gatt_db\gatt_database_dynamic.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\gatt_db\gatt_db_handles.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\gatt_db\macros\gatt_db_macros.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\gatt_db\macros\gatt_db_x_macros.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\gatt_db\macros\gatt_decl_x.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\gatt_db\macros\gatt_enum_x.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\gatt_db\macros\gatt_init_x.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\gatt_db\macros\gatt_size_x.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\gatt_db\macros\gatt_uuid_decl_x.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\gatt_db\macros\gatt_uuid_def_x.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\fsci_host\host\host_ble.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\fsci_host\host\host_ble.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\fsci_host\host\host_gap.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\fsci_host\host\host_gatt.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\fsci_host\host\host_gatt_db.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\fsci_host\host\host_l2cap.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\ieee11073.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\nwk_ip\nwk_ip_globals.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\nwk_ip\nwk_ip_init.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\nwk_ip\nwk_ip_init.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\nwk_ip\nwk_ip_manager.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\nwk_ip\nwk_ip_manager.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\nwk_ip\shell_ip\shell_nwk_ip.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\application\common\nwk_ip\shell_ip\shell_nwk_ip.h
+# End Source File
+# End Group
+# Begin Group "controller"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\controller\interface\controller_interface.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\controller\lib\lib_ble_kw41z_controller.a
+# End Source File
+# End Group
+# Begin Group "hci_transport"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\hci_transport\interface\hci_transport.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\hci_transport\source\hcit_serial_interface.c
+# End Source File
+# End Group
+# Begin Group "host"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\host\interface\att_callbacks.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\host\interface\att_errors.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\host\interface\att_interface.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\host\interface\att_params.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\host\interface\att_types.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\host\config\ble_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\host\interface\ble_constants.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\host\interface\ble_general.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\host\config\ble_globals.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\host\interface\ble_host_tasks.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\host\interface\ble_sig_defines.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\host\interface\ble_utils.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\host\interface\fsci_ble_interface.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\host\interface\gap_interface.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\host\interface\gap_types.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\host\interface\gatt_client_interface.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\host\interface\gatt_database.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\host\interface\gatt_db_app_interface.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\host\interface\gatt_db_dynamic.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\host\interface\gatt_interface.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\host\interface\gatt_server_interface.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\host\interface\gatt_types.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\host\interface\hci_interface.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\host\interface\hci_types.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\host\interface\l2ca_cb_interface.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\host\interface\l2ca_interface.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\host\interface\l2ca_types.h
+# End Source File
+# Begin Source File
+
+SOURCE=".\middleware\wireless\bluetooth_1.2.5\host\lib\lib_ble_4-2_host_central_cm0p.a"
+# End Source File
+# Begin Source File
+
+SOURCE=".\middleware\wireless\bluetooth_1.2.5\host\lib\lib_ble_4-2_host_cm0p.a"
+# End Source File
+# Begin Source File
+
+SOURCE=".\middleware\wireless\bluetooth_1.2.5\host\lib\lib_ble_4-2_host_fsci_cm0p.a"
+# End Source File
+# Begin Source File
+
+SOURCE=".\middleware\wireless\bluetooth_1.2.5\host\lib\lib_ble_4-2_host_peripheral_cm0p.a"
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\host\interface\vendor_debug_commands.h
+# End Source File
+# End Group
+# Begin Group "profiles"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\profiles\alert_notification\alert_notification_interface.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\profiles\alert_notification\alert_notification_service.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\profiles\battery\battery_interface.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\profiles\battery\battery_service.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\profiles\blood_pressure\blood_pressure_interface.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\profiles\blood_pressure\blood_pressure_service.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\profiles\time\current_time_interface.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\profiles\time\current_time_service.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\profiles\cycling_power\cycling_power_interface.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\profiles\cycling_power\cycling_power_service.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\profiles\cycling_speed_cadence\cycling_speed_cadence_interface.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\profiles\cycling_speed_cadence\cycling_speed_cadence_service.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\profiles\device_info\device_info_interface.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\profiles\device_info\device_info_service.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\profiles\glucose\glucose_interface.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\profiles\glucose\glucose_service.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\profiles\health_thermometer\health_thermometer_interface.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\profiles\health_thermometer\health_thermometer_service.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\profiles\heart_rate\heart_rate_interface.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\profiles\heart_rate\heart_rate_service.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\profiles\hid\hid_interface.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\profiles\hid\hid_service.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\profiles\proximity\immediate_alert_interface.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\profiles\proximity\immediate_alert_service.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\profiles\ipsp\ips_profile.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\profiles\ipsp\ipsp_interface.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\profiles\proximity\link_loss_interface.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\profiles\proximity\link_loss_service.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\profiles\time\next_dst_change_interface.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\profiles\time\next_dst_change_service.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\profiles\otap\otap_interface.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\profiles\otap\otap_service.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\profiles\pulse_oximeter\pulse_oximeter_interface.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\profiles\pulse_oximeter\pulse_oximeter_service.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\profiles\time\reference_time_update_interface.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\profiles\time\reference_time_update_service.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\profiles\running_speed_cadence\running_speed_cadence_interface.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\profiles\running_speed_cadence\running_speed_cadence_service.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\profiles\temperature\temperature_interface.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\profiles\temperature\temperature_service.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\profiles\proximity\tx_power_interface.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\profiles\proximity\tx_power_service.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\profiles\wireless_uart\wireless_uart_interface.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\profiles\wireless_uart\wireless_uart_service.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\profiles\wireless_power_transfer\wpt_interface.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\wireless\bluetooth_1.2.5\profiles\wireless_power_transfer\wpt_service.c
+# End Source File
+# End Group
+# End Group
+# End Group
+# Begin Group "dhara"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\middleware\dhara\ecc\bch.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\dhara\ecc\bch.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\dhara\dhara\bytes.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\dhara\dhara\error.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\dhara\dhara\error.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\dhara\ecc\hamming.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\dhara\ecc\hamming.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\dhara\dhara\journal.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\dhara\dhara\journal.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\dhara\dhara\map.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\dhara\dhara\map.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\dhara\dhara\nand.h
+# End Source File
+# End Group
 # End Group
 # Begin Group "CMSIS"
 

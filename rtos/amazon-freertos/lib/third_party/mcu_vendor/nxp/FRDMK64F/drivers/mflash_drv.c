@@ -65,7 +65,7 @@ static int32_t mflash_drv_sector_program(uint32_t sector_addr, uint32_t *sector_
     if (false == mflash_drv_is_sector_aligned((uint32_t)sector_addr))
         return -1;
 
-    result = FLASH_Program(&s_flashDriver, (uint32_t)sector_addr, (uint8_t *)sector_data, sector_data_length);
+    result = FLASH_Program(&s_flashDriver, (uint32_t)sector_addr, (uint8_t*)sector_data, sector_data_length);
     return result;
 }
 

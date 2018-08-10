@@ -5,25 +5,25 @@
       <name>all</name>
       <member>
         <project>fxos8700_poll</project>
-        <configuration>Debug</configuration>
+        <configuration>debug</configuration>
       </member>
       <member>
         <project>fxos8700_poll</project>
-        <configuration>Release</configuration>
-      </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>Debug</name>
-      <member>
-        <project>fxos8700_poll</project>
-        <configuration>Debug</configuration>
+        <configuration>release</configuration>
       </member>
     </batchDefinition>
     <batchDefinition>
-      <name>Release</name>
+      <name>debug</name>
       <member>
         <project>fxos8700_poll</project>
-        <configuration>Release</configuration>
+        <configuration>debug</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>release</name>
+      <member>
+        <project>fxos8700_poll</project>
+        <configuration>release</configuration>
       </member>
     </batchDefinition>
   </batchBuild>

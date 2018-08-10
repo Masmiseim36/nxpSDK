@@ -3,10 +3,10 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
+ *  that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -131,6 +131,17 @@ IRQn_Type vPortGetLptmrIrqn(void)
  */
 int main(void)
 {
+/* Define the init structure for the input switch pin */
+#ifdef BOARD_SW_NAME
+    gpio_pin_config_t sw_config =
+    {
+        kGPIO_DigitalInput,
+        0,
+#if defined(FSL_FEATURE_SOC_IGPIO_COUNT) && (FSL_FEATURE_SOC_IGPIO_COUNT > 0)
+        kGPIO_IntRisingEdge,
+#endif
+    };
+#endif
 #if configUSE_TICKLESS_IDLE
     lptmr_config_t lptmrConfig;
 
@@ -156,40 +167,6 @@ int main(void)
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
 
-    /*Create tickless task*/
-    if (xTaskCreate(Tickless_task, "Tickless_task", configMINIMAL_STACK_SIZE + 38, NULL, tickless_task_PRIORITY,
-                    NULL) != pdPASS)
-    {
-        PRINTF("Task creation failed!.\r\n");
-        while (1)
-            ;
-    }
-    if (xTaskCreate(SW_task, "Switch_task", configMINIMAL_STACK_SIZE + 38, NULL, SW_task_PRIORITY, NULL) != pdPASS)
-    {
-        PRINTF("Task creation failed!.\r\n");
-        while (1)
-            ;
-    }
-    /*Task Scheduler*/
-    vTaskStartScheduler();
-    for (;;)
-        ;
-}
-
-/* Tickless Task */
-static void Tickless_task(void *pvParameters)
-{
-/* Define the init structure for the input switch pin */
-#ifdef BOARD_SW_NAME
-    gpio_pin_config_t sw_config =
-    {
-        kGPIO_DigitalInput,
-        0,
-#if defined(FSL_FEATURE_SOC_IGPIO_COUNT) && (FSL_FEATURE_SOC_IGPIO_COUNT > 0)
-        kGPIO_IntRisingEdge,
-#endif
-    };
-#endif
     /* Print a note to terminal. */
     PRINTF("Tickless Demo example\r\n");
 #ifdef BOARD_SW_NAME
@@ -213,6 +190,30 @@ static void Tickless_task(void *pvParameters)
     GPIO_PortEnableInterrupts(BOARD_SW_GPIO, 1U << BOARD_SW_GPIO_PIN);
 #endif
 #endif
+
+    /*Create tickless task*/
+    if (xTaskCreate(Tickless_task, "Tickless_task", configMINIMAL_STACK_SIZE + 38, NULL, tickless_task_PRIORITY,
+                    NULL) != pdPASS)
+    {
+        PRINTF("Task creation failed!.\r\n");
+        while (1)
+            ;
+    }
+    if (xTaskCreate(SW_task, "Switch_task", configMINIMAL_STACK_SIZE + 38, NULL, SW_task_PRIORITY, NULL) != pdPASS)
+    {
+        PRINTF("Task creation failed!.\r\n");
+        while (1)
+            ;
+    }
+    /*Task Scheduler*/
+    vTaskStartScheduler();
+    for (;;)
+        ;
+}
+
+/* Tickless Task */
+static void Tickless_task(void *pvParameters)
+{
     PRINTF("\r\nTick count :\r\n");
     for (;;)
     {

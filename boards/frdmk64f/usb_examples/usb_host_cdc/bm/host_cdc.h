@@ -1,7 +1,7 @@
 /*
  * The Clear BSD License
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016, 2018 NXP
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -80,36 +80,28 @@ typedef struct _cdc_instance_struct
 /*! @brief USB host cdc instance global variable */
 extern cdc_instance_struct_t g_cdc;
 
-/*! @brief host app device attach/detach status */
-typedef enum HostCdcBmAppState
-{
-    kStatus_DEV_Idle = 0, /*!< there is no device attach/detach */
-    kStatus_DEV_Attached, /*!< device is attached */
-    kStatus_DEV_Detached, /*!< device is detached */
-} host_cdc_bm_app_state;
-
 /*! @brief host app run status */
 typedef enum HostCdcBmRunState
 {
-    kRunIdle = 0,                /*!< idle */
-    kRunSetControlInterface,     /*!< execute set interface code */
-    kRunWaitSetControlInterface, /*!< wait set interface done */
-    kRunSetControlInterfaceDone, /*!< set interface is done, execute next step */
-    kRunSetDataInterface,        /*!< execute set interface code */
-    kRunWaitSetDataInterface,    /*!< wait set interface done */
-    kRunSetDataInterfaceDone,    /*!< set interface is done, execute next step */
-    kRunWaitDataReceived,        /*!< wait data receive done */
-    kRunDataReceivedDone,        /*!< data receive is done, execute next step  */
-    kRunWaitGetState,            /*!< wait get state done*/
-    kRunGetStateDone,            /*!< get state done , execute next step*/
-    kRunWaitDataSend,            /*!< wait data send done */
-    kRunCheckData,               /*!< check whether uart has store data in send buffer*/
-    kRunPrimeDateSend,           /*!< prime bulk out send ,  execute data send*/
-    kRunPrimeDateReceive,        /*!< prime bulk in receive,  start data receive */
-    kRunWaitGetLineCode,         /*!< wait get line code  */
-    kRunGetLineCodeDone,         /*!< get line code done, execute next step*/
-    kRunWaitSetCtrlState,        /*!< wait set control state*/
-    kRunSetCtrlStateDone,        /*!< set control state done , execute next step*/
+    kUSB_HostCdcRunIdle = 0,                /*!< idle */
+    kUSB_HostCdcRunSetControlInterface,     /*!< execute set interface code */
+    kUSB_HostCdcRunWaitSetControlInterface, /*!< wait set interface done */
+    kUSB_HostCdcRunSetControlInterfaceDone, /*!< set interface is done, execute next step */
+    kUSB_HostCdcRunSetDataInterface,        /*!< execute set interface code */
+    kUSB_HostCdcRunWaitSetDataInterface,    /*!< wait set interface done */
+    kUSB_HostCdcRunSetDataInterfaceDone,    /*!< set interface is done, execute next step */
+    kUSB_HostCdcRunWaitDataReceived,        /*!< wait data receive done */
+    kUSB_HostCdcRunDataReceivedDone,        /*!< data receive is done, execute next step  */
+    kUSB_HostCdcRunWaitGetState,            /*!< wait get state done*/
+    kUSB_HostCdcRunGetStateDone,            /*!< get state done , execute next step*/
+    kUSB_HostCdcRunWaitDataSend,            /*!< wait data send done */
+    kUSB_HostCdcRunCheckData,               /*!< check whether uart has store data in send buffer*/
+    kUSB_HostCdcRunPrimeDateSend,           /*!< prime bulk out send ,  execute data send*/
+    kUSB_HostCdcRunPrimeDateReceive,        /*!< prime bulk in receive,  start data receive */
+    kUSB_HostCdcRunWaitGetLineCode,         /*!< wait get line code  */
+    kUSB_HostCdcRunGetLineCodeDone,         /*!< get line code done, execute next step*/
+    kUSB_HostCdcRunWaitSetCtrlState,        /*!< wait set control state*/
+    kUSB_HostCdcRunSetCtrlStateDone,        /*!< set control state done , execute next step*/
 } host_cdc_bm_run_state;
 
 /*!

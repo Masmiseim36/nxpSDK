@@ -134,7 +134,7 @@ int main()
         if (status != kErpcStatus_Success)
         {
             /* print error description */
-            erpc_error_handler(status);
+            erpc_error_handler(status, 0);
 
             /* stop erpc server */
             erpc_server_stop();

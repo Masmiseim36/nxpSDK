@@ -1,7 +1,7 @@
 /*
  * The Clear BSD License
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016 - 2017 NXP
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -376,6 +376,8 @@ usb_status_t USB_DeviceMscUfiInquiryCommand(usb_device_msc_struct_t *mscHandle)
 
     if (mscHandle->configurationStruct->classCallback != NULL)
     {
+        /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
+        it is from the second parameter of classInit */
         mscHandle->configurationStruct->classCallback((class_handle_t)mscHandle, kUSB_DeviceMscEventInquiry,
                                                       (void *)&temp);
     }
@@ -517,6 +519,8 @@ usb_status_t USB_DeviceMscUfiTestUnitReadyCommand(usb_device_msc_struct_t *mscHa
 
     if (mscHandle->configurationStruct->classCallback != NULL)
     {
+        /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
+        it is from the second parameter of classInit */
         mscHandle->configurationStruct->classCallback((class_handle_t)mscHandle, kUSB_DeviceMscEventTestUnitReady,
                                                       (void *)&temp);
     }
@@ -572,6 +576,8 @@ usb_status_t USB_DeviceMscUfiModeSenseCommand(usb_device_msc_struct_t *mscHandle
 
     if (mscHandle->configurationStruct->classCallback != NULL)
     {
+        /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
+        it is from the second parameter of classInit */
         mscHandle->configurationStruct->classCallback((class_handle_t)mscHandle, kUSB_DeviceMscEventModeSense,
                                                       (void *)&temp);
     }
@@ -607,7 +613,9 @@ usb_status_t USB_DeviceMscUfiModeSelectCommand(usb_device_msc_struct_t *mscHandl
     temp.size = 0;
     if (mscHandle->configurationStruct->classCallback != NULL)
     {
-        mscHandle->configurationStruct->classCallback((class_handle_t)mscHandle, kUSB_DeviceMscEventInquiry,
+        /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
+        it is from the second parameter of classInit */
+        mscHandle->configurationStruct->classCallback((class_handle_t)mscHandle, kUSB_DeviceMscEventModeSelect,
                                                       (void *)&temp);
     }
 
@@ -697,7 +705,8 @@ usb_status_t USB_DeviceMscUfiReadFormatCapacityCommand(usb_device_msc_struct_t *
         (uint8_t)(ufi->formattedDisk ? USB_DEVICE_MSC_UFI_FORMATTED_MEDIA : USB_DEVICE_MSC_UFI_UNFORMATTED_MEDIA);
     capacityListHead.capacityListLength = num_formattable_cap_desc * 8;
     current_max_head.blockNumber = USB_LONG_TO_BIG_ENDIAN(mscHandle->totalLogicalBlockNumber);
-    current_max_head.descriptorCodeBlockLength = USB_LONG_TO_BIG_ENDIAN(((uint8_t)(descriptor_code << 24) | mscHandle->lengthOfEachLba));
+    current_max_head.descriptorCodeBlockLength =
+        USB_LONG_TO_BIG_ENDIAN(((uint8_t)(descriptor_code << 24) | mscHandle->lengthOfEachLba));
 
     response_size = sizeof(usb_device_capacity_list_header_struct_t) +
                     sizeof(usb_device_current_max_capacity_descriptor_struct_t) +
@@ -817,6 +826,8 @@ usb_status_t USB_DeviceMscUfiPreventAllowMediumCommand(usb_device_msc_struct_t *
 
     if (mscHandle->configurationStruct->classCallback != NULL)
     {
+        /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
+        it is from the second parameter of classInit */
         mscHandle->configurationStruct->classCallback((class_handle_t)mscHandle, kUSB_DeviceMscEventRemovalRequest,
                                                       (void *)&temp);
     }
@@ -851,7 +862,9 @@ usb_status_t USB_DeviceMscUfiSendDiagnosticCommand(usb_device_msc_struct_t *mscH
     error = USB_DeviceMscUfiThirteenCasesCheck(mscHandle);
     if (mscHandle->configurationStruct->classCallback != NULL)
     {
-        mscHandle->configurationStruct->classCallback((class_handle_t)mscHandle, kUSB_DeviceMscEventRemovalRequest,
+        /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
+        it is from the second parameter of classInit */
+        mscHandle->configurationStruct->classCallback((class_handle_t)mscHandle, kUSB_DeviceMscEventSendDiagnostic,
                                                       (void *)&temp);
     }
     return error;
@@ -887,6 +900,8 @@ usb_status_t USB_DeviceMscUfiStartStopUnitCommand(usb_device_msc_struct_t *mscHa
     {
         if (mscHandle->configurationStruct->classCallback != NULL)
         {
+            /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
+            it is from the second parameter of classInit */
             mscHandle->configurationStruct->classCallback((class_handle_t)mscHandle, kUSB_DeviceMscEventStopEjectMedia,
                                                           (void *)&temp);
         }

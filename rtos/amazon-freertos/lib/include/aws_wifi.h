@@ -26,7 +26,7 @@
 
 /**
  * @file aws_wifi.h
- * @brief Wi-Fi Interface.
+ * @brief WiFi Interface.
  */
 
 #ifndef _AWS_WIFI_H_
@@ -34,17 +34,11 @@
 
 #include <stdint.h>
 
-#include "FreeRTOSConfig.h"
-#include "projdefs.h"
-
-/* FreeRTOS include for BaseType_t. */
-#include "portmacro.h"
-
-/* Wi-Fi configuration includes. */
+/* WiFi configuration includes. */
 #include "aws_wifi_config.h"
 
 /**
- * @brief Return code denoting API status.
+ * @brief Return code from various APIs.
  */
 typedef enum
 {
@@ -55,7 +49,7 @@ typedef enum
 } WIFIReturnCode_t;
 
 /**
- * @brief Wi-Fi Security types.
+ * @brief WiFi Security types.
  */
 typedef enum
 {
@@ -67,7 +61,7 @@ typedef enum
 } WIFISecurity_t;
 
 /**
- * @brief Wi-Fi device modes.
+ * @brief WiFi device modes.
  *
  * Device roles/modes supported.
  */
@@ -80,9 +74,9 @@ typedef enum
 } WIFIDeviceMode_t;
 
 /**
- * @brief Wi-Fi device power management modes.
+ * @brief WiFi device power management modes.
  *
- * Device power management modes supported.
+ * Device power management mode supported.
  */
 typedef enum
 {
@@ -92,83 +86,70 @@ typedef enum
     eWiFiPMNotSupported /**< Unsupported PM mode. */
 } WIFIPMMode_t;
 
+
 /**
- * @brief Parameters passed to the WIFI_ConnectAP API for connection.
+ * @brief Parameters passed to the WIFI_ConnectAP API.
  */
 typedef struct
 {
-    const char * pcSSID;      /**< SSID of the Wi-Fi network to join. */
+    const char * pcSSID;      /**< SSID of the WiFi network to join. */
     uint8_t ucSSIDLength;     /**< SSID length. */
     const char * pcPassword;  /**< Password needed to join the AP. */
     uint8_t ucPasswordLength; /**< Password length. */
-    WIFISecurity_t xSecurity; /**< Wi-Fi Security. @see WIFISecurity_t. */
+    WIFISecurity_t xSecurity; /**< WiFi Security. @see WIFISecurity_t. */
     int8_t cChannel;          /**< Channel number. */
 } WIFINetworkParams_t;
 
 /**
- * @brief Wi-Fi scan results.
+ * @brief WiFi scan results.
  *
- * Structure to store the Wi-Fi scan results.
- * 
- * @note The size of char arrays are the MAX lengths + 1 to 
- * account for possible null terminating at the end of the
- * strings.
+ * structure to store the WiFi scan results.
  */
 typedef struct
 {
-    char cSSID[ wificonfigMAX_SSID_LEN + 1 ];       /**< SSID of the Wi-Fi network. */
-    uint8_t ucBSSID[ wificonfigMAX_BSSID_LEN ]; /**< BSSID of the Wi-Fi network. */
-    WIFISecurity_t xSecurity;                   /**< Wi-Fi Security. @see WIFISecurity_t. */
+    char cSSID[ wificonfigMAX_SSID_LEN ];       /**< SSID of the WiFi network. */
+    uint8_t ucBSSID[ wificonfigMAX_BSSID_LEN ]; /**< BSSID of the WiFi network. */
+    WIFISecurity_t xSecurity;                   /**< WiFi Security. @see WIFISecurity_t. */
     int8_t cRSSI;                               /**< Signal Strength. */
     int8_t cChannel;                            /**< Channel number. */
     uint8_t ucHidden;                           /**< Hidden channel. */
 } WIFIScanResult_t;
 
 /**
- * @brief Wi-Fi network parameters passed to the WIFI_NetworkAdd API.
- * 
-* @note The size of char arrays are the MAX lengths + 1 to 
- * account for possible null terminating at the end of the
- * strings.
+ * @brief Parameters passed to the WIFI_ConnectAP API.
  */
 typedef struct
 {
-    char cSSID[ wificonfigMAX_SSID_LEN + 1 ];           /**< SSID of the Wi-Fi network to join. */
+    char cSSID[ wificonfigMAX_SSID_LEN ];           /**< SSID of the WiFi network to join. */
     uint8_t ucSSIDLength;                           /**< SSID length. */
-    uint8_t ucBSSID[ wificonfigMAX_BSSID_LEN ];     /**< BSSID of the Wi-Fi network. */
-    char cPassword[ wificonfigMAX_PASSPHRASE_LEN + 1 ]; /**< Password needed to join the AP. */
+    uint8_t ucBSSID[ wificonfigMAX_BSSID_LEN ];     /**< BSSID of the WiFi network. */
+    char cPassword[ wificonfigMAX_PASSPHRASE_LEN ]; /**< Password needed to join the AP. */
     uint8_t ucPasswordLength;                       /**< Password length. */
-    WIFISecurity_t xSecurity;                       /**< Wi-Fi Security. @see WIFISecurity_t. */
+    WIFISecurity_t xSecurity;                       /**< WiFi Security. @see WIFISecurity_t. */
 } WIFINetworkProfile_t;
 
 /**
- * @brief Turns on Wi-Fi.
+ * @brief Turns on WiFi.
  *
- * This function turns on Wi-Fi module,initializes the drivers and must be called
- * before calling any other Wi-Fi API
+ * This function turns on WiFi module,initializes the drivers and must be called
+ * before calling any other WiFi API
  *
- * @return eWiFiSuccess if Wi-Fi module was successfully turned on, failure code otherwise.
+ * @return eWiFiSuccess if everything succeeds, failure code otherwise.
  */
 WIFIReturnCode_t WIFI_On( void );
 
 /**
- * @brief Turns off Wi-Fi.
+ * @brief Turns off WiFi.
  *
- * This function turns off the Wi-Fi module. The Wi-Fi peripheral should be put in a 
- * low power or off state in this routine.
+ * This function turns off WiFi
  *
- * @return eWiFiSuccess if Wi-Fi module was successfully turned off, failure code otherwise.
+ * @return eWiFiSuccess if everything succeeds, failure code otherwise.
  */
 WIFIReturnCode_t WIFI_Off( void );
 
 /**
- * @brief Connects to the Wi-Fi Access Point (AP) specified in the input.
+ * @brief Connects to Access Point.
  *
- * The Wi-Fi should stay connected when the same Access Point it is currently connected to
- * is specified. Otherwise, the Wi-Fi should disconnect and connect to the new Access Point 
- * specified. If the new Access Point has invalid parameters, then the Wi-Fi should be 
- * disconnected.
- * 
  * @param[in] pxNetworkParams Configuration to join AP.
  *
  * @return eWiFiSuccess if connection is successful, failure code otherwise.
@@ -193,26 +174,25 @@ WIFIReturnCode_t WIFI_Off( void );
 WIFIReturnCode_t WIFI_ConnectAP( const WIFINetworkParams_t * const pxNetworkParams );
 
 /**
- * @brief Disconnects from the currently connected Access Point.
+ * @brief Disconnects from Access Point.
  *
  * @param[in] None.
  *
- * @return eWiFiSuccess if disconnection was successful or if the device is already
- * disconnected, failure code otherwise.
+ * @return eWiFiSuccess if everything succeeds, failure code otherwise.
  */
 WIFIReturnCode_t WIFI_Disconnect( void );
 
 /**
- * @brief Resets the Wi-Fi Module.
+ * @brief Resets the WiFi Module.
  *
  * @param[in] None.
  *
- * @return eWiFiSuccess if Wi-Fi module was successfully reset, failure code otherwise.
+ * @return eWiFiSuccess if everything succeeds, failure code otherwise.
  */
 WIFIReturnCode_t WIFI_Reset( void );
 
 /**
- * @brief Sets the Wi-Fi mode.
+ * @brief Sets WiFi mode.
  *
  * @param[in] xDeviceMode - Mode of the device Station / Access Point /P2P.
  *
@@ -225,12 +205,12 @@ WIFIReturnCode_t WIFI_Reset( void );
  * }
  * @endcode
  *
- * @return eWiFiSuccess if Wi-Fi mode was set successfully, failure code otherwise.
+ * @return eWiFiSuccess if everything succeeds, failure code otherwise.
  */
 WIFIReturnCode_t WIFI_SetMode( WIFIDeviceMode_t xDeviceMode );
 
 /**
- * @brief Gets the Wi-Fi mode.
+ * @brief Gets WiFi mode.
  *
  * @param[out] pxDeviceMode - return mode Station / Access Point /P2P
  *
@@ -244,19 +224,19 @@ WIFIReturnCode_t WIFI_SetMode( WIFIDeviceMode_t xDeviceMode );
  * }
  * @endcode
  *
- * @return eWiFiSuccess if Wi-Fi mode was successfully retrieved, failure code otherwise.
+ * @return eWiFiSuccess if everything succeeds, failure code otherwise.
  */
 WIFIReturnCode_t WIFI_GetMode( WIFIDeviceMode_t * pxDeviceMode );
 
 /**
- * @brief Add a Wi-Fi Network profile.
+ * @brief WiFi Add Network profile.
  *
- * Adds a Wi-fi network to the network list in Non Volatile memory.
+ * Adds wifi network to network list in Non Volatile memory
  *
- * @param[in] pxNetworkProfile - Network profile parameters
- * @param[out] pusIndex - Network profile index in storage
+ * @param[in] pxNetworkProfile - network profile parameters
+ * @param[out] pusIndex - network profile index
  *
- * @return Index of the profile storage on success, or failure return code on failure.
+ * @return Profile stored index on success, or negative error code on failure.
  *
  * @code
  * WIFINetworkProfile_t xNetworkProfile = {0};
@@ -275,18 +255,15 @@ WIFIReturnCode_t WIFI_NetworkAdd( const WIFINetworkProfile_t * const pxNetworkPr
 
 
 /**
- * @brief Get a Wi-Fi network profile.
+ * @brief WiFi Get Network profile .
  *
- * Gets the Wi-Fi network parameters at the given index from network list in non-volatile 
- * memory.
+ * Gets WiFi network parameters at given index from network list in Non volatile memory
  *
  * @param[out] pxNetworkProfile - pointer to return network profile parameters
  * @param[in] usIndex - Index of the network profile,
- *                      must be between 0 to wificonfigMAX_NETWORK_PROFILES
+ *                       must be between 0 to wificonfigMAX_NETWORK_PROFILES
  *
- * @return eWiFiSuccess if the network profile was successfully retrieved, failure code 
- * otherwise.
- * 
+ * @return eWiFiSuccess if everything succeeds, failure code otherwise.
  * @see WIFINetworkProfile_t
  *
  * @code
@@ -299,19 +276,14 @@ WIFIReturnCode_t WIFI_NetworkGet( WIFINetworkProfile_t * pxNetworkProfile,
                                   uint16_t usIndex );
 
 /**
- * @brief Delete a Wi-Fi Network profile.
+ * @brief WiFi Delete Network profile .
  *
- * Deletes the Wi-Fi network profile from the network profile list at given index in 
- * non-volatile memory
+ * Deletes WiFi network from network list at given index in Non volatile memory
  *
- * @param[in] usIndex - Index of the network profile, must be between 0 to 
- *                      wificonfigMAX_NETWORK_PROFILES.
- * 
- *                      If wificonfigMAX_NETWORK_PROFILES is the index, then all 
- *                      network profiles will be deleted.
+ * @param[in] usIndex - Index of the network profile, must be between 0 to wificonfigMAX_NETWORK_PROFILES
+ *                      wificonfigMAX_NETWORK_PROFILES as index will delete all network profiles
  *
- * @return eWiFiSuccess if successful, failure code otherwise. If successful, the 
- * interface IP address is copied into the IP address buffer.
+ * @return eWiFiSuccess if everything succeeds, failure code otherwise.
  *
  * @code
  * uint16_t usIndex = 2; //Delete profile at index 2
@@ -328,19 +300,18 @@ WIFIReturnCode_t WIFI_NetworkDelete( uint16_t usIndex );
  * @param[in] Number of times to ping
  * @param[in] Interval in mili-seconds for ping operation
  *
- * @return eWiFiSuccess if ping was successful, other failure code otherwise.
+ * @return eWiFiSuccess if disconnected, eWiFiFailure otherwise.
  */
 WIFIReturnCode_t WIFI_Ping( uint8_t * pucIPAddr,
                             uint16_t usCount,
                             uint32_t ulIntervalMS );
 
 /**
- * @brief Retrieves the Wi-Fi interface's IP address.
+ * @brief Retrieves the WiFi interface's IP address.
  *
  * @param[out] IP Address buffer.
  *
- * @return eWiFiSuccess if successful and IP Address buffer has the interface's IP address, 
- * failure code otherwise.
+ * @return eWiFiSuccess if disconnected, eWiFiFailure otherwise.
  *
  * @code
  * uint8_t ucIPAddr[ 4 ];
@@ -350,7 +321,7 @@ WIFIReturnCode_t WIFI_Ping( uint8_t * pucIPAddr,
 WIFIReturnCode_t WIFI_GetIP( uint8_t * pucIPAddr );
 
 /**
- * @brief Retrieves the Wi-Fi interface's MAC address.
+ * @brief Retrieves the WiFi interface's MAC address.
  *
  * @param[out] MAC Address buffer.
  *
@@ -359,19 +330,17 @@ WIFIReturnCode_t WIFI_GetIP( uint8_t * pucIPAddr );
  * WIFI_GetMAC( &ucMacAddressVal[0] );
  * @endcode
  *
- * @return eWiFiSuccess if the MAC address was successfully retrieved, eWiFiFailure 
- * otherwise.
+ * @return eWiFiSuccess if disconnected, eWiFiFailure otherwise.
  */
 WIFIReturnCode_t WIFI_GetMAC( uint8_t * pucMac );
 
 /**
- * @brief Retrieves the host IP address from a host name using DNS.
+ * @brief Retrieves host IP address from URL using DNS
  *
- * @param[in] pxHost - Host (node) name.
+ * @param[in] pxHost - Host URL.
  * @param[in] pxIPAddr - IP Address buffer.
  *
- * @return eWiFiSuccess if the host IP address was successfully retrieved, eWiFiFailure 
- * otherwise.
+ * @return eWiFiSuccess if disconnected, eWiFiFailure otherwise.
  *
  * @code
  * uint8_t ucIPAddr[ 4 ];
@@ -382,13 +351,12 @@ WIFIReturnCode_t WIFI_GetHostIP( char * pcHost,
                                  uint8_t * pucIPAddr );
 
 /**
- * @brief Perform a Wi-Fi network Scan.
+ * @brief Perform WiF Scan
  *
  * @param[in] pxBuffer - Buffer for scan results.
- * @param[in] uxNumNetworks - Number of networks to retrieve in scan result.
+ * @param[in] uxNumNetworks - Number of networks in scan result.
  *
- * @return eWiFiSuccess if the Wi-Fi network scan was successful, eWiFiFailure otherwise. 
- * The input buffer will have the results of the scan.
+ * @return eWiFiSuccess if disconnected, eWiFiFailure otherwise.
  *
  * @code
  * const uint8_t ucNumNetworks = 10; //Get 10 scan results
@@ -400,20 +368,20 @@ WIFIReturnCode_t WIFI_Scan( WIFIScanResult_t * pxBuffer,
                             uint8_t ucNumNetworks );
 
 /**
- * @brief Start SoftAP mode.
+ * @brief Start SoftAP.
  *
- * @param[in] None.
+ * @param[in] none.
  *
- * @return eWiFiSuccess if SoftAP was successfully started, failure code otherwise.
+ * @return eWiFiSuccess if disconnected,  failure code otherwise.
  */
 WIFIReturnCode_t WIFI_StartAP( void );
 
 /**
- * @brief Stop SoftAP mode.
+ * @brief Stop SoftAP.
  *
  * @param[in] None.
  *
- * @return eWiFiSuccess if the SoftAP was successfully stopped, failure code otherwise.
+ * @return eWiFiSuccess if disconnected,  failure code otherwise.
  */
 WIFIReturnCode_t WIFI_StopAP( void );
 
@@ -422,7 +390,7 @@ WIFIReturnCode_t WIFI_StopAP( void );
  *
  * @param[in] pxNetworkParams - Network parameters to configure AP.
  *
- * @return eWiFiSuccess if SoftAP was successfully configured, failure code otherwise.
+ * @return eWiFiSuccess if disconnected,  failure code otherwise.
  *
  * @code
  * WIFINetworkParams_t xNetworkParams;
@@ -436,7 +404,7 @@ WIFIReturnCode_t WIFI_StopAP( void );
 WIFIReturnCode_t WIFI_ConfigureAP( const WIFINetworkParams_t * const pxNetworkParams );
 
 /**
- * @brief Set the Wi-Fi power management mode.
+ * @brief Set power management mode
  *
  * @param[in] xPMModeType - Power mode type.
  *
@@ -444,29 +412,21 @@ WIFIReturnCode_t WIFI_ConfigureAP( const WIFINetworkParams_t * const pxNetworkPa
  *                            depends on the mode type
  *                            example - beacon interval in sec
  *
- * @return eWiFiSuccess if the power mode was successfully configured, failure code otherwise.
+ * @return eWiFiSuccess if disconnected, failure code otherwise.
  */
 WIFIReturnCode_t WIFI_SetPMMode( WIFIPMMode_t xPMModeType,
                                  const void * pvOptionValue );
 
 /**
- * @brief Get the Wi-Fi power management mode
+ * @brief Get power management mode
  *
  * @param[out] xPMModeType - pointer to get current power mode set.
  *
  * @param[out] pvOptionValue - optional value
  *
- * @return eWiFiSuccess if the power mode was successfully retrieved, failure code otherwise.
+ * @return eWiFiSuccess if disconnected, failure code otherwise.
  */
 WIFIReturnCode_t WIFI_GetPMMode( WIFIPMMode_t * pxPMModeType,
                                  void * pvOptionValue );
-
-
-/**
- * @brief Check if the Wi-Fi is connected.
- * 
- * @return pdTRUE if the link is up, pdFalse otherwise.
- */
-BaseType_t WIFI_IsConnected( void );
 
 #endif /* _AWS_WIFI_H_ */

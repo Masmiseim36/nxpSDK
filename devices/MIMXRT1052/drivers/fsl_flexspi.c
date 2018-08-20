@@ -569,11 +569,10 @@ status_t FLEXSPI_TransferBlocking(FLEXSPI_Type *base, flexspi_transfer_t *xfer)
     /* Clear sequence pointer before sending data to external devices. */
     base->FLSHCR2[xfer->port] |= FLEXSPI_FLSHCR2_CLRINSTRPTR_MASK;
 
-    /* Clear former pending status before start this tranfer. */
-    base->INTR |= FLEXSPI_INTR_AHBCMDERR_MASK | FLEXSPI_INTR_IPCMDERR_MASK | FLEXSPI_INTR_AHBCMDGE_MASK |
-                  FLEXSPI_INTR_IPCMDGE_MASK;
+    /* Clear former pending status before start this transfer. */
+    base->INTR |= FLEXSPI_INTR_AHBCMDERR_MASK | FLEXSPI_INTR_IPCMDERR_MASK | FLEXSPI_INTR_AHBCMDGE_MASK | FLEXSPI_INTR_IPCMDGE_MASK;
 
-    /* Configure base addresss. */
+    /* Configure base address. */
     base->IPCR0 = xfer->deviceAddress;
 
     /* Reset fifos. */

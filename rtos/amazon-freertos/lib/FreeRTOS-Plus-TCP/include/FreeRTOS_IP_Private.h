@@ -437,7 +437,7 @@ uint16_t usGenerateChecksum( uint32_t ulSum, const uint8_t * pucNextData, size_t
 
 /* Socket related private functions. */
 BaseType_t xProcessReceivedUDPPacket( NetworkBufferDescriptor_t *pxNetworkBuffer, uint16_t usPort );
-BaseType_t vNetworkSocketsInit( void );
+void vNetworkSocketsInit( void );
 
 /*
  * Returns pdTRUE if the IP task has been created and is initialised.  Otherwise

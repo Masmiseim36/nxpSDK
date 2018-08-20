@@ -1552,6 +1552,14 @@ boards\frdmk22f\wifi_qca_examples\qca_throughput\pin_mux.c
                                 // RelativePath = "boards\frdmk22f\wifi_qca_examples\qca_throughput\pin_mux.c"
 boards\frdmk22f\wifi_qca_examples\qca_throughput\wlan_qca400x.c
                                 // RelativePath = "boards\frdmk22f\wifi_qca_examples\qca_throughput\wlan_qca400x.c"
+boards\evkbimxrt1050\driver_examples\flexspi\hyper_flash\polling_transfer\board.c
+                                // RelativePath = "boards\evkbimxrt1050\driver_examples\flexspi\hyper_flash\polling_transfer\board.c"
+boards\evkbimxrt1050\driver_examples\flexspi\hyper_flash\polling_transfer\clock_config.c
+                                // RelativePath = "boards\evkbimxrt1050\driver_examples\flexspi\hyper_flash\polling_transfer\clock_config.c"
+boards\evkbimxrt1050\driver_examples\flexspi\hyper_flash\polling_transfer\flexspi_hyper_flash_polling_transfer.c
+                                // RelativePath = "boards\evkbimxrt1050\driver_examples\flexspi\hyper_flash\polling_transfer\flexspi_hyper_flash_polling_transfer.c"
+boards\evkbimxrt1050\driver_examples\flexspi\hyper_flash\polling_transfer\pin_mux.c
+                                // RelativePath = "boards\evkbimxrt1050\driver_examples\flexspi\hyper_flash\polling_transfer\pin_mux.c"
 middleware\sdmmc_2.1.2\port\sdhc\freertos\event.c
                                 // RelativePath = "middleware\sdmmc_2.1.2\port\sdhc\freertos\event.c"
 middleware\sdmmc_2.1.2\port\sdhc\freertos\fsl_host.c
@@ -1734,6 +1742,128 @@ middleware\issdk\algorithms\sensorfusion\sources\sensor_fusion.c
                                 // RelativePath = "middleware\issdk\algorithms\sensorfusion\sources\sensor_fusion.c"
 middleware\issdk\algorithms\sensorfusion\sources\status.c
                                 // RelativePath = "middleware\issdk\algorithms\sensorfusion\sources\status.c"
+middleware\wireless\bluetooth_1.2.5\application\common\nwk_ip\app_coap\app_coap.c
+                                // RelativePath = "middleware\wireless\bluetooth_1.2.5\application\common\nwk_ip\app_coap\app_coap.c"
+middleware\wireless\bluetooth_1.2.5\application\common\nwk_ip\app_echo_udp\app_echo_udp.c
+                                // RelativePath = "middleware\wireless\bluetooth_1.2.5\application\common\nwk_ip\app_echo_udp\app_echo_udp.c"
+middleware\wireless\bluetooth_1.2.5\application\common\nwk_ip\app_sockets\app_sockets.c
+                                // RelativePath = "middleware\wireless\bluetooth_1.2.5\application\common\nwk_ip\app_sockets\app_sockets.c"
+middleware\wireless\bluetooth_1.2.5\application\common\ApplMain.c
+                                // RelativePath = "middleware\wireless\bluetooth_1.2.5\application\common\ApplMain.c"
+middleware\wireless\bluetooth_1.2.5\application\common\hybrid\ApplMain.c
+                                // RelativePath = "middleware\wireless\bluetooth_1.2.5\application\common\hybrid\ApplMain.c"
+middleware\wireless\bluetooth_1.2.5\application\common\ble_conn_manager.c
+                                // RelativePath = "middleware\wireless\bluetooth_1.2.5\application\common\ble_conn_manager.c"
+middleware\wireless\bluetooth_1.2.5\application\common\ble_controller_task.c
+                                // RelativePath = "middleware\wireless\bluetooth_1.2.5\application\common\ble_controller_task.c"
+middleware\wireless\bluetooth_1.2.5\application\common\ble_host_tasks.c
+                                // RelativePath = "middleware\wireless\bluetooth_1.2.5\application\common\ble_host_tasks.c"
+middleware\wireless\bluetooth_1.2.5\application\common\ble_init.c
+                                // RelativePath = "middleware\wireless\bluetooth_1.2.5\application\common\ble_init.c"
+middleware\wireless\bluetooth_1.2.5\application\common\hybrid\ble_init.c
+                                // RelativePath = "middleware\wireless\bluetooth_1.2.5\application\common\hybrid\ble_init.c"
+middleware\wireless\bluetooth_1.2.5\application\common\ble_service_discovery.c
+                                // RelativePath = "middleware\wireless\bluetooth_1.2.5\application\common\ble_service_discovery.c"
+middleware\wireless\bluetooth_1.2.5\application\common\fsci_host\fsci\fsci_ble.c
+                                // RelativePath = "middleware\wireless\bluetooth_1.2.5\application\common\fsci_host\fsci\fsci_ble.c"
+middleware\wireless\bluetooth_1.2.5\application\common\fsci_host\fsci\fsci_ble_gap.c
+                                // RelativePath = "middleware\wireless\bluetooth_1.2.5\application\common\fsci_host\fsci\fsci_ble_gap.c"
+middleware\wireless\bluetooth_1.2.5\application\common\fsci_host\fsci\fsci_ble_gap_types.c
+                                // RelativePath = "middleware\wireless\bluetooth_1.2.5\application\common\fsci_host\fsci\fsci_ble_gap_types.c"
+middleware\wireless\bluetooth_1.2.5\application\common\fsci_host\fsci\fsci_ble_gatt.c
+                                // RelativePath = "middleware\wireless\bluetooth_1.2.5\application\common\fsci_host\fsci\fsci_ble_gatt.c"
+middleware\wireless\bluetooth_1.2.5\application\common\fsci_host\fsci\fsci_ble_gatt_db_app.c
+                                // RelativePath = "middleware\wireless\bluetooth_1.2.5\application\common\fsci_host\fsci\fsci_ble_gatt_db_app.c"
+middleware\wireless\bluetooth_1.2.5\application\common\fsci_host\fsci\fsci_ble_gatt_db_app_types.c
+                                // RelativePath = "middleware\wireless\bluetooth_1.2.5\application\common\fsci_host\fsci\fsci_ble_gatt_db_app_types.c"
+middleware\wireless\bluetooth_1.2.5\application\common\fsci_host\fsci\fsci_ble_gatt_types.c
+                                // RelativePath = "middleware\wireless\bluetooth_1.2.5\application\common\fsci_host\fsci\fsci_ble_gatt_types.c"
+middleware\wireless\bluetooth_1.2.5\application\common\fsci_host\fsci\fsci_ble_l2cap.c
+                                // RelativePath = "middleware\wireless\bluetooth_1.2.5\application\common\fsci_host\fsci\fsci_ble_l2cap.c"
+middleware\wireless\bluetooth_1.2.5\application\common\fsci_host\fsci\fsci_ble_l2cap_types.c
+                                // RelativePath = "middleware\wireless\bluetooth_1.2.5\application\common\fsci_host\fsci\fsci_ble_l2cap_types.c"
+middleware\wireless\bluetooth_1.2.5\application\common\fsci_host\fsci\fsci_ble_types.c
+                                // RelativePath = "middleware\wireless\bluetooth_1.2.5\application\common\fsci_host\fsci\fsci_ble_types.c"
+middleware\wireless\bluetooth_1.2.5\application\common\gatt_db\gatt_database.c
+                                // RelativePath = "middleware\wireless\bluetooth_1.2.5\application\common\gatt_db\gatt_database.c"
+middleware\wireless\bluetooth_1.2.5\application\common\gatt_db\gatt_database_dynamic.c
+                                // RelativePath = "middleware\wireless\bluetooth_1.2.5\application\common\gatt_db\gatt_database_dynamic.c"
+middleware\wireless\bluetooth_1.2.5\application\common\fsci_host\host\host_ble.c
+                                // RelativePath = "middleware\wireless\bluetooth_1.2.5\application\common\fsci_host\host\host_ble.c"
+middleware\wireless\bluetooth_1.2.5\application\common\fsci_host\host\host_gap.c
+                                // RelativePath = "middleware\wireless\bluetooth_1.2.5\application\common\fsci_host\host\host_gap.c"
+middleware\wireless\bluetooth_1.2.5\application\common\fsci_host\host\host_gatt.c
+                                // RelativePath = "middleware\wireless\bluetooth_1.2.5\application\common\fsci_host\host\host_gatt.c"
+middleware\wireless\bluetooth_1.2.5\application\common\fsci_host\host\host_gatt_db.c
+                                // RelativePath = "middleware\wireless\bluetooth_1.2.5\application\common\fsci_host\host\host_gatt_db.c"
+middleware\wireless\bluetooth_1.2.5\application\common\fsci_host\host\host_l2cap.c
+                                // RelativePath = "middleware\wireless\bluetooth_1.2.5\application\common\fsci_host\host\host_l2cap.c"
+middleware\wireless\bluetooth_1.2.5\application\common\nwk_ip\nwk_ip_globals.c
+                                // RelativePath = "middleware\wireless\bluetooth_1.2.5\application\common\nwk_ip\nwk_ip_globals.c"
+middleware\wireless\bluetooth_1.2.5\application\common\nwk_ip\nwk_ip_init.c
+                                // RelativePath = "middleware\wireless\bluetooth_1.2.5\application\common\nwk_ip\nwk_ip_init.c"
+middleware\wireless\bluetooth_1.2.5\application\common\nwk_ip\nwk_ip_manager.c
+                                // RelativePath = "middleware\wireless\bluetooth_1.2.5\application\common\nwk_ip\nwk_ip_manager.c"
+middleware\wireless\bluetooth_1.2.5\application\common\nwk_ip\shell_ip\shell_nwk_ip.c
+                                // RelativePath = "middleware\wireless\bluetooth_1.2.5\application\common\nwk_ip\shell_ip\shell_nwk_ip.c"
+middleware\wireless\bluetooth_1.2.5\hci_transport\source\hcit_serial_interface.c
+                                // RelativePath = "middleware\wireless\bluetooth_1.2.5\hci_transport\source\hcit_serial_interface.c"
+middleware\wireless\bluetooth_1.2.5\host\config\ble_globals.c
+                                // RelativePath = "middleware\wireless\bluetooth_1.2.5\host\config\ble_globals.c"
+middleware\wireless\bluetooth_1.2.5\profiles\alert_notification\alert_notification_service.c
+                                // RelativePath = "middleware\wireless\bluetooth_1.2.5\profiles\alert_notification\alert_notification_service.c"
+middleware\wireless\bluetooth_1.2.5\profiles\battery\battery_service.c
+                                // RelativePath = "middleware\wireless\bluetooth_1.2.5\profiles\battery\battery_service.c"
+middleware\wireless\bluetooth_1.2.5\profiles\blood_pressure\blood_pressure_service.c
+                                // RelativePath = "middleware\wireless\bluetooth_1.2.5\profiles\blood_pressure\blood_pressure_service.c"
+middleware\wireless\bluetooth_1.2.5\profiles\time\current_time_service.c
+                                // RelativePath = "middleware\wireless\bluetooth_1.2.5\profiles\time\current_time_service.c"
+middleware\wireless\bluetooth_1.2.5\profiles\cycling_power\cycling_power_service.c
+                                // RelativePath = "middleware\wireless\bluetooth_1.2.5\profiles\cycling_power\cycling_power_service.c"
+middleware\wireless\bluetooth_1.2.5\profiles\cycling_speed_cadence\cycling_speed_cadence_service.c
+                                // RelativePath = "middleware\wireless\bluetooth_1.2.5\profiles\cycling_speed_cadence\cycling_speed_cadence_service.c"
+middleware\wireless\bluetooth_1.2.5\profiles\device_info\device_info_service.c
+                                // RelativePath = "middleware\wireless\bluetooth_1.2.5\profiles\device_info\device_info_service.c"
+middleware\wireless\bluetooth_1.2.5\profiles\glucose\glucose_service.c
+                                // RelativePath = "middleware\wireless\bluetooth_1.2.5\profiles\glucose\glucose_service.c"
+middleware\wireless\bluetooth_1.2.5\profiles\health_thermometer\health_thermometer_service.c
+                                // RelativePath = "middleware\wireless\bluetooth_1.2.5\profiles\health_thermometer\health_thermometer_service.c"
+middleware\wireless\bluetooth_1.2.5\profiles\heart_rate\heart_rate_service.c
+                                // RelativePath = "middleware\wireless\bluetooth_1.2.5\profiles\heart_rate\heart_rate_service.c"
+middleware\wireless\bluetooth_1.2.5\profiles\hid\hid_service.c
+                                // RelativePath = "middleware\wireless\bluetooth_1.2.5\profiles\hid\hid_service.c"
+middleware\wireless\bluetooth_1.2.5\profiles\proximity\immediate_alert_service.c
+                                // RelativePath = "middleware\wireless\bluetooth_1.2.5\profiles\proximity\immediate_alert_service.c"
+middleware\wireless\bluetooth_1.2.5\profiles\ipsp\ips_profile.c
+                                // RelativePath = "middleware\wireless\bluetooth_1.2.5\profiles\ipsp\ips_profile.c"
+middleware\wireless\bluetooth_1.2.5\profiles\proximity\link_loss_service.c
+                                // RelativePath = "middleware\wireless\bluetooth_1.2.5\profiles\proximity\link_loss_service.c"
+middleware\wireless\bluetooth_1.2.5\profiles\time\next_dst_change_service.c
+                                // RelativePath = "middleware\wireless\bluetooth_1.2.5\profiles\time\next_dst_change_service.c"
+middleware\wireless\bluetooth_1.2.5\profiles\otap\otap_service.c
+                                // RelativePath = "middleware\wireless\bluetooth_1.2.5\profiles\otap\otap_service.c"
+middleware\wireless\bluetooth_1.2.5\profiles\pulse_oximeter\pulse_oximeter_service.c
+                                // RelativePath = "middleware\wireless\bluetooth_1.2.5\profiles\pulse_oximeter\pulse_oximeter_service.c"
+middleware\wireless\bluetooth_1.2.5\profiles\time\reference_time_update_service.c
+                                // RelativePath = "middleware\wireless\bluetooth_1.2.5\profiles\time\reference_time_update_service.c"
+middleware\wireless\bluetooth_1.2.5\profiles\running_speed_cadence\running_speed_cadence_service.c
+                                // RelativePath = "middleware\wireless\bluetooth_1.2.5\profiles\running_speed_cadence\running_speed_cadence_service.c"
+middleware\wireless\bluetooth_1.2.5\profiles\temperature\temperature_service.c
+                                // RelativePath = "middleware\wireless\bluetooth_1.2.5\profiles\temperature\temperature_service.c"
+middleware\wireless\bluetooth_1.2.5\profiles\proximity\tx_power_service.c
+                                // RelativePath = "middleware\wireless\bluetooth_1.2.5\profiles\proximity\tx_power_service.c"
+middleware\wireless\bluetooth_1.2.5\profiles\wireless_uart\wireless_uart_service.c
+                                // RelativePath = "middleware\wireless\bluetooth_1.2.5\profiles\wireless_uart\wireless_uart_service.c"
+middleware\wireless\bluetooth_1.2.5\profiles\wireless_power_transfer\wpt_service.c
+                                // RelativePath = "middleware\wireless\bluetooth_1.2.5\profiles\wireless_power_transfer\wpt_service.c"
+middleware\dhara\ecc\bch.c      // RelativePath = "middleware\dhara\ecc\bch.c"
+middleware\dhara\dhara\error.c
+                                // RelativePath = "middleware\dhara\dhara\error.c"
+middleware\dhara\ecc\hamming.c
+                                // RelativePath = "middleware\dhara\ecc\hamming.c"
+middleware\dhara\dhara\journal.c
+                                // RelativePath = "middleware\dhara\dhara\journal.c"
+middleware\dhara\dhara\map.c    // RelativePath = "middleware\dhara\dhara\map.c"
 rtos\freertos_9.0.0\Source\croutine.c
                                 // RelativePath = "rtos\freertos_9.0.0\Source\croutine.c"
 rtos\freertos_9.0.0\Source\event_groups.c
@@ -1746,3 +1876,65 @@ rtos\freertos_9.0.0\Source\tasks.c
                                 // RelativePath = "rtos\freertos_9.0.0\Source\tasks.c"
 rtos\freertos_9.0.0\Source\timers.c
                                 // RelativePath = "rtos\freertos_9.0.0\Source\timers.c"
+rtos\amazon-freertos\lib\FreeRTOS\portable\GCC\ARM_CM4F\fsl_tickless_systick.c
+                                // RelativePath = "rtos\amazon-freertos\lib\FreeRTOS\portable\GCC\ARM_CM4F\fsl_tickless_systick.c"
+rtos\amazon-freertos\lib\FreeRTOS\portable\GCC\ARM_CM4F\port.c
+                                // RelativePath = "rtos\amazon-freertos\lib\FreeRTOS\portable\GCC\ARM_CM4F\port.c"
+rtos\amazon-freertos\lib\FreeRTOS\event_groups.c
+                                // RelativePath = "rtos\amazon-freertos\lib\FreeRTOS\event_groups.c"
+rtos\amazon-freertos\lib\FreeRTOS\list.c
+                                // RelativePath = "rtos\amazon-freertos\lib\FreeRTOS\list.c"
+rtos\amazon-freertos\lib\FreeRTOS\queue.c
+                                // RelativePath = "rtos\amazon-freertos\lib\FreeRTOS\queue.c"
+rtos\amazon-freertos\lib\FreeRTOS\stream_buffer.c
+                                // RelativePath = "rtos\amazon-freertos\lib\FreeRTOS\stream_buffer.c"
+rtos\amazon-freertos\lib\FreeRTOS\tasks.c
+                                // RelativePath = "rtos\amazon-freertos\lib\FreeRTOS\tasks.c"
+rtos\amazon-freertos\lib\FreeRTOS\timers.c
+                                // RelativePath = "rtos\amazon-freertos\lib\FreeRTOS\timers.c"
+rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\protocols\FTP\FreeRTOS_FTP_commands.c
+                                // RelativePath = "rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\protocols\FTP\FreeRTOS_FTP_commands.c"
+rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\protocols\FTP\FreeRTOS_FTP_server.c
+                                // RelativePath = "rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\protocols\FTP\FreeRTOS_FTP_server.c"
+rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\protocols\HTTP\FreeRTOS_HTTP_commands.c
+                                // RelativePath = "rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\protocols\HTTP\FreeRTOS_HTTP_commands.c"
+rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\protocols\HTTP\FreeRTOS_HTTP_server.c
+                                // RelativePath = "rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\protocols\HTTP\FreeRTOS_HTTP_server.c"
+rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\protocols\Common\FreeRTOS_TCP_server.c
+                                // RelativePath = "rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\protocols\Common\FreeRTOS_TCP_server.c"
+rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\protocols\NTP\NTPDemo.c
+                                // RelativePath = "rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\protocols\NTP\NTPDemo.c"
+rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\portable\BufferManagement\BufferAllocation_1.c
+                                // RelativePath = "rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\portable\BufferManagement\BufferAllocation_1.c"
+rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\portable\BufferManagement\BufferAllocation_2.c
+                                // RelativePath = "rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\portable\BufferManagement\BufferAllocation_2.c"
+rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\portable\NetworkInterface\board_family\NetworkInterface.c
+                                // RelativePath = "rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\portable\NetworkInterface\board_family\NetworkInterface.c"
+rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\portable\NetworkInterface\ksz8851snl\NetworkInterface.c
+                                // RelativePath = "rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\portable\NetworkInterface\ksz8851snl\NetworkInterface.c"
+rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\FreeRTOS_ARP.c
+                                // RelativePath = "rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\FreeRTOS_ARP.c"
+rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\FreeRTOS_DHCP.c
+                                // RelativePath = "rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\FreeRTOS_DHCP.c"
+rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\FreeRTOS_DNS.c
+                                // RelativePath = "rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\FreeRTOS_DNS.c"
+rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\FreeRTOS_IP.c
+                                // RelativePath = "rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\FreeRTOS_IP.c"
+rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\FreeRTOS_Sockets.c
+                                // RelativePath = "rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\FreeRTOS_Sockets.c"
+rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\FreeRTOS_Stream_Buffer.c
+                                // RelativePath = "rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\FreeRTOS_Stream_Buffer.c"
+rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\FreeRTOS_TCP_IP.c
+                                // RelativePath = "rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\FreeRTOS_TCP_IP.c"
+rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\FreeRTOS_TCP_WIN.c
+                                // RelativePath = "rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\FreeRTOS_TCP_WIN.c"
+rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\FreeRTOS_UDP_IP.c
+                                // RelativePath = "rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\FreeRTOS_UDP_IP.c"
+rtos\amazon-freertos\lib\bufferpool\aws_bufferpool_static_thread_safe.c
+                                // RelativePath = "rtos\amazon-freertos\lib\bufferpool\aws_bufferpool_static_thread_safe.c"
+rtos\amazon-freertos\lib\crypto\aws_crypto.c
+                                // RelativePath = "rtos\amazon-freertos\lib\crypto\aws_crypto.c"
+rtos\amazon-freertos\lib\greengrass\aws_greengrass_discovery.c
+                                // RelativePath = "rtos\amazon-freertos\lib\greengrass\aws_greengrass_discovery.c"
+rtos\amazon-freertos\lib\greengrass\aws_helper_secure_connect.c
+                                // RelativePath = "rtos\amazon-freertos\lib\greengrass\aws_helper_secure_connect.c"

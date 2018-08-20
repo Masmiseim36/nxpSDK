@@ -1,5 +1,5 @@
 /*
- * Amazon FreeRTOS Shadow V1.0.3
+ * Amazon FreeRTOS Shadow V1.0.2
  * Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -43,10 +43,9 @@
 #include "aws_shadow_config_defaults.h"
 
 /* The JSON keys to search for when looking for the error code and message,
- * and client token, respectively. */
+ * respectively. */
 #define shadowJSON_ERROR_CODE       "code"
 #define shadowJSON_ERROR_MESSAGE    "message"
-#define shadowJSON_CLIENT_TOKEN     "clientToken"
 
 /**
  * @brief Given a JSON key, get its value. Does not work on arrays or objects.  Returns
@@ -74,7 +73,7 @@ BaseType_t SHADOW_JSONDocClientTokenMatch( const char * const pcDoc1,
                                            const char * const pcDoc2,
                                            uint32_t ulDoc2Length )
 {
-    jsmntok_t pxJSMNTokens[ shadowconfigJSON_JSMN_TOKENS ];
+    jsmntok_t pxJSMNTokens[ shadowConfigJSON_JSMN_TOKENS ];
     BaseType_t xReturn = pdFAIL;
     uint16_t usClientToken1Length, usClientToken2Length;
     int16_t sNbTokens;
@@ -88,7 +87,7 @@ BaseType_t SHADOW_JSONDocClientTokenMatch( const char * const pcDoc1,
     {
         /* Attempt to find the "clientToken" string in parsed pcDoc1. */
         usClientToken1Length = prvGetJSONValue( ( const char ** ) &pcClientToken1,
-                                                shadowJSON_CLIENT_TOKEN,
+                                                shadowConfigJSON_CLIENT_TOKEN,
                                                 pcDoc1,
                                                 ( jsmntok_t * ) pxJSMNTokens,
                                                 sNbTokens );
@@ -102,7 +101,7 @@ BaseType_t SHADOW_JSONDocClientTokenMatch( const char * const pcDoc1,
             {
                 /* If "clientToken" was found in pcDoc1, attempt to find "clientToken" in pcDoc2. */
                 usClientToken2Length = prvGetJSONValue( ( const char ** ) &pcClientToken2,
-                                                        shadowJSON_CLIENT_TOKEN,
+                                                        shadowConfigJSON_CLIENT_TOKEN,
                                                         pcDoc2,
                                                         ( jsmntok_t * ) pxJSMNTokens,
                                                         sNbTokens );
@@ -130,7 +129,7 @@ int16_t SHADOW_JSONGetErrorCodeAndMessage( const char * const pcErrorJSON,
                                            char ** ppcErrorMessage,
                                            uint16_t * pusErrorMessageLength )
 {
-    jsmntok_t pxJSMNTokens[ shadowconfigJSON_JSMN_TOKENS ];
+    jsmntok_t pxJSMNTokens[ shadowConfigJSON_JSMN_TOKENS ];
     char * pcErrorCode;
     int16_t sReturn = 0;
     int16_t sTokensParsed;
@@ -184,7 +183,7 @@ static int16_t prvParseJSON( const char * const pcDoc,
                                       pcDoc,
                                       ulDocLength,
                                       pxJSMNTokens,
-                                      shadowconfigJSON_JSMN_TOKENS );
+                                      shadowConfigJSON_JSMN_TOKENS );
 
     return sReturn;
 }

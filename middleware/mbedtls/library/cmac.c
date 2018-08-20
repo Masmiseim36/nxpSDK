@@ -65,8 +65,6 @@
 #endif /* MBEDTLS_SELF_TEST */
 #endif /* MBEDTLS_PLATFORM_C */
 
-#if !defined(MBEDTLS_CMAC_ALT) || defined(MBEDTLS_SELF_TEST)
-
 /* Implementation that should never be optimized out by the compiler */
 static void mbedtls_zeroize( void *v, size_t n ) {
     volatile unsigned char *p = (unsigned char*)v; while( n-- ) *p++ = 0;
@@ -166,9 +164,7 @@ exit:
 
     return( ret );
 }
-#endif /* !defined(MBEDTLS_CMAC_ALT) || defined(MBEDTLS_SELF_TEST) */
 
-#if !defined(MBEDTLS_CMAC_ALT)
 static void cmac_xor_block( unsigned char *output, const unsigned char *input1,
                             const unsigned char *input2,
                             const size_t block_size )
@@ -203,7 +199,6 @@ static void cmac_pad( unsigned char padded_block[MBEDTLS_CIPHER_BLKSIZE_MAX],
     }
 }
 
-#if !defined(MBEDTLS_CIPHER_CMAC_ALT)
 int mbedtls_cipher_cmac_starts( mbedtls_cipher_context_t *ctx,
                                 const unsigned char *key, size_t keybits )
 {
@@ -243,7 +238,6 @@ int mbedtls_cipher_cmac_starts( mbedtls_cipher_context_t *ctx,
 
     return 0;
 }
-#endif /* MBEDTLS_CIPHER_CMAC_ALT */
 
 int mbedtls_cipher_cmac_update( mbedtls_cipher_context_t *ctx,
                                 const unsigned char *input, size_t ilen )
@@ -475,8 +469,6 @@ exit:
     return( ret );
 }
 #endif /* MBEDTLS_AES_C */
-
-#endif /* !MBEDTLS_CMAC_ALT */
 
 #if defined(MBEDTLS_SELF_TEST)
 /*
@@ -798,7 +790,7 @@ static int cmac_test_subkeys( int verbose,
         if( ( ret = mbedtls_cipher_setup( &ctx, cipher_info ) ) != 0 )
         {
             if( verbose != 0 )
-                mbedtls_printf( "test execution failed\n\r" );
+                mbedtls_printf( "test execution failed\r\n" );
 
             goto cleanup;
         }
@@ -807,7 +799,7 @@ static int cmac_test_subkeys( int verbose,
                                        MBEDTLS_ENCRYPT ) ) != 0 )
         {
             if( verbose != 0 )
-                mbedtls_printf( "test execution failed\n\r" );
+                mbedtls_printf( "test execution failed\r\n" );
 
             goto cleanup;
         }
@@ -816,7 +808,7 @@ static int cmac_test_subkeys( int verbose,
         if( ret != 0 )
         {
            if( verbose != 0 )
-                mbedtls_printf( "failed\n\r" );
+                mbedtls_printf( "failed\r\n" );
 
             goto cleanup;
         }
@@ -825,13 +817,13 @@ static int cmac_test_subkeys( int verbose,
             ( ret = memcmp( K2, &subkeys[block_size], block_size ) ) != 0 )
         {
             if( verbose != 0 )
-                mbedtls_printf( "failed\n\r" );
+                mbedtls_printf( "failed\r\n" );
 
             goto cleanup;
         }
 
         if( verbose != 0 )
-            mbedtls_printf( "passed\n\r" );
+            mbedtls_printf( "passed\r\n" );
 
         mbedtls_cipher_free( &ctx );
     }
@@ -877,19 +869,19 @@ static int cmac_test_wth_cipher( int verbose,
                                          message_lengths[i], output ) ) != 0 )
         {
             if( verbose != 0 )
-                mbedtls_printf( "failed\n\r" );
+                mbedtls_printf( "failed\r\n" );
             goto exit;
         }
 
         if( ( ret = memcmp( output, &expected_result[i * block_size], block_size ) ) != 0 )
         {
             if( verbose != 0 )
-                mbedtls_printf( "failed\n\r" );
+                mbedtls_printf( "failed\r\n" );
             goto exit;
         }
 
         if( verbose != 0 )
-            mbedtls_printf( "passed\n\r" );
+            mbedtls_printf( "passed\r\n" );
     }
 
 exit:
@@ -912,13 +904,13 @@ static int test_aes128_cmac_prf( int verbose )
         {
 
             if( verbose != 0 )
-                mbedtls_printf( "failed\n\r" );
+                mbedtls_printf( "failed\r\n" );
 
             return( ret );
         }
         else if( verbose != 0 )
         {
-            mbedtls_printf( "passed\n\r" );
+            mbedtls_printf( "passed\r\n" );
         }
     }
     return( ret );
@@ -1079,7 +1071,7 @@ int mbedtls_cmac_self_test( int verbose )
 #endif /* MBEDTLS_AES_C */
 
     if( verbose != 0 )
-        mbedtls_printf( "\n\r" );
+        mbedtls_printf( "\r\n" );
 
     return( 0 );
 }

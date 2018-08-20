@@ -788,20 +788,16 @@ const int32_t l500ms = 500;
 				{
 					ulSavedSequenceNumber = ulCurrentSequenceNumber;
 
-                    /* Clean up all sequence received between ulSequenceNumber and ulSequenceNumber + ulLength since they are duplicated.
-                    If the server is forced to retransmit packets several time in a row it might send a batch of concatenated packet for speed.
-                    So we cannot rely on the packets between ulSequenceNumber and ulSequenceNumber + ulLength to be sequential and it is better to just
-                    clean them out. */
-                    do
-                    {
-                        pxFound = xTCPWindowRxConfirm( pxWindow, ulSequenceNumber, ulLength );
+					/* See if (part of) this segment has been stored already,
+					but this rarely happens. */
+					pxFound = xTCPWindowRxConfirm( pxWindow, ulSequenceNumber, ulLength );
+					if( pxFound != NULL )
+					{
+						ulCurrentSequenceNumber = pxFound->ulSequenceNumber + ( ( uint32_t ) pxFound->lDataLength );
 
-                        if ( pxFound != NULL )
-                        {
-                            /* Remove it because it will be passed to user directly. */
-                            vTCPWindowFree( pxFound );
-                        }
-                    } while ( pxFound );
+						/* Remove it because it will be passed to user directly. */
+						vTCPWindowFree( pxFound );
+					}
 
 					/*  Check for following segments that are already in the
 					queue and increment ulCurrentSequenceNumber. */

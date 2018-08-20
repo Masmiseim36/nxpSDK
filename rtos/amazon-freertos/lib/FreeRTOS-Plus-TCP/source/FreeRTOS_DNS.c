@@ -463,7 +463,7 @@ struct freertos_sockaddr xAddress;
 Socket_t xDNSSocket;
 uint32_t ulIPAddress = 0UL;
 uint8_t *pucUDPPayloadBuffer;
-uint32_t ulAddressLength = sizeof( struct freertos_sockaddr );
+static uint32_t ulAddressLength;
 BaseType_t xAttempt;
 int32_t lBytes;
 size_t xPayloadLength, xExpectedPayloadLength;
@@ -1067,7 +1067,7 @@ uint16_t x, usDataLength, usQuestions;
 
 static Socket_t prvCreateDNSSocket( void )
 {
-Socket_t xSocket = NULL;
+static Socket_t xSocket = NULL;
 struct freertos_sockaddr xAddress;
 BaseType_t xReturn;
 TickType_t xTimeoutTime = pdMS_TO_TICKS( 200 );

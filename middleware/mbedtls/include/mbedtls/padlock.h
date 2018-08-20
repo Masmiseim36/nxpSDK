@@ -3,8 +3,7 @@
  *
  * \brief VIA PadLock ACE for HW encryption/decryption supported by some
  *        processors
- */
-/*
+ *
  *  Copyright (C) 2006-2015, ARM Limited, All Rights Reserved
  *  SPDX-License-Identifier: Apache-2.0
  *

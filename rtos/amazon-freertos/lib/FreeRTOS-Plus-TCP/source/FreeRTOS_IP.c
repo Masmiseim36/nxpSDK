@@ -1004,13 +1004,10 @@ BaseType_t xReturn = pdFALSE;
 			memcpy( ( void * ) ipLOCAL_MAC_ADDRESS, ( void * ) ucMACAddress, ( size_t ) ipMAC_ADDRESS_LENGTH_BYTES );
 
 			/* Prepare the sockets interface. */
-            xReturn = vNetworkSocketsInit();
-            
-            if( pdTRUE == xReturn )
-            {
-                /* Create the task that processes Ethernet and stack events. */
-                xReturn = xTaskCreate( prvIPTask, "IP-task", ( uint16_t )ipconfigIP_TASK_STACK_SIZE_WORDS, NULL, ( UBaseType_t )ipconfigIP_TASK_PRIORITY, &xIPTaskHandle );
-            }
+			vNetworkSocketsInit();
+
+			/* Create the task that processes Ethernet and stack events. */
+			xReturn = xTaskCreate( prvIPTask, "IP-task", ( uint16_t ) ipconfigIP_TASK_STACK_SIZE_WORDS, NULL, ( UBaseType_t ) ipconfigIP_TASK_PRIORITY, &xIPTaskHandle );
 		}
 		else
 		{
@@ -2088,13 +2085,6 @@ uint32_t FreeRTOS_GetDNSServerAddress( void )
 uint32_t FreeRTOS_GetNetmask( void )
 {
 	return xNetworkAddressing.ulNetMask;
-}
-/*-----------------------------------------------------------*/
-
-void FreeRTOS_UpdateMACAddress( const uint8_t ucMACAddress[ipMAC_ADDRESS_LENGTH_BYTES] )
-{
-    /* Copy the MAC address at the start of the default packet header fragment. */
-    memcpy( ( void * )ipLOCAL_MAC_ADDRESS, ( void * )ucMACAddress, ( size_t )ipMAC_ADDRESS_LENGTH_BYTES );
 }
 /*-----------------------------------------------------------*/
 

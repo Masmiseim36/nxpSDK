@@ -86,8 +86,6 @@ typedef void * Socket_t;
 #define SOCKETS_ENOMEM                   ( -12 )   /*!< Memory allocation failed. */
 #define SOCKETS_EINVAL                   ( -22 )   /*!< Invalid argument. */
 #define SOCKETS_ENOPROTOOPT              ( -109 )  /*!< A bad option was specified . */
-#define SOCKETS_ENOTCONN                 ( -126 )  /*!< The supplied socket is not connected. */
-#define SOCKETS_EISCONN                  ( -127 )  /*!< The supplied socket is already connected. */
 #define SOCKETS_ECLOSED                  ( -128 )  /*!< The supplied socket has already been closed. */
 #define SOCKETS_TLS_INIT_ERROR           ( -1001 ) /*!< TLS initialization failed. */
 #define SOCKETS_TLS_HANDSHAKE_ERROR      ( -1002 ) /*!< TLS handshake failed. */
@@ -192,7 +190,7 @@ typedef struct SocketsSockaddr
 /**
  * @brief Well-known port numbers.
  */
-#define securesocketsDEFAULT_TLS_DESTINATION_PORT    443
+#define securesocketsDEFAULT_TLS_DESTINATION_PORT 443
 
 /**
  * @brief Secure Sockets library initialization function.
@@ -236,8 +234,6 @@ Socket_t SOCKETS_Socket( int32_t lDomain,
  *
  * \note To create a secure socket, SOCKETS_SetSockOpt() should be called with the
  * SOCKETS_SO_REQUIRE_TLS option \a before SOCKETS_Connect() is called.
- *
- * If this function returns an error the socket is considered invalid.
  *
  * \warning SOCKETS_Connect() is not safe to be called on the same socket
  * from multiple threads simultaneously with SOCKETS_Connect(),
@@ -370,8 +366,6 @@ int32_t SOCKETS_Close( Socket_t xSocket );
  *  - Non-Standard Options
  *    - @ref SOCKETS_SO_NONBLOCK
  *      - Makes a socket non-blocking.
- *      - Non-blocking connect is not supported - socket option should be
- *        called after connect.
  *      - pvOptionValue is ignored for this option.
  *  - Security Sockets Options
  *    - @ref SOCKETS_SO_REQUIRE_TLS

@@ -1,9 +1,6 @@
-/**
- * \file config-mini-tls1_1.h
- *
- * \brief Minimal configuration for TLS 1.1 (RFC 4346)
- */
 /*
+ *  Minimal configuration for TLS 1.1 (RFC 4346)
+ *
  *  Copyright (C) 2006-2015, ARM Limited, All Rights Reserved
  *  SPDX-License-Identifier: Apache-2.0
  *

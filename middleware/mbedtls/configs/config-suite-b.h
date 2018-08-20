@@ -1,9 +1,6 @@
-/**
- * \file config-suite-b.h
- *
- * \brief Minimal configuration for TLS NSA Suite B Profile (RFC 6460)
- */
 /*
+ *  Minimal configuration for TLS NSA Suite B Profile (RFC 6460)
+ *
  *  Copyright (C) 2006-2015, ARM Limited, All Rights Reserved
  *  SPDX-License-Identifier: Apache-2.0
  *

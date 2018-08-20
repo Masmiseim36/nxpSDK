@@ -98,7 +98,7 @@ void mbedtls_md4_clone( mbedtls_md4_context *dst,
 /*
  * MD4 context setup
  */
-int mbedtls_md4_starts_ret( mbedtls_md4_context *ctx )
+void mbedtls_md4_starts( mbedtls_md4_context *ctx )
 {
     ctx->total[0] = 0;
     ctx->total[1] = 0;
@@ -107,20 +107,10 @@ int mbedtls_md4_starts_ret( mbedtls_md4_context *ctx )
     ctx->state[1] = 0xEFCDAB89;
     ctx->state[2] = 0x98BADCFE;
     ctx->state[3] = 0x10325476;
-
-    return( 0 );
 }
-
-#if !defined(MBEDTLS_DEPRECATED_REMOVED)
-void mbedtls_md4_starts( mbedtls_md4_context *ctx )
-{
-    mbedtls_md4_starts_ret( ctx );
-}
-#endif
 
 #if !defined(MBEDTLS_MD4_PROCESS_ALT)
-int mbedtls_internal_md4_process( mbedtls_md4_context *ctx,
-                                  const unsigned char data[64] )
+void mbedtls_md4_process( mbedtls_md4_context *ctx, const unsigned char data[64] )
 {
     uint32_t X[16], A, B, C, D;
 
@@ -221,32 +211,19 @@ int mbedtls_internal_md4_process( mbedtls_md4_context *ctx,
     ctx->state[1] += B;
     ctx->state[2] += C;
     ctx->state[3] += D;
-
-    return( 0 );
 }
-
-#if !defined(MBEDTLS_DEPRECATED_REMOVED)
-void mbedtls_md4_process( mbedtls_md4_context *ctx,
-                          const unsigned char data[64] )
-{
-    mbedtls_internal_md4_process( ctx, data );
-}
-#endif
 #endif /* !MBEDTLS_MD4_PROCESS_ALT */
 
 /*
  * MD4 process buffer
  */
-int mbedtls_md4_update_ret( mbedtls_md4_context *ctx,
-                            const unsigned char *input,
-                            size_t ilen )
+void mbedtls_md4_update( mbedtls_md4_context *ctx, const unsigned char *input, size_t ilen )
 {
-    int ret;
     size_t fill;
     uint32_t left;
 
     if( ilen == 0 )
-        return( 0 );
+        return;
 
     left = ctx->total[0] & 0x3F;
     fill = 64 - left;
@@ -261,10 +238,7 @@ int mbedtls_md4_update_ret( mbedtls_md4_context *ctx,
     {
         memcpy( (void *) (ctx->buffer + left),
                 (void *) input, fill );
-
-        if( ( ret = mbedtls_internal_md4_process( ctx, ctx->buffer ) ) != 0 )
-            return( ret );
-
+        mbedtls_md4_process( ctx, ctx->buffer );
         input += fill;
         ilen  -= fill;
         left = 0;
@@ -272,9 +246,7 @@ int mbedtls_md4_update_ret( mbedtls_md4_context *ctx,
 
     while( ilen >= 64 )
     {
-        if( ( ret = mbedtls_internal_md4_process( ctx, input ) ) != 0 )
-            return( ret );
-
+        mbedtls_md4_process( ctx, input );
         input += 64;
         ilen  -= 64;
     }
@@ -284,18 +256,7 @@ int mbedtls_md4_update_ret( mbedtls_md4_context *ctx,
         memcpy( (void *) (ctx->buffer + left),
                 (void *) input, ilen );
     }
-
-    return( 0 );
 }
-
-#if !defined(MBEDTLS_DEPRECATED_REMOVED)
-void mbedtls_md4_update( mbedtls_md4_context *ctx,
-                         const unsigned char *input,
-                         size_t ilen )
-{
-    mbedtls_md4_update_ret( ctx, input, ilen );
-}
-#endif
 
 static const unsigned char md4_padding[64] =
 {
@@ -308,10 +269,8 @@ static const unsigned char md4_padding[64] =
 /*
  * MD4 final digest
  */
-int mbedtls_md4_finish_ret( mbedtls_md4_context *ctx,
-                            unsigned char output[16] )
+void mbedtls_md4_finish( mbedtls_md4_context *ctx, unsigned char output[16] )
 {
-    int ret;
     uint32_t last, padn;
     uint32_t high, low;
     unsigned char msglen[8];
@@ -326,74 +285,37 @@ int mbedtls_md4_finish_ret( mbedtls_md4_context *ctx,
     last = ctx->total[0] & 0x3F;
     padn = ( last < 56 ) ? ( 56 - last ) : ( 120 - last );
 
-    ret = mbedtls_md4_update_ret( ctx, (unsigned char *)md4_padding, padn );
-    if( ret != 0 )
-        return( ret );
-
-    if( ( ret = mbedtls_md4_update_ret( ctx, msglen, 8 ) ) != 0 )
-        return( ret );
-
+    mbedtls_md4_update( ctx, (unsigned char *) md4_padding, padn );
+    mbedtls_md4_update( ctx, msglen, 8 );
 
     PUT_UINT32_LE( ctx->state[0], output,  0 );
     PUT_UINT32_LE( ctx->state[1], output,  4 );
     PUT_UINT32_LE( ctx->state[2], output,  8 );
     PUT_UINT32_LE( ctx->state[3], output, 12 );
-
-    return( 0 );
 }
-
-#if !defined(MBEDTLS_DEPRECATED_REMOVED)
-void mbedtls_md4_finish( mbedtls_md4_context *ctx,
-                         unsigned char output[16] )
-{
-    mbedtls_md4_finish_ret( ctx, output );
-}
-#endif
 
 #endif /* !MBEDTLS_MD4_ALT */
 
 /*
  * output = MD4( input buffer )
  */
-int mbedtls_md4_ret( const unsigned char *input,
-                     size_t ilen,
-                     unsigned char output[16] )
+void mbedtls_md4( const unsigned char *input, size_t ilen, unsigned char output[16] )
 {
-    int ret;
     mbedtls_md4_context ctx;
 
     mbedtls_md4_init( &ctx );
-
-    if( ( ret = mbedtls_md4_starts_ret( &ctx ) ) != 0 )
-        goto exit;
-
-    if( ( ret = mbedtls_md4_update_ret( &ctx, input, ilen ) ) != 0 )
-        goto exit;
-
-    if( ( ret = mbedtls_md4_finish_ret( &ctx, output ) ) != 0 )
-        goto exit;
-
-exit:
+    mbedtls_md4_starts( &ctx );
+    mbedtls_md4_update( &ctx, input, ilen );
+    mbedtls_md4_finish( &ctx, output );
     mbedtls_md4_free( &ctx );
-
-    return( ret );
 }
-
-#if !defined(MBEDTLS_DEPRECATED_REMOVED)
-void mbedtls_md4( const unsigned char *input,
-                  size_t ilen,
-                  unsigned char output[16] )
-{
-    mbedtls_md4_ret( input, ilen, output );
-}
-#endif
 
 #if defined(MBEDTLS_SELF_TEST)
 
 /*
  * RFC 1320 test vectors
  */
-static const unsigned char md4_test_str[7][81] =
+static const char md4_test_str[7][81] =
 {
     { "" },
     { "a" },
@@ -401,13 +323,8 @@ static const unsigned char md4_test_str[7][81] =
     { "message digest" },
     { "abcdefghijklmnopqrstuvwxyz" },
     { "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789" },
-    { "12345678901234567890123456789012345678901234567890123456789012"
+    { "12345678901234567890123456789012345678901234567890123456789012" \
       "345678901234567890" }
-};
-
-static const size_t md4_test_strlen[7] =
-{
-    0, 1, 3, 14, 26, 62, 80
 };
 
 static const unsigned char md4_test_sum[7][16] =
@@ -433,7 +350,7 @@ static const unsigned char md4_test_sum[7][16] =
  */
 int mbedtls_md4_self_test( int verbose )
 {
-    int i, ret = 0;
+    int i;
     unsigned char md4sum[16];
 
     for( i = 0; i < 7; i++ )
@@ -441,14 +358,15 @@ int mbedtls_md4_self_test( int verbose )
         if( verbose != 0 )
             mbedtls_printf( "  MD4 test #%d: ", i + 1 );
 
-        ret = mbedtls_md4_ret( md4_test_str[i], md4_test_strlen[i], md4sum );
-        if( ret != 0 )
-            goto fail;
+        mbedtls_md4( (unsigned char *) md4_test_str[i],
+             strlen( md4_test_str[i] ), md4sum );
 
         if( memcmp( md4sum, md4_test_sum[i], 16 ) != 0 )
         {
-            ret = 1;
-            goto fail;
+            if( verbose != 0 )
+                mbedtls_printf( "failed\r\n" );
+
+            return( 1 );
         }
 
         if( verbose != 0 )
@@ -459,12 +377,6 @@ int mbedtls_md4_self_test( int verbose )
         mbedtls_printf( "\r\n" );
 
     return( 0 );
-
-fail:
-    if( verbose != 0 )
-        mbedtls_printf( "failed\r\n" );
-
-    return( ret );
 }
 
 #endif /* MBEDTLS_SELF_TEST */

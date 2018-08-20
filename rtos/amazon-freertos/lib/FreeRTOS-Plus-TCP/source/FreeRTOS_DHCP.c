@@ -593,19 +593,15 @@ static void prvInitialiseDHCP( void )
 		xDHCPData.ulTransactionId++;
 	}
 
-    /* Check for random number generator API failure. */
-    if( 0 != xDHCPData.ulTransactionId )
-    {
-	    xDHCPData.xUseBroadcast = 0;
-	    xDHCPData.ulOfferedIPAddress = 0UL;
-	    xDHCPData.ulDHCPServerAddress = 0UL;
-	    xDHCPData.xDHCPTxPeriod = dhcpINITIAL_DHCP_TX_PERIOD;
+	xDHCPData.xUseBroadcast = 0;
+	xDHCPData.ulOfferedIPAddress = 0UL;
+	xDHCPData.ulDHCPServerAddress = 0UL;
+	xDHCPData.xDHCPTxPeriod = dhcpINITIAL_DHCP_TX_PERIOD;
 
-	    /* Create the DHCP socket if it has not already been created. */
-	    prvCreateDHCPSocket();
-	    FreeRTOS_debug_printf( ( "prvInitialiseDHCP: start after %lu ticks\n", dhcpINITIAL_TIMER_PERIOD ) );
-	    vIPReloadDHCPTimer( dhcpINITIAL_TIMER_PERIOD );
-    }
+	/* Create the DHCP socket if it has not already been created. */
+	prvCreateDHCPSocket();
+	FreeRTOS_debug_printf( ( "prvInitialiseDHCP: start after %lu ticks\n", dhcpINITIAL_TIMER_PERIOD ) );
+	vIPReloadDHCPTimer( dhcpINITIAL_TIMER_PERIOD );
 }
 /*-----------------------------------------------------------*/
 

@@ -198,7 +198,7 @@ static void ethernet_callback(ENET_Type *base, enet_handle_t *handle, enet_event
 #endif
 
 #if LWIP_IPV4 && LWIP_IGMP
-static err_t ethernetif_igmp_mac_filter(struct netif *netif, const ip4_addr_t *group, u8_t action)
+static err_t ethernetif_igmp_mac_filter(struct netif *netif, const ip4_addr_t *group, enum netif_mac_filter_action action)
 {
     struct ethernetif *ethernetif = netif->state;
     uint8_t multicastMacAddr[6];
@@ -472,11 +472,6 @@ static void enet_init(struct netif *netif, struct ethernetif *ethernetif,
     ethernetif->txIdx = 0U;
 
     ENET_Init(ethernetif->base, &config, netif->hwaddr, sysClock);
-
-#if defined(LPC54018_SERIES)
-    /* Workaround for receive issue on lpc54018 */
-    ethernetif->base->MAC_FRAME_FILTER |= ENET_MAC_FRAME_FILTER_RA_MASK;
-#endif
 
 /* Create the handler. */
 #if USE_RTOS && defined(FSL_RTOS_FREE_RTOS)

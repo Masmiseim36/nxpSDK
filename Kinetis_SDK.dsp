@@ -6731,6 +6731,46 @@ SOURCE=.\boards\frdmk22f\wifi_qca_examples\qca_throughput\wlan_qcom.h
 # End Group
 # End Group
 # End Group
+# Begin Group "evkbimxrt1050"
+
+# PROP Default_Filter ""
+# Begin Group "driver_examples Nr. 1"
+
+# PROP Default_Filter ""
+# Begin Group "flexSPI polling"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\driver_examples\flexspi\hyper_flash\polling_transfer\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\driver_examples\flexspi\hyper_flash\polling_transfer\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\driver_examples\flexspi\hyper_flash\polling_transfer\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\driver_examples\flexspi\hyper_flash\polling_transfer\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\driver_examples\flexspi\hyper_flash\polling_transfer\flexspi_hyper_flash_polling_transfer.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\driver_examples\flexspi\hyper_flash\polling_transfer\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\driver_examples\flexspi\hyper_flash\polling_transfer\pin_mux.h
+# End Source File
+# End Group
+# End Group
+# End Group
 # End Group
 # Begin Group "Middleware"
 
@@ -8270,6 +8310,258 @@ SOURCE=.\rtos\freertos_9.0.0\Source\include\timers.h
 # Begin Group "amazon-freertos"
 
 # PROP Default_Filter ""
+# Begin Group "freeRTOS"
+
+# PROP Default_Filter ""
+# Begin Group "Port GCC CM4F"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=".\rtos\amazon-freertos\lib\FreeRTOS\portable\GCC\ARM_CM4F\fsl_tickless_generic.h"
+# End Source File
+# Begin Source File
+
+SOURCE=".\rtos\amazon-freertos\lib\FreeRTOS\portable\GCC\ARM_CM4F\fsl_tickless_systick.c"
+# End Source File
+# Begin Source File
+
+SOURCE=".\rtos\amazon-freertos\lib\FreeRTOS\portable\GCC\ARM_CM4F\port.c"
+# End Source File
+# Begin Source File
+
+SOURCE=".\rtos\amazon-freertos\lib\FreeRTOS\portable\GCC\ARM_CM4F\portmacro.h"
+# End Source File
+# End Group
+# Begin Source File
+
+SOURCE=".\rtos\amazon-freertos\lib\FreeRTOS\event_groups.c"
+# End Source File
+# Begin Source File
+
+SOURCE=".\rtos\amazon-freertos\lib\FreeRTOS\list.c"
+# End Source File
+# Begin Source File
+
+SOURCE=".\rtos\amazon-freertos\lib\FreeRTOS\queue.c"
+# End Source File
+# Begin Source File
+
+SOURCE=".\rtos\amazon-freertos\lib\FreeRTOS\stream_buffer.c"
+# End Source File
+# Begin Source File
+
+SOURCE=".\rtos\amazon-freertos\lib\FreeRTOS\tasks.c"
+# End Source File
+# Begin Source File
+
+SOURCE=".\rtos\amazon-freertos\lib\FreeRTOS\timers.c"
+# End Source File
+# End Group
+# Begin Group "freeRTOSTCP"
+
+# PROP Default_Filter ""
+# Begin Group "protocoll"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=".\rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\protocols\FTP\FreeRTOS_FTP_commands.c"
+# End Source File
+# Begin Source File
+
+SOURCE=".\rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\protocols\include\FreeRTOS_FTP_commands.h"
+# End Source File
+# Begin Source File
+
+SOURCE=".\rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\protocols\FTP\FreeRTOS_FTP_server.c"
+# End Source File
+# Begin Source File
+
+SOURCE=".\rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\protocols\HTTP\FreeRTOS_HTTP_commands.c"
+# End Source File
+# Begin Source File
+
+SOURCE=".\rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\protocols\include\FreeRTOS_HTTP_commands.h"
+# End Source File
+# Begin Source File
+
+SOURCE=".\rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\protocols\HTTP\FreeRTOS_HTTP_server.c"
+# End Source File
+# Begin Source File
+
+SOURCE=".\rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\protocols\include\FreeRTOS_server_private.h"
+# End Source File
+# Begin Source File
+
+SOURCE=".\rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\protocols\Common\FreeRTOS_TCP_server.c"
+# End Source File
+# Begin Source File
+
+SOURCE=".\rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\protocols\include\FreeRTOS_TCP_server.h"
+# End Source File
+# Begin Source File
+
+SOURCE=".\rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\protocols\include\NTPClient.h"
+# End Source File
+# Begin Source File
+
+SOURCE=".\rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\protocols\NTP\NTPDemo.c"
+# End Source File
+# Begin Source File
+
+SOURCE=".\rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\protocols\include\NTPDemo.h"
+# End Source File
+# End Group
+# Begin Group "portable"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=".\rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\portable\BufferManagement\BufferAllocation_1.c"
+# End Source File
+# Begin Source File
+
+SOURCE=".\rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\portable\BufferManagement\BufferAllocation_2.c"
+# End Source File
+# Begin Source File
+
+SOURCE=".\rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\portable\NetworkInterface\board_family\NetworkInterface.c"
+# End Source File
+# Begin Source File
+
+SOURCE=".\rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\portable\NetworkInterface\ksz8851snl\NetworkInterface.c"
+# End Source File
+# Begin Source File
+
+SOURCE=".\rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\portable\Compiler\CompilerName\pack_struct_end.h"
+# End Source File
+# Begin Source File
+
+SOURCE=".\rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\portable\Compiler\GCC\pack_struct_end.h"
+# End Source File
+# Begin Source File
+
+SOURCE=".\rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\portable\Compiler\CompilerName\pack_struct_start.h"
+# End Source File
+# Begin Source File
+
+SOURCE=".\rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\portable\Compiler\GCC\pack_struct_start.h"
+# End Source File
+# End Group
+# Begin Source File
+
+SOURCE=".\rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\FreeRTOS_ARP.c"
+# End Source File
+# Begin Source File
+
+SOURCE=".\rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\include\FreeRTOS_ARP.h"
+# End Source File
+# Begin Source File
+
+SOURCE=".\rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\FreeRTOS_DHCP.c"
+# End Source File
+# Begin Source File
+
+SOURCE=".\rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\include\FreeRTOS_DHCP.h"
+# End Source File
+# Begin Source File
+
+SOURCE=".\rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\FreeRTOS_DNS.c"
+# End Source File
+# Begin Source File
+
+SOURCE=".\rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\include\FreeRTOS_DNS.h"
+# End Source File
+# Begin Source File
+
+SOURCE=".\rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\include\FreeRTOS_errno_TCP.h"
+# End Source File
+# Begin Source File
+
+SOURCE=".\rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\FreeRTOS_IP.c"
+# End Source File
+# Begin Source File
+
+SOURCE=".\rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\include\FreeRTOS_IP.h"
+# End Source File
+# Begin Source File
+
+SOURCE=".\rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\include\FreeRTOS_IP_Private.h"
+# End Source File
+# Begin Source File
+
+SOURCE=".\rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\FreeRTOS_Sockets.c"
+# End Source File
+# Begin Source File
+
+SOURCE=".\rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\include\FreeRTOS_Sockets.h"
+# End Source File
+# Begin Source File
+
+SOURCE=".\rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\FreeRTOS_Stream_Buffer.c"
+# End Source File
+# Begin Source File
+
+SOURCE=".\rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\include\FreeRTOS_Stream_Buffer.h"
+# End Source File
+# Begin Source File
+
+SOURCE=".\rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\FreeRTOS_TCP_IP.c"
+# End Source File
+# Begin Source File
+
+SOURCE=".\rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\include\FreeRTOS_TCP_IP.h"
+# End Source File
+# Begin Source File
+
+SOURCE=".\rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\FreeRTOS_TCP_WIN.c"
+# End Source File
+# Begin Source File
+
+SOURCE=".\rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\include\FreeRTOS_TCP_WIN.h"
+# End Source File
+# Begin Source File
+
+SOURCE=".\rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\source\FreeRTOS_UDP_IP.c"
+# End Source File
+# Begin Source File
+
+SOURCE=".\rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\include\FreeRTOS_UDP_IP.h"
+# End Source File
+# Begin Source File
+
+SOURCE=".\rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\include\FreeRTOSIPConfigDefaults.h"
+# End Source File
+# Begin Source File
+
+SOURCE=".\rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\include\IPTraceMacroDefaults.h"
+# End Source File
+# Begin Source File
+
+SOURCE=".\rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\include\NetworkBufferManagement.h"
+# End Source File
+# Begin Source File
+
+SOURCE=".\rtos\amazon-freertos\lib\FreeRTOS-Plus-TCP\include\NetworkInterface.h"
+# End Source File
+# End Group
+# Begin Source File
+
+SOURCE=".\rtos\amazon-freertos\lib\bufferpool\aws_bufferpool_static_thread_safe.c"
+# End Source File
+# Begin Source File
+
+SOURCE=".\rtos\amazon-freertos\lib\crypto\aws_crypto.c"
+# End Source File
+# Begin Source File
+
+SOURCE=".\rtos\amazon-freertos\lib\greengrass\aws_greengrass_discovery.c"
+# End Source File
+# Begin Source File
+
+SOURCE=".\rtos\amazon-freertos\lib\greengrass\aws_helper_secure_connect.c"
+# End Source File
 # End Group
 # End Group
 # End Target

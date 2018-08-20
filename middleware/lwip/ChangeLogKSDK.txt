@@ -1,8 +1,8 @@
 /*!
 @page middleware_log Middleware Change Log
 
-@section lwip lwIP for MCUXpresso SDK.
-  The current version of lwIP is based on lwIP 2.0.3.
+@section lwip lwIP for MCUXpresso SDK
+  The current version of lwIP is based on lwIP 2.0.3 (2017-09-15, SHA-1: 92f23d6ca0971a32f2085b9480e738d34174417b).
 
   - 2.0.3_rev1
     - New features:

@@ -234,7 +234,6 @@ void FreeRTOS_SetAddressConfiguration( const uint32_t *pulIPAddress, const uint3
 BaseType_t FreeRTOS_SendPingRequest( uint32_t ulIPAddress, size_t xNumberOfBytesToSend, TickType_t xBlockTimeTicks );
 void FreeRTOS_ReleaseUDPPayloadBuffer( void *pvBuffer );
 const uint8_t * FreeRTOS_GetMACAddress( void );
-void FreeRTOS_UpdateMACAddress( const uint8_t ucMACAddress[ipMAC_ADDRESS_LENGTH_BYTES] );
 void vApplicationIPNetworkEventHook( eIPCallbackEvent_t eNetworkEvent );
 void vApplicationPingReplyHook( ePingReplyStatus_t eStatus, uint16_t usIdentifier );
 uint32_t FreeRTOS_GetIPAddress( void );

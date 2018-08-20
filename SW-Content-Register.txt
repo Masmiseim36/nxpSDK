@@ -1,5 +1,5 @@
 Release Name: MCUXpresso Software Development Kit (SDK)
-Release Version: 2.4.2
+Release Version: 2.4.0
 
 Amazon FreeRTOS            Author: Real Time Engineers, Ltd.                 
                            Description: IoT operating system for             
@@ -10,7 +10,7 @@ Amazon FreeRTOS            Author: Real Time Engineers, Ltd.
                            Location: rtos/amazon-freertos                    
                            name: Amazon FreeRTOS                             
                            URL: https://aws.amazon.com/freertos/             
-                           version: 1.2.7                                    
+                           version: 1.2.3                                    
 
 AwsRemoteControl           Location: boards/<board>/aws_examples/remote_contr
                            ol_android/AwsRemoteControl.apk                   
@@ -21,17 +21,6 @@ AwsRemoteControl           Location: boards/<board>/aws_examples/remote_contr
                            name: AWS Remote Control                          
                            version: 1.0                                      
                            Format: binary                                    
-
-C++ option-parser          version: NA                                       
-                           Location:                                         
-                           middleware/multicore/erpc/erpcgen/src/options.cpp 
-                           Description: C++ option-parser                    
-                           License: Brad Appleton's license                  
-                           Author: Brad Appleton    bradapp@enteract.com     
-                           name: C++ option-parser                           
-                           Format: Plain Text                                
-                           URL: http://www.bradapp.com/ftp/src/libs/C++/Optio
-                           ns.html                                           
 
 CMSIS Core header files    Author: ARM                                       
                            parentversion: 5.0.1                              
@@ -56,15 +45,6 @@ CMSIS DSP Library          name: CMSIS DSP Library
                            Location: CMSIS/DSP_Lib                           
                            Description: A digital signal processing library  
                            for Cortex-M cores from ARM                       
-
-CPP Template               version: NA                                       
-                           Location:                                         
-                           middleware/multicore/erpc/erpcgen/src/cpptemplate 
-                           Description: CPP Template                         
-                           License: Open Source - MIT                        
-                           Author: Ryan Ginstrom & Martinho Fernandes        
-                           name: CPP Template                                
-                           Format: source code                               
 
 DMA Manager                Format: source code                               
                            Location: middleware/dma_manager                  
@@ -149,42 +129,6 @@ MBED TLS stack             Author: ARM
                            URL: https://tls.mbed.org/                        
                            version: 2.6.0                                    
 
-Multicore SDK              version: 2.2.0                                    
-                           Location: middleware/multicore                    
-                           Description: Freescale Multicore Software         
-                           Development Kit.                                  
-                           License: Open Source - BSD-3-Clause Clear         
-                           Author: Freescale                                 
-                           name: Multicore SDK                               
-                           Format: source code                               
-
-NTAG I2C plus              Author: NXP                                       
-                           Description: NTAG I2C plus communication library  
-                           Format: source code                               
-                           License: Open Source - BSD-3-Clause Clear         
-                           Location: middleware/ntag_i2c_plus                
-                           name: NTAG I2C plus                               
-                           version: 1.0.0                                    
-
-Pedometer Library          version: 1.0                                      
-                           Location:                                         
-                           middleware/issdk/algorithms/pedometer/lib         
-                           Description: Pedometer algorithm library for Arm  
-                           Cortex M0+ and M4 processors                      
-                           License: LA_OPT_Base_License                      
-                           Author: KEYnetik, Inc                             
-                           name: Pedometer Library                           
-                           Format: binary library                            
-
-Percepio Tracealyzer -     version: 3.0.9                                    
-Snapshot Demo              Location: boards/<board>/rtos_examples/visualizati
-                           on/freertos_percepio_snapshot                     
-                           Description: Percepio Tracealyzer                 
-                           License: Open Source - BSD-3-Clause               
-                           Author: Percepio                                  
-                           name: Percepio Tracealyzer - Snapshot Demo        
-                           Format: source code                               
-
 SD MMC Card middleware     name: SD MMC Card middleware                      
                            Location: middleware/sdmmc                        
                            License: Open Source - BSD-3-Clause Clear         
@@ -193,35 +137,6 @@ SD MMC Card middleware     name: SD MMC Card middleware
                            Author: Freescale                                 
                            version: 2.1.2                                    
                            Format: source code                               
-
-SE_hostlib                 version: KSDK-1.4.0.1                             
-                           Location: middleware/se_hostlib                   
-                           Description: Secure element host library          
-                           License: NXP proprietary license                  
-                           Author: NXP                                       
-                           name: se_hostlib                                  
-                           Format: source code                               
-
-Segger SystemView Demo     version: 2.40a                                    
-                           Location: boards/<board>/rtos_examples/visualizati
-                           on/freertos_segger_sysview                        
-                           Description: Segger systemview demo               
-                           License: Open Source - BSD-3-Clause               
-                           Author: Segger                                    
-                           name: Segger SystemView Demo                      
-                           Format: source code                               
-
-The Bus Pirate             version: NA                                       
-                           Location: middleware/multicore/erpc/erpc_c/port/er
-                           pc_serial.h, middleware/multicore/erpc/erpc_c/port
-                           /erpc_serial.cpp                                  
-                           Description: OS independent serial interface      
-                           License: Open Source - CC0 (Public Domain         
-                           Dedication License)                               
-                           Author: Community                                 
-                           name: The Bus Pirate                              
-                           Format: source code                               
-                           URL: http://code.google.com/p/the-bus-pirate/     
 
 TinyCBOR                   Author: Intel Corporation                         
                            Description: TinyCBOR                             
@@ -243,41 +158,6 @@ USB                        version: 1.6.3
                            name: USB                                         
                            Format: source code                               
 
-aml                        Author: NXP                                       
-                           version: 1.4.2                                    
-                           name: aml                                         
-                           Format: source code & header files                
-                           License: Open Source - BSD-3-Clause Clear         
-                           Location: middleware/aml                          
-                           Description: NXP Analog Middleware Layer          
-
-eRPC                       version: 4.5.0                                    
-                           Location: middleware/multicore/erpc               
-                           Description: Embedded Remote Procedure Call       
-                           License: Open Source - BSD-3-Clause Clear         
-                           Author: Freescale                                 
-                           name: eRPC                                        
-                           Format: source code                               
-                           URL: https://github.com/EmbeddedRPC/erpc          
-
-emWin                      version: 5.38                                     
-                           Location: middleware/emwin                        
-                           Description: emWin graphics library               
-                           License: Licensed to NXP, binary distribution only
-                           Author: SEGGER Microcontroller Systems LLC        
-                           name: emWin                                       
-                           Format: binary library                            
-                           URL: http://www.nxp.com/pages/emwin-graphics-     
-                           library:EMWIN-GRAPHICS-LIBRARY                    
-
-lvhb                       Author: NXP                                       
-                           version: 1.0.0                                    
-                           name: lvhb                                        
-                           Format: source code & header files                
-                           License: Open Source - BSD-3-Clause Clear         
-                           Location: middleware/lvhb                         
-                           Description: NXP Low Voltage H-Bridge driver      
-
 lwIP TCP/IP Stack          Author: Swedish Institute of Computer Science     
                            Description: A light-weight TCP/IP stack          
                            Format: source code                               
@@ -285,7 +165,7 @@ lwIP TCP/IP Stack          Author: Swedish Institute of Computer Science
                            Location: middleware/lwip                         
                            name: lwIP TCP/IP Stack                           
                            URL: http://savannah.nongnu.org/projects/lwip     
-                           version: 2.0.2                                    
+                           version: 2.0.3                                    
 
 mmCAU S/W Library          Author: Freescale                                 
                            Description: S/W library that works with the      
@@ -297,13 +177,14 @@ mmCAU S/W Library          Author: Freescale
                            name: mmCAU S/W Library                           
                            version: 2.0.1                                    
 
-sigfox                     Author: NXP                                       
-                           version: 1.0.0                                    
-                           name: sigfox                                      
-                           Format: source code & header files                
+rtcesl                     Author: NXP                                       
+                           version: 4.3                                      
+                           name: rtcesl                                      
+                           Format: object code & header files                
                            License: Open Source - BSD-3-Clause Clear         
-                           Location: middleware/sigfox                       
-                           Description: NXP Sigfox driver                    
+                           Location: middleware/rtcesl                       
+                           Description: NXP Real Time Control Embedded       
+                           Software Library.                                 
 
 wifi_qca                   version: 2.0.0                                    
                            Location: middleware/wifi_qca                     

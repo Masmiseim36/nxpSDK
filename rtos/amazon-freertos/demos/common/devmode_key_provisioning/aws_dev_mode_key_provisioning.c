@@ -1,5 +1,5 @@
 /*
- * Amazon FreeRTOS V1.2.0
+ * Amazon FreeRTOS V1.2.3
  * Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -42,9 +42,6 @@
 #include "task.h"
 #include "semphr.h"
 
-/* Logging includes. */
-#include "aws_logging_task.h"
-
 /* PKCS#11 includes. */
 #include "aws_pkcs11.h"
 
@@ -56,10 +53,9 @@
 #include "aws_dev_mode_key_provisioning.h"
 
 /* Key provisioning helper defines. */
-#define provisioningPRIVATE_KEY_TEMPLATE_COUNT         4
-#define provisioningCERTIFICATE_TEMPLATE_COUNT         3
-#define provisioningROOT_CERTIFICATE_TEMPLATE_COUNT    3
-
+#define provisioningPRIVATE_KEY_TEMPLATE_COUNT  4
+#define provisioningCERTIFICATE_TEMPLATE_COUNT 3
+#define provisioningROOT_CERTIFICATE_TEMPLATE_COUNT 3
 
 /*-----------------------------------------------------------*/
 
@@ -96,11 +92,9 @@ static CK_RV prvInitialize( CK_FUNCTION_LIST_PTR * ppxFunctionList,
     return xResult;
 }
 
-
-
 /*-----------------------------------------------------------*/
 
-void vAlternateKeyProvisioning( ProvisioningParams_t * xParams )
+void vDevModeKeyProvisioning( void )
 {
     CK_RV xResult = 0;
     CK_FUNCTION_LIST_PTR pxFunctionList = NULL;
@@ -111,7 +105,7 @@ void vAlternateKeyProvisioning( ProvisioningParams_t * xParams )
     CK_OBJECT_CLASS xCertificateClass = CKO_CERTIFICATE;
     CK_OBJECT_CLASS xDeviceCertificateType = pkcs11CERTIFICATE_TYPE_USER;
     CK_OBJECT_CLASS xRootCertificateType = pkcs11CERTIFICATE_TYPE_ROOT;
-    CK_KEY_TYPE xPrivateKeyType = ( CK_KEY_TYPE ) xParams->ulClientPrivateKeyType;
+    CK_KEY_TYPE xPrivateKeyType = CKK_RSA;
     CK_BBOOL xCanSign = CK_TRUE;
     CK_ATTRIBUTE xPrivateKeyTemplate[ provisioningPRIVATE_KEY_TEMPLATE_COUNT ];
     CK_ATTRIBUTE xCertificateTemplate[ provisioningCERTIFICATE_TEMPLATE_COUNT ];
@@ -130,16 +124,16 @@ void vAlternateKeyProvisioning( ProvisioningParams_t * xParams )
     xPrivateKeyTemplate[ 2 ].pValue = &xCanSign;
     xPrivateKeyTemplate[ 2 ].ulValueLen = sizeof( xCanSign );
     xPrivateKeyTemplate[ 3 ].type = CKA_VALUE;
-    xPrivateKeyTemplate[ 3 ].pValue = ( CK_VOID_PTR ) xParams->pcClientPrivateKey;
-    xPrivateKeyTemplate[ 3 ].ulValueLen = ( CK_ULONG ) xParams->ulClientPrivateKeyLength;
+    xPrivateKeyTemplate[ 3 ].pValue = ( CK_VOID_PTR )clientcredentialCLIENT_PRIVATE_KEY_PEM;
+    xPrivateKeyTemplate[ 3 ].ulValueLen = ( CK_ULONG )clientcredentialCLIENT_PRIVATE_KEY_LENGTH;
 
     /* Initialize the client certificate template. */
     xCertificateTemplate[ 0 ].type = CKA_CLASS;
     xCertificateTemplate[ 0 ].pValue = &xCertificateClass;
     xCertificateTemplate[ 0 ].ulValueLen = sizeof( xCertificateClass );
     xCertificateTemplate[ 1 ].type = CKA_VALUE;
-    xCertificateTemplate[ 1 ].pValue = ( CK_VOID_PTR ) xParams->pcClientCertificate;
-    xCertificateTemplate[ 1 ].ulValueLen = ( CK_ULONG ) xParams->ulClientCertificateLength;
+    xCertificateTemplate[ 1 ].pValue = ( CK_VOID_PTR )clientcredentialCLIENT_CERTIFICATE_PEM;
+    xCertificateTemplate[ 1 ].ulValueLen = ( CK_ULONG )clientcredentialCLIENT_CERTIFICATE_LENGTH;
     xCertificateTemplate[ 2 ].type = CKA_CERTIFICATE_TYPE;
     xCertificateTemplate[ 2 ].pValue = &xDeviceCertificateType;
     xCertificateTemplate[ 2 ].ulValueLen = sizeof( xDeviceCertificateType );
@@ -149,8 +143,8 @@ void vAlternateKeyProvisioning( ProvisioningParams_t * xParams )
     xRootCertificateTemplate[ 0 ].pValue = &xCertificateClass;
     xRootCertificateTemplate[ 0 ].ulValueLen = sizeof( xCertificateClass );
     xRootCertificateTemplate[ 1 ].type = CKA_VALUE;
-    xRootCertificateTemplate[ 1 ].pValue = ( CK_VOID_PTR ) tlsVERISIGN_ROOT_CERTIFICATE_PEM;
-    xRootCertificateTemplate[ 1 ].ulValueLen = ( CK_ULONG ) tlsVERISIGN_ROOT_CERTIFICATE_LENGTH;
+    xRootCertificateTemplate[ 1 ].pValue = ( CK_VOID_PTR )tlsVERISIGN_ROOT_CERTIFICATE_PEM;
+    xRootCertificateTemplate[ 1 ].ulValueLen = ( CK_ULONG )tlsVERISIGN_ROOT_CERTIFICATE_LENGTH;
     xRootCertificateTemplate[ 2 ].type = CKA_CERTIFICATE_TYPE;
     xRootCertificateTemplate[ 2 ].pValue = &xRootCertificateType;
     xRootCertificateTemplate[ 2 ].ulValueLen = sizeof( xRootCertificateType );
@@ -160,7 +154,7 @@ void vAlternateKeyProvisioning( ProvisioningParams_t * xParams )
                              &xSlotId,
                              &xSession );
 
-    /*
+    /* 
      * Check that a certificate and private key can be imported into
      * persistent storage.
      */
@@ -224,20 +218,6 @@ void vAlternateKeyProvisioning( ProvisioningParams_t * xParams )
     }
 
     configPRINTF( ( "Key provisioning done...\r\n" ) );
-}
-/*-----------------------------------------------------------*/
-
-void vDevModeKeyProvisioning( void )
-{
-    ProvisioningParams_t xParams;
-
-    xParams.ulClientPrivateKeyType = CKK_RSA;
-    xParams.pcClientPrivateKey = ( uint8_t * ) clientcredentialCLIENT_PRIVATE_KEY_PEM;
-    xParams.ulClientPrivateKeyLength = clientcredentialCLIENT_PRIVATE_KEY_LENGTH;
-    xParams.pcClientCertificate = ( uint8_t * ) clientcredentialCLIENT_CERTIFICATE_PEM;
-    xParams.ulClientCertificateLength = clientcredentialCLIENT_CERTIFICATE_LENGTH;
-
-    vAlternateKeyProvisioning( &xParams );
 }
 
 /*-----------------------------------------------------------*/

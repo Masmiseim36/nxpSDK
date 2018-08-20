@@ -203,7 +203,7 @@ int main( int argc, char *argv[] )
     /*
      * 4. Handshake
      */
-    mbedtls_printf( "  . Performing the DTLS handshake..." );
+    mbedtls_printf( "  . Performing the SSL/TLS handshake..." );
     fflush( stdout );
 
     do ret = mbedtls_ssl_handshake( &ssl );

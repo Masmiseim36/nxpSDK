@@ -2,8 +2,7 @@
  * \file x509_crl.h
  *
  * \brief X.509 certificate revocation list parsing
- */
-/*
+ *
  *  Copyright (C) 2006-2015, ARM Limited, All Rights Reserved
  *  SPDX-License-Identifier: Apache-2.0
  *

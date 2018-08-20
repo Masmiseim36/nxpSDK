@@ -1,6 +1,7 @@
 /*
  * Amazon FreeRTOS
  * Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * Copyright 2018 NXP
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -61,6 +62,8 @@ typedef enum
     eMQTTAgentSuccess,              /**< The operation was successful. */
     eMQTTAgentFailure,              /**< The operation failed. */
     eMQTTAgentTimeout,              /**< The operation timed out. */
+    eMQTTAgentDisconnected,         /**< The MQTT client got disconnect in the middle of an operation */
+    eMQTTAgentConnNotSent,          /**< CONNECT message could not be sent */
     eMQTTAgentAPICalledFromCallback /**< The MQTT agent APIs must not be called from MQTT callbacks as callbacks run
                                      *   in the context of MQTT agent task and therefore can result in deadlock. This
                                      *   error code is returned if any MQTT agent API is invoked from any callback. */
@@ -156,7 +159,7 @@ typedef struct MQTTAgentSubscribeParams
     const uint8_t * pucTopic;                    /**< The topic to subscribe to. This can be a topic filter containing wild cards as permitted by the MQTT protocol. */
     uint16_t usTopicLength;                      /**< The length of the topic. */
     MQTTQoS_t xQoS;                              /**< Requested Quality of Service. */
-    #if( mqttconfigENABLE_SUBSCRIPTION_MANAGEMENT == 1 )
+    #ifdef mqttconfigENABLE_SUBSCRIPTION_MANAGEMENT
         void * pvPublishCallbackContext;         /**< Passed as it is in the publish callback. Can be NULL. */
         MQTTPublishCallback_t pxPublishCallback; /**< Callback function to be called whenever a publish message is received on this topic or on a topic which matches this
                                                   *   topic filter. If a publish message is received on a topic which matches more than one topic filters, the order in which

@@ -1,6 +1,7 @@
 /*
- * Amazon FreeRTOS TLS V1.1.1
+ * Amazon FreeRTOS TLS V1.1.0
  * Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * Copyright 2018 NXP
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -38,6 +39,9 @@
 #  include "pkcs11_se.h"
 #endif /* TGT_A71CH */
 
+/* TODO */
+/*#include "aws_clientcredential_keys.h"*/
+
 /* mbedTLS includes. */
 #include "mbedtls/platform.h"
 #include "mbedtls/net.h"
@@ -46,9 +50,6 @@
 #include "mbedtls/sha256.h"
 #include "mbedtls/pk.h"
 #include "mbedtls/debug.h"
-#ifdef MBEDTLS_DEBUG_C
-    #define tlsDEBUG_VERBOSE    4
-#endif
 
 /* C runtime includes. */
 #include <string.h>
@@ -273,7 +274,7 @@ static int prvInitializeClientCredential( TLSContext_t * pCtx )
     if( 0 == xResult )
     {
         xResult = ( BaseType_t ) pCtx->pxP11FunctionList->C_OpenSession( xSlotId,
-                                                                         CKF_SERIAL_SESSION,
+                                                                         0,
                                                                          NULL,
                                                                          NULL,
                                                                          &pCtx->xP11Session );
@@ -378,20 +379,6 @@ static int prvInitializeClientCredential( TLSContext_t * pCtx )
     }
 
     /*
-     * Add a JITR device issuer certificate, if present.
-     */
-    if( ( 0 == xResult ) &&
-        ( NULL != clientcredentialJITR_DEVICE_CERTIFICATE_AUTHORITY_PEM ) )
-    {
-        /* Decode the JITR issuer. The device client certificate will get
-         * inserted as the first certificate in this chain below. */
-        xResult = mbedtls_x509_crt_parse(
-            &pCtx->mbedX509Cli,
-            ( const unsigned char * ) clientcredentialJITR_DEVICE_CERTIFICATE_AUTHORITY_PEM,
-            1 + strlen( clientcredentialJITR_DEVICE_CERTIFICATE_AUTHORITY_PEM ) );
-    }
-
-    /*
      * Attach the client certificate and private key to the TLS configuration.
      */
     if( 0 == xResult )
@@ -443,25 +430,6 @@ BaseType_t TLS_Init( void ** ppvContext,
 
     return xResult;
 }
-
-/*-----------------------------------------------------------*/
-
-#ifdef MBEDTLS_DEBUG_C
-    static void prvTlsDebugPrint( void * ctx,
-                                  int level,
-                                  const char * file,
-                                  int line,
-                                  const char * str )
-    {
-        /* Unused parameters. */
-        ( void ) ctx;
-        ( void ) file;
-        ( void ) line;
-
-        /* Send the debug string to the portable logger. */
-        vLoggingPrintf( "mbedTLS: |%d| %s", level, str );
-    }
-#endif /* ifdef MBEDTLS_DEBUG_C */
 
 /*-----------------------------------------------------------*/
 
@@ -528,7 +496,7 @@ BaseType_t TLS_Connect( void * pvContext )
         xResult = prvInitializeClientCredential( pCtx );
     }
 
-    if( ( 0 == xResult ) && ( NULL != pCtx->ppcAlpnProtocols ) )
+    if( 0 == xResult && NULL != pCtx->ppcAlpnProtocols )
     {
         /* Include an application protocol list in the TLS ClientHello
          * message. */
@@ -536,14 +504,6 @@ BaseType_t TLS_Connect( void * pvContext )
             &pCtx->mbedSslConfig,
             pCtx->ppcAlpnProtocols );
     }
-
-    #ifdef MBEDTLS_DEBUG_C
-
-        /* If mbedTLS is being compiled with debug support, assume that the
-         * runtime configuration should use verbose output. */
-        mbedtls_ssl_conf_dbg( &pCtx->mbedSslConfig, prvTlsDebugPrint, NULL );
-        mbedtls_debug_set_threshold( tlsDEBUG_VERBOSE );
-    #endif
 
     if( 0 == xResult )
     {

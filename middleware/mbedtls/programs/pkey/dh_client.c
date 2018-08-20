@@ -212,11 +212,7 @@ int main( void )
         goto exit;
     }
 
-    if( ( ret = mbedtls_sha1_ret( buf, (int)( p - 2 - buf ), hash ) ) != 0 )
-    {
-        mbedtls_printf( " failed\n  ! mbedtls_sha1_ret returned %d\n\n", ret );
-        goto exit;
-    }
+    mbedtls_sha1( buf, (int)( p - 2 - buf ), hash );
 
     if( ( ret = mbedtls_rsa_pkcs1_verify( &rsa, NULL, NULL, MBEDTLS_RSA_PUBLIC,
                                   MBEDTLS_MD_SHA256, 0, hash, p ) ) != 0 )

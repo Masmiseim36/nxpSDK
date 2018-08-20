@@ -3215,15 +3215,9 @@ cleanup:
 
 #include "mbedtls/md5.h"
 
-int mbedtls_internal_md5_process( mbedtls_md5_context *ctx, const unsigned char data[64] )
+void mbedtls_md5_process(mbedtls_md5_context *ctx, const unsigned char data[64])
 {
-    status_t ret = kStatus_Fail;
-    ret = MMCAU_MD5_HashN(data, 1, ctx->state);
-    if (ret != kStatus_Success)
-    {
-        return MBEDTLS_ERR_MD5_HW_ACCEL_FAILED;
-    }
-    return 0;
+    MMCAU_MD5_HashN(data, 1, ctx->state);
 }
 
 #endif /* MBEDTLS_FREESCALE_MMCAU_MD5 */
@@ -3260,69 +3254,39 @@ void mbedtls_sha1_clone(mbedtls_sha1_context *dst, const mbedtls_sha1_context *s
 /*
  * SHA-1 context setup
  */
-int mbedtls_sha1_starts_ret(mbedtls_sha1_context *ctx)
+void mbedtls_sha1_starts(mbedtls_sha1_context *ctx)
 {
-    status_t ret = kStatus_Fail;
-    ret = LTC_HASH_Init(LTC_INSTANCE, ctx, kLTC_Sha1, NULL, 0);
-    if (ret != kStatus_Success)
-    {
-        return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
-    }
-    return 0;
+    LTC_HASH_Init(LTC_INSTANCE, ctx, kLTC_Sha1, NULL, 0);
 }
 
-int mbedtls_internal_sha1_process(mbedtls_sha1_context *ctx, const unsigned char data[64])
+void mbedtls_sha1_process(mbedtls_sha1_context *ctx, const unsigned char data[64])
 {
-    status_t ret = kStatus_Fail;
-    ret = LTC_HASH_Update(ctx, data, 64);
-    if (ret != kStatus_Success)
-    {
-        return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
-    }
-    return 0;
+    LTC_HASH_Update(ctx, data, 64);
 }
 
 /*
  * SHA-1 process buffer
  */
-int mbedtls_sha1_update_ret( mbedtls_sha1_context *ctx, const unsigned char *input, size_t ilen )
+void mbedtls_sha1_update(mbedtls_sha1_context *ctx, const unsigned char *input, size_t ilen)
 {
-    status_t ret = kStatus_Fail;
-    ret = LTC_HASH_Update(ctx, input, ilen);
-    if (ret != kStatus_Success)
-    {
-        return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
-    }
-    return 0;
+    LTC_HASH_Update(ctx, input, ilen);
 }
 
 /*
  * SHA-1 final digest
  */
-int mbedtls_sha1_finish_ret( mbedtls_sha1_context *ctx, unsigned char output[20] )
+void mbedtls_sha1_finish(mbedtls_sha1_context *ctx, unsigned char output[20])
 {
-    status_t ret = kStatus_Fail;
-    ret = LTC_HASH_Finish(ctx, output, 0);
-    if (ret != kStatus_Success)
-    {
-        return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
-    }
-    return 0;
+    LTC_HASH_Finish(ctx, output, 0);
 }
 
 #elif defined(MBEDTLS_FREESCALE_MMCAU_SHA1)
 
 #include "mbedtls/sha1.h"
 
-int mbedtls_internal_sha1_process( mbedtls_sha1_context *ctx, const unsigned char data[64] )
+void mbedtls_sha1_process(mbedtls_sha1_context *ctx, const unsigned char data[64])
 {
-    status_t ret = kStatus_Fail;
-    ret = MMCAU_SHA1_HashN(data, 1, ctx->state);
-    if (ret != kStatus_Success)
-    {
-        return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
-    }
-    return 0;
+    MMCAU_SHA1_HashN(data, 1, ctx->state);
 }
 
 #elif defined(MBEDTLS_FREESCALE_LPC_SHA1)
@@ -3349,55 +3313,31 @@ void mbedtls_sha1_clone(mbedtls_sha1_context *dst, const mbedtls_sha1_context *s
 /*
  * SHA-1 context setup
  */
-int mbedtls_sha1_starts_ret(mbedtls_sha1_context *ctx)
+void mbedtls_sha1_starts(mbedtls_sha1_context *ctx)
 {
-    status_t ret = kStatus_Fail;
-    ret = SHA_Init(SHA_INSTANCE, ctx, kSHA_Sha1);
-    if (ret != kStatus_Success)
-    {
-        return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
-    }
-    return 0;
+    SHA_Init(SHA_INSTANCE, ctx, kSHA_Sha1);
 }
 
-int mbedtls_internal_sha1_process(mbedtls_sha1_context *ctx, const unsigned char data[64])
+void mbedtls_sha1_process(mbedtls_sha1_context *ctx, const unsigned char data[64])
 {
-    status_t ret = kStatus_Fail;
-    ret = SHA_Update(SHA_INSTANCE, ctx, data, 64);
-    if (ret != kStatus_Success)
-    {
-        return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
-    }
-    return 0;
+    SHA_Update(SHA_INSTANCE, ctx, data, 64);
 }
 
 /*
  * SHA-1 process buffer
  */
-int mbedtls_sha1_update_ret(mbedtls_sha1_context *ctx, const unsigned char *input, size_t ilen)
+void mbedtls_sha1_update(mbedtls_sha1_context *ctx, const unsigned char *input, size_t ilen)
 {
-    status_t ret = kStatus_Fail;
-    ret = SHA_Update(SHA_INSTANCE, ctx, input, ilen);
-    if (ret != kStatus_Success)
-    {
-        return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
-    }
-    return 0;
+    SHA_Update(SHA_INSTANCE, ctx, input, ilen);
 }
 
 /*
  * SHA-1 final digest
  */
-int mbedtls_sha1_finish_ret(mbedtls_sha1_context *ctx, unsigned char output[20])
+void mbedtls_sha1_finish(mbedtls_sha1_context *ctx, unsigned char output[20])
 {
-    size_t outputSize = 20u;
-    status_t ret = kStatus_Fail;
-    ret = SHA_Finish(SHA_INSTANCE, ctx, output, &outputSize);
-    if (ret != kStatus_Success)
-    {
-        return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
-    }
-    return 0;
+    size_t outputSize = 20;
+    SHA_Finish(SHA_INSTANCE, ctx, output, &outputSize);
 }
 #elif defined(MBEDTLS_FREESCALE_CAAM_SHA1)
 #include "mbedtls/sha1.h"
@@ -3423,54 +3363,30 @@ void mbedtls_sha1_clone(mbedtls_sha1_context *dst, const mbedtls_sha1_context *s
 /*
  * SHA-1 context setup
  */
-int mbedtls_sha1_starts_ret(mbedtls_sha1_context *ctx)
+void mbedtls_sha1_starts(mbedtls_sha1_context *ctx)
 {
-    status_t ret = kStatus_Fail;
-    ret = CAAM_HASH_Init(CAAM_INSTANCE, &s_caamHandle, ctx, kCAAM_Sha1, NULL, 0);
-    if (ret != kStatus_Success)
-    {
-        return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
-    }
-    return 0;
+    CAAM_HASH_Init(CAAM_INSTANCE, &s_caamHandle, ctx, kCAAM_Sha1, NULL, 0);
 }
 
-int mbedtls_internal_sha1_process(mbedtls_sha1_context *ctx, const unsigned char data[64])
+void mbedtls_sha1_process(mbedtls_sha1_context *ctx, const unsigned char data[64])
 {
-    status_t ret = kStatus_Fail;
-    ret = CAAM_HASH_Update(ctx, data, 64);
-    if (ret != kStatus_Success)
-    {
-        return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
-    }
-    return 0;
+    CAAM_HASH_Update(ctx, data, 64);
 }
 
 /*
  * SHA-1 process buffer
  */
-int mbedtls_sha1_update_ret(mbedtls_sha1_context *ctx, const unsigned char *input, size_t ilen)
+void mbedtls_sha1_update(mbedtls_sha1_context *ctx, const unsigned char *input, size_t ilen)
 {
-    status_t ret = kStatus_Fail;
-    ret = CAAM_HASH_Update(ctx, input, ilen);
-    if (ret != kStatus_Success)
-    {
-        return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
-    }
-    return 0;
+    CAAM_HASH_Update(ctx, input, ilen);
 }
 
 /*
  * SHA-1 final digest
  */
-int mbedtls_sha1_finish_ret(mbedtls_sha1_context *ctx, unsigned char output[20])
+void mbedtls_sha1_finish(mbedtls_sha1_context *ctx, unsigned char output[20])
 {
-    status_t ret = kStatus_Fail;
-    ret = CAAM_HASH_Finish(ctx, output, 0);
-    if (ret != kStatus_Success)
-    {
-        return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
-    }
-    return 0;
+    CAAM_HASH_Finish(ctx, output, 0);
 }
 
 #elif defined(MBEDTLS_FREESCALE_CAU3_SHA1)
@@ -3497,54 +3413,30 @@ void mbedtls_sha1_clone(mbedtls_sha1_context *dst, const mbedtls_sha1_context *s
 /*
  * SHA-1 context setup
  */
-int mbedtls_sha1_starts_ret(mbedtls_sha1_context *ctx)
+void mbedtls_sha1_starts(mbedtls_sha1_context *ctx)
 {
-    status_t ret = kStatus_Fail;
-    ret = CAU3_HASH_Init(CAU3, ctx, kCAU3_Sha1);
-    if (ret != kStatus_Success)
-    {
-        return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
-    }
-    return 0;
+    CAU3_HASH_Init(CAU3, ctx, kCAU3_Sha1);
 }
 
-int mbedtls_internal_sha1_process(mbedtls_sha1_context *ctx, const unsigned char data[64])
+void mbedtls_sha1_process(mbedtls_sha1_context *ctx, const unsigned char data[64])
 {
-    status_t ret = kStatus_Fail;
-    ret = CAU3_HASH_Update(CAU3, ctx, data, 64);
-    if (ret != kStatus_Success)
-    {
-        return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
-    }
-    return 0;
+    CAU3_HASH_Update(CAU3, ctx, data, 64);
 }
 
 /*
  * SHA-1 process buffer
  */
-int mbedtls_sha1_update_ret(mbedtls_sha1_context *ctx, const unsigned char *input, size_t ilen)
+void mbedtls_sha1_update(mbedtls_sha1_context *ctx, const unsigned char *input, size_t ilen)
 {
-    status_t ret = kStatus_Fail;
-    ret = CAU3_HASH_Update(CAU3, ctx, input, ilen);
-    if (ret != kStatus_Success)
-    {
-        return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
-    }
-    return 0;
+    CAU3_HASH_Update(CAU3, ctx, input, ilen);
 }
 
 /*
  * SHA-1 final digest
  */
-int mbedtls_sha1_finish_ret(mbedtls_sha1_context *ctx, unsigned char output[20])
+void mbedtls_sha1_finish(mbedtls_sha1_context *ctx, unsigned char output[20])
 {
-    status_t ret = kStatus_Fail;
-    ret = CAU3_HASH_Finish(CAU3, ctx, output, 0);
-    if (ret != kStatus_Success)
-    {
-        return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
-    }
-    return 0;
+    CAU3_HASH_Finish(CAU3, ctx, output, 0);
 }
 
 #elif defined(MBEDTLS_FREESCALE_DCP_SHA1)
@@ -3571,54 +3463,30 @@ void mbedtls_sha1_clone(mbedtls_sha1_context *dst, const mbedtls_sha1_context *s
 /*
  * SHA-1 context setup
  */
-int mbedtls_sha1_starts_ret(mbedtls_sha1_context *ctx)
+void mbedtls_sha1_starts(mbedtls_sha1_context *ctx)
 {
-    status_t ret = kStatus_Fail;
-    ret = DCP_HASH_Init(DCP, &s_dcpHandle, ctx, kDCP_Sha1);
-    if (ret != kStatus_Success)
-    {
-        return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
-    }
-    return 0;
+    DCP_HASH_Init(DCP, &s_dcpHandle, ctx, kDCP_Sha1);
 }
 
-int mbedtls_internal_sha1_process(mbedtls_sha1_context *ctx, const unsigned char data[64])
+void mbedtls_sha1_process(mbedtls_sha1_context *ctx, const unsigned char data[64])
 {
-    status_t ret = kStatus_Fail;
-    ret = DCP_HASH_Update(DCP, ctx, data, 64);
-    if (ret != kStatus_Success)
-    {
-        return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
-    }
-    return 0;
+    DCP_HASH_Update(DCP, ctx, data, 64);
 }
 
 /*
  * SHA-1 process buffer
  */
-int mbedtls_sha1_update_ret(mbedtls_sha1_context *ctx, const unsigned char *input, size_t ilen)
+void mbedtls_sha1_update(mbedtls_sha1_context *ctx, const unsigned char *input, size_t ilen)
 {
-    status_t ret = kStatus_Fail;
-    ret = DCP_HASH_Update(DCP, ctx, input, ilen);
-    if (ret != kStatus_Success)
-    {
-        return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
-    }
-    return 0;
+    DCP_HASH_Update(DCP, ctx, input, ilen);
 }
 
 /*
  * SHA-1 final digest
  */
-int mbedtls_sha1_finish_ret(mbedtls_sha1_context *ctx, unsigned char output[20])
+void mbedtls_sha1_finish(mbedtls_sha1_context *ctx, unsigned char output[20])
 {
-    status_t ret = kStatus_Fail;
-    ret = DCP_HASH_Finish(DCP, ctx, output, NULL);
-    if (ret != kStatus_Success)
-    {
-        return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
-    }
-    return 0;
+    DCP_HASH_Finish(DCP, ctx, output, NULL);
 }
 
 #endif /* MBEDTLS_FREESCALE_LPC_SHA1 */
@@ -3654,77 +3522,46 @@ void mbedtls_sha256_clone(mbedtls_sha256_context *dst, const mbedtls_sha256_cont
 /*
  * SHA-256 context setup
  */
-int mbedtls_sha256_starts_ret(mbedtls_sha256_context *ctx, int is224)
+void mbedtls_sha256_starts(mbedtls_sha256_context *ctx, int is224)
 {
-    status_t ret = kStatus_Fail;    
     if (is224)
     {
-        ret = LTC_HASH_Init(LTC_INSTANCE, ctx, kLTC_Sha224, NULL, 0);
+        LTC_HASH_Init(LTC_INSTANCE, ctx, kLTC_Sha224, NULL, 0);
     }
     else
     {
-        ret = LTC_HASH_Init(LTC_INSTANCE, ctx, kLTC_Sha256, NULL, 0);
+        LTC_HASH_Init(LTC_INSTANCE, ctx, kLTC_Sha256, NULL, 0);
     }
-    
-    if (ret != kStatus_Success)
-    {
-        return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
-    }
-    return 0;
 }
 
-int mbedtls_internal_sha256_process(mbedtls_sha256_context *ctx, const unsigned char data[64])
+void mbedtls_sha256_process(mbedtls_sha256_context *ctx, const unsigned char data[64])
 {
-    status_t ret = kStatus_Fail;
-    ret = LTC_HASH_Update(ctx, data, 64);
-    if (ret != kStatus_Success)
-    {
-        return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
-    }
-    return 0;
+    LTC_HASH_Update(ctx, data, 64);
 }
 
 /*
  * SHA-256 process buffer
  */
-int mbedtls_sha256_update_ret(mbedtls_sha256_context *ctx, const unsigned char *input, size_t ilen)
+void mbedtls_sha256_update(mbedtls_sha256_context *ctx, const unsigned char *input, size_t ilen)
 {
-    status_t ret = kStatus_Fail;
-    ret = LTC_HASH_Update(ctx, input, ilen);
-    if (ret != kStatus_Success)
-    {
-        return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
-    }
-    return 0;
+    LTC_HASH_Update(ctx, input, ilen);
 }
 
 /*
  * SHA-256 final digest
  */
-int mbedtls_sha256_finish_ret(mbedtls_sha256_context *ctx, unsigned char output[32])
+void mbedtls_sha256_finish(mbedtls_sha256_context *ctx, unsigned char output[32])
 {
-    status_t ret = kStatus_Fail;
-    ret = LTC_HASH_Finish(ctx, output, 0);
-    if (ret != kStatus_Success)
-    {
-        return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
-    }
-    return 0;
+    LTC_HASH_Finish(ctx, output, 0);
 }
 
 #elif defined(MBEDTLS_FREESCALE_MMCAU_SHA256)
 
 #include "mbedtls/sha256.h"
 
-int mbedtls_internal_sha256_process(mbedtls_sha256_context *ctx, const unsigned char data[64])
+void mbedtls_sha256_process(mbedtls_sha256_context *ctx, const unsigned char data[64])
 {
-    status_t ret = kStatus_Fail;
-    ret = MMCAU_SHA256_HashN(data, 1, ctx->state);
-    if (ret != kStatus_Success)
-    {
-        return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
-    }
-    return 0;
+    MMCAU_SHA256_HashN(data, 1, ctx->state);
 }
 
 #elif defined(MBEDTLS_FREESCALE_CAU3_SHA256)
@@ -3752,57 +3589,33 @@ void mbedtls_sha256_clone(mbedtls_sha256_context *dst, const mbedtls_sha256_cont
 /*
  * SHA-256 context setup
  */
-int mbedtls_sha256_starts_ret(mbedtls_sha256_context *ctx, int is224)
+void mbedtls_sha256_starts(mbedtls_sha256_context *ctx, int is224)
 {
-    status_t ret = kStatus_Fail;    
-    if (!is224) /* SHA-224 not supported at the moment */
+    if (!is224) /* SHA-224 not supported */
     {
-        ret = CAU3_HASH_Init(CAU3, ctx, kCAU3_Sha256);
+        CAU3_HASH_Init(CAU3, ctx, kCAU3_Sha256);
     }
-    if (ret != kStatus_Success)
-    {
-        return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
-    }
-    return 0;
 }
 
-int mbedtls_internal_sha256_process(mbedtls_sha256_context *ctx, const unsigned char data[64])
+void mbedtls_sha256_process(mbedtls_sha256_context *ctx, const unsigned char data[64])
 {
-    status_t ret = kStatus_Fail;
-    ret = CAU3_HASH_Update(CAU3, ctx, data, 64);
-    if (ret != kStatus_Success)
-    {
-        return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
-    }
-    return 0;
+    CAU3_HASH_Update(CAU3, ctx, data, 64);
 }
 
 /*
  * SHA-256 process buffer
  */
-int mbedtls_sha256_update_ret(mbedtls_sha256_context *ctx, const unsigned char *input, size_t ilen)
+void mbedtls_sha256_update(mbedtls_sha256_context *ctx, const unsigned char *input, size_t ilen)
 {
-    status_t ret = kStatus_Fail;
-    ret = CAU3_HASH_Update(CAU3, ctx, input, ilen);
-    if (ret != kStatus_Success)
-    {
-        return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
-    }
-    return 0;
+    CAU3_HASH_Update(CAU3, ctx, input, ilen);
 }
 
 /*
  * SHA-256 final digest
  */
-int mbedtls_sha256_finish_ret(mbedtls_sha256_context *ctx, unsigned char output[32])
+void mbedtls_sha256_finish(mbedtls_sha256_context *ctx, unsigned char output[32])
 {
-    status_t ret = kStatus_Fail;
-    ret = CAU3_HASH_Finish(CAU3, ctx, output, 0);
-    if (ret != kStatus_Success)
-    {
-        return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
-    }
-    return 0;
+    CAU3_HASH_Finish(CAU3, ctx, output, 0);
 }
 
 #elif defined(MBEDTLS_FREESCALE_LPC_SHA256)
@@ -3829,58 +3642,34 @@ void mbedtls_sha256_clone(mbedtls_sha256_context *dst, const mbedtls_sha256_cont
 /*
  * SHA-256 context setup
  */
-int mbedtls_sha256_starts_ret(mbedtls_sha256_context *ctx, int is224)
+void mbedtls_sha256_starts(mbedtls_sha256_context *ctx, int is224)
 {
-    status_t ret = kStatus_Fail;    
     if (!is224) /* SHA-224 not supported */
     {
-        ret = SHA_Init(SHA_INSTANCE, ctx, kSHA_Sha256);
+        SHA_Init(SHA_INSTANCE, ctx, kSHA_Sha256);
     }
-    if (ret != kStatus_Success)
-    {
-        return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
-    }
-    return 0;
 }
 
-int mbedtls_internal_sha256_process(mbedtls_sha256_context *ctx, const unsigned char data[64])
+void mbedtls_sha256_process(mbedtls_sha256_context *ctx, const unsigned char data[64])
 {
-    status_t ret = kStatus_Fail;
-    ret = SHA_Update(SHA_INSTANCE, ctx, data, 64);
-    if (ret != kStatus_Success)
-    {
-        return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
-    }
-    return 0;
+    SHA_Update(SHA_INSTANCE, ctx, data, 64);
 }
 
 /*
  * SHA-256 process buffer
  */
-int mbedtls_sha256_update_ret(mbedtls_sha256_context *ctx, const unsigned char *input, size_t ilen)
+void mbedtls_sha256_update(mbedtls_sha256_context *ctx, const unsigned char *input, size_t ilen)
 {
-    status_t ret = kStatus_Fail;
-    ret = SHA_Update(SHA_INSTANCE, ctx, input, ilen);
-    if (ret != kStatus_Success)
-    {
-        return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
-    }
-    return 0;
+    SHA_Update(SHA_INSTANCE, ctx, input, ilen);
 }
 
 /*
  * SHA-256 final digest
  */
-int mbedtls_sha256_finish_ret(mbedtls_sha256_context *ctx, unsigned char output[32])
+void mbedtls_sha256_finish(mbedtls_sha256_context *ctx, unsigned char output[32])
 {
-    size_t outputSize = 32u;
-    status_t ret = kStatus_Fail;
-    ret = SHA_Finish(SHA_INSTANCE, ctx, output, &outputSize);
-    if (ret != kStatus_Success)
-    {
-        return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
-    }
-    return 0;
+    size_t outputSize = 32;
+    SHA_Finish(SHA_INSTANCE, ctx, output, &outputSize);
 }
 
 #elif defined(MBEDTLS_FREESCALE_CAAM_SHA256)
@@ -3907,61 +3696,37 @@ void mbedtls_sha256_clone(mbedtls_sha256_context *dst, const mbedtls_sha256_cont
 /*
  * SHA-256 context setup
  */
-int mbedtls_sha256_starts_ret(mbedtls_sha256_context *ctx, int is224)
+void mbedtls_sha256_starts(mbedtls_sha256_context *ctx, int is224)
 {
-    status_t ret = kStatus_Fail;
     if (is224)
     {
-        ret = CAAM_HASH_Init(CAAM_INSTANCE, &s_caamHandle, ctx, kCAAM_Sha224, NULL, 0);
+        CAAM_HASH_Init(CAAM_INSTANCE, &s_caamHandle, ctx, kCAAM_Sha224, NULL, 0);
     }
     else
     {
-        ret = CAAM_HASH_Init(CAAM_INSTANCE, &s_caamHandle, ctx, kCAAM_Sha256, NULL, 0);
+        CAAM_HASH_Init(CAAM_INSTANCE, &s_caamHandle, ctx, kCAAM_Sha256, NULL, 0);
     }
-    if (ret != kStatus_Success)
-    {
-        return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
-    }
-    return 0;
 }
 
-int mbedtls_internal_sha256_process(mbedtls_sha256_context *ctx, const unsigned char data[64])
+void mbedtls_sha256_process(mbedtls_sha256_context *ctx, const unsigned char data[64])
 {
-    status_t ret = kStatus_Fail;
-    ret = CAAM_HASH_Update(ctx, data, 64);
-    if (ret != kStatus_Success)
-    {
-        return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
-    }
-    return 0;
+    CAAM_HASH_Update(ctx, data, 64);
 }
 
 /*
  * SHA-256 process buffer
  */
-int mbedtls_sha256_update_ret(mbedtls_sha256_context *ctx, const unsigned char *input, size_t ilen)
+void mbedtls_sha256_update(mbedtls_sha256_context *ctx, const unsigned char *input, size_t ilen)
 {
-    status_t ret = kStatus_Fail;
-    ret = CAAM_HASH_Update(ctx, input, ilen);
-    if (ret != kStatus_Success)
-    {
-        return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
-    }
-    return 0;
+    CAAM_HASH_Update(ctx, input, ilen);
 }
 
 /*
  * SHA-256 final digest
  */
-int mbedtls_sha256_finish_ret(mbedtls_sha256_context *ctx, unsigned char output[32])
+void mbedtls_sha256_finish(mbedtls_sha256_context *ctx, unsigned char output[32])
 {
-    status_t ret = kStatus_Fail;
-    ret = CAAM_HASH_Finish(ctx, output, 0);
-    if (ret != kStatus_Success)
-    {
-        return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
-    }
-    return 0;
+    CAAM_HASH_Finish(ctx, output, 0);
 }
 
 #elif defined(MBEDTLS_FREESCALE_DCP_SHA256)
@@ -3988,57 +3753,33 @@ void mbedtls_sha256_clone(mbedtls_sha256_context *dst, const mbedtls_sha256_cont
 /*
  * SHA-256 context setup
  */
-int mbedtls_sha256_starts_ret(mbedtls_sha256_context *ctx, int is224)
+void mbedtls_sha256_starts(mbedtls_sha256_context *ctx, int is224)
 {
-    status_t ret = kStatus_Fail;
     if (!is224)
     {
-        ret = DCP_HASH_Init(DCP, &s_dcpHandle, ctx, kDCP_Sha256);
+        DCP_HASH_Init(DCP, &s_dcpHandle, ctx, kDCP_Sha256);
     }
-    if (ret != kStatus_Success)
-    {
-        return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
-    }
-    return 0;
 }
 
-int mbedtls_internal_sha256_process(mbedtls_sha256_context *ctx, const unsigned char data[64])
+void mbedtls_sha256_process(mbedtls_sha256_context *ctx, const unsigned char data[64])
 {
-    status_t ret = kStatus_Fail;
-    ret = DCP_HASH_Update(DCP, ctx, data, 64);
-    if (ret != kStatus_Success)
-    {
-        return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
-    }
-    return 0;
+    DCP_HASH_Update(DCP, ctx, data, 64);
 }
 
 /*
  * SHA-256 process buffer
  */
-int mbedtls_sha256_update_ret(mbedtls_sha256_context *ctx, const unsigned char *input, size_t ilen)
+void mbedtls_sha256_update(mbedtls_sha256_context *ctx, const unsigned char *input, size_t ilen)
 {
-    status_t ret = kStatus_Fail;
-    ret = DCP_HASH_Update(DCP, ctx, input, ilen);
-    if (ret != kStatus_Success)
-    {
-        return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
-    }
-    return 0;
+    DCP_HASH_Update(DCP, ctx, input, ilen);
 }
 
 /*
  * SHA-256 final digest
  */
-int mbedtls_sha256_finish_ret(mbedtls_sha256_context *ctx, unsigned char output[32])
+void mbedtls_sha256_finish(mbedtls_sha256_context *ctx, unsigned char output[32])
 {
-    status_t ret = kStatus_Fail;
-    ret = DCP_HASH_Finish(DCP, ctx, output, NULL);
-    if (ret != kStatus_Success)
-    {
-        return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
-    }
-    return 0;
+    DCP_HASH_Finish(DCP, ctx, output, NULL);
 }
 #endif /* MBEDTLS_FREESCALE_LTC_SHA256 */
 #endif /* MBEDTLS_SHA256_C */

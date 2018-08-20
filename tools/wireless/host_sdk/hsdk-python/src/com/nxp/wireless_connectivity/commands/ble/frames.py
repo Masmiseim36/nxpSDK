@@ -41,11 +41,6 @@ from com.nxp.wireless_connectivity.hsdk.utils import list_to_int, to_bytes
 from com.nxp.wireless_connectivity.commands.ble.enums import ValueUuidType as UuidType
 
 
-class FSCICPUResetRequest(object):
-
-    pass
-
-
 class HCIModeSelectRequest(object):
 
     def __init__(self, Enable=bytearray(1)):
@@ -135,6 +130,19 @@ class L2CAPSendSmpDataRequest(object):
         @param DeviceId: The DeviceId for which the command is intended
         @param PacketLength: Length of the SM data packet to be sent
         @param Packet: The SM data packet to be transmitted
+        '''
+        self.DeviceId = DeviceId
+        self.PacketLength = PacketLength
+        self.Packet = Packet
+
+
+class L2CAPSendSignalingDataRequest(object):
+
+    def __init__(self, DeviceId=bytearray(1), PacketLength=bytearray(2), Packet=[]):
+        '''
+        @param DeviceId: The DeviceId for which the command is intended
+        @param PacketLength: Length of the Signaling data packet to be sent
+        @param Packet: The Signaling data packet to be transmitted
         '''
         self.DeviceId = DeviceId
         self.PacketLength = PacketLength
@@ -603,7 +611,7 @@ class SMLeScOobDataRequestReplyRequest(object):
     def __init__(self, DestinationDeviceId=bytearray(1), LeScOobDataParams_=bytearray()):
         '''
         @param DestinationDeviceId: DeviceId of the destination device
-        @param LeScOobDataParams_: LeScOobDataParams_
+        @param LeScOobDataParams_:
         '''
         self.DestinationDeviceId = DestinationDeviceId
         self.LeScOobDataParams_ = LeScOobDataParams_
@@ -617,6 +625,19 @@ class SMLocalLeScOobDataRequestReqRequest(object):
 class SMGenerateNewEcdhPkSkPairRequest(object):
 
     pass
+
+
+class SMSetMinPairingSecurityPropertiesRequest(object):
+
+    def __init__(self, mitmProtection=bytearray(1), leSc=bytearray(1), minEncKeySize=bytearray(1)):
+        '''
+        @param mitmProtection: True if a Pairing Method which offers MITM protection is required to be used by the SMP Pairing Procedure
+        @param leSc: True if a LE Secure Connections Pairing Method is required to be used by the SMP Pairing Procedure
+        @param minEncKeySize: The minimum encryption key size required to be used for the SMP Pairing Procedure
+        '''
+        self.mitmProtection = mitmProtection
+        self.leSc = leSc
+        self.minEncKeySize = minEncKeySize
 
 
 class ATTModeSelectRequest(object):
@@ -2240,16 +2261,6 @@ class GATTServerSendInstantValueIndicationRequest(object):
 
 class GATTServerRegisterHandlesForReadNotificationsRequest(object):
 
-    class AttributeHandles(object):
-
-        def __init__(self, Handle=bytearray(2)):
-            self.Handle = Handle
-
-        def pickle(self):
-            result = bytearray()
-            result += to_bytes(self.Handle, 2)
-            return result
-
     def __init__(self, HandleCount=bytearray(1), AttributeHandles=[]):
         '''
         @param HandleCount: Number of handles in array
@@ -2257,13 +2268,6 @@ class GATTServerRegisterHandlesForReadNotificationsRequest(object):
         '''
         self.HandleCount = HandleCount
         self.AttributeHandles = AttributeHandles
-
-    def pickle(self):
-        result = bytearray()
-        result += to_bytes(self.HandleCount, 1)
-        for i in range(list_to_int(self.HandleCount, False)):
-            result += self.AttributeHandles[i].pickle()
-        return result
 
 
 class GATTServerSendAttributeReadStatusRequest(object):
@@ -2572,16 +2576,6 @@ class GATTDBAttReadBlobRequest(object):
 
 class GATTDBAttReadMultipleRequest(object):
 
-    class Params_ListOfHandles(object):
-
-        def __init__(self, Handle=bytearray(2)):
-            self.Handle = Handle
-
-        def pickle(self):
-            result = bytearray()
-            result += to_bytes(self.Handle, 2)
-            return result
-
     def __init__(self, DeviceId=bytearray(1), Params_HandleCount=bytearray(2), Params_ListOfHandles=[]):
         '''
         @param DeviceId: The DeviceId for which the command is intended
@@ -2591,14 +2585,6 @@ class GATTDBAttReadMultipleRequest(object):
         self.DeviceId = DeviceId
         self.Params_HandleCount = Params_HandleCount
         self.Params_ListOfHandles = Params_ListOfHandles
-
-    def pickle(self):
-        result = bytearray()
-        result += to_bytes(self.DeviceId, 1)
-        result += to_bytes(self.Params_HandleCount, 2)
-        for i in range(list_to_int(self.Params_HandleCount, False)):
-            result += self.Params_ListOfHandles[i].pickle()
-        return result
 
 
 class GATTDBAttReadByGroupTypeRequest(object):
@@ -3747,6 +3733,22 @@ class GAPGetBondedDevicesIdentityInformationRequest(object):
         self.maxDevices = maxDevices
 
 
+class GAPSetTxPowerLevelRequest(object):
+
+    def __init__(self, powerLevel=bytearray(1), channelType=GAPSetTxPowerLevelRequestchannelType.Advertising):
+        '''
+        @param powerLevel: power level value as described by the controller interface
+        @param channelType: Advertising or Connection channel type for the Tx power level
+        '''
+        self.powerLevel = powerLevel
+        self.channelType = channelType
+
+
+class FSCICPUResetRequest(object):
+
+    pass
+
+
 class FSCIAllowDeviceToSleepRequest(object):
 
     def __init__(self, SignalHostWhenWakeUp=FSCIAllowDeviceToSleepRequestSignalHostWhenWakeUp.FALSE, DeepSleepDuration=bytearray(4), DeepSleepMode=bytearray(1)):
@@ -3763,6 +3765,15 @@ class FSCIAllowDeviceToSleepRequest(object):
 class FSCIGetWakeupReasonRequest(object):
 
     pass
+
+
+class FSCIAckIndication(object):
+
+    def __init__(self, Checksum=bytearray(1)):
+        '''
+        @param Checksum: Checksum of the FSCI packet being acknowledged
+        '''
+        self.Checksum = Checksum
 
 
 class FSCIErrorIndication(object):
@@ -3795,6 +3806,116 @@ class FSCIGetWakeupReasonResponse(object):
         @param WakeUpReason: Wake Up Reason
         '''
         self.WakeUpReason = WakeUpReason
+
+
+class NVMSaveConfirm(object):
+
+    def __init__(self, Status=NVMSaveConfirmStatus.SUCCESS):
+        '''
+        @param Status: Did it work?
+        '''
+        self.Status = Status
+
+
+class NVMGetDataSetDescConfirm(object):
+
+    def __init__(self, Status=bytearray(1), Count=bytearray(1), CountSizeandID=[]):
+        '''
+        @param Status: Status
+        @param Count: Number of data sets.
+        @param CountSizeandID: Address, Count, Element size and id of each data set.
+        '''
+        self.Status = Status
+        self.Count = Count
+        self.CountSizeandID = CountSizeandID
+
+
+class NVMGetCountersConfirm(object):
+
+    def __init__(self, Status=bytearray(1), nvmFirstVirtualPageEraseCounter=bytearray(4), nvmSecondVirtualPageEraseCounter=bytearray(4)):
+        '''
+        @param Status: Status Value
+        @param nvmFirstVirtualPageEraseCounter: Number of erased pages
+        @param nvmSecondVirtualPageEraseCounter: Number of erased pages
+        '''
+        self.Status = Status
+        self.nvmFirstVirtualPageEraseCounter = nvmFirstVirtualPageEraseCounter
+        self.nvmSecondVirtualPageEraseCounter = nvmSecondVirtualPageEraseCounter
+
+
+class NVMSetMonitoringConfirm(object):
+
+    def __init__(self, Status=bytearray(1)):
+        '''
+        @param Status: Status Value
+        '''
+        self.Status = Status
+
+
+class NVMWriteMonitoringIndication(object):
+
+    def __init__(self, nvmDatasetId=bytearray(2), elementId=bytearray(2), saveAll=bytearray(1)):
+        '''
+        @param nvmDatasetId: DataSetId
+        @param elementId: DataSet element id
+        @param saveAll: SaveAll
+        '''
+        self.nvmDatasetId = nvmDatasetId
+        self.elementId = elementId
+        self.saveAll = saveAll
+
+
+class NVMPageEraseMonitoringIndication(object):
+
+    def __init__(self, nvmFlashErasedPageAddressParmName=bytearray(4), Status=bytearray(1)):
+        '''
+        @param nvmFlashErasedPageAddressParmName: nvmFlashErasedPageAddress
+        @param Status: NVFormat status returned
+        '''
+        self.nvmFlashErasedPageAddressParmName = nvmFlashErasedPageAddressParmName
+        self.Status = Status
+
+
+class NVMFormatReqConfirm(object):
+
+    def __init__(self, Status=bytearray(1)):
+        '''
+        @param Status: NVFormat status returned
+        '''
+        self.Status = Status
+
+
+class NVMRestoreReqConfirm(object):
+
+    def __init__(self, Status=bytearray(1)):
+        '''
+        @param Status: NVFormat status returned
+        '''
+        self.Status = Status
+
+
+class NVMRestoreMonitoringIndication(object):
+
+    def __init__(self, nvmDatasetId=bytearray(2), Start=bytearray(1), Status=bytearray(1)):
+        '''
+        @param nvmDatasetId: DataSetId
+        @param Start: start=o,Stop=0
+        @param Status: Restore status
+        '''
+        self.nvmDatasetId = nvmDatasetId
+        self.Start = Start
+        self.Status = Status
+
+
+class NVMVirtualPageMonitoringIndication(object):
+
+    def __init__(self, Start=bytearray(1), Status=bytearray(1)):
+        '''
+        @param Start: start=o,Stop=0
+        @param Status: Change status
+        '''
+        self.Start = Start
+        self.Status = Status
 
 
 class HCIConfirm(object):
@@ -3868,6 +3989,19 @@ class L2CAPSmpDataIndication(object):
         @param DeviceId: The DeviceId from which SM data packet is received
         @param PacketLength: Length of the received SM data packet
         @param Packet: The received SM data packet
+        '''
+        self.DeviceId = DeviceId
+        self.PacketLength = PacketLength
+        self.Packet = Packet
+
+
+class L2CAPSignalingDataIndication(object):
+
+    def __init__(self, DeviceId=bytearray(1), PacketLength=bytearray(2), Packet=[]):
+        '''
+        @param DeviceId: The DeviceId from which Signaling data packet is received
+        @param PacketLength: Length of the received Signaling data packet
+        @param Packet: The received Signaling data packet
         '''
         self.DeviceId = DeviceId
         self.PacketLength = PacketLength
@@ -4379,7 +4513,7 @@ class SMLocalLeScOobDataIndication(object):
     def __init__(self, SourceDeviceId=bytearray(1), LeScOobDataParams_=bytearray()):
         '''
         @param SourceDeviceId: Device Id corresponding to the event
-        @param LeScOobDataParams_: LeScOobDataParams_
+        @param LeScOobDataParams_:
         '''
         self.SourceDeviceId = SourceDeviceId
         self.LeScOobDataParams_ = LeScOobDataParams_
@@ -6282,11 +6416,51 @@ class GAPConnectionEventKeyExchangeRequestIndication(object):
 
 class GAPConnectionEventKeysReceivedIndication(object):
 
-    def __init__(self, DeviceId=bytearray(1)):
+    class Keys_LtkInfo(object):
+
+        def __init__(self, LtkSize=bytearray(1), Ltk=[]):
+            self.LtkSize = LtkSize
+            # Array length depends on LtkSize.
+            self.Ltk = Ltk
+
+    class Keys_RandEdivInfo(object):
+
+        def __init__(self, RandSize=bytearray(1), Rand=[], Ediv=bytearray(2)):
+            self.RandSize = RandSize
+            # Array length depends on RandSize.
+            self.Rand = Rand
+            self.Ediv = Ediv
+
+    class Keys_AddressInfo(object):
+
+        def __init__(self, DeviceAddressType=Keys_AddressInfoDeviceAddressType.gPublic_c, DeviceAddress=bytearray(6)):
+            self.DeviceAddressType = DeviceAddressType
+            # Unit length: 6 bytes
+            self.DeviceAddress = DeviceAddress
+
+    def __init__(self, DeviceId=bytearray(1), Keys_LtkIncluded=bytearray(1), Keys_LtkInfo=Keys_LtkInfo(), Keys_IrkIncluded=bytearray(1), Keys_Irk=[], Keys_CsrkIncluded=bytearray(1), Keys_Csrk=[], Keys_RandEdivInfo=Keys_RandEdivInfo(), Keys_AddressIncluded=[], Keys_AddressInfo=Keys_AddressInfo()):
         '''
         @param DeviceId: Device ID identifying the connection
+        @param Keys_LtkIncluded: Boolean value which indicates if LTK size and LTK are included or not
+        @param Keys_LtkInfo: LTK information (size and value)
+        @param Keys_IrkIncluded: Boolean value which indicates if IRK is included or not
+        @param Keys_Irk: Identity Resolving Key
+        @param Keys_CsrkIncluded: Boolean value which indicates if CSRK is included or not
+        @param Keys_Csrk: Connection Signature Resolving Key
+        @param Keys_RandEdivInfo: Rand information (size and value) and Ediv
+        @param Keys_AddressIncluded: Boolean value which indicates if Address is included or not
+        @param Keys_AddressInfo: Address information (type and value
         '''
         self.DeviceId = DeviceId
+        self.Keys_LtkIncluded = Keys_LtkIncluded
+        self.Keys_LtkInfo = Keys_LtkInfo
+        self.Keys_IrkIncluded = Keys_IrkIncluded
+        self.Keys_Irk = Keys_Irk
+        self.Keys_CsrkIncluded = Keys_CsrkIncluded
+        self.Keys_Csrk = Keys_Csrk
+        self.Keys_RandEdivInfo = Keys_RandEdivInfo
+        self.Keys_AddressIncluded = Keys_AddressIncluded
+        self.Keys_AddressInfo = Keys_AddressInfo
 
 
 class GAPConnectionEventLongTermKeyRequestIndication(object):
@@ -6492,6 +6666,15 @@ class GAPGenericEventControllerPrivacyStateChangedIndication(object):
         @param NewControllerPrivacyState: Indicates the new state of the controller privacy: TRUE if enabled, FALSE if disabled
         '''
         self.NewControllerPrivacyState = NewControllerPrivacyState
+
+
+class GAPGenericEventTxPowerLevelSetCompleteIndication(object):
+
+    def __init__(self, status=bytearray(1)):
+        '''
+        @param status: Indicates the status of the Set Tx Power Level request
+        '''
+        self.status = status
 
 
 class GAPGetBondedDevicesIdentityInformationIndication(object):

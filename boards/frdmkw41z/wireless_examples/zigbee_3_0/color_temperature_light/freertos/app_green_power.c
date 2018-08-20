@@ -881,7 +881,7 @@ void vApp_UpdateTranslationTableOnPairingCfg(tsGP_ZgpsPairingConfigCmdRcvd *psPa
                     (psPairingConfigCmdRcvd->u8NumberOfPairedEndpoints < 0xFD))
             {
                 /* check if we supports the endpoint provided */
-                for(i = 0; (i < psPairingConfigCmdRcvd->u8NumberOfPairedEndpoints);i++)
+                for(i = 0; (i < psPairingConfigCmdRcvd->u8NumberOfPairedEndpoints && i < GP_MAX_PAIRED_ENDPOINTS);i++)
                 {
                     if(psPairingConfigCmdRcvd->au8PairedEndpointList[i] == app_u8GetDeviceEndpoint() )
                     {

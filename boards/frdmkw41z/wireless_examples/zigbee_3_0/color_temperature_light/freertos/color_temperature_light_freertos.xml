@@ -196,7 +196,7 @@
       <files mask="app_zb_utils.c"/>
       <files mask="app_zcl_globals.c"/>
     </source>
-    <source path="boards/frdmkw41z/wireless_examples/zigbee_3_0/color_temperature_light/freertos" target_path="zigbee_3.0/app/common_light" type="c_include">
+    <source path="boards/frdmkw41z/wireless_examples/zigbee_3_0/color_temperature_light/freertos" target_path="zigbee_3_0/app/common_light" type="c_include">
       <files mask="app_buttons.h"/>
       <files mask="app_common.h"/>
       <files mask="app_events.h"/>
@@ -212,7 +212,7 @@
       <files mask="app_zcl_light_task.h"/>
       <files mask="app_zlo_light_node.h"/>
     </source>
-    <source path="boards/frdmkw41z/wireless_examples/zigbee_3_0/color_temperature_light/freertos" target_path="zigbee_3.0/app/common_light" type="src">
+    <source path="boards/frdmkw41z/wireless_examples/zigbee_3_0/color_temperature_light/freertos" target_path="zigbee_3_0/app/common_light" type="src">
       <files mask="app_buttons.c"/>
       <files mask="app_green_power.c"/>
       <files mask="app_light_interpolation.c"/>
@@ -228,11 +228,11 @@
       <files mask="app_zcl_light_task.c"/>
       <files mask="app_zlo_light_node.c"/>
     </source>
-    <source path="boards/frdmkw41z/wireless_examples/zigbee_3_0/color_temperature_light/freertos" target_path="zigbee_3.0/app/driver_bulb" type="c_include">
+    <source path="boards/frdmkw41z/wireless_examples/zigbee_3_0/color_temperature_light/freertos" target_path="zigbee_3_0/app/driver_bulb" type="c_include">
       <files mask="DriverBulb.h"/>
       <files mask="DriverBulb_Shim.h"/>
     </source>
-    <source path="boards/frdmkw41z/wireless_examples/zigbee_3_0/color_temperature_light/freertos" target_path="zigbee_3.0/app/driver_bulb" type="src">
+    <source path="boards/frdmkw41z/wireless_examples/zigbee_3_0/color_temperature_light/freertos" target_path="zigbee_3_0/app/driver_bulb" type="src">
       <files mask="DriverBulb_KW41z.c"/>
       <files mask="DriverBulb_Shim.c"/>
     </source>
@@ -242,22 +242,25 @@
     <source path="devices/MKW41Z4/gcc" target_path="startup" type="src" toolchain="mcuxpresso">
       <files mask="startup_MKW41Z4.S"/>
     </source>
-    <source path="middleware/wireless/framework_5.3.5/SecLib" type="lib" method="copy" toolchain="mcuxpresso">
+    <source path="middleware/wireless/framework_5.3.6/SecLib" type="lib" method="copy" toolchain="mcuxpresso">
       <files mask="lib_crypto_m0.a"/>
     </source>
-    <source path="middleware/wireless/ieee_802_15_4_5.3.5/mac/lib" type="lib" method="copy" toolchain="mcuxpresso">
+    <source path="middleware/wireless/ieee_802_15_4_5.3.6/mac/lib" type="lib" method="copy" toolchain="mcuxpresso">
       <files mask="lib802.15.4_mac_zp_cm0.a"/>
     </source>
-    <source path="middleware/wireless/zigbee_3_0_6.0.6/core/lib" type="lib" method="copy" toolchain="mcuxpresso">
+    <source path="middleware/wireless/zigbee_3_0_6.0.7/core/lib" type="lib" method="copy" toolchain="mcuxpresso">
       <files mask="lib_zps_cm0.a"/>
     </source>
-    <source path="middleware/wireless/framework_5.3.5/SecLib" type="lib" method="copy" toolchain="iar">
+    <source path="devices/MKW41Z4/iar" target_path="startup" type="src" toolchain="iar">
+      <files mask="startup_MKW41Z4.s"/>
+    </source>
+    <source path="middleware/wireless/framework_5.3.6/SecLib" type="lib" method="copy" toolchain="iar">
       <files mask="lib_crypto_m0.a"/>
     </source>
-    <source path="middleware/wireless/ieee_802_15_4_5.3.5/mac/lib" type="lib" method="copy" toolchain="iar">
+    <source path="middleware/wireless/ieee_802_15_4_5.3.6/mac/lib" type="lib" method="copy" toolchain="iar">
       <files mask="lib802.15.4_mac_zp_cm0.a"/>
     </source>
-    <source path="middleware/wireless/zigbee_3_0_6.0.6/core/lib" type="lib" method="copy" toolchain="iar">
+    <source path="middleware/wireless/zigbee_3_0_6.0.7/core/lib" type="lib" method="copy" toolchain="iar">
       <files mask="lib_zps_cm0.a"/>
     </source>
   </example>

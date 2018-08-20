@@ -56,10 +56,10 @@
 /****************************************************************************/
 /***        Macro Definitions                                             ***/
 /****************************************************************************/
-#ifndef DEBUG_APP_BUTTON
-    #define TRACE_APP_BUTTON               FALSE
-#else
+#ifdef DEBUG_APP_BUTTON
     #define TRACE_APP_BUTTON               TRUE
+#else
+    #define TRACE_APP_BUTTON               FALSE
 #endif
 
 #define WAKE_FROM_DEEP_SLEEP     (1<<11)

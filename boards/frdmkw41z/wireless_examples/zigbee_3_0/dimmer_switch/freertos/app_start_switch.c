@@ -85,10 +85,10 @@
 /****************************************************************************/
 /***        Macro Definitions                                             ***/
 /****************************************************************************/
-#ifndef DEBUG_START_UP
-    #define TRACE_START FALSE
-#else
+#ifdef DEBUG_START_UP
     #define TRACE_START TRUE
+#else
+    #define TRACE_START FALSE
 #endif
 
 #define RAM_HELD 2

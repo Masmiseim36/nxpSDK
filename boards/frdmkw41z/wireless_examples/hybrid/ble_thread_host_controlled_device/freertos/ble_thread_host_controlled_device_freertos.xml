@@ -193,10 +193,10 @@
     <source path="devices/MKW41Z4/gcc" target_path="startup" type="src" toolchain="mcuxpresso">
       <files mask="startup_MKW41Z4.S"/>
     </source>
-    <source path="middleware/wireless/nwk_ip_1.2.5/examples/ble_thread_host_controlled_device/config" target_path="source" type="c_include">
+    <source path="middleware/wireless/nwk_ip_1.2.6/examples/ble_thread_host_controlled_device/config" target_path="source" type="c_include">
       <files mask="config.h"/>
     </source>
-    <source path="middleware/wireless/nwk_ip_1.2.5/examples/ble_thread_host_controlled_device/src" target_path="source" type="c_include">
+    <source path="middleware/wireless/nwk_ip_1.2.6/examples/ble_thread_host_controlled_device/src" target_path="source" type="c_include">
       <files mask="ApplMain.h"/>
       <files mask="app.h"/>
       <files mask="ble_init.h"/>
@@ -204,41 +204,44 @@
       <files mask="gatt_uuid128.h"/>
       <files mask="host_controlled_device_hybrid_app.h"/>
     </source>
-    <source path="middleware/wireless/nwk_ip_1.2.5/examples/ble_thread_host_controlled_device/src" target_path="source" type="src">
+    <source path="middleware/wireless/nwk_ip_1.2.6/examples/ble_thread_host_controlled_device/src" target_path="source" type="src">
       <files mask="ApplMain.c"/>
       <files mask="app.c"/>
       <files mask="app_config.c"/>
       <files mask="ble_init.c"/>
       <files mask="host_controlled_device_hybrid_app.c"/>
     </source>
-    <source path="middleware/wireless/bluetooth_1.2.5/controller/lib" type="lib" method="copy" toolchain="mcuxpresso">
+    <source path="middleware/wireless/bluetooth_1.2.6/controller/lib" type="lib" method="copy" toolchain="mcuxpresso">
       <files mask="lib_ble_kw41z_controller.a"/>
     </source>
-    <source path="middleware/wireless/bluetooth_1.2.5/host/lib" type="lib" method="copy" toolchain="mcuxpresso">
+    <source path="middleware/wireless/bluetooth_1.2.6/host/lib" type="lib" method="copy" toolchain="mcuxpresso">
       <files mask="lib_ble_4-2_host_fsci_cm0p.a"/>
     </source>
-    <source path="middleware/wireless/framework_5.3.5/SecLib" type="lib" method="copy" toolchain="mcuxpresso">
+    <source path="middleware/wireless/framework_5.3.6/SecLib" type="lib" method="copy" toolchain="mcuxpresso">
       <files mask="lib_crypto_m0.a"/>
     </source>
-    <source path="middleware/wireless/ieee_802_15_4_5.3.5/mac/lib" type="lib" method="copy" toolchain="mcuxpresso">
+    <source path="middleware/wireless/ieee_802_15_4_5.3.6/mac/lib" type="lib" method="copy" toolchain="mcuxpresso">
       <files mask="lib802.15.4_mac_thr_cm0.a"/>
     </source>
-    <source path="middleware/wireless/nwk_ip_1.2.5/core/lib/thread" type="lib" method="copy" toolchain="mcuxpresso">
+    <source path="middleware/wireless/nwk_ip_1.2.6/core/lib/thread" type="lib" method="copy" toolchain="mcuxpresso">
       <files mask="lib_thread_br_cm0.a"/>
     </source>
-    <source path="middleware/wireless/bluetooth_1.2.5/controller/lib" type="lib" method="copy" toolchain="iar">
+    <source path="devices/MKW41Z4/iar" target_path="startup" type="src" toolchain="iar">
+      <files mask="startup_MKW41Z4.s"/>
+    </source>
+    <source path="middleware/wireless/bluetooth_1.2.6/controller/lib" type="lib" method="copy" toolchain="iar">
       <files mask="lib_ble_kw41z_controller.a"/>
     </source>
-    <source path="middleware/wireless/bluetooth_1.2.5/host/lib" type="lib" method="copy" toolchain="iar">
+    <source path="middleware/wireless/bluetooth_1.2.6/host/lib" type="lib" method="copy" toolchain="iar">
       <files mask="lib_ble_4-2_host_fsci_cm0p.a"/>
     </source>
-    <source path="middleware/wireless/framework_5.3.5/SecLib" type="lib" method="copy" toolchain="iar">
+    <source path="middleware/wireless/framework_5.3.6/SecLib" type="lib" method="copy" toolchain="iar">
       <files mask="lib_crypto_m0.a"/>
     </source>
-    <source path="middleware/wireless/ieee_802_15_4_5.3.5/mac/lib" type="lib" method="copy" toolchain="iar">
+    <source path="middleware/wireless/ieee_802_15_4_5.3.6/mac/lib" type="lib" method="copy" toolchain="iar">
       <files mask="lib802.15.4_mac_thr_cm0.a"/>
     </source>
-    <source path="middleware/wireless/nwk_ip_1.2.5/core/lib/thread" type="lib" method="copy" toolchain="iar">
+    <source path="middleware/wireless/nwk_ip_1.2.6/core/lib/thread" type="lib" method="copy" toolchain="iar">
       <files mask="lib_thread_br_cm0.a"/>
     </source>
   </example>

@@ -1201,6 +1201,12 @@ class GAPLeScSendKeypressNotificationPrivacyRequestGapLeScKeypressNotificationPa
     gKnPasskeyEntryCompleted_c = 0x04
 
 
+class GAPSetTxPowerLevelRequestchannelType(GenericEnum):
+
+    Advertising = 0x00
+    Connection = 0x01
+
+
 class FSCIAllowDeviceToSleepRequestSignalHostWhenWakeUp(GenericEnum):
 
     FALSE = 0x00
@@ -1226,6 +1232,12 @@ class FSCIAllowDeviceToSleepConfirmStatus(GenericEnum):
     gSuccess = 0x00
     # Error
     gError = 0xFF
+
+
+class NVMSaveConfirmStatus(GenericEnum):
+
+    # Data set save has been queued.
+    SUCCESS = 0x00
 
 
 class HCIConfirmStatus(GenericEnum):
@@ -1352,7 +1364,11 @@ class HCIConfirmStatus(GenericEnum):
     gSmLlConnectionEncryptionFailure_c = 0x0418
     gSmInsufficientResources_c = 0x0419
     gSmOobDataAddressMismatch_c = 0x041A
-    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041A
+    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041B
+    gSmReceivedTimerEventForUnknownDevice_c = 0x041C
+    gSmUnattainableLocalDeviceSecRequirements_c = 0x041D
+    gSmUnattainableLocalDeviceMinKeySize_c = 0x041E
+    gSmUnattainableSlaveSecReqRequirements_c = 0x041F
     gSmPairingErrorPasskeyEntryFailed_c = 0x0431
     gSmPairingErrorConfirmValueFailed_c = 0x0432
     gSmPairingErrorCommandNotSupported_c = 0x0433
@@ -1521,7 +1537,11 @@ class L2CAPConfirmStatus(GenericEnum):
     gSmLlConnectionEncryptionFailure_c = 0x0418
     gSmInsufficientResources_c = 0x0419
     gSmOobDataAddressMismatch_c = 0x041A
-    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041A
+    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041B
+    gSmReceivedTimerEventForUnknownDevice_c = 0x041C
+    gSmUnattainableLocalDeviceSecRequirements_c = 0x041D
+    gSmUnattainableLocalDeviceMinKeySize_c = 0x041E
+    gSmUnattainableSlaveSecReqRequirements_c = 0x041F
     gSmPairingErrorPasskeyEntryFailed_c = 0x0431
     gSmPairingErrorConfirmValueFailed_c = 0x0432
     gSmPairingErrorCommandNotSupported_c = 0x0433
@@ -1705,7 +1725,11 @@ class SMConfirmStatus(GenericEnum):
     gSmLlConnectionEncryptionFailure_c = 0x0418
     gSmInsufficientResources_c = 0x0419
     gSmOobDataAddressMismatch_c = 0x041A
-    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041A
+    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041B
+    gSmReceivedTimerEventForUnknownDevice_c = 0x041C
+    gSmUnattainableLocalDeviceSecRequirements_c = 0x041D
+    gSmUnattainableLocalDeviceMinKeySize_c = 0x041E
+    gSmUnattainableSlaveSecReqRequirements_c = 0x041F
     gSmPairingErrorPasskeyEntryFailed_c = 0x0431
     gSmPairingErrorConfirmValueFailed_c = 0x0432
     gSmPairingErrorCommandNotSupported_c = 0x0433
@@ -1875,6 +1899,10 @@ class SMStatusIndicationSmStatusParams_Status(GenericEnum):
     gSmInsufficientResources_c = 0x0419
     gSmOobDataAddressMismatch_c = 0x041A
     gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041B
+    gSmReceivedTimerEventForUnknownDevice_c = 0x041C
+    gSmUnattainableLocalDeviceSecRequirements_c = 0x041D
+    gSmUnattainableLocalDeviceMinKeySize_c = 0x041E
+    gSmUnattainableSlaveSecReqRequirements_c = 0x041F
     gSmPairingErrorPasskeyEntryFailed_c = 0x0431
     gSmPairingErrorConfirmValueFailed_c = 0x0432
     gSmPairingErrorCommandNotSupported_c = 0x0433
@@ -2119,7 +2147,11 @@ class SMLlEncryptionStatusIndicationLlEncryptionStatusParams_LlStatus(GenericEnu
     gSmLlConnectionEncryptionFailure_c = 0x0418
     gSmInsufficientResources_c = 0x0419
     gSmOobDataAddressMismatch_c = 0x041A
-    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041A
+    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041B
+    gSmReceivedTimerEventForUnknownDevice_c = 0x041C
+    gSmUnattainableLocalDeviceSecRequirements_c = 0x041D
+    gSmUnattainableLocalDeviceMinKeySize_c = 0x041E
+    gSmUnattainableSlaveSecReqRequirements_c = 0x041F
     gSmPairingErrorPasskeyEntryFailed_c = 0x0431
     gSmPairingErrorConfirmValueFailed_c = 0x0432
     gSmPairingErrorCommandNotSupported_c = 0x0433
@@ -2311,7 +2343,11 @@ class SMLlEncryptResIndicationLlEncryptResParams_Status(GenericEnum):
     gSmLlConnectionEncryptionFailure_c = 0x0418
     gSmInsufficientResources_c = 0x0419
     gSmOobDataAddressMismatch_c = 0x041A
-    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041A
+    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041B
+    gSmReceivedTimerEventForUnknownDevice_c = 0x041C
+    gSmUnattainableLocalDeviceSecRequirements_c = 0x041D
+    gSmUnattainableLocalDeviceMinKeySize_c = 0x041E
+    gSmUnattainableSlaveSecReqRequirements_c = 0x041F
     gSmPairingErrorPasskeyEntryFailed_c = 0x0431
     gSmPairingErrorConfirmValueFailed_c = 0x0432
     gSmPairingErrorCommandNotSupported_c = 0x0433
@@ -2480,7 +2516,11 @@ class SMLlRandResIndicationLlRandResParams_Status(GenericEnum):
     gSmLlConnectionEncryptionFailure_c = 0x0418
     gSmInsufficientResources_c = 0x0419
     gSmOobDataAddressMismatch_c = 0x041A
-    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041A
+    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041B
+    gSmReceivedTimerEventForUnknownDevice_c = 0x041C
+    gSmUnattainableLocalDeviceSecRequirements_c = 0x041D
+    gSmUnattainableLocalDeviceMinKeySize_c = 0x041E
+    gSmUnattainableSlaveSecReqRequirements_c = 0x041F
     gSmPairingErrorPasskeyEntryFailed_c = 0x0431
     gSmPairingErrorConfirmValueFailed_c = 0x0432
     gSmPairingErrorCommandNotSupported_c = 0x0433
@@ -2649,7 +2689,11 @@ class SMTbCreateRandomDeviceAddrResIndicationTbCreateRandomDeviceAddrResParams_S
     gSmLlConnectionEncryptionFailure_c = 0x0418
     gSmInsufficientResources_c = 0x0419
     gSmOobDataAddressMismatch_c = 0x041A
-    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041A
+    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041B
+    gSmReceivedTimerEventForUnknownDevice_c = 0x041C
+    gSmUnattainableLocalDeviceSecRequirements_c = 0x041D
+    gSmUnattainableLocalDeviceMinKeySize_c = 0x041E
+    gSmUnattainableSlaveSecReqRequirements_c = 0x041F
     gSmPairingErrorPasskeyEntryFailed_c = 0x0431
     gSmPairingErrorConfirmValueFailed_c = 0x0432
     gSmPairingErrorCommandNotSupported_c = 0x0433
@@ -2826,7 +2870,11 @@ class SMTbCheckResolvalePrivateAddrResIndicationTbCheckResolvablePrivateAddrResP
     gSmLlConnectionEncryptionFailure_c = 0x0418
     gSmInsufficientResources_c = 0x0419
     gSmOobDataAddressMismatch_c = 0x041A
-    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041A
+    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041B
+    gSmReceivedTimerEventForUnknownDevice_c = 0x041C
+    gSmUnattainableLocalDeviceSecRequirements_c = 0x041D
+    gSmUnattainableLocalDeviceMinKeySize_c = 0x041E
+    gSmUnattainableSlaveSecReqRequirements_c = 0x041F
     gSmPairingErrorPasskeyEntryFailed_c = 0x0431
     gSmPairingErrorConfirmValueFailed_c = 0x0432
     gSmPairingErrorCommandNotSupported_c = 0x0433
@@ -2995,7 +3043,11 @@ class SMTbSignDataResIndicationTbSignDataResParams_Status(GenericEnum):
     gSmLlConnectionEncryptionFailure_c = 0x0418
     gSmInsufficientResources_c = 0x0419
     gSmOobDataAddressMismatch_c = 0x041A
-    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041A
+    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041B
+    gSmReceivedTimerEventForUnknownDevice_c = 0x041C
+    gSmUnattainableLocalDeviceSecRequirements_c = 0x041D
+    gSmUnattainableLocalDeviceMinKeySize_c = 0x041E
+    gSmUnattainableSlaveSecReqRequirements_c = 0x041F
     gSmPairingErrorPasskeyEntryFailed_c = 0x0431
     gSmPairingErrorConfirmValueFailed_c = 0x0432
     gSmPairingErrorCommandNotSupported_c = 0x0433
@@ -3164,7 +3216,11 @@ class SMTbVerifyDataSignatureResIndicationTbVerifyDataSignatureResParams_Status(
     gSmLlConnectionEncryptionFailure_c = 0x0418
     gSmInsufficientResources_c = 0x0419
     gSmOobDataAddressMismatch_c = 0x041A
-    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041A
+    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041B
+    gSmReceivedTimerEventForUnknownDevice_c = 0x041C
+    gSmUnattainableLocalDeviceSecRequirements_c = 0x041D
+    gSmUnattainableLocalDeviceMinKeySize_c = 0x041E
+    gSmUnattainableSlaveSecReqRequirements_c = 0x041F
     gSmPairingErrorPasskeyEntryFailed_c = 0x0431
     gSmPairingErrorConfirmValueFailed_c = 0x0432
     gSmPairingErrorCommandNotSupported_c = 0x0433
@@ -3343,7 +3399,11 @@ class SMGenerateNewEcdhPkSkPairResIndicationStatus(GenericEnum):
     gSmLlConnectionEncryptionFailure_c = 0x0418
     gSmInsufficientResources_c = 0x0419
     gSmOobDataAddressMismatch_c = 0x041A
-    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041A
+    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041B
+    gSmReceivedTimerEventForUnknownDevice_c = 0x041C
+    gSmUnattainableLocalDeviceSecRequirements_c = 0x041D
+    gSmUnattainableLocalDeviceMinKeySize_c = 0x041E
+    gSmUnattainableSlaveSecReqRequirements_c = 0x041F
     gSmPairingErrorPasskeyEntryFailed_c = 0x0431
     gSmPairingErrorConfirmValueFailed_c = 0x0432
     gSmPairingErrorCommandNotSupported_c = 0x0433
@@ -3512,7 +3572,11 @@ class ATTConfirmStatus(GenericEnum):
     gSmLlConnectionEncryptionFailure_c = 0x0418
     gSmInsufficientResources_c = 0x0419
     gSmOobDataAddressMismatch_c = 0x041A
-    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041A
+    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041B
+    gSmReceivedTimerEventForUnknownDevice_c = 0x041C
+    gSmUnattainableLocalDeviceSecRequirements_c = 0x041D
+    gSmUnattainableLocalDeviceMinKeySize_c = 0x041E
+    gSmUnattainableSlaveSecReqRequirements_c = 0x041F
     gSmPairingErrorPasskeyEntryFailed_c = 0x0431
     gSmPairingErrorConfirmValueFailed_c = 0x0432
     gSmPairingErrorCommandNotSupported_c = 0x0433
@@ -3766,7 +3830,11 @@ class GATTConfirmStatus(GenericEnum):
     gSmLlConnectionEncryptionFailure_c = 0x0418
     gSmInsufficientResources_c = 0x0419
     gSmOobDataAddressMismatch_c = 0x041A
-    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041A
+    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041B
+    gSmReceivedTimerEventForUnknownDevice_c = 0x041C
+    gSmUnattainableLocalDeviceSecRequirements_c = 0x041D
+    gSmUnattainableLocalDeviceMinKeySize_c = 0x041E
+    gSmUnattainableSlaveSecReqRequirements_c = 0x041F
     gSmPairingErrorPasskeyEntryFailed_c = 0x0431
     gSmPairingErrorConfirmValueFailed_c = 0x0432
     gSmPairingErrorCommandNotSupported_c = 0x0433
@@ -3943,7 +4011,11 @@ class GATTClientProcedureExchangeMtuIndicationError(GenericEnum):
     gSmLlConnectionEncryptionFailure_c = 0x0418
     gSmInsufficientResources_c = 0x0419
     gSmOobDataAddressMismatch_c = 0x041A
-    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041A
+    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041B
+    gSmReceivedTimerEventForUnknownDevice_c = 0x041C
+    gSmUnattainableLocalDeviceSecRequirements_c = 0x041D
+    gSmUnattainableLocalDeviceMinKeySize_c = 0x041E
+    gSmUnattainableSlaveSecReqRequirements_c = 0x041F
     gSmPairingErrorPasskeyEntryFailed_c = 0x0431
     gSmPairingErrorConfirmValueFailed_c = 0x0432
     gSmPairingErrorCommandNotSupported_c = 0x0433
@@ -4120,7 +4192,11 @@ class GATTClientProcedureDiscoverAllPrimaryServicesIndicationError(GenericEnum):
     gSmLlConnectionEncryptionFailure_c = 0x0418
     gSmInsufficientResources_c = 0x0419
     gSmOobDataAddressMismatch_c = 0x041A
-    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041A
+    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041B
+    gSmReceivedTimerEventForUnknownDevice_c = 0x041C
+    gSmUnattainableLocalDeviceSecRequirements_c = 0x041D
+    gSmUnattainableLocalDeviceMinKeySize_c = 0x041E
+    gSmUnattainableSlaveSecReqRequirements_c = 0x041F
     gSmPairingErrorPasskeyEntryFailed_c = 0x0431
     gSmPairingErrorConfirmValueFailed_c = 0x0432
     gSmPairingErrorCommandNotSupported_c = 0x0433
@@ -4311,7 +4387,11 @@ class GATTClientProcedureDiscoverPrimaryServicesByUuidIndicationError(GenericEnu
     gSmLlConnectionEncryptionFailure_c = 0x0418
     gSmInsufficientResources_c = 0x0419
     gSmOobDataAddressMismatch_c = 0x041A
-    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041A
+    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041B
+    gSmReceivedTimerEventForUnknownDevice_c = 0x041C
+    gSmUnattainableLocalDeviceSecRequirements_c = 0x041D
+    gSmUnattainableLocalDeviceMinKeySize_c = 0x041E
+    gSmUnattainableSlaveSecReqRequirements_c = 0x041F
     gSmPairingErrorPasskeyEntryFailed_c = 0x0431
     gSmPairingErrorConfirmValueFailed_c = 0x0432
     gSmPairingErrorCommandNotSupported_c = 0x0433
@@ -4488,7 +4568,11 @@ class GATTClientProcedureFindIncludedServicesIndicationError(GenericEnum):
     gSmLlConnectionEncryptionFailure_c = 0x0418
     gSmInsufficientResources_c = 0x0419
     gSmOobDataAddressMismatch_c = 0x041A
-    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041A
+    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041B
+    gSmReceivedTimerEventForUnknownDevice_c = 0x041C
+    gSmUnattainableLocalDeviceSecRequirements_c = 0x041D
+    gSmUnattainableLocalDeviceMinKeySize_c = 0x041E
+    gSmUnattainableSlaveSecReqRequirements_c = 0x041F
     gSmPairingErrorPasskeyEntryFailed_c = 0x0431
     gSmPairingErrorConfirmValueFailed_c = 0x0432
     gSmPairingErrorCommandNotSupported_c = 0x0433
@@ -4672,7 +4756,11 @@ class GATTClientProcedureDiscoverAllCharacteristicsIndicationError(GenericEnum):
     gSmLlConnectionEncryptionFailure_c = 0x0418
     gSmInsufficientResources_c = 0x0419
     gSmOobDataAddressMismatch_c = 0x041A
-    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041A
+    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041B
+    gSmReceivedTimerEventForUnknownDevice_c = 0x041C
+    gSmUnattainableLocalDeviceSecRequirements_c = 0x041D
+    gSmUnattainableLocalDeviceMinKeySize_c = 0x041E
+    gSmUnattainableSlaveSecReqRequirements_c = 0x041F
     gSmPairingErrorPasskeyEntryFailed_c = 0x0431
     gSmPairingErrorConfirmValueFailed_c = 0x0432
     gSmPairingErrorCommandNotSupported_c = 0x0433
@@ -4856,7 +4944,11 @@ class GATTClientProcedureDiscoverCharacteristicByUuidIndicationError(GenericEnum
     gSmLlConnectionEncryptionFailure_c = 0x0418
     gSmInsufficientResources_c = 0x0419
     gSmOobDataAddressMismatch_c = 0x041A
-    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041A
+    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041B
+    gSmReceivedTimerEventForUnknownDevice_c = 0x041C
+    gSmUnattainableLocalDeviceSecRequirements_c = 0x041D
+    gSmUnattainableLocalDeviceMinKeySize_c = 0x041E
+    gSmUnattainableSlaveSecReqRequirements_c = 0x041F
     gSmPairingErrorPasskeyEntryFailed_c = 0x0431
     gSmPairingErrorConfirmValueFailed_c = 0x0432
     gSmPairingErrorCommandNotSupported_c = 0x0433
@@ -5033,7 +5125,11 @@ class GATTClientProcedureDiscoverAllCharacteristicDescriptorsIndicationError(Gen
     gSmLlConnectionEncryptionFailure_c = 0x0418
     gSmInsufficientResources_c = 0x0419
     gSmOobDataAddressMismatch_c = 0x041A
-    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041A
+    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041B
+    gSmReceivedTimerEventForUnknownDevice_c = 0x041C
+    gSmUnattainableLocalDeviceSecRequirements_c = 0x041D
+    gSmUnattainableLocalDeviceMinKeySize_c = 0x041E
+    gSmUnattainableSlaveSecReqRequirements_c = 0x041F
     gSmPairingErrorPasskeyEntryFailed_c = 0x0431
     gSmPairingErrorConfirmValueFailed_c = 0x0432
     gSmPairingErrorCommandNotSupported_c = 0x0433
@@ -5232,7 +5328,11 @@ class GATTClientProcedureReadCharacteristicValueIndicationError(GenericEnum):
     gSmLlConnectionEncryptionFailure_c = 0x0418
     gSmInsufficientResources_c = 0x0419
     gSmOobDataAddressMismatch_c = 0x041A
-    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041A
+    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041B
+    gSmReceivedTimerEventForUnknownDevice_c = 0x041C
+    gSmUnattainableLocalDeviceSecRequirements_c = 0x041D
+    gSmUnattainableLocalDeviceMinKeySize_c = 0x041E
+    gSmUnattainableSlaveSecReqRequirements_c = 0x041F
     gSmPairingErrorPasskeyEntryFailed_c = 0x0431
     gSmPairingErrorConfirmValueFailed_c = 0x0432
     gSmPairingErrorCommandNotSupported_c = 0x0433
@@ -5431,7 +5531,11 @@ class GATTClientProcedureReadUsingCharacteristicUuidIndicationError(GenericEnum)
     gSmLlConnectionEncryptionFailure_c = 0x0418
     gSmInsufficientResources_c = 0x0419
     gSmOobDataAddressMismatch_c = 0x041A
-    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041A
+    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041B
+    gSmReceivedTimerEventForUnknownDevice_c = 0x041C
+    gSmUnattainableLocalDeviceSecRequirements_c = 0x041D
+    gSmUnattainableLocalDeviceMinKeySize_c = 0x041E
+    gSmUnattainableSlaveSecReqRequirements_c = 0x041F
     gSmPairingErrorPasskeyEntryFailed_c = 0x0431
     gSmPairingErrorConfirmValueFailed_c = 0x0432
     gSmPairingErrorCommandNotSupported_c = 0x0433
@@ -5608,7 +5712,11 @@ class GATTClientProcedureReadMultipleCharacteristicValuesIndicationError(Generic
     gSmLlConnectionEncryptionFailure_c = 0x0418
     gSmInsufficientResources_c = 0x0419
     gSmOobDataAddressMismatch_c = 0x041A
-    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041A
+    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041B
+    gSmReceivedTimerEventForUnknownDevice_c = 0x041C
+    gSmUnattainableLocalDeviceSecRequirements_c = 0x041D
+    gSmUnattainableLocalDeviceMinKeySize_c = 0x041E
+    gSmUnattainableSlaveSecReqRequirements_c = 0x041F
     gSmPairingErrorPasskeyEntryFailed_c = 0x0431
     gSmPairingErrorConfirmValueFailed_c = 0x0432
     gSmPairingErrorCommandNotSupported_c = 0x0433
@@ -5785,7 +5893,11 @@ class GATTClientProcedureWriteCharacteristicValueIndicationError(GenericEnum):
     gSmLlConnectionEncryptionFailure_c = 0x0418
     gSmInsufficientResources_c = 0x0419
     gSmOobDataAddressMismatch_c = 0x041A
-    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041A
+    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041B
+    gSmReceivedTimerEventForUnknownDevice_c = 0x041C
+    gSmUnattainableLocalDeviceSecRequirements_c = 0x041D
+    gSmUnattainableLocalDeviceMinKeySize_c = 0x041E
+    gSmUnattainableSlaveSecReqRequirements_c = 0x041F
     gSmPairingErrorPasskeyEntryFailed_c = 0x0431
     gSmPairingErrorConfirmValueFailed_c = 0x0432
     gSmPairingErrorCommandNotSupported_c = 0x0433
@@ -5962,7 +6074,11 @@ class GATTClientProcedureReadCharacteristicDescriptorIndicationError(GenericEnum
     gSmLlConnectionEncryptionFailure_c = 0x0418
     gSmInsufficientResources_c = 0x0419
     gSmOobDataAddressMismatch_c = 0x041A
-    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041A
+    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041B
+    gSmReceivedTimerEventForUnknownDevice_c = 0x041C
+    gSmUnattainableLocalDeviceSecRequirements_c = 0x041D
+    gSmUnattainableLocalDeviceMinKeySize_c = 0x041E
+    gSmUnattainableSlaveSecReqRequirements_c = 0x041F
     gSmPairingErrorPasskeyEntryFailed_c = 0x0431
     gSmPairingErrorConfirmValueFailed_c = 0x0432
     gSmPairingErrorCommandNotSupported_c = 0x0433
@@ -6146,7 +6262,11 @@ class GATTClientProcedureWriteCharacteristicDescriptorIndicationError(GenericEnu
     gSmLlConnectionEncryptionFailure_c = 0x0418
     gSmInsufficientResources_c = 0x0419
     gSmOobDataAddressMismatch_c = 0x041A
-    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041A
+    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041B
+    gSmReceivedTimerEventForUnknownDevice_c = 0x041C
+    gSmUnattainableLocalDeviceSecRequirements_c = 0x041D
+    gSmUnattainableLocalDeviceMinKeySize_c = 0x041E
+    gSmUnattainableSlaveSecReqRequirements_c = 0x041F
     gSmPairingErrorPasskeyEntryFailed_c = 0x0431
     gSmPairingErrorConfirmValueFailed_c = 0x0432
     gSmPairingErrorCommandNotSupported_c = 0x0433
@@ -6334,7 +6454,11 @@ class GATTServerErrorIndicationProcedureError_Error(GenericEnum):
     gSmLlConnectionEncryptionFailure_c = 0x0418
     gSmInsufficientResources_c = 0x0419
     gSmOobDataAddressMismatch_c = 0x041A
-    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041A
+    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041B
+    gSmReceivedTimerEventForUnknownDevice_c = 0x041C
+    gSmUnattainableLocalDeviceSecRequirements_c = 0x041D
+    gSmUnattainableLocalDeviceMinKeySize_c = 0x041E
+    gSmUnattainableSlaveSecReqRequirements_c = 0x041F
     gSmPairingErrorPasskeyEntryFailed_c = 0x0431
     gSmPairingErrorConfirmValueFailed_c = 0x0432
     gSmPairingErrorCommandNotSupported_c = 0x0433
@@ -6503,7 +6627,11 @@ class GATTDBConfirmStatus(GenericEnum):
     gSmLlConnectionEncryptionFailure_c = 0x0418
     gSmInsufficientResources_c = 0x0419
     gSmOobDataAddressMismatch_c = 0x041A
-    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041A
+    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041B
+    gSmReceivedTimerEventForUnknownDevice_c = 0x041C
+    gSmUnattainableLocalDeviceSecRequirements_c = 0x041D
+    gSmUnattainableLocalDeviceMinKeySize_c = 0x041E
+    gSmUnattainableSlaveSecReqRequirements_c = 0x041F
     gSmPairingErrorPasskeyEntryFailed_c = 0x0431
     gSmPairingErrorConfirmValueFailed_c = 0x0432
     gSmPairingErrorCommandNotSupported_c = 0x0433
@@ -6672,7 +6800,11 @@ class GATTDBAttConfirmStatus(GenericEnum):
     gSmLlConnectionEncryptionFailure_c = 0x0418
     gSmInsufficientResources_c = 0x0419
     gSmOobDataAddressMismatch_c = 0x041A
-    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041A
+    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041B
+    gSmReceivedTimerEventForUnknownDevice_c = 0x041C
+    gSmUnattainableLocalDeviceSecRequirements_c = 0x041D
+    gSmUnattainableLocalDeviceMinKeySize_c = 0x041E
+    gSmUnattainableSlaveSecReqRequirements_c = 0x041F
     gSmPairingErrorPasskeyEntryFailed_c = 0x0431
     gSmPairingErrorConfirmValueFailed_c = 0x0432
     gSmPairingErrorCommandNotSupported_c = 0x0433
@@ -6849,7 +6981,11 @@ class GAPConfirmStatus(GenericEnum):
     gSmLlConnectionEncryptionFailure_c = 0x0418
     gSmInsufficientResources_c = 0x0419
     gSmOobDataAddressMismatch_c = 0x041A
-    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041A
+    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041B
+    gSmReceivedTimerEventForUnknownDevice_c = 0x041C
+    gSmUnattainableLocalDeviceSecRequirements_c = 0x041D
+    gSmUnattainableLocalDeviceMinKeySize_c = 0x041E
+    gSmUnattainableSlaveSecReqRequirements_c = 0x041F
     gSmPairingErrorPasskeyEntryFailed_c = 0x0431
     gSmPairingErrorConfirmValueFailed_c = 0x0432
     gSmPairingErrorCommandNotSupported_c = 0x0433
@@ -7018,7 +7154,11 @@ class GAPGenericEventInternalErrorIndicationInternalError_ErrorCode(GenericEnum)
     gSmLlConnectionEncryptionFailure_c = 0x0418
     gSmInsufficientResources_c = 0x0419
     gSmOobDataAddressMismatch_c = 0x041A
-    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041A
+    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041B
+    gSmReceivedTimerEventForUnknownDevice_c = 0x041C
+    gSmUnattainableLocalDeviceSecRequirements_c = 0x041D
+    gSmUnattainableLocalDeviceMinKeySize_c = 0x041E
+    gSmUnattainableSlaveSecReqRequirements_c = 0x041F
     gSmPairingErrorPasskeyEntryFailed_c = 0x0431
     gSmPairingErrorConfirmValueFailed_c = 0x0432
     gSmPairingErrorCommandNotSupported_c = 0x0433
@@ -7229,7 +7369,11 @@ class GAPGenericEventAdvertisingSetupFailedIndicationSetupFailReason(GenericEnum
     gSmLlConnectionEncryptionFailure_c = 0x0418
     gSmInsufficientResources_c = 0x0419
     gSmOobDataAddressMismatch_c = 0x041A
-    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041A
+    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041B
+    gSmReceivedTimerEventForUnknownDevice_c = 0x041C
+    gSmUnattainableLocalDeviceSecRequirements_c = 0x041D
+    gSmUnattainableLocalDeviceMinKeySize_c = 0x041E
+    gSmUnattainableSlaveSecReqRequirements_c = 0x041F
     gSmPairingErrorPasskeyEntryFailed_c = 0x0431
     gSmPairingErrorConfirmValueFailed_c = 0x0432
     gSmPairingErrorCommandNotSupported_c = 0x0433
@@ -7398,7 +7542,11 @@ class GAPAdvertisingEventCommandFailedIndicationFailReason(GenericEnum):
     gSmLlConnectionEncryptionFailure_c = 0x0418
     gSmInsufficientResources_c = 0x0419
     gSmOobDataAddressMismatch_c = 0x041A
-    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041A
+    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041B
+    gSmReceivedTimerEventForUnknownDevice_c = 0x041C
+    gSmUnattainableLocalDeviceSecRequirements_c = 0x041D
+    gSmUnattainableLocalDeviceMinKeySize_c = 0x041E
+    gSmUnattainableSlaveSecReqRequirements_c = 0x041F
     gSmPairingErrorPasskeyEntryFailed_c = 0x0431
     gSmPairingErrorConfirmValueFailed_c = 0x0432
     gSmPairingErrorCommandNotSupported_c = 0x0433
@@ -7567,7 +7715,11 @@ class GAPScanningEventCommandFailedIndicationFailReason(GenericEnum):
     gSmLlConnectionEncryptionFailure_c = 0x0418
     gSmInsufficientResources_c = 0x0419
     gSmOobDataAddressMismatch_c = 0x041A
-    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041A
+    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041B
+    gSmReceivedTimerEventForUnknownDevice_c = 0x041C
+    gSmUnattainableLocalDeviceSecRequirements_c = 0x041D
+    gSmUnattainableLocalDeviceMinKeySize_c = 0x041E
+    gSmUnattainableSlaveSecReqRequirements_c = 0x041F
     gSmPairingErrorPasskeyEntryFailed_c = 0x0431
     gSmPairingErrorConfirmValueFailed_c = 0x0432
     gSmPairingErrorCommandNotSupported_c = 0x0433
@@ -7921,7 +8073,11 @@ class PairingFailedFailReason(GenericEnum):
     gSmLlConnectionEncryptionFailure_c = 0x0418
     gSmInsufficientResources_c = 0x0419
     gSmOobDataAddressMismatch_c = 0x041A
-    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041A
+    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041B
+    gSmReceivedTimerEventForUnknownDevice_c = 0x041C
+    gSmUnattainableLocalDeviceSecRequirements_c = 0x041D
+    gSmUnattainableLocalDeviceMinKeySize_c = 0x041E
+    gSmUnattainableSlaveSecReqRequirements_c = 0x041F
     gSmPairingErrorPasskeyEntryFailed_c = 0x0431
     gSmPairingErrorConfirmValueFailed_c = 0x0432
     gSmPairingErrorCommandNotSupported_c = 0x0433
@@ -8090,7 +8246,11 @@ class GAPConnectionEventDisconnectedIndicationReason(GenericEnum):
     gSmLlConnectionEncryptionFailure_c = 0x0418
     gSmInsufficientResources_c = 0x0419
     gSmOobDataAddressMismatch_c = 0x041A
-    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041A
+    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041B
+    gSmReceivedTimerEventForUnknownDevice_c = 0x041C
+    gSmUnattainableLocalDeviceSecRequirements_c = 0x041D
+    gSmUnattainableLocalDeviceMinKeySize_c = 0x041E
+    gSmUnattainableSlaveSecReqRequirements_c = 0x041F
     gSmPairingErrorPasskeyEntryFailed_c = 0x0431
     gSmPairingErrorConfirmValueFailed_c = 0x0432
     gSmPairingErrorCommandNotSupported_c = 0x0433
@@ -8259,7 +8419,11 @@ class GAPConnectionEventPowerReadFailureIndicationFailReason(GenericEnum):
     gSmLlConnectionEncryptionFailure_c = 0x0418
     gSmInsufficientResources_c = 0x0419
     gSmOobDataAddressMismatch_c = 0x041A
-    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041A
+    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041B
+    gSmReceivedTimerEventForUnknownDevice_c = 0x041C
+    gSmUnattainableLocalDeviceSecRequirements_c = 0x041D
+    gSmUnattainableLocalDeviceMinKeySize_c = 0x041E
+    gSmUnattainableSlaveSecReqRequirements_c = 0x041F
     gSmPairingErrorPasskeyEntryFailed_c = 0x0431
     gSmPairingErrorConfirmValueFailed_c = 0x0432
     gSmPairingErrorCommandNotSupported_c = 0x0433
@@ -8428,7 +8592,11 @@ class GAPConnectionEventParameterUpdateCompleteIndicationConnectionParameterUpda
     gSmLlConnectionEncryptionFailure_c = 0x0418
     gSmInsufficientResources_c = 0x0419
     gSmOobDataAddressMismatch_c = 0x041A
-    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041A
+    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041B
+    gSmReceivedTimerEventForUnknownDevice_c = 0x041C
+    gSmUnattainableLocalDeviceSecRequirements_c = 0x041D
+    gSmUnattainableLocalDeviceMinKeySize_c = 0x041E
+    gSmUnattainableSlaveSecReqRequirements_c = 0x041F
     gSmPairingErrorPasskeyEntryFailed_c = 0x0431
     gSmPairingErrorConfirmValueFailed_c = 0x0432
     gSmPairingErrorCommandNotSupported_c = 0x0433

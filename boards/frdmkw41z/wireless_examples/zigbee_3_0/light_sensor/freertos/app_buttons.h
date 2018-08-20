@@ -52,10 +52,10 @@
 #if (defined BUTTON_MAP_OM15082 )
     typedef enum {
         APP_E_BUTTONS_BUTTON_1 = 0,
-        APP_E_BUTTONS_BUTTON_SW1,
         APP_E_BUTTONS_BUTTON_SW2,
         APP_E_BUTTONS_BUTTON_SW3,
         APP_E_BUTTONS_BUTTON_SW4,
+        APP_E_BUTTONS_BUTTON_SW5,
     } APP_teButtons;
 
     #define APP_BUTTONS_NUM             (5UL)
@@ -79,10 +79,10 @@
 #else
     typedef enum {
             APP_E_BUTTONS_BUTTON_1 = 0,
-            APP_E_BUTTONS_BUTTON_SW1,
             APP_E_BUTTONS_BUTTON_SW2,
             APP_E_BUTTONS_BUTTON_SW3,
             APP_E_BUTTONS_BUTTON_SW4,
+            APP_E_BUTTONS_BUTTON_SW5,
         } APP_teButtons;
 #endif
 

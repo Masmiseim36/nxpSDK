@@ -35,15 +35,9 @@
 * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 '''
 
-import sys
-
 from com.nxp.wireless_connectivity.commands.comm import Comm
 from com.nxp.wireless_connectivity.hsdk.CUartLibrary import Baudrate
-from com.nxp.wireless_connectivity.commands.thread.enums import \
-    THR_GetThreadIpAddrRequestAddressType, THR_MgmtDiagnosticGetRequestTlvId
-from com.nxp.wireless_connectivity.commands.thread.sync_requests import *
-from com.nxp.wireless_connectivity.hsdk.utils import list_to_int
-from time import sleep
+from com.nxp.wireless_connectivity.commands.thread.sync_requests import *  # @UnusedWildImport
 
 
 IN6ADDR_REALMLOCAL_ALLNODES_INIT = [
@@ -136,7 +130,7 @@ def display_remote(args):
     sleep(5)
 
 
-def cb_diag_get_rsp(devName, indication):
+def cb_diag_get_rsp(_, indication):
     for tlv in indication.TLVs:
         if tlv.type == 'Ip6AddrList':
             print tlv.type, '->',

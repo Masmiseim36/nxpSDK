@@ -49,6 +49,7 @@ class ZigBeeDevice(object):
 
     def __init__(self, serial_port, channel):
         self.serial_port = serial_port
+        self.channel = channel
 
         self.comm = Comm(self.serial_port,
                          FsciAckPolicy.NONE,
@@ -71,7 +72,7 @@ class ZigBeeDevice(object):
 
     def set_channel_mask(self):
         self.comm.send(Spec.SetChannelMaskFrame,
-                       Frames.SetChannelMask(ChannelMask=to_bytes(1 << channel, 4, False)))
+                       Frames.SetChannelMask(ChannelMask=to_bytes(1 << self.channel, 4, False)))
 
     def start_network(self):
         self.comm.send(Spec.StartNetworkMessageFrame, Frames.StartNetworkMessage())

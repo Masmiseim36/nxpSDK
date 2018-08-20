@@ -96,16 +96,16 @@
 /***        Macro Definitions                                             ***/
 /****************************************************************************/
 
-#ifndef DEBUG_APP
-#define TRACE_APP   FALSE
-#else
+#ifdef DEBUG_APP
 #define TRACE_APP   TRUE
+#else
+#define TRACE_APP   FALSE
 #endif
 
-#ifndef DEBUG_START_UP
-#define TRACE_START FALSE
-#else
+#ifdef DEBUG_START_UP
 #define TRACE_START TRUE
+#else
+#define TRACE_START FALSE
 #endif
 
 

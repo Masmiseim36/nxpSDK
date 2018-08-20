@@ -65,22 +65,22 @@
 /****************************************************************************/
 #define RAM_HELD 2
 
-#ifndef DEBUG_APP
-#define TRACE_APP   FALSE
-#else
+#ifdef DEBUG_APP
 #define TRACE_APP   TRUE
+#else
+#define TRACE_APP   FALSE
 #endif
 
-#ifndef DEBUG_START_UP
-#define TRACE_START FALSE
-#else
+#ifdef DEBUG_START_UP
 #define TRACE_START TRUE
+#else
+#define TRACE_START FALSE
 #endif
 
-#ifndef DEBUG_SLEEP
-#define TRACE_SLEEP FALSE
-#else
+#ifdef DEBUG_SLEEP
 #define TRACE_SLEEP TRUE
+#else
+#define TRACE_SLEEP FALSE
 #endif
 
 #define HALT_ON_EXCEPTION   FALSE

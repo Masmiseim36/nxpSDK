@@ -4,7 +4,7 @@
  * from a simulated user-friendly shell interface.
  *
  * The Clear BSD License
- * Copyright 2017 NXP
+ * Copyright 2017-2018 NXP
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -2296,6 +2296,9 @@ int main(int argc, char **argv)
     size_t len = SHELL_MAX_CMD_LEN;
     ssize_t nread;
     int i;
+
+    /* disable stdout buffering to be able to print live prompt (>) */
+    setbuf(stdout, NULL);
 
     while ((nread = getline(&command, &len, stdin)) != -1) {
 

@@ -216,6 +216,33 @@ class StartNetworkScanObserver(Observer):
             print_event(self.deviceName, frame)
         fsciLibrary.DestroyFSCIFrame(event)
 
+class CodeObserver(Observer):
+
+    opGroup = Spec.CodeFrame.opGroup
+    opCode = Spec.CodeFrame.opCode
+
+    @overrides(Observer)
+    def observeEvent(self, framer, event, callback, sync_request):
+        # Call super, print common information
+        Observer.observeEvent(self, framer, event, callback, sync_request)
+        # Get payload
+        fsciFrame = cast(event, POINTER(FsciFrame))
+        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
+        packet = Spec.CodeFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
+        # Create frame object
+        frame = Code()
+        frame.TargetExtendedAddress = packet.getParamValueAsNumber("TargetExtendedAddress")
+        frame.Code = packet.getParamValueAsNumber("Code")
+        frame._DevicePort = self.deviceName
+        framer.event_queue.put(frame) if sync_request else None
+
+        if callback is not None:
+            callback(self.deviceName, frame)
+        else:
+            print_event(self.deviceName, frame)
+        fsciLibrary.DestroyFSCIFrame(event)
+
+
 
 class ZLO_ZLLFactoryNewResetObserver(Observer):
 
@@ -1152,6 +1179,108 @@ class RecallSceneObserver(Observer):
         fsciLibrary.DestroyFSCIFrame(event)
 
 
+class AddEnhancedSceneObserver(Observer):
+
+    opGroup = Spec.AddEnhancedSceneFrame.opGroup
+    opCode = Spec.AddEnhancedSceneFrame.opCode
+
+    @overrides(Observer)
+    def observeEvent(self, framer, event, callback, sync_request):
+        # Call super, print common information
+        Observer.observeEvent(self, framer, event, callback, sync_request)
+        # Get payload
+        fsciFrame = cast(event, POINTER(FsciFrame))
+        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
+        packet = Spec.AddEnhancedSceneFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
+        # Create frame object
+        frame = AddEnhancedScene()
+        frame.AddressMode = packet.getParamValueAsNumber("AddressMode")
+        frame.TargetShortAddress = packet.getParamValueAsNumber("TargetShortAddress")
+        frame.SourceEndPoint = packet.getParamValueAsNumber("SourceEndPoint")
+        frame.DestinationEndPoint = packet.getParamValueAsNumber("DestinationEndPoint")
+        frame.GroupID = packet.getParamValueAsNumber("GroupID")
+        frame.SceneID = packet.getParamValueAsNumber("SceneID")
+        frame.TransitionTime = packet.getParamValueAsNumber("TransitionTime")
+        frame.SceneNameLength = packet.getParamValueAsNumber("SceneNameLength")
+        frame.SceneNameData = packet.getParamValueAsNumber("SceneNameData")
+        frame.Length = packet.getParamValueAsNumber("Length")
+        frame.MaxLength = packet.getParamValueAsNumber("MaxLength")
+        frame.ExtensionFieldSets = packet.getParamValueAsNumber("ExtensionFieldSets")
+        frame._DevicePort = self.deviceName
+        framer.event_queue.put(frame) if sync_request else None
+
+        if callback is not None:
+            callback(self.deviceName, frame)
+        else:
+            print_event(self.deviceName, frame)
+        fsciLibrary.DestroyFSCIFrame(event)
+
+
+class ViewEnhancedSceneObserver(Observer):
+
+    opGroup = Spec.ViewEnhancedSceneFrame.opGroup
+    opCode = Spec.ViewEnhancedSceneFrame.opCode
+
+    @overrides(Observer)
+    def observeEvent(self, framer, event, callback, sync_request):
+        # Call super, print common information
+        Observer.observeEvent(self, framer, event, callback, sync_request)
+        # Get payload
+        fsciFrame = cast(event, POINTER(FsciFrame))
+        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
+        packet = Spec.ViewEnhancedSceneFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
+        # Create frame object
+        frame = ViewEnhancedScene()
+        frame.AddressMode = packet.getParamValueAsNumber("AddressMode")
+        frame.TargetShortAddress = packet.getParamValueAsNumber("TargetShortAddress")
+        frame.SourceEndPoint = packet.getParamValueAsNumber("SourceEndPoint")
+        frame.DestinationEndPoint = packet.getParamValueAsNumber("DestinationEndPoint")
+        frame.GroupID = packet.getParamValueAsNumber("GroupID")
+        frame.SceneID = packet.getParamValueAsNumber("SceneID")
+        frame._DevicePort = self.deviceName
+        framer.event_queue.put(frame) if sync_request else None
+
+        if callback is not None:
+            callback(self.deviceName, frame)
+        else:
+            print_event(self.deviceName, frame)
+        fsciLibrary.DestroyFSCIFrame(event)
+
+
+class CopySceneObserver(Observer):
+
+    opGroup = Spec.CopySceneFrame.opGroup
+    opCode = Spec.CopySceneFrame.opCode
+
+    @overrides(Observer)
+    def observeEvent(self, framer, event, callback, sync_request):
+        # Call super, print common information
+        Observer.observeEvent(self, framer, event, callback, sync_request)
+        # Get payload
+        fsciFrame = cast(event, POINTER(FsciFrame))
+        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
+        packet = Spec.CopySceneFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
+        # Create frame object
+        frame = CopyScene()
+        frame.AddressMode = packet.getParamValueAsNumber("AddressMode")
+        frame.TargetShortAddress = packet.getParamValueAsNumber("TargetShortAddress")
+        frame.SourceEndPoint = packet.getParamValueAsNumber("SourceEndPoint")
+        frame.DestinationEndPoint = packet.getParamValueAsNumber("DestinationEndPoint")
+        frame.Mode = packet.getParamValueAsNumber("Mode")
+        frame.FromGroupID = packet.getParamValueAsNumber("FromGroupID")
+        frame.FromSceneID = packet.getParamValueAsNumber("FromSceneID")
+        frame.ToGroupID = packet.getParamValueAsNumber("ToGroupID")
+        frame.ToSceneID = packet.getParamValueAsNumber("ToSceneID")
+        frame._DevicePort = self.deviceName
+        framer.event_queue.put(frame) if sync_request else None
+
+        if callback is not None:
+            callback(self.deviceName, frame)
+        else:
+            print_event(self.deviceName, frame)
+        fsciLibrary.DestroyFSCIFrame(event)
+
+
 class MoveToHueObserver(Observer):
 
     opGroup = Spec.MoveToHueFrame.opGroup
@@ -1309,10 +1438,10 @@ class MoveSaturationObserver(Observer):
         fsciLibrary.DestroyFSCIFrame(event)
 
 
-class StepsaturationObserver(Observer):
+class StepSaturationObserver(Observer):
 
-    opGroup = Spec.StepsaturationFrame.opGroup
-    opCode = Spec.StepsaturationFrame.opCode
+    opGroup = Spec.StepSaturationFrame.opGroup
+    opCode = Spec.StepSaturationFrame.opCode
 
     @overrides(Observer)
     def observeEvent(self, framer, event, callback, sync_request):
@@ -1321,9 +1450,9 @@ class StepsaturationObserver(Observer):
         # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.StepsaturationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
+        packet = Spec.StepSaturationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
         # Create frame object
-        frame = Stepsaturation()
+        frame = StepSaturation()
         frame.AddressMode = packet.getParamValueAsNumber("AddressMode")
         frame.TargetShortAddress = packet.getParamValueAsNumber("TargetShortAddress")
         frame.SourceEndPoint = packet.getParamValueAsNumber("SourceEndPoint")
@@ -1426,212 +1555,6 @@ class MoveColourObserver(Observer):
         frame.DestinationEndPoint = packet.getParamValueAsNumber("DestinationEndPoint")
         frame.ColorX = packet.getParamValueAsNumber("ColorX")
         frame.ColorY = packet.getParamValueAsNumber("ColorY")
-        frame._DevicePort = self.deviceName
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class StepColourObserver(Observer):
-
-    opGroup = Spec.StepColourFrame.opGroup
-    opCode = Spec.StepColourFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.StepColourFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = StepColour()
-        frame.AddressMode = packet.getParamValueAsNumber("AddressMode")
-        frame.TargetShortAddress = packet.getParamValueAsNumber("TargetShortAddress")
-        frame.SourceEndPoint = packet.getParamValueAsNumber("SourceEndPoint")
-        frame.DestinationEndPoint = packet.getParamValueAsNumber("DestinationEndPoint")
-        frame.ColorX = packet.getParamValueAsNumber("ColorX")
-        frame.ColorY = packet.getParamValueAsNumber("ColorY")
-        frame.TransitionTime = packet.getParamValueAsNumber("TransitionTime")
-        frame._DevicePort = self.deviceName
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class InitiateTouchlinkObserver(Observer):
-
-    opGroup = Spec.InitiateTouchlinkFrame.opGroup
-    opCode = Spec.InitiateTouchlinkFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Create frame object
-        frame = InitiateTouchlink()
-        frame._DevicePort = self.deviceName
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class TouchLinkFactoryResetTargetObserver(Observer):
-
-    opGroup = Spec.TouchLinkFactoryResetTargetFrame.opGroup
-    opCode = Spec.TouchLinkFactoryResetTargetFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Create frame object
-        frame = TouchLinkFactoryResetTarget()
-        frame._DevicePort = self.deviceName
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class OnOffNoEffectsObserver(Observer):
-
-    opGroup = Spec.OnOffNoEffectsFrame.opGroup
-    opCode = Spec.OnOffNoEffectsFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.OnOffNoEffectsFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = OnOffNoEffects()
-        frame.AddressMode = packet.getParamValueAsNumber("AddressMode")
-        frame.TargetShortAddress = packet.getParamValueAsNumber("TargetShortAddress")
-        frame.SourceEndPoint = packet.getParamValueAsNumber("SourceEndPoint")
-        frame.DestinationEndPoint = packet.getParamValueAsNumber("DestinationEndPoint")
-        frame.CommandID = packet.getParamValueAsNumber("CommandID")
-        frame._DevicePort = self.deviceName
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class AddEnhancedSceneObserver(Observer):
-
-    opGroup = Spec.AddEnhancedSceneFrame.opGroup
-    opCode = Spec.AddEnhancedSceneFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.AddEnhancedSceneFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = AddEnhancedScene()
-        frame.AddressMode = packet.getParamValueAsNumber("AddressMode")
-        frame.TargetShortAddress = packet.getParamValueAsNumber("TargetShortAddress")
-        frame.SourceEndPoint = packet.getParamValueAsNumber("SourceEndPoint")
-        frame.DestinationEndPoint = packet.getParamValueAsNumber("DestinationEndPoint")
-        frame.GroupID = packet.getParamValueAsNumber("GroupID")
-        frame.SceneID = packet.getParamValueAsNumber("SceneID")
-        frame.TransitionTime = packet.getParamValueAsNumber("TransitionTime")
-        frame.SceneNameLength = packet.getParamValueAsNumber("SceneNameLength")
-        frame.SceneNameData = packet.getParamValueAsNumber("SceneNameData")
-        frame.Length = packet.getParamValueAsNumber("Length")
-        frame.MaxLength = packet.getParamValueAsNumber("MaxLength")
-        frame.ExtensionFieldSets = packet.getParamValueAsNumber("ExtensionFieldSets")
-        frame._DevicePort = self.deviceName
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class ViewEnhancedSceneObserver(Observer):
-
-    opGroup = Spec.ViewEnhancedSceneFrame.opGroup
-    opCode = Spec.ViewEnhancedSceneFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.ViewEnhancedSceneFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = ViewEnhancedScene()
-        frame.AddressMode = packet.getParamValueAsNumber("AddressMode")
-        frame.TargetShortAddress = packet.getParamValueAsNumber("TargetShortAddress")
-        frame.SourceEndPoint = packet.getParamValueAsNumber("SourceEndPoint")
-        frame.DestinationEndPoint = packet.getParamValueAsNumber("DestinationEndPoint")
-        frame.GroupID = packet.getParamValueAsNumber("GroupID")
-        frame.SceneID = packet.getParamValueAsNumber("SceneID")
-        frame._DevicePort = self.deviceName
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-class CopySceneObserver(Observer):
-
-    opGroup = Spec.CopySceneFrame.opGroup
-    opCode = Spec.CopySceneFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
-        fsciFrame = cast(event, POINTER(FsciFrame))
-        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.CopySceneFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
-        # Create frame object
-        frame = CopyScene()
-        frame.AddressMode = packet.getParamValueAsNumber("AddressMode")
-        frame.TargetShortAddress = packet.getParamValueAsNumber("TargetShortAddress")
-        frame.SourceEndPoint = packet.getParamValueAsNumber("SourceEndPoint")
-        frame.DestinationEndPoint = packet.getParamValueAsNumber("DestinationEndPoint")
-        frame.Mode = packet.getParamValueAsNumber("Mode")
-        frame.FromGroupID = packet.getParamValueAsNumber("FromGroupID")
-        frame.FromSceneID = packet.getParamValueAsNumber("FromSceneID")
-        frame.ToGroupID = packet.getParamValueAsNumber("ToGroupID")
-        frame.ToSceneID = packet.getParamValueAsNumber("ToSceneID")
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -1823,11 +1746,8 @@ class StopMoveStepObserver(Observer):
         frame.TargetShortAddress = packet.getParamValueAsNumber("TargetShortAddress")
         frame.SourceEndPoint = packet.getParamValueAsNumber("SourceEndPoint")
         frame.DestinationEndPoint = packet.getParamValueAsNumber("DestinationEndPoint")
-        frame.UpdateFlags = packet.getParamValueAsNumber("UpdateFlags")
-        frame.Action = packet.getParamValueAsNumber("Action")
-        frame.Direction = packet.getParamValueAsNumber("Direction")
-        frame.Time = packet.getParamValueAsNumber("Time")
-        frame.StartHue = packet.getParamValueAsNumber("StartHue")
+        frame.OptionsMask = packet.getParamValueAsNumber("OptionsMask")
+        frame.OptionsOverride = packet.getParamValueAsNumber("OptionsOverride")
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -1928,6 +1848,50 @@ class StepColourTemperatureObserver(Observer):
         frame.TransitionTime = packet.getParamValueAsNumber("TransitionTime")
         frame.MinimumTemperature = packet.getParamValueAsNumber("MinimumTemperature")
         frame.MaximumTemperature = packet.getParamValueAsNumber("MaximumTemperature")
+        frame.OptionsMask = packet.getParamValueAsNumber("OptionsMask")
+        frame.OptionsOverride = packet.getParamValueAsNumber("OptionsOverride")
+        frame._DevicePort = self.deviceName
+        framer.event_queue.put(frame) if sync_request else None
+
+        if callback is not None:
+            callback(self.deviceName, frame)
+        else:
+            print_event(self.deviceName, frame)
+        fsciLibrary.DestroyFSCIFrame(event)
+
+
+class InitiateTouchlinkObserver(Observer):
+
+    opGroup = Spec.InitiateTouchlinkFrame.opGroup
+    opCode = Spec.InitiateTouchlinkFrame.opCode
+
+    @overrides(Observer)
+    def observeEvent(self, framer, event, callback, sync_request):
+        # Call super, print common information
+        Observer.observeEvent(self, framer, event, callback, sync_request)
+        # Create frame object
+        frame = InitiateTouchlink()
+        frame._DevicePort = self.deviceName
+        framer.event_queue.put(frame) if sync_request else None
+
+        if callback is not None:
+            callback(self.deviceName, frame)
+        else:
+            print_event(self.deviceName, frame)
+        fsciLibrary.DestroyFSCIFrame(event)
+
+
+class TouchLinkFactoryResetTargetObserver(Observer):
+
+    opGroup = Spec.TouchLinkFactoryResetTargetFrame.opGroup
+    opCode = Spec.TouchLinkFactoryResetTargetFrame.opCode
+
+    @overrides(Observer)
+    def observeEvent(self, framer, event, callback, sync_request):
+        # Call super, print common information
+        Observer.observeEvent(self, framer, event, callback, sync_request)
+        # Create frame object
+        frame = TouchLinkFactoryResetTarget()
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -2428,6 +2392,42 @@ class IEEEAddressResponseObserver(Observer):
         fsciLibrary.DestroyFSCIFrame(event)
 
 
+class NodeDescriptorResponseObserver(Observer):
+
+    opGroup = Spec.NodeDescriptorResponseFrame.opGroup
+    opCode = Spec.NodeDescriptorResponseFrame.opCode
+
+    @overrides(Observer)
+    def observeEvent(self, framer, event, callback, sync_request):
+        # Call super, print common information
+        Observer.observeEvent(self, framer, event, callback, sync_request)
+        # Get payload
+        fsciFrame = cast(event, POINTER(FsciFrame))
+        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
+        packet = Spec.NodeDescriptorResponseFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
+        # Create frame object
+        frame = NodeDescriptorResponse()
+        frame.SequenceNumber = packet.getParamValueAsNumber("SequenceNumber")
+        frame.Status = packet.getParamValueAsNumber("Status")
+        frame.NetworkAddress = packet.getParamValueAsNumber("NetworkAddress")
+        frame.ManufacturerCode = packet.getParamValueAsNumber("ManufacturerCode")
+        frame.MaxRxSize = packet.getParamValueAsNumber("MaxRxSize")
+        frame.MaxTxSize = packet.getParamValueAsNumber("MaxTxSize")
+        frame.ServerMask = packet.getParamValueAsNumber("ServerMask")
+        frame.DescriptorCapability = packet.getParamValueAsNumber("DescriptorCapability")
+        frame.MacCapability = packet.getParamValueAsNumber("MacCapability")
+        frame.MaxBufferSize = packet.getParamValueAsNumber("MaxBufferSize")
+        frame.BitFields = packet.getParamValueAsNumber("BitFields")
+        frame._DevicePort = self.deviceName
+        framer.event_queue.put(frame) if sync_request else None
+
+        if callback is not None:
+            callback(self.deviceName, frame)
+        else:
+            print_event(self.deviceName, frame)
+        fsciLibrary.DestroyFSCIFrame(event)
+
+
 class SimpleDescriptorResponseObserver(Observer):
 
     opGroup = Spec.SimpleDescriptorResponseFrame.opGroup
@@ -2799,6 +2799,78 @@ class SystemServerDiscoveryResponseObserver(Observer):
         fsciLibrary.DestroyFSCIFrame(event)
 
 
+class ManagementLQIResponseObserver(Observer):
+
+    opGroup = Spec.ManagementLQIResponseFrame.opGroup
+    opCode = Spec.ManagementLQIResponseFrame.opCode
+
+    @overrides(Observer)
+    def observeEvent(self, framer, event, callback, sync_request):
+        # Call super, print common information
+        Observer.observeEvent(self, framer, event, callback, sync_request)
+        # Get payload
+        fsciFrame = cast(event, POINTER(FsciFrame))
+        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
+        packet = Spec.ManagementLQIResponseFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
+        # Create frame object
+        frame = ManagementLQIResponse()
+        frame.SequenceNumber = packet.getParamValueAsNumber("SequenceNumber")
+        frame.Status = packet.getParamValueAsNumber("Status")
+        frame.NeighbourTableEntries = packet.getParamValueAsNumber("NeighbourTableEntries")
+        frame.NeighbourTableListCount = packet.getParamValueAsNumber("NeighbourTableListCount")
+        frame.StartIndex = packet.getParamValueAsNumber("StartIndex")
+        frame.ListOfEntries_NWKAddress = packet.getParamValueAsNumber("ListOfEntries_NWKAddress")
+        frame.ListOfEntries_ExtendedPANID = packet.getParamValueAsNumber("ListOfEntries_ExtendedPANID")
+        frame.ListOfEntries_IEEEAddress = packet.getParamValueAsNumber("ListOfEntries_IEEEAddress")
+        frame.ListOfEntries_Depth = packet.getParamValueAsNumber("ListOfEntries_Depth")
+        frame.ListOfEntries_LinkQuality = packet.getParamValueAsNumber("ListOfEntries_LinkQuality")
+        frame.ListOfEntries_BitMapOfAttributes.DeviceType = packet.getParamValueAsNumber(
+            "ListOfEntries_BitMapOfAttributesDeviceType")
+        frame.ListOfEntries_BitMapOfAttributes.PermitJoinStatus = ManagementLQIResponse.ListOfEntries_BitMapOfAttributesPermitJoinStatus.getEnumString(
+            packet.getParamValueAsNumber("ListOfEntries_BitMapOfAttributesPermitJoinStatus"))
+        frame.ListOfEntries_BitMapOfAttributes.Relationship = packet.getParamValueAsNumber(
+            "ListOfEntries_BitMapOfAttributesRelationship")
+        frame.ListOfEntries_BitMapOfAttributes.RxOnWhenIdleStatus = ManagementLQIResponse.ListOfEntries_BitMapOfAttributesRxOnWhenIdleStatus.getEnumString(
+            packet.getParamValueAsNumber("ListOfEntries_BitMapOfAttributesRxOnWhenIdleStatus"))
+        frame._DevicePort = self.deviceName
+        framer.event_queue.put(frame) if sync_request else None
+
+        if callback is not None:
+            callback(self.deviceName, frame)
+        else:
+            print_event(self.deviceName, frame)
+        fsciLibrary.DestroyFSCIFrame(event)
+
+
+class AttributeDiscoveryResponseObserver(Observer):
+
+    opGroup = Spec.AttributeDiscoveryResponseFrame.opGroup
+    opCode = Spec.AttributeDiscoveryResponseFrame.opCode
+
+    @overrides(Observer)
+    def observeEvent(self, framer, event, callback, sync_request):
+        # Call super, print common information
+        Observer.observeEvent(self, framer, event, callback, sync_request)
+        # Get payload
+        fsciFrame = cast(event, POINTER(FsciFrame))
+        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
+        packet = Spec.AttributeDiscoveryResponseFrame.getFsciPacketFromByteArray(
+            data.contents, fsciFrame.contents.length)
+        # Create frame object
+        frame = AttributeDiscoveryResponse()
+        frame.Complete = packet.getParamValueAsNumber("Complete")
+        frame.AttributeType = packet.getParamValueAsNumber("AttributeType")
+        frame.AttributeID = packet.getParamValueAsNumber("AttributeID")
+        frame._DevicePort = self.deviceName
+        framer.event_queue.put(frame) if sync_request else None
+
+        if callback is not None:
+            callback(self.deviceName, frame)
+        else:
+            print_event(self.deviceName, frame)
+        fsciLibrary.DestroyFSCIFrame(event)
+
+
 class AuthenticateResponseObserver(Observer):
 
     opGroup = Spec.AuthenticateResponseFrame.opGroup
@@ -2822,6 +2894,32 @@ class AuthenticateResponseObserver(Observer):
         frame.Channel = packet.getParamValueAsNumber("Channel")
         frame.ShortPANID = packet.getParamValueAsNumber("ShortPANID")
         frame.ExtendedPANID = packet.getParamValueAsNumber("ExtendedPANID")
+        frame._DevicePort = self.deviceName
+        framer.event_queue.put(frame) if sync_request else None
+
+        if callback is not None:
+            callback(self.deviceName, frame)
+        else:
+            print_event(self.deviceName, frame)
+        fsciLibrary.DestroyFSCIFrame(event)
+
+
+class CodeResponseObserver(Observer):
+
+    opGroup = Spec.CodeResponseFrame.opGroup
+    opCode = Spec.CodeResponseFrame.opCode
+
+    @overrides(Observer)
+    def observeEvent(self, framer, event, callback, sync_request):
+        # Call super, print common information
+        Observer.observeEvent(self, framer, event, callback, sync_request)
+        # Get payload
+        fsciFrame = cast(event, POINTER(FsciFrame))
+        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
+        packet = Spec.CodeResponseFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
+        # Create frame object
+        frame = CodeResponse()
+        frame.Status = packet.getParamValueAsNumber("Status")
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 
@@ -3157,6 +3255,45 @@ class ViewSceneResponseObserver(Observer):
         fsciLibrary.DestroyFSCIFrame(event)
 
 
+class ViewEnhancedSceneResponseObserver(Observer):
+
+    opGroup = Spec.ViewEnhancedSceneResponseFrame.opGroup
+    opCode = Spec.ViewEnhancedSceneResponseFrame.opCode
+
+    @overrides(Observer)
+    def observeEvent(self, framer, event, callback, sync_request):
+        # Call super, print common information
+        Observer.observeEvent(self, framer, event, callback, sync_request)
+        # Get payload
+        fsciFrame = cast(event, POINTER(FsciFrame))
+        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
+        packet = Spec.ViewEnhancedSceneResponseFrame.getFsciPacketFromByteArray(
+            data.contents, fsciFrame.contents.length)
+        # Create frame object
+        frame = ViewEnhancedSceneResponse()
+        frame.SequenceNumber = packet.getParamValueAsNumber("SequenceNumber")
+        frame.Endpoint = packet.getParamValueAsNumber("Endpoint")
+        frame.ClusterID = packet.getParamValueAsNumber("ClusterID")
+        frame.Status = packet.getParamValueAsNumber("Status")
+        frame.GroupID = packet.getParamValueAsNumber("GroupID")
+        frame.SceneID = packet.getParamValueAsNumber("SceneID")
+        frame.TransitionTime = packet.getParamValueAsNumber("TransitionTime")
+        frame.SceneNameLength = packet.getParamValueAsNumber("SceneNameLength")
+        frame.SceneNameMaxLength = packet.getParamValueAsNumber("SceneNameMaxLength")
+        frame.SceneNameData = packet.getParamValueAsNumber("SceneNameData")
+        frame.ExtensionsLength = packet.getParamValueAsNumber("ExtensionsLength")
+        frame.ExtensionsMaxLength = packet.getParamValueAsNumber("ExtensionsMaxLength")
+        frame.ExtensionsData = packet.getParamValueAsNumber("ExtensionsData")
+        frame._DevicePort = self.deviceName
+        framer.event_queue.put(frame) if sync_request else None
+
+        if callback is not None:
+            callback(self.deviceName, frame)
+        else:
+            print_event(self.deviceName, frame)
+        fsciLibrary.DestroyFSCIFrame(event)
+
+
 class AddSceneResponseObserver(Observer):
 
     opGroup = Spec.AddSceneResponseFrame.opGroup
@@ -3178,6 +3315,37 @@ class AddSceneResponseObserver(Observer):
         frame.Status = packet.getParamValueAsNumber("Status")
         frame.GroupID = packet.getParamValueAsNumber("GroupID")
         frame.SceneID = packet.getParamValueAsNumber("SceneID")
+        frame._DevicePort = self.deviceName
+        framer.event_queue.put(frame) if sync_request else None
+
+        if callback is not None:
+            callback(self.deviceName, frame)
+        else:
+            print_event(self.deviceName, frame)
+        fsciLibrary.DestroyFSCIFrame(event)
+
+
+class CopySceneResponseObserver(Observer):
+
+    opGroup = Spec.CopySceneResponseFrame.opGroup
+    opCode = Spec.CopySceneResponseFrame.opCode
+
+    @overrides(Observer)
+    def observeEvent(self, framer, event, callback, sync_request):
+        # Call super, print common information
+        Observer.observeEvent(self, framer, event, callback, sync_request)
+        # Get payload
+        fsciFrame = cast(event, POINTER(FsciFrame))
+        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
+        packet = Spec.CopySceneResponseFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
+        # Create frame object
+        frame = CopySceneResponse()
+        frame.SequenceNumber = packet.getParamValueAsNumber("SequenceNumber")
+        frame.Endpoint = packet.getParamValueAsNumber("Endpoint")
+        frame.ClusterID = packet.getParamValueAsNumber("ClusterID")
+        frame.Status = packet.getParamValueAsNumber("Status")
+        frame.FromGroupID = packet.getParamValueAsNumber("FromGroupID")
+        frame.FromSceneID = packet.getParamValueAsNumber("FromSceneID")
         frame._DevicePort = self.deviceName
         framer.event_queue.put(frame) if sync_request else None
 

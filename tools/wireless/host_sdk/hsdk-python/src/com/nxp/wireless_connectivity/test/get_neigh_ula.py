@@ -37,7 +37,7 @@
 import commands
 
 from com.nxp.wireless_connectivity.commands.comm import Comm
-from com.nxp.wireless_connectivity.commands.thread.sync_requests import *
+from com.nxp.wireless_connectivity.commands.thread.sync_requests import *  # @UnusedWildImport
 from com.nxp.wireless_connectivity.hsdk.CUartLibrary import Baudrate
 from com.nxp.wireless_connectivity.hsdk.framing.fsci_framer import FsciFramer
 
@@ -55,8 +55,8 @@ def create_nwk(br, joiner, channel=None):
 
     if channel is not None:
         ch_attr_id = THR_SetAttrRequestAttributeId.Channel
-        confirm = THR_SetAttr(br, AttributeId=ch_attr_id, AttrSize=1, AttributeValue=channel)
-        confirm = THR_SetAttr(joiner, AttributeId=ch_attr_id, AttrSize=1, AttributeValue=channel)
+        THR_SetAttr(br, AttributeId=ch_attr_id, AttrSize=1, AttributeValue=channel)
+        THR_SetAttr(joiner, AttributeId=ch_attr_id, AttrSize=1, AttributeValue=channel)
 
     confirm = THR_CreateNwk(br)
     assert confirm.Status == 'OK'
@@ -112,7 +112,7 @@ def get_mesh_prefix(dev):
 
 
 def get_br_linklocal(dev):
-    rsp = NWKU_IfconfigAll(br)
+    rsp = NWKU_IfconfigAll(dev)
     print 'BR LL64 ->', rsp.InterfaceList[0].Addresses[0]
 
     return rsp.InterfaceList[0].Addresses[0]
@@ -141,7 +141,7 @@ def get_joiner_rloc_str(dev):
     return rloc_str
 
 
-def cb_diag_get_rsp(devName, rsp):
+def cb_diag_get_rsp(_, rsp):
     try:
         ula_list = rsp.TLVs[0].raw_value[48:64]
         ula_hex = ['%02x' % b for b in ula_list]

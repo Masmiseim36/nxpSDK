@@ -1361,8 +1361,6 @@ class THR_MgmtDiagnosticGetRspIndicationObserver(Observer):
         # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
-        packet = Spec.THR_MgmtDiagnosticGetRspIndicationFrame.getFsciPacketFromByteArray(
-            data.contents, fsciFrame.contents.length)
         # Create frame object
         frame = THR_MgmtDiagnosticGetRspIndication()
         curr = 0
@@ -3731,7 +3729,7 @@ class MAC_PromiscuousRxIndicationObserver(Observer):
     SNIFFER_QUEUE_ENABLED = False
 
     @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
+    def observeEvent(self, framer, event, callback, _):
         # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))

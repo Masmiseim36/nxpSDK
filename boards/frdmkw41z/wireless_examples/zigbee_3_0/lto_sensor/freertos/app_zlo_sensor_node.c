@@ -106,7 +106,9 @@ PRIVATE void app_vStartNodeFactoryNew(void);
 PRIVATE void app_vRestartNode (void);
 PRIVATE uint8 app_u8GetSensorEndpoint( void);
 PRIVATE void vAPP_InitialiseTask(void);
+#ifndef CPU_MKW41Z512VHT4
 PRIVATE void vHandleZdoLeaveRequest(uint8 u8Action, uint64 u64TargetAddr, uint8 u8Flags);
+#endif
 PRIVATE void vAppHandleAfEvent( BDB_tsZpsAfEvent *psZpsAfEvent);
 PRIVATE void vAppHandleZdoEvents( BDB_tsZpsAfEvent *psZpsAfEvent);
 
@@ -182,10 +184,11 @@ PUBLIC void APP_vInitialiseNode(void)
 #endif
 
     /* Initialize ZBPro stack */
-    ZPS_eAplAfInit();
+    ZPS_psAplAibGetAib()->bUseInstallCode = BDB_JOIN_USES_INSTALL_CODE_KEY;
 #ifdef CPU_MKW41Z512VHT4
     APP_vSetMacAddr();
 #endif
+    ZPS_eAplAfInit();
 
     DBG_vPrintf(TRACE_SENSOR_NODE, "\nAPP Sensor Node: ZPS_eAplAfInit");
 
@@ -232,8 +235,10 @@ PUBLIC void APP_vInitialiseNode(void)
     }
 #endif
 
+#ifndef CPU_MKW41Z512VHT4
     /* Register callback that will handle ZDP (mgmt) leave requests */
     ZPS_vAplZdoRegisterZdoLeaveActionCallback(vHandleZdoLeaveRequest);
+#endif
 
     #ifdef PDM_EEPROM
         vDisplayPDMUsage();
@@ -540,7 +545,7 @@ PRIVATE void vAppHandleAfEvent( BDB_tsZpsAfEvent *psZpsAfEvent)
     }
 
 }
-
+#ifndef CPU_MKW41Z512VHT4
 /****************************************************************************
  *
  * NAME: vHandleZdoLeaveRequest
@@ -580,7 +585,7 @@ PRIVATE void vHandleZdoLeaveRequest(uint8 u8Action, uint64 u64TargetAddr, uint8 
         }
     }
 }
-
+#endif
 /****************************************************************************
  *
  * NAME: vDeletePDMOnButtonPress
@@ -767,6 +772,7 @@ PUBLIC void APP_vFactoryResetRecords(void)
     /* clear out the stack */
     ZPS_vDefaultStack();
     (void)ZPS_eAplAibSetApsUseExtendedPanId(ZPS_APS_AIB_INIT_USE_EXTENDED_PANID);
+    ZPS_vSetKeys();
     /* save everything */
     PDM_eSaveRecordData(PDM_ID_APP_SENSOR,
                             &sDeviceDesc,

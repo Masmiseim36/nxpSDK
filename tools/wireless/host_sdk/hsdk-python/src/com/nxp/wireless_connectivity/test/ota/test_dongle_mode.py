@@ -38,8 +38,8 @@
 from com.nxp.wireless_connectivity.hsdk import utils
 from com.nxp.wireless_connectivity.commands.comm import Comm
 from com.nxp.wireless_connectivity.commands.firmware.spec import Spec as _Spec
-from com.nxp.wireless_connectivity.commands.firmware.sync_requests import *
-from com.nxp.wireless_connectivity.commands.thread.sync_requests import *
+from com.nxp.wireless_connectivity.commands.firmware.sync_requests import *  # @UnusedWildImport
+from com.nxp.wireless_connectivity.commands.thread.sync_requests import *  # @UnusedWildImport
 
 from com.nxp.wireless_connectivity.hsdk.CUartLibrary import Baudrate
 from com.nxp.wireless_connectivity.hsdk.ota_server import OTAFileHeader
@@ -153,7 +153,7 @@ def start_leader_as_commissioner(device, channel=None):
 ##############################################################################
 
 
-def cb_query_image_ind(devName, event):
+def cb_query_image_ind(_, event):
     global remaining_devices
 
     query_img_event.set()
@@ -174,7 +174,7 @@ def cb_query_image_ind(devName, event):
     )
 
 
-def cb_chunk_ind(devName, event):
+def cb_chunk_ind(_, event):
     global remaining_devices, last_device_id
 
     # new line if different device this time, so that \r does not delete current progress

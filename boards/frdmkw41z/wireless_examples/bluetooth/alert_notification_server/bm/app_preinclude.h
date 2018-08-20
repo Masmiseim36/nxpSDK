@@ -96,7 +96,7 @@
 #define gTmrApplicationTimers_c         5
 
 /* Defines number of timers needed by the protocol stack */
-#define gTmrStackTimers_c               5
+#define gTmrStackTimers_c               6
 
 /* Set this define TRUE if the PIT frequency is an integer number of MHZ */
 #define gTMR_PIT_FreqMultipleOfMHZ_d    0

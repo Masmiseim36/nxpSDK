@@ -107,7 +107,7 @@
 #define TX_QUEUE_SIZE                                              150
 #define RX_QUEUE_SIZE                                              150
 #define BDB_QUEUE_SIZE                                             2
-#define APP_ZTIMER_STORAGE                                         4
+#define APP_ZTIMER_STORAGE                                         5
 
 /****************************************************************************/
 /***        Type Definitions                                              ***/
@@ -165,7 +165,10 @@ tsZllState sZllState = {
 
 /* Register to pdm/nvm sZllState */
 NVM_RegisterDataSet(&sZllState, 1, sizeof(tsZllState), PDM_ID_APP_ZLL_CMSSION, gNVM_MirroredInRam_c);
-
+#ifdef FULL_FUNC_DEVICE
+NVM_RegisterDataSet(&sEndpointTable, 1, sizeof(tsZllEndpointInfoTable), PDM_ID_APP_END_P_TABLE, gNVM_MirroredInRam_c);
+NVM_RegisterDataSet(&sGroupTable, 1, sizeof(tsZllGroupInfoTable), PDM_ID_APP_GROUP_TABLE, gNVM_MirroredInRam_c);
+#endif
 PUBLIC tszQueue           APP_msgBdbEvents;
 PUBLIC tszQueue           APP_msgAppEvents;
 ZTIMER_tsTimer            asTimers[APP_ZTIMER_STORAGE + BDB_ZTIMER_STORAGE];
@@ -430,6 +433,9 @@ PRIVATE void vInitialiseApp ( void )
 #endif
     ZPS_eMiniMacSetTxBuffers ( 5 );
 
+    ZPS_psAplAibGetAib()->bUseInstallCode = BDB_JOIN_USES_INSTALL_CODE_KEY;
+    APP_vSetMacAddr();
+
     if ( sZllState.eNodeState == E_RUNNING )
     {
         u8DeviceType = ( sZllState.u8DeviceType >=  2 ) ? 1 : sZllState.u8DeviceType;
@@ -445,8 +451,6 @@ PRIVATE void vInitialiseApp ( void )
         ZPS_vNwkNibSetPanId (ZPS_pvAplZdoGetNwkHandle(), (uint16) RND_u32GetRand ( 1, 0xfff0 ) );
 
     }
-
-    APP_vSetMacAddr();
 
     /* If the device state has been restored from flash, re-start the stack
      * and set the application running again.

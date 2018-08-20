@@ -49,10 +49,10 @@
 /****************************************************************************/
 /***        Macro Definitions                                             ***/
 /****************************************************************************/
-#ifndef DEBUG_APP_OTA
-    #define TRACE_APP_OTA               FALSE
-#else
+#ifdef DEBUG_APP_OTA
     #define TRACE_APP_OTA               TRUE
+#else
+    #define TRACE_APP_OTA               FALSE
 #endif
 
 #define OTA_CLIENT_EP                      1

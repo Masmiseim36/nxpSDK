@@ -140,7 +140,7 @@ class BLEDevice(object):
 
         self.gap_event_connected = Event()
 
-    def cb_gap_conn_event_connected_cb(self, devName, event):
+    def cb_gap_conn_event_connected_cb(self, _, event):
         '''
         Callback executed when a smartphone connects to this device.
 
@@ -153,7 +153,7 @@ class BLEDevice(object):
         else:
             sleep(1)
 
-    def cb_gap_conn_event_disconnected_cb(self, devName, event):
+    def cb_gap_conn_event_disconnected_cb(self, _, event):
         '''
         Callback executed when a smartphone disconnects from this device.
 
@@ -162,7 +162,7 @@ class BLEDevice(object):
         print_event(self.serial_port, event)
         self.gap_event_connected.clear()
 
-    def cb_gap_conn_event_pairing_request_cb(self, devName, event):
+    def cb_gap_conn_event_pairing_request_cb(self, _, event):
         '''
         Callback executed when a pairing request is received from a device.
         @param event: GAPConnectionEventPairingRequestIndication
@@ -170,7 +170,7 @@ class BLEDevice(object):
         print_event(self.serial_port, event)
         self.gap_accept_pairing_req()
 
-    def cb_gap_conn_event_key_exchange_request_cb(self, devName, event):
+    def cb_gap_conn_event_key_exchange_request_cb(self, _, event):
         '''
         Callback executed when a key exchange request is received from a device.
         @param event: GAPConnectionEventKeyExchangeRequestIndication
@@ -178,7 +178,7 @@ class BLEDevice(object):
         print_event(self.serial_port, event)
         self.gap_send_smp_keys_req(event)
 
-    def cb_gap_conn_event_pairing_complete_cb(self, devName, event):
+    def cb_gap_conn_event_pairing_complete_cb(self, _, event):
         '''
         Callback executed when pairing complete is received from a device.
         @param event: GAPConnectionEventPairingCompleteIndication
@@ -858,9 +858,6 @@ def main(args):
     hValueBatteryLevel = dev.gattdb_find_char_value_handle_in_service(
         gBleSig_BatteryService_d, gBleSig_BatteryLevel_d)
     dev.gattdb_write_attr(hValueBatteryLevel, 1, 100)  # 100% battery level
-
-    handleCccd = dev.gattdb_find_cccd_handle_for_char_value_handle(hValueBatteryLevel)
-    dev.gap_check_notification_status(handleCccd)
 
     print 79 * '=' + '\nPlease open NXP IoT Toolbox and select Heart Rate, and then NXP_HRS device.\n' + 79 * '='
     while True:

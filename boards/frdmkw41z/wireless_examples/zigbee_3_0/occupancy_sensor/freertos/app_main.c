@@ -86,10 +86,10 @@
 /****************************************************************************/
 /***        Macro Definitions                                             ***/
 /****************************************************************************/
-#ifndef DEBUG_APP
-#define TRACE_APP   FALSE
-#else
+#ifdef DEBUG_APP
 #define TRACE_APP   TRUE
+#else
+#define TRACE_APP   FALSE
 #endif
 
 #define TIMER_QUEUE_SIZE             8
@@ -333,21 +333,21 @@ PRIVATE void KBD_Callback( uint8_t events)
     {
 #ifdef BUILD_OTA
         case gKBD_EventPB1_c:
-            /* SW5 on FRDM-KW41Z */
+            /* SW4 on FRDM-KW41Z */
             sButtonEvent.uEvent.sButton.u8Button = APP_E_BUTTONS_BUTTON_SW4;
             break;
         case gKBD_EventPB2_c:
-            /* SW4 on FRDM-KW41Z */
-            sButtonEvent.uEvent.sButton.u8Button = APP_E_BUTTONS_BUTTON_SW2;
+            /* SW3 on FRDM-KW41Z */
+            sButtonEvent.uEvent.sButton.u8Button = APP_E_BUTTONS_BUTTON_SW3;
             break;
 #else
         case gKBD_EventPB1_c:
             /* SW5 on FRDM-KW41Z */
-            sButtonEvent.uEvent.sButton.u8Button = APP_E_BUTTONS_BUTTON_SW1;
+            sButtonEvent.uEvent.sButton.u8Button = APP_E_BUTTONS_BUTTON_SW5;
             break;
         case gKBD_EventPB2_c:
             /* SW4 on FRDM-KW41Z */
-            sButtonEvent.uEvent.sButton.u8Button = APP_E_BUTTONS_BUTTON_SW2;
+            sButtonEvent.uEvent.sButton.u8Button = APP_E_BUTTONS_BUTTON_SW4;
             break;
         case gKBD_EventPB3_c:
             /* SW3 on FRDM-KW41Z */
@@ -355,7 +355,7 @@ PRIVATE void KBD_Callback( uint8_t events)
             break;
         case gKBD_EventPB4_c:
             /* SW2 on FRDM-KW41Z*/
-            sButtonEvent.uEvent.sButton.u8Button = APP_E_BUTTONS_BUTTON_SW4;
+            sButtonEvent.uEvent.sButton.u8Button = APP_E_BUTTONS_BUTTON_SW2;
             break;
         case gKBD_EventLongPB1_c:
         case gKBD_EventLongPB2_c:

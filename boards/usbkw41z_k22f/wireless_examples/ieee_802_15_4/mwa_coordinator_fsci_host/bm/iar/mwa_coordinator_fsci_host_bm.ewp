@@ -318,33 +318,33 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/usb_1.6.3/osa</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb_1.6.3/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb_1.6.3/device</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/OSAbstraction/Interface</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/OSAbstraction/Interface</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/ieee_802_15_4_5.3.5/mac/source/App</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/ieee_802_15_4_5.3.5/mac/interface</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/ieee_802_15_4_5.3.5/phy/interface</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/GPIO</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/Keyboard/Interface</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/LED/Interface</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/SerialManager/Source/SPI_Adapter</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/SerialManager/Source</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/FSCI/Interface</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/FSCI/Source</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/Common</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/MemManager/Interface</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/Messaging/Interface</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/Panic/Interface</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/RNG/Interface</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/SerialManager/Interface</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/SerialManager/Source/USB_VirtualCom</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/TimersManager/Interface</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/TimersManager/Source</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/ModuleInfo</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/FunctionLib</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/Lists</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/SecLib</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/Flash/Internal</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/MWSCoexistence/Interface</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/ieee_802_15_4_5.3.6/mac/source/App</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/ieee_802_15_4_5.3.6/mac/interface</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/ieee_802_15_4_5.3.6/phy/interface</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/GPIO</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/Keyboard/Interface</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/LED/Interface</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/SerialManager/Source/SPI_Adapter</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/SerialManager/Source</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/FSCI/Interface</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/FSCI/Source</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/Common</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/MemManager/Interface</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/Messaging/Interface</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/Panic/Interface</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/RNG/Interface</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/SerialManager/Interface</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/SerialManager/Source/USB_VirtualCom</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/TimersManager/Interface</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/TimersManager/Source</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/ModuleInfo</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/FunctionLib</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/Lists</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/SecLib</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/Flash/Internal</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/MWSCoexistence/Interface</state>
           <state>$PROJ_DIR$/../..</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MK22F51212/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MK22F51212</state>
@@ -809,7 +809,7 @@
         </option>
         <option>
           <name>IlinkAdditionalLibs</name>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/SecLib/lib_crypto_m4.a</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/SecLib/lib_crypto_m4.a</state>
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
@@ -1314,33 +1314,33 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/usb_1.6.3/osa</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb_1.6.3/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb_1.6.3/device</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/OSAbstraction/Interface</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/OSAbstraction/Interface</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/ieee_802_15_4_5.3.5/mac/source/App</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/ieee_802_15_4_5.3.5/mac/interface</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/ieee_802_15_4_5.3.5/phy/interface</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/GPIO</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/Keyboard/Interface</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/LED/Interface</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/SerialManager/Source/SPI_Adapter</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/SerialManager/Source</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/FSCI/Interface</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/FSCI/Source</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/Common</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/MemManager/Interface</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/Messaging/Interface</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/Panic/Interface</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/RNG/Interface</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/SerialManager/Interface</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/SerialManager/Source/USB_VirtualCom</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/TimersManager/Interface</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/TimersManager/Source</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/ModuleInfo</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/FunctionLib</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/Lists</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/SecLib</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/Flash/Internal</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/MWSCoexistence/Interface</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/ieee_802_15_4_5.3.6/mac/source/App</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/ieee_802_15_4_5.3.6/mac/interface</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/ieee_802_15_4_5.3.6/phy/interface</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/GPIO</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/Keyboard/Interface</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/LED/Interface</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/SerialManager/Source/SPI_Adapter</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/SerialManager/Source</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/FSCI/Interface</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/FSCI/Source</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/Common</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/MemManager/Interface</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/Messaging/Interface</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/Panic/Interface</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/RNG/Interface</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/SerialManager/Interface</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/SerialManager/Source/USB_VirtualCom</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/TimersManager/Interface</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/TimersManager/Source</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/ModuleInfo</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/FunctionLib</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/Lists</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/SecLib</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/Flash/Internal</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/MWSCoexistence/Interface</state>
           <state>$PROJ_DIR$/../..</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MK22F51212/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MK22F51212</state>
@@ -1804,7 +1804,7 @@
         </option>
         <option>
           <name>IlinkAdditionalLibs</name>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/SecLib/lib_crypto_m4.a</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/SecLib/lib_crypto_m4.a</state>
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
@@ -2023,19 +2023,19 @@
       <group>
         <name>Interface</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/OSAbstraction/Interface/fsl_os_abstraction.h</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/OSAbstraction/Interface/fsl_os_abstraction.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/OSAbstraction/Interface/fsl_os_abstraction_config.h</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/OSAbstraction/Interface/fsl_os_abstraction_config.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/OSAbstraction/Interface/fsl_os_abstraction_bm.h</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/OSAbstraction/Interface/fsl_os_abstraction_bm.h</name>
         </file>
       </group>
       <group>
         <name>Source</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/OSAbstraction/Source/fsl_os_abstraction_bm.c</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/OSAbstraction/Source/fsl_os_abstraction_bm.c</name>
         </file>
       </group>
     </group>
@@ -2044,13 +2044,13 @@
       <group>
         <name>Interface</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/GPIO/GPIO_Adapter.h</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/GPIO/GPIO_Adapter.h</name>
         </file>
       </group>
       <group>
         <name>Source</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/GPIO/GPIO_Adapter.c</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/GPIO/GPIO_Adapter.c</name>
         </file>
       </group>
     </group>
@@ -2059,13 +2059,13 @@
       <group>
         <name>Interface</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/Keyboard/Interface/Keyboard.h</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/Keyboard/Interface/Keyboard.h</name>
         </file>
       </group>
       <group>
         <name>Source</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/Keyboard/Source/Keyboard.c</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/Keyboard/Source/Keyboard.c</name>
         </file>
       </group>
     </group>
@@ -2074,13 +2074,13 @@
       <group>
         <name>Interface</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/LED/Interface/LED.h</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/LED/Interface/LED.h</name>
         </file>
       </group>
       <group>
         <name>Source</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/LED/Source/LED.c</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/LED/Source/LED.c</name>
         </file>
       </group>
     </group>
@@ -2089,7 +2089,7 @@
       <group>
         <name>Source</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/Reset/Reset.c</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/Reset/Reset.c</name>
         </file>
       </group>
     </group>
@@ -2100,69 +2100,69 @@
         <group>
           <name>SPI_Adapter</name>
           <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/SerialManager/Source/SPI_Adapter/SPI_Adapter.h</name>
+            <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/SerialManager/Source/SPI_Adapter/SPI_Adapter.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/SerialManager/Source/SPI_Adapter/SPI_Adapter.c</name>
+            <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/SerialManager/Source/SPI_Adapter/SPI_Adapter.c</name>
           </file>
         </group>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/SerialManager/Source/UART_Adapter.h</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/SerialManager/Source/UART_Adapter.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/SerialManager/Source/UART_Adapter.c</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/SerialManager/Source/UART_Adapter.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/SerialManager/Source/I2C_Adapter.h</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/SerialManager/Source/I2C_Adapter.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/SerialManager/Source/I2C_Adapter.c</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/SerialManager/Source/I2C_Adapter.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/SerialManager/Source/SerialManager.c</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/SerialManager/Source/SerialManager.c</name>
         </file>
         <group>
           <name>USB_VirtualCom</name>
           <group>
             <name>Interface</name>
             <file>
-              <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/SerialManager/Source/USB_VirtualCom/VirtualComInterface.h</name>
+              <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/SerialManager/Source/USB_VirtualCom/VirtualComInterface.h</name>
             </file>
           </group>
           <group>
             <name>Source</name>
             <file>
-              <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/SerialManager/Source/USB_VirtualCom/usb_device_cdc_acm.h</name>
+              <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/SerialManager/Source/USB_VirtualCom/usb_device_cdc_acm.h</name>
             </file>
             <file>
-              <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/SerialManager/Source/USB_VirtualCom/usb_device_cdc_acm.c</name>
+              <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/SerialManager/Source/USB_VirtualCom/usb_device_cdc_acm.c</name>
             </file>
             <file>
-              <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/SerialManager/Source/USB_VirtualCom/usb_device_ch9.h</name>
+              <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/SerialManager/Source/USB_VirtualCom/usb_device_ch9.h</name>
             </file>
             <file>
-              <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/SerialManager/Source/USB_VirtualCom/usb_device_ch9.c</name>
+              <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/SerialManager/Source/USB_VirtualCom/usb_device_ch9.c</name>
             </file>
             <file>
-              <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/SerialManager/Source/USB_VirtualCom/usb_device_class.h</name>
+              <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/SerialManager/Source/USB_VirtualCom/usb_device_class.h</name>
             </file>
             <file>
-              <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/SerialManager/Source/USB_VirtualCom/usb_device_class.c</name>
+              <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/SerialManager/Source/USB_VirtualCom/usb_device_class.c</name>
             </file>
             <file>
-              <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/SerialManager/Source/USB_VirtualCom/usb_device_config.h</name>
+              <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/SerialManager/Source/USB_VirtualCom/usb_device_config.h</name>
             </file>
             <file>
-              <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/SerialManager/Source/USB_VirtualCom/usb_device_descriptor.h</name>
+              <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/SerialManager/Source/USB_VirtualCom/usb_device_descriptor.h</name>
             </file>
             <file>
-              <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/SerialManager/Source/USB_VirtualCom/usb_device_descriptor.c</name>
+              <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/SerialManager/Source/USB_VirtualCom/usb_device_descriptor.c</name>
             </file>
             <file>
-              <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/SerialManager/Source/USB_VirtualCom/virtual_com.h</name>
+              <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/SerialManager/Source/USB_VirtualCom/virtual_com.h</name>
             </file>
             <file>
-              <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/SerialManager/Source/USB_VirtualCom/virtual_com.c</name>
+              <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/SerialManager/Source/USB_VirtualCom/virtual_com.c</name>
             </file>
           </group>
         </group>
@@ -2170,7 +2170,7 @@
       <group>
         <name>Interface</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/SerialManager/Interface/SerialManager.h</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/SerialManager/Interface/SerialManager.h</name>
         </file>
       </group>
     </group>
@@ -2179,35 +2179,35 @@
       <group>
         <name>Interface</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/FSCI/Interface/FsciInterface.h</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/FSCI/Interface/FsciInterface.h</name>
         </file>
       </group>
       <group>
         <name>Source</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/FSCI/Source/FsciCommands.c</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/FSCI/Source/FsciCommands.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/FSCI/Source/FsciCommands.h</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/FSCI/Source/FsciCommands.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/FSCI/Source/FsciCommunication.c</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/FSCI/Source/FsciCommunication.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/FSCI/Source/FsciCommunication.h</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/FSCI/Source/FsciCommunication.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/FSCI/Source/FsciLogging.c</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/FSCI/Source/FsciLogging.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/FSCI/Source/FsciMain.c</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/FSCI/Source/FsciMain.c</name>
         </file>
       </group>
     </group>
     <group>
       <name>Common</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/Common/EmbeddedTypes.h</name>
+        <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/Common/EmbeddedTypes.h</name>
       </file>
     </group>
     <group>
@@ -2215,13 +2215,13 @@
       <group>
         <name>Interface</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/MemManager/Interface/MemManager.h</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/MemManager/Interface/MemManager.h</name>
         </file>
       </group>
       <group>
         <name>Source</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/MemManager/Source/MemManager.c</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/MemManager/Source/MemManager.c</name>
         </file>
       </group>
     </group>
@@ -2230,13 +2230,13 @@
       <group>
         <name>Interface</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/Messaging/Interface/Messaging.h</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/Messaging/Interface/Messaging.h</name>
         </file>
       </group>
       <group>
         <name>Source</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/Messaging/Source/Messaging.c</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/Messaging/Source/Messaging.c</name>
         </file>
       </group>
     </group>
@@ -2245,13 +2245,13 @@
       <group>
         <name>Interface</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/Panic/Interface/Panic.h</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/Panic/Interface/Panic.h</name>
         </file>
       </group>
       <group>
         <name>Source</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/Panic/Source/Panic.c</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/Panic/Source/Panic.c</name>
         </file>
       </group>
     </group>
@@ -2260,13 +2260,13 @@
       <group>
         <name>Interface</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/RNG/Interface/RNG_Interface.h</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/RNG/Interface/RNG_Interface.h</name>
         </file>
       </group>
       <group>
         <name>Source</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/RNG/Source/RNG.c</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/RNG/Source/RNG.c</name>
         </file>
       </group>
     </group>
@@ -2275,59 +2275,59 @@
       <group>
         <name>Interface</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/TimersManager/Interface/TimersManager.h</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/TimersManager/Interface/TimersManager.h</name>
         </file>
       </group>
       <group>
         <name>Source</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/TimersManager/Source/TimersManager.c</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/TimersManager/Source/TimersManager.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/TimersManager/Source/TimersManagerInternal.h</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/TimersManager/Source/TimersManagerInternal.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/TimersManager/Source/TMR_Adapter.h</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/TimersManager/Source/TMR_Adapter.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/TimersManager/Source/TMR_Adapter.c</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/TimersManager/Source/TMR_Adapter.c</name>
         </file>
       </group>
     </group>
     <group>
       <name>ModuleInfo</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/ModuleInfo/ModuleInfo.h</name>
+        <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/ModuleInfo/ModuleInfo.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/ModuleInfo/ModuleInfo.c</name>
+        <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/ModuleInfo/ModuleInfo.c</name>
       </file>
     </group>
     <group>
       <name>FunctionLib</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/FunctionLib/FunctionLib.c</name>
+        <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/FunctionLib/FunctionLib.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/FunctionLib/FunctionLib.h</name>
+        <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/FunctionLib/FunctionLib.h</name>
       </file>
     </group>
     <group>
       <name>Lists</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/Lists/GenericList.c</name>
+        <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/Lists/GenericList.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/Lists/GenericList.h</name>
+        <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/Lists/GenericList.h</name>
       </file>
     </group>
     <group>
       <name>SecLib</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/SecLib/SecLib.h</name>
+        <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/SecLib/SecLib.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/SecLib/SecLib.c</name>
+        <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/SecLib/SecLib.c</name>
       </file>
     </group>
     <group>
@@ -2335,10 +2335,10 @@
       <group>
         <name>Internal</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/Flash/Internal/Flash_Adapter.h</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/Flash/Internal/Flash_Adapter.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/Flash/Internal/Flash_Adapter.c</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/Flash/Internal/Flash_Adapter.c</name>
         </file>
       </group>
     </group>
@@ -2347,13 +2347,13 @@
       <group>
         <name>Interface</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/MWSCoexistence/Interface/MWS.h</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/MWSCoexistence/Interface/MWS.h</name>
         </file>
       </group>
       <group>
         <name>Source</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.5/MWSCoexistence/Source/MWS.c</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.6/MWSCoexistence/Source/MWS.c</name>
         </file>
       </group>
     </group>
@@ -2402,22 +2402,22 @@
     <group>
       <name>App</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/wireless/ieee_802_15_4_5.3.5/mac/source/App/FsciAspCommands.h</name>
+        <name>$PROJ_DIR$/../../../../../../../middleware/wireless/ieee_802_15_4_5.3.6/mac/source/App/FsciAspCommands.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/wireless/ieee_802_15_4_5.3.5/mac/source/App/FsciAspCommands.c</name>
+        <name>$PROJ_DIR$/../../../../../../../middleware/wireless/ieee_802_15_4_5.3.6/mac/source/App/FsciAspCommands.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/wireless/ieee_802_15_4_5.3.5/mac/source/App/FsciMacCommands.h</name>
+        <name>$PROJ_DIR$/../../../../../../../middleware/wireless/ieee_802_15_4_5.3.6/mac/source/App/FsciMacCommands.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/wireless/ieee_802_15_4_5.3.5/mac/source/App/FsciMacCommands.c</name>
+        <name>$PROJ_DIR$/../../../../../../../middleware/wireless/ieee_802_15_4_5.3.6/mac/source/App/FsciMacCommands.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/wireless/ieee_802_15_4_5.3.5/mac/source/App/MacGlobals.c</name>
+        <name>$PROJ_DIR$/../../../../../../../middleware/wireless/ieee_802_15_4_5.3.6/mac/source/App/MacGlobals.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/wireless/ieee_802_15_4_5.3.5/mac/source/App/MacGlobals.h</name>
+        <name>$PROJ_DIR$/../../../../../../../middleware/wireless/ieee_802_15_4_5.3.6/mac/source/App/MacGlobals.h</name>
       </file>
     </group>
     <group>
@@ -2425,23 +2425,23 @@
       <group>
         <name>interface</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/ieee_802_15_4_5.3.5/mac/interface/MacFunctionalityDefines.h</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/ieee_802_15_4_5.3.6/mac/interface/MacFunctionalityDefines.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/ieee_802_15_4_5.3.5/mac/interface/MacInterface.h</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/ieee_802_15_4_5.3.6/mac/interface/MacInterface.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/ieee_802_15_4_5.3.5/mac/interface/MacMessages.h</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/ieee_802_15_4_5.3.6/mac/interface/MacMessages.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/ieee_802_15_4_5.3.5/mac/interface/MacTypes.h</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/ieee_802_15_4_5.3.6/mac/interface/MacTypes.h</name>
         </file>
       </group>
     </group>
     <group>
       <name>ASP</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/wireless/ieee_802_15_4_5.3.5/phy/interface/AspInterface.h</name>
+        <name>$PROJ_DIR$/../../../../../../../middleware/wireless/ieee_802_15_4_5.3.6/phy/interface/AspInterface.h</name>
       </file>
     </group>
   </group>

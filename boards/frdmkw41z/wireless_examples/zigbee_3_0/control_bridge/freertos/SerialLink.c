@@ -57,8 +57,9 @@
 #if gFsciIncluded_c
 #include "FsciInterface.h"
 #include "FsciCommunication.h"
-#include "FunctionLib.h"
 #endif
+#include "FunctionLib.h"
+#include "app_zb_utils.h"
 
 /****************************************************************************/
 /***        Macro Definitions                                             ***/
@@ -87,10 +88,10 @@ typedef enum
 PUBLIC uint8 u8SL_CalculateCRC(uint16 u16Type, uint16 u16Length, uint8 *pu8Data);
 #if JENNIC_DEBUG_ENABLE   
 PRIVATE void vLogInit(void);
-PRIVATE void vLogPutch(char c);
 PRIVATE void vLogFlush(void);
 PRIVATE void vLogAssert(void);
 #endif
+PRIVATE void vLogPutch(char c);
 
 #ifdef CCITT_CRC
 PRIVATE uint8 u8CCITT_CRC(uint8 u8CRCIn, uint8 u8Val);
@@ -371,7 +372,8 @@ PUBLIC void vSL_LogSend(void)
         }
         //u8CRC ^= 0;
         u8CRC ^= u8Length;
-        len += 1 + sizeof(uint16) + sizeof(uint16) + sizeof(uint8) + u8Length + 1;
+        /* Take into account the extra SL_ESC_CHARs */
+        len += 1 + sizeof(uint16) + sizeof(uint16) + sizeof(uint8) + u8Length + 1 + 4;
 #endif
         
         pTxData = MEM_BufferAlloc(len);
@@ -420,6 +422,7 @@ PUBLIC void vSL_LogSend(void)
             
             /* Send end character */
             *p++ = SL_END_CHAR;
+            len = p - pTxData;
             
             Serial_AsyncWrite (u8SerialId, pTxData, len, (pSerialCallBack_t)MEM_BufferFree, pTxData);
 #endif
@@ -427,7 +430,93 @@ PUBLIC void vSL_LogSend(void)
     }
 }
 
-
+/****************************************************************************
+ *
+ * NAME: vSL_WriteLog
+ *
+ * DESCRIPTION:
+ * Writes log message to the buffer
+ *
+ * PARAMETERS:  Name                RW  Usage
+ *
+ * RETURNS:
+ * void
+ ****************************************************************************/
+PUBLIC void vSL_WriteLog(char * fmt, ...)
+{
+    va_list ap;
+    uint16_t n;
+    uint8_t placeholders = 0;
+    char *pStr;
+    bLogging = FALSE;
+    
+    /* Get size of string and check for placeholders */
+    for (n=0; fmt[n] != '\0'; n++)
+    {
+        if (fmt[n] == '%')
+        {
+            placeholders++;
+        }
+    }
+    
+    if (placeholders == 0)
+    {
+        /* If there are no placeholders, just copy the string to the buffer */
+        for (n=0; fmt[n] != '\0'; n++)
+        {
+            vLogPutch(fmt[n]);
+        }
+    }
+    else
+    {
+        /* Allocate a memory buffer to populate placeholders. Account for placeholders length */
+        pStr = MEM_BufferAlloc(n + MAX_PARAM_LEN);
+        
+        if (pStr)
+        {
+            uint32_t i = 0;
+            int len;
+            
+            n = MEM_BufferGetSize(pStr);
+            
+            va_start(ap, fmt);
+            
+            for ( ;*fmt != '\0'; fmt++)
+            {
+                if (*fmt == '%')
+                {
+                    len = n-i; /* remaining space */
+                    fmt = pccHandlePlaceHolder (fmt + 1, &ap, &pStr[i], &len);
+                    i += len;
+                }
+                else if ((*fmt == '\n') && (i < (n - 1)))
+                {
+                    pStr[i++] = '\r';
+                    pStr[i++] = '\n';
+                }
+                else if (i < n)
+                {
+                    pStr[i++] = *fmt;
+                }
+            }
+            
+            n = i;
+            
+            va_end(ap);
+            
+            /* If there are no placeholders, just copy the string to the buffer */
+            for (n=0; n < i; n++)
+            {
+                vLogPutch(pStr[n]);
+            }
+            
+            MEM_BufferFree(pStr);
+        }
+    }
+    
+    au8LogBuffer[u8LogEnd] = '\0';
+    u8LogEnd++;
+}
 /****************************************************************************
  *
  * NAME: vSL_LogFlush
@@ -514,24 +603,6 @@ PUBLIC uint8 u8SL_CalculateCRC(uint16 u16Type, uint16 u16Length, uint8 *pu8Data)
 
 #endif
 
-#if JENNIC_DEBUG_ENABLE 
-/****************************************************************************
- *
- * NAME: vLogInit
- *
- * DESCRIPTION:
- * Callback function for DBG module to initialise output
- *
- * PARAMETERS:  Name                RW  Usage
- *
- * RETURNS:
- * void
- ****************************************************************************/
-PRIVATE void vLogInit(void)
-{
-
-}
-
 /****************************************************************************
  *
  * NAME: vLogPutch
@@ -571,6 +642,23 @@ PRIVATE void vLogPutch(char c)
     bLogging = TRUE;
 }
 
+#if JENNIC_DEBUG_ENABLE 
+/****************************************************************************
+ *
+ * NAME: vLogInit
+ *
+ * DESCRIPTION:
+ * Callback function for DBG module to initialise output
+ *
+ * PARAMETERS:  Name                RW  Usage
+ *
+ * RETURNS:
+ * void
+ ****************************************************************************/
+PRIVATE void vLogInit(void)
+{
+
+}
 
 /****************************************************************************
  *

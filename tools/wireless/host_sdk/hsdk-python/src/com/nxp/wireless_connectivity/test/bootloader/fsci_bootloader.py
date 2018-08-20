@@ -114,7 +114,7 @@ def read_image(path):
     return size, contents
 
 
-def cb_push_image_cnf(devName, cnf):
+def cb_push_image_cnf(_, cnf):
     global bytes_sent, seq_no
 
     if cnf.Status == 'Success':

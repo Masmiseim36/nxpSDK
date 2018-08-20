@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.0.xsd" format_version="3.0" api_version="2.0.0" name="SDK version 2.2.0 package for FRDM-KW41Z board" brief="This is SDK version 2.2.0 manifest file. It describes the content of the SDK version 2.2.0 package for FRDM-KW41Z board and additional settings for tools that support SDK version 2.2.0" id="SDK_2.x_FRDM-KW41Z" configuration="8849c85e39055eb7bf04b9d6a08a0124">
+<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.0.xsd" format_version="3.0" api_version="2.0.0" name="SDK version 2.2.0 package for FRDM-KW41Z board" brief="This is SDK version 2.2.0 manifest file. It describes the content of the SDK version 2.2.0 package for FRDM-KW41Z board and additional settings for tools that support SDK version 2.2.0" id="SDK_2.x_FRDM-KW41Z" configuration="a035f412e6b401a870f71cc080dbf42a">
   <defines>
-    <define name="CPU_$|package|" value=""/>
     <define name="CPU_$|package|_$|core|" value=""/>
+    <define name="CPU_$|package|" value=""/>
   </defines>
   <externalDefinitions>
     <definition extID="usbkw41z"/>
@@ -848,11 +848,6 @@ The FRDM-KW41Z highly-sensitive, optimized 2.4 GHz radio features a PCB F-antenn
         <example id="frdmkw41z_wireless_examples_hybrid_ble_thread_router_wireless_uart_freertos" name="freertos" category="wireless_examples/hybrid/ble_thread_router_wireless_uart" toolchain="iar mcuxpresso">
           <external path="boards/frdmkw41z/wireless_examples/hybrid/ble_thread_router_wireless_uart/freertos" type="xml">
             <files mask="ble_thread_router_wireless_uart_freertos.xml"/>
-          </external>
-        </example>
-        <example id="frdmkw41z_wireless_examples_hybrid_ble_zigbee_control_bridge_freertos" name="freertos" category="wireless_examples/hybrid/ble_zigbee_control_bridge" toolchain="iar mcuxpresso">
-          <external path="boards/frdmkw41z/wireless_examples/hybrid/ble_zigbee_control_bridge/freertos" type="xml">
-            <files mask="ble_zigbee_control_bridge_freertos.xml"/>
           </external>
         </example>
         <example id="frdmkw41z_wireless_examples_hybrid_ble_zigbee_coordinator_freertos" name="freertos" category="wireless_examples/hybrid/ble_zigbee_coordinator" toolchain="iar mcuxpresso">
@@ -1738,10 +1733,10 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
       </source>
     </component>
     <component id="middleware.framework.generic_lists.MKW41Z4" name="generic_lists" type="middleware" brief="Common framework sources" dependency="middleware.wireless.framework.common.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/framework_5.3.5/Lists" target_path="framework/Lists" type="src">
+      <source path="middleware/wireless/framework_5.3.6/Lists" target_path="framework/Lists" type="src">
         <files mask="GenericList.c"/>
       </source>
-      <source path="middleware/wireless/framework_5.3.5/Lists" target_path="framework/Lists" type="c_include">
+      <source path="middleware/wireless/framework_5.3.6/Lists" target_path="framework/Lists" type="c_include">
         <files mask="GenericList.h"/>
       </source>
     </component>
@@ -2628,33 +2623,33 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
       </source>
     </component>
     <component id="middleware.wireless.ble_appl_main.MKW41Z4" name="ble_appl_main" type="middleware" brief="BLE Application Main Source" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/bluetooth_1.2.5/application/common" target_path="source/common" type="src">
+      <source path="middleware/wireless/bluetooth_1.2.6/application/common" target_path="source/common" type="src">
         <files mask="ApplMain.c"/>
         <files mask="ble_init.c"/>
       </source>
-      <source path="middleware/wireless/bluetooth_1.2.5/application/common" target_path="source/common" type="c_include">
+      <source path="middleware/wireless/bluetooth_1.2.6/application/common" target_path="source/common" type="c_include">
         <files mask="ApplMain.h"/>
         <files mask="ble_init.h"/>
       </source>
     </component>
     <component id="middleware.wireless.ble_controller.MKW41Z4" name="ble_controller" type="middleware" brief="BLE Controller Interace" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/bluetooth_1.2.5/controller/interface" target_path="bluetooth/controller/interface" type="c_include">
+      <source path="middleware/wireless/bluetooth_1.2.6/controller/interface" target_path="bluetooth/controller/interface" type="c_include">
         <files mask="controller_interface.h"/>
       </source>
-      <source path="middleware/wireless/bluetooth_1.2.5/application/common" target_path="source/common" type="src">
+      <source path="middleware/wireless/bluetooth_1.2.6/application/common" target_path="source/common" type="src">
         <files mask="ble_controller_task.c"/>
       </source>
-      <source path="middleware/wireless/bluetooth_1.2.5/application/common" target_path="source/common" type="c_include">
+      <source path="middleware/wireless/bluetooth_1.2.6/application/common" target_path="source/common" type="c_include">
         <files mask="ble_controller_task_config.h"/>
       </source>
     </component>
     <component id="middleware.wireless.ble_controller.libraries.MKW41Z4" name="libraries" type="middleware" brief="BLE Controller Libraries" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/bluetooth_1.2.5/controller/lib" target_path="bluetooth/controller/lib" type="lib">
+      <source path="middleware/wireless/bluetooth_1.2.6/controller/lib" target_path="bluetooth/controller/lib" type="lib">
         <files mask="lib_ble_kw41z_controller.a"/>
       </source>
     </component>
     <component id="middleware.wireless.ble_fsci.MKW41Z4" name="ble_fsci" type="middleware" brief="BLE FSCI" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/bluetooth_1.2.5/application/common/fsci_host/fsci" target_path="bluetooth/fsci" type="src">
+      <source path="middleware/wireless/bluetooth_1.2.6/application/common/fsci_host/fsci" target_path="bluetooth/fsci" type="src">
         <files mask="fsci_ble.c"/>
         <files mask="fsci_ble_gap.c"/>
         <files mask="fsci_ble_gap_types.c"/>
@@ -2666,7 +2661,7 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="fsci_ble_l2cap_types.c"/>
         <files mask="fsci_ble_types.c"/>
       </source>
-      <source path="middleware/wireless/bluetooth_1.2.5/application/common/fsci_host/fsci" target_path="bluetooth/fsci" type="c_include">
+      <source path="middleware/wireless/bluetooth_1.2.6/application/common/fsci_host/fsci" target_path="bluetooth/fsci" type="c_include">
         <files mask="fsci_ble.h"/>
         <files mask="fsci_ble_gap.h"/>
         <files mask="fsci_ble_gap_types.h"/>
@@ -2680,18 +2675,18 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
       </source>
     </component>
     <component id="middleware.wireless.ble_fsci_host_appl_main.MKW41Z4" name="ble_fsci_host_appl_main" type="middleware" brief="BLE FSCI Host Application Main Source" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/bluetooth_1.2.5/application/common" target_path="source/common" type="src">
+      <source path="middleware/wireless/bluetooth_1.2.6/application/common" target_path="source/common" type="src">
         <files mask="ApplMain.c"/>
         <files mask="ble_conn_manager.c"/>
       </source>
-      <source path="middleware/wireless/bluetooth_1.2.5/application/common" target_path="source/common" type="c_include">
+      <source path="middleware/wireless/bluetooth_1.2.6/application/common" target_path="source/common" type="c_include">
         <files mask="ApplMain.h"/>
         <files mask="ble_conn_manager.h"/>
         <files mask="ble_init.h"/>
       </source>
     </component>
     <component id="middleware.wireless.ble_fsci_host_interface_host.MKW41Z4" name="ble_fsci_host_interface_host" type="middleware" brief="BLE FSCI Host Interace" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/bluetooth_1.2.5/host/interface" target_path="bluetooth/host/interface" type="c_include">
+      <source path="middleware/wireless/bluetooth_1.2.6/host/interface" target_path="bluetooth/host/interface" type="c_include">
         <files mask="att_errors.h"/>
         <files mask="att_types.h"/>
         <files mask="ble_constants.h"/>
@@ -2713,27 +2708,27 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="l2ca_types.h"/>
         <files mask="vendor_debug_commands.h"/>
       </source>
-      <source path="middleware/wireless/bluetooth_1.2.5/host/config" target_path="bluetooth/host/config" type="src">
+      <source path="middleware/wireless/bluetooth_1.2.6/host/config" target_path="bluetooth/host/config" type="src">
         <files mask="ble_globals.c"/>
       </source>
-      <source path="middleware/wireless/bluetooth_1.2.5/host/config" target_path="bluetooth/host/config" type="c_include">
+      <source path="middleware/wireless/bluetooth_1.2.6/host/config" target_path="bluetooth/host/config" type="c_include">
         <files mask="ble_config.h"/>
       </source>
     </component>
     <component id="middleware.wireless.ble_fsci_host_source_host.MKW41Z4" name="ble_fsci_host_source_host" type="middleware" brief="BLE FSCI Host Source" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/bluetooth_1.2.5/application/common/fsci_host/host" target_path="bluetooth/host/source" type="src">
+      <source path="middleware/wireless/bluetooth_1.2.6/application/common/fsci_host/host" target_path="bluetooth/host/source" type="src">
         <files mask="host_ble.c"/>
         <files mask="host_gap.c"/>
         <files mask="host_gatt.c"/>
         <files mask="host_gatt_db.c"/>
         <files mask="host_l2cap.c"/>
       </source>
-      <source path="middleware/wireless/bluetooth_1.2.5/application/common/fsci_host/host" target_path="bluetooth/host/source" type="c_include">
+      <source path="middleware/wireless/bluetooth_1.2.6/application/common/fsci_host/host" target_path="bluetooth/host/source" type="c_include">
         <files mask="host_ble.h"/>
       </source>
     </component>
     <component id="middleware.wireless.ble_gatt_db.MKW41Z4" name="ble_gatt_db" type="middleware" brief="BLE GATT DB" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/bluetooth_1.2.5/application/common/gatt_db/macros" target_path="source/common/gatt_db/macros" type="c_include">
+      <source path="middleware/wireless/bluetooth_1.2.6/application/common/gatt_db/macros" target_path="source/common/gatt_db/macros" type="c_include">
         <files mask="gatt_alloc_x.h"/>
         <files mask="gatt_db_macros.h"/>
         <files mask="gatt_db_x_macros.h"/>
@@ -2744,43 +2739,43 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="gatt_uuid_decl_x.h"/>
         <files mask="gatt_uuid_def_x.h"/>
       </source>
-      <source path="middleware/wireless/bluetooth_1.2.5/application/common/gatt_db" target_path="source/common/gatt_db" type="src">
+      <source path="middleware/wireless/bluetooth_1.2.6/application/common/gatt_db" target_path="source/common/gatt_db" type="src">
         <files mask="gatt_database.c"/>
       </source>
-      <source path="middleware/wireless/bluetooth_1.2.5/application/common/gatt_db" target_path="source/common/gatt_db" type="c_include">
+      <source path="middleware/wireless/bluetooth_1.2.6/application/common/gatt_db" target_path="source/common/gatt_db" type="c_include">
         <files mask="gatt_db_handles.h"/>
       </source>
-      <source path="middleware/wireless/bluetooth_1.2.5/application/common" target_path="source/common" type="c_include">
+      <source path="middleware/wireless/bluetooth_1.2.6/application/common" target_path="source/common" type="c_include">
         <files mask="ieee11073.h"/>
       </source>
     </component>
     <component id="middleware.wireless.ble_gatt_db_dynamic.MKW41Z4" name="ble_gatt_db_dynamic" type="middleware" brief="BLE GATT DB Dynamic" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/bluetooth_1.2.5/application/common/gatt_db" target_path="source/common/gatt_db" type="src">
+      <source path="middleware/wireless/bluetooth_1.2.6/application/common/gatt_db" target_path="source/common/gatt_db" type="src">
         <files mask="gatt_database.c"/>
         <files mask="gatt_database_dynamic.c"/>
       </source>
-      <source path="middleware/wireless/bluetooth_1.2.5/application/common/gatt_db" target_path="source/common/gatt_db" type="c_include">
+      <source path="middleware/wireless/bluetooth_1.2.6/application/common/gatt_db" target_path="source/common/gatt_db" type="c_include">
         <files mask="gatt_database_dynamic.h"/>
       </source>
     </component>
     <component id="middleware.wireless.ble_gatt_service_discovery.MKW41Z4" name="ble_gatt_service_discovery" type="middleware" brief="BLE GATT Service Discovery" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/bluetooth_1.2.5/application/common" target_path="source/common" type="src">
+      <source path="middleware/wireless/bluetooth_1.2.6/application/common" target_path="source/common" type="src">
         <files mask="ble_service_discovery.c"/>
       </source>
-      <source path="middleware/wireless/bluetooth_1.2.5/application/common" target_path="source/common" type="c_include">
+      <source path="middleware/wireless/bluetooth_1.2.6/application/common" target_path="source/common" type="c_include">
         <files mask="ble_service_discovery.h"/>
       </source>
     </component>
     <component id="middleware.wireless.ble_hci_transport.MKW41Z4" name="ble_hci_transport" type="middleware" brief="BLE HCI Transport" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/bluetooth_1.2.5/hci_transport/interface" target_path="bluetooth/hci_transport/interface" type="c_include">
+      <source path="middleware/wireless/bluetooth_1.2.6/hci_transport/interface" target_path="bluetooth/hci_transport/interface" type="c_include">
         <files mask="hci_transport.h"/>
       </source>
-      <source path="middleware/wireless/bluetooth_1.2.5/hci_transport/source" target_path="bluetooth/hci_transport/source" type="src">
+      <source path="middleware/wireless/bluetooth_1.2.6/hci_transport/source" target_path="bluetooth/hci_transport/source" type="src">
         <files mask="hcit_serial_interface.c"/>
       </source>
     </component>
     <component id="middleware.wireless.ble_host.MKW41Z4" name="ble_host" type="middleware" brief="BLE Host Interace" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/bluetooth_1.2.5/host/interface" target_path="bluetooth/host/interface" type="c_include">
+      <source path="middleware/wireless/bluetooth_1.2.6/host/interface" target_path="bluetooth/host/interface" type="c_include">
         <files mask="att_callbacks.h"/>
         <files mask="att_errors.h"/>
         <files mask="att_interface.h"/>
@@ -2807,23 +2802,23 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="l2ca_types.h"/>
         <files mask="vendor_debug_commands.h"/>
       </source>
-      <source path="middleware/wireless/bluetooth_1.2.5/application/common" target_path="source/common" type="src">
+      <source path="middleware/wireless/bluetooth_1.2.6/application/common" target_path="source/common" type="src">
         <files mask="ble_conn_manager.c"/>
         <files mask="ble_host_tasks.c"/>
       </source>
-      <source path="middleware/wireless/bluetooth_1.2.5/application/common" target_path="source/common" type="c_include">
+      <source path="middleware/wireless/bluetooth_1.2.6/application/common" target_path="source/common" type="c_include">
         <files mask="ble_conn_manager.h"/>
         <files mask="ble_host_task_config.h"/>
       </source>
-      <source path="middleware/wireless/bluetooth_1.2.5/host/config" target_path="bluetooth/host/config" type="src">
+      <source path="middleware/wireless/bluetooth_1.2.6/host/config" target_path="bluetooth/host/config" type="src">
         <files mask="ble_globals.c"/>
       </source>
-      <source path="middleware/wireless/bluetooth_1.2.5/host/config" target_path="bluetooth/host/config" type="c_include">
+      <source path="middleware/wireless/bluetooth_1.2.6/host/config" target_path="bluetooth/host/config" type="c_include">
         <files mask="ble_config.h"/>
       </source>
     </component>
     <component id="middleware.wireless.ble_host.libraries_cm0plus.MKW41Z4" name="libraries_cm0plus" type="middleware" brief="BLE Host Libraries" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/bluetooth_1.2.5/host/lib" target_path="bluetooth/host/lib" type="lib">
+      <source path="middleware/wireless/bluetooth_1.2.6/host/lib" target_path="bluetooth/host/lib" type="lib">
         <files mask="lib_ble_4-2_host_central_cm0p.a"/>
         <files mask="lib_ble_4-2_host_cm0p.a"/>
         <files mask="lib_ble_4-2_host_fsci_cm0p.a"/>
@@ -2831,21 +2826,21 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
       </source>
     </component>
     <component id="middleware.wireless.ble_nwk_ip.MKW41Z4" name="ble_nwk_ip" type="middleware" brief="BLE Nwk IP Interace" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/nwk_ip_1.2.5/base/interface" target_path="nwk_ip/base/interface" type="c_include">
+      <source path="middleware/wireless/nwk_ip_1.2.6/base/interface" target_path="nwk_ip/base/interface" type="c_include">
         <files mask="ble_abs_types.h"/>
         <files mask="ip_if_6LoBle.h"/>
         <files mask="mac_abs_802154.h"/>
         <files mask="mac_abs_types.h"/>
       </source>
-      <source path="middleware/wireless/nwk_ip_1.2.5/base/ip_media_if" target_path="nwk_ip/base/ip_media_if" type="src">
+      <source path="middleware/wireless/nwk_ip_1.2.6/base/ip_media_if" target_path="nwk_ip/base/ip_media_if" type="src">
         <files mask="ip_if_6loble.c"/>
       </source>
-      <source path="middleware/wireless/nwk_ip_1.2.5/core/interface" target_path="nwk_ip/core/interface" type="c_include">
+      <source path="middleware/wireless/nwk_ip_1.2.6/core/interface" target_path="nwk_ip/core/interface" type="c_include">
         <files mask="network_utils.h"/>
         <files mask="sockets.h"/>
         <files mask="stack_events.h"/>
       </source>
-      <source path="middleware/wireless/nwk_ip_1.2.5/core/interface/modules" target_path="nwk_ip/core/interface/modules" type="c_include">
+      <source path="middleware/wireless/nwk_ip_1.2.6/core/interface/modules" target_path="nwk_ip/core/interface/modules" type="c_include">
         <files mask="arp.h"/>
         <files mask="coap.h"/>
         <files mask="coap_cfg.h"/>
@@ -2923,251 +2918,251 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
       </source>
     </component>
     <component id="middleware.wireless.ble_nwk_ip.libraries.MKW41Z4" name="libraries" type="middleware" brief="BLE Nwk IP Libraries" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/nwk_ip_1.2.5/core/lib/ble" target_path="bluetooth/host/lib" type="lib">
+      <source path="middleware/wireless/nwk_ip_1.2.6/core/lib/ble" target_path="bluetooth/host/lib" type="lib">
         <files mask="lib_ble_ipv6_cm0p.a"/>
       </source>
     </component>
     <component id="middleware.wireless.ble_nwk_ip_common.MKW41Z4" name="ble_nwk_ip_common" type="middleware" brief="BLE NwkIp Common" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/bluetooth_1.2.5/application/common/nwk_ip" target_path="source/common/nwk_ip" type="src">
+      <source path="middleware/wireless/bluetooth_1.2.6/application/common/nwk_ip" target_path="source/common/nwk_ip" type="src">
         <files mask="nwk_ip_globals.c"/>
         <files mask="nwk_ip_init.c"/>
         <files mask="nwk_ip_manager.c"/>
       </source>
-      <source path="middleware/wireless/bluetooth_1.2.5/application/common/nwk_ip" target_path="source/common/nwk_ip" type="c_include">
+      <source path="middleware/wireless/bluetooth_1.2.6/application/common/nwk_ip" target_path="source/common/nwk_ip" type="c_include">
         <files mask="nwk_ip_init.h"/>
         <files mask="nwk_ip_manager.h"/>
       </source>
-      <source path="middleware/wireless/bluetooth_1.2.5/application/common/nwk_ip/shell_ip" target_path="source/common/nwk_ip/shell_ip" type="src">
+      <source path="middleware/wireless/bluetooth_1.2.6/application/common/nwk_ip/shell_ip" target_path="source/common/nwk_ip/shell_ip" type="src">
         <files mask="shell_nwk_ip.c"/>
       </source>
-      <source path="middleware/wireless/bluetooth_1.2.5/application/common/nwk_ip/shell_ip" target_path="source/common/nwk_ip/shell_ip" type="c_include">
+      <source path="middleware/wireless/bluetooth_1.2.6/application/common/nwk_ip/shell_ip" target_path="source/common/nwk_ip/shell_ip" type="c_include">
         <files mask="shell_nwk_ip.h"/>
       </source>
-      <source path="middleware/wireless/bluetooth_1.2.5/application/common/nwk_ip/app_echo_udp" target_path="source/common/nwk_ip/app_echo_udp" type="src">
+      <source path="middleware/wireless/bluetooth_1.2.6/application/common/nwk_ip/app_echo_udp" target_path="source/common/nwk_ip/app_echo_udp" type="src">
         <files mask="app_echo_udp.c"/>
       </source>
-      <source path="middleware/wireless/bluetooth_1.2.5/application/common/nwk_ip/app_echo_udp" target_path="source/common/nwk_ip/app_echo_udp" type="c_include">
+      <source path="middleware/wireless/bluetooth_1.2.6/application/common/nwk_ip/app_echo_udp" target_path="source/common/nwk_ip/app_echo_udp" type="c_include">
         <files mask="app_echo_udp.h"/>
       </source>
-      <source path="middleware/wireless/bluetooth_1.2.5/application/common/nwk_ip/app_sockets" target_path="source/common/nwk_ip/app_sockets" type="src">
+      <source path="middleware/wireless/bluetooth_1.2.6/application/common/nwk_ip/app_sockets" target_path="source/common/nwk_ip/app_sockets" type="src">
         <files mask="app_sockets.c"/>
       </source>
-      <source path="middleware/wireless/bluetooth_1.2.5/application/common/nwk_ip/app_sockets" target_path="source/common/nwk_ip/app_sockets" type="c_include">
+      <source path="middleware/wireless/bluetooth_1.2.6/application/common/nwk_ip/app_sockets" target_path="source/common/nwk_ip/app_sockets" type="c_include">
         <files mask="app_sockets.h"/>
       </source>
-      <source path="middleware/wireless/bluetooth_1.2.5/application/common/nwk_ip/app_coap" target_path="source/common/nwk_ip/app_coap" type="src">
+      <source path="middleware/wireless/bluetooth_1.2.6/application/common/nwk_ip/app_coap" target_path="source/common/nwk_ip/app_coap" type="src">
         <files mask="app_coap.c"/>
       </source>
-      <source path="middleware/wireless/bluetooth_1.2.5/application/common/nwk_ip/app_coap" target_path="source/common/nwk_ip/app_coap" type="c_include">
+      <source path="middleware/wireless/bluetooth_1.2.6/application/common/nwk_ip/app_coap" target_path="source/common/nwk_ip/app_coap" type="c_include">
         <files mask="app_coap.h"/>
       </source>
     </component>
     <component id="middleware.wireless.ble_profiles.alert_notification.MKW41Z4" name="alert_notification" type="middleware" brief="BLE Profiles: Alert Notification" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/bluetooth_1.2.5/profiles/alert_notification" target_path="bluetooth/profiles/alert_notification" type="src">
+      <source path="middleware/wireless/bluetooth_1.2.6/profiles/alert_notification" target_path="bluetooth/profiles/alert_notification" type="src">
         <files mask="alert_notification_service.c"/>
       </source>
-      <source path="middleware/wireless/bluetooth_1.2.5/profiles/alert_notification" target_path="bluetooth/profiles/alert_notification" type="c_include">
+      <source path="middleware/wireless/bluetooth_1.2.6/profiles/alert_notification" target_path="bluetooth/profiles/alert_notification" type="c_include">
         <files mask="alert_notification_interface.h"/>
       </source>
     </component>
     <component id="middleware.wireless.ble_profiles.battery_service.MKW41Z4" name="battery_service" type="middleware" brief="BLE Profiles: Battery Service" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/bluetooth_1.2.5/profiles/battery" target_path="bluetooth/profiles/battery" type="src">
+      <source path="middleware/wireless/bluetooth_1.2.6/profiles/battery" target_path="bluetooth/profiles/battery" type="src">
         <files mask="battery_service.c"/>
       </source>
-      <source path="middleware/wireless/bluetooth_1.2.5/profiles/battery" target_path="bluetooth/profiles/battery" type="c_include">
+      <source path="middleware/wireless/bluetooth_1.2.6/profiles/battery" target_path="bluetooth/profiles/battery" type="c_include">
         <files mask="battery_interface.h"/>
       </source>
     </component>
     <component id="middleware.wireless.ble_profiles.blood_pressure.MKW41Z4" name="blood_pressure" type="middleware" brief="BLE Profiles: Blood Pressure" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/bluetooth_1.2.5/profiles/blood_pressure" target_path="bluetooth/profiles/blood_pressure" type="src">
+      <source path="middleware/wireless/bluetooth_1.2.6/profiles/blood_pressure" target_path="bluetooth/profiles/blood_pressure" type="src">
         <files mask="blood_pressure_service.c"/>
       </source>
-      <source path="middleware/wireless/bluetooth_1.2.5/profiles/blood_pressure" target_path="bluetooth/profiles/blood_pressure" type="c_include">
+      <source path="middleware/wireless/bluetooth_1.2.6/profiles/blood_pressure" target_path="bluetooth/profiles/blood_pressure" type="c_include">
         <files mask="blood_pressure_interface.h"/>
       </source>
     </component>
     <component id="middleware.wireless.ble_profiles.cycling_power.MKW41Z4" name="cycling_power" type="middleware" brief="BLE Profiles: Cycling Power" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/bluetooth_1.2.5/profiles/cycling_power" target_path="bluetooth/profiles/cycling_power" type="src">
+      <source path="middleware/wireless/bluetooth_1.2.6/profiles/cycling_power" target_path="bluetooth/profiles/cycling_power" type="src">
         <files mask="cycling_power_service.c"/>
       </source>
-      <source path="middleware/wireless/bluetooth_1.2.5/profiles/cycling_power" target_path="bluetooth/profiles/cycling_power" type="c_include">
+      <source path="middleware/wireless/bluetooth_1.2.6/profiles/cycling_power" target_path="bluetooth/profiles/cycling_power" type="c_include">
         <files mask="cycling_power_interface.h"/>
       </source>
     </component>
     <component id="middleware.wireless.ble_profiles.cycling_speed_cadence.MKW41Z4" name="cycling_speed_cadence" type="middleware" brief="BLE Profiles: Cycling Speed Cadence" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/bluetooth_1.2.5/profiles/cycling_speed_cadence" target_path="bluetooth/profiles/cycling_speed_cadence" type="src">
+      <source path="middleware/wireless/bluetooth_1.2.6/profiles/cycling_speed_cadence" target_path="bluetooth/profiles/cycling_speed_cadence" type="src">
         <files mask="cycling_speed_cadence_service.c"/>
       </source>
-      <source path="middleware/wireless/bluetooth_1.2.5/profiles/cycling_speed_cadence" target_path="bluetooth/profiles/cycling_speed_cadence" type="c_include">
+      <source path="middleware/wireless/bluetooth_1.2.6/profiles/cycling_speed_cadence" target_path="bluetooth/profiles/cycling_speed_cadence" type="c_include">
         <files mask="cycling_speed_cadence_interface.h"/>
       </source>
     </component>
     <component id="middleware.wireless.ble_profiles.device_info_service.MKW41Z4" name="device_info_service" type="middleware" brief="BLE Profiles: Device Info Service" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/bluetooth_1.2.5/profiles/device_info" target_path="bluetooth/profiles/device_info" type="src">
+      <source path="middleware/wireless/bluetooth_1.2.6/profiles/device_info" target_path="bluetooth/profiles/device_info" type="src">
         <files mask="device_info_service.c"/>
       </source>
-      <source path="middleware/wireless/bluetooth_1.2.5/profiles/device_info" target_path="bluetooth/profiles/device_info" type="c_include">
+      <source path="middleware/wireless/bluetooth_1.2.6/profiles/device_info" target_path="bluetooth/profiles/device_info" type="c_include">
         <files mask="device_info_interface.h"/>
       </source>
     </component>
     <component id="middleware.wireless.ble_profiles.glucose.MKW41Z4" name="glucose" type="middleware" brief="BLE Profiles: Glucose" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/bluetooth_1.2.5/profiles/glucose" target_path="bluetooth/profiles/glucose" type="src">
+      <source path="middleware/wireless/bluetooth_1.2.6/profiles/glucose" target_path="bluetooth/profiles/glucose" type="src">
         <files mask="glucose_service.c"/>
       </source>
-      <source path="middleware/wireless/bluetooth_1.2.5/profiles/glucose" target_path="bluetooth/profiles/glucose" type="c_include">
+      <source path="middleware/wireless/bluetooth_1.2.6/profiles/glucose" target_path="bluetooth/profiles/glucose" type="c_include">
         <files mask="glucose_interface.h"/>
       </source>
     </component>
     <component id="middleware.wireless.ble_profiles.health_thermometer.MKW41Z4" name="health_thermometer" type="middleware" brief="BLE Profiles: Health Thermometer" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/bluetooth_1.2.5/profiles/health_thermometer" target_path="bluetooth/profiles/health_thermometer" type="src">
+      <source path="middleware/wireless/bluetooth_1.2.6/profiles/health_thermometer" target_path="bluetooth/profiles/health_thermometer" type="src">
         <files mask="health_thermometer_service.c"/>
       </source>
-      <source path="middleware/wireless/bluetooth_1.2.5/profiles/health_thermometer" target_path="bluetooth/profiles/health_thermometer" type="c_include">
+      <source path="middleware/wireless/bluetooth_1.2.6/profiles/health_thermometer" target_path="bluetooth/profiles/health_thermometer" type="c_include">
         <files mask="health_thermometer_interface.h"/>
       </source>
     </component>
     <component id="middleware.wireless.ble_profiles.heart_rate.MKW41Z4" name="heart_rate" type="middleware" brief="BLE Profiles: Heart Rate" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/bluetooth_1.2.5/profiles/heart_rate" target_path="bluetooth/profiles/heart_rate" type="src">
+      <source path="middleware/wireless/bluetooth_1.2.6/profiles/heart_rate" target_path="bluetooth/profiles/heart_rate" type="src">
         <files mask="heart_rate_service.c"/>
       </source>
-      <source path="middleware/wireless/bluetooth_1.2.5/profiles/heart_rate" target_path="bluetooth/profiles/heart_rate" type="c_include">
+      <source path="middleware/wireless/bluetooth_1.2.6/profiles/heart_rate" target_path="bluetooth/profiles/heart_rate" type="c_include">
         <files mask="heart_rate_interface.h"/>
       </source>
     </component>
     <component id="middleware.wireless.ble_profiles.hid.MKW41Z4" name="hid" type="middleware" brief="BLE Profiles: HID" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/bluetooth_1.2.5/profiles/hid" target_path="bluetooth/profiles/hid" type="src">
+      <source path="middleware/wireless/bluetooth_1.2.6/profiles/hid" target_path="bluetooth/profiles/hid" type="src">
         <files mask="hid_service.c"/>
       </source>
-      <source path="middleware/wireless/bluetooth_1.2.5/profiles/hid" target_path="bluetooth/profiles/hid" type="c_include">
+      <source path="middleware/wireless/bluetooth_1.2.6/profiles/hid" target_path="bluetooth/profiles/hid" type="c_include">
         <files mask="hid_interface.h"/>
       </source>
     </component>
     <component id="middleware.wireless.ble_profiles.ipsp.MKW41Z4" name="ipsp" type="middleware" brief="BLE Profiles: IPSP" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/bluetooth_1.2.5/profiles/ipsp" target_path="bluetooth/profiles/ipsp" type="src">
+      <source path="middleware/wireless/bluetooth_1.2.6/profiles/ipsp" target_path="bluetooth/profiles/ipsp" type="src">
         <files mask="ips_profile.c"/>
       </source>
-      <source path="middleware/wireless/bluetooth_1.2.5/profiles/ipsp" target_path="bluetooth/profiles/ipsp" type="c_include">
+      <source path="middleware/wireless/bluetooth_1.2.6/profiles/ipsp" target_path="bluetooth/profiles/ipsp" type="c_include">
         <files mask="ipsp_interface.h"/>
       </source>
     </component>
     <component id="middleware.wireless.ble_profiles.otap.MKW41Z4" name="otap" type="middleware" brief="BLE Profiles: OTAP" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/bluetooth_1.2.5/profiles/otap" target_path="bluetooth/profiles/otap" type="src">
+      <source path="middleware/wireless/bluetooth_1.2.6/profiles/otap" target_path="bluetooth/profiles/otap" type="src">
         <files mask="otap_service.c"/>
       </source>
-      <source path="middleware/wireless/bluetooth_1.2.5/profiles/otap" target_path="bluetooth/profiles/otap" type="c_include">
+      <source path="middleware/wireless/bluetooth_1.2.6/profiles/otap" target_path="bluetooth/profiles/otap" type="c_include">
         <files mask="otap_interface.h"/>
       </source>
     </component>
     <component id="middleware.wireless.ble_profiles.proximity.MKW41Z4" name="proximity" type="middleware" brief="BLE Profiles: Proximity" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/bluetooth_1.2.5/profiles/proximity" target_path="bluetooth/profiles/proximity" type="src">
+      <source path="middleware/wireless/bluetooth_1.2.6/profiles/proximity" target_path="bluetooth/profiles/proximity" type="src">
         <files mask="immediate_alert_service.c"/>
         <files mask="link_loss_service.c"/>
         <files mask="tx_power_service.c"/>
       </source>
-      <source path="middleware/wireless/bluetooth_1.2.5/profiles/proximity" target_path="bluetooth/profiles/proximity" type="c_include">
+      <source path="middleware/wireless/bluetooth_1.2.6/profiles/proximity" target_path="bluetooth/profiles/proximity" type="c_include">
         <files mask="immediate_alert_interface.h"/>
         <files mask="link_loss_interface.h"/>
         <files mask="tx_power_interface.h"/>
       </source>
     </component>
     <component id="middleware.wireless.ble_profiles.pulse_oximeter.MKW41Z4" name="pulse_oximeter" type="middleware" brief="BLE Profiles: Pulse Oximeter" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/bluetooth_1.2.5/profiles/pulse_oximeter" target_path="bluetooth/profiles/pulse_oximeter" type="src">
+      <source path="middleware/wireless/bluetooth_1.2.6/profiles/pulse_oximeter" target_path="bluetooth/profiles/pulse_oximeter" type="src">
         <files mask="pulse_oximeter_service.c"/>
       </source>
-      <source path="middleware/wireless/bluetooth_1.2.5/profiles/pulse_oximeter" target_path="bluetooth/profiles/pulse_oximeter" type="c_include">
+      <source path="middleware/wireless/bluetooth_1.2.6/profiles/pulse_oximeter" target_path="bluetooth/profiles/pulse_oximeter" type="c_include">
         <files mask="pulse_oximeter_interface.h"/>
       </source>
     </component>
     <component id="middleware.wireless.ble_profiles.running_speed_cadence.MKW41Z4" name="running_speed_cadence" type="middleware" brief="BLE Profiles: Running Speed Cadence" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/bluetooth_1.2.5/profiles/running_speed_cadence" target_path="bluetooth/profiles/running_speed_cadence" type="src">
+      <source path="middleware/wireless/bluetooth_1.2.6/profiles/running_speed_cadence" target_path="bluetooth/profiles/running_speed_cadence" type="src">
         <files mask="running_speed_cadence_service.c"/>
       </source>
-      <source path="middleware/wireless/bluetooth_1.2.5/profiles/running_speed_cadence" target_path="bluetooth/profiles/running_speed_cadence" type="c_include">
+      <source path="middleware/wireless/bluetooth_1.2.6/profiles/running_speed_cadence" target_path="bluetooth/profiles/running_speed_cadence" type="c_include">
         <files mask="running_speed_cadence_interface.h"/>
       </source>
     </component>
     <component id="middleware.wireless.ble_profiles.temperature.MKW41Z4" name="temperature" type="middleware" brief="BLE Profiles: Temperature" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/bluetooth_1.2.5/profiles/temperature" target_path="bluetooth/profiles/temperature" type="src">
+      <source path="middleware/wireless/bluetooth_1.2.6/profiles/temperature" target_path="bluetooth/profiles/temperature" type="src">
         <files mask="temperature_service.c"/>
       </source>
-      <source path="middleware/wireless/bluetooth_1.2.5/profiles/temperature" target_path="bluetooth/profiles/temperature" type="c_include">
+      <source path="middleware/wireless/bluetooth_1.2.6/profiles/temperature" target_path="bluetooth/profiles/temperature" type="c_include">
         <files mask="temperature_interface.h"/>
       </source>
     </component>
     <component id="middleware.wireless.ble_profiles.time.MKW41Z4" name="time" type="middleware" brief="BLE Profiles: Time" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/bluetooth_1.2.5/profiles/time" target_path="bluetooth/profiles/time" type="src">
+      <source path="middleware/wireless/bluetooth_1.2.6/profiles/time" target_path="bluetooth/profiles/time" type="src">
         <files mask="current_time_service.c"/>
         <files mask="next_dst_change_service.c"/>
         <files mask="reference_time_update_service.c"/>
       </source>
-      <source path="middleware/wireless/bluetooth_1.2.5/profiles/time" target_path="bluetooth/profiles/time" type="c_include">
+      <source path="middleware/wireless/bluetooth_1.2.6/profiles/time" target_path="bluetooth/profiles/time" type="c_include">
         <files mask="current_time_interface.h"/>
         <files mask="next_dst_change_interface.h"/>
         <files mask="reference_time_update_interface.h"/>
       </source>
     </component>
     <component id="middleware.wireless.ble_profiles.wireless_power_transfer.MKW41Z4" name="wireless_power_transfer" type="middleware" brief="BLE Profiles: Wireless Power Transfer" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/bluetooth_1.2.5/profiles/wireless_power_transfer" target_path="bluetooth/profiles/wpt" type="src">
+      <source path="middleware/wireless/bluetooth_1.2.6/profiles/wireless_power_transfer" target_path="bluetooth/profiles/wpt" type="src">
         <files mask="wpt_service.c"/>
       </source>
-      <source path="middleware/wireless/bluetooth_1.2.5/profiles/wireless_power_transfer" target_path="bluetooth/profiles/wpt" type="c_include">
+      <source path="middleware/wireless/bluetooth_1.2.6/profiles/wireless_power_transfer" target_path="bluetooth/profiles/wpt" type="c_include">
         <files mask="wpt_interface.h"/>
       </source>
     </component>
     <component id="middleware.wireless.ble_profiles.wireless_uart.MKW41Z4" name="wireless_uart" type="middleware" brief="BLE Profiles: Wireless UART" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/bluetooth_1.2.5/profiles/wireless_uart" target_path="bluetooth/profiles/wireless_uart" type="src">
+      <source path="middleware/wireless/bluetooth_1.2.6/profiles/wireless_uart" target_path="bluetooth/profiles/wireless_uart" type="src">
         <files mask="wireless_uart_service.c"/>
       </source>
-      <source path="middleware/wireless/bluetooth_1.2.5/profiles/wireless_uart" target_path="bluetooth/profiles/wireless_uart" type="c_include">
+      <source path="middleware/wireless/bluetooth_1.2.6/profiles/wireless_uart" target_path="bluetooth/profiles/wireless_uart" type="c_include">
         <files mask="wireless_uart_interface.h"/>
       </source>
     </component>
     <component id="middleware.wireless.framework.coexistence.MKW41Z4" name="coexistence" type="middleware" brief="Coexistence module" dependency="middleware.wireless.framework.common.MKW41Z4 middleware.wireless.framework.gpio_adapter.MKW41Z4 middleware.wireless.framework.tmr.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/framework_5.3.5/MWSCoexistence/Interface" target_path="framework/MWSCoexistence/Interface" type="c_include">
+      <source path="middleware/wireless/framework_5.3.6/MWSCoexistence/Interface" target_path="framework/MWSCoexistence/Interface" type="c_include">
         <files mask="MWS.h"/>
       </source>
-      <source path="middleware/wireless/framework_5.3.5/MWSCoexistence/Source" target_path="framework/MWSCoexistence/Source" type="src">
+      <source path="middleware/wireless/framework_5.3.6/MWSCoexistence/Source" target_path="framework/MWSCoexistence/Source" type="src">
         <files mask="MWS.c"/>
       </source>
     </component>
     <component id="middleware.wireless.framework.common.MKW41Z4" name="common" type="middleware" brief="Common framework sources" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/framework_5.3.5/Common" target_path="framework/common" type="c_include">
+      <source path="middleware/wireless/framework_5.3.6/Common" target_path="framework/common" type="c_include">
         <files mask="EmbeddedTypes.h"/>
       </source>
     </component>
     <component id="middleware.wireless.framework.dcdc.MKW41Z4" name="dcdc" type="middleware" brief="DCDC module" dependency="middleware.wireless.framework.common.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/framework_5.3.5/DCDC/Interface" target_path="framework/DCDC/Interface" type="c_include">
+      <source path="middleware/wireless/framework_5.3.6/DCDC/Interface" target_path="framework/DCDC/Interface" type="c_include">
         <files mask="DCDC.h"/>
       </source>
-      <source path="middleware/wireless/framework_5.3.5/DCDC/Source" target_path="framework/DCDC/Source" type="src">
+      <source path="middleware/wireless/framework_5.3.6/DCDC/Source" target_path="framework/DCDC/Source" type="src">
         <files mask="DCDC.c"/>
       </source>
     </component>
     <component id="middleware.wireless.framework.dsp_common.MKW41Z4" name="dsp_common" type="middleware" brief="Common framework sources" dependency="middleware.wireless.framework.common.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/framework_5.3.5/DSP/CRC" type="src">
+      <source path="middleware/wireless/framework_5.3.6/DSP/CRC" type="src">
         <files mask="CRC.c"/>
       </source>
-      <source path="middleware/wireless/framework_5.3.5/DSP/CRC" type="c_include">
+      <source path="middleware/wireless/framework_5.3.6/DSP/CRC" type="c_include">
         <files mask="CRC.h"/>
       </source>
-      <source path="middleware/wireless/framework_5.3.5/DSP/FEC" type="lib">
+      <source path="middleware/wireless/framework_5.3.6/DSP/FEC" type="lib">
         <files mask="lib_fec_IAR_M0.a"/>
       </source>
-      <source path="middleware/wireless/framework_5.3.5/DSP/FEC" type="c_include">
+      <source path="middleware/wireless/framework_5.3.6/DSP/FEC" type="c_include">
         <files mask="fec_interface.h"/>
       </source>
-      <source path="middleware/wireless/framework_5.3.5/DSP/Scrambler" type="src">
+      <source path="middleware/wireless/framework_5.3.6/DSP/Scrambler" type="src">
         <files mask="Scrambler.c"/>
       </source>
-      <source path="middleware/wireless/framework_5.3.5/DSP/Scrambler" type="c_include">
+      <source path="middleware/wireless/framework_5.3.6/DSP/Scrambler" type="c_include">
         <files mask="Scrambler.h"/>
       </source>
     </component>
     <component id="middleware.wireless.framework.flash.external.MKW41Z4" name="external" type="middleware" brief="External Flash driver" dependency="middleware.wireless.framework.common.MKW41Z4 middleware.wireless.framework.smgr.spi_adapter.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/framework_5.3.5/Flash/External/Interface" target_path="framework/Flash/External/Interface" type="c_include">
+      <source path="middleware/wireless/framework_5.3.6/Flash/External/Interface" target_path="framework/Flash/External/Interface" type="c_include">
         <files mask="Eeprom.h"/>
       </source>
-      <source path="middleware/wireless/framework_5.3.5/Flash/External/Source" target_path="framework/Flash/External/Source" type="src">
+      <source path="middleware/wireless/framework_5.3.6/Flash/External/Source" target_path="framework/Flash/External/Source" type="src">
         <files mask="Eeprom_AT26DF081A.c"/>
         <files mask="Eeprom_AT45DB021E.c"/>
         <files mask="Eeprom_AT45DB041E.c"/>
@@ -3176,201 +3171,201 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
       </source>
     </component>
     <component id="middleware.wireless.framework.flash.internal.MKW41Z4" name="internal" type="middleware" brief="Internal Flash driver" dependency="middleware.wireless.framework.common.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/framework_5.3.5/Flash/Internal" target_path="framework/Flash/Internal" type="src">
+      <source path="middleware/wireless/framework_5.3.6/Flash/Internal" target_path="framework/Flash/Internal" type="src">
         <files mask="Flash_Adapter.c"/>
       </source>
-      <source path="middleware/wireless/framework_5.3.5/Flash/Internal" target_path="framework/Flash/Internal" type="c_include">
+      <source path="middleware/wireless/framework_5.3.6/Flash/Internal" target_path="framework/Flash/Internal" type="c_include">
         <files mask="Flash_Adapter.h"/>
       </source>
     </component>
     <component id="middleware.wireless.framework.fsci.MKW41Z4" name="fsci" type="middleware" brief="Framework Serial Communication Interface (FSCI)" dependency="middleware.wireless.framework.common.MKW41Z4 middleware.wireless.framework.smgr.MKW41Z4 middleware.wireless.framework.smgr.i2c_adapter.MKW41Z4 middleware.wireless.framework.smgr.spi_adapter.MKW41Z4 middleware.wireless.framework.smgr.uart_adapter.MKW41Z4 middleware.wireless.framework.tmr.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/framework_5.3.5/FSCI/Interface" target_path="framework/FSCI/Interface" type="c_include">
+      <source path="middleware/wireless/framework_5.3.6/FSCI/Interface" target_path="framework/FSCI/Interface" type="c_include">
         <files mask="FsciInterface.h"/>
       </source>
-      <source path="middleware/wireless/framework_5.3.5/FSCI/Source" target_path="framework/FSCI/Source" type="src">
+      <source path="middleware/wireless/framework_5.3.6/FSCI/Source" target_path="framework/FSCI/Source" type="src">
         <files mask="FsciCommands.c"/>
         <files mask="FsciCommunication.c"/>
         <files mask="FsciLogging.c"/>
         <files mask="FsciMain.c"/>
       </source>
-      <source path="middleware/wireless/framework_5.3.5/FSCI/Source" target_path="framework/FSCI/Source" type="c_include">
+      <source path="middleware/wireless/framework_5.3.6/FSCI/Source" target_path="framework/FSCI/Source" type="c_include">
         <files mask="FsciCommands.h"/>
         <files mask="FsciCommunication.h"/>
       </source>
     </component>
     <component id="middleware.wireless.framework.function_lib.MKW41Z4" name="function_lib" type="middleware" brief="Common framework sources" dependency="middleware.wireless.framework.common.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/framework_5.3.5/FunctionLib" target_path="framework/FunctionLib" type="src">
+      <source path="middleware/wireless/framework_5.3.6/FunctionLib" target_path="framework/FunctionLib" type="src">
         <files mask="FunctionLib.c"/>
       </source>
-      <source path="middleware/wireless/framework_5.3.5/FunctionLib" target_path="framework/FunctionLib" type="c_include">
+      <source path="middleware/wireless/framework_5.3.6/FunctionLib" target_path="framework/FunctionLib" type="c_include">
         <files mask="FunctionLib.h"/>
       </source>
     </component>
     <component id="middleware.wireless.framework.gpio_adapter.MKW41Z4" name="gpio_adapter" type="middleware" brief="GPIO adapter" dependency="middleware.wireless.framework.common.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/framework_5.3.5/GPIO" target_path="framework/GPIO" type="src">
+      <source path="middleware/wireless/framework_5.3.6/GPIO" target_path="framework/GPIO" type="src">
         <files mask="GPIO_Adapter.c"/>
       </source>
-      <source path="middleware/wireless/framework_5.3.5/GPIO" target_path="framework/GPIO" type="c_include">
+      <source path="middleware/wireless/framework_5.3.6/GPIO" target_path="framework/GPIO" type="c_include">
         <files mask="GPIO_Adapter.h"/>
       </source>
     </component>
     <component id="middleware.wireless.framework.keyboard.MKW41Z4" name="keyboard" type="middleware" brief="Keyboard module" dependency="middleware.wireless.framework.common.MKW41Z4 middleware.wireless.framework.gpio_adapter.MKW41Z4 middleware.wireless.framework.tmr.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/framework_5.3.5/Keyboard/Interface" target_path="framework/Keyboard/Interface" type="c_include">
+      <source path="middleware/wireless/framework_5.3.6/Keyboard/Interface" target_path="framework/Keyboard/Interface" type="c_include">
         <files mask="Keyboard.h"/>
       </source>
-      <source path="middleware/wireless/framework_5.3.5/Keyboard/Source" target_path="framework/Keyboard/Source" type="src">
+      <source path="middleware/wireless/framework_5.3.6/Keyboard/Source" target_path="framework/Keyboard/Source" type="src">
         <files mask="Keyboard.c"/>
       </source>
     </component>
     <component id="middleware.wireless.framework.led.MKW41Z4" name="led" type="middleware" brief="LED module" dependency="middleware.wireless.framework.common.MKW41Z4 middleware.wireless.framework.gpio_adapter.MKW41Z4 middleware.wireless.framework.tmr.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/framework_5.3.5/LED/Interface" target_path="framework/LED/Interface" type="c_include">
+      <source path="middleware/wireless/framework_5.3.6/LED/Interface" target_path="framework/LED/Interface" type="c_include">
         <files mask="LED.h"/>
       </source>
-      <source path="middleware/wireless/framework_5.3.5/LED/Source" target_path="framework/LED/Source" type="src">
+      <source path="middleware/wireless/framework_5.3.6/LED/Source" target_path="framework/LED/Source" type="src">
         <files mask="LED.c"/>
       </source>
     </component>
     <component id="middleware.wireless.framework.lpm_MKW41Z.MKW41Z4" name="lpm_MKW41Z" type="middleware" brief="KW41Z/KW31Z/KW21Z Low Power module" dependency="middleware.wireless.framework.common.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/framework_5.3.5/LowPower/Interface/MKW41Z" target_path="framework/LowPower/Interface/MKW41Z" type="c_include">
+      <source path="middleware/wireless/framework_5.3.6/LowPower/Interface/MKW41Z" target_path="framework/LowPower/Interface/MKW41Z" type="c_include">
         <files mask="PWR_Configuration.h"/>
         <files mask="PWR_Interface.h"/>
       </source>
-      <source path="middleware/wireless/framework_5.3.5/LowPower/Source/MKW41Z" target_path="framework/LowPower/Source/MKW41Z" type="src">
+      <source path="middleware/wireless/framework_5.3.6/LowPower/Source/MKW41Z" target_path="framework/LowPower/Source/MKW41Z" type="src">
         <files mask="PWR.c"/>
         <files mask="PWRLib.c"/>
       </source>
-      <source path="middleware/wireless/framework_5.3.5/LowPower/Source/MKW41Z" target_path="framework/LowPower/Source/MKW41Z" type="c_include">
+      <source path="middleware/wireless/framework_5.3.6/LowPower/Source/MKW41Z" target_path="framework/LowPower/Source/MKW41Z" type="c_include">
         <files mask="PWRLib.h"/>
       </source>
     </component>
     <component id="middleware.wireless.framework.lpm_ble_MKW41Z.MKW41Z4" name="lpm_ble_MKW41Z" type="middleware" brief="BLE Low Power module" dependency="middleware.wireless.framework.common.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/framework_5.3.5/LowPower/Source/MKW41Z" target_path="framework/LowPower/Source/MKW41Z" type="src">
+      <source path="middleware/wireless/framework_5.3.6/LowPower/Source/MKW41Z" target_path="framework/LowPower/Source/MKW41Z" type="src">
         <files mask="PWR_BLE.c"/>
       </source>
-      <source path="middleware/wireless/framework_5.3.5/LowPower/Source/MKW41Z" target_path="framework/LowPower/Source/MKW41Z" type="c_include">
+      <source path="middleware/wireless/framework_5.3.6/LowPower/Source/MKW41Z" target_path="framework/LowPower/Source/MKW41Z" type="c_include">
         <files mask="PWR_BLE.h"/>
       </source>
     </component>
     <component id="middleware.wireless.framework.lpm_smac_MKW41Z.MKW41Z4" name="lpm_smac_MKW41Z" type="middleware" brief="SMAC Low Power module" dependency="middleware.wireless.framework.common.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/framework_5.3.5/LowPower/Source/MKW41Z" target_path="framework/LowPower/Source/MKW41Z" type="src">
+      <source path="middleware/wireless/framework_5.3.6/LowPower/Source/MKW41Z" target_path="framework/LowPower/Source/MKW41Z" type="src">
         <files mask="PWR_Platform.c"/>
       </source>
-      <source path="middleware/wireless/framework_5.3.5/LowPower/Source/MKW41Z" target_path="framework/LowPower/Source/MKW41Z" type="c_include">
+      <source path="middleware/wireless/framework_5.3.6/LowPower/Source/MKW41Z" target_path="framework/LowPower/Source/MKW41Z" type="c_include">
         <files mask="PWR_Platform.h"/>
       </source>
     </component>
     <component id="middleware.wireless.framework.mem_manager.MKW41Z4" name="mem_manager" type="middleware" brief="Common framework sources" dependency="middleware.framework.generic_lists.MKW41Z4 middleware.wireless.framework.common.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/framework_5.3.5/MemManager/Interface" target_path="framework/MemManager/Interface" type="c_include">
+      <source path="middleware/wireless/framework_5.3.6/MemManager/Interface" target_path="framework/MemManager/Interface" type="c_include">
         <files mask="MemManager.h"/>
       </source>
-      <source path="middleware/wireless/framework_5.3.5/MemManager/Source" target_path="framework/MemManager/Source" type="src">
+      <source path="middleware/wireless/framework_5.3.6/MemManager/Source" target_path="framework/MemManager/Source" type="src">
         <files mask="MemManager.c"/>
       </source>
     </component>
     <component id="middleware.wireless.framework.messaging.MKW41Z4" name="messaging" type="middleware" brief="Messaging module" dependency="middleware.framework.generic_lists.MKW41Z4 middleware.wireless.framework.common.MKW41Z4 middleware.wireless.framework.mem_manager.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/framework_5.3.5/Messaging/Interface" target_path="framework/Messaging/Interface" type="c_include">
+      <source path="middleware/wireless/framework_5.3.6/Messaging/Interface" target_path="framework/Messaging/Interface" type="c_include">
         <files mask="Messaging.h"/>
       </source>
-      <source path="middleware/wireless/framework_5.3.5/Messaging/Source" target_path="framework/Messaging/Source" type="src">
+      <source path="middleware/wireless/framework_5.3.6/Messaging/Source" target_path="framework/Messaging/Source" type="src">
         <files mask="Messaging.c"/>
       </source>
     </component>
     <component id="middleware.wireless.framework.module_info.MKW41Z4" name="module_info" type="middleware" brief="Module Info" dependency="middleware.wireless.framework.common.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/framework_5.3.5/ModuleInfo" target_path="framework/ModuleInfo" type="src">
+      <source path="middleware/wireless/framework_5.3.6/ModuleInfo" target_path="framework/ModuleInfo" type="src">
         <files mask="ModuleInfo.c"/>
       </source>
-      <source path="middleware/wireless/framework_5.3.5/ModuleInfo" target_path="framework/ModuleInfo" type="c_include">
+      <source path="middleware/wireless/framework_5.3.6/ModuleInfo" target_path="framework/ModuleInfo" type="c_include">
         <files mask="ModuleInfo.h"/>
       </source>
     </component>
     <component id="middleware.wireless.framework.nvm.MKW41Z4" name="nvm" type="middleware" brief="Non Volatile Memory module" dependency="middleware.wireless.framework.common.MKW41Z4 middleware.wireless.framework.flash.internal.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/framework_5.3.5/NVM/Interface" target_path="framework/NVM/Interface" type="c_include">
+      <source path="middleware/wireless/framework_5.3.6/NVM/Interface" target_path="framework/NVM/Interface" type="c_include">
         <files mask="NVM_Interface.h"/>
       </source>
-      <source path="middleware/wireless/framework_5.3.5/NVM/Source" target_path="framework/NVM/Source" type="src">
+      <source path="middleware/wireless/framework_5.3.6/NVM/Source" target_path="framework/NVM/Source" type="src">
         <files mask="NV_Flash.c"/>
         <files mask="NV_FsciCommands.c"/>
       </source>
-      <source path="middleware/wireless/framework_5.3.5/NVM/Source" target_path="framework/NVM/Source" type="c_include">
+      <source path="middleware/wireless/framework_5.3.6/NVM/Source" target_path="framework/NVM/Source" type="c_include">
         <files mask="NV_Flash.h"/>
         <files mask="NV_FsciCommands.h"/>
       </source>
     </component>
     <component id="middleware.wireless.framework.osa.MKW41Z4" name="osa" type="middleware" brief="OS Abstraction module" dependency="middleware.wireless.framework.common.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/framework_5.3.5/OSAbstraction/Interface" target_path="framework/OSAbstraction/Interface" type="c_include">
+      <source path="middleware/wireless/framework_5.3.6/OSAbstraction/Interface" target_path="framework/OSAbstraction/Interface" type="c_include">
         <files mask="fsl_os_abstraction.h"/>
         <files mask="fsl_os_abstraction_config.h"/>
       </source>
     </component>
     <component id="middleware.wireless.framework.osa_bm.MKW41Z4" name="osa_bm" type="middleware" brief="OS Abstraction module" dependency="middleware.wireless.framework.common.MKW41Z4 middleware.wireless.framework.osa.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/framework_5.3.5/OSAbstraction/Interface" target_path="framework/OSAbstraction/Interface" type="c_include">
+      <source path="middleware/wireless/framework_5.3.6/OSAbstraction/Interface" target_path="framework/OSAbstraction/Interface" type="c_include">
         <files mask="fsl_os_abstraction.h"/>
         <files mask="fsl_os_abstraction_bm.h"/>
         <files mask="fsl_os_abstraction_config.h"/>
       </source>
-      <source path="middleware/wireless/framework_5.3.5/OSAbstraction/Source" target_path="framework/OSAbstraction/Source" type="src">
+      <source path="middleware/wireless/framework_5.3.6/OSAbstraction/Source" target_path="framework/OSAbstraction/Source" type="src">
         <files mask="fsl_os_abstraction_bm.c"/>
       </source>
     </component>
     <component id="middleware.wireless.framework.osa_freertos.MKW41Z4" name="osa_freertos" type="middleware" brief="OS Abstraction module" dependency="middleware.wireless.framework.common.MKW41Z4 middleware.wireless.framework.osa.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/framework_5.3.5/OSAbstraction/Interface" target_path="framework/OSAbstraction/Interface" type="c_include">
+      <source path="middleware/wireless/framework_5.3.6/OSAbstraction/Interface" target_path="framework/OSAbstraction/Interface" type="c_include">
         <files mask="fsl_os_abstraction.h"/>
         <files mask="fsl_os_abstraction_config.h"/>
         <files mask="fsl_os_abstraction_free_rtos.h"/>
       </source>
-      <source path="middleware/wireless/framework_5.3.5/OSAbstraction/Source" target_path="framework/OSAbstraction/Source" type="src">
+      <source path="middleware/wireless/framework_5.3.6/OSAbstraction/Source" target_path="framework/OSAbstraction/Source" type="src">
         <files mask="fsl_os_abstraction_free_rtos.c"/>
       </source>
     </component>
     <component id="middleware.wireless.framework.ota.MKW41Z4" name="ota" type="middleware" brief="Over-the-air upgrade support module" dependency="middleware.wireless.framework.common.MKW41Z4 middleware.wireless.framework.flash.external.MKW41Z4 middleware.wireless.framework.smgr.spi_adapter.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/framework_5.3.5/OtaSupport/Interface" target_path="framework/OtaSupport/Interface" type="c_include">
+      <source path="middleware/wireless/framework_5.3.6/OtaSupport/Interface" target_path="framework/OtaSupport/Interface" type="c_include">
         <files mask="OtaSupport.h"/>
       </source>
-      <source path="middleware/wireless/framework_5.3.5/OtaSupport/Source" target_path="framework/OtaSupport/Source" type="src">
+      <source path="middleware/wireless/framework_5.3.6/OtaSupport/Source" target_path="framework/OtaSupport/Source" type="src">
         <files mask="OtaSupport.c"/>
       </source>
     </component>
     <component id="middleware.wireless.framework.panic.MKW41Z4" name="panic" type="middleware" brief="Panic module" dependency="middleware.wireless.framework.common.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/framework_5.3.5/Panic/Interface" target_path="framework/Panic/Interface" type="c_include">
+      <source path="middleware/wireless/framework_5.3.6/Panic/Interface" target_path="framework/Panic/Interface" type="c_include">
         <files mask="Panic.h"/>
       </source>
-      <source path="middleware/wireless/framework_5.3.5/Panic/Source" target_path="framework/Panic/Source" type="src">
+      <source path="middleware/wireless/framework_5.3.6/Panic/Source" target_path="framework/Panic/Source" type="src">
         <files mask="Panic.c"/>
       </source>
     </component>
     <component id="middleware.wireless.framework.reset.MKW41Z4" name="reset" type="middleware" brief="Reset module" dependency="middleware.wireless.framework.common.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/framework_5.3.5/Reset" target_path="framework/Reset" type="src">
+      <source path="middleware/wireless/framework_5.3.6/Reset" target_path="framework/Reset" type="src">
         <files mask="Reset.c"/>
       </source>
     </component>
     <component id="middleware.wireless.framework.rng.MKW41Z4" name="rng" type="middleware" brief="Random number generator module" dependency="middleware.wireless.framework.common.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/framework_5.3.5/RNG/Interface" target_path="framework/RNG/Interface" type="c_include">
+      <source path="middleware/wireless/framework_5.3.6/RNG/Interface" target_path="framework/RNG/Interface" type="c_include">
         <files mask="RNG_Interface.h"/>
       </source>
-      <source path="middleware/wireless/framework_5.3.5/RNG/Source" target_path="framework/RNG/Source" type="src">
+      <source path="middleware/wireless/framework_5.3.6/RNG/Source" target_path="framework/RNG/Source" type="src">
         <files mask="RNG.c"/>
       </source>
     </component>
     <component id="middleware.wireless.framework.sec_lib.MKW41Z4" name="sec_lib" type="middleware" brief="SecLib sources" dependency="middleware.wireless.framework.common.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/framework_5.3.5/SecLib" target_path="framework/SecLib" type="src">
+      <source path="middleware/wireless/framework_5.3.6/SecLib" target_path="framework/SecLib" type="src">
         <files mask="SecLib.c"/>
       </source>
-      <source path="middleware/wireless/framework_5.3.5/SecLib" target_path="framework/SecLib" type="c_include">
+      <source path="middleware/wireless/framework_5.3.6/SecLib" target_path="framework/SecLib" type="c_include">
         <files mask="SecLib.h"/>
       </source>
     </component>
     <component id="middleware.wireless.framework.sec_lib.libs.MKW41Z4" name="libs" type="middleware" brief="Security libraries" dependency="middleware.wireless.framework.common.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/framework_5.3.5/SecLib" target_path="framework/SecLib" type="lib">
+      <source path="middleware/wireless/framework_5.3.6/SecLib" target_path="framework/SecLib" type="lib">
         <files mask="lib_crypto_m0.a"/>
         <files mask="lib_crypto_m4.a"/>
       </source>
     </component>
     <component id="middleware.wireless.framework.shell.MKW41Z4" name="shell" type="middleware" brief="Shell" dependency="middleware.wireless.framework.common.MKW41Z4 middleware.wireless.framework.smgr.MKW41Z4 middleware.wireless.framework.smgr.i2c_adapter.MKW41Z4 middleware.wireless.framework.smgr.spi_adapter.MKW41Z4 middleware.wireless.framework.smgr.uart_adapter.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/framework_5.3.5/Shell/Interface" target_path="framework/Shell/Interface" type="c_include">
+      <source path="middleware/wireless/framework_5.3.6/Shell/Interface" target_path="framework/Shell/Interface" type="c_include">
         <files mask="shell.h"/>
         <files mask="shell_config.h"/>
       </source>
-      <source path="middleware/wireless/framework_5.3.5/Shell/Source" target_path="framework/Shell/Source" type="src">
+      <source path="middleware/wireless/framework_5.3.6/Shell/Source" target_path="framework/Shell/Source" type="src">
         <files mask="shell.c"/>
         <files mask="shell_autocomplete.c"/>
         <files mask="shell_cmdhelp.c"/>
@@ -3378,55 +3373,55 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
       </source>
     </component>
     <component id="middleware.wireless.framework.smgr.MKW41Z4" name="smgr" type="middleware" brief="Serial Manager" dependency="middleware.wireless.framework.common.MKW41Z4 middleware.wireless.framework.smgr.i2c_adapter.MKW41Z4 middleware.wireless.framework.smgr.spi_adapter.MKW41Z4 middleware.wireless.framework.smgr.uart_adapter.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/framework_5.3.5/SerialManager/Interface" target_path="framework/SerialManager/Interface" type="c_include">
+      <source path="middleware/wireless/framework_5.3.6/SerialManager/Interface" target_path="framework/SerialManager/Interface" type="c_include">
         <files mask="SerialManager.h"/>
       </source>
-      <source path="middleware/wireless/framework_5.3.5/SerialManager/Source" target_path="framework/SerialManager/Source" type="src">
+      <source path="middleware/wireless/framework_5.3.6/SerialManager/Source" target_path="framework/SerialManager/Source" type="src">
         <files mask="SerialManager.c"/>
       </source>
     </component>
     <component id="middleware.wireless.framework.smgr.i2c_adapter.MKW41Z4" name="i2c_adapter" type="middleware" brief="Serial Manager I2C Adapter" dependency="middleware.wireless.framework.common.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/framework_5.3.5/SerialManager/Source" target_path="framework/SerialManager/Source/I2C_Adapter" type="src">
+      <source path="middleware/wireless/framework_5.3.6/SerialManager/Source" target_path="framework/SerialManager/Source/I2C_Adapter" type="src">
         <files mask="I2C_Adapter.c"/>
       </source>
-      <source path="middleware/wireless/framework_5.3.5/SerialManager/Source" target_path="framework/SerialManager/Source/I2C_Adapter" type="c_include">
+      <source path="middleware/wireless/framework_5.3.6/SerialManager/Source" target_path="framework/SerialManager/Source/I2C_Adapter" type="c_include">
         <files mask="I2C_Adapter.h"/>
       </source>
     </component>
     <component id="middleware.wireless.framework.smgr.rndis_fsci.MKW41Z4" name="rndis_fsci" type="middleware" brief="Serial Manager rndis fsci" dependency="middleware.wireless.framework.common.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/framework_5.3.5/SerialManager/Source/USB_VirtualNic" target_path="framework/SerialManager/Source/USB_VirtualNic" type="src">
+      <source path="middleware/wireless/framework_5.3.6/SerialManager/Source/USB_VirtualNic" target_path="framework/SerialManager/Source/USB_VirtualNic" type="src">
         <files mask="rndis_fsci.c"/>
       </source>
-      <source path="middleware/wireless/framework_5.3.5/SerialManager/Source/USB_VirtualNic" target_path="framework/SerialManager/Source/USB_VirtualNic" type="c_include">
+      <source path="middleware/wireless/framework_5.3.6/SerialManager/Source/USB_VirtualNic" target_path="framework/SerialManager/Source/USB_VirtualNic" type="c_include">
         <files mask="rndis.h"/>
         <files mask="rndis_fsci.h"/>
       </source>
     </component>
     <component id="middleware.wireless.framework.smgr.spi_adapter.MKW41Z4" name="spi_adapter" type="middleware" brief="Serial Manager SPI Adapter" dependency="middleware.wireless.framework.common.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/framework_5.3.5/SerialManager/Source/SPI_Adapter" target_path="framework/SerialManager/Source/SPI_Adapter" type="src">
+      <source path="middleware/wireless/framework_5.3.6/SerialManager/Source/SPI_Adapter" target_path="framework/SerialManager/Source/SPI_Adapter" type="src">
         <files mask="SPI_Adapter.c"/>
       </source>
-      <source path="middleware/wireless/framework_5.3.5/SerialManager/Source/SPI_Adapter" target_path="framework/SerialManager/Source/SPI_Adapter" type="c_include">
+      <source path="middleware/wireless/framework_5.3.6/SerialManager/Source/SPI_Adapter" target_path="framework/SerialManager/Source/SPI_Adapter" type="c_include">
         <files mask="SPI_Adapter.h"/>
       </source>
     </component>
     <component id="middleware.wireless.framework.smgr.uart_adapter.MKW41Z4" name="uart_adapter" type="middleware" brief="Serial Manager UART Adapter" dependency="middleware.wireless.framework.common.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/framework_5.3.5/SerialManager/Source" target_path="framework/SerialManager/Source/UART_Adapter" type="src">
+      <source path="middleware/wireless/framework_5.3.6/SerialManager/Source" target_path="framework/SerialManager/Source/UART_Adapter" type="src">
         <files mask="UART_Adapter.c"/>
       </source>
-      <source path="middleware/wireless/framework_5.3.5/SerialManager/Source" target_path="framework/SerialManager/Source/UART_Adapter" type="c_include">
+      <source path="middleware/wireless/framework_5.3.6/SerialManager/Source" target_path="framework/SerialManager/Source/UART_Adapter" type="c_include">
         <files mask="UART_Adapter.h"/>
       </source>
     </component>
     <component id="middleware.wireless.framework.smgr.vcom.MKW41Z4" name="vcom" type="middleware" brief="Serial Manager Virtual Comm" dependency="middleware.wireless.framework.common.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/framework_5.3.5/SerialManager/Source/USB_VirtualCom" target_path="framework/SerialManager/Source/USB_VirtualCom" type="src">
+      <source path="middleware/wireless/framework_5.3.6/SerialManager/Source/USB_VirtualCom" target_path="framework/SerialManager/Source/USB_VirtualCom" type="src">
         <files mask="usb_device_cdc_acm.c"/>
         <files mask="usb_device_ch9.c"/>
         <files mask="usb_device_class.c"/>
         <files mask="usb_device_descriptor.c"/>
         <files mask="virtual_com.c"/>
       </source>
-      <source path="middleware/wireless/framework_5.3.5/SerialManager/Source/USB_VirtualCom" target_path="framework/SerialManager/Source/USB_VirtualCom" type="c_include">
+      <source path="middleware/wireless/framework_5.3.6/SerialManager/Source/USB_VirtualCom" target_path="framework/SerialManager/Source/USB_VirtualCom" type="c_include">
         <files mask="usb_device_cdc_acm.h"/>
         <files mask="usb_device_ch9.h"/>
         <files mask="usb_device_class.h"/>
@@ -3435,15 +3430,15 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="virtual_com.h"/>
         <files mask="VirtualComInterface.h"/>
       </source>
-      <source path="middleware/wireless/framework_5.3.5/SerialManager/Source/USB_VirtualCom/INF" target_path="framework/SerialManager/Source/USB_VirtualCom/INF" type="other">
+      <source path="middleware/wireless/framework_5.3.6/SerialManager/Source/USB_VirtualCom/INF" target_path="framework/SerialManager/Source/USB_VirtualCom/INF" type="other">
         <files mask="cdc.cat"/>
       </source>
-      <source path="middleware/wireless/framework_5.3.5/SerialManager/Source/USB_VirtualCom/INF" target_path="framework/SerialManager/Source/USB_VirtualCom/INF" type="configuration">
+      <source path="middleware/wireless/framework_5.3.6/SerialManager/Source/USB_VirtualCom/INF" target_path="framework/SerialManager/Source/USB_VirtualCom/INF" type="configuration">
         <files mask="nxp_vcom.inf"/>
       </source>
     </component>
     <component id="middleware.wireless.framework.smgr.vnic.MKW41Z4" name="vnic" type="middleware" brief="Serial Manager Virtual NIC" dependency="middleware.wireless.framework.common.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/framework_5.3.5/SerialManager/Source/USB_VirtualNic" target_path="framework/SerialManager/Source/USB_VirtualNic" type="src">
+      <source path="middleware/wireless/framework_5.3.6/SerialManager/Source/USB_VirtualNic" target_path="framework/SerialManager/Source/USB_VirtualNic" type="src">
         <files mask="rndis.c"/>
         <files mask="usb_device_cdc_acm.c"/>
         <files mask="usb_device_cdc_rndis.c"/>
@@ -3452,7 +3447,7 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="usb_device_descriptor.c"/>
         <files mask="virtual_nic.c"/>
       </source>
-      <source path="middleware/wireless/framework_5.3.5/SerialManager/Source/USB_VirtualNic" target_path="framework/SerialManager/Source/USB_VirtualNic" type="c_include">
+      <source path="middleware/wireless/framework_5.3.6/SerialManager/Source/USB_VirtualNic" target_path="framework/SerialManager/Source/USB_VirtualNic" type="c_include">
         <files mask="rndis.h"/>
         <files mask="usb_device_cdc_acm.h"/>
         <files mask="usb_device_cdc_rndis.h"/>
@@ -3463,38 +3458,38 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="virtual_nic.h"/>
         <files mask="VirtualNicInterface.h"/>
       </source>
-      <source path="middleware/wireless/framework_5.3.5/SerialManager/Source/USB_VirtualNic/INF" target_path="framework/SerialManager/Source/USB_VirtualNic/INF" type="other">
+      <source path="middleware/wireless/framework_5.3.6/SerialManager/Source/USB_VirtualNic/INF" target_path="framework/SerialManager/Source/USB_VirtualNic/INF" type="other">
         <files mask="nxp_rndis.cat"/>
       </source>
-      <source path="middleware/wireless/framework_5.3.5/SerialManager/Source/USB_VirtualNic/INF" target_path="framework/SerialManager/Source/USB_VirtualNic/INF" type="configuration">
+      <source path="middleware/wireless/framework_5.3.6/SerialManager/Source/USB_VirtualNic/INF" target_path="framework/SerialManager/Source/USB_VirtualNic/INF" type="configuration">
         <files mask="nxp_rndis.inf"/>
       </source>
     </component>
     <component id="middleware.wireless.framework.tmr.MKW41Z4" name="tmr" type="middleware" brief="Timers Manager" dependency="middleware.wireless.framework.common.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/framework_5.3.5/TimersManager/Interface" target_path="framework/TimersManager/Interface" type="c_include">
+      <source path="middleware/wireless/framework_5.3.6/TimersManager/Interface" target_path="framework/TimersManager/Interface" type="c_include">
         <files mask="TimersManager.h"/>
       </source>
-      <source path="middleware/wireless/framework_5.3.5/TimersManager/Source" target_path="framework/TimersManager/Source" type="src">
+      <source path="middleware/wireless/framework_5.3.6/TimersManager/Source" target_path="framework/TimersManager/Source" type="src">
         <files mask="TimersManager.c"/>
         <files mask="TMR_Adapter.c"/>
       </source>
-      <source path="middleware/wireless/framework_5.3.5/TimersManager/Source" target_path="framework/TimersManager/Source" type="c_include">
+      <source path="middleware/wireless/framework_5.3.6/TimersManager/Source" target_path="framework/TimersManager/Source" type="c_include">
         <files mask="TimersManagerInternal.h"/>
         <files mask="TMR_Adapter.h"/>
       </source>
     </component>
     <component id="middleware.wireless.framework_init.MKW41Z4" name="framework_init" type="middleware" brief="Common framework sources" dependency="middleware.wireless.framework.common.MKW41Z4 middleware.wireless.framework.smgr.MKW41Z4 middleware.wireless.framework.smgr.i2c_adapter.MKW41Z4 middleware.wireless.framework.smgr.spi_adapter.MKW41Z4 middleware.wireless.framework.smgr.uart_adapter.MKW41Z4 middleware.wireless.framework.tmr.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/framework_5.3.5/Common" target_path="framework/common" type="src">
+      <source path="middleware/wireless/framework_5.3.6/Common" target_path="framework/common" type="src">
         <files mask="FwkInit.c"/>
       </source>
     </component>
     <component id="middleware.wireless.genfsk.MKW41Z4" name="genfsk" type="middleware" brief="Genfsk" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/genfsk_1.0.5/interface" type="c_include">
+      <source path="middleware/wireless/genfsk_1.0.6/interface" type="c_include">
         <files mask="genfsk_interface.h"/>
         <files mask="genfsk_ll.h"/>
         <files mask="genfsk_utils.h"/>
       </source>
-      <source path="middleware/wireless/genfsk_1.0.5/source" type="src">
+      <source path="middleware/wireless/genfsk_1.0.6/source" type="src">
         <files mask="genfsk_isr.c"/>
         <files mask="genfsk_ll.c"/>
         <files mask="genfsk_time.c"/>
@@ -3633,6 +3628,35 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="RawFrame.c"/>
         <files mask="utils.c"/>
       </source>
+      <source path="tools/wireless/host_sdk/hsdk-c" type="other">
+        <files mask="README.md"/>
+      </source>
+      <source path="tools/wireless/host_sdk/hsdk-c/demo" type="other">
+        <files mask="Makefile"/>
+      </source>
+      <source path="tools/wireless/host_sdk/hsdk-c/demo" type="src">
+        <files mask="HeartRateSensor.c"/>
+        <files mask="ThreadLeader.c"/>
+        <files mask="ZigBeeCoordinator.c"/>
+      </source>
+      <source path="tools/wireless/host_sdk/hsdk-c/inc" type="c_include">
+        <files mask="ble_sig_defines.h"/>
+        <files mask="cmd_ble_1.2.6.h"/>
+        <files mask="cmd_threadip_1.2.6.h"/>
+        <files mask="cmd_zigbee3_0_6.0.7.h"/>
+        <files mask="os_abstraction.h"/>
+      </source>
+      <source path="tools/wireless/host_sdk/hsdk-c/src" type="src">
+        <files mask="cmd_ble_1.2.6.c"/>
+        <files mask="cmd_threadip_1.2.6.c"/>
+        <files mask="cmd_zigbee3_0_6.0.7.c"/>
+        <files mask="evt_ble_1.2.6.c"/>
+        <files mask="evt_printer_ble_1.2.6.c"/>
+        <files mask="evt_printer_threadip_1.2.6.c"/>
+        <files mask="evt_printer_zigbee3_0_6.0.7.c"/>
+        <files mask="evt_threadip_1.2.6.c"/>
+        <files mask="evt_zigbee3_0_6.0.7.c"/>
+      </source>
       <source path="tools/wireless/host_sdk/hsdk-python" type="project">
         <files mask=".project"/>
       </source>
@@ -3765,22 +3789,22 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
       </source>
     </component>
     <component id="middleware.wireless.hybrid_appl_main.MKW41Z4" name="hybrid_appl_main" type="middleware" brief="Hybrid BLE 802.15.4 Application Main Source" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/bluetooth_1.2.5/application/common/hybrid" target_path="source/common" type="src">
+      <source path="middleware/wireless/bluetooth_1.2.6/application/common/hybrid" target_path="source/common" type="src">
         <files mask="ApplMain.c"/>
         <files mask="ble_init.c"/>
       </source>
-      <source path="middleware/wireless/bluetooth_1.2.5/application/common/hybrid" target_path="source/common" type="c_include">
+      <source path="middleware/wireless/bluetooth_1.2.6/application/common/hybrid" target_path="source/common" type="c_include">
         <files mask="ApplMain.h"/>
         <files mask="ble_init.h"/>
       </source>
     </component>
     <component id="middleware.wireless.ieee_802_15_4.asp.interface.MKW41Z4" name="interface" type="middleware" brief="802.15.4 PHY ASP interface" dependency="middleware.wireless.ieee_802_15_4.phy.interface.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/ieee_802_15_4_5.3.5/phy/interface" target_path="ieee_802.15.4/ASP" type="c_include">
+      <source path="middleware/wireless/ieee_802_15_4_5.3.6/phy/interface" target_path="ieee_802.15.4/ASP" type="c_include">
         <files mask="AspInterface.h"/>
       </source>
     </component>
     <component id="middleware.wireless.ieee_802_15_4.mac.interface.MKW41Z4" name="interface" type="middleware" brief="802.15.4 MAC interface" dependency="middleware.wireless.ieee_802_15_4.phy.interface.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/ieee_802_15_4_5.3.5/mac/interface" target_path="ieee_802.15.4/mac/interface" type="c_include">
+      <source path="middleware/wireless/ieee_802_15_4_5.3.6/mac/interface" target_path="ieee_802.15.4/mac/interface" type="c_include">
         <files mask="MacFunctionalityDefines.h"/>
         <files mask="MacInterface.h"/>
         <files mask="MacMessages.h"/>
@@ -3788,7 +3812,7 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
       </source>
     </component>
     <component id="middleware.wireless.ieee_802_15_4.mac.libraries.MKW41Z4" name="libraries" type="middleware" brief="802.15.4 MAC Libraries" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/ieee_802_15_4_5.3.5/mac/lib" target_path="ieee_802.15.4/mac/lib" type="lib">
+      <source path="middleware/wireless/ieee_802_15_4_5.3.6/mac/lib" target_path="ieee_802.15.4/mac/lib" type="lib">
         <files mask="lib802.15.4_mac_06_cm0.a"/>
         <files mask="lib802.15.4_mac_06begts_cm0.a"/>
         <files mask="lib802.15.4_mac_06rfd_cm0.a"/>
@@ -3799,19 +3823,19 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
       </source>
     </component>
     <component id="middleware.wireless.ieee_802_15_4.mac.source.MKW41Z4" name="source" type="middleware" brief="802.15.4 MAC public source files" dependency="middleware.wireless.ieee_802_15_4.mac.interface.MKW41Z4 middleware.wireless.ieee_802_15_4.phy.interface.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/ieee_802_15_4_5.3.5/mac/source/App" target_path="ieee_802.15.4/mac/source/App" type="src">
+      <source path="middleware/wireless/ieee_802_15_4_5.3.6/mac/source/App" target_path="ieee_802.15.4/mac/source/App" type="src">
         <files mask="FsciAspCommands.c"/>
         <files mask="FsciMacCommands.c"/>
         <files mask="MacGlobals.c"/>
       </source>
-      <source path="middleware/wireless/ieee_802_15_4_5.3.5/mac/source/App" target_path="ieee_802.15.4/mac/source/App" type="c_include">
+      <source path="middleware/wireless/ieee_802_15_4_5.3.6/mac/source/App" target_path="ieee_802.15.4/mac/source/App" type="c_include">
         <files mask="FsciAspCommands.h"/>
         <files mask="FsciMacCommands.h"/>
         <files mask="MacGlobals.h"/>
       </source>
     </component>
     <component id="middleware.wireless.ieee_802_15_4.phy.interface.MKW41Z4" name="interface" type="middleware" brief="802.15.4 PHY interface" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/ieee_802_15_4_5.3.5/phy/interface" target_path="ieee_802.15.4/phy/interface" type="c_include">
+      <source path="middleware/wireless/ieee_802_15_4_5.3.6/phy/interface" target_path="ieee_802.15.4/phy/interface" type="c_include">
         <files mask="AspInterface.h"/>
         <files mask="MpmInterface.h"/>
         <files mask="PhyDebug.h"/>
@@ -3821,7 +3845,7 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
       </source>
     </component>
     <component id="middleware.wireless.ieee_802_15_4.phy.source_kw41z.MKW41Z4" name="source_kw41z" type="middleware" brief="KW41Z PHY sources" dependency="middleware.wireless.framework.common.MKW41Z4 middleware.wireless.ieee_802_15_4.phy.interface.MKW41Z4 middleware.wireless.xcvr_kw41z.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/ieee_802_15_4_5.3.5/phy/source/MKW41Z" target_path="ieee_802.15.4/phy/source/MKW41Z" type="src">
+      <source path="middleware/wireless/ieee_802_15_4_5.3.6/phy/source/MKW41Z" target_path="ieee_802.15.4/phy/source/MKW41Z" type="src">
         <files mask="ASP.c"/>
         <files mask="MPM.c"/>
         <files mask="PhyISR.c"/>
@@ -3830,24 +3854,24 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="PhyStateMachine.c"/>
         <files mask="PhyTime.c"/>
       </source>
-      <source path="middleware/wireless/ieee_802_15_4_5.3.5/phy/source/MKW41Z" target_path="ieee_802.15.4/phy/source/MKW41Z" type="c_include">
+      <source path="middleware/wireless/ieee_802_15_4_5.3.6/phy/source/MKW41Z" target_path="ieee_802.15.4/phy/source/MKW41Z" type="c_include">
         <files mask="Phy.h"/>
       </source>
     </component>
     <component id="middleware.wireless.nwk_ip.app_br_common.MKW41Z4" name="app_br_common" type="middleware" brief="Nwk IP app br common" dependency="middleware.wireless.ieee_802_15_4.mac.interface.MKW41Z4 middleware.wireless.ieee_802_15_4.phy.interface.MKW41Z4 middleware.wireless.nwk_ip.interface.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/nwk_ip_1.2.5/examples/common" target_path="nwk_ip/app/common" type="src">
+      <source path="middleware/wireless/nwk_ip_1.2.6/examples/common" target_path="nwk_ip/app/common" type="src">
         <files mask="app_border_router.c"/>
         <files mask="app_ethernet.c"/>
         <files mask="app_ethernet_usb.c"/>
       </source>
-      <source path="middleware/wireless/nwk_ip_1.2.5/examples/common" target_path="nwk_ip/app/common" type="c_include">
+      <source path="middleware/wireless/nwk_ip_1.2.6/examples/common" target_path="nwk_ip/app/common" type="c_include">
         <files mask="app_border_router.h"/>
         <files mask="app_ethernet.h"/>
         <files mask="app_ethernet_usb.h"/>
       </source>
     </component>
     <component id="middleware.wireless.nwk_ip.app_common.MKW41Z4" name="app_common" type="middleware" brief="Nwk IP app common" dependency="middleware.wireless.ieee_802_15_4.mac.interface.MKW41Z4 middleware.wireless.ieee_802_15_4.phy.interface.MKW41Z4 middleware.wireless.nwk_ip.interface.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/nwk_ip_1.2.5/examples/common" target_path="nwk_ip/app/common" type="src">
+      <source path="middleware/wireless/nwk_ip_1.2.6/examples/common" target_path="nwk_ip/app/common" type="src">
         <files mask="app_coap_observe.c"/>
         <files mask="app_echo_udp.c"/>
         <files mask="app_event_monitoring.c"/>
@@ -3859,7 +3883,7 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="app_thread_callbacks.c"/>
         <files mask="app_thread_init.c"/>
       </source>
-      <source path="middleware/wireless/nwk_ip_1.2.5/examples/common" target_path="nwk_ip/app/common" type="c_include">
+      <source path="middleware/wireless/nwk_ip_1.2.6/examples/common" target_path="nwk_ip/app/common" type="c_include">
         <files mask="app_coap_observe.h"/>
         <files mask="app_echo_udp.h"/>
         <files mask="app_event_monitoring.h"/>
@@ -3871,7 +3895,7 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
       </source>
     </component>
     <component id="middleware.wireless.nwk_ip.app_config.MKW41Z4" name="app_config" type="middleware" brief="Nwk IP app config" dependency="middleware.wireless.ieee_802_15_4.mac.interface.MKW41Z4 middleware.wireless.ieee_802_15_4.phy.interface.MKW41Z4 middleware.wireless.nwk_ip.interface.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/nwk_ip_1.2.5/examples/common" target_path="nwk_ip/app/config" type="c_include">
+      <source path="middleware/wireless/nwk_ip_1.2.6/examples/common" target_path="nwk_ip/app/config" type="c_include">
         <files mask="app_config.h"/>
         <files mask="app_framework_config.h"/>
         <files mask="app_mac_config.h"/>
@@ -3880,16 +3904,16 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
       </source>
     </component>
     <component id="middleware.wireless.nwk_ip.app_ota_common.MKW41Z4" name="app_ota_common" type="middleware" brief="Nwk IP app ota common" dependency="middleware.wireless.ieee_802_15_4.mac.interface.MKW41Z4 middleware.wireless.ieee_802_15_4.phy.interface.MKW41Z4 middleware.wireless.nwk_ip.interface.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/nwk_ip_1.2.5/examples/common" target_path="nwk_ip/app/common" type="src">
+      <source path="middleware/wireless/nwk_ip_1.2.6/examples/common" target_path="nwk_ip/app/common" type="src">
         <files mask="app_ota_client.c"/>
         <files mask="app_ota_server.c"/>
       </source>
-      <source path="middleware/wireless/nwk_ip_1.2.5/examples/common" target_path="nwk_ip/app/common" type="c_include">
+      <source path="middleware/wireless/nwk_ip_1.2.6/examples/common" target_path="nwk_ip/app/common" type="c_include">
         <files mask="app_ota.h"/>
       </source>
     </component>
     <component id="middleware.wireless.nwk_ip.base.MKW41Z4" name="base" type="middleware" brief="Nwk IP base" dependency="middleware.wireless.ieee_802_15_4.mac.interface.MKW41Z4 middleware.wireless.ieee_802_15_4.phy.interface.MKW41Z4 middleware.wireless.nwk_ip.interface.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/nwk_ip_1.2.5/base/interface" target_path="nwk_ip/base/interface" type="c_include">
+      <source path="middleware/wireless/nwk_ip_1.2.6/base/interface" target_path="nwk_ip/base/interface" type="c_include">
         <files mask="debug_log.h"/>
         <files mask="http.h"/>
         <files mask="http_cfg.h"/>
@@ -3906,15 +3930,15 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="shell_ip.h"/>
         <files mask="thci.h"/>
       </source>
-      <source path="middleware/wireless/nwk_ip_1.2.5/base/ip_media_if" target_path="nwk_ip/base/ip_media_if" type="src">
+      <source path="middleware/wireless/nwk_ip_1.2.6/base/ip_media_if" target_path="nwk_ip/base/ip_media_if" type="src">
         <files mask="ip_if_6lo.c"/>
         <files mask="ip_if_enet.c"/>
         <files mask="ip_if_usbenet.c"/>
       </source>
-      <source path="middleware/wireless/nwk_ip_1.2.5/base/shell" target_path="nwk_ip/base/shell" type="src">
+      <source path="middleware/wireless/nwk_ip_1.2.6/base/shell" target_path="nwk_ip/base/shell" type="src">
         <files mask="shell_ip.c"/>
       </source>
-      <source path="middleware/wireless/nwk_ip_1.2.5/base/stack_globals" target_path="nwk_ip/base/stack_globals" type="src">
+      <source path="middleware/wireless/nwk_ip_1.2.6/base/stack_globals" target_path="nwk_ip/base/stack_globals" type="src">
         <files mask="arp_globals.c"/>
         <files mask="coap_globals.c"/>
         <files mask="dhcp_globals.c"/>
@@ -3934,13 +3958,13 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="trickle_globals.c"/>
         <files mask="udp_globals.c"/>
       </source>
-      <source path="middleware/wireless/nwk_ip_1.2.5/base/thci" target_path="nwk_ip/base/thci" type="src">
+      <source path="middleware/wireless/nwk_ip_1.2.6/base/thci" target_path="nwk_ip/base/thci" type="src">
         <files mask="thci.c"/>
       </source>
-      <source path="middleware/wireless/nwk_ip_1.2.5/base/thread_config" target_path="nwk_ip/base/thread_config" type="src">
+      <source path="middleware/wireless/nwk_ip_1.2.6/base/thread_config" target_path="nwk_ip/base/thread_config" type="src">
         <files mask="thread_config.c"/>
       </source>
-      <source path="middleware/wireless/nwk_ip_1.2.5/base/utils" target_path="nwk_ip/base/utils" type="src">
+      <source path="middleware/wireless/nwk_ip_1.2.6/base/utils" target_path="nwk_ip/base/utils" type="src">
         <files mask="debug_log.c"/>
         <files mask="mac_abs_802154.c"/>
         <files mask="mac_filtering.c"/>
@@ -3949,41 +3973,41 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
       </source>
     </component>
     <component id="middleware.wireless.nwk_ip.base_enet_driver.MKW41Z4" name="base_enet_driver" type="middleware" brief="Nwk IP base enet driver" dependency="middleware.wireless.ieee_802_15_4.mac.interface.MKW41Z4 middleware.wireless.ieee_802_15_4.phy.interface.MKW41Z4 middleware.wireless.nwk_ip.base.MKW41Z4 middleware.wireless.nwk_ip.interface.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/nwk_ip_1.2.5/base/ip_media_if" target_path="nwk_ip/base/ip_media_if" type="src">
+      <source path="middleware/wireless/nwk_ip_1.2.6/base/ip_media_if" target_path="nwk_ip/base/ip_media_if" type="src">
         <files mask="enet_driver.c"/>
       </source>
-      <source path="middleware/wireless/nwk_ip_1.2.5/base/interface" target_path="nwk_ip/base/interface" type="c_include">
+      <source path="middleware/wireless/nwk_ip_1.2.6/base/interface" target_path="nwk_ip/base/interface" type="c_include">
         <files mask="enet_driver.h"/>
       </source>
     </component>
     <component id="middleware.wireless.nwk_ip.base_serial_tun.MKW41Z4" name="base_serial_tun" type="middleware" brief="Nwk IP base serial tun" dependency="middleware.wireless.ieee_802_15_4.mac.interface.MKW41Z4 middleware.wireless.ieee_802_15_4.phy.interface.MKW41Z4 middleware.wireless.nwk_ip.base.MKW41Z4 middleware.wireless.nwk_ip.interface.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/nwk_ip_1.2.5/base/ip_media_if" target_path="nwk_ip/base/ip_media_if" type="src">
+      <source path="middleware/wireless/nwk_ip_1.2.6/base/ip_media_if" target_path="nwk_ip/base/ip_media_if" type="src">
         <files mask="ip_if_serial_tun.c"/>
         <files mask="serial_tun_driver.c"/>
       </source>
-      <source path="middleware/wireless/nwk_ip_1.2.5/base/interface" target_path="nwk_ip/base/interface" type="c_include">
+      <source path="middleware/wireless/nwk_ip_1.2.6/base/interface" target_path="nwk_ip/base/interface" type="c_include">
         <files mask="ip_if_serial_tun.h"/>
         <files mask="serial_tun_driver.h"/>
       </source>
-      <source path="middleware/wireless/nwk_ip_1.2.5/examples/common" target_path="nwk_ip/app/common" type="src">
+      <source path="middleware/wireless/nwk_ip_1.2.6/examples/common" target_path="nwk_ip/app/common" type="src">
         <files mask="app_serial_tun.c"/>
       </source>
-      <source path="middleware/wireless/nwk_ip_1.2.5/examples/common" target_path="nwk_ip/app/common" type="c_include">
+      <source path="middleware/wireless/nwk_ip_1.2.6/examples/common" target_path="nwk_ip/app/common" type="c_include">
         <files mask="app_serial_tun.h"/>
       </source>
     </component>
     <component id="middleware.wireless.nwk_ip.ble_thread_host_controlled_device.MKW41Z4" name="ble_thread_host_controlled_device" type="middleware" brief="Nwk IP ble thread host controlled device" dependency="middleware.wireless.ieee_802_15_4.mac.interface.MKW41Z4 middleware.wireless.ieee_802_15_4.phy.interface.MKW41Z4 middleware.wireless.nwk_ip.interface.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/nwk_ip_1.2.5/examples/ble_thread_host_controlled_device/config" target_path="nwk_ip/app/ble_thread_host_controlled_device/config" type="c_include">
+      <source path="middleware/wireless/nwk_ip_1.2.6/examples/ble_thread_host_controlled_device/config" target_path="nwk_ip/app/ble_thread_host_controlled_device/config" type="c_include">
         <files mask="config.h"/>
       </source>
-      <source path="middleware/wireless/nwk_ip_1.2.5/examples/ble_thread_host_controlled_device/src" target_path="nwk_ip/app/ble_thread_host_controlled_device/src" type="src">
+      <source path="middleware/wireless/nwk_ip_1.2.6/examples/ble_thread_host_controlled_device/src" target_path="nwk_ip/app/ble_thread_host_controlled_device/src" type="src">
         <files mask="app.c"/>
         <files mask="app_config.c"/>
         <files mask="ApplMain.c"/>
         <files mask="ble_init.c"/>
         <files mask="host_controlled_device_hybrid_app.c"/>
       </source>
-      <source path="middleware/wireless/nwk_ip_1.2.5/examples/ble_thread_host_controlled_device/src" target_path="nwk_ip/app/ble_thread_host_controlled_device/src" type="c_include">
+      <source path="middleware/wireless/nwk_ip_1.2.6/examples/ble_thread_host_controlled_device/src" target_path="nwk_ip/app/ble_thread_host_controlled_device/src" type="c_include">
         <files mask="app.h"/>
         <files mask="ApplMain.h"/>
         <files mask="ble_init.h"/>
@@ -3993,17 +4017,17 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
       </source>
     </component>
     <component id="middleware.wireless.nwk_ip.ble_thread_router_wireless_uart.MKW41Z4" name="ble_thread_router_wireless_uart" type="middleware" brief="Nwk IP ble thread router wireless uart" dependency="middleware.wireless.ieee_802_15_4.mac.interface.MKW41Z4 middleware.wireless.ieee_802_15_4.phy.interface.MKW41Z4 middleware.wireless.nwk_ip.interface.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/nwk_ip_1.2.5/examples/ble_thread_router_wireless_uart/config" target_path="nwk_ip/app/ble_thread_router_wireless_uart/config" type="c_include">
+      <source path="middleware/wireless/nwk_ip_1.2.6/examples/ble_thread_router_wireless_uart/config" target_path="nwk_ip/app/ble_thread_router_wireless_uart/config" type="c_include">
         <files mask="config.h"/>
       </source>
-      <source path="middleware/wireless/nwk_ip_1.2.5/examples/ble_thread_router_wireless_uart/src" target_path="nwk_ip/app/ble_thread_router_wireless_uart/src" type="src">
+      <source path="middleware/wireless/nwk_ip_1.2.6/examples/ble_thread_router_wireless_uart/src" target_path="nwk_ip/app/ble_thread_router_wireless_uart/src" type="src">
         <files mask="app.c"/>
         <files mask="app_config.c"/>
         <files mask="ApplMain.c"/>
         <files mask="ble_init.c"/>
         <files mask="thread_router_bluetooth_wireless_uart_hybrid_app.c"/>
       </source>
-      <source path="middleware/wireless/nwk_ip_1.2.5/examples/ble_thread_router_wireless_uart/src" target_path="nwk_ip/app/ble_thread_router_wireless_uart/src" type="c_include">
+      <source path="middleware/wireless/nwk_ip_1.2.6/examples/ble_thread_router_wireless_uart/src" target_path="nwk_ip/app/ble_thread_router_wireless_uart/src" type="c_include">
         <files mask="app.h"/>
         <files mask="ApplMain.h"/>
         <files mask="ble_init.h"/>
@@ -4013,74 +4037,74 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
       </source>
     </component>
     <component id="middleware.wireless.nwk_ip.border_router.MKW41Z4" name="border_router" type="middleware" brief="Nwk IP border router" dependency="middleware.wireless.ieee_802_15_4.mac.interface.MKW41Z4 middleware.wireless.ieee_802_15_4.phy.interface.MKW41Z4 middleware.wireless.nwk_ip.interface.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/nwk_ip_1.2.5/examples/border_router/config" target_path="nwk_ip/app/border_router/config" type="c_include">
+      <source path="middleware/wireless/nwk_ip_1.2.6/examples/border_router/config" target_path="nwk_ip/app/border_router/config" type="c_include">
         <files mask="config.h"/>
       </source>
-      <source path="middleware/wireless/nwk_ip_1.2.5/examples/border_router/src" target_path="nwk_ip/app/border_router/src" type="src">
+      <source path="middleware/wireless/nwk_ip_1.2.6/examples/border_router/src" target_path="nwk_ip/app/border_router/src" type="src">
         <files mask="border_router_app.c"/>
       </source>
-      <source path="middleware/wireless/nwk_ip_1.2.5/examples/border_router/src" target_path="nwk_ip/app/border_router/src" type="c_include">
+      <source path="middleware/wireless/nwk_ip_1.2.6/examples/border_router/src" target_path="nwk_ip/app/border_router/src" type="c_include">
         <files mask="border_router_app.h"/>
       </source>
     </component>
     <component id="middleware.wireless.nwk_ip.core.lib.MKW41Z4" name="lib" type="middleware" brief="Nwk IP Libraries" dependency="middleware.wireless.ieee_802_15_4.mac.interface.MKW41Z4 middleware.wireless.ieee_802_15_4.phy.interface.MKW41Z4 middleware.wireless.nwk_ip.interface.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/nwk_ip_1.2.5/core/lib/thread" target_path="nwk_ip/core/lib/thread" type="lib">
+      <source path="middleware/wireless/nwk_ip_1.2.6/core/lib/thread" target_path="nwk_ip/core/lib/thread" type="lib">
         <files mask="lib_thread_br_cm0.a"/>
         <files mask="lib_thread_cm0.a"/>
         <files mask="lib_thread_ed_cm0.a"/>
       </source>
     </component>
     <component id="middleware.wireless.nwk_ip.end_device.MKW41Z4" name="end_device" type="middleware" brief="Nwk IP end device" dependency="middleware.wireless.ieee_802_15_4.mac.interface.MKW41Z4 middleware.wireless.ieee_802_15_4.phy.interface.MKW41Z4 middleware.wireless.nwk_ip.interface.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/nwk_ip_1.2.5/examples/end_device/config" target_path="nwk_ip/app/end_device/config" type="c_include">
+      <source path="middleware/wireless/nwk_ip_1.2.6/examples/end_device/config" target_path="nwk_ip/app/end_device/config" type="c_include">
         <files mask="config.h"/>
       </source>
-      <source path="middleware/wireless/nwk_ip_1.2.5/examples/end_device/src" target_path="nwk_ip/app/end_device/src" type="src">
+      <source path="middleware/wireless/nwk_ip_1.2.6/examples/end_device/src" target_path="nwk_ip/app/end_device/src" type="src">
         <files mask="end_device_app.c"/>
       </source>
-      <source path="middleware/wireless/nwk_ip_1.2.5/examples/end_device/src" target_path="nwk_ip/app/end_device/src" type="c_include">
+      <source path="middleware/wireless/nwk_ip_1.2.6/examples/end_device/src" target_path="nwk_ip/app/end_device/src" type="c_include">
         <files mask="end_device_app.h"/>
       </source>
     </component>
     <component id="middleware.wireless.nwk_ip.end_device_ota_client.MKW41Z4" name="end_device_ota_client" type="middleware" brief="Nwk IP end device ota client" dependency="middleware.wireless.ieee_802_15_4.mac.interface.MKW41Z4 middleware.wireless.ieee_802_15_4.phy.interface.MKW41Z4 middleware.wireless.nwk_ip.interface.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/nwk_ip_1.2.5/examples/end_device_ota_client/config" target_path="nwk_ip/app/end_device_ota_client/config" type="c_include">
+      <source path="middleware/wireless/nwk_ip_1.2.6/examples/end_device_ota_client/config" target_path="nwk_ip/app/end_device_ota_client/config" type="c_include">
         <files mask="config.h"/>
       </source>
-      <source path="middleware/wireless/nwk_ip_1.2.5/examples/end_device_ota_client/src" target_path="nwk_ip/app/end_device_ota_client/src" type="src">
+      <source path="middleware/wireless/nwk_ip_1.2.6/examples/end_device_ota_client/src" target_path="nwk_ip/app/end_device_ota_client/src" type="src">
         <files mask="end_device_ota_client_app.c"/>
       </source>
-      <source path="middleware/wireless/nwk_ip_1.2.5/examples/end_device_ota_client/src" target_path="nwk_ip/app/end_device_ota_client/src" type="c_include">
+      <source path="middleware/wireless/nwk_ip_1.2.6/examples/end_device_ota_client/src" target_path="nwk_ip/app/end_device_ota_client/src" type="c_include">
         <files mask="end_device_ota_client_app.h"/>
       </source>
     </component>
     <component id="middleware.wireless.nwk_ip.hcd_ota_server.MKW41Z4" name="hcd_ota_server" type="middleware" brief="Nwk IP hcd ota server" dependency="middleware.wireless.ieee_802_15_4.mac.interface.MKW41Z4 middleware.wireless.ieee_802_15_4.phy.interface.MKW41Z4 middleware.wireless.nwk_ip.interface.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/nwk_ip_1.2.5/examples/hcd_ota_server/config" target_path="nwk_ip/app/hcd_ota_server/config" type="c_include">
+      <source path="middleware/wireless/nwk_ip_1.2.6/examples/hcd_ota_server/config" target_path="nwk_ip/app/hcd_ota_server/config" type="c_include">
         <files mask="config.h"/>
       </source>
-      <source path="middleware/wireless/nwk_ip_1.2.5/examples/hcd_ota_server/src" target_path="nwk_ip/app/hcd_ota_server/src" type="src">
+      <source path="middleware/wireless/nwk_ip_1.2.6/examples/hcd_ota_server/src" target_path="nwk_ip/app/hcd_ota_server/src" type="src">
         <files mask="hcd_ota_server_app.c"/>
       </source>
-      <source path="middleware/wireless/nwk_ip_1.2.5/examples/hcd_ota_server/src" target_path="nwk_ip/app/hcd_ota_server/src" type="c_include">
+      <source path="middleware/wireless/nwk_ip_1.2.6/examples/hcd_ota_server/src" target_path="nwk_ip/app/hcd_ota_server/src" type="c_include">
         <files mask="hcd_ota_server_app.h"/>
       </source>
     </component>
     <component id="middleware.wireless.nwk_ip.host_controlled_device.MKW41Z4" name="host_controlled_device" type="middleware" brief="Nwk IP hcd ota server" dependency="middleware.wireless.ieee_802_15_4.mac.interface.MKW41Z4 middleware.wireless.ieee_802_15_4.phy.interface.MKW41Z4 middleware.wireless.nwk_ip.interface.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/nwk_ip_1.2.5/examples/host_controlled_device/config" target_path="nwk_ip/app/host_controlled_device/config" type="c_include">
+      <source path="middleware/wireless/nwk_ip_1.2.6/examples/host_controlled_device/config" target_path="nwk_ip/app/host_controlled_device/config" type="c_include">
         <files mask="config.h"/>
       </source>
-      <source path="middleware/wireless/nwk_ip_1.2.5/examples/host_controlled_device/src" target_path="nwk_ip/app/host_controlled_device/src" type="src">
+      <source path="middleware/wireless/nwk_ip_1.2.6/examples/host_controlled_device/src" target_path="nwk_ip/app/host_controlled_device/src" type="src">
         <files mask="host_controlled_device_app.c"/>
       </source>
-      <source path="middleware/wireless/nwk_ip_1.2.5/examples/host_controlled_device/src" target_path="nwk_ip/app/host_controlled_device/src" type="c_include">
+      <source path="middleware/wireless/nwk_ip_1.2.6/examples/host_controlled_device/src" target_path="nwk_ip/app/host_controlled_device/src" type="c_include">
         <files mask="host_controlled_device_app.h"/>
       </source>
     </component>
     <component id="middleware.wireless.nwk_ip.interface.MKW41Z4" name="interface" type="middleware" brief="Nwk IP Interface" dependency="middleware.wireless.ieee_802_15_4.mac.interface.MKW41Z4 middleware.wireless.ieee_802_15_4.phy.interface.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/nwk_ip_1.2.5/core/interface" target_path="nwk_ip/core/interface" type="c_include">
+      <source path="middleware/wireless/nwk_ip_1.2.6/core/interface" target_path="nwk_ip/core/interface" type="c_include">
         <files mask="network_utils.h"/>
         <files mask="sockets.h"/>
         <files mask="stack_events.h"/>
       </source>
-      <source path="middleware/wireless/nwk_ip_1.2.5/core/interface/modules" target_path="nwk_ip/core/interface/modules" type="c_include">
+      <source path="middleware/wireless/nwk_ip_1.2.6/core/interface/modules" target_path="nwk_ip/core/interface/modules" type="c_include">
         <files mask="arp.h"/>
         <files mask="coap.h"/>
         <files mask="coap_cfg.h"/>
@@ -4157,7 +4181,7 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="udp_cfg.h"/>
         <files mask="version.h"/>
       </source>
-      <source path="middleware/wireless/nwk_ip_1.2.5/core/interface/thread" target_path="nwk_ip/core/interface/thread" type="c_include">
+      <source path="middleware/wireless/nwk_ip_1.2.6/core/interface/thread" target_path="nwk_ip/core/interface/thread" type="c_include">
         <files mask="thread_app_callbacks.h"/>
         <files mask="thread_attributes.h"/>
         <files mask="thread_cfg.h"/>
@@ -4169,7 +4193,7 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="thread_types.h"/>
         <files mask="thread_utils.h"/>
       </source>
-      <source path="middleware/wireless/nwk_ip_1.2.5/base/interface" target_path="nwk_ip/base/interface" type="c_include">
+      <source path="middleware/wireless/nwk_ip_1.2.6/base/interface" target_path="nwk_ip/base/interface" type="c_include">
         <files mask="ble_abs_types.h"/>
         <files mask="debug_log.h"/>
         <files mask="enet_driver.h"/>
@@ -4192,68 +4216,68 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
       </source>
     </component>
     <component id="middleware.wireless.nwk_ip.low_power_end_device.MKW41Z4" name="low_power_end_device" type="middleware" brief="Nwk IP low power end device" dependency="middleware.wireless.ieee_802_15_4.mac.interface.MKW41Z4 middleware.wireless.ieee_802_15_4.phy.interface.MKW41Z4 middleware.wireless.nwk_ip.interface.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/nwk_ip_1.2.5/examples/low_power_end_device/config" target_path="nwk_ip/app/low_power_end_device/config" type="c_include">
+      <source path="middleware/wireless/nwk_ip_1.2.6/examples/low_power_end_device/config" target_path="nwk_ip/app/low_power_end_device/config" type="c_include">
         <files mask="config.h"/>
       </source>
-      <source path="middleware/wireless/nwk_ip_1.2.5/examples/low_power_end_device/src" target_path="nwk_ip/app/low_power_end_device/src" type="src">
+      <source path="middleware/wireless/nwk_ip_1.2.6/examples/low_power_end_device/src" target_path="nwk_ip/app/low_power_end_device/src" type="src">
         <files mask="low_power_end_device_app.c"/>
       </source>
-      <source path="middleware/wireless/nwk_ip_1.2.5/examples/low_power_end_device/src" target_path="nwk_ip/app/low_power_end_device/src" type="c_include">
+      <source path="middleware/wireless/nwk_ip_1.2.6/examples/low_power_end_device/src" target_path="nwk_ip/app/low_power_end_device/src" type="c_include">
         <files mask="low_power_end_device_app.h"/>
       </source>
     </component>
     <component id="middleware.wireless.nwk_ip.lped_ota_client.MKW41Z4" name="lped_ota_client" type="middleware" brief="Nwk IP lped ota client" dependency="middleware.wireless.ieee_802_15_4.mac.interface.MKW41Z4 middleware.wireless.ieee_802_15_4.phy.interface.MKW41Z4 middleware.wireless.nwk_ip.interface.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/nwk_ip_1.2.5/examples/lped_ota_client/config" target_path="nwk_ip/app/lped_ota_client/config" type="c_include">
+      <source path="middleware/wireless/nwk_ip_1.2.6/examples/lped_ota_client/config" target_path="nwk_ip/app/lped_ota_client/config" type="c_include">
         <files mask="config.h"/>
       </source>
-      <source path="middleware/wireless/nwk_ip_1.2.5/examples/lped_ota_client/src" target_path="nwk_ip/app/lped_ota_client/src" type="src">
+      <source path="middleware/wireless/nwk_ip_1.2.6/examples/lped_ota_client/src" target_path="nwk_ip/app/lped_ota_client/src" type="src">
         <files mask="lped_ota_client_app.c"/>
       </source>
-      <source path="middleware/wireless/nwk_ip_1.2.5/examples/lped_ota_client/src" target_path="nwk_ip/app/lped_ota_client/src" type="c_include">
+      <source path="middleware/wireless/nwk_ip_1.2.6/examples/lped_ota_client/src" target_path="nwk_ip/app/lped_ota_client/src" type="c_include">
         <files mask="lped_ota_client_app.h"/>
       </source>
     </component>
     <component id="middleware.wireless.nwk_ip.reed_ota_client.MKW41Z4" name="reed_ota_client" type="middleware" brief="Nwk IP reed ota client" dependency="middleware.wireless.ieee_802_15_4.mac.interface.MKW41Z4 middleware.wireless.ieee_802_15_4.phy.interface.MKW41Z4 middleware.wireless.nwk_ip.interface.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/nwk_ip_1.2.5/examples/reed_ota_client/config" target_path="nwk_ip/app/reed_ota_client/config" type="c_include">
+      <source path="middleware/wireless/nwk_ip_1.2.6/examples/reed_ota_client/config" target_path="nwk_ip/app/reed_ota_client/config" type="c_include">
         <files mask="config.h"/>
       </source>
-      <source path="middleware/wireless/nwk_ip_1.2.5/examples/reed_ota_client/src" target_path="nwk_ip/app/reed_ota_client/src" type="src">
+      <source path="middleware/wireless/nwk_ip_1.2.6/examples/reed_ota_client/src" target_path="nwk_ip/app/reed_ota_client/src" type="src">
         <files mask="router_eligible_device_app_ota_client.c"/>
       </source>
-      <source path="middleware/wireless/nwk_ip_1.2.5/examples/reed_ota_client/src" target_path="nwk_ip/app/reed_ota_client/src" type="c_include">
+      <source path="middleware/wireless/nwk_ip_1.2.6/examples/reed_ota_client/src" target_path="nwk_ip/app/reed_ota_client/src" type="c_include">
         <files mask="router_eligible_device_app_ota_client.h"/>
       </source>
     </component>
     <component id="middleware.wireless.nwk_ip.router_eligible_device.MKW41Z4" name="router_eligible_device" type="middleware" brief="Nwk IP router eligible device" dependency="middleware.wireless.ieee_802_15_4.mac.interface.MKW41Z4 middleware.wireless.ieee_802_15_4.phy.interface.MKW41Z4 middleware.wireless.nwk_ip.interface.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/nwk_ip_1.2.5/examples/router_eligible_device/config" target_path="nwk_ip/app/router_eligible_device/config" type="c_include">
+      <source path="middleware/wireless/nwk_ip_1.2.6/examples/router_eligible_device/config" target_path="nwk_ip/app/router_eligible_device/config" type="c_include">
         <files mask="config.h"/>
       </source>
-      <source path="middleware/wireless/nwk_ip_1.2.5/examples/router_eligible_device/src" target_path="nwk_ip/app/router_eligible_device/src" type="src">
+      <source path="middleware/wireless/nwk_ip_1.2.6/examples/router_eligible_device/src" target_path="nwk_ip/app/router_eligible_device/src" type="src">
         <files mask="router_eligible_device_app.c"/>
       </source>
-      <source path="middleware/wireless/nwk_ip_1.2.5/examples/router_eligible_device/src" target_path="nwk_ip/app/router_eligible_device/src" type="c_include">
+      <source path="middleware/wireless/nwk_ip_1.2.6/examples/router_eligible_device/src" target_path="nwk_ip/app/router_eligible_device/src" type="c_include">
         <files mask="router_eligible_device_app.h"/>
       </source>
     </component>
     <component id="middleware.wireless.smac.MKW41Z4" name="smac" type="middleware" brief="802.15.4 SMAC" dependency="middleware.wireless.framework.common.MKW41Z4 middleware.wireless.ieee_802_15_4.phy.interface.MKW41Z4 middleware.wireless.ieee_802_15_4.phy.source_kw41z.MKW41Z4 middleware.wireless.xcvr_kw41z.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/smac_3.3.5/interface" target_path="ieee_802.15.4/smac/interface" type="c_include">
+      <source path="middleware/wireless/smac_3.3.6/interface" target_path="ieee_802.15.4/smac/interface" type="c_include">
         <files mask="SMAC_Interface.h"/>
       </source>
-      <source path="middleware/wireless/smac_3.3.5/source" target_path="ieee_802.15.4/smac/source" type="src">
+      <source path="middleware/wireless/smac_3.3.6/source" target_path="ieee_802.15.4/smac/source" type="src">
         <files mask="SMAC.c"/>
       </source>
-      <source path="middleware/wireless/smac_3.3.5/source" target_path="ieee_802.15.4/smac/source" type="c_include">
+      <source path="middleware/wireless/smac_3.3.6/source" target_path="ieee_802.15.4/smac/source" type="c_include">
         <files mask="SMAC.h"/>
       </source>
-      <source path="middleware/wireless/smac_3.3.5/common" target_path="ieee_802.15.4/smac/common" type="c_include">
+      <source path="middleware/wireless/smac_3.3.6/common" target_path="ieee_802.15.4/smac/common" type="c_include">
         <files mask="SMAC_Channels.h"/>
         <files mask="SMAC_Config.h"/>
       </source>
     </component>
     <component id="middleware.wireless.tools.ble.MKW41Z4" name="ble" type="middleware" brief="Binaries and other tools for BLE" devices="MKW41Z512xxx4" version="1.0.0">
       <source path="tools/wireless/xml_fsci" type="xml">
-        <files mask="BLE_1.2.5.xml"/>
-        <files mask="BLE_HCI_1.2.5.xml"/>
+        <files mask="BLE_1.2.6.xml"/>
+        <files mask="BLE_HCI_1.2.6.xml"/>
       </source>
     </component>
     <component id="middleware.wireless.tools.framework.MKW41Z4" name="framework" type="middleware" brief="Binaries and other tools for Framework" devices="MKW41Z512xxx4" version="1.0.0">
@@ -4275,8 +4299,8 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="sniffer_usbkw41z_kw41z.bin"/>
       </source>
       <source path="tools/wireless/xml_fsci" type="xml">
-        <files mask="MAC2003_5.3.5.xml"/>
-        <files mask="MAC2006_5.3.5.xml"/>
+        <files mask="MAC2003_5.3.6.xml"/>
+        <files mask="MAC2006_5.3.6.xml"/>
       </source>
       <source path="tools/wireless/MyStarNetwork Demo" type="doc">
         <files mask="MyStarNetwork PC Application User's Guide.pdf"/>
@@ -4287,7 +4311,7 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
     </component>
     <component id="middleware.wireless.tools.thread.MKW41Z4" name="thread" type="middleware" brief="Binaries and other tools for Thread" devices="MKW41Z512xxx4" version="1.0.0">
       <source path="tools/wireless/xml_fsci" type="xml">
-        <files mask="ThreadIP_1.2.5.xml"/>
+        <files mask="ThreadIP_1.2.6.xml"/>
       </source>
     </component>
     <component id="middleware.wireless.tools.zigbee.MKW41Z4" name="zigbee" type="middleware" brief="Binaries and other tools for Zigbee" devices="MKW41Z512xxx4" version="1.0.0">
@@ -4295,7 +4319,6 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="bdb_coordinator_frdmkw41z.bin"/>
         <files mask="bdb_end_device_frdmkw41z.bin"/>
         <files mask="bdb_router_frdmkw41z.bin"/>
-        <files mask="ble_zigbee_control_bridge_frdmkw41z.bin"/>
         <files mask="ble_zigbee_coordinator_frdmkw41z.bin"/>
         <files mask="ble_zigbee_end_device_frdmkw41z.bin"/>
         <files mask="ble_zigbee_router_frdmkw41z.bin"/>
@@ -4315,23 +4338,23 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="Remote-Control-GUI.exe"/>
       </source>
       <source path="tools/wireless/xml_fsci" type="xml">
-        <files mask="ZigBee3_0_6.0.6.xml"/>
+        <files mask="ZigBee3_0_6.0.7.xml"/>
       </source>
     </component>
     <component id="middleware.wireless.xcvr_kw41z.MKW41Z4" name="xcvr_kw41z" type="middleware" brief="KW41Z/KW31Z/KW21Z XCVR files" dependency="middleware.wireless.framework.common.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/framework_5.3.5/XCVR/MKW41Z4" target_path="framework/XCVR/MKW41Z4" type="src">
+      <source path="middleware/wireless/framework_5.3.6/XCVR/MKW41Z4" target_path="framework/XCVR/MKW41Z4" type="src">
         <files mask="dbg_ram_capture.c"/>
         <files mask="fsl_xcvr.c"/>
         <files mask="fsl_xcvr_trim.c"/>
         <files mask="ifr_radio.c"/>
       </source>
-      <source path="middleware/wireless/framework_5.3.5/XCVR/MKW41Z4" target_path="framework/XCVR/MKW41Z4" type="c_include">
+      <source path="middleware/wireless/framework_5.3.6/XCVR/MKW41Z4" target_path="framework/XCVR/MKW41Z4" type="c_include">
         <files mask="dbg_ram_capture.h"/>
         <files mask="fsl_xcvr.h"/>
         <files mask="fsl_xcvr_trim.h"/>
         <files mask="ifr_radio.h"/>
       </source>
-      <source path="middleware/wireless/framework_5.3.5/XCVR/MKW41Z4/cfgs_kw4x_3x_2x" target_path="framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x" type="src">
+      <source path="middleware/wireless/framework_5.3.6/XCVR/MKW41Z4/cfgs_kw4x_3x_2x" target_path="framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x" type="src">
         <files mask="fsl_xcvr_ant_config.c"/>
         <files mask="fsl_xcvr_ble_config.c"/>
         <files mask="fsl_xcvr_common_config.c"/>
@@ -4347,106 +4370,118 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
       </source>
     </component>
     <component id="middleware.wireless.xcvr_kw41z.dma_capture.MKW41Z4" name="dma_capture" type="middleware" brief="KW41Z/KW31Z/KW21Z DMA Capture XCVR Files" dependency="middleware.wireless.framework.common.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/framework_5.3.5/XCVR/MKW41Z4" target_path="framework/XCVR/MKW41Z4" type="src">
+      <source path="middleware/wireless/framework_5.3.6/XCVR/MKW41Z4" target_path="framework/XCVR/MKW41Z4" type="src">
         <files mask="dma_capture.c"/>
       </source>
-      <source path="middleware/wireless/framework_5.3.5/XCVR/MKW41Z4" target_path="framework/XCVR/MKW41Z4" type="c_include">
+      <source path="middleware/wireless/framework_5.3.6/XCVR/MKW41Z4" target_path="framework/XCVR/MKW41Z4" type="c_include">
         <files mask="dma_capture.h"/>
       </source>
     </component>
     <component id="middleware.wireless.xcvr_test_kw41z.MKW41Z4" name="xcvr_test_kw41z" type="middleware" brief="KW41Z/KW31Z/KW21Z XCVR test files" dependency="middleware.wireless.framework.common.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/framework_5.3.5/XCVR/MKW41Z4/XCVR_Test" target_path="framework/XCVR/MKW41Z4/XCVR_Test" type="src">
+      <source path="middleware/wireless/framework_5.3.6/XCVR/MKW41Z4/XCVR_Test" target_path="framework/XCVR/MKW41Z4/XCVR_Test" type="src">
         <files mask="xcvr_test_fsk.c"/>
       </source>
-      <source path="middleware/wireless/framework_5.3.5/XCVR/MKW41Z4/XCVR_Test" target_path="framework/XCVR/MKW41Z4/XCVR_Test" type="c_include">
+      <source path="middleware/wireless/framework_5.3.6/XCVR/MKW41Z4/XCVR_Test" target_path="framework/XCVR/MKW41Z4/XCVR_Test" type="c_include">
         <files mask="xcvr_test_fsk.h"/>
       </source>
     </component>
     <component id="middleware.wireless.zigbee.base.MKW41Z4" name="base" type="middleware" brief="ZigBee base source files" dependency="middleware.wireless.ieee_802_15_4.mac.interface.MKW41Z4 middleware.wireless.ieee_802_15_4.phy.interface.MKW41Z4 middleware.wireless.zigbee.core.common.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/base/JennicCommon/Include" target_path="zigbee_3_0/base/include" type="c_include">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/base/JennicCommon/Include" target_path="zigbee_3_0/base/include" type="c_include">
         <files mask="dbg.h"/>
         <files mask="jendefs.h"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/base/PWRM/Include" target_path="zigbee_3_0/base/include" type="c_include">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/base/PWRM/Include" target_path="zigbee_3_0/base/include" type="c_include">
         <files mask="pwrm.h"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/base/PDM/Include" target_path="zigbee_3_0/base/pdm/include" type="c_include">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/base/PDM/Include" target_path="zigbee_3_0/base/pdm/include" type="c_include">
         <files mask="PDM.h"/>
         <files mask="PDM_IDs.h"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/base/PDM/Source" target_path="zigbee_3_0/base/pdm/Source" type="src">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/base/PDM/Source" target_path="zigbee_3_0/base/pdm/Source" type="src">
         <files mask="pdm.c"/>
       </source>
     </component>
     <component id="middleware.wireless.zigbee.base.interface.MKW41Z4" name="interface" type="middleware" brief="ZigBee base interface" dependency="middleware.wireless.ieee_802_15_4.mac.interface.MKW41Z4 middleware.wireless.ieee_802_15_4.phy.interface.MKW41Z4 middleware.wireless.zigbee.core.common.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/base/JennicCommon/Include" target_path="zigbee_3_0/base/include" type="c_include">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/base/JennicCommon/Include" target_path="zigbee_3_0/base/include" type="c_include">
         <files mask="dbg.h"/>
         <files mask="jendefs.h"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/base/PWRM/Include" target_path="zigbee_3_0/base/include" type="c_include">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/base/PWRM/Include" target_path="zigbee_3_0/base/include" type="c_include">
         <files mask="pwrm.h"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/base/PDM/Include" target_path="zigbee_3_0/base/pdm/include" type="c_include">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/base/PDM/Include" target_path="zigbee_3_0/base/pdm/include" type="c_include">
         <files mask="PDM.h"/>
         <files mask="PDM_IDs.h"/>
       </source>
     </component>
     <component id="middleware.wireless.zigbee.core.bdb.MKW41Z4" name="bdb" type="middleware" brief="ZigBee BDB source files" dependency="middleware.wireless.ieee_802_15_4.mac.interface.MKW41Z4 middleware.wireless.ieee_802_15_4.phy.interface.MKW41Z4 middleware.wireless.zigbee.core.common.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/BDB/Include" target_path="zigbee_3_0/core/bdb/common" type="c_include">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/BDB/Include" target_path="zigbee_3_0/core/bdb/common" type="c_include">
         <files mask="bdb_api.h"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/BDB/Source/Common" target_path="zigbee_3_0/core/bdb/common" type="src">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/BDB/Source/Common" target_path="zigbee_3_0/core/bdb/common" type="src">
         <files mask="bdb_fr.c"/>
         <files mask="bdb_start.c"/>
         <files mask="bdb_state_machine.c"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/BDB/Source/Common" target_path="zigbee_3_0/core/bdb/common" type="c_include">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/BDB/Source/Common" target_path="zigbee_3_0/core/bdb/common" type="c_include">
         <files mask="bdb_fr.h"/>
         <files mask="bdb_start.h"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/BDB/Source/FindAndBind" target_path="zigbee_3_0/core/bdb/find_and_bind" type="src">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/BDB/Source/FindAndBind" target_path="zigbee_3_0/core/bdb/find_and_bind" type="src">
         <files mask="bdb_fb_common.c"/>
         <files mask="bdb_fb_initiator.c"/>
         <files mask="bdb_fb_target.c"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/BDB/Source/FindAndBind" target_path="zigbee_3_0/core/bdb/find_and_bind" type="c_include">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/BDB/Source/FindAndBind" target_path="zigbee_3_0/core/bdb/find_and_bind" type="c_include">
         <files mask="bdb_fb_api.h"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/BDB/Source/NwkFormation" target_path="zigbee_3_0/core/bdb/nwk_formation" type="src">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/BDB/Source/NwkFormation" target_path="zigbee_3_0/core/bdb/nwk_formation" type="src">
         <files mask="bdb_nf.c"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/BDB/Source/NwkFormation" target_path="zigbee_3_0/core/bdb/nwk_formation" type="c_include">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/BDB/Source/NwkFormation" target_path="zigbee_3_0/core/bdb/nwk_formation" type="c_include">
         <files mask="bdb_nf.h"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/BDB/Source/NwkSteering" target_path="zigbee_3_0/core/bdb/nwk_steering" type="src">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/BDB/Source/NwkSteering" target_path="zigbee_3_0/core/bdb/nwk_steering" type="src">
         <files mask="bdb_ns.c"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/BDB/Source/NwkSteering" target_path="zigbee_3_0/core/bdb/nwk_steering" type="c_include">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/BDB/Source/NwkSteering" target_path="zigbee_3_0/core/bdb/nwk_steering" type="c_include">
         <files mask="bdb_ns.h"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/BDB/Source/OutOfBand" target_path="zigbee_3_0/core/bdb/out_of_band" type="src">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/BDB/Source/OutOfBand" target_path="zigbee_3_0/core/bdb/out_of_band" type="src">
         <files mask="bdb_DeviceCommissioning.c"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/BDB/Source/OutOfBand" target_path="zigbee_3_0/core/bdb/out_of_band" type="c_include">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/BDB/Source/OutOfBand" target_path="zigbee_3_0/core/bdb/out_of_band" type="c_include">
         <files mask="bdb_DeviceCommissioning.h"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/BDB/Source/TouchLink" target_path="zigbee_3_0/core/bdb/touch_link" type="c_include">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/BDB/Source/TouchLink" target_path="zigbee_3_0/core/bdb/touch_link" type="c_include">
         <files mask="bdb_tl.h"/>
       </source>
     </component>
+    <component id="middleware.wireless.zigbee.core.bdb.touchlink.router_initiator_target.MKW41Z4" name="router_initiator_target" type="middleware" brief="ZigBee BDB Touchlink router initiator target source files" dependency="middleware.wireless.ieee_802_15_4.mac.interface.MKW41Z4 middleware.wireless.ieee_802_15_4.phy.interface.MKW41Z4 middleware.wireless.zigbee.core.common.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/BDB/Source/TouchLink" target_path="zigbee_3_0/core/bdb/touch_link" type="src">
+        <files mask="bdb_tl_common.c"/>
+        <files mask="bdb_tl_router_initiator_target.c"/>
+      </source>
+    </component>
+    <component id="middleware.wireless.zigbee.core.bdb.touchlink.router_target.MKW41Z4" name="router_target" type="middleware" brief="ZigBee BDB Touchlink router target source files" dependency="middleware.wireless.ieee_802_15_4.mac.interface.MKW41Z4 middleware.wireless.ieee_802_15_4.phy.interface.MKW41Z4 middleware.wireless.zigbee.core.common.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/BDB/Source/TouchLink" target_path="zigbee_3_0/core/bdb/touch_link" type="src">
+        <files mask="bdb_tl_common.c"/>
+        <files mask="bdb_tl_router_target.c"/>
+      </source>
+    </component>
     <component id="middleware.wireless.zigbee.core.common.MKW41Z4" name="common" type="middleware" brief="ZigBee common source files" dependency="middleware.wireless.ieee_802_15_4.mac.interface.MKW41Z4 middleware.wireless.ieee_802_15_4.phy.interface.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZigbeeCommon/Include" target_path="zigbee_3_0/core/zigbee_common/include" type="c_include">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZigbeeCommon/Include" target_path="zigbee_3_0/core/zigbee_common/include" type="c_include">
         <files mask="appZdpExtraction.h"/>
         <files mask="appZpsBeaconHandler.h"/>
         <files mask="ZQueue.h"/>
         <files mask="ZTimer.h"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZPSMAC/Include" target_path="zigbee_3_0/core/ZPSMAC/include" type="c_include">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZPSMAC/Include" target_path="zigbee_3_0/core/ZPSMAC/include" type="c_include">
         <files mask="mac_sap.h"/>
         <files mask="mac_vs_sap.h"/>
         <files mask="zps_mac.h"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZPSAPL/Include" target_path="zigbee_3_0/core/ZPSAPL/include" type="c_include">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZPSAPL/Include" target_path="zigbee_3_0/core/ZPSAPL/include" type="c_include">
         <files mask="zps_apl.h"/>
         <files mask="zps_apl_af.h"/>
         <files mask="zps_apl_aib.h"/>
@@ -4454,7 +4489,7 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="zps_apl_zdo.h"/>
         <files mask="zps_apl_zdp.h"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZPSNWK/Include" target_path="zigbee_3_0/core/ZPSNWK/include" type="c_include">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZPSNWK/Include" target_path="zigbee_3_0/core/ZPSNWK/include" type="c_include">
         <files mask="zps_nwk_config.h"/>
         <files mask="zps_nwk_mac_sap.h"/>
         <files mask="zps_nwk_nib.h"/>
@@ -4463,15 +4498,15 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="zps_nwk_sec.h"/>
         <files mask="zps_nwk_slist.h"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZPSTSV/Include" target_path="zigbee_3_0/core/ZPSTSV/include" type="c_include">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZPSTSV/Include" target_path="zigbee_3_0/core/ZPSTSV/include" type="c_include">
         <files mask="zps_tsv.h"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/PDUM/Include" target_path="zigbee_3_0/core/include" type="c_include">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/PDUM/Include" target_path="zigbee_3_0/core/include" type="c_include">
         <files mask="pdum_apl.h"/>
         <files mask="pdum_common.h"/>
         <files mask="pdum_nwk.h"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZigbeeCommon/Source" target_path="zigbee_3_0/core/zigbee_common/source" type="src">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZigbeeCommon/Source" target_path="zigbee_3_0/core/zigbee_common/source" type="src">
         <files mask="app_zps_link_keys.c"/>
         <files mask="appZdpExtraction.c"/>
         <files mask="appZpsBeaconHandler.c"/>
@@ -4484,24 +4519,24 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
       </source>
     </component>
     <component id="middleware.wireless.zigbee.core.common.globals.MKW41Z4" name="globals" type="middleware" brief="ZigBee common globals source files" dependency="middleware.wireless.ieee_802_15_4.mac.interface.MKW41Z4 middleware.wireless.ieee_802_15_4.phy.interface.MKW41Z4 middleware.wireless.zigbee.core.common.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZigbeeCommon/Source" target_path="zigbee_3_0/core/zigbee_common/source" type="src">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZigbeeCommon/Source" target_path="zigbee_3_0/core/zigbee_common/source" type="src">
         <files mask="pdum_globals.c"/>
         <files mask="zps_globals.c"/>
       </source>
     </component>
     <component id="middleware.wireless.zigbee.core.eh.common.MKW41Z4" name="common" type="middleware" brief="ZigBee common source files for eh_switch" dependency="middleware.wireless.ieee_802_15_4.mac.interface.MKW41Z4 middleware.wireless.ieee_802_15_4.phy.interface.MKW41Z4 middleware.wireless.zigbee.core.common.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZigbeeCommon/Include" target_path="zigbee_3_0/core/zigbee_common/include" type="c_include">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZigbeeCommon/Include" target_path="zigbee_3_0/core/zigbee_common/include" type="c_include">
         <files mask="appZdpExtraction.h"/>
         <files mask="appZpsBeaconHandler.h"/>
         <files mask="ZQueue.h"/>
         <files mask="ZTimer.h"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZPSMAC/Include" target_path="zigbee_3_0/core/ZPSMAC/include" type="c_include">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZPSMAC/Include" target_path="zigbee_3_0/core/ZPSMAC/include" type="c_include">
         <files mask="mac_sap.h"/>
         <files mask="mac_vs_sap.h"/>
         <files mask="zps_mac.h"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZPSAPL/Include" target_path="zigbee_3_0/core/ZPSAPL/include" type="c_include">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZPSAPL/Include" target_path="zigbee_3_0/core/ZPSAPL/include" type="c_include">
         <files mask="zps_apl.h"/>
         <files mask="zps_apl_af.h"/>
         <files mask="zps_apl_aib.h"/>
@@ -4509,7 +4544,7 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="zps_apl_zdo.h"/>
         <files mask="zps_apl_zdp.h"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZPSNWK/Include" target_path="zigbee_3_0/core/ZPSNWK/include" type="c_include">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZPSNWK/Include" target_path="zigbee_3_0/core/ZPSNWK/include" type="c_include">
         <files mask="zps_nwk_config.h"/>
         <files mask="zps_nwk_mac_sap.h"/>
         <files mask="zps_nwk_nib.h"/>
@@ -4518,15 +4553,15 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="zps_nwk_sec.h"/>
         <files mask="zps_nwk_slist.h"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZPSTSV/Include" target_path="zigbee_3_0/core/ZPSTSV/include" type="c_include">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZPSTSV/Include" target_path="zigbee_3_0/core/ZPSTSV/include" type="c_include">
         <files mask="zps_tsv.h"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/PDUM/Include" target_path="zigbee_3_0/core/include" type="c_include">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/PDUM/Include" target_path="zigbee_3_0/core/include" type="c_include">
         <files mask="pdum_apl.h"/>
         <files mask="pdum_common.h"/>
         <files mask="pdum_nwk.h"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZigbeeCommon/Source" target_path="zigbee_3_0/core/zigbee_common/source" type="src">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZigbeeCommon/Source" target_path="zigbee_3_0/core/zigbee_common/source" type="src">
         <files mask="app_zps_link_keys.c"/>
         <files mask="appZdpExtraction.c"/>
         <files mask="appZpsBeaconHandler.c"/>
@@ -4539,13 +4574,13 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
       </source>
     </component>
     <component id="middleware.wireless.zigbee.core.libraries.MKW41Z4" name="libraries" type="middleware" brief="zigbee core Libraries" dependency="middleware.wireless.ieee_802_15_4.mac.interface.MKW41Z4 middleware.wireless.ieee_802_15_4.phy.interface.MKW41Z4 middleware.wireless.zigbee.core.common.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/lib" target_path="zigbee_3_0/lib" type="lib">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/lib" target_path="zigbee_3_0/lib" type="lib">
         <files mask="lib_zps_cm0.a"/>
         <files mask="lib_zps_ed_cm0.a"/>
       </source>
     </component>
     <component id="middleware.wireless.zigbee.core.zcif.MKW41Z4" name="zcif" type="middleware" brief="ZigBee ZCIF source files" dependency="middleware.wireless.ieee_802_15_4.mac.interface.MKW41Z4 middleware.wireless.ieee_802_15_4.phy.interface.MKW41Z4 middleware.wireless.zigbee.core.common.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZCIF/Include" target_path="zigbee_3_0/core/zcif/include" type="c_include">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZCIF/Include" target_path="zigbee_3_0/core/zcif/include" type="c_include">
         <files mask="dlist.h"/>
         <files mask="version.h"/>
         <files mask="zcl.h"/>
@@ -4553,7 +4588,7 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="zcl_heap.h"/>
         <files mask="zcl_internal_library_options.h"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZCIF/Source" target_path="zigbee_3_0/core/zcif/source" type="src">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZCIF/Source" target_path="zigbee_3_0/core/zcif/source" type="src">
         <files mask="dlist.c"/>
         <files mask="zcl.c"/>
         <files mask="zcl_attribute.c"/>
@@ -4599,19 +4634,19 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="zcl_WriteAttributesRequestSend.c"/>
         <files mask="zcl_WriteAttributesResponseHandle.c"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZCIF/Source" target_path="zigbee_3_0/core/zcif/source" type="c_include">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZCIF/Source" target_path="zigbee_3_0/core/zcif/source" type="c_include">
         <files mask="zcl_common.h"/>
         <files mask="zcl_internal.h"/>
       </source>
     </component>
     <component id="middleware.wireless.zigbee.core.zcl_clusters.MKW41Z4" name="zcl_clusters" type="middleware" brief="ZigBee ZCL source files" dependency="middleware.wireless.ieee_802_15_4.mac.interface.MKW41Z4 middleware.wireless.ieee_802_15_4.phy.interface.MKW41Z4 middleware.wireless.zigbee.core.common.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZCL/Clusters/ApplianceManagement/Include" target_path="zigbee_3_0/core/zcl/clusters/ApplianceManagement/Include" type="c_include">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZCL/Clusters/ApplianceManagement/Include" target_path="zigbee_3_0/core/zcl/clusters/ApplianceManagement/Include" type="c_include">
         <files mask="ApplianceControl.h"/>
         <files mask="ApplianceEventsAndAlerts.h"/>
         <files mask="ApplianceIdentification.h"/>
         <files mask="ApplianceStatistics.h"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZCL/Clusters/ApplianceManagement/Source" target_path="zigbee_3_0/core/zcl/clusters/ApplianceManagement/Source" type="src">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZCL/Clusters/ApplianceManagement/Source" target_path="zigbee_3_0/core/zcl/clusters/ApplianceManagement/Source" type="src">
         <files mask="ApplianceControl.c"/>
         <files mask="ApplianceControlClientCommands.c"/>
         <files mask="ApplianceControlCommandHandler.c"/>
@@ -4626,28 +4661,28 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="ApplianceStatisticsCommandHandler.c"/>
         <files mask="ApplianceStatisticsServerCommands.c"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZCL/Clusters/ApplianceManagement/Source" target_path="zigbee_3_0/core/zcl/clusters/ApplianceManagement/Source" type="c_include">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZCL/Clusters/ApplianceManagement/Source" target_path="zigbee_3_0/core/zcl/clusters/ApplianceManagement/Source" type="c_include">
         <files mask="ApplianceControl_internal.h"/>
         <files mask="ApplianceEventsAndAlerts_internal.h"/>
         <files mask="ApplianceStatistics_internal.h"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZCL/Clusters/Closures/Include" target_path="zigbee_3_0/core/zcl/clusters/Closures/Include" type="c_include">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZCL/Clusters/Closures/Include" target_path="zigbee_3_0/core/zcl/clusters/Closures/Include" type="c_include">
         <files mask="DoorLock.h"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZCL/Clusters/Closures/Source" target_path="zigbee_3_0/core/zcl/clusters/Closures/Source" type="src">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZCL/Clusters/Closures/Source" target_path="zigbee_3_0/core/zcl/clusters/Closures/Source" type="src">
         <files mask="DoorLock.c"/>
         <files mask="DoorLockCommandHandler.c"/>
         <files mask="DoorLockCommands.c"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZCL/Clusters/Closures/Source" target_path="zigbee_3_0/core/zcl/clusters/Closures/Source" type="c_include">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZCL/Clusters/Closures/Source" target_path="zigbee_3_0/core/zcl/clusters/Closures/Source" type="c_include">
         <files mask="DoorLock_internal.h"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZCL/Clusters/Commissioning/Include" target_path="zigbee_3_0/core/zcl/clusters/Commissioning/Include" type="c_include">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZCL/Clusters/Commissioning/Include" target_path="zigbee_3_0/core/zcl/clusters/Commissioning/Include" type="c_include">
         <files mask="Commissioning.h"/>
         <files mask="zll_commission.h"/>
         <files mask="zll_utility.h"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZCL/Clusters/Commissioning/Source" target_path="zigbee_3_0/core/zcl/clusters/Commissioning/Source" type="src">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZCL/Clusters/Commissioning/Source" target_path="zigbee_3_0/core/zcl/clusters/Commissioning/Source" type="src">
         <files mask="Commissioning.c"/>
         <files mask="CommissioningClientCommands.c"/>
         <files mask="CommissioningCmdHandler.c"/>
@@ -4657,10 +4692,10 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="zll_utility.c"/>
         <files mask="zll_UtilityCmdHandler.c"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZCL/Clusters/Commissioning/Source" target_path="zigbee_3_0/core/zcl/clusters/Commissioning/Source" type="c_include">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZCL/Clusters/Commissioning/Source" target_path="zigbee_3_0/core/zcl/clusters/Commissioning/Source" type="c_include">
         <files mask="Commissioning_internal.h"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZCL/Clusters/General/Include" target_path="zigbee_3_0/core/zcl/clusters/General/Include" type="c_include">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZCL/Clusters/General/Include" target_path="zigbee_3_0/core/zcl/clusters/General/Include" type="c_include">
         <files mask="Alarms.h"/>
         <files mask="AnalogInputBasic.h"/>
         <files mask="AnalogOutputBasic.h"/>
@@ -4681,9 +4716,9 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="PowerProfile.h"/>
         <files mask="Scenes.h"/>
         <files mask="TC.h"/>
-        <files mask="Time.h"/>
+        <files mask="ZclTime.h"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZCL/Clusters/General/Source" target_path="zigbee_3_0/core/zcl/clusters/General/Source" type="src">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZCL/Clusters/General/Source" target_path="zigbee_3_0/core/zcl/clusters/General/Source" type="src">
         <files mask="Alarms.c"/>
         <files mask="AlarmsClientCommands.c"/>
         <files mask="AlarmsCommandHandler.c"/>
@@ -4734,7 +4769,7 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="TC.c"/>
         <files mask="Time.c"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZCL/Clusters/General/Source" target_path="zigbee_3_0/core/zcl/clusters/General/Source" type="c_include">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZCL/Clusters/General/Source" target_path="zigbee_3_0/core/zcl/clusters/General/Source" type="c_include">
         <files mask="Alarms_internal.h"/>
         <files mask="AnalogInputBasic_internal.h"/>
         <files mask="AnalogOutputBasic_internal.h"/>
@@ -4751,10 +4786,10 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="PowerProfile_internal.h"/>
         <files mask="Scenes_internal.h"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZCL/Clusters/GreenPower/Include" target_path="zigbee_3_0/core/zcl/clusters/GreenPower/Include" type="c_include">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZCL/Clusters/GreenPower/Include" target_path="zigbee_3_0/core/zcl/clusters/GreenPower/Include" type="c_include">
         <files mask="GreenPower.h"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZCL/Clusters/GreenPower/Source" target_path="zigbee_3_0/core/zcl/clusters/GreenPower/Source" type="src">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZCL/Clusters/GreenPower/Source" target_path="zigbee_3_0/core/zcl/clusters/GreenPower/Source" type="src">
         <files mask="GreenPower.c"/>
         <files mask="GreenPowerCommissioningNotification.c"/>
         <files mask="GreenPowerCommon.c"/>
@@ -4778,37 +4813,37 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="GreenPowerTranslationTableResponse.c"/>
         <files mask="GreenPowerTranslationTableUpdate.c"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZCL/Clusters/GreenPower/Source" target_path="zigbee_3_0/core/zcl/clusters/GreenPower/Source" type="c_include">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZCL/Clusters/GreenPower/Source" target_path="zigbee_3_0/core/zcl/clusters/GreenPower/Source" type="c_include">
         <files mask="GreenPower_internal.h"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZCL/Clusters/HVAC/Include" target_path="zigbee_3_0/core/zcl/clusters/HVAC/Include" type="c_include">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZCL/Clusters/HVAC/Include" target_path="zigbee_3_0/core/zcl/clusters/HVAC/Include" type="c_include">
         <files mask="Thermostat.h"/>
         <files mask="ThermostatUIConfig.h"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZCL/Clusters/HVAC/Source" target_path="zigbee_3_0/core/zcl/clusters/HVAC/Source" type="src">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZCL/Clusters/HVAC/Source" target_path="zigbee_3_0/core/zcl/clusters/HVAC/Source" type="src">
         <files mask="Thermostat.c"/>
         <files mask="ThermostatCommandHandler.c"/>
         <files mask="ThermostatCommands.c"/>
         <files mask="ThermostatUIConfig.c"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZCL/Clusters/HVAC/Source" target_path="zigbee_3_0/core/zcl/clusters/HVAC/Source" type="c_include">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZCL/Clusters/HVAC/Source" target_path="zigbee_3_0/core/zcl/clusters/HVAC/Source" type="c_include">
         <files mask="Thermostat_internal.h"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZCL/Clusters/Lighting/Include" target_path="zigbee_3_0/core/zcl/clusters/Lighting/Include" type="c_include">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZCL/Clusters/Lighting/Include" target_path="zigbee_3_0/core/zcl/clusters/Lighting/Include" type="c_include">
         <files mask="BallastConfiguration.h"/>
         <files mask="ColourControl.h"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZCL/Clusters/Lighting/Source" target_path="zigbee_3_0/core/zcl/clusters/Lighting/Source" type="src">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZCL/Clusters/Lighting/Source" target_path="zigbee_3_0/core/zcl/clusters/Lighting/Source" type="src">
         <files mask="BallastConfiguration.c"/>
         <files mask="ColourControl.c"/>
         <files mask="ColourControlClientCommands.c"/>
         <files mask="ColourControlCommandHandler.c"/>
         <files mask="ColourControlConversions.c"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZCL/Clusters/Lighting/Source" target_path="zigbee_3_0/core/zcl/clusters/Lighting/Source" type="c_include">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZCL/Clusters/Lighting/Source" target_path="zigbee_3_0/core/zcl/clusters/Lighting/Source" type="c_include">
         <files mask="ColourControl_internal.h"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZCL/Clusters/MeasurementAndSensing/Include" target_path="zigbee_3_0/core/zcl/clusters/MeasurementAndSensing/Include" type="c_include">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZCL/Clusters/MeasurementAndSensing/Include" target_path="zigbee_3_0/core/zcl/clusters/MeasurementAndSensing/Include" type="c_include">
         <files mask="ElectricalMeasurement.h"/>
         <files mask="FlowMeasurement.h"/>
         <files mask="IlluminanceLevelSensing.h"/>
@@ -4818,7 +4853,7 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="RelativeHumidityMeasurement.h"/>
         <files mask="TemperatureMeasurement.h"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZCL/Clusters/MeasurementAndSensing/Source" target_path="zigbee_3_0/core/zcl/clusters/MeasurementAndSensing/Source" type="src">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZCL/Clusters/MeasurementAndSensing/Source" target_path="zigbee_3_0/core/zcl/clusters/MeasurementAndSensing/Source" type="src">
         <files mask="ElectricalMeasurement.c"/>
         <files mask="FlowMeasurement.c"/>
         <files mask="IlluminanceLevelSensing.c"/>
@@ -4828,10 +4863,10 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="RelativeHumidityMeasurement.c"/>
         <files mask="TemperatureMeasurement.c"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZCL/Clusters/OTA/Include" target_path="zigbee_3_0/core/zcl/clusters/OTA/Include" type="c_include">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZCL/Clusters/OTA/Include" target_path="zigbee_3_0/core/zcl/clusters/OTA/Include" type="c_include">
         <files mask="OTA.h"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZCL/Clusters/OTA/Source" target_path="zigbee_3_0/core/zcl/clusters/OTA/Source" type="src">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZCL/Clusters/OTA/Source" target_path="zigbee_3_0/core/zcl/clusters/OTA/Source" type="src">
         <files mask="OTA.c"/>
         <files mask="OTA_client.c"/>
         <files mask="OTA_ClientUpgradeManager.c"/>
@@ -4841,15 +4876,15 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="OTA_server.c"/>
         <files mask="OTA_ServerUpgradeManager.c"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZCL/Clusters/OTA/Source" target_path="zigbee_3_0/core/zcl/clusters/OTA/Source" type="c_include">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZCL/Clusters/OTA/Source" target_path="zigbee_3_0/core/zcl/clusters/OTA/Source" type="c_include">
         <files mask="OTA_private.h"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZCL/Clusters/SecurityAndSafety/Include" target_path="zigbee_3_0/core/zcl/clusters/SecurityAndSafety/Include" type="c_include">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZCL/Clusters/SecurityAndSafety/Include" target_path="zigbee_3_0/core/zcl/clusters/SecurityAndSafety/Include" type="c_include">
         <files mask="IASACE.h"/>
         <files mask="IASWD.h"/>
         <files mask="IASZone.h"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZCL/Clusters/SecurityAndSafety/Source" target_path="zigbee_3_0/core/zcl/clusters/SecurityAndSafety/Source" type="src">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZCL/Clusters/SecurityAndSafety/Source" target_path="zigbee_3_0/core/zcl/clusters/SecurityAndSafety/Source" type="src">
         <files mask="IASACE.c"/>
         <files mask="IASACEClientCommands.c"/>
         <files mask="IASACECommandHandler.c"/>
@@ -4861,18 +4896,18 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="IASZoneCommandHandler.c"/>
         <files mask="IASZoneCommands.c"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZCL/Clusters/SecurityAndSafety/Source" target_path="zigbee_3_0/core/zcl/clusters/SecurityAndSafety/Source" type="c_include">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZCL/Clusters/SecurityAndSafety/Source" target_path="zigbee_3_0/core/zcl/clusters/SecurityAndSafety/Source" type="c_include">
         <files mask="IASACE_internal.h"/>
         <files mask="IASWD_internal.h"/>
         <files mask="IASZone_internal.h"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZCL/Clusters/SmartEnergy/Include" target_path="zigbee_3_0/core/zcl/clusters/SmartEnergy/Include" type="c_include">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZCL/Clusters/SmartEnergy/Include" target_path="zigbee_3_0/core/zcl/clusters/SmartEnergy/Include" type="c_include">
         <files mask="DRLC.h"/>
         <files mask="Price.h"/>
         <files mask="SimpleMetering.h"/>
         <files mask="SimpleMeteringAttributeCount.h"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZCL/Clusters/SmartEnergy/Source" target_path="zigbee_3_0/core/zcl/clusters/SmartEnergy/Source" type="src">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZCL/Clusters/SmartEnergy/Source" target_path="zigbee_3_0/core/zcl/clusters/SmartEnergy/Source" type="src">
         <files mask="DRLC.c"/>
         <files mask="DRLCCommandCanceAlllLoadControlEvents.c"/>
         <files mask="DRLCCommandCancelLoadControlEvent.c"/>
@@ -4914,76 +4949,76 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="SimpleMetering_SendRequest.c"/>
         <files mask="SimpleMeteringCommandHandler.c"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZCL/Clusters/SmartEnergy/Source" target_path="zigbee_3_0/core/zcl/clusters/SmartEnergy/Source" type="c_include">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZCL/Clusters/SmartEnergy/Source" target_path="zigbee_3_0/core/zcl/clusters/SmartEnergy/Source" type="c_include">
         <files mask="DRLC_internal.h"/>
         <files mask="Price_internal.h"/>
         <files mask="SimpleMetering_internal.h"/>
       </source>
     </component>
     <component id="middleware.wireless.zigbee.core.zcl_devices.MKW41Z4" name="zcl_devices" type="middleware" brief="ZigBee ZCL source files" dependency="middleware.wireless.ieee_802_15_4.mac.interface.MKW41Z4 middleware.wireless.ieee_802_15_4.phy.interface.MKW41Z4 middleware.wireless.zigbee.core.common.MKW41Z4" devices="MKW41Z512xxx4" version="1.0.0">
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZCL/Devices/ZGP/Include" target_path="zigbee_3_0/core/zcl/devices/ZGP/Include" type="c_include">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZCL/Devices/ZGP/Include" target_path="zigbee_3_0/core/zcl/devices/ZGP/Include" type="c_include">
         <files mask="gp.h"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZCL/Devices/ZGP/Source" target_path="zigbee_3_0/core/zcl/devices/ZGP/Source" type="src">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZCL/Devices/ZGP/Source" target_path="zigbee_3_0/core/zcl/devices/ZGP/Source" type="src">
         <files mask="gp.c"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZCL/Devices/ZHA/ApplianceManagement/Include" target_path="zigbee_3_0/core/zcl/devices/ZHA/ApplianceManagement/Include" type="c_include">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZCL/Devices/ZHA/ApplianceManagement/Include" target_path="zigbee_3_0/core/zcl/devices/ZHA/ApplianceManagement/Include" type="c_include">
         <files mask="home_gateway.h"/>
         <files mask="white_goods.h"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZCL/Devices/ZHA/ApplianceManagement/Source" target_path="zigbee_3_0/core/zcl/devices/ZHA/ApplianceManagement/Source" type="src">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZCL/Devices/ZHA/ApplianceManagement/Source" target_path="zigbee_3_0/core/zcl/devices/ZHA/ApplianceManagement/Source" type="src">
         <files mask="home_gateway.c"/>
         <files mask="white_goods.c"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZCL/Devices/ZHA/Closures/Include" target_path="zigbee_3_0/core/zcl/devices/ZHA/Closures/Include" type="c_include">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZCL/Devices/ZHA/Closures/Include" target_path="zigbee_3_0/core/zcl/devices/ZHA/Closures/Include" type="c_include">
         <files mask="door_lock.h"/>
         <files mask="door_lock_controller.h"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZCL/Devices/ZHA/Closures/Source" target_path="zigbee_3_0/core/zcl/devices/ZHA/Closures/Source" type="src">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZCL/Devices/ZHA/Closures/Source" target_path="zigbee_3_0/core/zcl/devices/ZHA/Closures/Source" type="src">
         <files mask="door_lock.c"/>
         <files mask="door_lock_controller.c"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZCL/Devices/ZHA/Generic/Include" target_path="zigbee_3_0/core/zcl/devices/ZHA/Generic/Include" type="c_include">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZCL/Devices/ZHA/Generic/Include" target_path="zigbee_3_0/core/zcl/devices/ZHA/Generic/Include" type="c_include">
         <files mask="base_device.h"/>
         <files mask="mains_power_outlet.h"/>
         <files mask="on_off_output.h"/>
         <files mask="remote_control.h"/>
         <files mask="simple_sensor.h"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZCL/Devices/ZHA/Generic/Source" target_path="zigbee_3_0/core/zcl/devices/ZHA/Generic/Source" type="src">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZCL/Devices/ZHA/Generic/Source" target_path="zigbee_3_0/core/zcl/devices/ZHA/Generic/Source" type="src">
         <files mask="base_device.c"/>
         <files mask="mains_power_outlet.c"/>
         <files mask="on_off_output.c"/>
         <files mask="remote_control.c"/>
         <files mask="simple_sensor.c"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZCL/Devices/ZHA/HVAC/Include" target_path="zigbee_3_0/core/zcl/devices/ZHA/HVAC/Include" type="c_include">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZCL/Devices/ZHA/HVAC/Include" target_path="zigbee_3_0/core/zcl/devices/ZHA/HVAC/Include" type="c_include">
         <files mask="temperature_sensor.h"/>
         <files mask="thermostat_device.h"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZCL/Devices/ZHA/HVAC/Source" target_path="zigbee_3_0/core/zcl/devices/ZHA/HVAC/Source" type="src">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZCL/Devices/ZHA/HVAC/Source" target_path="zigbee_3_0/core/zcl/devices/ZHA/HVAC/Source" type="src">
         <files mask="temperature_sensor.c"/>
         <files mask="thermostat_device.c"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZCL/Devices/ZHA/SecurityAndSafety/Include" target_path="zigbee_3_0/core/zcl/devices/ZHA/SecurityAndSafety/Include" type="c_include">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZCL/Devices/ZHA/SecurityAndSafety/Include" target_path="zigbee_3_0/core/zcl/devices/ZHA/SecurityAndSafety/Include" type="c_include">
         <files mask="ancillary_control_equipment.h"/>
         <files mask="control_and_indicating_equipment.h"/>
         <files mask="warning_device.h"/>
         <files mask="zone.h"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZCL/Devices/ZHA/SecurityAndSafety/Source" target_path="zigbee_3_0/core/zcl/devices/ZHA/SecurityAndSafety/Source" type="src">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZCL/Devices/ZHA/SecurityAndSafety/Source" target_path="zigbee_3_0/core/zcl/devices/ZHA/SecurityAndSafety/Source" type="src">
         <files mask="ancillary_control_equipment.c"/>
         <files mask="control_and_indicating_equipment.c"/>
         <files mask="warning_device.c"/>
         <files mask="zone.c"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZCL/Devices/ZHA/SmartEnergy/Include" target_path="zigbee_3_0/core/zcl/devices/ZHA/SmartEnergy/Include" type="c_include">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZCL/Devices/ZHA/SmartEnergy/Include" target_path="zigbee_3_0/core/zcl/devices/ZHA/SmartEnergy/Include" type="c_include">
         <files mask="smart_plug.h"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZCL/Devices/ZHA/SmartEnergy/Source" target_path="zigbee_3_0/core/zcl/devices/ZHA/SmartEnergy/Source" type="src">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZCL/Devices/ZHA/SmartEnergy/Source" target_path="zigbee_3_0/core/zcl/devices/ZHA/SmartEnergy/Source" type="src">
         <files mask="smart_plug.c"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZCL/Devices/ZLO/Include" target_path="zigbee_3_0/core/zcl/devices/ZLO/Include" type="c_include">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZCL/Devices/ZLO/Include" target_path="zigbee_3_0/core/zcl/devices/ZLO/Include" type="c_include">
         <files mask="colour_controller.h"/>
         <files mask="colour_dimmable_light.h"/>
         <files mask="colour_dimmer_switch.h"/>
@@ -5008,7 +5043,7 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="on_off_sensor.h"/>
         <files mask="zlo_device_id.h"/>
       </source>
-      <source path="middleware/wireless/zigbee_3_0_6.0.6/core/ZCL/Devices/ZLO/Source" target_path="zigbee_3_0/core/zcl/devices/ZLO/Source" type="src">
+      <source path="middleware/wireless/zigbee_3_0_6.0.7/core/ZCL/Devices/ZLO/Source" target_path="zigbee_3_0/core/zcl/devices/ZLO/Source" type="src">
         <files mask="colour_controller.c"/>
         <files mask="colour_dimmable_light.c"/>
         <files mask="colour_dimmer_switch.c"/>
@@ -5236,11 +5271,14 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
       <source path="devices/MKW41Z4/gcc" type="asm_include" toolchain="mcuxpresso">
         <files mask="startup_MKW41Z4.S"/>
       </source>
+      <source path="devices/MKW41Z4/iar" type="asm_include" toolchain="iar">
+        <files mask="startup_MKW41Z4.s"/>
+      </source>
     </component>
     <component id="middleware.baremetal.MKW41Z4" name="baremetal" full_name="Baremetal" type="OS" devices="MKW41Z512xxx4" version="1.0.0">
       <defines>
-        <define name="SDK_OS_BAREMETAL" value=""/>
         <define name="FSL_RTOS_BM" value=""/>
+        <define name="SDK_OS_BAREMETAL" value=""/>
       </defines>
     </component>
     <component id="middleware.freertos.MKW41Z4" name="freertos" full_name="FreeRTOS" type="OS" brief="FreeRTOS, Real Time Operating System" dependency="middleware.template_application.freertos.MKW41Z4" devices="MKW41Z512xxx4" version="9.0.0" revision="2">
@@ -11612,7 +11650,7 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
     <component id="middleware.wireless.thread.docs" name="docs" type="documentation" brief="Wireless Thread Documents" dependency="middleware.wireless.common.docs" version="1.0.0">
       <source path="docs/wireless/Thread" type="doc">
         <files mask="Kinetis Thread Host Control Interface Reference Manual.pdf"/>
-        <files mask="Kinetis Thread Stack 1.2.5 Release Notes.pdf"/>
+        <files mask="Kinetis Thread Stack 1.2.6 Release Notes.pdf"/>
         <files mask="Kinetis Thread Stack and FSCI Bootloader Quick Start Guide.pdf"/>
         <files mask="Kinetis Thread Stack API Reference Manual.pdf"/>
         <files mask="Kinetis Thread Stack Application Developer's Guide.pdf"/>

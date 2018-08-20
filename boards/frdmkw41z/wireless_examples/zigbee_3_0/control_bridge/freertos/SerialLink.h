@@ -105,6 +105,8 @@ typedef enum
     E_SL_MSG_NETWORK_REMOVE_DEVICE                             =   0x0026,
     E_SL_MSG_NETWORK_WHITELIST_ENABLE                          =   0x0027,
     E_SL_MSG_ADD_AUTHENTICATE_DEVICE                           =   0x0028,
+    E_SL_MSG_CODE                                              =   0x0029,
+    E_SL_MSG_CODE_RESPONSE                                     =   0x8029,
     E_SL_MSG_UPDATE_AUTHENTICATE_DEVICE                        =   0x002A,
     E_SL_MSG_AUTHENTICATE_DEVICE_RESPONSE                      =   0x8028,
 
@@ -369,6 +371,7 @@ typedef struct
 PUBLIC bool bSL_ReadMessage(uint16 *pu16Type, uint16 *pu16Length, uint16 u16MaxLength, uint8 *pu8Message,uint8 u8Byte);
 PUBLIC void vSL_WriteMessage(uint16 u16Type, uint16 u16Length, uint8 *pu8Data);
 PUBLIC uint8 u8SL_CalculateCRC(uint16 u16Type, uint16 u16Length, uint8 *pu8Data);
+PUBLIC void vSL_WriteLog(char * fmt, ...);
 /****************************************************************************/
 /***        Local Functions                                               ***/
 /****************************************************************************/

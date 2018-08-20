@@ -57,7 +57,7 @@ class NodeDescriptorOperation(FsciOperation):
 
     def subscribeToEvents(self):
         self.spec = Spec.NodeDescriptorRequestFrame
-        self.observers = []
+        self.observers = [NodeDescriptorResponseObserver('NodeDescriptorResponse'), ]
         super(NodeDescriptorOperation, self).subscribeToEvents()
 
 
@@ -153,7 +153,7 @@ class ManagementLQIOperation(FsciOperation):
 
     def subscribeToEvents(self):
         self.spec = Spec.ManagementLQIRequestFrame
-        self.observers = []
+        self.observers = [ManagementLQIResponseObserver('ManagementLQIResponse'), ]
         super(ManagementLQIOperation, self).subscribeToEvents()
 
 
@@ -177,7 +177,7 @@ class AttributeDiscoveryOperation(FsciOperation):
 
     def subscribeToEvents(self):
         self.spec = Spec.AttributeDiscoveryRequestFrame
-        self.observers = []
+        self.observers = [AttributeDiscoveryResponseObserver('AttributeDiscoveryResponse'), ]
         super(AttributeDiscoveryOperation, self).subscribeToEvents()
 
 
@@ -260,6 +260,12 @@ class AuthenticateOperation(FsciOperation):
         self.observers = [AuthenticateResponseObserver('AuthenticateResponse'), ]
         super(AuthenticateOperation, self).subscribeToEvents()
 
+class CodeOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = None
+        self.observers = [CodeResponseObserver('CodeResponse'), ]
+        super(CodeOperation, self).subscribeToEvents()
 
 class ReadIndividualAttributeOperation(FsciOperation):
 
@@ -325,12 +331,28 @@ class ViewSceneOperation(FsciOperation):
         super(ViewSceneOperation, self).subscribeToEvents()
 
 
+class ViewEnhancedSceneOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = None
+        self.observers = [ViewEnhancedSceneResponseObserver('ViewEnhancedSceneResponse'), ]
+        super(ViewEnhancedSceneOperation, self).subscribeToEvents()
+
+
 class AddSceneOperation(FsciOperation):
 
     def subscribeToEvents(self):
         self.spec = None
         self.observers = [AddSceneResponseObserver('AddSceneResponse'), ]
         super(AddSceneOperation, self).subscribeToEvents()
+
+
+class CopySceneOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = None
+        self.observers = [CopySceneResponseObserver('CopySceneResponse'), ]
+        super(CopySceneOperation, self).subscribeToEvents()
 
 
 class RemoveSceneOperation(FsciOperation):

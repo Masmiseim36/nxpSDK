@@ -4,7 +4,7 @@
  *
  * The Clear BSD License
  * Copyright 2013-2015 Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2018 NXP
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -382,19 +382,23 @@ int HSDKWaitMultipleEvents(Event *events, uint32_t noEvents, int64_t millisecond
     }
 
     for (i = 0; i < noEvents; i++) {
-        if ((events[i]->gpioPollEvent == 1) && (pfds[i].revents & POLLPRI)) {
-            *triggeredEvent = i;
 
-            if (lseek(pfds[i].fd, 0, SEEK_SET) == -1) {
-                perror("lseek");
+        if (events[i] != NULL) {
+
+            if ((events[i]->gpioPollEvent == 1) && (pfds[i].revents & POLLPRI)) {
+                *triggeredEvent = i;
+
+                if (lseek(pfds[i].fd, 0, SEEK_SET) == -1) {
+                    perror("lseek");
+                }
+
+                break;
             }
 
-            break;
-        }
-
-        else if ((pfds[i].revents & POLLIN) && (events[i]->gpioPollEvent != 1)) {
-            *triggeredEvent = i;
-            break;
+            else if ((pfds[i].revents & POLLIN) && (events[i]->gpioPollEvent != 1)) {
+                *triggeredEvent = i;
+                break;
+            }
         }
     }
 

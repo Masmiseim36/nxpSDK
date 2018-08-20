@@ -37,10 +37,7 @@
 
 from __future__ import division
 
-from com.nxp.wireless_connectivity.hsdk import utils
-from threading import Event
-
-from test_dongle_mode import *
+from test_dongle_mode import *  # @UnusedWildImport
 
 
 # Events to change OTA server state
@@ -52,12 +49,12 @@ last_offset = 0
 block_len = 150
 
 
-def cb_standalone_query_image_ind(devName, event):
+def cb_standalone_query_image_ind(_, event):
     print_event(dev, event)
     query_img_event.set()
 
 
-def cb_standalone_chunk_ind(devName, event):
+def cb_standalone_chunk_ind(_, event):
     global last_offset, block_len
 
     print_event(dev, event)

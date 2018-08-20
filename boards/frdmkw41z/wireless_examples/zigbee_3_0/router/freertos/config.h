@@ -70,6 +70,9 @@ CONFIG APPLICATION
 #define gKBD_TsiElectdCount_c 0
 #define gKBD_KeysCount_c 2
 #endif
+
+#define BDB_SET_DEFAULT_TC_POLICY TRUE
+#define BDB_JOIN_USES_INSTALL_CODE_KEY TRUE
 /************************************************************************************
 *
 *       CONFIG STACK

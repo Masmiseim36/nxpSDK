@@ -1,24 +1,26 @@
-/*
+/*! *********************************************************************************
 * The Clear BSD License
-* Copyright (c) 2013-2015, Freescale Semiconductor, Inc.
-* Copyright 2016-2017 NXP
+* Copyright 2013-2015, Freescale Semiconductor, Inc.
+* Copyright 2016-2018 NXP
 * All rights reserved.
 *
+* \file
+*
 * Redistribution and use in source and binary forms, with or without
-* modification, are permitted (subject to the limitations in the
-* disclaimer below) provided that the following conditions are met:
-* 
-* * Redistributions of source code must retain the above copyright
-*   notice, this list of conditions and the following disclaimer.
-* 
-* * Redistributions in binary form must reproduce the above copyright
-*   notice, this list of conditions and the following disclaimer in the
-*   documentation and/or other materials provided with the distribution.
-* 
-* * Neither the name of the copyright holder nor the names of its
-*   contributors may be used to endorse or promote products derived from
-*   this software without specific prior written permission.
-* 
+* modification, are permitted (subject to the limitations in the disclaimer
+* below) provided that the following conditions are met:
+*
+* * Redistributions of source code must retain the above copyright notice,
+*   this list of conditions and the following disclaimer.
+*
+* * Redistributions in binary form must reproduce the above copyright notice,
+*   this list of conditions and the following disclaimer in the documentation
+*   and/or other materials provided with the distribution.
+*
+* * Neither the name of the copyright holder nor the names of its contributors
+*   may be used to endorse or promote products derived from this software
+*   without specific prior written permission.
+*
 * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE
 * GRANTED BY THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT
 * HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
@@ -32,7 +34,7 @@
 * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
 * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+********************************************************************************** */
 
 /************************************************************************************
 *************************************************************************************
@@ -195,8 +197,6 @@ void BOARD_GetMCUUid(uint8_t* aOutUid16B, uint8_t* pOutLen);
 
 void hardware_init(void)
 {
-    uint32_t temp, tempTrim;
-    uint8_t revId;
     static uint8_t initialized = 0;
     
     if( !initialized )
@@ -221,34 +221,7 @@ void hardware_init(void)
         
         SIM->SCGC6 |= (SIM_SCGC6_DMAMUX_MASK); /* Enable clock to DMA_MUX (SIM module) */
         SIM->SCGC7 |= (SIM_SCGC7_DMA_MASK);
-        
-        /* Obtain REV ID from SIM */
-        revId = (uint8_t)((SIM->SDID & SIM_SDID_REVID_MASK) >> SIM_SDID_REVID_SHIFT);
-        
-        if(0 == revId)
-        {
-            tempTrim = RSIM->ANA_TRIM;
-            RSIM->ANA_TRIM |= RSIM_ANA_TRIM_BB_LDO_XO_TRIM_MASK; /* max trim for BB LDO for XO */
-        }
-        
-        /* Turn on clocks for the XCVR */
-        /* Enable RF OSC in RSIM and wait for ready */
-        temp = RSIM->CONTROL;
-        temp &= ~RSIM_CONTROL_RF_OSC_EN_MASK;
-        RSIM->CONTROL = temp | RSIM_CONTROL_RF_OSC_EN(1);
-        /* Prevent XTAL_OUT_EN from generating XTAL_OUT request */
-        RSIM->RF_OSC_CTRL |= RSIM_RF_OSC_CTRL_RADIO_EXT_OSC_OVRD_EN_MASK;
-        /* wait for RF_OSC_READY */
-        while((RSIM->CONTROL & RSIM_CONTROL_RF_OSC_READY_MASK) == 0) {}
-        
-        if(0 == revId)
-        {
-            SIM->SCGC5 |= SIM_SCGC5_PHYDIG_MASK;
-            XCVR_TSM->OVRD0 |= XCVR_TSM_OVRD0_BB_LDO_ADCDAC_EN_OVRD_EN_MASK | XCVR_TSM_OVRD0_BB_LDO_ADCDAC_EN_OVRD_MASK; /* Force ADC DAC LDO on to prevent BGAP failure */
-            /* Reset LDO trim settings */
-            RSIM->ANA_TRIM = tempTrim;
-        }/* Workaround for Rev 1.0 XTAL startup and ADC analog diagnostics circuitry */
-        
+
         /* Init board clock */
         BOARD_BootClockRUN();
         

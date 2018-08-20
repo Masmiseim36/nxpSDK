@@ -101,10 +101,10 @@
     #define TRACE_REMOTE_NODE   FALSE
 #endif
 
-#ifndef DEBUG_CLASSIC_JOIN
-#define TRACE_CLASSIC FALSE
-#else
+#ifdef DEBUG_CLASSIC_JOIN
 #define TRACE_CLASSIC TRUE
+#else
+#define TRACE_CLASSIC FALSE
 #endif
 
 #ifdef DEBUG_LIGHT_AGE
@@ -113,16 +113,16 @@
 #define TRACE_LIGHT_AGE   FALSE
 #endif
 
-#ifndef DEBUG_SLEEP
-#define TRACE_SLEEP FALSE
-#else
+#ifdef DEBUG_SLEEP
 #define TRACE_SLEEP TRUE
+#else
+#define TRACE_SLEEP FALSE
 #endif
 
-#ifndef DEBUG_REJOIN
-#define TRACE_REJOIN FALSE
-#else
+#ifdef DEBUG_REJOIN
 #define TRACE_REJOIN TRUE
+#else
+#define TRACE_REJOIN FALSE
 #endif
 
 /* ZDO endpoint for all devices is always 0 */
@@ -258,10 +258,11 @@ PUBLIC void APP_vInitialiseNode(void)
     PDM_eReadDataFromRecord(PDM_ID_APP_GROUP_TABLE, &sGroupTable, sizeof(tsZllGroupInfoTable), &u16BytesRead);
 
     /* Initialise ZBPro stack */
-    ZPS_eAplAfInit();
+    ZPS_psAplAibGetAib()->bUseInstallCode = BDB_JOIN_USES_INSTALL_CODE_KEY;
 #ifdef CPU_MKW41Z512VHT4
     APP_vSetMacAddr();
 #endif
+    ZPS_eAplAfInit();
 
     APP_ZCL_vInitialise();
 

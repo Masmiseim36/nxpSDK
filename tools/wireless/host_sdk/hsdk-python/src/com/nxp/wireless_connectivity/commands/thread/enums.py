@@ -791,16 +791,16 @@ class NWKU_McastGroupManageRequestAction(GenericEnum):
     LeaveGroup = 0x02
 
 
-class SerialTun_LinkIndicationRequestState(GenericEnum):
-
-    Down = 0x00
-    Up = 0x01
-
-
 class NWKU_RoutesManageRequestAction(GenericEnum):
 
     Add = 0x01
     Remove = 0x02
+
+
+class SerialTun_LinkIndicationRequestState(GenericEnum):
+
+    Down = 0x00
+    Up = 0x01
 
 
 class Sniffer_MacSetPIBAttributeRequestPIBAttribute(GenericEnum):

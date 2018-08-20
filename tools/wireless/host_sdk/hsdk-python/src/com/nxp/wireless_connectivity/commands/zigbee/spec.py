@@ -49,6 +49,7 @@ class Spec(object):
         self.SetDeviceTypeFrame = self.InitSetDeviceType()
         self.StartNetworkMessageFrame = self.InitStartNetworkMessage()
         self.StartNetworkScanFrame = self.InitStartNetworkScan()
+        self.CodeFrame = self.InitCode()
         self.ZLO_ZLLFactoryNewResetFrame = self.InitZLO_ZLLFactoryNewReset()
         self.PermitJoinStatusOnTheTargetFrame = self.InitPermitJoinStatusOnTheTarget()
         self.ResetFrame = self.InitReset()
@@ -101,22 +102,18 @@ class Spec(object):
         self.StoreSceneFrame = self.InitStoreScene()
         self.RecallSceneFrame = self.InitRecallScene()
         self.SceneMembershipRequestFrame = self.InitSceneMembershipRequest()
+        self.AddEnhancedSceneFrame = self.InitAddEnhancedScene()
+        self.ViewEnhancedSceneFrame = self.InitViewEnhancedScene()
+        self.CopySceneFrame = self.InitCopyScene()
         self.MoveToHueFrame = self.InitMoveToHue()
         self.MoveHueFrame = self.InitMoveHue()
         self.StepHueFrame = self.InitStepHue()
         self.MoveToSaturationFrame = self.InitMoveToSaturation()
         self.MoveSaturationFrame = self.InitMoveSaturation()
-        self.StepsaturationFrame = self.InitStepsaturation()
+        self.StepSaturationFrame = self.InitStepSaturation()
         self.MoveToHueAndSaturationFrame = self.InitMoveToHueAndSaturation()
         self.MoveToColourFrame = self.InitMoveToColour()
         self.MoveColourFrame = self.InitMoveColour()
-        self.StepColourFrame = self.InitStepColour()
-        self.InitiateTouchlinkFrame = self.InitInitiateTouchlink()
-        self.TouchLinkFactoryResetTargetFrame = self.InitTouchLinkFactoryResetTarget()
-        self.OnOffNoEffectsFrame = self.InitOnOffNoEffects()
-        self.AddEnhancedSceneFrame = self.InitAddEnhancedScene()
-        self.ViewEnhancedSceneFrame = self.InitViewEnhancedScene()
-        self.CopySceneFrame = self.InitCopyScene()
         self.EnhancedMoveToHueFrame = self.InitEnhancedMoveToHue()
         self.EnhancedMoveHueFrame = self.InitEnhancedMoveHue()
         self.EnhancedStepHueFrame = self.InitEnhancedStepHue()
@@ -126,6 +123,8 @@ class Spec(object):
         self.MoveToColourTemperatureFrame = self.InitMoveToColourTemperature()
         self.MoveColourTemperatureFrame = self.InitMoveColourTemperature()
         self.StepColourTemperatureFrame = self.InitStepColourTemperature()
+        self.InitiateTouchlinkFrame = self.InitInitiateTouchlink()
+        self.TouchLinkFactoryResetTargetFrame = self.InitTouchLinkFactoryResetTarget()
         self.LockUnlockDoorFrame = self.InitLockUnlockDoor()
         self.IASZoneEnrollResponseFrame = self.InitIASZoneEnrollResponse()
         self.RawAPSDataRequestFrame = self.InitRawAPSDataRequest()
@@ -144,6 +143,7 @@ class Spec(object):
         self.UnbindResponseFrame = self.InitUnbindResponse()
         self.NetworkAddressResponseFrame = self.InitNetworkAddressResponse()
         self.IEEEAddressResponseFrame = self.InitIEEEAddressResponse()
+        self.NodeDescriptorResponseFrame = self.InitNodeDescriptorResponse()
         self.SimpleDescriptorResponseFrame = self.InitSimpleDescriptorResponse()
         self.PowerDescriptorResponseFrame = self.InitPowerDescriptorResponse()
         self.ActiveEndpointResponseFrame = self.InitActiveEndpointResponse()
@@ -156,7 +156,10 @@ class Spec(object):
         self.LeaveIndicationFrame = self.InitLeaveIndication()
         self.ManagementNetworkUpdateResponseFrame = self.InitManagementNetworkUpdateResponse()
         self.SystemServerDiscoveryResponseFrame = self.InitSystemServerDiscoveryResponse()
+        self.ManagementLQIResponseFrame = self.InitManagementLQIResponse()
+        self.AttributeDiscoveryResponseFrame = self.InitAttributeDiscoveryResponse()
         self.AuthenticateResponseFrame = self.InitAuthenticateResponse()
+        self.CodeResponseFrame = self.InitCodeResponse()
         self.ConfigureReportingResponseFrame = self.InitConfigureReportingResponse()
         self.ReadIndividualAttributeResponseFrame = self.InitReadIndividualAttributeResponse()
         self.WriteAttributeResponseFrame = self.InitWriteAttributeResponse()
@@ -167,7 +170,9 @@ class Spec(object):
         self.GetGroupMembershipResponseFrame = self.InitGetGroupMembershipResponse()
         self.RemoveGroupResponseFrame = self.InitRemoveGroupResponse()
         self.ViewSceneResponseFrame = self.InitViewSceneResponse()
+        self.ViewEnhancedSceneResponseFrame = self.InitViewEnhancedSceneResponse()
         self.AddSceneResponseFrame = self.InitAddSceneResponse()
+        self.CopySceneResponseFrame = self.InitCopySceneResponse()
         self.RemoveSceneResponseFrame = self.InitRemoveSceneResponse()
         self.RemoveAllSceneResponseFrame = self.InitRemoveAllSceneResponse()
         self.AddEnhancedSceneResponseFrame = self.InitAddEnhancedSceneResponse()
@@ -218,6 +223,14 @@ class Spec(object):
     def InitStartNetworkScan(self):
         cmdParams = []
         return FsciFrameDescription(0x37, 0x25, cmdParams)
+
+    def InitCode(self):
+        cmdParams = []
+        TargetExtendedAddress = FsciParameter("TargetExtendedAddress", 8)
+        cmdParams.append(TargetExtendedAddress)
+        Code = FsciParameter("Code", 16)
+        cmdParams.append(Code)
+        return FsciFrameDescription(0x37, 0x29, cmdParams)
 
     def InitZLO_ZLLFactoryNewReset(self):
         cmdParams = []
@@ -965,6 +978,72 @@ class Spec(object):
         cmdParams.append(GroupID)
         return FsciFrameDescription(0x37, 0xA6, cmdParams)
 
+    def InitAddEnhancedScene(self):
+        cmdParams = []
+        AddressMode = FsciParameter("AddressMode", 1)
+        cmdParams.append(AddressMode)
+        TargetShortAddress = FsciParameter("TargetShortAddress", 2)
+        cmdParams.append(TargetShortAddress)
+        SourceEndPoint = FsciParameter("SourceEndPoint", 1)
+        cmdParams.append(SourceEndPoint)
+        DestinationEndPoint = FsciParameter("DestinationEndPoint", 1)
+        cmdParams.append(DestinationEndPoint)
+        GroupID = FsciParameter("GroupID", 2)
+        cmdParams.append(GroupID)
+        SceneID = FsciParameter("SceneID", 1)
+        cmdParams.append(SceneID)
+        TransitionTime = FsciParameter("TransitionTime", 2)
+        cmdParams.append(TransitionTime)
+        SceneNameLength = FsciParameter("SceneNameLength", 1)
+        cmdParams.append(SceneNameLength)
+        SceneNameData = FsciParameter("SceneNameData", 1, SceneNameLength)
+        cmdParams.append(SceneNameData)
+        Length = FsciParameter("Length", 1)
+        cmdParams.append(Length)
+        MaxLength = FsciParameter("MaxLength", 1)
+        cmdParams.append(MaxLength)
+        ExtensionFieldSets = FsciParameter("ExtensionFieldSets", 1, Length)
+        cmdParams.append(ExtensionFieldSets)
+        return FsciFrameDescription(0x37, 0xA7, cmdParams)
+
+    def InitViewEnhancedScene(self):
+        cmdParams = []
+        AddressMode = FsciParameter("AddressMode", 1)
+        cmdParams.append(AddressMode)
+        TargetShortAddress = FsciParameter("TargetShortAddress", 2)
+        cmdParams.append(TargetShortAddress)
+        SourceEndPoint = FsciParameter("SourceEndPoint", 1)
+        cmdParams.append(SourceEndPoint)
+        DestinationEndPoint = FsciParameter("DestinationEndPoint", 1)
+        cmdParams.append(DestinationEndPoint)
+        GroupID = FsciParameter("GroupID", 2)
+        cmdParams.append(GroupID)
+        SceneID = FsciParameter("SceneID", 1)
+        cmdParams.append(SceneID)
+        return FsciFrameDescription(0x37, 0xA8, cmdParams)
+
+    def InitCopyScene(self):
+        cmdParams = []
+        AddressMode = FsciParameter("AddressMode", 1)
+        cmdParams.append(AddressMode)
+        TargetShortAddress = FsciParameter("TargetShortAddress", 2)
+        cmdParams.append(TargetShortAddress)
+        SourceEndPoint = FsciParameter("SourceEndPoint", 1)
+        cmdParams.append(SourceEndPoint)
+        DestinationEndPoint = FsciParameter("DestinationEndPoint", 1)
+        cmdParams.append(DestinationEndPoint)
+        Mode = FsciParameter("Mode", 1)
+        cmdParams.append(Mode)
+        FromGroupID = FsciParameter("FromGroupID", 2)
+        cmdParams.append(FromGroupID)
+        FromSceneID = FsciParameter("FromSceneID", 1)
+        cmdParams.append(FromSceneID)
+        ToGroupID = FsciParameter("ToGroupID", 2)
+        cmdParams.append(ToGroupID)
+        ToSceneID = FsciParameter("ToSceneID", 1)
+        cmdParams.append(ToSceneID)
+        return FsciFrameDescription(0x37, 0xA9, cmdParams)
+
     def InitMoveToHue(self):
         cmdParams = []
         AddressMode = FsciParameter("AddressMode", 1)
@@ -1049,7 +1128,7 @@ class Spec(object):
         cmdParams.append(Rate)
         return FsciFrameDescription(0x37, 0xB4, cmdParams)
 
-    def InitStepsaturation(self):
+    def InitStepSaturation(self):
         cmdParams = []
         AddressMode = FsciParameter("AddressMode", 1)
         cmdParams.append(AddressMode)
@@ -1118,112 +1197,6 @@ class Spec(object):
         ColorY = FsciParameter("ColorY", 2)
         cmdParams.append(ColorY)
         return FsciFrameDescription(0x37, 0xB8, cmdParams)
-
-    def InitStepColour(self):
-        cmdParams = []
-        AddressMode = FsciParameter("AddressMode", 1)
-        cmdParams.append(AddressMode)
-        TargetShortAddress = FsciParameter("TargetShortAddress", 2)
-        cmdParams.append(TargetShortAddress)
-        SourceEndPoint = FsciParameter("SourceEndPoint", 1)
-        cmdParams.append(SourceEndPoint)
-        DestinationEndPoint = FsciParameter("DestinationEndPoint", 1)
-        cmdParams.append(DestinationEndPoint)
-        ColorX = FsciParameter("ColorX", 2)
-        cmdParams.append(ColorX)
-        ColorY = FsciParameter("ColorY", 2)
-        cmdParams.append(ColorY)
-        TransitionTime = FsciParameter("TransitionTime", 2)
-        cmdParams.append(TransitionTime)
-        return FsciFrameDescription(0x37, 0xB7, cmdParams)
-
-    def InitInitiateTouchlink(self):
-        cmdParams = []
-        return FsciFrameDescription(0x37, 0xD0, cmdParams)
-
-    def InitTouchLinkFactoryResetTarget(self):
-        cmdParams = []
-        return FsciFrameDescription(0x37, 0xD2, cmdParams)
-
-    def InitOnOffNoEffects(self):
-        cmdParams = []
-        AddressMode = FsciParameter("AddressMode", 1)
-        cmdParams.append(AddressMode)
-        TargetShortAddress = FsciParameter("TargetShortAddress", 2)
-        cmdParams.append(TargetShortAddress)
-        SourceEndPoint = FsciParameter("SourceEndPoint", 1)
-        cmdParams.append(SourceEndPoint)
-        DestinationEndPoint = FsciParameter("DestinationEndPoint", 1)
-        cmdParams.append(DestinationEndPoint)
-        CommandID = FsciParameter("CommandID", 1)
-        cmdParams.append(CommandID)
-        return FsciFrameDescription(0x37, 0x92, cmdParams)
-
-    def InitAddEnhancedScene(self):
-        cmdParams = []
-        AddressMode = FsciParameter("AddressMode", 1)
-        cmdParams.append(AddressMode)
-        TargetShortAddress = FsciParameter("TargetShortAddress", 2)
-        cmdParams.append(TargetShortAddress)
-        SourceEndPoint = FsciParameter("SourceEndPoint", 1)
-        cmdParams.append(SourceEndPoint)
-        DestinationEndPoint = FsciParameter("DestinationEndPoint", 1)
-        cmdParams.append(DestinationEndPoint)
-        GroupID = FsciParameter("GroupID", 2)
-        cmdParams.append(GroupID)
-        SceneID = FsciParameter("SceneID", 1)
-        cmdParams.append(SceneID)
-        TransitionTime = FsciParameter("TransitionTime", 2)
-        cmdParams.append(TransitionTime)
-        SceneNameLength = FsciParameter("SceneNameLength", 1)
-        cmdParams.append(SceneNameLength)
-        SceneNameData = FsciParameter("SceneNameData", 1, SceneNameLength)
-        cmdParams.append(SceneNameData)
-        Length = FsciParameter("Length", 1)
-        cmdParams.append(Length)
-        MaxLength = FsciParameter("MaxLength", 1)
-        cmdParams.append(MaxLength)
-        ExtensionFieldSets = FsciParameter("ExtensionFieldSets", 1, Length)
-        cmdParams.append(ExtensionFieldSets)
-        return FsciFrameDescription(0x37, 0xA7, cmdParams)
-
-    def InitViewEnhancedScene(self):
-        cmdParams = []
-        AddressMode = FsciParameter("AddressMode", 1)
-        cmdParams.append(AddressMode)
-        TargetShortAddress = FsciParameter("TargetShortAddress", 2)
-        cmdParams.append(TargetShortAddress)
-        SourceEndPoint = FsciParameter("SourceEndPoint", 1)
-        cmdParams.append(SourceEndPoint)
-        DestinationEndPoint = FsciParameter("DestinationEndPoint", 1)
-        cmdParams.append(DestinationEndPoint)
-        GroupID = FsciParameter("GroupID", 2)
-        cmdParams.append(GroupID)
-        SceneID = FsciParameter("SceneID", 1)
-        cmdParams.append(SceneID)
-        return FsciFrameDescription(0x37, 0xA8, cmdParams)
-
-    def InitCopyScene(self):
-        cmdParams = []
-        AddressMode = FsciParameter("AddressMode", 1)
-        cmdParams.append(AddressMode)
-        TargetShortAddress = FsciParameter("TargetShortAddress", 2)
-        cmdParams.append(TargetShortAddress)
-        SourceEndPoint = FsciParameter("SourceEndPoint", 1)
-        cmdParams.append(SourceEndPoint)
-        DestinationEndPoint = FsciParameter("DestinationEndPoint", 1)
-        cmdParams.append(DestinationEndPoint)
-        Mode = FsciParameter("Mode", 1)
-        cmdParams.append(Mode)
-        FromGroupID = FsciParameter("FromGroupID", 2)
-        cmdParams.append(FromGroupID)
-        FromSceneID = FsciParameter("FromSceneID", 1)
-        cmdParams.append(FromSceneID)
-        ToGroupID = FsciParameter("ToGroupID", 2)
-        cmdParams.append(ToGroupID)
-        ToSceneID = FsciParameter("ToSceneID", 1)
-        cmdParams.append(ToSceneID)
-        return FsciFrameDescription(0x37, 0xA9, cmdParams)
 
     def InitEnhancedMoveToHue(self):
         cmdParams = []
@@ -1327,16 +1300,10 @@ class Spec(object):
         cmdParams.append(SourceEndPoint)
         DestinationEndPoint = FsciParameter("DestinationEndPoint", 1)
         cmdParams.append(DestinationEndPoint)
-        UpdateFlags = FsciParameter("UpdateFlags", 1)
-        cmdParams.append(UpdateFlags)
-        Action = FsciParameter("Action", 1)
-        cmdParams.append(Action)
-        Direction = FsciParameter("Direction", 1)
-        cmdParams.append(Direction)
-        Time = FsciParameter("Time", 1)
-        cmdParams.append(Time)
-        StartHue = FsciParameter("StartHue", 4)
-        cmdParams.append(StartHue)
+        OptionsMask = FsciParameter("OptionsMask", 1)
+        cmdParams.append(OptionsMask)
+        OptionsOverride = FsciParameter("OptionsOverride", 1)
+        cmdParams.append(OptionsOverride)
         return FsciFrameDescription(0x37, 0xBF, cmdParams)
 
     def InitMoveToColourTemperature(self):
@@ -1399,7 +1366,19 @@ class Spec(object):
         cmdParams.append(MinimumTemperature)
         MaximumTemperature = FsciParameter("MaximumTemperature", 2)
         cmdParams.append(MaximumTemperature)
+        OptionsMask = FsciParameter("OptionsMask", 1)
+        cmdParams.append(OptionsMask)
+        OptionsOverride = FsciParameter("OptionsOverride", 1)
+        cmdParams.append(OptionsOverride)
         return FsciFrameDescription(0x37, 0xC2, cmdParams)
+
+    def InitInitiateTouchlink(self):
+        cmdParams = []
+        return FsciFrameDescription(0x37, 0xD0, cmdParams)
+
+    def InitTouchLinkFactoryResetTarget(self):
+        cmdParams = []
+        return FsciFrameDescription(0x37, 0xD2, cmdParams)
 
     def InitLockUnlockDoor(self):
         cmdParams = []
@@ -1629,7 +1608,7 @@ class Spec(object):
         cmdParams.append(Status)
         IEEEAddress = FsciParameter("IEEEAddress", 8)
         cmdParams.append(IEEEAddress)
-        ShortAddress = FsciParameter("ShortAddress", 1)
+        ShortAddress = FsciParameter("ShortAddress", 2)
         cmdParams.append(ShortAddress)
         NumberOfAssociatedDevices = FsciParameter("NumberOfAssociatedDevices", 1)
         cmdParams.append(NumberOfAssociatedDevices)
@@ -1653,9 +1632,35 @@ class Spec(object):
         cmdParams.append(NumberOfAssociatedDevices)
         StartIndex = FsciParameter("StartIndex", 1)
         cmdParams.append(StartIndex)
-        DeviceList = FsciParameter("DeviceList", 2)
+        DeviceList = FsciParameter("DeviceList", 2, NumberOfAssociatedDevices)
         cmdParams.append(DeviceList)
         return FsciFrameDescription(0xB7, 0x41, cmdParams)
+
+    def InitNodeDescriptorResponse(self):
+        cmdParams = []
+        SequenceNumber = FsciParameter("SequenceNumber", 1)
+        cmdParams.append(SequenceNumber)
+        Status = FsciParameter("Status", 1)
+        cmdParams.append(Status)
+        NetworkAddress = FsciParameter("NetworkAddress", 2)
+        cmdParams.append(NetworkAddress)
+        ManufacturerCode = FsciParameter("ManufacturerCode", 2)
+        cmdParams.append(ManufacturerCode)
+        MaxRxSize = FsciParameter("MaxRxSize", 2)
+        cmdParams.append(MaxRxSize)
+        MaxTxSize = FsciParameter("MaxTxSize", 2)
+        cmdParams.append(MaxTxSize)
+        ServerMask = FsciParameter("ServerMask", 2)
+        cmdParams.append(ServerMask)
+        DescriptorCapability = FsciParameter("DescriptorCapability", 1)
+        cmdParams.append(DescriptorCapability)
+        MacCapability = FsciParameter("MacCapability", 1)
+        cmdParams.append(MacCapability)
+        MaxBufferSize = FsciParameter("MaxBufferSize", 1)
+        cmdParams.append(MaxBufferSize)
+        BitFields = FsciParameter("BitFields", 2)
+        cmdParams.append(BitFields)
+        return FsciFrameDescription(0xB7, 0x42, cmdParams)
 
     def InitSimpleDescriptorResponse(self):
         cmdParams = []
@@ -1819,6 +1824,42 @@ class Spec(object):
         cmdParams.append(ServerMask)
         return FsciFrameDescription(0xB7, 0x4B, cmdParams)
 
+    def InitManagementLQIResponse(self):
+        cmdParams = []
+        SequenceNumber = FsciParameter("SequenceNumber", 1)
+        cmdParams.append(SequenceNumber)
+        Status = FsciParameter("Status", 1)
+        cmdParams.append(Status)
+        NeighbourTableEntries = FsciParameter("NeighbourTableEntries", 1)
+        cmdParams.append(NeighbourTableEntries)
+        NeighbourTableListCount = FsciParameter("NeighbourTableListCount", 1)
+        cmdParams.append(NeighbourTableListCount)
+        StartIndex = FsciParameter("StartIndex", 1)
+        cmdParams.append(StartIndex)
+        ListOfEntries_NWKAddress = FsciParameter("ListOfEntries_NWKAddress", 2)
+        cmdParams.append(ListOfEntries_NWKAddress)
+        ListOfEntries_ExtendedPANID = FsciParameter("ListOfEntries_ExtendedPANID", 8)
+        cmdParams.append(ListOfEntries_ExtendedPANID)
+        ListOfEntries_IEEEAddress = FsciParameter("ListOfEntries_IEEEAddress", 8)
+        cmdParams.append(ListOfEntries_IEEEAddress)
+        ListOfEntries_Depth = FsciParameter("ListOfEntries_Depth", 1)
+        cmdParams.append(ListOfEntries_Depth)
+        ListOfEntries_LinkQuality = FsciParameter("ListOfEntries_LinkQuality", 1)
+        cmdParams.append(ListOfEntries_LinkQuality)
+        ListOfEntries_BitMapOfAttributes = FsciParameter("ListOfEntries_BitMapOfAttributes", 1)
+        cmdParams.append(ListOfEntries_BitMapOfAttributes)
+        return FsciFrameDescription(0xB7, 0x4E, cmdParams)
+
+    def InitAttributeDiscoveryResponse(self):
+        cmdParams = []
+        Complete = FsciParameter("Complete", 1)
+        cmdParams.append(Complete)
+        AttributeType = FsciParameter("AttributeType", 1)
+        cmdParams.append(AttributeType)
+        AttributeID = FsciParameter("AttributeID", 2)
+        cmdParams.append(AttributeID)
+        return FsciFrameDescription(0xB8, 0x40, cmdParams)
+
     def InitAuthenticateResponse(self):
         cmdParams = []
         IEEEAddressOfTtheGateway = FsciParameter("IEEEAddressOfTtheGateway", 8)
@@ -1839,6 +1880,12 @@ class Spec(object):
         cmdParams.append(ExtendedPANID)
         return FsciFrameDescription(0xB7, 0x28, cmdParams)
 
+    def InitCodeResponse(self):
+        cmdParams = []
+        Status = FsciParameter("Status", 1)
+        cmdParams.append(Status)
+        return FsciFrameDescription(0xB7, 0x29, cmdParams)
+
     def InitConfigureReportingResponse(self):
         cmdParams = []
         SequenceNumber = FsciParameter("SequenceNumber", 1)
@@ -1851,7 +1898,7 @@ class Spec(object):
         cmdParams.append(ClusterID)
         Status = FsciParameter("Status", 1)
         cmdParams.append(Status)
-        return FsciFrameDescription(0xB7, 0x00, cmdParams)
+        return FsciFrameDescription(0xB8, 0x20, cmdParams)
 
     def InitReadIndividualAttributeResponse(self):
         cmdParams = []
@@ -2011,7 +2058,7 @@ class Spec(object):
         cmdParams.append(SceneNameLength)
         SceneNameMaxLength = FsciParameter("SceneNameMaxLength", 1)
         cmdParams.append(SceneNameMaxLength)
-        SceneNameData = FsciParameter("SceneNameData", 1)
+        SceneNameData = FsciParameter("SceneNameData", 1, SceneNameLength)
         cmdParams.append(SceneNameData)
         ExtensionsLength = FsciParameter("ExtensionsLength", 2)
         cmdParams.append(ExtensionsLength)
@@ -2020,6 +2067,36 @@ class Spec(object):
         ExtensionsData = FsciParameter("ExtensionsData", 1, ExtensionsMaxLength)
         cmdParams.append(ExtensionsData)
         return FsciFrameDescription(0xB7, 0xA0, cmdParams)
+
+    def InitViewEnhancedSceneResponse(self):
+        cmdParams = []
+        SequenceNumber = FsciParameter("SequenceNumber", 1)
+        cmdParams.append(SequenceNumber)
+        Endpoint = FsciParameter("Endpoint", 1)
+        cmdParams.append(Endpoint)
+        ClusterID = FsciParameter("ClusterID", 2)
+        cmdParams.append(ClusterID)
+        Status = FsciParameter("Status", 1)
+        cmdParams.append(Status)
+        GroupID = FsciParameter("GroupID", 2)
+        cmdParams.append(GroupID)
+        SceneID = FsciParameter("SceneID", 1)
+        cmdParams.append(SceneID)
+        TransitionTime = FsciParameter("TransitionTime", 2)
+        cmdParams.append(TransitionTime)
+        SceneNameLength = FsciParameter("SceneNameLength", 1)
+        cmdParams.append(SceneNameLength)
+        SceneNameMaxLength = FsciParameter("SceneNameMaxLength", 1)
+        cmdParams.append(SceneNameMaxLength)
+        SceneNameData = FsciParameter("SceneNameData", 1, SceneNameLength)
+        cmdParams.append(SceneNameData)
+        ExtensionsLength = FsciParameter("ExtensionsLength", 2)
+        cmdParams.append(ExtensionsLength)
+        ExtensionsMaxLength = FsciParameter("ExtensionsMaxLength", 2)
+        cmdParams.append(ExtensionsMaxLength)
+        ExtensionsData = FsciParameter("ExtensionsData", 1, ExtensionsLength)
+        cmdParams.append(ExtensionsData)
+        return FsciFrameDescription(0xB7, 0xA8, cmdParams)
 
     def InitAddSceneResponse(self):
         cmdParams = []
@@ -2036,6 +2113,22 @@ class Spec(object):
         SceneID = FsciParameter("SceneID", 1)
         cmdParams.append(SceneID)
         return FsciFrameDescription(0xB7, 0xA1, cmdParams)
+
+    def InitCopySceneResponse(self):
+        cmdParams = []
+        SequenceNumber = FsciParameter("SequenceNumber", 1)
+        cmdParams.append(SequenceNumber)
+        Endpoint = FsciParameter("Endpoint", 1)
+        cmdParams.append(Endpoint)
+        ClusterID = FsciParameter("ClusterID", 2)
+        cmdParams.append(ClusterID)
+        Status = FsciParameter("Status", 1)
+        cmdParams.append(Status)
+        FromGroupID = FsciParameter("FromGroupID", 2)
+        cmdParams.append(FromGroupID)
+        FromSceneID = FsciParameter("FromSceneID", 1)
+        cmdParams.append(FromSceneID)
+        return FsciFrameDescription(0xB7, 0xA9, cmdParams)
 
     def InitRemoveSceneResponse(self):
         cmdParams = []
@@ -2125,7 +2218,7 @@ class Spec(object):
         cmdParams.append(Status)
         JoinedNodeShortAddress = FsciParameter("JoinedNodeShortAddress", 2)
         cmdParams.append(JoinedNodeShortAddress)
-        return FsciFrameDescription(0xB7, 0xA6, cmdParams)
+        return FsciFrameDescription(0xB7, 0xD1, cmdParams)
 
     def InitZoneStatusChangeNotification(self):
         cmdParams = []

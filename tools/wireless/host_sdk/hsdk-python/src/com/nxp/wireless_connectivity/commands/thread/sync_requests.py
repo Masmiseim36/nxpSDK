@@ -762,6 +762,7 @@ def SocketSendTo(
     device,
     SocketIndex=bytearray(1),
     Flags=SocketSendToRequestFlags(),
+    SecuredMACData=False,
     Size=bytearray(2),
     RemotePort=bytearray(2),
     # Unit length: 16 bytes
@@ -772,7 +773,7 @@ def SocketSendTo(
     protocol=Protocol.Thread,
     timeout=3
 ):
-    request = Frames.SocketSendToRequest(SocketIndex, Flags, Size, RemotePort, RemoteIpAddress, Data)
+    request = Frames.SocketSendToRequest(SocketIndex, Flags, SecuredMACData, Size, RemotePort, RemoteIpAddress, Data)
     return SocketSendToOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
 
 

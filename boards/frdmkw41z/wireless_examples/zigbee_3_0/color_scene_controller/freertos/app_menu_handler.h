@@ -55,10 +55,10 @@
 typedef enum
 {
     BUTTON_1,
-    BUTTON_SW1,
-    BUTTON_SW2,
-    BUTTON_SW3,
+    BUTTON_SW5,
     BUTTON_SW4,
+    BUTTON_SW3,
+    BUTTON_SW2,
     KEY_1 = 0x10,
     KEY_2,
     KEY_3,

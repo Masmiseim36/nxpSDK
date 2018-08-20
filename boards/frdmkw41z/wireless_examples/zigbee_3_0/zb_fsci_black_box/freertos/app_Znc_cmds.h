@@ -58,6 +58,7 @@ PUBLIC void vSendStatus ( uint8          u8Status,
                           const char*    pcMessage );
 
 PUBLIC void APP_vProcessIncomingSerialCommands ( uint8    u8RxByte );
+PUBLIC void vSetGroupAddress ( uint16 u16GroupStart, uint8 u8NumGroups);
 /****************************************************************************/
 /***        External Variables                                            ***/
 /****************************************************************************/

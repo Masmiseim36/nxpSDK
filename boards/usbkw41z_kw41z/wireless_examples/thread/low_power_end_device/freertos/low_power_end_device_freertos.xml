@@ -173,31 +173,34 @@
     <source path="devices/MKW41Z4/gcc" target_path="startup" type="src" toolchain="mcuxpresso">
       <files mask="startup_MKW41Z4.S"/>
     </source>
-    <source path="middleware/wireless/nwk_ip_1.2.5/examples/low_power_end_device/config" target_path="source" type="c_include">
+    <source path="middleware/wireless/nwk_ip_1.2.6/examples/low_power_end_device/config" target_path="source" type="c_include">
       <files mask="config.h"/>
     </source>
-    <source path="middleware/wireless/nwk_ip_1.2.5/examples/low_power_end_device/src" target_path="source" type="c_include">
+    <source path="middleware/wireless/nwk_ip_1.2.6/examples/low_power_end_device/src" target_path="source" type="c_include">
       <files mask="low_power_end_device_app.h"/>
     </source>
-    <source path="middleware/wireless/nwk_ip_1.2.5/examples/low_power_end_device/src" target_path="source" type="src">
+    <source path="middleware/wireless/nwk_ip_1.2.6/examples/low_power_end_device/src" target_path="source" type="src">
       <files mask="low_power_end_device_app.c"/>
     </source>
-    <source path="middleware/wireless/framework_5.3.5/SecLib" type="lib" method="copy" toolchain="mcuxpresso">
+    <source path="middleware/wireless/framework_5.3.6/SecLib" type="lib" method="copy" toolchain="mcuxpresso">
       <files mask="lib_crypto_m0.a"/>
     </source>
-    <source path="middleware/wireless/ieee_802_15_4_5.3.5/mac/lib" type="lib" method="copy" toolchain="mcuxpresso">
+    <source path="middleware/wireless/ieee_802_15_4_5.3.6/mac/lib" type="lib" method="copy" toolchain="mcuxpresso">
       <files mask="lib802.15.4_mac_thrrfd_cm0.a"/>
     </source>
-    <source path="middleware/wireless/nwk_ip_1.2.5/core/lib/thread" type="lib" method="copy" toolchain="mcuxpresso">
+    <source path="middleware/wireless/nwk_ip_1.2.6/core/lib/thread" type="lib" method="copy" toolchain="mcuxpresso">
       <files mask="lib_thread_ed_cm0.a"/>
     </source>
-    <source path="middleware/wireless/framework_5.3.5/SecLib" type="lib" method="copy" toolchain="iar">
+    <source path="devices/MKW41Z4/iar" target_path="startup" type="src" toolchain="iar">
+      <files mask="startup_MKW41Z4.s"/>
+    </source>
+    <source path="middleware/wireless/framework_5.3.6/SecLib" type="lib" method="copy" toolchain="iar">
       <files mask="lib_crypto_m0.a"/>
     </source>
-    <source path="middleware/wireless/ieee_802_15_4_5.3.5/mac/lib" type="lib" method="copy" toolchain="iar">
+    <source path="middleware/wireless/ieee_802_15_4_5.3.6/mac/lib" type="lib" method="copy" toolchain="iar">
       <files mask="lib802.15.4_mac_thrrfd_cm0.a"/>
     </source>
-    <source path="middleware/wireless/nwk_ip_1.2.5/core/lib/thread" type="lib" method="copy" toolchain="iar">
+    <source path="middleware/wireless/nwk_ip_1.2.6/core/lib/thread" type="lib" method="copy" toolchain="iar">
       <files mask="lib_thread_ed_cm0.a"/>
     </source>
   </example>

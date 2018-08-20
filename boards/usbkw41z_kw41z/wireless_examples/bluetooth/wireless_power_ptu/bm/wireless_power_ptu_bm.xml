@@ -175,22 +175,25 @@
     <source path="devices/MKW41Z4/gcc" target_path="startup" type="src" toolchain="mcuxpresso">
       <files mask="startup_MKW41Z4.S"/>
     </source>
-    <source path="middleware/wireless/bluetooth_1.2.5/controller/lib" type="lib" method="copy" toolchain="mcuxpresso">
+    <source path="middleware/wireless/bluetooth_1.2.6/controller/lib" type="lib" method="copy" toolchain="mcuxpresso">
       <files mask="lib_ble_kw41z_controller.a"/>
     </source>
-    <source path="middleware/wireless/bluetooth_1.2.5/host/lib" type="lib" method="copy" toolchain="mcuxpresso">
+    <source path="middleware/wireless/bluetooth_1.2.6/host/lib" type="lib" method="copy" toolchain="mcuxpresso">
       <files mask="lib_ble_4-2_host_central_cm0p.a"/>
     </source>
-    <source path="middleware/wireless/framework_5.3.5/SecLib" type="lib" method="copy" toolchain="mcuxpresso">
+    <source path="middleware/wireless/framework_5.3.6/SecLib" type="lib" method="copy" toolchain="mcuxpresso">
       <files mask="lib_crypto_m0.a"/>
     </source>
-    <source path="middleware/wireless/bluetooth_1.2.5/controller/lib" type="lib" method="copy" toolchain="iar">
+    <source path="devices/MKW41Z4/iar" target_path="startup" type="src" toolchain="iar">
+      <files mask="startup_MKW41Z4.s"/>
+    </source>
+    <source path="middleware/wireless/bluetooth_1.2.6/controller/lib" type="lib" method="copy" toolchain="iar">
       <files mask="lib_ble_kw41z_controller.a"/>
     </source>
-    <source path="middleware/wireless/bluetooth_1.2.5/host/lib" type="lib" method="copy" toolchain="iar">
+    <source path="middleware/wireless/bluetooth_1.2.6/host/lib" type="lib" method="copy" toolchain="iar">
       <files mask="lib_ble_4-2_host_central_cm0p.a"/>
     </source>
-    <source path="middleware/wireless/framework_5.3.5/SecLib" type="lib" method="copy" toolchain="iar">
+    <source path="middleware/wireless/framework_5.3.6/SecLib" type="lib" method="copy" toolchain="iar">
       <files mask="lib_crypto_m0.a"/>
     </source>
   </example>

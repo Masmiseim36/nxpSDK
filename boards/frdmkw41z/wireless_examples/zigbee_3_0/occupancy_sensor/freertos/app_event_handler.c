@@ -122,12 +122,12 @@ PUBLIC void vDioEventHandler(APP_teButtons eTransitionCode )
     switch(eTransitionCode)
     {
     /* Fall through for the button presses as there will be a delayed action*/
-    case APP_E_BUTTONS_BUTTON_SW1:
+    case APP_E_BUTTONS_BUTTON_SW5:
         occupancy_flag ^= 1;
         occupancy_flag == 1 ? vHandleFallingEdgeEvent() : vHandleRisingEdgeEvent();
         break;
 
-    case APP_E_BUTTONS_BUTTON_SW2:  /* Start/Stop Persistant Polling */
+    case APP_E_BUTTONS_BUTTON_SW4:  /* Start/Stop Persistant Polling */
         poll_flag ^= 1;
         poll_flag == 1 ? vStartPersistantPolling() : vStopPersistantPolling();
         break;
@@ -138,7 +138,7 @@ PUBLIC void vDioEventHandler(APP_teButtons eTransitionCode )
         sBDB.sAttrib.bTLStealNotAllowed = FALSE;
         break;
 
-    case APP_E_BUTTONS_BUTTON_SW4: /* Find and Bind */
+    case APP_E_BUTTONS_BUTTON_SW2: /* Find and Bind */
         vEventStartFindAndBind();
         break;
 

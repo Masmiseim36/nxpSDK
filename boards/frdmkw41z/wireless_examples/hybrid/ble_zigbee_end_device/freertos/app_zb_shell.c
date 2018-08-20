@@ -411,6 +411,15 @@ static int8_t SHELL_FormReq(uint8_t argc, char *argv[])
     {
         eStatus = BDB_eNfStartNwkFormation();
         APP_vPrintf("Nwk Formation %02x\r\n", eStatus);
+        if (eStatus != 0 && eStatus != 7)
+        {
+            APP_vPrintf("APP_EVENT: Formation Failed %02x\r\n", eStatus);
+        }
+        else
+        {
+            APP_vPrintf("APP-ZDO: Network started Channel = %d\r\n", ZPS_u8AplZdoGetRadioChannel());
+        } 
+        
     }
     return CMD_RET_SUCCESS;
 }

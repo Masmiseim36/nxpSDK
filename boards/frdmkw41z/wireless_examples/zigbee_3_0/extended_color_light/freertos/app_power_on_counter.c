@@ -57,10 +57,10 @@
 /****************************************************************************/
 /***        Macro Definitions                                             ***/
 /****************************************************************************/
-#ifndef DEBUG_POWER_ON_COUNTER
-    #define TRACE_POWER_ON_COUNTER   FALSE
-#else
+#ifdef DEBUG_POWER_ON_COUNTER
     #define TRACE_POWER_ON_COUNTER   TRUE
+#else
+    #define TRACE_POWER_ON_COUNTER   FALSE
 #endif
 
 #ifdef GP_CERITIFICATION_TEST

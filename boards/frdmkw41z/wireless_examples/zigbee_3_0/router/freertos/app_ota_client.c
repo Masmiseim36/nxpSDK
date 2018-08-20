@@ -69,10 +69,10 @@
 /****************************************************************************/
 #define OTA_LNT  FALSE
 
-#ifndef DEBUG_APP_OTA
-    #define TRACE_APP_OTA               FALSE
-#else
+#ifdef DEBUG_APP_OTA
     #define TRACE_APP_OTA               TRUE
+#else
+    #define TRACE_APP_OTA               FALSE
 #endif
 
 #define OTA_STARTUP_DELAY_IN_SEC 5

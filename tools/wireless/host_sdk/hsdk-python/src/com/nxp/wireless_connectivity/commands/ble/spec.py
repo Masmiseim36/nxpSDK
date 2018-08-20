@@ -43,7 +43,6 @@ from com.nxp.wireless_connectivity.hsdk.singleton import singleton
 class Spec(object):
 
     def __init__(self):
-        self.FSCICPUResetRequestFrame = self.InitFSCICPUResetRequest()
         self.HCIModeSelectRequestFrame = self.InitHCIModeSelectRequest()
         self.HCICommandRequestFrame = self.InitHCICommandRequest()
         self.HCIDataRequestFrame = self.InitHCIDataRequest()
@@ -53,6 +52,7 @@ class Spec(object):
         self.L2CAPConfigRequestFrame = self.InitL2CAPConfigRequest()
         self.L2CAPSendAttDataRequestFrame = self.InitL2CAPSendAttDataRequest()
         self.L2CAPSendSmpDataRequestFrame = self.InitL2CAPSendSmpDataRequest()
+        self.L2CAPSendSignalingDataRequestFrame = self.InitL2CAPSendSignalingDataRequest()
         self.L2CAPRegisterAttCallbackRequestFrame = self.InitL2CAPRegisterAttCallbackRequest()
         self.L2CAPRegisterSmpCallbackRequestFrame = self.InitL2CAPRegisterSmpCallbackRequest()
         self.L2CAPRegisterLePsmRequestFrame = self.InitL2CAPRegisterLePsmRequest()
@@ -89,6 +89,7 @@ class Spec(object):
         self.SMLeScOobDataRequestReplyRequestFrame = self.InitSMLeScOobDataRequestReplyRequest()
         self.SMLocalLeScOobDataRequestReqRequestFrame = self.InitSMLocalLeScOobDataRequestReqRequest()
         self.SMGenerateNewEcdhPkSkPairRequestFrame = self.InitSMGenerateNewEcdhPkSkPairRequest()
+        self.SMSetMinPairingSecurityPropertiesRequestFrame = self.InitSMSetMinPairingSecurityPropertiesRequest()
         self.ATTModeSelectRequestFrame = self.InitATTModeSelectRequest()
         self.ATTInitRequestFrame = self.InitATTInitRequest()
         self.ATTNotifyConnectionRequestFrame = self.InitATTNotifyConnectionRequest()
@@ -252,12 +253,25 @@ class Spec(object):
         self.GAPLeScSetPeerOobDataRequestFrame = self.InitGAPLeScSetPeerOobDataRequest()
         self.GAPLeScSendKeypressNotificationPrivacyRequestFrame = self.InitGAPLeScSendKeypressNotificationPrivacyRequest()
         self.GAPGetBondedDevicesIdentityInformationRequestFrame = self.InitGAPGetBondedDevicesIdentityInformationRequest()
+        self.GAPSetTxPowerLevelRequestFrame = self.InitGAPSetTxPowerLevelRequest()
+        self.FSCICPUResetRequestFrame = self.InitFSCICPUResetRequest()
         self.FSCIAllowDeviceToSleepRequestFrame = self.InitFSCIAllowDeviceToSleepRequest()
         self.FSCIGetWakeupReasonRequestFrame = self.InitFSCIGetWakeupReasonRequest()
+        self.FSCIAckIndicationFrame = self.InitFSCIAckIndication()
         self.FSCIErrorIndicationFrame = self.InitFSCIErrorIndication()
         self.FSCIAllowDeviceToSleepConfirmFrame = self.InitFSCIAllowDeviceToSleepConfirm()
         self.FSCIWakeUpIndicationFrame = self.InitFSCIWakeUpIndication()
         self.FSCIGetWakeupReasonResponseFrame = self.InitFSCIGetWakeupReasonResponse()
+        self.NVMSaveConfirmFrame = self.InitNVMSaveConfirm()
+        self.NVMGetDataSetDescConfirmFrame = self.InitNVMGetDataSetDescConfirm()
+        self.NVMGetCountersConfirmFrame = self.InitNVMGetCountersConfirm()
+        self.NVMSetMonitoringConfirmFrame = self.InitNVMSetMonitoringConfirm()
+        self.NVMWriteMonitoringIndicationFrame = self.InitNVMWriteMonitoringIndication()
+        self.NVMPageEraseMonitoringIndicationFrame = self.InitNVMPageEraseMonitoringIndication()
+        self.NVMFormatReqConfirmFrame = self.InitNVMFormatReqConfirm()
+        self.NVMRestoreReqConfirmFrame = self.InitNVMRestoreReqConfirm()
+        self.NVMRestoreMonitoringIndicationFrame = self.InitNVMRestoreMonitoringIndication()
+        self.NVMVirtualPageMonitoringIndicationFrame = self.InitNVMVirtualPageMonitoringIndication()
         self.HCIConfirmFrame = self.InitHCIConfirm()
         self.HCIEventIndicationFrame = self.InitHCIEventIndication()
         self.HCIDataIndicationFrame = self.InitHCIDataIndication()
@@ -265,6 +279,7 @@ class Spec(object):
         self.L2CAPConfirmFrame = self.InitL2CAPConfirm()
         self.L2CAPAttDataIndicationFrame = self.InitL2CAPAttDataIndication()
         self.L2CAPSmpDataIndicationFrame = self.InitL2CAPSmpDataIndication()
+        self.L2CAPSignalingDataIndicationFrame = self.InitL2CAPSignalingDataIndication()
         self.L2CAPLePsmConnectionRequestIndicationFrame = self.InitL2CAPLePsmConnectionRequestIndication()
         self.L2CAPLePsmConnectionCompleteIndicationFrame = self.InitL2CAPLePsmConnectionCompleteIndication()
         self.L2CAPLePsmDisconnectNotificationIndicationFrame = self.InitL2CAPLePsmDisconnectNotificationIndication()
@@ -435,12 +450,8 @@ class Spec(object):
         self.GAPLeScPublicKeyRegeneratedIndicationFrame = self.InitGAPLeScPublicKeyRegeneratedIndication()
         self.GAPGenericEventLeScLocalOobDataIndicationFrame = self.InitGAPGenericEventLeScLocalOobDataIndication()
         self.GAPGenericEventControllerPrivacyStateChangedIndicationFrame = self.InitGAPGenericEventControllerPrivacyStateChangedIndication()
+        self.GAPGenericEventTxPowerLevelSetCompleteIndicationFrame = self.InitGAPGenericEventTxPowerLevelSetCompleteIndication()
         self.GAPGetBondedDevicesIdentityInformationIndicationFrame = self.InitGAPGetBondedDevicesIdentityInformationIndication()
-
-
-    def InitFSCICPUResetRequest(self):
-        cmdParams = []
-        return FsciFrameDescription(0xA3, 0x08, cmdParams)
 
     def InitHCIModeSelectRequest(self):
         cmdParams = []
@@ -512,13 +523,23 @@ class Spec(object):
         cmdParams.append(Packet)
         return FsciFrameDescription(0x41, 0x04, cmdParams)
 
+    def InitL2CAPSendSignalingDataRequest(self):
+        cmdParams = []
+        DeviceId = FsciParameter("DeviceId", 1)
+        cmdParams.append(DeviceId)
+        PacketLength = FsciParameter("PacketLength", 2)
+        cmdParams.append(PacketLength)
+        Packet = FsciParameter("Packet", 1, PacketLength)
+        cmdParams.append(Packet)
+        return FsciFrameDescription(0x41, 0x05, cmdParams)
+
     def InitL2CAPRegisterAttCallbackRequest(self):
         cmdParams = []
-        return FsciFrameDescription(0x41, 0x05, cmdParams)
+        return FsciFrameDescription(0x41, 0x06, cmdParams)
 
     def InitL2CAPRegisterSmpCallbackRequest(self):
         cmdParams = []
-        return FsciFrameDescription(0x41, 0x06, cmdParams)
+        return FsciFrameDescription(0x41, 0x07, cmdParams)
 
     def InitL2CAPRegisterLePsmRequest(self):
         cmdParams = []
@@ -526,13 +547,13 @@ class Spec(object):
         cmdParams.append(LePsm)
         LePsmMtu = FsciParameter("LePsmMtu", 2)
         cmdParams.append(LePsmMtu)
-        return FsciFrameDescription(0x41, 0x07, cmdParams)
+        return FsciFrameDescription(0x41, 0x08, cmdParams)
 
     def InitL2CAPDeregisterLePsmRequest(self):
         cmdParams = []
         LePsm = FsciParameter("LePsm", 2)
         cmdParams.append(LePsm)
-        return FsciFrameDescription(0x41, 0x08, cmdParams)
+        return FsciFrameDescription(0x41, 0x09, cmdParams)
 
     def InitL2CAPConnectLePsmRequest(self):
         cmdParams = []
@@ -542,7 +563,7 @@ class Spec(object):
         cmdParams.append(DeviceId)
         InitialCredits = FsciParameter("InitialCredits", 2)
         cmdParams.append(InitialCredits)
-        return FsciFrameDescription(0x41, 0x09, cmdParams)
+        return FsciFrameDescription(0x41, 0x0A, cmdParams)
 
     def InitL2CAPDisconnectLeCbChannelRequest(self):
         cmdParams = []
@@ -550,7 +571,7 @@ class Spec(object):
         cmdParams.append(DeviceId)
         ChannelId = FsciParameter("ChannelId", 2)
         cmdParams.append(ChannelId)
-        return FsciFrameDescription(0x41, 0x0A, cmdParams)
+        return FsciFrameDescription(0x41, 0x0B, cmdParams)
 
     def InitL2CAPCancelConnectionRequest(self):
         cmdParams = []
@@ -560,7 +581,7 @@ class Spec(object):
         cmdParams.append(DeviceId)
         RefuseReason = FsciParameter("RefuseReason", 2)
         cmdParams.append(RefuseReason)
-        return FsciFrameDescription(0x41, 0x0B, cmdParams)
+        return FsciFrameDescription(0x41, 0x0C, cmdParams)
 
     def InitL2CAPSendLeCbDataRequest(self):
         cmdParams = []
@@ -572,7 +593,7 @@ class Spec(object):
         cmdParams.append(PacketLength)
         Packet = FsciParameter("Packet", 1, PacketLength)
         cmdParams.append(Packet)
-        return FsciFrameDescription(0x41, 0x0C, cmdParams)
+        return FsciFrameDescription(0x41, 0x0D, cmdParams)
 
     def InitL2CAPSendLeCreditRequest(self):
         cmdParams = []
@@ -582,7 +603,7 @@ class Spec(object):
         cmdParams.append(ChannelId)
         Credits = FsciParameter("Credits", 2)
         cmdParams.append(Credits)
-        return FsciFrameDescription(0x41, 0x0D, cmdParams)
+        return FsciFrameDescription(0x41, 0x0E, cmdParams)
 
     def InitSMModeSelectRequest(self):
         cmdParams = []
@@ -902,6 +923,16 @@ class Spec(object):
         cmdParams = []
         return FsciFrameDescription(0x42, 0x1A, cmdParams)
 
+    def InitSMSetMinPairingSecurityPropertiesRequest(self):
+        cmdParams = []
+        mitmProtection = FsciParameter("mitmProtection", 1)
+        cmdParams.append(mitmProtection)
+        leSc = FsciParameter("leSc", 1)
+        cmdParams.append(leSc)
+        minEncKeySize = FsciParameter("minEncKeySize", 1)
+        cmdParams.append(minEncKeySize)
+        return FsciFrameDescription(0x42, 0x1B, cmdParams)
+
     def InitATTModeSelectRequest(self):
         cmdParams = []
         Enable = FsciParameter("Enable", 1)
@@ -1035,14 +1066,7 @@ class Spec(object):
 
     def InitATTServerSendFindByTypeValueResponseRequest(self):
         cmdParams = []
-        DeviceId = FsciParameter("DeviceId", 1)
-        cmdParams.append(DeviceId)
-        Params_GroupCount = FsciParameter("Params_GroupCount", 2)
-        cmdParams.append(Params_GroupCount)
-        Params_HandleGroupStartingHandle = FsciParameter("Params_HandleGroupStartingHandle", 2, Params_GroupCount)
-        cmdParams.append(Params_HandleGroupStartingHandle)
-        Params_HandleGroupEndingHandle = FsciParameter("Params_HandleGroupEndingHandle", 2, Params_GroupCount)
-        cmdParams.append(Params_HandleGroupEndingHandle)
+        # not generated, pickle() is used instead; see frames.py
         return FsciFrameDescription(0x43, 0x0F, cmdParams)
 
     def InitATTClientSendReadByTypeRequestRequest(self):
@@ -1120,12 +1144,7 @@ class Spec(object):
 
     def InitATTClientSendReadMultipleRequestRequest(self):
         cmdParams = []
-        DeviceId = FsciParameter("DeviceId", 1)
-        cmdParams.append(DeviceId)
-        Params_HandleCount = FsciParameter("Params_HandleCount", 2)
-        cmdParams.append(Params_HandleCount)
-        Params_ListOfHandlesHandle = FsciParameter("Params_ListOfHandlesHandle", 2, Params_HandleCount)
-        cmdParams.append(Params_ListOfHandlesHandle)
+        # not generated, pickle() is used instead; see frames.py
         return FsciFrameDescription(0x43, 0x16, cmdParams)
 
     def InitATTServerSendReadMultipleResponseRequest(self):
@@ -1366,309 +1385,42 @@ class Spec(object):
 
     def InitGATTClientFindIncludedServicesRequest(self):
         cmdParams = []
-        DeviceId = FsciParameter("DeviceId", 1)
-        cmdParams.append(DeviceId)
-        Service_StartHandle = FsciParameter("Service_StartHandle", 2)
-        cmdParams.append(Service_StartHandle)
-        Service_EndHandle = FsciParameter("Service_EndHandle", 2)
-        cmdParams.append(Service_EndHandle)
-        Service_UuidType = FsciParameter("Service_UuidType", 1)
-        cmdParams.append(Service_UuidType)
-        Service_Uuiddict = {}
-        currentList = []
-        Service_UuidUuid16Bits = FsciParameter("Service_UuidUuid16Bits", 2)
-        currentList.append(Service_UuidUuid16Bits)
-        Service_Uuiddict[0x01] = currentList
-        currentList = []
-        Service_UuidUuid128Bits = FsciParameter("Service_UuidUuid128Bits", 16)
-        currentList.append(Service_UuidUuid128Bits)
-        Service_Uuiddict[0x02] = currentList
-        currentList = []
-        Service_UuidUuid32Bits = FsciParameter("Service_UuidUuid32Bits", 4)
-        currentList.append(Service_UuidUuid32Bits)
-        Service_Uuiddict[0x03] = currentList
-        Service_Uuid = FsciParameter("Service_Uuid", 1, Service_UuidType, Service_Uuiddict)
-        cmdParams.append(Service_Uuid)
-        Service_NbOfCharacteristics = FsciParameter("Service_NbOfCharacteristics", 1)
-        cmdParams.append(Service_NbOfCharacteristics)
-        Service_NbOfIncludedServices = FsciParameter("Service_NbOfIncludedServices", 1)
-        cmdParams.append(Service_NbOfIncludedServices)
-        MaxNbOfIncludedServices = FsciParameter("MaxNbOfIncludedServices", 1)
-        cmdParams.append(MaxNbOfIncludedServices)
+        # not generated, pickle() is used instead; see frames.py
         return FsciFrameDescription(0x44, 0x0B, cmdParams)
 
     def InitGATTClientDiscoverAllCharacteristicsOfServiceRequest(self):
         cmdParams = []
-        DeviceId = FsciParameter("DeviceId", 1)
-        cmdParams.append(DeviceId)
-        Service_StartHandle = FsciParameter("Service_StartHandle", 2)
-        cmdParams.append(Service_StartHandle)
-        Service_EndHandle = FsciParameter("Service_EndHandle", 2)
-        cmdParams.append(Service_EndHandle)
-        Service_UuidType = FsciParameter("Service_UuidType", 1)
-        cmdParams.append(Service_UuidType)
-        Service_Uuiddict = {}
-        currentList = []
-        Service_UuidUuid16Bits = FsciParameter("Service_UuidUuid16Bits", 2)
-        currentList.append(Service_UuidUuid16Bits)
-        Service_Uuiddict[0x01] = currentList
-        currentList = []
-        Service_UuidUuid128Bits = FsciParameter("Service_UuidUuid128Bits", 16)
-        currentList.append(Service_UuidUuid128Bits)
-        Service_Uuiddict[0x02] = currentList
-        currentList = []
-        Service_UuidUuid32Bits = FsciParameter("Service_UuidUuid32Bits", 4)
-        currentList.append(Service_UuidUuid32Bits)
-        Service_Uuiddict[0x03] = currentList
-        Service_Uuid = FsciParameter("Service_Uuid", 1, Service_UuidType, Service_Uuiddict)
-        cmdParams.append(Service_Uuid)
-        Service_NbOfCharacteristics = FsciParameter("Service_NbOfCharacteristics", 1)
-        cmdParams.append(Service_NbOfCharacteristics)
-        Service_NbOfIncludedServices = FsciParameter("Service_NbOfIncludedServices", 1)
-        cmdParams.append(Service_NbOfIncludedServices)
-        MaxNbOfCharacteristics = FsciParameter("MaxNbOfCharacteristics", 1)
-        cmdParams.append(MaxNbOfCharacteristics)
+        # not generated, pickle() is used instead; see frames.py
         return FsciFrameDescription(0x44, 0x0C, cmdParams)
 
     def InitGATTClientDiscoverCharacteristicOfServiceByUuidRequest(self):
         cmdParams = []
-        DeviceId = FsciParameter("DeviceId", 1)
-        cmdParams.append(DeviceId)
-        UuidType = FsciParameter("UuidType", 1)
-        cmdParams.append(UuidType)
-        Uuiddict = {}
-        currentList = []
-        UuidUuid16Bits = FsciParameter("UuidUuid16Bits", 2)
-        currentList.append(UuidUuid16Bits)
-        Uuiddict[0x01] = currentList
-        currentList = []
-        UuidUuid128Bits = FsciParameter("UuidUuid128Bits", 16)
-        currentList.append(UuidUuid128Bits)
-        Uuiddict[0x02] = currentList
-        currentList = []
-        UuidUuid32Bits = FsciParameter("UuidUuid32Bits", 4)
-        currentList.append(UuidUuid32Bits)
-        Uuiddict[0x03] = currentList
-        Uuid = FsciParameter("Uuid", 1, UuidType, Uuiddict)
-        cmdParams.append(Uuid)
-        Service_StartHandle = FsciParameter("Service_StartHandle", 2)
-        cmdParams.append(Service_StartHandle)
-        Service_EndHandle = FsciParameter("Service_EndHandle", 2)
-        cmdParams.append(Service_EndHandle)
-        Service_UuidType = FsciParameter("Service_UuidType", 1)
-        cmdParams.append(Service_UuidType)
-        Service_Uuiddict = {}
-        currentList = []
-        Service_UuidUuid16Bits = FsciParameter("Service_UuidUuid16Bits", 2)
-        currentList.append(Service_UuidUuid16Bits)
-        Service_Uuiddict[0x01] = currentList
-        currentList = []
-        Service_UuidUuid128Bits = FsciParameter("Service_UuidUuid128Bits", 16)
-        currentList.append(Service_UuidUuid128Bits)
-        Service_Uuiddict[0x02] = currentList
-        currentList = []
-        Service_UuidUuid32Bits = FsciParameter("Service_UuidUuid32Bits", 4)
-        currentList.append(Service_UuidUuid32Bits)
-        Service_Uuiddict[0x03] = currentList
-        Service_Uuid = FsciParameter("Service_Uuid", 1, UuidType, Service_Uuiddict)
-        cmdParams.append(Service_Uuid)
-        Service_NbOfCharacteristics = FsciParameter("Service_NbOfCharacteristics", 1)
-        cmdParams.append(Service_NbOfCharacteristics)
-        Service_NbOfIncludedServices = FsciParameter("Service_NbOfIncludedServices", 1)
-        cmdParams.append(Service_NbOfIncludedServices)
-        MaxNbOfCharacteristics = FsciParameter("MaxNbOfCharacteristics", 1)
-        cmdParams.append(MaxNbOfCharacteristics)
+        # not generated, pickle() is used instead; see frames.py
         return FsciFrameDescription(0x44, 0x0D, cmdParams)
 
     def InitGATTClientDiscoverAllCharacteristicDescriptorsRequest(self):
         cmdParams = []
-        DeviceId = FsciParameter("DeviceId", 1)
-        cmdParams.append(DeviceId)
-        Characteristic_Properties = FsciParameter("Characteristic_Properties", 1)
-        cmdParams.append(Characteristic_Properties)
-        Characteristic_ValueHandle = FsciParameter("Characteristic_ValueHandle", 2)
-        cmdParams.append(Characteristic_ValueHandle)
-        Characteristic_ValueUuidType = FsciParameter("Characteristic_ValueUuidType", 1)
-        cmdParams.append(Characteristic_ValueUuidType)
-        Characteristic_ValueUuiddict = {}
-        currentList = []
-        UuidUuid16Bits = FsciParameter("UuidUuid16Bits", 2)
-        currentList.append(UuidUuid16Bits)
-        Characteristic_ValueUuiddict[0x01] = currentList
-        currentList = []
-        UuidUuid128Bits = FsciParameter("UuidUuid128Bits", 16)
-        currentList.append(UuidUuid128Bits)
-        Characteristic_ValueUuiddict[0x02] = currentList
-        currentList = []
-        UuidUuid32Bits = FsciParameter("UuidUuid32Bits", 4)
-        currentList.append(UuidUuid32Bits)
-        Characteristic_ValueUuiddict[0x03] = currentList
-        Characteristic_ValueUuid = FsciParameter("Characteristic_ValueUuid", 1, Characteristic_ValueUuidType, Characteristic_ValueUuiddict)
-        cmdParams.append(Characteristic_ValueUuid)
-        Characteristic_ValueValueLength = FsciParameter("Characteristic_ValueValueLength", 2)
-        cmdParams.append(Characteristic_ValueValueLength)
-        Characteristic_ValueMaxValueLength = FsciParameter("Characteristic_ValueMaxValueLength", 2)
-        cmdParams.append(Characteristic_ValueMaxValueLength)
-        Characteristic_ValueValue = FsciParameter("Characteristic_ValueValue", 1, Characteristic_ValueValueLength)
-        cmdParams.append(Characteristic_ValueValue)
-        Characteristic_NbOfDescriptors = FsciParameter("Characteristic_NbOfDescriptors", 1)
-        cmdParams.append(Characteristic_NbOfDescriptors)
-        EndingHandle = FsciParameter("EndingHandle", 2)
-        cmdParams.append(EndingHandle)
-        MaxNbOfDescriptors = FsciParameter("MaxNbOfDescriptors", 1)
-        cmdParams.append(MaxNbOfDescriptors)
+        # not generated, pickle() is used instead; see frames.py
         return FsciFrameDescription(0x44, 0x0E, cmdParams)
 
     def InitGATTClientReadCharacteristicValueRequest(self):
         cmdParams = []
-        DeviceId = FsciParameter("DeviceId", 1)
-        cmdParams.append(DeviceId)
-        Characteristic_Properties = FsciParameter("Characteristic_Properties", 1)
-        cmdParams.append(Characteristic_Properties)
-        Characteristic_ValueHandle = FsciParameter("Characteristic_ValueHandle", 2)
-        cmdParams.append(Characteristic_ValueHandle)
-        Characteristic_ValueUuidType = FsciParameter("Characteristic_ValueUuidType", 1)
-        cmdParams.append(Characteristic_ValueUuidType)
-        Characteristic_ValueUuiddict = {}
-        currentList = []
-        UuidUuid16Bits = FsciParameter("UuidUuid16Bits", 2)
-        currentList.append(UuidUuid16Bits)
-        Characteristic_ValueUuiddict[0x01] = currentList
-        currentList = []
-        UuidUuid128Bits = FsciParameter("UuidUuid128Bits", 16)
-        currentList.append(UuidUuid128Bits)
-        Characteristic_ValueUuiddict[0x02] = currentList
-        currentList = []
-        UuidUuid32Bits = FsciParameter("UuidUuid32Bits", 4)
-        currentList.append(UuidUuid32Bits)
-        Characteristic_ValueUuiddict[0x03] = currentList
-        Characteristic_ValueUuid = FsciParameter("Characteristic_ValueUuid", 1, Characteristic_ValueUuidType, Characteristic_ValueUuiddict)
-        cmdParams.append(Characteristic_ValueUuid)
-        Characteristic_ValueValueLength = FsciParameter("Characteristic_ValueValueLength", 2)
-        cmdParams.append(Characteristic_ValueValueLength)
-        Characteristic_ValueMaxValueLength = FsciParameter("Characteristic_ValueMaxValueLength", 2)
-        cmdParams.append(Characteristic_ValueMaxValueLength)
-        Characteristic_ValueValue = FsciParameter("Characteristic_ValueValue", 1, Characteristic_ValueValueLength)
-        cmdParams.append(Characteristic_ValueValue)
-        Characteristic_NbOfDescriptors = FsciParameter("Characteristic_NbOfDescriptors", 1)
-        cmdParams.append(Characteristic_NbOfDescriptors)
-        MaxReadBytes = FsciParameter("MaxReadBytes", 2)
-        cmdParams.append(MaxReadBytes)
+        # not generated, pickle() is used instead; see frames.py
         return FsciFrameDescription(0x44, 0x0F, cmdParams)
 
     def InitGATTClientReadUsingCharacteristicUuidRequest(self):
         cmdParams = []
-        DeviceId = FsciParameter("DeviceId", 1)
-        cmdParams.append(DeviceId)
-        UuidType = FsciParameter("UuidType", 1)
-        cmdParams.append(UuidType)
-        Uuiddict = {}
-        currentList = []
-        UuidUuid16Bits = FsciParameter("UuidUuid16Bits", 2)
-        currentList.append(UuidUuid16Bits)
-        Uuiddict[0x01] = currentList
-        currentList = []
-        UuidUuid128Bits = FsciParameter("UuidUuid128Bits", 16)
-        currentList.append(UuidUuid128Bits)
-        Uuiddict[0x02] = currentList
-        currentList = []
-        UuidUuid32Bits = FsciParameter("UuidUuid32Bits", 4)
-        currentList.append(UuidUuid32Bits)
-        Uuiddict[0x03] = currentList
-        Uuid = FsciParameter("Uuid", 1, UuidType, Uuiddict)
-        cmdParams.append(Uuid)
-        HandleRangeIncluded = FsciParameter("HandleRangeIncluded", 1)
-        cmdParams.append(HandleRangeIncluded)
-        HandleRangeStartHandle = FsciParameter("HandleRangeStartHandle", 2, HandleRangeIncluded)
-        cmdParams.append(HandleRangeStartHandle)
-        HandleRangeEndHandle = FsciParameter("HandleRangeEndHandle", 2, HandleRangeIncluded)
-        cmdParams.append(HandleRangeEndHandle)
-        MaxReadBytes = FsciParameter("MaxReadBytes", 2)
-        cmdParams.append(MaxReadBytes)
+        # not generated, pickle() is used instead; see frames.py
         return FsciFrameDescription(0x44, 0x10, cmdParams)
 
     def InitGATTClientReadMultipleCharacteristicValuesRequest(self):
         cmdParams = []
-        DeviceId = FsciParameter("DeviceId", 1)
-        cmdParams.append(DeviceId)
-        NbOfCharacteristics = FsciParameter("NbOfCharacteristics", 1)
-        cmdParams.append(NbOfCharacteristics)
-        CharacteristicsProperties = FsciParameter("CharacteristicsProperties", 1, NbOfCharacteristics)
-        cmdParams.append(CharacteristicsProperties)
-        ValueHandle = FsciParameter("ValueHandle", 2, NbOfCharacteristics)
-        cmdParams.append(ValueHandle)
-        ValueUuidType = FsciParameter("ValueUuidType", 1, NbOfCharacteristics)
-        cmdParams.append(ValueUuidType)
-        ValueUuiddict = {}
-        currentList = []
-        UuidUuid16Bits = FsciParameter("UuidUuid16Bits", 2)
-        currentList.append(UuidUuid16Bits)
-        ValueUuiddict[0x01] = currentList
-        currentList = []
-        UuidUuid128Bits = FsciParameter("UuidUuid128Bits", 16)
-        currentList.append(UuidUuid128Bits)
-        ValueUuiddict[0x02] = currentList
-        currentList = []
-        UuidUuid32Bits = FsciParameter("UuidUuid32Bits", 4)
-        currentList.append(UuidUuid32Bits)
-        ValueUuiddict[0x03] = currentList
-        ValueUuid = FsciParameter("ValueUuid", 1, ValueUuidType, ValueUuiddict)
-        cmdParams.append(ValueUuid)
-        ValueValueLength = FsciParameter("ValueValueLength", 2, NbOfCharacteristics)
-        cmdParams.append(ValueValueLength)
-        ValueMaxValueLength = FsciParameter("ValueMaxValueLength", 2, NbOfCharacteristics)
-        cmdParams.append(ValueMaxValueLength)
-        ValueValue = FsciParameter("ValueValue", 1, ValueValueLength)
-        cmdParams.append(ValueValue)
-        CharacteristicsNbOfDescriptors = FsciParameter("CharacteristicsNbOfDescriptors", 1, NbOfCharacteristics)
-        cmdParams.append(CharacteristicsNbOfDescriptors)
+        # not generated, pickle() is used instead; see frames.py
         return FsciFrameDescription(0x44, 0x11, cmdParams)
 
     def InitGATTClientWriteCharacteristicValueRequest(self):
         cmdParams = []
-        DeviceId = FsciParameter("DeviceId", 1)
-        cmdParams.append(DeviceId)
-        Characteristic_Properties = FsciParameter("Characteristic_Properties", 1)
-        cmdParams.append(Characteristic_Properties)
-        Characteristic_ValueHandle = FsciParameter("Characteristic_ValueHandle", 2)
-        cmdParams.append(Characteristic_ValueHandle)
-        Characteristic_ValueUuidType = FsciParameter("Characteristic_ValueUuidType", 1)
-        cmdParams.append(Characteristic_ValueUuidType)
-        Characteristic_ValueUuiddict = {}
-        currentList = []
-        UuidUuid16Bits = FsciParameter("UuidUuid16Bits", 2)
-        currentList.append(UuidUuid16Bits)
-        Characteristic_ValueUuiddict[0x01] = currentList
-        currentList = []
-        UuidUuid128Bits = FsciParameter("UuidUuid128Bits", 16)
-        currentList.append(UuidUuid128Bits)
-        Characteristic_ValueUuiddict[0x02] = currentList
-        currentList = []
-        UuidUuid32Bits = FsciParameter("UuidUuid32Bits", 4)
-        currentList.append(UuidUuid32Bits)
-        Characteristic_ValueUuiddict[0x03] = currentList
-        Characteristic_ValueUuid = FsciParameter("Characteristic_ValueUuid", 1, Characteristic_ValueUuidType, Characteristic_ValueUuiddict)
-        cmdParams.append(Characteristic_ValueUuid)
-        Characteristic_ValueValueLength = FsciParameter("Characteristic_ValueValueLength", 2)
-        cmdParams.append(Characteristic_ValueValueLength)
-        Characteristic_ValueMaxValueLength = FsciParameter("Characteristic_ValueMaxValueLength", 2)
-        cmdParams.append(Characteristic_ValueMaxValueLength)
-        Characteristic_ValueValue = FsciParameter("Characteristic_ValueValue", 1, Characteristic_ValueValueLength)
-        cmdParams.append(Characteristic_ValueValue)
-        Characteristic_NbOfDescriptors = FsciParameter("Characteristic_NbOfDescriptors", 1)
-        cmdParams.append(Characteristic_NbOfDescriptors)
-        ValueLength = FsciParameter("ValueLength", 2)
-        cmdParams.append(ValueLength)
-        Value = FsciParameter("Value", 1, ValueLength)
-        cmdParams.append(Value)
-        WithoutResponse = FsciParameter("WithoutResponse", 1)
-        cmdParams.append(WithoutResponse)
-        SignedWrite = FsciParameter("SignedWrite", 1)
-        cmdParams.append(SignedWrite)
-        ReliableLongCharWrites = FsciParameter("ReliableLongCharWrites", 1)
-        cmdParams.append(ReliableLongCharWrites)
-        Csrk = FsciParameter("Csrk", 16)
-        cmdParams.append(Csrk)
+        # not generated, pickle() is used instead; see frames.py
         return FsciFrameDescription(0x44, 0x12, cmdParams)
 
     def InitGATTClientReadCharacteristicDescriptorRequest(self):
@@ -2304,24 +2056,7 @@ class Spec(object):
 
     def InitGAPRegisterDeviceSecurityRequirementsRequest(self):
         cmdParams = []
-        SecurityRequirementsIncluded = FsciParameter("SecurityRequirementsIncluded", 1)
-        cmdParams.append(SecurityRequirementsIncluded)
-        MasterSecurityRequirementsSecurityModeLevel = FsciParameter("MasterSecurityRequirementsSecurityModeLevel", 1, SecurityRequirementsIncluded)
-        cmdParams.append(MasterSecurityRequirementsSecurityModeLevel)
-        MasterSecurityRequirementsAuthorization = FsciParameter("MasterSecurityRequirementsAuthorization", 1, SecurityRequirementsIncluded)
-        cmdParams.append(MasterSecurityRequirementsAuthorization)
-        MasterSecurityRequirementsMinimumEncryptionKeySize = FsciParameter("MasterSecurityRequirementsMinimumEncryptionKeySize", 2, SecurityRequirementsIncluded)
-        cmdParams.append(MasterSecurityRequirementsMinimumEncryptionKeySize)
-        SecurityRequirementsNbOfServices = FsciParameter("SecurityRequirementsNbOfServices", 1, SecurityRequirementsIncluded)
-        cmdParams.append(SecurityRequirementsNbOfServices)
-        GapServiceSecurityRequirementsServiceHandle = FsciParameter("GapServiceSecurityRequirementsServiceHandle", 2, SecurityRequirementsNbOfServices)
-        cmdParams.append(GapServiceSecurityRequirementsServiceHandle)
-        RequirementsSecurityModeLevel = FsciParameter("RequirementsSecurityModeLevel", 1, SecurityRequirementsNbOfServices)
-        cmdParams.append(RequirementsSecurityModeLevel)
-        RequirementsAuthorization = FsciParameter("RequirementsAuthorization", 1, SecurityRequirementsNbOfServices)
-        cmdParams.append(RequirementsAuthorization)
-        RequirementsMinimumEncryptionKeySize = FsciParameter("RequirementsMinimumEncryptionKeySize", 2, SecurityRequirementsNbOfServices)
-        cmdParams.append(RequirementsMinimumEncryptionKeySize)
+        # not generated, pickle() is used instead; see frames.py
         return FsciFrameDescription(0x47, 0x02, cmdParams)
 
     def InitGAPSetAdvertisingParametersRequest(self):
@@ -2346,26 +2081,7 @@ class Spec(object):
 
     def InitGAPSetAdvertisingDataRequest(self):
         cmdParams = []
-        AdvertisingDataIncluded = FsciParameter("AdvertisingDataIncluded", 1)
-        cmdParams.append(AdvertisingDataIncluded)
-        AdvertisingDataNbOfAdStructures = FsciParameter("AdvertisingDataNbOfAdStructures", 1, AdvertisingDataIncluded)
-        cmdParams.append(AdvertisingDataNbOfAdStructures)
-        AdStructuresLength = FsciParameter("AdStructuresLength", 1, AdvertisingDataNbOfAdStructures)
-        cmdParams.append(AdStructuresLength)
-        AdStructuresType = FsciParameter("AdStructuresType", 1, AdvertisingDataNbOfAdStructures)
-        cmdParams.append(AdStructuresType)
-        AdStructuresData = FsciParameter("AdStructuresData", 1, AdStructuresLength)
-        cmdParams.append(AdStructuresData)
-        ScanResponseDataIncluded = FsciParameter("ScanResponseDataIncluded", 1)
-        cmdParams.append(ScanResponseDataIncluded)
-        ScanResponseDataNbOfAdStructures = FsciParameter("ScanResponseDataNbOfAdStructures", 1, ScanResponseDataIncluded)
-        cmdParams.append(ScanResponseDataNbOfAdStructures)
-        AdStructuresLength = FsciParameter("AdStructuresLength", 1, AdvertisingDataNbOfAdStructures)
-        cmdParams.append(AdStructuresLength)
-        AdStructuresType = FsciParameter("AdStructuresType", 1, AdvertisingDataNbOfAdStructures)
-        cmdParams.append(AdStructuresType)
-        AdStructuresData = FsciParameter("AdStructuresData", 1, AdStructuresLength)
-        cmdParams.append(AdStructuresData)
+        # not generated, pickle() is used instead; see frames.py
         return FsciFrameDescription(0x47, 0x04, cmdParams)
 
     def InitGAPStartAdvertisingRequest(self):
@@ -2514,34 +2230,7 @@ class Spec(object):
 
     def InitGAPSendSmpKeysRequest(self):
         cmdParams = []
-        DeviceId = FsciParameter("DeviceId", 1)
-        cmdParams.append(DeviceId)
-        Keys_LtkIncluded = FsciParameter("Keys_LtkIncluded", 1)
-        cmdParams.append(Keys_LtkIncluded)
-        Keys_LtkInfoLtkSize = FsciParameter("Keys_LtkInfoLtkSize", 1, Keys_LtkIncluded)
-        cmdParams.append(Keys_LtkInfoLtkSize)
-        Keys_LtkInfoLtk = FsciParameter("Keys_LtkInfoLtk", 1, Keys_LtkInfoLtkSize)
-        cmdParams.append(Keys_LtkInfoLtk)
-        Keys_IrkIncluded = FsciParameter("Keys_IrkIncluded", 1)
-        cmdParams.append(Keys_IrkIncluded)
-        Keys_Irk = FsciParameter("Keys_Irk", 16, Keys_IrkIncluded)
-        cmdParams.append(Keys_Irk)
-        Keys_CsrkIncluded = FsciParameter("Keys_CsrkIncluded", 1)
-        cmdParams.append(Keys_CsrkIncluded)
-        Keys_Csrk = FsciParameter("Keys_Csrk", 16, Keys_CsrkIncluded)
-        cmdParams.append(Keys_Csrk)
-        Keys_RandEdivInfoRandSize = FsciParameter("Keys_RandEdivInfoRandSize", 1, Keys_LtkIncluded)
-        cmdParams.append(Keys_RandEdivInfoRandSize)
-        Keys_RandEdivInfoRand = FsciParameter("Keys_RandEdivInfoRand", 1, Keys_RandEdivInfoRandSize)
-        cmdParams.append(Keys_RandEdivInfoRand)
-        Keys_RandEdivInfoEdiv = FsciParameter("Keys_RandEdivInfoEdiv", 2, Keys_LtkIncluded)
-        cmdParams.append(Keys_RandEdivInfoEdiv)
-        Keys_AddressIncluded = FsciParameter("Keys_AddressIncluded", 1, Keys_IrkIncluded)
-        cmdParams.append(Keys_AddressIncluded)
-        Keys_AddressInfoDeviceAddressType = FsciParameter("Keys_AddressInfoDeviceAddressType", 1, Keys_AddressIncluded)
-        cmdParams.append(Keys_AddressInfoDeviceAddressType)
-        Keys_AddressInfoDeviceAddress = FsciParameter("Keys_AddressInfoDeviceAddress", 6, Keys_AddressIncluded)
-        cmdParams.append(Keys_AddressInfoDeviceAddress)
+        # not generated, pickle() is used instead; see frames.py
         return FsciFrameDescription(0x47, 0x14, cmdParams)
 
     def InitGAPRejectKeyExchangeRequestRequest(self):
@@ -2580,18 +2269,7 @@ class Spec(object):
 
     def InitGAPStartScanningRequest(self):
         cmdParams = []
-        ScanningParametersIncluded = FsciParameter("ScanningParametersIncluded", 1)
-        cmdParams.append(ScanningParametersIncluded)
-        ScanningParametersType = FsciParameter("ScanningParametersType", 1, ScanningParametersIncluded)
-        cmdParams.append(ScanningParametersType)
-        ScanningParametersInterval = FsciParameter("ScanningParametersInterval", 2, ScanningParametersIncluded)
-        cmdParams.append(ScanningParametersInterval)
-        ScanningParametersWindow = FsciParameter("ScanningParametersWindow", 2, ScanningParametersIncluded)
-        cmdParams.append(ScanningParametersWindow)
-        ScanningParametersOwnAddressType = FsciParameter("ScanningParametersOwnAddressType", 1, ScanningParametersIncluded)
-        cmdParams.append(ScanningParametersOwnAddressType)
-        ScanningParametersFilterPolicy = FsciParameter("ScanningParametersFilterPolicy", 1, ScanningParametersIncluded)
-        cmdParams.append(ScanningParametersFilterPolicy)
+        # not generated, pickle() is used instead; see frames.py
         return FsciFrameDescription(0x47, 0x1A, cmdParams)
 
     def InitGAPStopScanningRequest(self):
@@ -2758,62 +2436,12 @@ class Spec(object):
 
     def InitGAPSetScanModeRequest(self):
         cmdParams = []
-        ScanMode = FsciParameter("ScanMode", 1)
-        cmdParams.append(ScanMode)
-        AutoConnectParams_NbOfAddresses = FsciParameter("AutoConnectParams_NbOfAddresses", 1)
-        cmdParams.append(AutoConnectParams_NbOfAddresses)
-        AutoConnectParams_WriteInWhiteList = FsciParameter("AutoConnectParams_WriteInWhiteList", 1)
-        cmdParams.append(AutoConnectParams_WriteInWhiteList)
-        AutoConnectParams_AutoConnectDataScanInterval = FsciParameter("AutoConnectParams_AutoConnectDataScanInterval", 2, AutoConnectParams_NbOfAddresses)
-        cmdParams.append(AutoConnectParams_AutoConnectDataScanInterval)
-        AutoConnectParams_AutoConnectDataScanWindow = FsciParameter("AutoConnectParams_AutoConnectDataScanWindow", 2, AutoConnectParams_NbOfAddresses)
-        cmdParams.append(AutoConnectParams_AutoConnectDataScanWindow)
-        AutoConnectParams_AutoConnectDataFilterPolicy = FsciParameter("AutoConnectParams_AutoConnectDataFilterPolicy", 1, AutoConnectParams_NbOfAddresses)
-        cmdParams.append(AutoConnectParams_AutoConnectDataFilterPolicy)
-        AutoConnectParams_AutoConnectDataOwnAddressType = FsciParameter("AutoConnectParams_AutoConnectDataOwnAddressType", 1, AutoConnectParams_NbOfAddresses)
-        cmdParams.append(AutoConnectParams_AutoConnectDataOwnAddressType)
-        AutoConnectParams_AutoConnectDataPeerAddressType = FsciParameter("AutoConnectParams_AutoConnectDataPeerAddressType", 1, AutoConnectParams_NbOfAddresses)
-        cmdParams.append(AutoConnectParams_AutoConnectDataPeerAddressType)
-        AutoConnectParams_AutoConnectDataPeerAddress = FsciParameter("AutoConnectParams_AutoConnectDataPeerAddress", 6, AutoConnectParams_NbOfAddresses)
-        cmdParams.append(AutoConnectParams_AutoConnectDataPeerAddress)
-        AutoConnectParams_AutoConnectDataConnIntervalMin = FsciParameter("AutoConnectParams_AutoConnectDataConnIntervalMin", 2, AutoConnectParams_NbOfAddresses)
-        cmdParams.append(AutoConnectParams_AutoConnectDataConnIntervalMin)
-        AutoConnectParams_AutoConnectDataConnIntervalMax = FsciParameter("AutoConnectParams_AutoConnectDataConnIntervalMax", 2, AutoConnectParams_NbOfAddresses)
-        cmdParams.append(AutoConnectParams_AutoConnectDataConnIntervalMax)
-        AutoConnectParams_AutoConnectDataConnLatency = FsciParameter("AutoConnectParams_AutoConnectDataConnLatency", 2, AutoConnectParams_NbOfAddresses)
-        cmdParams.append(AutoConnectParams_AutoConnectDataConnLatency)
-        AutoConnectParams_AutoConnectDataSupervisionTimeout = FsciParameter("AutoConnectParams_AutoConnectDataSupervisionTimeout", 2, AutoConnectParams_NbOfAddresses)
-        cmdParams.append(AutoConnectParams_AutoConnectDataSupervisionTimeout)
-        AutoConnectParams_AutoConnectDataConnEventLengthMin = FsciParameter("AutoConnectParams_AutoConnectDataConnEventLengthMin", 2, AutoConnectParams_NbOfAddresses)
-        cmdParams.append(AutoConnectParams_AutoConnectDataConnEventLengthMin)
-        AutoConnectParams_AutoConnectDataConnEventLengthMax = FsciParameter("AutoConnectParams_AutoConnectDataConnEventLengthMax", 2, AutoConnectParams_NbOfAddresses)
-        cmdParams.append(AutoConnectParams_AutoConnectDataConnEventLengthMax)
-        AutoConnectParams_AutoConnectDatausePeerIdentityAddress = FsciParameter("AutoConnectParams_AutoConnectDatausePeerIdentityAddress", 1, AutoConnectParams_NbOfAddresses)
-        cmdParams.append(AutoConnectParams_AutoConnectDatausePeerIdentityAddress)
+        # not generated, pickle() is used instead; see frames.py
         return FsciFrameDescription(0x47, 0x2F, cmdParams)
 
     def InitGAPSetDefaultPairingParametersRequest(self):
         cmdParams = []
-        PairingParametersIncluded = FsciParameter("PairingParametersIncluded", 1)
-        cmdParams.append(PairingParametersIncluded)
-        PairingParametersWithBonding = FsciParameter("PairingParametersWithBonding", 1, PairingParametersIncluded)
-        cmdParams.append(PairingParametersWithBonding)
-        PairingParametersSecurityModeAndLevel = FsciParameter("PairingParametersSecurityModeAndLevel", 1, PairingParametersIncluded)
-        cmdParams.append(PairingParametersSecurityModeAndLevel)
-        PairingParametersMaxEncryptionKeySize = FsciParameter("PairingParametersMaxEncryptionKeySize", 1, PairingParametersIncluded)
-        cmdParams.append(PairingParametersMaxEncryptionKeySize)
-        PairingParametersLocalIoCapabilities = FsciParameter("PairingParametersLocalIoCapabilities", 1, PairingParametersIncluded)
-        cmdParams.append(PairingParametersLocalIoCapabilities)
-        PairingParametersOobAvailable = FsciParameter("PairingParametersOobAvailable", 1, PairingParametersIncluded)
-        cmdParams.append(PairingParametersOobAvailable)
-        PairingParametersCentralKeys = FsciParameter("PairingParametersCentralKeys", 1, PairingParametersIncluded)
-        cmdParams.append(PairingParametersCentralKeys)
-        PairingParametersPeripheralKeys = FsciParameter("PairingParametersPeripheralKeys", 1, PairingParametersIncluded)
-        cmdParams.append(PairingParametersPeripheralKeys)
-        PairingParametersLeSecureConnectionSupported = FsciParameter("PairingParametersLeSecureConnectionSupported", 1, PairingParametersIncluded)
-        cmdParams.append(PairingParametersLeSecureConnectionSupported)
-        PairingParametersUseKeypressNotifications = FsciParameter("PairingParametersUseKeypressNotifications", 1, PairingParametersIncluded)
-        cmdParams.append(PairingParametersUseKeypressNotifications)
+        # not generated, pickle() is used instead; see frames.py
         return FsciFrameDescription(0x47, 0x30, cmdParams)
 
     def InitGAPUpdateConnectionParametersRequest(self):
@@ -2866,18 +2494,7 @@ class Spec(object):
 
     def InitGAPEnableControllerPrivacyRequest(self):
         cmdParams = []
-        Enable = FsciParameter("Enable", 1)
-        cmdParams.append(Enable)
-        OwnIrk = FsciParameter("OwnIrk", 16, Enable)
-        cmdParams.append(OwnIrk)
-        PeerIdCount = FsciParameter("PeerIdCount", 1, Enable)
-        cmdParams.append(PeerIdCount)
-        PeerIdentitiesIdentityAddressType = FsciParameter("PeerIdentitiesIdentityAddressType", 1, PeerIdCount)
-        cmdParams.append(PeerIdentitiesIdentityAddressType)
-        PeerIdentitiesIdentityAddress = FsciParameter("PeerIdentitiesIdentityAddress", 6, PeerIdCount)
-        cmdParams.append(PeerIdentitiesIdentityAddress)
-        PeerIdentitiesIrk = FsciParameter("PeerIdentitiesIrk", 16, PeerIdCount)
-        cmdParams.append(PeerIdentitiesIrk)
+        # not generated, pickle() is used instead; see frames.py
         return FsciFrameDescription(0x47, 0x36, cmdParams)
 
     def InitGAPLeScRegeneratePublicKeyRequest(self):
@@ -2920,6 +2537,18 @@ class Spec(object):
         cmdParams.append(maxDevices)
         return FsciFrameDescription(0x47, 0x3C, cmdParams)
 
+    def InitGAPSetTxPowerLevelRequest(self):
+        cmdParams = []
+        powerLevel = FsciParameter("powerLevel", 1)
+        cmdParams.append(powerLevel)
+        channelType = FsciParameter("channelType", 1)
+        cmdParams.append(channelType)
+        return FsciFrameDescription(0x47, 0x3D, cmdParams)
+
+    def InitFSCICPUResetRequest(self):
+        cmdParams = []
+        return FsciFrameDescription(0xA3, 0x08, cmdParams)
+
     def InitFSCIAllowDeviceToSleepRequest(self):
         cmdParams = []
         SignalHostWhenWakeUp = FsciParameter("SignalHostWhenWakeUp", 1)
@@ -2933,6 +2562,12 @@ class Spec(object):
     def InitFSCIGetWakeupReasonRequest(self):
         cmdParams = []
         return FsciFrameDescription(0xA3, 0x72, cmdParams)
+
+    def InitFSCIAckIndication(self):
+        cmdParams = []
+        Checksum = FsciParameter("Checksum", 1)
+        cmdParams.append(Checksum)
+        return FsciFrameDescription(0xA4, 0xFD, cmdParams)
 
     def InitFSCIErrorIndication(self):
         cmdParams = []
@@ -2955,6 +2590,86 @@ class Spec(object):
         WakeUpReason = FsciParameter("WakeUpReason", 1)
         cmdParams.append(WakeUpReason)
         return FsciFrameDescription(0xA4, 0x72, cmdParams)
+
+    def InitNVMSaveConfirm(self):
+        cmdParams = []
+        Status = FsciParameter("Status", 1)
+        cmdParams.append(Status)
+        return FsciFrameDescription(0xA8, 0xE4, cmdParams)
+
+    def InitNVMGetDataSetDescConfirm(self):
+        cmdParams = []
+        Status = FsciParameter("Status", 1)
+        cmdParams.append(Status)
+        Count = FsciParameter("Count", 1)
+        cmdParams.append(Count)
+        CountSizeandID = FsciParameter("CountSizeandID", 7, Count)
+        cmdParams.append(CountSizeandID)
+        return FsciFrameDescription(0xA8, 0xE5, cmdParams)
+
+    def InitNVMGetCountersConfirm(self):
+        cmdParams = []
+        Status = FsciParameter("Status", 1)
+        cmdParams.append(Status)
+        nvmFirstVirtualPageEraseCounter = FsciParameter("nvmFirstVirtualPageEraseCounter", 4)
+        cmdParams.append(nvmFirstVirtualPageEraseCounter)
+        nvmSecondVirtualPageEraseCounter = FsciParameter("nvmSecondVirtualPageEraseCounter", 4)
+        cmdParams.append(nvmSecondVirtualPageEraseCounter)
+        return FsciFrameDescription(0xA8, 0xE6, cmdParams)
+
+    def InitNVMSetMonitoringConfirm(self):
+        cmdParams = []
+        Status = FsciParameter("Status", 1)
+        cmdParams.append(Status)
+        return FsciFrameDescription(0xA8, 0xE9, cmdParams)
+
+    def InitNVMWriteMonitoringIndication(self):
+        cmdParams = []
+        nvmDatasetId = FsciParameter("nvmDatasetId", 2)
+        cmdParams.append(nvmDatasetId)
+        elementId = FsciParameter("elementId", 2)
+        cmdParams.append(elementId)
+        saveAll = FsciParameter("saveAll", 1)
+        cmdParams.append(saveAll)
+        return FsciFrameDescription(0xA8, 0xEA, cmdParams)
+
+    def InitNVMPageEraseMonitoringIndication(self):
+        cmdParams = []
+        nvmFlashErasedPageAddressParmName = FsciParameter("nvmFlashErasedPageAddressParmName", 4)
+        cmdParams.append(nvmFlashErasedPageAddressParmName)
+        Status = FsciParameter("Status", 1)
+        cmdParams.append(Status)
+        return FsciFrameDescription(0xA8, 0xEB, cmdParams)
+
+    def InitNVMFormatReqConfirm(self):
+        cmdParams = []
+        Status = FsciParameter("Status", 1)
+        cmdParams.append(Status)
+        return FsciFrameDescription(0xA8, 0xEC, cmdParams)
+
+    def InitNVMRestoreReqConfirm(self):
+        cmdParams = []
+        Status = FsciParameter("Status", 1)
+        cmdParams.append(Status)
+        return FsciFrameDescription(0xA8, 0xED, cmdParams)
+
+    def InitNVMRestoreMonitoringIndication(self):
+        cmdParams = []
+        nvmDatasetId = FsciParameter("nvmDatasetId", 2)
+        cmdParams.append(nvmDatasetId)
+        Start = FsciParameter("Start", 1)
+        cmdParams.append(Start)
+        Status = FsciParameter("Status", 1)
+        cmdParams.append(Status)
+        return FsciFrameDescription(0xA8, 0xEE, cmdParams)
+
+    def InitNVMVirtualPageMonitoringIndication(self):
+        cmdParams = []
+        Start = FsciParameter("Start", 1)
+        cmdParams.append(Start)
+        Status = FsciParameter("Status", 1)
+        cmdParams.append(Status)
+        return FsciFrameDescription(0xA8, 0xEF, cmdParams)
 
     def InitHCIConfirm(self):
         cmdParams = []
@@ -3012,71 +2727,40 @@ class Spec(object):
         cmdParams.append(Packet)
         return FsciFrameDescription(0x41, 0x82, cmdParams)
 
+    def InitL2CAPSignalingDataIndication(self):
+        cmdParams = []
+        DeviceId = FsciParameter("DeviceId", 1)
+        cmdParams.append(DeviceId)
+        PacketLength = FsciParameter("PacketLength", 2)
+        cmdParams.append(PacketLength)
+        Packet = FsciParameter("Packet", 1, PacketLength)
+        cmdParams.append(Packet)
+        return FsciFrameDescription(0x41, 0x83, cmdParams)
+
     def InitL2CAPLePsmConnectionRequestIndication(self):
         cmdParams = []
-        InformationIncluded = FsciParameter("InformationIncluded", 1)
-        cmdParams.append(InformationIncluded)
-        LeCbConnectionRequestDeviceId = FsciParameter("LeCbConnectionRequestDeviceId", 1, InformationIncluded)
-        cmdParams.append(LeCbConnectionRequestDeviceId)
-        LeCbConnectionRequestLePsm = FsciParameter("LeCbConnectionRequestLePsm", 2, InformationIncluded)
-        cmdParams.append(LeCbConnectionRequestLePsm)
-        LeCbConnectionRequestPeerMtu = FsciParameter("LeCbConnectionRequestPeerMtu", 2, InformationIncluded)
-        cmdParams.append(LeCbConnectionRequestPeerMtu)
-        LeCbConnectionRequestPeerMps = FsciParameter("LeCbConnectionRequestPeerMps", 2, InformationIncluded)
-        cmdParams.append(LeCbConnectionRequestPeerMps)
-        LeCbConnectionRequestInitialCredits = FsciParameter("LeCbConnectionRequestInitialCredits", 2, InformationIncluded)
-        cmdParams.append(LeCbConnectionRequestInitialCredits)
-        return FsciFrameDescription(0x41, 0x83, cmdParams)
+        # not generated, cursor based approach in observer; see events.py
+        return FsciFrameDescription(0x41, 0x84, cmdParams)
 
     def InitL2CAPLePsmConnectionCompleteIndication(self):
         cmdParams = []
-        InformationIncluded = FsciParameter("InformationIncluded", 1)
-        cmdParams.append(InformationIncluded)
-        LeCbConnectionCompleteDeviceId = FsciParameter("LeCbConnectionCompleteDeviceId", 1, InformationIncluded)
-        cmdParams.append(LeCbConnectionCompleteDeviceId)
-        LeCbConnectionCompleteChannelId = FsciParameter("LeCbConnectionCompleteChannelId", 2, InformationIncluded)
-        cmdParams.append(LeCbConnectionCompleteChannelId)
-        LeCbConnectionCompletePeerMtu = FsciParameter("LeCbConnectionCompletePeerMtu", 2, InformationIncluded)
-        cmdParams.append(LeCbConnectionCompletePeerMtu)
-        LeCbConnectionCompletePeerMps = FsciParameter("LeCbConnectionCompletePeerMps", 2, InformationIncluded)
-        cmdParams.append(LeCbConnectionCompletePeerMps)
-        LeCbConnectionCompleteInitialCredits = FsciParameter("LeCbConnectionCompleteInitialCredits", 2, InformationIncluded)
-        cmdParams.append(LeCbConnectionCompleteInitialCredits)
-        LeCbConnectionCompleteResult = FsciParameter("LeCbConnectionCompleteResult", 2, InformationIncluded)
-        cmdParams.append(LeCbConnectionCompleteResult)
-        return FsciFrameDescription(0x41, 0x84, cmdParams)
+        # not generated, cursor based approach in observer; see events.py
+        return FsciFrameDescription(0x41, 0x85, cmdParams)
 
     def InitL2CAPLePsmDisconnectNotificationIndication(self):
         cmdParams = []
-        InformationIncluded = FsciParameter("InformationIncluded", 1)
-        cmdParams.append(InformationIncluded)
-        LeCbDisconnectionDeviceId = FsciParameter("LeCbDisconnectionDeviceId", 1, InformationIncluded)
-        cmdParams.append(LeCbDisconnectionDeviceId)
-        LeCbDisconnectionChannelId = FsciParameter("LeCbDisconnectionChannelId", 2, InformationIncluded)
-        cmdParams.append(LeCbDisconnectionChannelId)
-        return FsciFrameDescription(0x41, 0x85, cmdParams)
+        # not generated, cursor based approach in observer; see events.py
+        return FsciFrameDescription(0x41, 0x86, cmdParams)
 
     def InitL2CAPNoPeerCreditsIndication(self):
         cmdParams = []
-        InformationIncluded = FsciParameter("InformationIncluded", 1)
-        cmdParams.append(InformationIncluded)
-        LeCbNoPeerCreditsDeviceId = FsciParameter("LeCbNoPeerCreditsDeviceId", 1, InformationIncluded)
-        cmdParams.append(LeCbNoPeerCreditsDeviceId)
-        LeCbNoPeerCreditsChannelId = FsciParameter("LeCbNoPeerCreditsChannelId", 2, InformationIncluded)
-        cmdParams.append(LeCbNoPeerCreditsChannelId)
-        return FsciFrameDescription(0x41, 0x86, cmdParams)
+        # not generated, cursor based approach in observer; see events.py
+        return FsciFrameDescription(0x41, 0x87, cmdParams)
 
     def InitL2CAPLocalCreditsNotificationIndication(self):
         cmdParams = []
-        InformationIncluded = FsciParameter("InformationIncluded", 1)
-        cmdParams.append(InformationIncluded)
-        LeCbLocalCreditsNotificationDeviceId = FsciParameter("LeCbLocalCreditsNotificationDeviceId", 1, InformationIncluded)
-        cmdParams.append(LeCbLocalCreditsNotificationDeviceId)
-        LeCbLocalCreditsNotificationChannelId = FsciParameter("LeCbLocalCreditsNotificationChannelId", 2, InformationIncluded)
-        cmdParams.append(LeCbLocalCreditsNotificationChannelId)
-        LeCbLocalCreditsNotificationLocalCredits = FsciParameter("LeCbLocalCreditsNotificationLocalCredits", 2, InformationIncluded)
-        cmdParams.append(LeCbLocalCreditsNotificationLocalCredits)
-        return FsciFrameDescription(0x41, 0x87, cmdParams)
+        # not generated, cursor based approach in observer; see events.py
+        return FsciFrameDescription(0x41, 0x88, cmdParams)
 
     def InitL2CAPLeCbDataIndication(self):
         cmdParams = []
@@ -3088,7 +2772,7 @@ class Spec(object):
         cmdParams.append(PacketLength)
         Packet = FsciParameter("Packet", 1, PacketLength)
         cmdParams.append(Packet)
-        return FsciFrameDescription(0x41, 0x88, cmdParams)
+        return FsciFrameDescription(0x41, 0x89, cmdParams)
 
     def InitSMConfirm(self):
         cmdParams = []
@@ -3511,14 +3195,7 @@ class Spec(object):
 
     def InitATTClientIncomingServerFindByTypeValueResponseIndication(self):
         cmdParams = []
-        DeviceId = FsciParameter("DeviceId", 1)
-        cmdParams.append(DeviceId)
-        Params_GroupCount = FsciParameter("Params_GroupCount", 2)
-        cmdParams.append(Params_GroupCount)
-        Params_HandleGroupStartingHandle = FsciParameter("Params_HandleGroupStartingHandle", 2, Params_GroupCount)
-        cmdParams.append(Params_HandleGroupStartingHandle)
-        Params_HandleGroupEndingHandle = FsciParameter("Params_HandleGroupEndingHandle", 2, Params_GroupCount)
-        cmdParams.append(Params_HandleGroupEndingHandle)
+        # not generated, cursor based approach in observer; see events.py
         return FsciFrameDescription(0x43, 0x88, cmdParams)
 
     def InitATTServerIncomingClientReadByTypeRequestIndication(self):
@@ -3596,12 +3273,7 @@ class Spec(object):
 
     def InitATTServerIncomingClientReadMultipleRequestIndication(self):
         cmdParams = []
-        DeviceId = FsciParameter("DeviceId", 1)
-        cmdParams.append(DeviceId)
-        Params_HandleCount = FsciParameter("Params_HandleCount", 2)
-        cmdParams.append(Params_HandleCount)
-        Params_ListOfHandlesHandle = FsciParameter("Params_ListOfHandlesHandle", 2, Params_HandleCount)
-        cmdParams.append(Params_ListOfHandlesHandle)
+        # not generated, cursor based approach in observer; see events.py
         return FsciFrameDescription(0x43, 0x8F, cmdParams)
 
     def InitATTClientIncomingServerReadMultipleResponseIndication(self):
@@ -3803,656 +3475,37 @@ class Spec(object):
 
     def InitGATTClientProcedureDiscoverAllPrimaryServicesIndication(self):
         cmdParams = []
-        DeviceId = FsciParameter("DeviceId", 1)
-        cmdParams.append(DeviceId)
-        ProcedureResult = FsciParameter("ProcedureResult", 1)
-        cmdParams.append(ProcedureResult)
-        Error = FsciParameter("Error", 2)
-        cmdParams.append(Error)
-        NbOfDiscoveredServices = FsciParameter("NbOfDiscoveredServices", 1)
-        cmdParams.append(NbOfDiscoveredServices)
-        DiscoveredServicesStartHandle = FsciParameter("DiscoveredServicesStartHandle", 2, NbOfDiscoveredServices)
-        cmdParams.append(DiscoveredServicesStartHandle)
-        DiscoveredServicesEndHandle = FsciParameter("DiscoveredServicesEndHandle", 2, NbOfDiscoveredServices)
-        cmdParams.append(DiscoveredServicesEndHandle)
-        DiscoveredServicesUuidType = FsciParameter("DiscoveredServicesUuidType", 1, NbOfDiscoveredServices)
-        cmdParams.append(DiscoveredServicesUuidType)
-        DiscoveredServicesUuiddict = {}
-        currentList = []
-        UuidUuid16Bits = FsciParameter("UuidUuid16Bits", 2)
-        currentList.append(UuidUuid16Bits)
-        DiscoveredServicesUuiddict[0x01] = currentList
-        currentList = []
-        UuidUuid128Bits = FsciParameter("UuidUuid128Bits", 16)
-        currentList.append(UuidUuid128Bits)
-        DiscoveredServicesUuiddict[0x02] = currentList
-        currentList = []
-        UuidUuid32Bits = FsciParameter("UuidUuid32Bits", 4)
-        currentList.append(UuidUuid32Bits)
-        DiscoveredServicesUuiddict[0x03] = currentList
-        DiscoveredServicesUuid = FsciParameter("DiscoveredServicesUuid", 1, DiscoveredServicesUuidType, DiscoveredServicesUuiddict)
-        cmdParams.append(DiscoveredServicesUuid)
-        DiscoveredServicesNbOfCharacteristics = FsciParameter("DiscoveredServicesNbOfCharacteristics", 1, NbOfDiscoveredServices)
-        cmdParams.append(DiscoveredServicesNbOfCharacteristics)
-        CharacteristicsProperties = FsciParameter("CharacteristicsProperties", 1, DiscoveredServicesNbOfCharacteristics)
-        cmdParams.append(CharacteristicsProperties)
-        ValueHandle = FsciParameter("ValueHandle", 2, DiscoveredServicesNbOfCharacteristics)
-        cmdParams.append(ValueHandle)
-        ValueUuidType = FsciParameter("ValueUuidType", 1, DiscoveredServicesNbOfCharacteristics)
-        cmdParams.append(ValueUuidType)
-        ValueUuiddict = {}
-        currentList = []
-        UuidUuid16Bits = FsciParameter("UuidUuid16Bits", 2)
-        currentList.append(UuidUuid16Bits)
-        ValueUuiddict[0x01] = currentList
-        currentList = []
-        UuidUuid128Bits = FsciParameter("UuidUuid128Bits", 16)
-        currentList.append(UuidUuid128Bits)
-        ValueUuiddict[0x02] = currentList
-        currentList = []
-        UuidUuid32Bits = FsciParameter("UuidUuid32Bits", 4)
-        currentList.append(UuidUuid32Bits)
-        ValueUuiddict[0x03] = currentList
-        ValueUuid = FsciParameter("ValueUuid", 1, DiscoveredServicesUuidType, ValueUuiddict)
-        cmdParams.append(ValueUuid)
-        ValueValueLength = FsciParameter("ValueValueLength", 2, DiscoveredServicesNbOfCharacteristics)
-        cmdParams.append(ValueValueLength)
-        ValueMaxValueLength = FsciParameter("ValueMaxValueLength", 2, DiscoveredServicesNbOfCharacteristics)
-        cmdParams.append(ValueMaxValueLength)
-        ValueValue = FsciParameter("ValueValue", 1, ValueValueLength)
-        cmdParams.append(ValueValue)
-        CharacteristicsNbOfDescriptors = FsciParameter("CharacteristicsNbOfDescriptors", 1, DiscoveredServicesNbOfCharacteristics)
-        cmdParams.append(CharacteristicsNbOfDescriptors)
-        DescriptorsHandle = FsciParameter("DescriptorsHandle", 2, CharacteristicsNbOfDescriptors)
-        cmdParams.append(DescriptorsHandle)
-        DescriptorsUuidType = FsciParameter("DescriptorsUuidType", 1, CharacteristicsNbOfDescriptors)
-        cmdParams.append(DescriptorsUuidType)
-        DescriptorsUuiddict = {}
-        currentList = []
-        UuidUuid16Bits = FsciParameter("UuidUuid16Bits", 2)
-        currentList.append(UuidUuid16Bits)
-        DescriptorsUuiddict[0x01] = currentList
-        currentList = []
-        UuidUuid128Bits = FsciParameter("UuidUuid128Bits", 16)
-        currentList.append(UuidUuid128Bits)
-        DescriptorsUuiddict[0x02] = currentList
-        currentList = []
-        UuidUuid32Bits = FsciParameter("UuidUuid32Bits", 4)
-        currentList.append(UuidUuid32Bits)
-        DescriptorsUuiddict[0x03] = currentList
-        DescriptorsUuid = FsciParameter("DescriptorsUuid", 1, DiscoveredServicesUuidType, DescriptorsUuiddict)
-        cmdParams.append(DescriptorsUuid)
-        DescriptorsValueLength = FsciParameter("DescriptorsValueLength", 2, CharacteristicsNbOfDescriptors)
-        cmdParams.append(DescriptorsValueLength)
-        DescriptorsMaxValueLength = FsciParameter("DescriptorsMaxValueLength", 2, CharacteristicsNbOfDescriptors)
-        cmdParams.append(DescriptorsMaxValueLength)
-        DescriptorsValue = FsciParameter("DescriptorsValue", 1, DescriptorsValueLength)
-        cmdParams.append(DescriptorsValue)
-        DiscoveredServicesNbOfIncludedServices = FsciParameter("DiscoveredServicesNbOfIncludedServices", 1, NbOfDiscoveredServices)
-        cmdParams.append(DiscoveredServicesNbOfIncludedServices)
-        IncludedServicesStartHandle = FsciParameter("IncludedServicesStartHandle", 2, DiscoveredServicesNbOfIncludedServices)
-        cmdParams.append(IncludedServicesStartHandle)
-        IncludedServicesEndHandle = FsciParameter("IncludedServicesEndHandle", 2, DiscoveredServicesNbOfIncludedServices)
-        cmdParams.append(IncludedServicesEndHandle)
-        IncludedServicesUuidType = FsciParameter("IncludedServicesUuidType", 1, DiscoveredServicesNbOfIncludedServices)
-        cmdParams.append(IncludedServicesUuidType)
-        IncludedServicesUuiddict = {}
-        currentList = []
-        UuidUuid16Bits = FsciParameter("UuidUuid16Bits", 2)
-        currentList.append(UuidUuid16Bits)
-        IncludedServicesUuiddict[0x01] = currentList
-        currentList = []
-        UuidUuid128Bits = FsciParameter("UuidUuid128Bits", 16)
-        currentList.append(UuidUuid128Bits)
-        IncludedServicesUuiddict[0x02] = currentList
-        currentList = []
-        UuidUuid32Bits = FsciParameter("UuidUuid32Bits", 4)
-        currentList.append(UuidUuid32Bits)
-        IncludedServicesUuiddict[0x03] = currentList
-        IncludedServicesUuid = FsciParameter("IncludedServicesUuid", 1, DiscoveredServicesUuidType, IncludedServicesUuiddict)
-        cmdParams.append(IncludedServicesUuid)
-        IncludedServicesNbOfCharacteristics = FsciParameter("IncludedServicesNbOfCharacteristics", 1, DiscoveredServicesNbOfIncludedServices)
-        cmdParams.append(IncludedServicesNbOfCharacteristics)
-        IncludedServicesNbOfIncludedServices = FsciParameter("IncludedServicesNbOfIncludedServices", 1, DiscoveredServicesNbOfIncludedServices)
-        cmdParams.append(IncludedServicesNbOfIncludedServices)
+        # not generated, cursor based approach in observer; see events.py
         return FsciFrameDescription(0x44, 0x83, cmdParams)
 
     def InitGATTClientProcedureDiscoverPrimaryServicesByUuidIndication(self):
         cmdParams = []
-        DeviceId = FsciParameter("DeviceId", 1)
-        cmdParams.append(DeviceId)
-        ProcedureResult = FsciParameter("ProcedureResult", 1)
-        cmdParams.append(ProcedureResult)
-        Error = FsciParameter("Error", 2)
-        cmdParams.append(Error)
-        NbOfDiscoveredServices = FsciParameter("NbOfDiscoveredServices", 1)
-        cmdParams.append(NbOfDiscoveredServices)
-        DiscoveredServicesStartHandle = FsciParameter("DiscoveredServicesStartHandle", 2, NbOfDiscoveredServices)
-        cmdParams.append(DiscoveredServicesStartHandle)
-        DiscoveredServicesEndHandle = FsciParameter("DiscoveredServicesEndHandle", 2, NbOfDiscoveredServices)
-        cmdParams.append(DiscoveredServicesEndHandle)
-        DiscoveredServicesUuidType = FsciParameter("DiscoveredServicesUuidType", 1, NbOfDiscoveredServices)
-        cmdParams.append(DiscoveredServicesUuidType)
-        DiscoveredServicesUuiddict = {}
-        currentList = []
-        UuidUuid16Bits = FsciParameter("UuidUuid16Bits", 2)
-        currentList.append(UuidUuid16Bits)
-        DiscoveredServicesUuiddict[0x01] = currentList
-        currentList = []
-        UuidUuid128Bits = FsciParameter("UuidUuid128Bits", 16)
-        currentList.append(UuidUuid128Bits)
-        DiscoveredServicesUuiddict[0x02] = currentList
-        currentList = []
-        UuidUuid32Bits = FsciParameter("UuidUuid32Bits", 4)
-        currentList.append(UuidUuid32Bits)
-        DiscoveredServicesUuiddict[0x03] = currentList
-        DiscoveredServicesUuid = FsciParameter("DiscoveredServicesUuid", 1, DiscoveredServicesUuidType, DiscoveredServicesUuiddict)
-        cmdParams.append(DiscoveredServicesUuid)
-        DiscoveredServicesNbOfCharacteristics = FsciParameter("DiscoveredServicesNbOfCharacteristics", 1, NbOfDiscoveredServices)
-        cmdParams.append(DiscoveredServicesNbOfCharacteristics)
-        CharacteristicsProperties = FsciParameter("CharacteristicsProperties", 1, DiscoveredServicesNbOfCharacteristics)
-        cmdParams.append(CharacteristicsProperties)
-        ValueHandle = FsciParameter("ValueHandle", 2, DiscoveredServicesNbOfCharacteristics)
-        cmdParams.append(ValueHandle)
-        ValueUuidType = FsciParameter("ValueUuidType", 1, DiscoveredServicesNbOfCharacteristics)
-        cmdParams.append(ValueUuidType)
-        ValueUuiddict = {}
-        currentList = []
-        UuidUuid16Bits = FsciParameter("UuidUuid16Bits", 2)
-        currentList.append(UuidUuid16Bits)
-        ValueUuiddict[0x01] = currentList
-        currentList = []
-        UuidUuid128Bits = FsciParameter("UuidUuid128Bits", 16)
-        currentList.append(UuidUuid128Bits)
-        ValueUuiddict[0x02] = currentList
-        currentList = []
-        UuidUuid32Bits = FsciParameter("UuidUuid32Bits", 4)
-        currentList.append(UuidUuid32Bits)
-        ValueUuiddict[0x03] = currentList
-        ValueUuid = FsciParameter("ValueUuid", 1, DiscoveredServicesUuidType, ValueUuiddict)
-        cmdParams.append(ValueUuid)
-        ValueValueLength = FsciParameter("ValueValueLength", 2, DiscoveredServicesNbOfCharacteristics)
-        cmdParams.append(ValueValueLength)
-        ValueMaxValueLength = FsciParameter("ValueMaxValueLength", 2, DiscoveredServicesNbOfCharacteristics)
-        cmdParams.append(ValueMaxValueLength)
-        ValueValue = FsciParameter("ValueValue", 1, ValueValueLength)
-        cmdParams.append(ValueValue)
-        CharacteristicsNbOfDescriptors = FsciParameter("CharacteristicsNbOfDescriptors", 1, DiscoveredServicesNbOfCharacteristics)
-        cmdParams.append(CharacteristicsNbOfDescriptors)
-        DescriptorsHandle = FsciParameter("DescriptorsHandle", 2, CharacteristicsNbOfDescriptors)
-        cmdParams.append(DescriptorsHandle)
-        DescriptorsUuidType = FsciParameter("DescriptorsUuidType", 1, CharacteristicsNbOfDescriptors)
-        cmdParams.append(DescriptorsUuidType)
-        DescriptorsUuiddict = {}
-        currentList = []
-        UuidUuid16Bits = FsciParameter("UuidUuid16Bits", 2)
-        currentList.append(UuidUuid16Bits)
-        DescriptorsUuiddict[0x01] = currentList
-        currentList = []
-        UuidUuid128Bits = FsciParameter("UuidUuid128Bits", 16)
-        currentList.append(UuidUuid128Bits)
-        DescriptorsUuiddict[0x02] = currentList
-        currentList = []
-        UuidUuid32Bits = FsciParameter("UuidUuid32Bits", 4)
-        currentList.append(UuidUuid32Bits)
-        DescriptorsUuiddict[0x03] = currentList
-        DescriptorsUuid = FsciParameter("DescriptorsUuid", 1, DiscoveredServicesUuidType, DescriptorsUuiddict)
-        cmdParams.append(DescriptorsUuid)
-        DescriptorsValueLength = FsciParameter("DescriptorsValueLength", 2, CharacteristicsNbOfDescriptors)
-        cmdParams.append(DescriptorsValueLength)
-        DescriptorsMaxValueLength = FsciParameter("DescriptorsMaxValueLength", 2, CharacteristicsNbOfDescriptors)
-        cmdParams.append(DescriptorsMaxValueLength)
-        DescriptorsValue = FsciParameter("DescriptorsValue", 1, DescriptorsValueLength)
-        cmdParams.append(DescriptorsValue)
-        DiscoveredServicesNbOfIncludedServices = FsciParameter("DiscoveredServicesNbOfIncludedServices", 1, NbOfDiscoveredServices)
-        cmdParams.append(DiscoveredServicesNbOfIncludedServices)
-        IncludedServicesStartHandle = FsciParameter("IncludedServicesStartHandle", 2, DiscoveredServicesNbOfIncludedServices)
-        cmdParams.append(IncludedServicesStartHandle)
-        IncludedServicesEndHandle = FsciParameter("IncludedServicesEndHandle", 2, DiscoveredServicesNbOfIncludedServices)
-        cmdParams.append(IncludedServicesEndHandle)
-        IncludedServicesUuidType = FsciParameter("IncludedServicesUuidType", 1, DiscoveredServicesNbOfIncludedServices)
-        cmdParams.append(IncludedServicesUuidType)
-        IncludedServicesUuiddict = {}
-        currentList = []
-        UuidUuid16Bits = FsciParameter("UuidUuid16Bits", 2)
-        currentList.append(UuidUuid16Bits)
-        IncludedServicesUuiddict[0x01] = currentList
-        currentList = []
-        UuidUuid128Bits = FsciParameter("UuidUuid128Bits", 16)
-        currentList.append(UuidUuid128Bits)
-        IncludedServicesUuiddict[0x02] = currentList
-        currentList = []
-        UuidUuid32Bits = FsciParameter("UuidUuid32Bits", 4)
-        currentList.append(UuidUuid32Bits)
-        IncludedServicesUuiddict[0x03] = currentList
-        IncludedServicesUuid = FsciParameter("IncludedServicesUuid", 1, DiscoveredServicesUuidType, IncludedServicesUuiddict)
-        cmdParams.append(IncludedServicesUuid)
-        IncludedServicesNbOfCharacteristics = FsciParameter("IncludedServicesNbOfCharacteristics", 1, DiscoveredServicesNbOfIncludedServices)
-        cmdParams.append(IncludedServicesNbOfCharacteristics)
-        IncludedServicesNbOfIncludedServices = FsciParameter("IncludedServicesNbOfIncludedServices", 1, DiscoveredServicesNbOfIncludedServices)
-        cmdParams.append(IncludedServicesNbOfIncludedServices)
+        # not generated, cursor based approach in observer; see events.py
         return FsciFrameDescription(0x44, 0x84, cmdParams)
 
     def InitGATTClientProcedureFindIncludedServicesIndication(self):
         cmdParams = []
-        DeviceId = FsciParameter("DeviceId", 1)
-        cmdParams.append(DeviceId)
-        ProcedureResult = FsciParameter("ProcedureResult", 1)
-        cmdParams.append(ProcedureResult)
-        Error = FsciParameter("Error", 2)
-        cmdParams.append(Error)
-        Service_StartHandle = FsciParameter("Service_StartHandle", 2)
-        cmdParams.append(Service_StartHandle)
-        Service_EndHandle = FsciParameter("Service_EndHandle", 2)
-        cmdParams.append(Service_EndHandle)
-        Service_UuidType = FsciParameter("Service_UuidType", 1)
-        cmdParams.append(Service_UuidType)
-        Service_Uuiddict = {}
-        currentList = []
-        Service_UuidUuid16Bits = FsciParameter("Service_UuidUuid16Bits", 2)
-        currentList.append(Service_UuidUuid16Bits)
-        Service_Uuiddict[0x01] = currentList
-        currentList = []
-        Service_UuidUuid128Bits = FsciParameter("Service_UuidUuid128Bits", 16)
-        currentList.append(Service_UuidUuid128Bits)
-        Service_Uuiddict[0x02] = currentList
-        currentList = []
-        Service_UuidUuid32Bits = FsciParameter("Service_UuidUuid32Bits", 4)
-        currentList.append(Service_UuidUuid32Bits)
-        Service_Uuiddict[0x03] = currentList
-        Service_Uuid = FsciParameter("Service_Uuid", 1, Service_UuidType, Service_Uuiddict)
-        cmdParams.append(Service_Uuid)
-        Service_NbOfCharacteristics = FsciParameter("Service_NbOfCharacteristics", 1)
-        cmdParams.append(Service_NbOfCharacteristics)
-        Service_CharacteristicsProperties = FsciParameter("Service_CharacteristicsProperties", 1, Service_NbOfCharacteristics)
-        cmdParams.append(Service_CharacteristicsProperties)
-        ValueHandle = FsciParameter("ValueHandle", 2, Service_NbOfCharacteristics)
-        cmdParams.append(ValueHandle)
-        ValueUuidType = FsciParameter("ValueUuidType", 1, Service_NbOfCharacteristics)
-        cmdParams.append(ValueUuidType)
-        ValueUuiddict = {}
-        currentList = []
-        UuidUuid16Bits = FsciParameter("UuidUuid16Bits", 2)
-        currentList.append(UuidUuid16Bits)
-        ValueUuiddict[0x01] = currentList
-        currentList = []
-        UuidUuid128Bits = FsciParameter("UuidUuid128Bits", 16)
-        currentList.append(UuidUuid128Bits)
-        ValueUuiddict[0x02] = currentList
-        currentList = []
-        UuidUuid32Bits = FsciParameter("UuidUuid32Bits", 4)
-        currentList.append(UuidUuid32Bits)
-        ValueUuiddict[0x03] = currentList
-        ValueUuid = FsciParameter("ValueUuid", 1, Service_UuidType, ValueUuiddict)
-        cmdParams.append(ValueUuid)
-        ValueValueLength = FsciParameter("ValueValueLength", 2, Service_NbOfCharacteristics)
-        cmdParams.append(ValueValueLength)
-        ValueMaxValueLength = FsciParameter("ValueMaxValueLength", 2, Service_NbOfCharacteristics)
-        cmdParams.append(ValueMaxValueLength)
-        ValueValue = FsciParameter("ValueValue", 1, ValueValueLength)
-        cmdParams.append(ValueValue)
-        Service_CharacteristicsNbOfDescriptors = FsciParameter("Service_CharacteristicsNbOfDescriptors", 1, Service_NbOfCharacteristics)
-        cmdParams.append(Service_CharacteristicsNbOfDescriptors)
-        DescriptorsHandle = FsciParameter("DescriptorsHandle", 2, Service_CharacteristicsNbOfDescriptors)
-        cmdParams.append(DescriptorsHandle)
-        DescriptorsUuidType = FsciParameter("DescriptorsUuidType", 1, Service_CharacteristicsNbOfDescriptors)
-        cmdParams.append(DescriptorsUuidType)
-        DescriptorsUuiddict = {}
-        currentList = []
-        UuidUuid16Bits = FsciParameter("UuidUuid16Bits", 2)
-        currentList.append(UuidUuid16Bits)
-        DescriptorsUuiddict[0x01] = currentList
-        currentList = []
-        UuidUuid128Bits = FsciParameter("UuidUuid128Bits", 16)
-        currentList.append(UuidUuid128Bits)
-        DescriptorsUuiddict[0x02] = currentList
-        currentList = []
-        UuidUuid32Bits = FsciParameter("UuidUuid32Bits", 4)
-        currentList.append(UuidUuid32Bits)
-        DescriptorsUuiddict[0x03] = currentList
-        DescriptorsUuid = FsciParameter("DescriptorsUuid", 1, Service_UuidType, DescriptorsUuiddict)
-        cmdParams.append(DescriptorsUuid)
-        DescriptorsValueLength = FsciParameter("DescriptorsValueLength", 2, Service_CharacteristicsNbOfDescriptors)
-        cmdParams.append(DescriptorsValueLength)
-        DescriptorsMaxValueLength = FsciParameter("DescriptorsMaxValueLength", 2, Service_CharacteristicsNbOfDescriptors)
-        cmdParams.append(DescriptorsMaxValueLength)
-        DescriptorsValue = FsciParameter("DescriptorsValue", 1, DescriptorsValueLength)
-        cmdParams.append(DescriptorsValue)
-        Service_NbOfIncludedServices = FsciParameter("Service_NbOfIncludedServices", 1)
-        cmdParams.append(Service_NbOfIncludedServices)
-        Service_IncludedServicesStartHandle = FsciParameter("Service_IncludedServicesStartHandle", 2, Service_NbOfIncludedServices)
-        cmdParams.append(Service_IncludedServicesStartHandle)
-        Service_IncludedServicesEndHandle = FsciParameter("Service_IncludedServicesEndHandle", 2, Service_NbOfIncludedServices)
-        cmdParams.append(Service_IncludedServicesEndHandle)
-        Service_IncludedServicesUuidType = FsciParameter("Service_IncludedServicesUuidType", 1, Service_NbOfIncludedServices)
-        cmdParams.append(Service_IncludedServicesUuidType)
-        Service_IncludedServicesUuiddict = {}
-        currentList = []
-        UuidUuid16Bits = FsciParameter("UuidUuid16Bits", 2)
-        currentList.append(UuidUuid16Bits)
-        Service_IncludedServicesUuiddict[0x01] = currentList
-        currentList = []
-        UuidUuid128Bits = FsciParameter("UuidUuid128Bits", 16)
-        currentList.append(UuidUuid128Bits)
-        Service_IncludedServicesUuiddict[0x02] = currentList
-        currentList = []
-        UuidUuid32Bits = FsciParameter("UuidUuid32Bits", 4)
-        currentList.append(UuidUuid32Bits)
-        Service_IncludedServicesUuiddict[0x03] = currentList
-        Service_IncludedServicesUuid = FsciParameter("Service_IncludedServicesUuid", 1, Service_UuidType, Service_IncludedServicesUuiddict)
-        cmdParams.append(Service_IncludedServicesUuid)
-        Service_IncludedServicesNbOfCharacteristics = FsciParameter("Service_IncludedServicesNbOfCharacteristics", 1, Service_NbOfIncludedServices)
-        cmdParams.append(Service_IncludedServicesNbOfCharacteristics)
-        Service_IncludedServicesNbOfIncludedServices = FsciParameter("Service_IncludedServicesNbOfIncludedServices", 1, Service_NbOfIncludedServices)
-        cmdParams.append(Service_IncludedServicesNbOfIncludedServices)
+        # not generated, cursor based approach in observer; see events.py
         return FsciFrameDescription(0x44, 0x85, cmdParams)
 
     def InitGATTClientProcedureDiscoverAllCharacteristicsIndication(self):
         cmdParams = []
-        DeviceId = FsciParameter("DeviceId", 1)
-        cmdParams.append(DeviceId)
-        ProcedureResult = FsciParameter("ProcedureResult", 1)
-        cmdParams.append(ProcedureResult)
-        Error = FsciParameter("Error", 2)
-        cmdParams.append(Error)
-        Service_StartHandle = FsciParameter("Service_StartHandle", 2)
-        cmdParams.append(Service_StartHandle)
-        Service_EndHandle = FsciParameter("Service_EndHandle", 2)
-        cmdParams.append(Service_EndHandle)
-        Service_UuidType = FsciParameter("Service_UuidType", 1)
-        cmdParams.append(Service_UuidType)
-        Service_Uuiddict = {}
-        currentList = []
-        Service_UuidUuid16Bits = FsciParameter("Service_UuidUuid16Bits", 2)
-        currentList.append(Service_UuidUuid16Bits)
-        Service_Uuiddict[0x01] = currentList
-        currentList = []
-        Service_UuidUuid128Bits = FsciParameter("Service_UuidUuid128Bits", 16)
-        currentList.append(Service_UuidUuid128Bits)
-        Service_Uuiddict[0x02] = currentList
-        currentList = []
-        Service_UuidUuid32Bits = FsciParameter("Service_UuidUuid32Bits", 4)
-        currentList.append(Service_UuidUuid32Bits)
-        Service_Uuiddict[0x03] = currentList
-        Service_Uuid = FsciParameter("Service_Uuid", 1, Service_UuidType, Service_Uuiddict)
-        cmdParams.append(Service_Uuid)
-        Service_NbOfCharacteristics = FsciParameter("Service_NbOfCharacteristics", 1)
-        cmdParams.append(Service_NbOfCharacteristics)
-        Service_CharacteristicsProperties = FsciParameter("Service_CharacteristicsProperties", 1, Service_NbOfCharacteristics)
-        cmdParams.append(Service_CharacteristicsProperties)
-        ValueHandle = FsciParameter("ValueHandle", 2, Service_NbOfCharacteristics)
-        cmdParams.append(ValueHandle)
-        ValueUuidType = FsciParameter("ValueUuidType", 1, Service_NbOfCharacteristics)
-        cmdParams.append(ValueUuidType)
-        ValueUuiddict = {}
-        currentList = []
-        UuidUuid16Bits = FsciParameter("UuidUuid16Bits", 2)
-        currentList.append(UuidUuid16Bits)
-        ValueUuiddict[0x01] = currentList
-        currentList = []
-        UuidUuid128Bits = FsciParameter("UuidUuid128Bits", 16)
-        currentList.append(UuidUuid128Bits)
-        ValueUuiddict[0x02] = currentList
-        currentList = []
-        UuidUuid32Bits = FsciParameter("UuidUuid32Bits", 4)
-        currentList.append(UuidUuid32Bits)
-        ValueUuiddict[0x03] = currentList
-        ValueUuid = FsciParameter("ValueUuid", 1, Service_UuidType, ValueUuiddict)
-        cmdParams.append(ValueUuid)
-        ValueValueLength = FsciParameter("ValueValueLength", 2, Service_NbOfCharacteristics)
-        cmdParams.append(ValueValueLength)
-        ValueMaxValueLength = FsciParameter("ValueMaxValueLength", 2, Service_NbOfCharacteristics)
-        cmdParams.append(ValueMaxValueLength)
-        ValueValue = FsciParameter("ValueValue", 1, ValueValueLength)
-        cmdParams.append(ValueValue)
-        Service_CharacteristicsNbOfDescriptors = FsciParameter("Service_CharacteristicsNbOfDescriptors", 1, Service_NbOfCharacteristics)
-        cmdParams.append(Service_CharacteristicsNbOfDescriptors)
-        DescriptorsHandle = FsciParameter("DescriptorsHandle", 2, Service_CharacteristicsNbOfDescriptors)
-        cmdParams.append(DescriptorsHandle)
-        DescriptorsUuidType = FsciParameter("DescriptorsUuidType", 1, Service_CharacteristicsNbOfDescriptors)
-        cmdParams.append(DescriptorsUuidType)
-        DescriptorsUuiddict = {}
-        currentList = []
-        UuidUuid16Bits = FsciParameter("UuidUuid16Bits", 2)
-        currentList.append(UuidUuid16Bits)
-        DescriptorsUuiddict[0x01] = currentList
-        currentList = []
-        UuidUuid128Bits = FsciParameter("UuidUuid128Bits", 16)
-        currentList.append(UuidUuid128Bits)
-        DescriptorsUuiddict[0x02] = currentList
-        currentList = []
-        UuidUuid32Bits = FsciParameter("UuidUuid32Bits", 4)
-        currentList.append(UuidUuid32Bits)
-        DescriptorsUuiddict[0x03] = currentList
-        DescriptorsUuid = FsciParameter("DescriptorsUuid", 1, Service_UuidType, DescriptorsUuiddict)
-        cmdParams.append(DescriptorsUuid)
-        DescriptorsValueLength = FsciParameter("DescriptorsValueLength", 2, Service_CharacteristicsNbOfDescriptors)
-        cmdParams.append(DescriptorsValueLength)
-        DescriptorsMaxValueLength = FsciParameter("DescriptorsMaxValueLength", 2, Service_CharacteristicsNbOfDescriptors)
-        cmdParams.append(DescriptorsMaxValueLength)
-        DescriptorsValue = FsciParameter("DescriptorsValue", 1, DescriptorsValueLength)
-        cmdParams.append(DescriptorsValue)
-        Service_NbOfIncludedServices = FsciParameter("Service_NbOfIncludedServices", 1)
-        cmdParams.append(Service_NbOfIncludedServices)
-        Service_IncludedServicesStartHandle = FsciParameter("Service_IncludedServicesStartHandle", 2, Service_NbOfIncludedServices)
-        cmdParams.append(Service_IncludedServicesStartHandle)
-        Service_IncludedServicesEndHandle = FsciParameter("Service_IncludedServicesEndHandle", 2, Service_NbOfIncludedServices)
-        cmdParams.append(Service_IncludedServicesEndHandle)
-        Service_IncludedServicesUuidType = FsciParameter("Service_IncludedServicesUuidType", 1, Service_NbOfIncludedServices)
-        cmdParams.append(Service_IncludedServicesUuidType)
-        Service_IncludedServicesUuiddict = {}
-        currentList = []
-        UuidUuid16Bits = FsciParameter("UuidUuid16Bits", 2)
-        currentList.append(UuidUuid16Bits)
-        Service_IncludedServicesUuiddict[0x01] = currentList
-        currentList = []
-        UuidUuid128Bits = FsciParameter("UuidUuid128Bits", 16)
-        currentList.append(UuidUuid128Bits)
-        Service_IncludedServicesUuiddict[0x02] = currentList
-        currentList = []
-        UuidUuid32Bits = FsciParameter("UuidUuid32Bits", 4)
-        currentList.append(UuidUuid32Bits)
-        Service_IncludedServicesUuiddict[0x03] = currentList
-        Service_IncludedServicesUuid = FsciParameter("Service_IncludedServicesUuid", 1, Service_UuidType, Service_IncludedServicesUuiddict)
-        cmdParams.append(Service_IncludedServicesUuid)
-        Service_IncludedServicesNbOfCharacteristics = FsciParameter("Service_IncludedServicesNbOfCharacteristics", 1, Service_NbOfIncludedServices)
-        cmdParams.append(Service_IncludedServicesNbOfCharacteristics)
-        Service_IncludedServicesNbOfIncludedServices = FsciParameter("Service_IncludedServicesNbOfIncludedServices", 1, Service_NbOfIncludedServices)
-        cmdParams.append(Service_IncludedServicesNbOfIncludedServices)
+        # not generated, cursor based approach in observer; see events.py
         return FsciFrameDescription(0x44, 0x86, cmdParams)
 
     def InitGATTClientProcedureDiscoverCharacteristicByUuidIndication(self):
         cmdParams = []
-        DeviceId = FsciParameter("DeviceId", 1)
-        cmdParams.append(DeviceId)
-        ProcedureResult = FsciParameter("ProcedureResult", 1)
-        cmdParams.append(ProcedureResult)
-        Error = FsciParameter("Error", 2)
-        cmdParams.append(Error)
-        NbOfCharacteristics = FsciParameter("NbOfCharacteristics", 1)
-        cmdParams.append(NbOfCharacteristics)
-        CharacteristicsProperties = FsciParameter("CharacteristicsProperties", 1, NbOfCharacteristics)
-        cmdParams.append(CharacteristicsProperties)
-        ValueHandle = FsciParameter("ValueHandle", 2, NbOfCharacteristics)
-        cmdParams.append(ValueHandle)
-        ValueUuidType = FsciParameter("ValueUuidType", 1, NbOfCharacteristics)
-        cmdParams.append(ValueUuidType)
-        ValueUuiddict = {}
-        currentList = []
-        UuidUuid16Bits = FsciParameter("UuidUuid16Bits", 2)
-        currentList.append(UuidUuid16Bits)
-        ValueUuiddict[0x01] = currentList
-        currentList = []
-        UuidUuid128Bits = FsciParameter("UuidUuid128Bits", 16)
-        currentList.append(UuidUuid128Bits)
-        ValueUuiddict[0x02] = currentList
-        currentList = []
-        UuidUuid32Bits = FsciParameter("UuidUuid32Bits", 4)
-        currentList.append(UuidUuid32Bits)
-        ValueUuiddict[0x03] = currentList
-        ValueUuid = FsciParameter("ValueUuid", 1, ValueUuidType, ValueUuiddict)
-        cmdParams.append(ValueUuid)
-        ValueValueLength = FsciParameter("ValueValueLength", 2, NbOfCharacteristics)
-        cmdParams.append(ValueValueLength)
-        ValueMaxValueLength = FsciParameter("ValueMaxValueLength", 2, NbOfCharacteristics)
-        cmdParams.append(ValueMaxValueLength)
-        ValueValue = FsciParameter("ValueValue", 1, ValueValueLength)
-        cmdParams.append(ValueValue)
-        CharacteristicsNbOfDescriptors = FsciParameter("CharacteristicsNbOfDescriptors", 1, NbOfCharacteristics)
-        cmdParams.append(CharacteristicsNbOfDescriptors)
-        DescriptorsHandle = FsciParameter("DescriptorsHandle", 2, CharacteristicsNbOfDescriptors)
-        cmdParams.append(DescriptorsHandle)
-        DescriptorsUuidType = FsciParameter("DescriptorsUuidType", 1, CharacteristicsNbOfDescriptors)
-        cmdParams.append(DescriptorsUuidType)
-        DescriptorsUuiddict = {}
-        currentList = []
-        UuidUuid16Bits = FsciParameter("UuidUuid16Bits", 2)
-        currentList.append(UuidUuid16Bits)
-        DescriptorsUuiddict[0x01] = currentList
-        currentList = []
-        UuidUuid128Bits = FsciParameter("UuidUuid128Bits", 16)
-        currentList.append(UuidUuid128Bits)
-        DescriptorsUuiddict[0x02] = currentList
-        currentList = []
-        UuidUuid32Bits = FsciParameter("UuidUuid32Bits", 4)
-        currentList.append(UuidUuid32Bits)
-        DescriptorsUuiddict[0x03] = currentList
-        DescriptorsUuid = FsciParameter("DescriptorsUuid", 1, ValueUuidType, DescriptorsUuiddict)
-        cmdParams.append(DescriptorsUuid)
-        DescriptorsValueLength = FsciParameter("DescriptorsValueLength", 2, CharacteristicsNbOfDescriptors)
-        cmdParams.append(DescriptorsValueLength)
-        DescriptorsMaxValueLength = FsciParameter("DescriptorsMaxValueLength", 2, CharacteristicsNbOfDescriptors)
-        cmdParams.append(DescriptorsMaxValueLength)
-        DescriptorsValue = FsciParameter("DescriptorsValue", 1, DescriptorsValueLength)
-        cmdParams.append(DescriptorsValue)
+        # not generated, cursor based approach in observer; see events.py
         return FsciFrameDescription(0x44, 0x87, cmdParams)
 
     def InitGATTClientProcedureDiscoverAllCharacteristicDescriptorsIndication(self):
         cmdParams = []
-        DeviceId = FsciParameter("DeviceId", 1)
-        cmdParams.append(DeviceId)
-        ProcedureResult = FsciParameter("ProcedureResult", 1)
-        cmdParams.append(ProcedureResult)
-        Error = FsciParameter("Error", 2)
-        cmdParams.append(Error)
-        Characteristic_Properties = FsciParameter("Characteristic_Properties", 1)
-        cmdParams.append(Characteristic_Properties)
-        Characteristic_ValueHandle = FsciParameter("Characteristic_ValueHandle", 2)
-        cmdParams.append(Characteristic_ValueHandle)
-        Characteristic_ValueUuidType = FsciParameter("Characteristic_ValueUuidType", 1)
-        cmdParams.append(Characteristic_ValueUuidType)
-        Characteristic_ValueUuiddict = {}
-        currentList = []
-        UuidUuid16Bits = FsciParameter("UuidUuid16Bits", 2)
-        currentList.append(UuidUuid16Bits)
-        Characteristic_ValueUuiddict[0x01] = currentList
-        currentList = []
-        UuidUuid128Bits = FsciParameter("UuidUuid128Bits", 16)
-        currentList.append(UuidUuid128Bits)
-        Characteristic_ValueUuiddict[0x02] = currentList
-        currentList = []
-        UuidUuid32Bits = FsciParameter("UuidUuid32Bits", 4)
-        currentList.append(UuidUuid32Bits)
-        Characteristic_ValueUuiddict[0x03] = currentList
-        Characteristic_ValueUuid = FsciParameter("Characteristic_ValueUuid", 1, Characteristic_ValueUuidType, Characteristic_ValueUuiddict)
-        cmdParams.append(Characteristic_ValueUuid)
-        Characteristic_ValueValueLength = FsciParameter("Characteristic_ValueValueLength", 2)
-        cmdParams.append(Characteristic_ValueValueLength)
-        Characteristic_ValueMaxValueLength = FsciParameter("Characteristic_ValueMaxValueLength", 2)
-        cmdParams.append(Characteristic_ValueMaxValueLength)
-        Characteristic_ValueValue = FsciParameter("Characteristic_ValueValue", 1, Characteristic_ValueValueLength)
-        cmdParams.append(Characteristic_ValueValue)
-        Characteristic_NbOfDescriptors = FsciParameter("Characteristic_NbOfDescriptors", 1)
-        cmdParams.append(Characteristic_NbOfDescriptors)
-        Characteristic_DescriptorsHandle = FsciParameter("Characteristic_DescriptorsHandle", 2, Characteristic_NbOfDescriptors)
-        cmdParams.append(Characteristic_DescriptorsHandle)
-        Characteristic_DescriptorsUuidType = FsciParameter("Characteristic_DescriptorsUuidType", 1, Characteristic_NbOfDescriptors)
-        cmdParams.append(Characteristic_DescriptorsUuidType)
-        Characteristic_DescriptorsUuiddict = {}
-        currentList = []
-        UuidUuid16Bits = FsciParameter("UuidUuid16Bits", 2)
-        currentList.append(UuidUuid16Bits)
-        Characteristic_DescriptorsUuiddict[0x01] = currentList
-        currentList = []
-        UuidUuid128Bits = FsciParameter("UuidUuid128Bits", 16)
-        currentList.append(UuidUuid128Bits)
-        Characteristic_DescriptorsUuiddict[0x02] = currentList
-        currentList = []
-        UuidUuid32Bits = FsciParameter("UuidUuid32Bits", 4)
-        currentList.append(UuidUuid32Bits)
-        Characteristic_DescriptorsUuiddict[0x03] = currentList
-        Characteristic_DescriptorsUuid = FsciParameter("Characteristic_DescriptorsUuid", 1, Characteristic_ValueUuidType, Characteristic_DescriptorsUuiddict)
-        cmdParams.append(Characteristic_DescriptorsUuid)
-        Characteristic_DescriptorsValueLength = FsciParameter("Characteristic_DescriptorsValueLength", 2, Characteristic_NbOfDescriptors)
-        cmdParams.append(Characteristic_DescriptorsValueLength)
-        Characteristic_DescriptorsMaxValueLength = FsciParameter("Characteristic_DescriptorsMaxValueLength", 2, Characteristic_NbOfDescriptors)
-        cmdParams.append(Characteristic_DescriptorsMaxValueLength)
-        Characteristic_DescriptorsValue = FsciParameter("Characteristic_DescriptorsValue", 1, Characteristic_DescriptorsValueLength)
-        cmdParams.append(Characteristic_DescriptorsValue)
+        # not generated, cursor based approach in observer; see events.py
         return FsciFrameDescription(0x44, 0x88, cmdParams)
 
     def InitGATTClientProcedureReadCharacteristicValueIndication(self):
         cmdParams = []
-        DeviceId = FsciParameter("DeviceId", 1)
-        cmdParams.append(DeviceId)
-        ProcedureResult = FsciParameter("ProcedureResult", 1)
-        cmdParams.append(ProcedureResult)
-        Error = FsciParameter("Error", 2)
-        cmdParams.append(Error)
-        Characteristic_Properties = FsciParameter("Characteristic_Properties", 1)
-        cmdParams.append(Characteristic_Properties)
-        Characteristic_ValueHandle = FsciParameter("Characteristic_ValueHandle", 2)
-        cmdParams.append(Characteristic_ValueHandle)
-        Characteristic_ValueUuidType = FsciParameter("Characteristic_ValueUuidType", 1)
-        cmdParams.append(Characteristic_ValueUuidType)
-        Characteristic_ValueUuiddict = {}
-        currentList = []
-        UuidUuid16Bits = FsciParameter("UuidUuid16Bits", 2)
-        currentList.append(UuidUuid16Bits)
-        Characteristic_ValueUuiddict[0x01] = currentList
-        currentList = []
-        UuidUuid128Bits = FsciParameter("UuidUuid128Bits", 16)
-        currentList.append(UuidUuid128Bits)
-        Characteristic_ValueUuiddict[0x02] = currentList
-        currentList = []
-        UuidUuid32Bits = FsciParameter("UuidUuid32Bits", 4)
-        currentList.append(UuidUuid32Bits)
-        Characteristic_ValueUuiddict[0x03] = currentList
-        Characteristic_ValueUuid = FsciParameter("Characteristic_ValueUuid", 1, Characteristic_ValueUuidType, Characteristic_ValueUuiddict)
-        cmdParams.append(Characteristic_ValueUuid)
-        Characteristic_ValueValueLength = FsciParameter("Characteristic_ValueValueLength", 2)
-        cmdParams.append(Characteristic_ValueValueLength)
-        Characteristic_ValueMaxValueLength = FsciParameter("Characteristic_ValueMaxValueLength", 2)
-        cmdParams.append(Characteristic_ValueMaxValueLength)
-        Characteristic_ValueValue = FsciParameter("Characteristic_ValueValue", 1, Characteristic_ValueValueLength)
-        cmdParams.append(Characteristic_ValueValue)
-        Characteristic_NbOfDescriptors = FsciParameter("Characteristic_NbOfDescriptors", 1)
-        cmdParams.append(Characteristic_NbOfDescriptors)
-        Characteristic_DescriptorsHandle = FsciParameter("Characteristic_DescriptorsHandle", 2, Characteristic_NbOfDescriptors)
-        cmdParams.append(Characteristic_DescriptorsHandle)
-        Characteristic_DescriptorsUuidType = FsciParameter("Characteristic_DescriptorsUuidType", 1, Characteristic_NbOfDescriptors)
-        cmdParams.append(Characteristic_DescriptorsUuidType)
-        Characteristic_DescriptorsUuiddict = {}
-        currentList = []
-        UuidUuid16Bits = FsciParameter("UuidUuid16Bits", 2)
-        currentList.append(UuidUuid16Bits)
-        Characteristic_DescriptorsUuiddict[0x01] = currentList
-        currentList = []
-        UuidUuid128Bits = FsciParameter("UuidUuid128Bits", 16)
-        currentList.append(UuidUuid128Bits)
-        Characteristic_DescriptorsUuiddict[0x02] = currentList
-        currentList = []
-        UuidUuid32Bits = FsciParameter("UuidUuid32Bits", 4)
-        currentList.append(UuidUuid32Bits)
-        Characteristic_DescriptorsUuiddict[0x03] = currentList
-        Characteristic_DescriptorsUuid = FsciParameter("Characteristic_DescriptorsUuid", 1, Characteristic_ValueUuidType, Characteristic_DescriptorsUuiddict)
-        cmdParams.append(Characteristic_DescriptorsUuid)
-        Characteristic_DescriptorsValueLength = FsciParameter("Characteristic_DescriptorsValueLength", 2, Characteristic_NbOfDescriptors)
-        cmdParams.append(Characteristic_DescriptorsValueLength)
-        Characteristic_DescriptorsMaxValueLength = FsciParameter("Characteristic_DescriptorsMaxValueLength", 2, Characteristic_NbOfDescriptors)
-        cmdParams.append(Characteristic_DescriptorsMaxValueLength)
-        Characteristic_DescriptorsValue = FsciParameter("Characteristic_DescriptorsValue", 1, Characteristic_DescriptorsValueLength)
-        cmdParams.append(Characteristic_DescriptorsValue)
+        # not generated, cursor based approach in observer; see events.py
         return FsciFrameDescription(0x44, 0x89, cmdParams)
 
     def InitGATTClientProcedureReadUsingCharacteristicUuidIndication(self):
@@ -4471,68 +3524,7 @@ class Spec(object):
 
     def InitGATTClientProcedureReadMultipleCharacteristicValuesIndication(self):
         cmdParams = []
-        DeviceId = FsciParameter("DeviceId", 1)
-        cmdParams.append(DeviceId)
-        ProcedureResult = FsciParameter("ProcedureResult", 1)
-        cmdParams.append(ProcedureResult)
-        Error = FsciParameter("Error", 2)
-        cmdParams.append(Error)
-        NbOfCharacteristics = FsciParameter("NbOfCharacteristics", 1)
-        cmdParams.append(NbOfCharacteristics)
-        CharacteristicsProperties = FsciParameter("CharacteristicsProperties", 1, NbOfCharacteristics)
-        cmdParams.append(CharacteristicsProperties)
-        ValueHandle = FsciParameter("ValueHandle", 2, NbOfCharacteristics)
-        cmdParams.append(ValueHandle)
-        ValueUuidType = FsciParameter("ValueUuidType", 1, NbOfCharacteristics)
-        cmdParams.append(ValueUuidType)
-        ValueUuiddict = {}
-        currentList = []
-        UuidUuid16Bits = FsciParameter("UuidUuid16Bits", 2)
-        currentList.append(UuidUuid16Bits)
-        ValueUuiddict[0x01] = currentList
-        currentList = []
-        UuidUuid128Bits = FsciParameter("UuidUuid128Bits", 16)
-        currentList.append(UuidUuid128Bits)
-        ValueUuiddict[0x02] = currentList
-        currentList = []
-        UuidUuid32Bits = FsciParameter("UuidUuid32Bits", 4)
-        currentList.append(UuidUuid32Bits)
-        ValueUuiddict[0x03] = currentList
-        ValueUuid = FsciParameter("ValueUuid", 1, ValueUuidType, ValueUuiddict)
-        cmdParams.append(ValueUuid)
-        ValueValueLength = FsciParameter("ValueValueLength", 2, NbOfCharacteristics)
-        cmdParams.append(ValueValueLength)
-        ValueMaxValueLength = FsciParameter("ValueMaxValueLength", 2, NbOfCharacteristics)
-        cmdParams.append(ValueMaxValueLength)
-        ValueValue = FsciParameter("ValueValue", 1, ValueValueLength)
-        cmdParams.append(ValueValue)
-        CharacteristicsNbOfDescriptors = FsciParameter("CharacteristicsNbOfDescriptors", 1, NbOfCharacteristics)
-        cmdParams.append(CharacteristicsNbOfDescriptors)
-        DescriptorsHandle = FsciParameter("DescriptorsHandle", 2, CharacteristicsNbOfDescriptors)
-        cmdParams.append(DescriptorsHandle)
-        DescriptorsUuidType = FsciParameter("DescriptorsUuidType", 1, CharacteristicsNbOfDescriptors)
-        cmdParams.append(DescriptorsUuidType)
-        DescriptorsUuiddict = {}
-        currentList = []
-        UuidUuid16Bits = FsciParameter("UuidUuid16Bits", 2)
-        currentList.append(UuidUuid16Bits)
-        DescriptorsUuiddict[0x01] = currentList
-        currentList = []
-        UuidUuid128Bits = FsciParameter("UuidUuid128Bits", 16)
-        currentList.append(UuidUuid128Bits)
-        DescriptorsUuiddict[0x02] = currentList
-        currentList = []
-        UuidUuid32Bits = FsciParameter("UuidUuid32Bits", 4)
-        currentList.append(UuidUuid32Bits)
-        DescriptorsUuiddict[0x03] = currentList
-        DescriptorsUuid = FsciParameter("DescriptorsUuid", 1, ValueUuidType, DescriptorsUuiddict)
-        cmdParams.append(DescriptorsUuid)
-        DescriptorsValueLength = FsciParameter("DescriptorsValueLength", 2, CharacteristicsNbOfDescriptors)
-        cmdParams.append(DescriptorsValueLength)
-        DescriptorsMaxValueLength = FsciParameter("DescriptorsMaxValueLength", 2, CharacteristicsNbOfDescriptors)
-        cmdParams.append(DescriptorsMaxValueLength)
-        DescriptorsValue = FsciParameter("DescriptorsValue", 1, DescriptorsValueLength)
-        cmdParams.append(DescriptorsValue)
+        # not generated, cursor based approach in observer; see events.py
         return FsciFrameDescription(0x44, 0x8B, cmdParams)
 
     def InitGATTClientProcedureWriteCharacteristicValueIndication(self):
@@ -4807,14 +3799,7 @@ class Spec(object):
 
     def InitGATTDBAttFindByTypeValueIndication(self):
         cmdParams = []
-        Params_GroupCount = FsciParameter("Params_GroupCount", 2)
-        cmdParams.append(Params_GroupCount)
-        Params_HandleGroupStartingHandle = FsciParameter("Params_HandleGroupStartingHandle", 2, Params_GroupCount)
-        cmdParams.append(Params_HandleGroupStartingHandle)
-        Params_HandleGroupEndingHandle = FsciParameter("Params_HandleGroupEndingHandle", 2, Params_GroupCount)
-        cmdParams.append(Params_HandleGroupEndingHandle)
-        ErrorAttributeHandle = FsciParameter("ErrorAttributeHandle", 2)
-        cmdParams.append(ErrorAttributeHandle)
+        # not generated, cursor based approach in observer; see events.py
         return FsciFrameDescription(0x46, 0x82, cmdParams)
 
     def InitGATTDBAttReadByTypeIndication(self):
@@ -5211,8 +4196,7 @@ class Spec(object):
 
     def InitGAPConnectionEventKeysReceivedIndication(self):
         cmdParams = []
-        DeviceId = FsciParameter("DeviceId", 1)
-        cmdParams.append(DeviceId)
+        # not generated, cursor based approach in observer; see events.py
         return FsciFrameDescription(0x47, 0xA6, cmdParams)
 
     def InitGAPConnectionEventLongTermKeyRequestIndication(self):
@@ -5372,14 +4356,13 @@ class Spec(object):
         cmdParams.append(NewControllerPrivacyState)
         return FsciFrameDescription(0x47, 0xB7, cmdParams)
 
+    def InitGAPGenericEventTxPowerLevelSetCompleteIndication(self):
+        cmdParams = []
+        status = FsciParameter("status", 1)
+        cmdParams.append(status)
+        return FsciFrameDescription(0x47, 0xB8, cmdParams)
+
     def InitGAPGetBondedDevicesIdentityInformationIndication(self):
         cmdParams = []
-        NbOfDeviceIdentityAddresses = FsciParameter("NbOfDeviceIdentityAddresses", 1)
-        cmdParams.append(NbOfDeviceIdentityAddresses)
-        IdentityAddressesIdentityAddressType = FsciParameter("IdentityAddressesIdentityAddressType", 1, NbOfDeviceIdentityAddresses)
-        cmdParams.append(IdentityAddressesIdentityAddressType)
-        IdentityAddressesIdentityAddress = FsciParameter("IdentityAddressesIdentityAddress", 6, NbOfDeviceIdentityAddresses)
-        cmdParams.append(IdentityAddressesIdentityAddress)
-        IdentityAddressesIrk = FsciParameter("IdentityAddressesIrk", 16, NbOfDeviceIdentityAddresses)
-        cmdParams.append(IdentityAddressesIrk)
+        # not generated, cursor based approach in observer; see events.py
         return FsciFrameDescription(0x47, 0x83, cmdParams)

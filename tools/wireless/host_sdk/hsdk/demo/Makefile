@@ -84,4 +84,4 @@ SPITest.o: SPITest.c
 
 clean:
 	rm -f $(BUILDDIR)/*
-	rm -rf $(BINDIR)/*
+	find $(BINDIR)/ -maxdepth 1 -type f -exec rm {} \;

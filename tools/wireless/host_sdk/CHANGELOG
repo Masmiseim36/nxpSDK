@@ -287,4 +287,36 @@ C
     - Remove obsolete thread-multicast-routing demo.
 
 Python
-    - Add ZigBee bindings.
+    - Add Zigbee bindings.
+
+1.7.2
+================================================================================
+Python
+    - Change BLE bindings to support KW35.
+
+1.8.0
+================================================================================
+Add hsdk-c/ directory containing C bindings generated from the BLE_1.3.2 FSCI XML.
+Add HeartRateSensor.c source file to demonstrate usage of the C bindings.
+
+1.8.1
+================================================================================
+C
+    - Fix segfault when running PCAPTest
+
+C bindings
+    - Add Thread C bindings generated from the ThreadIP_1.3.1.xml FSCI XML.
+    - Add ThreadLeader.c source file to demonstrate basic usage of the C bindings.
+
+Python bindings
+    - Regenerate the command set
+
+1.8.2
+================================================================================
+C bindings
+    - Add C bindings for the KW41Z Maintenance Release 1
+    - Add ZigBeeCoordinator sample program that makes use of the C bindings
+
+Python bindings
+    - Update Python bindings for the KW41Z Maintenance Release 1
+    - Remove warnings throughout the Python scripts and bindings

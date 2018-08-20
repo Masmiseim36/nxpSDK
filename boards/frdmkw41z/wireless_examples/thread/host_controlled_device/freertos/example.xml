@@ -94,185 +94,185 @@
   <source path="devices/MKW41Z4" target_path="devices" type="src">
     <files mask="system_MKW41Z4.c"/>
   </source>
-  <source path="middleware/wireless/framework_5.3.5/Common" target_path="wireless/framework/Common" type="c_include">
+  <source path="middleware/wireless/framework_5.3.6/Common" target_path="wireless/framework/Common" type="c_include">
     <files mask="EmbeddedTypes.h"/>
   </source>
-  <source path="middleware/wireless/framework_5.3.5/DCDC/Interface" target_path="wireless/framework/DCDC/Interface" type="c_include">
+  <source path="middleware/wireless/framework_5.3.6/DCDC/Interface" target_path="wireless/framework/DCDC/Interface" type="c_include">
     <files mask="DCDC.h"/>
   </source>
-  <source path="middleware/wireless/framework_5.3.5/DCDC/Source" target_path="wireless/framework/DCDC/Source" type="src">
+  <source path="middleware/wireless/framework_5.3.6/DCDC/Source" target_path="wireless/framework/DCDC/Source" type="src">
     <files mask="DCDC.c"/>
   </source>
-  <source path="middleware/wireless/framework_5.3.5/FSCI/Interface" target_path="wireless/framework/FSCI/Interface" type="c_include">
+  <source path="middleware/wireless/framework_5.3.6/FSCI/Interface" target_path="wireless/framework/FSCI/Interface" type="c_include">
     <files mask="FsciInterface.h"/>
   </source>
-  <source path="middleware/wireless/framework_5.3.5/FSCI/Source" target_path="wireless/framework/FSCI/Source" type="c_include">
+  <source path="middleware/wireless/framework_5.3.6/FSCI/Source" target_path="wireless/framework/FSCI/Source" type="c_include">
     <files mask="FsciCommands.h"/>
     <files mask="FsciCommunication.h"/>
   </source>
-  <source path="middleware/wireless/framework_5.3.5/FSCI/Source" target_path="wireless/framework/FSCI/Source" type="src">
+  <source path="middleware/wireless/framework_5.3.6/FSCI/Source" target_path="wireless/framework/FSCI/Source" type="src">
     <files mask="FsciCommands.c"/>
     <files mask="FsciCommunication.c"/>
     <files mask="FsciLogging.c"/>
     <files mask="FsciMain.c"/>
   </source>
-  <source path="middleware/wireless/framework_5.3.5/Flash/Internal" target_path="wireless/framework/Flash/Internal" type="c_include">
+  <source path="middleware/wireless/framework_5.3.6/Flash/Internal" target_path="wireless/framework/Flash/Internal" type="c_include">
     <files mask="Flash_Adapter.h"/>
   </source>
-  <source path="middleware/wireless/framework_5.3.5/Flash/Internal" target_path="wireless/framework/Flash/Internal" type="src">
+  <source path="middleware/wireless/framework_5.3.6/Flash/Internal" target_path="wireless/framework/Flash/Internal" type="src">
     <files mask="Flash_Adapter.c"/>
   </source>
-  <source path="middleware/wireless/framework_5.3.5/FunctionLib" target_path="wireless/framework/FunctionLib" type="c_include">
+  <source path="middleware/wireless/framework_5.3.6/FunctionLib" target_path="wireless/framework/FunctionLib" type="c_include">
     <files mask="FunctionLib.h"/>
   </source>
-  <source path="middleware/wireless/framework_5.3.5/FunctionLib" target_path="wireless/framework/FunctionLib" type="src">
+  <source path="middleware/wireless/framework_5.3.6/FunctionLib" target_path="wireless/framework/FunctionLib" type="src">
     <files mask="FunctionLib.c"/>
   </source>
-  <source path="middleware/wireless/framework_5.3.5/GPIO" target_path="wireless/framework/GPIO" type="c_include">
+  <source path="middleware/wireless/framework_5.3.6/GPIO" target_path="wireless/framework/GPIO" type="c_include">
     <files mask="GPIO_Adapter.h"/>
   </source>
-  <source path="middleware/wireless/framework_5.3.5/GPIO" target_path="wireless/framework/GPIO" type="src">
+  <source path="middleware/wireless/framework_5.3.6/GPIO" target_path="wireless/framework/GPIO" type="src">
     <files mask="GPIO_Adapter.c"/>
   </source>
-  <source path="middleware/wireless/framework_5.3.5/Keyboard/Interface" target_path="wireless/framework/Keyboard/Interface" type="c_include">
+  <source path="middleware/wireless/framework_5.3.6/Keyboard/Interface" target_path="wireless/framework/Keyboard/Interface" type="c_include">
     <files mask="Keyboard.h"/>
   </source>
-  <source path="middleware/wireless/framework_5.3.5/Keyboard/Source" target_path="wireless/framework/Keyboard/Source" type="src">
+  <source path="middleware/wireless/framework_5.3.6/Keyboard/Source" target_path="wireless/framework/Keyboard/Source" type="src">
     <files mask="Keyboard.c"/>
   </source>
-  <source path="middleware/wireless/framework_5.3.5/LED/Interface" target_path="wireless/framework/LED/Interface" type="c_include">
+  <source path="middleware/wireless/framework_5.3.6/LED/Interface" target_path="wireless/framework/LED/Interface" type="c_include">
     <files mask="LED.h"/>
   </source>
-  <source path="middleware/wireless/framework_5.3.5/LED/Source" target_path="wireless/framework/LED/Source" type="src">
+  <source path="middleware/wireless/framework_5.3.6/LED/Source" target_path="wireless/framework/LED/Source" type="src">
     <files mask="LED.c"/>
   </source>
-  <source path="middleware/wireless/framework_5.3.5/Lists" target_path="wireless/framework/Lists" type="c_include">
+  <source path="middleware/wireless/framework_5.3.6/Lists" target_path="wireless/framework/Lists" type="c_include">
     <files mask="GenericList.h"/>
   </source>
-  <source path="middleware/wireless/framework_5.3.5/Lists" target_path="wireless/framework/Lists" type="src">
+  <source path="middleware/wireless/framework_5.3.6/Lists" target_path="wireless/framework/Lists" type="src">
     <files mask="GenericList.c"/>
   </source>
-  <source path="middleware/wireless/framework_5.3.5/LowPower/Interface/MKW41Z" target_path="wireless/framework/LowPower/Interface/MKW41Z" type="c_include">
+  <source path="middleware/wireless/framework_5.3.6/LowPower/Interface/MKW41Z" target_path="wireless/framework/LowPower/Interface/MKW41Z" type="c_include">
     <files mask="PWR_Configuration.h"/>
     <files mask="PWR_Interface.h"/>
   </source>
-  <source path="middleware/wireless/framework_5.3.5/LowPower/Source/MKW41Z" target_path="wireless/framework/LowPower/Source/MKW41Z" type="c_include">
+  <source path="middleware/wireless/framework_5.3.6/LowPower/Source/MKW41Z" target_path="wireless/framework/LowPower/Source/MKW41Z" type="c_include">
     <files mask="PWRLib.h"/>
   </source>
-  <source path="middleware/wireless/framework_5.3.5/LowPower/Source/MKW41Z" target_path="wireless/framework/LowPower/Source/MKW41Z" type="src">
+  <source path="middleware/wireless/framework_5.3.6/LowPower/Source/MKW41Z" target_path="wireless/framework/LowPower/Source/MKW41Z" type="src">
     <files mask="PWR.c"/>
     <files mask="PWRLib.c"/>
   </source>
-  <source path="middleware/wireless/framework_5.3.5/MWSCoexistence/Interface" target_path="wireless/framework/MWSCoexistence/Interface" type="c_include">
+  <source path="middleware/wireless/framework_5.3.6/MWSCoexistence/Interface" target_path="wireless/framework/MWSCoexistence/Interface" type="c_include">
     <files mask="MWS.h"/>
   </source>
-  <source path="middleware/wireless/framework_5.3.5/MWSCoexistence/Source" target_path="wireless/framework/MWSCoexistence/Source" type="src">
+  <source path="middleware/wireless/framework_5.3.6/MWSCoexistence/Source" target_path="wireless/framework/MWSCoexistence/Source" type="src">
     <files mask="MWS.c"/>
   </source>
-  <source path="middleware/wireless/framework_5.3.5/MemManager/Interface" target_path="wireless/framework/MemManager/Interface" type="c_include">
+  <source path="middleware/wireless/framework_5.3.6/MemManager/Interface" target_path="wireless/framework/MemManager/Interface" type="c_include">
     <files mask="MemManager.h"/>
   </source>
-  <source path="middleware/wireless/framework_5.3.5/MemManager/Source" target_path="wireless/framework/MemManager/Source" type="src">
+  <source path="middleware/wireless/framework_5.3.6/MemManager/Source" target_path="wireless/framework/MemManager/Source" type="src">
     <files mask="MemManager.c"/>
   </source>
-  <source path="middleware/wireless/framework_5.3.5/Messaging/Interface" target_path="wireless/framework/Messaging/Interface" type="c_include">
+  <source path="middleware/wireless/framework_5.3.6/Messaging/Interface" target_path="wireless/framework/Messaging/Interface" type="c_include">
     <files mask="Messaging.h"/>
   </source>
-  <source path="middleware/wireless/framework_5.3.5/Messaging/Source" target_path="wireless/framework/Messaging/Source" type="src">
+  <source path="middleware/wireless/framework_5.3.6/Messaging/Source" target_path="wireless/framework/Messaging/Source" type="src">
     <files mask="Messaging.c"/>
   </source>
-  <source path="middleware/wireless/framework_5.3.5/ModuleInfo" target_path="wireless/framework/ModuleInfo" type="c_include">
+  <source path="middleware/wireless/framework_5.3.6/ModuleInfo" target_path="wireless/framework/ModuleInfo" type="c_include">
     <files mask="ModuleInfo.h"/>
   </source>
-  <source path="middleware/wireless/framework_5.3.5/ModuleInfo" target_path="wireless/framework/ModuleInfo" type="src">
+  <source path="middleware/wireless/framework_5.3.6/ModuleInfo" target_path="wireless/framework/ModuleInfo" type="src">
     <files mask="ModuleInfo.c"/>
   </source>
-  <source path="middleware/wireless/framework_5.3.5/NVM/Interface" target_path="wireless/framework/NVM/Interface" type="c_include">
+  <source path="middleware/wireless/framework_5.3.6/NVM/Interface" target_path="wireless/framework/NVM/Interface" type="c_include">
     <files mask="NVM_Interface.h"/>
   </source>
-  <source path="middleware/wireless/framework_5.3.5/NVM/Source" target_path="wireless/framework/NVM/Source" type="c_include">
+  <source path="middleware/wireless/framework_5.3.6/NVM/Source" target_path="wireless/framework/NVM/Source" type="c_include">
     <files mask="NV_Flash.h"/>
     <files mask="NV_FsciCommands.h"/>
   </source>
-  <source path="middleware/wireless/framework_5.3.5/NVM/Source" target_path="wireless/framework/NVM/Source" type="src">
+  <source path="middleware/wireless/framework_5.3.6/NVM/Source" target_path="wireless/framework/NVM/Source" type="src">
     <files mask="NV_Flash.c"/>
     <files mask="NV_FsciCommands.c"/>
   </source>
-  <source path="middleware/wireless/framework_5.3.5/OSAbstraction/Interface" target_path="wireless/framework/OSAbstraction/Interface" type="c_include">
+  <source path="middleware/wireless/framework_5.3.6/OSAbstraction/Interface" target_path="wireless/framework/OSAbstraction/Interface" type="c_include">
     <files mask="fsl_os_abstraction.h"/>
     <files mask="fsl_os_abstraction_config.h"/>
     <files mask="fsl_os_abstraction_free_rtos.h"/>
   </source>
-  <source path="middleware/wireless/framework_5.3.5/OSAbstraction/Source" target_path="wireless/framework/OSAbstraction/Source" type="src">
+  <source path="middleware/wireless/framework_5.3.6/OSAbstraction/Source" target_path="wireless/framework/OSAbstraction/Source" type="src">
     <files mask="fsl_os_abstraction_free_rtos.c"/>
   </source>
-  <source path="middleware/wireless/framework_5.3.5/Panic/Interface" target_path="wireless/framework/Panic/Interface" type="c_include">
+  <source path="middleware/wireless/framework_5.3.6/Panic/Interface" target_path="wireless/framework/Panic/Interface" type="c_include">
     <files mask="Panic.h"/>
   </source>
-  <source path="middleware/wireless/framework_5.3.5/Panic/Source" target_path="wireless/framework/Panic/Source" type="src">
+  <source path="middleware/wireless/framework_5.3.6/Panic/Source" target_path="wireless/framework/Panic/Source" type="src">
     <files mask="Panic.c"/>
   </source>
-  <source path="middleware/wireless/framework_5.3.5/RNG/Interface" target_path="wireless/framework/RNG/Interface" type="c_include">
+  <source path="middleware/wireless/framework_5.3.6/RNG/Interface" target_path="wireless/framework/RNG/Interface" type="c_include">
     <files mask="RNG_Interface.h"/>
   </source>
-  <source path="middleware/wireless/framework_5.3.5/RNG/Source" target_path="wireless/framework/RNG/Source" type="src">
+  <source path="middleware/wireless/framework_5.3.6/RNG/Source" target_path="wireless/framework/RNG/Source" type="src">
     <files mask="RNG.c"/>
   </source>
-  <source path="middleware/wireless/framework_5.3.5/Reset" target_path="wireless/framework/Reset" type="src">
+  <source path="middleware/wireless/framework_5.3.6/Reset" target_path="wireless/framework/Reset" type="src">
     <files mask="Reset.c"/>
   </source>
-  <source path="middleware/wireless/framework_5.3.5/SecLib" target_path="wireless/framework/SecLib" type="c_include">
+  <source path="middleware/wireless/framework_5.3.6/SecLib" target_path="wireless/framework/SecLib" type="c_include">
     <files mask="SecLib.h"/>
   </source>
-  <source path="middleware/wireless/framework_5.3.5/SecLib" target_path="wireless/framework/SecLib" type="lib" compiler="gcc">
+  <source path="middleware/wireless/framework_5.3.6/SecLib" target_path="wireless/framework/SecLib" type="lib" compiler="gcc">
     <files mask="lib_crypto_m0.a"/>
   </source>
-  <source path="middleware/wireless/framework_5.3.5/SecLib" target_path="wireless/framework/SecLib" type="lib" compiler="iar">
+  <source path="middleware/wireless/framework_5.3.6/SecLib" target_path="wireless/framework/SecLib" type="lib" compiler="iar">
     <files mask="lib_crypto_m0.a"/>
   </source>
-  <source path="middleware/wireless/framework_5.3.5/SecLib" target_path="wireless/framework/SecLib" type="src">
+  <source path="middleware/wireless/framework_5.3.6/SecLib" target_path="wireless/framework/SecLib" type="src">
     <files mask="SecLib.c"/>
   </source>
-  <source path="middleware/wireless/framework_5.3.5/SerialManager/Interface" target_path="wireless/framework/SerialManager/Interface" type="c_include">
+  <source path="middleware/wireless/framework_5.3.6/SerialManager/Interface" target_path="wireless/framework/SerialManager/Interface" type="c_include">
     <files mask="SerialManager.h"/>
   </source>
-  <source path="middleware/wireless/framework_5.3.5/SerialManager/Source/SPI_Adapter" target_path="wireless/framework/SerialManager/Source/SPI_Adapter" type="c_include">
+  <source path="middleware/wireless/framework_5.3.6/SerialManager/Source/SPI_Adapter" target_path="wireless/framework/SerialManager/Source/SPI_Adapter" type="c_include">
     <files mask="SPI_Adapter.h"/>
   </source>
-  <source path="middleware/wireless/framework_5.3.5/SerialManager/Source/SPI_Adapter" target_path="wireless/framework/SerialManager/Source/SPI_Adapter" type="src">
+  <source path="middleware/wireless/framework_5.3.6/SerialManager/Source/SPI_Adapter" target_path="wireless/framework/SerialManager/Source/SPI_Adapter" type="src">
     <files mask="SPI_Adapter.c"/>
   </source>
-  <source path="middleware/wireless/framework_5.3.5/SerialManager/Source" target_path="wireless/framework/SerialManager/Source" type="c_include">
+  <source path="middleware/wireless/framework_5.3.6/SerialManager/Source" target_path="wireless/framework/SerialManager/Source" type="c_include">
     <files mask="I2C_Adapter.h"/>
     <files mask="UART_Adapter.h"/>
   </source>
-  <source path="middleware/wireless/framework_5.3.5/SerialManager/Source" target_path="wireless/framework/SerialManager/Source" type="src">
+  <source path="middleware/wireless/framework_5.3.6/SerialManager/Source" target_path="wireless/framework/SerialManager/Source" type="src">
     <files mask="I2C_Adapter.c"/>
     <files mask="SerialManager.c"/>
     <files mask="UART_Adapter.c"/>
   </source>
-  <source path="middleware/wireless/framework_5.3.5/Shell/Interface" target_path="wireless/framework/Shell/Interface" type="c_include">
+  <source path="middleware/wireless/framework_5.3.6/Shell/Interface" target_path="wireless/framework/Shell/Interface" type="c_include">
     <files mask="shell.h"/>
     <files mask="shell_config.h"/>
   </source>
-  <source path="middleware/wireless/framework_5.3.5/Shell/Source" target_path="wireless/framework/Shell/Source" type="src">
+  <source path="middleware/wireless/framework_5.3.6/Shell/Source" target_path="wireless/framework/Shell/Source" type="src">
     <files mask="shell.c"/>
     <files mask="shell_autocomplete.c"/>
     <files mask="shell_cmdhelp.c"/>
     <files mask="shell_cmdhist.c"/>
   </source>
-  <source path="middleware/wireless/framework_5.3.5/TimersManager/Interface" target_path="wireless/framework/TimersManager/Interface" type="c_include">
+  <source path="middleware/wireless/framework_5.3.6/TimersManager/Interface" target_path="wireless/framework/TimersManager/Interface" type="c_include">
     <files mask="TimersManager.h"/>
   </source>
-  <source path="middleware/wireless/framework_5.3.5/TimersManager/Source" target_path="wireless/framework/TimersManager/Source" type="c_include">
+  <source path="middleware/wireless/framework_5.3.6/TimersManager/Source" target_path="wireless/framework/TimersManager/Source" type="c_include">
     <files mask="TMR_Adapter.h"/>
     <files mask="TimersManagerInternal.h"/>
   </source>
-  <source path="middleware/wireless/framework_5.3.5/TimersManager/Source" target_path="wireless/framework/TimersManager/Source" type="src">
+  <source path="middleware/wireless/framework_5.3.6/TimersManager/Source" target_path="wireless/framework/TimersManager/Source" type="src">
     <files mask="TMR_Adapter.c"/>
     <files mask="TimersManager.c"/>
   </source>
-  <source path="middleware/wireless/framework_5.3.5/XCVR/MKW41Z4/cfgs_kw4x_3x_2x" target_path="wireless/framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x" type="src">
+  <source path="middleware/wireless/framework_5.3.6/XCVR/MKW41Z4/cfgs_kw4x_3x_2x" target_path="wireless/framework/XCVR/MKW41Z4/cfgs_kw4x_3x_2x" type="src">
     <files mask="fsl_xcvr_ant_config.c"/>
     <files mask="fsl_xcvr_ble_config.c"/>
     <files mask="fsl_xcvr_common_config.c"/>
@@ -286,41 +286,41 @@
     <files mask="fsl_xcvr_msk_config.c"/>
     <files mask="fsl_xcvr_zgbe_config.c"/>
   </source>
-  <source path="middleware/wireless/framework_5.3.5/XCVR/MKW41Z4" target_path="wireless/framework/XCVR/MKW41Z4" type="c_include">
+  <source path="middleware/wireless/framework_5.3.6/XCVR/MKW41Z4" target_path="wireless/framework/XCVR/MKW41Z4" type="c_include">
     <files mask="dbg_ram_capture.h"/>
     <files mask="fsl_xcvr.h"/>
     <files mask="fsl_xcvr_trim.h"/>
     <files mask="ifr_radio.h"/>
   </source>
-  <source path="middleware/wireless/framework_5.3.5/XCVR/MKW41Z4" target_path="wireless/framework/XCVR/MKW41Z4" type="src">
+  <source path="middleware/wireless/framework_5.3.6/XCVR/MKW41Z4" target_path="wireless/framework/XCVR/MKW41Z4" type="src">
     <files mask="dbg_ram_capture.c"/>
     <files mask="fsl_xcvr.c"/>
     <files mask="fsl_xcvr_trim.c"/>
     <files mask="ifr_radio.c"/>
   </source>
-  <source path="middleware/wireless/ieee_802_15_4_5.3.5/mac/interface" target_path="wireless/ieee_802_15_4/mac/interface" type="c_include">
+  <source path="middleware/wireless/ieee_802_15_4_5.3.6/mac/interface" target_path="wireless/ieee_802_15_4/mac/interface" type="c_include">
     <files mask="MacFunctionalityDefines.h"/>
     <files mask="MacInterface.h"/>
     <files mask="MacMessages.h"/>
     <files mask="MacTypes.h"/>
   </source>
-  <source path="middleware/wireless/ieee_802_15_4_5.3.5/mac/lib" target_path="wireless/ieee_802_15_4/mac/lib" type="lib" compiler="gcc">
+  <source path="middleware/wireless/ieee_802_15_4_5.3.6/mac/lib" target_path="wireless/ieee_802_15_4/mac/lib" type="lib" compiler="gcc">
     <files mask="lib802.15.4_mac_thr_cm0.a"/>
   </source>
-  <source path="middleware/wireless/ieee_802_15_4_5.3.5/mac/lib" target_path="wireless/ieee_802_15_4/mac/lib" type="lib" compiler="iar">
+  <source path="middleware/wireless/ieee_802_15_4_5.3.6/mac/lib" target_path="wireless/ieee_802_15_4/mac/lib" type="lib" compiler="iar">
     <files mask="lib802.15.4_mac_thr_cm0.a"/>
   </source>
-  <source path="middleware/wireless/ieee_802_15_4_5.3.5/mac/source/App" target_path="wireless/ieee_802_15_4/mac/source/App" type="c_include">
+  <source path="middleware/wireless/ieee_802_15_4_5.3.6/mac/source/App" target_path="wireless/ieee_802_15_4/mac/source/App" type="c_include">
     <files mask="FsciAspCommands.h"/>
     <files mask="FsciMacCommands.h"/>
     <files mask="MacGlobals.h"/>
   </source>
-  <source path="middleware/wireless/ieee_802_15_4_5.3.5/mac/source/App" target_path="wireless/ieee_802_15_4/mac/source/App" type="src">
+  <source path="middleware/wireless/ieee_802_15_4_5.3.6/mac/source/App" target_path="wireless/ieee_802_15_4/mac/source/App" type="src">
     <files mask="FsciAspCommands.c"/>
     <files mask="FsciMacCommands.c"/>
     <files mask="MacGlobals.c"/>
   </source>
-  <source path="middleware/wireless/ieee_802_15_4_5.3.5/phy/interface" target_path="wireless/ieee_802_15_4/phy/interface" type="c_include">
+  <source path="middleware/wireless/ieee_802_15_4_5.3.6/phy/interface" target_path="wireless/ieee_802_15_4/phy/interface" type="c_include">
     <files mask="AspInterface.h"/>
     <files mask="MpmInterface.h"/>
     <files mask="PhyDebug.h"/>
@@ -328,10 +328,10 @@
     <files mask="PhyMessages.h"/>
     <files mask="PhyTypes.h"/>
   </source>
-  <source path="middleware/wireless/ieee_802_15_4_5.3.5/phy/source/MKW41Z" target_path="wireless/ieee_802_15_4/phy/source/MKW41Z" type="c_include">
+  <source path="middleware/wireless/ieee_802_15_4_5.3.6/phy/source/MKW41Z" target_path="wireless/ieee_802_15_4/phy/source/MKW41Z" type="c_include">
     <files mask="Phy.h"/>
   </source>
-  <source path="middleware/wireless/ieee_802_15_4_5.3.5/phy/source/MKW41Z" target_path="wireless/ieee_802_15_4/phy/source/MKW41Z" type="src">
+  <source path="middleware/wireless/ieee_802_15_4_5.3.6/phy/source/MKW41Z" target_path="wireless/ieee_802_15_4/phy/source/MKW41Z" type="src">
     <files mask="ASP.c"/>
     <files mask="MPM.c"/>
     <files mask="PhyISR.c"/>
@@ -340,7 +340,7 @@
     <files mask="PhyStateMachine.c"/>
     <files mask="PhyTime.c"/>
   </source>
-  <source path="middleware/wireless/nwk_ip_1.2.5/base/interface" target_path="wireless/nwk_ip/base/interface" type="c_include">
+  <source path="middleware/wireless/nwk_ip_1.2.6/base/interface" target_path="wireless/nwk_ip/base/interface" type="c_include">
     <files mask="debug_log.h"/>
     <files mask="http.h"/>
     <files mask="http_cfg.h"/>
@@ -358,17 +358,17 @@
     <files mask="shell_ip.h"/>
     <files mask="thci.h"/>
   </source>
-  <source path="middleware/wireless/nwk_ip_1.2.5/base/ip_media_if" target_path="wireless/nwk_ip/base/ip_media_if" type="src">
+  <source path="middleware/wireless/nwk_ip_1.2.6/base/ip_media_if" target_path="wireless/nwk_ip/base/ip_media_if" type="src">
     <files mask="ip_if_6lo.c"/>
     <files mask="ip_if_enet.c"/>
     <files mask="ip_if_serial_tun.c"/>
     <files mask="ip_if_usbenet.c"/>
     <files mask="serial_tun_driver.c"/>
   </source>
-  <source path="middleware/wireless/nwk_ip_1.2.5/base/shell" target_path="wireless/nwk_ip/base/shell" type="src">
+  <source path="middleware/wireless/nwk_ip_1.2.6/base/shell" target_path="wireless/nwk_ip/base/shell" type="src">
     <files mask="shell_ip.c"/>
   </source>
-  <source path="middleware/wireless/nwk_ip_1.2.5/base/stack_globals" target_path="wireless/nwk_ip/base/stack_globals" type="src">
+  <source path="middleware/wireless/nwk_ip_1.2.6/base/stack_globals" target_path="wireless/nwk_ip/base/stack_globals" type="src">
     <files mask="arp_globals.c"/>
     <files mask="coap_globals.c"/>
     <files mask="dhcp_globals.c"/>
@@ -388,20 +388,20 @@
     <files mask="trickle_globals.c"/>
     <files mask="udp_globals.c"/>
   </source>
-  <source path="middleware/wireless/nwk_ip_1.2.5/base/thci" target_path="wireless/nwk_ip/base/thci" type="src">
+  <source path="middleware/wireless/nwk_ip_1.2.6/base/thci" target_path="wireless/nwk_ip/base/thci" type="src">
     <files mask="thci.c"/>
   </source>
-  <source path="middleware/wireless/nwk_ip_1.2.5/base/thread_config" target_path="wireless/nwk_ip/base/thread_config" type="src">
+  <source path="middleware/wireless/nwk_ip_1.2.6/base/thread_config" target_path="wireless/nwk_ip/base/thread_config" type="src">
     <files mask="thread_config.c"/>
   </source>
-  <source path="middleware/wireless/nwk_ip_1.2.5/base/utils" target_path="wireless/nwk_ip/base/utils" type="src">
+  <source path="middleware/wireless/nwk_ip_1.2.6/base/utils" target_path="wireless/nwk_ip/base/utils" type="src">
     <files mask="debug_log.c"/>
     <files mask="mac_abs_802154.c"/>
     <files mask="mac_filtering.c"/>
     <files mask="nv_data.c"/>
     <files mask="nvm_adapter.c"/>
   </source>
-  <source path="middleware/wireless/nwk_ip_1.2.5/core/interface/modules" target_path="wireless/nwk_ip/core/interface/modules" type="c_include">
+  <source path="middleware/wireless/nwk_ip_1.2.6/core/interface/modules" target_path="wireless/nwk_ip/core/interface/modules" type="c_include">
     <files mask="arp.h"/>
     <files mask="coap.h"/>
     <files mask="coap_cfg.h"/>
@@ -470,7 +470,7 @@
     <files mask="udp_cfg.h"/>
     <files mask="version.h"/>
   </source>
-  <source path="middleware/wireless/nwk_ip_1.2.5/core/interface/thread" target_path="wireless/nwk_ip/core/interface/thread" type="c_include">
+  <source path="middleware/wireless/nwk_ip_1.2.6/core/interface/thread" target_path="wireless/nwk_ip/core/interface/thread" type="c_include">
     <files mask="thread_app_callbacks.h"/>
     <files mask="thread_attributes.h"/>
     <files mask="thread_cfg.h"/>
@@ -483,18 +483,18 @@
     <files mask="thread_types.h"/>
     <files mask="thread_utils.h"/>
   </source>
-  <source path="middleware/wireless/nwk_ip_1.2.5/core/interface" target_path="wireless/nwk_ip/core/interface" type="c_include">
+  <source path="middleware/wireless/nwk_ip_1.2.6/core/interface" target_path="wireless/nwk_ip/core/interface" type="c_include">
     <files mask="network_utils.h"/>
     <files mask="sockets.h"/>
     <files mask="stack_events.h"/>
   </source>
-  <source path="middleware/wireless/nwk_ip_1.2.5/core/lib/thread" target_path="wireless/nwk_ip/core/lib/thread" type="lib" compiler="gcc">
+  <source path="middleware/wireless/nwk_ip_1.2.6/core/lib/thread" target_path="wireless/nwk_ip/core/lib/thread" type="lib" compiler="gcc">
     <files mask="lib_thread_br_cm0.a"/>
   </source>
-  <source path="middleware/wireless/nwk_ip_1.2.5/core/lib/thread" target_path="wireless/nwk_ip/core/lib/thread" type="lib" compiler="iar">
+  <source path="middleware/wireless/nwk_ip_1.2.6/core/lib/thread" target_path="wireless/nwk_ip/core/lib/thread" type="lib" compiler="iar">
     <files mask="lib_thread_br_cm0.a"/>
   </source>
-  <source path="middleware/wireless/nwk_ip_1.2.5/examples/common" target_path="wireless/nwk_ip/examples/common" type="c_include">
+  <source path="middleware/wireless/nwk_ip_1.2.6/examples/common" target_path="wireless/nwk_ip/examples/common" type="c_include">
     <files mask="app_border_router.h"/>
     <files mask="app_coap_observe.h"/>
     <files mask="app_config.h"/>
@@ -513,7 +513,7 @@
     <files mask="app_temp_sensor.h"/>
     <files mask="app_thread_config.h"/>
   </source>
-  <source path="middleware/wireless/nwk_ip_1.2.5/examples/common" target_path="wireless/nwk_ip/examples/common" type="src">
+  <source path="middleware/wireless/nwk_ip_1.2.6/examples/common" target_path="wireless/nwk_ip/examples/common" type="src">
     <files mask="app_border_router.c"/>
     <files mask="app_coap_observe.c"/>
     <files mask="app_echo_udp.c"/>
@@ -529,13 +529,13 @@
     <files mask="app_thread_callbacks.c"/>
     <files mask="app_thread_init.c"/>
   </source>
-  <source path="middleware/wireless/nwk_ip_1.2.5/examples/host_controlled_device/config" target_path="wireless/nwk_ip/examples/host_controlled_device/config" type="c_include">
+  <source path="middleware/wireless/nwk_ip_1.2.6/examples/host_controlled_device/config" target_path="wireless/nwk_ip/examples/host_controlled_device/config" type="c_include">
     <files mask="config.h"/>
   </source>
-  <source path="middleware/wireless/nwk_ip_1.2.5/examples/host_controlled_device/src" target_path="wireless/nwk_ip/examples/host_controlled_device/src" type="c_include">
+  <source path="middleware/wireless/nwk_ip_1.2.6/examples/host_controlled_device/src" target_path="wireless/nwk_ip/examples/host_controlled_device/src" type="c_include">
     <files mask="host_controlled_device_app.h"/>
   </source>
-  <source path="middleware/wireless/nwk_ip_1.2.5/examples/host_controlled_device/src" target_path="wireless/nwk_ip/examples/host_controlled_device/src" type="src">
+  <source path="middleware/wireless/nwk_ip_1.2.6/examples/host_controlled_device/src" target_path="wireless/nwk_ip/examples/host_controlled_device/src" type="src">
     <files mask="host_controlled_device_app.c"/>
   </source>
   <source path="rtos/freertos_9.0.0/Source/include" target_path="freertos/Source/include" type="c_include">

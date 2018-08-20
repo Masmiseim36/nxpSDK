@@ -94,10 +94,10 @@
 /****************************************************************************/
 /***        Macro Definitions                                             ***/
 /****************************************************************************/
-#ifndef DEBUG_APP
-#define TRACE_APP_MAIN   FALSE
-#else
+#ifdef DEBUG_APP
 #define TRACE_APP_MAIN   TRUE
+#else
+#define TRACE_APP_MAIN   FALSE
 #endif
 #define TIMER_QUEUE_SIZE             8
 #define MLME_QUEQUE_SIZE            10
@@ -426,8 +426,8 @@ PRIVATE void KBD_Callback( uint8_t events)
     switch(events)
     {
         case gKBD_EventPB1_c:
-            /* SW1 on FRDM-KW41Z */
-            sButtonEvent.uEvent.sButton.u8Button = APP_E_BUTTONS_BUTTON_SW1;
+            /* SW5 on FRDM-KW41Z */
+            sButtonEvent.uEvent.sButton.u8Button = APP_E_BUTTONS_BUTTON_SW5;
             sButtonEvent.uEvent.sButton.u32DIOState &= ~ON; // Down: 021103 , up: 021903
             break;
         case gKBD_EventPB2_c:

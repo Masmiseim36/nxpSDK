@@ -58,7 +58,7 @@ LEADER_RCV_EVENT = Event()
 JOINER_RLOC, PAYLOAD = None, None
 
 
-def cb_leader_coap_msg_recv(devName, ind):
+def cb_leader_coap_msg_recv(_, ind):
     global JOINER_RLOC, PAYLOAD
     print_event(leader, ind)
 
@@ -69,7 +69,7 @@ def cb_leader_coap_msg_recv(devName, ind):
     comm_leader.fsciFramer.removeAllObservers()
 
 
-def cb_joiner_coap_msg_recv(devName, ind):
+def cb_joiner_coap_msg_recv(_, ind):
     print_event(joiner, ind)
     print '\n[Joiner] Received answer', PAYLOAD, '=', ind.Payload, '\n'
 

@@ -114,7 +114,7 @@ extern "C" {
     #define BDB_COMMISSIONING_GROUP_ID              (0xFFFF)            /* bdbCommissioningGroupID */
 #endif
 #ifndef BDB_COMMISSIONING_MODE
-    #define BDB_COMMISSIONING_MODE                  (0x0F)              /* bdbCommissioningMode */
+    #define BDB_COMMISSIONING_MODE                  (0x0E)              /* bdbCommissioningMode */
 #endif    
 #ifndef BDB_COMMISSIONING_STATUS
     #define BDB_COMMISSIONING_STATUS                (0x00)                  /* bdbCommissioningStatus */

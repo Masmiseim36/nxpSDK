@@ -93,7 +93,6 @@ static const moduleInfo_t *const zps_nwk_dummy __attribute__((__used__)) = &ZPS_
 /*==================================================================================================
 Private prototypes
 ==================================================================================================*/
-static char *pccHandlePlaceHolder(char *pcFormat, va_list *pap, char * pOut, int* n);
 static void vWriteUIntToBuffer(unsigned long long ullInteger,
                                int iBase,
                                char acOutBuffer[BUFFER_SIZE],
@@ -284,7 +283,7 @@ static void vWriteUIntToBuffer(unsigned long long ullInteger,
 * char *
 *
 ****************************************************************************/
-static char *pccHandlePlaceHolder(char *pcFormat, va_list *pap, char * pOut, int* n)
+char *pccHandlePlaceHolder(char *pcFormat, va_list *pap, char * pOut, int* n)
 {
     char acBuffer[BUFFER_SIZE];
     int i = 0;

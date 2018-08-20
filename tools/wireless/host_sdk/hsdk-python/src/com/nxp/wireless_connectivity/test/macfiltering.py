@@ -39,7 +39,6 @@ from com.nxp.wireless_connectivity.commands.thread.sync_requests import MAC_MacF
     MAC_MacFilteringAddEntry, MAC_MacFilteringGetTable,\
     MAC_MacFilteringRemoveEntry, THR_FactoryReset
 from com.nxp.wireless_connectivity.commands.thread.enums import MAC_MacFilteringEnableRequestMacFiltering
-from com.nxp.wireless_connectivity.hsdk.utils import list_to_int
 
 
 leader = '/dev/ttyACM0'

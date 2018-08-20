@@ -174,6 +174,8 @@ PRIVATE void APP_vControlNodeScanStart ( void );
 
 PRIVATE void APP_vControlNodeStartNetwork ( void );
 
+PRIVATE void APP_vControlNodeCode(uint64_t u64Addr, uint8 *pu8Key);
+
 PRIVATE ZPS_teStatus APP_eZdpMgmtLqiRequest ( uint16    u16Addr,
                                               uint8     u8StartIndex,
                                               uint8     *pu8Seq);
@@ -259,7 +261,7 @@ uint32             u32TimerSeconds       =  0;
 bool_t             bProcessMessages      =  TRUE;
 bool_t             bBlackListEnable      =  FALSE;
 ZPS_TclkDescriptorEntry    asTclkStruct[ZNC_MAX_TCLK_DEVICES];
-#ifdef FULL_FUNC_DEVICE
+#if (defined(FULL_FUNC_DEVICE) && !defined(BDB_SUPPORT_TOUCHLINK))
 bool_t                     bSendFactoryResetOverAir;
 #endif
 /****************************************************************************/
@@ -515,6 +517,16 @@ PUBLIC void APP_vProcessIncomingSerialCommands ( uint8    u8RxByte )
                 }
                 break;
 
+            case (E_SL_MSG_CODE):
+                {
+                    uint64_t u64Address;
+                    
+                    u64Address    =  ZNC_RTN_U64 ( au8LinkRxBuffer, 0 );
+                    
+                    APP_vControlNodeCode(u64Address, &au8LinkRxBuffer[8]);
+                }
+                break;
+
 #ifdef FULL_FUNC_DEVICE
             case (E_SL_MSG_START_SCAN):
                 {
@@ -621,7 +633,13 @@ PUBLIC void APP_vProcessIncomingSerialCommands ( uint8    u8RxByte )
                 {
                     if(sZllState.u8DeviceType != ZPS_ZDO_DEVICE_COORD)
                     {
-                        APP_vAppAddGroup( 0 , FALSE );
+                        //APP_vAppAddGroup( 0 , FALSE );
+                        if(sZllState.eState == FACTORY_NEW)
+                        {
+                            // take our group address requirement
+                            vSetGroupAddress(sZllState.u16FreeGroupLow, GROUPS_REQUIRED);
+                            sZllState.u16FreeGroupLow += GROUPS_REQUIRED;
+                        }
                         sEvent.eType              =  BDB_E_ZCL_EVENT_TL_START;
                         BDB_vZclEventHandler ( &sEvent );
                     }
@@ -3037,7 +3055,33 @@ PRIVATE void APP_vControlNodeStartNetwork(void)
             }
         }
     }
+    else if(sZllState.eState == NOT_FACTORY_NEW)
+    {
+        au8Buffer[0] =  BDB_E_ERROR_NODE_IS_ON_A_NWK;
+        vSL_WriteMessage ( E_SL_MSG_NETWORK_JOINED_FORMED,
+                           sizeof(uint8)  ,
+                           au8Buffer );
+    }
 #endif
+}
+
+PRIVATE void APP_vControlNodeCode(uint64_t u64Addr, uint8 *pu8Key)
+{
+    uint8 u8Status = BDB_E_FAILURE;
+    
+    if((u64Addr != 0) && (ZPS_ZDO_DEVICE_COORD == ZPS_eAplZdoGetDeviceType()))
+    {
+        ZPS_teStatus eStatus;
+        
+        eStatus = ZPS_eAplZdoAddReplaceInstallCodes( u64Addr, pu8Key, 16, ZPS_APS_UNIQUE_LINK_KEY);
+        
+        if(eStatus == ZPS_E_SUCCESS)
+        {
+            u8Status = BDB_E_SUCCESS;
+        }
+    }
+    
+    vSL_WriteMessage(E_SL_MSG_CODE_RESPONSE, sizeof(uint8), &u8Status);
 }
 
 /****************************************************************************

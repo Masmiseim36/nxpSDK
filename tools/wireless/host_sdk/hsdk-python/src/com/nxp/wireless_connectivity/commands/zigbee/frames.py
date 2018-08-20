@@ -89,6 +89,17 @@ class StartNetworkScan(object):
     pass
 
 
+class Code(object):
+
+    def __init__(self, TargetExtendedAddress=bytearray(8), Code=bytearray(16)):
+        '''
+        @param TargetExtendedAddress: TargetExtendedAddress
+        @param Code: Code
+        '''
+        self.TargetExtendedAddress = TargetExtendedAddress
+        self.Code = Code
+
+
 class ZLO_ZLLFactoryNewReset(object):
 
     pass
@@ -994,6 +1005,81 @@ class SceneMembershipRequest(object):
         self.GroupID = GroupID
 
 
+class AddEnhancedScene(object):
+
+    def __init__(self, AddressMode=bytearray(1), TargetShortAddress=bytearray(2), SourceEndPoint=bytearray(1), DestinationEndPoint=bytearray(1), GroupID=bytearray(2), SceneID=bytearray(1), TransitionTime=bytearray(2), SceneNameLength=bytearray(1), SceneNameData=[], Length=bytearray(1), MaxLength=bytearray(1), ExtensionFieldSets=[]):
+        '''
+        @param AddressMode: AddressMode
+        @param TargetShortAddress: TargetShortAddress
+        @param SourceEndPoint: SourceEndPoint
+        @param DestinationEndPoint: DestinationEndPoint
+        @param GroupID: GroupID
+        @param SceneID: SceneID
+        @param TransitionTime: TransitionTime
+        @param SceneNameLength: SceneNameLength
+        @param SceneNameData: SceneNameData
+        @param Length: Length
+        @param MaxLength: MaxLength
+        @param ExtensionFieldSets: ExtensionFieldSets
+        '''
+        self.AddressMode = AddressMode
+        self.TargetShortAddress = TargetShortAddress
+        self.SourceEndPoint = SourceEndPoint
+        self.DestinationEndPoint = DestinationEndPoint
+        self.GroupID = GroupID
+        self.SceneID = SceneID
+        self.TransitionTime = TransitionTime
+        self.SceneNameLength = SceneNameLength
+        self.SceneNameData = SceneNameData
+        self.Length = Length
+        self.MaxLength = MaxLength
+        self.ExtensionFieldSets = ExtensionFieldSets
+
+
+class ViewEnhancedScene(object):
+
+    def __init__(self, AddressMode=bytearray(1), TargetShortAddress=bytearray(2), SourceEndPoint=bytearray(1), DestinationEndPoint=bytearray(1), GroupID=bytearray(2), SceneID=bytearray(1)):
+        '''
+        @param AddressMode: AddressMode
+        @param TargetShortAddress: TargetShortAddress
+        @param SourceEndPoint: SourceEndPoint
+        @param DestinationEndPoint: DestinationEndPoint
+        @param GroupID: GroupID
+        @param SceneID: SceneID
+        '''
+        self.AddressMode = AddressMode
+        self.TargetShortAddress = TargetShortAddress
+        self.SourceEndPoint = SourceEndPoint
+        self.DestinationEndPoint = DestinationEndPoint
+        self.GroupID = GroupID
+        self.SceneID = SceneID
+
+
+class CopyScene(object):
+
+    def __init__(self, AddressMode=bytearray(1), TargetShortAddress=bytearray(2), SourceEndPoint=bytearray(1), DestinationEndPoint=bytearray(1), Mode=bytearray(1), FromGroupID=bytearray(2), FromSceneID=bytearray(1), ToGroupID=bytearray(2), ToSceneID=bytearray(1)):
+        '''
+        @param AddressMode: AddressMode
+        @param TargetShortAddress: TargetShortAddress
+        @param SourceEndPoint: SourceEndPoint
+        @param DestinationEndPoint: DestinationEndPoint
+        @param Mode: Mode
+        @param FromGroupID: FromGroupID
+        @param FromSceneID: FromSceneID
+        @param ToGroupID: ToGroupID
+        @param ToSceneID: ToSceneID
+        '''
+        self.AddressMode = AddressMode
+        self.TargetShortAddress = TargetShortAddress
+        self.SourceEndPoint = SourceEndPoint
+        self.DestinationEndPoint = DestinationEndPoint
+        self.Mode = Mode
+        self.FromGroupID = FromGroupID
+        self.FromSceneID = FromSceneID
+        self.ToGroupID = ToGroupID
+        self.ToSceneID = ToSceneID
+
+
 class MoveToHue(object):
 
     def __init__(self, AddressMode=bytearray(1), TargetShortAddress=bytearray(2), SourceEndPoint=bytearray(1), DestinationEndPoint=bytearray(1), Hue=bytearray(1), Direction=bytearray(1), TransitionTime=bytearray(2)):
@@ -1093,7 +1179,7 @@ class MoveSaturation(object):
         self.Rate = Rate
 
 
-class Stepsaturation(object):
+class StepSaturation(object):
 
     def __init__(self, AddressMode=bytearray(1), TargetShortAddress=bytearray(2), SourceEndPoint=bytearray(1), DestinationEndPoint=bytearray(1), Mode=bytearray(1), StepSize=bytearray(1), TransitionTime=bytearray(1)):
         '''
@@ -1173,129 +1259,6 @@ class MoveColour(object):
         self.DestinationEndPoint = DestinationEndPoint
         self.ColorX = ColorX
         self.ColorY = ColorY
-
-
-class StepColour(object):
-
-    def __init__(self, AddressMode=bytearray(1), TargetShortAddress=bytearray(2), SourceEndPoint=bytearray(1), DestinationEndPoint=bytearray(1), ColorX=bytearray(2), ColorY=bytearray(2), TransitionTime=bytearray(2)):
-        '''
-        @param AddressMode: AddressMode
-        @param TargetShortAddress: TargetShortAddress
-        @param SourceEndPoint: SourceEndPoint
-        @param DestinationEndPoint: DestinationEndPoint
-        @param ColorX: ColorX
-        @param ColorY: ColorY
-        @param TransitionTime: TransitionTime
-        '''
-        self.AddressMode = AddressMode
-        self.TargetShortAddress = TargetShortAddress
-        self.SourceEndPoint = SourceEndPoint
-        self.DestinationEndPoint = DestinationEndPoint
-        self.ColorX = ColorX
-        self.ColorY = ColorY
-        self.TransitionTime = TransitionTime
-
-
-class InitiateTouchlink(object):
-
-    pass
-
-
-class TouchLinkFactoryResetTarget(object):
-
-    pass
-
-
-class OnOffNoEffects(object):
-
-    def __init__(self, AddressMode=bytearray(1), TargetShortAddress=bytearray(2), SourceEndPoint=bytearray(1), DestinationEndPoint=bytearray(1), CommandID=bytearray(1)):
-        '''
-        @param AddressMode: AddressMode
-        @param TargetShortAddress: TargetShortAddress
-        @param SourceEndPoint: SourceEndPoint
-        @param DestinationEndPoint: DestinationEndPoint
-        @param CommandID: CommandID
-        '''
-        self.AddressMode = AddressMode
-        self.TargetShortAddress = TargetShortAddress
-        self.SourceEndPoint = SourceEndPoint
-        self.DestinationEndPoint = DestinationEndPoint
-        self.CommandID = CommandID
-
-
-class AddEnhancedScene(object):
-
-    def __init__(self, AddressMode=bytearray(1), TargetShortAddress=bytearray(2), SourceEndPoint=bytearray(1), DestinationEndPoint=bytearray(1), GroupID=bytearray(2), SceneID=bytearray(1), TransitionTime=bytearray(2), SceneNameLength=bytearray(1), SceneNameData=[], Length=bytearray(1), MaxLength=bytearray(1), ExtensionFieldSets=[]):
-        '''
-        @param AddressMode: AddressMode
-        @param TargetShortAddress: TargetShortAddress
-        @param SourceEndPoint: SourceEndPoint
-        @param DestinationEndPoint: DestinationEndPoint
-        @param GroupID: GroupID
-        @param SceneID: SceneID
-        @param TransitionTime: TransitionTime
-        @param SceneNameLength: SceneNameLength
-        @param SceneNameData: SceneNameData
-        @param Length: Length
-        @param MaxLength: MaxLength
-        @param ExtensionFieldSets: ExtensionFieldSets
-        '''
-        self.AddressMode = AddressMode
-        self.TargetShortAddress = TargetShortAddress
-        self.SourceEndPoint = SourceEndPoint
-        self.DestinationEndPoint = DestinationEndPoint
-        self.GroupID = GroupID
-        self.SceneID = SceneID
-        self.TransitionTime = TransitionTime
-        self.SceneNameLength = SceneNameLength
-        self.SceneNameData = SceneNameData
-        self.Length = Length
-        self.MaxLength = MaxLength
-        self.ExtensionFieldSets = ExtensionFieldSets
-
-
-class ViewEnhancedScene(object):
-
-    def __init__(self, AddressMode=bytearray(1), TargetShortAddress=bytearray(2), SourceEndPoint=bytearray(1), DestinationEndPoint=bytearray(1), GroupID=bytearray(2), SceneID=bytearray(1)):
-        '''
-        @param AddressMode: AddressMode
-        @param TargetShortAddress: TargetShortAddress
-        @param SourceEndPoint: SourceEndPoint
-        @param DestinationEndPoint: DestinationEndPoint
-        @param GroupID: GroupID
-        @param SceneID: SceneID
-        '''
-        self.AddressMode = AddressMode
-        self.TargetShortAddress = TargetShortAddress
-        self.SourceEndPoint = SourceEndPoint
-        self.DestinationEndPoint = DestinationEndPoint
-        self.GroupID = GroupID
-        self.SceneID = SceneID
-
-
-class CopyScene(object):
-
-    def __init__(self, AddressMode=bytearray(1), TargetShortAddress=bytearray(2), SourceEndPoint=bytearray(1), DestinationEndPoint=bytearray(1), Mode=bytearray(1), FromGroupID=bytearray(2), FromSceneID=bytearray(1), ToGroupID=bytearray(2), ToSceneID=bytearray(1)):
-        '''
-        @param AddressMode: AddressMode
-        @param TargetShortAddress: TargetShortAddress
-        @param SourceEndPoint: SourceEndPoint
-        @param DestinationEndPoint: DestinationEndPoint
-        @param Mode: Mode
-        @param FromGroupID: FromGroupID
-        @param FromSceneID: FromSceneID
-        @param ToGroupID: ToGroupID
-        @param ToSceneID: ToSceneID
-        '''
-        self.AddressMode = AddressMode
-        self.TargetShortAddress = TargetShortAddress
-        self.SourceEndPoint = SourceEndPoint
-        self.DestinationEndPoint = DestinationEndPoint
-        self.Mode = Mode
-        self.FromGroupID = FromGroupID
-        self.FromSceneID = FromSceneID
-        self.ToGroupID = ToGroupID
-        self.ToSceneID = ToSceneID
 
 
 class EnhancedMoveToHue(object):
@@ -1407,27 +1370,21 @@ class ColourLoopSet(object):
 
 class StopMoveStep(object):
 
-    def __init__(self, AddressMode=bytearray(1), TargetShortAddress=bytearray(2), SourceEndPoint=bytearray(1), DestinationEndPoint=bytearray(1), UpdateFlags=bytearray(1), Action=bytearray(1), Direction=bytearray(1), Time=bytearray(1), StartHue=bytearray(4)):
+    def __init__(self, AddressMode=bytearray(1), TargetShortAddress=bytearray(2), SourceEndPoint=bytearray(1), DestinationEndPoint=bytearray(1), OptionsMask=bytearray(1), OptionsOverride=bytearray(1)):
         '''
         @param AddressMode: AddressMode
         @param TargetShortAddress: TargetShortAddress
         @param SourceEndPoint: SourceEndPoint
         @param DestinationEndPoint: DestinationEndPoint
-        @param UpdateFlags: UpdateFlags
-        @param Action: Action
-        @param Direction: Direction
-        @param Time: Time
-        @param StartHue: StartHue
+        @param OptionsMask: OptionsMask
+        @param OptionsOverride: OptionsOverride
         '''
         self.AddressMode = AddressMode
         self.TargetShortAddress = TargetShortAddress
         self.SourceEndPoint = SourceEndPoint
         self.DestinationEndPoint = DestinationEndPoint
-        self.UpdateFlags = UpdateFlags
-        self.Action = Action
-        self.Direction = Direction
-        self.Time = Time
-        self.StartHue = StartHue
+        self.OptionsMask = OptionsMask
+        self.OptionsOverride = OptionsOverride
 
 
 class MoveToColourTemperature(object):
@@ -1478,7 +1435,7 @@ class MoveColourTemperature(object):
 
 class StepColourTemperature(object):
 
-    def __init__(self, AddressMode=bytearray(1), TargetShortAddress=bytearray(2), SourceEndPoint=bytearray(1), DestinationEndPoint=bytearray(1), Mode=bytearray(1), StepSize=bytearray(2), TransitionTime=bytearray(2), MinimumTemperature=bytearray(2), MaximumTemperature=bytearray(2)):
+    def __init__(self, AddressMode=bytearray(1), TargetShortAddress=bytearray(2), SourceEndPoint=bytearray(1), DestinationEndPoint=bytearray(1), Mode=bytearray(1), StepSize=bytearray(2), TransitionTime=bytearray(2), MinimumTemperature=bytearray(2), MaximumTemperature=bytearray(2), OptionsMask=bytearray(1), OptionsOverride=bytearray(1)):
         '''
         @param AddressMode: AddressMode
         @param TargetShortAddress: TargetShortAddress
@@ -1489,6 +1446,8 @@ class StepColourTemperature(object):
         @param TransitionTime: TransitionTime
         @param MinimumTemperature: MinimumTemperature
         @param MaximumTemperature: MaximumTemperature
+        @param OptionsMask: OptionsMask
+        @param OptionsOverride: OptionsOverride
         '''
         self.AddressMode = AddressMode
         self.TargetShortAddress = TargetShortAddress
@@ -1499,6 +1458,18 @@ class StepColourTemperature(object):
         self.TransitionTime = TransitionTime
         self.MinimumTemperature = MinimumTemperature
         self.MaximumTemperature = MaximumTemperature
+        self.OptionsMask = OptionsMask
+        self.OptionsOverride = OptionsOverride
+
+
+class InitiateTouchlink(object):
+
+    pass
+
+
+class TouchLinkFactoryResetTarget(object):
+
+    pass
 
 
 class LockUnlockDoor(object):
@@ -1579,7 +1550,7 @@ class Status(object):
 
 class LogMessage(object):
 
-    def __init__(self, LogLevel=LogMessageLogLevel.Emergency, LogMessage=bytearray(1)):
+    def __init__(self, LogLevel=LogMessageLogLevel.Emergency, LogMessage=[]):
         '''
         @param LogLevel: Use the Linux / Unix log levels
         @param LogMessage: LogMessage
@@ -1737,7 +1708,7 @@ class UnbindResponse(object):
 
 class NetworkAddressResponse(object):
 
-    def __init__(self, SequenceNumber=bytearray(1), Status=bytearray(1), IEEEAddress=bytearray(8), ShortAddress=bytearray(1), NumberOfAssociatedDevices=bytearray(1), StartIndex=bytearray(1), DeviceList=bytearray(2)):
+    def __init__(self, SequenceNumber=bytearray(1), Status=bytearray(1), IEEEAddress=bytearray(8), ShortAddress=bytearray(2), NumberOfAssociatedDevices=bytearray(1), StartIndex=bytearray(1), DeviceList=bytearray(2)):
         '''
         @param SequenceNumber: SequenceNumber
         @param Status: Status
@@ -1758,7 +1729,7 @@ class NetworkAddressResponse(object):
 
 class IEEEAddressResponse(object):
 
-    def __init__(self, SequenceNumber=bytearray(1), Status=bytearray(1), IEEEAddress=bytearray(8), shortAddress=bytearray(2), NumberOfAssociatedDevices=bytearray(1), StartIndex=bytearray(1), DeviceList=bytearray(2)):
+    def __init__(self, SequenceNumber=bytearray(1), Status=bytearray(1), IEEEAddress=bytearray(8), shortAddress=bytearray(2), NumberOfAssociatedDevices=bytearray(1), StartIndex=bytearray(1), DeviceList=[]):
         '''
         @param SequenceNumber: SequenceNumber
         @param Status: Status
@@ -1775,6 +1746,35 @@ class IEEEAddressResponse(object):
         self.NumberOfAssociatedDevices = NumberOfAssociatedDevices
         self.StartIndex = StartIndex
         self.DeviceList = DeviceList
+
+
+class NodeDescriptorResponse(object):
+
+    def __init__(self, SequenceNumber=bytearray(1), Status=bytearray(1), NetworkAddress=bytearray(2), ManufacturerCode=bytearray(2), MaxRxSize=bytearray(2), MaxTxSize=bytearray(2), ServerMask=bytearray(2), DescriptorCapability=bytearray(1), MacCapability=bytearray(1), MaxBufferSize=bytearray(1), BitFields=bytearray(2)):
+        '''
+        @param SequenceNumber: SequenceNumber
+        @param Status: Status
+        @param NetworkAddress: NetworkAddress
+        @param ManufacturerCode: ManufacturerCode
+        @param MaxRxSize: MaxRxSize
+        @param MaxTxSize: MaxTxSize
+        @param ServerMask: ServerMask
+        @param DescriptorCapability: DescriptorCapability
+        @param MacCapability: MacCapability
+        @param MaxBufferSize: MaxBufferSize
+        @param BitFields: BitFields
+        '''
+        self.SequenceNumber = SequenceNumber
+        self.Status = Status
+        self.NetworkAddress = NetworkAddress
+        self.ManufacturerCode = ManufacturerCode
+        self.MaxRxSize = MaxRxSize
+        self.MaxTxSize = MaxTxSize
+        self.ServerMask = ServerMask
+        self.DescriptorCapability = DescriptorCapability
+        self.MacCapability = MacCapability
+        self.MaxBufferSize = MaxBufferSize
+        self.BitFields = BitFields
 
 
 class SimpleDescriptorResponse(object):
@@ -2000,6 +2000,56 @@ class SystemServerDiscoveryResponse(object):
         self.ServerMask = ServerMask
 
 
+class ManagementLQIResponse(object):
+
+    class ListOfEntries_BitMapOfAttributes(object):
+
+        def __init__(self, DeviceType=ListOfEntries_BitMapOfAttributesDeviceType.Coordinator, PermitJoinStatus=ListOfEntries_BitMapOfAttributesPermitJoinStatus.Off, Relationship=ListOfEntries_BitMapOfAttributesRelationship.Parent, RxOnWhenIdleStatus=ListOfEntries_BitMapOfAttributesRxOnWhenIdleStatus.Off):
+            self.DeviceType = DeviceType
+            self.PermitJoinStatus = PermitJoinStatus
+            self.Relationship = Relationship
+            self.RxOnWhenIdleStatus = RxOnWhenIdleStatus
+
+    def __init__(self, SequenceNumber=bytearray(1), Status=bytearray(1), NeighbourTableEntries=bytearray(1), NeighbourTableListCount=bytearray(1), StartIndex=bytearray(1), ListOfEntries_NWKAddress=bytearray(2), ListOfEntries_ExtendedPANID=bytearray(8), ListOfEntries_IEEEAddress=bytearray(8), ListOfEntries_Depth=bytearray(1), ListOfEntries_LinkQuality=bytearray(1), ListOfEntries_BitMapOfAttributes=ListOfEntries_BitMapOfAttributes(1)):
+        '''
+        @param SequenceNumber: SequenceNumber
+        @param Status: Status
+        @param NeighbourTableEntries: NeighbourTableEntries
+        @param NeighbourTableListCount: NeighbourTableListCount
+        @param StartIndex: StartIndex
+        @param ListOfEntries_NWKAddress: NWKAddress
+        @param ListOfEntries_ExtendedPANID: ExtendedPANID
+        @param ListOfEntries_IEEEAddress: IEEEAddress
+        @param ListOfEntries_Depth: Depth
+        @param ListOfEntries_LinkQuality: LinkQuality
+        @param ListOfEntries_BitMapOfAttributes: BitMapOfAttributes
+        '''
+        self.SequenceNumber = SequenceNumber
+        self.Status = Status
+        self.NeighbourTableEntries = NeighbourTableEntries
+        self.NeighbourTableListCount = NeighbourTableListCount
+        self.StartIndex = StartIndex
+        self.ListOfEntries_NWKAddress = ListOfEntries_NWKAddress
+        self.ListOfEntries_ExtendedPANID = ListOfEntries_ExtendedPANID
+        self.ListOfEntries_IEEEAddress = ListOfEntries_IEEEAddress
+        self.ListOfEntries_Depth = ListOfEntries_Depth
+        self.ListOfEntries_LinkQuality = ListOfEntries_LinkQuality
+        self.ListOfEntries_BitMapOfAttributes = ListOfEntries_BitMapOfAttributes
+
+
+class AttributeDiscoveryResponse(object):
+
+    def __init__(self, Complete=AttributeDiscoveryResponseComplete.MoreAttributesToFollow, AttributeType=bytearray(1), AttributeID=bytearray(2)):
+        '''
+        @param Complete: Complete
+        @param AttributeType: AttributeType
+        @param AttributeID: AttributeID
+        '''
+        self.Complete = Complete
+        self.AttributeType = AttributeType
+        self.AttributeID = AttributeID
+
+
 class AuthenticateResponse(object):
 
     def __init__(self, IEEEAddressOfTtheGateway=bytearray(8), EncryptedKey=bytearray(2), MIC=bytearray(1), IEEEAddressOfTheInitiatingNode=bytearray(8), ActiveKeySequenceNumber=bytearray(1), Channel=bytearray(1), ShortPANID=bytearray(2), ExtendedPANID=bytearray(8)):
@@ -2021,6 +2071,15 @@ class AuthenticateResponse(object):
         self.Channel = Channel
         self.ShortPANID = ShortPANID
         self.ExtendedPANID = ExtendedPANID
+
+
+class CodeResponse(object):
+
+    def __init__(self, Status=bytearray(1)):
+        '''
+        @param Status: Status
+        '''
+        self.Status = Status
 
 
 class ConfigureReportingResponse(object):
@@ -2204,7 +2263,40 @@ class RemoveGroupResponse(object):
 
 class ViewSceneResponse(object):
 
-    def __init__(self, SequenceNumber=bytearray(1), Endpoint=bytearray(1), ClusterID=bytearray(2), Status=bytearray(1), GroupID=bytearray(2), SceneID=bytearray(1), TransitionTime=bytearray(2), SceneNameLength=bytearray(1), SceneNameMaxLength=bytearray(1), SceneNameData=bytearray(1), ExtensionsLength=bytearray(2), ExtensionsMaxLength=bytearray(2), ExtensionsData=[]):
+    def __init__(self, SequenceNumber=bytearray(1), Endpoint=bytearray(1), ClusterID=bytearray(2), Status=bytearray(1), GroupID=bytearray(2), SceneID=bytearray(1), TransitionTime=bytearray(2), SceneNameLength=bytearray(1), SceneNameMaxLength=bytearray(1), SceneNameData=[], ExtensionsLength=bytearray(2), ExtensionsMaxLength=bytearray(2), ExtensionsData=[]):
+        '''
+        @param SequenceNumber: SequenceNumber
+        @param Endpoint: Endpoint
+        @param ClusterID: ClusterID
+        @param Status: Status
+        @param GroupID: GroupID
+        @param SceneID: SceneID
+        @param TransitionTime: TransitionTime
+        @param SceneNameLength: SceneNameLength
+        @param SceneNameMaxLength: SceneNameMaxLength
+        @param SceneNameData: SceneNameData
+        @param ExtensionsLength: ExtensionsLength
+        @param ExtensionsMaxLength: ExtensionsMaxLength
+        @param ExtensionsData: ExtensionsData
+        '''
+        self.SequenceNumber = SequenceNumber
+        self.Endpoint = Endpoint
+        self.ClusterID = ClusterID
+        self.Status = Status
+        self.GroupID = GroupID
+        self.SceneID = SceneID
+        self.TransitionTime = TransitionTime
+        self.SceneNameLength = SceneNameLength
+        self.SceneNameMaxLength = SceneNameMaxLength
+        self.SceneNameData = SceneNameData
+        self.ExtensionsLength = ExtensionsLength
+        self.ExtensionsMaxLength = ExtensionsMaxLength
+        self.ExtensionsData = ExtensionsData
+
+
+class ViewEnhancedSceneResponse(object):
+
+    def __init__(self, SequenceNumber=bytearray(1), Endpoint=bytearray(1), ClusterID=bytearray(2), Status=bytearray(1), GroupID=bytearray(2), SceneID=bytearray(1), TransitionTime=bytearray(2), SceneNameLength=bytearray(1), SceneNameMaxLength=bytearray(1), SceneNameData=[], ExtensionsLength=bytearray(2), ExtensionsMaxLength=bytearray(2), ExtensionsData=[]):
         '''
         @param SequenceNumber: SequenceNumber
         @param Endpoint: Endpoint
@@ -2252,6 +2344,25 @@ class AddSceneResponse(object):
         self.Status = Status
         self.GroupID = GroupID
         self.SceneID = SceneID
+
+
+class CopySceneResponse(object):
+
+    def __init__(self, SequenceNumber=bytearray(1), Endpoint=bytearray(1), ClusterID=bytearray(2), Status=bytearray(1), FromGroupID=bytearray(2), FromSceneID=bytearray(1)):
+        '''
+        @param SequenceNumber: SequenceNumber
+        @param Endpoint: Endpoint
+        @param ClusterID: ClusterID
+        @param Status: Status
+        @param FromGroupID: FromGroupID
+        @param FromSceneID: FromSceneID
+        '''
+        self.SequenceNumber = SequenceNumber
+        self.Endpoint = Endpoint
+        self.ClusterID = ClusterID
+        self.Status = Status
+        self.FromGroupID = FromGroupID
+        self.FromSceneID = FromSceneID
 
 
 class RemoveSceneResponse(object):

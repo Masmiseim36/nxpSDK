@@ -83,6 +83,9 @@ CONFIG APPLICATION
 #define CLD_SCENES_CMD_ENHANCED_VIEW_SCENE
 #define CLD_SCENES_CMD_ENHANCED_ADD_SCENE
 
+#define BDB_SET_DEFAULT_TC_POLICY TRUE
+#define BDB_JOIN_USES_INSTALL_CODE_KEY TRUE
+
 /************************************************************************************
 *
 *       CONFIG FRAMEWORK

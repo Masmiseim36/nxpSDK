@@ -116,16 +116,16 @@
 #endif
 #include "app_zps_cfg.h"
 
-#ifndef DEBUG_APP
-#define TRACE_APP   FALSE
-#else
+#ifdef DEBUG_APP
 #define TRACE_APP   TRUE
+#else
+#define TRACE_APP   FALSE
 #endif
 
-#ifndef DEBUG_LIGHT_NODE
-#define TRACE_LIGHT_NODE   FALSE
-#else
+#ifdef DEBUG_LIGHT_NODE
 #define TRACE_LIGHT_NODE   TRUE
+#else
+#define TRACE_LIGHT_NODE   FALSE
 #endif
 
 
@@ -140,7 +140,9 @@
 
 #define GREEN_POWER_ENDPOINT                   242
 
-
+#ifndef ASSOCIATION_ATTEMPTS
+#define ASSOCIATION_ATTEMPTS   (5)
+#endif
 /****************************************************************************/
 /***        Type Definitions                                              ***/
 /****************************************************************************/
@@ -161,7 +163,7 @@ NVM_RegisterDataSet(&sZllState, 1, sizeof(tsZllState), PDM_ID_APP_TL_ROUTER, gNV
 /****************************************************************************/
 /***        Local Variables                                               ***/
 /****************************************************************************/
-
+uint8 u8AssociationAttempts;
 
 /****************************************************************************/
 /***        Exported Functions                                            ***/
@@ -239,6 +241,8 @@ PUBLIC void APP_vInitialiseNode(void)
     DBG_vPrintf(TRACE_LIGHT_NODE, "\r\nZll recovered state %02x\r\n", sZllState.eState);
 
     ZPS_eMiniMacSetTxBuffers (4);
+    
+    ZPS_psAplAibGetAib()->bUseInstallCode = BDB_JOIN_USES_INSTALL_CODE_KEY;
 
 #ifdef CPU_MKW41Z512VHT4
     APP_vSetMacAddr();
@@ -308,6 +312,8 @@ PUBLIC void APP_vInitialiseNode(void)
         sBDB.sAttrib.bTLStealNotAllowed = FALSE;
 
     }
+
+    u8AssociationAttempts = ASSOCIATION_ATTEMPTS;
 
     BDB_tsInitArgs sArgs;
 
@@ -391,11 +397,19 @@ PUBLIC void APP_vBdbCallback(BDB_tsBdbEvent *psBdbEvent)
 
         case BDB_EVENT_NO_NETWORK:
             DBG_vPrintf(TRACE_APP,"APP: BDB No Networks\r\n");
-
+            if (u8AssociationAttempts > 0)
+            {
+                u8AssociationAttempts--;
+                BDB_eNsStartNwkSteering();
+                DBG_vPrintf(TRACE_APP, "BDB rery Steering status\r\n");
+            }
+            else
+            {
                 uint32 u32Channel;
                 eAppApiPlmeGet(PHY_PIB_ATTR_CURRENT_CHANNEL, &u32Channel);
                 ZPS_vNwkNibSetChannel( ZPS_pvAplZdoGetNwkHandle(), (uint8)u32Channel );
                 DBG_vPrintf(TRACE_APP,"APP: BDB No Networks -> Wait On %d\r\n", u32Channel);
+            }
             break;
 
         case BDB_EVENT_NWK_FORMATION_SUCCESS:
@@ -513,11 +527,13 @@ PUBLIC void APP_taskLight(void)
                             ResetMCU();
                         }
                         break;
-                    case APP_E_BUTTONS_BUTTON_SW2:
+                    case APP_E_BUTTONS_BUTTON_SW4:
                         /* Permit Join */
                         if (TRUE == sBDB.sAttrib.bbdbNodeIsOnANetwork)
                         {
                            BDB_eNsStartNwkSteering();
+                           BDB_eFbTriggerAsTarget(app_u8GetDeviceEndpoint());
+                           sBDB.sAttrib.bTLStealNotAllowed = FALSE;
                         }                                
                         break;    
                     case APP_E_BUTTONS_BUTTON_SW3:
@@ -528,7 +544,7 @@ PUBLIC void APP_taskLight(void)
                             sBDB.sAttrib.bTLStealNotAllowed = FALSE;
                         }
                         break;
-                    case APP_E_BUTTONS_BUTTON_SW4:  //FindAndBind
+                    case APP_E_BUTTONS_BUTTON_SW2:  //FindAndBind
                         DBG_vPrintf(TRACE_APP, "APP: Switch 4\r\n");
                         if(TRUE == sBDB.sAttrib.bbdbNodeIsOnANetwork)
                         {

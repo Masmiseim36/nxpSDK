@@ -61,10 +61,10 @@
 /****************************************************************************/
 /***        Macro Definitions                                             ***/
 /****************************************************************************/
-#ifndef DEBUG_REPORT
-    #define TRACE_REPORT   FALSE
-#else
+#ifdef DEBUG_REPORT
     #define TRACE_REPORT   TRUE
+#else
+    #define TRACE_REPORT   FALSE
 #endif
 /****************************************************************************/
 /***        Type Definitions                                              ***/

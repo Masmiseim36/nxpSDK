@@ -80,6 +80,9 @@ CONFIG APPLICATION
 /*! Enable Network Steering Capability */
 #define BDB_SUPPORT_NWK_STEERING
 
+#define BDB_SUPPORT_TOUCHLINK
+#define BDB_COMMISSIONING_MODE 0x0F
+
 /*! Enable Network Formation Capability */
 #define BDB_SUPPORT_NWK_FORMATION
 
@@ -88,6 +91,9 @@ CONFIG APPLICATION
 
 /*! Supports both Router and Coordinator device */
 #define FULL_FUNC_DEVICE
+
+#define BDB_SET_DEFAULT_TC_POLICY TRUE
+#define BDB_JOIN_USES_INSTALL_CODE_KEY TRUE
 /************************************************************************************
 *
 *       CONFIG FRAMEWORK

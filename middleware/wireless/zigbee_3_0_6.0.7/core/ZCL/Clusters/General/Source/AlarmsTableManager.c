@@ -1,0 +1,469 @@
+/*
+* The Clear BSD License
+* Copyright 2016-2017 NXP
+* All rights reserved.
+*
+* Redistribution and use in source and binary forms, with or without
+* modification, are permitted (subject to the limitations in the
+* disclaimer below) provided that the following conditions are met:
+*
+* * Redistributions of source code must retain the above copyright
+*   notice, this list of conditions and the following disclaimer.
+*
+* * Redistributions in binary form must reproduce the above copyright
+*   notice, this list of conditions and the following disclaimer in the
+*   documentation and/or other materials provided with the distribution.
+*
+* * Neither the name of the copyright holder nor the names of its
+*   contributors may be used to endorse or promote products derived from
+*   this software without specific prior written permission.
+*
+* NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE
+* GRANTED BY THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT
+* HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
+* WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+* MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+* LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+* CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+* SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
+* BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+* WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+* OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
+* IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*/
+
+/*!=============================================================================
+\file       AlarmsTableManager.c
+\brief      Alarm management functions
+==============================================================================*/
+
+
+/****************************************************************************/
+/***        Include files                                                 ***/
+/****************************************************************************/
+#include "FunctionLib.h"
+#include <jendefs.h>
+
+#include "zps_apl.h"
+#include "zps_apl_aib.h"
+
+#include "zcl.h"
+#include "zcl_customcommand.h"
+
+#include "Alarms.h"
+#include "Alarms_internal.h"
+
+#include "pdum_apl.h"
+#include "zps_apl.h"
+#include "zps_apl_af.h"
+
+#include "string.h"
+
+#include "dbg.h"
+
+#ifdef DEBUG_CLD_ALARMS
+#define TRACE_ALARMS    TRUE
+#else
+#define TRACE_ALARMS    FALSE
+#endif
+
+/****************************************************************************/
+/***        Macro Definitions                                             ***/
+/****************************************************************************/
+
+/****************************************************************************/
+/***        Type Definitions                                              ***/
+/****************************************************************************/
+#ifdef ALARMS_SERVER
+
+typedef struct
+{
+    uint8   u8AlarmCode;
+    uint16  u16ClusterId;
+    uint32  u32TimeStamp;
+} tsCLD_AlarmsMatch;
+
+/****************************************************************************/
+/***        Local Function Prototypes                                     ***/
+/****************************************************************************/
+
+PRIVATE tsCLD_AlarmsTableEntry *psCLD_AlarmsGetEarliestEntry(tsZCL_ClusterInstance *psClusterInstance);
+PRIVATE bool bCLD_AlarmsSearchForAlarm(void *pvSearchParam, void *psNodeUnderTest);
+
+/****************************************************************************/
+/***        Exported Variables                                            ***/
+/****************************************************************************/
+
+/****************************************************************************/
+/***        Local Variables                                               ***/
+/****************************************************************************/
+
+/****************************************************************************/
+/***        Public Functions                                              ***/
+/****************************************************************************/
+
+/****************************************************************************
+ **
+ ** NAME:       eCLD_AlarmsResetAlarmLog
+ **
+ ** DESCRIPTION:
+ ** Clears the alarm log
+ **
+ ** PARAMETERS:                 Name                           Usage
+ ** tsZCL_EndPointDefinition    *psEndPointDefinition
+ ** tsZCL_ClusterInstance       *psClusterInstance
+ **
+ ** RETURN:
+ ** teZCL_Status
+ **
+ ****************************************************************************/
+PUBLIC teZCL_Status eCLD_AlarmsResetAlarmLog(
+                    tsZCL_EndPointDefinition    *psEndPointDefinition,
+                    tsZCL_ClusterInstance       *psClusterInstance)
+{
+    int n;
+    tsCLD_AlarmsTableEntry *psTableEntry;
+    tsCLD_AlarmsCustomDataStructure *psCommon;
+
+    /* Parameter check */
+    #ifdef STRICT_PARAM_CHECK
+        if((psEndPointDefinition == NULL)           ||
+           (psClusterInstance == NULL))
+        {
+            return E_ZCL_ERR_PARAMETER_NULL;
+        }
+    #endif
+    psCommon = (tsCLD_AlarmsCustomDataStructure*)psClusterInstance->pvEndPointCustomStructPtr;
+
+    // get EP mutex
+    #ifndef COOPERATIVE
+        eZCL_GetMutex(psEndPointDefinition);
+    #endif
+
+
+    /* Move all allocated table entries to the unallocated list */
+    for(n = 0; n < CLD_ALARMS_MAX_NUMBER_OF_ALARMS; n++)
+    {
+        /* Get an entry from the allocated list, exit if there are none */
+        psTableEntry = (tsCLD_AlarmsTableEntry*)psDLISTgetHead(&psCommon->lAlarmsAllocList);
+        if(psTableEntry == NULL)
+        {
+            break;
+        }
+
+        /* Remove from list of allocated table entries */
+        psDLISTremove(&psCommon->lAlarmsAllocList, (DNODE*)psTableEntry);
+
+        /* Add to deallocated list */
+        vDLISTaddToTail(&psCommon->lAlarmsDeAllocList, (DNODE*)psTableEntry);
+    }
+
+#ifdef CLD_ALARMS_ATTR_ALARM_COUNT
+        ((tsCLD_Alarms*)psClusterInstance->pvEndPointSharedStructPtr)->u16AlarmCount = 0;
+#endif
+
+    // release EP
+    #ifndef COOPERATIVE
+        eZCL_ReleaseMutex(psEndPointDefinition);
+    #endif
+
+
+    return E_ZCL_SUCCESS;
+
+}
+
+/****************************************************************************
+ **
+ ** NAME:       eCLD_AlarmsAddAlarm
+ **
+ ** DESCRIPTION:
+ ** Adds an alarm to the table
+ **
+ ** PARAMETERS:                 Name                           Usage
+ ** tsZCL_EndPointDefinition    *psEndPointDefinition
+ ** tsZCL_ClusterInstance       *psClusterInstance
+ ** uint8                       u8AlarmCode                     Alarm Code
+ ** uint16                      u16ClusterId                    Cluster Id
+ **
+ ** RETURN:
+ ** teZCL_Status
+ **
+ ****************************************************************************/
+PUBLIC teZCL_Status eCLD_AlarmsAddAlarmToLog(
+                    tsZCL_EndPointDefinition    *psEndPointDefinition,
+                    tsZCL_ClusterInstance       *psClusterInstance,
+                    uint8                       u8AlarmCode,
+                    uint16                      u16ClusterId)
+{
+    tsCLD_AlarmsTableEntry *psTableEntry;
+    tsCLD_AlarmsCustomDataStructure *psCommon;
+    tsCLD_AlarmsMatch sSearchParameter;
+    uint32 u32TimeStamp = u32ZCL_GetUTCTime();
+
+    /* Parameter check */
+    #ifdef STRICT_PARAM_CHECK
+        if((psEndPointDefinition == NULL)           ||
+           (psClusterInstance == NULL))
+        {
+            return E_ZCL_ERR_PARAMETER_NULL;
+        }
+    #endif
+    
+    psCommon = (tsCLD_AlarmsCustomDataStructure*)psClusterInstance->pvEndPointCustomStructPtr;
+
+    // get EP mutex
+    #ifndef COOPERATIVE
+        eZCL_GetMutex(psEndPointDefinition);
+    #endif
+
+
+    /* Search list for any existing entry to avoid duplication */
+    sSearchParameter.u8AlarmCode  = u8AlarmCode;
+    sSearchParameter.u16ClusterId = u16ClusterId;
+    sSearchParameter.u32TimeStamp = u32TimeStamp;
+    psTableEntry = (tsCLD_AlarmsTableEntry*)psDLISTsearchFromHead(&psCommon->lAlarmsAllocList, bCLD_AlarmsSearchForAlarm, (void*)&sSearchParameter);
+
+    /* If no matching entry is found that we can update, try and get a free table entry */
+    if(psTableEntry == NULL)
+    {
+        DBG_vPrintf(TRACE_ALARMS, "No Existing alarm entry in table\r\n");
+
+        /* Get a free table entry */
+        psTableEntry = (tsCLD_AlarmsTableEntry*)psDLISTgetHead(&psCommon->lAlarmsDeAllocList);
+
+        /* If no free entries, we need to expire the oldest entry and then try again */
+        if(psTableEntry == NULL)
+        {
+            /* Get earliest entry and use that instead */
+            psTableEntry = psCLD_AlarmsGetEarliestEntry(psClusterInstance);
+            if(psTableEntry == NULL)
+            {
+                #ifndef COOPERATIVE
+                    eZCL_ReleaseMutex(psEndPointDefinition);
+                #endif
+
+
+                DBG_vPrintf(TRACE_ALARMS, "Error: Insufficient space\r\n");
+
+                return E_ZCL_ERR_INSUFFICIENT_SPACE;
+            }
+        }
+
+        /* Remove from list of free table entries */
+        psDLISTremove(&psCommon->lAlarmsDeAllocList, (DNODE*)psTableEntry);
+
+        /* Add to allocated list */
+        vDLISTaddToTail(&psCommon->lAlarmsAllocList, (DNODE*)psTableEntry);
+
+#ifdef CLD_ALARMS_ATTR_ALARM_COUNT
+        if(((tsCLD_Alarms*)psClusterInstance->pvEndPointSharedStructPtr)->u16AlarmCount < CLD_ALARMS_MAX_NUMBER_OF_ALARMS)
+        {
+            ((tsCLD_Alarms*)psClusterInstance->pvEndPointSharedStructPtr)->u16AlarmCount++;
+        }
+#endif
+
+    }
+
+    /* Fill in table entry */
+    psTableEntry->u8AlarmCode           = u8AlarmCode;
+    psTableEntry->u16ClusterId          = u16ClusterId;
+    psTableEntry->u32TimeStamp          = u32TimeStamp;
+
+    // release EP
+    #ifndef COOPERATIVE
+        eZCL_ReleaseMutex(psEndPointDefinition);
+    #endif
+
+
+    return E_ZCL_SUCCESS;
+
+}
+
+
+/****************************************************************************
+ **
+ ** NAME:       eCLD_AlarmsGetAlarmFromLog
+ **
+ ** DESCRIPTION:
+ ** Gets an alarm from the table. This also deletes the log entry.
+ **
+ ** PARAMETERS:                 Name                           Usage
+ ** tsZCL_EndPointDefinition    *psEndPointDefinition
+ ** tsZCL_ClusterInstance       *psClusterInstance
+ ** uint8                       *pu8AlarmCode                  Alarm Code
+ ** uint16                      *pu16ClusterId                 Cluster Id
+ **
+ ** RETURN:
+ ** teZCL_Status
+ **
+ ****************************************************************************/
+PUBLIC teZCL_Status eCLD_AlarmsGetAlarmFromLog(
+                    tsZCL_EndPointDefinition    *psEndPointDefinition,
+                    tsZCL_ClusterInstance       *psClusterInstance,
+                    uint8                       *pu8AlarmCode,
+                    uint16                      *pu16ClusterId,
+                    uint32                      *pu32TimeStamp)
+{
+
+    tsCLD_AlarmsTableEntry *psTableEntry;
+    tsCLD_AlarmsCustomDataStructure *psCommon;
+
+    /* Parameter check */
+    #ifdef STRICT_PARAM_CHECK
+        if((psEndPointDefinition == NULL)           ||
+           (psClusterInstance == NULL))
+        {
+            return E_ZCL_ERR_PARAMETER_NULL;
+        }
+    #endif
+
+    psCommon = (tsCLD_AlarmsCustomDataStructure*)psClusterInstance->pvEndPointCustomStructPtr;
+
+    // get EP mutex
+    #ifndef COOPERATIVE
+        eZCL_GetMutex(psEndPointDefinition);
+    #endif
+
+
+    /* Get earliest entry in the log */
+    psTableEntry = psCLD_AlarmsGetEarliestEntry(psClusterInstance);
+    if(psTableEntry == NULL)
+    {
+        #ifndef COOPERATIVE
+            eZCL_ReleaseMutex(psEndPointDefinition);
+        #endif
+
+
+        DBG_vPrintf(TRACE_ALARMS, "Error: Log empty\r\n");
+
+        return E_ZCL_FAIL;
+    }
+
+    *pu8AlarmCode = psTableEntry->u8AlarmCode;
+    *pu16ClusterId = psTableEntry->u16ClusterId;
+    *pu32TimeStamp = psTableEntry->u32TimeStamp;
+
+    /* Remove from list of allocated table entries */
+    psDLISTremove(&psCommon->lAlarmsAllocList, (DNODE*)psTableEntry);
+
+    /* Add to unallocated list */
+    vDLISTaddToTail(&psCommon->lAlarmsDeAllocList, (DNODE*)psTableEntry);
+
+#ifdef CLD_ALARMS_ATTR_ALARM_COUNT
+        ((tsCLD_Alarms*)psClusterInstance->pvEndPointSharedStructPtr)->u16AlarmCount--;
+#endif
+
+    // release EP
+    #ifndef COOPERATIVE
+        eZCL_ReleaseMutex(psEndPointDefinition);
+    #endif
+
+
+    return E_ZCL_SUCCESS;
+
+}
+
+/****************************************************************************
+ **
+ ** NAME:       PUBLIC eCLD_AlarmsCountAlarms
+ **
+ ** DESCRIPTION:
+ ** Returns the number of alarms
+ **
+ ** PARAMETERS:                 Name                           Usage
+ ** tsZCL_EndPointDefinition    *psEndPointDefinition
+ ** tsZCL_ClusterInstance       *psClusterInstance
+ ** uint16                      *pu16NumberOfScenes
+ **
+ ** RETURN:
+ ** teZCL_Status
+ **
+ ****************************************************************************/
+PUBLIC teZCL_Status eCLD_AlarmsCountAlarms(
+                            tsZCL_EndPointDefinition    *psEndPointDefinition,
+                            tsZCL_ClusterInstance       *psClusterInstance,
+                            uint8                       *pu8NumberOfAlarms)
+{
+
+    tsCLD_AlarmsCustomDataStructure *psCommon;
+    
+    #ifdef STRICT_PARAM_CHECK	
+        /* Parameter check */
+        if((psEndPointDefinition == NULL)   ||
+           (psClusterInstance == NULL)      ||
+           (pu8NumberOfAlarms == NULL))
+        {   
+            return E_ZCL_ERR_PARAMETER_NULL;
+        }
+    #endif
+    psCommon = (tsCLD_AlarmsCustomDataStructure*)psClusterInstance->pvEndPointCustomStructPtr;
+
+    *pu8NumberOfAlarms = (uint8)iDLISTnumberOfNodes(&psCommon->lAlarmsAllocList);
+
+    return E_ZCL_SUCCESS;
+
+}
+
+/****************************************************************************/
+/***        Private Functions                                             ***/
+/****************************************************************************/
+
+PRIVATE tsCLD_AlarmsTableEntry *psCLD_AlarmsGetEarliestEntry(tsZCL_ClusterInstance *psClusterInstance)
+{
+
+    int n;
+    tsCLD_AlarmsTableEntry *psTableEntry;
+    tsCLD_AlarmsTableEntry *psEarliestTableEntry;
+    tsCLD_AlarmsCustomDataStructure *psCommon;
+
+    psCommon = (tsCLD_AlarmsCustomDataStructure*)psClusterInstance->pvEndPointCustomStructPtr;
+
+    /* Point to start of list */
+    psTableEntry = (tsCLD_AlarmsTableEntry*)psDLISTgetHead(&psCommon->lAlarmsAllocList);
+    psEarliestTableEntry = psTableEntry;
+
+    for(n = 0; n < iDLISTnumberOfNodes(&psCommon->lAlarmsAllocList); n++)
+    {
+
+        /* If entry is valid and older than last one we looked at, mark this as oldest */
+        if((psTableEntry != NULL) && (psTableEntry->u32TimeStamp < psEarliestTableEntry->u32TimeStamp))
+        {
+            psEarliestTableEntry = psTableEntry;
+        }
+
+        psTableEntry = (tsCLD_AlarmsTableEntry*)psDLISTgetNext((DNODE*)psTableEntry);
+    }
+
+    return psEarliestTableEntry;
+
+}
+
+
+PRIVATE bool bCLD_AlarmsSearchForAlarm(void *pvSearchParam, void *psNodeUnderTest)
+{
+
+    tsCLD_AlarmsMatch sSearchParameter;
+    tsCLD_AlarmsTableEntry sSearchEntry;
+
+    FLib_MemCpy(&sSearchParameter, pvSearchParam, sizeof(tsCLD_AlarmsMatch));
+    FLib_MemCpy(&sSearchEntry, psNodeUnderTest, sizeof(tsCLD_AlarmsTableEntry));
+
+    DBG_vPrintf(TRACE_ALARMS, "Search: A%04x C%02x:A%04x C%02x\r\n", sSearchParameter.u8AlarmCode,
+                                                                     sSearchParameter.u16ClusterId,
+                                                                     sSearchEntry.u8AlarmCode,
+                                                                     sSearchEntry.u16ClusterId);
+
+    if((sSearchParameter.u8AlarmCode == sSearchEntry.u8AlarmCode) &&
+       (sSearchParameter.u16ClusterId == sSearchEntry.u16ClusterId))
+    {
+        return TRUE;
+    }
+
+    return FALSE;
+
+}
+#endif
+/****************************************************************************/
+/***        END OF FILE                                                   ***/
+/****************************************************************************/

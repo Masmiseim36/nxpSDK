@@ -134,8 +134,8 @@ class WriteAttributeRequestManufacturerSpecific(GenericEnum):
 
 class AttributeDiscoveryRequestDirection(GenericEnum):
 
-    FromServerToClient = 0x00
-    FromClientToServer = 0x01
+    FromServerToClient = 0x01
+    FromClientToServer = 0x00
 
 
 class AttributeDiscoveryRequestManufacturerSpecific(GenericEnum):
@@ -247,6 +247,38 @@ class FactoryNewRestartStatus(GenericEnum):
     STARTUP = 0x00
     NFN_START = 0x02
     RUNNING = 0x06
+
+
+class ListOfEntries_BitMapOfAttributesDeviceType(GenericEnum):
+
+    Coordinator = 0x00
+    Router = 0x01
+    EndDevice = 0x02
+
+
+class ListOfEntries_BitMapOfAttributesPermitJoinStatus(GenericEnum):
+
+    Off = 0x00
+    On = 0x01
+
+
+class ListOfEntries_BitMapOfAttributesRelationship(GenericEnum):
+
+    Parent = 0x00
+    Child = 0x01
+    Sibling = 0x02
+
+
+class ListOfEntries_BitMapOfAttributesRxOnWhenIdleStatus(GenericEnum):
+
+    Off = 0x00
+    On = 0x01
+
+
+class AttributeDiscoveryResponseComplete(GenericEnum):
+
+    MoreAttributesToFollow = 0x00
+    ThisWasTheLastAttribute = 0x01
 
 
 class TouchlinkStatusStatus(GenericEnum):

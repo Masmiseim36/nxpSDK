@@ -186,6 +186,7 @@ PRIVATE uint16 u16FastPoll;
 /****************************************************************************/
 extern instanceId_t mMacInstance;
 
+#ifndef CPU_MKW41Z512VHT4
 /****************************************************************************
  *
  * NAME: vHandleZdoLeaveRequest
@@ -225,7 +226,7 @@ PRIVATE void vHandleZdoLeaveRequest(uint8 u8Action, uint64 u64TargetAddr, uint8 
         }
     }
 }
-
+#endif
 /****************************************************************************
  *
  * NAME: APP_vInitialiseNode
@@ -258,10 +259,11 @@ PUBLIC void APP_vInitialiseNode(void)
                             &u16ByteRead);
 
     /* Initialise ZBPro stack */
-    ZPS_eAplAfInit();
+    ZPS_psAplAibGetAib()->bUseInstallCode = BDB_JOIN_USES_INSTALL_CODE_KEY;
 #ifdef CPU_MKW41Z512VHT4
     APP_vSetMacAddr();
 #endif
+    ZPS_eAplAfInit();
 
     APP_ZCL_vInitialise();
 
@@ -290,9 +292,10 @@ PUBLIC void APP_vInitialiseNode(void)
         
         sBDB.sAttrib.bbdbNodeIsOnANetwork = FALSE;
     }
-
+#ifndef CPU_MKW41Z512VHT4
     /* Register callback that will handle ZDP (mgmt) leave requests */
     ZPS_vAplZdoRegisterZdoLeaveActionCallback(vHandleZdoLeaveRequest);
+#endif
     #ifdef PDM_EEPROM
         vDisplayPDMUsage();
     #endif

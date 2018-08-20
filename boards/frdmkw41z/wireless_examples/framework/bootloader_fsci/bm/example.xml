@@ -87,7 +87,7 @@
     <files mask="MKW41Z4_features.h"/>
     <files mask="fsl_device_registers.h"/>
   </source>
-  <source path="middleware/wireless/framework_5.3.5/Common" target_path="wireless/framework/Common" type="c_include">
+  <source path="middleware/wireless/framework_5.3.6/Common" target_path="wireless/framework/Common" type="c_include">
     <files mask="EmbeddedTypes.h"/>
   </source>
   <include_paths>

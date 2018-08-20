@@ -91,7 +91,7 @@
 /****************************************************************************/
 
 
-#ifndef DEBUG_APP
+#ifdef DEBUG_APP
     #define TRACE_APP   TRUE
 #else
     #define TRACE_APP   FALSE
@@ -334,7 +334,7 @@ PUBLIC void APP_taskRouter(void)
         {
             switch(sAppEvent.uEvent.sButton.u8Button)
             {
-                case APP_E_BUTTONS_BUTTON_SW1:
+                case APP_E_BUTTONS_BUTTON_SW5:
                     /* Create Network */
                     if (FALSE == sBDB.sAttrib.bbdbNodeIsOnANetwork)
                     {
@@ -352,7 +352,7 @@ PUBLIC void APP_taskRouter(void)
                     }
                     break;
 
-                case APP_E_BUTTONS_BUTTON_SW2:
+                case APP_E_BUTTONS_BUTTON_SW4:
                     /* Permit Join */
                     if (TRUE == sBDB.sAttrib.bbdbNodeIsOnANetwork)
                     {
@@ -370,7 +370,7 @@ PUBLIC void APP_taskRouter(void)
                     }
                     break;
 
-                case APP_E_BUTTONS_BUTTON_SW4:
+                case APP_E_BUTTONS_BUTTON_SW2:
                     /* Find & Bind */
 #ifdef USE_GROUPS
                     sBDB.sAttrib.u16bdbCommissioningGroupID = GROUP_ID;

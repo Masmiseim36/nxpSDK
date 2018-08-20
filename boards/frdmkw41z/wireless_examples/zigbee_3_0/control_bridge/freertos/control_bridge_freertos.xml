@@ -37,6 +37,7 @@
     <definition extID="middleware.wireless.xcvr_kw41z.MKW41Z4"/>
     <definition extID="middleware.wireless.zigbee.base.MKW41Z4"/>
     <definition extID="middleware.wireless.zigbee.core.bdb.MKW41Z4"/>
+    <definition extID="middleware.wireless.zigbee.core.bdb.touchlink.router_initiator_target.MKW41Z4"/>
     <definition extID="middleware.wireless.zigbee.core.common.MKW41Z4"/>
     <definition extID="middleware.wireless.zigbee.core.common.globals.MKW41Z4"/>
     <definition extID="middleware.wireless.zigbee.core.zcif.MKW41Z4"/>
@@ -67,7 +68,7 @@
     <definition extID="mcuxpresso"/>
     <definition extID="iar"/>
   </externalDefinitions>
-  <example id="frdmkw41z_wireless_examples_zigbee_3_0_control_bridge_freertos" name="freertos" category="wireless_examples/zigbee_3_0/control_bridge" dependency="middleware.freertos.heap_4.MKW41Z4 middleware.wireless.framework.osa_freertos.MKW41Z4 middleware.freertos.MKW41Z4 middleware.wireless.ieee_802_15_4.mac.source.MKW41Z4 middleware.wireless.ieee_802_15_4.mac.interface.MKW41Z4 middleware.wireless.ieee_802_15_4.phy.interface.MKW41Z4 middleware.wireless.framework.gpio_adapter.MKW41Z4 middleware.wireless.framework.keyboard.MKW41Z4 middleware.wireless.framework.led.MKW41Z4 middleware.wireless.framework.reset.MKW41Z4 middleware.wireless.framework.smgr.spi_adapter.MKW41Z4 middleware.wireless.framework.smgr.uart_adapter.MKW41Z4 middleware.wireless.framework.smgr.i2c_adapter.MKW41Z4 middleware.wireless.framework.flash.internal.MKW41Z4 middleware.wireless.framework.flash.external.MKW41Z4 middleware.wireless.framework.ota.MKW41Z4 middleware.wireless.framework.common.MKW41Z4 middleware.wireless.framework.mem_manager.MKW41Z4 middleware.wireless.framework.messaging.MKW41Z4 middleware.wireless.framework.panic.MKW41Z4 middleware.wireless.framework.rng.MKW41Z4 middleware.wireless.framework.smgr.MKW41Z4 middleware.wireless.framework.tmr.MKW41Z4 middleware.wireless.framework.module_info.MKW41Z4 middleware.wireless.framework.function_lib.MKW41Z4 middleware.framework.generic_lists.MKW41Z4 middleware.wireless.framework.sec_lib.MKW41Z4 middleware.wireless.framework.coexistence.MKW41Z4 middleware.wireless.framework.nvm.MKW41Z4 middleware.wireless.framework.lpm_MKW41Z.MKW41Z4 middleware.wireless.zigbee.core.common.MKW41Z4 middleware.wireless.zigbee.core.common.globals.MKW41Z4 middleware.wireless.zigbee.core.bdb.MKW41Z4 middleware.wireless.zigbee.core.zcif.MKW41Z4 middleware.wireless.zigbee.core.zcl_clusters.MKW41Z4 middleware.wireless.zigbee.core.zcl_devices.MKW41Z4 middleware.wireless.zigbee.base.MKW41Z4 platform.drivers.common.MKW41Z4 platform.drivers.trng.MKW41Z4 platform.drivers.flash.MKW41Z4 platform.drivers.lpuart.MKW41Z4 platform.drivers.gpio.MKW41Z4 platform.drivers.port.MKW41Z4 platform.drivers.tpm.MKW41Z4 platform.drivers.dspi.MKW41Z4 platform.drivers.i2c.MKW41Z4 platform.drivers.lptmr.MKW41Z4 platform.drivers.rtc.MKW41Z4 platform.drivers.llwu.MKW41Z4 platform.drivers.ltc.MKW41Z4 platform.drivers.pmc.MKW41Z4 platform.drivers.adc16.MKW41Z4 middleware.wireless.framework.dcdc.MKW41Z4 platform.drivers.tsi_v4.MKW41Z4 platform.drivers.cop.MKW41Z4 platform.drivers.rcm.MKW41Z4 middleware.wireless.xcvr_kw41z.MKW41Z4 middleware.wireless.ieee_802_15_4.phy.source_kw41z.MKW41Z4 platform.drivers.smc.MKW41Z4 platform.drivers.clock.MKW41Z4 platform.devices.MKW41Z4_CMSIS.MKW41Z4 platform.utilities.debug_console.MKW41Z4" toolchain="iar mcuxpresso">
+  <example id="frdmkw41z_wireless_examples_zigbee_3_0_control_bridge_freertos" name="freertos" category="wireless_examples/zigbee_3_0/control_bridge" dependency="middleware.freertos.heap_4.MKW41Z4 middleware.wireless.framework.osa_freertos.MKW41Z4 middleware.freertos.MKW41Z4 middleware.wireless.ieee_802_15_4.mac.source.MKW41Z4 middleware.wireless.ieee_802_15_4.mac.interface.MKW41Z4 middleware.wireless.ieee_802_15_4.phy.interface.MKW41Z4 middleware.wireless.framework.gpio_adapter.MKW41Z4 middleware.wireless.framework.keyboard.MKW41Z4 middleware.wireless.framework.led.MKW41Z4 middleware.wireless.framework.reset.MKW41Z4 middleware.wireless.framework.smgr.spi_adapter.MKW41Z4 middleware.wireless.framework.smgr.uart_adapter.MKW41Z4 middleware.wireless.framework.smgr.i2c_adapter.MKW41Z4 middleware.wireless.framework.flash.internal.MKW41Z4 middleware.wireless.framework.flash.external.MKW41Z4 middleware.wireless.framework.ota.MKW41Z4 middleware.wireless.framework.common.MKW41Z4 middleware.wireless.framework.mem_manager.MKW41Z4 middleware.wireless.framework.messaging.MKW41Z4 middleware.wireless.framework.panic.MKW41Z4 middleware.wireless.framework.rng.MKW41Z4 middleware.wireless.framework.smgr.MKW41Z4 middleware.wireless.framework.tmr.MKW41Z4 middleware.wireless.framework.module_info.MKW41Z4 middleware.wireless.framework.function_lib.MKW41Z4 middleware.framework.generic_lists.MKW41Z4 middleware.wireless.framework.sec_lib.MKW41Z4 middleware.wireless.framework.coexistence.MKW41Z4 middleware.wireless.framework.nvm.MKW41Z4 middleware.wireless.framework.lpm_MKW41Z.MKW41Z4 middleware.wireless.zigbee.core.common.MKW41Z4 middleware.wireless.zigbee.core.common.globals.MKW41Z4 middleware.wireless.zigbee.core.bdb.MKW41Z4 middleware.wireless.zigbee.core.bdb.touchlink.router_initiator_target.MKW41Z4 middleware.wireless.zigbee.core.zcif.MKW41Z4 middleware.wireless.zigbee.core.zcl_clusters.MKW41Z4 middleware.wireless.zigbee.core.zcl_devices.MKW41Z4 middleware.wireless.zigbee.base.MKW41Z4 platform.drivers.common.MKW41Z4 platform.drivers.trng.MKW41Z4 platform.drivers.flash.MKW41Z4 platform.drivers.lpuart.MKW41Z4 platform.drivers.gpio.MKW41Z4 platform.drivers.port.MKW41Z4 platform.drivers.tpm.MKW41Z4 platform.drivers.dspi.MKW41Z4 platform.drivers.i2c.MKW41Z4 platform.drivers.lptmr.MKW41Z4 platform.drivers.rtc.MKW41Z4 platform.drivers.llwu.MKW41Z4 platform.drivers.ltc.MKW41Z4 platform.drivers.pmc.MKW41Z4 platform.drivers.adc16.MKW41Z4 middleware.wireless.framework.dcdc.MKW41Z4 platform.drivers.tsi_v4.MKW41Z4 platform.drivers.cop.MKW41Z4 platform.drivers.rcm.MKW41Z4 middleware.wireless.xcvr_kw41z.MKW41Z4 middleware.wireless.ieee_802_15_4.phy.source_kw41z.MKW41Z4 platform.drivers.smc.MKW41Z4 platform.drivers.clock.MKW41Z4 platform.devices.MKW41Z4_CMSIS.MKW41Z4 platform.utilities.debug_console.MKW41Z4" toolchain="iar mcuxpresso">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -214,22 +215,25 @@
     <source path="devices/MKW41Z4/gcc" target_path="startup" type="src" toolchain="mcuxpresso">
       <files mask="startup_MKW41Z4.S"/>
     </source>
-    <source path="middleware/wireless/framework_5.3.5/SecLib" type="lib" method="copy" toolchain="mcuxpresso">
+    <source path="middleware/wireless/framework_5.3.6/SecLib" type="lib" method="copy" toolchain="mcuxpresso">
       <files mask="lib_crypto_m0.a"/>
     </source>
-    <source path="middleware/wireless/ieee_802_15_4_5.3.5/mac/lib" type="lib" method="copy" toolchain="mcuxpresso">
+    <source path="middleware/wireless/ieee_802_15_4_5.3.6/mac/lib" type="lib" method="copy" toolchain="mcuxpresso">
       <files mask="lib802.15.4_mac_zp_cm0.a"/>
     </source>
-    <source path="middleware/wireless/zigbee_3_0_6.0.6/core/lib" type="lib" method="copy" toolchain="mcuxpresso">
+    <source path="middleware/wireless/zigbee_3_0_6.0.7/core/lib" type="lib" method="copy" toolchain="mcuxpresso">
       <files mask="lib_zps_cm0.a"/>
     </source>
-    <source path="middleware/wireless/framework_5.3.5/SecLib" type="lib" method="copy" toolchain="iar">
+    <source path="devices/MKW41Z4/iar" target_path="startup" type="src" toolchain="iar">
+      <files mask="startup_MKW41Z4.s"/>
+    </source>
+    <source path="middleware/wireless/framework_5.3.6/SecLib" type="lib" method="copy" toolchain="iar">
       <files mask="lib_crypto_m0.a"/>
     </source>
-    <source path="middleware/wireless/ieee_802_15_4_5.3.5/mac/lib" type="lib" method="copy" toolchain="iar">
+    <source path="middleware/wireless/ieee_802_15_4_5.3.6/mac/lib" type="lib" method="copy" toolchain="iar">
       <files mask="lib802.15.4_mac_zp_cm0.a"/>
     </source>
-    <source path="middleware/wireless/zigbee_3_0_6.0.6/core/lib" type="lib" method="copy" toolchain="iar">
+    <source path="middleware/wireless/zigbee_3_0_6.0.7/core/lib" type="lib" method="copy" toolchain="iar">
       <files mask="lib_zps_cm0.a"/>
     </source>
   </example>

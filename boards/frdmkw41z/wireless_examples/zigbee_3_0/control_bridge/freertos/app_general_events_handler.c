@@ -536,7 +536,7 @@ PUBLIC void APP_vHandleStackEvents ( ZPS_tsAfEvent*    psStackEvent )
                         ZNC_BUF_U64_UPD  ( &au8LinkTxBuffer [u16Length] , sApsZdpEvent.uZdpData.sIeeeAddrRsp.u64IeeeAddrRemoteDev,    u16Length );
                         ZNC_BUF_U16_UPD  ( &au8LinkTxBuffer [u16Length] , sApsZdpEvent.uZdpData.sIeeeAddrRsp.u16NwkAddrRemoteDev,     u16Length );
                         ZNC_BUF_U8_UPD   ( &au8LinkTxBuffer [u16Length] , sApsZdpEvent.uZdpData.sIeeeAddrRsp.u8NumAssocDev,           u16Length );
-                        ZNC_BUF_U16_UPD  ( &au8LinkTxBuffer [u16Length] , sApsZdpEvent.uZdpData.sIeeeAddrRsp.u8StartIndex,            u16Length );
+                        ZNC_BUF_U8_UPD  ( &au8LinkTxBuffer [u16Length] , sApsZdpEvent.uZdpData.sIeeeAddrRsp.u8StartIndex,            u16Length );
                         if( sApsZdpEvent.uZdpData.sIeeeAddrRsp.u8Status == ZPS_E_SUCCESS )
                         {
                             while ( i < sApsZdpEvent.uZdpData.sIeeeAddrRsp.u8NumAssocDev )

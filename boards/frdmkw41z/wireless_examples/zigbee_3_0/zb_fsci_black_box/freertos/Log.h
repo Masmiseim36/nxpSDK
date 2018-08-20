@@ -50,7 +50,7 @@ extern "C" {
 /****************************************************************************/
 
 #include <dbg.h>
-
+#include "SerialLink.h"
 /****************************************************************************/
 /***        Macro Definitions                                             ***/
 /****************************************************************************/
@@ -73,13 +73,25 @@ extern "C" {
 /* The log macros filter out log messages that have a higher log level than that set in LOG_LEVEL */
 #ifdef UART_DEBUGGING
 /* When logging via UART, we don't print the level */
-#define vLog_Printf(STREAM, LEVEL, FORMAT, ARGS...)  DBG_vPrintf((STREAM && (LEVEL <= LOG_LEVEL)), FORMAT, ##ARGS)
+#define vLog_Printf(STREAM, LEVEL, FORMAT, ARGS...)\
+    do {                                                            \
+        if(STREAM)                                                  \
+            vSL_WriteLog((FORMAT), ## ARGS);                         \
+        else                                                        \
+            APP_vPrintfNullImpl((FORMAT), ##ARGS);                 \
+    } while(0)
 
 #else
 /* When logging via Serial link to host syslog, send the log level as a char integer at the start of the message */
 #define QUOTE(A) #A
 #define CHAR(A) QUOTE(\x##A)
-#define vLog_Printf(STREAM, LEVEL, FORMAT, ARGS...)  DBG_vPrintf((STREAM && (LEVEL <= LOG_LEVEL)), CHAR(LEVEL) FORMAT, ##ARGS)
+#define vLog_Printf(STREAM, LEVEL, FORMAT, ARGS...)\
+    do {                                                            \
+        if(STREAM && (LEVEL <= LOG_LEVEL))                                                  \
+            vSL_WriteLog(CHAR(LEVEL) FORMAT, ##ARGS);                         \
+        else                                                        \
+            APP_vPrintfNullImpl((FORMAT), ## ARGS);                 \
+    } while(0)
 
 #endif
 

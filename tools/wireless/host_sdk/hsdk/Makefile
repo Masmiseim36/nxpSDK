@@ -9,7 +9,7 @@ PREFIX_CONF?=/usr/local/etc
 PREFIX_UDEV_RULES?=/lib/udev/rules.d
 
 PROJROOT=$(shell pwd)
-BUILDDIR=$(PROJROOT)/build/
+BUILDDIR="$(PROJROOT)/build/"
 
 SYS_INC=-Iinclude/sys
 PHY_INC=-Iinclude/physical
@@ -82,7 +82,7 @@ else
 		LIBLFLAGS=-shared -Wl,-soname,
 		EXTENSION=.so
 		VERSION=.1
-		FULL_VERSION=.1.7.1
+		FULL_VERSION=.1.8.2
 	endif
 	LL=$(CC)
 endif

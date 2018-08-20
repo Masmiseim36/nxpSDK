@@ -4,7 +4,7 @@
  *
  * The Clear BSD License
  * Copyright 2013-2015 Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2018 NXP
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -95,6 +95,7 @@ int FSCIStartState (void);
 int FSCIFinalState (void);
 FrameStatus FSCIStateMachineDispatch(Framer *framer, void **currentFrame, uint32_t *dataSize);
 void FSCIFramerInitialization(Framer *framer);
+DLLEXPORT void FSCI_transmitPayload(Framer *framer, uint8_t OG, uint8_t OC, void *pMsg, uint16_t msgLen, uint32_t fsciInterface);
 
 #ifdef __cplusplus
 } /* extern "C" */

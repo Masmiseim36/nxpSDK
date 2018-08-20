@@ -113,6 +113,9 @@ CONFIG APPLICATION
     #define ZB_POLLING_INTERVAL_MS                  3000     /* Milliseconds */
 #endif
 
+#define BDB_SET_DEFAULT_TC_POLICY TRUE
+#define BDB_JOIN_USES_INSTALL_CODE_KEY TRUE
+
 /************************************************************************************
 *
 *       CONFIG FRAMEWORK

@@ -53,7 +53,8 @@
 * Private macros
 *************************************************************************************
 ************************************************************************************/
-#define MAXNAME 257
+#define MAXNAME                 257
+#define KNOWN_VID_PID_PAIRS     12  /* increment whenever a new device is added */
 
 /************************************************************************************
 *************************************************************************************
@@ -724,7 +725,7 @@ static void AddDeviceIdentity(char **vidPidList, int listSize)
 ********************************************************************************** */
 static void CreateListOfKinetisWIdentities()
 {
-    char **list = (char **)calloc(22, sizeof(char *));
+    char **list = (char **)calloc(KNOWN_VID_PID_PAIRS * 2, sizeof(char *));
     list[0] = "VID_2504";
     list[1] = "PID_0300";
     list[2] = "VID_15A2"; // Virtual Com Port Freescale VID
@@ -747,8 +748,8 @@ static void CreateListOfKinetisWIdentities()
     list[19] = "PID_0300"; // Virtual Com Port PID
     list[20] = "VID_0403"; // OM15028-1 / JN5179 VID
     list[21] = "PID_6015"; // OM15028-1 / JN5179 PID
-    list[20] = "VID_1FC9"; // QN9080 DK VID
-    list[21] = "PID_0090"; // QN9080 DK PID
+    list[22] = "VID_1FC9"; // QN9080 DK VID
+    list[23] = "PID_0090"; // QN9080 DK PID
 
     AddDeviceIdentity(list, 22);
     free(list);
@@ -961,23 +962,24 @@ int isKinetisWDevice(const char *idVendor, const char *idProduct)
     int i;
 
     if (vendorList == NULL) {
-        vendorList = (char **)calloc(11, sizeof(char *));
-        productList = (char **)calloc(11, sizeof(char *));
+        vendorList = (char **)calloc(KNOWN_VID_PID_PAIRS, sizeof(char *));
+        productList = (char **)calloc(KNOWN_VID_PID_PAIRS, sizeof(char *));
 
         vendorList[0] = strdup("2504"); productList[0] = strdup("0300");
-        vendorList[1] = strdup("15A2"); productList[1] = strdup("0300"); // VCP Freescale VID/PID
+        vendorList[1] = strdup("15A2"); productList[1] = strdup("0300");    // VCP Freescale
         vendorList[2] = strdup("15A2"); productList[2] = strdup("005A");
         vendorList[3] = strdup("1357"); productList[3] = strdup("0089");
         vendorList[4] = strdup("0403"); productList[4] = strdup("6001");
         vendorList[5] = strdup("1357"); productList[5] = strdup("0707");
         vendorList[6] = strdup("1366"); productList[6] = strdup("0105");
-        vendorList[7] = strdup("0D28"); productList[7] = strdup("0204"); // FRDM-KW40Z
-        vendorList[8] = strdup("1366"); productList[8] = strdup("1015"); // J-Link CDC UART
-        vendorList[9] = strdup("1FC9"); productList[9] = strdup("0300"); // VCP NXP VID/PID
-        vendorList[10] = strdup("0403"); productList[10] = strdup("6015"); // OM15028-1 / JN5179 VID/PID
+        vendorList[7] = strdup("0D28"); productList[7] = strdup("0204");    // FRDM-KW40Z
+        vendorList[8] = strdup("1366"); productList[8] = strdup("1015");    // J-Link CDC UART
+        vendorList[9] = strdup("1FC9"); productList[9] = strdup("0300");    // VCP NXP
+        vendorList[10] = strdup("0403"); productList[10] = strdup("6015");  // OM15028-1 / JN5179
+        vendorList[11] = strdup("1FC9"); productList[11] = strdup("0090");  // QN9080 DK
     }
 
-    for (i = 0; i < 11; i++) {
+    for (i = 0; i < KNOWN_VID_PID_PAIRS; i++) {
         if (strcmp(vendorList[i], idVendor) && strcmp(productList[i], idProduct)) {
             return 1;
         }

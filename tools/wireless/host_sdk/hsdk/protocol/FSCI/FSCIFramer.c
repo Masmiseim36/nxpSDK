@@ -4,7 +4,7 @@
  *
  * The Clear BSD License
  * Copyright 2013-2015 Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2018 NXP
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -135,6 +135,18 @@ uint8_t *CreateFSCIPacket(Framer *framer, void *frame, uint32_t *size)
     FSCIFrame *fsciFrame = (FSCIFrame *) frame;
 
     return CreatePacket(framer, fsciFrame->opGroup, fsciFrame->opCode, fsciFrame->length, fsciFrame->data, fsciFrame->crc, (!(fsciFrame->virtualInterface)) ? 1 : 2, size);
+}
+
+void FSCI_transmitPayload(Framer *framer, uint8_t OG, uint8_t OC, void *pMsg, uint16_t msgLen, uint32_t fsciInterface)
+{
+    if (framer) {
+        FSCIFrame *frame = CreateFSCIFrame(framer, OG, OC, (uint8_t *)pMsg, msgLen, fsciInterface);
+
+        if (frame) {
+            SendFrame(framer, frame);
+            DestroyFSCIFrame(frame);
+        }
+    }
 }
 
 /*! *********************************************************************************

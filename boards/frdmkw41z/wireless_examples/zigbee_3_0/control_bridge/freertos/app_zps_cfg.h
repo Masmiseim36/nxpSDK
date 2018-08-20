@@ -238,7 +238,7 @@
 #define APS_POLL_INTERVAL  100
 
 
-#define ZPS_INIT_APL_DEFAULT_GLOBAL_APS_LINK_KEY FALSE
+#define ZPS_INIT_APL_DEFAULT_GLOBAL_APS_LINK_KEY TRUE
 /*****************************************************************************/
 /*! ZPS NWK AND APS PERSIST FRAME COUNTER */
 /*****************************************************************************/

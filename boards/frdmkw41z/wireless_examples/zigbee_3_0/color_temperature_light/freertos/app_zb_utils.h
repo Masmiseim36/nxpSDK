@@ -83,7 +83,7 @@ void APP_vSetLedState(bool_t bDeviceOnTheNwk);
 uint64_t hex_str_to_uint(char * str);
 uint64_t dec_str_to_uint(char * str);
 int16_t hex_str_to_array(char * str, uint8_t * pOut, uint16_t max_len);
-
+char *pccHandlePlaceHolder(char *pcFormat, va_list *pap, char * pOut, int* n);
 /*================================================================================================*/
 
 

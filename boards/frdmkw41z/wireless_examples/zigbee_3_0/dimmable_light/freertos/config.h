@@ -84,6 +84,9 @@ CONFIG APPLICATION
 /*! Enable find and bind target Capability */
 #define BDB_SUPPORT_FIND_AND_BIND_TARGET
 
+#define BDB_SUPPORT_TOUCHLINK
+#define BDB_COMMISSIONING_MODE 0x0F
+
 /*! Aplication PDM ID */
 #define PDM_APP_ID  PDM_APP_LIGHT_ID 
 
@@ -110,6 +113,9 @@ CONFIG APPLICATION
 #define gKBD_KeysCount_c 2
 #define gOtaVerifyWrite_d 1
 #endif
+
+#define BDB_SET_DEFAULT_TC_POLICY TRUE
+#define BDB_JOIN_USES_INSTALL_CODE_KEY TRUE
 /************************************************************************************
 *
 *       CONFIG FRAMEWORK

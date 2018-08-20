@@ -354,13 +354,13 @@ PUBLIC void APP_taskCoordinator(void)
         {
             switch(sAppEvent.uEvent.sButton.u8Button)
             {
-                case APP_E_BUTTONS_BUTTON_SW1:
+                case APP_E_BUTTONS_BUTTON_SW5:
                     /* On.Off Toggle */
                     DBG_vPrintf(TRACE_APP_EVENT, "APP-EVT: Send Toggle Cmd\r\n");
                     vAppSendOnOff();
                     break;
 
-                case APP_E_BUTTONS_BUTTON_SW2:
+                case APP_E_BUTTONS_BUTTON_SW4:
                     /* Permit Join */
                     if (TRUE == sBDB.sAttrib.bbdbNodeIsOnANetwork)
                     {
@@ -378,7 +378,7 @@ PUBLIC void APP_taskCoordinator(void)
                     }
                     break;
 
-                case APP_E_BUTTONS_BUTTON_SW4:
+                case APP_E_BUTTONS_BUTTON_SW2:
                     /* Find & Bind */
 #ifdef USE_GROUPS
                     sBDB.sAttrib.u16bdbCommissioningGroupID = GROUP_ID;

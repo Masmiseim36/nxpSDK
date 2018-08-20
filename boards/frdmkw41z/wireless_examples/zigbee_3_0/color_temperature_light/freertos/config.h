@@ -107,6 +107,9 @@ CONFIG APPLICATION
     #define DEBUG_APP_EVENT
     #define DEBUG_LIGHT_NODE
 #endif
+
+#define BDB_SET_DEFAULT_TC_POLICY TRUE
+#define BDB_JOIN_USES_INSTALL_CODE_KEY TRUE
 /************************************************************************************
 *
 *       CONFIG FRAMEWORK

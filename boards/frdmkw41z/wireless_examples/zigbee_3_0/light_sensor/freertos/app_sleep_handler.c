@@ -61,10 +61,10 @@
 /****************************************************************************/
 /***        Macro Definitions                                             ***/
 /****************************************************************************/
-#ifndef DEBUG_SLEEP_HANDLER
-    #define TRACE_SLEEP_HANDLER   FALSE
-#else
+#ifdef DEBUG_SLEEP_HANDLER
     #define TRACE_SLEEP_HANDLER   TRUE
+#else
+    #define TRACE_SLEEP_HANDLER   FALSE
 #endif
 
 #if ZLO_MAX_REPORT_INTERVAL == 0

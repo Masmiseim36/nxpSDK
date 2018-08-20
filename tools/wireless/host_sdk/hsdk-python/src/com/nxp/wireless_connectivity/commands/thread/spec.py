@@ -720,6 +720,8 @@ class Spec(object):
         cmdParams.append(SocketIndex)
         Flags = FsciParameter("Flags", 1)
         cmdParams.append(Flags)
+        SecuredMACData = FsciParameter("SecuredMACData", 1)
+        cmdParams.append(SecuredMACData)
         Size = FsciParameter("Size", 2)
         cmdParams.append(Size)
         RemotePort = FsciParameter("RemotePort", 2)
@@ -1989,18 +1991,7 @@ class Spec(object):
 
     def InitNWKU_RoutesShowResponse(self):
         cmdParams = []
-        CountRoutes = FsciParameter("CountRoutes", 1)
-        cmdParams.append(CountRoutes)
-        RouteDestination = FsciParameter("RouteDestination", 16, CountRoutes)
-        cmdParams.append(RouteDestination)
-        RouteNextHop = FsciParameter("RouteNextHop", 16, CountRoutes)
-        cmdParams.append(RouteNextHop)
-        RoutePrefixLength = FsciParameter("RoutePrefixLength", 1, CountRoutes)
-        cmdParams.append(RoutePrefixLength)
-        RouteRouteMetric = FsciParameter("RouteRouteMetric", 1, CountRoutes)
-        cmdParams.append(RouteRouteMetric)
-        RouteInstanceId = FsciParameter("RouteInstanceId", 1, CountRoutes)
-        cmdParams.append(RouteInstanceId)
+        # not generated, cursor based approach in observer; see events.py
         return FsciFrameDescription(0xCF, 0x74, cmdParams)
 
     def InitMESHCOP_StartCommissionerConfirm(self):

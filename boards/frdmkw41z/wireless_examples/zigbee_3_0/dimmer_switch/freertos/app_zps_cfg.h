@@ -349,7 +349,7 @@ join. */
 #define ZPS_NWK_NIB_INIT_VS_MAX_OUTGOING_COST 4
 
 /*! Vendor specific - leave reajoin flags - flags: leave_allowed 1, leave_and_rejoin 2, leave_without rejoin 4 */
-#define ZPS_NWK_NIB_INIT_VS_LEAVE_REJOIN 1
+#define ZPS_NWK_NIB_INIT_VS_LEAVE_REJOIN 0
 
 /*! Network End Device Timeout */
 #define ZPS_NWK_NIB_INIT_ZED_TIMEOUT  2

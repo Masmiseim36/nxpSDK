@@ -249,10 +249,18 @@ void Boot_LoadImage (void)
                 else
                 {
                     /* Program the image block to Flash */
+                    uint32_t alignedLen = len;
+
+                    if (alignedLen & (FSL_FEATURE_FLASH_PFLASH_BLOCK_WRITE_UNIT_SIZE - 1))
+                    {
+                        alignedLen &= ~(FSL_FEATURE_FLASH_PFLASH_BLOCK_WRITE_UNIT_SIZE - 1);
+                        alignedLen += FSL_FEATURE_FLASH_PFLASH_BLOCK_WRITE_UNIT_SIZE;
+                    }
+
 #ifdef FLASH_PROGRAM_SECTION_SUPPORT
-                    if(FLASH_OK != FLASH_Boot_ProgramPreloadedSection(flashAddr, len))
+                    if(FLASH_OK != FLASH_Boot_ProgramPreloadedSection(flashAddr, alignedLen))
 #else
-                    if(FLASH_OK != FLASH_Boot_Program(flashAddr, (uint32_t)buffer, len))
+                    if(FLASH_OK != FLASH_Boot_Program(flashAddr, (uint32_t)buffer, alignedLen))
 #endif
                     {
                         gHandleBootError_d();

@@ -710,10 +710,11 @@ class SocketSendRequest(object):
 
 class SocketSendToRequest(object):
 
-    def __init__(self, SocketIndex=bytearray(1), Flags=SocketSendToRequestFlags(), Size=bytearray(2), RemotePort=bytearray(2), RemoteIpAddress=bytearray(16), Data=[]):
+    def __init__(self, SocketIndex=bytearray(1), Flags=SocketSendToRequestFlags(), SecuredMACData=bytearray(1), Size=bytearray(2), RemotePort=bytearray(2), RemoteIpAddress=bytearray(16), Data=[]):
         '''
         @param SocketIndex: The socket index.
         @param Flags: Flags
+        @param SecuredMACData: The socket usses MAC security for data sent.
         @param Size: The number of payload bytes
         @param RemotePort: The remote port.
         @param RemoteIpAddress: The remote IP address.
@@ -721,6 +722,7 @@ class SocketSendToRequest(object):
         '''
         self.SocketIndex = SocketIndex
         self.Flags = Flags
+        self.SecuredMACData = SecuredMACData
         self.Size = Size
         self.RemotePort = RemotePort
         self.RemoteIpAddress = RemoteIpAddress
@@ -2500,7 +2502,7 @@ class THR_MgmtDiagnosticGetRspIndication(object):
 
     class TLV(object):
 
-        def __init__(self, type=bytearray(1), length=bytearray(1), value=bytearray()):
+        def __init__(self, type=bytearray(1), length=bytearray(1), value=bytearray()):  # @ReservedAssignment
             self.type = type
             self.length = length
             self.value = value

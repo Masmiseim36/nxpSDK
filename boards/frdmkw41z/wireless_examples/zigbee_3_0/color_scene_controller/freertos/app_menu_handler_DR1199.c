@@ -121,13 +121,13 @@ PUBLIC void APP_vHandleFactoryNewKeyPress(teUserKeyCodes eKeyCode)
         sEvent.eType = BDB_E_ZCL_EVENT_TL_START;
         BDB_vZclEventHandler(&sEvent);
         break;
-    case BUTTON_SW1:
+    case BUTTON_SW5:
         break;
-    case BUTTON_SW2:
+    case BUTTON_SW4:
         break;
     case BUTTON_SW3:
         break;
-    case BUTTON_SW4:
+    case BUTTON_SW2:
     case KEY_1:
         // try classic discover and join
         sBDB.sAttrib.u32bdbPrimaryChannelSet = BDB_PRIMARY_CHANNEL_SET;
@@ -223,17 +223,17 @@ PUBLIC void APP_vHandleKeyPress(teUserKeyCodes eKeyCode)
 
             switch (eKeyCode)
             {
-            case BUTTON_SW1:
+            case BUTTON_SW5:
                 vAppOnOff(E_CLD_ONOFF_CMD_TOGGLE);
                 DBG_vPrintf(1, "Sent Toggle\n");
                 break;
-            case BUTTON_SW2:
+            case BUTTON_SW4:
                 BDB_eNsStartNwkSteering();
                 break;
             case BUTTON_SW3:
                 bAddrMode = !bAddrMode;
                 break;
-            case BUTTON_SW4:
+            case BUTTON_SW2:
                 sBDB.sAttrib.u16bdbCommissioningGroupID = sGroupTable.asGroupRecords[u8GroupId].u16GroupId;
                 BDB_eFbTriggerAsInitiator(COLORSCENECONTROLLER_REMOTE_ENDPOINT);
                 u8KeepAliveTime = FIND_AND_BIND_IME;
@@ -337,16 +337,16 @@ PUBLIC void APP_vHandleKeyPress(teUserKeyCodes eKeyCode)
             u8SelfFR =0;
             switch (eKeyCode)
             {
-            case BUTTON_SW1:
+            case BUTTON_SW5:
                 vAppOnOff(E_CLD_ONOFF_CMD_TOGGLE);
                 break;
-            case BUTTON_SW2:
+            case BUTTON_SW4:
                 BDB_eNsStartNwkSteering();
                 break;
             case BUTTON_SW3:
                 bAddrMode = !bAddrMode;
                 break;
-            case BUTTON_SW4:
+            case BUTTON_SW2:
                 sBDB.sAttrib.u16bdbCommissioningGroupID = sGroupTable.asGroupRecords[u8GroupId].u16GroupId;
                 BDB_eFbTriggerAsInitiator(COLORSCENECONTROLLER_REMOTE_ENDPOINT);
                 u8KeepAliveTime = FIND_AND_BIND_IME;
@@ -453,16 +453,16 @@ PUBLIC void APP_vHandleKeyPress(teUserKeyCodes eKeyCode)
         case E_SHIFT_2:
             switch(eKeyCode)
             {
-            case BUTTON_SW1:
+            case BUTTON_SW5:
                 vAppOnOff(E_CLD_ONOFF_CMD_TOGGLE);
                 break;
-            case BUTTON_SW2:
+            case BUTTON_SW4:
                 BDB_eNsStartNwkSteering();
                 break;
             case APP_E_BUTTONS_BUTTON_SW3:
                 bAddrMode = !bAddrMode;
                 break;
-            case BUTTON_SW4:
+            case BUTTON_SW2:
                 sBDB.sAttrib.u16bdbCommissioningGroupID = sGroupTable.asGroupRecords[u8GroupId].u16GroupId;
                 BDB_eFbTriggerAsInitiator(COLORSCENECONTROLLER_REMOTE_ENDPOINT);
                 u8KeepAliveTime = FIND_AND_BIND_IME;
@@ -528,7 +528,7 @@ PUBLIC void APP_vHandleKeyPress(teUserKeyCodes eKeyCode)
         case E_SHIFT_3:
             switch(eKeyCode)
             {
-            case BUTTON_SW1:
+            case BUTTON_SW5:
                 vAppOnOff(E_CLD_ONOFF_CMD_TOGGLE);
                 break;
             case APP_E_BUTTONS_BUTTON_SW2:
@@ -537,7 +537,7 @@ PUBLIC void APP_vHandleKeyPress(teUserKeyCodes eKeyCode)
             case BUTTON_SW3:
                 bAddrMode = !bAddrMode;
                 break;
-            case BUTTON_SW4:
+            case BUTTON_SW2:
                 sBDB.sAttrib.u16bdbCommissioningGroupID = sGroupTable.asGroupRecords[u8GroupId].u16GroupId;
                 BDB_eFbTriggerAsInitiator(COLORSCENECONTROLLER_REMOTE_ENDPOINT);
                 u8KeepAliveTime = FIND_AND_BIND_IME;

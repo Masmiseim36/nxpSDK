@@ -94,10 +94,10 @@
 /****************************************************************************/
 
 
-#ifndef DEBUG_APP
-    #define TRACE_APP   FALSE
-#else
+#ifdef DEBUG_APP
     #define TRACE_APP   TRUE
+#else
+    #define TRACE_APP   FALSE
 #endif
 
 #ifdef DEBUG_APP_EVENT
@@ -446,7 +446,7 @@ PUBLIC void APP_taskEndDevice(void)
 
                 switch(sAppEvent.uEvent.sButton.u8Button)
                 {
-                case APP_E_BUTTONS_BUTTON_SW1:
+                case APP_E_BUTTONS_BUTTON_SW5:
                     /* On.Off Toggle */
                     DBG_vPrintf(TRACE_APP_EVENT, "APP-EVT: Switch 1\r\n");
                     if ((eNodeState == E_RUNNING) && (bFailToJoin == FALSE))
@@ -454,7 +454,7 @@ PUBLIC void APP_taskEndDevice(void)
                         vAppSendOnOff();
                     }
                     break;
-                case APP_E_BUTTONS_BUTTON_SW2:
+                case APP_E_BUTTONS_BUTTON_SW4:
                     /* Permit Join */
                     if (TRUE == sBDB.sAttrib.bbdbNodeIsOnANetwork)
                     {
@@ -470,7 +470,7 @@ PUBLIC void APP_taskEndDevice(void)
                         DBG_vPrintf(TRACE_APP_EVENT, "APP-EVT: Switch 2 status %d\r\n",eStatus);
                     }
                     break;
-                case APP_E_BUTTONS_BUTTON_SW4:
+                case APP_E_BUTTONS_BUTTON_SW2:
                     /* Find & Bind */
                     DBG_vPrintf(TRACE_APP_EVENT, "APP-EVT: Switch 4\r\n");
                     if ((eNodeState == E_RUNNING) && (bFailToJoin == FALSE))

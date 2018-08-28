@@ -5,25 +5,25 @@
       <name>all</name>
       <member>
         <project>dspi_polling_b2b_transfer_master</project>
-        <configuration>Release</configuration>
+        <configuration>release</configuration>
       </member>
       <member>
         <project>dspi_polling_b2b_transfer_master</project>
-        <configuration>Debug</configuration>
-      </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>Release</name>
-      <member>
-        <project>dspi_polling_b2b_transfer_master</project>
-        <configuration>Release</configuration>
+        <configuration>debug</configuration>
       </member>
     </batchDefinition>
     <batchDefinition>
-      <name>Debug</name>
+      <name>release</name>
       <member>
         <project>dspi_polling_b2b_transfer_master</project>
-        <configuration>Debug</configuration>
+        <configuration>release</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>debug</name>
+      <member>
+        <project>dspi_polling_b2b_transfer_master</project>
+        <configuration>debug</configuration>
       </member>
     </batchDefinition>
   </batchBuild>

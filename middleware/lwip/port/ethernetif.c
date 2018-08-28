@@ -198,7 +198,7 @@ static void ethernet_callback(ENET_Type *base, enet_handle_t *handle, enet_event
 #endif
 
 #if LWIP_IPV4 && LWIP_IGMP
-static err_t ethernetif_igmp_mac_filter(struct netif *netif, const ip4_addr_t *group, enum netif_mac_filter_action action)
+static err_t ethernetif_igmp_mac_filter(struct netif *netif, const ip4_addr_t *group, u8_t action)
 {
     struct ethernetif *ethernetif = netif->state;
     uint8_t multicastMacAddr[6];

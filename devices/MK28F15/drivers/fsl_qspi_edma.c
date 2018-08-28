@@ -3,10 +3,10 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
+ *  that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -38,6 +38,12 @@
  * Definitions
  ******************************************************************************/
 
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.qspi_edma"
+#endif
+
+
 /*<! Structure definition for qspi_edma_private_handle_t. The structure is private. */
 typedef struct _qspi_edma_private_handle
 {
@@ -53,7 +59,7 @@ enum _qspi_edma_tansfer_states
 };
 
 /*******************************************************************************
- * Definitions
+ * Variables
  ******************************************************************************/
 
 /*<! Private handle only used for internally. */
@@ -84,14 +90,6 @@ static void QSPI_SendEDMACallback(edma_handle_t *handle, void *param, bool trans
  * @param param Callback function parameter.
  */
 static void QSPI_ReceiveEDMACallback(edma_handle_t *handle, void *param, bool transferDone, uint32_t tcds);
-
-/*!
- * @brief Get the QSPI instance from peripheral base address.
- *
- * @param base QSPI peripheral base address.
- * @return QSPI instance.
- */
-extern uint32_t QSPI_GetInstance(QuadSPI_Type *base);
 
 /*******************************************************************************
  * Code

@@ -1,7 +1,7 @@
 /*
  * The Clear BSD License
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016 , 2018 NXP
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -451,14 +451,16 @@ usb_status_t USB_DeviceSetSpeed(uint8_t speed)
         {
             if (USB_SPEED_HIGH == speed)
             {
-                if (USB_PHDC_INTERRUPT_ENDPOINT_IN ==
-                    (pDescStart->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK))
+                if (((pDescStart->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) ==
+                     USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_IN) &&
+                    (USB_PHDC_INTERRUPT_ENDPOINT_IN ==
+                    (pDescStart->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)))
                 {
                     pDescStart->endpoint.bInterval = HS_USB_PHDC_INTERRUPT_ENDPOINT_IN_INTERVAL;
                     USB_SHORT_TO_LITTLE_ENDIAN_ADDRESS(HS_USB_PHDC_INTERRUPT_ENDPOINT_IN_PACKET_SIZE,
                                                        pDescStart->endpoint.wMaxPacketSize);
                 }
-                else if (((pDescStart->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_IN) ==
+                else if (((pDescStart->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) ==
                           USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_IN) &&
                          (USB_PHDC_BULK_ENDPOINT_IN ==
                           (pDescStart->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)))
@@ -466,7 +468,7 @@ usb_status_t USB_DeviceSetSpeed(uint8_t speed)
                     USB_SHORT_TO_LITTLE_ENDIAN_ADDRESS(HS_USB_PHDC_BULK_ENDPOINT_IN_PACKET_SIZE,
                                                        pDescStart->endpoint.wMaxPacketSize);
                 }
-                else if (((pDescStart->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_OUT) ==
+                else if (((pDescStart->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) ==
                           USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_OUT) &&
                          (USB_PHDC_BULK_ENDPOINT_OUT ==
                           (pDescStart->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)))
@@ -480,14 +482,16 @@ usb_status_t USB_DeviceSetSpeed(uint8_t speed)
             }
             else
             {
-                if (USB_PHDC_INTERRUPT_ENDPOINT_IN ==
-                    (pDescStart->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK))
+                if (((pDescStart->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) ==
+                     USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_IN) &&
+                    (USB_PHDC_INTERRUPT_ENDPOINT_IN ==
+                    (pDescStart->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)))
                 {
                     pDescStart->endpoint.bInterval = FS_USB_PHDC_INTERRUPT_ENDPOINT_IN_INTERVAL;
                     USB_SHORT_TO_LITTLE_ENDIAN_ADDRESS(FS_USB_PHDC_INTERRUPT_ENDPOINT_IN_PACKET_SIZE,
                                                        pDescStart->endpoint.wMaxPacketSize);
                 }
-                else if (((pDescStart->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_IN) ==
+                else if (((pDescStart->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) ==
                           USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_IN) &&
                          (USB_PHDC_BULK_ENDPOINT_IN ==
                           (pDescStart->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)))
@@ -495,7 +499,7 @@ usb_status_t USB_DeviceSetSpeed(uint8_t speed)
                     USB_SHORT_TO_LITTLE_ENDIAN_ADDRESS(FS_USB_PHDC_BULK_ENDPOINT_IN_PACKET_SIZE,
                                                        pDescStart->endpoint.wMaxPacketSize);
                 }
-                else if (((pDescStart->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_OUT) ==
+                else if (((pDescStart->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) ==
                           USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_OUT) &&
                          (USB_PHDC_BULK_ENDPOINT_OUT ==
                           (pDescStart->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)))

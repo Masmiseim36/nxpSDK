@@ -3,10 +3,10 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
+ *  that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -48,6 +48,12 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+
+/*! @name Driver version */
+/*@{*/
+/*! @brief UART freertos driver version 2.1.5. */
+#define FSL_UART_FREERTOS_DRIVER_VERSION (MAKE_VERSION(2, 1, 5))
+/*@}*/
 
 /*! @brief UART configuration structure */
 typedef struct _uart_rtos_config

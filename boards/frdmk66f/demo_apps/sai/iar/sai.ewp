@@ -2,7 +2,7 @@
 <project>
   <fileVersion>2</fileVersion>
   <configuration>
-    <name>Debug</name>
+    <name>debug</name>
     <toolchain>
       <name>ARM</name>
     </toolchain>
@@ -185,6 +185,8 @@
           <state>FRDM_K66F</state>
           <state>FREEDOM</state>
           <state>PRINTF_FLOAT_ENABLE=1</state>
+          <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
+          <state>BOARD_USE_CODEC=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -245,7 +247,7 @@
         <option>
           <name>CCAllowList</name>
           <version>1</version>
-          <state>00000000</state>
+          <state>00100000</state>
         </option>
         <option>
           <name>CCDebugInfo</name>
@@ -261,7 +263,7 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IExtraOptions</name>
@@ -322,9 +324,8 @@
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/src</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/inc</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/port</state>
-          <state>$PROJ_DIR$/../../../../../middleware/fatfs/src/fsl_sd_disk</state>
-          <state>$PROJ_DIR$/../../../../../middleware/fatfs/src</state>
-          <state>$PROJ_DIR$/../../../../../middleware/fatfs/src/option</state>
+          <state>$PROJ_DIR$/../../../../../middleware/fatfs/source/fsl_sd_disk</state>
+          <state>$PROJ_DIR$/../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../devices/MK66F18</state>
           <state>$PROJ_DIR$/../../../../../devices/MK66F18/utilities/io</state>
           <state>$PROJ_DIR$/../../../../../devices/MK66F18/utilities/str</state>
@@ -396,7 +397,7 @@
         </option>
         <option>
           <name>IccCppDialect</name>
-          <state>2</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccExceptions</name>
@@ -412,7 +413,7 @@
         </option>
         <option>
           <name>IccCppInlineSemantics</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccCmsis</name>
@@ -979,7 +980,7 @@
     </settings>
   </configuration>
   <configuration>
-    <name>Release</name>
+    <name>release</name>
     <toolchain>
       <name>ARM</name>
     </toolchain>
@@ -1162,6 +1163,8 @@
           <state>FRDM_K66F</state>
           <state>FREEDOM</state>
           <state>PRINTF_FLOAT_ENABLE=1</state>
+          <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
+          <state>BOARD_USE_CODEC=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1238,7 +1241,7 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IExtraOptions</name>
@@ -1299,9 +1302,8 @@
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/src</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/inc</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/port</state>
-          <state>$PROJ_DIR$/../../../../../middleware/fatfs/src/fsl_sd_disk</state>
-          <state>$PROJ_DIR$/../../../../../middleware/fatfs/src</state>
-          <state>$PROJ_DIR$/../../../../../middleware/fatfs/src/option</state>
+          <state>$PROJ_DIR$/../../../../../middleware/fatfs/source/fsl_sd_disk</state>
+          <state>$PROJ_DIR$/../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../devices/MK66F18</state>
           <state>$PROJ_DIR$/../../../../../devices/MK66F18/utilities/io</state>
           <state>$PROJ_DIR$/../../../../../devices/MK66F18/utilities/str</state>
@@ -1373,7 +1375,7 @@
         </option>
         <option>
           <name>IccCppDialect</name>
-          <state>2</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccExceptions</name>
@@ -1389,7 +1391,7 @@
         </option>
         <option>
           <name>IccCppInlineSemantics</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccCmsis</name>
@@ -1472,6 +1474,7 @@
         </option>
         <option>
           <name>ADefines</name>
+          <state>NDEBUG</state>
           <state>__STARTUP_INITIALIZE_NONCACHEDATA</state>
         </option>
         <option>
@@ -1960,7 +1963,19 @@
       <name>$PROJ_DIR$/../ffconf.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../recordtoSdcard.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../sai.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../sai.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../recordPlayback.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../playbackSineWave.c</name>
     </file>
   </group>
   <group>
@@ -2010,18 +2025,21 @@
     <file>
       <name>$PROJ_DIR$/../pin_mux.h</name>
     </file>
-    <file>
-      <name>$PROJ_DIR$/../board.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../board.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../clock_config.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../clock_config.h</name>
-    </file>
+    <group>
+      <name>src</name>
+      <file>
+        <name>$PROJ_DIR$/../board.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../board.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../clock_config.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../clock_config.h</name>
+      </file>
+    </group>
   </group>
   <group>
     <name>doc</name>
@@ -2056,7 +2074,37 @@
       <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_sdhc.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_flash.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_ftfx_adapter.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_ftfx_utilities.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_ftfx_features.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_ftfx_controller.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_ftfx_controller.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_ftfx_flash.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_ftfx_flash.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_ftfx_cache.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_ftfx_cache.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_ftfx_flexnvm.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_ftfx_flexnvm.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_flash.h</name>
@@ -2101,16 +2149,16 @@
       <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_sai_edma.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_edma.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_edma.c</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_dmamux.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_dmamux.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_edma.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_edma.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK66F18/drivers/fsl_sysmpu.h</name>
@@ -2127,34 +2175,46 @@
     <file>
       <name>$PROJ_DIR$/../fsl_dialog7212.c</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$/../fsl_codec_common.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../fsl_codec_common.c</name>
+    </file>
   </group>
   <group>
     <name>fatfs</name>
     <group>
       <name>fatfs_include</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/fatfs/src/fsl_sd_disk/fsl_sd_disk.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/fatfs/src/integer.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/fatfs/source/diskio.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/fatfs/src/ff.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/fatfs/source/ff.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/fatfs/src/diskio.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/fatfs/source/integer.h</name>
       </file>
     </group>
     <group>
       <name>fatfs_source</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/fatfs/src/fsl_sd_disk/fsl_sd_disk.c</name>
+        <name>$PROJ_DIR$/../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/fatfs/src/ff.c</name>
+        <name>$PROJ_DIR$/../../../../../middleware/fatfs/source/diskio.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/fatfs/src/diskio.c</name>
+        <name>$PROJ_DIR$/../../../../../middleware/fatfs/source/ff.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/fatfs/source/ffsystem.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/fatfs/source/ffunicode.c</name>
       </file>
     </group>
   </group>

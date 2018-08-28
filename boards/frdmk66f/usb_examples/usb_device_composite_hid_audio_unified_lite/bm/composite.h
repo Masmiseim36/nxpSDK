@@ -73,7 +73,7 @@ typedef struct _usb_device_composite_struct
 /*!
  * @brief Audio class specific callback function.
  *
- * This function handles the Audio class specific requests.
+ * This function handles the Audio class specific requests which recipient is interface.
  *
  * @param handle          The Audio class handle.
  * @param setup           The setup buffer address of the request.
@@ -82,10 +82,26 @@ typedef struct _usb_device_composite_struct
  *
  * @return A USB error code or kStatus_USB_Success.
  */
-extern usb_status_t USB_DeviceAudioUnifiedClassRequest(usb_device_handle handle,
-                                                       usb_setup_struct_t *setup,
-                                                       uint32_t *length,
-                                                       uint8_t **buffer);
+extern usb_status_t USB_DeviceAudioUnifiedClassRequestIntfRecipient(usb_device_handle handle,
+                                                                    usb_setup_struct_t *setup,
+                                                                    uint32_t *length,
+                                                                    uint8_t **buffer);
+/*!
+ * @brief Audio class specific callback function.
+ *
+ * This function handles the Audio class specific requests which recipient is endpoint.
+ *
+ * @param handle          The Audio class handle.
+ * @param setup           The setup buffer address of the request.
+ * @param length          The active data length.
+ * @param buffer          The active data buffer need to be sent or received.
+ *
+ * @return A USB error code or kStatus_USB_Success.
+ */
+extern usb_status_t USB_DeviceAudioUnifiedClassRequestEndpRecipient(usb_device_handle handle,
+                                                                    usb_setup_struct_t *setup,
+                                                                    uint32_t *length,
+                                                                    uint8_t **buffer);
 /*!
  * @brief USB configure endpoint function.
  *

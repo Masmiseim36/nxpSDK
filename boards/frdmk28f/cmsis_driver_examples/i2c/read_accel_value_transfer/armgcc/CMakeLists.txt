@@ -54,6 +54,8 @@ SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -mfloat-abi=hard")
 
 SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -mfpu=fpv4-sp-d16")
 
+SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -DNDEBUG")
+
 SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -D__STARTUP_CLEAR_BSS")
 
 SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -D__STARTUP_INITIALIZE_NONCACHEDATA")
@@ -197,6 +199,8 @@ SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -mfpu=fpv4-sp-d16")
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -MMD")
 
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -MP")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DNDEBUG")
 
 SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DCPU_MK28FN2M0VMI15")
 
@@ -366,7 +370,17 @@ add_executable(cmsis_i2c_read_accel_value_transfer.elf
 "${ProjDirPath}/../../../../../../devices/MK28F15/drivers/fsl_i2c_edma.h"
 "${ProjDirPath}/../../../../../../devices/MK28F15/cmsis_drivers/fsl_i2c_cmsis.h"
 "${ProjDirPath}/../../../../../../devices/MK28F15/cmsis_drivers/fsl_i2c_cmsis.c"
-"${ProjDirPath}/../../../../../../devices/MK28F15/drivers/fsl_flash.c"
+"${ProjDirPath}/../../../../../../devices/MK28F15/drivers/fsl_ftfx_adapter.h"
+"${ProjDirPath}/../../../../../../devices/MK28F15/drivers/fsl_ftfx_utilities.h"
+"${ProjDirPath}/../../../../../../devices/MK28F15/drivers/fsl_ftfx_features.h"
+"${ProjDirPath}/../../../../../../devices/MK28F15/drivers/fsl_ftfx_controller.c"
+"${ProjDirPath}/../../../../../../devices/MK28F15/drivers/fsl_ftfx_controller.h"
+"${ProjDirPath}/../../../../../../devices/MK28F15/drivers/fsl_ftfx_flash.c"
+"${ProjDirPath}/../../../../../../devices/MK28F15/drivers/fsl_ftfx_flash.h"
+"${ProjDirPath}/../../../../../../devices/MK28F15/drivers/fsl_ftfx_cache.c"
+"${ProjDirPath}/../../../../../../devices/MK28F15/drivers/fsl_ftfx_cache.h"
+"${ProjDirPath}/../../../../../../devices/MK28F15/drivers/fsl_ftfx_flexnvm.c"
+"${ProjDirPath}/../../../../../../devices/MK28F15/drivers/fsl_ftfx_flexnvm.h"
 "${ProjDirPath}/../../../../../../devices/MK28F15/drivers/fsl_flash.h"
 "${ProjDirPath}/../../../../../../devices/MK28F15/system_MK28F15.c"
 "${ProjDirPath}/../../../../../../devices/MK28F15/system_MK28F15.h"

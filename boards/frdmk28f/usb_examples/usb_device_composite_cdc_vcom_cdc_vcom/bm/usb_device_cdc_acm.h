@@ -154,6 +154,9 @@ typedef struct _usb_device_cdc_acm_request_param_struct
 typedef struct _usb_device_cdc_acm_pipe
 {
     usb_osa_mutex_handle mutex; /*!< The mutex of the pipe. */
+    uint8_t *pipeDataBuffer;      /*!< pipe data buffer backup when stall */
+    uint32_t pipeDataLen;         /*!< pipe data length backup when stall  */
+    uint8_t pipeStall;            /*!< pipe is stall  */
     uint8_t ep;                 /*!< The endpoint number of the pipe. */
     uint8_t isBusy;             /*!< 1: The pipe is transferring packet, 0: The pipe is idle. */
 } usb_device_cdc_acm_pipe_t;

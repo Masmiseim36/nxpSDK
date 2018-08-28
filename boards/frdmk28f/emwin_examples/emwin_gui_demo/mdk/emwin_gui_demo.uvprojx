@@ -4,7 +4,7 @@
   <Header>### uVision Project, (C) Keil Software</Header>
   <Targets>
     <Target>
-      <TargetName>emwin_gui_demo Debug</TargetName>
+      <TargetName>emwin_gui_demo debug</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <TargetOption>
@@ -448,6 +448,11 @@
               <FileType>5</FileType>
               <FilePath>../emwin_support.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>board-src</GroupName>
+          <Files>
             <File>
               <FileName>board.c</FileName>
               <FileType>1</FileType>
@@ -549,16 +554,6 @@
               <FilePath>../../../../../devices/MK28F15/drivers/fsl_edma.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_dmamux.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK28F15/drivers/fsl_dmamux.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_dmamux.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK28F15/drivers/fsl_dmamux.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_qspi.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MK28F15/drivers/fsl_qspi.h</FilePath>
@@ -567,6 +562,16 @@
               <FileName>fsl_qspi.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MK28F15/drivers/fsl_qspi.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dmamux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK28F15/drivers/fsl_dmamux.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dmamux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK28F15/drivers/fsl_dmamux.c</FilePath>
             </File>
             <File>
               <FileName>fsl_gpio.h</FileName>
@@ -599,9 +604,59 @@
               <FilePath>../../../../../devices/MK28F15/drivers/fsl_i2c.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_flash.c</FileName>
+              <FileName>fsl_ftfx_adapter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK28F15/drivers/fsl_ftfx_adapter.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_utilities.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK28F15/drivers/fsl_ftfx_utilities.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_features.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK28F15/drivers/fsl_ftfx_features.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_controller.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK28F15/drivers/fsl_flash.c</FilePath>
+              <FilePath>../../../../../devices/MK28F15/drivers/fsl_ftfx_controller.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_controller.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK28F15/drivers/fsl_ftfx_controller.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK28F15/drivers/fsl_ftfx_flash.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flash.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK28F15/drivers/fsl_ftfx_flash.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_cache.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK28F15/drivers/fsl_ftfx_cache.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_cache.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK28F15/drivers/fsl_ftfx_cache.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flexnvm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK28F15/drivers/fsl_ftfx_flexnvm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flexnvm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK28F15/drivers/fsl_ftfx_flexnvm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_flash.h</FileName>
@@ -1338,7 +1393,7 @@
       </Groups>
     </Target>
     <Target>
-      <TargetName>emwin_gui_demo Release</TargetName>
+      <TargetName>emwin_gui_demo release</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <TargetOption>
@@ -1722,7 +1777,7 @@
             <useXO>0</useXO>
             <VariousControls>
               <MiscControls/>
-              <Define>__STARTUP_INITIALIZE_NONCACHEDATA</Define>
+              <Define>NDEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
               <Undefine/>
               <IncludePath/>
             </VariousControls>
@@ -1782,6 +1837,11 @@
               <FileType>5</FileType>
               <FilePath>../emwin_support.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>board-src</GroupName>
+          <Files>
             <File>
               <FileName>board.c</FileName>
               <FileType>1</FileType>
@@ -1883,16 +1943,6 @@
               <FilePath>../../../../../devices/MK28F15/drivers/fsl_edma.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_dmamux.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK28F15/drivers/fsl_dmamux.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_dmamux.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK28F15/drivers/fsl_dmamux.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_qspi.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MK28F15/drivers/fsl_qspi.h</FilePath>
@@ -1901,6 +1951,16 @@
               <FileName>fsl_qspi.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MK28F15/drivers/fsl_qspi.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dmamux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK28F15/drivers/fsl_dmamux.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dmamux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK28F15/drivers/fsl_dmamux.c</FilePath>
             </File>
             <File>
               <FileName>fsl_gpio.h</FileName>
@@ -1933,9 +1993,59 @@
               <FilePath>../../../../../devices/MK28F15/drivers/fsl_i2c.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_flash.c</FileName>
+              <FileName>fsl_ftfx_adapter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK28F15/drivers/fsl_ftfx_adapter.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_utilities.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK28F15/drivers/fsl_ftfx_utilities.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_features.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK28F15/drivers/fsl_ftfx_features.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_controller.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK28F15/drivers/fsl_flash.c</FilePath>
+              <FilePath>../../../../../devices/MK28F15/drivers/fsl_ftfx_controller.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_controller.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK28F15/drivers/fsl_ftfx_controller.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK28F15/drivers/fsl_ftfx_flash.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flash.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK28F15/drivers/fsl_ftfx_flash.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_cache.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK28F15/drivers/fsl_ftfx_cache.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_cache.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK28F15/drivers/fsl_ftfx_cache.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flexnvm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK28F15/drivers/fsl_ftfx_flexnvm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flexnvm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK28F15/drivers/fsl_ftfx_flexnvm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_flash.h</FileName>

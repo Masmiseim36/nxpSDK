@@ -39,18 +39,10 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define ACCEL_I2C_CLK_SRC I2C0_CLK_SRC
 
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-#if defined(FSL_FEATURE_SOC_LPI2C_COUNT) && (FSL_FEATURE_SOC_LPI2C_COUNT)
-extern void FXOS_master_callback(LPI2C_Type *base, lpi2c_master_handle_t *handle, status_t status, void *userData);
-lpi2c_master_handle_t g_MasterHandle;
-#else
-i2c_master_handle_t g_MasterHandle;
-#endif
-
 fxos_handle_t g_fxosHandle;
 uint8_t g_sensor_address[] = {0x1CU, 0x1EU, 0x1DU, 0x1FU};
 uint8_t g_sensorRange = 0;
@@ -59,47 +51,6 @@ uint8_t g_dataScale = 0;
 /*******************************************************************************
  * Code
 ******************************************************************************/
-
-void i2cInit(void)
-{
-#if defined(FSL_FEATURE_SOC_LPI2C_COUNT) && (FSL_FEATURE_SOC_LPI2C_COUNT)
-    lpi2c_master_config_t i2cConfig;
-#else
-    i2c_master_config_t i2cConfig;
-#endif
-
-    uint32_t i2cSourceClock;
-
-#if defined(FSL_FEATURE_SOC_LPI2C_COUNT) && (FSL_FEATURE_SOC_LPI2C_COUNT)
-    i2cSourceClock = LPI2C_CLOCK_FREQUENCY;
-    /*
-     * i2cConfig.debugEnable = false;
-     * i2cConfig.ignoreAck = false;
-     * i2cConfig.pinConfig = kLPI2C_2PinOpenDrain;
-     * i2cConfig.baudRate_Bps = 100000U;
-     * i2cConfig.busIdleTimeout_ns = 0;
-     * i2cConfig.pinLowTimeout_ns = 0;
-     * i2cConfig.sdaGlitchFilterWidth_ns = 0;
-     * i2cConfig.sclGlitchFilterWidth_ns = 0;
-     */
-    LPI2C_MasterGetDefaultConfig(&i2cConfig);
-    LPI2C_MasterInit(BOARD_ACCEL_I2C_BASEADDR, &i2cConfig, i2cSourceClock);
-    LPI2C_MasterTransferCreateHandle(BOARD_ACCEL_I2C_BASEADDR, &g_MasterHandle, FXOS_master_callback, NULL);
-#else
-    i2cSourceClock = CLOCK_GetFreq(ACCEL_I2C_CLK_SRC);
-    /*
-     * i2cConfig.baudRate_Bps = 100000U;
-     * i2cConfig.enableHighDrive = false;
-     * i2cConfig.enableStopHold = false;
-     * i2cConfig.glitchFilterWidth = 0U;
-     * i2cConfig.enableMaster = true;
-     */
-    I2C_MasterGetDefaultConfig(&i2cConfig);
-    I2C_MasterInit(BOARD_ACCEL_I2C_BASEADDR, &i2cConfig, i2cSourceClock);
-    I2C_MasterTransferCreateHandle(BOARD_ACCEL_I2C_BASEADDR, &g_MasterHandle, NULL, NULL);
-#endif
-}
-
 void Sensor_ReadData(int16_t *Ax, int16_t *Ay, int16_t *Az, int16_t *Mx, int16_t *My, int16_t *Mz)
 {
     fxos_data_t fxos_data;
@@ -122,35 +73,29 @@ void Sensor_ReadData(int16_t *Ax, int16_t *Ay, int16_t *Az, int16_t *Mx, int16_t
 
 int32_t init_mag_accel(void)
 {
+    fxos_config_t config = {0};
+    status_t result = kStatus_Fail;
     uint16_t i = 0;
-    uint8_t regResult = 0;
+    uint16_t array_addr_size = 0;
 
-    g_fxosHandle.base = BOARD_ACCEL_I2C_BASEADDR;
-    g_fxosHandle.i2cHandle = &g_MasterHandle;
+    /* Configure the I2C function */
+    config.I2C_SendFunc = BOARD_Accel_I2C_Send;
+    config.I2C_ReceiveFunc = BOARD_Accel_I2C_Receive;
 
-    /* Find sensor on board */
-    for (i = 0; i < 4; i++)
+    /* Initialize sensor devices */
+    array_addr_size = sizeof(g_sensor_address) / sizeof(g_sensor_address[0]);
+    for (i = 0; i < array_addr_size; i++)
     {
-        g_fxosHandle.xfer.slaveAddress = g_sensor_address[i];
-        if (FXOS_ReadReg(&g_fxosHandle, WHO_AM_I_REG, &regResult, 1) == kStatus_Success)
+        config.slaveAddress = g_sensor_address[i];
+        /* Initialize accelerometer sensor */
+        result = FXOS_Init(&g_fxosHandle, &config);
+        if (result == kStatus_Success)
         {
-            if (regResult == kFXOS_WHO_AM_I_Device_ID)
-            {
-                break;
-            }
-        }
-        else /* Not found any sensor on board */
-        {
-            if (i == 3)
-            {
-                // Failed to initialize the sensor device!"
-                return -1;
-            }
+            break;
         }
     }
 
-    /* Init sensor */
-    if (FXOS_Init(&g_fxosHandle) != kStatus_Success)
+    if (result != kStatus_Success)
     {
         return -1;
     }

@@ -3,10 +3,10 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
+ *  that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -49,6 +49,12 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+
+/*! @name Driver version */
+/*@{*/
+/*! @brief I2C freertos driver version 2.0.5. */
+#define FSL_I2C_FREERTOS_DRIVER_VERSION (MAKE_VERSION(2, 0, 5))
+/*@}*/
 
 /*!
  * @cond RTOS_PRIVATE

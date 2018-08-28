@@ -22,19 +22,21 @@
     <definition extID="platform.utilities.debug_console.MK66F18"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
-    <definition extID="kds"/>
     <definition extID="mcuxpresso"/>
     <definition extID="armgcc"/>
   </externalDefinitions>
-  <example id="frdmk66f_dev_phdc_weighscale_bm" name="dev_phdc_weighscale_bm" category="usb_examples" dependency="middleware.usb.device_controller_khci.MK66F18 middleware.usb.device_controller_ehci.MK66F18 middleware.usb.phy.MK66F18 middleware.baremetal.MK66F18 platform.drivers.port.MK66F18 platform.drivers.common.MK66F18 platform.drivers.clock.MK66F18 platform.drivers.sim.MK66F18 platform.utilities.debug_console.MK66F18 platform.drivers.smc.MK66F18 platform.drivers.flash.MK66F18 platform.devices.MK66F18_CMSIS.MK66F18 platform.devices.MK66F18_startup.MK66F18 platform.drivers.lpuart.MK66F18 platform.drivers.uart.MK66F18 platform.drivers.gpio.MK66F18 platform.drivers.sysmpu.MK66F18 platform.utilities.assert.MK66F18" toolchain="iar mdk armgcc kds mcuxpresso">
+  <example id="frdmk66f_dev_phdc_weighscale_bm" name="dev_phdc_weighscale_bm" category="usb_examples" dependency="middleware.usb.device_controller_khci.MK66F18 middleware.usb.device_controller_ehci.MK66F18 middleware.usb.phy.MK66F18 middleware.baremetal.MK66F18 platform.drivers.port.MK66F18 platform.drivers.common.MK66F18 platform.drivers.clock.MK66F18 platform.drivers.sim.MK66F18 platform.utilities.debug_console.MK66F18 platform.drivers.smc.MK66F18 platform.drivers.flash.MK66F18 platform.devices.MK66F18_CMSIS.MK66F18 platform.devices.MK66F18_startup.MK66F18 platform.drivers.lpuart.MK66F18 platform.drivers.uart.MK66F18 platform.drivers.gpio.MK66F18 platform.drivers.sysmpu.MK66F18 platform.utilities.assert.MK66F18" toolchain="mdk iar armgcc mcuxpresso">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
     <toolchainSettings>
-      <!-- Curently, mcux just supports one common settings set for both debug and release -->
       <toolchainSetting id_refs="com.nxp.mcuxpresso">
-        <!-- asm compiler -->
-        <!-- gcc compiler -->
+        <option id="com.crt.advproject.gas.fpu" type="enum">
+          <value>com.crt.advproject.gas.fpu.fpv4.hard</value>
+        </option>
+        <option id="com.crt.advproject.gcc.fpu" type="enum">
+          <value>com.crt.advproject.gcc.fpu.fpv4.hard</value>
+        </option>
         <option id="com.crt.advproject.c.misc.dialect" type="enum">
           <value>com.crt.advproject.misc.dialect.gnu99</value>
         </option>
@@ -55,29 +57,28 @@
         <option id="gnu.c.compiler.option.misc.other" type="string">
           <value>-c  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin</value>
         </option>
-        <!-- gcc linker -->
+        <option id="com.crt.advproject.link.fpu" type="enum">
+          <value>com.crt.advproject.link.fpu.fpv4.hard</value>
+        </option>
         <option id="gnu.c.link.option.nostdlibs" type="boolean">
           <value>true</value>
-        </option>
-        <option id="gnu.c.link.option.other" type="stringList">
-          <value>--gc-sections</value>
         </option>
         <option id="com.crt.advproject.link.memory.heapAndStack" type="string">
           <value>&amp;Heap:Default;Default;0x2000&amp;Stack:Default;Default;0x2000</value>
         </option>
       </toolchainSetting>
     </toolchainSettings>
-    <source path="boards/frdmk66f/usb_examples/usb_device_phdc_weighscale/bm" target_path="board" type="c_include">
+    <source path="boards/frdmk66f/usb_examples/usb_device_phdc_weighscale/bm" target_path="board/src" type="c_include">
       <files mask="board.h"/>
       <files mask="clock_config.h"/>
       <files mask="pin_mux.h"/>
     </source>
-    <source path="boards/frdmk66f/usb_examples/usb_device_phdc_weighscale/bm" target_path="board" type="src">
+    <source path="boards/frdmk66f/usb_examples/usb_device_phdc_weighscale/bm" target_path="board/src" type="src">
       <files mask="board.c"/>
       <files mask="clock_config.c"/>
       <files mask="pin_mux.c"/>
     </source>
-    <source path="boards/frdmk66f/usb_examples/usb_device_phdc_weighscale/bm" target_path="doc" type="doc" toolchain="iar mdk kds mcuxpresso">
+    <source path="boards/frdmk66f/usb_examples/usb_device_phdc_weighscale/bm" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso">
       <files mask="readme.txt"/>
     </source>
     <source path="boards/frdmk66f/usb_examples/usb_device_phdc_weighscale/bm" target_path="sources/ieee11073_agent" type="c_include">

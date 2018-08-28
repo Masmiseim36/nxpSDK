@@ -50,7 +50,7 @@
 /*! @name Driver version */
 /*@{*/
 /*! @brief Defines the driver version. */
-#define FSL_ENET_DRIVER_VERSION (MAKE_VERSION(2, 2, 2)) /*!< Version 2.2.2. */
+#define FSL_ENET_DRIVER_VERSION (MAKE_VERSION(2, 2, 3)) /*!< Version 2.2.3. */
 /*@}*/
 
 /*! @name ENET DESCRIPTOR QUEUE */
@@ -706,6 +706,10 @@ void ENET_GetDefaultConfig(enet_config_t *config);
  * @param bufferConfig  ENET buffer configuration structure pointer.
  *        The buffer configuration should be prepared for ENET Initialization.
  *        It is the start address of "ringNum" enet_buffer_config structures.
+ *        To support added multi-ring features in some soc and compatible with the previous
+ *        enet driver version. For single ring supported, this bufferConfig is a buffer 
+ *        configure structure pointer, for multi-ring supported and used case, this bufferConfig 
+ *        pointer should be a buffer configure structure array pointer. 
  * @param macAddr  ENET mac address of Ethernet device. This MAC address should be
  *        provided.
  * @param srcClock_Hz The internal module clock source for MII clock.

@@ -1,7 +1,7 @@
 /*
  * The Clear BSD License
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 - 2017 NXP
+ * Copyright 2016 - 2018 NXP
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -65,19 +65,19 @@ uint8_t g_UsbDeviceHidGenericReportDescriptor[] = {
     0x09U, 0x83U, /* Usage (Vendor defined) */
 
     0x09U, 0x84U, /* Usage (Vendor defined) */
-    0x15U, 0x80U, /* logical Minimum (-128) */
-    0x25U, 0x7FU, /* logical Maximum (127) */
+    0x15U, 0x80U, /* Logical Minimum (-128) */
+    0x25U, 0x7FU, /* Logical Maximum (127) */
     0x75U, 0x08U, /* Report Size (8U) */
     0x95U, 0x08U, /* Report Count (8U) */
     0x81U, 0x02U, /* Input(Data, Variable, Absolute) */
 
     0x09U, 0x84U, /* Usage (Vendor defined) */
-    0x15U, 0x80U, /* logical Minimum (-128) */
-    0x25U, 0x7FU, /* logical Maximum (127) */
+    0x15U, 0x80U, /* Logical Minimum (-128) */
+    0x25U, 0x7FU, /* Logical Maximum (127) */
     0x75U, 0x08U, /* Report Size (8U) */
     0x95U, 0x08U, /* Report Count (8U) */
     0x91U, 0x02U, /* Input(Data, Variable, Absolute) */
-    0xC0U,        /* end collection */
+    0xC0U,        /* End collection */
 };
 
 USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
@@ -412,7 +412,7 @@ usb_status_t USB_DeviceSetSpeed(uint8_t speed)
         {
             if (USB_SPEED_HIGH == speed)
             {
-                if (((descriptorHead->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_IN) ==
+                if (((descriptorHead->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) ==
                      USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_IN) &&
                     (USB_HID_GENERIC_ENDPOINT_IN ==
                      (descriptorHead->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)))
@@ -421,7 +421,7 @@ usb_status_t USB_DeviceSetSpeed(uint8_t speed)
                     USB_SHORT_TO_LITTLE_ENDIAN_ADDRESS(HS_HID_GENERIC_INTERRUPT_IN_PACKET_SIZE,
                                                        descriptorHead->endpoint.wMaxPacketSize);
                 }
-                else if (((descriptorHead->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_OUT) ==
+                else if (((descriptorHead->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) ==
                           USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_OUT) &&
                          (USB_HID_GENERIC_ENDPOINT_OUT ==
                           (descriptorHead->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)))
@@ -436,7 +436,7 @@ usb_status_t USB_DeviceSetSpeed(uint8_t speed)
             }
             else
             {
-                if (((descriptorHead->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_IN) ==
+                if (((descriptorHead->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) ==
                      USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_IN) &&
                     (USB_HID_GENERIC_ENDPOINT_IN ==
                      (descriptorHead->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)))
@@ -445,7 +445,7 @@ usb_status_t USB_DeviceSetSpeed(uint8_t speed)
                     USB_SHORT_TO_LITTLE_ENDIAN_ADDRESS(FS_HID_GENERIC_INTERRUPT_IN_PACKET_SIZE,
                                                        descriptorHead->endpoint.wMaxPacketSize);
                 }
-                else if (((descriptorHead->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_OUT) ==
+                else if (((descriptorHead->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) ==
                           USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_OUT) &&
                          (USB_HID_GENERIC_ENDPOINT_OUT ==
                           (descriptorHead->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)))

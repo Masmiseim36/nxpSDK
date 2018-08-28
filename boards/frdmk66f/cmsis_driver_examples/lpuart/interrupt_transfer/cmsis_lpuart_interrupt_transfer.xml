@@ -22,20 +22,22 @@
     <definition extID="platform.utilities.debug_console.MK66F18"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
-    <definition extID="kds"/>
     <definition extID="atl"/>
     <definition extID="mcuxpresso"/>
     <definition extID="armgcc"/>
   </externalDefinitions>
-  <example id="frdmk66f_cmsis_lpuart_interrupt_transfer" name="cmsis_lpuart_interrupt_transfer" category="cmsis_driver_examples/lpuart" dependency="platform.drivers.port.MK66F18 platform.drivers.common.MK66F18 platform.drivers.clock.MK66F18 platform.drivers.edma.MK66F18 platform.drivers.dmamux.MK66F18 platform.drivers.lpuart.MK66F18 platform.drivers.lpuart_edma.MK66F18 platform.drivers.lpuart_cmsis.MK66F18 platform.CMSIS_Driver_Include.USART_CMSISInclude.MK66F18 platform.CMSIS_Driver_Include.Common_CMSISInclude.MK66F18 platform.drivers.flash.MK66F18 platform.devices.MK66F18_CMSIS.MK66F18 platform.devices.MK66F18_startup.MK66F18 platform.drivers.uart.MK66F18 platform.drivers.smc.MK66F18 platform.utilities.debug_console.MK66F18 platform.drivers.gpio.MK66F18 platform.utilities.assert.MK66F18" toolchain="iar mdk armgcc kds mcuxpresso">
+  <example id="frdmk66f_cmsis_lpuart_interrupt_transfer" name="cmsis_lpuart_interrupt_transfer" category="cmsis_driver_examples/lpuart" dependency="platform.drivers.port.MK66F18 platform.drivers.common.MK66F18 platform.drivers.clock.MK66F18 platform.drivers.edma.MK66F18 platform.drivers.dmamux.MK66F18 platform.drivers.lpuart.MK66F18 platform.drivers.lpuart_edma.MK66F18 platform.drivers.lpuart_cmsis.MK66F18 platform.CMSIS_Driver_Include.USART_CMSISInclude.MK66F18 platform.CMSIS_Driver_Include.Common_CMSISInclude.MK66F18 platform.drivers.flash.MK66F18 platform.devices.MK66F18_CMSIS.MK66F18 platform.devices.MK66F18_startup.MK66F18 platform.drivers.uart.MK66F18 platform.drivers.smc.MK66F18 platform.utilities.debug_console.MK66F18 platform.drivers.gpio.MK66F18 platform.utilities.assert.MK66F18" toolchain="mdk iar armgcc mcuxpresso">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
     <toolchainSettings>
-      <!-- Curently, mcux just supports one common settings set for both debug and release -->
       <toolchainSetting id_refs="com.nxp.mcuxpresso">
-        <!-- asm compiler -->
-        <!-- gcc compiler -->
+        <option id="com.crt.advproject.gas.fpu" type="enum">
+          <value>com.crt.advproject.gas.fpu.fpv4.hard</value>
+        </option>
+        <option id="com.crt.advproject.gcc.fpu" type="enum">
+          <value>com.crt.advproject.gcc.fpu.fpv4.hard</value>
+        </option>
         <option id="com.crt.advproject.c.misc.dialect" type="enum">
           <value>com.crt.advproject.misc.dialect.gnu99</value>
         </option>
@@ -56,27 +58,34 @@
         <option id="gnu.c.compiler.option.misc.other" type="string">
           <value>-c  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin</value>
         </option>
-        <!-- gcc linker -->
+        <option id="com.crt.advproject.link.fpu" type="enum">
+          <value>com.crt.advproject.link.fpu.fpv4.hard</value>
+        </option>
         <option id="gnu.c.link.option.nostdlibs" type="boolean">
           <value>true</value>
         </option>
-        <option id="gnu.c.link.option.other" type="stringList">
-          <value>--gc-sections</value>
+        <option id="com.crt.advproject.link.memory.sections" type="stringList">
+          <value>isd=*(NonCacheable.init);region=RAM2;type=.data</value>
+          <value>isd=*(NonCacheable);region=RAM2;type=.bss</value>
         </option>
       </toolchainSetting>
     </toolchainSettings>
-    <source path="boards/frdmk66f/cmsis_driver_examples/lpuart/interrupt_transfer" target_path="board" type="c_include">
-      <files mask="RTE_Device.h"/>
+    <source path="boards/frdmk66f/cmsis_driver_examples/lpuart/interrupt_transfer" target_path="board/src" type="c_include">
       <files mask="board.h"/>
       <files mask="clock_config.h"/>
+    </source>
+    <source path="boards/frdmk66f/cmsis_driver_examples/lpuart/interrupt_transfer" target_path="board/src" type="src">
+      <files mask="board.c"/>
+      <files mask="clock_config.c"/>
+    </source>
+    <source path="boards/frdmk66f/cmsis_driver_examples/lpuart/interrupt_transfer" target_path="board" type="c_include">
+      <files mask="RTE_Device.h"/>
       <files mask="pin_mux.h"/>
     </source>
     <source path="boards/frdmk66f/cmsis_driver_examples/lpuart/interrupt_transfer" target_path="board" type="src">
-      <files mask="board.c"/>
-      <files mask="clock_config.c"/>
       <files mask="pin_mux.c"/>
     </source>
-    <source path="boards/frdmk66f/cmsis_driver_examples/lpuart/interrupt_transfer" target_path="doc" type="doc" toolchain="iar mdk kds atl mcuxpresso">
+    <source path="boards/frdmk66f/cmsis_driver_examples/lpuart/interrupt_transfer" target_path="doc" type="doc" toolchain="iar mdk atl mcuxpresso">
       <files mask="readme.txt"/>
     </source>
     <source path="boards/frdmk66f/cmsis_driver_examples/lpuart/interrupt_transfer" target_path="source" type="src">

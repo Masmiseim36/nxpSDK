@@ -412,14 +412,14 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     USB_DESCRIPTOR_TYPE_CONFIGURE,   /* CONFIGURATION Descriptor Type */
     USB_SHORT_GET_LOW(USB_DESCRIPTOR_LENGTH_CONFIGURE + USB_DESCRIPTOR_LENGTH_INTERFACE +
                       USB_AUDIO_CONTROL_INTERFACE_HEADER_LENGTH + USB_AUDIO_INPUT_TERMINAL_ONLY_DESC_SIZE +
-                      USB_AUDIO_FEATURE_UNIT_ONLY_DESC_SIZE(1, 1) + USB_AUDIO_OUTPUT_TERMINAL_ONLY_DESC_SIZE +
+                      USB_AUDIO_FEATURE_UNIT_ONLY_DESC_SIZE(2, 1) + USB_AUDIO_OUTPUT_TERMINAL_ONLY_DESC_SIZE +
                       USB_DESCRIPTOR_LENGTH_AC_INTERRUPT_ENDPOINT + USB_DESCRIPTOR_LENGTH_INTERFACE +
                       USB_DESCRIPTOR_LENGTH_INTERFACE + USB_AUDIO_STREAMING_IFACE_DESC_SIZE +
                       USB_AUDIO_STREAMING_TYPE_I_DESC_SIZE + USB_ENDPOINT_AUDIO_DESCRIPTOR_LENGTH +
                       USB_AUDIO_STREAMING_ENDP_DESC_SIZE + USB_ENDPOINT_AUDIO_DESCRIPTOR_LENGTH),
     USB_SHORT_GET_HIGH(
         USB_DESCRIPTOR_LENGTH_CONFIGURE + USB_DESCRIPTOR_LENGTH_INTERFACE + USB_AUDIO_CONTROL_INTERFACE_HEADER_LENGTH +
-        USB_AUDIO_INPUT_TERMINAL_ONLY_DESC_SIZE + USB_AUDIO_FEATURE_UNIT_ONLY_DESC_SIZE(1, 1) +
+        USB_AUDIO_INPUT_TERMINAL_ONLY_DESC_SIZE + USB_AUDIO_FEATURE_UNIT_ONLY_DESC_SIZE(2, 1) +
         USB_AUDIO_OUTPUT_TERMINAL_ONLY_DESC_SIZE + USB_DESCRIPTOR_LENGTH_AC_INTERRUPT_ENDPOINT +
         USB_DESCRIPTOR_LENGTH_INTERFACE + USB_DESCRIPTOR_LENGTH_INTERFACE + USB_AUDIO_STREAMING_IFACE_DESC_SIZE +
         USB_AUDIO_STREAMING_TYPE_I_DESC_SIZE + USB_ENDPOINT_AUDIO_DESCRIPTOR_LENGTH +
@@ -462,7 +462,7 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     USB_DESCRIPTOR_TYPE_AUDIO_CS_INTERFACE,      /* CS_INTERFACE Descriptor Type   */
     USB_DESCRIPTOR_SUBTYPE_AUDIO_CONTROL_HEADER, /* HEADER descriptor subtype   */
     0x00U, 0x01U, /* Audio Device compliant to the USB Audio specification version 1.00  */
-    0x27, 0x00U,  /* Total number of bytes returned for the class-specific AudioControl interface descriptor. Includes
+    0x28, 0x00U,  /* Total number of bytes returned for the class-specific AudioControl interface descriptor. Includes
                      the combined length of this descriptor header and all Unit and Terminal descriptors. */
     0x01U, /* The number of AudioStreaming and MIDIStreaming interfaces in the Audio Interface Collection to which this
               AudioControl interface belongs   */
@@ -479,15 +479,15 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     0x01U,
     0x01,         /* A generic microphone that does not fit under any of the other classifications.  */
     0x00U,        /* This Input Terminal has no association  */
-    0x01U,        /* This Terminal's output audio channel cluster has 1 logical output channels  */
-    0x00U, 0x00U, /* Spatial locations present in the cluster */
+    0x02U,        /* This Terminal's output audio channel cluster has 1 logical output channels  */
+    0x03U, 0x00U, /* Spatial locations present in the cluster */
     0x00U,        /* Index of a string descriptor, describing the name of the first logical channel.   */
     0x00U,        /* Index of a string descriptor, describing the Input Terminal.   */
 
     /* Audio Class Specific type of Feature Unit */
     /* The USB_AUDIO_FEATURE_UNIT_ONLY_DESC_SIZE should be changed to 0x0a and Master channel controls should be changed
        to 0x03, 0x00U, 0x00U, if sampling rate is 48k */
-    USB_AUDIO_FEATURE_UNIT_ONLY_DESC_SIZE(1, 1),       /* Size of the descriptor, in bytes   */
+    USB_AUDIO_FEATURE_UNIT_ONLY_DESC_SIZE(2, 1),       /* Size of the descriptor, in bytes   */
     USB_DESCRIPTOR_TYPE_AUDIO_CS_INTERFACE,            /* CS_INTERFACE Descriptor Type  */
     USB_DESCRIPTOR_SUBTYPE_AUDIO_CONTROL_FEATURE_UNIT, /* FEATURE_UNIT descriptor subtype   */
     USB_AUDIO_SPEAKER_CONTROL_FEATURE_UNIT_ID, /* Constant uniquely identifying the Unit within the audio function. This
@@ -496,8 +496,9 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     USB_AUDIO_SPEAKER_CONTROL_INPUT_TERMINAL_ID, /* ID of the Unit or Terminal to which this Feature Unit is connected.
                                                     */
     0x01U,                                       /* Size in bytes of an element of the bmaControls() array:  */
-    0x03,
-    0x00U, /* Master channel controls */
+    0x03U,                                       /* Master channel0 controls */
+    0x00U,                                       /* Master channel1 controls */
+    0x00U,                                       /* Master channel2 controls */
     0x00U, /* Index of a string descriptor, describing this Feature Unit.   */
 
     /* Audio Class Specific type of  Output Terminal */

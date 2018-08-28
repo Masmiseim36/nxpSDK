@@ -124,7 +124,6 @@ extern void USB_AudioSpeakerResetTask(void);
 * Variables
 ******************************************************************************/
 extern usb_device_composite_struct_t g_composite;
-static i2c_master_handle_t i2cHandle;
 extern uint8_t audioPlayDataBuff[AUDIO_SPEAKER_DATA_WHOLE_BUFFER_LENGTH * FS_ISO_OUT_ENDP_PACKET_SIZE];
 extern uint8_t audioRecDataBuff[AUDIO_RECORDER_DATA_WHOLE_BUFFER_LENGTH * FS_ISO_IN_ENDP_PACKET_SIZE];
 
@@ -144,7 +143,8 @@ static uint8_t audioPlayDMATempBuff[FS_ISO_OUT_ENDP_PACKET_SIZE];
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
 static uint8_t audioRecDMATempBuff[FS_ISO_IN_ENDP_PACKET_SIZE];
 #endif
-
+codec_handle_t codecHandle = {0};
+extern codec_config_t boardCodecConfig;
 /* Composite device structure. */
 usb_device_composite_struct_t g_composite;
 extern usb_device_class_struct_t g_UsbDeviceHidMouseClass;
@@ -155,7 +155,7 @@ extern usb_device_composite_struct_t *g_UsbDeviceComposite;
 extern usb_device_composite_struct_t *g_deviceAudioComposite;
 
 /* USB device class information */
-static usb_device_class_config_struct_t g_compositeDevice[3] = {
+static usb_device_class_config_struct_t g_CompositeClassConfig[3] = {
     {
         USB_DeviceHidKeyboardCallback, (class_handle_t)NULL, &g_UsbDeviceHidMouseClass,
     },
@@ -169,8 +169,8 @@ static usb_device_class_config_struct_t g_compositeDevice[3] = {
 };
 
 /* USB device class configuraion information */
-static usb_device_class_config_list_struct_t g_compositeDeviceConfigList = {
-    g_compositeDevice, USB_DeviceCallback, 3,
+static usb_device_class_config_list_struct_t g_UsbDeviceCompositeConfigList = {
+    g_CompositeClassConfig, USB_DeviceCallback, 3,
 };
 
 /*******************************************************************************
@@ -217,12 +217,13 @@ char *SW_GetName(void)
 
 void BOARD_Codec_Init()
 {
-    DA7212_USB_Audio_Init(BOARD_I2C_BASEADDR, (void *)&i2cHandle);
+    CODEC_Init(&codecHandle, &boardCodecConfig);
+    CODEC_SetFormat(&codecHandle, audioFormat.masterClockHz, audioFormat.sampleRate_Hz, audioFormat.bitWidth);
 }
 
 void BOARD_SetCodecMuteUnmute(bool mute)
 {
-    DA7212_Set_Playback_Mute(mute);
+    DA7212_Mute(&codecHandle, mute);
 }
 
 void SAI_USB_Audio_TxInit(I2S_Type *SAIBase)
@@ -261,17 +262,6 @@ void BOARD_USB_Audio_TxRxInit(uint32_t samplingRate)
     DA7212_Config_Audio_Formats(samplingRate);
 }
 
-void BOARD_I2C_LPI2C_Init()
-{
-    i2c_master_config_t i2cConfig = {0};
-
-    uint32_t i2cSourceClock;
-    i2cSourceClock = CLOCK_GetFreq(BOARD_DEMO_I2C_CLKSRC);
-
-    I2C_MasterGetDefaultConfig(&i2cConfig);
-    I2C_MasterInit(BOARD_I2C_BASEADDR, &i2cConfig, i2cSourceClock);
-    I2C_MasterTransferCreateHandle(BOARD_I2C_BASEADDR, &i2cHandle, NULL, NULL);
-}
 
 #if AUDIO_DMA_EDMA_MODE
 static void txCallback(I2S_Type *base, sai_edma_handle_t *handle, status_t status, void *userData)
@@ -565,11 +555,7 @@ void USB_DeviceIsrEnable(void)
     irqNumber = usbDeviceKhciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
 #endif
 /* Install isr, set priority, and enable IRQ. */
-#if defined(__GIC_PRIO_BITS)
-    GIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
-#else
     NVIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
-#endif
     EnableIRQ((IRQn_Type)irqNumber);
 }
 #if USB_DEVICE_CONFIG_USE_TASK
@@ -634,7 +620,6 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
             {
                 uint8_t interface = (uint8_t)((*temp16 & 0xFF00U) >> 0x08U);
                 uint8_t alternateSetting = (uint8_t)(*temp16 & 0x00FFU);
-                g_composite.currentInterfaceAlternateSetting[interface] = alternateSetting;
                 if (USB_AUDIO_RECORDER_STREAM_INTERFACE_INDEX == interface)
                 {
                     USB_DeviceAudioRecorderSetInterface(g_composite.audioUnified.audioRecorderHandle, interface,
@@ -689,26 +674,11 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
                 error = USB_DeviceGetStringDescriptor(handle, (usb_device_get_string_descriptor_struct_t *)param);
             }
             break;
-        case kUSB_DeviceEventGetHidDescriptor:
-            if (param)
-            {
-                /* Get hid descriptor request */
-                error = USB_DeviceGetHidDescriptor(handle, (usb_device_get_hid_descriptor_struct_t *)param);
-            }
-            break;
         case kUSB_DeviceEventGetHidReportDescriptor:
             if (param)
             {
                 error =
                     USB_DeviceGetHidReportDescriptor(handle, (usb_device_get_hid_report_descriptor_struct_t *)param);
-            }
-            break;
-        case kUSB_DeviceEventGetHidPhysicalDescriptor:
-            if (param)
-            {
-                /* Get hid physical descriptor request */
-                error = USB_DeviceGetHidPhysicalDescriptor(handle,
-                                                           (usb_device_get_hid_physical_descriptor_struct_t *)param);
             }
             break;
 #if (defined(USB_DEVICE_CONFIG_CV_TEST) && (USB_DEVICE_CONFIG_CV_TEST > 0U))
@@ -750,7 +720,7 @@ void APPInit(void)
     g_composite.deviceHandle = NULL;
 
     if (kStatus_USB_Success !=
-        USB_DeviceClassInit(CONTROLLER_ID, &g_compositeDeviceConfigList, &g_composite.deviceHandle))
+        USB_DeviceClassInit(CONTROLLER_ID, &g_UsbDeviceCompositeConfigList, &g_composite.deviceHandle))
     {
         usb_echo("USB device composite demo init failed\r\n");
         return;
@@ -760,9 +730,9 @@ void APPInit(void)
         usb_echo("USB device composite demo\r\n");
         usb_echo("Please Press  switch(%s) to mute/unmute device audio speaker.\r\n", SW_GetName());
 
-        g_composite.hidKeyboard.hidHandle = g_compositeDeviceConfigList.config[0].classHandle;
-        g_composite.audioUnified.audioRecorderHandle = g_compositeDeviceConfigList.config[1].classHandle;
-        g_composite.audioUnified.audioSpeakerHandle = g_compositeDeviceConfigList.config[2].classHandle;
+        g_composite.hidKeyboard.hidHandle = g_UsbDeviceCompositeConfigList.config[0].classHandle;
+        g_composite.audioUnified.audioRecorderHandle = g_UsbDeviceCompositeConfigList.config[1].classHandle;
+        g_composite.audioUnified.audioSpeakerHandle = g_UsbDeviceCompositeConfigList.config[2].classHandle;
 
         USB_DeviceAudioCompositeInit(&g_composite);
         USB_DeviceHidKeyboardInit(&g_composite);

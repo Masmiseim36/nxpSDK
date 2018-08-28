@@ -4,7 +4,7 @@
   <Header>### uVision Project, (C) Keil Software</Header>
   <Targets>
     <Target>
-      <TargetName>host_msd_fatfs_bm Debug</TargetName>
+      <TargetName>host_msd_fatfs_bm debug</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <TargetOption>
@@ -371,9 +371,9 @@
 --diag_suppress=66,1296,186 
  
 </MiscControls>
-              <Define>_DEBUG=1, CPU_MK28FN2M0VMI15, USB_STACK_BM, PRINTF_ADVANCED_ENABLE=1</Define>
+              <Define>DEBUG, _DEBUG=1, CPU_MK28FN2M0VMI15, USB_STACK_BM, PRINTF_ADVANCED_ENABLE=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../middleware/fatfs/src;../../../..;../../../../../../CMSIS/Include;../../../../../../middleware/usb;../../../../../../middleware/usb/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/phy;../../../../../../devices/MK28F15/drivers;../../../../../../middleware/usb/host/class;../../../../../../middleware/fatfs/src/option;../../../../../../devices/MK28F15/utilities/io;../../../../../../devices/MK28F15/utilities/str;../../../../../../devices/MK28F15/utilities/log;../../../../../../devices/MK28F15/utilities;../../../../../../devices/MK28F15</IncludePath>
+              <IncludePath>..;../../../../../../middleware/fatfs/source;../../../..;../../../../../../CMSIS/Include;../../../../../../middleware/usb;../../../../../../middleware/usb/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/phy;../../../../../../devices/MK28F15/drivers;../../../../../../middleware/usb/host/class;../../../../../../devices/MK28F15/utilities/io;../../../../../../devices/MK28F15/utilities/str;../../../../../../devices/MK28F15/utilities/log;../../../../../../devices/MK28F15/utilities;../../../../../../devices/MK28F15</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -470,7 +470,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>board</GroupName>
+          <GroupName>board-src</GroupName>
           <Files>
             <File>
               <FileName>board.c</FileName>
@@ -698,9 +698,59 @@
               <FilePath>../../../../../../devices/MK28F15/drivers/fsl_smc.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_flash.c</FileName>
+              <FileName>fsl_ftfx_adapter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_adapter.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_utilities.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_utilities.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_features.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_features.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_controller.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_flash.c</FilePath>
+              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_controller.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_controller.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_controller.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_flash.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flash.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_flash.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_cache.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_cache.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_cache.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_cache.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flexnvm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_flexnvm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flexnvm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_flexnvm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_flash.h</FileName>
@@ -783,14 +833,24 @@
           <GroupName>fatfs-fatfs_source</GroupName>
           <Files>
             <File>
-              <FileName>ff.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/fatfs/src/ff.c</FilePath>
-            </File>
-            <File>
               <FileName>diskio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/fatfs/src/diskio.c</FilePath>
+              <FilePath>../../../../../../middleware/fatfs/source/diskio.c</FilePath>
+            </File>
+            <File>
+              <FileName>ff.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/fatfs/source/ff.c</FilePath>
+            </File>
+            <File>
+              <FileName>ffsystem.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/fatfs/source/ffsystem.c</FilePath>
+            </File>
+            <File>
+              <FileName>ffunicode.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/fatfs/source/ffunicode.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -798,19 +858,19 @@
           <GroupName>fatfs-fatfs_include</GroupName>
           <Files>
             <File>
-              <FileName>integer.h</FileName>
+              <FileName>diskio.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/fatfs/src/integer.h</FilePath>
+              <FilePath>../../../../../../middleware/fatfs/source/diskio.h</FilePath>
             </File>
             <File>
               <FileName>ff.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/fatfs/src/ff.h</FilePath>
+              <FilePath>../../../../../../middleware/fatfs/source/ff.h</FilePath>
             </File>
             <File>
-              <FileName>diskio.h</FileName>
+              <FileName>integer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/fatfs/src/diskio.h</FilePath>
+              <FilePath>../../../../../../middleware/fatfs/source/integer.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -892,7 +952,7 @@
       </Groups>
     </Target>
     <Target>
-      <TargetName>host_msd_fatfs_bm Release</TargetName>
+      <TargetName>host_msd_fatfs_bm release</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <TargetOption>
@@ -1259,9 +1319,9 @@
 --diag_suppress=66,1296,186 
  
 </MiscControls>
-              <Define>_DEBUG=0, CPU_MK28FN2M0VMI15, USB_STACK_BM, PRINTF_ADVANCED_ENABLE=1</Define>
+              <Define>NDEBUG, _DEBUG=0, CPU_MK28FN2M0VMI15, USB_STACK_BM, PRINTF_ADVANCED_ENABLE=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../middleware/fatfs/src;../../../..;../../../../../../CMSIS/Include;../../../../../../middleware/usb;../../../../../../middleware/usb/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/phy;../../../../../../devices/MK28F15/drivers;../../../../../../middleware/usb/host/class;../../../../../../middleware/fatfs/src/option;../../../../../../devices/MK28F15/utilities/io;../../../../../../devices/MK28F15/utilities/str;../../../../../../devices/MK28F15/utilities/log;../../../../../../devices/MK28F15/utilities;../../../../../../devices/MK28F15</IncludePath>
+              <IncludePath>..;../../../../../../middleware/fatfs/source;../../../..;../../../../../../CMSIS/Include;../../../../../../middleware/usb;../../../../../../middleware/usb/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/phy;../../../../../../devices/MK28F15/drivers;../../../../../../middleware/usb/host/class;../../../../../../devices/MK28F15/utilities/io;../../../../../../devices/MK28F15/utilities/str;../../../../../../devices/MK28F15/utilities/log;../../../../../../devices/MK28F15/utilities;../../../../../../devices/MK28F15</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1276,7 +1336,7 @@
             <useXO>0</useXO>
             <VariousControls>
               <MiscControls/>
-              <Define>__STARTUP_INITIALIZE_NONCACHEDATA</Define>
+              <Define>NDEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
               <Undefine/>
               <IncludePath/>
             </VariousControls>
@@ -1358,7 +1418,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>board</GroupName>
+          <GroupName>board-src</GroupName>
           <Files>
             <File>
               <FileName>board.c</FileName>
@@ -1586,9 +1646,59 @@
               <FilePath>../../../../../../devices/MK28F15/drivers/fsl_smc.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_flash.c</FileName>
+              <FileName>fsl_ftfx_adapter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_adapter.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_utilities.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_utilities.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_features.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_features.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_controller.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_flash.c</FilePath>
+              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_controller.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_controller.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_controller.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_flash.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flash.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_flash.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_cache.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_cache.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_cache.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_cache.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flexnvm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_flexnvm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flexnvm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_flexnvm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_flash.h</FileName>
@@ -1671,14 +1781,24 @@
           <GroupName>fatfs-fatfs_source</GroupName>
           <Files>
             <File>
-              <FileName>ff.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/fatfs/src/ff.c</FilePath>
-            </File>
-            <File>
               <FileName>diskio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/fatfs/src/diskio.c</FilePath>
+              <FilePath>../../../../../../middleware/fatfs/source/diskio.c</FilePath>
+            </File>
+            <File>
+              <FileName>ff.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/fatfs/source/ff.c</FilePath>
+            </File>
+            <File>
+              <FileName>ffsystem.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/fatfs/source/ffsystem.c</FilePath>
+            </File>
+            <File>
+              <FileName>ffunicode.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/fatfs/source/ffunicode.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1686,19 +1806,19 @@
           <GroupName>fatfs-fatfs_include</GroupName>
           <Files>
             <File>
-              <FileName>integer.h</FileName>
+              <FileName>diskio.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/fatfs/src/integer.h</FilePath>
+              <FilePath>../../../../../../middleware/fatfs/source/diskio.h</FilePath>
             </File>
             <File>
               <FileName>ff.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/fatfs/src/ff.h</FilePath>
+              <FilePath>../../../../../../middleware/fatfs/source/ff.h</FilePath>
             </File>
             <File>
-              <FileName>diskio.h</FileName>
+              <FileName>integer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/fatfs/src/diskio.h</FilePath>
+              <FilePath>../../../../../../middleware/fatfs/source/integer.h</FilePath>
             </File>
           </Files>
         </Group>

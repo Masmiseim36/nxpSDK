@@ -406,8 +406,7 @@ int main(void)
     }
 
     memset(s_nor_program_buffer, 0xFFU, sizeof(s_nor_program_buffer));
-    memcpy(s_nor_read_buffer, (void *)(EXAMPLE_FLEXSPI_AMBA_BASE + EXAMPLE_SECTOR * SECTOR_SIZE),
-           sizeof(s_nor_read_buffer));
+    memcpy(s_nor_read_buffer, (void *)(EXAMPLE_FLEXSPI_AMBA_BASE + EXAMPLE_SECTOR * SECTOR_SIZE), sizeof(s_nor_read_buffer));
 
     if (memcmp(s_nor_program_buffer, s_nor_read_buffer, sizeof(s_nor_program_buffer)))
     {
@@ -424,8 +423,7 @@ int main(void)
         s_nor_program_buffer[i] = i;
     }
 
-    status =
-        flexspi_nor_flash_page_program(EXAMPLE_FLEXSPI, EXAMPLE_SECTOR * SECTOR_SIZE, (void *)s_nor_program_buffer);
+    status = flexspi_nor_flash_page_program(EXAMPLE_FLEXSPI, EXAMPLE_SECTOR * SECTOR_SIZE, (void *)s_nor_program_buffer);
     if (status != kStatus_Success)
     {
         PRINTF("Page program failure !\r\n");
@@ -435,8 +433,7 @@ int main(void)
     /* Do software reset to reset AHB buffer. */
     FLEXSPI_SoftwareReset(EXAMPLE_FLEXSPI);
 
-    memcpy(s_nor_read_buffer, (void *)(EXAMPLE_FLEXSPI_AMBA_BASE + EXAMPLE_SECTOR * SECTOR_SIZE),
-           sizeof(s_nor_read_buffer));
+    memcpy(s_nor_read_buffer, (void *)(EXAMPLE_FLEXSPI_AMBA_BASE + EXAMPLE_SECTOR * SECTOR_SIZE), sizeof(s_nor_read_buffer));
 
     if (memcmp(s_nor_read_buffer, s_nor_program_buffer, sizeof(s_nor_program_buffer)) != 0)
     {

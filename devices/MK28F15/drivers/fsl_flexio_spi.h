@@ -3,10 +3,10 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
+ *  that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -49,8 +49,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief FlexIO SPI driver version 2.1.2. */
-#define FSL_FLEXIO_SPI_DRIVER_VERSION (MAKE_VERSION(2, 1, 2))
+/*! @brief FlexIO SPI driver version 2.1.3. */
+#define FSL_FLEXIO_SPI_DRIVER_VERSION (MAKE_VERSION(2, 1, 3))
 /*@}*/
 
 #ifndef FLEXIO_SPI_DUMMYDATA

@@ -54,6 +54,8 @@ SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -mfloat-abi=hard")
 
 SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -mfpu=fpv4-sp-d16")
 
+SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -DNDEBUG")
+
 SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -D__STARTUP_CLEAR_BSS")
 
 SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -D__STARTUP_INITIALIZE_NONCACHEDATA")
@@ -198,6 +200,8 @@ SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -MMD")
 
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -MP")
 
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DNDEBUG")
+
 SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DCPU_MK66FN2M0VMD18")
 
 SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Os")
@@ -338,6 +342,8 @@ include_directories(${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc
 
 include_directories(${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/transports)
 
+include_directories(${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c)
+
 include_directories(${ProjDirPath}/../../../../../devices/MK66F18/drivers)
 
 include_directories(${ProjDirPath}/../../../../../devices/MK66F18)
@@ -355,7 +361,6 @@ add_executable(erpc_client_matrix_multiply_spi.elf
 "${ProjDirPath}/../erpc_config.h"
 "${ProjDirPath}/../../erpc_common/erpc_error_handler.h"
 "${ProjDirPath}/../../erpc_common/erpc_error_handler.cpp"
-"${ProjDirPath}/../../erpc_common/erpc_matrix_multiply/service/erpc_crc16.h"
 "${ProjDirPath}/../../erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply.erpc"
 "${ProjDirPath}/../../erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply.h"
 "${ProjDirPath}/../../erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply_client.cpp"
@@ -365,26 +370,26 @@ add_executable(erpc_client_matrix_multiply_spi.elf
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../clock_config.h"
-"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/transports/dspi_master_transport.h"
-"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/transports/dspi_master_transport.cpp"
-"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/framed_transport.h"
-"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/framed_transport.cpp"
+"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_dspi_master_transport.h"
+"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_dspi_master_transport.cpp"
+"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_framed_transport.h"
+"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_framed_transport.cpp"
 "${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_setup_mbf_dynamic.cpp"
 "${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_version.h"
-"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/codec.h"
-"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/basic_codec.h"
-"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/transport.h"
-"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/message_buffer.h"
-"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/message_loggers.h"
+"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_codec.h"
+"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_basic_codec.h"
+"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_transport.h"
+"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_buffer.h"
+"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_loggers.h"
 "${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_common.h"
 "${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_transport_setup.h"
 "${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_mbf_setup.h"
-"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/manually_constructed.h"
-"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/crc16.h"
-"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/basic_codec.cpp"
-"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/message_buffer.cpp"
-"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/message_loggers.cpp"
-"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/crc16.cpp"
+"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_manually_constructed.h"
+"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_crc16.h"
+"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_basic_codec.cpp"
+"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_buffer.cpp"
+"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_loggers.cpp"
+"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_crc16.cpp"
 "${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_setup_dspi_master.cpp"
 "${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_dspi.h"
 "${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_dspi.c"
@@ -392,7 +397,17 @@ add_executable(erpc_client_matrix_multiply_spi.elf
 "${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_common.c"
 "${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_clock.h"
 "${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_clock.c"
-"${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_flash.c"
+"${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_ftfx_adapter.h"
+"${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_ftfx_utilities.h"
+"${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_ftfx_features.h"
+"${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_ftfx_controller.c"
+"${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_ftfx_controller.h"
+"${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_ftfx_flash.c"
+"${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_ftfx_flash.h"
+"${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_ftfx_cache.c"
+"${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_ftfx_cache.h"
+"${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_ftfx_flexnvm.c"
+"${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_ftfx_flexnvm.h"
 "${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_flash.h"
 "${ProjDirPath}/../../../../../devices/MK66F18/system_MK66F18.c"
 "${ProjDirPath}/../../../../../devices/MK66F18/system_MK66F18.h"
@@ -416,8 +431,8 @@ add_executable(erpc_client_matrix_multiply_spi.elf
 "${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_gpio.h"
 "${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_gpio.c"
 "${ProjDirPath}/../../../../../devices/MK66F18/utilities/fsl_assert.c"
-"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/client_manager.h"
-"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/client_manager.cpp"
+"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_client_manager.h"
+"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_client_manager.cpp"
 "${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_client_setup.h"
 "${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_client_setup.cpp"
 "${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/port/erpc_port.h"

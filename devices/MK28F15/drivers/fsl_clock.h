@@ -908,6 +908,13 @@ bool CLOCK_EnableUsbfs0Clock(clock_usb_src_t src, uint32_t freq);
  */
 bool CLOCK_EnableUsbhs0PhyPllClock(clock_usb_phy_src_t src, uint32_t freq);
 
+/*! @brief Enable USB hs0 Pfd clock.
+ *
+ * @param frac  fractional divider.
+ * @param src clock source.
+ */
+void CLOCK_EnableUsbhs0PfdClock(uint8_t frac, clock_usb_pfd_src_t src);
+
 /*! @brief Disable USB FS clock.
  *
  * Disable USB FS clock.
@@ -916,6 +923,24 @@ static inline void CLOCK_DisableUsbfs0Clock(void)
 {
     CLOCK_DisableClock(kCLOCK_Usbfs0);
 }
+
+/*! @brief Disable USB hs pfd clock.
+ *
+ * Disable USB hs pfd clock.
+ */
+void CLOCK_DisableUsbhs0PfdClock(void);
+
+/*! @brief Disable USB hs clock.
+ *
+ * Disable USB hs clock.
+ */
+void CLOCK_DisableUsbhs0Clock(void);
+
+/*! @brief Disable USB hs phy pll clock.
+ *
+ * Disable USB hs phy pll clock.
+ */
+void CLOCK_DisableUsbhs0PhyPllClock(void);
 
 /*!
  * @brief System clock divider
@@ -1009,7 +1034,16 @@ uint32_t CLOCK_GetOsc0ErClkUndivFreq(void);
  *
  * @return Clock frequency in Hz.
  */
+
 uint32_t CLOCK_GetOsc0ErClkFreq(void);
+
+/*!
+ * @brief Get the OSC0 external reference divided clock frequency.
+ *
+ * @return Clock frequency in Hz.
+ */
+uint32_t CLOCK_GetOsc0ErClkDivFreq(void);
+
 
 /*!
  * @brief Set the clock configure in SIM module.

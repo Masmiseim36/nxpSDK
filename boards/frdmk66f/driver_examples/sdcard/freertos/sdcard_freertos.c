@@ -3,10 +3,10 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
+ *  that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -132,6 +132,14 @@ static const sdmmchost_detect_card_t s_sdCardDetect = {
     .cardInserted = SDCARD_DetectCallBack,
     .cardRemoved = SDCARD_DetectCallBack,
 };
+
+/*! @brief SDMMC card power control configuration */
+#if defined DEMO_SDCARD_POWER_CTRL_FUNCTION_EXIST
+static const sdmmchost_pwr_card_t s_sdCardPwrCtrl = {
+    .powerOn = BOARD_PowerOnSDCARD, .powerOnDelay_ms = 500U, .powerOff = BOARD_PowerOffSDCARD, .powerOffDelay_ms = 0U,
+};
+#endif
+
 /*! @brief SD card detect flag  */
 static bool s_cardInserted = false;
 
@@ -154,7 +162,6 @@ static void CardDetectTask(void *pvParameters)
     {
         if (!s_cardInserted)
         {
-            PRINTF("\r\nPlease insert a card into board.\r\n");
             /* power off card */
             SD_PowerOffCard(g_sd.host.base, g_sd.usrParam.pwr);
         }
@@ -176,7 +183,7 @@ static void CardDetectTask(void *pvParameters)
         }
         else
         {
-            PRINTF("\r\nCard removed.\r\n");
+            PRINTF("\r\nPlease insert a card into board.\r\n");
         }
     }
 }
@@ -232,6 +239,9 @@ int main(void)
     g_sd.host.base = SD_HOST_BASEADDR;
     g_sd.host.sourceClock_Hz = SD_HOST_CLK_FREQ;
     g_sd.usrParam.cd = &s_sdCardDetect;
+#if defined DEMO_SDCARD_POWER_CTRL_FUNCTION_EXIST
+    g_sd.usrParam.pwr = &s_sdCardPwrCtrl;
+#endif
 
 #if defined(__CORTEX_M)
     NVIC_SetPriority(SD_HOST_IRQ, 5U);

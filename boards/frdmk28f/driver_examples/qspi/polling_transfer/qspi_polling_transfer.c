@@ -3,10 +3,10 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
+ *  that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -138,6 +138,9 @@ qspi_flash_config_t single_config = {.flashA1Size = FLASH_SIZE, /* 4MB */
                                      .enableWordAddress = false};
 
 static uint32_t buff[64]; /* Test data */
+#if !defined(FSL_FEATURE_QSPI_CLOCK_CONTROL_EXTERNAL) || (!FSL_FEATURE_QSPI_CLOCK_CONTROL_EXTERNAL)
+static bool isDivNeedRestore = false;
+#endif
 
 /*******************************************************************************
  * Code
@@ -158,7 +161,7 @@ void check_if_finished(void)
         while (QSPI_GetStatusFlags(EXAMPLE_QSPI) & kQSPI_Busy)
         {
         }
-        val = *(volatile uint32_t *)(FSL_FEATURE_QSPI_ARDB_BASE);
+        val = EXAMPLE_QSPI->RBDR[0];
         /* Clear ARDB area */
         QSPI_ClearErrorFlag(EXAMPLE_QSPI, kQSPI_RxBufferDrain);
     } while (val & 0x1);
@@ -277,12 +280,38 @@ void qspi_polling(void)
 #endif
     erase_sector(addr);
     PRINTF("Erase finished!\r\n");
+
+#if !defined(FSL_FEATURE_QSPI_CLOCK_CONTROL_EXTERNAL) || (!FSL_FEATURE_QSPI_CLOCK_CONTROL_EXTERNAL)
+    /* Reduce frequency while clock divder is less than 2 */
+    uint8_t qspiClockDiv = ((EXAMPLE_QSPI->MCR & QuadSPI_MCR_SCLKCFG_MASK) >> QuadSPI_MCR_SCLKCFG_SHIFT) + 1U;
+    if (qspiClockDiv == 1U)
+    {
+        /* Reduce the frequency */
+        isDivNeedRestore = true;
+        QSPI_Enable(EXAMPLE_QSPI, false);
+        EXAMPLE_QSPI->MCR &= ~QuadSPI_MCR_SCLKCFG_MASK;
+        EXAMPLE_QSPI->MCR |= QuadSPI_MCR_SCLKCFG(1U);
+        QSPI_Enable(EXAMPLE_QSPI, true);
+    }
+#endif
+
     /* Program pages in a sector */
     for (i = 0; i < FLASH_SECTORE_SIZE / FLASH_PAGE_SIZE; i++)
     {
         program_page(addr + i * FLASH_PAGE_SIZE, buff);
     }
     PRINTF("Program data finished!\r\n");
+
+#if !defined(FSL_FEATURE_QSPI_CLOCK_CONTROL_EXTERNAL) || (!FSL_FEATURE_QSPI_CLOCK_CONTROL_EXTERNAL)
+    /* Restore the frequency if needed */
+    if (isDivNeedRestore)
+    {
+        QSPI_Enable(EXAMPLE_QSPI, false);
+        EXAMPLE_QSPI->MCR &= ~QuadSPI_MCR_SCLKCFG_MASK;
+        EXAMPLE_QSPI->MCR |= QuadSPI_MCR_SCLKCFG(0U);
+        QSPI_Enable(EXAMPLE_QSPI, true);
+    }
+#endif
 
     for (i = 0; i < FLASH_SECTORE_SIZE / 4; i++)
     {
@@ -318,6 +347,7 @@ int main(void)
     /*Set AHB buffer size for reading data through AHB bus */
     config.AHBbufferSize[3] = FLASH_PAGE_SIZE;
     clockSourceFreq = QSPI_CLK_FREQ;
+
     QSPI_Init(EXAMPLE_QSPI, &config, clockSourceFreq);
 
     /* Copy the LUT table */
@@ -326,8 +356,7 @@ int main(void)
     /*According to serial flash feature to configure flash settings */
     QSPI_SetFlashConfig(EXAMPLE_QSPI, &single_config);
 
-    /*Initialize data buffer */
-    for (i = 0; i < 64; i++)
+    /*Initialize data buffer */ for (i = 0; i < 64; i++)
     {
         buff[i] = i;
     }

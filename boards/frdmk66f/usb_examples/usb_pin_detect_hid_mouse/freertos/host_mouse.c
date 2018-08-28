@@ -1,7 +1,7 @@
 /*
  * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016, 2018 NXP
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -209,21 +209,22 @@ static void USB_HostHidControlCallback(void *param, uint8_t *data, uint32_t data
 {
     usb_host_mouse_instance_t *mouseInstance = (usb_host_mouse_instance_t *)param;
 
-    if (mouseInstance->runWaitState == kRunWaitSetInterface) /* set interface finish */
+    if (mouseInstance->runWaitState == kUSB_HostHidRunWaitSetInterface) /* set interface finish */
     {
-        mouseInstance->runState = kRunSetInterfaceDone;
+        mouseInstance->runState = kUSB_HostHidRunSetInterfaceDone;
     }
-    else if (mouseInstance->runWaitState == kRunWaitSetIdle) /* hid set idle finish */
+    else if (mouseInstance->runWaitState == kUSB_HostHidRunWaitSetIdle) /* hid set idle finish */
     {
-        mouseInstance->runState = kRunSetIdleDone;
+        mouseInstance->runState = kUSB_HostHidRunSetIdleDone;
     }
-    else if (mouseInstance->runWaitState == kRunWaitGetReportDescriptor) /* hid get report descriptor finish */
+    else if (mouseInstance->runWaitState ==
+             kUSB_HostHidRunWaitGetReportDescriptor) /* hid get report descriptor finish */
     {
-        mouseInstance->runState = kRunGetReportDescriptorDone;
+        mouseInstance->runState = kUSB_HostHidRunGetReportDescriptorDone;
     }
-    else if (mouseInstance->runWaitState == kRunWaitSetProtocol) /* hid set protocol finish */
+    else if (mouseInstance->runWaitState == kUSB_HostHidRunWaitSetProtocol) /* hid set protocol finish */
     {
-        mouseInstance->runState = kRunSetProtocolDone;
+        mouseInstance->runState = kUSB_HostHidRunSetProtocolDone;
     }
     else
     {
@@ -234,17 +235,17 @@ static void USB_HostHidInCallback(void *param, uint8_t *data, uint32_t dataLengt
 {
     usb_host_mouse_instance_t *mouseInstance = (usb_host_mouse_instance_t *)param;
 
-    if (mouseInstance->runWaitState == kRunWaitDataReceived)
+    if (mouseInstance->runWaitState == kUSB_HostHidRunWaitDataReceived)
     {
         if (mouseInstance->deviceState == kStatus_DEV_Attached)
         {
             if (status == kStatus_USB_Success)
             {
-                mouseInstance->runState = kRunDataReceived; /* go to process data */
+                mouseInstance->runState = kUSB_HostHidRunDataReceived; /* go to process data */
             }
             else
             {
-                mouseInstance->runState = kRunPrimeDataReceive; /* go to prime next receiving */
+                mouseInstance->runState = kUSB_HostHidRunPrimeDataReceive; /* go to prime next receiving */
             }
         }
     }
@@ -269,7 +270,7 @@ void USB_HostHidMouseTask(void *param)
                 break;
 
             case kStatus_DEV_Attached: /* deivce is attached and numeration is done */
-                mouseInstance->runState = kRunSetInterface;
+                mouseInstance->runState = kUSB_HostHidRunSetInterface;
                 status = USB_HostHidInit(mouseInstance->deviceHandle,
                                          &mouseInstance->classHandle); /* hid class initialization */
                 usb_echo("mouse attached\r\n");
@@ -287,12 +288,12 @@ void USB_HostHidMouseTask(void *param)
     /* run state */
     switch (mouseInstance->runState)
     {
-        case kRunIdle:
+        case kUSB_HostHidRunIdle:
             break;
 
-        case kRunSetInterface: /* 1. set hid interface */
-            mouseInstance->runWaitState = kRunWaitSetInterface;
-            mouseInstance->runState = kRunIdle;
+        case kUSB_HostHidRunSetInterface: /* 1. set hid interface */
+            mouseInstance->runWaitState = kUSB_HostHidRunWaitSetInterface;
+            mouseInstance->runState = kUSB_HostHidRunIdle;
             if (USB_HostHidSetInterface(mouseInstance->classHandle, mouseInstance->interfaceHandle, 0,
                                         USB_HostHidControlCallback, mouseInstance) != kStatus_USB_Success)
             {
@@ -300,13 +301,13 @@ void USB_HostHidMouseTask(void *param)
             }
             break;
 
-        case kRunSetInterfaceDone: /* 2. hid set idle */
+        case kUSB_HostHidRunSetInterfaceDone: /* 2. hid set idle */
             mouseInstance->maxPacketSize =
                 USB_HostHidGetPacketsize(mouseInstance->classHandle, USB_ENDPOINT_INTERRUPT, USB_IN);
 
             /* first: set idle */
-            mouseInstance->runWaitState = kRunWaitSetIdle;
-            mouseInstance->runState = kRunIdle;
+            mouseInstance->runWaitState = kUSB_HostHidRunWaitSetIdle;
+            mouseInstance->runState = kUSB_HostHidRunIdle;
             if (USB_HostHidSetIdle(mouseInstance->classHandle, 0, 0, USB_HostHidControlCallback, mouseInstance) !=
                 kStatus_USB_Success)
             {
@@ -314,7 +315,7 @@ void USB_HostHidMouseTask(void *param)
             }
             break;
 
-        case kRunSetIdleDone: /* 3. hid get report descriptor */
+        case kUSB_HostHidRunSetIdleDone: /* 3. hid get report descriptor */
             /* get report descriptor's length */
             hidDescriptor = NULL;
             descriptor = (uint8_t *)((usb_host_interface_t *)mouseInstance->interfaceHandle)->interfaceExtension;
@@ -352,20 +353,20 @@ void USB_HostHidMouseTask(void *param)
             if (mouseReportLength > HID_BUFFER_SIZE)
             {
                 usb_echo("hid buffer is too small\r\n");
-                mouseInstance->runState = kRunIdle;
+                mouseInstance->runState = kUSB_HostHidRunIdle;
                 return;
             }
 
-            mouseInstance->runWaitState = kRunWaitGetReportDescriptor;
-            mouseInstance->runState = kRunIdle;
+            mouseInstance->runWaitState = kUSB_HostHidRunWaitGetReportDescriptor;
+            mouseInstance->runState = kUSB_HostHidRunIdle;
             /* second: get report descriptor */
             USB_HostHidGetReportDescriptor(mouseInstance->classHandle, mouseInstance->mouseBuffer, mouseReportLength,
                                            USB_HostHidControlCallback, mouseInstance);
             break;
 
-        case kRunGetReportDescriptorDone: /* 4. hid set protocol */
-            mouseInstance->runWaitState = kRunWaitSetProtocol;
-            mouseInstance->runState = kRunIdle;
+        case kUSB_HostHidRunGetReportDescriptorDone: /* 4. hid set protocol */
+            mouseInstance->runWaitState = kUSB_HostHidRunWaitSetProtocol;
+            mouseInstance->runState = kUSB_HostHidRunIdle;
             /* third: set protocol */
             if (USB_HostHidSetProtocol(mouseInstance->classHandle, USB_HOST_HID_REQUEST_PROTOCOL_REPORT,
                                        USB_HostHidControlCallback, mouseInstance) != kStatus_USB_Success)
@@ -374,9 +375,9 @@ void USB_HostHidMouseTask(void *param)
             }
             break;
 
-        case kRunSetProtocolDone: /* 5. start to receive data */
-            mouseInstance->runWaitState = kRunWaitDataReceived;
-            mouseInstance->runState = kRunIdle;
+        case kUSB_HostHidRunSetProtocolDone: /* 5. start to receive data */
+            mouseInstance->runWaitState = kUSB_HostHidRunWaitDataReceived;
+            mouseInstance->runState = kUSB_HostHidRunIdle;
             if (USB_HostHidRecv(mouseInstance->classHandle, mouseInstance->mouseBuffer, mouseInstance->maxPacketSize,
                                 USB_HostHidInCallback, mouseInstance) != kStatus_USB_Success)
             {
@@ -384,11 +385,11 @@ void USB_HostHidMouseTask(void *param)
             }
             break;
 
-        case kRunDataReceived: /* process received data and receive next data */
+        case kUSB_HostHidRunDataReceived: /* process received data and receive next data */
             USB_HostMouseProcessBuffer(mouseInstance->mouseBuffer);
 
-            mouseInstance->runWaitState = kRunWaitDataReceived;
-            mouseInstance->runState = kRunIdle;
+            mouseInstance->runWaitState = kUSB_HostHidRunWaitDataReceived;
+            mouseInstance->runState = kUSB_HostHidRunIdle;
             if (USB_HostHidRecv(mouseInstance->classHandle, mouseInstance->mouseBuffer, mouseInstance->maxPacketSize,
                                 USB_HostHidInCallback, mouseInstance) != kStatus_USB_Success)
             {
@@ -396,9 +397,9 @@ void USB_HostHidMouseTask(void *param)
             }
             break;
 
-        case kRunPrimeDataReceive: /* receive data */
-            mouseInstance->runWaitState = kRunWaitDataReceived;
-            mouseInstance->runState = kRunIdle;
+        case kUSB_HostHidRunPrimeDataReceive: /* receive data */
+            mouseInstance->runWaitState = kUSB_HostHidRunWaitDataReceived;
+            mouseInstance->runState = kUSB_HostHidRunIdle;
             if (USB_HostHidRecv(mouseInstance->classHandle, mouseInstance->mouseBuffer, mouseInstance->maxPacketSize,
                                 USB_HostHidInCallback, mouseInstance) != kStatus_USB_Success)
             {
@@ -503,7 +504,7 @@ usb_status_t USB_HostHidMouseEvent(usb_device_handle deviceHandle,
                               g_HostHidMouse.classHandle); /* hid class de-initialization */
             g_HostHidMouse.classHandle = NULL;
             g_HostHidMouse.deviceState = kStatus_DEV_Idle;
-            g_HostHidMouse.runState = kRunIdle;
+            g_HostHidMouse.runState = kUSB_HostHidRunIdle;
             usb_echo("mouse detached\r\n");
             break;
 

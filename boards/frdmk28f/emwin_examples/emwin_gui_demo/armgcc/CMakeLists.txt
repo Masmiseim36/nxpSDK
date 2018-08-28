@@ -54,6 +54,8 @@ SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -mfloat-abi=hard")
 
 SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -mfpu=fpv4-sp-d16")
 
+SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -DNDEBUG")
+
 SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -D__STARTUP_CLEAR_BSS")
 
 SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -D__STARTUP_INITIALIZE_NONCACHEDATA")
@@ -197,6 +199,8 @@ SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -mfpu=fpv4-sp-d16")
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -MMD")
 
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -MP")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DNDEBUG")
 
 SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DCPU_MK28FN2M0VMI15")
 
@@ -365,10 +369,10 @@ add_executable(emwin_gui_demo.elf
 "${ProjDirPath}/../../../../../devices/MK28F15/drivers/fsl_flexio_mculcd_edma.h"
 "${ProjDirPath}/../../../../../devices/MK28F15/drivers/fsl_edma.h"
 "${ProjDirPath}/../../../../../devices/MK28F15/drivers/fsl_edma.c"
-"${ProjDirPath}/../../../../../devices/MK28F15/drivers/fsl_dmamux.h"
-"${ProjDirPath}/../../../../../devices/MK28F15/drivers/fsl_dmamux.c"
 "${ProjDirPath}/../../../../../devices/MK28F15/drivers/fsl_qspi.h"
 "${ProjDirPath}/../../../../../devices/MK28F15/drivers/fsl_qspi.c"
+"${ProjDirPath}/../../../../../devices/MK28F15/drivers/fsl_dmamux.h"
+"${ProjDirPath}/../../../../../devices/MK28F15/drivers/fsl_dmamux.c"
 "${ProjDirPath}/../fsl_ssd1963.h"
 "${ProjDirPath}/../fsl_ssd1963.c"
 "${ProjDirPath}/../fsl_ft5406.h"
@@ -379,7 +383,17 @@ add_executable(emwin_gui_demo.elf
 "${ProjDirPath}/../../../../../devices/MK28F15/drivers/fsl_lpuart.c"
 "${ProjDirPath}/../../../../../devices/MK28F15/drivers/fsl_i2c.h"
 "${ProjDirPath}/../../../../../devices/MK28F15/drivers/fsl_i2c.c"
-"${ProjDirPath}/../../../../../devices/MK28F15/drivers/fsl_flash.c"
+"${ProjDirPath}/../../../../../devices/MK28F15/drivers/fsl_ftfx_adapter.h"
+"${ProjDirPath}/../../../../../devices/MK28F15/drivers/fsl_ftfx_utilities.h"
+"${ProjDirPath}/../../../../../devices/MK28F15/drivers/fsl_ftfx_features.h"
+"${ProjDirPath}/../../../../../devices/MK28F15/drivers/fsl_ftfx_controller.c"
+"${ProjDirPath}/../../../../../devices/MK28F15/drivers/fsl_ftfx_controller.h"
+"${ProjDirPath}/../../../../../devices/MK28F15/drivers/fsl_ftfx_flash.c"
+"${ProjDirPath}/../../../../../devices/MK28F15/drivers/fsl_ftfx_flash.h"
+"${ProjDirPath}/../../../../../devices/MK28F15/drivers/fsl_ftfx_cache.c"
+"${ProjDirPath}/../../../../../devices/MK28F15/drivers/fsl_ftfx_cache.h"
+"${ProjDirPath}/../../../../../devices/MK28F15/drivers/fsl_ftfx_flexnvm.c"
+"${ProjDirPath}/../../../../../devices/MK28F15/drivers/fsl_ftfx_flexnvm.h"
 "${ProjDirPath}/../../../../../devices/MK28F15/drivers/fsl_flash.h"
 "${ProjDirPath}/../../../../../devices/MK28F15/system_MK28F15.c"
 "${ProjDirPath}/../../../../../devices/MK28F15/system_MK28F15.h"

@@ -70,7 +70,6 @@
 #endif
 
 #if ((defined(USB_DEVICE_CONFIG_DFU)) && (USB_DEVICE_CONFIG_DFU > 0U))
-#include "usb_device_dfu_config.h"
 #include "usb_device_dfu.h"
 #endif
 
@@ -127,7 +126,7 @@ static const usb_device_class_map_t s_UsbDeviceClassInterfaceMap[] = {
 #endif
 
 #if ((defined USB_DEVICE_CONFIG_DFU) && (USB_DEVICE_CONFIG_DFU > 0U))
-    {usb_device_dfu_init, usb_device_dfu_deinit, usb_device_dfu_event, kUSB_DeviceClassTypeDfu},
+    {USB_DeviceDfuInit, USB_DeviceDfuDeinit, USB_DeviceDfuEvent, kUSB_DeviceClassTypeDfu},
 #endif
 
 #if ((defined USB_DEVICE_CONFIG_CCID) && (USB_DEVICE_CONFIG_CCID > 0U))
@@ -418,7 +417,8 @@ usb_status_t USB_DeviceClassCallback(usb_device_handle handle, uint32_t event, v
         USB_DeviceClassEvent(handle, kUSB_DeviceClassEventDeviceReset, classHandle);
     }
 
-    /* Call the application device callback function. */
+    /* Call the application device callback function. deviceCallback is from the second parameter of
+       USB_DeviceClassInit */
     error = classHandle->configList->deviceCallback(handle, event, param);
     return error;
 }

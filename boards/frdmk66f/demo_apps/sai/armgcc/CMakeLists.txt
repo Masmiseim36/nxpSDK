@@ -54,6 +54,8 @@ SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -mfloat-abi=hard")
 
 SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -mfpu=fpv4-sp-d16")
 
+SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -DNDEBUG")
+
 SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -D__STARTUP_CLEAR_BSS")
 
 SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -D__STARTUP_INITIALIZE_NONCACHEDATA")
@@ -93,6 +95,10 @@ SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DFRDM_K66F")
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DFREEDOM")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DPRINTF_FLOAT_ENABLE=1")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DSDK_I2C_BASED_COMPONENT_USED=1")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DBOARD_USE_CODEC=1")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -g")
 
@@ -139,6 +145,10 @@ SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DFRDM_K66F")
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DFREEDOM")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DPRINTF_FLOAT_ENABLE=1")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DSDK_I2C_BASED_COMPONENT_USED=1")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DBOARD_USE_CODEC=1")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Os")
 
@@ -209,6 +219,8 @@ SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -mfpu=fpv4-sp-d16")
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -MMD")
 
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -MP")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DNDEBUG")
 
 SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DCPU_MK66FN2M0VMD18")
 
@@ -352,11 +364,9 @@ include_directories(${ProjDirPath}/../../../../../middleware/sdmmc/inc)
 
 include_directories(${ProjDirPath}/../../../../../middleware/sdmmc/port)
 
-include_directories(${ProjDirPath}/../../../../../middleware/fatfs/src/fsl_sd_disk)
+include_directories(${ProjDirPath}/../../../../../middleware/fatfs/source/fsl_sd_disk)
 
-include_directories(${ProjDirPath}/../../../../../middleware/fatfs/src)
-
-include_directories(${ProjDirPath}/../../../../../middleware/fatfs/src/option)
+include_directories(${ProjDirPath}/../../../../../middleware/fatfs/source)
 
 include_directories(${ProjDirPath}/../../../../../devices/MK66F18)
 
@@ -370,10 +380,14 @@ include_directories(${ProjDirPath}/../../../../../devices/MK66F18/utilities)
 
 add_executable(sai.elf 
 "${ProjDirPath}/../ffconf.h"
+"${ProjDirPath}/../recordtoSdcard.c"
 "${ProjDirPath}/../fsl_sdmmc_host.c"
 "${ProjDirPath}/../fsl_sdmmc_event.c"
 "${ProjDirPath}/../fsl_sdmmc_event.h"
+"${ProjDirPath}/../sai.h"
 "${ProjDirPath}/../sai.c"
+"${ProjDirPath}/../recordPlayback.c"
+"${ProjDirPath}/../playbackSineWave.c"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../board.c"
@@ -388,6 +402,8 @@ add_executable(sai.elf
 "${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_clock.c"
 "${ProjDirPath}/../fsl_dialog7212.h"
 "${ProjDirPath}/../fsl_dialog7212.c"
+"${ProjDirPath}/../fsl_codec_common.h"
+"${ProjDirPath}/../fsl_codec_common.c"
 "${ProjDirPath}/../../../../../middleware/sdmmc/src/fsl_sd.c"
 "${ProjDirPath}/../../../../../middleware/sdmmc/inc/fsl_sd.h"
 "${ProjDirPath}/../../../../../middleware/sdmmc/inc/fsl_sdmmc_host.h"
@@ -396,14 +412,26 @@ add_executable(sai.elf
 "${ProjDirPath}/../../../../../middleware/sdmmc/src/fsl_sdmmc_common.c"
 "${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_sdhc.h"
 "${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_sdhc.c"
-"${ProjDirPath}/../../../../../middleware/fatfs/src/fsl_sd_disk/fsl_sd_disk.h"
-"${ProjDirPath}/../../../../../middleware/fatfs/src/fsl_sd_disk/fsl_sd_disk.c"
-"${ProjDirPath}/../../../../../middleware/fatfs/src/ff.c"
-"${ProjDirPath}/../../../../../middleware/fatfs/src/diskio.c"
-"${ProjDirPath}/../../../../../middleware/fatfs/src/integer.h"
-"${ProjDirPath}/../../../../../middleware/fatfs/src/ff.h"
-"${ProjDirPath}/../../../../../middleware/fatfs/src/diskio.h"
-"${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_flash.c"
+"${ProjDirPath}/../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.h"
+"${ProjDirPath}/../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.c"
+"${ProjDirPath}/../../../../../middleware/fatfs/source/diskio.c"
+"${ProjDirPath}/../../../../../middleware/fatfs/source/ff.c"
+"${ProjDirPath}/../../../../../middleware/fatfs/source/ffsystem.c"
+"${ProjDirPath}/../../../../../middleware/fatfs/source/ffunicode.c"
+"${ProjDirPath}/../../../../../middleware/fatfs/source/diskio.h"
+"${ProjDirPath}/../../../../../middleware/fatfs/source/ff.h"
+"${ProjDirPath}/../../../../../middleware/fatfs/source/integer.h"
+"${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_ftfx_adapter.h"
+"${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_ftfx_utilities.h"
+"${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_ftfx_features.h"
+"${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_ftfx_controller.c"
+"${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_ftfx_controller.h"
+"${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_ftfx_flash.c"
+"${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_ftfx_flash.h"
+"${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_ftfx_cache.c"
+"${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_ftfx_cache.h"
+"${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_ftfx_flexnvm.c"
+"${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_ftfx_flexnvm.h"
 "${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_flash.h"
 "${ProjDirPath}/../../../../../devices/MK66F18/system_MK66F18.c"
 "${ProjDirPath}/../../../../../devices/MK66F18/system_MK66F18.h"
@@ -431,10 +459,10 @@ add_executable(sai.elf
 "${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_sai.c"
 "${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_sai_edma.h"
 "${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_sai_edma.c"
-"${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_edma.h"
-"${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_edma.c"
 "${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_dmamux.h"
 "${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_dmamux.c"
+"${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_edma.h"
+"${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_edma.c"
 "${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_sysmpu.h"
 "${ProjDirPath}/../../../../../devices/MK66F18/drivers/fsl_sysmpu.c"
 )

@@ -86,7 +86,8 @@ int main(void)
     tpmParam.chnlNumber = BOARD_TPM_CHANNEL_PAIR;
     tpmParam.level = TPM_LED_ON_LEVEL;
     tpmParam.dutyCyclePercent = updatedDutycycle;
-    tpmParam.firstEdgeDelayPercent = 0U;
+    /* Note: If setting deadtime insertion, the value of firstEdgeDelayPercent must be non-zero */
+    tpmParam.firstEdgeDelayPercent = 10U;
 
     /* Board pin, clock, debug console init */
     BOARD_InitPins();
@@ -111,8 +112,6 @@ int main(void)
     /* Initialize TPM module */
     TPM_Init(BOARD_TPM_BASEADDR, &tpmInfo);
 
-    TPM_SetupPwm(BOARD_TPM_BASEADDR, &tpmParam, 1U, kTPM_CombinedPwm, 24000U, TPM_SOURCE_CLOCK);
-
 #if defined(FSL_FEATURE_TPM_HAS_POL) && FSL_FEATURE_TPM_HAS_POL
     /* Change the polarity on the second channel of the pair to get complementary PWM signals */
     BOARD_TPM_BASEADDR->POL |= (1U << ((BOARD_TPM_CHANNEL_PAIR * 2) + 1));
@@ -122,11 +121,13 @@ int main(void)
     filterVal = BOARD_TPM_BASEADDR->FILTER;
     /* Clear the channel pair's filter values */
     filterVal &= ~((TPM_FILTER_CH0FVAL_MASK | TPM_FILTER_CH1FVAL_MASK)
-                   << (BOARD_TPM_CHANNEL_PAIR * (TPM_FILTER_CH0FVAL_SHIFT + TPM_FILTER_CH1FVAL_SHIFT)));
+                   << ((BOARD_TPM_CHANNEL_PAIR * 2) * (TPM_FILTER_CH0FVAL_SHIFT + TPM_FILTER_CH1FVAL_SHIFT)));
     /* Shift the deadtime insertion value to the right place in the register */
     filterVal |= (TPM_FILTER_CH0FVAL(deadtimeValue) | TPM_FILTER_CH1FVAL(deadtimeValue))
-                 << (BOARD_TPM_CHANNEL_PAIR * (TPM_FILTER_CH0FVAL_SHIFT + TPM_FILTER_CH1FVAL_SHIFT));
+                 << ((BOARD_TPM_CHANNEL_PAIR * 2) * (TPM_FILTER_CH0FVAL_SHIFT + TPM_FILTER_CH1FVAL_SHIFT));
     BOARD_TPM_BASEADDR->FILTER = filterVal;
+
+    TPM_SetupPwm(BOARD_TPM_BASEADDR, &tpmParam, 1U, kTPM_CombinedPwm, 24000U, TPM_SOURCE_CLOCK);
 
     TPM_StartTimer(BOARD_TPM_BASEADDR, kTPM_SystemClock);
 
@@ -135,13 +136,13 @@ int main(void)
         do
         {
             PRINTF("\r\nPlease enter a value to update the Duty cycle:\r\n");
-            PRINTF("Note: The range of value is 0 to 9.\r\n");
+            PRINTF("Note: The range of value is 1 to 9.\r\n");
             PRINTF("For example: If enter '5', the duty cycle will be set to 50 percent.\r\n");
             PRINTF("Value:");
             getCharValue = GETCHAR() - 0x30U;
             PRINTF("%d", getCharValue);
             PRINTF("\r\n");
-        } while (getCharValue > 9U);
+        } while ((getCharValue > 9U) || (getCharValue == 0U));
 
         updatedDutycycle = getCharValue * 10U;
 
@@ -150,6 +151,7 @@ int main(void)
         TPM_UpdateChnlEdgeLevelSelect(BOARD_TPM_BASEADDR, (tpm_chnl_t)((BOARD_TPM_CHANNEL_PAIR * 2) + 1), 0U);
 
         /* Update PWM duty cycle on the channel pair */
+        /* Note: If setting deadtime insertion, the value of Dutycycle must be non-zero */
         TPM_UpdatePwmDutycycle(BOARD_TPM_BASEADDR, BOARD_TPM_CHANNEL_PAIR, kTPM_CombinedPwm, updatedDutycycle);
 
         /* Start output on each channel of the pair with updated dutycycle */

@@ -3,10 +3,10 @@
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
+ *  that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -84,12 +84,6 @@ static void SDMMCHOST_TransferCompleteCallback(SDMMCHOST_TYPE *base,
                                                void *userData);
 
 /*!
- * @brief host controller error recovery.
- * @param host base address.
- */
-static void SDMMCHOST_ErrorRecovery(SDMMCHOST_TYPE *base);
-
-/*!
  * @brief card detect deinit function.
  */
 static void SDMMCHOST_CardDetectDeinit(void);
@@ -103,9 +97,9 @@ static status_t SDMMCHOST_CardDetectInit(SDMMCHOST_TYPE *base, const sdmmchost_d
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-static sdhc_handle_t s_sdhcHandle;
+sdhc_handle_t g_sdhcHandle;
 static uint32_t s_sdhcAdmaTable[SDHC_ADMA_TABLE_WORDS];
-static volatile bool s_sdhcTransferSuccessFlag = true;
+volatile bool g_sdhcTransferSuccessFlag = true;
 /*! @brief Card detect flag. */
 static volatile bool s_sdInsertedFlag = false;
 /*******************************************************************************
@@ -160,11 +154,11 @@ static void SDMMCHOST_TransferCompleteCallback(SDMMCHOST_TYPE *base,
 {
     if (status == kStatus_Success)
     {
-        s_sdhcTransferSuccessFlag = true;
+        g_sdhcTransferSuccessFlag = true;
     }
     else
     {
-        s_sdhcTransferSuccessFlag = false;
+        g_sdhcTransferSuccessFlag = false;
     }
 
     SDMMCEVENT_Notify(kSDMMCEVENT_TransferComplete);
@@ -176,12 +170,12 @@ static status_t SDMMCHOST_TransferFunction(SDMMCHOST_TYPE *base, SDMMCHOST_TRANS
 
     do
     {
-        error = SDHC_TransferNonBlocking(base, &s_sdhcHandle, s_sdhcAdmaTable, SDHC_ADMA_TABLE_WORDS, content);
+        error = SDHC_TransferNonBlocking(base, &g_sdhcHandle, s_sdhcAdmaTable, SDHC_ADMA_TABLE_WORDS, content);
     } while (error == kStatus_SDHC_BusyTransferring);
 
     if ((error != kStatus_Success) ||
         (false == SDMMCEVENT_Wait(kSDMMCEVENT_TransferComplete, SDMMCHOST_TRANSFER_COMPLETE_TIMEOUT)) ||
-        (!s_sdhcTransferSuccessFlag))
+        (!g_sdhcTransferSuccessFlag))
     {
         error = kStatus_Fail;
         /* host error recovery */
@@ -193,7 +187,7 @@ static status_t SDMMCHOST_TransferFunction(SDMMCHOST_TYPE *base, SDMMCHOST_TRANS
     return error;
 }
 
-static void SDMMCHOST_ErrorRecovery(SDMMCHOST_TYPE *base)
+void SDMMCHOST_ErrorRecovery(SDMMCHOST_TYPE *base)
 {
     uint32_t status = 0U;
     /* get host present status */
@@ -230,10 +224,10 @@ static status_t SDMMCHOST_CardDetectInit(SDMMCHOST_TYPE *base, const sdmmchost_d
     {
         /* Card detection pin will generate interrupt on either eage */
         PORT_SetPinInterruptConfig(BOARD_SDHC_CD_PORT_BASE, BOARD_SDHC_CD_GPIO_PIN, kPORT_InterruptEitherEdge);
-        /* Open card detection pin NVIC. */
-        SDMMCHOST_ENABLE_IRQ(SDMMCHOST_CARD_DETECT_IRQ);
         /* set IRQ priority */
         SDMMCHOST_SET_IRQ_PRIORITY(SDMMCHOST_CARD_DETECT_IRQ, 6U);
+        /* Open card detection pin NVIC. */
+        SDMMCHOST_ENABLE_IRQ(SDMMCHOST_CARD_DETECT_IRQ);
         /* check card detect status */
         SDMMCHOST_DetectCardByGpio(cd);
     }
@@ -268,7 +262,7 @@ void SDMMCHOST_CARD_DETECT_GPIO_INTERRUPT_HANDLER(void)
 {
     if (PORT_GetPinsInterruptFlags(BOARD_SDHC_CD_PORT_BASE) == (1U << BOARD_SDHC_CD_GPIO_PIN))
     {
-        SDMMCHOST_DetectCardByGpio((sdmmchost_detect_card_t *)(s_sdhcHandle.userData));
+        SDMMCHOST_DetectCardByGpio((sdmmchost_detect_card_t *)(g_sdhcHandle.userData));
     }
     /* Clear interrupt flag.*/
     PORT_ClearPinsInterruptFlags(BOARD_SDHC_CD_PORT_BASE, ~0U);
@@ -349,7 +343,7 @@ status_t SDMMCHOST_Init(SDMMCHOST_CONFIG *host, void *userData)
     sdhcCallback.TransferComplete = SDMMCHOST_TransferCompleteCallback;
     sdhcCallback.CardInserted = SDMMCHOST_DetectCardInsertByHost;
     sdhcCallback.CardRemoved = SDMMCHOST_DetectCardRemoveByHost;
-    SDHC_TransferCreateHandle(sdhcHost->base, &s_sdhcHandle, &sdhcCallback, userData);
+    SDHC_TransferCreateHandle(sdhcHost->base, &g_sdhcHandle, &sdhcCallback, userData);
 
     /* Create transfer complete event. */
     if (false == SDMMCEVENT_Create(kSDMMCEVENT_TransferComplete))

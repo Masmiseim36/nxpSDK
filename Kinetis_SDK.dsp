@@ -7301,6 +7301,146 @@ SOURCE=.\boards\evkbimxrt1050\driver_examples\flexspi\hyper_flash\polling_transf
 SOURCE=.\boards\evkbimxrt1050\driver_examples\flexspi\hyper_flash\polling_transfer\pin_mux.h
 # End Source File
 # End Group
+# Begin Group "CAN_interrupt_transfer"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\driver_examples\flexcan\interrupt_transfer\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\driver_examples\flexcan\interrupt_transfer\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\driver_examples\flexcan\interrupt_transfer\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\driver_examples\flexcan\interrupt_transfer\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\driver_examples\flexcan\interrupt_transfer\flexcan_interrupt_transfer.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\driver_examples\flexcan\interrupt_transfer\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\driver_examples\flexcan\interrupt_transfer\pin_mux.h
+# End Source File
+# End Group
+# Begin Group "flexRAM_access"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\driver_examples\flexram\ram_access\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\driver_examples\flexram\ram_access\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\driver_examples\flexram\ram_access\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\driver_examples\flexram\ram_access\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\driver_examples\flexram\ram_access\flexram.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\driver_examples\flexram\ram_access\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\driver_examples\flexram\ram_access\pin_mux.h
+# End Source File
+# End Group
+# Begin Group "flexRAM_allocate"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\driver_examples\flexram\ram_allocate\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\driver_examples\flexram\ram_allocate\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\driver_examples\flexram\ram_allocate\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\driver_examples\flexram\ram_allocate\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\driver_examples\flexram\ram_allocate\flexram.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\driver_examples\flexram\ram_allocate\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\driver_examples\flexram\ram_allocate\pin_mux.h
+# End Source File
+# End Group
+# End Group
+# Begin Group "lwIP_DHCP"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\lwip_examples\lwip_dhcp\bm\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\lwip_examples\lwip_dhcp\bm\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\lwip_examples\lwip_dhcp\bm\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\lwip_examples\lwip_dhcp\bm\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\lwip_examples\lwip_dhcp\bm\fsl_phy.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\lwip_examples\lwip_dhcp\bm\fsl_phy.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\lwip_examples\lwip_dhcp\bm\lwip_dhcp_bm.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\lwip_examples\lwip_dhcp\bm\lwipopts.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\lwip_examples\lwip_dhcp\bm\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\lwip_examples\lwip_dhcp\bm\pin_mux.h
+# End Source File
 # End Group
 # End Group
 # Begin Group "EVK-iMXRT1020"
@@ -7337,6 +7477,78 @@ SOURCE=.\boards\evkmimxrt1020\driver_examples\flexspi\nor\polling_transfer\pin_m
 
 SOURCE=.\boards\evkmimxrt1020\driver_examples\flexspi\nor\polling_transfer\pin_mux.h
 # End Source File
+# End Group
+# End Group
+# Begin Group "FRDM_K28F"
+
+# PROP Default_Filter ""
+# Begin Group "driver_examples Nr. 2"
+
+# PROP Default_Filter ""
+# Begin Group "QSPI_EDMA"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\frdmk28f\driver_examples\qspi\edma_transfer\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk28f\driver_examples\qspi\edma_transfer\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk28f\driver_examples\qspi\edma_transfer\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk28f\driver_examples\qspi\edma_transfer\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk28f\driver_examples\qspi\edma_transfer\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk28f\driver_examples\qspi\edma_transfer\pin_mux.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk28f\driver_examples\qspi\edma_transfer\qspi_edma_transfer.c
+# End Source File
+# End Group
+# Begin Group "QSPI_Polling"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\frdmk28f\driver_examples\qspi\polling_transfer\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk28f\driver_examples\qspi\polling_transfer\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk28f\driver_examples\qspi\polling_transfer\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk28f\driver_examples\qspi\polling_transfer\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk28f\driver_examples\qspi\polling_transfer\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk28f\driver_examples\qspi\polling_transfer\pin_mux.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk28f\driver_examples\qspi\polling_transfer\qspi_polling_transfer.c
+# End Source File
+# End Group
 # End Group
 # End Group
 # End Group

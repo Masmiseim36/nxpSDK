@@ -100,6 +100,8 @@ void CRYPTO_InitHardware(void)
 #elif defined(FREESCALE_USE_CAU3)
     /* Initialize CAU3 */
     CAU3_Init(CAU3);
+    /* Get CAU3 ownership for this Host CPU */
+    CAU3_LockSemaphore(CAU3);
 #elif defined(FREESCALE_USE_DCP)
     /* Initialize DCP */
     dcp_config_t dcpConfig;

@@ -6,7 +6,7 @@
  *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
+ *  that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -47,8 +47,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief Driver version 2.1.6. */
-#define FSL_SDHC_DRIVER_VERSION (MAKE_VERSION(2U, 1U, 6U))
+/*! @brief Driver version 2.1.7. */
+#define FSL_SDHC_DRIVER_VERSION (MAKE_VERSION(2U, 1U, 7U))
 /*@}*/
 
 /*! @brief Maximum block count can be set one time */
@@ -891,7 +891,7 @@ static inline uint32_t SDHC_GetCommandResponse(SDHC_Type *base, uint32_t index)
 }
 
 /*!
- * @brief Fills the the data port.
+ * @brief Fills the data port.
  *
  * This function is used to implement the data transfer by Data Port instead of DMA.
  *

@@ -54,6 +54,8 @@ SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -mfloat-abi=hard")
 
 SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -mfpu=fpv4-sp-d16")
 
+SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -DNDEBUG")
+
 SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -D__STARTUP_CLEAR_BSS")
 
 SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -D__STARTUP_INITIALIZE_NONCACHEDATA")
@@ -82,6 +84,8 @@ SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -mfloat-abi=hard")
 
 SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -mfpu=fpv4-sp-d16")
 
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DDEBUG")
+
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -D_DEBUG=1")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DCPU_MK66FN2M0VMD18")
@@ -89,6 +93,10 @@ SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DCPU_MK66FN2M0VMD18")
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DUSB_STACK_BM")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DUSING_SAI")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DSDK_I2C_BASED_COMPONENT_USED=1")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DBOARD_USE_CODEC=1")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -g")
 
@@ -122,6 +130,8 @@ SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -MMD")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -MP")
 
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DNDEBUG")
+
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -D_DEBUG=0")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DCPU_MK66FN2M0VMD18")
@@ -129,6 +139,10 @@ SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DCPU_MK66FN2M0VMD18")
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DUSB_STACK_BM")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DUSING_SAI")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DSDK_I2C_BASED_COMPONENT_USED=1")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DBOARD_USE_CODEC=1")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Os")
 
@@ -197,6 +211,8 @@ SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -mfpu=fpv4-sp-d16")
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -MMD")
 
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -MP")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DNDEBUG")
 
 SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DCPU_MK66FN2M0VMD18")
 
@@ -349,7 +365,6 @@ include_directories(${ProjDirPath}/../../../../../../devices/MK66F18/utilities)
 include_directories(${ProjDirPath}/../../../../../../devices/MK66F18)
 
 add_executable(dev_audio_speaker_lite_bm.elf 
-"${ProjDirPath}/../da7212_interface.c"
 "${ProjDirPath}/../audio_speaker.c"
 "${ProjDirPath}/../audio_speaker.h"
 "${ProjDirPath}/../usb_device_descriptor.c"
@@ -387,6 +402,8 @@ add_executable(dev_audio_speaker_lite_bm.elf
 "${ProjDirPath}/../../../../../../middleware/usb/phy/usb_phy.h"
 "${ProjDirPath}/../fsl_dialog7212.h"
 "${ProjDirPath}/../fsl_dialog7212.c"
+"${ProjDirPath}/../fsl_codec_common.h"
+"${ProjDirPath}/../fsl_codec_common.c"
 "${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_sai.h"
 "${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_sai.c"
 "${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_common.h"
@@ -397,10 +414,10 @@ add_executable(dev_audio_speaker_lite_bm.elf
 "${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_i2c.c"
 "${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_sai_edma.h"
 "${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_sai_edma.c"
-"${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_edma.h"
-"${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_edma.c"
 "${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_dmamux.h"
 "${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_dmamux.c"
+"${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_edma.h"
+"${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_edma.c"
 "${ProjDirPath}/../../../../../../middleware/usb/device/usb_device.h"
 "${ProjDirPath}/../../../../../../middleware/usb/device/usb_device_dci.c"
 "${ProjDirPath}/../../../../../../middleware/usb/device/usb_device_dci.h"
@@ -418,7 +435,17 @@ add_executable(dev_audio_speaker_lite_bm.elf
 "${ProjDirPath}/../../../../../../devices/MK66F18/utilities/fsl_debug_console_conf.h"
 "${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_smc.h"
 "${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_smc.c"
-"${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_flash.c"
+"${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_ftfx_adapter.h"
+"${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_ftfx_utilities.h"
+"${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_ftfx_features.h"
+"${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_ftfx_controller.c"
+"${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_ftfx_controller.h"
+"${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_ftfx_flash.c"
+"${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_ftfx_flash.h"
+"${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_ftfx_cache.c"
+"${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_ftfx_cache.h"
+"${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_ftfx_flexnvm.c"
+"${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_ftfx_flexnvm.h"
 "${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_flash.h"
 "${ProjDirPath}/../../../../../../devices/MK66F18/system_MK66F18.c"
 "${ProjDirPath}/../../../../../../devices/MK66F18/system_MK66F18.h"

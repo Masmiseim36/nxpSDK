@@ -4,11 +4,14 @@
 // Version : 050117
 //*****************************************************************************
 //
+// The Clear BSD License
 // Copyright(C) NXP Semiconductors, 2017
 // All rights reserved.
 //
+// 
 // Redistribution and use in source and binary forms, with or without modification,
-// are permitted provided that the following conditions are met:
+// are permitted (subject to the limitations in the disclaimer below) provided
+//  that the following conditions are met:
 //
 // o Redistributions of source code must retain the above copyright notice, this list
 //   of conditions and the following disclaimer.
@@ -21,6 +24,7 @@
 //   contributors may be used to endorse or promote products derived from this
 //   software without specific prior written permission.
 //
+// NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 // ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 // WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -60,6 +64,62 @@ extern "C" {
 //*****************************************************************************
 #if defined (__cplusplus)
 extern "C" {
+#endif
+
+/*!
+ * @brief Defines the structure to set the Bootloader Configuration Area
+ *
+ * This type of variable is used to set the Bootloader Configuration Area
+ * of the chip.
+ */
+typedef struct SystemBootloaderConfig
+{
+  unsigned int      tag;                /*!< Magic number to verify bootloader configuration is valid. Must be set to 'kcfg'. */
+  unsigned int      crcStartAddress;    /*!< Start address for application image CRC check. If the bits are all set then Kinetis bootloader by default will not perform any CRC check. */
+  unsigned int      crcByteCount;       /*!< Byte count for application image CRC check. If the bits are all set then Kinetis bootloader by default will not prform any CRC check. */
+  unsigned int      crcExpectedValue;   /*!< Expected CRC value for application CRC check. If the bits are all set then Kinetis bootloader by default will not perform any CRC check.*/
+  unsigned char     enabledPeripherals; /*!< Bitfield of peripherals to enable.
+                                         bit 0 - LPUART, bit 1 - I2C, bit 2 - SPI, bit 4 - USB
+                                         Kinetis bootloader will enable the peripheral if corresponding bit is set to 1. */
+  unsigned char     i2cSlaveAddress;    /*!< If not 0xFF, used as the 7-bit I2C slave address. If 0xFF, defaults to 0x10 for I2C slave address */
+  unsigned short    peripheralDetectionTimeoutMs; /*!< Timeout in milliseconds for active peripheral detection. If 0xFFFF, defaults to 5 seconds. */
+  unsigned short    usbVid;             /*!< Sets the USB Vendor ID reported by the device during enumeration. If 0xFFFF, it defaults to 0x15A2. */
+  unsigned short    usbPid;             /*!< Sets the USB Product ID reported by the device during enumeration. */
+  unsigned int      usbStringsPointer;  /*!< Sets the USB Strings reported by the device during enumeration. */
+  unsigned char     clockFlags;         /*!< The flags in the clockFlags configuration field are enabled if the corresponding bit is cleared (0).
+                                           bit 0 - HighSpeed Enable high speed mode (i.e., 48 MHz). */
+  unsigned char     clockDivider;       /*!< Inverted value of the divider to use for core and bus clocks when in high speed mode */
+  unsigned char     bootFlags;          /*!< If bit 0 is cleared, then Kinetis bootloader will jump to either Quad SPI Flash or internal flash image depending on FOPT BOOTSRC_SEL bits.
+                                           If the bit is set, then Kinetis bootloader will prepare for host communication over serial peripherals. */
+  unsigned char     RESERVED1;
+  unsigned int      mmcauConfigPointer; /*!< A pointer to the MMCAU configuration structure in memory. */
+  unsigned int      keyBlobPointer;     /*!< A pointer to the keyblob data in memory. */
+  unsigned char     RESERVED2[8];
+  unsigned int      qspiConfigBlockPtr; /*!< A pointer to the QSPI config block in internal flash array. */
+  unsigned char     RESERVED3[12];
+} system_bootloader_config_t;
+
+#ifdef BOOTLOADER_CONFIG
+__attribute__ ((section (".BootloaderConfig"))) const system_bootloader_config_t BootloaderConfig =
+
+{
+    .tag                        = 0x6766636BU, /* Magic Number */
+    .crcStartAddress            = 0xFFFFFFFFU, /* Disable CRC check */
+    .crcByteCount               = 0xFFFFFFFFU, /* Disable CRC check */
+    .crcExpectedValue           = 0xFFFFFFFFU, /* Disable CRC check */
+    .enabledPeripherals         = 0x17,        /* Enable all peripherals */
+    .i2cSlaveAddress            = 0xFF,        /* Use default I2C address */
+    .peripheralDetectionTimeoutMs = 0x01F4U,   /* Use default timeout */
+    .usbVid                     = 0xFFFFU,     /* Use default USB Vendor ID */
+    .usbPid                     = 0xFFFFU,     /* Use default USB Product ID */
+    .usbStringsPointer          = 0xFFFFFFFFU, /* Use default USB Strings */
+    .clockFlags                 = 0x01,        /* Enable High speed mode */
+    .clockDivider               = 0xFF,        /* Use clock divider 1 */
+    .bootFlags                  = 0x01,        /* Enable communication with host */
+    .mmcauConfigPointer         = 0xFFFFFFFFU, /* No MMCAU configuration */
+    .keyBlobPointer             = 0x000001000, /* keyblob data is at 0x1000 */
+    .qspiConfigBlockPtr         = 0xFFFFFFFFU  /* No QSPI configuration */
+};
 #endif
 
 //*****************************************************************************

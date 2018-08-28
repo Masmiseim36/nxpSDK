@@ -126,7 +126,6 @@ usb_status_t USB_DeviceAudioCallback(class_handle_t handle, uint32_t event, void
 usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *param);
 
 extern void BOARD_USB_Audio_TxInit(uint32_t samplingRate);
-extern void BOARD_I2C_LPI2C_Init(void);
 extern void BOARD_Codec_Init(void);
 
 extern void BOARD_DMA_EDMA_Config(void);
@@ -138,7 +137,6 @@ extern void BOARD_DMA_EDMA_Start(void);
  * Variables
  ******************************************************************************/
 extern usb_audio_speaker_struct_t g_UsbDeviceAudioSpeaker;
-static i2c_master_handle_t i2cHandle;
 extern uint8_t audioPlayDataBuff[AUDIO_SPEAKER_DATA_WHOLE_BUFFER_LENGTH * FS_ISO_OUT_ENDP_PACKET_SIZE];
 sai_config_t saiTxConfig;
 sai_transfer_format_t audioFormat;
@@ -147,14 +145,15 @@ edma_handle_t dmaTxHandle = {0};
 
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
 static uint8_t audioPlayDMATempBuff[FS_ISO_OUT_ENDP_PACKET_SIZE];
-
+codec_handle_t codecHandle = {0};
+extern codec_config_t boardCodecConfig;
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
 uint8_t audioPlayDataBuff[AUDIO_SPEAKER_DATA_WHOLE_BUFFER_LENGTH * FS_ISO_OUT_ENDP_PACKET_SIZE];
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
 uint8_t audioPlayPacket[FS_ISO_OUT_ENDP_PACKET_SIZE + AUDIO_FORMAT_CHANNELS * AUDIO_FORMAT_SIZE];
 
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
-uint8_t audioFeedBackBuffer[3] = {TSAMFREQ2BYTES(AUDIO_SAMPLING_RATE_TO_10_14)};
+uint8_t audioFeedBackBuffer[3];
 
 extern usb_device_class_struct_t g_UsbDeviceAudioClass;
 
@@ -168,9 +167,9 @@ usb_audio_speaker_struct_t g_UsbDeviceAudioSpeaker = {
     .attach = 0U,
     .copyProtect = 0x01U,
     .curMute = 0x00U,
-    .curVolume = {0x00U, 0x80U},
-    .minVolume = {0x00U, 0x80U},
-    .maxVolume = {0xFFU, 0x7FU},
+    .curVolume = {0x00U, 0x1fU},
+    .minVolume = {0x00U, 0x00U},
+    .maxVolume = {0x00U, 0x43U},
     .resVolume = {0x01U, 0x00U},
     .curBass = 0x00U,
     .minBass = 0x80U,
@@ -238,7 +237,8 @@ extern void DA7212_Config_Audio_Formats(uint32_t samplingRate);
 
 void BOARD_Codec_Init()
 {
-    DA7212_USB_Audio_Init(BOARD_I2C_BASEADDR, (void *)&i2cHandle);
+    CODEC_Init(&codecHandle, &boardCodecConfig);
+    CODEC_SetFormat(&codecHandle, audioFormat.masterClockHz, audioFormat.sampleRate_Hz, audioFormat.bitWidth);
 }
 
 void SAI_USB_Audio_TxInit(I2S_Type *SAIBase)
@@ -267,18 +267,6 @@ void BOARD_USB_Audio_TxInit(uint32_t samplingRate)
 {
     SAI_USB_Audio_TxInit(BOARD_DEMO_SAI);
     DA7212_Config_Audio_Formats(samplingRate);
-}
-
-void BOARD_I2C_LPI2C_Init()
-{
-    i2c_master_config_t i2cConfig = {0};
-
-    uint32_t i2cSourceClock;
-    i2cSourceClock = CLOCK_GetFreq(BOARD_DEMO_I2C_CLKSRC);
-
-    I2C_MasterGetDefaultConfig(&i2cConfig);
-    I2C_MasterInit(BOARD_I2C_BASEADDR, &i2cConfig, i2cSourceClock);
-    I2C_MasterTransferCreateHandle(BOARD_I2C_BASEADDR, &i2cHandle, NULL, NULL);
 }
 
 static void txCallback(I2S_Type *base, sai_edma_handle_t *handle, status_t status, void *userData)
@@ -421,11 +409,7 @@ void USB_DeviceIsrEnable(void)
     irqNumber = usbDeviceKhciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
 #endif
 /* Install isr, set priority, and enable IRQ. */
-#if defined(__GIC_PRIO_BITS)
-    GIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
-#else
     NVIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
-#endif
     EnableIRQ((IRQn_Type)irqNumber);
 }
 #if USB_DEVICE_CONFIG_USE_TASK
@@ -446,7 +430,7 @@ void Init_Board_Sai_Codec(void)
     usb_echo("Init Audio SAI and CODEC\r\n");
 
     BOARD_USB_Audio_TxInit(AUDIO_SAMPLING_RATE);
-    BOARD_I2C_LPI2C_Init();
+    BOARD_Codec_I2C_Init();
     BOARD_Codec_Init();
     BOARD_DMA_EDMA_Config();
     BOARD_Create_Audio_DMA_EDMA_Handle();
@@ -786,8 +770,8 @@ usb_status_t USB_DeviceAudioRequest(class_handle_t handle, uint32_t event, void 
     return error;
 }
 
-/* The USB_AudioSpeakerBufferSpaceAvailable() function gets the reserved speaker ringbuffer size */
-uint32_t USB_AudioSpeakerBufferSpaceAvailable(void)
+/* The USB_AudioSpeakerBufferSpaceUsed() function gets the used speaker ringbuffer size */
+uint32_t USB_AudioSpeakerBufferSpaceUsed(void)
 {
     if (g_UsbDeviceAudioSpeaker.tdReadNumberPlay > g_UsbDeviceAudioSpeaker.tdWriteNumberPlay)
     {
@@ -808,7 +792,7 @@ uint32_t USB_AudioSpeakerBufferSpaceAvailable(void)
 void USB_AudioFeedbackDataUpdate()
 {
     static uint32_t feedbackValue = 0x0, originFeedbackValue = 0x0;
-    uint32_t reservedSpace = 0;
+    uint32_t usedSpace = 0;
 
     if (g_UsbDeviceAudioSpeaker.speakerIntervalCount != AUDIO_CALCULATE_Ff_INTERVAL)
     {
@@ -826,23 +810,15 @@ void USB_AudioFeedbackDataUpdate()
         feedbackValue = originFeedbackValue;
         AUDIO_UPDATE_FEEDBACK_DATA(audioFeedBackBuffer, originFeedbackValue);
     }
-#if 1
     else if (g_UsbDeviceAudioSpeaker.timesFeedbackCalculate > 2)
     {
-        reservedSpace = USB_AudioSpeakerBufferSpaceAvailable();
-        if (reservedSpace >=
+        usedSpace = USB_AudioSpeakerBufferSpaceUsed();
+        if (usedSpace >=
             AUDIO_BUFFER_UPPER_LIMIT(AUDIO_SPEAKER_DATA_WHOLE_BUFFER_LENGTH * FS_ISO_OUT_ENDP_PACKET_SIZE))
         {
             feedbackValue -= (AUDIO_SAMPLING_RATE_KHZ / AUDIO_SAMPLING_RATE_16KHZ) * (AUDIO_ADJUST_MIN_STEP);
         }
-        else if ((reservedSpace >=
-                  AUDIO_BUFFER_LOWER_LIMIT(AUDIO_SPEAKER_DATA_WHOLE_BUFFER_LENGTH * FS_ISO_OUT_ENDP_PACKET_SIZE)) &&
-                 (reservedSpace <
-                  AUDIO_BUFFER_UPPER_LIMIT(AUDIO_RECORDER_DATA_WHOLE_BUFFER_LENGTH * FS_ISO_OUT_ENDP_PACKET_SIZE)))
-        {
-            // feedbackValue = originFeedbackValue;
-        }
-        else if (reservedSpace <
+        else if (usedSpace <
                  AUDIO_BUFFER_LOWER_LIMIT(AUDIO_SPEAKER_DATA_WHOLE_BUFFER_LENGTH * FS_ISO_OUT_ENDP_PACKET_SIZE))
         {
             feedbackValue += (AUDIO_SAMPLING_RATE_KHZ / AUDIO_SAMPLING_RATE_16KHZ) * (AUDIO_ADJUST_MIN_STEP);
@@ -855,7 +831,6 @@ void USB_AudioFeedbackDataUpdate()
     else
     {
     }
-#endif
     g_UsbDeviceAudioSpeaker.lastAudioSendCount = g_UsbDeviceAudioSpeaker.audioSendCount;
 }
 
@@ -1093,6 +1068,8 @@ void APPInit(void)
     SYSMPU_Enable(SYSMPU, 0);
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
     Init_Board_Sai_Codec();
+
+    AUDIO_UPDATE_FEEDBACK_DATA(audioFeedBackBuffer, AUDIO_SAMPLING_RATE_TO_10_14);
 
     if (kStatus_USB_Success !=
         USB_DeviceClassInit(CONTROLLER_ID, &s_audioConfigList, &g_UsbDeviceAudioSpeaker.deviceHandle))

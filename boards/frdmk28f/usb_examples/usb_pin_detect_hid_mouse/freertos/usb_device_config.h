@@ -148,8 +148,9 @@
 #define USB_DEVICE_CONFIG_KEEP_ALIVE_MODE (0U)
 
 /*! @brief Whether the transfer buffer is cache-enabled or not. */
+#ifndef USB_DEVICE_CONFIG_BUFFER_PROPERTY_CACHEABLE
 #define USB_DEVICE_CONFIG_BUFFER_PROPERTY_CACHEABLE (0U)
-
+#endif
 /*! @brief Whether the low power mode is enabled or not. */
 #define USB_DEVICE_CONFIG_LOW_POWER_MODE (0U)
 

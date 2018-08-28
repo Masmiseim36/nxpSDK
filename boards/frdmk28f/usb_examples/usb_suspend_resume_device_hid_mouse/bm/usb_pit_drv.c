@@ -45,7 +45,7 @@ void PIT0_IRQHandler(void)
     timerCallback();
    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping 
      exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
+#if defined __CORTEX_M && (__CORTEX_M == 4U || __CORTEX_M == 7U)
     __DSB();
 #endif
 }
@@ -57,7 +57,7 @@ void PIT_IRQHandler(void)
     timerCallback();
    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping 
      exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
+#if defined __CORTEX_M && (__CORTEX_M == 4U || __CORTEX_M == 7U)
     __DSB();
 #endif
 }

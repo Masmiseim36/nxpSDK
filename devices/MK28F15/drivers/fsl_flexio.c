@@ -3,10 +3,10 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
+ *  that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -38,12 +38,25 @@
  * Definitions
  ******************************************************************************/
 
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.flexio"
+#endif
+
+
 /*< @brief user configurable flexio handle count. */
 #define FLEXIO_HANDLE_COUNT 2
 
 /*******************************************************************************
  * Variables
  ******************************************************************************/
+/*! @brief Pointers to flexio bases for each instance. */
+FLEXIO_Type *const s_flexioBases[] = FLEXIO_BASE_PTRS;
+
+#if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
+/*! @brief Pointers to flexio clocks for each instance. */
+const clock_ip_name_t s_flexioClocks[] = FLEXIO_CLOCKS;
+#endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
 
 /*< @brief pointer to array of FLEXIO handle. */
 static void *s_flexioHandle[FLEXIO_HANDLE_COUNT];
@@ -53,14 +66,6 @@ static void *s_flexioType[FLEXIO_HANDLE_COUNT];
 
 /*< @brief pointer to array of FLEXIO Isr. */
 static flexio_isr_t s_flexioIsr[FLEXIO_HANDLE_COUNT];
-
-#if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
-/*! @brief Pointers to flexio clocks for each instance. */
-const clock_ip_name_t s_flexioClocks[] = FLEXIO_CLOCKS;
-#endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
-
-/*! @brief Pointers to flexio bases for each instance. */
-FLEXIO_Type *const s_flexioBases[] = FLEXIO_BASE_PTRS;
 
 /*******************************************************************************
  * Codes
@@ -282,8 +287,8 @@ void FLEXIO_CommonIRQHandler(void)
             s_flexioIsr[index](s_flexioType[index], s_flexioHandle[index]);
         }
     }
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
+/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
+  exception return operation might vector to incorrect interrupt */
 #if defined __CORTEX_M && (__CORTEX_M == 4U)
     __DSB();
 #endif
@@ -305,6 +310,11 @@ void FLEXIO1_DriverIRQHandler(void)
 }
 
 void UART2_FLEXIO_DriverIRQHandler(void)
+{
+    FLEXIO_CommonIRQHandler();
+}
+
+void FLEXIO2_DriverIRQHandler(void)
 {
     FLEXIO_CommonIRQHandler();
 }

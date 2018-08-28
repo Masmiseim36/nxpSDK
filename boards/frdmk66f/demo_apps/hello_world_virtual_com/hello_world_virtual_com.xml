@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
+  <externalDefinitions>
+    <definition extID="com.nxp.mcuxpresso"/>
+    <definition extID="middleware.baremetal.MK66F18"/>
+    <definition extID="middleware.usb.device_controller_ehci.MK66F18"/>
+    <definition extID="middleware.usb.phy.MK66F18"/>
+    <definition extID="platform.devices.MK66F18_CMSIS.MK66F18"/>
+    <definition extID="platform.devices.MK66F18_startup.MK66F18"/>
+    <definition extID="platform.drivers.clock.MK66F18"/>
+    <definition extID="platform.drivers.common.MK66F18"/>
+    <definition extID="platform.drivers.flash.MK66F18"/>
+    <definition extID="platform.drivers.gpio.MK66F18"/>
+    <definition extID="platform.drivers.lpuart.MK66F18"/>
+    <definition extID="platform.drivers.port.MK66F18"/>
+    <definition extID="platform.drivers.smc.MK66F18"/>
+    <definition extID="platform.drivers.sysmpu.MK66F18"/>
+    <definition extID="platform.drivers.uart.MK66F18"/>
+    <definition extID="platform.utilities.assert.MK66F18"/>
+    <definition extID="platform.utilities.debug_console.MK66F18"/>
+    <definition extID="iar"/>
+    <definition extID="mdk"/>
+    <definition extID="mcuxpresso"/>
+    <definition extID="armgcc"/>
+  </externalDefinitions>
+  <example id="frdmk66f_hello_world_virtual_com" name="hello_world_virtual_com" category="demo_apps" dependency="middleware.usb.phy.MK66F18 middleware.usb.device_controller_ehci.MK66F18 platform.drivers.clock.MK66F18 platform.drivers.flash.MK66F18 platform.drivers.common.MK66F18 platform.devices.MK66F18_CMSIS.MK66F18 platform.devices.MK66F18_startup.MK66F18 platform.drivers.uart.MK66F18 platform.drivers.lpuart.MK66F18 platform.drivers.port.MK66F18 platform.drivers.smc.MK66F18 platform.utilities.debug_console.MK66F18 platform.drivers.gpio.MK66F18 platform.utilities.assert.MK66F18 platform.drivers.sysmpu.MK66F18 middleware.baremetal.MK66F18" toolchain="mdk iar armgcc mcuxpresso">
+    <projects>
+      <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
+    </projects>
+    <toolchainSettings>
+      <toolchainSetting id_refs="com.nxp.mcuxpresso">
+        <option id="com.crt.advproject.gas.fpu" type="enum">
+          <value>com.crt.advproject.gas.fpu.fpv4.hard</value>
+        </option>
+        <option id="com.crt.advproject.gcc.fpu" type="enum">
+          <value>com.crt.advproject.gcc.fpu.fpv4.hard</value>
+        </option>
+        <option id="com.crt.advproject.c.misc.dialect" type="enum">
+          <value>com.crt.advproject.misc.dialect.gnu99</value>
+        </option>
+        <option id="com.crt.advproject.gcc.exe.debug.option.debugging.level" type="enum">
+          <value>gnu.c.debugging.level.default</value>
+        </option>
+        <option id="com.crt.advproject.gcc.exe.release.option.debugging.level" type="enum">
+          <value>gnu.c.debugging.level.default</value>
+        </option>
+        <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
+          <value>CPU_MK66FN2M0VMD18</value>
+          <value>FRDM_K66F</value>
+          <value>FREEDOM</value>
+          <value>PRINTF_FLOAT_ENABLE=0</value>
+          <value>SCANF_FLOAT_ENABLE=0</value>
+          <value>PRINTF_ADVANCED_ENABLE=0</value>
+          <value>SCANF_ADVANCED_ENABLE=0</value>
+          <value>USB_STACK_BM</value>
+          <value>BOARD_USE_VIRTUALCOM=1</value>
+        </option>
+        <option id="gnu.c.compiler.option.optimization.flags" type="string">
+          <value>-fno-common</value>
+        </option>
+        <option id="gnu.c.compiler.option.misc.other" type="string">
+          <value>-c  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin</value>
+        </option>
+        <option id="com.crt.advproject.link.fpu" type="enum">
+          <value>com.crt.advproject.link.fpu.fpv4.hard</value>
+        </option>
+        <option id="gnu.c.link.option.nostdlibs" type="boolean">
+          <value>true</value>
+        </option>
+        <option id="com.crt.advproject.link.memory.sections" type="stringList">
+          <value>isd=*(NonCacheable.init);region=RAM2;type=.data</value>
+          <value>isd=*(NonCacheable);region=RAM2;type=.bss</value>
+        </option>
+      </toolchainSetting>
+    </toolchainSettings>
+    <source path="boards/frdmk66f/demo_apps/hello_world_virtual_com" target_path="board/src" type="c_include">
+      <files mask="board.h"/>
+      <files mask="clock_config.h"/>
+    </source>
+    <source path="boards/frdmk66f/demo_apps/hello_world_virtual_com" target_path="board/src" type="src">
+      <files mask="board.c"/>
+      <files mask="clock_config.c"/>
+    </source>
+    <source path="boards/frdmk66f/demo_apps/hello_world_virtual_com" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso">
+      <files mask="readme.txt"/>
+    </source>
+    <source path="boards/frdmk66f/demo_apps/hello_world_virtual_com" target_path="source" type="src">
+      <files mask="hello_world.c"/>
+    </source>
+    <source path="devices/MK66F18/utilities" target_path="utilities" type="c_include">
+      <files mask="usb_device_cdc_acm.h"/>
+      <files mask="usb_device_ch9.h"/>
+      <files mask="usb_device_config.h"/>
+      <files mask="usb_device_descriptor.h"/>
+      <files mask="virtual_com.h"/>
+    </source>
+    <source path="devices/MK66F18/utilities" target_path="utilities" type="src">
+      <files mask="usb_device_cdc_acm.c"/>
+      <files mask="usb_device_ch9.c"/>
+      <files mask="usb_device_descriptor.c"/>
+      <files mask="virtual_com.c"/>
+    </source>
+    <source path="middleware/usb/device" target_path="usb/device/include" type="c_include">
+      <files mask="usb_device.h"/>
+    </source>
+    <source path="middleware/usb/device" target_path="usb/device/source" type="c_include">
+      <files mask="usb_device_dci.h"/>
+    </source>
+    <source path="middleware/usb/device" target_path="usb/device/source" type="src">
+      <files mask="usb_device_dci.c"/>
+    </source>
+  </example>
+</ksdk:examples>

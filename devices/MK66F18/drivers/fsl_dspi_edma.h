@@ -6,7 +6,7 @@
  *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
+ *  that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -44,6 +44,12 @@
 /***********************************************************************************************************************
  * Definitions
  **********************************************************************************************************************/
+
+/*! @name Driver version */
+/*@{*/
+/*! @brief DSPI EDMA driver version 2.2.0. */
+#define FSL_DSPI_EDMA_DRIVER_VERSION (MAKE_VERSION(2, 2, 0))
+/*@}*/
 
 /*!
 * @brief Forward declaration of the DSPI eDMA master handle typedefs.

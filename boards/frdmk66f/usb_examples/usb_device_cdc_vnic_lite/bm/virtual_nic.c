@@ -121,10 +121,14 @@ USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_zeroSend = 0x00;
 /*******************************************************************************
 * Code
 ******************************************************************************/
-
 ENET_Type *BOARD_GetExampleEnetBase(void)
 {
     return ENET;
+}
+
+uint32_t BOARD_GetPhySysClock(void)
+{
+    return CLOCK_GetFreq(kCLOCK_CoreSysClk);
 }
 
 #if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U))
@@ -187,11 +191,7 @@ void USB_DeviceIsrEnable(void)
     irqNumber = usbDeviceKhciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
 #endif
 /* Install isr, set priority, and enable IRQ. */
-#if defined(__GIC_PRIO_BITS)
-    GIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
-#else
     NVIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
-#endif
     EnableIRQ((IRQn_Type)irqNumber);
 }
 #if USB_DEVICE_CONFIG_USE_TASK
@@ -1025,6 +1025,12 @@ void main(void)
     SYSMPU_Enable(SYSMPU, false);
     /* Set RMII clock src. */
     CLOCK_SetRmii0Clock(1U);
+
+    NVIC_SetPriority((IRQn_Type)ENET_Receive_IRQn, 6U);
+#ifdef ENET_ENHANCEDBUFFERDESCRIPTOR_MODE
+    NVIC_SetPriority(ENET_Transmit_IRQn, 6U);
+    NVIC_SetPriority(ENET_1588_Timer_IRQn, 6U);
+#endif
 
     APPInit();
 

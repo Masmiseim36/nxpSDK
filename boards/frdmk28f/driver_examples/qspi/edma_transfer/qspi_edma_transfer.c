@@ -3,10 +3,10 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
+ *  that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -211,8 +211,8 @@ qspi_flash_config_t single_config = {
     .endian = kQSPI_64LittleEndian,
     .enableWordAddress = false};
 
-static uint32_t buff[64]; /* Test data */
-
+AT_NONCACHEABLE_SECTION_ALIGN(static uint32_t buff[64], 4); /* Test data */
+static bool isDivNeedRestore = false;
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -358,12 +358,34 @@ void qspi_edma(void)
 #endif
     erase_sector(addr);
     PRINTF("Erase finished!\r\n");
+
+    /* Reduce frequency while clock divder is less than 2 */
+    uint8_t qspiClockDiv = ((EXAMPLE_QSPI->MCR & QuadSPI_MCR_SCLKCFG_MASK) >> QuadSPI_MCR_SCLKCFG_SHIFT) + 1U;
+    if (qspiClockDiv == 1U)
+    {
+        /* Reduce the frequency */
+        isDivNeedRestore = true;
+        QSPI_Enable(EXAMPLE_QSPI, false);
+        EXAMPLE_QSPI->MCR &= ~QuadSPI_MCR_SCLKCFG_MASK;
+        EXAMPLE_QSPI->MCR |= QuadSPI_MCR_SCLKCFG(1U);
+        QSPI_Enable(EXAMPLE_QSPI, true);
+    }
+
     /* Program pages in a sector */
     for (i = 0; i < FLASH_SECTORE_SIZE / FLASH_PAGE_SIZE; i++)
     {
         program_page(addr + i * FLASH_PAGE_SIZE, buff);
     }
     PRINTF("Program data finished!\r\n");
+
+    /* Restore the frequency if needed */
+    if (isDivNeedRestore)
+    {
+        QSPI_Enable(EXAMPLE_QSPI, false);
+        EXAMPLE_QSPI->MCR &= ~QuadSPI_MCR_SCLKCFG_MASK;
+        EXAMPLE_QSPI->MCR |= QuadSPI_MCR_SCLKCFG(0U);
+        QSPI_Enable(EXAMPLE_QSPI, true);
+    }
 
     for (i = 0; i < FLASH_SECTORE_SIZE / 4; i++)
     {

@@ -442,8 +442,7 @@ int main(void)
         s_hyperflash_program_buffer[i] = i & 0xFFU;
     }
 
-    status = flexspi_nor_flash_page_program(EXAMPLE_FLEXSPI, EXAMPLE_SECTOR * SECTOR_SIZE,
-                                            (void *)s_hyperflash_program_buffer);
+    status = flexspi_nor_flash_page_program(EXAMPLE_FLEXSPI, EXAMPLE_SECTOR * SECTOR_SIZE, (void *)s_hyperflash_program_buffer);
     if (status != kStatus_Success)
     {
         PRINTF("Page program failure !\r\n");

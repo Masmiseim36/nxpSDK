@@ -132,7 +132,6 @@ extern void USB_AudioSpeakerResetTask(void);
 * Variables
 ******************************************************************************/
 extern usb_device_composite_struct_t g_composite;
-static i2c_master_handle_t i2cHandle;
 extern uint8_t audioPlayDataBuff[AUDIO_SPEAKER_DATA_WHOLE_BUFFER_LENGTH * FS_ISO_OUT_ENDP_PACKET_SIZE];
 extern uint8_t audioRecDataBuff[AUDIO_RECORDER_DATA_WHOLE_BUFFER_LENGTH * FS_ISO_IN_ENDP_PACKET_SIZE];
 extern sai_transfer_format_t audioFormat;
@@ -152,7 +151,8 @@ static uint8_t audioPlayDMATempBuff[FS_ISO_OUT_ENDP_PACKET_SIZE];
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
 static uint8_t audioRecDMATempBuff[FS_ISO_IN_ENDP_PACKET_SIZE];
 #endif
-
+codec_handle_t codecHandle = {0};
+extern codec_config_t boardCodecConfig;
 /* Composite device structure. */
 usb_device_composite_struct_t g_composite;
 extern volatile bool g_ButtonPress;
@@ -204,12 +204,13 @@ char *SW_GetName(void)
 
 void BOARD_Codec_Init()
 {
-    DA7212_USB_Audio_Init(BOARD_I2C_BASEADDR, (void *)&i2cHandle);
+    CODEC_Init(&codecHandle, &boardCodecConfig);
+    CODEC_SetFormat(&codecHandle, audioFormat.masterClockHz, audioFormat.sampleRate_Hz, audioFormat.bitWidth);
 }
 
 void BOARD_SetCodecMuteUnmute(bool mute)
 {
-    DA7212_Set_Playback_Mute(mute);
+    DA7212_Mute(&codecHandle, mute);
 }
 
 void SAI_USB_Audio_TxInit(I2S_Type *SAIBase)
@@ -248,17 +249,6 @@ void BOARD_USB_Audio_TxRxInit(uint32_t samplingRate)
     DA7212_Config_Audio_Formats(samplingRate);
 }
 
-void BOARD_I2C_LPI2C_Init()
-{
-    i2c_master_config_t i2cConfig = {0};
-
-    uint32_t i2cSourceClock;
-    i2cSourceClock = CLOCK_GetFreq(BOARD_DEMO_I2C_CLKSRC);
-
-    I2C_MasterGetDefaultConfig(&i2cConfig);
-    I2C_MasterInit(BOARD_I2C_BASEADDR, &i2cConfig, i2cSourceClock);
-    I2C_MasterTransferCreateHandle(BOARD_I2C_BASEADDR, &i2cHandle, NULL, NULL);
-}
 
 #if AUDIO_DMA_EDMA_MODE
 static void txCallback(I2S_Type *base, sai_edma_handle_t *handle, status_t status, void *userData)
@@ -552,11 +542,7 @@ void USB_DeviceIsrEnable(void)
     irqNumber = usbDeviceKhciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
 #endif
 /* Install isr, set priority, and enable IRQ. */
-#if defined(__GIC_PRIO_BITS)
-    GIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
-#else
     NVIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
-#endif
     EnableIRQ((IRQn_Type)irqNumber);
 }
 #if USB_DEVICE_CONFIG_USE_TASK
@@ -811,16 +797,23 @@ usb_status_t USB_DeviceProcessClassRequest(usb_device_handle handle,
 {
     usb_status_t error = kStatus_USB_InvalidRequest;
 
-    if (USB_AUDIO_CONTROL_INTERFACE_INDEX == (setup->wIndex & 0xFFU))
+    if ((setup->bmRequestType & USB_REQUEST_TYPE_RECIPIENT_MASK) != USB_REQUEST_TYPE_RECIPIENT_INTERFACE)
     {
-        return USB_DeviceAudioUnifiedClassRequest(handle, setup, length, buffer);
-    }
-    else if (USB_HID_KEYBOARD_INTERFACE_INDEX == (setup->wIndex & 0xFFU))
-    {
-        return USB_DeviceHidKeyboardClassRequest(handle, setup, buffer, length);
+        return USB_DeviceAudioUnifiedClassRequestEndpRecipient(handle, setup, length, buffer);
     }
     else
     {
+        if (USB_AUDIO_CONTROL_INTERFACE_INDEX == (setup->wIndex & 0xFFU))
+        {
+            return USB_DeviceAudioUnifiedClassRequestIntfRecipient(handle, setup, length, buffer);
+        }
+        else if (USB_HID_KEYBOARD_INTERFACE_INDEX == (setup->wIndex & 0xFFU))
+        {
+            return USB_DeviceHidKeyboardClassRequest(handle, setup, buffer, length);
+        }
+        else
+        {
+        }
     }
 
     return error;

@@ -3,10 +3,10 @@
  * Copyright (c) 2015-2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
+ *  that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -34,12 +34,7 @@
 #ifndef _FSL_DIALOG7212_H_
 #define _FSL_DIALOG7212_H_
 
-#include "fsl_common.h"
-#if defined(FSL_FEATURE_SOC_LPI2C_COUNT) && (FSL_FEATURE_SOC_LPI2C_COUNT)
-#include "fsl_lpi2c.h"
-#else
-#include "fsl_i2c.h"
-#endif
+#include "fsl_codec_common.h"
 
 /*******************************************************************************
  * Definitions
@@ -1052,20 +1047,6 @@ typedef struct da7212_config
     da7212_dac_source_t dacSource; /*!< DA7212 data source. */
 } da7212_config_t;
 
-/*! @brief DA7212 handle */
-typedef struct da7212_handle
-{
-#if defined(FSL_FEATURE_SOC_LPI2C_COUNT) && (FSL_FEATURE_SOC_LPI2C_COUNT)
-    LPI2C_Type *base;
-    lpi2c_master_transfer_t xfer;
-    lpi2c_master_handle_t *i2cHandle;
-#else
-    I2C_Type *base;                 /*!< I2C base pointer for da7212 */
-    i2c_master_handle_t *i2cHandle; /*!< I2C master handle used for transfer */
-    i2c_master_transfer_t xfer;     /*!< I2C transfer structure */
-#endif
-} da7212_handle_t;
-
 /*******************************************************************************
  * API
  ******************************************************************************/
@@ -1087,7 +1068,7 @@ extern "C" {
  * codec_config.isMaster = false
  * @endcode
  */
-void DA7212_Init(da7212_handle_t *handle, da7212_config_t *config);
+status_t DA7212_Init(codec_handle_t *handle, void *config);
 
 /*!
  * @brief Set DA7212 audio format.
@@ -1099,9 +1080,9 @@ void DA7212_Init(da7212_handle_t *handle, da7212_config_t *config);
  * 11.025K/22.05K/44.1K
  * @param dataBits How many bits in a word of a audio frame, DA7212 only supports 16/20/24/32 bits.
  */
-void DA7212_ConfigAudioFormat(da7212_handle_t *handle,
-                              uint32_t sampleRate_Hz,
+status_t DA7212_ConfigAudioFormat(codec_handle_t *handle,
                               uint32_t masterClock_Hz,
+                              uint32_t sampleRate_Hz,
                               uint32_t dataBits);
 
 /*!
@@ -1110,7 +1091,7 @@ void DA7212_ConfigAudioFormat(da7212_handle_t *handle,
  * @param handle DA7212 handle pointer.
  * @param volume The volume of playback.
  */
-void DA7212_ChangeHPVolume(da7212_handle_t *handle, da7212_volume_t volume);
+void DA7212_ChangeHPVolume(codec_handle_t *handle, da7212_volume_t volume);
 
 /*!
  * @brief Mute or unmute DA7212.
@@ -1118,7 +1099,7 @@ void DA7212_ChangeHPVolume(da7212_handle_t *handle, da7212_volume_t volume);
  * @param handle DA7212 handle pointer.
  * @param isMuted True means mute, false means unmute.
  */
-void DA7212_Mute(da7212_handle_t *handle, bool isMuted);
+void DA7212_Mute(codec_handle_t *handle, bool isMuted);
 
 /*!
  * @brief Set the input data source of DA7212.
@@ -1126,7 +1107,7 @@ void DA7212_Mute(da7212_handle_t *handle, bool isMuted);
  * @param handle DA7212 handle pointer.
  * @param DA7212_Input Input data source.
  */
-void DA7212_ChangeInput(da7212_handle_t *handle, da7212_Input_t DA7212_Input);
+void DA7212_ChangeInput(codec_handle_t *handle, da7212_Input_t DA7212_Input);
 
 /*!
  * @brief Set the output device of DA7212.
@@ -1134,7 +1115,7 @@ void DA7212_ChangeInput(da7212_handle_t *handle, da7212_Input_t DA7212_Input);
  * @param handle DA7212 handle pointer.
  * @param DA7212_Output Output device of DA7212.
  */
-void DA7212_ChangeOutput(da7212_handle_t *handle, da7212_Output_t DA7212_Output);
+void DA7212_ChangeOutput(codec_handle_t *handle, da7212_Output_t DA7212_Output);
 
 /*!
  * @brief Write a register for DA7212.
@@ -1143,7 +1124,7 @@ void DA7212_ChangeOutput(da7212_handle_t *handle, da7212_Output_t DA7212_Output)
  * @param u8Register DA7212 register address to be written.
  * @param u8RegisterData Data to be written into regsiter
  */
-status_t DA7212_WriteRegister(da7212_handle_t *handle, uint8_t u8Register, uint8_t u8RegisterData);
+status_t DA7212_WriteRegister(codec_handle_t *handle, uint8_t u8Register, uint8_t u8RegisterData);
 
 /*!
  * @brief Get a register value of DA7212.
@@ -1152,7 +1133,14 @@ status_t DA7212_WriteRegister(da7212_handle_t *handle, uint8_t u8Register, uint8
  * @param u8Register DA7212 register address to be read.
  * @param pu8RegisterData Pointer where the read out value to be stored.
  */
-status_t DA7212_ReadRegister(da7212_handle_t *handle, uint8_t u8Register, uint8_t *pu8RegisterData);
+status_t DA7212_ReadRegister(codec_handle_t *handle, uint8_t u8Register, uint8_t *pu8RegisterData);
+
+/*!
+ * @brief Deinit DA7212.
+ *
+ * @param handle DA7212 handle pointer.
+ */
+status_t DA7212_Deinit(codec_handle_t *handle);
 
 #if defined(__cplusplus)
 }

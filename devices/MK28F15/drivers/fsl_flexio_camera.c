@@ -3,10 +3,10 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
+ *  that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -34,27 +34,26 @@
 
 #include "fsl_flexio_camera.h"
 
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.flexio_camera"
+#endif
+
+
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
 
-extern uint32_t FLEXIO_GetInstance(FLEXIO_Type *base);
 
 /*******************************************************************************
  * Variables
  ******************************************************************************/
 
-#if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
-extern const clock_ip_name_t s_flexioClocks[];
-#endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
-
-extern FLEXIO_Type *const s_flexioBases[];
-
 /*******************************************************************************
  * Codes
  ******************************************************************************/
 
-uint32_t FLEXIO_CAMERA_GetInstance(FLEXIO_CAMERA_Type *base)
+static uint32_t FLEXIO_CAMERA_GetInstance(FLEXIO_CAMERA_Type *base)
 {
     return FLEXIO_GetInstance(base->flexioBase);
 }

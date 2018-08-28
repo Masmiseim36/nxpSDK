@@ -3,10 +3,10 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
+ *  that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -91,6 +91,13 @@ static const sdmmchost_detect_card_t s_sdCardDetect = {
 #endif
     .cdTimeOut_ms = (~0U),
 };
+
+/*! @brief SDMMC card power control configuration */
+#if defined DEMO_SDCARD_POWER_CTRL_FUNCTION_EXIST
+static const sdmmchost_pwr_card_t s_sdCardPwrCtrl = {
+    .powerOn = BOARD_PowerOnSDCARD, .powerOnDelay_ms = 500U, .powerOff = BOARD_PowerOffSDCARD, .powerOffDelay_ms = 0U,
+};
+#endif
 
 /*******************************************************************************
  * Code
@@ -195,6 +202,9 @@ int main(void)
     card->host.sourceClock_Hz = SD_HOST_CLK_FREQ;
     /* card detect type */
     card->usrParam.cd = &s_sdCardDetect;
+#if defined DEMO_SDCARD_POWER_CTRL_FUNCTION_EXIST
+    card->usrParam.pwr = &s_sdCardPwrCtrl;
+#endif
 
     PRINTF("\r\nSDCARD polling example.\r\n");
 

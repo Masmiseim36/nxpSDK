@@ -27,20 +27,23 @@
     <definition extID="platform.utilities.debug_console.MK66F18"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
-    <definition extID="kds"/>
     <definition extID="mcuxpresso"/>
     <definition extID="armgcc"/>
   </externalDefinitions>
-  <example id="frdmk66f_erpc_server_matrix_multiply_uart" name="erpc_server_matrix_multiply_uart" category="multiprocessor_examples" dependency="platform.drivers.uart.MK66F18 platform.drivers.common.MK66F18 platform.drivers.clock.MK66F18 platform.drivers.uart_edma.MK66F18 platform.drivers.edma.MK66F18 platform.drivers.dmamux.MK66F18 platform.drivers.uart_cmsis.MK66F18 platform.CMSIS_Driver_Include.USART_CMSISInclude.MK66F18 platform.CMSIS_Driver_Include.Common_CMSISInclude.MK66F18 platform.drivers.flash.MK66F18 platform.devices.MK66F18_CMSIS.MK66F18 platform.devices.MK66F18_startup.MK66F18 platform.drivers.lpuart.MK66F18 platform.drivers.port.MK66F18 platform.drivers.smc.MK66F18 platform.utilities.debug_console.MK66F18 platform.drivers.gpio.MK66F18 platform.utilities.assert.MK66F18 middleware.multicore.erpc.eRPC_server.MK66F18 middleware.multicore.erpc.common.MK66F18 middleware.multicore.erpc.eRPC_uart_cmsis_transport.MK66F18 middleware.multicore.erpc.eRPC_port_stdlib.MK66F18 middleware.multicore.erpc.doc.MK66F18" toolchain="iar mdk armgcc kds mcuxpresso">
+  <example id="frdmk66f_erpc_server_matrix_multiply_uart" name="erpc_server_matrix_multiply_uart" category="multiprocessor_examples" dependency="platform.drivers.uart.MK66F18 platform.drivers.common.MK66F18 platform.drivers.clock.MK66F18 platform.drivers.uart_edma.MK66F18 platform.drivers.edma.MK66F18 platform.drivers.uart_cmsis.MK66F18 platform.CMSIS_Driver_Include.USART_CMSISInclude.MK66F18 platform.CMSIS_Driver_Include.Common_CMSISInclude.MK66F18 platform.drivers.flash.MK66F18 platform.devices.MK66F18_CMSIS.MK66F18 platform.devices.MK66F18_startup.MK66F18 platform.drivers.lpuart.MK66F18 platform.drivers.port.MK66F18 platform.drivers.smc.MK66F18 platform.utilities.debug_console.MK66F18 platform.drivers.gpio.MK66F18 platform.utilities.assert.MK66F18 platform.drivers.dmamux.MK66F18 middleware.multicore.erpc.eRPC_server.MK66F18 middleware.multicore.erpc.common.MK66F18 middleware.multicore.erpc.eRPC_uart_cmsis_transport.MK66F18 middleware.multicore.erpc.eRPC_port_stdlib.MK66F18 middleware.multicore.erpc.doc.MK66F18" toolchain="mdk iar armgcc mcuxpresso">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.ccnature"/>
     </projects>
     <toolchainSettings>
       <toolchainSetting id_refs="com.nxp.mcuxpresso">
-        <!-- asm -->
-        <!-- gcc -->
+        <option id="com.crt.advproject.gas.fpu" type="enum">
+          <value>com.crt.advproject.gas.fpu.fpv4.hard</value>
+        </option>
         <option id="com.crt.advproject.c.misc.dialect" type="enum">
           <value>com.crt.advproject.misc.dialect.gnu99</value>
+        </option>
+        <option id="com.crt.advproject.gcc.fpu" type="enum">
+          <value>com.crt.advproject.gcc.fpu.fpv4.hard</value>
         </option>
         <option id="com.crt.advproject.gcc.exe.debug.option.debugging.level" type="enum">
           <value>gnu.c.debugging.level.default</value>
@@ -59,7 +62,9 @@
         <option id="gnu.c.compiler.option.misc.other" type="string">
           <value>-c  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin</value>
         </option>
-        <!-- cpp -->
+        <option id="com.crt.advproject.cpp.fpu" type="enum">
+          <value>com.crt.advproject.cpp.fpu.fpv4.hard</value>
+        </option>
         <option id="com.crt.advproject.cpp.misc.dialect" type="enum">
           <value>com.crt.advproject.misc.dialect.gnupp11</value>
         </option>
@@ -72,18 +77,17 @@
         <option id="gnu.cpp.compiler.option.other.other" type="string">
           <value>-c  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin  -fno-rtti  -fno-exceptions</value>
         </option>
-        <!-- cpp linker -->
+        <option id="com.crt.advproject.link.cpp.fpu" type="enum">
+          <value>com.crt.advproject.link.cpp.fpu.fpv4.hard</value>
+        </option>
         <option id="gnu.cpp.link.option.nostdlibs" type="boolean">
           <value>true</value>
-        </option>
-        <option id="gnu.cpp.link.option.other" type="stringList">
-          <value>--gc-sections</value>
         </option>
         <option id="com.crt.advproject.link.memory.heapAndStack.cpp" type="string">
           <value>&amp;Heap:Default;Default;0x2000&amp;Stack:Default;Default;0x400</value>
         </option>
         <option id="gnu.cpp.link.option.flags" type="string">
-          <value>-g  --specs=nano.specs  -fno-common  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin   -Wall</value>
+          <value>-g  --specs=nano.specs  -fno-common  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin  -Wall</value>
         </option>
       </toolchainSetting>
     </toolchainSettings>
@@ -91,12 +95,11 @@
       <files mask="Driver_Common.h"/>
       <files mask="Driver_USART.h"/>
     </source>
-    <source path="CMSIS/Driver/Include" target_path="drivers" type="c_include">
+    <source path="CMSIS/Driver/Include" target_path="drivers/src" type="c_include">
       <files mask="Driver_Common.h"/>
       <files mask="Driver_USART.h"/>
     </source>
     <source path="boards/frdmk66f/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service" target_path="erpc/service" type="c_include">
-      <files mask="erpc_crc16.h"/>
       <files mask="erpc_matrix_multiply.h"/>
       <files mask="erpc_matrix_multiply_server.h"/>
     </source>
@@ -112,18 +115,22 @@
     <source path="boards/frdmk66f/multiprocessor_examples/erpc_common" target_path="erpc" type="src">
       <files mask="erpc_error_handler.cpp"/>
     </source>
-    <source path="boards/frdmk66f/multiprocessor_examples/erpc_server_matrix_multiply_uart" target_path="board" type="c_include">
-      <files mask="RTE_Device.h"/>
+    <source path="boards/frdmk66f/multiprocessor_examples/erpc_server_matrix_multiply_uart" target_path="board/src" type="c_include">
       <files mask="board.h"/>
       <files mask="clock_config.h"/>
+    </source>
+    <source path="boards/frdmk66f/multiprocessor_examples/erpc_server_matrix_multiply_uart" target_path="board/src" type="src">
+      <files mask="board.c"/>
+      <files mask="clock_config.c"/>
+    </source>
+    <source path="boards/frdmk66f/multiprocessor_examples/erpc_server_matrix_multiply_uart" target_path="board" type="c_include">
+      <files mask="RTE_Device.h"/>
       <files mask="pin_mux.h"/>
     </source>
     <source path="boards/frdmk66f/multiprocessor_examples/erpc_server_matrix_multiply_uart" target_path="board" type="src">
-      <files mask="board.c"/>
-      <files mask="clock_config.c"/>
       <files mask="pin_mux.c"/>
     </source>
-    <source path="boards/frdmk66f/multiprocessor_examples/erpc_server_matrix_multiply_uart" target_path="doc" type="doc" toolchain="iar mdk kds mcuxpresso">
+    <source path="boards/frdmk66f/multiprocessor_examples/erpc_server_matrix_multiply_uart" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso">
       <files mask="readme.txt"/>
     </source>
     <source path="boards/frdmk66f/multiprocessor_examples/erpc_server_matrix_multiply_uart" target_path="source" type="c_include">

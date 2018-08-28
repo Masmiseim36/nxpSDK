@@ -158,11 +158,7 @@ void USB_DeviceIsrEnable(void)
     irqNumber = usbDeviceKhciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
 #endif
 /* Install isr, set priority, and enable IRQ. */
-#if defined(__GIC_PRIO_BITS)
-    GIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
-#else
     NVIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
-#endif
     EnableIRQ((IRQn_Type)irqNumber);
 }
 #if USB_DEVICE_CONFIG_USE_TASK

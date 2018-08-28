@@ -3,10 +3,10 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
+ *  that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -50,6 +50,8 @@
 #define SW_GPIO BOARD_SW2_GPIO
 #define SW_GPIO_PIN BOARD_SW2_GPIO_PIN
 #define SW_NAME BOARD_SW2_NAME
+/* GPIO port input low-logic level when SW is pressed */
+#define SW_GPIO_PRESSED_VALUE 0U
 
 /*******************************************************************************
  * Prototypes
@@ -87,7 +89,7 @@ void gpio_configure(void)
  */
 static uint32_t is_key_pressed(void)
 {
-    return !(GPIO_PinRead(SW_GPIO, SW_GPIO_PIN));
+    return (GPIO_PinRead(SW_GPIO, SW_GPIO_PIN) == SW_GPIO_PRESSED_VALUE);
 }
 
 /*!

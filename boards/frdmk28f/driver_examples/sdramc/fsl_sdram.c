@@ -38,8 +38,8 @@
  * Definitions
  ******************************************************************************/
 
-/* Defines the sdram nop delay times in initialize sequence for about 1us. */
-#define SDRAM_DELAYTIMES_ONEMICROSECOND (125U)
+/* Defines the sdram nop delay counts in initialize sequence. */
+#define SDRAM_DELAY_COUNTS (125U)
 
 /*******************************************************************************
 * Prototypes
@@ -107,7 +107,7 @@ static status_t SDRAM_InitSequence(SDRAM_Type *base,
                                sdram_operation_mode_t opMode,
                                sdram_write_burst_mode_t writeBurstMode)
 {
-    uint32_t count = SDRAM_DELAYTIMES_ONEMICROSECOND;
+    uint32_t count = SDRAM_DELAY_COUNTS;
     uint8_t *mrsAddr = 0;
     uint32_t addr = 0;
 
@@ -121,7 +121,7 @@ static status_t SDRAM_InitSequence(SDRAM_Type *base,
     /* Enable the refresh. */
     SDRAMC_SendCommand(base, whichBlock, kSDRAMC_AutoRefreshEnableCommand);
 
-    /* Wait for 8 refresh cycles less than one microsecond. */
+    /* Wait for at least 8 refresh cycles. */
     while (count != 0)
     {
         __NOP();

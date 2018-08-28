@@ -3,10 +3,10 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
+ *  that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -58,7 +58,7 @@ static volatile uint32_t g_eventCardDetect;
 static volatile uint32_t g_eventTransferComplete;
 
 /*! @brief Time variable unites as milliseconds. */
-static volatile uint32_t g_eventTimeMilliseconds;
+volatile uint32_t g_eventTimeMilliseconds;
 
 /*******************************************************************************
  * Code

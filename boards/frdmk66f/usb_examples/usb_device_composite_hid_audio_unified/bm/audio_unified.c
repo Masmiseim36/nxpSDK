@@ -76,7 +76,6 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
 
 extern void BOARD_USB_AUDIO_KEYBOARD_Init(void);
 extern void BOARD_USB_Audio_TxRxInit(uint32_t samplingRate);
-extern void BOARD_I2C_LPI2C_Init(void);
 extern void BOARD_Codec_Init(void);
 extern void BOARD_SetCodecMuteUnmute(bool);
 #if AUDIO_DMA_EDMA_MODE
@@ -104,7 +103,7 @@ USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
 uint8_t audioRecPacket[(FS_ISO_IN_ENDP_PACKET_SIZE + AUDIO_FORMAT_CHANNELS * AUDIO_FORMAT_SIZE)];
 
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
-uint8_t audioFeedBackBuffer[3] = {TSAMFREQ2BYTES(AUDIO_SAMPLING_RATE_TO_10_14)};
+uint8_t audioFeedBackBuffer[3];
 
 usb_device_composite_struct_t *g_deviceAudioComposite;
 volatile bool g_CodecMuteUnmute = false;
@@ -122,7 +121,7 @@ void Init_Board_Sai_Codec(void)
     BOARD_USB_AUDIO_KEYBOARD_Init();
 
     BOARD_USB_Audio_TxRxInit(AUDIO_SAMPLING_RATE);
-    BOARD_I2C_LPI2C_Init();
+    BOARD_Codec_I2C_Init();
     BOARD_Codec_Init();
 
 #if AUDIO_INTERRUPT_IRQ_MODE
@@ -442,8 +441,8 @@ usb_status_t USB_DeviceAudioRequest(class_handle_t handle, uint32_t event, void 
     return error;
 }
 
-/* The USB_AudioSpeakerBufferSpaceAvailable() function gets the reserved speaker ringbuffer size */
-uint32_t USB_AudioSpeakerBufferSpaceAvailable(void)
+/* The AudioSpeakerBufferSpaceUsed() function gets the reserved speaker ringbuffer size */
+uint32_t AudioSpeakerBufferSpaceUsed(void)
 {
     if (g_deviceAudioComposite->audioUnified.tdReadNumberPlay > g_deviceAudioComposite->audioUnified.tdWriteNumberPlay)
     {
@@ -465,7 +464,7 @@ uint32_t USB_AudioSpeakerBufferSpaceAvailable(void)
 void USB_AudioFeedbackDataUpdate()
 {
     static uint32_t feedbackValue = 0x0, originFeedbackValue = 0x0;
-    uint32_t reservedSpace = 0;
+    uint32_t usedSpace = 0;
 
     if (g_deviceAudioComposite->audioUnified.speakerIntervalCount != AUDIO_CALCULATE_Ff_INTERVAL)
     {
@@ -484,23 +483,15 @@ void USB_AudioFeedbackDataUpdate()
         feedbackValue = originFeedbackValue;
         AUDIO_UPDATE_FEEDBACK_DATA(audioFeedBackBuffer, originFeedbackValue);
     }
-#if 1
     else if (g_deviceAudioComposite->audioUnified.timesFeedbackCalculate > 2)
     {
-        reservedSpace = USB_AudioSpeakerBufferSpaceAvailable();
-        if (reservedSpace >=
+        usedSpace = AudioSpeakerBufferSpaceUsed();
+        if (usedSpace >=
             AUDIO_BUFFER_UPPER_LIMIT(AUDIO_SPEAKER_DATA_WHOLE_BUFFER_LENGTH * FS_ISO_OUT_ENDP_PACKET_SIZE))
         {
             feedbackValue -= (AUDIO_SAMPLING_RATE_KHZ / AUDIO_SAMPLING_RATE_16KHZ) * (AUDIO_ADJUST_MIN_STEP);
         }
-        else if ((reservedSpace >=
-                  AUDIO_BUFFER_LOWER_LIMIT(AUDIO_SPEAKER_DATA_WHOLE_BUFFER_LENGTH * FS_ISO_OUT_ENDP_PACKET_SIZE)) &&
-                 (reservedSpace <
-                  AUDIO_BUFFER_UPPER_LIMIT(AUDIO_RECORDER_DATA_WHOLE_BUFFER_LENGTH * FS_ISO_OUT_ENDP_PACKET_SIZE)))
-        {
-            // feedbackValue = originFeedbackValue;
-        }
-        else if (reservedSpace <
+        else if (usedSpace <
                  AUDIO_BUFFER_LOWER_LIMIT(AUDIO_SPEAKER_DATA_WHOLE_BUFFER_LENGTH * FS_ISO_OUT_ENDP_PACKET_SIZE))
         {
             feedbackValue += (AUDIO_SAMPLING_RATE_KHZ / AUDIO_SAMPLING_RATE_16KHZ) * (AUDIO_ADJUST_MIN_STEP);
@@ -513,12 +504,11 @@ void USB_AudioFeedbackDataUpdate()
     else
     {
     }
-#endif
     g_deviceAudioComposite->audioUnified.lastAudioSendCount = g_deviceAudioComposite->audioUnified.audioSendCount;
 }
 
-/* The USB_AudioRecorderBufferSpaceAvailable() function gets the reserved recorder ringbuffer size */
-uint32_t USB_AudioRecorderBufferSpaceAvailable(void)
+/* The USB_AudioRecorderBufferSpaceUsed() function gets the reserved recorder ringbuffer size */
+uint32_t USB_AudioRecorderBufferSpaceUsed(void)
 {
     if (g_deviceAudioComposite->audioUnified.tdReadNumberRec > g_deviceAudioComposite->audioUnified.tdWriteNumberRec)
     {
@@ -643,7 +633,7 @@ usb_status_t USB_DeviceAudioCompositeCallback(class_handle_t handle, uint32_t ev
                     if (g_deviceAudioComposite->audioUnified.startRecHalfFull)
                     {
                         USB_AUDIO_ENTER_CRITICAL();
-                        epPacketSize = USB_RecorderDataMatch(USB_AudioRecorderBufferSpaceAvailable());
+                        epPacketSize = USB_RecorderDataMatch(USB_AudioRecorderBufferSpaceUsed());
                         USB_AUDIO_EXIT_CRITICAL();
 
                         USB_AudioRecorderGetBuffer(audioRecPacket, epPacketSize);
@@ -787,11 +777,11 @@ usb_status_t USB_DeviceAudioCompositeInit(usb_device_composite_struct_t *device_
     g_deviceAudioComposite->audioUnified.copyProtect = 0x01U;
     g_deviceAudioComposite->audioUnified.curMute = 0x00U;
     g_deviceAudioComposite->audioUnified.curVolume[0] = 0x00U;
-    g_deviceAudioComposite->audioUnified.curVolume[1] = 0x80U;
+    g_deviceAudioComposite->audioUnified.curVolume[1] = 0x1fU;
     g_deviceAudioComposite->audioUnified.minVolume[0] = 0x00U;
-    g_deviceAudioComposite->audioUnified.minVolume[1] = 0x80U;
-    g_deviceAudioComposite->audioUnified.maxVolume[0] = 0xFFU;
-    g_deviceAudioComposite->audioUnified.maxVolume[1] = 0X7FU;
+    g_deviceAudioComposite->audioUnified.minVolume[1] = 0x00U;
+    g_deviceAudioComposite->audioUnified.maxVolume[0] = 0x00U;
+    g_deviceAudioComposite->audioUnified.maxVolume[1] = 0X43U;
     g_deviceAudioComposite->audioUnified.resVolume[0] = 0x01U;
     g_deviceAudioComposite->audioUnified.resVolume[1] = 0x00U;
     g_deviceAudioComposite->audioUnified.curBass = 0x00U;

@@ -3,10 +3,10 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
+ *  that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -306,6 +306,16 @@ typedef struct _flexio_shifter_config
 typedef void (*flexio_isr_t)(void *base, void *handle);
 
 /*******************************************************************************
+ * Variables
+ ******************************************************************************/
+/*! @brief Pointers to flexio bases for each instance. */
+extern FLEXIO_Type *const s_flexioBases[];
+
+#if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
+/*! @brief Pointers to flexio clocks for each instance. */
+extern const clock_ip_name_t s_flexioClocks[];
+#endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
+/*******************************************************************************
  * API
  ******************************************************************************/
 
@@ -360,6 +370,13 @@ void FLEXIO_Init(FLEXIO_Type *base, const flexio_config_t *userConfig);
  * @param base FlexIO peripheral base address
 */
 void FLEXIO_Deinit(FLEXIO_Type *base);
+
+/*!
+ * @brief Get instance number for FLEXIO module.
+ *
+ * @param base FLEXIO peripheral base address.
+ */
+uint32_t FLEXIO_GetInstance(FLEXIO_Type *base);
 
 /* @} */
 

@@ -1,7 +1,7 @@
 /*
  * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016, 2018 NXP
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -39,6 +39,7 @@
 #include "fsl_debug_console.h"
 #include "board.h"
 #include "usb_serial_port.h"
+#include "app.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -492,27 +493,27 @@ void USB_HostCdcControlCallback(void *param, uint8_t *data, uint32_t dataLength,
         return;
     }
 
-    if (cdcInstance->runWaitState == kRunWaitSetControlInterface)
+    if (cdcInstance->runWaitState == kUSB_HostCdcRunWaitSetControlInterface)
     {
-        cdcInstance->runState = kRunSetControlInterfaceDone;
+        cdcInstance->runState = kUSB_HostCdcRunSetControlInterfaceDone;
     }
-    else if (cdcInstance->runWaitState == kRunWaitSetDataInterface)
+    else if (cdcInstance->runWaitState == kUSB_HostCdcRunWaitSetDataInterface)
     {
-        cdcInstance->runState = kRunSetDataInterfaceDone;
+        cdcInstance->runState = kUSB_HostCdcRunSetDataInterfaceDone;
     }
-    else if (cdcInstance->runWaitState == kRunWaitGetLineCode)
+    else if (cdcInstance->runWaitState == kUSB_HostCdcRunWaitGetLineCode)
     {
-        cdcInstance->runState = kRunGetLineCodeDone;
+        cdcInstance->runState = kUSB_HostCdcRunGetLineCodeDone;
     }
 #if USB_HOST_UART_SUPPORT_HW_FLOW
-    else if (cdcInstance->runWaitState == kRunWaitSetCtrlState)
+    else if (cdcInstance->runWaitState == kUSB_HostCdcRunWaitSetCtrlState)
     {
-        cdcInstance->runState = kRunSetCtrlStateDone;
+        cdcInstance->runState = kUSB_HostCdcRunSetCtrlStateDone;
     }
 #endif
-    else if (cdcInstance->runWaitState == kRunWaitGetState)
+    else if (cdcInstance->runWaitState == kUSB_HostCdcRunWaitGetState)
     {
-        cdcInstance->runState = kRunGetStateDone;
+        cdcInstance->runState = kUSB_HostCdcRunGetStateDone;
     }
     else
     {
@@ -539,13 +540,13 @@ void USB_HosCdcTask(void *param)
             case kStatus_DEV_Idle:
                 break;
             case kStatus_DEV_Attached:
-                cdcInstance->runState = kRunSetControlInterface;
+                cdcInstance->runState = kUSB_HostCdcRunSetControlInterface;
                 status = USB_HostCdcInit(cdcInstance->deviceHandle, &cdcInstance->classHandle);
                 usb_echo("cdc device attached\r\n");
                 break;
             case kStatus_DEV_Detached:
                 cdcInstance->deviceState = kStatus_DEV_Idle;
-                cdcInstance->runState = kRunIdle;
+                cdcInstance->runState = kUSB_HostCdcRunIdle;
                 USB_HostCdcDeinit(cdcInstance->deviceHandle, cdcInstance->classHandle);
                 cdcInstance->dataInterfaceHandle = NULL;
                 cdcInstance->classHandle = NULL;
@@ -561,7 +562,7 @@ void USB_HosCdcTask(void *param)
     /* run state */
     switch (cdcInstance->runState)
     {
-        case kRunIdle:
+        case kUSB_HostCdcRunIdle:
             if (g_AttachFlag)
             {
                 if (!g_UsbSendBusy)
@@ -602,18 +603,18 @@ void USB_HosCdcTask(void *param)
                 }
             }
             break;
-        case kRunSetControlInterface:
-            cdcInstance->runWaitState = kRunWaitSetControlInterface;
-            cdcInstance->runState = kRunIdle;
+        case kUSB_HostCdcRunSetControlInterface:
+            cdcInstance->runWaitState = kUSB_HostCdcRunWaitSetControlInterface;
+            cdcInstance->runState = kUSB_HostCdcRunIdle;
             if (USB_HostCdcSetControlInterface(cdcInstance->classHandle, cdcInstance->controlInterfaceHandle, 0,
                                                USB_HostCdcControlCallback, &g_cdc) != kStatus_USB_Success)
             {
                 usb_echo("set control interface error\r\n");
             }
             break;
-        case kRunSetControlInterfaceDone:
-            cdcInstance->runWaitState = kRunWaitSetDataInterface;
-            cdcInstance->runState = kRunIdle;
+        case kUSB_HostCdcRunSetControlInterfaceDone:
+            cdcInstance->runWaitState = kUSB_HostCdcRunWaitSetDataInterface;
+            cdcInstance->runState = kUSB_HostCdcRunIdle;
             if (USB_HostCdcSetDataInterface(cdcInstance->classHandle, cdcInstance->dataInterfaceHandle, 0,
                                             USB_HostCdcControlCallback, &g_cdc) != kStatus_USB_Success)
             {
@@ -622,9 +623,9 @@ void USB_HosCdcTask(void *param)
             cdcInstance->bulkInMaxPacketSize =
                 USB_HostCdcGetPacketsize(cdcInstance->classHandle, USB_ENDPOINT_BULK, USB_IN);
             break;
-        case kRunSetDataInterfaceDone:
+        case kUSB_HostCdcRunSetDataInterfaceDone:
             g_AttachFlag = 1;
-            cdcInstance->runState = kRunGetStateDone;
+            cdcInstance->runState = kUSB_HostCdcRunGetStateDone;
             /*get the class-specific descriptor */
             /*usb_host_cdc_head_function_desc_struct_t *headDesc = NULL;
             usb_host_cdc_call_manage_desc_struct_t *callManage = NULL;
@@ -639,23 +640,23 @@ void USB_HosCdcTask(void *param)
                 usb_echo("Error in USB_HostCdcInterruptRecv: %x\r\n", status);
             }
             break;
-        case kRunGetStateDone:
-            cdcInstance->runWaitState = kRunWaitSetCtrlState;
-            cdcInstance->runState = kRunIdle;
+        case kUSB_HostCdcRunGetStateDone:
+            cdcInstance->runWaitState = kUSB_HostCdcRunWaitSetCtrlState;
+            cdcInstance->runState = kUSB_HostCdcRunIdle;
 #if USB_HOST_UART_SUPPORT_HW_FLOW
             USB_HostCdcSetAcmCtrlState(cdcInstance->classHandle, 1, 1, USB_HostCdcControlCallback, (void *)cdcInstance);
 #else
-            cdcInstance->runState = kRunSetCtrlStateDone;
+            cdcInstance->runState = kUSB_HostCdcRunSetCtrlStateDone;
 #endif
             break;
-        case kRunSetCtrlStateDone:
-            cdcInstance->runWaitState = kRunWaitGetLineCode;
-            cdcInstance->runState = kRunIdle;
+        case kUSB_HostCdcRunSetCtrlStateDone:
+            cdcInstance->runWaitState = kUSB_HostCdcRunWaitGetLineCode;
+            cdcInstance->runState = kUSB_HostCdcRunIdle;
             USB_HostCdcGetAcmLineCoding(cdcInstance->classHandle, &g_LineCode, USB_HostCdcControlCallback,
                                         (void *)cdcInstance);
             break;
-        case kRunGetLineCodeDone:
-            cdcInstance->runState = kRunIdle;
+        case kUSB_HostCdcRunGetLineCodeDone:
+            cdcInstance->runState = kUSB_HostCdcRunIdle;
             break;
         default:
             break;

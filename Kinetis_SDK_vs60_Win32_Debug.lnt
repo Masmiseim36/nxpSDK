@@ -1686,6 +1686,30 @@ boards\evkbimxrt1050\driver_examples\flexspi\hyper_flash\polling_transfer\flexsp
                                 // RelativePath = "boards\evkbimxrt1050\driver_examples\flexspi\hyper_flash\polling_transfer\flexspi_hyper_flash_polling_transfer.c"
 boards\evkbimxrt1050\driver_examples\flexspi\hyper_flash\polling_transfer\pin_mux.c
                                 // RelativePath = "boards\evkbimxrt1050\driver_examples\flexspi\hyper_flash\polling_transfer\pin_mux.c"
+boards\evkbimxrt1050\driver_examples\flexcan\interrupt_transfer\board.c
+                                // RelativePath = "boards\evkbimxrt1050\driver_examples\flexcan\interrupt_transfer\board.c"
+boards\evkbimxrt1050\driver_examples\flexcan\interrupt_transfer\clock_config.c
+                                // RelativePath = "boards\evkbimxrt1050\driver_examples\flexcan\interrupt_transfer\clock_config.c"
+boards\evkbimxrt1050\driver_examples\flexcan\interrupt_transfer\flexcan_interrupt_transfer.c
+                                // RelativePath = "boards\evkbimxrt1050\driver_examples\flexcan\interrupt_transfer\flexcan_interrupt_transfer.c"
+boards\evkbimxrt1050\driver_examples\flexcan\interrupt_transfer\pin_mux.c
+                                // RelativePath = "boards\evkbimxrt1050\driver_examples\flexcan\interrupt_transfer\pin_mux.c"
+boards\evkbimxrt1050\driver_examples\flexram\ram_access\board.c
+                                // RelativePath = "boards\evkbimxrt1050\driver_examples\flexram\ram_access\board.c"
+boards\evkbimxrt1050\driver_examples\flexram\ram_access\clock_config.c
+                                // RelativePath = "boards\evkbimxrt1050\driver_examples\flexram\ram_access\clock_config.c"
+boards\evkbimxrt1050\driver_examples\flexram\ram_access\flexram.c
+                                // RelativePath = "boards\evkbimxrt1050\driver_examples\flexram\ram_access\flexram.c"
+boards\evkbimxrt1050\driver_examples\flexram\ram_access\pin_mux.c
+                                // RelativePath = "boards\evkbimxrt1050\driver_examples\flexram\ram_access\pin_mux.c"
+boards\evkbimxrt1050\driver_examples\flexram\ram_allocate\board.c
+                                // RelativePath = "boards\evkbimxrt1050\driver_examples\flexram\ram_allocate\board.c"
+boards\evkbimxrt1050\driver_examples\flexram\ram_allocate\clock_config.c
+                                // RelativePath = "boards\evkbimxrt1050\driver_examples\flexram\ram_allocate\clock_config.c"
+boards\evkbimxrt1050\driver_examples\flexram\ram_allocate\flexram.c
+                                // RelativePath = "boards\evkbimxrt1050\driver_examples\flexram\ram_allocate\flexram.c"
+boards\evkbimxrt1050\driver_examples\flexram\ram_allocate\pin_mux.c
+                                // RelativePath = "boards\evkbimxrt1050\driver_examples\flexram\ram_allocate\pin_mux.c"
 boards\evkmimxrt1020\driver_examples\flexspi\nor\polling_transfer\board.c
                                 // RelativePath = "boards\evkmimxrt1020\driver_examples\flexspi\nor\polling_transfer\board.c"
 boards\evkmimxrt1020\driver_examples\flexspi\nor\polling_transfer\clock_config.c

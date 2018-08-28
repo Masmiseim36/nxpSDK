@@ -4,7 +4,7 @@
   <Header>### uVision Project, (C) Keil Software</Header>
   <Targets>
     <Target>
-      <TargetName>dev_msc_ramdisk_freertos Debug</TargetName>
+      <TargetName>dev_msc_ramdisk_freertos debug</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <TargetOption>
@@ -371,9 +371,9 @@
 --diag_suppress=66,1296,186 
  
 </MiscControls>
-              <Define>_DEBUG=1, CPU_MK28FN2M0VMI15, USB_STACK_FREERTOS, USB_STACK_FREERTOS_HEAP_SIZE=32768, FSL_RTOS_FREE_RTOS</Define>
+              <Define>DEBUG, _DEBUG=1, CPU_MK28FN2M0VMI15, USB_STACK_FREERTOS, USB_STACK_FREERTOS_HEAP_SIZE=32768, FSL_RTOS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>../../../../../../rtos/freertos/Source/portable/RVDS/ARM_CM4F;..;../../../..;../../../../../../CMSIS/Include;../../../../../../middleware/usb;../../../../../../middleware/usb/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../rtos/freertos/Source/include;../../../../../../middleware/usb/phy;../../../../../../devices/MK28F15/drivers;../../../../../../devices/MK28F15/utilities/io;../../../../../../devices/MK28F15/utilities/str;../../../../../../devices/MK28F15/utilities/log;../../../../../../devices/MK28F15/utilities;../../../../../../devices/MK28F15</IncludePath>
+              <IncludePath>../../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/RVDS/ARM_CM4F;..;../../../..;../../../../../../CMSIS/Include;../../../../../../middleware/usb;../../../../../../middleware/usb/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../rtos/amazon-freertos/lib/include;../../../../../../rtos/amazon-freertos/lib/include/private;../../../../../../middleware/usb/phy;../../../../../../devices/MK28F15/drivers;../../../../../../devices/MK28F15/utilities/io;../../../../../../devices/MK28F15/utilities/str;../../../../../../devices/MK28F15/utilities/log;../../../../../../devices/MK28F15/utilities;../../../../../../devices/MK28F15</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -460,7 +460,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>board</GroupName>
+          <GroupName>board-src</GroupName>
           <Files>
             <File>
               <FileName>board.c</FileName>
@@ -703,9 +703,59 @@
               <FilePath>../../../../../../devices/MK28F15/drivers/fsl_smc.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_flash.c</FileName>
+              <FileName>fsl_ftfx_adapter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_adapter.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_utilities.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_utilities.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_features.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_features.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_controller.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_flash.c</FilePath>
+              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_controller.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_controller.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_controller.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_flash.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flash.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_flash.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_cache.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_cache.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_cache.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_cache.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flexnvm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_flexnvm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flexnvm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_flexnvm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_flash.h</FileName>
@@ -745,177 +795,167 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos-portable</GroupName>
+          <GroupName>amazon-freertos-FreeRTOS-portable</GroupName>
           <Files>
             <File>
               <FileName>heap_4.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/Source/portable/MemMang/heap_4.c</FilePath>
+              <FilePath>../../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/MemMang/heap_4.c</FilePath>
             </File>
             <File>
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/Source/portable/readme.txt</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_tickless_systick.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/Source/portable/RVDS/ARM_CM4F/fsl_tickless_systick.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_tickless_generic.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/Source/portable/RVDS/ARM_CM4F/fsl_tickless_generic.h</FilePath>
+              <FilePath>../../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/readme.txt</FilePath>
             </File>
             <File>
               <FileName>port.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/Source/portable/RVDS/ARM_CM4F/port.c</FilePath>
+              <FilePath>../../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/RVDS/ARM_CM4F/port.c</FilePath>
             </File>
             <File>
               <FileName>portmacro.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/Source/portable/RVDS/ARM_CM4F/portmacro.h</FilePath>
+              <FilePath>../../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/RVDS/ARM_CM4F/portmacro.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos</GroupName>
+          <GroupName>amazon-freertos-license</GroupName>
           <Files>
             <File>
-              <FileName>FreeRTOS_for_Kinetis_SDK_v2.0.txt</FileName>
+              <FileName>LICENSE</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/FreeRTOS_for_Kinetis_SDK_v2.0.txt</FilePath>
+              <FilePath>../../../../../../rtos/amazon-freertos/LICENSE</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos-license</GroupName>
+          <GroupName>amazon-freertos-include</GroupName>
           <Files>
-            <File>
-              <FileName>license.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/License/license.txt</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos-include</GroupName>
-          <Files>
-            <File>
-              <FileName>croutine.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/Source/include/croutine.h</FilePath>
-            </File>
             <File>
               <FileName>event_groups.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/Source/include/event_groups.h</FilePath>
+              <FilePath>../../../../../../rtos/amazon-freertos/lib/include/event_groups.h</FilePath>
             </File>
             <File>
               <FileName>FreeRTOS.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/Source/include/FreeRTOS.h</FilePath>
+              <FilePath>../../../../../../rtos/amazon-freertos/lib/include/FreeRTOS.h</FilePath>
             </File>
             <File>
-              <FileName>list.h</FileName>
+              <FileName>message_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/Source/include/list.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_wrappers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/Source/include/mpu_wrappers.h</FilePath>
-            </File>
-            <File>
-              <FileName>portable.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/Source/include/portable.h</FilePath>
-            </File>
-            <File>
-              <FileName>projdefs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/Source/include/projdefs.h</FilePath>
+              <FilePath>../../../../../../rtos/amazon-freertos/lib/include/message_buffer.h</FilePath>
             </File>
             <File>
               <FileName>queue.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/Source/include/queue.h</FilePath>
+              <FilePath>../../../../../../rtos/amazon-freertos/lib/include/queue.h</FilePath>
             </File>
             <File>
               <FileName>semphr.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/Source/include/semphr.h</FilePath>
+              <FilePath>../../../../../../rtos/amazon-freertos/lib/include/semphr.h</FilePath>
             </File>
             <File>
-              <FileName>StackMacros.h</FileName>
+              <FileName>stream_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/Source/include/StackMacros.h</FilePath>
-            </File>
-            <File>
-              <FileName>stdint.readme</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/Source/include/stdint.readme</FilePath>
+              <FilePath>../../../../../../rtos/amazon-freertos/lib/include/stream_buffer.h</FilePath>
             </File>
             <File>
               <FileName>task.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/Source/include/task.h</FilePath>
+              <FilePath>../../../../../../rtos/amazon-freertos/lib/include/task.h</FilePath>
             </File>
             <File>
               <FileName>timers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/Source/include/timers.h</FilePath>
-            </File>
-            <File>
-              <FileName>deprecated_definitions.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/Source/include/deprecated_definitions.h</FilePath>
+              <FilePath>../../../../../../rtos/amazon-freertos/lib/include/timers.h</FilePath>
             </File>
             <File>
               <FileName>freertos_tasks_c_additions.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/Source/include/freertos_tasks_c_additions.h</FilePath>
+              <FilePath>../../../../../../rtos/amazon-freertos/lib/include/freertos_tasks_c_additions.h</FilePath>
+            </File>
+            <File>
+              <FileName>deprecated_definitions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/amazon-freertos/lib/include/private/deprecated_definitions.h</FilePath>
+            </File>
+            <File>
+              <FileName>list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/amazon-freertos/lib/include/private/list.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_wrappers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/amazon-freertos/lib/include/private/mpu_wrappers.h</FilePath>
+            </File>
+            <File>
+              <FileName>portable.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/amazon-freertos/lib/include/private/portable.h</FilePath>
+            </File>
+            <File>
+              <FileName>projdefs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/amazon-freertos/lib/include/private/projdefs.h</FilePath>
+            </File>
+            <File>
+              <FileName>stack_macros.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/amazon-freertos/lib/include/private/stack_macros.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos-source</GroupName>
+          <GroupName>amazon-freertos-FreeRTOS</GroupName>
           <Files>
             <File>
-              <FileName>croutine.c</FileName>
+              <FileName>event_groups.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/Source/croutine.c</FilePath>
+              <FilePath>../../../../../../rtos/amazon-freertos/lib/FreeRTOS/event_groups.c</FilePath>
             </File>
             <File>
               <FileName>list.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/Source/list.c</FilePath>
+              <FilePath>../../../../../../rtos/amazon-freertos/lib/FreeRTOS/list.c</FilePath>
             </File>
             <File>
               <FileName>queue.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/Source/queue.c</FilePath>
+              <FilePath>../../../../../../rtos/amazon-freertos/lib/FreeRTOS/queue.c</FilePath>
             </File>
             <File>
-              <FileName>readme.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/Source/readme.txt</FilePath>
+              <FileName>stream_buffer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../rtos/amazon-freertos/lib/FreeRTOS/stream_buffer.c</FilePath>
             </File>
             <File>
               <FileName>tasks.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/Source/tasks.c</FilePath>
+              <FilePath>../../../../../../rtos/amazon-freertos/lib/FreeRTOS/tasks.c</FilePath>
             </File>
             <File>
               <FileName>timers.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/Source/timers.c</FilePath>
+              <FilePath>../../../../../../rtos/amazon-freertos/lib/FreeRTOS/timers.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>amazon-freertos-portable</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_tickless_systick.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/RVDS/ARM_CM4F/fsl_tickless_systick.c</FilePath>
             </File>
             <File>
-              <FileName>event_groups.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/Source/event_groups.c</FilePath>
+              <FileName>fsl_tickless_generic.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/RVDS/ARM_CM4F/fsl_tickless_generic.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1037,7 +1077,7 @@
       </Groups>
     </Target>
     <Target>
-      <TargetName>dev_msc_ramdisk_freertos Release</TargetName>
+      <TargetName>dev_msc_ramdisk_freertos release</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <TargetOption>
@@ -1404,9 +1444,9 @@
 --diag_suppress=66,1296,186 
  
 </MiscControls>
-              <Define>_DEBUG=0, CPU_MK28FN2M0VMI15, USB_STACK_FREERTOS, USB_STACK_FREERTOS_HEAP_SIZE=32768, FSL_RTOS_FREE_RTOS</Define>
+              <Define>NDEBUG, _DEBUG=0, CPU_MK28FN2M0VMI15, USB_STACK_FREERTOS, USB_STACK_FREERTOS_HEAP_SIZE=32768, FSL_RTOS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>../../../../../../rtos/freertos/Source/portable/RVDS/ARM_CM4F;..;../../../..;../../../../../../CMSIS/Include;../../../../../../middleware/usb;../../../../../../middleware/usb/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../rtos/freertos/Source/include;../../../../../../middleware/usb/phy;../../../../../../devices/MK28F15/drivers;../../../../../../devices/MK28F15/utilities/io;../../../../../../devices/MK28F15/utilities/str;../../../../../../devices/MK28F15/utilities/log;../../../../../../devices/MK28F15/utilities;../../../../../../devices/MK28F15</IncludePath>
+              <IncludePath>../../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/RVDS/ARM_CM4F;..;../../../..;../../../../../../CMSIS/Include;../../../../../../middleware/usb;../../../../../../middleware/usb/osa;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../rtos/amazon-freertos/lib/include;../../../../../../rtos/amazon-freertos/lib/include/private;../../../../../../middleware/usb/phy;../../../../../../devices/MK28F15/drivers;../../../../../../devices/MK28F15/utilities/io;../../../../../../devices/MK28F15/utilities/str;../../../../../../devices/MK28F15/utilities/log;../../../../../../devices/MK28F15/utilities;../../../../../../devices/MK28F15</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1421,7 +1461,7 @@
             <useXO>0</useXO>
             <VariousControls>
               <MiscControls/>
-              <Define>__STARTUP_INITIALIZE_NONCACHEDATA</Define>
+              <Define>NDEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
               <Undefine/>
               <IncludePath>../../../..;..</IncludePath>
             </VariousControls>
@@ -1493,7 +1533,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>board</GroupName>
+          <GroupName>board-src</GroupName>
           <Files>
             <File>
               <FileName>board.c</FileName>
@@ -1736,9 +1776,59 @@
               <FilePath>../../../../../../devices/MK28F15/drivers/fsl_smc.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_flash.c</FileName>
+              <FileName>fsl_ftfx_adapter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_adapter.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_utilities.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_utilities.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_features.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_features.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_controller.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_flash.c</FilePath>
+              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_controller.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_controller.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_controller.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_flash.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flash.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_flash.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_cache.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_cache.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_cache.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_cache.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flexnvm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_flexnvm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flexnvm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_flexnvm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_flash.h</FileName>
@@ -1778,177 +1868,167 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos-portable</GroupName>
+          <GroupName>amazon-freertos-FreeRTOS-portable</GroupName>
           <Files>
             <File>
               <FileName>heap_4.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/Source/portable/MemMang/heap_4.c</FilePath>
+              <FilePath>../../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/MemMang/heap_4.c</FilePath>
             </File>
             <File>
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/Source/portable/readme.txt</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_tickless_systick.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/Source/portable/RVDS/ARM_CM4F/fsl_tickless_systick.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_tickless_generic.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/Source/portable/RVDS/ARM_CM4F/fsl_tickless_generic.h</FilePath>
+              <FilePath>../../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/readme.txt</FilePath>
             </File>
             <File>
               <FileName>port.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/Source/portable/RVDS/ARM_CM4F/port.c</FilePath>
+              <FilePath>../../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/RVDS/ARM_CM4F/port.c</FilePath>
             </File>
             <File>
               <FileName>portmacro.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/Source/portable/RVDS/ARM_CM4F/portmacro.h</FilePath>
+              <FilePath>../../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/RVDS/ARM_CM4F/portmacro.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos</GroupName>
+          <GroupName>amazon-freertos-license</GroupName>
           <Files>
             <File>
-              <FileName>FreeRTOS_for_Kinetis_SDK_v2.0.txt</FileName>
+              <FileName>LICENSE</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/FreeRTOS_for_Kinetis_SDK_v2.0.txt</FilePath>
+              <FilePath>../../../../../../rtos/amazon-freertos/LICENSE</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos-license</GroupName>
+          <GroupName>amazon-freertos-include</GroupName>
           <Files>
-            <File>
-              <FileName>license.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/License/license.txt</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos-include</GroupName>
-          <Files>
-            <File>
-              <FileName>croutine.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/Source/include/croutine.h</FilePath>
-            </File>
             <File>
               <FileName>event_groups.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/Source/include/event_groups.h</FilePath>
+              <FilePath>../../../../../../rtos/amazon-freertos/lib/include/event_groups.h</FilePath>
             </File>
             <File>
               <FileName>FreeRTOS.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/Source/include/FreeRTOS.h</FilePath>
+              <FilePath>../../../../../../rtos/amazon-freertos/lib/include/FreeRTOS.h</FilePath>
             </File>
             <File>
-              <FileName>list.h</FileName>
+              <FileName>message_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/Source/include/list.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_wrappers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/Source/include/mpu_wrappers.h</FilePath>
-            </File>
-            <File>
-              <FileName>portable.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/Source/include/portable.h</FilePath>
-            </File>
-            <File>
-              <FileName>projdefs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/Source/include/projdefs.h</FilePath>
+              <FilePath>../../../../../../rtos/amazon-freertos/lib/include/message_buffer.h</FilePath>
             </File>
             <File>
               <FileName>queue.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/Source/include/queue.h</FilePath>
+              <FilePath>../../../../../../rtos/amazon-freertos/lib/include/queue.h</FilePath>
             </File>
             <File>
               <FileName>semphr.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/Source/include/semphr.h</FilePath>
+              <FilePath>../../../../../../rtos/amazon-freertos/lib/include/semphr.h</FilePath>
             </File>
             <File>
-              <FileName>StackMacros.h</FileName>
+              <FileName>stream_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/Source/include/StackMacros.h</FilePath>
-            </File>
-            <File>
-              <FileName>stdint.readme</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/Source/include/stdint.readme</FilePath>
+              <FilePath>../../../../../../rtos/amazon-freertos/lib/include/stream_buffer.h</FilePath>
             </File>
             <File>
               <FileName>task.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/Source/include/task.h</FilePath>
+              <FilePath>../../../../../../rtos/amazon-freertos/lib/include/task.h</FilePath>
             </File>
             <File>
               <FileName>timers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/Source/include/timers.h</FilePath>
-            </File>
-            <File>
-              <FileName>deprecated_definitions.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/Source/include/deprecated_definitions.h</FilePath>
+              <FilePath>../../../../../../rtos/amazon-freertos/lib/include/timers.h</FilePath>
             </File>
             <File>
               <FileName>freertos_tasks_c_additions.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/Source/include/freertos_tasks_c_additions.h</FilePath>
+              <FilePath>../../../../../../rtos/amazon-freertos/lib/include/freertos_tasks_c_additions.h</FilePath>
+            </File>
+            <File>
+              <FileName>deprecated_definitions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/amazon-freertos/lib/include/private/deprecated_definitions.h</FilePath>
+            </File>
+            <File>
+              <FileName>list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/amazon-freertos/lib/include/private/list.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_wrappers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/amazon-freertos/lib/include/private/mpu_wrappers.h</FilePath>
+            </File>
+            <File>
+              <FileName>portable.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/amazon-freertos/lib/include/private/portable.h</FilePath>
+            </File>
+            <File>
+              <FileName>projdefs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/amazon-freertos/lib/include/private/projdefs.h</FilePath>
+            </File>
+            <File>
+              <FileName>stack_macros.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/amazon-freertos/lib/include/private/stack_macros.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos-source</GroupName>
+          <GroupName>amazon-freertos-FreeRTOS</GroupName>
           <Files>
             <File>
-              <FileName>croutine.c</FileName>
+              <FileName>event_groups.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/Source/croutine.c</FilePath>
+              <FilePath>../../../../../../rtos/amazon-freertos/lib/FreeRTOS/event_groups.c</FilePath>
             </File>
             <File>
               <FileName>list.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/Source/list.c</FilePath>
+              <FilePath>../../../../../../rtos/amazon-freertos/lib/FreeRTOS/list.c</FilePath>
             </File>
             <File>
               <FileName>queue.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/Source/queue.c</FilePath>
+              <FilePath>../../../../../../rtos/amazon-freertos/lib/FreeRTOS/queue.c</FilePath>
             </File>
             <File>
-              <FileName>readme.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/Source/readme.txt</FilePath>
+              <FileName>stream_buffer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../rtos/amazon-freertos/lib/FreeRTOS/stream_buffer.c</FilePath>
             </File>
             <File>
               <FileName>tasks.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/Source/tasks.c</FilePath>
+              <FilePath>../../../../../../rtos/amazon-freertos/lib/FreeRTOS/tasks.c</FilePath>
             </File>
             <File>
               <FileName>timers.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/Source/timers.c</FilePath>
+              <FilePath>../../../../../../rtos/amazon-freertos/lib/FreeRTOS/timers.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>amazon-freertos-portable</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_tickless_systick.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/RVDS/ARM_CM4F/fsl_tickless_systick.c</FilePath>
             </File>
             <File>
-              <FileName>event_groups.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/Source/event_groups.c</FilePath>
+              <FileName>fsl_tickless_generic.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/RVDS/ARM_CM4F/fsl_tickless_generic.h</FilePath>
             </File>
           </Files>
         </Group>

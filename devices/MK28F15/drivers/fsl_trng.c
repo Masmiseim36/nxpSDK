@@ -3,10 +3,10 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
+ *  that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -38,6 +38,12 @@
 /*******************************************************************************
  * Definitions
  *******************************************************************************/
+
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.trng"
+#endif
+
 /* Default values for user configuration structure.*/
 #if (defined(KW40Z4_SERIES) || defined(KW41Z4_SERIES) || defined(KW31Z4_SERIES) || defined(KW21Z4_SERIES) || \
      defined(MCIMX7U5_M4_SERIES) || defined(KW36Z4_SERIES))
@@ -902,6 +908,7 @@ typedef enum _trng_statistical_check
     (TRNG_RMW_MCTL(base, (TRNG_MCTL_RST_DEF_MASK | TRNG_MCTL_ERR_MASK), TRNG_MCTL_RST_DEF(value)))
 /*@}*/
 
+#if !(defined(FSL_FEATURE_TRNG_HAS_NO_TRNG_ACC) && (FSL_FEATURE_TRNG_HAS_NO_TRNG_ACC > 0))
 /*!
  * @name Register TRNG_MCTL, field TRNG_ACC[5] (RW)
  *
@@ -918,6 +925,7 @@ typedef enum _trng_statistical_check
 #define TRNG_WR_MCTL_TRNG_ACC(base, value) \
     (TRNG_RMW_MCTL(base, (TRNG_MCTL_TRNG_ACC_MASK | TRNG_MCTL_ERR_MASK), TRNG_MCTL_TRNG_ACC(value)))
 /*@}*/
+#endif
 
 /*!
  * @name Register TRNG_MCTL, field TSTOP_OK[13] (RO)
@@ -1244,7 +1252,7 @@ status_t TRNG_GetDefaultConfig(trng_config_t *userConfig)
 {
     status_t result;
 
-    if (userConfig != 0)
+    if (userConfig != NULL)
     {
         userConfig->lock = TRNG_USER_CONFIG_DEFAULT_LOCK;
         userConfig->clockMode = kTRNG_ClockModeRingOscillator;
@@ -1521,7 +1529,7 @@ status_t TRNG_Init(TRNG_Type *base, const trng_config_t *userConfig)
     status_t result;
 
     /* Check input parameters.*/
-    if ((base != 0) && (userConfig != 0))
+    if ((base != NULL) && (userConfig != NULL))
     {
 #if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
         /* Enable the clock gate. */
@@ -1540,9 +1548,11 @@ status_t TRNG_Init(TRNG_Type *base, const trng_config_t *userConfig)
             /* Start entropy generation.*/
             /* Set to Run mode.*/
             TRNG_WR_MCTL_PRGM(base, kTRNG_WorkModeRun);
+#if !(defined(FSL_FEATURE_TRNG_HAS_NO_TRNG_ACC) && (FSL_FEATURE_TRNG_HAS_NO_TRNG_ACC > 0))
             /* Enable TRNG Access Mode. To generate an Entropy
             * value that can be read via the true0-true15 registers.*/
             TRNG_WR_MCTL_TRNG_ACC(base, 1);
+#endif /* !FSL_FEATURE_TRNG_HAS_NO_TRNG_ACC */
 
             if (userConfig->lock == 1) /* Disable programmability of TRNG registers. */
             {

@@ -18,6 +18,7 @@
  * limitations under the License.
  */
 
+
 #ifndef _FSL_LPUART_CMSIS_H_
 #define _FSL_LPUART_CMSIS_H_
 
@@ -58,6 +59,10 @@ extern ARM_DRIVER_USART Driver_USART4;
 #if defined(LPUART5)
 extern ARM_DRIVER_USART Driver_USART5;
 #endif /* LPUART5 */
+
+#if defined(LPUART6)
+extern ARM_DRIVER_USART Driver_USART6;
+#endif /* LPUART6 */
 
 #if (FSL_FEATURE_SOC_LPUART_COUNT == 1) && (FSL_FEATURE_SOC_UART_COUNT == 3)
 

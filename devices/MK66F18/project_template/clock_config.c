@@ -64,7 +64,6 @@
 !!ClocksProfile
 product: Clocks v1.0
 processor: MK66FN2M0xxx18
-package_id: MK66FN2M0VMD18
 mcu_data: ksdk2_0
 processor_version: 1.0.1
 board: FRDM-K66F

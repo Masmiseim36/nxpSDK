@@ -1,7 +1,7 @@
 /*
  * The Clear BSD License
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 - 2017 NXP
+ * Copyright 2016 - 2018 NXP
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -387,7 +387,10 @@ usb_status_t USB_DeviceSetSpeed(uint8_t speed)
         {
             if (USB_SPEED_HIGH == speed)
             {
-                if (descriptorHead->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK)
+                if (((descriptorHead->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) ==
+                     USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_IN) &&
+                    (USB_MSC_BULK_IN_ENDPOINT ==
+                     (descriptorHead->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)))
                 {
                     descriptorHead->endpoint.wMaxPacketSize[0] = USB_SHORT_GET_LOW(HS_MSC_BULK_IN_PACKET_SIZE);
                     descriptorHead->endpoint.wMaxPacketSize[1] = USB_SHORT_GET_HIGH(HS_MSC_BULK_IN_PACKET_SIZE);
@@ -400,7 +403,10 @@ usb_status_t USB_DeviceSetSpeed(uint8_t speed)
             }
             else
             {
-                if (descriptorHead->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK)
+                if (((descriptorHead->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) ==
+                     USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_IN) &&
+                    (USB_MSC_BULK_IN_ENDPOINT ==
+                     (descriptorHead->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)))
                 {
                     descriptorHead->endpoint.wMaxPacketSize[0] = USB_SHORT_GET_LOW(FS_MSC_BULK_IN_PACKET_SIZE);
                     descriptorHead->endpoint.wMaxPacketSize[1] = USB_SHORT_GET_HIGH(FS_MSC_BULK_IN_PACKET_SIZE);

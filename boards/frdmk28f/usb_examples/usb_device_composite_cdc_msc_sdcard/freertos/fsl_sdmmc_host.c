@@ -3,10 +3,10 @@
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
+ *  that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -81,12 +81,6 @@ static void SDMMCHOST_TransferCompleteCallback(SDMMCHOST_TYPE *base,
                                                sdhc_handle_t *handle,
                                                status_t status,
                                                void *userData);
-
-/*!
- * @brief host controller error recovery.
- * @param host base address.
- */
-static void SDMMCHOST_ErrorRecovery(SDMMCHOST_TYPE *base);
 
 /*!
  * @brief card detect deinit function.
@@ -191,7 +185,7 @@ static status_t SDMMCHOST_TransferFunction(SDMMCHOST_TYPE *base, SDMMCHOST_TRANS
     return error;
 }
 
-static void SDMMCHOST_ErrorRecovery(SDMMCHOST_TYPE *base)
+void SDMMCHOST_ErrorRecovery(SDMMCHOST_TYPE *base)
 {
     uint32_t status = 0U;
     /* get host present status */
@@ -228,10 +222,10 @@ static status_t SDMMCHOST_CardDetectInit(SDMMCHOST_TYPE *base, const sdmmchost_d
     {
         /* Card detection pin will generate interrupt on either eage */
         PORT_SetPinInterruptConfig(BOARD_SDHC_CD_PORT_BASE, BOARD_SDHC_CD_GPIO_PIN, kPORT_InterruptEitherEdge);
-        /* Open card detection pin NVIC. */
-        SDMMCHOST_ENABLE_IRQ(SDMMCHOST_CARD_DETECT_IRQ);
         /* set IRQ priority */
         SDMMCHOST_SET_IRQ_PRIORITY(SDMMCHOST_CARD_DETECT_IRQ, 6U);
+        /* Open card detection pin NVIC. */
+        SDMMCHOST_ENABLE_IRQ(SDMMCHOST_CARD_DETECT_IRQ);
         /* check card detect status */
         SDMMCHOST_DetectCardByGpio(cd);
     }

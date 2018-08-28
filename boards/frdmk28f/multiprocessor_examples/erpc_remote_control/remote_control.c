@@ -68,6 +68,7 @@
 
 /* eRPC includes */
 #include "erpc_arbitrated_client_setup.h"
+#include "erpc_error_handler.h"
 #include "erpc_server_setup.h"
 #include "erpc_transport_setup.h"
 
@@ -116,20 +117,14 @@
 
 /* Accelerometer driver specific defines */
 #if defined(BOARD_ACCEL_FXOS)
-#define WHO_AM_I WHO_AM_I_REG
-#define WHO_AM_I_DEV_ID kFXOS_WHO_AM_I_Device_ID
 #define XYZ_DATA_CFG XYZ_DATA_CFG_REG
-#define I2C_MASTER_CB FXOS_master_callback
-#define ACCEL_INIT(handle) FXOS_Init(handle)
+#define ACCEL_INIT(handle, config) FXOS_Init(handle, config)
 #define ACCEL_READ_REG(handle, reg, val) FXOS_ReadReg(handle, reg, val, 1)
 #define ACCELL_READ_SENSOR_DATA(handle, data) FXOS_ReadSensorData(handle, data)
 
 #elif defined(BOARD_ACCEL_MMA)
-#define WHO_AM_I kMMA8451_WHO_AM_I
-#define WHO_AM_I_DEV_ID kMMA8451_WHO_AM_I_Device_ID
 #define XYZ_DATA_CFG kMMA8451_XYZ_DATA_CFG
-#define I2C_MASTER_CB MMA_master_callback
-#define ACCEL_INIT(handle) MMA_Init(handle)
+#define ACCEL_INIT(handle, config) MMA_Init(handle, config)
 #define ACCEL_READ_REG(handle, reg, val) MMA_ReadReg(handle, reg, val)
 #define ACCELL_READ_SENSOR_DATA(handle, data) MMA_ReadSensorData(handle, data)
 #endif
@@ -145,11 +140,6 @@ void BOARD_I2C_ReleaseBus(void);
 static void init_dac_adc(void);
 
 /*!
- * @brief Initialize I2C
- */
-static void init_i2c(void);
-
-/*!
  * @brief Initialize GPIO pins
  */
 static void init_pins(void);
@@ -161,13 +151,6 @@ static void init_pins(void);
  * @return kStatus_Fail If initialization has failed
  */
 static status_t init_mag_accel(void);
-
-/*!
- * @brief eRPC error handler is called from eRPC client when some error occurs.
- *
- * @param[in] err eRPC error status
- */
-void erpc_error_handler(erpc_status_t err);
 
 /*!
  * @brief Server task creates transport arbitrator and creates remote control service
@@ -186,6 +169,7 @@ static adc16_channel_config_t adc16ChannelConfigStruct;
 static erpc_transport_t transportArbitrator = NULL; /*! eRPC transport arbitrator */
 static erpc_mbf_t message_buffer_factory = NULL;    /* MessageBufferFactory */
 static uint8_t swButton = 0;                        /*! Which SW button was pressed */
+extern bool g_erpc_error_occurred;
 
 /* FreeRTOS task handles */
 TaskHandle_t serverTaskHandle = NULL;
@@ -195,23 +179,13 @@ TaskHandle_t clientTaskHandle = NULL;
 #if defined(BOARD_ACCEL_FXOS)
 static fxos_handle_t accelHandle = {0};
 static const uint8_t accelAddress[] = {0x1CU, 0x1EU, 0x1DU, 0x1FU};
+fxos_config_t config = {0};
 #elif defined(BOARD_ACCEL_MMA)
 static mma_handle_t accelHandle = {0};
 static const uint8_t accelAddress[] = {0x1CU, 0x1DU, 0x1EU, 0x1FU};
+mma_config_t config = {0};
 #endif
 static uint8_t accelDataScale = 0; /*! Accelerometer data scale */
-
-/* I2C */
-#if defined(FSL_FEATURE_SOC_LPI2C_COUNT) && (FSL_FEATURE_SOC_LPI2C_COUNT)
-#if defined(BOARD_ACCEL_FXOS)
-extern void FXOS_master_callback(LPI2C_Type *base, lpi2c_master_handle_t *handle, status_t status, void *userData);
-#elif defined(BOARD_ACCEL_MMA)
-extern void MMA_master_callback(LPI2C_Type *base, lpi2c_master_handle_t *handle, status_t status, void *userData);
-#endif
-lpi2c_master_handle_t i2cMasterHandle;
-#else
-i2c_master_handle_t i2cMasterHandle;
-#endif
 
 /* GPIO LED configuration */
 gpio_pin_config_t led_config = {
@@ -395,30 +369,6 @@ static void init_dac_adc(void)
 }
 
 /*!
- * @brief Initialize I2C
- */
-static void init_i2c(void)
-{
-    uint32_t i2cSourceClock;
-
-#if defined(FSL_FEATURE_SOC_LPI2C_COUNT) && (FSL_FEATURE_SOC_LPI2C_COUNT)
-    lpi2c_master_config_t i2cConfig;
-
-    i2cSourceClock = LPI2C_CLOCK_FREQUENCY;
-    LPI2C_MasterGetDefaultConfig(&i2cConfig);
-    LPI2C_MasterInit(BOARD_ACCEL_I2C_BASEADDR, &i2cConfig, i2cSourceClock);
-    LPI2C_MasterTransferCreateHandle(BOARD_ACCEL_I2C_BASEADDR, &i2cMasterHandle, I2C_MASTER_CB, NULL);
-#else
-    i2c_master_config_t i2cConfig;
-
-    i2cSourceClock = CLOCK_GetFreq(ACCEL_I2C_CLK_SRC);
-    I2C_MasterGetDefaultConfig(&i2cConfig);
-    I2C_MasterInit(BOARD_ACCEL_I2C_BASEADDR, &i2cConfig, i2cSourceClock);
-    I2C_MasterTransferCreateHandle(BOARD_ACCEL_I2C_BASEADDR, &i2cMasterHandle, NULL, NULL);
-#endif
-}
-
-/*!
  * @brief Initialize GPIO pins
  */
 static void init_pins(void)
@@ -467,8 +417,8 @@ void BOARD_SW1_IRQ_HANDLER(void)
 
     /* Clear external interrupt flag. */
     GPIO_PortClearInterruptFlags(BOARD_SW1_GPIO, 1U << BOARD_SW1_GPIO_PIN);
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
+/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
+  exception return operation might vector to incorrect interrupt */
 #if defined __CORTEX_M && (__CORTEX_M == 4U)
     __DSB();
 #endif
@@ -478,20 +428,22 @@ void BOARD_SW1_IRQ_HANDLER(void)
 void BOARD_SW2_IRQ_HANDLER(void)
 {
     uint32_t intMask;
-    
+
     /* Save which SW button was pressed */
     intMask = GPIO_PortGetInterruptFlags(BOARD_SW2_GPIO);
-    if((intMask & (1U << BOARD_SW2_GPIO_PIN)) != 0) {
-      swButton = 2;
-      GPIO_PortClearInterruptFlags(BOARD_SW2_GPIO, 1U << BOARD_SW2_GPIO_PIN);      
+    if ((intMask & (1U << BOARD_SW2_GPIO_PIN)) != 0)
+    {
+        swButton = 2;
+        GPIO_PortClearInterruptFlags(BOARD_SW2_GPIO, 1U << BOARD_SW2_GPIO_PIN);
     }
     intMask = GPIO_PortGetInterruptFlags(BOARD_SW3_GPIO);
-    if((intMask & (1U << BOARD_SW3_GPIO_PIN)) != 0) {
-      swButton = 3;
-      GPIO_PortClearInterruptFlags(BOARD_SW3_GPIO, 1U << BOARD_SW3_GPIO_PIN);      
+    if ((intMask & (1U << BOARD_SW3_GPIO_PIN)) != 0)
+    {
+        swButton = 3;
+        GPIO_PortClearInterruptFlags(BOARD_SW3_GPIO, 1U << BOARD_SW3_GPIO_PIN);
     }
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
+/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
+  exception return operation might vector to incorrect interrupt */
 #if defined __CORTEX_M && (__CORTEX_M == 4U)
     __DSB();
 #endif
@@ -505,8 +457,8 @@ void BOARD_SW2_IRQ_HANDLER(void)
 
     /* Clear external interrupt flag. */
     GPIO_PortClearInterruptFlags(BOARD_SW2_GPIO, 1U << BOARD_SW2_GPIO_PIN);
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
+/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
+  exception return operation might vector to incorrect interrupt */
 #if defined __CORTEX_M && (__CORTEX_M == 4U)
     __DSB();
 #endif
@@ -520,8 +472,8 @@ void BOARD_SW3_IRQ_HANDLER(void)
 
     /* Clear external interrupt flag. */
     GPIO_PortClearInterruptFlags(BOARD_SW3_GPIO, 1U << BOARD_SW3_GPIO_PIN);
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
+/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
+  exception return operation might vector to incorrect interrupt */
 #if defined __CORTEX_M && (__CORTEX_M == 4U)
     __DSB();
 #endif
@@ -534,38 +486,30 @@ void BOARD_SW3_IRQ_HANDLER(void)
 static status_t init_mag_accel(void)
 {
     uint8_t arrayAddrSize = 0;
-    uint8_t regResult = 0;
     uint8_t sensorRange = 0;
+    uint16_t i = 0;
+    status_t result = kStatus_Fail;
 
-    accelHandle.base = BOARD_ACCEL_I2C_BASEADDR;
-    accelHandle.i2cHandle = &i2cMasterHandle;
+    /* Configure the I2C function */
+    config.I2C_SendFunc = BOARD_Accel_I2C_Send;
+    config.I2C_ReceiveFunc = BOARD_Accel_I2C_Receive;
 
-    /* Find sensor on board */
-    uint8_t i = 0;
+    /* Initialize sensor devices */
     arrayAddrSize = sizeof(accelAddress) / sizeof(accelAddress[0]);
     for (i = 0; i < arrayAddrSize; i++)
     {
-        accelHandle.xfer.slaveAddress = accelAddress[i];
-
-        if (kStatus_Success == ACCEL_READ_REG(&accelHandle, WHO_AM_I, &regResult))
+        config.slaveAddress = accelAddress[i];
+        /* Initialize accelerometer sensor */
+        result = ACCEL_INIT(&accelHandle, &config);
+        if (result == kStatus_Success)
         {
-            if (regResult == WHO_AM_I_DEV_ID)
-            {
-                /* Sensor found */
-                break;
-            }
-        }
-        else if (i == (arrayAddrSize - 1))
-        {
-            /* Not found any sensor on board */
-            return kStatus_Fail;
+            break;
         }
     }
 
-    /* Initialize sensor */
-    if (kStatus_Success != ACCEL_INIT(&accelHandle))
+    if (result != kStatus_Success)
     {
-        return kStatus_Fail;
+        return result;
     }
 
     /* Get sensor range */
@@ -592,17 +536,6 @@ static status_t init_mag_accel(void)
 /*******************************************************************************
  * eRPC functions
  ******************************************************************************/
-
-/*!
- * @brief eRPC error handler is called from eRPC client when some error occurs.
- */
-void erpc_error_handler(erpc_status_t err)
-{
-    /* Error occurred */
-    for (;;)
-        ;
-}
-
 /*!
  * @brief Convert number to analog value through DAC and check it with ADC
  */
@@ -679,7 +612,7 @@ void read_mag_accel(Vector *results, bool *status)
     if (kStatus_Success != ACCELL_READ_SENSOR_DATA(&accelHandle, &sensorData))
     {
         // Failed to read magnetometer and accelerometer data!
-    	*status = false;
+        *status = false;
         return;
     }
 
@@ -736,7 +669,13 @@ static void server_task(void *pvParameters)
         if (kStatus_Success != status)
         {
             /* Error occurred */
-            erpc_error_handler(status);
+            erpc_error_handler(status, 0);
+
+            /* stop erpc server */
+            erpc_server_stop();
+
+            /* exit program loop */
+            break;
         }
     }
 }
@@ -756,7 +695,7 @@ static void client_task(void *pvParameters)
     transportArbitrator = erpc_arbitrated_client_init(transport, message_buffer_factory);
 
     /* Register error handler */
-    erpc_client_set_error_handler(erpc_error_handler);
+    erpc_arbitrated_client_set_error_handler(erpc_error_handler);
 
     while (1)
     {
@@ -764,6 +703,13 @@ static void client_task(void *pvParameters)
         {
             /* Call eRPC function for SW button press */
             button_pressed(swButton);
+
+            /* Check if some error occured in eRPC */
+            if (g_erpc_error_occurred)
+            {
+                /* Exit program loop */
+                break;
+            }
 
             /* Clear info about pressed button */
             swButton = 0;
@@ -790,7 +736,7 @@ int main(void)
     init_pins();
 
     /* Initialize I2C */
-    init_i2c();
+    BOARD_Accel_I2C_Init();
 
     /* Initialize magnetometer and accelerometer */
     if (kStatus_Success != init_mag_accel())

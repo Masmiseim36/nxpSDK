@@ -53,10 +53,8 @@
  ******************************************************************************/
 #if defined(USB_STACK_BM)
 #define USB_CDC_RNDIS_MUTEX_LOCK(_X_) \
-    \
-USB_OSA_SR_ALLOC();                   \
-    \
-USB_OSA_ENTER_CRITICAL()
+    USB_OSA_SR_ALLOC();               \
+    USB_OSA_ENTER_CRITICAL()
 #define USB_CDC_RNDIS_MUTEX_UNLOCK(_X_) USB_OSA_EXIT_CRITICAL()
 #else
 #define USB_CDC_RNDIS_MUTEX_LOCK(_X_) USB_OsaMutexLock(_X_)
@@ -619,6 +617,8 @@ usb_status_t USB_DeviceCdcRndisQueryCommand(usb_device_cdc_rndis_struct_t *handl
             reqParam.length = infoBufLen;
             if (handle->rndisCallback)
             {
+                /* The rndisCallback is initialized in APPInit and is from the second parameter of
+                   USB_DeviceCdcRndisInit */
                 handle->rndisCallback(handle->cdcAcmHandle, kUSB_DeviceCdcEventAppGetMaxFrameSize, &reqParam);
             }
 
@@ -631,6 +631,8 @@ usb_status_t USB_DeviceCdcRndisQueryCommand(usb_device_cdc_rndis_struct_t *handl
             reqParam.length = infoBufLen;
             if (handle->rndisCallback)
             {
+                /* The rndisCallback is initialized in APPInit and is from the second parameter of
+                   USB_DeviceCdcRndisInit */
                 handle->rndisCallback(handle->cdcAcmHandle, kUSB_DeviceCdcEventAppGetLinkSpeed, &reqParam);
             }
 
@@ -645,6 +647,8 @@ usb_status_t USB_DeviceCdcRndisQueryCommand(usb_device_cdc_rndis_struct_t *handl
             reqParam.length = infoBufLen;
             if (handle->rndisCallback)
             {
+                /* The rndisCallback is initialized in APPInit and is from the second parameter of
+                   USB_DeviceCdcRndisInit */
                 handle->rndisCallback(handle->cdcAcmHandle, kUSB_DeviceCdcEventAppGetSendPacketSize, &reqParam);
             }
 
@@ -658,6 +662,8 @@ usb_status_t USB_DeviceCdcRndisQueryCommand(usb_device_cdc_rndis_struct_t *handl
             reqParam.length = infoBufLen;
             if (handle->rndisCallback)
             {
+                /* The rndisCallback is initialized in APPInit and is from the second parameter of
+                   USB_DeviceCdcRndisInit */
                 handle->rndisCallback(handle->cdcAcmHandle, kUSB_DeviceCdcEventAppGetRecvPacketSize, &reqParam);
             }
             *((uint32_t *)infoBuf) = USB_LONG_TO_LITTLE_ENDIAN(*((uint32_t *)infoBuf));
@@ -700,6 +706,8 @@ usb_status_t USB_DeviceCdcRndisQueryCommand(usb_device_cdc_rndis_struct_t *handl
                 reqParam.length = infoBufLen;
                 if (handle->rndisCallback)
                 {
+                    /* The rndisCallback is initialized in APPInit and is from the second parameter of
+                       USB_DeviceCdcRndisInit */
                     handle->rndisCallback(handle->cdcAcmHandle, kUSB_DeviceCdcEventAppGetLinkSpeed, &reqParam);
                 }
 
@@ -746,6 +754,8 @@ usb_status_t USB_DeviceCdcRndisQueryCommand(usb_device_cdc_rndis_struct_t *handl
             reqParam.length = infoBufLen;
             if (handle->rndisCallback)
             {
+                /* The rndisCallback is initialized in APPInit and is from the second parameter of
+                   USB_DeviceCdcRndisInit */
                 handle->rndisCallback(handle->cdcAcmHandle, kUSB_DeviceCdcEventAppGetMacAddress, &reqParam);
             }
 
@@ -758,6 +768,8 @@ usb_status_t USB_DeviceCdcRndisQueryCommand(usb_device_cdc_rndis_struct_t *handl
             reqParam.length = infoBufLen;
             if (handle->rndisCallback)
             {
+                /* The rndisCallback is initialized in APPInit and is from the second parameter of
+                   USB_DeviceCdcRndisInit */
                 handle->rndisCallback(handle->cdcAcmHandle, kUSB_DeviceCdcEventAppGetMacAddress, &reqParam);
             }
         }
@@ -862,6 +874,8 @@ usb_status_t USB_DeviceCdcRndisSetCommand(usb_device_cdc_rndis_struct_t *handle,
                 reqParam.length = sizeof(mediaConnected);
                 if (handle->rndisCallback)
                 {
+                    /* The rndisCallback is initialized in APPInit and is from the second parameter of
+                       USB_DeviceCdcRndisInit */
                     handle->rndisCallback(handle->cdcAcmHandle, kUSB_DeviceCdcEventAppGetLinkStatus, &reqParam);
                 }
 

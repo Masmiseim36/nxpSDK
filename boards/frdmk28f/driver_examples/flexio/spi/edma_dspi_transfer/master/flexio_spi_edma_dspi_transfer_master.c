@@ -3,10 +3,10 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
+ *  that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -57,6 +57,10 @@
 #define EXAMPLE_FLEXIO_SPI_DMA_DSPI_BASEADDR DMA0
 #define FLEXIO_SPI_TX_DMA_DSPI_CHANNEL 16U
 #define FLEXIO_SPI_RX_DMA_DSPI_CHANNEL 17U
+#define FLEXIO_TX_SHIFTER_INDEX 0U
+#define FLEXIO_RX_SHIFTER_INDEX 1U
+#define EXAMPLE_TX_DMA_SOURCE (FLEXIO_DMA_REQUEST_BASE + FLEXIO_TX_SHIFTER_INDEX)
+#define EXAMPLE_RX_DMA_SOURCE (FLEXIO_DMA_REQUEST_BASE + FLEXIO_RX_SHIFTER_INDEX)
 #define TRANSFER_SIZE 256U        /*! Transfer dataSize */
 #define TRANSFER_BAUDRATE 500000U /*! Transfer baudrate - 500k */
 
@@ -165,8 +169,8 @@ int main(void)
     spiDev.SDIPinIndex = FLEXIO_SPI_SIN_PIN;
     spiDev.SCKPinIndex = FLEXIO_SPI_CLK_PIN;
     spiDev.CSnPinIndex = FLEXIO_SPI_PCS_PIN;
-    spiDev.shifterIndex[0] = 0U;
-    spiDev.shifterIndex[1] = 1U;
+    spiDev.shifterIndex[0] = FLEXIO_TX_SHIFTER_INDEX;
+    spiDev.shifterIndex[1] = FLEXIO_RX_SHIFTER_INDEX;
     spiDev.timerIndex[0] = 0U;
     spiDev.timerIndex[1] = 1U;
 
@@ -215,8 +219,8 @@ int main(void)
     EDMA_GetDefaultConfig(&config);
     EDMA_Init(EXAMPLE_FLEXIO_SPI_DMA_DSPI_BASEADDR, &config);
 
-    dma_request_source_tx = (dma_request_source_t)(FLEXIO_DMA_REQUEST_BASE + spiDev.shifterIndex[0]);
-    dma_request_source_rx = (dma_request_source_t)(FLEXIO_DMA_REQUEST_BASE + spiDev.shifterIndex[1]);
+    dma_request_source_tx = (dma_request_source_t)(EXAMPLE_TX_DMA_SOURCE);
+    dma_request_source_rx = (dma_request_source_t)(EXAMPLE_RX_DMA_SOURCE);
 
     /* Request DMA channels for TX & RX. */
     DMAMUX_SetSource(EXAMPLE_FLEXIO_SPI_DMAMUX_BASEADDR, FLEXIO_SPI_TX_DMA_DSPI_CHANNEL, dma_request_source_tx);

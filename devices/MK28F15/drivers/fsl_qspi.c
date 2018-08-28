@@ -3,10 +3,10 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
+ *  that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -34,6 +34,12 @@
 
 #include "fsl_qspi.h"
 
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.qspi"
+#endif
+
+
 /*******************************************************************************
  * Definitations
  ******************************************************************************/
@@ -44,17 +50,11 @@ enum _qspi_transfer_state
     kQSPI_TxError        /*!< Transfer error occured. */
 };
 
-#define QSPI_AHB_BUFFER_REG(base, index) (*((uint32_t *)&(base->BUF0CR) + index))
+#define QSPI_AHB_BUFFER_REG(base, index) (((volatile uint32_t *)&((base)->BUF0CR))[(index)])
 
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-/*!
-* @brief Get the instance number for QSPI.
-*
-* @param base QSPI base pointer.
-*/
-uint32_t QSPI_GetInstance(QuadSPI_Type *base);
 
 /*******************************************************************************
  * Variables
@@ -222,7 +222,7 @@ void QSPI_SetFlashConfig(QuadSPI_Type *base, qspi_flash_config_t *config)
 
 void QSPI_SoftwareReset(QuadSPI_Type *base)
 {
-    volatile uint32_t i = 0;
+    uint32_t i = 0;
 
     /* Reset AHB domain and buffer domian */
     base->MCR |= (QuadSPI_MCR_SWRSTHD_MASK | QuadSPI_MCR_SWRSTSD_MASK);

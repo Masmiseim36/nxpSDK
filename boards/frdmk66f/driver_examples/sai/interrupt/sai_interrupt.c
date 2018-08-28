@@ -3,10 +3,10 @@
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
+ *  that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -78,20 +78,8 @@ void BOARD_I2C_ReleaseBus(void);
  ******************************************************************************/
 static size_t g_index = 0;
 static volatile bool isFinished = false;
-#if defined(DEMO_CODEC_WM8960)
-wm8960_handle_t codecHandle = {0};
-#elif defined(DEMO_CODEC_DA7212)
-da7212_handle_t codecHandle = {0};
-#else
-sgtl_handle_t codecHandle = {0};
-#endif
-
-#if defined(FSL_FEATURE_SOC_LPI2C_COUNT) && (FSL_FEATURE_SOC_LPI2C_COUNT)
-lpi2c_master_handle_t i2cHandle;
-#else
-i2c_master_handle_t i2cHandle;
-#endif
-
+codec_handle_t codecHandle = {0};
+extern codec_config_t boardCodecConfig;
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -130,8 +118,8 @@ void SAI_TxIRQHandler(void)
         SAI_TxDisableInterrupts(DEMO_SAI, kSAI_FIFOWarningInterruptEnable | kSAI_FIFOErrorInterruptEnable);
         SAI_TxEnable(DEMO_SAI, false);
     }
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
+/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
+  exception return operation might vector to incorrect interrupt */
 #if defined __CORTEX_M && (__CORTEX_M == 4U)
     __DSB();
 #endif
@@ -145,16 +133,12 @@ int main(void)
     sai_config_t config;
     uint32_t mclkSourceClockHz = 0U;
     sai_transfer_format_t format;
-#if defined(FSL_FEATURE_SOC_LPI2C_COUNT) && (FSL_FEATURE_SOC_LPI2C_COUNT)
-    lpi2c_master_config_t i2cConfig = {0};
-#else
-    i2c_master_config_t i2cConfig = {0};
-#endif
-    uint32_t i2cSourceClock;
+    uint32_t delayCycle = 500000;
 
     BOARD_InitPins();
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
+    BOARD_Codec_I2C_Init();
 
     PRINTF("SAI functional interrupt example started!\n\r");
 
@@ -182,50 +166,19 @@ int main(void)
     format.stereo = kSAI_Stereo;
     format.isFrameSyncCompact = false;
 
-    /* Configure Codec I2C */
-    codecHandle.base = DEMO_I2C;
-    codecHandle.i2cHandle = &i2cHandle;
-    i2cSourceClock = DEMO_I2C_CLK_FREQ;
+    /* Use default setting to init codec */
+    CODEC_Init(&codecHandle, &boardCodecConfig);
+    CODEC_SetFormat(&codecHandle, format.masterClockHz, format.sampleRate_Hz, format.bitWidth);
 
-#if defined(FSL_FEATURE_SOC_LPI2C_COUNT) && (FSL_FEATURE_SOC_LPI2C_COUNT)
-    /*
-     * i2cConfig.debugEnable = false;
-     * i2cConfig.ignoreAck = false;
-     * i2cConfig.pinConfig = kLPI2C_2PinOpenDrain;
-     * i2cConfig.baudRate_Hz = 100000U;
-     * i2cConfig.busIdleTimeout_ns = 0;
-     * i2cConfig.pinLowTimeout_ns = 0;
-     * i2cConfig.sdaGlitchFilterWidth_ns = 0;
-     * i2cConfig.sclGlitchFilterWidth_ns = 0;
-     */
-    LPI2C_MasterGetDefaultConfig(&i2cConfig);
-    LPI2C_MasterInit(DEMO_I2C, &i2cConfig, i2cSourceClock);
-    LPI2C_MasterTransferCreateHandle(DEMO_I2C, &i2cHandle, NULL, NULL);
-#else
-    /*
-     * i2cConfig.baudRate_Bps = 100000U;
-     * i2cConfig.enableStopHold = false;
-     * i2cConfig.glitchFilterWidth = 0U;
-     * i2cConfig.enableMaster = true;
-     */
-    I2C_MasterGetDefaultConfig(&i2cConfig);
-    I2C_MasterInit(DEMO_I2C, &i2cConfig, i2cSourceClock);
-    I2C_MasterTransferCreateHandle(DEMO_I2C, &i2cHandle, NULL, NULL);
+#if defined(CODEC_CYCLE)
+    delayCycle = CODEC_CYCLE;
 #endif
+    while (delayCycle)
+    {
+        __ASM("nop");
+        delayCycle--;
+    }
 
-#if defined(DEMO_CODEC_WM8960)
-    WM8960_Init(&codecHandle, NULL);
-    WM8960_ConfigDataFormat(&codecHandle, format.masterClockHz, format.sampleRate_Hz, format.bitWidth);
-#elif defined(DEMO_CODEC_DA7212)
-    DA7212_Init(&codecHandle, NULL);
-    DA7212_ConfigAudioFormat(&codecHandle, format.sampleRate_Hz, format.masterClockHz, format.bitWidth);
-    DA7212_ChangeOutput(&codecHandle, kDA7212_Output_HP);
-#else
-    /* Use default settings for sgtl5000 */
-    SGTL_Init(&codecHandle, NULL);
-    /* Configure codec format */
-    SGTL_ConfigDataFormat(&codecHandle, format.masterClockHz, format.sampleRate_Hz, format.bitWidth);
-#endif
     mclkSourceClockHz = DEMO_SAI_CLK_FREQ;
     SAI_TxSetFormat(DEMO_SAI, &format, mclkSourceClockHz, format.masterClockHz);
 

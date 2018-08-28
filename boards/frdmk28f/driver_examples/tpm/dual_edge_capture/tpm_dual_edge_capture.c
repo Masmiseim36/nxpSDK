@@ -3,10 +3,10 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
+ *  that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -51,8 +51,10 @@
 #define TPM_INPUT_CAPTURE_HANDLER TPM2_IRQHandler
 
 /* Interrupt to enable and flag to read; depends on the TPM channel used */
-#define TPM_CHANNEL_INTERRUPT_ENABLE kTPM_Chnl1InterruptEnable
-#define TPM_CHANNEL_FLAG kTPM_Chnl1Flag
+#define TPM_FIRST_CHANNEL_INTERRUPT_ENABLE kTPM_Chnl0InterruptEnable
+#define TPM_FIRST_CHANNEL_FLAG kTPM_Chnl0Flag
+#define TPM_SECOND_CHANNEL_INTERRUPT_ENABLE kTPM_Chnl1InterruptEnable
+#define TPM_SECOND_CHANNEL_FLAG kTPM_Chnl1Flag
 
 /* Get source clock for TPM driver */
 #define TPM_SOURCE_CLOCK CLOCK_GetFreq(kCLOCK_PllFllSelClk)
@@ -65,17 +67,48 @@
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-volatile bool tpmIsrFlag = false;
+volatile bool tpmFirstChannelInterruptFlag = false;
+volatile bool tpmSecondChannelInterruptFlag = false;
+/* Record TPM TOF interrupt times */
+volatile uint32_t g_timerOverflowInterruptCount = 0u;
+volatile uint32_t g_firstChannelOverflowCount = 0u;
+volatile uint32_t g_secondChannelOverflowCount = 0u;
 
 /*******************************************************************************
  * Code
  ******************************************************************************/
 void TPM_INPUT_CAPTURE_HANDLER(void)
 {
-    tpmIsrFlag = true;
-
-    /* Clear interrupt flag.*/
-    TPM_ClearStatusFlags(DEMO_TPM_BASEADDR, TPM_CHANNEL_FLAG);
+    if ((TPM_GetStatusFlags(DEMO_TPM_BASEADDR) & kTPM_TimeOverflowFlag) == kTPM_TimeOverflowFlag)
+    {
+        /* Clear overflow interrupt flag.*/
+        TPM_ClearStatusFlags(DEMO_TPM_BASEADDR, kTPM_TimeOverflowFlag);
+        g_timerOverflowInterruptCount++;
+    }
+    else if ((TPM_GetStatusFlags(DEMO_TPM_BASEADDR) & TPM_FIRST_CHANNEL_FLAG) == TPM_FIRST_CHANNEL_FLAG)
+    {
+        /* Clear first channel interrupt flag.*/
+        TPM_ClearStatusFlags(DEMO_TPM_BASEADDR, TPM_FIRST_CHANNEL_FLAG);
+        /* Disable first channel interrupt.*/
+        TPM_DisableInterrupts(DEMO_TPM_BASEADDR, TPM_FIRST_CHANNEL_INTERRUPT_ENABLE);
+        g_firstChannelOverflowCount = g_timerOverflowInterruptCount;
+        tpmFirstChannelInterruptFlag = true;
+    }
+    else if ((TPM_GetStatusFlags(DEMO_TPM_BASEADDR) & TPM_SECOND_CHANNEL_FLAG) == TPM_SECOND_CHANNEL_FLAG)
+    {
+        /* Clear second channel interrupt flag.*/
+        TPM_ClearStatusFlags(DEMO_TPM_BASEADDR, TPM_SECOND_CHANNEL_FLAG);
+        if(tpmFirstChannelInterruptFlag == true)
+        {
+            /* Disable second channel interrupt.*/
+            TPM_DisableInterrupts(DEMO_TPM_BASEADDR, TPM_SECOND_CHANNEL_INTERRUPT_ENABLE);
+            g_secondChannelOverflowCount = g_timerOverflowInterruptCount;
+            tpmSecondChannelInterruptFlag = true;
+        }
+    }
+    else
+    {
+    }
 }
 
 /*!
@@ -118,18 +151,33 @@ int main(void)
 
     /* Set the timer to be in free-running mode */
     DEMO_TPM_BASEADDR->MOD = 0xFFFF;
+    
+    /* Enable first channel interrupt */
+    TPM_EnableInterrupts(DEMO_TPM_BASEADDR, TPM_FIRST_CHANNEL_INTERRUPT_ENABLE);
 
-    /* Enable channel interrupt when the second edge is detected */
-    TPM_EnableInterrupts(DEMO_TPM_BASEADDR, TPM_CHANNEL_INTERRUPT_ENABLE);
+    /* Enable second channel interrupt when the second edge is detected */
+    TPM_EnableInterrupts(DEMO_TPM_BASEADDR, TPM_SECOND_CHANNEL_INTERRUPT_ENABLE);
+
+    /* Enable overflow interrupt */
+    TPM_EnableInterrupts(DEMO_TPM_BASEADDR, kTPM_TimeOverflowInterruptEnable);
 
     /* Enable at the NVIC */
     EnableIRQ(TPM_INTERRUPT_NUMBER);
 
     TPM_StartTimer(DEMO_TPM_BASEADDR, kTPM_SystemClock);
 
-    while (tpmIsrFlag != true)
+    while (tpmFirstChannelInterruptFlag != true)
     {
     }
+    
+    while (tpmSecondChannelInterruptFlag != true)
+    {
+    }
+
+    /* Clear overflow interrupt flag */
+    TPM_ClearStatusFlags(DEMO_TPM_BASEADDR, kTPM_TimeOverflowFlag);
+    /* Disable overflow interrupt.*/
+    TPM_DisableInterrupts(DEMO_TPM_BASEADDR, kTPM_TimeOverflowInterruptEnable);
 
     capture1Val = DEMO_TPM_BASEADDR->CONTROLS[BOARD_TPM_INPUT_CAPTURE_CHANNEL_PAIR * 2].CnV;
     capture2Val = DEMO_TPM_BASEADDR->CONTROLS[(BOARD_TPM_INPUT_CAPTURE_CHANNEL_PAIR * 2) + 1].CnV;
@@ -139,7 +187,7 @@ int main(void)
     /* TPM clock source is not prescaled and is
      * divided by 1000000 as the output is printed in microseconds
      */
-    pulseWidth = ((capture2Val - capture1Val) + 1) / (TPM_SOURCE_CLOCK / 1000000);
+    pulseWidth = (((g_secondChannelOverflowCount - g_firstChannelOverflowCount) * 65536 + capture2Val - capture1Val) + 1) / (TPM_SOURCE_CLOCK / 1000000);
 
     PRINTF("\r\nInput signals pulse width=%d us\r\n", pulseWidth);
     while (1)

@@ -3,10 +3,10 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
+ *  that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -50,6 +50,10 @@
 #define EXAMPLE_FLEXIO_UART_DMA_BASEADDR DMA0
 #define FLEXIO_UART_TX_DMA_CHANNEL 16U
 #define FLEXIO_UART_RX_DMA_CHANNEL 17U
+#define FLEXIO_TX_SHIFTER_INDEX 0U
+#define FLEXIO_RX_SHIFTER_INDEX 1U
+#define EXAMPLE_TX_DMA_SOURCE (FLEXIO_DMA_REQUEST_BASE + FLEXIO_TX_SHIFTER_INDEX)
+#define EXAMPLE_RX_DMA_SOURCE (FLEXIO_DMA_REQUEST_BASE + FLEXIO_RX_SHIFTER_INDEX)
 #define ECHO_BUFFER_LENGTH 8
 
 /*******************************************************************************
@@ -136,8 +140,8 @@ int main(void)
     uartDev.flexioBase = BOARD_FLEXIO_BASE;
     uartDev.TxPinIndex = FLEXIO_UART_TX_PIN;
     uartDev.RxPinIndex = FLEXIO_UART_RX_PIN;
-    uartDev.shifterIndex[0] = 0U;
-    uartDev.shifterIndex[1] = 1U;
+    uartDev.shifterIndex[0] = FLEXIO_TX_SHIFTER_INDEX;
+    uartDev.shifterIndex[1] = FLEXIO_RX_SHIFTER_INDEX;
     uartDev.timerIndex[0] = 0U;
     uartDev.timerIndex[1] = 1U;
 
@@ -153,10 +157,8 @@ int main(void)
     EDMA_Init(EXAMPLE_FLEXIO_UART_DMA_BASEADDR, &config);
 
     /* Request DMA channels for TX & RX. */
-    DMAMUX_SetSource(EXAMPLE_FLEXIO_UART_DMAMUX_BASEADDR, FLEXIO_UART_TX_DMA_CHANNEL,
-                     (FLEXIO_DMA_REQUEST_BASE + uartDev.shifterIndex[0]));
-    DMAMUX_SetSource(EXAMPLE_FLEXIO_UART_DMAMUX_BASEADDR, FLEXIO_UART_RX_DMA_CHANNEL,
-                     (FLEXIO_DMA_REQUEST_BASE + uartDev.shifterIndex[1]));
+    DMAMUX_SetSource(EXAMPLE_FLEXIO_UART_DMAMUX_BASEADDR, FLEXIO_UART_TX_DMA_CHANNEL, EXAMPLE_TX_DMA_SOURCE);
+    DMAMUX_SetSource(EXAMPLE_FLEXIO_UART_DMAMUX_BASEADDR, FLEXIO_UART_RX_DMA_CHANNEL, EXAMPLE_RX_DMA_SOURCE);
     DMAMUX_EnableChannel(EXAMPLE_FLEXIO_UART_DMAMUX_BASEADDR, FLEXIO_UART_TX_DMA_CHANNEL);
     DMAMUX_EnableChannel(EXAMPLE_FLEXIO_UART_DMAMUX_BASEADDR, FLEXIO_UART_RX_DMA_CHANNEL);
     EDMA_CreateHandle(&g_uartTxEdmaHandle, EXAMPLE_FLEXIO_UART_DMA_BASEADDR, FLEXIO_UART_TX_DMA_CHANNEL);

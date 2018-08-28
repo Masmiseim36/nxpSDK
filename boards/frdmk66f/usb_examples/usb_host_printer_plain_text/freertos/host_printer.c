@@ -1,7 +1,7 @@
 /*
  * The Clear BSD License
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016, 2018 NXP
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -36,6 +36,7 @@
 #include "usb_host.h"
 #include "usb_host_printer.h"
 #include "host_printer.h"
+#include "app.h"
 #include "string.h"
 #include "stdlib.h"
 
@@ -116,12 +117,12 @@ static void USB_HostPrinterAppBulkInCallback(void *param, uint8_t *data, uint32_
     if (status == kStatus_USB_Success)
     {
         printerApp->receiveLength = dataLength;
-        printerApp->runState = kRunDataReceived;
+        printerApp->runState = kUSB_HostPrinterRunDataReceived;
     }
     else
     {
         printerApp->receiveLength = 0U;
-        printerApp->runState = kRunPrimeReceive;
+        printerApp->runState = kUSB_HostPrinterRunPrimeReceive;
     }
 }
 
@@ -129,7 +130,7 @@ static void USB_HostPrinterAppControlCallback(void *param, uint8_t *data, uint32
 {
     usb_host_printer_app_t *printerApp = (usb_host_printer_app_t *)param;
 
-    if (printerApp->runState == kRunPrinterTest)
+    if (printerApp->runState == kUSB_HostPrinterRunPrinterTest)
     {
         if (printerApp->commandSemaphore != NULL)
         {
@@ -141,28 +142,28 @@ static void USB_HostPrinterAppControlCallback(void *param, uint8_t *data, uint32
     {
         if (status == kStatus_USB_Success)
         {
-            if (printerApp->runWaitState == kRunWaitSetInterface) /* set interface finish */
+            if (printerApp->runWaitState == kUSB_HostPrinterRunWaitSetInterface) /* set interface finish */
             {
-                printerApp->runState = kRunPrinterTest;
+                printerApp->runState = kUSB_HostPrinterRunPrinterTest;
             }
-            else if (printerApp->runWaitState == kRunWaitGetDeviceId) /* get device id finish */
+            else if (printerApp->runWaitState == kUSB_HostPrinterRunWaitGetDeviceId) /* get device id finish */
             {
-                printerApp->runState = kRunGetDeviceIdDone;
+                printerApp->runState = kUSB_HostPrinterRunGetDeviceIdDone;
             }
-            else if (printerApp->runWaitState == kRunWaitGetDeviceIdAll)
+            else if (printerApp->runWaitState == kUSB_HostPrinterRunWaitGetDeviceIdAll)
             {
-                printerApp->runState = kRunGetDeviceIdAllDone;
+                printerApp->runState = kUSB_HostPrinterRunGetDeviceIdAllDone;
             }
             else
             {
             }
-            printerApp->runWaitState = kRunIdle;
+            printerApp->runWaitState = kUSB_HostPrinterRunIdle;
         }
         else
         {
-            if (printerApp->runWaitState == kRunWaitGetDeviceIdAll)
+            if (printerApp->runWaitState == kUSB_HostPrinterRunWaitGetDeviceIdAll)
             {
-                printerApp->runState = kRunGetDeviceIdAllError;
+                printerApp->runState = kUSB_HostPrinterRunGetDeviceIdAllError;
             }
         }
     }
@@ -353,7 +354,7 @@ void USB_HostPrinterAppTask(void *param)
                 break;
 
             case kStatus_DEV_Attached: /* device is attached and numeration is done */
-                printerApp->runState = kRunGetDeviceId;
+                printerApp->runState = kUSB_HostPrinterRunGetDeviceId;
                 /* printer class initialization */
                 if (USB_HostPrinterInit(printerApp->deviceHandle, &printerApp->classHandle) != kStatus_USB_Success)
                 {
@@ -363,7 +364,7 @@ void USB_HostPrinterAppTask(void *param)
 
             case kStatus_DEV_Detached: /* device is detached */
                 printerApp->deviceState = kStatus_DEV_Idle;
-                printerApp->runState = kRunIdle;
+                printerApp->runState = kUSB_HostPrinterRunIdle;
                 /* printer class de-initialization */
                 USB_HostPrinterDeinit(printerApp->deviceHandle, printerApp->classHandle);
                 printerApp->classHandle = NULL;
@@ -378,17 +379,17 @@ void USB_HostPrinterAppTask(void *param)
     /* run state */
     switch (printerApp->runState)
     {
-        case kRunIdle:
+        case kUSB_HostPrinterRunIdle:
             break;
 
-        case kRunGetDeviceId: /* 1. get device id */
-            printerApp->runState = kRunIdle;
+        case kUSB_HostPrinterRunGetDeviceId: /* 1. get device id */
+            printerApp->runState = kUSB_HostPrinterRunIdle;
             if (printerApp->deviceIdBuffer != NULL)
             {
                 free(printerApp->deviceIdBuffer);
                 printerApp->deviceIdBuffer = NULL;
             }
-            printerApp->runWaitState = kRunWaitGetDeviceId;
+            printerApp->runWaitState = kUSB_HostPrinterRunWaitGetDeviceId;
             interfaceIndex = ((usb_host_interface_t *)printerApp->interfaceHandle)->interfaceDesc->bInterfaceNumber;
             status =
                 USB_HostPrinterGetDeviceId(printerApp->classHandle, interfaceIndex, printerApp->selectAlternateSetting,
@@ -400,12 +401,12 @@ void USB_HostPrinterAppTask(void *param)
             }
             break;
 
-        case kRunGetDeviceIdDone:
+        case kUSB_HostPrinterRunGetDeviceIdDone:
             idLength = printerApp->printerAppBuffer[0];
             idLength <<= 8;
             idLength |= printerApp->printerAppBuffer[1];
 
-            printerApp->runState = kRunIdle;
+            printerApp->runState = kUSB_HostPrinterRunIdle;
             if (idLength > USB_HOST_PRINTER_APP_BUFFER_SIZE) /* the device id is longer */
             {
                 printerApp->deviceIdBuffer = malloc(idLength + 1);
@@ -414,7 +415,7 @@ void USB_HostPrinterAppTask(void *param)
                     usb_echo("malloc error\r\n");
                     return;
                 }
-                printerApp->runWaitState = kRunWaitGetDeviceIdAll;
+                printerApp->runWaitState = kUSB_HostPrinterRunWaitGetDeviceIdAll;
                 interfaceIndex = ((usb_host_interface_t *)printerApp->interfaceHandle)->interfaceDesc->bInterfaceNumber;
                 status = USB_HostPrinterGetDeviceId(printerApp->classHandle, interfaceIndex,
                                                     printerApp->selectAlternateSetting, printerApp->deviceIdBuffer,
@@ -426,21 +427,21 @@ void USB_HostPrinterAppTask(void *param)
             }
             else /* the device id is all */
             {
-                printerApp->runState = kRunParseDeviceId;
+                printerApp->runState = kUSB_HostPrinterRunParseDeviceId;
             }
             break;
 
-        case kRunGetDeviceIdAllDone: /* 2. get device id done */
-            printerApp->runState = kRunParseDeviceId;
+        case kUSB_HostPrinterRunGetDeviceIdAllDone: /* 2. get device id done */
+            printerApp->runState = kUSB_HostPrinterRunParseDeviceId;
             break;
 
-        case kRunGetDeviceIdAllError:
-            printerApp->runState = kRunIdle;
+        case kUSB_HostPrinterRunGetDeviceIdAllError:
+            printerApp->runState = kUSB_HostPrinterRunIdle;
             free(printerApp->deviceIdBuffer);
             printerApp->deviceIdBuffer = NULL;
             break;
 
-        case kRunParseDeviceId:
+        case kUSB_HostPrinterRunParseDeviceId:
             if (printerApp->deviceIdBuffer != NULL)
             {
                 idBuffer = printerApp->deviceIdBuffer;
@@ -476,7 +477,7 @@ void USB_HostPrinterAppTask(void *param)
 
             if (support)
             {
-                printerApp->runState = kRunSetInterface;
+                printerApp->runState = kUSB_HostPrinterRunSetInterface;
             }
             else
             {
@@ -490,9 +491,9 @@ void USB_HostPrinterAppTask(void *param)
             }
             break;
 
-        case kRunSetInterface: /* 3. set supported printer interface */
-            printerApp->runWaitState = kRunWaitSetInterface;
-            printerApp->runState = kRunIdle;
+        case kUSB_HostPrinterRunSetInterface: /* 3. set supported printer interface */
+            printerApp->runWaitState = kUSB_HostPrinterRunWaitSetInterface;
+            printerApp->runState = kUSB_HostPrinterRunIdle;
             if (USB_HostPrinterSetInterface(printerApp->classHandle, printerApp->interfaceHandle,
                                             printerApp->selectAlternateSetting, USB_HostPrinterAppControlCallback,
                                             printerApp) != kStatus_USB_Success)
@@ -501,19 +502,19 @@ void USB_HostPrinterAppTask(void *param)
             }
             break;
 
-        case kRunPrinterTest:
+        case kUSB_HostPrinterRunPrinterTest:
             USB_HostPrinterTest(printerApp);
-            printerApp->runState = kRunPrimeReceive;
+            printerApp->runState = kUSB_HostPrinterRunPrimeReceive;
             break;
 
-        case kRunPrimeReceive:
-            if ((printerApp->deviceState != kStatus_DEV_Attached) || (printerApp->receiveDelay == 0))
+        case kUSB_HostPrinterRunPrimeReceive:
+            if (printerApp->deviceState != kStatus_DEV_Attached)
             {
                 return;
             }
 
             printerApp->receiveDelay = 0;
-            printerApp->runState = kRunIdle;
+            printerApp->runState = kUSB_HostPrinterRunIdle;
             /* receive data */
             status =
                 USB_HostPrinterRecv(printerApp->classHandle, printerApp->printerAppBuffer,
@@ -524,13 +525,13 @@ void USB_HostPrinterAppTask(void *param)
             }
             break;
 
-        case kRunDataReceived:
+        case kUSB_HostPrinterRunDataReceived:
             if (printerApp->receiveLength > 0)
             {
                 printerApp->printerAppBuffer[printerApp->receiveLength] = 0;
                 usb_echo("%s\r\n", printerApp->printerAppBuffer);
             }
-            printerApp->runState = kRunPrimeReceive;
+            printerApp->runState = kUSB_HostPrinterRunPrimeReceive;
             break;
 
         default:

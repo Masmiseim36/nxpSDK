@@ -2,7 +2,7 @@
 <project>
   <fileVersion>2</fileVersion>
   <configuration>
-    <name>Debug</name>
+    <name>debug</name>
     <toolchain>
       <name>ARM</name>
     </toolchain>
@@ -180,6 +180,7 @@
         <debug>1</debug>
         <option>
           <name>CCDefines</name>
+          <state>DEBUG</state>
           <state>_DEBUG=1</state>
           <state>CPU_MK66FN2M0VMD18</state>
           <state>USB_STACK_FREERTOS</state>
@@ -245,7 +246,7 @@
         <option>
           <name>CCAllowList</name>
           <version>1</version>
-          <state>00000000</state>
+          <state>00100000</state>
         </option>
         <option>
           <name>CCDebugInfo</name>
@@ -261,7 +262,7 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IExtraOptions</name>
@@ -313,7 +314,7 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../../rtos/freertos/Source/portable/IAR/ARM_CM4F</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../..</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
@@ -321,7 +322,8 @@
           <state>$PROJ_DIR$/../../../../../../middleware/usb/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/freertos/Source/include</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/lib/include</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/lib/include/private</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
@@ -396,7 +398,7 @@
         </option>
         <option>
           <name>IccCppDialect</name>
-          <state>2</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccExceptions</name>
@@ -412,7 +414,7 @@
         </option>
         <option>
           <name>IccCppInlineSemantics</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccCmsis</name>
@@ -981,7 +983,7 @@
     </settings>
   </configuration>
   <configuration>
-    <name>Release</name>
+    <name>release</name>
     <toolchain>
       <name>ARM</name>
     </toolchain>
@@ -1159,6 +1161,7 @@
         <debug>0</debug>
         <option>
           <name>CCDefines</name>
+          <state>NDEBUG</state>
           <state>_DEBUG=0</state>
           <state>CPU_MK66FN2M0VMD18</state>
           <state>USB_STACK_FREERTOS</state>
@@ -1240,7 +1243,7 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IExtraOptions</name>
@@ -1292,7 +1295,7 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../../rtos/freertos/Source/portable/IAR/ARM_CM4F</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../..</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
@@ -1300,7 +1303,8 @@
           <state>$PROJ_DIR$/../../../../../../middleware/usb/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/freertos/Source/include</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/lib/include</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/lib/include/private</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
@@ -1375,7 +1379,7 @@
         </option>
         <option>
           <name>IccCppDialect</name>
-          <state>2</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccExceptions</name>
@@ -1391,7 +1395,7 @@
         </option>
         <option>
           <name>IccCppInlineSemantics</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccCmsis</name>
@@ -1474,6 +1478,7 @@
         </option>
         <option>
           <name>ADefines</name>
+          <state>NDEBUG</state>
           <state>__STARTUP_INITIALIZE_NONCACHEDATA</state>
         </option>
         <option>
@@ -1987,24 +1992,27 @@
   </group>
   <group>
     <name>board</name>
-    <file>
-      <name>$PROJ_DIR$/../board.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../board.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../clock_config.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../clock_config.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../pin_mux.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../pin_mux.h</name>
-    </file>
+    <group>
+      <name>src</name>
+      <file>
+        <name>$PROJ_DIR$/../board.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../board.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../clock_config.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../clock_config.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../pin_mux.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../pin_mux.h</name>
+      </file>
+    </group>
   </group>
   <group>
     <name>usb</name>
@@ -2150,7 +2158,37 @@
       <name>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers/fsl_smc.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers/fsl_flash.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers/fsl_ftfx_adapter.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers/fsl_ftfx_utilities.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers/fsl_ftfx_features.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers/fsl_ftfx_controller.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers/fsl_ftfx_controller.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers/fsl_ftfx_flash.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers/fsl_ftfx_flash.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers/fsl_ftfx_cache.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers/fsl_ftfx_cache.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers/fsl_ftfx_flexnvm.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers/fsl_ftfx_flexnvm.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers/fsl_flash.h</name>
@@ -2181,110 +2219,107 @@
     </file>
   </group>
   <group>
-    <name>freertos</name>
+    <name>amazon-freertos</name>
     <group>
-      <name>portable</name>
+      <name>FreeRTOS</name>
+      <group>
+        <name>portable</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/MemMang/heap_4.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/readme.txt</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM4F/port.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM4F/portasm.s</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM4F/portmacro.h</name>
+        </file>
+      </group>
       <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/Source/portable/MemMang/heap_4.c</name>
+        <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/lib/FreeRTOS/event_groups.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/Source/portable/readme.txt</name>
+        <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/lib/FreeRTOS/list.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/Source/portable/IAR/ARM_CM4F/fsl_tickless_systick.c</name>
+        <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/lib/FreeRTOS/queue.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/Source/portable/IAR/ARM_CM4F/fsl_tickless_generic.h</name>
+        <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/lib/FreeRTOS/stream_buffer.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/Source/portable/IAR/ARM_CM4F/port.c</name>
+        <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/lib/FreeRTOS/tasks.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/Source/portable/IAR/ARM_CM4F/portasm.s</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/Source/portable/IAR/ARM_CM4F/portmacro.h</name>
+        <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/lib/FreeRTOS/timers.c</name>
       </file>
     </group>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../rtos/freertos/FreeRTOS_for_Kinetis_SDK_v2.0.txt</name>
-    </file>
     <group>
       <name>license</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/License/license.txt</name>
+        <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/LICENSE</name>
       </file>
     </group>
     <group>
       <name>include</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/Source/include/croutine.h</name>
+        <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/lib/include/event_groups.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/Source/include/event_groups.h</name>
+        <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/lib/include/FreeRTOS.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/Source/include/FreeRTOS.h</name>
+        <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/lib/include/message_buffer.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/Source/include/list.h</name>
+        <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/lib/include/queue.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/Source/include/mpu_wrappers.h</name>
+        <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/lib/include/semphr.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/Source/include/portable.h</name>
+        <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/lib/include/stream_buffer.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/Source/include/projdefs.h</name>
+        <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/lib/include/task.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/Source/include/queue.h</name>
+        <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/lib/include/timers.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/Source/include/semphr.h</name>
+        <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/lib/include/freertos_tasks_c_additions.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/Source/include/StackMacros.h</name>
+        <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/lib/include/private/deprecated_definitions.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/Source/include/stdint.readme</name>
+        <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/lib/include/private/list.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/Source/include/task.h</name>
+        <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/lib/include/private/mpu_wrappers.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/Source/include/timers.h</name>
+        <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/lib/include/private/portable.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/Source/include/deprecated_definitions.h</name>
+        <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/lib/include/private/projdefs.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/Source/include/freertos_tasks_c_additions.h</name>
+        <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/lib/include/private/stack_macros.h</name>
       </file>
     </group>
     <group>
-      <name>source</name>
+      <name>portable</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/Source/croutine.c</name>
+        <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM4F/fsl_tickless_systick.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/Source/list.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/Source/queue.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/Source/readme.txt</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/Source/tasks.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/Source/timers.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/Source/event_groups.c</name>
+        <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM4F/fsl_tickless_generic.h</name>
       </file>
     </group>
   </group>

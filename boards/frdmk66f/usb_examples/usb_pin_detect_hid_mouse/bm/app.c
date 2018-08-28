@@ -67,7 +67,6 @@
  * Definitions
  ******************************************************************************/
 
-
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -90,6 +89,7 @@ extern void USB_HostClockInit(void);
 volatile uint32_t g_idPinStatus = 0;
 volatile uint32_t g_idPinStatusChange = 0;
 volatile uint32_t g_deviceMode = 0;
+volatile uint32_t g_timer = 0x0;
 volatile USBHS_Type *ehciRegisterBase;
 /*******************************************************************************
  * Code
@@ -205,11 +205,7 @@ void USB_DeviceIsrEnable(void)
     irqNumber = usbDeviceKhciIrq[0];
 #endif
 /* Install isr, set priority, and enable IRQ. */
-#if defined(__GIC_PRIO_BITS)
-    GIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
-#else
     NVIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
-#endif
     EnableIRQ((IRQn_Type)irqNumber);
 }
 
@@ -225,11 +221,7 @@ void USB_DeviceIsrDisable(void)
     irqNumber = usbDeviceKhciIrq[0];
 #endif
 /* Install isr, set priority, and enable IRQ. */
-#if defined(__GIC_PRIO_BITS)
-    GIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
-#else
     NVIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
-#endif
     DisableIRQ((IRQn_Type)irqNumber);
 }
 #if USB_DEVICE_CONFIG_USE_TASK
@@ -264,6 +256,23 @@ uint8_t USB_GetIdPinStatus(void)
 }
 
 /*!
+ * @brief task makes a concession
+ */
+uint8_t TaskConcess(uint8_t ms)
+{
+    g_timer++;
+    if (g_timer == 1000 * ms)
+    {
+        g_timer = 0;
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+/*!
  * @brief ehci host isr
  */
 void USBHS_IRQHandler(void)
@@ -295,8 +304,8 @@ void USBHS_IRQHandler(void)
         {
         }
     }
-   /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping 
-     exception return operation might vector to incorrect interrupt */
+/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
+  exception return operation might vector to incorrect interrupt */
 #if defined __CORTEX_M && (__CORTEX_M == 4U)
     __DSB();
 #endif
@@ -357,10 +366,15 @@ void Pin_DetectTaskFunction(void)
         }
         else
         {
-            Host_AppDeinit();
-            g_deviceMode = 1;
-            BOARD_UsbVbusOn(0);
-            Device_AppInit();
+            if (TaskConcess(1))
+            {
+                Host_AppDeinit();
+                g_deviceMode = 1;
+                BOARD_UsbVbusOn(0);
+                Device_AppInit();
+            }
+            else
+                return;
         }
         g_idPinStatusChange = 0;
     }

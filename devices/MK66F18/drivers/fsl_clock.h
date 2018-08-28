@@ -1028,7 +1028,16 @@ uint32_t CLOCK_GetEr32kClkFreq(void);
  *
  * @return Clock frequency in Hz.
  */
+
 uint32_t CLOCK_GetOsc0ErClkFreq(void);
+
+/*!
+ * @brief Get the OSC0 external reference divided clock frequency.
+ *
+ * @return Clock frequency in Hz.
+ */
+uint32_t CLOCK_GetOsc0ErClkDivFreq(void);
+
 
 /*!
  * @brief Get the OSC0 external reference undivided clock frequency (OSC0ERCLK_UNDIV).

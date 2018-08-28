@@ -4,7 +4,7 @@
   <Header>### uVision Project, (C) Keil Software</Header>
   <Targets>
     <Target>
-      <TargetName>ecompass Debug</TargetName>
+      <TargetName>ecompass debug</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <TargetOption>
@@ -371,7 +371,7 @@
 --diag_suppress=66,1296,186 
  
 </MiscControls>
-              <Define>DEBUG, CPU_MK66FN2M0VMD18, FRDM_K66F, FREEDOM, PRINTF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1</Define>
+              <Define>DEBUG, CPU_MK66FN2M0VMD18, FRDM_K66F, FREEDOM, PRINTF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1</Define>
               <Undefine/>
               <IncludePath>../../../../../CMSIS/Include;../../../../../devices;..;../../..;../../../../../devices/MK66F18/drivers;../../../../../devices/MK66F18;../../../../../devices/MK66F18/utilities/io;../../../../../devices/MK66F18/utilities/str;../../../../../devices/MK66F18/utilities/log;../../../../../devices/MK66F18/utilities</IncludePath>
             </VariousControls>
@@ -437,6 +437,11 @@
               <FileType>5</FileType>
               <FilePath>../pin_mux.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>board-src</GroupName>
+          <Files>
             <File>
               <FileName>board.c</FileName>
               <FileType>1</FileType>
@@ -483,9 +488,59 @@
               <FilePath>../../../../../devices/MK66F18/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_flash.c</FileName>
+              <FileName>fsl_ftfx_adapter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_adapter.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_utilities.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_utilities.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_features.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_features.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_controller.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK66F18/drivers/fsl_flash.c</FilePath>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_controller.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_controller.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_controller.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_flash.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flash.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_flash.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_cache.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_cache.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_cache.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_cache.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flexnvm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_flexnvm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flexnvm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_flexnvm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_flash.h</FileName>
@@ -652,7 +707,7 @@
       </Groups>
     </Target>
     <Target>
-      <TargetName>ecompass Release</TargetName>
+      <TargetName>ecompass release</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <TargetOption>
@@ -1019,7 +1074,7 @@
 --diag_suppress=66,1296,186 
  
 </MiscControls>
-              <Define>NDEBUG, CPU_MK66FN2M0VMD18, FRDM_K66F, FREEDOM, PRINTF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1</Define>
+              <Define>NDEBUG, CPU_MK66FN2M0VMD18, FRDM_K66F, FREEDOM, PRINTF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1</Define>
               <Undefine/>
               <IncludePath>../../../../../CMSIS/Include;../../../../../devices;..;../../..;../../../../../devices/MK66F18/drivers;../../../../../devices/MK66F18;../../../../../devices/MK66F18/utilities/io;../../../../../devices/MK66F18/utilities/str;../../../../../devices/MK66F18/utilities/log;../../../../../devices/MK66F18/utilities</IncludePath>
             </VariousControls>
@@ -1036,7 +1091,7 @@
             <useXO>0</useXO>
             <VariousControls>
               <MiscControls/>
-              <Define>CPU_MK66FN2M0VMI18, NDEBUG,__CC_ARM,KEIL,FRDM_K66F, FREEDOM, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
+              <Define>CPU_MK66FN2M0VMI18, NDEBUG,__CC_ARM,KEIL,FRDM_K66F, FREEDOM, NDEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
               <Undefine/>
               <IncludePath/>
             </VariousControls>
@@ -1085,6 +1140,11 @@
               <FileType>5</FileType>
               <FilePath>../pin_mux.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>board-src</GroupName>
+          <Files>
             <File>
               <FileName>board.c</FileName>
               <FileType>1</FileType>
@@ -1131,9 +1191,59 @@
               <FilePath>../../../../../devices/MK66F18/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_flash.c</FileName>
+              <FileName>fsl_ftfx_adapter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_adapter.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_utilities.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_utilities.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_features.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_features.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_controller.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK66F18/drivers/fsl_flash.c</FilePath>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_controller.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_controller.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_controller.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_flash.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flash.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_flash.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_cache.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_cache.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_cache.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_cache.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flexnvm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_flexnvm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flexnvm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_flexnvm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_flash.h</FileName>

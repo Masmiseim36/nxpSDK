@@ -67,7 +67,6 @@
  * Definitions
  ******************************************************************************/
 
-
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -205,11 +204,7 @@ void USB_DeviceIsrEnable(void)
     irqNumber = usbDeviceKhciIrq[0];
 #endif
 /* Install isr, set priority, and enable IRQ. */
-#if defined(__GIC_PRIO_BITS)
-    GIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
-#else
     NVIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
-#endif
     EnableIRQ((IRQn_Type)irqNumber);
 }
 
@@ -225,11 +220,7 @@ void USB_DeviceIsrDisable(void)
     irqNumber = usbDeviceKhciIrq[0];
 #endif
 /* Install isr, set priority, and enable IRQ. */
-#if defined(__GIC_PRIO_BITS)
-    GIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
-#else
     NVIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
-#endif
     DisableIRQ((IRQn_Type)irqNumber);
 }
 #if USB_DEVICE_CONFIG_USE_TASK
@@ -295,8 +286,8 @@ void USBHS_IRQHandler(void)
         {
         }
     }
-   /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping 
-     exception return operation might vector to incorrect interrupt */
+/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
+  exception return operation might vector to incorrect interrupt */
 #if defined __CORTEX_M && (__CORTEX_M == 4U)
     __DSB();
 #endif
@@ -350,6 +341,7 @@ void Pin_DetectTaskFunction(void)
         }
         else
         {
+            vTaskDelay(100);
             Host_AppDeinit();
             g_deviceMode = 1;
             BOARD_UsbVbusOn(0);

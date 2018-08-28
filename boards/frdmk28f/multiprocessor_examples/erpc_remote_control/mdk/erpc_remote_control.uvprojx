@@ -4,7 +4,7 @@
   <Header>### uVision Project, (C) Keil Software</Header>
   <Targets>
     <Target>
-      <TargetName>erpc_remote_control Debug</TargetName>
+      <TargetName>erpc_remote_control debug</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <TargetOption>
@@ -371,9 +371,9 @@
 --diag_suppress=66,1296,186 
  
 </MiscControls>
-              <Define>DEBUG, CPU_MK28FN2M0VMI15, FRDM_K28F, FREEDOM, FSL_RTOS_FREE_RTOS</Define>
+              <Define>DEBUG, CPU_MK28FN2M0VMI15, FRDM_K28F, FREEDOM, SDK_I2C_BASED_COMPONENT_USED=1, FSL_RTOS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>../../../../../rtos/freertos/Source/portable/RVDS/ARM_CM4F;../../../../../CMSIS/Include;../../../../../devices;..;../service;../../../../../CMSIS/Driver/Include;../../..;../../../../../rtos/freertos/Source/include;../../../../../devices/MK28F15/drivers;../../../../../devices/MK28F15/cmsis_drivers;../../../../../devices/MK28F15;../../../../../devices/MK28F15/utilities/io;../../../../../devices/MK28F15/utilities/str;../../../../../devices/MK28F15/utilities/log;../../../../../devices/MK28F15/utilities;../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../middleware/multicore/erpc/erpc_c/transports</IncludePath>
+              <IncludePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/RVDS/ARM_CM4F;../../../../../CMSIS/Include;../../../../../devices;..;../service;../../../../../CMSIS/Driver/Include;../../..;../../erpc_common;../../../../../rtos/amazon-freertos/lib/include;../../../../../rtos/amazon-freertos/lib/include/private;../../../../../devices/MK28F15/drivers;../../../../../devices/MK28F15/cmsis_drivers;../../../../../devices/MK28F15;../../../../../devices/MK28F15/utilities/io;../../../../../devices/MK28F15/utilities/str;../../../../../devices/MK28F15/utilities/log;../../../../../devices/MK28F15/utilities;../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../middleware/multicore/erpc/erpc_c</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -416,7 +416,7 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>drivers</GroupName>
+          <GroupName>drivers-src</GroupName>
           <Files>
             <File>
               <FileName>Driver_Common.h</FileName>
@@ -428,6 +428,141 @@
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Driver/Include/Driver_USART.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>source</GroupName>
+          <Files>
+            <File>
+              <FileName>remote_control.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../remote_control.c</FilePath>
+            </File>
+            <File>
+              <FileName>FreeRTOSConfig.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../FreeRTOSConfig.h</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../erpc_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>erpc</GroupName>
+          <Files>
+            <File>
+              <FileName>erpc_error_handler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../erpc_common/erpc_error_handler.h</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_error_handler.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../erpc_common/erpc_error_handler.cpp</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>erpc-service</GroupName>
+          <Files>
+            <File>
+              <FileName>erpc_remote_control.erpc</FileName>
+              <FileType>5</FileType>
+              <FilePath>../service/erpc_remote_control.erpc</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_remote_control.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../service/erpc_remote_control.h</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_remote_control_app_0.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../service/erpc_remote_control_app_0.h</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_remote_control_app_0_server.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../service/erpc_remote_control_app_0_server.h</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_remote_control_app_0_server.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../service/erpc_remote_control_app_0_server.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_remote_control_app_1.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../service/erpc_remote_control_app_1.h</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_remote_control_app_1_client.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../service/erpc_remote_control_app_1_client.cpp</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>board</GroupName>
+          <Files>
+            <File>
+              <FileName>pin_mux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../pin_mux.c</FilePath>
+            </File>
+            <File>
+              <FileName>pin_mux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../pin_mux.h</FilePath>
+            </File>
+            <File>
+              <FileName>RTE_Device.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../RTE_Device.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>board-src</GroupName>
+          <Files>
+            <File>
+              <FileName>board.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../board.c</FilePath>
+            </File>
+            <File>
+              <FileName>board.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../board.h</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../clock_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../clock_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>doc</GroupName>
+          <Files>
+            <File>
+              <FileName>readme.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../readme.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>drivers</GroupName>
+          <Files>
             <File>
               <FileName>fsl_edma.h</FileName>
               <FileType>5</FileType>
@@ -437,16 +572,6 @@
               <FileName>fsl_edma.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MK28F15/drivers/fsl_edma.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_dmamux.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK28F15/drivers/fsl_dmamux.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_dmamux.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK28F15/drivers/fsl_dmamux.c</FilePath>
             </File>
             <File>
               <FileName>fsl_common.h</FileName>
@@ -509,9 +634,59 @@
               <FilePath>../../../../../devices/MK28F15/cmsis_drivers/fsl_lpuart_cmsis.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_flash.c</FileName>
+              <FileName>fsl_ftfx_adapter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK28F15/drivers/fsl_ftfx_adapter.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_utilities.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK28F15/drivers/fsl_ftfx_utilities.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_features.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK28F15/drivers/fsl_ftfx_features.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_controller.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK28F15/drivers/fsl_flash.c</FilePath>
+              <FilePath>../../../../../devices/MK28F15/drivers/fsl_ftfx_controller.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_controller.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK28F15/drivers/fsl_ftfx_controller.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK28F15/drivers/fsl_ftfx_flash.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flash.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK28F15/drivers/fsl_ftfx_flash.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_cache.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK28F15/drivers/fsl_ftfx_cache.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_cache.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK28F15/drivers/fsl_ftfx_cache.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flexnvm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK28F15/drivers/fsl_ftfx_flexnvm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flexnvm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK28F15/drivers/fsl_ftfx_flexnvm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_flash.h</FileName>
@@ -573,120 +748,15 @@
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MK28F15/drivers/fsl_adc16.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>source</GroupName>
-          <Files>
             <File>
-              <FileName>remote_control.c</FileName>
+              <FileName>fsl_dmamux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK28F15/drivers/fsl_dmamux.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dmamux.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../remote_control.c</FilePath>
-            </File>
-            <File>
-              <FileName>FreeRTOSConfig.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../FreeRTOSConfig.h</FilePath>
-            </File>
-            <File>
-              <FileName>erpc_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../erpc_config.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>erpc-service</GroupName>
-          <Files>
-            <File>
-              <FileName>erpc_crc16.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../service/erpc_crc16.h</FilePath>
-            </File>
-            <File>
-              <FileName>erpc_remote_control.erpc</FileName>
-              <FileType>5</FileType>
-              <FilePath>../service/erpc_remote_control.erpc</FilePath>
-            </File>
-            <File>
-              <FileName>erpc_remote_control.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../service/erpc_remote_control.h</FilePath>
-            </File>
-            <File>
-              <FileName>erpc_remote_control_app_0.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../service/erpc_remote_control_app_0.h</FilePath>
-            </File>
-            <File>
-              <FileName>erpc_remote_control_app_0_server.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../service/erpc_remote_control_app_0_server.h</FilePath>
-            </File>
-            <File>
-              <FileName>erpc_remote_control_app_0_server.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>../service/erpc_remote_control_app_0_server.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>erpc_remote_control_app_1.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../service/erpc_remote_control_app_1.h</FilePath>
-            </File>
-            <File>
-              <FileName>erpc_remote_control_app_1_client.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>../service/erpc_remote_control_app_1_client.cpp</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>board</GroupName>
-          <Files>
-            <File>
-              <FileName>pin_mux.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../pin_mux.c</FilePath>
-            </File>
-            <File>
-              <FileName>pin_mux.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../pin_mux.h</FilePath>
-            </File>
-            <File>
-              <FileName>RTE_Device.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../RTE_Device.h</FilePath>
-            </File>
-            <File>
-              <FileName>board.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../board.c</FilePath>
-            </File>
-            <File>
-              <FileName>board.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../board.h</FilePath>
-            </File>
-            <File>
-              <FileName>clock_config.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../clock_config.c</FilePath>
-            </File>
-            <File>
-              <FileName>clock_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../clock_config.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>doc</GroupName>
-          <Files>
-            <File>
-              <FileName>readme.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../../../../../devices/MK28F15/drivers/fsl_dmamux.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -799,54 +869,54 @@
           <GroupName>erpc-infra</GroupName>
           <Files>
             <File>
-              <FileName>arbitrated_client_manager.h</FileName>
+              <FileName>erpc_arbitrated_client_manager.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/arbitrated_client_manager.h</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_arbitrated_client_manager.h</FilePath>
             </File>
             <File>
-              <FileName>arbitrated_client_manager.cpp</FileName>
+              <FileName>erpc_arbitrated_client_manager.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/arbitrated_client_manager.cpp</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_arbitrated_client_manager.cpp</FilePath>
             </File>
             <File>
-              <FileName>client_manager.h</FileName>
+              <FileName>erpc_client_manager.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/client_manager.h</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_client_manager.h</FilePath>
             </File>
             <File>
-              <FileName>client_manager.cpp</FileName>
+              <FileName>erpc_client_manager.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/client_manager.cpp</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_client_manager.cpp</FilePath>
             </File>
             <File>
-              <FileName>simple_server.h</FileName>
+              <FileName>erpc_simple_server.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/simple_server.h</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_simple_server.h</FilePath>
             </File>
             <File>
-              <FileName>simple_server.cpp</FileName>
+              <FileName>erpc_simple_server.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/simple_server.cpp</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_simple_server.cpp</FilePath>
             </File>
             <File>
-              <FileName>server.h</FileName>
+              <FileName>erpc_server.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/server.h</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_server.h</FilePath>
             </File>
             <File>
-              <FileName>server.cpp</FileName>
+              <FileName>erpc_server.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/server.cpp</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_server.cpp</FilePath>
             </File>
             <File>
-              <FileName>transport_arbitrator.h</FileName>
+              <FileName>erpc_transport_arbitrator.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/transport_arbitrator.h</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_transport_arbitrator.h</FilePath>
             </File>
             <File>
-              <FileName>transport_arbitrator.cpp</FileName>
+              <FileName>erpc_transport_arbitrator.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/transport_arbitrator.cpp</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_transport_arbitrator.cpp</FilePath>
             </File>
             <File>
               <FileName>erpc_version.h</FileName>
@@ -854,29 +924,29 @@
               <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_version.h</FilePath>
             </File>
             <File>
-              <FileName>codec.h</FileName>
+              <FileName>erpc_codec.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/codec.h</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_codec.h</FilePath>
             </File>
             <File>
-              <FileName>basic_codec.h</FileName>
+              <FileName>erpc_basic_codec.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/basic_codec.h</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_basic_codec.h</FilePath>
             </File>
             <File>
-              <FileName>transport.h</FileName>
+              <FileName>erpc_transport.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/transport.h</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_transport.h</FilePath>
             </File>
             <File>
-              <FileName>message_buffer.h</FileName>
+              <FileName>erpc_message_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/message_buffer.h</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_buffer.h</FilePath>
             </File>
             <File>
-              <FileName>message_loggers.h</FileName>
+              <FileName>erpc_message_loggers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/message_loggers.h</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_loggers.h</FilePath>
             </File>
             <File>
               <FileName>erpc_common.h</FileName>
@@ -884,44 +954,44 @@
               <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_common.h</FilePath>
             </File>
             <File>
-              <FileName>manually_constructed.h</FileName>
+              <FileName>erpc_manually_constructed.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/manually_constructed.h</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_manually_constructed.h</FilePath>
             </File>
             <File>
-              <FileName>crc16.h</FileName>
+              <FileName>erpc_crc16.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/crc16.h</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_crc16.h</FilePath>
             </File>
             <File>
-              <FileName>basic_codec.cpp</FileName>
+              <FileName>erpc_basic_codec.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/basic_codec.cpp</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_basic_codec.cpp</FilePath>
             </File>
             <File>
-              <FileName>message_buffer.cpp</FileName>
+              <FileName>erpc_message_buffer.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/message_buffer.cpp</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_buffer.cpp</FilePath>
             </File>
             <File>
-              <FileName>message_loggers.cpp</FileName>
+              <FileName>erpc_message_loggers.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/message_loggers.cpp</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_loggers.cpp</FilePath>
             </File>
             <File>
-              <FileName>crc16.cpp</FileName>
+              <FileName>erpc_crc16.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/crc16.cpp</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_crc16.cpp</FilePath>
             </File>
             <File>
-              <FileName>framed_transport.h</FileName>
+              <FileName>erpc_framed_transport.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/framed_transport.h</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_framed_transport.h</FilePath>
             </File>
             <File>
-              <FileName>framed_transport.cpp</FileName>
+              <FileName>erpc_framed_transport.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/framed_transport.cpp</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_framed_transport.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -1004,196 +1074,186 @@
           <GroupName>erpc-transports</GroupName>
           <Files>
             <File>
-              <FileName>uart_cmsis_transport.h</FileName>
+              <FileName>erpc_uart_cmsis_transport.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/transports/uart_cmsis_transport.h</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_uart_cmsis_transport.h</FilePath>
             </File>
             <File>
-              <FileName>uart_cmsis_transport.cpp</FileName>
+              <FileName>erpc_uart_cmsis_transport.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/transports/uart_cmsis_transport.cpp</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_uart_cmsis_transport.cpp</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos-portable</GroupName>
+          <GroupName>amazon-freertos-FreeRTOS-portable</GroupName>
           <Files>
             <File>
               <FileName>heap_4.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/Source/portable/MemMang/heap_4.c</FilePath>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/MemMang/heap_4.c</FilePath>
             </File>
             <File>
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/Source/portable/readme.txt</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_tickless_systick.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/Source/portable/RVDS/ARM_CM4F/fsl_tickless_systick.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_tickless_generic.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/Source/portable/RVDS/ARM_CM4F/fsl_tickless_generic.h</FilePath>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/readme.txt</FilePath>
             </File>
             <File>
               <FileName>port.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/Source/portable/RVDS/ARM_CM4F/port.c</FilePath>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/RVDS/ARM_CM4F/port.c</FilePath>
             </File>
             <File>
               <FileName>portmacro.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/Source/portable/RVDS/ARM_CM4F/portmacro.h</FilePath>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/RVDS/ARM_CM4F/portmacro.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos</GroupName>
+          <GroupName>amazon-freertos-license</GroupName>
           <Files>
             <File>
-              <FileName>FreeRTOS_for_Kinetis_SDK_v2.0.txt</FileName>
+              <FileName>LICENSE</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/FreeRTOS_for_Kinetis_SDK_v2.0.txt</FilePath>
+              <FilePath>../../../../../rtos/amazon-freertos/LICENSE</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos-license</GroupName>
+          <GroupName>amazon-freertos-include</GroupName>
           <Files>
-            <File>
-              <FileName>license.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/License/license.txt</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos-include</GroupName>
-          <Files>
-            <File>
-              <FileName>croutine.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/Source/include/croutine.h</FilePath>
-            </File>
             <File>
               <FileName>event_groups.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/Source/include/event_groups.h</FilePath>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/event_groups.h</FilePath>
             </File>
             <File>
               <FileName>FreeRTOS.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/Source/include/FreeRTOS.h</FilePath>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/FreeRTOS.h</FilePath>
             </File>
             <File>
-              <FileName>list.h</FileName>
+              <FileName>message_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/Source/include/list.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_wrappers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/Source/include/mpu_wrappers.h</FilePath>
-            </File>
-            <File>
-              <FileName>portable.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/Source/include/portable.h</FilePath>
-            </File>
-            <File>
-              <FileName>projdefs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/Source/include/projdefs.h</FilePath>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/message_buffer.h</FilePath>
             </File>
             <File>
               <FileName>queue.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/Source/include/queue.h</FilePath>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/queue.h</FilePath>
             </File>
             <File>
               <FileName>semphr.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/Source/include/semphr.h</FilePath>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/semphr.h</FilePath>
             </File>
             <File>
-              <FileName>StackMacros.h</FileName>
+              <FileName>stream_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/Source/include/StackMacros.h</FilePath>
-            </File>
-            <File>
-              <FileName>stdint.readme</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/Source/include/stdint.readme</FilePath>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/stream_buffer.h</FilePath>
             </File>
             <File>
               <FileName>task.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/Source/include/task.h</FilePath>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/task.h</FilePath>
             </File>
             <File>
               <FileName>timers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/Source/include/timers.h</FilePath>
-            </File>
-            <File>
-              <FileName>deprecated_definitions.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/Source/include/deprecated_definitions.h</FilePath>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/timers.h</FilePath>
             </File>
             <File>
               <FileName>freertos_tasks_c_additions.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/Source/include/freertos_tasks_c_additions.h</FilePath>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/freertos_tasks_c_additions.h</FilePath>
+            </File>
+            <File>
+              <FileName>deprecated_definitions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/deprecated_definitions.h</FilePath>
+            </File>
+            <File>
+              <FileName>list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/list.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_wrappers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/mpu_wrappers.h</FilePath>
+            </File>
+            <File>
+              <FileName>portable.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/portable.h</FilePath>
+            </File>
+            <File>
+              <FileName>projdefs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/projdefs.h</FilePath>
+            </File>
+            <File>
+              <FileName>stack_macros.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/stack_macros.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos-source</GroupName>
+          <GroupName>amazon-freertos-FreeRTOS</GroupName>
           <Files>
             <File>
-              <FileName>croutine.c</FileName>
+              <FileName>event_groups.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/Source/croutine.c</FilePath>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/event_groups.c</FilePath>
             </File>
             <File>
               <FileName>list.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/Source/list.c</FilePath>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/list.c</FilePath>
             </File>
             <File>
               <FileName>queue.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/Source/queue.c</FilePath>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/queue.c</FilePath>
             </File>
             <File>
-              <FileName>readme.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/Source/readme.txt</FilePath>
+              <FileName>stream_buffer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/stream_buffer.c</FilePath>
             </File>
             <File>
               <FileName>tasks.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/Source/tasks.c</FilePath>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/tasks.c</FilePath>
             </File>
             <File>
               <FileName>timers.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/Source/timers.c</FilePath>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/timers.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>amazon-freertos-portable</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_tickless_systick.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/RVDS/ARM_CM4F/fsl_tickless_systick.c</FilePath>
             </File>
             <File>
-              <FileName>event_groups.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/Source/event_groups.c</FilePath>
+              <FileName>fsl_tickless_generic.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/RVDS/ARM_CM4F/fsl_tickless_generic.h</FilePath>
             </File>
           </Files>
         </Group>
       </Groups>
     </Target>
     <Target>
-      <TargetName>erpc_remote_control Release</TargetName>
+      <TargetName>erpc_remote_control release</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <TargetOption>
@@ -1560,9 +1620,9 @@
 --diag_suppress=66,1296,186 
  
 </MiscControls>
-              <Define>NDEBUG, CPU_MK28FN2M0VMI15, FRDM_K28F, FREEDOM, FSL_RTOS_FREE_RTOS</Define>
+              <Define>NDEBUG, CPU_MK28FN2M0VMI15, FRDM_K28F, FREEDOM, SDK_I2C_BASED_COMPONENT_USED=1, FSL_RTOS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>../../../../../rtos/freertos/Source/portable/RVDS/ARM_CM4F;../../../../../CMSIS/Include;../../../../../devices;..;../service;../../../../../CMSIS/Driver/Include;../../..;../../../../../rtos/freertos/Source/include;../../../../../devices/MK28F15/drivers;../../../../../devices/MK28F15/cmsis_drivers;../../../../../devices/MK28F15;../../../../../devices/MK28F15/utilities/io;../../../../../devices/MK28F15/utilities/str;../../../../../devices/MK28F15/utilities/log;../../../../../devices/MK28F15/utilities;../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../middleware/multicore/erpc/erpc_c/transports</IncludePath>
+              <IncludePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/RVDS/ARM_CM4F;../../../../../CMSIS/Include;../../../../../devices;..;../service;../../../../../CMSIS/Driver/Include;../../..;../../erpc_common;../../../../../rtos/amazon-freertos/lib/include;../../../../../rtos/amazon-freertos/lib/include/private;../../../../../devices/MK28F15/drivers;../../../../../devices/MK28F15/cmsis_drivers;../../../../../devices/MK28F15;../../../../../devices/MK28F15/utilities/io;../../../../../devices/MK28F15/utilities/str;../../../../../devices/MK28F15/utilities/log;../../../../../devices/MK28F15/utilities;../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../middleware/multicore/erpc/erpc_c</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1577,7 +1637,7 @@
             <useXO>0</useXO>
             <VariousControls>
               <MiscControls/>
-              <Define>__STARTUP_INITIALIZE_NONCACHEDATA</Define>
+              <Define>NDEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
               <Undefine/>
               <IncludePath>..;../service;../../../../../CMSIS/Driver/Include;../../..</IncludePath>
             </VariousControls>
@@ -1605,7 +1665,7 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>drivers</GroupName>
+          <GroupName>drivers-src</GroupName>
           <Files>
             <File>
               <FileName>Driver_Common.h</FileName>
@@ -1617,6 +1677,141 @@
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Driver/Include/Driver_USART.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>source</GroupName>
+          <Files>
+            <File>
+              <FileName>remote_control.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../remote_control.c</FilePath>
+            </File>
+            <File>
+              <FileName>FreeRTOSConfig.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../FreeRTOSConfig.h</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../erpc_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>erpc</GroupName>
+          <Files>
+            <File>
+              <FileName>erpc_error_handler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../erpc_common/erpc_error_handler.h</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_error_handler.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../erpc_common/erpc_error_handler.cpp</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>erpc-service</GroupName>
+          <Files>
+            <File>
+              <FileName>erpc_remote_control.erpc</FileName>
+              <FileType>5</FileType>
+              <FilePath>../service/erpc_remote_control.erpc</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_remote_control.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../service/erpc_remote_control.h</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_remote_control_app_0.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../service/erpc_remote_control_app_0.h</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_remote_control_app_0_server.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../service/erpc_remote_control_app_0_server.h</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_remote_control_app_0_server.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../service/erpc_remote_control_app_0_server.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_remote_control_app_1.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../service/erpc_remote_control_app_1.h</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_remote_control_app_1_client.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../service/erpc_remote_control_app_1_client.cpp</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>board</GroupName>
+          <Files>
+            <File>
+              <FileName>pin_mux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../pin_mux.c</FilePath>
+            </File>
+            <File>
+              <FileName>pin_mux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../pin_mux.h</FilePath>
+            </File>
+            <File>
+              <FileName>RTE_Device.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../RTE_Device.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>board-src</GroupName>
+          <Files>
+            <File>
+              <FileName>board.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../board.c</FilePath>
+            </File>
+            <File>
+              <FileName>board.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../board.h</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../clock_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../clock_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>doc</GroupName>
+          <Files>
+            <File>
+              <FileName>readme.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../readme.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>drivers</GroupName>
+          <Files>
             <File>
               <FileName>fsl_edma.h</FileName>
               <FileType>5</FileType>
@@ -1626,16 +1821,6 @@
               <FileName>fsl_edma.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MK28F15/drivers/fsl_edma.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_dmamux.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK28F15/drivers/fsl_dmamux.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_dmamux.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK28F15/drivers/fsl_dmamux.c</FilePath>
             </File>
             <File>
               <FileName>fsl_common.h</FileName>
@@ -1698,9 +1883,59 @@
               <FilePath>../../../../../devices/MK28F15/cmsis_drivers/fsl_lpuart_cmsis.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_flash.c</FileName>
+              <FileName>fsl_ftfx_adapter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK28F15/drivers/fsl_ftfx_adapter.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_utilities.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK28F15/drivers/fsl_ftfx_utilities.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_features.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK28F15/drivers/fsl_ftfx_features.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_controller.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK28F15/drivers/fsl_flash.c</FilePath>
+              <FilePath>../../../../../devices/MK28F15/drivers/fsl_ftfx_controller.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_controller.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK28F15/drivers/fsl_ftfx_controller.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK28F15/drivers/fsl_ftfx_flash.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flash.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK28F15/drivers/fsl_ftfx_flash.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_cache.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK28F15/drivers/fsl_ftfx_cache.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_cache.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK28F15/drivers/fsl_ftfx_cache.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flexnvm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK28F15/drivers/fsl_ftfx_flexnvm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flexnvm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK28F15/drivers/fsl_ftfx_flexnvm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_flash.h</FileName>
@@ -1762,120 +1997,15 @@
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MK28F15/drivers/fsl_adc16.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>source</GroupName>
-          <Files>
             <File>
-              <FileName>remote_control.c</FileName>
+              <FileName>fsl_dmamux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK28F15/drivers/fsl_dmamux.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dmamux.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../remote_control.c</FilePath>
-            </File>
-            <File>
-              <FileName>FreeRTOSConfig.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../FreeRTOSConfig.h</FilePath>
-            </File>
-            <File>
-              <FileName>erpc_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../erpc_config.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>erpc-service</GroupName>
-          <Files>
-            <File>
-              <FileName>erpc_crc16.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../service/erpc_crc16.h</FilePath>
-            </File>
-            <File>
-              <FileName>erpc_remote_control.erpc</FileName>
-              <FileType>5</FileType>
-              <FilePath>../service/erpc_remote_control.erpc</FilePath>
-            </File>
-            <File>
-              <FileName>erpc_remote_control.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../service/erpc_remote_control.h</FilePath>
-            </File>
-            <File>
-              <FileName>erpc_remote_control_app_0.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../service/erpc_remote_control_app_0.h</FilePath>
-            </File>
-            <File>
-              <FileName>erpc_remote_control_app_0_server.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../service/erpc_remote_control_app_0_server.h</FilePath>
-            </File>
-            <File>
-              <FileName>erpc_remote_control_app_0_server.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>../service/erpc_remote_control_app_0_server.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>erpc_remote_control_app_1.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../service/erpc_remote_control_app_1.h</FilePath>
-            </File>
-            <File>
-              <FileName>erpc_remote_control_app_1_client.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>../service/erpc_remote_control_app_1_client.cpp</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>board</GroupName>
-          <Files>
-            <File>
-              <FileName>pin_mux.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../pin_mux.c</FilePath>
-            </File>
-            <File>
-              <FileName>pin_mux.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../pin_mux.h</FilePath>
-            </File>
-            <File>
-              <FileName>RTE_Device.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../RTE_Device.h</FilePath>
-            </File>
-            <File>
-              <FileName>board.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../board.c</FilePath>
-            </File>
-            <File>
-              <FileName>board.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../board.h</FilePath>
-            </File>
-            <File>
-              <FileName>clock_config.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../clock_config.c</FilePath>
-            </File>
-            <File>
-              <FileName>clock_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../clock_config.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>doc</GroupName>
-          <Files>
-            <File>
-              <FileName>readme.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../../../../../devices/MK28F15/drivers/fsl_dmamux.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1988,54 +2118,54 @@
           <GroupName>erpc-infra</GroupName>
           <Files>
             <File>
-              <FileName>arbitrated_client_manager.h</FileName>
+              <FileName>erpc_arbitrated_client_manager.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/arbitrated_client_manager.h</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_arbitrated_client_manager.h</FilePath>
             </File>
             <File>
-              <FileName>arbitrated_client_manager.cpp</FileName>
+              <FileName>erpc_arbitrated_client_manager.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/arbitrated_client_manager.cpp</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_arbitrated_client_manager.cpp</FilePath>
             </File>
             <File>
-              <FileName>client_manager.h</FileName>
+              <FileName>erpc_client_manager.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/client_manager.h</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_client_manager.h</FilePath>
             </File>
             <File>
-              <FileName>client_manager.cpp</FileName>
+              <FileName>erpc_client_manager.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/client_manager.cpp</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_client_manager.cpp</FilePath>
             </File>
             <File>
-              <FileName>simple_server.h</FileName>
+              <FileName>erpc_simple_server.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/simple_server.h</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_simple_server.h</FilePath>
             </File>
             <File>
-              <FileName>simple_server.cpp</FileName>
+              <FileName>erpc_simple_server.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/simple_server.cpp</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_simple_server.cpp</FilePath>
             </File>
             <File>
-              <FileName>server.h</FileName>
+              <FileName>erpc_server.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/server.h</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_server.h</FilePath>
             </File>
             <File>
-              <FileName>server.cpp</FileName>
+              <FileName>erpc_server.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/server.cpp</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_server.cpp</FilePath>
             </File>
             <File>
-              <FileName>transport_arbitrator.h</FileName>
+              <FileName>erpc_transport_arbitrator.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/transport_arbitrator.h</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_transport_arbitrator.h</FilePath>
             </File>
             <File>
-              <FileName>transport_arbitrator.cpp</FileName>
+              <FileName>erpc_transport_arbitrator.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/transport_arbitrator.cpp</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_transport_arbitrator.cpp</FilePath>
             </File>
             <File>
               <FileName>erpc_version.h</FileName>
@@ -2043,29 +2173,29 @@
               <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_version.h</FilePath>
             </File>
             <File>
-              <FileName>codec.h</FileName>
+              <FileName>erpc_codec.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/codec.h</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_codec.h</FilePath>
             </File>
             <File>
-              <FileName>basic_codec.h</FileName>
+              <FileName>erpc_basic_codec.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/basic_codec.h</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_basic_codec.h</FilePath>
             </File>
             <File>
-              <FileName>transport.h</FileName>
+              <FileName>erpc_transport.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/transport.h</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_transport.h</FilePath>
             </File>
             <File>
-              <FileName>message_buffer.h</FileName>
+              <FileName>erpc_message_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/message_buffer.h</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_buffer.h</FilePath>
             </File>
             <File>
-              <FileName>message_loggers.h</FileName>
+              <FileName>erpc_message_loggers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/message_loggers.h</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_loggers.h</FilePath>
             </File>
             <File>
               <FileName>erpc_common.h</FileName>
@@ -2073,44 +2203,44 @@
               <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_common.h</FilePath>
             </File>
             <File>
-              <FileName>manually_constructed.h</FileName>
+              <FileName>erpc_manually_constructed.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/manually_constructed.h</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_manually_constructed.h</FilePath>
             </File>
             <File>
-              <FileName>crc16.h</FileName>
+              <FileName>erpc_crc16.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/crc16.h</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_crc16.h</FilePath>
             </File>
             <File>
-              <FileName>basic_codec.cpp</FileName>
+              <FileName>erpc_basic_codec.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/basic_codec.cpp</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_basic_codec.cpp</FilePath>
             </File>
             <File>
-              <FileName>message_buffer.cpp</FileName>
+              <FileName>erpc_message_buffer.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/message_buffer.cpp</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_buffer.cpp</FilePath>
             </File>
             <File>
-              <FileName>message_loggers.cpp</FileName>
+              <FileName>erpc_message_loggers.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/message_loggers.cpp</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_loggers.cpp</FilePath>
             </File>
             <File>
-              <FileName>crc16.cpp</FileName>
+              <FileName>erpc_crc16.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/crc16.cpp</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_crc16.cpp</FilePath>
             </File>
             <File>
-              <FileName>framed_transport.h</FileName>
+              <FileName>erpc_framed_transport.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/framed_transport.h</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_framed_transport.h</FilePath>
             </File>
             <File>
-              <FileName>framed_transport.cpp</FileName>
+              <FileName>erpc_framed_transport.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/framed_transport.cpp</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_framed_transport.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -2193,189 +2323,179 @@
           <GroupName>erpc-transports</GroupName>
           <Files>
             <File>
-              <FileName>uart_cmsis_transport.h</FileName>
+              <FileName>erpc_uart_cmsis_transport.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/transports/uart_cmsis_transport.h</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_uart_cmsis_transport.h</FilePath>
             </File>
             <File>
-              <FileName>uart_cmsis_transport.cpp</FileName>
+              <FileName>erpc_uart_cmsis_transport.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/transports/uart_cmsis_transport.cpp</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_uart_cmsis_transport.cpp</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos-portable</GroupName>
+          <GroupName>amazon-freertos-FreeRTOS-portable</GroupName>
           <Files>
             <File>
               <FileName>heap_4.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/Source/portable/MemMang/heap_4.c</FilePath>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/MemMang/heap_4.c</FilePath>
             </File>
             <File>
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/Source/portable/readme.txt</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_tickless_systick.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/Source/portable/RVDS/ARM_CM4F/fsl_tickless_systick.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_tickless_generic.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/Source/portable/RVDS/ARM_CM4F/fsl_tickless_generic.h</FilePath>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/readme.txt</FilePath>
             </File>
             <File>
               <FileName>port.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/Source/portable/RVDS/ARM_CM4F/port.c</FilePath>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/RVDS/ARM_CM4F/port.c</FilePath>
             </File>
             <File>
               <FileName>portmacro.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/Source/portable/RVDS/ARM_CM4F/portmacro.h</FilePath>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/RVDS/ARM_CM4F/portmacro.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos</GroupName>
+          <GroupName>amazon-freertos-license</GroupName>
           <Files>
             <File>
-              <FileName>FreeRTOS_for_Kinetis_SDK_v2.0.txt</FileName>
+              <FileName>LICENSE</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/FreeRTOS_for_Kinetis_SDK_v2.0.txt</FilePath>
+              <FilePath>../../../../../rtos/amazon-freertos/LICENSE</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos-license</GroupName>
+          <GroupName>amazon-freertos-include</GroupName>
           <Files>
-            <File>
-              <FileName>license.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/License/license.txt</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos-include</GroupName>
-          <Files>
-            <File>
-              <FileName>croutine.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/Source/include/croutine.h</FilePath>
-            </File>
             <File>
               <FileName>event_groups.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/Source/include/event_groups.h</FilePath>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/event_groups.h</FilePath>
             </File>
             <File>
               <FileName>FreeRTOS.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/Source/include/FreeRTOS.h</FilePath>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/FreeRTOS.h</FilePath>
             </File>
             <File>
-              <FileName>list.h</FileName>
+              <FileName>message_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/Source/include/list.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_wrappers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/Source/include/mpu_wrappers.h</FilePath>
-            </File>
-            <File>
-              <FileName>portable.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/Source/include/portable.h</FilePath>
-            </File>
-            <File>
-              <FileName>projdefs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/Source/include/projdefs.h</FilePath>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/message_buffer.h</FilePath>
             </File>
             <File>
               <FileName>queue.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/Source/include/queue.h</FilePath>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/queue.h</FilePath>
             </File>
             <File>
               <FileName>semphr.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/Source/include/semphr.h</FilePath>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/semphr.h</FilePath>
             </File>
             <File>
-              <FileName>StackMacros.h</FileName>
+              <FileName>stream_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/Source/include/StackMacros.h</FilePath>
-            </File>
-            <File>
-              <FileName>stdint.readme</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/Source/include/stdint.readme</FilePath>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/stream_buffer.h</FilePath>
             </File>
             <File>
               <FileName>task.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/Source/include/task.h</FilePath>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/task.h</FilePath>
             </File>
             <File>
               <FileName>timers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/Source/include/timers.h</FilePath>
-            </File>
-            <File>
-              <FileName>deprecated_definitions.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/Source/include/deprecated_definitions.h</FilePath>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/timers.h</FilePath>
             </File>
             <File>
               <FileName>freertos_tasks_c_additions.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/Source/include/freertos_tasks_c_additions.h</FilePath>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/freertos_tasks_c_additions.h</FilePath>
+            </File>
+            <File>
+              <FileName>deprecated_definitions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/deprecated_definitions.h</FilePath>
+            </File>
+            <File>
+              <FileName>list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/list.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_wrappers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/mpu_wrappers.h</FilePath>
+            </File>
+            <File>
+              <FileName>portable.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/portable.h</FilePath>
+            </File>
+            <File>
+              <FileName>projdefs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/projdefs.h</FilePath>
+            </File>
+            <File>
+              <FileName>stack_macros.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/stack_macros.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos-source</GroupName>
+          <GroupName>amazon-freertos-FreeRTOS</GroupName>
           <Files>
             <File>
-              <FileName>croutine.c</FileName>
+              <FileName>event_groups.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/Source/croutine.c</FilePath>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/event_groups.c</FilePath>
             </File>
             <File>
               <FileName>list.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/Source/list.c</FilePath>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/list.c</FilePath>
             </File>
             <File>
               <FileName>queue.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/Source/queue.c</FilePath>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/queue.c</FilePath>
             </File>
             <File>
-              <FileName>readme.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/Source/readme.txt</FilePath>
+              <FileName>stream_buffer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/stream_buffer.c</FilePath>
             </File>
             <File>
               <FileName>tasks.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/Source/tasks.c</FilePath>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/tasks.c</FilePath>
             </File>
             <File>
               <FileName>timers.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/Source/timers.c</FilePath>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/timers.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>amazon-freertos-portable</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_tickless_systick.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/RVDS/ARM_CM4F/fsl_tickless_systick.c</FilePath>
             </File>
             <File>
-              <FileName>event_groups.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/Source/event_groups.c</FilePath>
+              <FileName>fsl_tickless_generic.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/RVDS/ARM_CM4F/fsl_tickless_generic.h</FilePath>
             </File>
           </Files>
         </Group>

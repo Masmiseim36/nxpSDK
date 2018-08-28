@@ -4,7 +4,7 @@
   <Header>### uVision Project, (C) Keil Software</Header>
   <Targets>
     <Target>
-      <TargetName>sai Debug</TargetName>
+      <TargetName>sai debug</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <TargetOption>
@@ -371,9 +371,9 @@
 --diag_suppress=66,1296,186 
  
 </MiscControls>
-              <Define>DEBUG, ARM_MATH_CM4, CPU_MK66FN2M0VMD18, FRDM_K66F, FREEDOM, PRINTF_FLOAT_ENABLE=1</Define>
+              <Define>DEBUG, ARM_MATH_CM4, CPU_MK66FN2M0VMD18, FRDM_K66F, FREEDOM, PRINTF_FLOAT_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1</Define>
               <Undefine/>
-              <IncludePath>../../../../../platform/components/da7212;../../../../../CMSIS/Include;../../../../../devices;..;../../..;../../../../../devices/MK66F18/drivers;../../../../../middleware/sdmmc/src;../../../../../middleware/sdmmc/inc;../../../../../middleware/sdmmc/port;../../../../../middleware/fatfs/src/fsl_sd_disk;../../../../../middleware/fatfs/src;../../../../../middleware/fatfs/src/option;../../../../../devices/MK66F18;../../../../../devices/MK66F18/utilities/io;../../../../../devices/MK66F18/utilities/str;../../../../../devices/MK66F18/utilities/log;../../../../../devices/MK66F18/utilities</IncludePath>
+              <IncludePath>../../../../../platform/components/da7212;../../../../../CMSIS/Include;../../../../../devices;..;../../..;../../../../../devices/MK66F18/drivers;../../../../../middleware/sdmmc/src;../../../../../middleware/sdmmc/inc;../../../../../middleware/sdmmc/port;../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../middleware/fatfs/source;../../../../../devices/MK66F18;../../../../../devices/MK66F18/utilities/io;../../../../../devices/MK66F18/utilities/str;../../../../../devices/MK66F18/utilities/log;../../../../../devices/MK66F18/utilities</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -424,9 +424,29 @@
               <FilePath>../ffconf.h</FilePath>
             </File>
             <File>
+              <FileName>recordtoSdcard.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../recordtoSdcard.c</FilePath>
+            </File>
+            <File>
+              <FileName>sai.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../sai.h</FilePath>
+            </File>
+            <File>
               <FileName>sai.c</FileName>
               <FileType>1</FileType>
               <FilePath>../sai.c</FilePath>
+            </File>
+            <File>
+              <FileName>recordPlayback.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../recordPlayback.c</FilePath>
+            </File>
+            <File>
+              <FileName>playbackSineWave.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../playbackSineWave.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -463,6 +483,11 @@
               <FileType>5</FileType>
               <FilePath>../pin_mux.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>board-src</GroupName>
+          <Files>
             <File>
               <FileName>board.c</FileName>
               <FileType>1</FileType>
@@ -539,9 +564,59 @@
               <FilePath>../../../../../devices/MK66F18/drivers/fsl_sdhc.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_flash.c</FileName>
+              <FileName>fsl_ftfx_adapter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_adapter.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_utilities.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_utilities.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_features.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_features.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_controller.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK66F18/drivers/fsl_flash.c</FilePath>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_controller.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_controller.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_controller.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_flash.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flash.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_flash.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_cache.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_cache.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_cache.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_cache.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flexnvm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_flexnvm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flexnvm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_flexnvm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_flash.h</FileName>
@@ -614,16 +689,6 @@
               <FilePath>../../../../../devices/MK66F18/drivers/fsl_sai_edma.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_edma.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK66F18/drivers/fsl_edma.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_edma.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK66F18/drivers/fsl_edma.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_dmamux.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MK66F18/drivers/fsl_dmamux.h</FilePath>
@@ -632,6 +697,16 @@
               <FileName>fsl_dmamux.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MK66F18/drivers/fsl_dmamux.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_edma.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_edma.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_edma.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_edma.c</FilePath>
             </File>
             <File>
               <FileName>fsl_sysmpu.h</FileName>
@@ -657,6 +732,16 @@
               <FileName>fsl_dialog7212.c</FileName>
               <FileType>1</FileType>
               <FilePath>../fsl_dialog7212.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_codec_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../fsl_codec_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_codec_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../fsl_codec_common.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -706,22 +791,22 @@
             <File>
               <FileName>fsl_sd_disk.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/fatfs/src/fsl_sd_disk/fsl_sd_disk.h</FilePath>
-            </File>
-            <File>
-              <FileName>integer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/fatfs/src/integer.h</FilePath>
-            </File>
-            <File>
-              <FileName>ff.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/fatfs/src/ff.h</FilePath>
+              <FilePath>../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.h</FilePath>
             </File>
             <File>
               <FileName>diskio.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/fatfs/src/diskio.h</FilePath>
+              <FilePath>../../../../../middleware/fatfs/source/diskio.h</FilePath>
+            </File>
+            <File>
+              <FileName>ff.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/fatfs/source/ff.h</FilePath>
+            </File>
+            <File>
+              <FileName>integer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/fatfs/source/integer.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -731,17 +816,27 @@
             <File>
               <FileName>fsl_sd_disk.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/fatfs/src/fsl_sd_disk/fsl_sd_disk.c</FilePath>
-            </File>
-            <File>
-              <FileName>ff.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/fatfs/src/ff.c</FilePath>
+              <FilePath>../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.c</FilePath>
             </File>
             <File>
               <FileName>diskio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/fatfs/src/diskio.c</FilePath>
+              <FilePath>../../../../../middleware/fatfs/source/diskio.c</FilePath>
+            </File>
+            <File>
+              <FileName>ff.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/fatfs/source/ff.c</FilePath>
+            </File>
+            <File>
+              <FileName>ffsystem.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/fatfs/source/ffsystem.c</FilePath>
+            </File>
+            <File>
+              <FileName>ffunicode.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/fatfs/source/ffunicode.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -823,7 +918,7 @@
       </Groups>
     </Target>
     <Target>
-      <TargetName>sai Release</TargetName>
+      <TargetName>sai release</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <TargetOption>
@@ -1190,9 +1285,9 @@
 --diag_suppress=66,1296,186 
  
 </MiscControls>
-              <Define>NDEBUG, ARM_MATH_CM4, CPU_MK66FN2M0VMD18, FRDM_K66F, FREEDOM, PRINTF_FLOAT_ENABLE=1</Define>
+              <Define>NDEBUG, ARM_MATH_CM4, CPU_MK66FN2M0VMD18, FRDM_K66F, FREEDOM, PRINTF_FLOAT_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1</Define>
               <Undefine/>
-              <IncludePath>../../../../../platform/components/da7212;../../../../../CMSIS/Include;../../../../../devices;..;../../..;../../../../../devices/MK66F18/drivers;../../../../../middleware/sdmmc/src;../../../../../middleware/sdmmc/inc;../../../../../middleware/sdmmc/port;../../../../../middleware/fatfs/src/fsl_sd_disk;../../../../../middleware/fatfs/src;../../../../../middleware/fatfs/src/option;../../../../../devices/MK66F18;../../../../../devices/MK66F18/utilities/io;../../../../../devices/MK66F18/utilities/str;../../../../../devices/MK66F18/utilities/log;../../../../../devices/MK66F18/utilities</IncludePath>
+              <IncludePath>../../../../../platform/components/da7212;../../../../../CMSIS/Include;../../../../../devices;..;../../..;../../../../../devices/MK66F18/drivers;../../../../../middleware/sdmmc/src;../../../../../middleware/sdmmc/inc;../../../../../middleware/sdmmc/port;../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../middleware/fatfs/source;../../../../../devices/MK66F18;../../../../../devices/MK66F18/utilities/io;../../../../../devices/MK66F18/utilities/str;../../../../../devices/MK66F18/utilities/log;../../../../../devices/MK66F18/utilities</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1207,7 +1302,7 @@
             <useXO>0</useXO>
             <VariousControls>
               <MiscControls/>
-              <Define>CPU_MK66FN2M0VMI18, NDEBUG,__CC_ARM,KEIL,FRDM_K66F, FREEDOM, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
+              <Define>CPU_MK66FN2M0VMI18, NDEBUG,__CC_ARM,KEIL,FRDM_K66F, FREEDOM, NDEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
               <Undefine/>
               <IncludePath/>
             </VariousControls>
@@ -1243,9 +1338,29 @@
               <FilePath>../ffconf.h</FilePath>
             </File>
             <File>
+              <FileName>recordtoSdcard.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../recordtoSdcard.c</FilePath>
+            </File>
+            <File>
+              <FileName>sai.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../sai.h</FilePath>
+            </File>
+            <File>
               <FileName>sai.c</FileName>
               <FileType>1</FileType>
               <FilePath>../sai.c</FilePath>
+            </File>
+            <File>
+              <FileName>recordPlayback.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../recordPlayback.c</FilePath>
+            </File>
+            <File>
+              <FileName>playbackSineWave.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../playbackSineWave.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1282,6 +1397,11 @@
               <FileType>5</FileType>
               <FilePath>../pin_mux.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>board-src</GroupName>
+          <Files>
             <File>
               <FileName>board.c</FileName>
               <FileType>1</FileType>
@@ -1358,9 +1478,59 @@
               <FilePath>../../../../../devices/MK66F18/drivers/fsl_sdhc.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_flash.c</FileName>
+              <FileName>fsl_ftfx_adapter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_adapter.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_utilities.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_utilities.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_features.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_features.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_controller.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK66F18/drivers/fsl_flash.c</FilePath>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_controller.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_controller.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_controller.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_flash.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flash.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_flash.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_cache.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_cache.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_cache.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_cache.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flexnvm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_flexnvm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flexnvm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_flexnvm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_flash.h</FileName>
@@ -1433,16 +1603,6 @@
               <FilePath>../../../../../devices/MK66F18/drivers/fsl_sai_edma.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_edma.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK66F18/drivers/fsl_edma.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_edma.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK66F18/drivers/fsl_edma.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_dmamux.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MK66F18/drivers/fsl_dmamux.h</FilePath>
@@ -1451,6 +1611,16 @@
               <FileName>fsl_dmamux.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MK66F18/drivers/fsl_dmamux.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_edma.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_edma.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_edma.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_edma.c</FilePath>
             </File>
             <File>
               <FileName>fsl_sysmpu.h</FileName>
@@ -1476,6 +1646,16 @@
               <FileName>fsl_dialog7212.c</FileName>
               <FileType>1</FileType>
               <FilePath>../fsl_dialog7212.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_codec_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../fsl_codec_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_codec_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../fsl_codec_common.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1525,22 +1705,22 @@
             <File>
               <FileName>fsl_sd_disk.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/fatfs/src/fsl_sd_disk/fsl_sd_disk.h</FilePath>
-            </File>
-            <File>
-              <FileName>integer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/fatfs/src/integer.h</FilePath>
-            </File>
-            <File>
-              <FileName>ff.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/fatfs/src/ff.h</FilePath>
+              <FilePath>../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.h</FilePath>
             </File>
             <File>
               <FileName>diskio.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/fatfs/src/diskio.h</FilePath>
+              <FilePath>../../../../../middleware/fatfs/source/diskio.h</FilePath>
+            </File>
+            <File>
+              <FileName>ff.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/fatfs/source/ff.h</FilePath>
+            </File>
+            <File>
+              <FileName>integer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/fatfs/source/integer.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1550,17 +1730,27 @@
             <File>
               <FileName>fsl_sd_disk.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/fatfs/src/fsl_sd_disk/fsl_sd_disk.c</FilePath>
-            </File>
-            <File>
-              <FileName>ff.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/fatfs/src/ff.c</FilePath>
+              <FilePath>../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.c</FilePath>
             </File>
             <File>
               <FileName>diskio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/fatfs/src/diskio.c</FilePath>
+              <FilePath>../../../../../middleware/fatfs/source/diskio.c</FilePath>
+            </File>
+            <File>
+              <FileName>ff.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/fatfs/source/ff.c</FilePath>
+            </File>
+            <File>
+              <FileName>ffsystem.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/fatfs/source/ffsystem.c</FilePath>
+            </File>
+            <File>
+              <FileName>ffunicode.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/fatfs/source/ffunicode.c</FilePath>
             </File>
           </Files>
         </Group>

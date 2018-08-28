@@ -163,6 +163,9 @@ void CRYPTO_InitHardware(void)
 #if defined(FSL_FEATURE_SOC_CAU3_COUNT) && (FSL_FEATURE_SOC_CAU3_COUNT > 0)
     /* Initialize CAU3 */
     CAU3_Init(CAU3);
+
+    /* Get CAU3 ownership for this Host CPU */
+    CAU3_LockSemaphore(CAU3);
 #endif
 #if defined(FSL_FEATURE_SOC_DCP_COUNT) && (FSL_FEATURE_SOC_DCP_COUNT > 0)
     /* Initialize DCP */

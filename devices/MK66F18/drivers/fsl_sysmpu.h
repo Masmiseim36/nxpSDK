@@ -3,10 +3,10 @@
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
+ *  that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -49,14 +49,14 @@
 /*! @name Driver version */
 /*@{*/
 /*! @brief SYSMPU driver version 2.2.0. */
-#define FSL_SYSMPU_DRIVER_VERSION (MAKE_VERSION(2, 2, 0))
+#define FSL_SYSMPU_DRIVER_VERSION (MAKE_VERSION(2, 2, 1))
 /*@}*/
 
 /*! @brief define the start master port with read and write attributes. */
 #define SYSMPU_MASTER_RWATTRIBUTE_START_PORT (4)
 
 /*! @brief SYSMPU the bit shift for masters with privilege rights: read write and execute. */
-#define SYSMPU_REGION_RWXRIGHTS_MASTER_SHIFT(n) (n * 6)
+#define SYSMPU_REGION_RWXRIGHTS_MASTER_SHIFT(n) ((n) * 6)
 
 /*! @brief SYSMPU masters with read, write and execute rights bit mask. */
 #define SYSMPU_REGION_RWXRIGHTS_MASTER_MASK(n) (0x1Fu << SYSMPU_REGION_RWXRIGHTS_MASTER_SHIFT(n))
@@ -69,7 +69,7 @@
     (((uint32_t)(((uint32_t)(x)) << SYSMPU_REGION_RWXRIGHTS_MASTER_SHIFT(n))) & SYSMPU_REGION_RWXRIGHTS_MASTER_MASK(n))
 
 /*! @brief SYSMPU masters with read, write and execute rights process enable bit shift. */
-#define SYSMPU_REGION_RWXRIGHTS_MASTER_PE_SHIFT(n) (n * 6 + SYSMPU_REGION_RWXRIGHTS_MASTER_WIDTH)
+#define SYSMPU_REGION_RWXRIGHTS_MASTER_PE_SHIFT(n) ((n) * 6 + SYSMPU_REGION_RWXRIGHTS_MASTER_WIDTH)
 
 /*! @brief SYSMPU masters with read, write and execute rights process enable bit mask. */
 #define SYSMPU_REGION_RWXRIGHTS_MASTER_PE_MASK(n) (0x1u << SYSMPU_REGION_RWXRIGHTS_MASTER_PE_SHIFT(n))
@@ -79,7 +79,7 @@
     (((uint32_t)(((uint32_t)(x)) << SYSMPU_REGION_RWXRIGHTS_MASTER_PE_SHIFT(n))) & SYSMPU_REGION_RWXRIGHTS_MASTER_PE_MASK(n))
 
 /*! @brief SYSMPU masters with normal read write permission bit shift. */
-#define SYSMPU_REGION_RWRIGHTS_MASTER_SHIFT(n) ((n - SYSMPU_MASTER_RWATTRIBUTE_START_PORT) * 2 + 24)
+#define SYSMPU_REGION_RWRIGHTS_MASTER_SHIFT(n) (((n) - SYSMPU_MASTER_RWATTRIBUTE_START_PORT) * 2 + 24)
 
 /*! @brief SYSMPU masters with normal read write rights bit mask. */
 #define SYSMPU_REGION_RWRIGHTS_MASTER_MASK(n) (0x3u << SYSMPU_REGION_RWRIGHTS_MASTER_SHIFT(n))

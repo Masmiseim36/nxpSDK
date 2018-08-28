@@ -6,7 +6,7 @@
  *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
+ *  that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -165,7 +165,7 @@ static const da7212_register_value_t kInitRegisterSequence[DA7212_INIT_SIZE] = {
     },
     {
         DIALOG7212_DAI_CTRL, (DIALOG7212_DAI_EN_MASK | DIALOG7212_DAI_OE_MASK | DIALOG7212_DAI_WORD_LENGTH_16B |
-                              DIALOG7212_DAI_FORMAT_LEFT_JUSTIFIED),
+                              DIALOG7212_DAI_FORMAT_I2S_MODE),
     },
     {
         DIALOG7212_DIG_ROUTING_DAC, (DIALOG7212_DIG_ROUTING_DAC_R_RSC_DAC_R | DIALOG7212_DIG_ROUTING_DAC_L_RSC_DAC_L),
@@ -212,10 +212,10 @@ static const da7212_register_value_t kInitRegisterSequence[DA7212_INIT_SIZE] = {
         DIALOG7212_SYSTEM_STATUS, CLEAR_REGISTER,
     },
     {
-        DIALOG7212_DAC_L_GAIN, kDA7212_DACGain0DB,
+        DIALOG7212_DAC_L_GAIN, kDA7212_DACGainM6DB,
     },
     {
-        DIALOG7212_DAC_R_GAIN, kDA7212_DACGain0DB,
+        DIALOG7212_DAC_R_GAIN, kDA7212_DACGainM6DB,
     },
     {
         DIALOG7212_MIXIN_L_SELECT, DIALOG7212_MIXIN_L_SELECT_AUX_L_SEL_MASK,
@@ -261,69 +261,40 @@ static const da7212_register_value_t kInitRegisterSequence[DA7212_INIT_SIZE] = {
  * Code
  ******************************************************************************/
 
-status_t DA7212_WriteRegister(da7212_handle_t *handle, uint8_t u8Register, uint8_t u8RegisterData)
+status_t DA7212_WriteRegister(codec_handle_t *handle, uint8_t u8Register, uint8_t u8RegisterData)
 {
     status_t status = kStatus_Success;
 
-#if defined(FSL_FEATURE_SOC_LPI2C_COUNT) && (FSL_FEATURE_SOC_LPI2C_COUNT)
-    uint8_t data[2] = {0};
-    data[0] = u8Register;
-    data[1] = u8RegisterData;
-    status = LPI2C_MasterStart(handle->base, DA7212_ADDRESS, kLPI2C_Write);
-    status = LPI2C_MasterSend(handle->base, data, 2);
-    status = LPI2C_MasterStop(handle->base);
-#else
-    /* Set the command buffer to send the data thru physical layer */
-    handle->xfer.slaveAddress = DA7212_ADDRESS;
-    handle->xfer.direction = kI2C_Write;
-    handle->xfer.subaddress = u8Register;
-    handle->xfer.subaddressSize = 1U;
-    handle->xfer.data = &u8RegisterData;
-    handle->xfer.dataSize = 1U;
-
-    status = I2C_MasterTransferBlocking(handle->base, &handle->xfer);
-#endif
+    status = CODEC_I2C_WriteReg(handle->slaveAddress, kCODEC_RegAddr8Bit, u8Register, kCODEC_RegWidth8Bit,
+                                u8RegisterData, handle->I2C_SendFunc);
 
     return status;
 }
 
-status_t DA7212_ReadRegister(da7212_handle_t *handle, uint8_t u8Register, uint8_t *pu8RegisterData)
+status_t DA7212_ReadRegister(codec_handle_t *handle, uint8_t u8Register, uint8_t *pu8RegisterData)
 {
     status_t status = kStatus_Success;
-#if defined(FSL_FEATURE_SOC_LPI2C_COUNT) && (FSL_FEATURE_SOC_LPI2C_COUNT)
-    uint8_t buff = u8Register;
-    status = LPI2C_MasterStart(handle->base, DA7212_ADDRESS, kLPI2C_Write);
-    status = LPI2C_MasterSend(handle->base, &buff, 1);
-    status = LPI2C_MasterStart(handle->base, DA7212_ADDRESS, kLPI2C_Read);
-    status = LPI2C_MasterReceive(handle->base, pu8RegisterData, 1);
-    status = LPI2C_MasterStop(handle->base);
-#else
-    handle->xfer.slaveAddress = DA7212_ADDRESS;
-    handle->xfer.direction = kI2C_Read;
-    handle->xfer.subaddress = u8Register;
-    handle->xfer.subaddressSize = 1U;
-    handle->xfer.data = pu8RegisterData;
-    handle->xfer.dataSize = 1U;
 
-    status = I2C_MasterTransferBlocking(handle->base, &handle->xfer);
-#endif
+    status = CODEC_I2C_ReadReg(handle->slaveAddress, kCODEC_RegAddr8Bit, u8Register, kCODEC_RegWidth8Bit,
+                               pu8RegisterData, handle->I2C_ReceiveFunc);
 
     return status;
 }
 
-void DA7212_Init(da7212_handle_t *handle, da7212_config_t *config)
+status_t DA7212_Init(codec_handle_t *handle, void *codecConfig)
 {
     uint32_t i = 0;
+    da7212_config_t *config = (da7212_config_t *)codecConfig;
+
+    handle->slaveAddress = DA7212_ADDRESS;
 
     /* If no config structure, use default settings */
-    if (config == NULL)
+    for (i = 0; i < DA7212_INIT_SIZE; i++)
     {
-        for (i = 0; i < DA7212_INIT_SIZE; i++)
-        {
-            DA7212_WriteRegister(handle, kInitRegisterSequence[i].addr, kInitRegisterSequence[i].value);
-        }
+        DA7212_WriteRegister(handle, kInitRegisterSequence[i].addr, kInitRegisterSequence[i].value);
     }
-    else
+
+    if (config != NULL)
     {
         /* Set to be master or slave */
         DA7212_WriteRegister(handle, DIALOG7212_DAI_CLK_MODE,
@@ -342,15 +313,22 @@ void DA7212_Init(da7212_handle_t *handle, da7212_config_t *config)
             DA7212_WriteRegister(handle, DIALOG7212_DIG_ROUTING_DAC, 0x32);
         }
     }
+
+    return kStatus_Success;
 }
 
-void DA7212_ConfigAudioFormat(da7212_handle_t *handle,
-                              uint32_t sampleRate_Hz,
-                              uint32_t masterClock_Hz,
-                              uint32_t dataBits)
+status_t DA7212_ConfigAudioFormat(codec_handle_t *handle,
+                                  uint32_t masterClock_Hz,
+                                  uint32_t sampleRate_Hz,
+                                  uint32_t dataBits)
 {
     uint32_t sysClock_Hz = 0;
-    uint8_t indiv = 0, inputDiv = 0, integerDiv = 0, regVal = 0;
+    uint8_t indiv = 0, inputDiv = 0, regVal = 0;
+    uint64_t PllValue = 0;
+    uint32_t PllFractional;
+    uint8_t PllInteger;
+    uint8_t PllFracTop;
+    uint8_t PllFracBottom;
 
     switch (sampleRate_Hz)
     {
@@ -446,14 +424,29 @@ void DA7212_ConfigAudioFormat(da7212_handle_t *handle,
         inputDiv = 16;
     }
 
-    integerDiv = (sysClock_Hz * 8) / (masterClock_Hz / inputDiv);
+    /* PLL feedback divider is a Q13 value */
+    PllValue = (uint64_t)(((uint64_t)((((uint64_t)sysClock_Hz * 8) * inputDiv) << 13)) / (masterClock_Hz));
 
-    /* Set PLL setting register */
-    DA7212_WriteRegister(handle, DIALOG7212_PLL_INTEGER, integerDiv);
-    DA7212_WriteRegister(handle, DIALOG7212_PLL_CTRL, (indiv | DIALOG7212_PLL_EN_MASK));
+    /* extract integer and fractional */
+    PllInteger = PllValue >> 13;
+    PllFractional = (PllValue - (PllInteger << 13));
+    PllFracTop = (PllFractional >> 8);
+    PllFracBottom = (PllFractional & 0xFF);
+
+    DA7212_WriteRegister(handle, DIALOG7212_PLL_FRAC_TOP, PllFracTop);
+
+    DA7212_WriteRegister(handle, DIALOG7212_PLL_FRAC_BOT, PllFracBottom);
+
+    DA7212_WriteRegister(handle, DIALOG7212_PLL_INTEGER, PllInteger);
+
+    regVal = DIALOG7212_PLL_EN_MASK | indiv;
+
+    DA7212_WriteRegister(handle, DIALOG7212_PLL_CTRL, regVal);
+
+    return kStatus_Success;
 }
 
-void DA7212_ChangeInput(da7212_handle_t *handle, da7212_Input_t DA7212_Input)
+void DA7212_ChangeInput(codec_handle_t *handle, da7212_Input_t DA7212_Input)
 {
     uint32_t i = 0;
     uint32_t seqSize = sizeof(kInputRegisterSequence[DA7212_Input]) / sizeof(da7212_register_value_t);
@@ -465,7 +458,7 @@ void DA7212_ChangeInput(da7212_handle_t *handle, da7212_Input_t DA7212_Input)
     }
 }
 
-void DA7212_ChangeOutput(da7212_handle_t *handle, da7212_Output_t DA7212_Output)
+void DA7212_ChangeOutput(codec_handle_t *handle, da7212_Output_t DA7212_Output)
 {
     uint32_t i = 0;
     uint32_t seqSize = sizeof(kOutputRegisterSequence[DA7212_Output]) / sizeof(da7212_register_value_t);
@@ -477,13 +470,13 @@ void DA7212_ChangeOutput(da7212_handle_t *handle, da7212_Output_t DA7212_Output)
     }
 }
 
-void DA7212_ChangeHPVolume(da7212_handle_t *handle, da7212_volume_t volume)
+void DA7212_ChangeHPVolume(codec_handle_t *handle, da7212_volume_t volume)
 {
     DA7212_WriteRegister(handle, DIALOG7212_DAC_L_GAIN, volume);
     DA7212_WriteRegister(handle, DIALOG7212_DAC_R_GAIN, volume);
 }
 
-void DA7212_Mute(da7212_handle_t *handle, bool isMuted)
+void DA7212_Mute(codec_handle_t *handle, bool isMuted)
 {
     uint8_t val = 0;
 
@@ -498,4 +491,9 @@ void DA7212_Mute(da7212_handle_t *handle, bool isMuted)
 
     DA7212_WriteRegister(handle, DIALOG7212_DAC_L_CTRL, val);
     DA7212_WriteRegister(handle, DIALOG7212_DAC_R_CTRL, val);
+}
+
+status_t DA7212_Deinit(codec_handle_t *handle)
+{
+    return kStatus_Success;
 }

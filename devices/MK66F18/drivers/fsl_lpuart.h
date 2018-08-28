@@ -6,7 +6,7 @@
  *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
+ *  that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -47,8 +47,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief LPUART driver version 2.2.4. */
-#define FSL_LPUART_DRIVER_VERSION (MAKE_VERSION(2, 2, 4))
+/*! @brief LPUART driver version 2.2.5. */
+#define FSL_LPUART_DRIVER_VERSION (MAKE_VERSION(2, 2, 5))
 /*@}*/
 
 /*! @brief Error codes for the LPUART driver. */
@@ -517,12 +517,10 @@ static inline void LPUART_EnableTxDMA(LPUART_Type *base, bool enable)
     if (enable)
     {
         base->BAUD |= LPUART_BAUD_TDMAE_MASK;
-        base->CTRL |= LPUART_CTRL_TIE_MASK;
     }
     else
     {
         base->BAUD &= ~LPUART_BAUD_TDMAE_MASK;
-        base->CTRL &= ~LPUART_CTRL_TIE_MASK;
     }
 }
 
@@ -539,12 +537,10 @@ static inline void LPUART_EnableRxDMA(LPUART_Type *base, bool enable)
     if (enable)
     {
         base->BAUD |= LPUART_BAUD_RDMAE_MASK;
-        base->CTRL |= LPUART_CTRL_RIE_MASK;
     }
     else
     {
         base->BAUD &= ~LPUART_BAUD_RDMAE_MASK;
-        base->CTRL &= ~LPUART_CTRL_RIE_MASK;
     }
 }
 
@@ -555,6 +551,14 @@ static inline void LPUART_EnableRxDMA(LPUART_Type *base, bool enable)
  * @name Bus Operations
  * @{
  */
+
+/*!
+ * @brief Get the LPUART instance from peripheral base address.
+ *
+ * @param base LPUART peripheral base address.
+ * @return LPUART instance.
+ */
+uint32_t LPUART_GetInstance(LPUART_Type *base);
 
 /*!
  * @brief Enables or disables the LPUART transmitter.

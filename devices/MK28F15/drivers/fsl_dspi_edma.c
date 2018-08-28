@@ -6,7 +6,7 @@
  *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
+ *  that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -35,8 +35,13 @@
 #include "fsl_dspi_edma.h"
 
 /***********************************************************************************************************************
-* Definitons
+* Definitions
 ***********************************************************************************************************************/
+
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.dspi_edma"
+#endif
 
 /*!
 * @brief Structure definition for dspi_master_edma_private_handle_t. The structure is private.
@@ -76,14 +81,6 @@ static void EDMA_DspiSlaveCallback(edma_handle_t *edmaHandle,
                                    void *g_dspiEdmaPrivateHandle,
                                    bool transferDone,
                                    uint32_t tcds);
-/*!
-* @brief Get instance number for DSPI module.
-*
-* This is not a public API and it's extern from fsl_dspi.c.
-*
-* @param base DSPI peripheral base address
-*/
-extern uint32_t DSPI_GetInstance(SPI_Type *base);
 
 /***********************************************************************************************************************
 * Variables
@@ -93,8 +90,6 @@ extern uint32_t DSPI_GetInstance(SPI_Type *base);
 static dspi_master_edma_private_handle_t s_dspiMasterEdmaPrivateHandle[FSL_FEATURE_SOC_DSPI_COUNT];
 static dspi_slave_edma_private_handle_t s_dspiSlaveEdmaPrivateHandle[FSL_FEATURE_SOC_DSPI_COUNT];
 
-/*! @brief Global variable for dummy data value setting. */
-extern volatile uint8_t s_dummyData[];
 /***********************************************************************************************************************
 * Code
 ***********************************************************************************************************************/
@@ -157,7 +152,7 @@ status_t DSPI_MasterTransferEDMA(SPI_Type *base, dspi_master_edma_handle_t *hand
 
     uint32_t instance = DSPI_GetInstance(base);
     uint16_t wordToSend = 0;
-    uint8_t dummyData = s_dummyData[DSPI_GetInstance(base)];
+    uint8_t dummyData = g_dspiDummyData[DSPI_GetInstance(base)];
     uint8_t dataAlreadyFed = 0;
     uint8_t dataFedMax = 2;
 
@@ -1144,7 +1139,7 @@ status_t DSPI_SlaveTransferEDMA(SPI_Type *base, dspi_slave_edma_handle_t *handle
     handle->totalByteCount = transfer->dataSize;
 
     uint16_t wordToSend = 0;
-    uint8_t dummyData = s_dummyData[DSPI_GetInstance(base)];
+    uint8_t dummyData = g_dspiDummyData[DSPI_GetInstance(base)];
     uint8_t dataAlreadyFed = 0;
     uint8_t dataFedMax = 2;
 

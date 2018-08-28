@@ -1,13 +1,8 @@
 /*!
 @page middleware_log Middleware Change Log
  
-@section mbedtls mbedTLS for MCUXpresso SDK
+@section mbedtls mbedTLS for MCUXpresso SDK.
   The current version of mbedTLS is based on mbedTLS 2.6.0 released 2017-Aug-10.
- 
- - 2.6.0_rev2
-   - Bug fixes:
-      - ssl_cookie.c now uses SHA256 for COOKIE_MD (instead of original SHA224). Some hw crypto acceleration (such as CAU3) don't support SHA224
-        but all support SHA256.
  
  - 2.6.0_rev1
     - Bug fixes:

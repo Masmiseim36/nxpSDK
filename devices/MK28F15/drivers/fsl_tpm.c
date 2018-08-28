@@ -37,6 +37,12 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.tpm"
+#endif
+
 #define TPM_COMBINE_SHIFT (8U)
 
 /*******************************************************************************

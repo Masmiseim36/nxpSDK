@@ -194,18 +194,8 @@ usb_status_t USB_DeviceGetConfigurationDescriptor(
 usb_status_t USB_DeviceGetStringDescriptor(usb_device_handle handle,
                                            usb_device_get_string_descriptor_struct_t *stringDescriptor);
 
-/* Get hid descriptor request */
-usb_status_t USB_DeviceGetHidDescriptor(usb_device_handle handle,
-                                        usb_device_get_hid_descriptor_struct_t *hidDescriptor);
-
-/* Get hid report descriptor request */
 usb_status_t USB_DeviceGetHidReportDescriptor(usb_device_handle handle,
                                               usb_device_get_hid_report_descriptor_struct_t *hidReportDescriptor);
-
-/* Get hid physical descriptor request */
-usb_status_t USB_DeviceGetHidPhysicalDescriptor(usb_device_handle handle,
-                                                usb_device_get_hid_physical_descriptor_struct_t *hidPhysicalDescriptor);
-
 #if (defined(USB_DEVICE_CONFIG_CV_TEST) && (USB_DEVICE_CONFIG_CV_TEST > 0U))
 /* Get device qualifier descriptor request */
 usb_status_t USB_DeviceGetDeviceQualifierDescriptor(

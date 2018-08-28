@@ -3,10 +3,10 @@
  * Copyright (c) 2013 - 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
+ *  that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -50,7 +50,7 @@
 #define DEMO_PDB_DAC_INTERVAL_VALUE 800U
 
 #define DEMO_DAC_BASE DAC0
-#define DEMO_DAC_CHANNEL 0U
+#define DEMO_DAC_CHANNEL kPDB_DACTriggerChannel0
 #define DEMO_DAC_IRQ_ID DAC0_IRQn
 #define DEMO_DAC_IRQ_HANDLER DAC0_IRQHandler
 #define DEMO_DAC_USED_BUFFER_SIZE DAC_DATL_COUNT

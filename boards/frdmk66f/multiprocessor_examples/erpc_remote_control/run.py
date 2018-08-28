@@ -222,7 +222,6 @@ if __name__ == "__main__":
     # initialize UART transport layer
     try:
         transport = erpc.transport.SerialTransport(args.port, args.bd)
-        transport.crc_16 = service.ERPC_GENERATED_SHIM_CODE_CRC
         print('Selected UART port: %s, %s bd' % (args.port, args.bd))
     except SerialException:
         print('Could not open port %s' % args.port)

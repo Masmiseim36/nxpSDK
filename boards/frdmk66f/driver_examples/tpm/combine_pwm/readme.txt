@@ -9,11 +9,10 @@ And if the board do not support LEDs to show, the outputs can be observed by osc
 
 Toolchain supported
 ===================
-- IAR embedded Workbench 8.11.3
-- Keil MDK 5.23
-- GCC ARM Embedded 6-2017-q2
-- Kinetis Development Studio IDE 3.2.0
-- MCUXpresso10.1.0
+- Keil MDK 5.24a
+- IAR embedded Workbench 8.22.2
+- GCC ARM Embedded 7-2017-q4-major
+- MCUXpresso10.2.0
 
 Hardware requirements
 =====================
@@ -48,13 +47,13 @@ TPM example to output combined complementary PWM signals on two channels
 If an LED is connected to the TPM pin, you will see a change in LED brightness if you enter different values
 If no LED is connected to the TPM pin, then probe the signal using an oscilloscope
 Please enter a value to update the Duty cycle:
-Note: The range of value is 0 to 9.
+Note: The range of value is 1 to 9.
 For example: If enter '5', the duty cycle will be set to 50 percent.
 Value:5
 The duty cycle was successfully updated!
 
 Please enter a value to update the Duty cycle:
-Note: The range of value is 0 to 9.
+Note: The range of value is 1 to 9.
 For example: If enter '5', the duty cycle will be set to 50 percent.
 Value:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

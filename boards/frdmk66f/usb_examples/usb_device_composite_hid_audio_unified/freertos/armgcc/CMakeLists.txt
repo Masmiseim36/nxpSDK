@@ -54,6 +54,8 @@ SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -mfloat-abi=hard")
 
 SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -mfpu=fpv4-sp-d16")
 
+SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -DNDEBUG")
+
 SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -D__STARTUP_CLEAR_BSS")
 
 SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -D__STARTUP_INITIALIZE_NONCACHEDATA")
@@ -82,6 +84,8 @@ SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -mfloat-abi=hard")
 
 SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -mfpu=fpv4-sp-d16")
 
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DDEBUG")
+
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -D_DEBUG=1")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DCPU_MK66FN2M0VMD18")
@@ -89,6 +93,10 @@ SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DCPU_MK66FN2M0VMD18")
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DUSB_STACK_FREERTOS")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DUSB_STACK_FREERTOS_HEAP_SIZE=32768")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DSDK_I2C_BASED_COMPONENT_USED=1")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DBOARD_USE_CODEC=1")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DFSL_RTOS_FREE_RTOS")
 
@@ -124,6 +132,8 @@ SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -MMD")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -MP")
 
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DNDEBUG")
+
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -D_DEBUG=0")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DCPU_MK66FN2M0VMD18")
@@ -131,6 +141,10 @@ SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DCPU_MK66FN2M0VMD18")
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DUSB_STACK_FREERTOS")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DUSB_STACK_FREERTOS_HEAP_SIZE=32768")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DSDK_I2C_BASED_COMPONENT_USED=1")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DBOARD_USE_CODEC=1")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DFSL_RTOS_FREE_RTOS")
 
@@ -201,6 +215,8 @@ SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -mfpu=fpv4-sp-d16")
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -MMD")
 
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -MP")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DNDEBUG")
 
 SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DCPU_MK66FN2M0VMD18")
 
@@ -326,7 +342,7 @@ include_directories(${ProjDirPath}/../../../..)
 
 include_directories(${ProjDirPath}/..)
 
-include_directories(${ProjDirPath}/../../../../../../rtos/freertos/Source/portable/GCC/ARM_CM4F)
+include_directories(${ProjDirPath}/../../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/GCC/ARM_CM4F)
 
 include_directories(${ProjDirPath}/../../../../../../CMSIS/Include)
 
@@ -338,7 +354,9 @@ include_directories(${ProjDirPath}/../../../../../../middleware/usb/include)
 
 include_directories(${ProjDirPath}/../../../../../../middleware/usb/device)
 
-include_directories(${ProjDirPath}/../../../../../../rtos/freertos/Source/include)
+include_directories(${ProjDirPath}/../../../../../../rtos/amazon-freertos/lib/include)
+
+include_directories(${ProjDirPath}/../../../../../../rtos/amazon-freertos/lib/include/private)
 
 include_directories(${ProjDirPath}/../../../../../../middleware/usb/phy)
 
@@ -355,7 +373,6 @@ include_directories(${ProjDirPath}/../../../../../../devices/MK66F18/utilities)
 include_directories(${ProjDirPath}/../../../../../../devices/MK66F18)
 
 add_executable(dev_composite_hid_audio_unified_freertos.elf 
-"${ProjDirPath}/../da7212_interface.c"
 "${ProjDirPath}/../audio_unified.c"
 "${ProjDirPath}/../audio_unified.h"
 "${ProjDirPath}/../composite.c"
@@ -394,6 +411,8 @@ add_executable(dev_composite_hid_audio_unified_freertos.elf
 "${ProjDirPath}/../../../../../../middleware/usb/phy/usb_phy.h"
 "${ProjDirPath}/../fsl_dialog7212.h"
 "${ProjDirPath}/../fsl_dialog7212.c"
+"${ProjDirPath}/../fsl_codec_common.h"
+"${ProjDirPath}/../fsl_codec_common.c"
 "${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_sai.h"
 "${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_sai.c"
 "${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_common.h"
@@ -404,46 +423,44 @@ add_executable(dev_composite_hid_audio_unified_freertos.elf
 "${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_i2c.c"
 "${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_sai_edma.h"
 "${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_sai_edma.c"
-"${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_edma.h"
-"${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_edma.c"
 "${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_dmamux.h"
 "${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_dmamux.c"
+"${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_edma.h"
+"${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_edma.c"
 "${ProjDirPath}/../../../../../../middleware/usb/device/usb_device.h"
 "${ProjDirPath}/../../../../../../middleware/usb/device/usb_device_dci.c"
 "${ProjDirPath}/../../../../../../middleware/usb/device/usb_device_dci.h"
 "${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_port.h"
 "${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_sim.h"
 "${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_sim.c"
-"${ProjDirPath}/../../../../../../rtos/freertos/Source/portable/MemMang/heap_4.c"
-"${ProjDirPath}/../../../../../../rtos/freertos/FreeRTOS_for_Kinetis_SDK_v2.0.txt"
-"${ProjDirPath}/../../../../../../rtos/freertos/License/license.txt"
-"${ProjDirPath}/../../../../../../rtos/freertos/Source/include/croutine.h"
-"${ProjDirPath}/../../../../../../rtos/freertos/Source/include/event_groups.h"
-"${ProjDirPath}/../../../../../../rtos/freertos/Source/include/FreeRTOS.h"
-"${ProjDirPath}/../../../../../../rtos/freertos/Source/include/list.h"
-"${ProjDirPath}/../../../../../../rtos/freertos/Source/include/mpu_wrappers.h"
-"${ProjDirPath}/../../../../../../rtos/freertos/Source/include/portable.h"
-"${ProjDirPath}/../../../../../../rtos/freertos/Source/include/projdefs.h"
-"${ProjDirPath}/../../../../../../rtos/freertos/Source/include/queue.h"
-"${ProjDirPath}/../../../../../../rtos/freertos/Source/include/semphr.h"
-"${ProjDirPath}/../../../../../../rtos/freertos/Source/include/StackMacros.h"
-"${ProjDirPath}/../../../../../../rtos/freertos/Source/include/stdint.readme"
-"${ProjDirPath}/../../../../../../rtos/freertos/Source/include/task.h"
-"${ProjDirPath}/../../../../../../rtos/freertos/Source/include/timers.h"
-"${ProjDirPath}/../../../../../../rtos/freertos/Source/include/deprecated_definitions.h"
-"${ProjDirPath}/../../../../../../rtos/freertos/Source/include/freertos_tasks_c_additions.h"
-"${ProjDirPath}/../../../../../../rtos/freertos/Source/croutine.c"
-"${ProjDirPath}/../../../../../../rtos/freertos/Source/list.c"
-"${ProjDirPath}/../../../../../../rtos/freertos/Source/queue.c"
-"${ProjDirPath}/../../../../../../rtos/freertos/Source/readme.txt"
-"${ProjDirPath}/../../../../../../rtos/freertos/Source/tasks.c"
-"${ProjDirPath}/../../../../../../rtos/freertos/Source/timers.c"
-"${ProjDirPath}/../../../../../../rtos/freertos/Source/event_groups.c"
-"${ProjDirPath}/../../../../../../rtos/freertos/Source/portable/readme.txt"
-"${ProjDirPath}/../../../../../../rtos/freertos/Source/portable/GCC/ARM_CM4F/fsl_tickless_generic.h"
-"${ProjDirPath}/../../../../../../rtos/freertos/Source/portable/GCC/ARM_CM4F/fsl_tickless_systick.c"
-"${ProjDirPath}/../../../../../../rtos/freertos/Source/portable/GCC/ARM_CM4F/port.c"
-"${ProjDirPath}/../../../../../../rtos/freertos/Source/portable/GCC/ARM_CM4F/portmacro.h"
+"${ProjDirPath}/../../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/MemMang/heap_4.c"
+"${ProjDirPath}/../../../../../../rtos/amazon-freertos/LICENSE"
+"${ProjDirPath}/../../../../../../rtos/amazon-freertos/lib/include/event_groups.h"
+"${ProjDirPath}/../../../../../../rtos/amazon-freertos/lib/include/FreeRTOS.h"
+"${ProjDirPath}/../../../../../../rtos/amazon-freertos/lib/include/message_buffer.h"
+"${ProjDirPath}/../../../../../../rtos/amazon-freertos/lib/include/queue.h"
+"${ProjDirPath}/../../../../../../rtos/amazon-freertos/lib/include/semphr.h"
+"${ProjDirPath}/../../../../../../rtos/amazon-freertos/lib/include/stream_buffer.h"
+"${ProjDirPath}/../../../../../../rtos/amazon-freertos/lib/include/task.h"
+"${ProjDirPath}/../../../../../../rtos/amazon-freertos/lib/include/timers.h"
+"${ProjDirPath}/../../../../../../rtos/amazon-freertos/lib/include/freertos_tasks_c_additions.h"
+"${ProjDirPath}/../../../../../../rtos/amazon-freertos/lib/include/private/deprecated_definitions.h"
+"${ProjDirPath}/../../../../../../rtos/amazon-freertos/lib/include/private/list.h"
+"${ProjDirPath}/../../../../../../rtos/amazon-freertos/lib/include/private/mpu_wrappers.h"
+"${ProjDirPath}/../../../../../../rtos/amazon-freertos/lib/include/private/portable.h"
+"${ProjDirPath}/../../../../../../rtos/amazon-freertos/lib/include/private/projdefs.h"
+"${ProjDirPath}/../../../../../../rtos/amazon-freertos/lib/include/private/stack_macros.h"
+"${ProjDirPath}/../../../../../../rtos/amazon-freertos/lib/FreeRTOS/event_groups.c"
+"${ProjDirPath}/../../../../../../rtos/amazon-freertos/lib/FreeRTOS/list.c"
+"${ProjDirPath}/../../../../../../rtos/amazon-freertos/lib/FreeRTOS/queue.c"
+"${ProjDirPath}/../../../../../../rtos/amazon-freertos/lib/FreeRTOS/stream_buffer.c"
+"${ProjDirPath}/../../../../../../rtos/amazon-freertos/lib/FreeRTOS/tasks.c"
+"${ProjDirPath}/../../../../../../rtos/amazon-freertos/lib/FreeRTOS/timers.c"
+"${ProjDirPath}/../../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/readme.txt"
+"${ProjDirPath}/../../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/GCC/ARM_CM4F/fsl_tickless_generic.h"
+"${ProjDirPath}/../../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/GCC/ARM_CM4F/fsl_tickless_systick.c"
+"${ProjDirPath}/../../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/GCC/ARM_CM4F/port.c"
+"${ProjDirPath}/../../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/GCC/ARM_CM4F/portmacro.h"
 "${ProjDirPath}/../usb_device_ch9.c"
 "${ProjDirPath}/../usb_device_ch9.h"
 "${ProjDirPath}/../usb_device_class.c"
@@ -463,7 +480,17 @@ add_executable(dev_composite_hid_audio_unified_freertos.elf
 "${ProjDirPath}/../../../../../../devices/MK66F18/utilities/fsl_debug_console_conf.h"
 "${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_smc.h"
 "${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_smc.c"
-"${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_flash.c"
+"${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_ftfx_adapter.h"
+"${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_ftfx_utilities.h"
+"${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_ftfx_features.h"
+"${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_ftfx_controller.c"
+"${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_ftfx_controller.h"
+"${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_ftfx_flash.c"
+"${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_ftfx_flash.h"
+"${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_ftfx_cache.c"
+"${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_ftfx_cache.h"
+"${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_ftfx_flexnvm.c"
+"${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_ftfx_flexnvm.h"
 "${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_flash.h"
 "${ProjDirPath}/../../../../../../devices/MK66F18/system_MK66F18.c"
 "${ProjDirPath}/../../../../../../devices/MK66F18/system_MK66F18.h"

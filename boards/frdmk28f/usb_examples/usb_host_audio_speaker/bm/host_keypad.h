@@ -1,7 +1,7 @@
 /*
  * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016, 2018 NXP
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -39,24 +39,17 @@
  * Definitions
  ******************************************************************************/
 #define HID_BUFFER_SIZE 100
-/*! @brief host app device attach/detach status */
-typedef enum _host_keypad_app_state
-{
-    kStatus_DEV_Idle = 0, /*!< there is no device attach/detach */
-    kStatus_DEV_Attached, /*!< device is attached */
-    kStatus_DEV_Detached, /*!< device is detached */
-} host_keypad_app_state_t;
 
 /*! @brief host app run status */
 typedef enum _host_keypad_run_state
 {
-    kRunIdle = 0,         /*!< idle */
-    kRunSetInterface,     /*!< execute set interface code */
-    kRunWaitSetInterface, /*!< wait set interface done */
-    kRunSetInterfaceDone, /*!< set interface is done, execute next step */
-    kRunWaitDataReceived, /*!< wait interrupt in data */
-    kRunDataReceived,     /*!< interrupt in data received */
-    kRunPrimeDataReceive, /*!< prime interrupt in receive */
+    kUSB_HostHidRunIdle = 0,         /*!< idle */
+    kUSB_HostHidRunSetInterface,     /*!< execute set interface code */
+    kUSB_HostHidRunWaitSetInterface, /*!< wait set interface done */
+    kUSB_HostHidRunSetInterfaceDone, /*!< set interface is done, execute next step */
+    kUSB_HostHidRunWaitDataReceived, /*!< wait interrupt in data */
+    kUSB_HostHidRunDataReceived,     /*!< interrupt in data received */
+    kUSB_HostHidRunPrimeDataReceive, /*!< prime interrupt in receive */
 } host_keypad_run_state_t;
 
 /*! @brief USB host keypad instance structure */

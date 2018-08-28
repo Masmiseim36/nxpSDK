@@ -58,8 +58,6 @@
 #define BOARD_DEBUG_UART_BAUDRATE 115200
 #endif /* BOARD_DEBUG_UART_BAUDRATE */
 
-#define BOARD_ACCEL_I2C_BASE I2C0
-
 /*! @brief The CAN instance used for board. */
 #define BOARD_CAN_BASEADDR CAN0
 
@@ -85,6 +83,7 @@
 #define BOARD_ACCEL_ADDR BOARD_FXOS8700_ADDR
 #define BOARD_ACCEL_BAUDRATE 100
 #define BOARD_ACCEL_I2C_BASEADDR I2C0
+#define BOARD_ACCEL_I2C_CLOCK_FREQ CLOCK_GetFreq(I2C0_CLK_SRC)
 
 /*! @brief The FlexBus instance used for board.*/
 #define BOARD_FLEXBUS_BASEADDR FB
@@ -225,6 +224,9 @@
 /* Board accelerometer driver */
 #define BOARD_ACCEL_FXOS
 
+#define BOARD_CODEC_I2C_BASEADDR I2C1
+#define BOARD_CODEC_I2C_CLOCK_FREQ CLOCK_GetFreq(kCLOCK_BusClk)
+
 #if defined(__cplusplus)
 extern "C" {
 #endif /* __cplusplus */
@@ -234,6 +236,29 @@ extern "C" {
  ******************************************************************************/
 
 void BOARD_InitDebugConsole(void);
+#if defined(SDK_I2C_BASED_COMPONENT_USED) && SDK_I2C_BASED_COMPONENT_USED
+void BOARD_I2C_Init(I2C_Type *base, uint32_t clkSrc_Hz);
+status_t BOARD_I2C_Send(I2C_Type *base,
+                        uint8_t deviceAddress,
+                        uint32_t subAddress,
+                        uint8_t subaddressSize,
+                        uint8_t *txBuff,
+                        uint8_t txBuffSize);
+status_t BOARD_I2C_Receive(I2C_Type *base,
+                           uint8_t deviceAddress,
+                           uint32_t subAddress,
+                           uint8_t subaddressSize,
+                           uint8_t *rxBuff,
+                           uint8_t rxBuffSize);
+void BOARD_Accel_I2C_Init(void);
+status_t BOARD_Accel_I2C_Send(uint8_t deviceAddress, uint32_t subAddress, uint8_t subaddressSize, uint32_t txBuff);
+status_t BOARD_Accel_I2C_Receive(uint8_t deviceAddress, uint32_t subAddress, uint8_t subaddressSize, uint8_t *rxBuff, uint8_t rxBuffSize);
+void BOARD_Codec_I2C_Init(void);
+status_t BOARD_Codec_I2C_Send(
+    uint8_t deviceAddress, uint32_t subAddress, uint8_t subAddressSize, const uint8_t *txBuff, uint8_t txBuffSize);
+status_t BOARD_Codec_I2C_Receive(
+    uint8_t deviceAddress, uint32_t subAddress, uint8_t subAddressSize, uint8_t *rxBuff, uint8_t rxBuffSize);
+#endif /* SDK_I2C_BASED_COMPONENT_USED */
 
 #if defined(__cplusplus)
 }

@@ -2,7 +2,7 @@
 <project>
   <fileVersion>2</fileVersion>
   <configuration>
-    <name>Debug</name>
+    <name>debug</name>
     <toolchain>
       <name>ARM</name>
     </toolchain>
@@ -180,6 +180,7 @@
         <debug>1</debug>
         <option>
           <name>CCDefines</name>
+          <state>DEBUG</state>
           <state>_DEBUG=1</state>
           <state>CPU_MK66FN2M0VMD18</state>
           <state>USB_STACK_BM</state>
@@ -244,7 +245,7 @@
         <option>
           <name>CCAllowList</name>
           <version>1</version>
-          <state>00000000</state>
+          <state>00100000</state>
         </option>
         <option>
           <name>CCDebugInfo</name>
@@ -260,7 +261,7 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IExtraOptions</name>
@@ -313,7 +314,7 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/fatfs/src</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../..</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb</state>
@@ -323,7 +324,6 @@
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/fatfs/src/option</state>
           <state>$PROJ_DIR$/../../../../../../devices/MK66F18/utilities/io</state>
           <state>$PROJ_DIR$/../../../../../../devices/MK66F18/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MK66F18/utilities/log</state>
@@ -395,7 +395,7 @@
         </option>
         <option>
           <name>IccCppDialect</name>
-          <state>2</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccExceptions</name>
@@ -411,7 +411,7 @@
         </option>
         <option>
           <name>IccCppInlineSemantics</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccCmsis</name>
@@ -978,7 +978,7 @@
     </settings>
   </configuration>
   <configuration>
-    <name>Release</name>
+    <name>release</name>
     <toolchain>
       <name>ARM</name>
     </toolchain>
@@ -1156,6 +1156,7 @@
         <debug>0</debug>
         <option>
           <name>CCDefines</name>
+          <state>NDEBUG</state>
           <state>_DEBUG=0</state>
           <state>CPU_MK66FN2M0VMD18</state>
           <state>USB_STACK_BM</state>
@@ -1236,7 +1237,7 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IExtraOptions</name>
@@ -1289,7 +1290,7 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/fatfs/src</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../..</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb</state>
@@ -1299,7 +1300,6 @@
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/fatfs/src/option</state>
           <state>$PROJ_DIR$/../../../../../../devices/MK66F18/utilities/io</state>
           <state>$PROJ_DIR$/../../../../../../devices/MK66F18/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MK66F18/utilities/log</state>
@@ -1371,7 +1371,7 @@
         </option>
         <option>
           <name>IccCppDialect</name>
-          <state>2</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccExceptions</name>
@@ -1387,7 +1387,7 @@
         </option>
         <option>
           <name>IccCppInlineSemantics</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccCmsis</name>
@@ -1470,6 +1470,7 @@
         </option>
         <option>
           <name>ADefines</name>
+          <state>NDEBUG</state>
           <state>__STARTUP_INITIALIZE_NONCACHEDATA</state>
         </option>
         <option>
@@ -1987,24 +1988,27 @@
   </group>
   <group>
     <name>board</name>
-    <file>
-      <name>$PROJ_DIR$/../board.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../board.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../clock_config.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../clock_config.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../pin_mux.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../pin_mux.h</name>
-    </file>
+    <group>
+      <name>src</name>
+      <file>
+        <name>$PROJ_DIR$/../board.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../board.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../clock_config.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../clock_config.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../pin_mux.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../pin_mux.h</name>
+      </file>
+    </group>
   </group>
   <group>
     <name>usb</name>
@@ -2150,7 +2154,37 @@
       <name>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers/fsl_smc.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers/fsl_flash.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers/fsl_ftfx_adapter.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers/fsl_ftfx_utilities.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers/fsl_ftfx_features.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers/fsl_ftfx_controller.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers/fsl_ftfx_controller.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers/fsl_ftfx_flash.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers/fsl_ftfx_flash.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers/fsl_ftfx_cache.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers/fsl_ftfx_cache.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers/fsl_ftfx_flexnvm.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers/fsl_ftfx_flexnvm.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers/fsl_flash.h</name>
@@ -2185,22 +2219,28 @@
     <group>
       <name>fatfs_source</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/fatfs/src/ff.c</name>
+        <name>$PROJ_DIR$/../../../../../../middleware/fatfs/source/diskio.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/fatfs/src/diskio.c</name>
+        <name>$PROJ_DIR$/../../../../../../middleware/fatfs/source/ff.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/fatfs/source/ffsystem.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/fatfs/source/ffunicode.c</name>
       </file>
     </group>
     <group>
       <name>fatfs_include</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/fatfs/src/integer.h</name>
+        <name>$PROJ_DIR$/../../../../../../middleware/fatfs/source/diskio.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/fatfs/src/ff.h</name>
+        <name>$PROJ_DIR$/../../../../../../middleware/fatfs/source/ff.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/fatfs/src/diskio.h</name>
+        <name>$PROJ_DIR$/../../../../../../middleware/fatfs/source/integer.h</name>
       </file>
     </group>
   </group>

@@ -1,7 +1,7 @@
 /*
  * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016, 2018 NXP
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -37,6 +37,7 @@
 #include "host_keypad.h"
 #include "usb_host_hid.h"
 #include "fsl_debug_console.h"
+#include "app.h"
 
 /*******************************************************************************
  * Definitions
@@ -100,9 +101,9 @@ void Hid_ControlCallback(void *param, uint8_t *data, uint32_t dataLen, usb_statu
         usb_echo("control transfer error\r\n");
     }
 
-    if (keypad_ptr->runWaitState == kRunWaitSetInterface)
+    if (keypad_ptr->runWaitState == kUSB_HostHidRunWaitSetInterface)
     {
-        keypad_ptr->runState = kRunSetInterfaceDone;
+        keypad_ptr->runState = kUSB_HostHidRunSetInterfaceDone;
     }
 }
 
@@ -120,17 +121,17 @@ void Hid_InCallback(void *param, uint8_t *data, uint32_t dataLen, usb_status_t s
 {
     host_keypad_instance_t *keypad_ptr = (host_keypad_instance_t *)param;
 
-    if (keypad_ptr->runWaitState == kRunWaitDataReceived)
+    if (keypad_ptr->runWaitState == kUSB_HostHidRunWaitDataReceived)
     {
         if (status == kStatus_USB_Success)
         {
-            keypad_ptr->runState = kRunDataReceived;
+            keypad_ptr->runState = kUSB_HostHidRunDataReceived;
         }
         else
         {
             if (keypad_ptr->devState == kStatus_DEV_Attached)
             {
-                keypad_ptr->runState = kRunPrimeDataReceive;
+                keypad_ptr->runState = kUSB_HostHidRunPrimeDataReceive;
             }
         }
     }
@@ -157,14 +158,14 @@ void USB_KeypadTask(void *arg)
                 break;
 
             case kStatus_DEV_Attached:
-                g_keypad.runState = kRunSetInterface;
+                g_keypad.runState = kUSB_HostHidRunSetInterface;
                 status = USB_HostHidInit(g_keypad.deviceHandle, &g_keypad.classHandle);
                 usb_echo("keypad attached\r\n");
                 break;
 
             case kStatus_DEV_Detached:
                 g_keypad.devState = kStatus_DEV_Idle;
-                g_keypad.runState = kRunIdle;
+                g_keypad.runState = kUSB_HostHidRunIdle;
                 USB_HostHidDeinit(g_keypad.deviceHandle, g_keypad.classHandle);
                 g_keypad.classHandle = NULL;
                 usb_echo("keypad detached\r\n");
@@ -178,12 +179,12 @@ void USB_KeypadTask(void *arg)
     /* run state */
     switch (g_keypad.runState)
     {
-        case kRunIdle:
+        case kUSB_HostHidRunIdle:
             break;
 
-        case kRunSetInterface:
-            g_keypad.runWaitState = kRunWaitSetInterface;
-            g_keypad.runState = kRunIdle;
+        case kUSB_HostHidRunSetInterface:
+            g_keypad.runWaitState = kUSB_HostHidRunWaitSetInterface;
+            g_keypad.runState = kUSB_HostHidRunIdle;
             if (USB_HostHidSetInterface(g_keypad.classHandle, g_keypad.interfaceHandle, 0, Hid_ControlCallback,
                                         &g_keypad) != kStatus_USB_Success)
             {
@@ -191,10 +192,10 @@ void USB_KeypadTask(void *arg)
             }
             break;
 
-        case kRunSetInterfaceDone:
+        case kUSB_HostHidRunSetInterfaceDone:
             g_keypad.maxPacketSize = USB_HostHidGetPacketsize(g_keypad.classHandle, USB_ENDPOINT_INTERRUPT, USB_IN);
-            g_keypad.runWaitState = kRunWaitDataReceived;
-            g_keypad.runState = kRunIdle;
+            g_keypad.runWaitState = kUSB_HostHidRunWaitDataReceived;
+            g_keypad.runState = kUSB_HostHidRunIdle;
             if (USB_HostHidRecv(g_keypad.classHandle, g_keypad.keypadBuffer, g_keypad.maxPacketSize, Hid_InCallback,
                                 &g_keypad) != kStatus_USB_Success)
             {
@@ -202,11 +203,11 @@ void USB_KeypadTask(void *arg)
             }
             break;
 
-        case kRunDataReceived:
+        case kUSB_HostHidRunDataReceived:
             process_keypadBuffer(g_keypad.keypadBuffer);
 
-            g_keypad.runWaitState = kRunWaitDataReceived;
-            g_keypad.runState = kRunIdle;
+            g_keypad.runWaitState = kUSB_HostHidRunWaitDataReceived;
+            g_keypad.runState = kUSB_HostHidRunIdle;
             if (USB_HostHidRecv(g_keypad.classHandle, g_keypad.keypadBuffer, g_keypad.maxPacketSize, Hid_InCallback,
                                 &g_keypad) != kStatus_USB_Success)
             {
@@ -214,9 +215,9 @@ void USB_KeypadTask(void *arg)
             }
             break;
 
-        case kRunPrimeDataReceive:
-            g_keypad.runWaitState = kRunWaitDataReceived;
-            g_keypad.runState = kRunIdle;
+        case kUSB_HostHidRunPrimeDataReceive:
+            g_keypad.runWaitState = kUSB_HostHidRunWaitDataReceived;
+            g_keypad.runState = kUSB_HostHidRunIdle;
             if (USB_HostHidRecv(g_keypad.classHandle, g_keypad.keypadBuffer, g_keypad.maxPacketSize, Hid_InCallback,
                                 &g_keypad) != kStatus_USB_Success)
             {

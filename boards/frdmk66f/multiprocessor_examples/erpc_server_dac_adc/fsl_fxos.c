@@ -3,10 +3,10 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
+ *  that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -37,28 +37,20 @@
 /******************************************************************************
  * Code
  ******************************************************************************/
-#if defined(FSL_FEATURE_SOC_LPI2C_COUNT) && (FSL_FEATURE_SOC_LPI2C_COUNT)
-volatile static bool g_completionFlag = false;
-volatile static bool g_nakFlag = false;
-
-void FXOS_master_callback(LPI2C_Type *base, lpi2c_master_handle_t *handle, status_t status, void *userData)
+status_t FXOS_Init(fxos_handle_t *fxos_handle, fxos_config_t *config)
 {
-    /* Signal transfer success when received success status. */
-    if (status == kStatus_Success)
-    {
-        g_completionFlag = true;
-    }
-    /* Signal transfer success when received success status. */
-    if (status == kStatus_LPI2C_Nak)
-    {
-        g_nakFlag = true;
-    }
-}
-#endif
+    assert(fxos_handle);
+    assert(config);
+    assert(config->I2C_SendFunc);
+    assert(config->I2C_ReceiveFunc);
 
-status_t FXOS_Init(fxos_handle_t *fxos_handle)
-{
     uint8_t tmp[1] = {0};
+
+    /* Initialize the I2C access function. */
+    fxos_handle->I2C_SendFunc = config->I2C_SendFunc;
+    fxos_handle->I2C_ReceiveFunc = config->I2C_ReceiveFunc;
+    /* Set Slave Address. */    
+    fxos_handle->slaveAddress = config->slaveAddress;
 
     if(FXOS_ReadReg(fxos_handle, WHO_AM_I_REG, tmp, 1) != kStatus_Success)
     {
@@ -236,91 +228,25 @@ status_t FXOS_ReadSensorData(fxos_handle_t *fxos_handle, fxos_data_t *sensorData
 
 status_t FXOS_ReadReg(fxos_handle_t *handle, uint8_t reg, uint8_t *val, uint8_t bytesNumber)
 {
-    status_t status = kStatus_Success;
+    assert(handle);
+    assert(val);
 
-    /* Configure I2C xfer */
-    handle->xfer.subaddress = (uint32_t)reg;
-    handle->xfer.subaddressSize = 1U;
-    handle->xfer.data = val;
-    handle->xfer.dataSize = bytesNumber;
-#if defined(FSL_FEATURE_SOC_LPI2C_COUNT) && (FSL_FEATURE_SOC_LPI2C_COUNT)
-    handle->xfer.direction = kLPI2C_Read;
-    handle->xfer.flags = kLPI2C_TransferDefaultFlag;
-#else
-    handle->xfer.direction = kI2C_Read;
-    handle->xfer.flags = kI2C_TransferDefaultFlag;
-#endif
-
-#if defined(FSL_FEATURE_SOC_LPI2C_COUNT) && (FSL_FEATURE_SOC_LPI2C_COUNT)
-    if(LPI2C_MasterTransferNonBlocking(handle->base, handle->i2cHandle, &handle->xfer) == kStatus_Fail)
+    if (!handle->I2C_ReceiveFunc)
     {
         return kStatus_Fail;
     }
-    /*  wait for transfer completed. */
-    while ((!g_nakFlag) && (!g_completionFlag))
-    {
-    }
 
-    g_nakFlag = false;
-
-    if (g_completionFlag == true)
-    {
-        g_completionFlag = false;
-    }
-    else
-    {
-        status = kStatus_Fail;
-    }
-#else
-    status = I2C_MasterTransferBlocking(handle->base, &handle->xfer);
-#endif
-
-    return status;
+    return handle->I2C_ReceiveFunc(handle->slaveAddress, reg, 1, val, bytesNumber);
 }
 
 status_t FXOS_WriteReg(fxos_handle_t *handle, uint8_t reg, uint8_t val)
 {
-    status_t status = kStatus_Success;
-    uint8_t buff[1];
+    assert(handle);
 
-    buff[0] = val;
-    /* Set I2C xfer structure */
-    handle->xfer.subaddress = (uint32_t)reg;
-    handle->xfer.subaddressSize = 1U;
-    handle->xfer.data = buff;
-    handle->xfer.dataSize = 1U;
-#if defined(FSL_FEATURE_SOC_LPI2C_COUNT) && (FSL_FEATURE_SOC_LPI2C_COUNT)
-    handle->xfer.direction = kLPI2C_Write;
-    handle->xfer.flags = kLPI2C_TransferDefaultFlag;
-#else
-    handle->xfer.direction = kI2C_Write;
-    handle->xfer.flags = kI2C_TransferDefaultFlag;
-#endif
-
-#if defined(FSL_FEATURE_SOC_LPI2C_COUNT) && (FSL_FEATURE_SOC_LPI2C_COUNT)
-    if(LPI2C_MasterTransferNonBlocking(handle->base, handle->i2cHandle, &handle->xfer) == kStatus_Fail)
+    if (!handle->I2C_SendFunc)
     {
         return kStatus_Fail;
     }
 
-    /*  wait for transfer completed. */
-    while ((!g_nakFlag) && (!g_completionFlag))
-    {
-    }
-
-    g_nakFlag = false;
-
-    if (g_completionFlag == true)
-    {
-        g_completionFlag = false;
-    }
-    else
-    {
-        status = kStatus_Fail;
-    }
-#else
-    status = I2C_MasterTransferBlocking(handle->base, &handle->xfer);
-#endif
-
-    return status;
+    return handle->I2C_SendFunc(handle->slaveAddress, reg, 1, val);
 }

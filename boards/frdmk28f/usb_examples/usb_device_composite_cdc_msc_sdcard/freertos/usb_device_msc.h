@@ -239,6 +239,9 @@ typedef struct _usb_device_msc_struct
     uint8_t interfaceNumber;         /*!< The interface number of the class */
     uint8_t inEndpointCswCancelFlag; /*!< the state when calcel function happens, and need send the csw after cancel*/
 } usb_device_msc_struct_t;
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /*!
  * @name USB device MSC class APIs
@@ -276,26 +279,8 @@ extern usb_status_t USB_DeviceMscLbaTransfer(usb_device_msc_struct_t *mscHandle,
                                              uint8_t direction,
                                              usb_lba_transfer_information_struct_t *lba_info_ptr);
 
-#ifdef __cplusplus
-extern "C" {
-#endif
 
-extern usb_status_t USB_DeviceMscUfiThirteenCasesCheck(usb_device_msc_struct_t *mscHandle);
-extern usb_status_t USB_DeviceMscUfiRequestSenseCommand(usb_device_msc_struct_t *mscHandle);
-extern usb_status_t USB_DeviceMscUfiInquiryCommand(usb_device_msc_struct_t *mscHandle);
-extern usb_status_t USB_DeviceMscUfiReadCommand(usb_device_msc_struct_t *mscHandle);
-extern usb_status_t USB_DeviceMscUfiWriteCommand(usb_device_msc_struct_t *mscHandle);
-extern usb_status_t USB_DeviceMscUfiTestUnitReadyCommand(usb_device_msc_struct_t *mscHandle);
-extern usb_status_t USB_DeviceMscUfiVerifyCommand(usb_device_msc_struct_t *mscHandle);
-extern usb_status_t USB_DeviceMscUfiModeSenseCommand(usb_device_msc_struct_t *mscHandle);
-extern usb_status_t USB_DeviceMscUfiModeSelectCommand(usb_device_msc_struct_t *mscHandle);
-extern usb_status_t USB_DeviceMscUfiReadCapacityCommand(usb_device_msc_struct_t *mscHandle);
-extern usb_status_t USB_DeviceMscUfiReadFormatCapacityCommand(usb_device_msc_struct_t *mscHandle);
-extern usb_status_t USB_DeviceMscUfiFormatUnitCommand(usb_device_msc_struct_t *mscHandle);
-extern usb_status_t USB_DeviceMscUfiPreventAllowMediumCommand(usb_device_msc_struct_t *mscHandle);
-extern usb_status_t USB_DeviceMscUfiSendDiagnosticCommand(usb_device_msc_struct_t *mscHandle);
-extern usb_status_t USB_DeviceMscUfiStartStopUnitCommand(usb_device_msc_struct_t *mscHandle);
-extern usb_status_t USB_DeviceMscUfiUnsupportCommand(usb_device_msc_struct_t *mscHandle);
+
 #ifdef __cplusplus
 }
 #endif

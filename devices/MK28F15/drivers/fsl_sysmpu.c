@@ -3,10 +3,10 @@
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
+ *  that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -34,12 +34,18 @@
 
 #include "fsl_sysmpu.h"
 
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.sysmpu"
+#endif
+
+
 /*******************************************************************************
  * Variables
  ******************************************************************************/
 
 #if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
-const clock_ip_name_t g_sysmpuClock[FSL_FEATURE_SOC_SYSMPU_COUNT] = SYSMPU_CLOCKS;
+static const clock_ip_name_t g_sysmpuClock[] = SYSMPU_CLOCKS;
 #endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
 
 /*******************************************************************************

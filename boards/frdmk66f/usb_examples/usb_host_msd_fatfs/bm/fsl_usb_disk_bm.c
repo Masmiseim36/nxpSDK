@@ -4,10 +4,10 @@
  * Copyright 2016 NXP
  * All rights reserved.
  *
- *
+ * 
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
+ *  that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -69,7 +69,7 @@ static volatile uint8_t ufiIng;
 static volatile usb_status_t ufiStatus;
 
 #if defined(USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE) && (USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE)
-USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_UsbTransferBuffer[_MAX_SS];
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_UsbTransferBuffer[FF_MAX_SS];
 #else
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_UsbTransferBuffer[20];
 #endif
@@ -179,7 +179,7 @@ DRESULT USB_HostMsdReadDisk(BYTE pdrv, BYTE *buff, DWORD sector, UINT count)
     uint32_t retry = USB_HOST_FATFS_RW_RETRY_TIMES;
     uint8_t *transferBuf;
     uint32_t sectorCount;
-    uint16_t sectorIndex;
+    uint32_t sectorIndex;
 #if defined(USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE) && (USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE)
     uint32_t index;
 #endif
@@ -245,7 +245,7 @@ DRESULT USB_HostMsdWriteDisk(BYTE pdrv, const BYTE *buff, DWORD sector, UINT cou
     uint32_t retry = USB_HOST_FATFS_RW_RETRY_TIMES;
     const uint8_t *transferBuf;
     uint32_t sectorCount;
-    uint16_t sectorIndex;
+    uint32_t sectorIndex;
 #if defined(USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE) && (USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE)
     uint32_t index;
 #endif
@@ -353,14 +353,20 @@ DRESULT USB_HostMsdIoctlDisk(BYTE pdrv, BYTE cmd, void *buff)
                     address = (uint32_t)&s_UsbTransferBuffer[0];
                     address = (uint32_t)((usb_host_ufi_read_capacity_t *)(address))->lastLogicalBlockAddress;
                     value = USB_LONG_FROM_BIG_ENDIAN_ADDRESS(((uint8_t *)address));
-                    USB_LONG_TO_LITTLE_ENDIAN_ADDRESS(value, ((uint8_t *)buff));
+                    ((uint8_t *)buff)[0] = ((uint8_t*)&value)[0];
+                    ((uint8_t *)buff)[1] = ((uint8_t*)&value)[1];
+                    ((uint8_t *)buff)[2] = ((uint8_t*)&value)[2];
+                    ((uint8_t *)buff)[3] = ((uint8_t*)&value)[3];
                 }
                 else /* Get the sector size in byte */
                 {
                     address = (uint32_t)&s_UsbTransferBuffer[0];
-                    address = (uint32_t)((usb_host_ufi_read_capacity_t *)(address))->lastLogicalBlockAddress;
+                    address = (uint32_t)((usb_host_ufi_read_capacity_t *)(address))->blockLengthInBytes;
                     value = USB_LONG_FROM_BIG_ENDIAN_ADDRESS(((uint8_t *)address));
-                    USB_LONG_TO_LITTLE_ENDIAN_ADDRESS(value, ((uint8_t *)buff));
+                    ((uint8_t *)buff)[0] = ((uint8_t*)&value)[0];
+                    ((uint8_t *)buff)[1] = ((uint8_t*)&value)[1];
+                    ((uint8_t *)buff)[2] = ((uint8_t*)&value)[2];
+                    ((uint8_t *)buff)[3] = ((uint8_t*)&value)[3];
                 }
             }
             break;

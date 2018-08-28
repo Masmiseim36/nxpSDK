@@ -3,10 +3,10 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
+ *  that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -48,7 +48,7 @@
 
 /*! @name Driver version */
 /*@{*/
-#define FSL_FTM_DRIVER_VERSION (MAKE_VERSION(2, 0, 2)) /*!< Version 2.0.2 */
+#define FSL_FTM_DRIVER_VERSION (MAKE_VERSION(2, 0, 4)) /*!< Version 2.0.4 */
                                                        /*@}*/
 
 /*!
@@ -971,6 +971,33 @@ static inline void FTM_SetWriteProtection(FTM_Type *base, bool enable)
         base->MODE |= FTM_MODE_WPDIS_MASK;
     }
 }
+
+#if defined(FSL_FEATURE_FTM_HAS_DMA_SUPPORT) && FSL_FEATURE_FTM_HAS_DMA_SUPPORT
+/*!
+ * @brief Enable DMA transfer or not.
+ *
+ * Note: CHnIE bit needs to be set when calling this API. The channel DMA transfer request 
+ * is generated and the channel interrupt is not generated if (CHnF = 1) when DMA and CHnIE 
+ * bits are set.
+ *
+ * @param base   FTM peripheral base address.
+ * @param chnlNumber Channel to be configured
+ * @param enable true to enable, false to disable
+ */
+static inline void FTM_EnableDmaTransfer(FTM_Type *base, ftm_chnl_t chnlNumber, bool enable)
+{
+    if (enable)
+    {
+        /* Enable DMA transfer */
+        base->CONTROLS[chnlNumber].CnSC |= FTM_CnSC_DMA_MASK;
+    }
+    else
+    {
+        /* Disable DMA transfer */
+        base->CONTROLS[chnlNumber].CnSC &= ~FTM_CnSC_DMA_MASK;
+    }
+}
+#endif /* FSL_FEATURE_FTM_HAS_DMA_SUPPORT */
 
 #if defined(__cplusplus)
 }

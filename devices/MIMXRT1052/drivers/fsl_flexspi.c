@@ -376,14 +376,12 @@ void FLEXSPI_SetFlashConfig(FLEXSPI_Type *base, flexspi_device_config_t *config,
 
     if (config->AWRSeqNumber > 0U)
     {
-        configValue |=
-            FLEXSPI_FLSHCR2_AWRSEQID(config->AWRSeqIndex) | FLEXSPI_FLSHCR2_AWRSEQNUM(config->AWRSeqNumber - 1U);
+        configValue |= FLEXSPI_FLSHCR2_AWRSEQID(config->AWRSeqIndex) | FLEXSPI_FLSHCR2_AWRSEQNUM(config->AWRSeqNumber - 1U);
     }
 
     if (config->ARDSeqNumber > 0U)
     {
-        configValue |=
-            FLEXSPI_FLSHCR2_ARDSEQID(config->ARDSeqIndex) | FLEXSPI_FLSHCR2_ARDSEQNUM(config->ARDSeqNumber - 1U);
+        configValue |= FLEXSPI_FLSHCR2_ARDSEQID(config->ARDSeqIndex) | FLEXSPI_FLSHCR2_ARDSEQNUM(config->ARDSeqNumber - 1U);
     }
 
     base->FLSHCR2[port] = configValue;
@@ -561,7 +559,7 @@ status_t FLEXSPI_ReadBlocking(FLEXSPI_Type *base, uint32_t *buffer, size_t size)
     return result;
 }
 
-status_t FLEXSPI_TransferBlocking(FLEXSPI_Type *base, flexspi_transfer_t *xfer)
+status_t FLEXSPI_TransferBlocking (FLEXSPI_Type *base, flexspi_transfer_t *xfer)
 {
     uint32_t configValue = 0;
     status_t result = kStatus_Success;
@@ -617,10 +615,7 @@ status_t FLEXSPI_TransferBlocking(FLEXSPI_Type *base, flexspi_transfer_t *xfer)
     return result;
 }
 
-void FLEXSPI_TransferCreateHandle(FLEXSPI_Type *base,
-                                  flexspi_handle_t *handle,
-                                  flexspi_transfer_callback_t callback,
-                                  void *userData)
+void FLEXSPI_TransferCreateHandle (FLEXSPI_Type *base, flexspi_handle_t *handle, flexspi_transfer_callback_t callback, void *userData)
 {
     assert(handle);
 

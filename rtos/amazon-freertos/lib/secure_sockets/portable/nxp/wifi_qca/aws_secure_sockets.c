@@ -76,6 +76,7 @@
 * no timeout, so one is the smallest value we can set it to.
 */
 #define nxpsecuresocketsONE_MILLISECOND      ( 1 )
+#define nxpsecuresocketsSOCKET_CONNECTED_FLAG (1)
 
 /* Internal context structure. */
 typedef struct SSOCKETContext
@@ -91,6 +92,7 @@ typedef struct SSOCKETContext
     uint32_t ulRecvTimeout;
     char * pcServerCertificate;
     uint32_t ulServerCertificateLength;
+    uint32_t ulState;
 } SSOCKETContext_t, * SSOCKETContextPtr_t;
 
 /*
@@ -105,6 +107,12 @@ static BaseType_t prvNetworkSend( void * pvContext,
                                   size_t xDataLength )
 {
     SSOCKETContextPtr_t pxContext = ( SSOCKETContextPtr_t ) pvContext;
+
+    /* Do not send data on unconnected socket */
+    if (!(pxContext->ulState & nxpsecuresocketsSOCKET_CONNECTED_FLAG))
+    {
+        return -1;
+    }
 
     char * sendBuf = custom_alloc( xDataLength );
 
@@ -140,6 +148,12 @@ static BaseType_t prvNetworkRecv( void * pvContext,
 {
     SSOCKETContextPtr_t pxContext = ( SSOCKETContextPtr_t ) pvContext;
     TickType_t xTimeOnEntering = xTaskGetTickCount();
+
+    /* Do not receive data on unconnected socket */
+    if (!(pxContext->ulState & nxpsecuresocketsSOCKET_CONNECTED_FLAG))
+    {
+        return -1;
+    }
 
     QCA_CONTEXT_STRUCT * enetCtx = wlan_get_context();
     A_STATUS xStatus;
@@ -178,11 +192,10 @@ static BaseType_t prvNetworkRecv( void * pvContext,
             }
             else
             {
-                xRetVal = 0;
+                xRetVal = 0;// return -1;
                 break;
             }
         }
-
         else
         {
             xRetVal = SOCKETS_SOCKET_ERROR;
@@ -210,6 +223,8 @@ int32_t SOCKETS_Close( Socket_t xSocket )
 
     if( ( NULL != pxContext ) && ( SOCKETS_INVALID_SOCKET != pxContext ) )
     {
+        pxContext->ulState = 0;
+
         if( NULL != pxContext->pcDestination )
         {
             vPortFree( pxContext->pcDestination );
@@ -230,7 +245,7 @@ int32_t SOCKETS_Close( Socket_t xSocket )
     }
     else
     {
-        lStatus = SOCKETS_SOCKET_ERROR;
+        lStatus = SOCKETS_EINVAL;
     }
 
     return lStatus;
@@ -246,7 +261,7 @@ int32_t SOCKETS_Connect( Socket_t xSocket,
     TLSParams_t xTLSParams = { 0 };
     SOCKADDR_T xTempAddress = { 0 };
 
-    if( ( SOCKETS_INVALID_SOCKET != pxContext ) && ( NULL != pxAddress ) )
+    if( ( SOCKETS_INVALID_SOCKET != pxContext ) && ( NULL != pxAddress ) && WIFI_IsConnected())
     {
         /* Connect the wrapped socket. */
 
@@ -258,6 +273,12 @@ int32_t SOCKETS_Connect( Socket_t xSocket,
         xStatus = qcom_connect( ( int ) pxContext->xSocket,
                                 ( struct sockaddr * ) &xTempAddress,
                                 xAddressLength );
+
+        /* Keep socket state - connected */
+        if (SOCKETS_ERROR_NONE == xStatus)
+        {
+            pxContext->ulState |= nxpsecuresocketsSOCKET_CONNECTED_FLAG;
+        }
 
         /* Negotiate TLS if requested. */
         if( ( SOCKETS_ERROR_NONE == xStatus ) && ( pdTRUE == pxContext->xRequireTLS ) )
@@ -274,6 +295,8 @@ int32_t SOCKETS_Connect( Socket_t xSocket,
             if( SOCKETS_ERROR_NONE == xStatus )
             {
                 xStatus = TLS_Connect( pxContext->pvTLSContext );
+                /* Report positive error codes as negative number */
+                xStatus = xStatus > 0 ? SOCKETS_TLS_HANDSHAKE_ERROR : xStatus;
             }
         }
     }
@@ -328,12 +351,14 @@ int32_t SOCKETS_Recv( Socket_t xSocket,
     int32_t lStatus = SOCKETS_ERROR_NONE;
     SSOCKETContextPtr_t pxContext = ( SSOCKETContextPtr_t ) xSocket;
 
-    pxContext->xRecvFlags = ( BaseType_t ) ulFlags;
-
     if( ( SOCKETS_INVALID_SOCKET != xSocket ) &&
         ( NULL != pvBuffer ) &&
-        ( ( nxpsecuresocketsSOCKET_READ_CLOSED_FLAG & pxContext->xShutdownFlags ) == 0UL ) )
+        ( ( nxpsecuresocketsSOCKET_READ_CLOSED_FLAG & pxContext->xShutdownFlags ) == 0UL ) &&
+        (pxContext->ulState & (nxpsecuresocketsSOCKET_CONNECTED_FLAG))
+    )
     {
+        pxContext->xRecvFlags = ( BaseType_t ) ulFlags;
+
         if( pdTRUE == pxContext->xRequireTLS )
         {
             /* Receive through TLS pipe, if negotiated. */
@@ -360,19 +385,23 @@ int32_t SOCKETS_Send( Socket_t xSocket,
                       uint32_t ulFlags )
 {
     /* The WiFi module refuses to send data if it exceeds this threshold defined in
-     * atheros_stack_offload.h. */
-    const uint32_t ulSendMaxLength = IPV4_FRAGMENTATION_THRESHOLD;
+     * atheros_stack_offload.h */
+    uint32_t ulSendMaxLength = IPV4_FRAGMENTATION_THRESHOLD;
     int32_t lWritten = 0, lWrittenPerLoop = 0;
     SSOCKETContextPtr_t pxContext = ( SSOCKETContextPtr_t ) xSocket;
 
     if( ( SOCKETS_INVALID_SOCKET != pxContext ) &&
         ( NULL != pvBuffer ) &&
-        ( ( nxpsecuresocketsSOCKET_WRITE_CLOSED_FLAG & pxContext->xShutdownFlags ) == 0UL ) )
+        ( ( nxpsecuresocketsSOCKET_WRITE_CLOSED_FLAG & pxContext->xShutdownFlags ) == 0UL ) &&
+        (pxContext->ulState & (nxpsecuresocketsSOCKET_CONNECTED_FLAG))
+    )
     {
         pxContext->xSendFlags = ( BaseType_t ) ulFlags;
 
         if( pdTRUE == pxContext->xRequireTLS )
         {
+            /* In case of TLS, reserve extra space for SSL meta data (header, maclen, ivlen, ... = 45B) */
+            ulSendMaxLength = 1531;
             for(
                 uint32_t ulToRemain = xDataLength, ulBufferPos = 0, ulToSend = 0 ;
                 ulToRemain ;
@@ -457,7 +486,12 @@ int32_t SOCKETS_SetSockOpt( Socket_t xSocket,
         switch( lOptionName )
         {
             case SOCKETS_SO_SERVER_NAME_INDICATION:
-
+                /* Secure socket option cannot be used on connected socket */
+                if (pxContext->ulState & (nxpsecuresocketsSOCKET_CONNECTED_FLAG))
+                {
+                    lStatus = SOCKETS_SOCKET_ERROR;
+                    break;
+                }
                 /* Non-NULL destination string indicates that SNI extension should
                  * be used during TLS negotiation. */
                 if( NULL == ( pxContext->pcDestination =
@@ -474,7 +508,12 @@ int32_t SOCKETS_SetSockOpt( Socket_t xSocket,
                 break;
 
             case SOCKETS_SO_TRUSTED_SERVER_CERTIFICATE:
-
+                /* Secure socket option cannot be used on connected socket */
+                if (pxContext->ulState & (nxpsecuresocketsSOCKET_CONNECTED_FLAG))
+                {
+                    lStatus = SOCKETS_SOCKET_ERROR;
+                    break;
+                }
                 /* Non-NULL server certificate field indicates that the default trust
                  * list should not be used. */
                 if( NULL == ( pxContext->pcServerCertificate =
@@ -491,15 +530,27 @@ int32_t SOCKETS_SetSockOpt( Socket_t xSocket,
                 break;
 
             case SOCKETS_SO_REQUIRE_TLS:
+                /* Secure socket option cannot be used on connected socket */
+                if (pxContext->ulState & (nxpsecuresocketsSOCKET_CONNECTED_FLAG))
+                {
+                    lStatus = SOCKETS_SOCKET_ERROR;
+                    break;
+                }
                 pxContext->xRequireTLS = pdTRUE;
                 break;
 
             case SOCKETS_SO_NONBLOCK:
-                xTimeout = 0;
-                /* TODO: Investigate the NONBLOCK compile time config. */
-                pxContext->ulSendTimeout = 1;
-                pxContext->ulRecvTimeout = 1;
-
+                if (pxContext->ulState & (nxpsecuresocketsSOCKET_CONNECTED_FLAG))
+                {
+                    xTimeout = 0;
+                    /* TODO: Investigate the NONBLOCK compile time config. */
+                    pxContext->ulSendTimeout = 1;
+                    pxContext->ulRecvTimeout = 1;
+                }
+                else
+                {
+                    lStatus = SOCKETS_SOCKET_ERROR;
+                }
                 break;
 
             case SOCKETS_SO_RCVTIMEO:
@@ -529,6 +580,15 @@ int32_t SOCKETS_SetSockOpt( Socket_t xSocket,
                     pxContext->ulSendTimeout = xTimeout;
                 }
 
+                break;
+            case SOCKETS_SO_ALPN_PROTOCOLS:
+                /* Secure socket option cannot be used on connected socket */
+                if (pxContext->ulState & (nxpsecuresocketsSOCKET_CONNECTED_FLAG))
+                {
+                    lStatus = SOCKETS_SOCKET_ERROR;
+                    break;
+                }
+                /* NOT implemented ? */
                 break;
 
             default:
@@ -590,6 +650,10 @@ int32_t SOCKETS_Shutdown( Socket_t xSocket,
                 lRetVal = SOCKETS_EINVAL;
                 break;
         }
+    }
+    else
+    {
+        return SOCKETS_EINVAL;
     }
 
     return lRetVal;

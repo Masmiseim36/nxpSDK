@@ -42,6 +42,13 @@
 #define WRITE_REGISTER              (5)
 
 
+//#ifdef XIP_IMAGE
+//#warning NOTE: MFLASH driver expects that application runs from XIP
+//#else
+//#warning NOTE: MFLASH driver expects that application runs from SRAM
+//#endif
+
+
 /* Temporary sector storage. Use uint32_t type to force 4B alignment and 
  * improve copy operation */
 static uint32_t g_flashm_sector[MFLASH_SECTOR_SIZE / sizeof(uint32_t)];

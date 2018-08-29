@@ -6170,6 +6170,9 @@
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/mbedtls/rsa.h</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/mbedtls/rsa_internal.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/mbedtls/sha1.h</name>
       </file>
       <file>
@@ -6366,6 +6369,9 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/rsa.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/rsa_internal.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/sha1.c</name>

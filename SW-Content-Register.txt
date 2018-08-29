@@ -1,5 +1,5 @@
 Release Name: MCUXpresso Software Development Kit (SDK)
-Release Version: 2.4.1
+Release Version: 2.4.2
 
 Amazon FreeRTOS            Author: Real Time Engineers, Ltd.                 
                            Description: IoT operating system for             
@@ -10,7 +10,7 @@ Amazon FreeRTOS            Author: Real Time Engineers, Ltd.
                            Location: rtos/amazon-freertos                    
                            name: Amazon FreeRTOS                             
                            URL: https://aws.amazon.com/freertos/             
-                           version: 1.2.3                                    
+                           version: 1.2.7                                    
 
 C++ option-parser          version: NA                                       
                            Location:                                         
@@ -31,7 +31,7 @@ AwsRemoteControl           Location: boards/<board>/aws_examples/remote_contr
                            Author: Android Open Source Project & NXP         
                            name: AWS Remote Control                          
                            version: 1.0                                      
-                           Format: binary   
+                           Format: binary                                    
 
 CMSIS Core header files    Author: ARM                                       
                            parentversion: 5.0.1                              
@@ -117,7 +117,7 @@ JSMN                       version: NA
                            Author: Serge A. Zaitsev                          
                            name: JSMN                                        
                            Format: source code                               
-                           URL: http://zserge.com/jsmn.html        
+                           URL: http://zserge.com/jsmn.html                  
 
 FreeRTOS(tm)               Author: Real Time Engineers, Ltd.                 
                            Description: A real-time operating system(RTOS)   
@@ -303,6 +303,17 @@ Kinetis_ZigBeeLib          version: 6.0.7
                            Name: Kinetis ZigBee 3.0 Stack                    
                            Format: Binary libraries                          
 
+LIBJPEG                    version: 9b                                       
+                           Location: middleware/libjpeg                      
+                           Description: JPEG image encoding, decoding, and   
+                           transcoding                                       
+                           License: IJG, See                                 
+                           <rootfolder>/middleware/libjpeg/README            
+                           Author: IJG (http://www.ijg.org/)                 
+                           name: LIBJPEG                                     
+                           Format: source code                               
+                           URL: http://www.ijg.org                           
+
 LittleFS                   version: 1.3                                      
                            Location: middleware/littlefs                     
                            Description: LittleFS - A little fail-safe        
@@ -331,7 +342,17 @@ Multicore SDK              version: 2.2.0
                            License: Open Source - BSD-3-Clause Clear         
                            Author: Freescale                                 
                            name: Multicore SDK                               
-                           Format: source code                               
+                           Format: source code   
+
+Pedometer Library          version: 1.0                                      
+                           Location:                                         
+                           middleware/issdk/algorithms/pedometer/lib         
+                           Description: Pedometer algorithm library for Arm  
+                           Cortex M0+ and M4 processors                      
+                           License: LA_OPT_Base_License                      
+                           Author: KEYnetik, Inc                             
+                           name: Pedometer Library                           
+                           Format: binary library                            
 
 Percepio Tracealyzer -     version: 3.0.9                                    
 Snapshot Demo              Location: boards/<board>/rtos_examples/visualizati
@@ -446,7 +467,7 @@ lwIP TCP/IP Stack          Author: Swedish Institute of Computer Science
                            Location: middleware/lwip                         
                            name: lwIP TCP/IP Stack                           
                            URL: http://savannah.nongnu.org/projects/lwip     
-                           version: 2.0.3   
+                           version: 2.0.2                                    
 
 mmCAU S/W Library          Author: Freescale                                 
                            Description: S/W library that works with the      
@@ -457,6 +478,35 @@ mmCAU S/W Library          Author: Freescale
                            Location: middleware/mmcau                        
                            name: mmCAU S/W Library                           
                            version: 2.0.1                                    
+
+motor_control              Author: NXP                                       
+                           version: 1.1.0                                    
+                           name: motor_control                               
+                           Format: source code                               
+                           License: Open Source - BSD-3-Clause Clear         
+                           Location: middleware/motor_control                
+                           Description: Motor control examples for PMSM and  
+                           BLDC motors.                                      
+
+motor_control - JavaScript Author: jQuery Foundation, Inc.                   
+                           version: v1.11.1                                  
+                           name: motor_control                               
+                           Format: source code                               
+                           License: Open Source - MIT (jquery.org/license)   
+                           Location: middleware/motor_control/freemaster/fm_c
+                           ontrol/jquery-1.11.1.min.js                       
+                           Description: Cross-platform JavaScript library.   
+
+motor_control - jQuery     Author: jQWidgets                                 
+                           version: v3.7.1 (2015-Feb)                        
+                           name: motor_control                               
+                           Format: library                                   
+                           License: Commercial -                             
+                           http://www.jqwidgets.com/license/                 
+                           Location:                                         
+                           middleware/motor_control/freemaster/fm_control    
+                           Description: Advanced jQuery and HTML5 UI         
+                           framework.                                        
 
 rtcesl                     Author: NXP                                       
                            version: 4.3                                      

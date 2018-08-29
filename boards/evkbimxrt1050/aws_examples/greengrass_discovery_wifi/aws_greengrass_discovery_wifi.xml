@@ -8,6 +8,7 @@
     <definition extID="middleware.amazon_freertos.aws_iot.jsmn.MIMXRT1052"/>
     <definition extID="middleware.amazon_freertos.aws_iot.secure_sockets_wifi_qca.MIMXRT1052"/>
     <definition extID="middleware.amazon_freertos.aws_iot.wifi.MIMXRT1052"/>
+    <definition extID="middleware.amazon_freertos.aws_iot_demos.MIMXRT1052"/>
     <definition extID="middleware.freertos.MIMXRT1052"/>
     <definition extID="middleware.freertos.heap.heap_4.MIMXRT1052"/>
     <definition extID="middleware.mbedtls.MIMXRT1052"/>
@@ -39,7 +40,7 @@
     <definition extID="mdk"/>
     <definition extID="armgcc"/>
   </externalDefinitions>
-  <example id="evkbimxrt1050_aws_greengrass_discovery_wifi" name="aws_greengrass_discovery_wifi" category="aws_examples" dependency="platform.drivers.trng.MIMXRT1052 platform.drivers.common.MIMXRT1052 platform.drivers.clock.MIMXRT1052 platform.drivers.dcp.MIMXRT1052 platform.drivers.cache_armv7_m7.MIMXRT1052 platform.drivers.flexspi.MIMXRT1052 middleware.wifi_qca.evkbimxrt1050.freertos.shields.gt202.MIMXRT1052 middleware.wifi_qca.evkbimxrt1050.freertos.shields.MIMXRT1052 middleware.wifi_qca.freertos.MIMXRT1052 middleware.freertos.MIMXRT1052 middleware.wifi_qca.MIMXRT1052 middleware.wifi_qca.freertos.drivers.lpspi_edma.MIMXRT1052 platform.drivers.lpspi.MIMXRT1052 platform.drivers.lpspi_edma.MIMXRT1052 platform.drivers.edma.MIMXRT1052 platform.drivers.dmamux.MIMXRT1052 platform.drivers.igpio.MIMXRT1052 middleware.amazon_freertos.aws_iot.drivers_rt1050.MIMXRT1052 middleware.amazon_freertos.aws_iot.MIMXRT1052 platform.devices.MIMXRT1052_CMSIS.MIMXRT1052 platform.devices.MIMXRT1052_startup.MIMXRT1052 platform.drivers.lpuart.MIMXRT1052 platform.utilities.debug_console.MIMXRT1052 platform.drivers.iomuxc.MIMXRT1052 platform.utilities.assert.MIMXRT1052 platform.drivers.xip.MIMXRT1052 middleware.freertos.heap.heap_4.MIMXRT1052 middleware.mbedtls.MIMXRT1052 middleware.amazon_freertos.aws_iot.jsmn.MIMXRT1052 middleware.amazon_freertos.aws_iot.secure_sockets_wifi_qca.MIMXRT1052 middleware.amazon_freertos.aws_iot.wifi.MIMXRT1052 middleware.amazon_freertos.aws_iot.greengrass.MIMXRT1052" toolchain="mdk iar armgcc mcuxpresso">
+  <example id="evkbimxrt1050_aws_greengrass_discovery_wifi" name="aws_greengrass_discovery_wifi" category="aws_examples" dependency="platform.drivers.trng.MIMXRT1052 platform.drivers.common.MIMXRT1052 platform.drivers.clock.MIMXRT1052 platform.drivers.dcp.MIMXRT1052 platform.drivers.cache_armv7_m7.MIMXRT1052 platform.drivers.flexspi.MIMXRT1052 middleware.wifi_qca.evkbimxrt1050.freertos.shields.gt202.MIMXRT1052 middleware.wifi_qca.evkbimxrt1050.freertos.shields.MIMXRT1052 middleware.wifi_qca.freertos.MIMXRT1052 middleware.freertos.MIMXRT1052 middleware.wifi_qca.MIMXRT1052 middleware.wifi_qca.freertos.drivers.lpspi_edma.MIMXRT1052 platform.drivers.lpspi.MIMXRT1052 platform.drivers.lpspi_edma.MIMXRT1052 platform.drivers.edma.MIMXRT1052 platform.drivers.dmamux.MIMXRT1052 platform.drivers.igpio.MIMXRT1052 middleware.amazon_freertos.aws_iot.drivers_rt1050.MIMXRT1052 middleware.amazon_freertos.aws_iot.MIMXRT1052 platform.devices.MIMXRT1052_CMSIS.MIMXRT1052 platform.devices.MIMXRT1052_startup.MIMXRT1052 platform.drivers.lpuart.MIMXRT1052 platform.utilities.debug_console.MIMXRT1052 platform.drivers.iomuxc.MIMXRT1052 platform.utilities.assert.MIMXRT1052 platform.drivers.xip.MIMXRT1052 middleware.freertos.heap.heap_4.MIMXRT1052 middleware.mbedtls.MIMXRT1052 middleware.amazon_freertos.aws_iot.jsmn.MIMXRT1052 middleware.amazon_freertos.aws_iot.secure_sockets_wifi_qca.MIMXRT1052 middleware.amazon_freertos.aws_iot.wifi.MIMXRT1052 middleware.amazon_freertos.aws_iot.greengrass.MIMXRT1052 middleware.amazon_freertos.aws_iot_demos.MIMXRT1052" toolchain="mdk iar armgcc mcuxpresso">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -109,6 +110,7 @@
       <files mask="aws_ggd_config.h"/>
       <files mask="aws_mqtt_agent_config.h"/>
       <files mask="aws_mqtt_config.h"/>
+      <files mask="aws_pkcs11_config.h"/>
       <files mask="aws_secure_sockets_config.h"/>
       <files mask="aws_wifi_config.h"/>
     </source>

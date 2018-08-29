@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.3.xsd" format_version="3.3" api_version="2.0.0" name="SDK version 2.4.1 package for EVKB-IMXRT1050 board" brief="This is SDK version 2.4.1 manifest file. It describes the content of the SDK version 2.4.1 package for EVKB-IMXRT1050 board and additional settings for tools that support SDK version 2.4.1" id="SDK_2.x_EVKB-IMXRT1050" configuration="a733a78d1c26b96fdb1bbae27db33d74">
+<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.3.xsd" format_version="3.3" api_version="2.0.0" name="SDK version 2.4.2 package for EVKB-IMXRT1050 board" brief="This is SDK version 2.4.2 manifest file. It describes the content of the SDK version 2.4.2 package for EVKB-IMXRT1050 board and additional settings for tools that support SDK version 2.4.2" id="SDK_2.x_EVKB-IMXRT1050" configuration="1d6d4f8eda932d228b82e059a1b3f115">
   <defines>
     <define name="CPU_$|package|" value=""/>
     <define name="CPU_$|package|_$|core|" value=""/>
   </defines>
-  <ksdk id="KSDK241" name="KSDK241" version="2.4.1" revision="19f8bd257a1 2018-06-18"/>
+  <ksdk id="KSDK242" name="KSDK242" version="2.4.2" revision="3c928c3fb69 2018-08-02"/>
   <compilers>
     <compiler id="compiler_arm" type="arm" name="arm"/>
     <compiler id="compiler_gcc" type="gcc" name="gcc"/>
@@ -90,45 +90,6 @@ ${run}
     <toolchain id="mdk" name="Keil_MDK" full_name="Keil MDK" type="mdk" compiler="compiler_arm" version="5.24" vendor="ARM" vendor_url="http://www.arm.com"/>
   </toolchains>
   <boards>
-    <board id="evkbimxrt1050_om13588" name="EVKB-IMXRT1050-OM13588" package="MIMXRT1052DVL6B" type="kit" version="1.0.0" href="http://www.nxp.com/products/interfaces/usb-interfaces/usb-type-c-shield-board-for-kinetis-freedom-board:OM13588">
-      <description>
-USB Type-C Shield Board for Kinetis Freedom Board
-        </description>
-      <image type="image" path="docs/images">
-        <files mask="EVKB-IMXRT1050-OM13588.gif"/>
-      </image>
-      <metadataSet>
-        <metadata key="vendor" value="NXP"/>
-        <metadata key="html">
-          <specific>
-            <content>
-The USB Type-C shield board combined with a Kinetis Power Delivery SDK allows a system designer to tether a USB Type-C connector to any Kinetis development platform.
-        </content>
-          </specific>
-        </metadata>
-      </metadataSet>
-      <memory ram_size_kb="32768" flash_size_kb="65536">
-        <memoryBlock id="BOARD_FLASH_evkbimxrt1050_om13588" name="BOARD_FLASH" addr="60000000" size="04000000" type="ExtFlash" access="RO"/>
-        <memoryBlock id="BOARD_SDRAM_evkbimxrt1050_om13588" name="BOARD_SDRAM" addr="80000000" size="02000000" type="RAM" access="RW"/>
-      </memory>
-      <examples/>
-      <debug_configurations>
-        <debug_configuration id_refs="com.crt.advproject.config.exe.debug com.crt.advproject.config.exe.release">
-          <drivers>
-            <driver id_refs="BOARD_FLASH_evkbimxrt1050_om13588">
-              <driverBinary path="devices/MIMXRT1052/mcuxpresso" type="binary">
-                <files mask="MIMXRT1050-EVK_S26KS512S.cfx"/>
-              </driverBinary>
-            </driver>
-            <driver id_refs="BOARD_FLASH_evkbimxrt1050_om13588">
-              <driverBinary path="devices/MIMXRT1052/mcuxpresso" type="binary">
-                <files mask="MIMXRT1050-EVK_IS25WP064A.cfx"/>
-              </driverBinary>
-            </driver>
-          </drivers>
-        </debug_configuration>
-      </debug_configurations>
-    </board>
     <board id="evkbimxrt1050" name="EVKB-IMXRT1050" package="MIMXRT1052DVL6B" version="1.0.0" href="https://www.nxp.com/mimxrt1050-evk">
       <description>IMXRT1050-EVKB: EVK Development Platform for i.MX MIMXRT1052 and MIMXRT1051 MCUs</description>
       <image type="image" path="docs/images">
@@ -1324,6 +1285,45 @@ Demonstration Custom Kit (FRDM-STBC-AGM01 Sensor Shield Development Board with E
         </debug_configuration>
       </debug_configurations>
     </board>
+    <board id="evkbimxrt1050_om13588" name="EVKB-IMXRT1050-OM13588" package="MIMXRT1052DVL6B" type="kit" version="1.0.0" href="http://www.nxp.com/products/interfaces/usb-interfaces/usb-type-c-shield-board-for-kinetis-freedom-board:OM13588">
+      <description>
+USB Type-C Shield Board for Kinetis Freedom Board
+        </description>
+      <image type="image" path="docs/images">
+        <files mask="EVKB-IMXRT1050-OM13588.gif"/>
+      </image>
+      <metadataSet>
+        <metadata key="vendor" value="NXP"/>
+        <metadata key="html">
+          <specific>
+            <content>
+The USB Type-C shield board combined with a Kinetis Power Delivery SDK allows a system designer to tether a USB Type-C connector to any Kinetis development platform.
+        </content>
+          </specific>
+        </metadata>
+      </metadataSet>
+      <memory ram_size_kb="32768" flash_size_kb="65536">
+        <memoryBlock id="BOARD_FLASH_evkbimxrt1050_om13588" name="BOARD_FLASH" addr="60000000" size="04000000" type="ExtFlash" access="RO"/>
+        <memoryBlock id="BOARD_SDRAM_evkbimxrt1050_om13588" name="BOARD_SDRAM" addr="80000000" size="02000000" type="RAM" access="RW"/>
+      </memory>
+      <examples/>
+      <debug_configurations>
+        <debug_configuration id_refs="com.crt.advproject.config.exe.debug com.crt.advproject.config.exe.release">
+          <drivers>
+            <driver id_refs="BOARD_FLASH_evkbimxrt1050_om13588">
+              <driverBinary path="devices/MIMXRT1052/mcuxpresso" type="binary">
+                <files mask="MIMXRT1050-EVK_S26KS512S.cfx"/>
+              </driverBinary>
+            </driver>
+            <driver id_refs="BOARD_FLASH_evkbimxrt1050_om13588">
+              <driverBinary path="devices/MIMXRT1052/mcuxpresso" type="binary">
+                <files mask="MIMXRT1050-EVK_IS25WP064A.cfx"/>
+              </driverBinary>
+            </driver>
+          </drivers>
+        </debug_configuration>
+      </debug_configurations>
+    </board>
   </boards>
   <devices>
     <device id="MIMXRT1052xxxxB" full_name="MIMXRT1052xxxxB" name="MIMXRT1052" version="1.0.0" href="http://www.nxp.com/kinetis">
@@ -1894,9 +1894,9 @@ The MIMXRT1052 are ARM Cortex-M7 based microcontrollers for embedded application
     </component>
     <component id="platform.drivers.xip.MIMXRT1052" name="xip" full_name="XIP Driver" type="driver" brief="XIP Driver" devices="MIMXRT1052xxxxB" version="2.0.0" user_visible="true">
       <defines>
-        <define name="XIP_EXTERNAL_FLASH=1" value=""/>
         <define name="XIP_BOOT_HEADER_DCD_ENABLE=1" value=""/>
         <define name="XIP_BOOT_HEADER_ENABLE=1" value=""/>
+        <define name="XIP_EXTERNAL_FLASH=1" value=""/>
       </defines>
       <source path="devices/MIMXRT1052/xip" target_path="xip" type="src">
         <files mask="evkbimxrt1050_flexspi_nor_config.c"/>
@@ -2003,8 +2003,11 @@ The MIMXRT1052 are ARM Cortex-M7 based microcontrollers for embedded application
       </source>
     </component>
     <component id="middleware.amazon_freertos.aws_iot.drivers_frdmk64f.MIMXRT1052" name="amazon_freertos_drivers_frdmk64f" full_name="drivers_frdmk64f" type="other" brief="drivers_frdmk64f" category="AWS IoT/AWS IoT" device_cores="core0_MIMXRT1052xxxxB" core="cm7" dependency="middleware.amazon_freertos.aws_iot.MIMXRT1052 middleware.freertos.MIMXRT1052 middleware.mbedtls.MIMXRT1052 middleware.template_application.freertos.MIMXRT1052 platform.Include_common.MIMXRT1052 platform.Include_core_cm7.MIMXRT1052 platform.devices.MIMXRT1052_CMSIS.MIMXRT1052 platform.drivers.clock.MIMXRT1052 platform.drivers.common.MIMXRT1052 platform.drivers.dcp.MIMXRT1052 platform.drivers.trng.MIMXRT1052" devices="MIMXRT1052xxxxB" version="1.0.0" user_visible="false">
-      <source path="rtos/amazon-freertos/lib/pkcs11/portable/nxp/common" target_path="amazon-freertos/pkcs11" type="src">
-        <files mask="pkcs11.c"/>
+      <source path="rtos/amazon-freertos/lib/pkcs11/mbedtls" target_path="amazon-freertos/pkcs11" type="src">
+        <files mask="aws_pkcs11_mbedtls.c"/>
+      </source>
+      <source path="rtos/amazon-freertos/lib/pkcs11/portable/nxp/frdmk64f" target_path="amazon-freertos/pkcs11" type="src">
+        <files mask="aws_pkcs11_pal.c"/>
       </source>
       <source path="rtos/amazon-freertos/lib/third_party/mcu_vendor/nxp/FRDMK64F/drivers" target_path="amazon-freertos/drivers" type="src">
         <files mask="mflash_drv.c"/>
@@ -2016,8 +2019,11 @@ The MIMXRT1052 are ARM Cortex-M7 based microcontrollers for embedded application
       </source>
     </component>
     <component id="middleware.amazon_freertos.aws_iot.drivers_frdmk66f.MIMXRT1052" name="amazon_freertos_drivers_frdmk66f" full_name="drivers_frdmk66f" type="other" brief="drivers_frdmk66f" category="AWS IoT/AWS IoT" device_cores="core0_MIMXRT1052xxxxB" core="cm7" dependency="middleware.amazon_freertos.aws_iot.MIMXRT1052 middleware.freertos.MIMXRT1052 middleware.mbedtls.MIMXRT1052 middleware.template_application.freertos.MIMXRT1052 platform.Include_common.MIMXRT1052 platform.Include_core_cm7.MIMXRT1052 platform.devices.MIMXRT1052_CMSIS.MIMXRT1052 platform.drivers.clock.MIMXRT1052 platform.drivers.common.MIMXRT1052 platform.drivers.dcp.MIMXRT1052 platform.drivers.trng.MIMXRT1052" devices="MIMXRT1052xxxxB" version="1.0.0" user_visible="false">
-      <source path="rtos/amazon-freertos/lib/pkcs11/portable/nxp/common" target_path="amazon-freertos/pkcs11" type="src">
-        <files mask="pkcs11.c"/>
+      <source path="rtos/amazon-freertos/lib/pkcs11/mbedtls" target_path="amazon-freertos/pkcs11" type="src">
+        <files mask="aws_pkcs11_mbedtls.c"/>
+      </source>
+      <source path="rtos/amazon-freertos/lib/pkcs11/portable/nxp/frdmk66f" target_path="amazon-freertos/pkcs11" type="src">
+        <files mask="aws_pkcs11_pal.c"/>
       </source>
       <source path="rtos/amazon-freertos/lib/third_party/mcu_vendor/nxp/FRDMK66F/drivers" target_path="amazon-freertos/drivers" type="src">
         <files mask="mflash_drv.c"/>
@@ -2029,8 +2035,11 @@ The MIMXRT1052 are ARM Cortex-M7 based microcontrollers for embedded application
       </source>
     </component>
     <component id="middleware.amazon_freertos.aws_iot.drivers_frdmk82f.MIMXRT1052" name="amazon_freertos_drivers_frdmk82f" full_name="drivers_frdmk82f" type="other" brief="drivers_frdmk82f" category="AWS IoT/AWS IoT" device_cores="core0_MIMXRT1052xxxxB" core="cm7" dependency="middleware.amazon_freertos.aws_iot.MIMXRT1052 middleware.freertos.MIMXRT1052 middleware.mbedtls.MIMXRT1052 middleware.template_application.freertos.MIMXRT1052 platform.Include_common.MIMXRT1052 platform.Include_core_cm7.MIMXRT1052 platform.devices.MIMXRT1052_CMSIS.MIMXRT1052 platform.drivers.clock.MIMXRT1052 platform.drivers.common.MIMXRT1052 platform.drivers.dcp.MIMXRT1052 platform.drivers.trng.MIMXRT1052" devices="MIMXRT1052xxxxB" version="1.0.0" user_visible="false">
-      <source path="rtos/amazon-freertos/lib/pkcs11/portable/nxp/common" target_path="amazon-freertos/pkcs11" type="src">
-        <files mask="pkcs11.c"/>
+      <source path="rtos/amazon-freertos/lib/pkcs11/mbedtls" target_path="amazon-freertos/pkcs11" type="src">
+        <files mask="aws_pkcs11_mbedtls.c"/>
+      </source>
+      <source path="rtos/amazon-freertos/lib/pkcs11/portable/nxp/frdmk82f" target_path="amazon-freertos/pkcs11" type="src">
+        <files mask="aws_pkcs11_pal.c"/>
       </source>
       <source path="rtos/amazon-freertos/lib/third_party/mcu_vendor/nxp/FRDMK82F/drivers" target_path="amazon-freertos/drivers" type="src">
         <files mask="mflash_drv.c"/>
@@ -2042,8 +2051,11 @@ The MIMXRT1052 are ARM Cortex-M7 based microcontrollers for embedded application
       </source>
     </component>
     <component id="middleware.amazon_freertos.aws_iot.drivers_lpc54018.MIMXRT1052" name="amazon_freertos_drivers_lpc54018" full_name="drivers_lpc54018" type="other" brief="drivers_lpc54018" category="AWS IoT/AWS IoT" device_cores="core0_MIMXRT1052xxxxB" core="cm7" dependency="middleware.amazon_freertos.aws_iot.MIMXRT1052 middleware.freertos.MIMXRT1052 middleware.mbedtls.MIMXRT1052 middleware.template_application.freertos.MIMXRT1052 platform.Include_common.MIMXRT1052 platform.Include_core_cm7.MIMXRT1052 platform.devices.MIMXRT1052_CMSIS.MIMXRT1052 platform.drivers.clock.MIMXRT1052 platform.drivers.common.MIMXRT1052 platform.drivers.dcp.MIMXRT1052 platform.drivers.trng.MIMXRT1052" devices="MIMXRT1052xxxxB" version="1.0.0" user_visible="false">
-      <source path="rtos/amazon-freertos/lib/pkcs11/portable/nxp/common" target_path="amazon-freertos/pkcs11" type="src">
-        <files mask="pkcs11.c"/>
+      <source path="rtos/amazon-freertos/lib/pkcs11/mbedtls" target_path="amazon-freertos/pkcs11" type="src">
+        <files mask="aws_pkcs11_mbedtls.c"/>
+      </source>
+      <source path="rtos/amazon-freertos/lib/pkcs11/portable/nxp/lpc54018iotmodule" target_path="amazon-freertos/pkcs11" type="src">
+        <files mask="aws_pkcs11_pal.c"/>
       </source>
       <source path="rtos/amazon-freertos/lib/third_party/mcu_vendor/nxp/LPC54018/drivers" target_path="amazon-freertos/drivers" type="src">
         <files mask="mflash_drv.c"/>
@@ -2055,8 +2067,11 @@ The MIMXRT1052 are ARM Cortex-M7 based microcontrollers for embedded application
       </source>
     </component>
     <component id="middleware.amazon_freertos.aws_iot.drivers_rt1050.MIMXRT1052" name="amazon_freertos_drivers_rt1050" full_name="drivers_rt1050" type="other" brief="drivers_rt1050" category="AWS IoT/AWS IoT" device_cores="core0_MIMXRT1052xxxxB" core="cm7" dependency="middleware.amazon_freertos.aws_iot.MIMXRT1052 middleware.freertos.MIMXRT1052 middleware.mbedtls.MIMXRT1052 middleware.template_application.freertos.MIMXRT1052 platform.Include_common.MIMXRT1052 platform.Include_core_cm7.MIMXRT1052 platform.devices.MIMXRT1052_CMSIS.MIMXRT1052 platform.drivers.clock.MIMXRT1052 platform.drivers.common.MIMXRT1052 platform.drivers.dcp.MIMXRT1052 platform.drivers.trng.MIMXRT1052" devices="MIMXRT1052xxxxB" version="1.0.0" user_visible="false">
-      <source path="rtos/amazon-freertos/lib/pkcs11/portable/nxp/common" target_path="amazon-freertos/pkcs11" type="src">
-        <files mask="pkcs11.c"/>
+      <source path="rtos/amazon-freertos/lib/pkcs11/mbedtls" target_path="amazon-freertos/pkcs11" type="src">
+        <files mask="aws_pkcs11_mbedtls.c"/>
+      </source>
+      <source path="rtos/amazon-freertos/lib/pkcs11/portable/nxp/evkbimxrt1050" target_path="amazon-freertos/pkcs11" type="src">
+        <files mask="aws_pkcs11_pal.c"/>
       </source>
       <source path="rtos/amazon-freertos/lib/third_party/mcu_vendor/nxp/MIMXRT1052/drivers" target_path="amazon-freertos/drivers" type="src">
         <files mask="mflash_drv.c"/>
@@ -2067,7 +2082,7 @@ The MIMXRT1052 are ARM Cortex-M7 based microcontrollers for embedded application
         <files mask="mflash_file.h"/>
       </source>
     </component>
-    <component id="middleware.amazon_freertos.aws_iot.greengrass.MIMXRT1052" name="amazon_freertos_greengrass" full_name="greengrass_discovery" type="other" brief="greengrass" category="AWS IoT/AWS IoT" device_cores="core0_MIMXRT1052xxxxB" core="cm7" dependency="middleware.amazon_freertos.aws_iot.MIMXRT1052 middleware.freertos.MIMXRT1052 middleware.mbedtls.MIMXRT1052 middleware.template_application.freertos.MIMXRT1052 platform.Include_common.MIMXRT1052 platform.Include_core_cm7.MIMXRT1052 platform.devices.MIMXRT1052_CMSIS.MIMXRT1052 platform.drivers.clock.MIMXRT1052 platform.drivers.common.MIMXRT1052 platform.drivers.dcp.MIMXRT1052 platform.drivers.trng.MIMXRT1052" devices="MIMXRT1052xxxxB" version="1.0.0" user_visible="false">
+    <component id="middleware.amazon_freertos.aws_iot.greengrass.MIMXRT1052" name="amazon_freertos_greengrass" full_name="greengrass_discovery" type="other" brief="greengrass" category="AWS IoT/AWS IoT" device_cores="core0_MIMXRT1052xxxxB" core="cm7" dependency="middleware.amazon_freertos.aws_iot.MIMXRT1052 middleware.freertos.MIMXRT1052 middleware.mbedtls.MIMXRT1052 middleware.template_application.freertos.MIMXRT1052 platform.Include_common.MIMXRT1052 platform.Include_core_cm7.MIMXRT1052 platform.devices.MIMXRT1052_CMSIS.MIMXRT1052 platform.drivers.clock.MIMXRT1052 platform.drivers.common.MIMXRT1052 platform.drivers.dcp.MIMXRT1052 platform.drivers.trng.MIMXRT1052" devices="MIMXRT1052xxxxB" version="1.0.3" user_visible="false">
       <source path="rtos/amazon-freertos/lib/greengrass" target_path="amazon-freertos/greengrass" type="src">
         <files mask="aws_greengrass_discovery.c"/>
         <files mask="aws_helper_secure_connect.c"/>
@@ -2091,13 +2106,13 @@ The MIMXRT1052 are ARM Cortex-M7 based microcontrollers for embedded application
         <files mask="aws_secure_sockets.c"/>
       </source>
     </component>
-    <component id="middleware.amazon_freertos.aws_iot.shadow.MIMXRT1052" name="amazon_freertos_shadow" full_name="shadow" type="other" brief="shadow" category="AWS IoT/AWS IoT" device_cores="core0_MIMXRT1052xxxxB" core="cm7" dependency="middleware.amazon_freertos.aws_iot.MIMXRT1052 middleware.freertos.MIMXRT1052 middleware.mbedtls.MIMXRT1052 middleware.template_application.freertos.MIMXRT1052 platform.Include_common.MIMXRT1052 platform.Include_core_cm7.MIMXRT1052 platform.devices.MIMXRT1052_CMSIS.MIMXRT1052 platform.drivers.clock.MIMXRT1052 platform.drivers.common.MIMXRT1052 platform.drivers.dcp.MIMXRT1052 platform.drivers.trng.MIMXRT1052" devices="MIMXRT1052xxxxB" version="1.0.0" user_visible="false">
+    <component id="middleware.amazon_freertos.aws_iot.shadow.MIMXRT1052" name="amazon_freertos_shadow" full_name="shadow" type="other" brief="shadow" category="AWS IoT/AWS IoT" device_cores="core0_MIMXRT1052xxxxB" core="cm7" dependency="middleware.amazon_freertos.aws_iot.MIMXRT1052 middleware.freertos.MIMXRT1052 middleware.mbedtls.MIMXRT1052 middleware.template_application.freertos.MIMXRT1052 platform.Include_common.MIMXRT1052 platform.Include_core_cm7.MIMXRT1052 platform.devices.MIMXRT1052_CMSIS.MIMXRT1052 platform.drivers.clock.MIMXRT1052 platform.drivers.common.MIMXRT1052 platform.drivers.dcp.MIMXRT1052 platform.drivers.trng.MIMXRT1052" devices="MIMXRT1052xxxxB" version="1.0.3" user_visible="false">
       <source path="rtos/amazon-freertos/lib/shadow" target_path="amazon-freertos/shadow" type="src">
         <files mask="aws_shadow.c"/>
         <files mask="aws_shadow_json.c"/>
       </source>
     </component>
-    <component id="middleware.amazon_freertos.aws_iot.unused_files.MIMXRT1052" name="unused_files" type="other" brief="Amazon-FreeRTOS files unused by projects" device_cores="core0_MIMXRT1052xxxxB" core="cm7" dependency="middleware.amazon_freertos.aws_iot.MIMXRT1052 middleware.freertos.MIMXRT1052 middleware.mbedtls.MIMXRT1052 middleware.template_application.freertos.MIMXRT1052 platform.Include_common.MIMXRT1052 platform.Include_core_cm7.MIMXRT1052 platform.devices.MIMXRT1052_CMSIS.MIMXRT1052 platform.drivers.clock.MIMXRT1052 platform.drivers.common.MIMXRT1052 platform.drivers.dcp.MIMXRT1052 platform.drivers.trng.MIMXRT1052" devices="MIMXRT1052xxxxB" version="1.2.3" user_visible="false">
+    <component id="middleware.amazon_freertos.aws_iot.unused_files.MIMXRT1052" name="unused_files" type="other" brief="Amazon-FreeRTOS files unused by projects" device_cores="core0_MIMXRT1052xxxxB" core="cm7" dependency="middleware.amazon_freertos.aws_iot.MIMXRT1052 middleware.freertos.MIMXRT1052 middleware.mbedtls.MIMXRT1052 middleware.template_application.freertos.MIMXRT1052 platform.Include_common.MIMXRT1052 platform.Include_core_cm7.MIMXRT1052 platform.devices.MIMXRT1052_CMSIS.MIMXRT1052 platform.drivers.clock.MIMXRT1052 platform.drivers.common.MIMXRT1052 platform.drivers.dcp.MIMXRT1052 platform.drivers.trng.MIMXRT1052" devices="MIMXRT1052xxxxB" version="1.2.7" user_visible="false">
       <source path="rtos/amazon-freertos/lib/FreeRTOS-Plus-TCP/include" target_path="amazon-freertos/FreeRTOS-Plus-TCP" exclude="true" type="c_include">
         <files mask="FreeRTOS_ARP.h"/>
         <files mask="FreeRTOS_DHCP.h"/>
@@ -2254,10 +2269,30 @@ The MIMXRT1052 are ARM Cortex-M7 based microcontrollers for embedded application
         <files mask="extract_number_p.h"/>
         <files mask="math_support_p.h"/>
       </source>
+      <source path="rtos/amazon-freertos" target_path="amazon-freertos" exclude="true" type="doc">
+        <files mask="change_log.txt"/>
+      </source>
     </component>
-    <component id="middleware.amazon_freertos.aws_iot.wifi.MIMXRT1052" name="amazon_freertos_wifi" full_name="wifi" type="other" brief="wifi" category="AWS IoT/AWS IoT" device_cores="core0_MIMXRT1052xxxxB" core="cm7" dependency="middleware.amazon_freertos.aws_iot.MIMXRT1052 middleware.freertos.MIMXRT1052 middleware.mbedtls.MIMXRT1052 middleware.template_application.freertos.MIMXRT1052 platform.Include_common.MIMXRT1052 platform.Include_core_cm7.MIMXRT1052 platform.devices.MIMXRT1052_CMSIS.MIMXRT1052 platform.drivers.clock.MIMXRT1052 platform.drivers.common.MIMXRT1052 platform.drivers.dcp.MIMXRT1052 platform.drivers.trng.MIMXRT1052" devices="MIMXRT1052xxxxB" version="1.0.0" user_visible="false">
+    <component id="middleware.amazon_freertos.aws_iot.wifi.MIMXRT1052" name="amazon_freertos_wifi" full_name="wifi" type="other" brief="wifi" category="AWS IoT/AWS IoT" device_cores="core0_MIMXRT1052xxxxB" core="cm7" dependency="middleware.amazon_freertos.aws_iot.MIMXRT1052 middleware.freertos.MIMXRT1052 middleware.mbedtls.MIMXRT1052 middleware.template_application.freertos.MIMXRT1052 platform.Include_common.MIMXRT1052 platform.Include_core_cm7.MIMXRT1052 platform.devices.MIMXRT1052_CMSIS.MIMXRT1052 platform.drivers.clock.MIMXRT1052 platform.drivers.common.MIMXRT1052 platform.drivers.dcp.MIMXRT1052 platform.drivers.trng.MIMXRT1052" devices="MIMXRT1052xxxxB" version="1.0.1" user_visible="false">
       <source path="rtos/amazon-freertos/lib/wifi/portable/nxp/common" target_path="amazon-freertos/wifi" type="src">
         <files mask="aws_wifi.c"/>
+      </source>
+    </component>
+    <component id="middleware.amazon_freertos.aws_iot_demos.MIMXRT1052" name="amazon_freertos_aws_iot_demos" full_name="demos" type="other" brief="AWS IOT demos" category="AWS IoT/AWS IoT" device_cores="core0_MIMXRT1052xxxxB" core="cm7" dependency="middleware.amazon_freertos.aws_iot.MIMXRT1052 middleware.freertos.MIMXRT1052 middleware.mbedtls.MIMXRT1052 middleware.template_application.freertos.MIMXRT1052 platform.Include_common.MIMXRT1052 platform.Include_core_cm7.MIMXRT1052 platform.devices.MIMXRT1052_CMSIS.MIMXRT1052 platform.drivers.clock.MIMXRT1052 platform.drivers.common.MIMXRT1052 platform.drivers.dcp.MIMXRT1052 platform.drivers.trng.MIMXRT1052" devices="MIMXRT1052xxxxB" version="1.2.7" user_visible="false">
+      <source path="rtos/amazon-freertos/demos/common/devmode_key_provisioning" target_path="amazon-freertos/devmode_key_provisioning" type="src">
+        <files mask="aws_dev_mode_key_provisioning.c"/>
+      </source>
+      <source path="rtos/amazon-freertos/demos/common/include" target_path="amazon-freertos/include" type="c_include">
+        <files mask="aws_clientcredential.h"/>
+        <files mask="aws_clientcredential_keys.h"/>
+        <files mask="aws_demo.h"/>
+        <files mask="aws_dev_mode_key_provisioning.h"/>
+        <files mask="aws_greengrass_discovery_demo.h"/>
+        <files mask="aws_logging_task.h"/>
+        <files mask="aws_shadow_lightbulb_on_off.h"/>
+      </source>
+      <source path="rtos/amazon-freertos/demos/common/logging" target_path="amazon-freertos/logging" type="src">
+        <files mask="aws_logging_task_dynamic_buffers.c"/>
       </source>
     </component>
     <component id="middleware.fatfs.unused_files.MIMXRT1052" name="unused_files" type="other" brief="fatfs files unused by projects" devices="MIMXRT1052xxxxB" version="3.9.8" revision="3" user_visible="false">
@@ -2443,7 +2478,6 @@ The MIMXRT1052 are ARM Cortex-M7 based microcontrollers for embedded application
         <files mask="config-ccm-psk-tls1_2.h"/>
         <files mask="config-mini-tls1_1.h"/>
         <files mask="config-no-entropy.h"/>
-        <files mask="config-picocoin.h"/>
         <files mask="config-suite-b.h"/>
         <files mask="config-thread.h"/>
       </source>
@@ -2601,10 +2635,9 @@ The MIMXRT1052 are ARM Cortex-M7 based microcontrollers for embedded application
         <files mask="generate_errors.pl"/>
         <files mask="generate_features.pl"/>
         <files mask="generate_visualc_files.pl"/>
-        <files mask="malloc-init.pl"/>
         <files mask="massif_max.pl"/>
         <files mask="rename.pl"/>
-        <files mask="rm-malloc-cast.cocci"/>
+        <files mask="rm-calloc-cast.cocci"/>
       </source>
       <source path="middleware/mbedtls/tests/data_files/dir-maxpath" target_path="mbedTLS/tests/data_files/dir-maxpath" exclude="true" type="script">
         <files mask="long.sh"/>
@@ -2755,6 +2788,8 @@ The MIMXRT1052 are ARM Cortex-M7 based microcontrollers for embedded application
         <files mask="crl-ec-sha384.pem"/>
         <files mask="crl-ec-sha512.pem"/>
         <files mask="crl-future.pem"/>
+        <files mask="crl-idp.pem"/>
+        <files mask="crl-idpnc.pem"/>
         <files mask="crl-malformed-trailing-spaces.pem"/>
         <files mask="crl-rsa-pss-sha1-badsign.pem"/>
         <files mask="crl-rsa-pss-sha1.pem"/>
@@ -2816,34 +2851,133 @@ The MIMXRT1052 are ARM Cortex-M7 based microcontrollers for embedded application
         <files mask="hash_file_3"/>
         <files mask="hash_file_4"/>
         <files mask="hash_file_5"/>
-        <files mask="keyfile"/>
-        <files mask="keyfile.3des"/>
-        <files mask="keyfile.aes128"/>
-        <files mask="keyfile.aes192"/>
-        <files mask="keyfile.aes256"/>
-        <files mask="keyfile.des"/>
         <files mask="keyUsage.decipherOnly.crt"/>
         <files mask="Makefile"/>
         <files mask="mpi_10"/>
         <files mask="mpi_too_big"/>
         <files mask="passwd.psk"/>
-        <files mask="pkcs8_pbe_sha1_2des.key"/>
-        <files mask="pkcs8_pbe_sha1_3des.der"/>
-        <files mask="pkcs8_pbe_sha1_3des.key"/>
-        <files mask="pkcs8_pbe_sha1_rc4_128.key"/>
-        <files mask="pkcs8_pbes2_pbkdf2_3des.der"/>
-        <files mask="pkcs8_pbes2_pbkdf2_3des.key"/>
-        <files mask="pkcs8_pbes2_pbkdf2_des.key"/>
         <files mask="print_c.pl"/>
         <files mask="rsa4096_prv.pem"/>
         <files mask="rsa4096_pub.pem"/>
+        <files mask="rsa512.key"/>
+        <files mask="rsa521.key"/>
+        <files mask="rsa522.key"/>
+        <files mask="rsa528.key"/>
+        <files mask="rsa_pkcs1_1024_3des.pem"/>
+        <files mask="rsa_pkcs1_1024_aes128.pem"/>
+        <files mask="rsa_pkcs1_1024_aes192.pem"/>
+        <files mask="rsa_pkcs1_1024_aes256.pem"/>
+        <files mask="rsa_pkcs1_1024_clear.pem"/>
+        <files mask="rsa_pkcs1_1024_des.pem"/>
+        <files mask="rsa_pkcs1_2048_3des.pem"/>
+        <files mask="rsa_pkcs1_2048_aes128.pem"/>
+        <files mask="rsa_pkcs1_2048_aes192.pem"/>
+        <files mask="rsa_pkcs1_2048_aes256.pem"/>
+        <files mask="rsa_pkcs1_2048_clear.pem"/>
+        <files mask="rsa_pkcs1_2048_des.pem"/>
+        <files mask="rsa_pkcs1_2048_public.der"/>
+        <files mask="rsa_pkcs1_2048_public.pem"/>
+        <files mask="rsa_pkcs1_4096_3des.pem"/>
+        <files mask="rsa_pkcs1_4096_aes128.pem"/>
+        <files mask="rsa_pkcs1_4096_aes192.pem"/>
+        <files mask="rsa_pkcs1_4096_aes256.pem"/>
+        <files mask="rsa_pkcs1_4096_clear.pem"/>
+        <files mask="rsa_pkcs1_4096_des.pem"/>
+        <files mask="rsa_pkcs8_1024_public.der"/>
+        <files mask="rsa_pkcs8_2048_public.der"/>
+        <files mask="rsa_pkcs8_2048_public.pem"/>
+        <files mask="rsa_pkcs8_pbe_sha1_1024_2des.der"/>
+        <files mask="rsa_pkcs8_pbe_sha1_1024_2des.pem"/>
+        <files mask="rsa_pkcs8_pbe_sha1_1024_3des.der"/>
+        <files mask="rsa_pkcs8_pbe_sha1_1024_3des.pem"/>
+        <files mask="rsa_pkcs8_pbe_sha1_1024_rc4_128.der"/>
+        <files mask="rsa_pkcs8_pbe_sha1_1024_rc4_128.pem"/>
+        <files mask="rsa_pkcs8_pbe_sha1_2048_2des.der"/>
+        <files mask="rsa_pkcs8_pbe_sha1_2048_2des.pem"/>
+        <files mask="rsa_pkcs8_pbe_sha1_2048_3des.der"/>
+        <files mask="rsa_pkcs8_pbe_sha1_2048_3des.pem"/>
+        <files mask="rsa_pkcs8_pbe_sha1_2048_rc4_128.der"/>
+        <files mask="rsa_pkcs8_pbe_sha1_2048_rc4_128.pem"/>
+        <files mask="rsa_pkcs8_pbe_sha1_4096_2des.der"/>
+        <files mask="rsa_pkcs8_pbe_sha1_4096_2des.pem"/>
+        <files mask="rsa_pkcs8_pbe_sha1_4096_3des.der"/>
+        <files mask="rsa_pkcs8_pbe_sha1_4096_3des.pem"/>
+        <files mask="rsa_pkcs8_pbe_sha1_4096_rc4_128.der"/>
+        <files mask="rsa_pkcs8_pbe_sha1_4096_rc4_128.pem"/>
+        <files mask="rsa_pkcs8_pbes2_pbkdf2_1024_3des.der"/>
+        <files mask="rsa_pkcs8_pbes2_pbkdf2_1024_3des.pem"/>
+        <files mask="rsa_pkcs8_pbes2_pbkdf2_1024_3des_sha224.der"/>
+        <files mask="rsa_pkcs8_pbes2_pbkdf2_1024_3des_sha224.pem"/>
+        <files mask="rsa_pkcs8_pbes2_pbkdf2_1024_3des_sha256.der"/>
+        <files mask="rsa_pkcs8_pbes2_pbkdf2_1024_3des_sha256.pem"/>
+        <files mask="rsa_pkcs8_pbes2_pbkdf2_1024_3des_sha384.der"/>
+        <files mask="rsa_pkcs8_pbes2_pbkdf2_1024_3des_sha384.pem"/>
+        <files mask="rsa_pkcs8_pbes2_pbkdf2_1024_3des_sha512.der"/>
+        <files mask="rsa_pkcs8_pbes2_pbkdf2_1024_3des_sha512.pem"/>
+        <files mask="rsa_pkcs8_pbes2_pbkdf2_1024_des.der"/>
+        <files mask="rsa_pkcs8_pbes2_pbkdf2_1024_des.pem"/>
+        <files mask="rsa_pkcs8_pbes2_pbkdf2_1024_des_sha224.der"/>
+        <files mask="rsa_pkcs8_pbes2_pbkdf2_1024_des_sha224.pem"/>
+        <files mask="rsa_pkcs8_pbes2_pbkdf2_1024_des_sha256.der"/>
+        <files mask="rsa_pkcs8_pbes2_pbkdf2_1024_des_sha256.pem"/>
+        <files mask="rsa_pkcs8_pbes2_pbkdf2_1024_des_sha384.der"/>
+        <files mask="rsa_pkcs8_pbes2_pbkdf2_1024_des_sha384.pem"/>
+        <files mask="rsa_pkcs8_pbes2_pbkdf2_1024_des_sha512.der"/>
+        <files mask="rsa_pkcs8_pbes2_pbkdf2_1024_des_sha512.pem"/>
+        <files mask="rsa_pkcs8_pbes2_pbkdf2_2048_3des.der"/>
+        <files mask="rsa_pkcs8_pbes2_pbkdf2_2048_3des.pem"/>
+        <files mask="rsa_pkcs8_pbes2_pbkdf2_2048_3des_sha224.der"/>
+        <files mask="rsa_pkcs8_pbes2_pbkdf2_2048_3des_sha224.pem"/>
+        <files mask="rsa_pkcs8_pbes2_pbkdf2_2048_3des_sha256.der"/>
+        <files mask="rsa_pkcs8_pbes2_pbkdf2_2048_3des_sha256.pem"/>
+        <files mask="rsa_pkcs8_pbes2_pbkdf2_2048_3des_sha384.der"/>
+        <files mask="rsa_pkcs8_pbes2_pbkdf2_2048_3des_sha384.pem"/>
+        <files mask="rsa_pkcs8_pbes2_pbkdf2_2048_3des_sha512.der"/>
+        <files mask="rsa_pkcs8_pbes2_pbkdf2_2048_3des_sha512.pem"/>
+        <files mask="rsa_pkcs8_pbes2_pbkdf2_2048_des.der"/>
+        <files mask="rsa_pkcs8_pbes2_pbkdf2_2048_des.pem"/>
+        <files mask="rsa_pkcs8_pbes2_pbkdf2_2048_des_sha224.der"/>
+        <files mask="rsa_pkcs8_pbes2_pbkdf2_2048_des_sha224.pem"/>
+        <files mask="rsa_pkcs8_pbes2_pbkdf2_2048_des_sha256.der"/>
+        <files mask="rsa_pkcs8_pbes2_pbkdf2_2048_des_sha256.pem"/>
+        <files mask="rsa_pkcs8_pbes2_pbkdf2_2048_des_sha384.der"/>
+        <files mask="rsa_pkcs8_pbes2_pbkdf2_2048_des_sha384.pem"/>
+        <files mask="rsa_pkcs8_pbes2_pbkdf2_2048_des_sha512.der"/>
+        <files mask="rsa_pkcs8_pbes2_pbkdf2_2048_des_sha512.pem"/>
+        <files mask="rsa_pkcs8_pbes2_pbkdf2_4096_3des.der"/>
+        <files mask="rsa_pkcs8_pbes2_pbkdf2_4096_3des.pem"/>
+        <files mask="rsa_pkcs8_pbes2_pbkdf2_4096_3des_sha224.der"/>
+        <files mask="rsa_pkcs8_pbes2_pbkdf2_4096_3des_sha224.pem"/>
+        <files mask="rsa_pkcs8_pbes2_pbkdf2_4096_3des_sha256.der"/>
+        <files mask="rsa_pkcs8_pbes2_pbkdf2_4096_3des_sha256.pem"/>
+        <files mask="rsa_pkcs8_pbes2_pbkdf2_4096_3des_sha384.der"/>
+        <files mask="rsa_pkcs8_pbes2_pbkdf2_4096_3des_sha384.pem"/>
+        <files mask="rsa_pkcs8_pbes2_pbkdf2_4096_3des_sha512.der"/>
+        <files mask="rsa_pkcs8_pbes2_pbkdf2_4096_3des_sha512.pem"/>
+        <files mask="rsa_pkcs8_pbes2_pbkdf2_4096_des.der"/>
+        <files mask="rsa_pkcs8_pbes2_pbkdf2_4096_des.pem"/>
+        <files mask="rsa_pkcs8_pbes2_pbkdf2_4096_des_sha224.der"/>
+        <files mask="rsa_pkcs8_pbes2_pbkdf2_4096_des_sha224.pem"/>
+        <files mask="rsa_pkcs8_pbes2_pbkdf2_4096_des_sha256.der"/>
+        <files mask="rsa_pkcs8_pbes2_pbkdf2_4096_des_sha256.pem"/>
+        <files mask="rsa_pkcs8_pbes2_pbkdf2_4096_des_sha384.der"/>
+        <files mask="rsa_pkcs8_pbes2_pbkdf2_4096_des_sha384.pem"/>
+        <files mask="rsa_pkcs8_pbes2_pbkdf2_4096_des_sha512.der"/>
+        <files mask="rsa_pkcs8_pbes2_pbkdf2_4096_des_sha512.pem"/>
         <files mask="server1-nospace.crt"/>
         <files mask="server1-v1.crt"/>
         <files mask="server1.cert_type.crt"/>
+        <files mask="server1.cert_type.crt.openssl.v3_ext"/>
+        <files mask="server1.cert_type_noauthid.crt"/>
         <files mask="server1.crt"/>
+        <files mask="server1.crt.openssl.v3_ext"/>
+        <files mask="server1.csr"/>
         <files mask="server1.ext_ku.crt"/>
         <files mask="server1.key"/>
         <files mask="server1.key_usage.crt"/>
+        <files mask="server1.key_usage.crt.openssl.v3_ext"/>
+        <files mask="server1.key_usage_noauthid.crt"/>
+        <files mask="server1.noauthid.crt"/>
         <files mask="server1.pubkey"/>
         <files mask="server1.req.cert_type"/>
         <files mask="server1.req.key_usage"/>
@@ -2860,6 +2994,7 @@ The MIMXRT1052 are ARM Cortex-M7 based microcontrollers for embedded application
         <files mask="server10_int3_int-ca2.crt"/>
         <files mask="server10_int3_int-ca2_ca.crt"/>
         <files mask="server1_ca.crt"/>
+        <files mask="server1_csr.opensslconf"/>
         <files mask="server2-badsign.crt"/>
         <files mask="server2-sha256.crt"/>
         <files mask="server2-v1-chain.crt"/>
@@ -2940,6 +3075,7 @@ The MIMXRT1052 are ARM Cortex-M7 based microcontrollers for embedded application
         <files mask="test-ca.crt"/>
         <files mask="test-ca.key"/>
         <files mask="test-ca.opensslconf"/>
+        <files mask="test-ca.server1.opensslconf"/>
         <files mask="test-ca2.crt"/>
         <files mask="test-ca2.key"/>
         <files mask="test-ca2.ku-crl.crt"/>
@@ -3823,7 +3959,7 @@ The MIMXRT1052 are ARM Cortex-M7 based microcontrollers for embedded application
         <files mask="armgcc_force_cpp.cmake"/>
       </source>
     </component>
-    <component id="middleware.amazon_freertos.aws_iot.MIMXRT1052" name="amazon_freertos_aws_iot" full_name="AWS IoT" type="middleware" brief="AWS IOT" category="AWS IoT/AWS IoT" device_cores="core0_MIMXRT1052xxxxB" core="cm7" dependency="middleware.freertos.MIMXRT1052 middleware.mbedtls.MIMXRT1052 middleware.template_application.freertos.MIMXRT1052 platform.Include_common.MIMXRT1052 platform.Include_core_cm7.MIMXRT1052 platform.devices.MIMXRT1052_CMSIS.MIMXRT1052 platform.drivers.clock.MIMXRT1052 platform.drivers.common.MIMXRT1052 platform.drivers.dcp.MIMXRT1052 platform.drivers.trng.MIMXRT1052" devices="MIMXRT1052xxxxB" version="1.1.0" user_visible="false">
+    <component id="middleware.amazon_freertos.aws_iot.MIMXRT1052" name="amazon_freertos_aws_iot" full_name="AWS IoT" type="middleware" brief="AWS IOT" category="AWS IoT/AWS IoT" device_cores="core0_MIMXRT1052xxxxB" core="cm7" dependency="middleware.freertos.MIMXRT1052 middleware.mbedtls.MIMXRT1052 middleware.template_application.freertos.MIMXRT1052 platform.Include_common.MIMXRT1052 platform.Include_core_cm7.MIMXRT1052 platform.devices.MIMXRT1052_CMSIS.MIMXRT1052 platform.drivers.clock.MIMXRT1052 platform.drivers.common.MIMXRT1052 platform.drivers.dcp.MIMXRT1052 platform.drivers.trng.MIMXRT1052" devices="MIMXRT1052xxxxB" version="1.2.7" user_visible="false">
       <source path="rtos/amazon-freertos/demos/common/devmode_key_provisioning/CertificateConfigurationTool/js" target_path="amazon-freertos/devmode_key_provisioning" exclude="true" type="script">
         <files mask="generator.js"/>
       </source>
@@ -3832,18 +3968,6 @@ The MIMXRT1052 are ARM Cortex-M7 based microcontrollers for embedded application
       </source>
       <source path="rtos/amazon-freertos/demos/common/devmode_key_provisioning" target_path="amazon-freertos/devmode_key_provisioning" type="src">
         <files mask="aws_dev_mode_key_provisioning.c"/>
-      </source>
-      <source path="rtos/amazon-freertos/demos/common/include" target_path="amazon-freertos/include" type="c_include">
-        <files mask="aws_clientcredential.h"/>
-        <files mask="aws_clientcredential_keys.h"/>
-        <files mask="aws_demo.h"/>
-        <files mask="aws_dev_mode_key_provisioning.h"/>
-        <files mask="aws_greengrass_discovery_demo.h"/>
-        <files mask="aws_logging_task.h"/>
-        <files mask="aws_shadow_lightbulb_on_off.h"/>
-      </source>
-      <source path="rtos/amazon-freertos/demos/common/logging" target_path="amazon-freertos/logging" type="src">
-        <files mask="aws_logging_task_dynamic_buffers.c"/>
       </source>
       <source path="rtos/amazon-freertos/lib/bufferpool" target_path="amazon-freertos/bufferpool" type="src">
         <files mask="aws_bufferpool_static_thread_safe.c"/>
@@ -4319,6 +4443,7 @@ The MIMXRT1052 are ARM Cortex-M7 based microcontrollers for embedded application
         <files mask="platform_time.h"/>
         <files mask="ripemd160.h"/>
         <files mask="rsa.h"/>
+        <files mask="rsa_internal.h"/>
         <files mask="sha1.h"/>
         <files mask="sha256.h"/>
         <files mask="sha512.h"/>
@@ -4386,6 +4511,7 @@ The MIMXRT1052 are ARM Cortex-M7 based microcontrollers for embedded application
         <files mask="platform.c"/>
         <files mask="ripemd160.c"/>
         <files mask="rsa.c"/>
+        <files mask="rsa_internal.c"/>
         <files mask="sha1.c"/>
         <files mask="sha256.c"/>
         <files mask="sha512.c"/>
@@ -6083,8 +6209,8 @@ The MIMXRT1052 are ARM Cortex-M7 based microcontrollers for embedded application
     </component>
     <component id="middleware.freertos.MIMXRT1052" name="freertos" full_name="Amazon-FreeRTOS Kernel" type="OS" brief="Amazon FreeRTOS, Real Time Operating System" dependency="middleware.template_application.freertos.MIMXRT1052" devices="MIMXRT1052xxxxB" version="10.0.1" user_visible="true">
       <defines>
-        <define name="SDK_OS_FREE_RTOS" value=""/>
         <define name="FSL_RTOS_FREE_RTOS" value=""/>
+        <define name="SDK_OS_FREE_RTOS" value=""/>
       </defines>
       <source path="rtos/amazon-freertos/lib/FreeRTOS/portable/GCC/ARM_CM4F" target_path="amazon-freertos/FreeRTOS/portable" device_cores="core0_MIMXRT1052xxxxB" core="cm7" type="src" toolchain="mcuxpresso">
         <files mask="port.c"/>

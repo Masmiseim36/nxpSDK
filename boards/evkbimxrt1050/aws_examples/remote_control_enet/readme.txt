@@ -67,7 +67,7 @@ Before running the demo it is need to configure AWS IoT Console and update some 
     - One stop bit
     - No flow control
 
-6.  Connect the boards's RJ45 to network with Internet access (IP address to the board is assigned by the DHCP server). Make sure the connection on port 8883 is not blocked.
+6.  Connect the board's RJ45 to network with Internet access (IP address to the board is assigned by the DHCP server). Make sure the connection on port 8883 is not blocked.
 
 7.  Download the program to the target board.
 

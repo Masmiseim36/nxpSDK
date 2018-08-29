@@ -360,8 +360,6 @@ include_directories(${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers)
 
 include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/third_party/mcu_vendor/nxp/MIMXRT1052/drivers)
 
-include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/demos/common/include)
-
 include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/third_party/pkcs11)
 
 include_directories(${ProjDirPath}/../../../../../devices/MIMXRT1052)
@@ -386,6 +384,8 @@ include_directories(${ProjDirPath}/../../../../../middleware/lwip/src/include)
 
 include_directories(${ProjDirPath}/../../../../../middleware/lwip/contrib/apps)
 
+include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/demos/common/include)
+
 add_executable(aws_greengrass_discovery_enet.elf 
 "${ProjDirPath}/../aws_greengrass_discovery_demo.c"
 "${ProjDirPath}/../main_enet.c"
@@ -398,6 +398,7 @@ add_executable(aws_greengrass_discovery_enet.elf
 "${ProjDirPath}/../config_files/aws_demo_config.h"
 "${ProjDirPath}/../config_files/aws_mqtt_agent_config.h"
 "${ProjDirPath}/../config_files/aws_mqtt_config.h"
+"${ProjDirPath}/../config_files/aws_pkcs11_config.h"
 "${ProjDirPath}/../config_files/aws_secure_sockets_config.h"
 "${ProjDirPath}/../config_files/aws_ggd_config.h"
 "${ProjDirPath}/../config_files/aws_wifi_config.h"
@@ -424,7 +425,8 @@ add_executable(aws_greengrass_discovery_enet.elf
 "${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/third_party/mcu_vendor/nxp/MIMXRT1052/drivers/mflash_drv.c"
 "${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/third_party/mcu_vendor/nxp/MIMXRT1052/drivers/mflash_file.h"
 "${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/third_party/mcu_vendor/nxp/MIMXRT1052/drivers/mflash_file.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/pkcs11/portable/nxp/common/pkcs11.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/pkcs11/mbedtls/aws_pkcs11_mbedtls.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/pkcs11/portable/nxp/evkbimxrt1050/aws_pkcs11_pal.c"
 "${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/FreeRTOS.h"
 "${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/aws_crypto.h"
 "${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/aws_greengrass_discovery.h"
@@ -468,14 +470,6 @@ add_executable(aws_greengrass_discovery_enet.elf
 "${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/mqtt/aws_mqtt_lib.c"
 "${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/tls/aws_tls.c"
 "${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/bufferpool/aws_bufferpool_static_thread_safe.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/demos/common/include/aws_clientcredential.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/demos/common/include/aws_clientcredential_keys.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/demos/common/include/aws_demo.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/demos/common/include/aws_dev_mode_key_provisioning.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/demos/common/include/aws_logging_task.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/demos/common/include/aws_shadow_lightbulb_on_off.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/demos/common/include/aws_greengrass_discovery_demo.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/demos/common/logging/aws_logging_task_dynamic_buffers.c"
 "${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/crypto/aws_crypto.c"
 "${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/third_party/pkcs11/pkcs11.h"
 "${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/third_party/pkcs11/pkcs11f.h"
@@ -772,6 +766,7 @@ add_executable(aws_greengrass_discovery_enet.elf
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/platform_time.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/ripemd160.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/rsa.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/rsa_internal.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/sha1.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/sha256.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/sha512.h"
@@ -837,6 +832,7 @@ add_executable(aws_greengrass_discovery_enet.elf
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/platform.c"
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/ripemd160.c"
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/rsa.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/rsa_internal.c"
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/sha1.c"
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/sha256.c"
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/sha512.c"
@@ -868,6 +864,15 @@ add_executable(aws_greengrass_discovery_enet.elf
 "${ProjDirPath}/../../../../../middleware/mbedtls/port/ksdk/des_alt.c"
 "${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/greengrass/aws_greengrass_discovery.c"
 "${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/greengrass/aws_helper_secure_connect.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/demos/common/include/aws_clientcredential.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/demos/common/include/aws_clientcredential_keys.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/demos/common/include/aws_demo.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/demos/common/include/aws_dev_mode_key_provisioning.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/demos/common/include/aws_logging_task.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/demos/common/include/aws_shadow_lightbulb_on_off.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/demos/common/include/aws_greengrass_discovery_demo.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/demos/common/logging/aws_logging_task_dynamic_buffers.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/demos/common/devmode_key_provisioning/aws_dev_mode_key_provisioning.c"
 )
 
 

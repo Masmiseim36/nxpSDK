@@ -332,7 +332,6 @@
           <state>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers</state>
           <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/third_party/mcu_vendor/nxp/MIMXRT1052/drivers</state>
-          <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/demos/common/include</state>
           <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/third_party/pkcs11</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/io</state>
@@ -345,6 +344,7 @@
           <state>$PROJ_DIR$/../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/contrib/apps</state>
+          <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/demos/common/include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1330,7 +1330,6 @@
           <state>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers</state>
           <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/third_party/mcu_vendor/nxp/MIMXRT1052/drivers</state>
-          <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/demos/common/include</state>
           <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/third_party/pkcs11</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/io</state>
@@ -1343,6 +1342,7 @@
           <state>$PROJ_DIR$/../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/contrib/apps</state>
+          <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/demos/common/include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2062,6 +2062,9 @@
         <name>$PROJ_DIR$/../config_files/aws_mqtt_config.h</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../config_files/aws_pkcs11_config.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../config_files/aws_secure_sockets_config.h</name>
       </file>
       <file>
@@ -2092,7 +2095,10 @@
     <group>
       <name>pkcs11</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/pkcs11/portable/nxp/common/pkcs11.c</name>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/pkcs11/mbedtls/aws_pkcs11_mbedtls.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/pkcs11/portable/nxp/evkbimxrt1050/aws_pkcs11_pal.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/third_party/pkcs11/pkcs11.h</name>
@@ -2224,27 +2230,6 @@
         <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/timers.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/demos/common/include/aws_clientcredential.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/demos/common/include/aws_clientcredential_keys.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/demos/common/include/aws_demo.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/demos/common/include/aws_dev_mode_key_provisioning.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/demos/common/include/aws_logging_task.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/demos/common/include/aws_shadow_lightbulb_on_off.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/demos/common/include/aws_greengrass_discovery_demo.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/event_groups.h</name>
       </file>
       <file>
@@ -2289,6 +2274,27 @@
       <file>
         <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private/stack_macros.h</name>
       </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/demos/common/include/aws_clientcredential.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/demos/common/include/aws_clientcredential_keys.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/demos/common/include/aws_demo.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/demos/common/include/aws_dev_mode_key_provisioning.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/demos/common/include/aws_logging_task.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/demos/common/include/aws_shadow_lightbulb_on_off.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/demos/common/include/aws_greengrass_discovery_demo.h</name>
+      </file>
     </group>
     <group>
       <name>mqtt</name>
@@ -2312,12 +2318,6 @@
       </file>
     </group>
     <group>
-      <name>logging</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/demos/common/logging/aws_logging_task_dynamic_buffers.c</name>
-      </file>
-    </group>
-    <group>
       <name>crypto</name>
       <file>
         <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/crypto/aws_crypto.c</name>
@@ -2331,6 +2331,9 @@
     </group>
     <group>
       <name>devmode_key_provisioning</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/demos/common/devmode_key_provisioning/aws_dev_mode_key_provisioning.c</name>
+      </file>
       <file>
         <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/demos/common/devmode_key_provisioning/aws_dev_mode_key_provisioning.c</name>
       </file>
@@ -2414,6 +2417,12 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/shadow/aws_shadow_json.c</name>
+      </file>
+    </group>
+    <group>
+      <name>logging</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/demos/common/logging/aws_logging_task_dynamic_buffers.c</name>
       </file>
     </group>
   </group>
@@ -3310,6 +3319,9 @@
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/mbedtls/rsa.h</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/mbedtls/rsa_internal.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/mbedtls/sha1.h</name>
       </file>
       <file>
@@ -3506,6 +3518,9 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/rsa.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/rsa_internal.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/sha1.c</name>

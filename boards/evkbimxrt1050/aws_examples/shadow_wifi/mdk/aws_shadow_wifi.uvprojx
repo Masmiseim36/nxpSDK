@@ -337,7 +337,7 @@
 </MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, CPU_MIMXRT1052DVL6B, USE_RTOS=1, MBEDTLS_CONFIG_FILE='\"aws_mbedtls_config.h\"', FSL_RTOS_FREE_RTOS, A_LITTLE_ENDIAN</Define>
               <Undefine/>
-              <IncludePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/RVDS/ARM_CM4F;../../../../../CMSIS/Include;../../../../../devices;../../..;..;../../../../src/aws_examples/common;../config_files;../../../../../platform/utilities/virtual_com;../../../../../rtos/amazon-freertos/lib/include;../../../../../rtos/amazon-freertos/lib/include/private;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/port/ksdk;../../../../../devices/MIMXRT1052/drivers;../../../../../middleware/wifi_qca/port/boards/evkbimxrt1050/freertos/gt202;../../../../../middleware/wifi_qca/port/boards/evkbimxrt1050/freertos;../../../../../middleware/wifi_qca/port/env/freertos;../../../../../middleware/wifi_qca;../../../../../middleware/wifi_qca/include;../../../../../middleware/wifi_qca/include/AR6002;../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw;../../../../../middleware/wifi_qca/include/AR6002/hw4.0/hw;../../../../../middleware/wifi_qca/custom_src/stack_custom;../../../../../middleware/wifi_qca/custom_src/include;../../../../../middleware/wifi_qca/common_src/include;../../../../../middleware/wifi_qca/common_src/stack_common;../../../../../middleware/wifi_qca/common_src/hcd;../../../../../middleware/wifi_qca/common_src/wmi;../../../../../middleware/wifi_qca/port;../../../../../middleware/wifi_qca/port/drivers/lpspi_edma_freertos;../../../../../rtos/amazon-freertos/lib/third_party/mcu_vendor/nxp/MIMXRT1052/drivers;../../../../../rtos/amazon-freertos/demos/common/include;../../../../../rtos/amazon-freertos/lib/third_party/pkcs11;../../../../../devices/MIMXRT1052;../../../../../devices/MIMXRT1052/utilities/io;../../../../../devices/MIMXRT1052/utilities/str;../../../../../devices/MIMXRT1052/utilities/log;../../../../../devices/MIMXRT1052/utilities;../../../../../devices/MIMXRT1052/xip;../../../../../rtos/amazon-freertos/lib/third_party/jsmn</IncludePath>
+              <IncludePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/RVDS/ARM_CM4F;../../../../../CMSIS/Include;../../../../../devices;../../..;..;../../../../src/aws_examples/common;../config_files;../../../../../platform/utilities/virtual_com;../../../../../rtos/amazon-freertos/lib/include;../../../../../rtos/amazon-freertos/lib/include/private;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/port/ksdk;../../../../../devices/MIMXRT1052/drivers;../../../../../middleware/wifi_qca/port/boards/evkbimxrt1050/freertos/gt202;../../../../../middleware/wifi_qca/port/boards/evkbimxrt1050/freertos;../../../../../middleware/wifi_qca/port/env/freertos;../../../../../middleware/wifi_qca;../../../../../middleware/wifi_qca/include;../../../../../middleware/wifi_qca/include/AR6002;../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw;../../../../../middleware/wifi_qca/include/AR6002/hw4.0/hw;../../../../../middleware/wifi_qca/custom_src/stack_custom;../../../../../middleware/wifi_qca/custom_src/include;../../../../../middleware/wifi_qca/common_src/include;../../../../../middleware/wifi_qca/common_src/stack_common;../../../../../middleware/wifi_qca/common_src/hcd;../../../../../middleware/wifi_qca/common_src/wmi;../../../../../middleware/wifi_qca/port;../../../../../middleware/wifi_qca/port/drivers/lpspi_edma_freertos;../../../../../rtos/amazon-freertos/lib/third_party/mcu_vendor/nxp/MIMXRT1052/drivers;../../../../../rtos/amazon-freertos/lib/third_party/pkcs11;../../../../../devices/MIMXRT1052;../../../../../devices/MIMXRT1052/utilities/io;../../../../../devices/MIMXRT1052/utilities/str;../../../../../devices/MIMXRT1052/utilities/log;../../../../../devices/MIMXRT1052/utilities;../../../../../devices/MIMXRT1052/xip;../../../../../rtos/amazon-freertos/lib/third_party/jsmn;../../../../../rtos/amazon-freertos/demos/common/include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -445,6 +445,11 @@
               <FileName>aws_mqtt_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../config_files/aws_mqtt_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_pkcs11_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../config_files/aws_pkcs11_config.h</FilePath>
             </File>
             <File>
               <FileName>aws_secure_sockets_config.h</FileName>
@@ -1692,9 +1697,14 @@
           <GroupName>amazon-freertos-pkcs11</GroupName>
           <Files>
             <File>
-              <FileName>pkcs11.c</FileName>
+              <FileName>aws_pkcs11_mbedtls.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/pkcs11/portable/nxp/common/pkcs11.c</FilePath>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/pkcs11/mbedtls/aws_pkcs11_mbedtls.c</FilePath>
+            </File>
+            <File>
+              <FileName>aws_pkcs11_pal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/pkcs11/portable/nxp/evkbimxrt1050/aws_pkcs11_pal.c</FilePath>
             </File>
             <File>
               <FileName>pkcs11.h</FileName>
@@ -1749,16 +1759,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-logging</GroupName>
-          <Files>
-            <File>
-              <FileName>aws_logging_task_dynamic_buffers.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/demos/common/logging/aws_logging_task_dynamic_buffers.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>amazon-freertos-crypto</GroupName>
           <Files>
             <File>
@@ -1781,6 +1781,11 @@
         <Group>
           <GroupName>amazon-freertos-devmode_key_provisioning</GroupName>
           <Files>
+            <File>
+              <FileName>aws_dev_mode_key_provisioning.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/demos/common/devmode_key_provisioning/aws_dev_mode_key_provisioning.c</FilePath>
+            </File>
             <File>
               <FileName>aws_dev_mode_key_provisioning.c</FileName>
               <FileType>1</FileType>
@@ -2167,6 +2172,11 @@
               <FilePath>../../../../../middleware/mbedtls/include/mbedtls/rsa.h</FilePath>
             </File>
             <File>
+              <FileName>rsa_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/include/mbedtls/rsa_internal.h</FilePath>
+            </File>
+            <File>
               <FileName>sha1.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls/include/mbedtls/sha1.h</FilePath>
@@ -2497,6 +2507,11 @@
               <FilePath>../../../../../middleware/mbedtls/library/rsa.c</FilePath>
             </File>
             <File>
+              <FileName>rsa_internal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/rsa_internal.c</FilePath>
+            </File>
+            <File>
               <FileName>sha1.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/library/sha1.c</FilePath>
@@ -2695,6 +2710,16 @@
               <FileName>aws_wifi.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/amazon-freertos/lib/wifi/portable/nxp/common/aws_wifi.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>amazon-freertos-logging</GroupName>
+          <Files>
+            <File>
+              <FileName>aws_logging_task_dynamic_buffers.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/demos/common/logging/aws_logging_task_dynamic_buffers.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3033,7 +3058,7 @@
 </MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, CPU_MIMXRT1052DVL6B, USE_RTOS=1, MBEDTLS_CONFIG_FILE='\"aws_mbedtls_config.h\"', FSL_RTOS_FREE_RTOS, A_LITTLE_ENDIAN</Define>
               <Undefine/>
-              <IncludePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/RVDS/ARM_CM4F;../../../../../CMSIS/Include;../../../../../devices;../../..;..;../../../../src/aws_examples/common;../config_files;../../../../../platform/utilities/virtual_com;../../../../../rtos/amazon-freertos/lib/include;../../../../../rtos/amazon-freertos/lib/include/private;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/port/ksdk;../../../../../devices/MIMXRT1052/drivers;../../../../../middleware/wifi_qca/port/boards/evkbimxrt1050/freertos/gt202;../../../../../middleware/wifi_qca/port/boards/evkbimxrt1050/freertos;../../../../../middleware/wifi_qca/port/env/freertos;../../../../../middleware/wifi_qca;../../../../../middleware/wifi_qca/include;../../../../../middleware/wifi_qca/include/AR6002;../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw;../../../../../middleware/wifi_qca/include/AR6002/hw4.0/hw;../../../../../middleware/wifi_qca/custom_src/stack_custom;../../../../../middleware/wifi_qca/custom_src/include;../../../../../middleware/wifi_qca/common_src/include;../../../../../middleware/wifi_qca/common_src/stack_common;../../../../../middleware/wifi_qca/common_src/hcd;../../../../../middleware/wifi_qca/common_src/wmi;../../../../../middleware/wifi_qca/port;../../../../../middleware/wifi_qca/port/drivers/lpspi_edma_freertos;../../../../../rtos/amazon-freertos/lib/third_party/mcu_vendor/nxp/MIMXRT1052/drivers;../../../../../rtos/amazon-freertos/demos/common/include;../../../../../rtos/amazon-freertos/lib/third_party/pkcs11;../../../../../devices/MIMXRT1052;../../../../../devices/MIMXRT1052/utilities/io;../../../../../devices/MIMXRT1052/utilities/str;../../../../../devices/MIMXRT1052/utilities/log;../../../../../devices/MIMXRT1052/utilities;../../../../../devices/MIMXRT1052/xip;../../../../../rtos/amazon-freertos/lib/third_party/jsmn</IncludePath>
+              <IncludePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/RVDS/ARM_CM4F;../../../../../CMSIS/Include;../../../../../devices;../../..;..;../../../../src/aws_examples/common;../config_files;../../../../../platform/utilities/virtual_com;../../../../../rtos/amazon-freertos/lib/include;../../../../../rtos/amazon-freertos/lib/include/private;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/port/ksdk;../../../../../devices/MIMXRT1052/drivers;../../../../../middleware/wifi_qca/port/boards/evkbimxrt1050/freertos/gt202;../../../../../middleware/wifi_qca/port/boards/evkbimxrt1050/freertos;../../../../../middleware/wifi_qca/port/env/freertos;../../../../../middleware/wifi_qca;../../../../../middleware/wifi_qca/include;../../../../../middleware/wifi_qca/include/AR6002;../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw;../../../../../middleware/wifi_qca/include/AR6002/hw4.0/hw;../../../../../middleware/wifi_qca/custom_src/stack_custom;../../../../../middleware/wifi_qca/custom_src/include;../../../../../middleware/wifi_qca/common_src/include;../../../../../middleware/wifi_qca/common_src/stack_common;../../../../../middleware/wifi_qca/common_src/hcd;../../../../../middleware/wifi_qca/common_src/wmi;../../../../../middleware/wifi_qca/port;../../../../../middleware/wifi_qca/port/drivers/lpspi_edma_freertos;../../../../../rtos/amazon-freertos/lib/third_party/mcu_vendor/nxp/MIMXRT1052/drivers;../../../../../rtos/amazon-freertos/lib/third_party/pkcs11;../../../../../devices/MIMXRT1052;../../../../../devices/MIMXRT1052/utilities/io;../../../../../devices/MIMXRT1052/utilities/str;../../../../../devices/MIMXRT1052/utilities/log;../../../../../devices/MIMXRT1052/utilities;../../../../../devices/MIMXRT1052/xip;../../../../../rtos/amazon-freertos/lib/third_party/jsmn;../../../../../rtos/amazon-freertos/demos/common/include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3141,6 +3166,11 @@
               <FileName>aws_mqtt_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../config_files/aws_mqtt_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_pkcs11_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../config_files/aws_pkcs11_config.h</FilePath>
             </File>
             <File>
               <FileName>aws_secure_sockets_config.h</FileName>
@@ -4388,9 +4418,14 @@
           <GroupName>amazon-freertos-pkcs11</GroupName>
           <Files>
             <File>
-              <FileName>pkcs11.c</FileName>
+              <FileName>aws_pkcs11_mbedtls.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/pkcs11/portable/nxp/common/pkcs11.c</FilePath>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/pkcs11/mbedtls/aws_pkcs11_mbedtls.c</FilePath>
+            </File>
+            <File>
+              <FileName>aws_pkcs11_pal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/pkcs11/portable/nxp/evkbimxrt1050/aws_pkcs11_pal.c</FilePath>
             </File>
             <File>
               <FileName>pkcs11.h</FileName>
@@ -4445,16 +4480,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-logging</GroupName>
-          <Files>
-            <File>
-              <FileName>aws_logging_task_dynamic_buffers.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/demos/common/logging/aws_logging_task_dynamic_buffers.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>amazon-freertos-crypto</GroupName>
           <Files>
             <File>
@@ -4477,6 +4502,11 @@
         <Group>
           <GroupName>amazon-freertos-devmode_key_provisioning</GroupName>
           <Files>
+            <File>
+              <FileName>aws_dev_mode_key_provisioning.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/demos/common/devmode_key_provisioning/aws_dev_mode_key_provisioning.c</FilePath>
+            </File>
             <File>
               <FileName>aws_dev_mode_key_provisioning.c</FileName>
               <FileType>1</FileType>
@@ -4863,6 +4893,11 @@
               <FilePath>../../../../../middleware/mbedtls/include/mbedtls/rsa.h</FilePath>
             </File>
             <File>
+              <FileName>rsa_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/include/mbedtls/rsa_internal.h</FilePath>
+            </File>
+            <File>
               <FileName>sha1.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls/include/mbedtls/sha1.h</FilePath>
@@ -5193,6 +5228,11 @@
               <FilePath>../../../../../middleware/mbedtls/library/rsa.c</FilePath>
             </File>
             <File>
+              <FileName>rsa_internal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/rsa_internal.c</FilePath>
+            </File>
+            <File>
               <FileName>sha1.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/library/sha1.c</FilePath>
@@ -5391,6 +5431,16 @@
               <FileName>aws_wifi.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/amazon-freertos/lib/wifi/portable/nxp/common/aws_wifi.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>amazon-freertos-logging</GroupName>
+          <Files>
+            <File>
+              <FileName>aws_logging_task_dynamic_buffers.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/demos/common/logging/aws_logging_task_dynamic_buffers.c</FilePath>
             </File>
           </Files>
         </Group>

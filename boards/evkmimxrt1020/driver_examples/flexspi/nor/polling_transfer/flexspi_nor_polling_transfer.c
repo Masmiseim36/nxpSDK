@@ -377,7 +377,7 @@ int main(void)
     /* Configure flash settings according to serial flash feature. */
     FLEXSPI_SetFlashConfig(EXAMPLE_FLEXSPI, &deviceconfig, kFLEXSPI_PortA1);
 
-    /* Update LUT table. */
+    /* Update LUT table. */ 
     FLEXSPI_UpdateLUT(EXAMPLE_FLEXSPI, 0, customLUT, CUSTOM_LUT_LENGTH);
 
     /* Get vendor ID. */

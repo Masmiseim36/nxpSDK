@@ -1710,6 +1710,16 @@ boards\evkbimxrt1050\driver_examples\flexram\ram_allocate\flexram.c
                                 // RelativePath = "boards\evkbimxrt1050\driver_examples\flexram\ram_allocate\flexram.c"
 boards\evkbimxrt1050\driver_examples\flexram\ram_allocate\pin_mux.c
                                 // RelativePath = "boards\evkbimxrt1050\driver_examples\flexram\ram_allocate\pin_mux.c"
+boards\evkbimxrt1050\lwip_examples\lwip_dhcp\bm\board.c
+                                // RelativePath = "boards\evkbimxrt1050\lwip_examples\lwip_dhcp\bm\board.c"
+boards\evkbimxrt1050\lwip_examples\lwip_dhcp\bm\clock_config.c
+                                // RelativePath = "boards\evkbimxrt1050\lwip_examples\lwip_dhcp\bm\clock_config.c"
+boards\evkbimxrt1050\lwip_examples\lwip_dhcp\bm\fsl_phy.c
+                                // RelativePath = "boards\evkbimxrt1050\lwip_examples\lwip_dhcp\bm\fsl_phy.c"
+boards\evkbimxrt1050\lwip_examples\lwip_dhcp\bm\lwip_dhcp_bm.c
+                                // RelativePath = "boards\evkbimxrt1050\lwip_examples\lwip_dhcp\bm\lwip_dhcp_bm.c"
+boards\evkbimxrt1050\lwip_examples\lwip_dhcp\bm\pin_mux.c
+                                // RelativePath = "boards\evkbimxrt1050\lwip_examples\lwip_dhcp\bm\pin_mux.c"
 boards\evkmimxrt1020\driver_examples\flexspi\nor\polling_transfer\board.c
                                 // RelativePath = "boards\evkmimxrt1020\driver_examples\flexspi\nor\polling_transfer\board.c"
 boards\evkmimxrt1020\driver_examples\flexspi\nor\polling_transfer\clock_config.c
@@ -1718,6 +1728,22 @@ boards\evkmimxrt1020\driver_examples\flexspi\nor\polling_transfer\flexspi_nor_po
                                 // RelativePath = "boards\evkmimxrt1020\driver_examples\flexspi\nor\polling_transfer\flexspi_nor_polling_transfer.c"
 boards\evkmimxrt1020\driver_examples\flexspi\nor\polling_transfer\pin_mux.c
                                 // RelativePath = "boards\evkmimxrt1020\driver_examples\flexspi\nor\polling_transfer\pin_mux.c"
+boards\frdmk28f\driver_examples\qspi\edma_transfer\board.c
+                                // RelativePath = "boards\frdmk28f\driver_examples\qspi\edma_transfer\board.c"
+boards\frdmk28f\driver_examples\qspi\edma_transfer\clock_config.c
+                                // RelativePath = "boards\frdmk28f\driver_examples\qspi\edma_transfer\clock_config.c"
+boards\frdmk28f\driver_examples\qspi\edma_transfer\pin_mux.c
+                                // RelativePath = "boards\frdmk28f\driver_examples\qspi\edma_transfer\pin_mux.c"
+boards\frdmk28f\driver_examples\qspi\edma_transfer\qspi_edma_transfer.c
+                                // RelativePath = "boards\frdmk28f\driver_examples\qspi\edma_transfer\qspi_edma_transfer.c"
+boards\frdmk28f\driver_examples\qspi\polling_transfer\board.c
+                                // RelativePath = "boards\frdmk28f\driver_examples\qspi\polling_transfer\board.c"
+boards\frdmk28f\driver_examples\qspi\polling_transfer\clock_config.c
+                                // RelativePath = "boards\frdmk28f\driver_examples\qspi\polling_transfer\clock_config.c"
+boards\frdmk28f\driver_examples\qspi\polling_transfer\pin_mux.c
+                                // RelativePath = "boards\frdmk28f\driver_examples\qspi\polling_transfer\pin_mux.c"
+boards\frdmk28f\driver_examples\qspi\polling_transfer\qspi_polling_transfer.c
+                                // RelativePath = "boards\frdmk28f\driver_examples\qspi\polling_transfer\qspi_polling_transfer.c"
 middleware\sdmmc_2.1.2\port\sdhc\freertos\event.c
                                 // RelativePath = "middleware\sdmmc_2.1.2\port\sdhc\freertos\event.c"
 middleware\sdmmc_2.1.2\port\sdhc\freertos\fsl_host.c

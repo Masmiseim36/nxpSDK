@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>39613C90-D3FD-466B-B9D9-DC666880F859</string>
+	<key>IDESourceControlProjectName</key>
+	<string>blfwk</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>B0D5F4B3-E512-4A54-9F8A-89FE66DEC76C</key>
+		<string>ssh://sw-git.freescale.net/git/sw_git/repos/mcu-boot.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>apps/common/blfwk/blfwk.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>B0D5F4B3-E512-4A54-9F8A-89FE66DEC76C</key>
+		<string>../../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://sw-git.freescale.net/git/sw_git/repos/mcu-boot.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>B0D5F4B3-E512-4A54-9F8A-89FE66DEC76C</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>B0D5F4B3-E512-4A54-9F8A-89FE66DEC76C</string>
+			<key>IDESourceControlWCCName</key>
+			<string>mcu-boot</string>
+		</dict>
+	</array>
+</dict>
+</plist>

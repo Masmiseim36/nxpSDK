@@ -1,0 +1,35 @@
+
+# The source block assign file name to identifiers
+sources {
+ myBinFile = extern (0);
+}
+
+constants {
+    kAbsAddr_Start= 0x90000000;
+    kAbsAddr_Ivt = 0x90001000;
+    kAbsAddr_App = 0x90002000;
+}
+
+# The section block specifies the sequence of boot commands to be written to the SB file
+section (0) {
+
+    #1. Prepare Flash option
+    # Note: This is a template, need to be udpated to actual option in users' project
+    load 0xD0002600 > 0x2000;
+    # Configure to CSX2, ADV high active, 16bits IO, safe AC timing mode
+    enable semcnor 0x2000;
+    
+    #2. Erase flash as needed.
+    # Note: This is a template, need to be udpated to actual required memory range
+    #       in users' project.
+    erase 0x90000000..0x90010000;
+
+    
+    #3. Program image
+    load myBinFile > kAbsAddr_Ivt;
+
+    #4. Program Fuse as needed
+    # Note: this is a template, need to be updated to actual required fuse value in users' 
+    #       project
+    # load fuse 00000000 > 0x05;
+}

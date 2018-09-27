@@ -6357,6 +6357,106 @@ SOURCE=.\boards\frdmk64f\driver_examples\ftm\dual_edge_capture\pin_mux.h
 # End Source File
 # End Group
 # End Group
+# Begin Group "i2C"
+
+# PROP Default_Filter ""
+# Begin Group "edma_b2b_transfer_master"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\driver_examples\i2c\edma_b2b_transfer\master\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\driver_examples\i2c\edma_b2b_transfer\master\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\driver_examples\i2c\edma_b2b_transfer\master\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\driver_examples\i2c\edma_b2b_transfer\master\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\driver_examples\i2c\edma_b2b_transfer\master\i2c_edma_b2b_transfer_master.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\driver_examples\i2c\edma_b2b_transfer\master\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\driver_examples\i2c\edma_b2b_transfer\master\pin_mux.h
+# End Source File
+# End Group
+# Begin Group "edma_b2b_transfer_slave"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\driver_examples\i2c\edma_b2b_transfer\slave\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\driver_examples\i2c\edma_b2b_transfer\slave\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\driver_examples\i2c\edma_b2b_transfer\slave\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\driver_examples\i2c\edma_b2b_transfer\slave\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\driver_examples\i2c\edma_b2b_transfer\slave\i2c_edma_b2b_transfer_slave.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\driver_examples\i2c\edma_b2b_transfer\slave\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\driver_examples\i2c\edma_b2b_transfer\slave\pin_mux.h
+# End Source File
+# End Group
+# Begin Group "edma_transfer"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\driver_examples\i2c\edma_transfer\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\driver_examples\i2c\edma_transfer\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\driver_examples\i2c\edma_transfer\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\driver_examples\i2c\edma_transfer\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\driver_examples\i2c\edma_transfer\i2c_edma_transfer.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\driver_examples\i2c\edma_transfer\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\driver_examples\i2c\edma_transfer\pin_mux.h
+# End Source File
+# End Group
+# End Group
 # End Group
 # Begin Group "flexcan Nr. 1"
 

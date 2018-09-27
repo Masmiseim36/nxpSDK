@@ -1,0 +1,181 @@
+#*******************************************************************************
+#                               makefile.rules
+# Description:
+#   gnu make makefile rules for elftosb executable.  make needs to be called
+#   with the following command:
+#
+#   make -C ${BUILD_DIR} -f ${SRC_DIR}/makefile.rules SRC_DIR=${SRC_DIR} $@;
+#
+#   SRC_DIR needs to be passed in.  It is assumed that make is running in
+#   the build directory.
+
+#*******************************************************************************
+#                               Environment
+
+# UNAMES is going to be set to either "Linux", "Darwin" or "CYGWIN_NT-5.1"
+UNAMES = $(shell uname -s)
+
+
+#*******************************************************************************
+# 				Debug or Release
+# Release by default
+
+build ?= release
+
+
+#*******************************************************************************
+#                               Directories
+
+#*******************************************************************************
+#                               Paths
+
+# search path for source files. make finds them automatically.
+VPATH = \
+	${SRC_DIR}/common	\
+	${SRC_DIR}/elftosb2
+
+# include directories
+INC_PATH =                      \
+    	-I${SRC_DIR}/elftosb2        \
+	-I${SRC_DIR}/common	\
+	-I${SRC_DIR}/mbedtls/include
+
+#*******************************************************************************
+#                               Build flags
+# gcc Compiler flags
+
+CFLAGS	    = $(INC_PATH) -D${UNAMES} -Wno-multichar -Wno-format-extra-args
+CPPFLAGS    = $(INC_PATH) -D${UNAMES} -Wno-multichar -Wno-format-extra-args -std=gnu++11
+
+# -g : Produce debugging information.
+
+ifeq "$(build)" "debug"
+CFLAGS += -g
+CPPFLAGS += -g
+endif
+
+
+#*******************************************************************************
+#                               File lists
+
+OBJ_FILES_COMMON =			\
+	aes128_key_wrap_unwrap.o	\
+	AESKey.o	\
+	Blob.o	\
+	bytes_aes.o	\
+	crc.o	\
+	DataSource.o	\
+	DataSourceImager.o	\
+	DataTarget.o	\
+	ELFSourceFile.o \
+	EncoreBootImage.o	\
+	EncoreBootImageReader.o	\
+	EvalContext.o	\
+	ExcludesListMatcher.o	\
+	format_string.o	\
+	GHSSecInfo.o	\
+	GlobMatcher.o	\
+	HexValues.o \
+	iMXImage.o	\
+	IVTDataSource.o	\
+	Keyblob.o	\
+	Logging.o	\
+	Operation.o \
+	OptionDictionary.o	\
+	options.o	\
+	OutputSection.o \
+	Random.o	\
+	RijndaelCBCMAC.o	\
+	RijndaelCTR.o	\
+	rijndael.o	\
+	SB2Image.o	\
+	SearchPath.o	\
+	SHA1.o	\
+	SourceFile.o	\
+	SRecordSourceFile.o \
+	stdafx.o	\
+	StELFFile.o \
+	StExecutableImage.o \
+	StSRecordFile.o \
+	Value.o \
+	Version.o
+
+OBJ_FILES_ELFTOSB2 = 		\
+	${OBJ_FILES_COMMON} \
+	BootImageGenerator.o	\
+	ConversionController.o	\
+	ElftosbAST.o	\
+	elftosb.o	\
+	elftosb_lexer.o \
+	ElftosbLexer.o	\
+	elftosb_parser.tab.o	\
+	EncoreBootImageGenerator.o \
+	iMXImageGenerator.o	\
+	SB2ImageGenerator.o
+
+LIBS =     -lstdc++ -lm -L${SRC_DIR}/mbedtls/library/ -lmbedtls -lmbedcrypto -lmbedx509
+
+ifeq ("${UNAMES}", "Linux")
+EXEC_FILE_ELFTOSB2 = elftosb
+else 
+ifeq ("${UNAMES}", "CYGWIN_NT-5.1")
+EXEC_FILE_ELFTOSB2 = elftosb.exe
+else 
+ifeq ("${UNAMES}", "Darwin")
+EXEC_FILE_ELFTOSB2 = elftosb
+endif # ifeq ("${UNAMES}", "CYGWIN_NT-5.1")
+endif # ifeq ("${UNAMES}", "Linux")
+endif # ifeq ("${UNAMES}", "Darwin")
+
+#*******************************************************************************
+#                                 Targets
+
+all: elftosb
+
+# Uncomment the next line to print out the environment variables.
+all: exec_always
+
+exec_always:
+	@echo "SRC_DIR = ${SRC_DIR}"
+	@echo "OBJ_FILES = ${OBJ_FILES_ELFTOSB2}"
+	@echo "LIBS = ${LIBS}"
+	@echo "EXEC_FILE = ${EXEC_FILE}"
+	@echo "BUILD_DIR = ${BUILD_DIR}"
+
+clean:
+	rm -f ${OBJ_FILES_ELFTOSB2} \
+		${EXEC_FILE_ELFTOSB2}
+
+elftosb: ${OBJ_FILES_ELFTOSB2}
+	gcc ${OBJ_FILES_ELFTOSB2} ${LIBS} -o ${EXEC_FILE_ELFTOSB2}
+
+
+#ifeq ("${UNAMES}", "Linux")
+# Use default rules for creating all the .o files from the .c files.  Only
+# for linux
+.SUFFIXES : .c .cpp
+
+.c.o :
+	gcc ${CFLAGS} -c $<
+
+.cpp.o :
+	gcc ${CPPFLAGS} -c $<
+
+#endif
+
+#*******************************************************************************
+#                       Automatic dependency generation
+
+%.d: %.c
+	@set -e; \
+	$(CC) -MM $(CFLAGS) $< | \
+	sed 's/\($*\)\.o[ :]*/\1.o $@ : /g' > $@; \
+	[ -s $@ ]  || rm -f $@
+
+%.d: %.cpp
+	@set -e; \
+	$(CC) -MM $(CPPFLAGS) $< | \
+	sed 's/\($*\)\.o[ :]*/\1.o $@ : /g' > $@; \
+	[ -s $@ ]  || rm -f $@
+
+#*******************************************************************************

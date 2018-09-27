@@ -1,0 +1,35 @@
+
+# The source block assign file name to identifiers
+sources {
+ myBinFile = extern (0);
+}
+
+# The section block specifies the sequence of boot commands to be written to the SB file
+section (0) {
+
+    #1. Prepare SEMC NAND FCB option
+    # Note: This is a template, need to be udpated to actual option in users' project
+    # See MCUX Flashloader RM for more details
+    # ONFI 1.0, non-EDO, Timing mode 0, 8bit IO, CSX0 
+    load 0xD0030501 > 0x2000;
+    #  image copy = 1, search stride = 1, search count = 1 
+    load 0x00010101 > 0x2004;
+    #  block index = 2, block count = 1  
+    load 0x00020001 > 0x2008;
+    enable semcnand 0x2000;
+    
+    #2. Erase flash as needed.
+    # Note: This is a template, need to be udpated to actual required memory range
+    #       in users' project.
+    # byte adress = page size * pages per block * block index
+    erase semcnand 0x100000..0x180000;
+    
+    #3. Program image (byte address)
+    # byte adress = page size * pages per block * block index
+    load semcnand myBinFile > 0x100000;
+
+    #4. Program Fuse as needed
+    # Note: this is a template, need to be updated to actual required fuse value in users' 
+    #       project
+    # load fuse 00000000 > 0x05;
+}

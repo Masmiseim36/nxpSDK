@@ -1,0 +1,783 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0221DBD618EB3D6800B76EC2 /* BlfwkErrors.h in Headers */ = {isa = PBXBuildFile; fileRef = 0221DBB718EB3D6800B76EC2 /* BlfwkErrors.h */; };
+		0221DBD718EB3D6800B76EC2 /* Blob.h in Headers */ = {isa = PBXBuildFile; fileRef = 0221DBB818EB3D6800B76EC2 /* Blob.h */; };
+		0221DBDA18EB3D6800B76EC2 /* DataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 0221DBBB18EB3D6800B76EC2 /* DataSource.h */; };
+		0221DBDB18EB3D6800B76EC2 /* DataTarget.h in Headers */ = {isa = PBXBuildFile; fileRef = 0221DBBC18EB3D6800B76EC2 /* DataTarget.h */; };
+		0221DBDC18EB3D6800B76EC2 /* ELF.h in Headers */ = {isa = PBXBuildFile; fileRef = 0221DBBD18EB3D6800B76EC2 /* ELF.h */; };
+		0221DBDD18EB3D6800B76EC2 /* ELFSourceFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 0221DBBE18EB3D6800B76EC2 /* ELFSourceFile.h */; };
+		0221DBDE18EB3D6800B76EC2 /* EndianUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = 0221DBBF18EB3D6800B76EC2 /* EndianUtilities.h */; };
+		0221DBDF18EB3D6800B76EC2 /* format_string.h in Headers */ = {isa = PBXBuildFile; fileRef = 0221DBC018EB3D6800B76EC2 /* format_string.h */; };
+		0221DBE018EB3D6800B76EC2 /* GHSSecInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 0221DBC118EB3D6800B76EC2 /* GHSSecInfo.h */; };
+		0221DBE118EB3D6800B76EC2 /* hidapi.h in Headers */ = {isa = PBXBuildFile; fileRef = 0221DBC218EB3D6800B76EC2 /* hidapi.h */; };
+		0221DBE718EB3D6800B76EC2 /* host_types.h in Headers */ = {isa = PBXBuildFile; fileRef = 0221DBC818EB3D6800B76EC2 /* host_types.h */; };
+		0221DBE818EB3D6800B76EC2 /* int_size.h in Headers */ = {isa = PBXBuildFile; fileRef = 0221DBC918EB3D6800B76EC2 /* int_size.h */; };
+		0221DBE918EB3D6800B76EC2 /* json.h in Headers */ = {isa = PBXBuildFile; fileRef = 0221DBCA18EB3D6800B76EC2 /* json.h */; };
+		0221DBEA18EB3D6800B76EC2 /* Logging.h in Headers */ = {isa = PBXBuildFile; fileRef = 0221DBCB18EB3D6800B76EC2 /* Logging.h */; };
+		0221DBEB18EB3D6800B76EC2 /* OptionContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 0221DBCC18EB3D6800B76EC2 /* OptionContext.h */; };
+		0221DBEC18EB3D6800B76EC2 /* options.h in Headers */ = {isa = PBXBuildFile; fileRef = 0221DBCD18EB3D6800B76EC2 /* options.h */; };
+		0221DBED18EB3D6800B76EC2 /* SBSourceFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 0221DBCE18EB3D6800B76EC2 /* SBSourceFile.h */; };
+		0221DBEE18EB3D6800B76EC2 /* SearchPath.h in Headers */ = {isa = PBXBuildFile; fileRef = 0221DBCF18EB3D6800B76EC2 /* SearchPath.h */; };
+		0221DBEF18EB3D6800B76EC2 /* serial.h in Headers */ = {isa = PBXBuildFile; fileRef = 0221DBD018EB3D6800B76EC2 /* serial.h */; };
+		0221DBF318EB3D6800B76EC2 /* smart_ptr.h in Headers */ = {isa = PBXBuildFile; fileRef = 0221DBD418EB3D6800B76EC2 /* smart_ptr.h */; };
+		0221DBF418EB3D6800B76EC2 /* SourceFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 0221DBD518EB3D6800B76EC2 /* SourceFile.h */; };
+		0221DC1718EB3D7C00B76EC2 /* DataSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0221DBF718EB3D7C00B76EC2 /* DataSource.cpp */; };
+		0221DC1818EB3D7C00B76EC2 /* DataTarget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0221DBF818EB3D7C00B76EC2 /* DataTarget.cpp */; };
+		0221DC1918EB3D7C00B76EC2 /* ELFSourceFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0221DBF918EB3D7C00B76EC2 /* ELFSourceFile.cpp */; };
+		0221DC1A18EB3D7C00B76EC2 /* format_string.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0221DBFA18EB3D7C00B76EC2 /* format_string.cpp */; };
+		0221DC1B18EB3D7C00B76EC2 /* GHSSecInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0221DBFB18EB3D7C00B76EC2 /* GHSSecInfo.cpp */; };
+		0221DC1C18EB3D7C00B76EC2 /* hid-mac.c in Sources */ = {isa = PBXBuildFile; fileRef = 0221DBFC18EB3D7C00B76EC2 /* hid-mac.c */; };
+		0221DC2218EB3D7C00B76EC2 /* jsoncpp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0221DC0218EB3D7C00B76EC2 /* jsoncpp.cpp */; };
+		0221DC2318EB3D7C00B76EC2 /* Logging.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0221DC0318EB3D7C00B76EC2 /* Logging.cpp */; };
+		0221DC2418EB3D7C00B76EC2 /* options.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0221DC0418EB3D7C00B76EC2 /* options.cpp */; };
+		0221DC2518EB3D7C00B76EC2 /* SBSourceFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0221DC0518EB3D7C00B76EC2 /* SBSourceFile.cpp */; };
+		0221DC2618EB3D7C00B76EC2 /* SearchPath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0221DC0618EB3D7C00B76EC2 /* SearchPath.cpp */; };
+		0221DC2718EB3D7C00B76EC2 /* serial.c in Sources */ = {isa = PBXBuildFile; fileRef = 0221DC0718EB3D7C00B76EC2 /* serial.c */; };
+		0221DC2B18EB3D7C00B76EC2 /* SourceFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0221DC0B18EB3D7C00B76EC2 /* SourceFile.cpp */; };
+		0221DC2C18EB3D7C00B76EC2 /* SRecordSourceFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0221DC0C18EB3D7C00B76EC2 /* SRecordSourceFile.cpp */; };
+		0221DC2D18EB3D7C00B76EC2 /* StELFFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0221DC0D18EB3D7C00B76EC2 /* StELFFile.cpp */; };
+		0221DC2E18EB3D7C00B76EC2 /* StExecutableImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0221DC0E18EB3D7C00B76EC2 /* StExecutableImage.cpp */; };
+		0221DC2F18EB3D7C00B76EC2 /* StSRecordFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0221DC0F18EB3D7C00B76EC2 /* StSRecordFile.cpp */; };
+		0221DC3118EB3D7C00B76EC2 /* Updater.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0221DC1118EB3D7C00B76EC2 /* Updater.cpp */; };
+		0221DC3318EB3D7C00B76EC2 /* utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0221DC1318EB3D7C00B76EC2 /* utils.cpp */; };
+		0221DC3418EB3D7C00B76EC2 /* Value.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0221DC1418EB3D7C00B76EC2 /* Value.cpp */; };
+		0221DC4018EB3D8E00B76EC2 /* SRecordSourceFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 0221DC3518EB3D8E00B76EC2 /* SRecordSourceFile.h */; };
+		0221DC4118EB3D8E00B76EC2 /* stdafx.h in Headers */ = {isa = PBXBuildFile; fileRef = 0221DC3618EB3D8E00B76EC2 /* stdafx.h */; };
+		0221DC4218EB3D8E00B76EC2 /* StELFFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 0221DC3718EB3D8E00B76EC2 /* StELFFile.h */; };
+		0221DC4318EB3D8E00B76EC2 /* StExecutableImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 0221DC3818EB3D8E00B76EC2 /* StExecutableImage.h */; };
+		0221DC4418EB3D8E00B76EC2 /* StringMatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 0221DC3918EB3D8E00B76EC2 /* StringMatcher.h */; };
+		0221DC4518EB3D8E00B76EC2 /* StSRecordFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 0221DC3A18EB3D8E00B76EC2 /* StSRecordFile.h */; };
+		0221DC4718EB3D8E00B76EC2 /* Updater.h in Headers */ = {isa = PBXBuildFile; fileRef = 0221DC3C18EB3D8E00B76EC2 /* Updater.h */; };
+		0221DC4918EB3D8E00B76EC2 /* utils.h in Headers */ = {isa = PBXBuildFile; fileRef = 0221DC3E18EB3D8E00B76EC2 /* utils.h */; };
+		0221DC4A18EB3D8E00B76EC2 /* Value.h in Headers */ = {isa = PBXBuildFile; fileRef = 0221DC3F18EB3D8E00B76EC2 /* Value.h */; };
+		0221DC7018EB3DE100B76EC2 /* command.c in Sources */ = {isa = PBXBuildFile; fileRef = 0221DC5218EB3DE100B76EC2 /* command.c */; };
+		0221DC7118EB3DE100B76EC2 /* command.h in Headers */ = {isa = PBXBuildFile; fileRef = 0221DC5318EB3DE100B76EC2 /* command.h */; };
+		0221DC7218EB3DE100B76EC2 /* context.h in Headers */ = {isa = PBXBuildFile; fileRef = 0221DC5418EB3DE100B76EC2 /* context.h */; };
+		0221DC7318EB3DE100B76EC2 /* peripheral.h in Headers */ = {isa = PBXBuildFile; fileRef = 0221DC5518EB3DE100B76EC2 /* peripheral.h */; };
+		0221DC7418EB3DE100B76EC2 /* bootloader.h in Headers */ = {isa = PBXBuildFile; fileRef = 0221DC5618EB3DE100B76EC2 /* bootloader.h */; };
+		0221DC7518EB3DE100B76EC2 /* bootloader_hid_report_ids.h in Headers */ = {isa = PBXBuildFile; fileRef = 0221DC5718EB3DE100B76EC2 /* bootloader_hid_report_ids.h */; };
+		0221DC7618EB3DE100B76EC2 /* crc16.h in Headers */ = {isa = PBXBuildFile; fileRef = 0221DC5818EB3DE100B76EC2 /* crc16.h */; };
+		0221DC7718EB3DE100B76EC2 /* crc32.h in Headers */ = {isa = PBXBuildFile; fileRef = 0221DC5918EB3DE100B76EC2 /* crc32.h */; };
+		0221DC7818EB3DE100B76EC2 /* crc16.c in Sources */ = {isa = PBXBuildFile; fileRef = 0221DC5A18EB3DE100B76EC2 /* crc16.c */; };
+		0221DC7918EB3DE100B76EC2 /* crc32.c in Sources */ = {isa = PBXBuildFile; fileRef = 0221DC5B18EB3DE100B76EC2 /* crc32.c */; };
+		0221DC7A18EB3DE100B76EC2 /* fsl_platform_common.h in Headers */ = {isa = PBXBuildFile; fileRef = 0221DC5C18EB3DE100B76EC2 /* fsl_platform_common.h */; };
+		0221DC7B18EB3DE100B76EC2 /* fsl_platform_status.h in Headers */ = {isa = PBXBuildFile; fileRef = 0221DC5D18EB3DE100B76EC2 /* fsl_platform_status.h */; };
+		0221DC7C18EB3DE100B76EC2 /* fsl_platform_types.h in Headers */ = {isa = PBXBuildFile; fileRef = 0221DC5E18EB3DE100B76EC2 /* fsl_platform_types.h */; };
+		0221DC7D18EB3DE100B76EC2 /* bootloader_common.h in Headers */ = {isa = PBXBuildFile; fileRef = 0221DC5F18EB3DE100B76EC2 /* bootloader_common.h */; };
+		0221DC7E18EB3DE100B76EC2 /* memory.h in Headers */ = {isa = PBXBuildFile; fileRef = 0221DC6018EB3DE100B76EC2 /* memory.h */; };
+		0221DC7F18EB3DE100B76EC2 /* memory.c in Sources */ = {isa = PBXBuildFile; fileRef = 0221DC6118EB3DE100B76EC2 /* memory.c */; };
+		0221DC8018EB3DE100B76EC2 /* command_packet.h in Headers */ = {isa = PBXBuildFile; fileRef = 0221DC6218EB3DE100B76EC2 /* command_packet.h */; };
+		0221DC8118EB3DE100B76EC2 /* serial_packet.h in Headers */ = {isa = PBXBuildFile; fileRef = 0221DC6318EB3DE100B76EC2 /* serial_packet.h */; };
+		0221DC8218EB3DE100B76EC2 /* serial_packet.c in Sources */ = {isa = PBXBuildFile; fileRef = 0221DC6418EB3DE100B76EC2 /* serial_packet.c */; };
+		0221DC8318EB3DE100B76EC2 /* property.h in Headers */ = {isa = PBXBuildFile; fileRef = 0221DC6518EB3DE100B76EC2 /* property.h */; };
+		0221DC8418EB3DE100B76EC2 /* property.c in Sources */ = {isa = PBXBuildFile; fileRef = 0221DC6618EB3DE100B76EC2 /* property.c */; };
+		0221DC8A18EB3DE100B76EC2 /* sb_file_format.h in Headers */ = {isa = PBXBuildFile; fileRef = 0221DC6C18EB3DE100B76EC2 /* sb_file_format.h */; };
+		BFF233CD1B051DFD002112AD /* AESCounter.h in Headers */ = {isa = PBXBuildFile; fileRef = BFF233B51B051DFD002112AD /* AESCounter.h */; };
+		BFF233CE1B051DFD002112AD /* AESKey.h in Headers */ = {isa = PBXBuildFile; fileRef = BFF233B61B051DFD002112AD /* AESKey.h */; };
+		BFF233CF1B051DFD002112AD /* bootloader_config.h in Headers */ = {isa = PBXBuildFile; fileRef = BFF233B71B051DFD002112AD /* bootloader_config.h */; };
+		BFF233D01B051DFD002112AD /* Bootloader.h in Headers */ = {isa = PBXBuildFile; fileRef = BFF233B81B051DFD002112AD /* Bootloader.h */; };
+		BFF233D11B051DFD002112AD /* BusPal.h in Headers */ = {isa = PBXBuildFile; fileRef = BFF233B91B051DFD002112AD /* BusPal.h */; };
+		BFF233D21B051DFD002112AD /* BusPalPeripheral.h in Headers */ = {isa = PBXBuildFile; fileRef = BFF233BA1B051DFD002112AD /* BusPalPeripheral.h */; };
+		BFF233D31B051DFD002112AD /* Command.h in Headers */ = {isa = PBXBuildFile; fileRef = BFF233BB1B051DFD002112AD /* Command.h */; };
+		BFF233D41B051DFD002112AD /* DataSourceImager.h in Headers */ = {isa = PBXBuildFile; fileRef = BFF233BC1B051DFD002112AD /* DataSourceImager.h */; };
+		BFF233D51B051DFD002112AD /* ExcludesListMatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = BFF233BD1B051DFD002112AD /* ExcludesListMatcher.h */; };
+		BFF233D61B051DFD002112AD /* GlobMatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = BFF233BE1B051DFD002112AD /* GlobMatcher.h */; };
+		BFF233D71B051DFD002112AD /* HexValues.h in Headers */ = {isa = PBXBuildFile; fileRef = BFF233BF1B051DFD002112AD /* HexValues.h */; };
+		BFF233D81B051DFD002112AD /* Packetizer.h in Headers */ = {isa = PBXBuildFile; fileRef = BFF233C01B051DFD002112AD /* Packetizer.h */; };
+		BFF233D91B051DFD002112AD /* Peripheral.h in Headers */ = {isa = PBXBuildFile; fileRef = BFF233C11B051DFD002112AD /* Peripheral.h */; };
+		BFF233DA1B051DFD002112AD /* Random.h in Headers */ = {isa = PBXBuildFile; fileRef = BFF233C21B051DFD002112AD /* Random.h */; };
+		BFF233DB1B051DFD002112AD /* rijndael.h in Headers */ = {isa = PBXBuildFile; fileRef = BFF233C31B051DFD002112AD /* rijndael.h */; };
+		BFF233DC1B051DFD002112AD /* RijndaelCTR.h in Headers */ = {isa = PBXBuildFile; fileRef = BFF233C41B051DFD002112AD /* RijndaelCTR.h */; };
+		BFF233DD1B051DFD002112AD /* SerialPacketizer.h in Headers */ = {isa = PBXBuildFile; fileRef = BFF233C51B051DFD002112AD /* SerialPacketizer.h */; };
+		BFF233DE1B051DFD002112AD /* SimPacketizer.h in Headers */ = {isa = PBXBuildFile; fileRef = BFF233C61B051DFD002112AD /* SimPacketizer.h */; };
+		BFF233DF1B051DFD002112AD /* SimPeripheral.h in Headers */ = {isa = PBXBuildFile; fileRef = BFF233C71B051DFD002112AD /* SimPeripheral.h */; };
+		BFF233E01B051DFD002112AD /* Simulator.h in Headers */ = {isa = PBXBuildFile; fileRef = BFF233C81B051DFD002112AD /* Simulator.h */; };
+		BFF233E11B051DFD002112AD /* SimulatorMemory.h in Headers */ = {isa = PBXBuildFile; fileRef = BFF233C91B051DFD002112AD /* SimulatorMemory.h */; };
+		BFF233E21B051DFD002112AD /* UartPeripheral.h in Headers */ = {isa = PBXBuildFile; fileRef = BFF233CA1B051DFD002112AD /* UartPeripheral.h */; };
+		BFF233E31B051DFD002112AD /* UsbHidPacketizer.h in Headers */ = {isa = PBXBuildFile; fileRef = BFF233CB1B051DFD002112AD /* UsbHidPacketizer.h */; };
+		BFF233E41B051DFD002112AD /* UsbHidPeripheral.h in Headers */ = {isa = PBXBuildFile; fileRef = BFF233CC1B051DFD002112AD /* UsbHidPeripheral.h */; };
+		BFF233FB1B051E4D002112AD /* AESCounter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFF233E51B051E4D002112AD /* AESCounter.cpp */; };
+		BFF233FC1B051E4D002112AD /* AESKey.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFF233E61B051E4D002112AD /* AESKey.cpp */; };
+		BFF233FD1B051E4D002112AD /* Blob.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFF233E71B051E4D002112AD /* Blob.cpp */; };
+		BFF233FE1B051E4D002112AD /* Bootloader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFF233E81B051E4D002112AD /* Bootloader.cpp */; };
+		BFF233FF1B051E4D002112AD /* BusPal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFF233E91B051E4D002112AD /* BusPal.cpp */; };
+		BFF234001B051E4D002112AD /* BusPalPeripheral.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFF233EA1B051E4D002112AD /* BusPalPeripheral.cpp */; };
+		BFF234011B051E4D002112AD /* Command.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFF233EB1B051E4D002112AD /* Command.cpp */; };
+		BFF234021B051E4D002112AD /* DataSourceImager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFF233EC1B051E4D002112AD /* DataSourceImager.cpp */; };
+		BFF234031B051E4D002112AD /* ExcludesListMatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFF233ED1B051E4D002112AD /* ExcludesListMatcher.cpp */; };
+		BFF234041B051E4D002112AD /* GlobMatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFF233EE1B051E4D002112AD /* GlobMatcher.cpp */; };
+		BFF234051B051E4D002112AD /* HexValues.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFF233EF1B051E4D002112AD /* HexValues.cpp */; };
+		BFF234061B051E4D002112AD /* Random.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFF233F01B051E4D002112AD /* Random.cpp */; };
+		BFF234071B051E4D002112AD /* rijndael.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFF233F11B051E4D002112AD /* rijndael.cpp */; };
+		BFF234081B051E4D002112AD /* RijndaelCTR.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFF233F21B051E4D002112AD /* RijndaelCTR.cpp */; };
+		BFF234091B051E4D002112AD /* SerialPacketizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFF233F31B051E4D002112AD /* SerialPacketizer.cpp */; };
+		BFF2340A1B051E4D002112AD /* SimPacketizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFF233F41B051E4D002112AD /* SimPacketizer.cpp */; };
+		BFF2340B1B051E4D002112AD /* SimPeripheral.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFF233F51B051E4D002112AD /* SimPeripheral.cpp */; };
+		BFF2340C1B051E4D002112AD /* Simulator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFF233F61B051E4D002112AD /* Simulator.cpp */; };
+		BFF2340D1B051E4D002112AD /* SimulatorMemory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFF233F71B051E4D002112AD /* SimulatorMemory.cpp */; };
+		BFF2340E1B051E4D002112AD /* UartPeripheral.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFF233F81B051E4D002112AD /* UartPeripheral.cpp */; };
+		BFF2340F1B051E4D002112AD /* UsbHidPacketizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFF233F91B051E4D002112AD /* UsbHidPacketizer.cpp */; };
+		BFF234101B051E4D002112AD /* UsbHidPeripheral.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFF233FA1B051E4D002112AD /* UsbHidPeripheral.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0221DBAD18EB3C0F00B76EC2 /* libblfwk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libblfwk.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		0221DBB718EB3D6800B76EC2 /* BlfwkErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BlfwkErrors.h; path = ../../../src/blfwk/BlfwkErrors.h; sourceTree = "<group>"; };
+		0221DBB818EB3D6800B76EC2 /* Blob.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Blob.h; path = ../../../src/blfwk/Blob.h; sourceTree = "<group>"; };
+		0221DBBB18EB3D6800B76EC2 /* DataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DataSource.h; path = ../../../src/blfwk/DataSource.h; sourceTree = "<group>"; };
+		0221DBBC18EB3D6800B76EC2 /* DataTarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DataTarget.h; path = ../../../src/blfwk/DataTarget.h; sourceTree = "<group>"; };
+		0221DBBD18EB3D6800B76EC2 /* ELF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ELF.h; path = ../../../src/blfwk/ELF.h; sourceTree = "<group>"; };
+		0221DBBE18EB3D6800B76EC2 /* ELFSourceFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ELFSourceFile.h; path = ../../../src/blfwk/ELFSourceFile.h; sourceTree = "<group>"; };
+		0221DBBF18EB3D6800B76EC2 /* EndianUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EndianUtilities.h; path = ../../../src/blfwk/EndianUtilities.h; sourceTree = "<group>"; };
+		0221DBC018EB3D6800B76EC2 /* format_string.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = format_string.h; path = ../../../src/blfwk/format_string.h; sourceTree = "<group>"; };
+		0221DBC118EB3D6800B76EC2 /* GHSSecInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GHSSecInfo.h; path = ../../../src/blfwk/GHSSecInfo.h; sourceTree = "<group>"; };
+		0221DBC218EB3D6800B76EC2 /* hidapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = hidapi.h; path = ../../../src/blfwk/hidapi.h; sourceTree = "<group>"; };
+		0221DBC818EB3D6800B76EC2 /* host_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = host_types.h; path = ../../../src/blfwk/host_types.h; sourceTree = "<group>"; };
+		0221DBC918EB3D6800B76EC2 /* int_size.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = int_size.h; path = ../../../src/blfwk/int_size.h; sourceTree = "<group>"; };
+		0221DBCA18EB3D6800B76EC2 /* json.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = json.h; path = ../../../src/blfwk/json.h; sourceTree = "<group>"; };
+		0221DBCB18EB3D6800B76EC2 /* Logging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Logging.h; path = ../../../src/blfwk/Logging.h; sourceTree = "<group>"; };
+		0221DBCC18EB3D6800B76EC2 /* OptionContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OptionContext.h; path = ../../../src/blfwk/OptionContext.h; sourceTree = "<group>"; };
+		0221DBCD18EB3D6800B76EC2 /* options.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = options.h; path = ../../../src/blfwk/options.h; sourceTree = "<group>"; };
+		0221DBCE18EB3D6800B76EC2 /* SBSourceFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBSourceFile.h; path = ../../../src/blfwk/SBSourceFile.h; sourceTree = "<group>"; };
+		0221DBCF18EB3D6800B76EC2 /* SearchPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchPath.h; path = ../../../src/blfwk/SearchPath.h; sourceTree = "<group>"; };
+		0221DBD018EB3D6800B76EC2 /* serial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = serial.h; path = ../../../src/blfwk/serial.h; sourceTree = "<group>"; };
+		0221DBD418EB3D6800B76EC2 /* smart_ptr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = smart_ptr.h; path = ../../../src/blfwk/smart_ptr.h; sourceTree = "<group>"; };
+		0221DBD518EB3D6800B76EC2 /* SourceFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SourceFile.h; path = ../../../src/blfwk/SourceFile.h; sourceTree = "<group>"; };
+		0221DBF718EB3D7C00B76EC2 /* DataSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DataSource.cpp; path = ../../../src/blfwk/src/DataSource.cpp; sourceTree = "<group>"; };
+		0221DBF818EB3D7C00B76EC2 /* DataTarget.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DataTarget.cpp; path = ../../../src/blfwk/src/DataTarget.cpp; sourceTree = "<group>"; };
+		0221DBF918EB3D7C00B76EC2 /* ELFSourceFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ELFSourceFile.cpp; path = ../../../src/blfwk/src/ELFSourceFile.cpp; sourceTree = "<group>"; };
+		0221DBFA18EB3D7C00B76EC2 /* format_string.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = format_string.cpp; path = ../../../src/blfwk/src/format_string.cpp; sourceTree = "<group>"; };
+		0221DBFB18EB3D7C00B76EC2 /* GHSSecInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GHSSecInfo.cpp; path = ../../../src/blfwk/src/GHSSecInfo.cpp; sourceTree = "<group>"; };
+		0221DBFC18EB3D7C00B76EC2 /* hid-mac.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "hid-mac.c"; path = "../../../src/blfwk/src/hid-mac.c"; sourceTree = "<group>"; };
+		0221DC0218EB3D7C00B76EC2 /* jsoncpp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsoncpp.cpp; path = ../../../src/blfwk/src/jsoncpp.cpp; sourceTree = "<group>"; };
+		0221DC0318EB3D7C00B76EC2 /* Logging.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Logging.cpp; path = ../../../src/blfwk/src/Logging.cpp; sourceTree = "<group>"; };
+		0221DC0418EB3D7C00B76EC2 /* options.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = options.cpp; path = ../../../src/blfwk/src/options.cpp; sourceTree = "<group>"; };
+		0221DC0518EB3D7C00B76EC2 /* SBSourceFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SBSourceFile.cpp; path = ../../../src/blfwk/src/SBSourceFile.cpp; sourceTree = "<group>"; };
+		0221DC0618EB3D7C00B76EC2 /* SearchPath.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SearchPath.cpp; path = ../../../src/blfwk/src/SearchPath.cpp; sourceTree = "<group>"; };
+		0221DC0718EB3D7C00B76EC2 /* serial.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = serial.c; path = ../../../src/blfwk/src/serial.c; sourceTree = "<group>"; };
+		0221DC0B18EB3D7C00B76EC2 /* SourceFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SourceFile.cpp; path = ../../../src/blfwk/src/SourceFile.cpp; sourceTree = "<group>"; };
+		0221DC0C18EB3D7C00B76EC2 /* SRecordSourceFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SRecordSourceFile.cpp; path = ../../../src/blfwk/src/SRecordSourceFile.cpp; sourceTree = "<group>"; };
+		0221DC0D18EB3D7C00B76EC2 /* StELFFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = StELFFile.cpp; path = ../../../src/blfwk/src/StELFFile.cpp; sourceTree = "<group>"; };
+		0221DC0E18EB3D7C00B76EC2 /* StExecutableImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = StExecutableImage.cpp; path = ../../../src/blfwk/src/StExecutableImage.cpp; sourceTree = "<group>"; };
+		0221DC0F18EB3D7C00B76EC2 /* StSRecordFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = StSRecordFile.cpp; path = ../../../src/blfwk/src/StSRecordFile.cpp; sourceTree = "<group>"; };
+		0221DC1118EB3D7C00B76EC2 /* Updater.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Updater.cpp; path = ../../../src/blfwk/src/Updater.cpp; sourceTree = "<group>"; };
+		0221DC1318EB3D7C00B76EC2 /* utils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = utils.cpp; path = ../../../src/blfwk/src/utils.cpp; sourceTree = "<group>"; };
+		0221DC1418EB3D7C00B76EC2 /* Value.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Value.cpp; path = ../../../src/blfwk/src/Value.cpp; sourceTree = "<group>"; };
+		0221DC3518EB3D8E00B76EC2 /* SRecordSourceFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SRecordSourceFile.h; path = ../../../src/blfwk/SRecordSourceFile.h; sourceTree = "<group>"; };
+		0221DC3618EB3D8E00B76EC2 /* stdafx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stdafx.h; path = ../../../src/blfwk/stdafx.h; sourceTree = "<group>"; };
+		0221DC3718EB3D8E00B76EC2 /* StELFFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StELFFile.h; path = ../../../src/blfwk/StELFFile.h; sourceTree = "<group>"; };
+		0221DC3818EB3D8E00B76EC2 /* StExecutableImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StExecutableImage.h; path = ../../../src/blfwk/StExecutableImage.h; sourceTree = "<group>"; };
+		0221DC3918EB3D8E00B76EC2 /* StringMatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StringMatcher.h; path = ../../../src/blfwk/StringMatcher.h; sourceTree = "<group>"; };
+		0221DC3A18EB3D8E00B76EC2 /* StSRecordFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StSRecordFile.h; path = ../../../src/blfwk/StSRecordFile.h; sourceTree = "<group>"; };
+		0221DC3C18EB3D8E00B76EC2 /* Updater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Updater.h; path = ../../../src/blfwk/Updater.h; sourceTree = "<group>"; };
+		0221DC3E18EB3D8E00B76EC2 /* utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = utils.h; path = ../../../src/blfwk/utils.h; sourceTree = "<group>"; };
+		0221DC3F18EB3D8E00B76EC2 /* Value.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Value.h; path = ../../../src/blfwk/Value.h; sourceTree = "<group>"; };
+		0221DC5218EB3DE100B76EC2 /* command.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = command.c; path = ../../../src/bootloader/src/command.c; sourceTree = "<group>"; };
+		0221DC5318EB3DE100B76EC2 /* command.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = command.h; path = ../../../src/bootloader/command.h; sourceTree = "<group>"; };
+		0221DC5418EB3DE100B76EC2 /* context.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = context.h; path = ../../../src/bootloader/context.h; sourceTree = "<group>"; };
+		0221DC5518EB3DE100B76EC2 /* peripheral.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = peripheral.h; path = ../../../src/bootloader/peripheral.h; sourceTree = "<group>"; };
+		0221DC5618EB3DE100B76EC2 /* bootloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bootloader.h; path = ../../../src/bootloader/bootloader.h; sourceTree = "<group>"; };
+		0221DC5718EB3DE100B76EC2 /* bootloader_hid_report_ids.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bootloader_hid_report_ids.h; path = ../../../src/usb_device/bootloader_hid_report_ids.h; sourceTree = "<group>"; };
+		0221DC5818EB3DE100B76EC2 /* crc16.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = crc16.h; path = ../../../src/crc/crc16.h; sourceTree = "<group>"; };
+		0221DC5918EB3DE100B76EC2 /* crc32.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = crc32.h; path = ../../../src/crc/crc32.h; sourceTree = "<group>"; };
+		0221DC5A18EB3DE100B76EC2 /* crc16.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = crc16.c; path = ../../../src/crc/src/crc16.c; sourceTree = "<group>"; };
+		0221DC5B18EB3DE100B76EC2 /* crc32.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = crc32.c; path = ../../../src/crc/src/crc32.c; sourceTree = "<group>"; };
+		0221DC5C18EB3DE100B76EC2 /* fsl_platform_common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = fsl_platform_common.h; path = ../../../src/include/fsl_platform_common.h; sourceTree = "<group>"; };
+		0221DC5D18EB3DE100B76EC2 /* fsl_platform_status.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = fsl_platform_status.h; path = ../../../src/include/fsl_platform_status.h; sourceTree = "<group>"; };
+		0221DC5E18EB3DE100B76EC2 /* fsl_platform_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = fsl_platform_types.h; path = ../../../src/include/fsl_platform_types.h; sourceTree = "<group>"; };
+		0221DC5F18EB3DE100B76EC2 /* bootloader_common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bootloader_common.h; path = ../../../src/include/bootloader_common.h; sourceTree = "<group>"; };
+		0221DC6018EB3DE100B76EC2 /* memory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = memory.h; path = ../../../src/memory/memory.h; sourceTree = "<group>"; };
+		0221DC6118EB3DE100B76EC2 /* memory.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = memory.c; path = ../../../src/memory/src/memory.c; sourceTree = "<group>"; };
+		0221DC6218EB3DE100B76EC2 /* command_packet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = command_packet.h; path = ../../../src/packet/command_packet.h; sourceTree = "<group>"; };
+		0221DC6318EB3DE100B76EC2 /* serial_packet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = serial_packet.h; path = ../../../src/packet/serial_packet.h; sourceTree = "<group>"; };
+		0221DC6418EB3DE100B76EC2 /* serial_packet.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = serial_packet.c; path = ../../../src/packet/src/serial_packet.c; sourceTree = "<group>"; };
+		0221DC6518EB3DE100B76EC2 /* property.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = property.h; path = ../../../src/property/property.h; sourceTree = "<group>"; };
+		0221DC6618EB3DE100B76EC2 /* property.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = property.c; path = ../../../src/property/src/property.c; sourceTree = "<group>"; };
+		0221DC6C18EB3DE100B76EC2 /* sb_file_format.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sb_file_format.h; path = ../../../src/sbloader/sb_file_format.h; sourceTree = "<group>"; };
+		BFF233B51B051DFD002112AD /* AESCounter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AESCounter.h; path = ../../../src/blfwk/AESCounter.h; sourceTree = "<group>"; };
+		BFF233B61B051DFD002112AD /* AESKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AESKey.h; path = ../../../src/blfwk/AESKey.h; sourceTree = "<group>"; };
+		BFF233B71B051DFD002112AD /* bootloader_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bootloader_config.h; path = ../../../src/blfwk/bootloader_config.h; sourceTree = "<group>"; };
+		BFF233B81B051DFD002112AD /* Bootloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Bootloader.h; path = ../../../src/blfwk/Bootloader.h; sourceTree = "<group>"; };
+		BFF233B91B051DFD002112AD /* BusPal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BusPal.h; path = ../../../src/blfwk/BusPal.h; sourceTree = "<group>"; };
+		BFF233BA1B051DFD002112AD /* BusPalPeripheral.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BusPalPeripheral.h; path = ../../../src/blfwk/BusPalPeripheral.h; sourceTree = "<group>"; };
+		BFF233BB1B051DFD002112AD /* Command.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Command.h; path = ../../../src/blfwk/Command.h; sourceTree = "<group>"; };
+		BFF233BC1B051DFD002112AD /* DataSourceImager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DataSourceImager.h; path = ../../../src/blfwk/DataSourceImager.h; sourceTree = "<group>"; };
+		BFF233BD1B051DFD002112AD /* ExcludesListMatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExcludesListMatcher.h; path = ../../../src/blfwk/ExcludesListMatcher.h; sourceTree = "<group>"; };
+		BFF233BE1B051DFD002112AD /* GlobMatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GlobMatcher.h; path = ../../../src/blfwk/GlobMatcher.h; sourceTree = "<group>"; };
+		BFF233BF1B051DFD002112AD /* HexValues.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HexValues.h; path = ../../../src/blfwk/HexValues.h; sourceTree = "<group>"; };
+		BFF233C01B051DFD002112AD /* Packetizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Packetizer.h; path = ../../../src/blfwk/Packetizer.h; sourceTree = "<group>"; };
+		BFF233C11B051DFD002112AD /* Peripheral.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Peripheral.h; path = ../../../src/blfwk/Peripheral.h; sourceTree = "<group>"; };
+		BFF233C21B051DFD002112AD /* Random.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Random.h; path = ../../../src/blfwk/Random.h; sourceTree = "<group>"; };
+		BFF233C31B051DFD002112AD /* rijndael.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = rijndael.h; path = ../../../src/blfwk/rijndael.h; sourceTree = "<group>"; };
+		BFF233C41B051DFD002112AD /* RijndaelCTR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RijndaelCTR.h; path = ../../../src/blfwk/RijndaelCTR.h; sourceTree = "<group>"; };
+		BFF233C51B051DFD002112AD /* SerialPacketizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SerialPacketizer.h; path = ../../../src/blfwk/SerialPacketizer.h; sourceTree = "<group>"; };
+		BFF233C61B051DFD002112AD /* SimPacketizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SimPacketizer.h; path = ../../../src/blfwk/SimPacketizer.h; sourceTree = "<group>"; };
+		BFF233C71B051DFD002112AD /* SimPeripheral.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SimPeripheral.h; path = ../../../src/blfwk/SimPeripheral.h; sourceTree = "<group>"; };
+		BFF233C81B051DFD002112AD /* Simulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Simulator.h; path = ../../../src/blfwk/Simulator.h; sourceTree = "<group>"; };
+		BFF233C91B051DFD002112AD /* SimulatorMemory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SimulatorMemory.h; path = ../../../src/blfwk/SimulatorMemory.h; sourceTree = "<group>"; };
+		BFF233CA1B051DFD002112AD /* UartPeripheral.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UartPeripheral.h; path = ../../../src/blfwk/UartPeripheral.h; sourceTree = "<group>"; };
+		BFF233CB1B051DFD002112AD /* UsbHidPacketizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UsbHidPacketizer.h; path = ../../../src/blfwk/UsbHidPacketizer.h; sourceTree = "<group>"; };
+		BFF233CC1B051DFD002112AD /* UsbHidPeripheral.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UsbHidPeripheral.h; path = ../../../src/blfwk/UsbHidPeripheral.h; sourceTree = "<group>"; };
+		BFF233E51B051E4D002112AD /* AESCounter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AESCounter.cpp; path = ../../../src/blfwk/src/AESCounter.cpp; sourceTree = "<group>"; };
+		BFF233E61B051E4D002112AD /* AESKey.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AESKey.cpp; path = ../../../src/blfwk/src/AESKey.cpp; sourceTree = "<group>"; };
+		BFF233E71B051E4D002112AD /* Blob.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Blob.cpp; path = ../../../src/blfwk/src/Blob.cpp; sourceTree = "<group>"; };
+		BFF233E81B051E4D002112AD /* Bootloader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Bootloader.cpp; path = ../../../src/blfwk/src/Bootloader.cpp; sourceTree = "<group>"; };
+		BFF233E91B051E4D002112AD /* BusPal.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BusPal.cpp; path = ../../../src/blfwk/src/BusPal.cpp; sourceTree = "<group>"; };
+		BFF233EA1B051E4D002112AD /* BusPalPeripheral.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BusPalPeripheral.cpp; path = ../../../src/blfwk/src/BusPalPeripheral.cpp; sourceTree = "<group>"; };
+		BFF233EB1B051E4D002112AD /* Command.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Command.cpp; path = ../../../src/blfwk/src/Command.cpp; sourceTree = "<group>"; };
+		BFF233EC1B051E4D002112AD /* DataSourceImager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DataSourceImager.cpp; path = ../../../src/blfwk/src/DataSourceImager.cpp; sourceTree = "<group>"; };
+		BFF233ED1B051E4D002112AD /* ExcludesListMatcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ExcludesListMatcher.cpp; path = ../../../src/blfwk/src/ExcludesListMatcher.cpp; sourceTree = "<group>"; };
+		BFF233EE1B051E4D002112AD /* GlobMatcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GlobMatcher.cpp; path = ../../../src/blfwk/src/GlobMatcher.cpp; sourceTree = "<group>"; };
+		BFF233EF1B051E4D002112AD /* HexValues.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = HexValues.cpp; path = ../../../src/blfwk/src/HexValues.cpp; sourceTree = "<group>"; };
+		BFF233F01B051E4D002112AD /* Random.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Random.cpp; path = ../../../src/blfwk/src/Random.cpp; sourceTree = "<group>"; };
+		BFF233F11B051E4D002112AD /* rijndael.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = rijndael.cpp; path = ../../../src/blfwk/src/rijndael.cpp; sourceTree = "<group>"; };
+		BFF233F21B051E4D002112AD /* RijndaelCTR.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RijndaelCTR.cpp; path = ../../../src/blfwk/src/RijndaelCTR.cpp; sourceTree = "<group>"; };
+		BFF233F31B051E4D002112AD /* SerialPacketizer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SerialPacketizer.cpp; path = ../../../src/blfwk/src/SerialPacketizer.cpp; sourceTree = "<group>"; };
+		BFF233F41B051E4D002112AD /* SimPacketizer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SimPacketizer.cpp; path = ../../../src/blfwk/src/SimPacketizer.cpp; sourceTree = "<group>"; };
+		BFF233F51B051E4D002112AD /* SimPeripheral.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SimPeripheral.cpp; path = ../../../src/blfwk/src/SimPeripheral.cpp; sourceTree = "<group>"; };
+		BFF233F61B051E4D002112AD /* Simulator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Simulator.cpp; path = ../../../src/blfwk/src/Simulator.cpp; sourceTree = "<group>"; };
+		BFF233F71B051E4D002112AD /* SimulatorMemory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SimulatorMemory.cpp; path = ../../../src/blfwk/src/SimulatorMemory.cpp; sourceTree = "<group>"; };
+		BFF233F81B051E4D002112AD /* UartPeripheral.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UartPeripheral.cpp; path = ../../../src/blfwk/src/UartPeripheral.cpp; sourceTree = "<group>"; };
+		BFF233F91B051E4D002112AD /* UsbHidPacketizer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UsbHidPacketizer.cpp; path = ../../../src/blfwk/src/UsbHidPacketizer.cpp; sourceTree = "<group>"; };
+		BFF233FA1B051E4D002112AD /* UsbHidPeripheral.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UsbHidPeripheral.cpp; path = ../../../src/blfwk/src/UsbHidPeripheral.cpp; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		0221DBAA18EB3C0F00B76EC2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0221DBA418EB3C0F00B76EC2 = {
+			isa = PBXGroup;
+			children = (
+				0221DBB418EB3D4100B76EC2 /* src */,
+				0221DBAE18EB3C0F00B76EC2 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		0221DBAE18EB3C0F00B76EC2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0221DBAD18EB3C0F00B76EC2 /* libblfwk.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0221DBB418EB3D4100B76EC2 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				0221DBB518EB3D4600B76EC2 /* blfwk */,
+				0221DC4B18EB3DA800B76EC2 /* bootloader */,
+				0221DC4C18EB3DB100B76EC2 /* crc */,
+				0221DC4D18EB3DB700B76EC2 /* include */,
+				0221DC4E18EB3DBE00B76EC2 /* memory */,
+				0221DC4F18EB3DC600B76EC2 /* packet */,
+				0221DC5018EB3DCB00B76EC2 /* property */,
+				0221DC5118EB3DD000B76EC2 /* sbloader */,
+			);
+			name = src;
+			sourceTree = "<group>";
+		};
+		0221DBB518EB3D4600B76EC2 /* blfwk */ = {
+			isa = PBXGroup;
+			children = (
+				BFF233B51B051DFD002112AD /* AESCounter.h */,
+				BFF233B61B051DFD002112AD /* AESKey.h */,
+				BFF233B71B051DFD002112AD /* bootloader_config.h */,
+				BFF233B81B051DFD002112AD /* Bootloader.h */,
+				BFF233B91B051DFD002112AD /* BusPal.h */,
+				BFF233BA1B051DFD002112AD /* BusPalPeripheral.h */,
+				BFF233BB1B051DFD002112AD /* Command.h */,
+				BFF233BC1B051DFD002112AD /* DataSourceImager.h */,
+				BFF233BD1B051DFD002112AD /* ExcludesListMatcher.h */,
+				BFF233BE1B051DFD002112AD /* GlobMatcher.h */,
+				BFF233BF1B051DFD002112AD /* HexValues.h */,
+				BFF233C01B051DFD002112AD /* Packetizer.h */,
+				BFF233C11B051DFD002112AD /* Peripheral.h */,
+				BFF233C21B051DFD002112AD /* Random.h */,
+				BFF233C31B051DFD002112AD /* rijndael.h */,
+				BFF233C41B051DFD002112AD /* RijndaelCTR.h */,
+				BFF233C51B051DFD002112AD /* SerialPacketizer.h */,
+				BFF233C61B051DFD002112AD /* SimPacketizer.h */,
+				BFF233C71B051DFD002112AD /* SimPeripheral.h */,
+				BFF233C81B051DFD002112AD /* Simulator.h */,
+				BFF233C91B051DFD002112AD /* SimulatorMemory.h */,
+				BFF233CA1B051DFD002112AD /* UartPeripheral.h */,
+				BFF233CB1B051DFD002112AD /* UsbHidPacketizer.h */,
+				BFF233CC1B051DFD002112AD /* UsbHidPeripheral.h */,
+				0221DBB618EB3D5300B76EC2 /* src */,
+				0221DBB718EB3D6800B76EC2 /* BlfwkErrors.h */,
+				0221DBB818EB3D6800B76EC2 /* Blob.h */,
+				0221DBBB18EB3D6800B76EC2 /* DataSource.h */,
+				0221DBBC18EB3D6800B76EC2 /* DataTarget.h */,
+				0221DBBD18EB3D6800B76EC2 /* ELF.h */,
+				0221DBBE18EB3D6800B76EC2 /* ELFSourceFile.h */,
+				0221DBBF18EB3D6800B76EC2 /* EndianUtilities.h */,
+				0221DBC018EB3D6800B76EC2 /* format_string.h */,
+				0221DBC118EB3D6800B76EC2 /* GHSSecInfo.h */,
+				0221DBC218EB3D6800B76EC2 /* hidapi.h */,
+				0221DBC818EB3D6800B76EC2 /* host_types.h */,
+				0221DBC918EB3D6800B76EC2 /* int_size.h */,
+				0221DBCA18EB3D6800B76EC2 /* json.h */,
+				0221DBCB18EB3D6800B76EC2 /* Logging.h */,
+				0221DBCC18EB3D6800B76EC2 /* OptionContext.h */,
+				0221DBCD18EB3D6800B76EC2 /* options.h */,
+				0221DBCE18EB3D6800B76EC2 /* SBSourceFile.h */,
+				0221DBCF18EB3D6800B76EC2 /* SearchPath.h */,
+				0221DBD018EB3D6800B76EC2 /* serial.h */,
+				0221DBD418EB3D6800B76EC2 /* smart_ptr.h */,
+				0221DBD518EB3D6800B76EC2 /* SourceFile.h */,
+				0221DC3518EB3D8E00B76EC2 /* SRecordSourceFile.h */,
+				0221DC3618EB3D8E00B76EC2 /* stdafx.h */,
+				0221DC3718EB3D8E00B76EC2 /* StELFFile.h */,
+				0221DC3818EB3D8E00B76EC2 /* StExecutableImage.h */,
+				0221DC3918EB3D8E00B76EC2 /* StringMatcher.h */,
+				0221DC3A18EB3D8E00B76EC2 /* StSRecordFile.h */,
+				0221DC3C18EB3D8E00B76EC2 /* Updater.h */,
+				0221DC3E18EB3D8E00B76EC2 /* utils.h */,
+				0221DC3F18EB3D8E00B76EC2 /* Value.h */,
+			);
+			name = blfwk;
+			sourceTree = "<group>";
+		};
+		0221DBB618EB3D5300B76EC2 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				BFF233E51B051E4D002112AD /* AESCounter.cpp */,
+				BFF233E61B051E4D002112AD /* AESKey.cpp */,
+				BFF233E71B051E4D002112AD /* Blob.cpp */,
+				BFF233E81B051E4D002112AD /* Bootloader.cpp */,
+				BFF233E91B051E4D002112AD /* BusPal.cpp */,
+				BFF233EA1B051E4D002112AD /* BusPalPeripheral.cpp */,
+				BFF233EB1B051E4D002112AD /* Command.cpp */,
+				BFF233EC1B051E4D002112AD /* DataSourceImager.cpp */,
+				BFF233ED1B051E4D002112AD /* ExcludesListMatcher.cpp */,
+				BFF233EE1B051E4D002112AD /* GlobMatcher.cpp */,
+				BFF233EF1B051E4D002112AD /* HexValues.cpp */,
+				BFF233F01B051E4D002112AD /* Random.cpp */,
+				BFF233F11B051E4D002112AD /* rijndael.cpp */,
+				BFF233F21B051E4D002112AD /* RijndaelCTR.cpp */,
+				BFF233F31B051E4D002112AD /* SerialPacketizer.cpp */,
+				BFF233F41B051E4D002112AD /* SimPacketizer.cpp */,
+				BFF233F51B051E4D002112AD /* SimPeripheral.cpp */,
+				BFF233F61B051E4D002112AD /* Simulator.cpp */,
+				BFF233F71B051E4D002112AD /* SimulatorMemory.cpp */,
+				BFF233F81B051E4D002112AD /* UartPeripheral.cpp */,
+				BFF233F91B051E4D002112AD /* UsbHidPacketizer.cpp */,
+				BFF233FA1B051E4D002112AD /* UsbHidPeripheral.cpp */,
+				0221DBF718EB3D7C00B76EC2 /* DataSource.cpp */,
+				0221DBF818EB3D7C00B76EC2 /* DataTarget.cpp */,
+				0221DBF918EB3D7C00B76EC2 /* ELFSourceFile.cpp */,
+				0221DBFA18EB3D7C00B76EC2 /* format_string.cpp */,
+				0221DBFB18EB3D7C00B76EC2 /* GHSSecInfo.cpp */,
+				0221DBFC18EB3D7C00B76EC2 /* hid-mac.c */,
+				0221DC0218EB3D7C00B76EC2 /* jsoncpp.cpp */,
+				0221DC0318EB3D7C00B76EC2 /* Logging.cpp */,
+				0221DC0418EB3D7C00B76EC2 /* options.cpp */,
+				0221DC0518EB3D7C00B76EC2 /* SBSourceFile.cpp */,
+				0221DC0618EB3D7C00B76EC2 /* SearchPath.cpp */,
+				0221DC0718EB3D7C00B76EC2 /* serial.c */,
+				0221DC0B18EB3D7C00B76EC2 /* SourceFile.cpp */,
+				0221DC0C18EB3D7C00B76EC2 /* SRecordSourceFile.cpp */,
+				0221DC0D18EB3D7C00B76EC2 /* StELFFile.cpp */,
+				0221DC0E18EB3D7C00B76EC2 /* StExecutableImage.cpp */,
+				0221DC0F18EB3D7C00B76EC2 /* StSRecordFile.cpp */,
+				0221DC1118EB3D7C00B76EC2 /* Updater.cpp */,
+				0221DC1318EB3D7C00B76EC2 /* utils.cpp */,
+				0221DC1418EB3D7C00B76EC2 /* Value.cpp */,
+			);
+			name = src;
+			sourceTree = "<group>";
+		};
+		0221DC4B18EB3DA800B76EC2 /* bootloader */ = {
+			isa = PBXGroup;
+			children = (
+				0221DC5218EB3DE100B76EC2 /* command.c */,
+				0221DC5318EB3DE100B76EC2 /* command.h */,
+				0221DC5418EB3DE100B76EC2 /* context.h */,
+				0221DC5518EB3DE100B76EC2 /* peripheral.h */,
+				0221DC5618EB3DE100B76EC2 /* bootloader.h */,
+				0221DC5718EB3DE100B76EC2 /* bootloader_hid_report_ids.h */,
+			);
+			name = bootloader;
+			sourceTree = "<group>";
+		};
+		0221DC4C18EB3DB100B76EC2 /* crc */ = {
+			isa = PBXGroup;
+			children = (
+				0221DC5818EB3DE100B76EC2 /* crc16.h */,
+				0221DC5918EB3DE100B76EC2 /* crc32.h */,
+				0221DC5A18EB3DE100B76EC2 /* crc16.c */,
+				0221DC5B18EB3DE100B76EC2 /* crc32.c */,
+			);
+			name = crc;
+			sourceTree = "<group>";
+		};
+		0221DC4D18EB3DB700B76EC2 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				0221DC5C18EB3DE100B76EC2 /* fsl_platform_common.h */,
+				0221DC5D18EB3DE100B76EC2 /* fsl_platform_status.h */,
+				0221DC5E18EB3DE100B76EC2 /* fsl_platform_types.h */,
+				0221DC5F18EB3DE100B76EC2 /* bootloader_common.h */,
+			);
+			name = include;
+			sourceTree = "<group>";
+		};
+		0221DC4E18EB3DBE00B76EC2 /* memory */ = {
+			isa = PBXGroup;
+			children = (
+				0221DC6018EB3DE100B76EC2 /* memory.h */,
+				0221DC6118EB3DE100B76EC2 /* memory.c */,
+			);
+			name = memory;
+			sourceTree = "<group>";
+		};
+		0221DC4F18EB3DC600B76EC2 /* packet */ = {
+			isa = PBXGroup;
+			children = (
+				0221DC6218EB3DE100B76EC2 /* command_packet.h */,
+				0221DC6318EB3DE100B76EC2 /* serial_packet.h */,
+				0221DC6418EB3DE100B76EC2 /* serial_packet.c */,
+			);
+			name = packet;
+			sourceTree = "<group>";
+		};
+		0221DC5018EB3DCB00B76EC2 /* property */ = {
+			isa = PBXGroup;
+			children = (
+				0221DC6518EB3DE100B76EC2 /* property.h */,
+				0221DC6618EB3DE100B76EC2 /* property.c */,
+			);
+			name = property;
+			sourceTree = "<group>";
+		};
+		0221DC5118EB3DD000B76EC2 /* sbloader */ = {
+			isa = PBXGroup;
+			children = (
+				0221DC6C18EB3DE100B76EC2 /* sb_file_format.h */,
+			);
+			name = sbloader;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		0221DBAB18EB3C0F00B76EC2 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0221DC4418EB3D8E00B76EC2 /* StringMatcher.h in Headers */,
+				0221DC7D18EB3DE100B76EC2 /* bootloader_common.h in Headers */,
+				0221DC7418EB3DE100B76EC2 /* bootloader.h in Headers */,
+				0221DC4918EB3D8E00B76EC2 /* utils.h in Headers */,
+				0221DC4518EB3D8E00B76EC2 /* StSRecordFile.h in Headers */,
+				0221DC7118EB3DE100B76EC2 /* command.h in Headers */,
+				0221DC7318EB3DE100B76EC2 /* peripheral.h in Headers */,
+				0221DBD618EB3D6800B76EC2 /* BlfwkErrors.h in Headers */,
+				0221DBE818EB3D6800B76EC2 /* int_size.h in Headers */,
+				0221DBE118EB3D6800B76EC2 /* hidapi.h in Headers */,
+				0221DC7618EB3DE100B76EC2 /* crc16.h in Headers */,
+				0221DC7718EB3DE100B76EC2 /* crc32.h in Headers */,
+				0221DBDC18EB3D6800B76EC2 /* ELF.h in Headers */,
+				0221DBEC18EB3D6800B76EC2 /* options.h in Headers */,
+				0221DC7518EB3DE100B76EC2 /* bootloader_hid_report_ids.h in Headers */,
+				0221DBDA18EB3D6800B76EC2 /* DataSource.h in Headers */,
+				0221DC8118EB3DE100B76EC2 /* serial_packet.h in Headers */,
+				0221DC7C18EB3DE100B76EC2 /* fsl_platform_types.h in Headers */,
+				0221DBEB18EB3D6800B76EC2 /* OptionContext.h in Headers */,
+				0221DBD718EB3D6800B76EC2 /* Blob.h in Headers */,
+				0221DC4018EB3D8E00B76EC2 /* SRecordSourceFile.h in Headers */,
+				0221DC4318EB3D8E00B76EC2 /* StExecutableImage.h in Headers */,
+				0221DBDE18EB3D6800B76EC2 /* EndianUtilities.h in Headers */,
+				0221DC8318EB3DE100B76EC2 /* property.h in Headers */,
+				0221DBE918EB3D6800B76EC2 /* json.h in Headers */,
+				0221DC7E18EB3DE100B76EC2 /* memory.h in Headers */,
+				0221DBE718EB3D6800B76EC2 /* host_types.h in Headers */,
+				0221DC7A18EB3DE100B76EC2 /* fsl_platform_common.h in Headers */,
+				0221DC4218EB3D8E00B76EC2 /* StELFFile.h in Headers */,
+				0221DC7218EB3DE100B76EC2 /* context.h in Headers */,
+				0221DBE018EB3D6800B76EC2 /* GHSSecInfo.h in Headers */,
+				0221DBEF18EB3D6800B76EC2 /* serial.h in Headers */,
+				0221DBDB18EB3D6800B76EC2 /* DataTarget.h in Headers */,
+				0221DC8018EB3DE100B76EC2 /* command_packet.h in Headers */,
+				0221DBEE18EB3D6800B76EC2 /* SearchPath.h in Headers */,
+				0221DC8A18EB3DE100B76EC2 /* sb_file_format.h in Headers */,
+				0221DBED18EB3D6800B76EC2 /* SBSourceFile.h in Headers */,
+				0221DC4A18EB3D8E00B76EC2 /* Value.h in Headers */,
+				0221DBDF18EB3D6800B76EC2 /* format_string.h in Headers */,
+				0221DBEA18EB3D6800B76EC2 /* Logging.h in Headers */,
+				0221DC7B18EB3DE100B76EC2 /* fsl_platform_status.h in Headers */,
+				0221DBDD18EB3D6800B76EC2 /* ELFSourceFile.h in Headers */,
+				0221DBF418EB3D6800B76EC2 /* SourceFile.h in Headers */,
+				0221DC4118EB3D8E00B76EC2 /* stdafx.h in Headers */,
+				0221DC4718EB3D8E00B76EC2 /* Updater.h in Headers */,
+				0221DBF318EB3D6800B76EC2 /* smart_ptr.h in Headers */,
+				BFF233CD1B051DFD002112AD /* AESCounter.h in Headers */,
+				BFF233CE1B051DFD002112AD /* AESKey.h in Headers */,
+				BFF233CF1B051DFD002112AD /* bootloader_config.h in Headers */,
+				BFF233D01B051DFD002112AD /* Bootloader.h in Headers */,
+				BFF233D11B051DFD002112AD /* BusPal.h in Headers */,
+				BFF233D21B051DFD002112AD /* BusPalPeripheral.h in Headers */,
+				BFF233D31B051DFD002112AD /* Command.h in Headers */,
+				BFF233D41B051DFD002112AD /* DataSourceImager.h in Headers */,
+				BFF233D51B051DFD002112AD /* ExcludesListMatcher.h in Headers */,
+				BFF233D61B051DFD002112AD /* GlobMatcher.h in Headers */,
+				BFF233D71B051DFD002112AD /* HexValues.h in Headers */,
+				BFF233D81B051DFD002112AD /* Packetizer.h in Headers */,
+				BFF233D91B051DFD002112AD /* Peripheral.h in Headers */,
+				BFF233DA1B051DFD002112AD /* Random.h in Headers */,
+				BFF233DB1B051DFD002112AD /* rijndael.h in Headers */,
+				BFF233DC1B051DFD002112AD /* RijndaelCTR.h in Headers */,
+				BFF233DD1B051DFD002112AD /* SerialPacketizer.h in Headers */,
+				BFF233DE1B051DFD002112AD /* SimPacketizer.h in Headers */,
+				BFF233DF1B051DFD002112AD /* SimPeripheral.h in Headers */,
+				BFF233E01B051DFD002112AD /* Simulator.h in Headers */,
+				BFF233E11B051DFD002112AD /* SimulatorMemory.h in Headers */,
+				BFF233E21B051DFD002112AD /* UartPeripheral.h in Headers */,
+				BFF233E31B051DFD002112AD /* UsbHidPacketizer.h in Headers */,
+				BFF233E41B051DFD002112AD /* UsbHidPeripheral.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		0221DBAC18EB3C0F00B76EC2 /* blfwk */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0221DBB118EB3C0F00B76EC2 /* Build configuration list for PBXNativeTarget "blfwk" */;
+			buildPhases = (
+				0221DBA918EB3C0F00B76EC2 /* Sources */,
+				0221DBAA18EB3C0F00B76EC2 /* Frameworks */,
+				0221DBAB18EB3C0F00B76EC2 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = blfwk;
+			productName = blfwk;
+			productReference = 0221DBAD18EB3C0F00B76EC2 /* libblfwk.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0221DBA518EB3C0F00B76EC2 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = "Freescale Semiconductor, Inc.";
+			};
+			buildConfigurationList = 0221DBA818EB3C0F00B76EC2 /* Build configuration list for PBXProject "blfwk" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 0221DBA418EB3C0F00B76EC2;
+			productRefGroup = 0221DBAE18EB3C0F00B76EC2 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				0221DBAC18EB3C0F00B76EC2 /* blfwk */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0221DBA918EB3C0F00B76EC2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0221DC1818EB3D7C00B76EC2 /* DataTarget.cpp in Sources */,
+				0221DC2C18EB3D7C00B76EC2 /* SRecordSourceFile.cpp in Sources */,
+				0221DC1718EB3D7C00B76EC2 /* DataSource.cpp in Sources */,
+				0221DC2F18EB3D7C00B76EC2 /* StSRecordFile.cpp in Sources */,
+				0221DC2E18EB3D7C00B76EC2 /* StExecutableImage.cpp in Sources */,
+				0221DC1B18EB3D7C00B76EC2 /* GHSSecInfo.cpp in Sources */,
+				0221DC1918EB3D7C00B76EC2 /* ELFSourceFile.cpp in Sources */,
+				0221DC3318EB3D7C00B76EC2 /* utils.cpp in Sources */,
+				0221DC2718EB3D7C00B76EC2 /* serial.c in Sources */,
+				0221DC8418EB3DE100B76EC2 /* property.c in Sources */,
+				0221DC1A18EB3D7C00B76EC2 /* format_string.cpp in Sources */,
+				0221DC1C18EB3D7C00B76EC2 /* hid-mac.c in Sources */,
+				0221DC2418EB3D7C00B76EC2 /* options.cpp in Sources */,
+				0221DC2618EB3D7C00B76EC2 /* SearchPath.cpp in Sources */,
+				0221DC2518EB3D7C00B76EC2 /* SBSourceFile.cpp in Sources */,
+				0221DC7F18EB3DE100B76EC2 /* memory.c in Sources */,
+				0221DC3118EB3D7C00B76EC2 /* Updater.cpp in Sources */,
+				0221DC3418EB3D7C00B76EC2 /* Value.cpp in Sources */,
+				0221DC7018EB3DE100B76EC2 /* command.c in Sources */,
+				0221DC2D18EB3D7C00B76EC2 /* StELFFile.cpp in Sources */,
+				0221DC2B18EB3D7C00B76EC2 /* SourceFile.cpp in Sources */,
+				0221DC8218EB3DE100B76EC2 /* serial_packet.c in Sources */,
+				0221DC7818EB3DE100B76EC2 /* crc16.c in Sources */,
+				0221DC2318EB3D7C00B76EC2 /* Logging.cpp in Sources */,
+				0221DC7918EB3DE100B76EC2 /* crc32.c in Sources */,
+				0221DC2218EB3D7C00B76EC2 /* jsoncpp.cpp in Sources */,
+				BFF233FB1B051E4D002112AD /* AESCounter.cpp in Sources */,
+				BFF233FC1B051E4D002112AD /* AESKey.cpp in Sources */,
+				BFF233FD1B051E4D002112AD /* Blob.cpp in Sources */,
+				BFF233FE1B051E4D002112AD /* Bootloader.cpp in Sources */,
+				BFF233FF1B051E4D002112AD /* BusPal.cpp in Sources */,
+				BFF234001B051E4D002112AD /* BusPalPeripheral.cpp in Sources */,
+				BFF234011B051E4D002112AD /* Command.cpp in Sources */,
+				BFF234021B051E4D002112AD /* DataSourceImager.cpp in Sources */,
+				BFF234031B051E4D002112AD /* ExcludesListMatcher.cpp in Sources */,
+				BFF234041B051E4D002112AD /* GlobMatcher.cpp in Sources */,
+				BFF234051B051E4D002112AD /* HexValues.cpp in Sources */,
+				BFF234061B051E4D002112AD /* Random.cpp in Sources */,
+				BFF234071B051E4D002112AD /* rijndael.cpp in Sources */,
+				BFF234081B051E4D002112AD /* RijndaelCTR.cpp in Sources */,
+				BFF234091B051E4D002112AD /* SerialPacketizer.cpp in Sources */,
+				BFF2340A1B051E4D002112AD /* SimPacketizer.cpp in Sources */,
+				BFF2340B1B051E4D002112AD /* SimPeripheral.cpp in Sources */,
+				BFF2340C1B051E4D002112AD /* Simulator.cpp in Sources */,
+				BFF2340D1B051E4D002112AD /* SimulatorMemory.cpp in Sources */,
+				BFF2340E1B051E4D002112AD /* UartPeripheral.cpp in Sources */,
+				BFF2340F1B051E4D002112AD /* UsbHidPacketizer.cpp in Sources */,
+				BFF234101B051E4D002112AD /* UsbHidPeripheral.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		0221DBAF18EB3C0F00B76EC2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					BOOTLOADER_HOST,
+					MACOSX,
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				USER_HEADER_SEARCH_PATHS = "../../../src ../../../src/include";
+			};
+			name = Debug;
+		};
+		0221DBB018EB3C0F00B76EC2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					BOOTLOADER_HOST,
+					MACOSX,
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				SDKROOT = macosx;
+				USER_HEADER_SEARCH_PATHS = "../../../src ../../../src/include";
+			};
+			name = Release;
+		};
+		0221DBB218EB3C0F00B76EC2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		0221DBB318EB3C0F00B76EC2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0221DBA818EB3C0F00B76EC2 /* Build configuration list for PBXProject "blfwk" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0221DBAF18EB3C0F00B76EC2 /* Debug */,
+				0221DBB018EB3C0F00B76EC2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0221DBB118EB3C0F00B76EC2 /* Build configuration list for PBXNativeTarget "blfwk" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0221DBB218EB3C0F00B76EC2 /* Debug */,
+				0221DBB318EB3C0F00B76EC2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0221DBA518EB3C0F00B76EC2 /* Project object */;
+}

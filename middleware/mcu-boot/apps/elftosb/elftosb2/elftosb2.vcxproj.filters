@@ -1,0 +1,366 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source Files\common">
+      <UniqueIdentifier>{9453b333-3419-4bc0-8fb8-b0a65cfa5ab7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\elftosb">
+      <UniqueIdentifier>{7a5e4903-3272-4bca-8ed5-629eb0d880a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Header Files\common">
+      <UniqueIdentifier>{55b0f525-56b7-4c59-8bf4-7a118c172b82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\elftosb">
+      <UniqueIdentifier>{297df138-bad7-4418-bf8b-b2638afffb61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\common\AESKey.cpp">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\Blob.cpp">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\crc.cpp">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\DataSource.cpp">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\DataSourceImager.cpp">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\DataTarget.cpp">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\ELFSourceFile.cpp">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\EncoreBootImage.cpp">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\EvalContext.cpp">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\ExcludesListMatcher.cpp">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\format_string.cpp">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\GHSSecInfo.cpp">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\GlobMatcher.cpp">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\HexValues.cpp">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\Logging.cpp">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\Operation.cpp">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\OptionDictionary.cpp">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\options.cpp">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\OutputSection.cpp">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\Random.cpp">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\rijndael.cpp">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\RijndaelCBCMAC.cpp">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\SearchPath.cpp">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\SHA1.cpp">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\SourceFile.cpp">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\SRecordSourceFile.cpp">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\stdafx.cpp">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\StELFFile.cpp">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\StExecutableImage.cpp">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\StSRecordFile.cpp">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\Value.cpp">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\Version.cpp">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="BootImageGenerator.cpp">
+      <Filter>Source Files\elftosb</Filter>
+    </ClCompile>
+    <ClCompile Include="ConversionController.cpp">
+      <Filter>Source Files\elftosb</Filter>
+    </ClCompile>
+    <ClCompile Include="elftosb.cpp">
+      <Filter>Source Files\elftosb</Filter>
+    </ClCompile>
+    <ClCompile Include="elftosb_lexer.cpp">
+      <Filter>Source Files\elftosb</Filter>
+    </ClCompile>
+    <ClCompile Include="elftosb_parser.tab.cpp">
+      <Filter>Source Files\elftosb</Filter>
+    </ClCompile>
+    <ClCompile Include="ElftosbAST.cpp">
+      <Filter>Source Files\elftosb</Filter>
+    </ClCompile>
+    <ClCompile Include="ElftosbLexer.cpp">
+      <Filter>Source Files\elftosb</Filter>
+    </ClCompile>
+    <ClCompile Include="EncoreBootImageGenerator.cpp">
+      <Filter>Source Files\elftosb</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\aes128_key_wrap_unwrap.c">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\bytes_aes.c">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\Keyblob.cpp">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\RijndaelCTR.cpp">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\EncoreBootImageReader.cpp">
+      <Filter>Source Files\elftosb</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\SB2Image.cpp">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="SB2ImageGenerator.cpp">
+      <Filter>Source Files\elftosb</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\iMXImage.cpp">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="iMXImageGenerator.cpp">
+      <Filter>Source Files\elftosb</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\IVTDataSource.cpp">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\common\AESKey.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\Blob.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\BootImage.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\crc.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\DataSource.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\DataSourceImager.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\DataTarget.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\ELF.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\ELFSourceFile.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\EncoreBootImage.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\EndianUtilities.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\EvalContext.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\ExcludesListMatcher.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\format_string.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\GHSSecInfo.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\GlobMatcher.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\HexValues.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\int_size.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\IVTDataSource.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\Logging.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\Operation.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\OptionContext.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\OptionDictionary.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\options.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\OutputSection.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\Random.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\rijndael.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\RijndaelCBCMAC.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\SearchPath.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\SHA1.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\smart_ptr.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\SourceFile.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\SRecordSourceFile.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\stdafx.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\StELFFile.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\StExecutableImage.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\StringMatcher.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\StSRecordFile.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\Value.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\Version.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="BootImageGenerator.h">
+      <Filter>Header Files\elftosb</Filter>
+    </ClInclude>
+    <ClInclude Include="ConversionController.h">
+      <Filter>Header Files\elftosb</Filter>
+    </ClInclude>
+    <ClInclude Include="crypto.h">
+      <Filter>Header Files\elftosb</Filter>
+    </ClInclude>
+    <ClInclude Include="default_rom_key.h">
+      <Filter>Header Files\elftosb</Filter>
+    </ClInclude>
+    <ClInclude Include="elftosb.h">
+      <Filter>Header Files\elftosb</Filter>
+    </ClInclude>
+    <ClInclude Include="elftosb_parser.tab.hpp">
+      <Filter>Header Files\elftosb</Filter>
+    </ClInclude>
+    <ClInclude Include="ElftosbAST.h">
+      <Filter>Header Files\elftosb</Filter>
+    </ClInclude>
+    <ClInclude Include="ElftosbErrors.h">
+      <Filter>Header Files\elftosb</Filter>
+    </ClInclude>
+    <ClInclude Include="ElftosbLexer.h">
+      <Filter>Header Files\elftosb</Filter>
+    </ClInclude>
+    <ClInclude Include="EncoreBootImageGenerator.h">
+      <Filter>Header Files\elftosb</Filter>
+    </ClInclude>
+    <ClInclude Include="FlexLexer.h">
+      <Filter>Header Files\elftosb</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\Keyblob.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\aes128_key_wrap_unwrap.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\AESCounter.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\KeyblobEntry.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\RijndaelCTR.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\EncoreBootImageReader.h">
+      <Filter>Header Files\elftosb</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\SB2Image.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="SB2ImageGenerator.h">
+      <Filter>Header Files\elftosb</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\iMXImage.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="iMXImageGenerator.h">
+      <Filter>Header Files\elftosb</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

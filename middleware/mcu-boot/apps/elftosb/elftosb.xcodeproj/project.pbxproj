@@ -1,0 +1,655 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		020DDCE80A1E858600E1CB49 /* Everything */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 020DDCF00A1E85BA00E1CB49 /* Build configuration list for PBXAggregateTarget "Everything" */;
+			buildPhases = (
+			);
+			dependencies = (
+				020DDCEA0A1E858D00E1CB49 /* PBXTargetDependency */,
+			);
+			name = Everything;
+			productName = Everything;
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXBuildFile section */
+		0208BEB30A02D2B800255D31 /* SHA1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0208BEB10A02D2B800255D31 /* SHA1.cpp */; };
+		0208BF4D0A03137800255D31 /* Random.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0208BF4B0A03137800255D31 /* Random.cpp */; };
+		0208BF8C0A03E04800255D31 /* RijndaelCBCMAC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0208BF8A0A03E04800255D31 /* RijndaelCBCMAC.cpp */; };
+		0208C03F0A0544BA00255D31 /* options.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0208C03D0A0544BA00255D31 /* options.cpp */; };
+		0208C08C0A05677000255D31 /* AESKey.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0208C08B0A05677000255D31 /* AESKey.cpp */; };
+		0208C28E0A0A4E5F00255D31 /* DataSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0208C2880A0A4E5F00255D31 /* DataSource.cpp */; };
+		0208C2900A0A4E5F00255D31 /* Operation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0208C28A0A0A4E5F00255D31 /* Operation.cpp */; };
+		0208C2920A0A4E5F00255D31 /* DataTarget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0208C28C0A0A4E5F00255D31 /* DataTarget.cpp */; };
+		0208C29B0A0A4EE800255D31 /* ConversionController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0208C2990A0A4EE800255D31 /* ConversionController.cpp */; };
+		020D41880A0FF0C20027E24E /* OutputSection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 020D41860A0FF0C20027E24E /* OutputSection.cpp */; };
+		020D419A0A0FF5BF0027E24E /* BootImageGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 020D41980A0FF5BF0027E24E /* BootImageGenerator.cpp */; };
+		020D41A60A0FF8880027E24E /* Version.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 020D41A40A0FF8880027E24E /* Version.cpp */; };
+		020D41BA0A0FFD140027E24E /* EncoreBootImageGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 020D41B80A0FFD140027E24E /* EncoreBootImageGenerator.cpp */; };
+		020D43A80A14D7E20027E24E /* Logging.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 020D43A60A14D7E20027E24E /* Logging.cpp */; };
+		020D45070A1523350027E24E /* GHSSecInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 020D45050A1523350027E24E /* GHSSecInfo.cpp */; };
+		020DDBED0A1D08AD00E1CB49 /* OptionDictionary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 020DDBEB0A1D08AD00E1CB49 /* OptionDictionary.cpp */; };
+		02123F320A6B057E003CF33F /* Blob.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 02123F300A6B057E003CF33F /* Blob.cpp */; };
+		02123F3A0A6B09CF003CF33F /* HexValues.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 02123F380A6B09CF003CF33F /* HexValues.cpp */; };
+		0215B3D309F424D800EA7C45 /* elftosb_parser.y in Sources */ = {isa = PBXBuildFile; fileRef = 0215B3D209F424D800EA7C45 /* elftosb_parser.y */; };
+		0215B3E909F4277100EA7C45 /* elftosb_lexer.l in Sources */ = {isa = PBXBuildFile; fileRef = 02E3997909F2E0410055992A /* elftosb_lexer.l */; };
+		021CA3F30A8D16960028326F /* ExcludesListMatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 021CA3F10A8D16960028326F /* ExcludesListMatcher.cpp */; };
+		022B4657121763A100A74F96 /* IVTDataSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 022B4656121763A100A74F96 /* IVTDataSource.cpp */; };
+		024F1D5F0A0BCD7200D21D61 /* SRecordSourceFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 024F1D5D0A0BCD7200D21D61 /* SRecordSourceFile.cpp */; };
+		024F1D630A0BCD8300D21D61 /* ELFSourceFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 024F1D610A0BCD8300D21D61 /* ELFSourceFile.cpp */; };
+		027402E60A0FB00000CF4BE7 /* GlobMatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 027402E40A0FB00000CF4BE7 /* GlobMatcher.cpp */; };
+		0296A4E709D9AE9400F80AFF /* elftosb.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0296A49309D9AE9400F80AFF /* elftosb.cpp */; };
+		0296A4F209D9AE9400F80AFF /* stdafx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0296A49E09D9AE9400F80AFF /* stdafx.cpp */; };
+		0296A4F309D9AE9400F80AFF /* StELFFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0296A49F09D9AE9400F80AFF /* StELFFile.cpp */; };
+		0296A4F809D9AE9400F80AFF /* StExecutableImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0296A4A409D9AE9400F80AFF /* StExecutableImage.cpp */; };
+		0296A4FE09D9AE9400F80AFF /* StSRecordFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0296A4AA09D9AE9400F80AFF /* StSRecordFile.cpp */; };
+		02C5DB940A925C61003B9C11 /* format_string.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 02C5DB920A925C61003B9C11 /* format_string.cpp */; };
+		02CD157609F543FE00ABE650 /* ElftosbAST.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 02CD157409F543FE00ABE650 /* ElftosbAST.cpp */; };
+		02CD158909F557D300ABE650 /* ElftosbLexer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 02CD158809F557D300ABE650 /* ElftosbLexer.cpp */; };
+		02D1FCA90BD02B69007C7450 /* SearchPath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 02D1FCA80BD02B69007C7450 /* SearchPath.cpp */; };
+		02E3998F09F2EFAA0055992A /* rijndael.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 02E3998D09F2EFAA0055992A /* rijndael.cpp */; };
+		02E535B50C245AEC00CBD4A5 /* DataSourceImager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 02E535B40C245AEC00CBD4A5 /* DataSourceImager.cpp */; };
+		02E9D67609FBFE98006D7279 /* EvalContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 02E9D67409FBFE98006D7279 /* EvalContext.cpp */; };
+		02F8D41E09FE86FB004CBE69 /* EncoreBootImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 02F8D41C09FE86FA004CBE69 /* EncoreBootImage.cpp */; };
+		02F8D4F109FEE91B004CBE69 /* crc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 02F8D4EF09FEE91B004CBE69 /* crc.cpp */; };
+		02F8D54C0A014F5D004CBE69 /* Value.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 02F8D54A0A014F5D004CBE69 /* Value.cpp */; };
+		02F8D5630A0152AB004CBE69 /* SourceFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 02F8D5610A0152AB004CBE69 /* SourceFile.cpp */; };
+		3B9439861C5693470061FE25 /* EncoreBootImageReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3B9439841C5693470061FE25 /* EncoreBootImageReader.cpp */; };
+		3BF52AF41BD5939A00BA97D0 /* aes128_key_wrap_unwrap.c in Sources */ = {isa = PBXBuildFile; fileRef = 3BF52AEB1BD5939A00BA97D0 /* aes128_key_wrap_unwrap.c */; };
+		3BF52AF51BD5939A00BA97D0 /* bytes_aes.c in Sources */ = {isa = PBXBuildFile; fileRef = 3BF52AEE1BD5939A00BA97D0 /* bytes_aes.c */; };
+		3BF52AF61BD5939A00BA97D0 /* Keyblob.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3BF52AEF1BD5939A00BA97D0 /* Keyblob.cpp */; };
+		3BF52AF71BD5939A00BA97D0 /* RijndaelCTR.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3BF52AF21BD5939A00BA97D0 /* RijndaelCTR.cpp */; };
+		6C51FA5B1F913872008DC52C /* iMXImageGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6C51FA571F913872008DC52C /* iMXImageGenerator.cpp */; };
+		6C51FA5C1F913872008DC52C /* SB2ImageGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6C51FA591F913872008DC52C /* SB2ImageGenerator.cpp */; };
+		6C51FA611F91388B008DC52C /* iMXImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6C51FA5D1F91388B008DC52C /* iMXImage.cpp */; };
+		6C51FA621F91388B008DC52C /* SB2Image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6C51FA5F1F91388B008DC52C /* SB2Image.cpp */; };
+		6C51FA661F9138D0008DC52C /* libmbedcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C51FA631F9138D0008DC52C /* libmbedcrypto.a */; };
+		6C51FA671F9138D0008DC52C /* libmbedtls.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C51FA641F9138D0008DC52C /* libmbedtls.a */; };
+		6C51FA681F9138D0008DC52C /* libmbedx509.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C51FA651F9138D0008DC52C /* libmbedx509.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXBuildRule section */
+		0215B3D509F4254100EA7C45 /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			fileType = sourcecode.lex;
+			isEditable = 1;
+			outputFiles = (
+				"${DERIVED_FILES_DIR}/${INPUT_FILE_BASE}.cpp",
+			);
+			script = "flex -o${DERIVED_FILES_DIR}/${INPUT_FILE_BASE}.cpp ${INPUT_FILE_DIR}/${INPUT_FILE_NAME}";
+		};
+		0215B3D609F4255D00EA7C45 /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			fileType = sourcecode.yacc;
+			isEditable = 1;
+			outputFiles = (
+				"${DERIVED_FILES_DIR}/${INPUT_FILE_BASE}.tab.cpp",
+			);
+			script = "bison -o ${DERIVED_FILES_DIR}/${INPUT_FILE_BASE}.tab.cpp ${INPUT_FILE_DIR}/${INPUT_FILE_NAME}";
+		};
+		0296CF9309DB3B8700F80AFF /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.gcc;
+			fileType = sourcecode.c;
+			isEditable = 1;
+			outputFiles = (
+			);
+		};
+/* End PBXBuildRule section */
+
+/* Begin PBXContainerItemProxy section */
+		020DDCE90A1E858D00E1CB49 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 08FB7793FE84155DC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8DD76F620486A84900D96B5E;
+			remoteInfo = elftosb;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0208BEB10A02D2B800255D31 /* SHA1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SHA1.cpp; sourceTree = "<group>"; };
+		0208BEB20A02D2B800255D31 /* SHA1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHA1.h; sourceTree = "<group>"; };
+		0208BF4A0A03137800255D31 /* Random.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Random.h; sourceTree = "<group>"; };
+		0208BF4B0A03137800255D31 /* Random.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Random.cpp; sourceTree = "<group>"; };
+		0208BF890A03E04800255D31 /* RijndaelCBCMAC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RijndaelCBCMAC.h; sourceTree = "<group>"; };
+		0208BF8A0A03E04800255D31 /* RijndaelCBCMAC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RijndaelCBCMAC.cpp; sourceTree = "<group>"; };
+		0208C03D0A0544BA00255D31 /* options.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = options.cpp; sourceTree = "<group>"; };
+		0208C03E0A0544BA00255D31 /* options.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = options.h; sourceTree = "<group>"; };
+		0208C08B0A05677000255D31 /* AESKey.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AESKey.cpp; sourceTree = "<group>"; };
+		0208C2880A0A4E5F00255D31 /* DataSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DataSource.cpp; sourceTree = "<group>"; };
+		0208C2890A0A4E5F00255D31 /* DataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataSource.h; sourceTree = "<group>"; };
+		0208C28A0A0A4E5F00255D31 /* Operation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Operation.cpp; sourceTree = "<group>"; };
+		0208C28B0A0A4E5F00255D31 /* Operation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Operation.h; sourceTree = "<group>"; };
+		0208C28C0A0A4E5F00255D31 /* DataTarget.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DataTarget.cpp; sourceTree = "<group>"; };
+		0208C28D0A0A4E5F00255D31 /* DataTarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataTarget.h; sourceTree = "<group>"; };
+		0208C2990A0A4EE800255D31 /* ConversionController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConversionController.cpp; sourceTree = "<group>"; };
+		0208C29A0A0A4EE800255D31 /* ConversionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConversionController.h; sourceTree = "<group>"; };
+		0208C2E00A0AA4F700255D31 /* int_size.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = int_size.h; sourceTree = "<group>"; };
+		020D416A0A0FE8AC0027E24E /* StringMatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StringMatcher.h; sourceTree = "<group>"; };
+		020D41850A0FF0C20027E24E /* OutputSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OutputSection.h; sourceTree = "<group>"; };
+		020D41860A0FF0C20027E24E /* OutputSection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OutputSection.cpp; sourceTree = "<group>"; };
+		020D41970A0FF5BF0027E24E /* BootImageGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BootImageGenerator.h; sourceTree = "<group>"; };
+		020D41980A0FF5BF0027E24E /* BootImageGenerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BootImageGenerator.cpp; sourceTree = "<group>"; };
+		020D41A30A0FF8880027E24E /* Version.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Version.h; sourceTree = "<group>"; };
+		020D41A40A0FF8880027E24E /* Version.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Version.cpp; sourceTree = "<group>"; };
+		020D41AE0A0FFB040027E24E /* BootImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BootImage.h; sourceTree = "<group>"; };
+		020D41B70A0FFD140027E24E /* EncoreBootImageGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EncoreBootImageGenerator.h; sourceTree = "<group>"; };
+		020D41B80A0FFD140027E24E /* EncoreBootImageGenerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EncoreBootImageGenerator.cpp; sourceTree = "<group>"; };
+		020D43A50A14D7E20027E24E /* Logging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Logging.h; sourceTree = "<group>"; };
+		020D43A60A14D7E20027E24E /* Logging.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Logging.cpp; sourceTree = "<group>"; };
+		020D45040A1523350027E24E /* GHSSecInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHSSecInfo.h; sourceTree = "<group>"; };
+		020D45050A1523350027E24E /* GHSSecInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GHSSecInfo.cpp; sourceTree = "<group>"; };
+		020D454F0A1533550027E24E /* OptionContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptionContext.h; sourceTree = "<group>"; };
+		020DDBEA0A1D08AD00E1CB49 /* OptionDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptionDictionary.h; sourceTree = "<group>"; };
+		020DDBEB0A1D08AD00E1CB49 /* OptionDictionary.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OptionDictionary.cpp; sourceTree = "<group>"; };
+		02123F2F0A6B057E003CF33F /* Blob.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Blob.h; sourceTree = "<group>"; };
+		02123F300A6B057E003CF33F /* Blob.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Blob.cpp; sourceTree = "<group>"; };
+		02123F370A6B09CF003CF33F /* HexValues.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HexValues.h; sourceTree = "<group>"; };
+		02123F380A6B09CF003CF33F /* HexValues.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HexValues.cpp; sourceTree = "<group>"; };
+		0215B3BA09F3FBF100EA7C45 /* ElftosbLexer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ElftosbLexer.h; sourceTree = "<group>"; };
+		0215B3D209F424D800EA7C45 /* elftosb_parser.y */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.yacc; path = elftosb_parser.y; sourceTree = "<group>"; tabWidth = 4; usesTabs = 1; };
+		021CA3F00A8D16960028326F /* ExcludesListMatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExcludesListMatcher.h; sourceTree = "<group>"; };
+		021CA3F10A8D16960028326F /* ExcludesListMatcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExcludesListMatcher.cpp; sourceTree = "<group>"; };
+		022B4655121763A100A74F96 /* IVTDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IVTDataSource.h; sourceTree = "<group>"; };
+		022B4656121763A100A74F96 /* IVTDataSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IVTDataSource.cpp; sourceTree = "<group>"; };
+		024F1D5C0A0BCD7200D21D61 /* SRecordSourceFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRecordSourceFile.h; sourceTree = "<group>"; };
+		024F1D5D0A0BCD7200D21D61 /* SRecordSourceFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SRecordSourceFile.cpp; sourceTree = "<group>"; };
+		024F1D600A0BCD8300D21D61 /* ELFSourceFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ELFSourceFile.h; sourceTree = "<group>"; };
+		024F1D610A0BCD8300D21D61 /* ELFSourceFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ELFSourceFile.cpp; sourceTree = "<group>"; };
+		024F1E190A0D20C900D21D61 /* ElftosbErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ElftosbErrors.h; sourceTree = "<group>"; };
+		027402E30A0FB00000CF4BE7 /* GlobMatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlobMatcher.h; sourceTree = "<group>"; };
+		027402E40A0FB00000CF4BE7 /* GlobMatcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GlobMatcher.cpp; sourceTree = "<group>"; };
+		0296A48709D9AE9400F80AFF /* ELF.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ELF.h; sourceTree = "<group>"; };
+		0296A49309D9AE9400F80AFF /* elftosb.cpp */ = {isa = PBXFileReference; fileEncoding = 30; indentWidth = 4; lastKnownFileType = sourcecode.cpp.cpp; path = elftosb.cpp; sourceTree = "<group>"; tabWidth = 4; usesTabs = 1; };
+		0296A49E09D9AE9400F80AFF /* stdafx.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = stdafx.cpp; sourceTree = "<group>"; };
+		0296A49F09D9AE9400F80AFF /* StELFFile.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = StELFFile.cpp; sourceTree = "<group>"; };
+		0296A4A009D9AE9400F80AFF /* StELFFile.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = StELFFile.h; sourceTree = "<group>"; };
+		0296A4A409D9AE9400F80AFF /* StExecutableImage.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = StExecutableImage.cpp; sourceTree = "<group>"; };
+		0296A4A509D9AE9400F80AFF /* StExecutableImage.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = StExecutableImage.h; sourceTree = "<group>"; };
+		0296A4AA09D9AE9400F80AFF /* StSRecordFile.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = StSRecordFile.cpp; sourceTree = "<group>"; };
+		0296A4AB09D9AE9400F80AFF /* StSRecordFile.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = StSRecordFile.h; sourceTree = "<group>"; };
+		0296CF9C09DB3C5200F80AFF /* stdafx.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = stdafx.h; sourceTree = "<group>"; };
+		02C5DB910A925C61003B9C11 /* format_string.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = format_string.h; sourceTree = "<group>"; };
+		02C5DB920A925C61003B9C11 /* format_string.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = format_string.cpp; sourceTree = "<group>"; };
+		02C5DC000A93AC85003B9C11 /* EndianUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EndianUtilities.h; sourceTree = "<group>"; };
+		02CD157309F543FE00ABE650 /* ElftosbAST.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ElftosbAST.h; sourceTree = "<group>"; };
+		02CD157409F543FE00ABE650 /* ElftosbAST.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ElftosbAST.cpp; sourceTree = "<group>"; };
+		02CD158809F557D300ABE650 /* ElftosbLexer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ElftosbLexer.cpp; sourceTree = "<group>"; };
+		02D1FCA70BD02B69007C7450 /* SearchPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchPath.h; sourceTree = "<group>"; };
+		02D1FCA80BD02B69007C7450 /* SearchPath.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchPath.cpp; sourceTree = "<group>"; };
+		02D46C100FED492400E65706 /* elftosb_lexer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = elftosb_lexer.cpp; path = build/elftosb.build/Debug/elftosb.build/DerivedSources/elftosb_lexer.cpp; sourceTree = SOURCE_ROOT; };
+		02D46C110FED492400E65706 /* elftosb_parser.tab.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = elftosb_parser.tab.cpp; path = build/elftosb.build/Debug/elftosb.build/DerivedSources/elftosb_parser.tab.cpp; sourceTree = SOURCE_ROOT; };
+		02D46C120FED492400E65706 /* elftosb_parser.tab.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = elftosb_parser.tab.hpp; path = build/elftosb.build/Debug/elftosb.build/DerivedSources/elftosb_parser.tab.hpp; sourceTree = SOURCE_ROOT; };
+		02E3997909F2E0410055992A /* elftosb_lexer.l */ = {isa = PBXFileReference; explicitFileType = sourcecode.lex; fileEncoding = 4; path = elftosb_lexer.l; sourceTree = "<group>"; };
+		02E3998909F2ED990055992A /* FlexLexer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlexLexer.h; sourceTree = "<group>"; };
+		02E3998D09F2EFAA0055992A /* rijndael.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rijndael.cpp; sourceTree = "<group>"; };
+		02E3998E09F2EFAA0055992A /* rijndael.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rijndael.h; sourceTree = "<group>"; };
+		02E535B30C245AEC00CBD4A5 /* DataSourceImager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataSourceImager.h; sourceTree = "<group>"; };
+		02E535B40C245AEC00CBD4A5 /* DataSourceImager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DataSourceImager.cpp; sourceTree = "<group>"; };
+		02E9D5B009FA8AE4006D7279 /* smart_ptr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = smart_ptr.h; sourceTree = "<group>"; };
+		02E9D67309FBFE97006D7279 /* EvalContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EvalContext.h; sourceTree = "<group>"; };
+		02E9D67409FBFE98006D7279 /* EvalContext.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EvalContext.cpp; sourceTree = "<group>"; };
+		02F8D41B09FE86FA004CBE69 /* EncoreBootImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EncoreBootImage.h; sourceTree = "<group>"; };
+		02F8D41C09FE86FA004CBE69 /* EncoreBootImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EncoreBootImage.cpp; sourceTree = "<group>"; };
+		02F8D46509FEA584004CBE69 /* AESKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AESKey.h; sourceTree = "<group>"; };
+		02F8D4EF09FEE91B004CBE69 /* crc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = crc.cpp; sourceTree = "<group>"; };
+		02F8D4F009FEE91B004CBE69 /* crc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crc.h; sourceTree = "<group>"; };
+		02F8D5490A014F5D004CBE69 /* Value.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Value.h; sourceTree = "<group>"; };
+		02F8D54A0A014F5D004CBE69 /* Value.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Value.cpp; sourceTree = "<group>"; };
+		02F8D5600A0152AB004CBE69 /* SourceFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SourceFile.h; sourceTree = "<group>"; };
+		02F8D5610A0152AB004CBE69 /* SourceFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SourceFile.cpp; sourceTree = "<group>"; };
+		3B9439841C5693470061FE25 /* EncoreBootImageReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EncoreBootImageReader.cpp; sourceTree = "<group>"; };
+		3B9439851C5693470061FE25 /* EncoreBootImageReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EncoreBootImageReader.h; sourceTree = "<group>"; };
+		3BF52AEB1BD5939A00BA97D0 /* aes128_key_wrap_unwrap.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = aes128_key_wrap_unwrap.c; sourceTree = "<group>"; };
+		3BF52AEC1BD5939A00BA97D0 /* aes128_key_wrap_unwrap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aes128_key_wrap_unwrap.h; sourceTree = "<group>"; };
+		3BF52AED1BD5939A00BA97D0 /* AESCounter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AESCounter.h; sourceTree = "<group>"; };
+		3BF52AEE1BD5939A00BA97D0 /* bytes_aes.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = bytes_aes.c; sourceTree = "<group>"; };
+		3BF52AEF1BD5939A00BA97D0 /* Keyblob.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Keyblob.cpp; sourceTree = "<group>"; };
+		3BF52AF01BD5939A00BA97D0 /* Keyblob.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Keyblob.h; sourceTree = "<group>"; };
+		3BF52AF11BD5939A00BA97D0 /* KeyblobEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyblobEntry.h; sourceTree = "<group>"; };
+		3BF52AF21BD5939A00BA97D0 /* RijndaelCTR.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RijndaelCTR.cpp; sourceTree = "<group>"; };
+		3BF52AF31BD5939A00BA97D0 /* RijndaelCTR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RijndaelCTR.h; sourceTree = "<group>"; };
+		6C51FA571F913872008DC52C /* iMXImageGenerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = iMXImageGenerator.cpp; sourceTree = "<group>"; };
+		6C51FA581F913872008DC52C /* iMXImageGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iMXImageGenerator.h; sourceTree = "<group>"; };
+		6C51FA591F913872008DC52C /* SB2ImageGenerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SB2ImageGenerator.cpp; sourceTree = "<group>"; };
+		6C51FA5A1F913872008DC52C /* SB2ImageGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SB2ImageGenerator.h; sourceTree = "<group>"; };
+		6C51FA5D1F91388B008DC52C /* iMXImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = iMXImage.cpp; sourceTree = "<group>"; };
+		6C51FA5E1F91388B008DC52C /* iMXImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iMXImage.h; sourceTree = "<group>"; };
+		6C51FA5F1F91388B008DC52C /* SB2Image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SB2Image.cpp; sourceTree = "<group>"; };
+		6C51FA601F91388B008DC52C /* SB2Image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SB2Image.h; sourceTree = "<group>"; };
+		6C51FA631F9138D0008DC52C /* libmbedcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libmbedcrypto.a; path = mbedtls/library/libmbedcrypto.a; sourceTree = "<group>"; };
+		6C51FA641F9138D0008DC52C /* libmbedtls.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libmbedtls.a; path = mbedtls/library/libmbedtls.a; sourceTree = "<group>"; };
+		6C51FA651F9138D0008DC52C /* libmbedx509.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libmbedx509.a; path = mbedtls/library/libmbedx509.a; sourceTree = "<group>"; };
+		6C51FA691F9138D0008DC52C /* elftosb */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = elftosb; path = "/Users/momentum/Desktop/final_Darwin/mcu-elftosb/build/Debug/elftosb"; sourceTree = "<absolute>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8DD76F660486A84900D96B5E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6C51FA661F9138D0008DC52C /* libmbedcrypto.a in Frameworks */,
+				6C51FA671F9138D0008DC52C /* libmbedtls.a in Frameworks */,
+				6C51FA681F9138D0008DC52C /* libmbedx509.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		020D47700A1691F10027E24E /* common */ = {
+			isa = PBXGroup;
+			children = (
+				3BF52AEB1BD5939A00BA97D0 /* aes128_key_wrap_unwrap.c */,
+				3BF52AEC1BD5939A00BA97D0 /* aes128_key_wrap_unwrap.h */,
+				3BF52AED1BD5939A00BA97D0 /* AESCounter.h */,
+				0208C08B0A05677000255D31 /* AESKey.cpp */,
+				02F8D46509FEA584004CBE69 /* AESKey.h */,
+				02123F300A6B057E003CF33F /* Blob.cpp */,
+				02123F2F0A6B057E003CF33F /* Blob.h */,
+				020D41AE0A0FFB040027E24E /* BootImage.h */,
+				3BF52AEE1BD5939A00BA97D0 /* bytes_aes.c */,
+				02F8D4EF09FEE91B004CBE69 /* crc.cpp */,
+				02F8D4F009FEE91B004CBE69 /* crc.h */,
+				0208C2880A0A4E5F00255D31 /* DataSource.cpp */,
+				0208C2890A0A4E5F00255D31 /* DataSource.h */,
+				02E535B40C245AEC00CBD4A5 /* DataSourceImager.cpp */,
+				02E535B30C245AEC00CBD4A5 /* DataSourceImager.h */,
+				0208C28C0A0A4E5F00255D31 /* DataTarget.cpp */,
+				0208C28D0A0A4E5F00255D31 /* DataTarget.h */,
+				0296A48709D9AE9400F80AFF /* ELF.h */,
+				024F1D610A0BCD8300D21D61 /* ELFSourceFile.cpp */,
+				024F1D600A0BCD8300D21D61 /* ELFSourceFile.h */,
+				02F8D41C09FE86FA004CBE69 /* EncoreBootImage.cpp */,
+				02F8D41B09FE86FA004CBE69 /* EncoreBootImage.h */,
+				3B9439841C5693470061FE25 /* EncoreBootImageReader.cpp */,
+				3B9439851C5693470061FE25 /* EncoreBootImageReader.h */,
+				02C5DC000A93AC85003B9C11 /* EndianUtilities.h */,
+				02E9D67409FBFE98006D7279 /* EvalContext.cpp */,
+				02E9D67309FBFE97006D7279 /* EvalContext.h */,
+				021CA3F10A8D16960028326F /* ExcludesListMatcher.cpp */,
+				021CA3F00A8D16960028326F /* ExcludesListMatcher.h */,
+				02C5DB920A925C61003B9C11 /* format_string.cpp */,
+				02C5DB910A925C61003B9C11 /* format_string.h */,
+				020D45050A1523350027E24E /* GHSSecInfo.cpp */,
+				020D45040A1523350027E24E /* GHSSecInfo.h */,
+				027402E40A0FB00000CF4BE7 /* GlobMatcher.cpp */,
+				027402E30A0FB00000CF4BE7 /* GlobMatcher.h */,
+				02123F380A6B09CF003CF33F /* HexValues.cpp */,
+				02123F370A6B09CF003CF33F /* HexValues.h */,
+				6C51FA5D1F91388B008DC52C /* iMXImage.cpp */,
+				6C51FA5E1F91388B008DC52C /* iMXImage.h */,
+				0208C2E00A0AA4F700255D31 /* int_size.h */,
+				022B4656121763A100A74F96 /* IVTDataSource.cpp */,
+				022B4655121763A100A74F96 /* IVTDataSource.h */,
+				3BF52AEF1BD5939A00BA97D0 /* Keyblob.cpp */,
+				3BF52AF01BD5939A00BA97D0 /* Keyblob.h */,
+				3BF52AF11BD5939A00BA97D0 /* KeyblobEntry.h */,
+				020D43A60A14D7E20027E24E /* Logging.cpp */,
+				020D43A50A14D7E20027E24E /* Logging.h */,
+				0208C28A0A0A4E5F00255D31 /* Operation.cpp */,
+				0208C28B0A0A4E5F00255D31 /* Operation.h */,
+				020D454F0A1533550027E24E /* OptionContext.h */,
+				020DDBEB0A1D08AD00E1CB49 /* OptionDictionary.cpp */,
+				020DDBEA0A1D08AD00E1CB49 /* OptionDictionary.h */,
+				0208C03D0A0544BA00255D31 /* options.cpp */,
+				0208C03E0A0544BA00255D31 /* options.h */,
+				020D41860A0FF0C20027E24E /* OutputSection.cpp */,
+				020D41850A0FF0C20027E24E /* OutputSection.h */,
+				0208BF4B0A03137800255D31 /* Random.cpp */,
+				0208BF4A0A03137800255D31 /* Random.h */,
+				02E3998D09F2EFAA0055992A /* rijndael.cpp */,
+				02E3998E09F2EFAA0055992A /* rijndael.h */,
+				0208BF8A0A03E04800255D31 /* RijndaelCBCMAC.cpp */,
+				0208BF890A03E04800255D31 /* RijndaelCBCMAC.h */,
+				3BF52AF21BD5939A00BA97D0 /* RijndaelCTR.cpp */,
+				3BF52AF31BD5939A00BA97D0 /* RijndaelCTR.h */,
+				6C51FA5F1F91388B008DC52C /* SB2Image.cpp */,
+				6C51FA601F91388B008DC52C /* SB2Image.h */,
+				02D1FCA80BD02B69007C7450 /* SearchPath.cpp */,
+				02D1FCA70BD02B69007C7450 /* SearchPath.h */,
+				0208BEB10A02D2B800255D31 /* SHA1.cpp */,
+				0208BEB20A02D2B800255D31 /* SHA1.h */,
+				02E9D5B009FA8AE4006D7279 /* smart_ptr.h */,
+				02F8D5610A0152AB004CBE69 /* SourceFile.cpp */,
+				02F8D5600A0152AB004CBE69 /* SourceFile.h */,
+				024F1D5D0A0BCD7200D21D61 /* SRecordSourceFile.cpp */,
+				024F1D5C0A0BCD7200D21D61 /* SRecordSourceFile.h */,
+				0296A49E09D9AE9400F80AFF /* stdafx.cpp */,
+				0296CF9C09DB3C5200F80AFF /* stdafx.h */,
+				0296A49F09D9AE9400F80AFF /* StELFFile.cpp */,
+				0296A4A009D9AE9400F80AFF /* StELFFile.h */,
+				0296A4A409D9AE9400F80AFF /* StExecutableImage.cpp */,
+				0296A4A509D9AE9400F80AFF /* StExecutableImage.h */,
+				020D416A0A0FE8AC0027E24E /* StringMatcher.h */,
+				0296A4AA09D9AE9400F80AFF /* StSRecordFile.cpp */,
+				0296A4AB09D9AE9400F80AFF /* StSRecordFile.h */,
+				02F8D54A0A014F5D004CBE69 /* Value.cpp */,
+				02F8D5490A014F5D004CBE69 /* Value.h */,
+				020D41A40A0FF8880027E24E /* Version.cpp */,
+				020D41A30A0FF8880027E24E /* Version.h */,
+			);
+			path = common;
+			sourceTree = "<group>";
+		};
+		0296A45909D9AE9400F80AFF /* elftosb2 */ = {
+			isa = PBXGroup;
+			children = (
+				020D41980A0FF5BF0027E24E /* BootImageGenerator.cpp */,
+				020D41970A0FF5BF0027E24E /* BootImageGenerator.h */,
+				0208C2990A0A4EE800255D31 /* ConversionController.cpp */,
+				0208C29A0A0A4EE800255D31 /* ConversionController.h */,
+				02D46C140FED492C00E65706 /* Derived Sources */,
+				02E3997909F2E0410055992A /* elftosb_lexer.l */,
+				0215B3D209F424D800EA7C45 /* elftosb_parser.y */,
+				0296A49309D9AE9400F80AFF /* elftosb.cpp */,
+				02CD157409F543FE00ABE650 /* ElftosbAST.cpp */,
+				02CD157309F543FE00ABE650 /* ElftosbAST.h */,
+				024F1E190A0D20C900D21D61 /* ElftosbErrors.h */,
+				02CD158809F557D300ABE650 /* ElftosbLexer.cpp */,
+				0215B3BA09F3FBF100EA7C45 /* ElftosbLexer.h */,
+				020D41B80A0FFD140027E24E /* EncoreBootImageGenerator.cpp */,
+				020D41B70A0FFD140027E24E /* EncoreBootImageGenerator.h */,
+				02E3998909F2ED990055992A /* FlexLexer.h */,
+				6C51FA571F913872008DC52C /* iMXImageGenerator.cpp */,
+				6C51FA581F913872008DC52C /* iMXImageGenerator.h */,
+				6C51FA591F913872008DC52C /* SB2ImageGenerator.cpp */,
+				6C51FA5A1F913872008DC52C /* SB2ImageGenerator.h */,
+			);
+			path = elftosb2;
+			sourceTree = "<group>";
+		};
+		02D46C140FED492C00E65706 /* Derived Sources */ = {
+			isa = PBXGroup;
+			children = (
+				02D46C100FED492400E65706 /* elftosb_lexer.cpp */,
+				02D46C110FED492400E65706 /* elftosb_parser.tab.cpp */,
+				02D46C120FED492400E65706 /* elftosb_parser.tab.hpp */,
+			);
+			name = "Derived Sources";
+			sourceTree = "<group>";
+		};
+		08FB7794FE84155DC02AAC07 /* elftosb */ = {
+			isa = PBXGroup;
+			children = (
+				6C51FA631F9138D0008DC52C /* libmbedcrypto.a */,
+				6C51FA641F9138D0008DC52C /* libmbedtls.a */,
+				6C51FA651F9138D0008DC52C /* libmbedx509.a */,
+				08FB7795FE84155DC02AAC07 /* Source */,
+			);
+			name = elftosb;
+			sourceTree = "<group>";
+		};
+		08FB7795FE84155DC02AAC07 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				0296A45909D9AE9400F80AFF /* elftosb2 */,
+				020D47700A1691F10027E24E /* common */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8DD76F620486A84900D96B5E /* elftosb */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1DEB923108733DC60010E9CD /* Build configuration list for PBXNativeTarget "elftosb" */;
+			buildPhases = (
+				8DD76F640486A84900D96B5E /* Sources */,
+				8DD76F660486A84900D96B5E /* Frameworks */,
+			);
+			buildRules = (
+				0215B3D609F4255D00EA7C45 /* PBXBuildRule */,
+				0215B3D509F4254100EA7C45 /* PBXBuildRule */,
+				0296CF9309DB3B8700F80AFF /* PBXBuildRule */,
+			);
+			dependencies = (
+			);
+			name = elftosb;
+			productInstallPath = "$(HOME)/bin";
+			productName = elftosb;
+			productReference = 6C51FA691F9138D0008DC52C /* elftosb */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		08FB7793FE84155DC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0620;
+			};
+			buildConfigurationList = 1DEB923508733DC60010E9CD /* Build configuration list for PBXProject "elftosb" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 08FB7794FE84155DC02AAC07 /* elftosb */;
+			productRefGroup = 08FB7794FE84155DC02AAC07 /* elftosb */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8DD76F620486A84900D96B5E /* elftosb */,
+				020DDCE80A1E858600E1CB49 /* Everything */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8DD76F640486A84900D96B5E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0215B3D309F424D800EA7C45 /* elftosb_parser.y in Sources */,
+				0215B3E909F4277100EA7C45 /* elftosb_lexer.l in Sources */,
+				0296A4E709D9AE9400F80AFF /* elftosb.cpp in Sources */,
+				0296A4F209D9AE9400F80AFF /* stdafx.cpp in Sources */,
+				0296A4F309D9AE9400F80AFF /* StELFFile.cpp in Sources */,
+				0296A4F809D9AE9400F80AFF /* StExecutableImage.cpp in Sources */,
+				0296A4FE09D9AE9400F80AFF /* StSRecordFile.cpp in Sources */,
+				02E3998F09F2EFAA0055992A /* rijndael.cpp in Sources */,
+				6C51FA5B1F913872008DC52C /* iMXImageGenerator.cpp in Sources */,
+				02CD157609F543FE00ABE650 /* ElftosbAST.cpp in Sources */,
+				02CD158909F557D300ABE650 /* ElftosbLexer.cpp in Sources */,
+				02E9D67609FBFE98006D7279 /* EvalContext.cpp in Sources */,
+				02F8D41E09FE86FB004CBE69 /* EncoreBootImage.cpp in Sources */,
+				3BF52AF71BD5939A00BA97D0 /* RijndaelCTR.cpp in Sources */,
+				02F8D4F109FEE91B004CBE69 /* crc.cpp in Sources */,
+				02F8D54C0A014F5D004CBE69 /* Value.cpp in Sources */,
+				02F8D5630A0152AB004CBE69 /* SourceFile.cpp in Sources */,
+				0208BEB30A02D2B800255D31 /* SHA1.cpp in Sources */,
+				0208BF4D0A03137800255D31 /* Random.cpp in Sources */,
+				0208BF8C0A03E04800255D31 /* RijndaelCBCMAC.cpp in Sources */,
+				0208C03F0A0544BA00255D31 /* options.cpp in Sources */,
+				0208C08C0A05677000255D31 /* AESKey.cpp in Sources */,
+				3BF52AF51BD5939A00BA97D0 /* bytes_aes.c in Sources */,
+				0208C28E0A0A4E5F00255D31 /* DataSource.cpp in Sources */,
+				0208C2900A0A4E5F00255D31 /* Operation.cpp in Sources */,
+				0208C2920A0A4E5F00255D31 /* DataTarget.cpp in Sources */,
+				0208C29B0A0A4EE800255D31 /* ConversionController.cpp in Sources */,
+				024F1D5F0A0BCD7200D21D61 /* SRecordSourceFile.cpp in Sources */,
+				024F1D630A0BCD8300D21D61 /* ELFSourceFile.cpp in Sources */,
+				027402E60A0FB00000CF4BE7 /* GlobMatcher.cpp in Sources */,
+				020D41880A0FF0C20027E24E /* OutputSection.cpp in Sources */,
+				020D419A0A0FF5BF0027E24E /* BootImageGenerator.cpp in Sources */,
+				020D41A60A0FF8880027E24E /* Version.cpp in Sources */,
+				6C51FA621F91388B008DC52C /* SB2Image.cpp in Sources */,
+				6C51FA611F91388B008DC52C /* iMXImage.cpp in Sources */,
+				020D41BA0A0FFD140027E24E /* EncoreBootImageGenerator.cpp in Sources */,
+				3BF52AF61BD5939A00BA97D0 /* Keyblob.cpp in Sources */,
+				020D43A80A14D7E20027E24E /* Logging.cpp in Sources */,
+				3BF52AF41BD5939A00BA97D0 /* aes128_key_wrap_unwrap.c in Sources */,
+				020D45070A1523350027E24E /* GHSSecInfo.cpp in Sources */,
+				020DDBED0A1D08AD00E1CB49 /* OptionDictionary.cpp in Sources */,
+				6C51FA5C1F913872008DC52C /* SB2ImageGenerator.cpp in Sources */,
+				02123F320A6B057E003CF33F /* Blob.cpp in Sources */,
+				02123F3A0A6B09CF003CF33F /* HexValues.cpp in Sources */,
+				021CA3F30A8D16960028326F /* ExcludesListMatcher.cpp in Sources */,
+				02C5DB940A925C61003B9C11 /* format_string.cpp in Sources */,
+				02D1FCA90BD02B69007C7450 /* SearchPath.cpp in Sources */,
+				02E535B50C245AEC00CBD4A5 /* DataSourceImager.cpp in Sources */,
+				3B9439861C5693470061FE25 /* EncoreBootImageReader.cpp in Sources */,
+				022B4657121763A100A74F96 /* IVTDataSource.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		020DDCEA0A1E858D00E1CB49 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8DD76F620486A84900D96B5E /* elftosb */;
+			targetProxy = 020DDCE90A1E858D00E1CB49 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		020DDCF10A1E85BA00E1CB49 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = Everything;
+			};
+			name = Debug;
+		};
+		020DDCF20A1E85BA00E1CB49 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				PRODUCT_NAME = Everything;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		1DEB923208733DC60010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					SHA1_NO_UTILITY_FUNCTIONS,
+					"$(GCC_PREPROCESSOR_DEFINITIONS)",
+					MACOSX,
+				);
+				HEADER_SEARCH_PATHS = "${SRCROOT}/mbedtls/include";
+				INSTALL_PATH = "$(HOME)/bin";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/mbedtls/library",
+				);
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = elftosb;
+				SDKROOT = macosx;
+				ZERO_LINK = NO;
+			};
+			name = Debug;
+		};
+		1DEB923308733DC60010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					SHA1_NO_UTILITY_FUNCTIONS,
+					"$(GCC_PREPROCESSOR_DEFINITIONS)",
+					MACOSX,
+				);
+				HEADER_SEARCH_PATHS = "${SRCROOT}/mbedtls/include";
+				INSTALL_PATH = "$(HOME)/bin";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/mbedtls/library",
+				);
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = elftosb;
+				SDKROOT = macosx;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		1DEB923608733DC60010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		1DEB923708733DC60010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		020DDCF00A1E85BA00E1CB49 /* Build configuration list for PBXAggregateTarget "Everything" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				020DDCF10A1E85BA00E1CB49 /* Debug */,
+				020DDCF20A1E85BA00E1CB49 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1DEB923108733DC60010E9CD /* Build configuration list for PBXNativeTarget "elftosb" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB923208733DC60010E9CD /* Debug */,
+				1DEB923308733DC60010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1DEB923508733DC60010E9CD /* Build configuration list for PBXProject "elftosb" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB923608733DC60010E9CD /* Debug */,
+				1DEB923708733DC60010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 08FB7793FE84155DC02AAC07 /* Project object */;
+}

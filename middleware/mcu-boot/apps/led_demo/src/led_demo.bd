@@ -1,0 +1,12 @@
+sources {
+     demo = extern(0);
+}
+
+section (0) {
+     erase all;
+
+     load $A1*, $P1* from demo;
+
+     // jump to entry point
+     jump demo;
+}

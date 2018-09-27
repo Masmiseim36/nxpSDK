@@ -33,6 +33,24 @@ AwsRemoteControl           Location: boards/<board>/aws_examples/remote_contr
                            version: 1.0                                      
                            Format: binary                                    
 
+Bootloader Source          Description: Software drivers for Bootloaders and 
+                           Flashloaders                                      
+                           Author: NXP                                       
+                           License: Open Source - BSD-3-Clause               
+                           Format: source code                               
+                           Location: middleware/mcu-boot                     
+
+Bootloader Source, Host    Description: C++ interface to the Vincent Rijmen's
+Source - blfwk.lib         Rijndael block cipher                             
+                           Author: Szymon Stefanek (stefanek@tin.it)         
+                           License: Public Domain                            
+                           URL: http://www.pragmaware.net/software/rijndael/i
+                           ndex.php                                          
+                           Format: source code                               
+                           Location: middleware/mcu-                         
+                           boot/tools/src/blfwk/rijndael.h, middleware/mcu-  
+                           boot/tools/src/blfwk/src/rijndael.cpp             
+
 CMSIS Core header files    Author: ARM                                       
                            parentversion: 5.0.1                              
                            URL: http://silver.arm.com                        
@@ -98,6 +116,42 @@ Gradle                     version: 4.1
                            name: Gradle                                      
                            Format: binary library                            
                            URL: https://github.com/gradle/gradle             
+
+Host tools - JSON support  Description: Windows JSON support                 
+                           Author: JSONCPP                                   
+                           License: Open Source - MIT                        
+                           Format: source code                               
+                           Location: middleware/mcu-                         
+                           boot/tools/src/blfwk/json.h, middleware/mcu-      
+                           boot/tools/src/blfwk/src/jsoncpp.cpp              
+
+Host tools - Serial        Description: Windows Serial peripheral support    
+support                    Author: Bus Pirate Project                        
+                           License: Open Source - CC0-1.0 (Creative Commons  
+                           Zero)                                             
+                           URL: http://code.google.com/p/the-bus-pirate/     
+                           Format: source code                               
+                           Location: middleware/mcu-                         
+                           boot/tools/src/blfwk/serial.h, middleware/mcu-    
+                           boot/tools/src/blfwk/src/serial.c                 
+
+Host tools - USB HID       Description: Windows USB HID support              
+support                    Author: HIDAPI                                    
+                           License: Open Source - BSD-3-Clause               
+                           URL: http://github.com/signal11/hidapi            
+                           Format: source code                               
+                           Location: middleware/mcu-                         
+                           boot/tools/src/blfwk/hidapi.h, middleware/mcu-    
+                           boot/tools/src/blfwk/src/hid-*.c                  
+
+Host tools - options       Description: Command line parsing utility         
+support                    Author: bradapp@enteract.com                      
+                           License: Open Source - MIT                        
+                           URL: http://www.bradapp.com                       
+                           Format: source code                               
+                           Location: middleware/mcu-                         
+                           boot/tools/src/blfwk/options.h, middleware/mcu-   
+                           boot/tools/src/blfwk/src/options.cpp              
 
 ISSDK                      version: 1.7                                      
                            Location: middleware/issdk                        
@@ -440,6 +494,16 @@ USB                        version: 1.6.3
                            Author: Freescale                                 
                            name: USB                                         
                            Format: source code                               
+
+Utility Source - elf.py    Description: Python implementation of an ELF file 
+                           reader                                            
+                           Author: Chris Liechti (cliechti@gmx.net)          
+                           License: BSD License                              
+                           URL: http://bazaar.launchpad.net/~zsquareplusc    
+                           /python-                                          
+                           msp430-tools/trunk/view/head:/msp430/memory/elf.py
+                           Format: source code                               
+                           Location: middleware/mcu-boot/bin/elf.py          
 
 eRPC                       version: 4.5.0                                    
                            Location: middleware/multicore/erpc               

@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.3.xsd" format_version="3.3" api_version="2.0.0" name="SDK version 2.4.2 package for EVKB-IMXRT1050 board" brief="This is SDK version 2.4.2 manifest file. It describes the content of the SDK version 2.4.2 package for EVKB-IMXRT1050 board and additional settings for tools that support SDK version 2.4.2" id="SDK_2.x_EVKB-IMXRT1050" configuration="1d6d4f8eda932d228b82e059a1b3f115">
+<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.3.xsd" format_version="3.3" api_version="2.0.0" name="SDK version 2.4.2 package for EVKB-IMXRT1050 board" brief="This is SDK version 2.4.2 manifest file. It describes the content of the SDK version 2.4.2 package for EVKB-IMXRT1050 board and additional settings for tools that support SDK version 2.4.2" id="SDK_2.x_EVKB-IMXRT1050" configuration="e1a5bd56ae6976471e0563359308a89c">
   <defines>
     <define name="CPU_$|package|" value=""/>
     <define name="CPU_$|package|_$|core|" value=""/>
   </defines>
-  <ksdk id="KSDK242" name="KSDK242" version="2.4.2" revision="3c928c3fb69 2018-08-02"/>
+  <ksdk id="KSDK242" name="KSDK242" version="2.4.2" revision="6ac87859e74 2018-09-14"/>
   <compilers>
     <compiler id="compiler_arm" type="arm" name="arm"/>
     <compiler id="compiler_gcc" type="gcc" name="gcc"/>
@@ -90,6 +90,69 @@ ${run}
     <toolchain id="mdk" name="Keil_MDK" full_name="Keil MDK" type="mdk" compiler="compiler_arm" version="5.24" vendor="ARM" vendor_url="http://www.arm.com"/>
   </toolchains>
   <boards>
+    <board id="evkbimxrt1050_agm01" name="EVKB-IMXRT1050-AGM01" package="MIMXRT1052DVL6B" type="kit" version="1.0.0" full_name="EVKB-IMXRT1050 with AGM01" href="http://www.nxp.com/FRDM-STBC-AGM01">
+      <description>
+Sensor Toolbox Development Platform for FXAS21002C and FXOS8700C 9-Axis Solution
+        </description>
+      <image type="image" path="docs/images">
+        <files mask="EVKB-IMXRT1050-AGM01.gif"/>
+      </image>
+      <metadataSet>
+        <metadata key="vendor" value="NXP"/>
+        <metadata key="html">
+          <specific>
+            <content>
+Demonstration Custom Kit (FRDM-STBC-AGM01 Sensor Shield Development Board with EVKB-IMXRT1050 Board):
+&lt;ul&gt;
+&lt;li&gt;Enables quick and easy visualization of 9-Axis (3 Axis Gyroscope + 6-Axis E-compass) sensor data and results.&lt;/li&gt;
+&lt;/ul&gt;
+        </content>
+          </specific>
+        </metadata>
+      </metadataSet>
+      <memory ram_size_kb="32768" flash_size_kb="65536">
+        <memoryBlock id="BOARD_FLASH_evkbimxrt1050_agm01" name="BOARD_FLASH" addr="60000000" size="04000000" type="ExtFlash" access="RO"/>
+        <memoryBlock id="BOARD_SDRAM_evkbimxrt1050_agm01" name="BOARD_SDRAM" addr="80000000" size="02000000" type="RAM" access="RW"/>
+      </memory>
+      <examples>
+        <example id="evkbimxrt1050_agm01_fxas21002_fifo" name="fxas21002_fifo" category="issdk/sensors" path="boards/evkbimxrt1050_agm01/issdk_examples/sensors/fxas21002/fxas21002_fifo" toolchain="armgcc iar mcuxpresso mdk">
+          <external path="boards/evkbimxrt1050_agm01/issdk_examples/sensors/fxas21002/fxas21002_fifo" type="xml">
+            <files mask="fxas21002_fifo.xml"/>
+          </external>
+        </example>
+        <example id="evkbimxrt1050_agm01_fxas21002_poll" name="fxas21002_poll" category="issdk/sensors" path="boards/evkbimxrt1050_agm01/issdk_examples/sensors/fxas21002/fxas21002_poll" toolchain="armgcc iar mcuxpresso mdk">
+          <external path="boards/evkbimxrt1050_agm01/issdk_examples/sensors/fxas21002/fxas21002_poll" type="xml">
+            <files mask="fxas21002_poll.xml"/>
+          </external>
+        </example>
+        <example id="evkbimxrt1050_agm01_fxos8700_fifo" name="fxos8700_fifo" category="issdk/sensors" path="boards/evkbimxrt1050_agm01/issdk_examples/sensors/fxos8700/fxos8700_fifo" toolchain="armgcc iar mcuxpresso mdk">
+          <external path="boards/evkbimxrt1050_agm01/issdk_examples/sensors/fxos8700/fxos8700_fifo" type="xml">
+            <files mask="fxos8700_fifo.xml"/>
+          </external>
+        </example>
+        <example id="evkbimxrt1050_agm01_fxos8700_poll" name="fxos8700_poll" category="issdk/sensors" path="boards/evkbimxrt1050_agm01/issdk_examples/sensors/fxos8700/fxos8700_poll" toolchain="armgcc iar mcuxpresso mdk">
+          <external path="boards/evkbimxrt1050_agm01/issdk_examples/sensors/fxos8700/fxos8700_poll" type="xml">
+            <files mask="fxos8700_poll.xml"/>
+          </external>
+        </example>
+      </examples>
+      <debug_configurations>
+        <debug_configuration id_refs="com.crt.advproject.config.exe.debug com.crt.advproject.config.exe.release">
+          <drivers>
+            <driver id_refs="BOARD_FLASH_evkbimxrt1050_agm01">
+              <driverBinary path="devices/MIMXRT1052/mcuxpresso" type="binary">
+                <files mask="MIMXRT1050-EVK_S26KS512S.cfx"/>
+              </driverBinary>
+            </driver>
+            <driver id_refs="BOARD_FLASH_evkbimxrt1050_agm01">
+              <driverBinary path="devices/MIMXRT1052/mcuxpresso" type="binary">
+                <files mask="MIMXRT1050-EVK_IS25WP064A.cfx"/>
+              </driverBinary>
+            </driver>
+          </drivers>
+        </debug_configuration>
+      </debug_configurations>
+    </board>
     <board id="evkbimxrt1050" name="EVKB-IMXRT1050" package="MIMXRT1052DVL6B" version="1.0.0" href="https://www.nxp.com/mimxrt1050-evk">
       <description>IMXRT1050-EVKB: EVK Development Platform for i.MX MIMXRT1052 and MIMXRT1051 MCUs</description>
       <image type="image" path="docs/images">
@@ -137,6 +200,21 @@ The NXP IMXRT1050-EVKB is a development board for the i.MX MIMXRT1052 and MIMXRT
         <example id="evkbimxrt1050_aws_shadow_wifi" name="aws_shadow_wifi" category="aws_examples" path="boards/evkbimxrt1050/aws_examples/shadow_wifi" toolchain="armgcc iar mcuxpresso mdk">
           <external path="boards/evkbimxrt1050/aws_examples/shadow_wifi" type="xml">
             <files mask="aws_shadow_wifi.xml"/>
+          </external>
+        </example>
+        <example id="evkbimxrt1050_led_demo_evk_flexspi_nor" name="led_demo_evk_flexspi_nor" category="bootloader_examples/demo_apps" path="boards/evkbimxrt1050/bootloader_examples/demo_apps/led_demo_evk_flexspi_nor" toolchain="iar mcuxpresso mdk">
+          <external path="boards/evkbimxrt1050/bootloader_examples/demo_apps/led_demo_evk_flexspi_nor" type="xml">
+            <files mask="led_demo_evk_flexspi_nor.xml"/>
+          </external>
+        </example>
+        <example id="evkbimxrt1050_led_demo_evk_ram" name="led_demo_evk_ram" category="bootloader_examples/demo_apps" path="boards/evkbimxrt1050/bootloader_examples/demo_apps/led_demo_evk_ram" toolchain="iar mcuxpresso mdk">
+          <external path="boards/evkbimxrt1050/bootloader_examples/demo_apps/led_demo_evk_ram" type="xml">
+            <files mask="led_demo_evk_ram.xml"/>
+          </external>
+        </example>
+        <example id="evkbimxrt1050_flashloader" name="flashloader" category="bootloader_examples" path="boards/evkbimxrt1050/bootloader_examples/flashloader" toolchain="iar mcuxpresso mdk">
+          <external path="boards/evkbimxrt1050/bootloader_examples/flashloader" type="xml">
+            <files mask="flashloader.xml"/>
           </external>
         </example>
         <example id="evkbimxrt1050_cmsis_lpi2c_edma_b2b_transfer_master" name="cmsis_lpi2c_edma_b2b_transfer_master" category="cmsis_driver_examples/lpi2c" path="boards/evkbimxrt1050/cmsis_driver_examples/lpi2c/edma_b2b_transfer/master" toolchain="armgcc iar mcuxpresso mdk">
@@ -1222,69 +1300,6 @@ The NXP IMXRT1050-EVKB is a development board for the i.MX MIMXRT1052 and MIMXRT
         </debug_configuration>
       </debug_configurations>
     </board>
-    <board id="evkbimxrt1050_agm01" name="EVKB-IMXRT1050-AGM01" package="MIMXRT1052DVL6B" type="kit" version="1.0.0" full_name="EVKB-IMXRT1050 with AGM01" href="http://www.nxp.com/FRDM-STBC-AGM01">
-      <description>
-Sensor Toolbox Development Platform for FXAS21002C and FXOS8700C 9-Axis Solution
-        </description>
-      <image type="image" path="docs/images">
-        <files mask="EVKB-IMXRT1050-AGM01.gif"/>
-      </image>
-      <metadataSet>
-        <metadata key="vendor" value="NXP"/>
-        <metadata key="html">
-          <specific>
-            <content>
-Demonstration Custom Kit (FRDM-STBC-AGM01 Sensor Shield Development Board with EVKB-IMXRT1050 Board):
-&lt;ul&gt;
-&lt;li&gt;Enables quick and easy visualization of 9-Axis (3 Axis Gyroscope + 6-Axis E-compass) sensor data and results.&lt;/li&gt;
-&lt;/ul&gt;
-        </content>
-          </specific>
-        </metadata>
-      </metadataSet>
-      <memory ram_size_kb="32768" flash_size_kb="65536">
-        <memoryBlock id="BOARD_FLASH_evkbimxrt1050_agm01" name="BOARD_FLASH" addr="60000000" size="04000000" type="ExtFlash" access="RO"/>
-        <memoryBlock id="BOARD_SDRAM_evkbimxrt1050_agm01" name="BOARD_SDRAM" addr="80000000" size="02000000" type="RAM" access="RW"/>
-      </memory>
-      <examples>
-        <example id="evkbimxrt1050_agm01_fxas21002_fifo" name="fxas21002_fifo" category="issdk/sensors" path="boards/evkbimxrt1050_agm01/issdk_examples/sensors/fxas21002/fxas21002_fifo" toolchain="armgcc iar mcuxpresso mdk">
-          <external path="boards/evkbimxrt1050_agm01/issdk_examples/sensors/fxas21002/fxas21002_fifo" type="xml">
-            <files mask="fxas21002_fifo.xml"/>
-          </external>
-        </example>
-        <example id="evkbimxrt1050_agm01_fxas21002_poll" name="fxas21002_poll" category="issdk/sensors" path="boards/evkbimxrt1050_agm01/issdk_examples/sensors/fxas21002/fxas21002_poll" toolchain="armgcc iar mcuxpresso mdk">
-          <external path="boards/evkbimxrt1050_agm01/issdk_examples/sensors/fxas21002/fxas21002_poll" type="xml">
-            <files mask="fxas21002_poll.xml"/>
-          </external>
-        </example>
-        <example id="evkbimxrt1050_agm01_fxos8700_fifo" name="fxos8700_fifo" category="issdk/sensors" path="boards/evkbimxrt1050_agm01/issdk_examples/sensors/fxos8700/fxos8700_fifo" toolchain="armgcc iar mcuxpresso mdk">
-          <external path="boards/evkbimxrt1050_agm01/issdk_examples/sensors/fxos8700/fxos8700_fifo" type="xml">
-            <files mask="fxos8700_fifo.xml"/>
-          </external>
-        </example>
-        <example id="evkbimxrt1050_agm01_fxos8700_poll" name="fxos8700_poll" category="issdk/sensors" path="boards/evkbimxrt1050_agm01/issdk_examples/sensors/fxos8700/fxos8700_poll" toolchain="armgcc iar mcuxpresso mdk">
-          <external path="boards/evkbimxrt1050_agm01/issdk_examples/sensors/fxos8700/fxos8700_poll" type="xml">
-            <files mask="fxos8700_poll.xml"/>
-          </external>
-        </example>
-      </examples>
-      <debug_configurations>
-        <debug_configuration id_refs="com.crt.advproject.config.exe.debug com.crt.advproject.config.exe.release">
-          <drivers>
-            <driver id_refs="BOARD_FLASH_evkbimxrt1050_agm01">
-              <driverBinary path="devices/MIMXRT1052/mcuxpresso" type="binary">
-                <files mask="MIMXRT1050-EVK_S26KS512S.cfx"/>
-              </driverBinary>
-            </driver>
-            <driver id_refs="BOARD_FLASH_evkbimxrt1050_agm01">
-              <driverBinary path="devices/MIMXRT1052/mcuxpresso" type="binary">
-                <files mask="MIMXRT1050-EVK_IS25WP064A.cfx"/>
-              </driverBinary>
-            </driver>
-          </drivers>
-        </debug_configuration>
-      </debug_configurations>
-    </board>
     <board id="evkbimxrt1050_om13588" name="EVKB-IMXRT1050-OM13588" package="MIMXRT1052DVL6B" type="kit" version="1.0.0" href="http://www.nxp.com/products/interfaces/usb-interfaces/usb-type-c-shield-board-for-kinetis-freedom-board:OM13588">
       <description>
 USB Type-C Shield Board for Kinetis Freedom Board
@@ -1894,9 +1909,9 @@ The MIMXRT1052 are ARM Cortex-M7 based microcontrollers for embedded application
     </component>
     <component id="platform.drivers.xip.MIMXRT1052" name="xip" full_name="XIP Driver" type="driver" brief="XIP Driver" devices="MIMXRT1052xxxxB" version="2.0.0" user_visible="true">
       <defines>
-        <define name="XIP_BOOT_HEADER_DCD_ENABLE=1" value=""/>
-        <define name="XIP_BOOT_HEADER_ENABLE=1" value=""/>
         <define name="XIP_EXTERNAL_FLASH=1" value=""/>
+        <define name="XIP_BOOT_HEADER_ENABLE=1" value=""/>
+        <define name="XIP_BOOT_HEADER_DCD_ENABLE=1" value=""/>
       </defines>
       <source path="devices/MIMXRT1052/xip" target_path="xip" type="src">
         <files mask="evkbimxrt1050_flexspi_nor_config.c"/>
@@ -3361,6 +3376,514 @@ The MIMXRT1052 are ARM Cortex-M7 based microcontrollers for embedded application
         <files mask="README.md"/>
       </source>
     </component>
+    <component id="middleware.mcu-boot.all_files.MIMXRT1052" name="all_files" type="other" brief="kboot files" devices="MIMXRT1052xxxxB" version="1.0.0" user_visible="false">
+      <source path="middleware/mcu-boot/apps/elftosb/common" exclude="true" type="src">
+        <files mask="aes128_key_wrap_unwrap.c"/>
+        <files mask="AESKey.cpp"/>
+        <files mask="Blob.cpp"/>
+        <files mask="bytes_aes.c"/>
+        <files mask="crc.cpp"/>
+        <files mask="DataSource.cpp"/>
+        <files mask="DataSourceImager.cpp"/>
+        <files mask="DataTarget.cpp"/>
+        <files mask="ELFSourceFile.cpp"/>
+        <files mask="EncoreBootImage.cpp"/>
+        <files mask="EncoreBootImageReader.cpp"/>
+        <files mask="EvalContext.cpp"/>
+        <files mask="ExcludesListMatcher.cpp"/>
+        <files mask="format_string.cpp"/>
+        <files mask="GHSSecInfo.cpp"/>
+        <files mask="GlobMatcher.cpp"/>
+        <files mask="HexValues.cpp"/>
+        <files mask="iMXImage.cpp"/>
+        <files mask="IVTDataSource.cpp"/>
+        <files mask="Keyblob.cpp"/>
+        <files mask="Logging.cpp"/>
+        <files mask="Operation.cpp"/>
+        <files mask="OptionDictionary.cpp"/>
+        <files mask="options.cpp"/>
+        <files mask="OutputSection.cpp"/>
+        <files mask="Random.cpp"/>
+        <files mask="rijndael.cpp"/>
+        <files mask="RijndaelCBCMAC.cpp"/>
+        <files mask="RijndaelCTR.cpp"/>
+        <files mask="SB2Image.cpp"/>
+        <files mask="SearchPath.cpp"/>
+        <files mask="SHA1.cpp"/>
+        <files mask="SourceFile.cpp"/>
+        <files mask="SRecordSourceFile.cpp"/>
+        <files mask="stdafx.cpp"/>
+        <files mask="StELFFile.cpp"/>
+        <files mask="StExecutableImage.cpp"/>
+        <files mask="StSRecordFile.cpp"/>
+        <files mask="Value.cpp"/>
+        <files mask="Version.cpp"/>
+      </source>
+      <source path="middleware/mcu-boot/apps/elftosb/common" exclude="true" type="c_include">
+        <files mask="aes128_key_wrap_unwrap.h"/>
+        <files mask="AESCounter.h"/>
+        <files mask="AESKey.h"/>
+        <files mask="Blob.h"/>
+        <files mask="BootImage.h"/>
+        <files mask="crc.h"/>
+        <files mask="DataSource.h"/>
+        <files mask="DataSourceImager.h"/>
+        <files mask="DataTarget.h"/>
+        <files mask="ELF.h"/>
+        <files mask="ELFSourceFile.h"/>
+        <files mask="EncoreBootImage.h"/>
+        <files mask="EncoreBootImageReader.h"/>
+        <files mask="EndianUtilities.h"/>
+        <files mask="EvalContext.h"/>
+        <files mask="ExcludesListMatcher.h"/>
+        <files mask="format_string.h"/>
+        <files mask="GHSSecInfo.h"/>
+        <files mask="GlobMatcher.h"/>
+        <files mask="HexValues.h"/>
+        <files mask="iMXImage.h"/>
+        <files mask="int_size.h"/>
+        <files mask="IVTDataSource.h"/>
+        <files mask="Keyblob.h"/>
+        <files mask="KeyblobEntry.h"/>
+        <files mask="Logging.h"/>
+        <files mask="Operation.h"/>
+        <files mask="OptionContext.h"/>
+        <files mask="OptionDictionary.h"/>
+        <files mask="options.h"/>
+        <files mask="OutputSection.h"/>
+        <files mask="Random.h"/>
+        <files mask="rijndael.h"/>
+        <files mask="RijndaelCBCMAC.h"/>
+        <files mask="RijndaelCTR.h"/>
+        <files mask="SB2Image.h"/>
+        <files mask="SearchPath.h"/>
+        <files mask="SHA1.h"/>
+        <files mask="smart_ptr.h"/>
+        <files mask="SourceFile.h"/>
+        <files mask="SRecordSourceFile.h"/>
+        <files mask="stdafx.h"/>
+        <files mask="StELFFile.h"/>
+        <files mask="StExecutableImage.h"/>
+        <files mask="StringMatcher.h"/>
+        <files mask="StSRecordFile.h"/>
+        <files mask="Value.h"/>
+        <files mask="Version.h"/>
+      </source>
+      <source path="middleware/mcu-boot/apps/elftosb/elftosb.xcodeproj/project.xcworkspace" exclude="true" type="other">
+        <files mask="contents.xcworkspacedata"/>
+      </source>
+      <source path="middleware/mcu-boot/apps/elftosb/elftosb.xcodeproj" exclude="true" type="other">
+        <files mask="project.pbxproj"/>
+      </source>
+      <source path="middleware/mcu-boot/apps/elftosb/elftosb2" exclude="true" type="other">
+        <files mask="elftosb2.vcproj"/>
+        <files mask="elftosb2.vcxproj"/>
+        <files mask="elftosb2.vcxproj.filters"/>
+        <files mask="elftosb_lexer.l"/>
+        <files mask="elftosb_parser.tab.hpp"/>
+        <files mask="elftosb_parser.y"/>
+      </source>
+      <source path="middleware/mcu-boot/apps/elftosb/elftosb2" exclude="true" type="src">
+        <files mask="BootImageGenerator.cpp"/>
+        <files mask="ConversionController.cpp"/>
+        <files mask="elftosb.cpp"/>
+        <files mask="elftosb_lexer.cpp"/>
+        <files mask="elftosb_parser.tab.cpp"/>
+        <files mask="ElftosbAST.cpp"/>
+        <files mask="ElftosbLexer.cpp"/>
+        <files mask="EncoreBootImageGenerator.cpp"/>
+        <files mask="iMXImageGenerator.cpp"/>
+        <files mask="SB2ImageGenerator.cpp"/>
+      </source>
+      <source path="middleware/mcu-boot/apps/elftosb/elftosb2" exclude="true" type="c_include">
+        <files mask="BootImageGenerator.h"/>
+        <files mask="ConversionController.h"/>
+        <files mask="ElftosbAST.h"/>
+        <files mask="ElftosbErrors.h"/>
+        <files mask="ElftosbLexer.h"/>
+        <files mask="EncoreBootImageGenerator.h"/>
+        <files mask="FlexLexer.h"/>
+        <files mask="iMXImageGenerator.h"/>
+        <files mask="SB2ImageGenerator.h"/>
+      </source>
+      <source path="middleware/mcu-boot/apps/elftosb/winsupport" exclude="true" type="c_include">
+        <files mask="unistd.h"/>
+      </source>
+      <source path="middleware/mcu-boot/apps/elftosb" exclude="true" type="other">
+        <files mask="elftosb.sln"/>
+        <files mask="makefile"/>
+        <files mask="makefile.rules"/>
+      </source>
+      <source path="middleware/mcu-boot/apps/elftosb" exclude="true" type="c_include">
+        <files mask="stdafx.h"/>
+      </source>
+      <source path="middleware/mcu-boot/apps/led_demo/src" exclude="true" type="other">
+        <files mask="led_demo.bd"/>
+      </source>
+      <source path="middleware/mcu-boot/apps/led_demo/src" type="src">
+        <files mask="milliseconds_delay.c"/>
+      </source>
+      <source path="middleware/mcu-boot/apps/led_demo/src" exclude="true" type="src">
+        <files mask="milliseconds_delay.c"/>
+      </source>
+      <source path="middleware/mcu-boot/apps/led_demo/src" type="c_include">
+        <files mask="milliseconds_delay.h"/>
+      </source>
+      <source path="middleware/mcu-boot/bin/Tools/blhost/linux/amd64" exclude="true" type="other">
+        <files mask="blhost"/>
+      </source>
+      <source path="middleware/mcu-boot/bin/Tools/blhost/linux/i386" exclude="true" type="other">
+        <files mask="blhost"/>
+      </source>
+      <source path="middleware/mcu-boot/bin/Tools/blhost/mac" exclude="true" type="other">
+        <files mask="blhost"/>
+      </source>
+      <source path="middleware/mcu-boot/bin/Tools/blhost/win" exclude="true" type="other">
+        <files mask="blhost.exe"/>
+      </source>
+      <source path="middleware/mcu-boot/bin/Tools/elftosb/linux/amd64" exclude="true" type="other">
+        <files mask="elftosb"/>
+      </source>
+      <source path="middleware/mcu-boot/bin/Tools/elftosb/linux/i386" exclude="true" type="other">
+        <files mask="elftosb"/>
+      </source>
+      <source path="middleware/mcu-boot/bin/Tools/elftosb/win" exclude="true" type="other">
+        <files mask="elftosb.exe"/>
+      </source>
+      <source path="middleware/mcu-boot/bin" type="script">
+        <files mask="create_fl_image.py"/>
+        <files mask="create_fl_image_mcux.py"/>
+        <files mask="create_fl_image_mdk.py"/>
+        <files mask="create_flashloader_image.bat"/>
+        <files mask="create_flashloader_image_mcux.bat"/>
+        <files mask="create_flashloader_image_mdk.bat"/>
+        <files mask="elf.py"/>
+      </source>
+      <source path="middleware/mcu-boot/doc" exclude="true" type="doc">
+        <files mask="blhost User's Guide.pdf"/>
+        <files mask="elftosb User's Guide.pdf"/>
+      </source>
+      <source path="middleware/mcu-boot/mk" exclude="true" type="script">
+        <files mask="config.mk"/>
+        <files mask="flags.mk"/>
+        <files mask="paths.mk"/>
+        <files mask="targets.mk"/>
+      </source>
+      <source path="middleware/mcu-boot/src/drivers/smc" type="c_include">
+        <files mask="smc.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/utilities/src" type="src">
+        <files mask="bootloader_tree_stub.c"/>
+        <files mask="fsl_assert.c"/>
+        <files mask="fsl_rtos_abstraction.c"/>
+        <files mask="ring_buffer.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/utilities" type="c_include">
+        <files mask="fsl_assert.h"/>
+        <files mask="fsl_rtos_abstraction.h"/>
+        <files mask="kinetis_family.h"/>
+        <files mask="ring_buffer.h"/>
+        <files mask="vector_table_info.h"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/mk" type="script">
+        <files mask="common.mk"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/src/blfwk/doc" type="other">
+        <files mask="blfwk.md"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/src/blfwk/src" type="src">
+        <files mask="AESCounter.cpp"/>
+        <files mask="AESKey.cpp"/>
+        <files mask="Blob.cpp"/>
+        <files mask="Bootloader.cpp"/>
+        <files mask="BusPal.cpp"/>
+        <files mask="BusPalPeripheral.cpp"/>
+        <files mask="Command.cpp"/>
+        <files mask="Crc.cpp"/>
+        <files mask="DataSource.cpp"/>
+        <files mask="DataSourceImager.cpp"/>
+        <files mask="DataTarget.cpp"/>
+        <files mask="ELFSourceFile.cpp"/>
+        <files mask="ExcludesListMatcher.cpp"/>
+        <files mask="format_string.cpp"/>
+        <files mask="GHSSecInfo.cpp"/>
+        <files mask="GlobMatcher.cpp"/>
+        <files mask="HexValues.cpp"/>
+        <files mask="hid-linux.c"/>
+        <files mask="hid-mac.c"/>
+        <files mask="hid-windows.c"/>
+        <files mask="IntelHexSourceFile.cpp"/>
+        <files mask="jsoncpp.cpp"/>
+        <files mask="Logging.cpp"/>
+        <files mask="options.cpp"/>
+        <files mask="Random.cpp"/>
+        <files mask="rijndael.cpp"/>
+        <files mask="RijndaelCTR.cpp"/>
+        <files mask="SBSourceFile.cpp"/>
+        <files mask="SDPCommand.cpp"/>
+        <files mask="SDPUsbHidPacketizer.cpp"/>
+        <files mask="SearchPath.cpp"/>
+        <files mask="serial.c"/>
+        <files mask="SerialPacketizer.cpp"/>
+        <files mask="SimPacketizer.cpp"/>
+        <files mask="SimPeripheral.cpp"/>
+        <files mask="Simulator.cpp"/>
+        <files mask="SimulatorMemory.cpp"/>
+        <files mask="SourceFile.cpp"/>
+        <files mask="SRecordSourceFile.cpp"/>
+        <files mask="StELFFile.cpp"/>
+        <files mask="StExecutableImage.cpp"/>
+        <files mask="StIntelHexFile.cpp"/>
+        <files mask="StSRecordFile.cpp"/>
+        <files mask="UartPeripheral.cpp"/>
+        <files mask="Updater.cpp"/>
+        <files mask="UsbHidPacketizer.cpp"/>
+        <files mask="UsbHidPeripheral.cpp"/>
+        <files mask="utils.cpp"/>
+        <files mask="Value.cpp"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/src/blfwk" type="c_include">
+        <files mask="AESCounter.h"/>
+        <files mask="AESKey.h"/>
+        <files mask="BlfwkErrors.h"/>
+        <files mask="Blob.h"/>
+        <files mask="Bootloader.h"/>
+        <files mask="bootloader_config.h"/>
+        <files mask="BusPal.h"/>
+        <files mask="BusPalPeripheral.h"/>
+        <files mask="Command.h"/>
+        <files mask="Crc.h"/>
+        <files mask="DataSource.h"/>
+        <files mask="DataSourceImager.h"/>
+        <files mask="DataTarget.h"/>
+        <files mask="ELF.h"/>
+        <files mask="ELFSourceFile.h"/>
+        <files mask="EndianUtilities.h"/>
+        <files mask="ExcludesListMatcher.h"/>
+        <files mask="format_string.h"/>
+        <files mask="GHSSecInfo.h"/>
+        <files mask="GlobMatcher.h"/>
+        <files mask="HexValues.h"/>
+        <files mask="hidapi.h"/>
+        <files mask="host_types.h"/>
+        <files mask="int_size.h"/>
+        <files mask="IntelHexSourceFile.h"/>
+        <files mask="json.h"/>
+        <files mask="Logging.h"/>
+        <files mask="OptionContext.h"/>
+        <files mask="options.h"/>
+        <files mask="Packetizer.h"/>
+        <files mask="Peripheral.h"/>
+        <files mask="Progress.h"/>
+        <files mask="Random.h"/>
+        <files mask="rijndael.h"/>
+        <files mask="RijndaelCTR.h"/>
+        <files mask="SBSourceFile.h"/>
+        <files mask="SDPCommand.h"/>
+        <files mask="SDPUartPacketizer.h"/>
+        <files mask="SDPUsbHidPacketizer.h"/>
+        <files mask="SearchPath.h"/>
+        <files mask="serial.h"/>
+        <files mask="SerialPacketizer.h"/>
+        <files mask="SimPacketizer.h"/>
+        <files mask="SimPeripheral.h"/>
+        <files mask="Simulator.h"/>
+        <files mask="SimulatorMemory.h"/>
+        <files mask="smart_ptr.h"/>
+        <files mask="SourceFile.h"/>
+        <files mask="SRecordSourceFile.h"/>
+        <files mask="stdafx.h"/>
+        <files mask="StELFFile.h"/>
+        <files mask="StExecutableImage.h"/>
+        <files mask="StIntelHexFile.h"/>
+        <files mask="StringMatcher.h"/>
+        <files mask="StSRecordFile.h"/>
+        <files mask="UartPeripheral.h"/>
+        <files mask="Updater.h"/>
+        <files mask="UsbHidPacketizer.h"/>
+        <files mask="UsbHidPeripheral.h"/>
+        <files mask="utils.h"/>
+        <files mask="Value.h"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/src/bootloader" type="c_include">
+        <files mask="bl_peripheral.h"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/src/crc/src" type="src">
+        <files mask="crc16.c"/>
+        <files mask="crc32.c"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/src/crc" type="c_include">
+        <files mask="crc16.h"/>
+        <files mask="crc32.h"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/src/include" type="c_include">
+        <files mask="bootloader_common.h"/>
+        <files mask="bootloader_hid_report_ids.h"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/src/memory" type="c_include">
+        <files mask="memory.h"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/src/packet" type="c_include">
+        <files mask="command_packet.h"/>
+        <files mask="serial_packet.h"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/src/property" type="c_include">
+        <files mask="property.h"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/blhost.xcodeproj/project.xcworkspace" exclude="true" type="other">
+        <files mask="contents.xcworkspacedata"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/blhost.xcodeproj" exclude="true" type="other">
+        <files mask="project.pbxproj"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/blhost/gcc" exclude="true" type="other">
+        <files mask="Makefile"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/blhost/mac-gcc" exclude="true" type="other">
+        <files mask="Makefile"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/blhost/src" exclude="true" type="other">
+        <files mask="blhost.vcxproj"/>
+        <files mask="blhost.vcxproj.filters"/>
+        <files mask="blhost.vcxproj.user"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/blhost/src" type="src">
+        <files mask="blhost.cpp"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/blhost/src" type="c_include">
+        <files mask="targetver.h"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/blhost" exclude="true" type="other">
+        <files mask="blhost.sln"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/common/blfwk/blfwk.xcodeproj/project.xcworkspace/xcshareddata" exclude="true" type="other">
+        <files mask="blfwk.xccheckout"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/common/blfwk/blfwk.xcodeproj/project.xcworkspace" exclude="true" type="other">
+        <files mask="contents.xcworkspacedata"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/common/blfwk/blfwk.xcodeproj" exclude="true" type="other">
+        <files mask="project.pbxproj"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/common/blfwk" exclude="true" type="other">
+        <files mask="blfwk.vcxproj"/>
+        <files mask="blfwk.vcxproj.filters"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/common/blfwkdll" exclude="true" type="other">
+        <files mask="blfwk.vcxproj"/>
+        <files mask="blfwk.vcxproj.filters"/>
+        <files mask="blfwk.vcxproj.user"/>
+        <files mask="blfwkdll.vcxproj"/>
+        <files mask="blfwkdll.vcxproj.filters"/>
+        <files mask="blfwkdll.vcxproj.user"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/common/blfwkdll" exclude="true" type="src">
+        <files mask="blfwkdll.cpp"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/common/blfwkdll" exclude="true" type="c_include">
+        <files mask="blfwkdll.h"/>
+      </source>
+    </component>
+    <component id="middleware.mcu-boot.imxrt_files.MIMXRT1052" name="imxrt_files" type="other" brief="imxrt files" devices="MIMXRT1052xxxxB" version="1.0.0" user_visible="false">
+      <source path="middleware/mcu-boot/bin/Tools/bd_file/imxrt10xx" exclude="true" type="other">
+        <files mask="enable_hab.bd"/>
+        <files mask="imx-dtcm-encrypted.bd"/>
+        <files mask="imx-dtcm-signed.bd"/>
+        <files mask="imx-dtcm-unsigned.bd"/>
+        <files mask="imx-flexspinor-normal-signed.bd"/>
+        <files mask="imx-flexspinor-normal-unsigned.bd"/>
+        <files mask="imx-flexspinor-plugin-signed.bd"/>
+        <files mask="imx-flexspinor-plugin-unsigned.bd"/>
+        <files mask="imx-itcm-encrypted.bd"/>
+        <files mask="imx-itcm-signed.bd"/>
+        <files mask="imx-itcm-unsigned.bd"/>
+        <files mask="imx-ocram-unsigned.bd"/>
+        <files mask="program_flexspinand_encrypt_image_keyblob.bd"/>
+        <files mask="program_flexspinand_image.bd"/>
+        <files mask="program_flexspinor_image_adesto_atxp032.bd"/>
+        <files mask="program_flexspinor_image_hyperflash.bd"/>
+        <files mask="program_flexspinor_image_hyperflash_encrypt.bd"/>
+        <files mask="program_flexspinor_image_micron_mt35x.bd"/>
+        <files mask="program_flexspinor_image_mxic_mx25um51245g.bd"/>
+        <files mask="program_flexspinor_image_mxic_mx25um51345g.bd"/>
+        <files mask="program_flexspinor_image_qspinor.bd"/>
+        <files mask="program_flexspinor_image_qspinor_status_reg1_bit6.bd"/>
+        <files mask="program_flexspinor_image_qspinor_status_reg2_0x31.bd"/>
+        <files mask="program_flexspinor_image_qspinor_status_reg2_bit1.bd"/>
+        <files mask="program_flexspinor_image_qspinor_status_reg2_bit7.bd"/>
+        <files mask="program_mmccard_image_fastboot.bd"/>
+        <files mask="program_mmccard_image_normal.bd"/>
+        <files mask="program_sdcard_encrypt_image_keyblob.bd"/>
+        <files mask="program_sdcard_image.bd"/>
+        <files mask="program_semcnand_image.bd"/>
+        <files mask="program_semcnor_image.bd"/>
+        <files mask="program_spinor_eeprom_image.bd"/>
+        <files mask="program_spinor_eeprom_image_encrypt_image_keyblob.bd"/>
+      </source>
+      <source path="middleware/mcu-boot/bin/Tools/mfgtools-rel/Profiles/MXRT105X/OS Firmware" exclude="true" type="xml">
+        <files mask="ucl2.xml"/>
+      </source>
+      <source path="middleware/mcu-boot/bin/Tools/mfgtools-rel/Profiles/MXRT105X/OS Firmware" exclude="true" type="binary">
+        <files mask="ivt_bootdata.bin"/>
+        <files mask="ivt_flashloader.bin"/>
+      </source>
+      <source path="middleware/mcu-boot/bin/Tools/mfgtools-rel/Profiles/MXRT105X" exclude="true" type="configuration">
+        <files mask="player.ini"/>
+      </source>
+      <source path="middleware/mcu-boot/bin/Tools/mfgtools-rel" exclude="true" type="other">
+        <files mask="MfgTool2.exe"/>
+        <files mask="MfgToolLib.dll"/>
+      </source>
+      <source path="middleware/mcu-boot/bin/Tools/mfgtools-rel" exclude="true" type="configuration">
+        <files mask="cfg_MXRT105X.ini"/>
+        <files mask="UICfg.ini"/>
+      </source>
+      <source path="middleware/mcu-boot/bin/Tools/sdphost/linux/amd64" exclude="true" type="other">
+        <files mask="sdphost"/>
+      </source>
+      <source path="middleware/mcu-boot/bin/Tools/sdphost/linux/i386" exclude="true" type="other">
+        <files mask="sdphost"/>
+      </source>
+      <source path="middleware/mcu-boot/bin/Tools/sdphost/mac" exclude="true" type="other">
+        <files mask="sdphost"/>
+      </source>
+      <source path="middleware/mcu-boot/bin/Tools/sdphost/win" exclude="true" type="other">
+        <files mask="sdphost.exe"/>
+      </source>
+      <source path="middleware/mcu-boot/doc" exclude="true" type="doc">
+        <files mask="i.MX RT1050 Manufacturing User's Guide.pdf"/>
+        <files mask="MCU Flashloader Reference Manual.pdf"/>
+        <files mask="sdphost User's Guide.pdf"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/sdphost.xcodeproj/project.xcworkspace" exclude="true" type="other">
+        <files mask="contents.xcworkspacedata"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/sdphost.xcodeproj" exclude="true" type="other">
+        <files mask="project.pbxproj"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/sdphost/gcc" exclude="true" type="other">
+        <files mask="Makefile"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/sdphost/mac-gcc" exclude="true" type="other">
+        <files mask="Makefile"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/sdphost/sdphost" exclude="true" type="other">
+        <files mask="sdphost.vcxproj"/>
+        <files mask="sdphost.vcxproj.filters"/>
+        <files mask="sdphost.vcxproj.user"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/sdphost/sdphost" type="src">
+        <files mask="sdphost.cpp"/>
+        <files mask="stdafx.cpp"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/sdphost/sdphost" type="c_include">
+        <files mask="stdafx.h"/>
+        <files mask="targetver.h"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/sdphost" exclude="true" type="other">
+        <files mask="sdphost.sln"/>
+      </source>
+    </component>
     <component id="middleware.motor_control.files.MIMXRT1052" name="mc_files" type="other" devices="MIMXRT1052xxxxB" version="1.0.0" user_visible="false">
       <source path="middleware/motor_control/bldc/mc_algorithms" type="src">
         <files mask="bldc_control.c"/>
@@ -4549,6 +5072,412 @@ The MIMXRT1052 are ARM Cortex-M7 based microcontrollers for embedded application
       <include_paths>
         <include_path path="mbedTLS/include"/>
       </include_paths>
+    </component>
+    <component id="middleware.mcu-boot.CMSIS_cm7_headers.MIMXRT1052" name="CMSIS_cm7_headers" type="middleware" devices="MIMXRT1052xxxxB" version="1.0.0" user_visible="true">
+      <source path="CMSIS/Include" target_path="CMSIS" type="c_include" toolchain="mcuxpresso">
+        <files mask="cmsis_compiler.h"/>
+        <files mask="cmsis_gcc.h"/>
+        <files mask="cmsis_version.h"/>
+        <files mask="core_cm7.h"/>
+        <files mask="mpu_armv7.h"/>
+      </source>
+    </component>
+    <component id="middleware.mcu-boot.MIMXRT1052_application_0x60002000_linker.MIMXRT1052" name="MIMXRT1052_application_0x60002000_linker" type="middleware" devices="MIMXRT1052xxxxB" version="1.0.0" user_visible="true">
+      <source path="middleware/mcu-boot/targets/common/linker/arm/MIMXRT1052" type="linker" toolchain="mdk">
+        <files mask="MIMXRT1052_application_0x60002000.scf"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/common/linker/gcc/MIMXRT1052" type="linker" toolchain="mcuxpresso">
+        <files mask="MIMXRT1052_application_0x60002000.ld"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/common/linker/iar/MIMXRT1052" type="linker" toolchain="iar">
+        <files mask="MIMXRT1052_application_0x60002000.icf"/>
+      </source>
+    </component>
+    <component id="middleware.mcu-boot.MIMXRT1052_application_0xa000_linker.MIMXRT1052" name="MIMXRT1052_application_0xa000_linker" type="middleware" devices="MIMXRT1052xxxxB" version="1.0.0" user_visible="true">
+      <source path="middleware/mcu-boot/targets/common/linker/arm/MIMXRT1052" type="linker" toolchain="mdk">
+        <files mask="MIMXRT1052_application_0xa000.scf"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/common/linker/gcc/MIMXRT1052" type="linker" toolchain="mcuxpresso">
+        <files mask="MIMXRT1052_application_0xa000.ld"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/common/linker/iar/MIMXRT1052" type="linker" toolchain="iar">
+        <files mask="MIMXRT1052_application_0xa000.icf"/>
+      </source>
+    </component>
+    <component id="middleware.mcu-boot.MIMXRT1052_drivers.MIMXRT1052" name="MIMXRT1052_drivers" type="middleware" devices="MIMXRT1052xxxxB" version="1.0.0" user_visible="true">
+      <source path="devices/MIMXRT1052/drivers" target_path="drivers" type="src">
+        <files mask="fsl_clock.c"/>
+        <files mask="fsl_common.c"/>
+      </source>
+      <source path="devices/MIMXRT1052/drivers" target_path="drivers" type="c_include">
+        <files mask="fsl_clock.h"/>
+        <files mask="fsl_common.h"/>
+      </source>
+    </component>
+    <component id="middleware.mcu-boot.MIMXRT1052_loader_startup.MIMXRT1052" name="MIMXRT1052_loader_startup" type="middleware" devices="MIMXRT1052xxxxB" version="1.0.0" user_visible="true">
+      <source path="devices/MIMXRT1052" target_path="startup" type="c_include">
+        <files mask="fsl_device_registers.h"/>
+        <files mask="MIMXRT1052.h"/>
+        <files mask="MIMXRT1052_features.h"/>
+        <files mask="system_MIMXRT1052.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/memory/src" target_path="source/memory/src" type="asm_include" toolchain="mcuxpresso">
+        <files mask="pattern_fill_gcc.S"/>
+      </source>
+      <source path="middleware/mcu-boot/src/memory/src" target_path="source/memory/src" type="asm_include" toolchain="iar">
+        <files mask="pattern_fill.s"/>
+      </source>
+      <source path="middleware/mcu-boot/src/memory/src" target_path="source/memory/src" type="asm_include" toolchain="mdk">
+        <files mask="pattern_fill.s"/>
+      </source>
+      <source path="middleware/mcu-boot/src/startup" target_path="startup" type="asm_include" toolchain="mcuxpresso">
+        <files mask="crt0_gcc.S"/>
+      </source>
+      <source path="middleware/mcu-boot/src/startup" target_path="startup" type="src">
+        <files mask="startup.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/startup" target_path="startup" type="c_include">
+        <files mask="ar_asm_macros.h"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/MIMXRT1052/src/startup/arm" target_path="startup" type="asm_include" toolchain="mdk">
+        <files mask="startup_MIMXRT1052.s"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/MIMXRT1052/src/startup/gcc" target_path="startup" type="asm_include" toolchain="mcuxpresso">
+        <files mask="startup_MIMXRT1052.S"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/MIMXRT1052/src/startup/iar" target_path="startup" type="asm_include" toolchain="iar">
+        <files mask="startup_MIMXRT1052.s"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/MIMXRT1052/src/startup" target_path="startup" type="src">
+        <files mask="system_MIMXRT1052.c"/>
+      </source>
+    </component>
+    <component id="middleware.mcu-boot.MIMXRT1052_ram_flashloader_linker.MIMXRT1052" name="MIMXRT1052_ram_flashloader_linker" type="middleware" devices="MIMXRT1052xxxxB" version="1.0.0" user_visible="true">
+      <source path="middleware/mcu-boot/targets/common/linker/arm/MIMXRT1052" type="linker" toolchain="mdk">
+        <files mask="MIMXRT1052_ram_flashloader.scf"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/common/linker/gcc/MIMXRT1052" type="linker" toolchain="mcuxpresso">
+        <files mask="MIMXRT1052_ram_flashloader.ld"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/common/linker/iar/MIMXRT1052" type="linker" toolchain="iar">
+        <files mask="MIMXRT1052_ram_flashloader.icf"/>
+      </source>
+    </component>
+    <component id="middleware.mcu-boot.MIMXRT1052_sources.MIMXRT1052" name="MIMXRT1052_sources" type="middleware" devices="MIMXRT1052xxxxB" version="1.0.0" user_visible="true">
+      <source path="devices/MIMXRT1052/drivers" target_path="MIMXRT1052" type="c_include" toolchain="mcuxpresso">
+        <files mask="fsl_iomuxc.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/bootloader/src" target_path="source/bootloader/src" type="src">
+        <files mask="bl_app_crc_check.c"/>
+        <files mask="bl_keyblob.c"/>
+        <files mask="bl_keyblob_dcp.c"/>
+        <files mask="bl_misc.c"/>
+        <files mask="bl_nor_encrypt_bee.c"/>
+        <files mask="lpuart_peripheral_interface.c"/>
+        <files mask="usb_hid_msc_peripheral_interface.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/bootloader" target_path="source/bootloader" type="c_include">
+        <files mask="bl_app_crc_check.h"/>
+        <files mask="bl_keyblob.h"/>
+        <files mask="bl_nor_encrypt.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/drivers/dcp" target_path="source/drivers/dcp" type="src">
+        <files mask="fsl_dcp.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/drivers/dcp" target_path="source/drivers/dcp" type="c_include">
+        <files mask="fsl_dcp.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/drivers/flexspi" target_path="source/drivers/flexspi" type="src">
+        <files mask="fsl_flexspi.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/drivers/flexspi" target_path="source/drivers/flexspi" type="c_include">
+        <files mask="fsl_flexspi.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/drivers/flexspi_nand" target_path="source/drivers/flexspi_nand" type="src">
+        <files mask="flexspi_nand_flash.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/drivers/flexspi_nand" target_path="source/drivers/flexspi_nand" type="c_include">
+        <files mask="flexspi_nand_flash.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/drivers/flexspi_nor" target_path="source/drivers/flexspi_nor" type="src">
+        <files mask="flexspi_nor_flash.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/drivers/flexspi_nor" target_path="source/drivers/flexspi_nor" type="c_include">
+        <files mask="flexspi_nor_flash.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/drivers/gpio" target_path="source/drivers/gpio" type="c_include">
+        <files mask="fsl_gpio.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/drivers/lpspi" target_path="source/drivers/lpspi" type="src">
+        <files mask="fsl_lpspi.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/drivers/lpspi" target_path="source/drivers/lpspi" type="c_include">
+        <files mask="fsl_lpspi.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/drivers/lpuart" target_path="source/drivers/lpuart" type="src">
+        <files mask="fsl_lpuart.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/drivers/lpuart" target_path="source/drivers/lpuart" type="c_include">
+        <files mask="fsl_lpuart.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/drivers/microseconds/src" target_path="source/drivers/microseconds" type="src">
+        <files mask="microseconds_pit.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/drivers/nand_ecc" target_path="source/drivers/nand_ecc" type="src">
+        <files mask="nand_ecc.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/drivers/nand_ecc" target_path="source/drivers/nand_ecc" type="c_include">
+        <files mask="nand_ecc.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/drivers/ocotp" target_path="source/drivers/ocotp" type="src">
+        <files mask="fsl_ocotp.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/drivers/ocotp" target_path="source/drivers/ocotp" type="c_include">
+        <files mask="fsl_ocotp.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/drivers/sdmmc/inc" target_path="source/drivers/sdmmc" type="c_include">
+        <files mask="fsl_card.h"/>
+        <files mask="fsl_host.h"/>
+        <files mask="fsl_sdmmc.h"/>
+        <files mask="fsl_specification.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/drivers/sdmmc/port/usdhc/polling" target_path="source/drivers/sdmmc" type="src">
+        <files mask="fsl_host.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/drivers/sdmmc/src" target_path="source/drivers/sdmmc" type="src">
+        <files mask="fsl_mmc.c"/>
+        <files mask="fsl_sd.c"/>
+        <files mask="fsl_sdmmc.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/drivers/semc" target_path="source/drivers/semc" type="src">
+        <files mask="fsl_semc.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/drivers/semc" target_path="source/drivers/semc" type="c_include">
+        <files mask="fsl_semc.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/drivers/semc_nand" target_path="source/drivers/semc_nand" type="src">
+        <files mask="semc_nand_flash.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/drivers/semc_nand" target_path="source/drivers/semc_nand" type="c_include">
+        <files mask="semc_nand_flash.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/drivers/semc_nor" target_path="source/drivers/semc_nor" type="src">
+        <files mask="semc_nor_flash.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/drivers/semc_nor" target_path="source/drivers/semc_nor" type="c_include">
+        <files mask="semc_nor_flash.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/drivers/serial_nor_eeprom" target_path="source/drivers/serial_nor_eeprom" type="src">
+        <files mask="serial_nor_eeprom.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/drivers/serial_nor_eeprom" target_path="source/drivers/serial_nor_eeprom" type="c_include">
+        <files mask="serial_nor_eeprom.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/drivers/trng" target_path="source/drivers/trng" type="src">
+        <files mask="fsl_trng.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/drivers/trng" target_path="source/drivers/trng" type="c_include">
+        <files mask="fsl_trng.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/drivers/usdhc" target_path="source/drivers/usdhc" type="src">
+        <files mask="fsl_usdhc.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/drivers/usdhc" target_path="source/drivers/usdhc" type="c_include">
+        <files mask="fsl_usdhc.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/memory/src" target_path="source/memory/src" type="src">
+        <files mask="flexspi_nor_memory.c"/>
+        <files mask="mmc_memory.c"/>
+        <files mask="sd_memory.c"/>
+        <files mask="semc_nand_memory.c"/>
+        <files mask="semc_nor_memory.c"/>
+        <files mask="spi_nor_eeprom_memory.c"/>
+        <files mask="spinand_memory.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/memory/src" target_path="source/memory/src" type="c_include">
+        <files mask="flexspi_nor_memory.h"/>
+        <files mask="mmc_memory.h"/>
+        <files mask="sd_memory.h"/>
+        <files mask="semc_nand_memory.h"/>
+        <files mask="semc_nor_memory.h"/>
+        <files mask="spi_nor_eeprom_memory.h"/>
+        <files mask="spinand_memory.h"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/MIMXRT1052/src" target_path="source/memory/src" type="src">
+        <files mask="sram_init_MIMXRT1052.c"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/MIMXRT1052/src" target_path="MIMXRT1052" type="src">
+        <files mask="bl_lpuart_irq_config_MIMXRT1052.c"/>
+        <files mask="clock_config_MIMXRT1052.c"/>
+        <files mask="external_memory_property_map_MIMXRT1052.c"/>
+        <files mask="flexspi_nand_config_MIMXRT1052.c"/>
+        <files mask="flexspi_nor_config_MIMXRT1052.c"/>
+        <files mask="hardware_init_MIMXRT1052.c"/>
+        <files mask="memory_map_MIMXRT1052.c"/>
+        <files mask="peripherals_MIMXRT1052.c"/>
+        <files mask="sdmmc_config_MIMXRT1052.c"/>
+        <files mask="semc_nand_config_MIMXRT1052.c"/>
+        <files mask="semc_nor_config_MIMXRT1052.c"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/MIMXRT1052/src" target_path="MIMXRT1052" type="c_include">
+        <files mask="bootloader_config.h"/>
+        <files mask="fusemap.h"/>
+        <files mask="peripherals_pinmux.h"/>
+        <files mask="sdmmc_init.h"/>
+        <files mask="target_config.h"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/MIMXRT1052/src" target_path="source/usb/bm_composite" type="c_include">
+        <files mask="usb_device_config.h"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/common/src" target_path="MIMXRT1052" type="src">
+        <files mask="pinmux_utility_imxrt_series.c"/>
+      </source>
+    </component>
+    <component id="middleware.mcu-boot.MIMXRT1052_startup.MIMXRT1052" name="MIMXRT1052_startup" type="middleware" devices="MIMXRT1052xxxxB" version="1.0.0" user_visible="true">
+      <source path="devices/MIMXRT1052" target_path="startup" type="c_include">
+        <files mask="fsl_device_registers.h"/>
+        <files mask="MIMXRT1052.h"/>
+        <files mask="MIMXRT1052_features.h"/>
+        <files mask="system_MIMXRT1052.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/include" target_path="startup" type="c_include">
+        <files mask="bootloader_core.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/startup" target_path="startup" type="asm_include" toolchain="mcuxpresso">
+        <files mask="crt0_gcc.S"/>
+      </source>
+      <source path="middleware/mcu-boot/src/startup" target_path="startup" type="src">
+        <files mask="startup.c"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/MIMXRT1052/src/startup/arm" target_path="startup" type="asm_include" toolchain="mdk">
+        <files mask="startup_MIMXRT1052.s"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/MIMXRT1052/src/startup/gcc" target_path="startup" type="asm_include" toolchain="mcuxpresso">
+        <files mask="startup_MIMXRT1052.S"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/MIMXRT1052/src/startup/iar" target_path="startup" type="asm_include" toolchain="iar">
+        <files mask="startup_MIMXRT1052.s"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/MIMXRT1052/src/startup" target_path="startup" type="src">
+        <files mask="system_MIMXRT1052.c"/>
+      </source>
+    </component>
+    <component id="middleware.mcu-boot.bootsources.MIMXRT1052" name="bootsources" type="middleware" devices="MIMXRT1052xxxxB" version="1.0.0" user_visible="true">
+      <source path="middleware/mcu-boot/src/autobaud/src" target_path="source/autobaud" type="src">
+        <files mask="autobaud_irq.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/autobaud" target_path="source/autobaud" type="c_include">
+        <files mask="autobaud.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/bootloader/src" target_path="source/bootloader/src" type="src">
+        <files mask="bl_command.c"/>
+        <files mask="bl_context.c"/>
+        <files mask="bl_exception_handler.c"/>
+        <files mask="bl_main.c"/>
+        <files mask="bl_shutdown_cleanup.c"/>
+        <files mask="bl_tree_root.c"/>
+        <files mask="bl_user_entry.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/bootloader" target_path="source/bootloader" type="c_include">
+        <files mask="bl_command.h"/>
+        <files mask="bl_context.h"/>
+        <files mask="bl_irq_common.h"/>
+        <files mask="bl_peripheral.h"/>
+        <files mask="bl_peripheral_interface.h"/>
+        <files mask="bl_reliable_update.h"/>
+        <files mask="bl_shutdown_cleanup.h"/>
+        <files mask="bl_user_entry.h"/>
+        <files mask="bl_version.h"/>
+        <files mask="bootloader.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/crc/src" target_path="source/crc" type="src">
+        <files mask="crc16.c"/>
+        <files mask="crc32.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/crc" target_path="source/crc" type="c_include">
+        <files mask="crc16.h"/>
+        <files mask="crc32.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/drivers/microseconds" target_path="source/drivers/microseconds" type="c_include">
+        <files mask="microseconds.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/include" target_path="source/include" type="c_include">
+        <files mask="bootloader_common.h"/>
+        <files mask="bootloader_core.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/memory/src" target_path="source/memory/src" type="src">
+        <files mask="device_memory.c"/>
+        <files mask="memory.c"/>
+        <files mask="normal_memory.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/memory/src" target_path="source/memory/src" type="c_include">
+        <files mask="device_memory.h"/>
+        <files mask="normal_memory.h"/>
+        <files mask="pattern_fill.h"/>
+        <files mask="sram_init.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/memory" target_path="source/memory" type="c_include">
+        <files mask="memory.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/packet/src" target_path="source/packet/src" type="src">
+        <files mask="serial_packet.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/packet" target_path="source/packet" type="c_include">
+        <files mask="command_packet.h"/>
+        <files mask="serial_packet.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/property" target_path="source/property" type="c_include">
+        <files mask="property.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/sbloader/src" target_path="source/sbloader/src" type="src">
+        <files mask="sbloader.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/sbloader" target_path="source/sbloader" type="c_include">
+        <files mask="sb_file_format.h"/>
+        <files mask="sbloader.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/utilities/src" target_path="source/utilities/src" type="src">
+        <files mask="fsl_assert.c"/>
+        <files mask="fsl_rtos_abstraction.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/utilities" target_path="source/utilities" type="c_include">
+        <files mask="fsl_assert.h"/>
+        <files mask="fsl_rtos_abstraction.h"/>
+        <files mask="vector_table_info.h"/>
+      </source>
+    </component>
+    <component id="middleware.mcu-boot.bootsources_imxrt.MIMXRT1052" name="bootsources_imxrt" type="middleware" devices="MIMXRT1052xxxxB" version="1.0.0" user_visible="true">
+      <source path="middleware/mcu-boot/src/drivers/igpio" target_path="source/drivers/igpio" type="src">
+        <files mask="fsl_gpio.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/drivers/igpio" target_path="source/drivers/igpio" type="c_include">
+        <files mask="fsl_gpio.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/drivers/port" target_path="source/drivers/port" type="c_include">
+        <files mask="fsl_port.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/drivers/smc" target_path="source/drivers" type="c_include">
+        <files mask="smc.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/property/src" target_path="source/property/src" type="src">
+        <files mask="property_imx.c"/>
+      </source>
+    </component>
+    <component id="middleware.mcu-boot.src_bm_usb.MIMXRT1052" name="src_bm_usb" type="middleware" devices="MIMXRT1052xxxxB" version="1.0.0" user_visible="true">
+      <source path="middleware/mcu-boot/src/bm_usb" target_path="source/usb/bm_composite" type="src">
+        <files mask="composite.c"/>
+        <files mask="hid_bootloader.c"/>
+        <files mask="msc_disk.c"/>
+        <files mask="usb_descriptor.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/bm_usb" target_path="source/usb/bm_composite" type="c_include">
+        <files mask="bootloader_hid_report_ids.h"/>
+        <files mask="composite.h"/>
+        <files mask="fat_directory_entry.h"/>
+        <files mask="hid_bootloader.h"/>
+        <files mask="msc_disk.h"/>
+        <files mask="usb_descriptor.h"/>
+      </source>
     </component>
     <component id="middleware.mmcau_cm0p.MIMXRT1052" name="mmcau_cm0p" type="middleware" brief="MMCAU library for ARM Cortex M0 core" category="Security/MMCAU library" device_cores="core0_MIMXRT1052xxxxB" core="cm7" dependency="platform.Include_common.MIMXRT1052 platform.Include_core_cm7.MIMXRT1052 platform.devices.MIMXRT1052_CMSIS.MIMXRT1052 platform.drivers.clock.MIMXRT1052 platform.drivers.common.MIMXRT1052 platform.drivers.lpuart.MIMXRT1052 platform.utilities.debug_console.MIMXRT1052" devices="MIMXRT1052xxxxB" version="2.0.1" user_visible="true">
       <source path="middleware/mmcau/asm-cm0p" target_path="libs" type="lib" toolchain="armgcc">
@@ -6203,8 +7132,8 @@ The MIMXRT1052 are ARM Cortex-M7 based microcontrollers for embedded application
     </component>
     <component id="middleware.baremetal.MIMXRT1052" name="baremetal" full_name="Baremetal" type="OS" devices="MIMXRT1052xxxxB" version="1.0.0" user_visible="true">
       <defines>
-        <define name="SDK_OS_BAREMETAL" value=""/>
         <define name="FSL_RTOS_BM" value=""/>
+        <define name="SDK_OS_BAREMETAL" value=""/>
       </defines>
     </component>
     <component id="middleware.freertos.MIMXRT1052" name="freertos" full_name="Amazon-FreeRTOS Kernel" type="OS" brief="Amazon FreeRTOS, Real Time Operating System" dependency="middleware.template_application.freertos.MIMXRT1052" devices="MIMXRT1052xxxxB" version="10.0.1" user_visible="true">

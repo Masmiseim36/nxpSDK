@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.0.xsd" format_version="3.0" api_version="2.0.0" name="SDK version 2.2.0 package for FRDM-KW41Z board" brief="This is SDK version 2.2.0 manifest file. It describes the content of the SDK version 2.2.0 package for FRDM-KW41Z board and additional settings for tools that support SDK version 2.2.0" id="SDK_2.x_FRDM-KW41Z" configuration="a035f412e6b401a870f71cc080dbf42a">
+<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.0.xsd" format_version="3.0" api_version="2.0.0" name="SDK version 2.2.0 package for FRDM-KW41Z board" brief="This is SDK version 2.2.0 manifest file. It describes the content of the SDK version 2.2.0 package for FRDM-KW41Z board and additional settings for tools that support SDK version 2.2.0" id="SDK_2.x_FRDM-KW41Z" configuration="05581be0b186c9744dda5392de532e5d">
   <defines>
     <define name="CPU_$|package|_$|core|" value=""/>
     <define name="CPU_$|package|" value=""/>
@@ -5277,14 +5277,14 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
     </component>
     <component id="middleware.baremetal.MKW41Z4" name="baremetal" full_name="Baremetal" type="OS" devices="MKW41Z512xxx4" version="1.0.0">
       <defines>
-        <define name="FSL_RTOS_BM" value=""/>
         <define name="SDK_OS_BAREMETAL" value=""/>
+        <define name="FSL_RTOS_BM" value=""/>
       </defines>
     </component>
     <component id="middleware.freertos.MKW41Z4" name="freertos" full_name="FreeRTOS" type="OS" brief="FreeRTOS, Real Time Operating System" dependency="middleware.template_application.freertos.MKW41Z4" devices="MKW41Z512xxx4" version="9.0.0" revision="2">
       <defines>
-        <define name="SDK_OS_FREE_RTOS" value=""/>
         <define name="FSL_RTOS_FREE_RTOS" value=""/>
+        <define name="SDK_OS_FREE_RTOS" value=""/>
       </defines>
       <source path="rtos/freertos_9.0.0/License" type="doc">
         <files mask="license.txt"/>

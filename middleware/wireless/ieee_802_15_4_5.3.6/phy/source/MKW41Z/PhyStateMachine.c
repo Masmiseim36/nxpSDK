@@ -76,7 +76,7 @@
 *************************************************************************************
 ********************************************************************************** */
 #define mPhyMaxIdleRxDuration_c         (0xF00000) /* [sym] */
-#define mPhyOverhead_d                  (30)       /* [sym] */
+#define mPhyOverhead_d                  (60)       /* [sym] */
 #define mPhyMaxFrameDuration_d (gPhySHRDuration_c + (1 + gMaxPHYPacketSize_c) * gPhySymbolsPerOctet_c + gPhyTurnaroundTime_c + 54)
 //#define mPhyMinRxDuration_d mPhyMaxFrameDuration_d
 #define mPhyMinRxDuration_d (gPhyTurnaroundTime_c + 22)
@@ -210,7 +210,8 @@ static void Phy24Task(Phy_PhyLocalStruct_t *pPhyStruct)
     phyMessageHeader_t * pMsgIn = NULL;
     phyStatus_t status;
 
-    ProtectFromXcvrInterrupt();
+    //ProtectFromXcvrInterrupt();
+    OSA_InterruptDisable();
     
     /* Handling messages from upper layer */
     while( MSG_Pending(&pPhyStruct->macPhyInputQueue) )
@@ -222,6 +223,7 @@ static void Phy24Task(Phy_PhyLocalStruct_t *pPhyStruct)
         if ((state != gIdle_c) && (state != gRX_c))
         {
             status = gPhyBusy_c;
+            break;
         }
         else
         {
@@ -229,12 +231,6 @@ static void Phy24Task(Phy_PhyLocalStruct_t *pPhyStruct)
 
             /* PHY doesn't free dynamic alocated messages! */
             pMsgIn = MSG_DeQueue( &pPhyStruct->macPhyInputQueue );
-
-            if (pMsgIn == NULL)
-            {
-                break;
-            }
-
             pPhyStruct->currentMacInstance = pMsgIn->macInstance;
 
 #if gMWS_Enabled_d
@@ -363,9 +359,8 @@ static void Phy24Task(Phy_PhyLocalStruct_t *pPhyStruct)
             }
         }
     }/* while( MSG_Pending(&pPhyStruct->macPhyInputQueue) ) */
-    
-    UnprotectFromXcvrInterrupt();
-    
+    //UnprotectFromXcvrInterrupt();
+    OSA_InterruptEnable();
     /* Check if PHY can enter Idle state */
     if( gIdle_c == PhyGetSeqState() )
     {
@@ -423,7 +418,8 @@ phyStatus_t MAC_PD_SapHandler(macToPdDataMessage_t *pMsg, instanceId_t phyInstan
             
         case gPdDataReq_c:
             MSG_Queue(&phyLocal.macPhyInputQueue, pMsg);
-            Phy24Task( &phyLocal );
+            //Phy24Task( &phyLocal );
+            PHY_ForceIrqPending();
             break;
             
         default:
@@ -468,7 +464,8 @@ phyStatus_t MAC_PLME_SapHandler(macToPlmeMessage_t * pMsg, instanceId_t phyInsta
         case gPlmeEdReq_c:
         case gPlmeCcaReq_c:
             MSG_Queue(&phyLocal.macPhyInputQueue, pMsg);
-            Phy24Task( &phyLocal );
+            //Phy24Task( &phyLocal );
+            PHY_ForceIrqPending();
             break;
             
         case gPlmeSetReq_c:

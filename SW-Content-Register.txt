@@ -12,17 +12,6 @@ Amazon FreeRTOS            Author: Real Time Engineers, Ltd.
                            URL: https://aws.amazon.com/freertos/             
                            version: 1.2.7                                    
 
-C++ option-parser          version: NA                                       
-                           Location:                                         
-                           middleware/multicore/erpc/erpcgen/src/options.cpp 
-                           Description: C++ option-parser                    
-                           License: Brad Appleton's license                  
-                           Author: Brad Appleton    bradapp@enteract.com     
-                           name: C++ option-parser                           
-                           Format: Plain Text                                
-                           URL: http://www.bradapp.com/ftp/src/libs/C++/Optio
-                           ns.html                                           
-
 AwsRemoteControl           Location: boards/<board>/aws_examples/remote_contr
                            ol_android/AwsRemoteControl.apk                   
                            Description: AWS Remote Control example Android   
@@ -50,6 +39,17 @@ Source - blfwk.lib         Rijndael block cipher
                            Location: middleware/mcu-                         
                            boot/tools/src/blfwk/rijndael.h, middleware/mcu-  
                            boot/tools/src/blfwk/src/rijndael.cpp             
+
+C++ option-parser          version: NA                                       
+                           Location:                                         
+                           middleware/multicore/erpc/erpcgen/src/options.cpp 
+                           Description: C++ option-parser                    
+                           License: Brad Appleton's license                  
+                           Author: Brad Appleton    bradapp@enteract.com     
+                           name: C++ option-parser                           
+                           Format: Plain Text                                
+                           URL: http://www.bradapp.com/ftp/src/libs/C++/Optio
+                           ns.html                                           
 
 CMSIS Core header files    Author: ARM                                       
                            parentversion: 5.0.1                              
@@ -173,38 +173,6 @@ JSMN                       version: NA
                            Format: source code                               
                            URL: http://zserge.com/jsmn.html                  
 
-FreeRTOS(tm)               Author: Real Time Engineers, Ltd.                 
-                           Description: A real-time operating system(RTOS)   
-                           from Real Time Engineers, Ltd.                    
-                           Format: source code                               
-                           License: Modified GPLv2. See                      
-                           ,<rootfolder>/rtos/freertos/License/license.txt.  
-                           Location: rtos/freertos_9.0.0                     
-                           name: FreeRTOS(tm)                                
-                           URL: http://www.freertos.org                      
-                           version: 9.0.0                                    
-
-HostSDK                    version: 1.8.2                                    
-                           Location: tools/wireless/host_sdk                 
-                           Description: Network Protocol stack serial bus    
-                           drivers and application code                      
-                           License: Proprietary, See EULA LA_OPT_TOOL        
-                           Software Tools v12 June 2018                      
-                           Author: NXP                                       
-                           Name: Connectivity Host SDK                       
-                           Format: Binaries, Source code and Header Files    
-
-KSDK CMSIS Peripheral      Author: Freescale                                 
-Drivers                    version: 2.x.x                                    
-                           Format: source code                               
-                           Description: CMSIS Peripheral drivers are designed
-                           to provide hardware independent APIs which make   
-                           application reusable across a wide range of       
-                           supported microcontroller devices.                
-                           name: KSDK CMSIS Peripheral Drivers               
-                           Location: devices/<device>/cmsis_drivers          
-                           License: Open Source - Apache 2.0 & BSD-3-Clause  
-
 KSDK Peripheral Driver     Description: Peripheral drivers are designed for  
                            the most common use cases indentified for         
                            the underlying hardware block.                    
@@ -213,160 +181,6 @@ KSDK Peripheral Driver     Description: Peripheral drivers are designed for
                            License: Open Source - BSD-3-Clause Clear         
                            Format: source code                               
                            Location: devices/<device_name>/drivers           
-
-Kinetis_BLE                version: 1.2.6                                    
-                           Location: middleware/wireless/bluetooth_1.2.6     
-                           Description: Bluetooth Low Energy Software        
-                           License: Open Source - BSD-3-Clause Clear         
-                           Author: NXP                                       
-                           Name: Bluetooth Low Energy Application Source     
-                           files                                             
-                           Format: Source code and Header Files              
-
-Kinetis_BLE_ControllerLib  version: 4.2.0                                    
-                           Location:                                         
-                           middleware/wireless/bluetooth_1.2.6/controller/lib
-                           Description: Bluetooth Low Energy Controller      
-                           Firmware. Host Command Interface (HCI).           
-                           License: Proprietary                              
-                           Author: Mindtree                                  
-                           Name: Bluetooth Low Energy Controller Firmware    
-                           Format: Binary libraries                          
-
-Kinetis_BLE_HostLib        version: 1.2.6                                    
-                           Location:                                         
-                           middleware/wireless/bluetooth_1.2.6/host/lib      
-                           Description: Bluetooth Low Energy Stack (HCI,     
-                           L2CAP, ATT, GATT, GAP and SM)                     
-                           License: Proprietary, See EULA LA_OPT_BASE_LICENSE
-                           v26 June 2018                                     
-                           Author: NXP                                       
-                           Name: Bluetooth Low Energy Host Firmware          
-                           Format: Binary libraries                          
-
-Kinetis_Demo_Apps          version: 1.2.6                                    
-                           Location: tools/wireless/binaries                 
-                           Description: Kinetis Wireless Demo Applications   
-                           License: Proprietary, See EULA LA_OPT_BASE_LICENSE
-                           v26 June 2018                                     
-                           Author: NXP                                       
-                           Name: Kinetis Wireless Demo Applications          
-                           Format: Binaries                                  
-
-Kinetis_FWK                version: 5.3.6                                    
-                           Location: middleware/wireless/framework_5.3.6     
-                           Description: Kinetis Connectivity Framework       
-                           Middleware for Connectivity stacks                
-                           License: Open Source - BSD-3-Clause Clear         
-                           Author: NXP                                       
-                           Name: Kinetis Connectivity Framework              
-                           Format: Source code and Header Files              
-
-Kinetis_FecLib             version: 5.3.6                                    
-                           Location: middleware/wireless/framework_5.3.6/DSP/
-                           FEC/lib_fec_IAR_*.a                               
-                           Description: Connectivity FEC Library for Kinetis 
-                           License: Proprietary. See EULA LA_OPT_BASE_LICENSE
-                           v26 June 2018                                     
-                           Author: NXP                                       
-                           Name: Connectivity FEC library                    
-                           Format: Binary libraries                          
-
-Kinetis_GENFSK             version: 1.0.6                                    
-                           Location: middleware/wireless/genfsk_1.0.6        
-                           Description: Software for driving the GENFSK      
-                           Module                                            
-                           License: Open Source - BSD-3-Clause Clear         
-                           Author: NXP                                       
-                           Name: Generic FSK Link Layer Software             
-                           Format: Source code and Header Files              
-
-Kinetis_MAC                version: 5.3.6                                    
-                           Location:                                         
-                           middleware\wireless\ieee_802_15_4_5.3.6\mac       
-                           Description: Kinetis 802.15.4 MAC Software        
-                           License: Open Source - BSD-3-Clause Clear         
-                           Author: NXP                                       
-                           Name: Kinetis MAC Software                        
-                           Format: Source code and Header Files              
-
-Kinetis_MAClib             version: 5.3.6                                    
-                           Location:                                         
-                           middleware\wireless\ieee_802_15_4_5.3.6\mac\lib   
-                           Description: Kinetis 802.15.4 MAC Library         
-                           License: Proprietary. See EULA LA_OPT_BASE_LICENSE
-                           v26 June 2018                                     
-                           Author: NXP                                       
-                           Name: Kinetis MAC Library                         
-                           Format: Binary libraries                          
-
-Kinetis_SMAC               version: 3.3.6                                    
-                           Location: middleware\wireless\smac_3.3.6          
-                           Description: Kinetis Simple Media Access          
-                           Controller Software                               
-                           License: Open Source - BSD-3-Clause Clear         
-                           Author: NXP                                       
-                           name: Kinetis SMAC Software                       
-                           Format: Source code and Header Files              
-
-Kinetis_SecLib             version: 5.3.6                                    
-                           Location: middleware/wireless/framework_5.3.6/SecL
-                           ib/lib_crypto_*.a                                 
-                           Description: Connectivity Security Library for    
-                           Kinetis                                           
-                           License: Proprietary. See EULA LA_OPT_BASE_LICENSE
-                           v26 June 2018                                     
-                           Author: NXP                                       
-                           Name: Kinetis Connectivity SecLib                 
-                           Format: Binary libraries                          
-
-Kinetis_Thread             version: 1.2.6                                    
-                           Location: middleware/wireless/nwk_ip_1.2.6        
-                           Description: Kinetis Thread Software              
-                           License: Open Source - BSD-3-Clause Clear         
-                           Author: NXP                                       
-                           Name: Kinetis Thread Software                     
-                           Format: Source code and Header Files              
-
-Kinetis_ThreadLib          version: 1.2.6                                    
-                           Location:                                         
-                           middleware/wireless/nwk_ip_1.2.6/core/lib         
-                           Description: Kinetis Thread Stack Network layers  
-                           License: Proprietary, See EULA LA_OPT_BASE_LICENSE
-                           v26 June 2018                                     
-                           Author: NXP                                       
-                           Name: Kinetis Thread Stack                        
-                           Format: Binary libraries                          
-
-Kinetis_ZigBee             version: 6.0.7                                    
-                           Location: middleware/wireless/zigbee_3_0_6.0.7    
-                           Description: Kinetis ZigBee Software              
-                           License: Open Source - BSD-3-Clause Clear         
-                           Author: NXP                                       
-                           Name: Kinetis ZigBee Software                     
-                           Format: Source code and Header Files              
-
-Kinetis_ZigBeeLib          version: 6.0.7                                    
-                           Location:                                         
-                           middleware/wireless/zigbee_3_0_6.0.7/core/lib     
-                           Description: Kinetis ZigBee 3.0 Stack Network     
-                           layers                                            
-                           License: Proprietary, See EULA LA_OPT_BASE_LICENSE
-                           v26 June 2018                                     
-                           Author: NXP                                       
-                           Name: Kinetis ZigBee 3.0 Stack                    
-                           Format: Binary libraries                          
-
-LIBJPEG                    version: 9b                                       
-                           Location: middleware/libjpeg                      
-                           Description: JPEG image encoding, decoding, and   
-                           transcoding                                       
-                           License: IJG, See                                 
-                           <rootfolder>/middleware/libjpeg/README            
-                           Author: IJG (http://www.ijg.org/)                 
-                           name: LIBJPEG                                     
-                           Format: source code                               
-                           URL: http://www.ijg.org                           
 
 LittleFS                   version: 1.3                                      
                            Location: middleware/littlefs                     
@@ -396,7 +210,7 @@ Multicore SDK              version: 2.2.0
                            License: Open Source - BSD-3-Clause Clear         
                            Author: Freescale                                 
                            name: Multicore SDK                               
-                           Format: source code   
+                           Format: source code                               
 
 Pedometer Library          version: 1.0                                      
                            Location:                                         
@@ -454,6 +268,14 @@ SD MMC Card middleware     name: SD MMC Card middleware
                            version: 2.1.2                                    
                            Format: source code                               
 
+SE_hostlib                 version: KSDK-1.4.0.1                             
+                           Location: middleware/se_hostlib                   
+                           Description: Secure element host library          
+                           License: NXP proprietary license                  
+                           Author: NXP                                       
+                           name: se_hostlib                                  
+                           Format: source code                               
+
 Segger SystemView Demo     version: 2.40a                                    
                            Location: boards/<board>/rtos_examples/visualizati
                            on/freertos_segger_sysview                        
@@ -505,6 +327,14 @@ Utility Source - elf.py    Description: Python implementation of an ELF file
                            Format: source code                               
                            Location: middleware/mcu-boot/bin/elf.py          
 
+aml                        Author: NXP                                       
+                           version: 1.4.2                                    
+                           name: aml                                         
+                           Format: source code & header files                
+                           License: Open Source - BSD-3-Clause Clear         
+                           Location: middleware/aml                          
+                           Description: NXP Analog Middleware Layer          
+
 eRPC                       version: 4.5.0                                    
                            Location: middleware/multicore/erpc               
                            Description: Embedded Remote Procedure Call       
@@ -523,6 +353,14 @@ emWin                      version: 5.38
                            Format: binary library                            
                            URL: http://www.nxp.com/pages/emwin-graphics-     
                            library:EMWIN-GRAPHICS-LIBRARY                    
+
+lvhb                       Author: NXP                                       
+                           version: 1.0.0                                    
+                           name: lvhb                                        
+                           Format: source code & header files                
+                           License: Open Source - BSD-3-Clause Clear         
+                           Location: middleware/lvhb                         
+                           Description: NXP Low Voltage H-Bridge driver      
 
 lwIP TCP/IP Stack          Author: Swedish Institute of Computer Science     
                            Description: A light-weight TCP/IP stack          
@@ -580,6 +418,14 @@ rtcesl                     Author: NXP
                            Location: middleware/rtcesl                       
                            Description: NXP Real Time Control Embedded       
                            Software Library.                                 
+
+sigfox                     Author: NXP                                       
+                           version: 1.0.0                                    
+                           name: sigfox                                      
+                           Format: source code & header files                
+                           License: Open Source - BSD-3-Clause Clear         
+                           Location: middleware/sigfox                       
+                           Description: NXP Sigfox driver                    
 
 wifi_qca                   version: 2.0.0                                    
                            Location: middleware/wifi_qca                     

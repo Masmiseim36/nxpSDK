@@ -1,0 +1,34 @@
+<!--
+* Copyright (c) 2010-2015 Freescale Semiconductor, Inc.
+* All rights reserved.
+*
+* The CFG element contains a list of recognized usb devices.
+*  DEV elements provide a name, class, vid and pid for each device.
+*
+* Each LIST element contains a list of update instructions.
+*
+* Each CMD element contains one update instruction of attribute type.
+*  "find" - Waits for "timeout" seconds for the "body" device to connect.
+*  "blhost" - Executes a blhost command.
+-->
+
+
+<UCL>
+  <CFG>
+    <STATE name="Blhost" dev="KBL-CDC" vid="1366" pid="1015"/>   <!--JLINK CDC-->
+    <STATE name="Blhost" dev="KBL-CDC" vid="0d28" pid="0204"/>   <!--mBed CDC-->
+    <STATE name="Blhost" dev="KBL-CDC" vid="1357" pid="0707"/>   <!--OpenSDK CDC-->
+    <STATE name="Blhost" dev="KBL-CDC" vid="1357" pid="0089"/>   <!--OpenSDA CDC-->
+    <STATE name="Blhost" dev="KBL-CDC" vid="1a86" pid="7523"/>   <!--CH340 CDC-->
+    <STATE name="Blhost" dev="KBL-CDC" vid="067b" pid="2303"/>   <!--PL2303 CDC-->
+    <STATE name="Blhost" dev="KBL-HID" vid="15A2" pid="0073"/>   <!--KBL USB-HID-->
+  </CFG>
+<!--
+  The following Lists are for Kinetis Bootloader chips
+-->
+<LIST name="Kinetis-bootloader" desc="Choose Flash as media">
+    <CMD state="Blhost" type="blhost" timeout="5000" body="flash-erase-region 0xA000 0x800">Flash Erase Region</CMD>
+    <CMD state="Blhost" type="blhost" body="write-memory 0xA000 \"Profiles\\Kinetis Bootloader\\OS Firmware\\files\\demo.bin\"">Write Memory</CMD>
+    <CMD state="Blhost" type="blhost" body="Update Completed!">Done</CMD>
+</LIST>
+</UCL>

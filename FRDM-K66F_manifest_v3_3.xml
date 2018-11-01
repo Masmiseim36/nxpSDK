@@ -1,13 +1,13 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.3.xsd" format_version="3.3" api_version="2.0.0" name="SDK version 2.4.1 package for FRDM-K66F board" brief="This is SDK version 2.4.1 manifest file. It describes the content of the SDK version 2.4.1 package for FRDM-K66F board and additional settings for tools that support SDK version 2.4.1" id="SDK_2.x_FRDM-K66F" configuration="6d8f9ee9f06f977cdbad4af4808c8d21">
+<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.3.xsd" format_version="3.3" api_version="2.0.0" name="SDK version 2.4.1 package for FRDM-K66F board" brief="This is SDK version 2.4.1 manifest file. It describes the content of the SDK version 2.4.1 package for FRDM-K66F board and additional settings for tools that support SDK version 2.4.1" id="SDK_2.x_FRDM-K66F" configuration="964d6a1dc4efb2b2ea4c8c31157a96b6">
   <defines>
-    <define name="CPU_$|package|" value=""/>
     <define name="CPU_$|package|_$|core|" value=""/>
+    <define name="CPU_$|package|" value=""/>
   </defines>
   <externalDefinitions>
     <definition extID="twrk65f180m"/>
   </externalDefinitions>
-  <ksdk id="KSDK241" name="KSDK241" version="2.4.1" revision="19f8bd257a1 2018-06-18"/>
+  <ksdk id="KSDK241" name="KSDK241" version="2.4.1" revision="a7aaae4b2db 2018-09-14"/>
   <compilers>
     <compiler id="compiler_arm" type="arm" name="arm"/>
     <compiler id="compiler_gcc" type="gcc" name="gcc"/>
@@ -128,6 +128,31 @@ The FRDM-K66F is a low cost development platform for Kinetis K66, K65, and K26 M
         <example id="frdmk66f_aws_shadow_enet" name="aws_shadow_enet" category="aws_examples" path="boards/frdmk66f/aws_examples/shadow_enet" toolchain="armgcc iar mcuxpresso mdk">
           <external path="boards/frdmk66f/aws_examples/shadow_enet" type="xml">
             <files mask="aws_shadow_enet.xml"/>
+          </external>
+        </example>
+        <example id="frdmk66f_led_demo_freedom_0000" name="led_demo_freedom_0000" category="bootloader_examples/demo_apps" path="boards/frdmk66f/bootloader_examples/demo_apps/led_demo_freedom_0000" toolchain="iar mcuxpresso mdk">
+          <external path="boards/frdmk66f/bootloader_examples/demo_apps/led_demo_freedom_0000" type="xml">
+            <files mask="led_demo_freedom_0000.xml"/>
+          </external>
+        </example>
+        <example id="frdmk66f_led_demo_freedom_a000" name="led_demo_freedom_a000" category="bootloader_examples/demo_apps" path="boards/frdmk66f/bootloader_examples/demo_apps/led_demo_freedom_a000" toolchain="iar mcuxpresso mdk">
+          <external path="boards/frdmk66f/bootloader_examples/demo_apps/led_demo_freedom_a000" type="xml">
+            <files mask="led_demo_freedom_a000.xml"/>
+          </external>
+        </example>
+        <example id="frdmk66f_flashloader" name="flashloader" category="bootloader_examples" path="boards/frdmk66f/bootloader_examples/flashloader" toolchain="iar mcuxpresso mdk">
+          <external path="boards/frdmk66f/bootloader_examples/flashloader" type="xml">
+            <files mask="flashloader.xml"/>
+          </external>
+        </example>
+        <example id="frdmk66f_flashloader_loader" name="flashloader_loader" category="bootloader_examples" path="boards/frdmk66f/bootloader_examples/flashloader_loader" toolchain="iar mcuxpresso mdk">
+          <external path="boards/frdmk66f/bootloader_examples/flashloader_loader" type="xml">
+            <files mask="flashloader_loader.xml"/>
+          </external>
+        </example>
+        <example id="frdmk66f_freedom_bootloader" name="freedom_bootloader" category="bootloader_examples" path="boards/frdmk66f/bootloader_examples/freedom_bootloader" toolchain="iar mcuxpresso mdk">
+          <external path="boards/frdmk66f/bootloader_examples/freedom_bootloader" type="xml">
+            <files mask="freedom_bootloader.xml"/>
           </external>
         </example>
         <example id="frdmk66f_cmsis_dspi_edma_b2b_transfer_master" name="cmsis_dspi_edma_b2b_transfer_master" category="cmsis_driver_examples/dspi" path="boards/frdmk66f/cmsis_driver_examples/dspi/edma_b2b_transfer/master" toolchain="armgcc iar mcuxpresso mdk">
@@ -3045,6 +3070,505 @@ The Kinetis® K66 180MHz IEEE® 1588 Ethernet MCUs are built on the ARM® Cortex
         <files mask="LICENSE"/>
         <files mask="Makefile"/>
         <files mask="README.md"/>
+      </source>
+    </component>
+    <component id="middleware.mcu-boot.all_files.MK66F18" name="all_files" type="other" brief="kboot files" devices="MK66FN2M0xxx18" version="1.0.0" user_visible="false">
+      <source path="middleware/mcu-boot/apps/elftosb/common" exclude="true" type="src">
+        <files mask="aes128_key_wrap_unwrap.c"/>
+        <files mask="AESKey.cpp"/>
+        <files mask="Blob.cpp"/>
+        <files mask="bytes_aes.c"/>
+        <files mask="crc.cpp"/>
+        <files mask="DataSource.cpp"/>
+        <files mask="DataSourceImager.cpp"/>
+        <files mask="DataTarget.cpp"/>
+        <files mask="ELFSourceFile.cpp"/>
+        <files mask="EncoreBootImage.cpp"/>
+        <files mask="EncoreBootImageReader.cpp"/>
+        <files mask="EvalContext.cpp"/>
+        <files mask="ExcludesListMatcher.cpp"/>
+        <files mask="format_string.cpp"/>
+        <files mask="GHSSecInfo.cpp"/>
+        <files mask="GlobMatcher.cpp"/>
+        <files mask="HexValues.cpp"/>
+        <files mask="iMXImage.cpp"/>
+        <files mask="IVTDataSource.cpp"/>
+        <files mask="Keyblob.cpp"/>
+        <files mask="Logging.cpp"/>
+        <files mask="Operation.cpp"/>
+        <files mask="OptionDictionary.cpp"/>
+        <files mask="options.cpp"/>
+        <files mask="OutputSection.cpp"/>
+        <files mask="Random.cpp"/>
+        <files mask="rijndael.cpp"/>
+        <files mask="RijndaelCBCMAC.cpp"/>
+        <files mask="RijndaelCTR.cpp"/>
+        <files mask="SB2Image.cpp"/>
+        <files mask="SearchPath.cpp"/>
+        <files mask="SHA1.cpp"/>
+        <files mask="SourceFile.cpp"/>
+        <files mask="SRecordSourceFile.cpp"/>
+        <files mask="stdafx.cpp"/>
+        <files mask="StELFFile.cpp"/>
+        <files mask="StExecutableImage.cpp"/>
+        <files mask="StSRecordFile.cpp"/>
+        <files mask="Value.cpp"/>
+        <files mask="Version.cpp"/>
+      </source>
+      <source path="middleware/mcu-boot/apps/elftosb/common" exclude="true" type="c_include">
+        <files mask="aes128_key_wrap_unwrap.h"/>
+        <files mask="AESCounter.h"/>
+        <files mask="AESKey.h"/>
+        <files mask="Blob.h"/>
+        <files mask="BootImage.h"/>
+        <files mask="crc.h"/>
+        <files mask="DataSource.h"/>
+        <files mask="DataSourceImager.h"/>
+        <files mask="DataTarget.h"/>
+        <files mask="ELF.h"/>
+        <files mask="ELFSourceFile.h"/>
+        <files mask="EncoreBootImage.h"/>
+        <files mask="EncoreBootImageReader.h"/>
+        <files mask="EndianUtilities.h"/>
+        <files mask="EvalContext.h"/>
+        <files mask="ExcludesListMatcher.h"/>
+        <files mask="format_string.h"/>
+        <files mask="GHSSecInfo.h"/>
+        <files mask="GlobMatcher.h"/>
+        <files mask="HexValues.h"/>
+        <files mask="iMXImage.h"/>
+        <files mask="int_size.h"/>
+        <files mask="IVTDataSource.h"/>
+        <files mask="Keyblob.h"/>
+        <files mask="KeyblobEntry.h"/>
+        <files mask="Logging.h"/>
+        <files mask="Operation.h"/>
+        <files mask="OptionContext.h"/>
+        <files mask="OptionDictionary.h"/>
+        <files mask="options.h"/>
+        <files mask="OutputSection.h"/>
+        <files mask="Random.h"/>
+        <files mask="rijndael.h"/>
+        <files mask="RijndaelCBCMAC.h"/>
+        <files mask="RijndaelCTR.h"/>
+        <files mask="SB2Image.h"/>
+        <files mask="SearchPath.h"/>
+        <files mask="SHA1.h"/>
+        <files mask="smart_ptr.h"/>
+        <files mask="SourceFile.h"/>
+        <files mask="SRecordSourceFile.h"/>
+        <files mask="stdafx.h"/>
+        <files mask="StELFFile.h"/>
+        <files mask="StExecutableImage.h"/>
+        <files mask="StringMatcher.h"/>
+        <files mask="StSRecordFile.h"/>
+        <files mask="Value.h"/>
+        <files mask="Version.h"/>
+      </source>
+      <source path="middleware/mcu-boot/apps/elftosb/elftosb.xcodeproj/project.xcworkspace" exclude="true" type="other">
+        <files mask="contents.xcworkspacedata"/>
+      </source>
+      <source path="middleware/mcu-boot/apps/elftosb/elftosb.xcodeproj" exclude="true" type="other">
+        <files mask="project.pbxproj"/>
+      </source>
+      <source path="middleware/mcu-boot/apps/elftosb/elftosb2" exclude="true" type="other">
+        <files mask="elftosb2.vcproj"/>
+        <files mask="elftosb2.vcxproj"/>
+        <files mask="elftosb2.vcxproj.filters"/>
+        <files mask="elftosb_lexer.l"/>
+        <files mask="elftosb_parser.tab.hpp"/>
+        <files mask="elftosb_parser.y"/>
+      </source>
+      <source path="middleware/mcu-boot/apps/elftosb/elftosb2" exclude="true" type="src">
+        <files mask="BootImageGenerator.cpp"/>
+        <files mask="ConversionController.cpp"/>
+        <files mask="elftosb.cpp"/>
+        <files mask="elftosb_lexer.cpp"/>
+        <files mask="elftosb_parser.tab.cpp"/>
+        <files mask="ElftosbAST.cpp"/>
+        <files mask="ElftosbLexer.cpp"/>
+        <files mask="EncoreBootImageGenerator.cpp"/>
+        <files mask="iMXImageGenerator.cpp"/>
+        <files mask="SB2ImageGenerator.cpp"/>
+      </source>
+      <source path="middleware/mcu-boot/apps/elftosb/elftosb2" exclude="true" type="c_include">
+        <files mask="BootImageGenerator.h"/>
+        <files mask="ConversionController.h"/>
+        <files mask="ElftosbAST.h"/>
+        <files mask="ElftosbErrors.h"/>
+        <files mask="ElftosbLexer.h"/>
+        <files mask="EncoreBootImageGenerator.h"/>
+        <files mask="FlexLexer.h"/>
+        <files mask="iMXImageGenerator.h"/>
+        <files mask="SB2ImageGenerator.h"/>
+      </source>
+      <source path="middleware/mcu-boot/apps/elftosb/winsupport" exclude="true" type="c_include">
+        <files mask="unistd.h"/>
+      </source>
+      <source path="middleware/mcu-boot/apps/elftosb" exclude="true" type="other">
+        <files mask="elftosb.sln"/>
+        <files mask="makefile"/>
+        <files mask="makefile.rules"/>
+      </source>
+      <source path="middleware/mcu-boot/apps/elftosb" exclude="true" type="c_include">
+        <files mask="stdafx.h"/>
+      </source>
+      <source path="middleware/mcu-boot/apps/led_demo/src" exclude="true" type="other">
+        <files mask="led_demo.bd"/>
+      </source>
+      <source path="middleware/mcu-boot/apps/led_demo/src" type="src">
+        <files mask="milliseconds_delay.c"/>
+      </source>
+      <source path="middleware/mcu-boot/apps/led_demo/src" exclude="true" type="src">
+        <files mask="milliseconds_delay.c"/>
+      </source>
+      <source path="middleware/mcu-boot/apps/led_demo/src" type="c_include">
+        <files mask="milliseconds_delay.h"/>
+      </source>
+      <source path="middleware/mcu-boot/bin/Tools/blhost/linux/amd64" exclude="true" type="other">
+        <files mask="blhost"/>
+      </source>
+      <source path="middleware/mcu-boot/bin/Tools/blhost/linux/i386" exclude="true" type="other">
+        <files mask="blhost"/>
+      </source>
+      <source path="middleware/mcu-boot/bin/Tools/blhost/mac" exclude="true" type="other">
+        <files mask="blhost"/>
+      </source>
+      <source path="middleware/mcu-boot/bin/Tools/blhost/win" exclude="true" type="other">
+        <files mask="blhost.exe"/>
+      </source>
+      <source path="middleware/mcu-boot/bin/Tools/elftosb/linux/amd64" exclude="true" type="other">
+        <files mask="elftosb"/>
+      </source>
+      <source path="middleware/mcu-boot/bin/Tools/elftosb/linux/i386" exclude="true" type="other">
+        <files mask="elftosb"/>
+      </source>
+      <source path="middleware/mcu-boot/bin/Tools/elftosb/win" exclude="true" type="other">
+        <files mask="elftosb.exe"/>
+      </source>
+      <source path="middleware/mcu-boot/bin" type="script">
+        <files mask="create_fl_image.py"/>
+        <files mask="create_fl_image_mcux.py"/>
+        <files mask="create_fl_image_mdk.py"/>
+        <files mask="create_flashloader_image.bat"/>
+        <files mask="create_flashloader_image_mcux.bat"/>
+        <files mask="create_flashloader_image_mdk.bat"/>
+        <files mask="elf.py"/>
+      </source>
+      <source path="middleware/mcu-boot/doc" exclude="true" type="doc">
+        <files mask="blhost User's Guide.pdf"/>
+        <files mask="elftosb User's Guide.pdf"/>
+      </source>
+      <source path="middleware/mcu-boot/mk" exclude="true" type="script">
+        <files mask="config.mk"/>
+        <files mask="flags.mk"/>
+        <files mask="paths.mk"/>
+        <files mask="targets.mk"/>
+      </source>
+      <source path="middleware/mcu-boot/src/drivers/smc" type="c_include">
+        <files mask="smc.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/utilities/src" type="src">
+        <files mask="bootloader_tree_stub.c"/>
+        <files mask="fsl_assert.c"/>
+        <files mask="fsl_rtos_abstraction.c"/>
+        <files mask="ring_buffer.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/utilities" type="c_include">
+        <files mask="fsl_assert.h"/>
+        <files mask="fsl_rtos_abstraction.h"/>
+        <files mask="kinetis_family.h"/>
+        <files mask="ring_buffer.h"/>
+        <files mask="vector_table_info.h"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/mk" type="script">
+        <files mask="common.mk"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/src/blfwk/doc" type="other">
+        <files mask="blfwk.md"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/src/blfwk/src" type="src">
+        <files mask="AESCounter.cpp"/>
+        <files mask="AESKey.cpp"/>
+        <files mask="Blob.cpp"/>
+        <files mask="Bootloader.cpp"/>
+        <files mask="BusPal.cpp"/>
+        <files mask="BusPalPeripheral.cpp"/>
+        <files mask="Command.cpp"/>
+        <files mask="Crc.cpp"/>
+        <files mask="DataSource.cpp"/>
+        <files mask="DataSourceImager.cpp"/>
+        <files mask="DataTarget.cpp"/>
+        <files mask="ELFSourceFile.cpp"/>
+        <files mask="ExcludesListMatcher.cpp"/>
+        <files mask="format_string.cpp"/>
+        <files mask="GHSSecInfo.cpp"/>
+        <files mask="GlobMatcher.cpp"/>
+        <files mask="HexValues.cpp"/>
+        <files mask="hid-linux.c"/>
+        <files mask="hid-mac.c"/>
+        <files mask="hid-windows.c"/>
+        <files mask="IntelHexSourceFile.cpp"/>
+        <files mask="jsoncpp.cpp"/>
+        <files mask="Logging.cpp"/>
+        <files mask="options.cpp"/>
+        <files mask="Random.cpp"/>
+        <files mask="rijndael.cpp"/>
+        <files mask="RijndaelCTR.cpp"/>
+        <files mask="SBSourceFile.cpp"/>
+        <files mask="SDPCommand.cpp"/>
+        <files mask="SDPUsbHidPacketizer.cpp"/>
+        <files mask="SearchPath.cpp"/>
+        <files mask="serial.c"/>
+        <files mask="SerialPacketizer.cpp"/>
+        <files mask="SimPacketizer.cpp"/>
+        <files mask="SimPeripheral.cpp"/>
+        <files mask="Simulator.cpp"/>
+        <files mask="SimulatorMemory.cpp"/>
+        <files mask="SourceFile.cpp"/>
+        <files mask="SRecordSourceFile.cpp"/>
+        <files mask="StELFFile.cpp"/>
+        <files mask="StExecutableImage.cpp"/>
+        <files mask="StIntelHexFile.cpp"/>
+        <files mask="StSRecordFile.cpp"/>
+        <files mask="UartPeripheral.cpp"/>
+        <files mask="Updater.cpp"/>
+        <files mask="UsbHidPacketizer.cpp"/>
+        <files mask="UsbHidPeripheral.cpp"/>
+        <files mask="utils.cpp"/>
+        <files mask="Value.cpp"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/src/blfwk" type="c_include">
+        <files mask="AESCounter.h"/>
+        <files mask="AESKey.h"/>
+        <files mask="BlfwkErrors.h"/>
+        <files mask="Blob.h"/>
+        <files mask="Bootloader.h"/>
+        <files mask="bootloader_config.h"/>
+        <files mask="BusPal.h"/>
+        <files mask="BusPalPeripheral.h"/>
+        <files mask="Command.h"/>
+        <files mask="Crc.h"/>
+        <files mask="DataSource.h"/>
+        <files mask="DataSourceImager.h"/>
+        <files mask="DataTarget.h"/>
+        <files mask="ELF.h"/>
+        <files mask="ELFSourceFile.h"/>
+        <files mask="EndianUtilities.h"/>
+        <files mask="ExcludesListMatcher.h"/>
+        <files mask="format_string.h"/>
+        <files mask="GHSSecInfo.h"/>
+        <files mask="GlobMatcher.h"/>
+        <files mask="HexValues.h"/>
+        <files mask="hidapi.h"/>
+        <files mask="host_types.h"/>
+        <files mask="int_size.h"/>
+        <files mask="IntelHexSourceFile.h"/>
+        <files mask="json.h"/>
+        <files mask="Logging.h"/>
+        <files mask="OptionContext.h"/>
+        <files mask="options.h"/>
+        <files mask="Packetizer.h"/>
+        <files mask="Peripheral.h"/>
+        <files mask="Progress.h"/>
+        <files mask="Random.h"/>
+        <files mask="rijndael.h"/>
+        <files mask="RijndaelCTR.h"/>
+        <files mask="SBSourceFile.h"/>
+        <files mask="SDPCommand.h"/>
+        <files mask="SDPUartPacketizer.h"/>
+        <files mask="SDPUsbHidPacketizer.h"/>
+        <files mask="SearchPath.h"/>
+        <files mask="serial.h"/>
+        <files mask="SerialPacketizer.h"/>
+        <files mask="SimPacketizer.h"/>
+        <files mask="SimPeripheral.h"/>
+        <files mask="Simulator.h"/>
+        <files mask="SimulatorMemory.h"/>
+        <files mask="smart_ptr.h"/>
+        <files mask="SourceFile.h"/>
+        <files mask="SRecordSourceFile.h"/>
+        <files mask="stdafx.h"/>
+        <files mask="StELFFile.h"/>
+        <files mask="StExecutableImage.h"/>
+        <files mask="StIntelHexFile.h"/>
+        <files mask="StringMatcher.h"/>
+        <files mask="StSRecordFile.h"/>
+        <files mask="UartPeripheral.h"/>
+        <files mask="Updater.h"/>
+        <files mask="UsbHidPacketizer.h"/>
+        <files mask="UsbHidPeripheral.h"/>
+        <files mask="utils.h"/>
+        <files mask="Value.h"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/src/bootloader" type="c_include">
+        <files mask="bl_peripheral.h"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/src/crc/src" type="src">
+        <files mask="crc16.c"/>
+        <files mask="crc32.c"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/src/crc" type="c_include">
+        <files mask="crc16.h"/>
+        <files mask="crc32.h"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/src/include" type="c_include">
+        <files mask="bootloader_common.h"/>
+        <files mask="bootloader_hid_report_ids.h"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/src/memory" type="c_include">
+        <files mask="memory.h"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/src/packet" type="c_include">
+        <files mask="command_packet.h"/>
+        <files mask="serial_packet.h"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/src/property" type="c_include">
+        <files mask="property.h"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/blhost.xcodeproj/project.xcworkspace" exclude="true" type="other">
+        <files mask="contents.xcworkspacedata"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/blhost.xcodeproj" exclude="true" type="other">
+        <files mask="project.pbxproj"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/blhost/gcc" exclude="true" type="other">
+        <files mask="Makefile"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/blhost/mac-gcc" exclude="true" type="other">
+        <files mask="Makefile"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/blhost/src" exclude="true" type="other">
+        <files mask="blhost.vcxproj"/>
+        <files mask="blhost.vcxproj.filters"/>
+        <files mask="blhost.vcxproj.user"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/blhost/src" type="src">
+        <files mask="blhost.cpp"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/blhost/src" type="c_include">
+        <files mask="targetver.h"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/blhost" exclude="true" type="other">
+        <files mask="blhost.sln"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/common/blfwk/blfwk.xcodeproj/project.xcworkspace/xcshareddata" exclude="true" type="other">
+        <files mask="blfwk.xccheckout"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/common/blfwk/blfwk.xcodeproj/project.xcworkspace" exclude="true" type="other">
+        <files mask="contents.xcworkspacedata"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/common/blfwk/blfwk.xcodeproj" exclude="true" type="other">
+        <files mask="project.pbxproj"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/common/blfwk" exclude="true" type="other">
+        <files mask="blfwk.vcxproj"/>
+        <files mask="blfwk.vcxproj.filters"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/common/blfwkdll" exclude="true" type="other">
+        <files mask="blfwk.vcxproj"/>
+        <files mask="blfwk.vcxproj.filters"/>
+        <files mask="blfwk.vcxproj.user"/>
+        <files mask="blfwkdll.vcxproj"/>
+        <files mask="blfwkdll.vcxproj.filters"/>
+        <files mask="blfwkdll.vcxproj.user"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/common/blfwkdll" exclude="true" type="src">
+        <files mask="blfwkdll.cpp"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/common/blfwkdll" exclude="true" type="c_include">
+        <files mask="blfwkdll.h"/>
+      </source>
+    </component>
+    <component id="middleware.mcu-boot.kinetis_files.MK66F18" name="kinetis_files" type="other" brief="kinetis files" devices="MK66FN2M0xxx18" version="1.0.0" user_visible="false">
+      <source path="middleware/mcu-boot/bin/Tools/KinetisFlashTool/win" exclude="true" type="other">
+        <files mask="blfwkdll.dll"/>
+        <files mask="KinetisFlashTool.exe"/>
+      </source>
+      <source path="middleware/mcu-boot/bin/Tools/elftosb/mac" exclude="true" type="other">
+        <files mask="elftosb"/>
+      </source>
+      <source path="middleware/mcu-boot/bin/Tools/mfgtools-rel/Profiles/Kinetis Bootloader/OS Firmware/files" exclude="true" type="binary">
+        <files mask="demo.bin"/>
+        <files mask="flashConfig.bin"/>
+        <files mask="simple.bin"/>
+      </source>
+      <source path="middleware/mcu-boot/bin/Tools/mfgtools-rel/Profiles/Kinetis Bootloader/OS Firmware/files" exclude="true" type="doc">
+        <files mask="Readme.txt"/>
+      </source>
+      <source path="middleware/mcu-boot/bin/Tools/mfgtools-rel/Profiles/Kinetis Bootloader/OS Firmware/files" exclude="true" type="other">
+        <files mask="simple.bd"/>
+        <files mask="simple.hex"/>
+        <files mask="simple.sb"/>
+        <files mask="simple.srec"/>
+      </source>
+      <source path="middleware/mcu-boot/bin/Tools/mfgtools-rel/Profiles/Kinetis Bootloader/OS Firmware" exclude="true" type="xml">
+        <files mask="ucl2(for binary).xml"/>
+        <files mask="ucl2(for HEX).xml"/>
+        <files mask="ucl2(for SB).xml"/>
+        <files mask="ucl2(for SRecord).xml"/>
+        <files mask="ucl2.xml"/>
+      </source>
+      <source path="middleware/mcu-boot/bin/Tools/mfgtools-rel/Profiles/Kinetis Bootloader" exclude="true" type="configuration">
+        <files mask="player.ini"/>
+      </source>
+      <source path="middleware/mcu-boot/bin/Tools/mfgtools-rel" exclude="true" type="other">
+        <files mask="MfgTool2.exe"/>
+        <files mask="MfgToolLib.dll"/>
+      </source>
+      <source path="middleware/mcu-boot/bin/Tools/mfgtools-rel" exclude="true" type="configuration">
+        <files mask="cfg.ini"/>
+        <files mask="UICfg.ini"/>
+      </source>
+      <source path="middleware/mcu-boot/doc" exclude="true" type="doc">
+        <files mask="Getting Started with the Flashloader for Kinetis.pdf"/>
+        <files mask="Kinetis Flash Tool User's Guide.pdf"/>
+        <files mask="Kinetis MCU Manufacturing Tool User's Guide.pdf"/>
+        <files mask="MCU Bootloader Demo Application User's Guide.pdf"/>
+        <files mask="MCU Bootloader Release Notes.pdf"/>
+        <files mask="MCU Bootloader v2.6.0 Reference Manual.pdf"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/KinetisFlashTool/KinetisFlashTool/res" exclude="true" type="other">
+        <files mask="Freescale.ico"/>
+        <files mask="KinetisFlashTool.rc2"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/KinetisFlashTool/KinetisFlashTool" exclude="true" type="other">
+        <files mask="KinetisFlashTool.rc"/>
+        <files mask="KinetisFlashTool.vcxproj"/>
+        <files mask="KinetisFlashTool.vcxproj.filters"/>
+        <files mask="KinetisFlashTool.vcxproj.user"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/KinetisFlashTool/KinetisFlashTool" exclude="true" type="src">
+        <files mask="Bootloader.cpp"/>
+        <files mask="BootloaderConfigDlg.cpp"/>
+        <files mask="ConfigDlg.cpp"/>
+        <files mask="FlashDlg.cpp"/>
+        <files mask="HistoryData.cpp"/>
+        <files mask="KinetisFlashTool.cpp"/>
+        <files mask="KinetisFlashToolDlg.cpp"/>
+        <files mask="SerialList.cpp"/>
+        <files mask="stdafx.cpp"/>
+        <files mask="UpdateDlg.cpp"/>
+        <files mask="utility.cpp"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/KinetisFlashTool/KinetisFlashTool" exclude="true" type="c_include">
+        <files mask="Bootloader.h"/>
+        <files mask="BootloaderConfigDlg.h"/>
+        <files mask="BootloaderConfigText.h"/>
+        <files mask="ConfigDlg.h"/>
+        <files mask="FlashDlg.h"/>
+        <files mask="HistoryData.h"/>
+        <files mask="KinetisFlashTool.h"/>
+        <files mask="KinetisFlashToolDlg.h"/>
+        <files mask="resource.h"/>
+        <files mask="SerialList.h"/>
+        <files mask="stdafx.h"/>
+        <files mask="targetver.h"/>
+        <files mask="UpdateDlg.h"/>
+        <files mask="utility.h"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/KinetisFlashTool" exclude="true" type="other">
+        <files mask="KinetisFlashTool.sln"/>
       </source>
     </component>
     <component id="middleware.multicore.MK66F18" name="multicore" full_name="Multicore Software Development Kit" type="other" brief="Multicore SDK" devices="MK66FN2M0xxx18" version="2.3.0" user_visible="true">
@@ -6219,6 +6743,337 @@ The Kinetis® K66 180MHz IEEE® 1588 Ethernet MCUs are built on the ARM® Cortex
         <include_path path="mbedTLS/include"/>
       </include_paths>
     </component>
+    <component id="middleware.mcu-boot.MK66F18_application_0x0000_linker.MK66F18" name="MK66F18_application_0x0000_linker" type="middleware" devices="MK66FN2M0xxx18" version="1.0.0" user_visible="true">
+      <source path="middleware/mcu-boot/targets/common/linker/arm/MK66F18" type="linker" toolchain="mdk">
+        <files mask="MK66FN2M0xxx18_application_0x0000.scf"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/common/linker/gcc/MK66F18" type="linker" toolchain="mcuxpresso">
+        <files mask="MK66FN2M0xxx18_application_0x0000.ld"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/common/linker/iar/MK66F18" type="linker" toolchain="iar">
+        <files mask="MK66FN2M0xxx18_application_0x0000.icf"/>
+      </source>
+    </component>
+    <component id="middleware.mcu-boot.MK66F18_application_0xA000_linker.MK66F18" name="MK66F18_application_0xA000_linker" type="middleware" devices="MK66FN2M0xxx18" version="1.0.0" user_visible="true">
+      <source path="middleware/mcu-boot/targets/common/linker/arm/MK66F18" type="linker" toolchain="mdk">
+        <files mask="MK66FN2M0xxx18_application_0xa000.scf"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/common/linker/gcc/MK66F18" type="linker" toolchain="mcuxpresso">
+        <files mask="MK66FN2M0xxx18_application_0xa000.ld"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/common/linker/iar/MK66F18" type="linker" toolchain="iar">
+        <files mask="MK66FN2M0xxx18_application_0xA000.icf"/>
+      </source>
+    </component>
+    <component id="middleware.mcu-boot.MK66F18_flashloader_loader_linker.MK66F18" name="MK66F18_flashloader_loader_linker" type="middleware" devices="MK66FN2M0xxx18" version="1.0.0" user_visible="true">
+      <source path="middleware/mcu-boot/targets/common/linker/arm/MK66F18" type="linker" toolchain="mdk">
+        <files mask="MK66FN2M0xxx18_flashloader_loader.scf"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/common/linker/gcc/MK66F18" type="linker" toolchain="mcuxpresso">
+        <files mask="MK66FN2M0xxx18_flashloader_loader.ld"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/common/linker/iar/MK66F18" type="linker" toolchain="iar">
+        <files mask="MK66FN2M0xxx18_flashloader_loader.icf"/>
+      </source>
+    </component>
+    <component id="middleware.mcu-boot.MK66F18_loader_startup.MK66F18" name="MK66F18_loader_startup" type="middleware" devices="MK66FN2M0xxx18" version="1.0.0" user_visible="true">
+      <source path="devices/MK66F18" target_path="startup" type="src" toolchain="iar">
+        <files mask="system_MK66F18.c"/>
+      </source>
+      <source path="devices/MK66F18" target_path="startup" type="src" toolchain="mdk">
+        <files mask="system_MK66F18.c"/>
+      </source>
+      <source path="devices/MK66F18" target_path="startup" type="c_include" toolchain="iar">
+        <files mask="system_MK66F18.h"/>
+      </source>
+      <source path="devices/MK66F18" target_path="startup" type="c_include" toolchain="mdk">
+        <files mask="system_MK66F18.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/memory/src" target_path="source/memory/src" type="asm_include" toolchain="mcuxpresso">
+        <files mask="pattern_fill_gcc.S"/>
+      </source>
+      <source path="middleware/mcu-boot/src/memory/src" target_path="source/memory/src" type="asm_include" toolchain="iar">
+        <files mask="pattern_fill.s"/>
+      </source>
+      <source path="middleware/mcu-boot/src/memory/src" target_path="source/memory/src" type="asm_include" toolchain="mdk">
+        <files mask="pattern_fill.s"/>
+      </source>
+      <source path="middleware/mcu-boot/src/startup" target_path="startup" type="asm_include" toolchain="mcuxpresso">
+        <files mask="crt0_gcc.S"/>
+      </source>
+      <source path="middleware/mcu-boot/src/startup" target_path="startup" type="asm_include" toolchain="iar">
+        <files mask="crt0.s"/>
+      </source>
+      <source path="middleware/mcu-boot/src/startup" target_path="startup" type="src">
+        <files mask="startup.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/startup" target_path="startup" type="c_include">
+        <files mask="ar_asm_macros.h"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/MK66F18/src/startup/arm" target_path="startup" type="asm_include" toolchain="mdk">
+        <files mask="startup_MK66F18.s"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/MK66F18/src/startup/gcc" target_path="startup" type="asm_include" toolchain="mcuxpresso">
+        <files mask="startup_MK66F18.S"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/MK66F18/src/startup/iar" target_path="startup" type="asm_include" toolchain="iar">
+        <files mask="startup_MK66F18.s"/>
+      </source>
+    </component>
+    <component id="middleware.mcu-boot.MK66F18_ram_flashloader_linker.MK66F18" name="MK66F18_ram_flashloader_linker" type="middleware" devices="MK66FN2M0xxx18" version="1.0.0" user_visible="true">
+      <source path="middleware/mcu-boot/targets/common/linker/arm/MK66F18" type="linker" toolchain="mdk">
+        <files mask="MK66FN2M0xxx18_ram_flashloader.scf"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/common/linker/gcc/MK66F18" type="linker" toolchain="mcuxpresso">
+        <files mask="MK66FN2M0xxx18_ram_flashloader.ld"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/common/linker/iar/MK66F18" type="linker" toolchain="iar">
+        <files mask="MK66FN2M0xxx18_ram_flashloader.icf"/>
+      </source>
+    </component>
+    <component id="middleware.mcu-boot.MK66F18_sources.MK66F18" name="MK66F18_sources" type="middleware" devices="MK66FN2M0xxx18" version="1.0.0" user_visible="true">
+      <source path="middleware/mcu-boot/src/bootloader/src" target_path="source/bootloader/src" type="src">
+        <files mask="dspi_peripheral_interface.c"/>
+        <files mask="i2c_peripheral_interface.c"/>
+        <files mask="scuart_peripheral_interface.c"/>
+        <files mask="usb_hid_msc_peripheral_interface.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/drivers/ltc" target_path="source" type="c_include">
+        <files mask="ltc.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/drivers/microseconds/src" target_path="source/drivers/microseconds" type="src">
+        <files mask="microseconds_pit.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/memory/src" target_path="source/memory/src" type="src">
+        <files mask="sram_init_cm4.c"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/MK66F18/src" target_path="MK66F18" type="src">
+        <files mask="clock_config_MK66F18.c"/>
+        <files mask="hardware_init_MK66F18.c"/>
+        <files mask="memory_map_MK66F18.c"/>
+        <files mask="peripherals_MK66F18.c"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/MK66F18/src" target_path="source/usb/bm_composite" type="c_include">
+        <files mask="usb_device_config.h"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/MK66F18/src" target_path="MK66F18" type="c_include">
+        <files mask="bootloader_config.h"/>
+        <files mask="peripherals_pinmux.h"/>
+        <files mask="target_config.h"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/common/src" target_path="MK66F18" type="src">
+        <files mask="bl_dspi_irq_config_common.c"/>
+        <files mask="bl_i2c_irq_config_common.c"/>
+        <files mask="bl_uart_irq_config_common.c"/>
+        <files mask="pinmux_utility_common.c"/>
+      </source>
+    </component>
+    <component id="middleware.mcu-boot.MK66F18_startup.MK66F18" name="MK66F18_startup" type="middleware" devices="MK66FN2M0xxx18" version="1.0.0" user_visible="true">
+      <source path="devices/MK66F18" target_path="startup" type="src" toolchain="iar">
+        <files mask="system_MK66F18.c"/>
+      </source>
+      <source path="devices/MK66F18" target_path="startup" type="src" toolchain="mdk">
+        <files mask="system_MK66F18.c"/>
+      </source>
+      <source path="devices/MK66F18" target_path="startup" type="c_include" toolchain="iar">
+        <files mask="system_MK66F18.h"/>
+      </source>
+      <source path="devices/MK66F18" target_path="startup" type="c_include" toolchain="mdk">
+        <files mask="system_MK66F18.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/include" target_path="source/include" type="c_include">
+        <files mask="bootloader_core.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/startup" target_path="startup" type="asm_include" toolchain="mcuxpresso">
+        <files mask="crt0_gcc.S"/>
+      </source>
+      <source path="middleware/mcu-boot/src/startup" target_path="startup" type="asm_include" toolchain="iar">
+        <files mask="crt0.s"/>
+      </source>
+      <source path="middleware/mcu-boot/src/startup" target_path="startup" type="src">
+        <files mask="startup.c"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/MK66F18/src/startup/arm" target_path="startup" type="asm_include" toolchain="mdk">
+        <files mask="startup_MK66F18.s"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/MK66F18/src/startup/gcc" target_path="startup" type="asm_include" toolchain="mcuxpresso">
+        <files mask="startup_MK66F18.S"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/MK66F18/src/startup/iar" target_path="startup" type="asm_include" toolchain="iar">
+        <files mask="startup_MK66F18.s"/>
+      </source>
+    </component>
+    <component id="middleware.mcu-boot.bootsources.MK66F18" name="bootsources" type="middleware" devices="MK66FN2M0xxx18" version="1.0.0" user_visible="true">
+      <source path="middleware/mcu-boot/src/autobaud/src" target_path="source/autobaud" type="src">
+        <files mask="autobaud_irq.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/autobaud" target_path="source/autobaud" type="c_include">
+        <files mask="autobaud.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/bootloader/src" target_path="source/bootloader/src" type="src">
+        <files mask="bl_command.c"/>
+        <files mask="bl_context.c"/>
+        <files mask="bl_exception_handler.c"/>
+        <files mask="bl_main.c"/>
+        <files mask="bl_shutdown_cleanup.c"/>
+        <files mask="bl_tree_root.c"/>
+        <files mask="bl_user_entry.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/bootloader" target_path="source/bootloader" type="c_include">
+        <files mask="bl_command.h"/>
+        <files mask="bl_context.h"/>
+        <files mask="bl_irq_common.h"/>
+        <files mask="bl_peripheral.h"/>
+        <files mask="bl_peripheral_interface.h"/>
+        <files mask="bl_reliable_update.h"/>
+        <files mask="bl_shutdown_cleanup.h"/>
+        <files mask="bl_user_entry.h"/>
+        <files mask="bl_version.h"/>
+        <files mask="bootloader.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/crc/src" target_path="source/crc" type="src">
+        <files mask="crc16.c"/>
+        <files mask="crc32.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/crc" target_path="source/crc" type="c_include">
+        <files mask="crc16.h"/>
+        <files mask="crc32.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/drivers/microseconds" target_path="source/drivers/microseconds" type="c_include">
+        <files mask="microseconds.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/include" target_path="source/include" type="c_include">
+        <files mask="bootloader_common.h"/>
+        <files mask="bootloader_core.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/memory/src" target_path="source/memory/src" type="src">
+        <files mask="device_memory.c"/>
+        <files mask="memory.c"/>
+        <files mask="normal_memory.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/memory/src" target_path="source/memory/src" type="c_include">
+        <files mask="device_memory.h"/>
+        <files mask="normal_memory.h"/>
+        <files mask="pattern_fill.h"/>
+        <files mask="sram_init.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/memory" target_path="source/memory" type="c_include">
+        <files mask="memory.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/packet/src" target_path="source/packet/src" type="src">
+        <files mask="serial_packet.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/packet" target_path="source/packet" type="c_include">
+        <files mask="command_packet.h"/>
+        <files mask="serial_packet.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/property" target_path="source/property" type="c_include">
+        <files mask="property.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/sbloader/src" target_path="source/sbloader/src" type="src">
+        <files mask="sbloader.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/sbloader" target_path="source/sbloader" type="c_include">
+        <files mask="sb_file_format.h"/>
+        <files mask="sbloader.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/utilities/src" target_path="source/utilities/src" type="src">
+        <files mask="fsl_assert.c"/>
+        <files mask="fsl_rtos_abstraction.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/utilities" target_path="source/utilities" type="c_include">
+        <files mask="fsl_assert.h"/>
+        <files mask="fsl_rtos_abstraction.h"/>
+        <files mask="vector_table_info.h"/>
+      </source>
+    </component>
+    <component id="middleware.mcu-boot.bootsources_kinetis.MK66F18" name="bootsources_kinetis" type="middleware" devices="MK66FN2M0xxx18" version="1.0.0" user_visible="true">
+      <source path="middleware/mcu-boot/src/drivers/smc" target_path="source/drivers/smc" type="src">
+        <files mask="smc.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/drivers/smc" target_path="source/drivers/smc" type="c_include">
+        <files mask="smc.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/memory/src" target_path="source/memory/src" type="src">
+        <files mask="flash_memory.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/memory/src" target_path="source/memory/src" type="c_include">
+        <files mask="flash_memory.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/property/src" target_path="source/property/src" type="src">
+        <files mask="property_kinetis.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/utilities" target_path="source/utilities" type="c_include">
+        <files mask="kinetis_family.h"/>
+      </source>
+    </component>
+    <component id="middleware.mcu-boot.drv_mmcau.MK66F18" name="drv_mmcau" type="middleware" devices="MK66FN2M0xxx18" version="1.0.0" user_visible="true">
+      <source path="middleware/mcu-boot/src/drivers/mmcau/src" target_path="source/drivers/mmcau" type="src">
+        <files mask="mmcau_aes_functions.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/drivers/mmcau" target_path="source/drivers/mmcau" type="c_include">
+        <files mask="mmcau.h"/>
+      </source>
+    </component>
+    <component id="middleware.mcu-boot.loadersources.MK66F18" name="loadersources" type="middleware" devices="MK66FN2M0xxx18" version="1.0.0" user_visible="true">
+      <source path="middleware/mcu-boot/src/bootloader/src" target_path="source/bootloader" type="src">
+        <files mask="bl_exception_handler.c"/>
+        <files mask="bl_flashloader.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/bootloader" target_path="source/bootloader" type="c_include">
+        <files mask="flashloader_image.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/include" target_path="source/include" type="c_include">
+        <files mask="bootloader_common.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/utilities" target_path="source/utilities" type="c_include">
+        <files mask="vector_table_info.h"/>
+      </source>
+    </component>
+    <component id="middleware.mcu-boot.postaction.MK66F18" name="postaction" type="middleware" devices="MK66FN2M0xxx18" version="1.0.0" user_visible="true">
+      <source path="middleware/mcu-boot/bin" target_path="postaction" exclude="true" type="script" toolchain="mcuxpresso">
+        <files mask="create_fl_image_mcux.py"/>
+        <files mask="elf.py"/>
+      </source>
+    </component>
+    <component id="middleware.mcu-boot.src_bm_usb.MK66F18" name="src_bm_usb" type="middleware" devices="MK66FN2M0xxx18" version="1.0.0" user_visible="true">
+      <source path="middleware/mcu-boot/src/bm_usb" target_path="source/usb/bm_composite" type="src">
+        <files mask="composite.c"/>
+        <files mask="hid_bootloader.c"/>
+        <files mask="msc_disk.c"/>
+        <files mask="usb_descriptor.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/bm_usb" target_path="source/usb/bm_composite" type="c_include">
+        <files mask="bootloader_hid_report_ids.h"/>
+        <files mask="composite.h"/>
+        <files mask="fat_directory_entry.h"/>
+        <files mask="hid_bootloader.h"/>
+        <files mask="msc_disk.h"/>
+        <files mask="usb_descriptor.h"/>
+      </source>
+    </component>
+    <component id="middleware.mcu-boot.src_bootloader.MK66F18" name="src_bootloader" type="middleware" devices="MK66FN2M0xxx18" version="1.0.0" user_visible="true">
+      <source path="middleware/mcu-boot/src/bootloader/src" target_path="source/bootloader/src" type="src">
+        <files mask="bl_app_crc_check.c"/>
+        <files mask="bl_misc.c"/>
+        <files mask="bl_reliable_update.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/bootloader" target_path="source/bootloader" type="c_include">
+        <files mask="bl_app_crc_check.h"/>
+      </source>
+    </component>
+    <component id="middleware.mcu-boot.src_security.MK66F18" name="src_security" type="middleware" devices="MK66FN2M0xxx18" version="1.0.0" user_visible="true">
+      <source path="middleware/mcu-boot/src/security/src" target_path="source/security/src" type="src">
+        <files mask="aes128_key_wrap_unwrap.c"/>
+        <files mask="aes_security.c"/>
+        <files mask="cbc_mac.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/security" target_path="source/security" type="c_include">
+        <files mask="aes128_key_wrap_unwrap.h"/>
+        <files mask="aes_security.h"/>
+        <files mask="cbc_mac.h"/>
+      </source>
+    </component>
     <component id="middleware.mmcau_cm0p.MK66F18" name="mmcau_cm0p" type="middleware" brief="MMCAU library for ARM Cortex M0 core" category="Security/MMCAU library" device_cores="core0_MK66FN2M0xxx18" core="cm4" dependency="platform.Include_common.MK66F18 platform.Include_core_cm4.MK66F18 platform.devices.MK66F18_CMSIS.MK66F18 platform.drivers.clock.MK66F18 platform.drivers.common.MK66F18 platform.drivers.lpuart.MK66F18 platform.drivers.uart.MK66F18 platform.utilities.debug_console.MK66F18" devices="MK66FN2M0xxx18" version="2.0.1" user_visible="true">
       <source path="middleware/mmcau/asm-cm0p" target_path="libs" type="lib" toolchain="armgcc">
         <files mask="lib_mmcau-cm0p.a"/>
@@ -7138,8 +7993,8 @@ The Kinetis® K66 180MHz IEEE® 1588 Ethernet MCUs are built on the ARM® Cortex
     </component>
     <component id="middleware.freertos.MK66F18" name="freertos" full_name="Amazon-FreeRTOS Kernel" type="OS" brief="Amazon FreeRTOS, Real Time Operating System" dependency="middleware.template_application.freertos.MK66F18" devices="MK66FN2M0xxx18" version="10.0.1" user_visible="true">
       <defines>
-        <define name="SDK_OS_FREE_RTOS" value=""/>
         <define name="FSL_RTOS_FREE_RTOS" value=""/>
+        <define name="SDK_OS_FREE_RTOS" value=""/>
       </defines>
       <source path="rtos/amazon-freertos/lib/FreeRTOS/portable/GCC/ARM_CM4F" target_path="amazon-freertos/portable" device_cores="core0_MK66FN2M0xxx18" core="cm4" type="src" toolchain="mcuxpresso">
         <files mask="fsl_tickless_systick.c"/>

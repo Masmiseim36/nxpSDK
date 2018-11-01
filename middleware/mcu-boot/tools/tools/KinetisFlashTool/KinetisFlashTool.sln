@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KinetisFlashTool", "KinetisFlashTool\KinetisFlashTool.vcxproj", "{864CBA51-EAF2-491E-9C74-4791B49FE039}"
+	ProjectSection(ProjectDependencies) = postProject
+		{DE64A8C3-695A-491F-B3E3-24D6A3057A40} = {DE64A8C3-695A-491F-B3E3-24D6A3057A40}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "blfwkdll", "..\common\blfwkdll\blfwkdll.vcxproj", "{426D14FE-6F2B-442D-893D-B5730DD6941F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{DE64A8C3-695A-491F-B3E3-24D6A3057A40} = {DE64A8C3-695A-491F-B3E3-24D6A3057A40}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "blfwk", "..\common\blfwkdll\blfwk.vcxproj", "{DE64A8C3-695A-491F-B3E3-24D6A3057A40}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{864CBA51-EAF2-491E-9C74-4791B49FE039}.Debug|x64.ActiveCfg = Debug|Win32
+		{864CBA51-EAF2-491E-9C74-4791B49FE039}.Debug|x64.Build.0 = Debug|Win32
+		{864CBA51-EAF2-491E-9C74-4791B49FE039}.Debug|x86.ActiveCfg = Debug|Win32
+		{864CBA51-EAF2-491E-9C74-4791B49FE039}.Debug|x86.Build.0 = Debug|Win32
+		{864CBA51-EAF2-491E-9C74-4791B49FE039}.Release|x64.ActiveCfg = Release|Win32
+		{864CBA51-EAF2-491E-9C74-4791B49FE039}.Release|x64.Build.0 = Release|Win32
+		{864CBA51-EAF2-491E-9C74-4791B49FE039}.Release|x86.ActiveCfg = Release|Win32
+		{864CBA51-EAF2-491E-9C74-4791B49FE039}.Release|x86.Build.0 = Release|Win32
+		{426D14FE-6F2B-442D-893D-B5730DD6941F}.Debug|x64.ActiveCfg = Debug|Win32
+		{426D14FE-6F2B-442D-893D-B5730DD6941F}.Debug|x64.Build.0 = Debug|Win32
+		{426D14FE-6F2B-442D-893D-B5730DD6941F}.Debug|x86.ActiveCfg = Debug|Win32
+		{426D14FE-6F2B-442D-893D-B5730DD6941F}.Debug|x86.Build.0 = Debug|Win32
+		{426D14FE-6F2B-442D-893D-B5730DD6941F}.Release|x64.ActiveCfg = Release|Win32
+		{426D14FE-6F2B-442D-893D-B5730DD6941F}.Release|x64.Build.0 = Release|Win32
+		{426D14FE-6F2B-442D-893D-B5730DD6941F}.Release|x86.ActiveCfg = Release|Win32
+		{426D14FE-6F2B-442D-893D-B5730DD6941F}.Release|x86.Build.0 = Release|Win32
+		{DE64A8C3-695A-491F-B3E3-24D6A3057A40}.Debug|x64.ActiveCfg = Debug|Win32
+		{DE64A8C3-695A-491F-B3E3-24D6A3057A40}.Debug|x64.Build.0 = Debug|Win32
+		{DE64A8C3-695A-491F-B3E3-24D6A3057A40}.Debug|x86.ActiveCfg = Debug|Win32
+		{DE64A8C3-695A-491F-B3E3-24D6A3057A40}.Debug|x86.Build.0 = Debug|Win32
+		{DE64A8C3-695A-491F-B3E3-24D6A3057A40}.Release|x64.ActiveCfg = Release|Win32
+		{DE64A8C3-695A-491F-B3E3-24D6A3057A40}.Release|x64.Build.0 = Release|Win32
+		{DE64A8C3-695A-491F-B3E3-24D6A3057A40}.Release|x86.ActiveCfg = Release|Win32
+		{DE64A8C3-695A-491F-B3E3-24D6A3057A40}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

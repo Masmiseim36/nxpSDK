@@ -1,0 +1,8 @@
+sources {
+	inputFile = extern(0);
+}
+
+section (0) {
+	erase 40K..42K;
+	load inputFile > 0x0000A000;
+}

@@ -6456,6 +6456,38 @@ SOURCE=.\boards\frdmk64f\driver_examples\i2c\edma_transfer\pin_mux.c
 SOURCE=.\boards\frdmk64f\driver_examples\i2c\edma_transfer\pin_mux.h
 # End Source File
 # End Group
+# Begin Group "interrupt Nr. 1"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\driver_examples\i2c\interrupt\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\driver_examples\i2c\interrupt\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\driver_examples\i2c\interrupt\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\driver_examples\i2c\interrupt\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\driver_examples\i2c\interrupt\i2c_interrupt.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\driver_examples\i2c\interrupt\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\driver_examples\i2c\interrupt\pin_mux.h
+# End Source File
+# End Group
 # End Group
 # End Group
 # Begin Group "flexcan Nr. 1"
@@ -6491,6 +6523,118 @@ SOURCE=.\boards\frdmk64f\driver_examples\flexcan\loopback\pin_mux.c
 # Begin Source File
 
 SOURCE=.\boards\frdmk64f\driver_examples\flexcan\loopback\pin_mux.h
+# End Source File
+# End Group
+# End Group
+# Begin Group "cmsis_driver_examples Nr. 1"
+
+# PROP Default_Filter ""
+# Begin Group "I2C edma_b2b_transfer_master"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\cmsis_driver_examples\i2c\edma_b2b_transfer\master\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\cmsis_driver_examples\i2c\edma_b2b_transfer\master\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\cmsis_driver_examples\i2c\edma_b2b_transfer\master\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\cmsis_driver_examples\i2c\edma_b2b_transfer\master\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\cmsis_driver_examples\i2c\edma_b2b_transfer\master\cmsis_i2c_edma_b2b_transfer_master.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\cmsis_driver_examples\i2c\edma_b2b_transfer\master\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\cmsis_driver_examples\i2c\edma_b2b_transfer\master\pin_mux.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\cmsis_driver_examples\i2c\edma_b2b_transfer\master\RTE_Device.h
+# End Source File
+# End Group
+# Begin Group "I2C edma_b2b_transfer_slave"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\cmsis_driver_examples\i2c\edma_b2b_transfer\slave\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\cmsis_driver_examples\i2c\edma_b2b_transfer\slave\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\cmsis_driver_examples\i2c\edma_b2b_transfer\slave\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\cmsis_driver_examples\i2c\edma_b2b_transfer\slave\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\cmsis_driver_examples\i2c\edma_b2b_transfer\slave\cmsis_i2c_edma_b2b_transfer_slave.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\cmsis_driver_examples\i2c\edma_b2b_transfer\slave\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\cmsis_driver_examples\i2c\edma_b2b_transfer\slave\pin_mux.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\cmsis_driver_examples\i2c\edma_b2b_transfer\slave\RTE_Device.h
+# End Source File
+# End Group
+# Begin Group "I2C edma_transfer"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\cmsis_driver_examples\i2c\edma_transfer\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\cmsis_driver_examples\i2c\edma_transfer\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\cmsis_driver_examples\i2c\edma_transfer\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\cmsis_driver_examples\i2c\edma_transfer\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\cmsis_driver_examples\i2c\edma_transfer\cmsis_i2c_edma_transfer.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\cmsis_driver_examples\i2c\edma_transfer\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\cmsis_driver_examples\i2c\edma_transfer\pin_mux.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk64f\cmsis_driver_examples\i2c\edma_transfer\RTE_Device.h
 # End Source File
 # End Group
 # End Group
@@ -7546,6 +7690,9 @@ SOURCE=.\boards\evkbimxrt1050\lwip_examples\lwip_dhcp\bm\pin_mux.h
 # Begin Group "EVK-iMXRT1020"
 
 # PROP Default_Filter ""
+# Begin Group "driver example"
+
+# PROP Default_Filter ""
 # Begin Group "flexSPI Polling Nr. 1"
 
 # PROP Default_Filter ""
@@ -7576,6 +7723,103 @@ SOURCE=.\boards\evkmimxrt1020\driver_examples\flexspi\nor\polling_transfer\pin_m
 # Begin Source File
 
 SOURCE=.\boards\evkmimxrt1020\driver_examples\flexspi\nor\polling_transfer\pin_mux.h
+# End Source File
+# End Group
+# End Group
+# Begin Group "flexcan_loopback"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexcan\loopback\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexcan\loopback\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexcan\loopback\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexcan\loopback\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexcan\loopback\flexcan_loopback.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexcan\loopback\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexcan\loopback\pin_mux.h
+# End Source File
+# End Group
+# Begin Group "flexcan_interrupt"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexcan\interrupt_transfer\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexcan\interrupt_transfer\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexcan\interrupt_transfer\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexcan\interrupt_transfer\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexcan\interrupt_transfer\flexcan_interrupt_transfer.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexcan\interrupt_transfer\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexcan\interrupt_transfer\pin_mux.h
+# End Source File
+# End Group
+# Begin Group "flexcan_loopbacktransfer"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexcan\loopback_transfer\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexcan\loopback_transfer\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexcan\loopback_transfer\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexcan\loopback_transfer\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexcan\loopback_transfer\flexcan_loopback_transfer.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexcan\loopback_transfer\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexcan\loopback_transfer\pin_mux.h
 # End Source File
 # End Group
 # End Group
@@ -8144,6 +8388,514 @@ SOURCE=".\middleware\issdk\boardkit\frdm-k22f\pin_mux.h"
 # Begin Source File
 
 SOURCE=".\middleware\issdk\boardkit\frdm-k22f\RTE_Device.h"
+# End Source File
+# End Group
+# Begin Group "sensors"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\middleware\issdk\sensors\diff_p.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\sensors\fxas21002.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\sensors\fxas21002_drv.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\sensors\fxas21002_drv.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\sensors\fxlc95000.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\sensors\fxlc95000_drv.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\sensors\fxlc95000_drv.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\sensors\fxls8471q.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\sensors\fxls8471q_drv.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\sensors\fxls8471q_drv.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\sensors\fxls8962.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\sensors\fxls8962_drv.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\sensors\fxls8962_drv.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\sensors\fxos8700.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\sensors\fxos8700_drv.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\sensors\fxos8700_drv.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\sensors\fxpq3115.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\sensors\host_io_uart.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\sensors\host_io_uart.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\sensors\mag3110.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\sensors\mag3110_drv.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\sensors\mag3110_drv.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\sensors\mma845x.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\sensors\mma8491q.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\sensors\mma865x.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\sensors\mma865x_drv.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\sensors\mma865x_drv.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\sensors\mma9553.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\sensors\mma9553_drv.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\sensors\mma9553_drv.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\sensors\mpl3115.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\sensors\mpl3115_drv.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\sensors\mpl3115_drv.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\sensors\register_io_i2c.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\sensors\register_io_i2c.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\sensors\register_io_spi.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\sensors\register_io_spi.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\sensors\sensor_drv.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\sensors\sensor_io_i2c.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\sensors\sensor_io_i2c.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\sensors\sensor_io_spi.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\sensors\sensor_io_spi.h
+# End Source File
+# End Group
+# Begin Group "frdm-k64f Nr. 1"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=".\middleware\issdk\boardkit\frdm-k64f\board.c"
+# End Source File
+# Begin Source File
+
+SOURCE=".\middleware\issdk\boardkit\frdm-k64f\board.h"
+# End Source File
+# Begin Source File
+
+SOURCE=".\middleware\issdk\boardkit\frdm-k64f\clock_config.c"
+# End Source File
+# Begin Source File
+
+SOURCE=".\middleware\issdk\boardkit\frdm-k64f\clock_config.h"
+# End Source File
+# Begin Source File
+
+SOURCE=".\middleware\issdk\boardkit\frdm-k64f\frdm_k64f.c"
+# End Source File
+# Begin Source File
+
+SOURCE=".\middleware\issdk\boardkit\frdm-k64f\frdm_k64f.h"
+# End Source File
+# Begin Source File
+
+SOURCE=".\middleware\issdk\boardkit\frdm-k64f\pin_mux.c"
+# End Source File
+# Begin Source File
+
+SOURCE=".\middleware\issdk\boardkit\frdm-k64f\pin_mux.h"
+# End Source File
+# Begin Source File
+
+SOURCE=".\middleware\issdk\boardkit\frdm-k64f\RTE_Device.h"
+# End Source File
+# End Group
+# Begin Group "example"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\demos\data_logger_demo.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\demos\demo_11_axis_mult2b.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\demos\diff_p_demo.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\demos\dp5004_demo.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\dp5004\dp5004_interrupt.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\demos\fxas21002_demo.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\fxas21002\fxas21002_fifo.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\fxas21002\fxas21002_interrupt.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\fxas21002\fxas21002_poll.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\demos\fxas21002_poll_demo.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\fxas21002\fxas21002_poll_spi.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\fxlc95000\fxlc95000_accel_i2c.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\fxlc95000\fxlc95000_accel_spi.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\demos\fxlc95000_flash_demo.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\demos\fxls8471_demo.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\demos\fxls8471_demo_kl25z.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\fxls8471q\fxls8471q_spi_fifo.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\fxls8471q\fxls8471q_spi_interrupt.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\fxls8471q\fxls8471q_spi_poll.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\demos\fxls8962_demo.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\fxls8962\fxls8962_fifo_spi.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\fxls8962\fxls8962_freefall.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\fxls8962\fxls8962_interrupt.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\fxls8962\fxls8962_motion_detection.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\fxls8962\fxls8962_normal.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\fxls8962\fxls8962_normal_spi.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\fxls8962\fxls8962_orientation_detection.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\demos\fxos8700_demo.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\fxos8700\fxos8700_fifo.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\fxos8700\fxos8700_interrupt.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\fxos8700\fxos8700_poll.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\demos\fxos8700_poll_demo.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\fxos8700\fxos8700_poll_spi.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\fxpq3115\fxpq3115_altitude.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\demos\fxpq3115_demo.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\fxpq3115\fxpq3115_fifo.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\fxpq3115\fxpq3115_fifo_interrupt.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\fxpq3115\fxpq3115_normal.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\fxpq3115\fxpq3115_normal_interrupt.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\fxpq3115\fxpq3115_oneshot.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\demos\host_demo.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\demos\mag3110_demo.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\mag3110\mag3110_normal.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\mag3110\mag3110_normal_interrupt.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\mag3110\mag3110_oneshot.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\demos\mag3110_poll_demo.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\demos\mma845x_demo.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\mma845x\mma845x_fifo.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\mma845x\mma845x_interrupt.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\mma845x\mma845x_poll.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\demos\mma8491q_demo.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\mma8491q\mma8491q_example.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\demos\mma865x_demo.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\mma865x\mma865x_fifo.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\mma865x\mma865x_freefall.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\mma865x\mma865x_interrupt.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\mma865x\mma865x_poll.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\demos\mma9553_demo.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\mma9553\mma9553_pedometer_i2c.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\mma9553\mma9553_pedometer_interrupt.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\mma9553\mma9553_pedometer_spi.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\mpl3115\mpl3115_altitude.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\demos\mpl3115_demo.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\mpl3115\mpl3115_fifo.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\mpl3115\mpl3115_fifo_interrupt.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\mpl3115\mpl3115_normal.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\mpl3115\mpl3115_normal_interrupt.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\mpl3115\mpl3115_oneshot.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\demos\mpl3115_oneShot_demo.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\demos\mpl3115_poll_demo.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\demos\orientaion_application_baremetal_agm01.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\demos\orientaion_application_baremetal_agm04.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\issdk\driverexamples\demos\orientaion_application_baremetal_agmp03.c
 # End Source File
 # End Group
 # Begin Source File
@@ -8990,6 +9742,330 @@ SOURCE=.\middleware\dhara\dhara\map.h
 
 SOURCE=.\middleware\dhara\dhara\nand.h
 # End Source File
+# End Group
+# Begin Group "aml"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\middleware\aml\common_aml.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\aml\tmr_aml\ftm_aml.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\aml\tmr_aml\ftm_aml.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\aml\gpio_aml.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\aml\spi_aml\spi_aml.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\aml\spi_aml\spi_aml.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\aml\tmr_aml\tmr_aml.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\aml\tmr_aml\tpm_aml.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\aml\tmr_aml\tpm_aml.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\aml\wait_aml\wait_aml.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\aml\wait_aml\wait_aml.h
+# End Source File
+# End Group
+# Begin Group "dma manager"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\middleware\dma_manager\fsl_dma_manager.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\dma_manager\fsl_dma_manager.h
+# End Source File
+# End Group
+# Begin Group "emv"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\middleware\emv\inc\emvl1_adapter_sdk.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\emv\src\emvl1_core.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\emv\inc\emvl1_core.h
+# End Source File
+# End Group
+# Begin Group "libjpeg"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\middleware\libjpeg\inc\cderror.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\libjpeg\inc\cdjpeg.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\libjpeg\src\jaricom.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\libjpeg\src\jcapimin.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\libjpeg\src\jcapistd.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\libjpeg\src\jcarith.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\libjpeg\src\jccoefct.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\libjpeg\src\jccolor.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\libjpeg\src\jcdctmgr.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\libjpeg\src\jchuff.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\libjpeg\src\jcinit.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\libjpeg\src\jcmainct.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\libjpeg\src\jcmarker.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\libjpeg\src\jcmaster.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\libjpeg\src\jcomapi.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\libjpeg\src\jcparam.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\libjpeg\src\jcprepct.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\libjpeg\src\jcsample.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\libjpeg\src\jctrans.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\libjpeg\src\jdapimin.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\libjpeg\src\jdapistd.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\libjpeg\src\jdarith.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\libjpeg\src\jdatadst.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\libjpeg\src\jdatasrc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\libjpeg\src\jdcoefct.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\libjpeg\src\jdcolor.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\libjpeg\inc\jdct.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\libjpeg\src\jddctmgr.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\libjpeg\src\jdhuff.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\libjpeg\src\jdinput.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\libjpeg\src\jdmainct.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\libjpeg\src\jdmarker.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\libjpeg\src\jdmaster.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\libjpeg\src\jdmerge.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\libjpeg\src\jdpostct.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\libjpeg\src\jdsample.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\libjpeg\src\jdtrans.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\libjpeg\src\jerror.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\libjpeg\inc\jerror.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\libjpeg\src\jfdctflt.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\libjpeg\src\jfdctfst.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\libjpeg\src\jfdctint.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\libjpeg\src\jidctflt.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\libjpeg\src\jidctfst.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\libjpeg\src\jidctint.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\libjpeg\inc\jinclude.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\libjpeg\src\jmemmgr.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\libjpeg\src\jmemnobs.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\libjpeg\inc\jmemsys.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\libjpeg\inc\jmorecfg.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\libjpeg\inc\jpegint.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\libjpeg\inc\jpeglib.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\libjpeg\src\jquant1.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\libjpeg\src\jquant2.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\libjpeg\src\jutils.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\libjpeg\inc\jversion.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\libjpeg\inc\transupp.h
+# End Source File
+# End Group
+# Begin Group "lvhb"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\middleware\lvhb\lvhb.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\middleware\lvhb\lvhb.h
+# End Source File
+# End Group
+# Begin Group "mbedtls"
+
+# PROP Default_Filter ""
 # End Group
 # End Group
 # Begin Group "CMSIS"

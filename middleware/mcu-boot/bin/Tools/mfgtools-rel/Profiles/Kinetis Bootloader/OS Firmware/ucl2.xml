@@ -1,0 +1,155 @@
+<!--
+* Copyright (c) 2010-2015 Freescale Semiconductor, Inc.
+* All rights reserved.
+*
+* The CFG element contains a list of recognized usb devices.
+*  DEV elements provide a name, class, vid and pid for each device.
+*
+* Each LIST element contains a list of update instructions.
+*
+* Each CMD element contains one update instruction of attribute type.
+*  "find" - Waits for "timeout" seconds for the "body" device to connect.
+*  "blhost" - Executes a blhost command.
+-->
+
+
+<UCL>
+  <CFG>
+    <STATE name="Blhost" dev="KBL-CDC" vid="1366" pid="1015"/>   <!--JLINK CDC-->
+    <STATE name="Blhost" dev="KBL-CDC" vid="0d28" pid="0204"/>   <!--mBed CDC-->
+    <STATE name="Blhost" dev="KBL-CDC" vid="1357" pid="0707"/>   <!--OpenSDK CDC-->
+    <STATE name="Blhost" dev="KBL-CDC" vid="1357" pid="0089"/>   <!--OpenSDA CDC-->
+    <STATE name="Blhost" dev="KBL-CDC" vid="1a86" pid="7523"/>   <!--CH340 CDC-->
+    <STATE name="Blhost" dev="KBL-CDC" vid="067b" pid="2303"/>   <!--PL2303 CDC-->
+    <STATE name="Blhost" dev="KBL-HID" vid="15A2" pid="0073"/>   <!--KBL USB-HID-->
+  </CFG>
+<!--
+  The following Lists are for Kinetis Bootloader chips
+-->
+<LIST name="Kinetis-bootloader" desc="Choose Flash as media">  
+    <!--Get/Set bootloader property-->
+    <CMD state="Blhost" type="blhost" timeout="5000" body="get-property 1">Get Property 1</CMD>
+    <CMD state="Blhost" type="blhost" body="get-property 2">Get Property 2</CMD>
+    <CMD state="Blhost" type="blhost" body="get-property 3">Get Property 3</CMD>
+    <CMD state="Blhost" type="blhost" body="get-property 4">Get Property 4</CMD>
+    <CMD state="Blhost" type="blhost" body="get-property 5">Get Property 5</CMD>
+    <CMD state="Blhost" type="blhost" body="get-property 6">Get Property 6</CMD>
+    <CMD state="Blhost" type="blhost" body="get-property 7">Get Property 7</CMD>
+    <CMD state="Blhost" type="blhost" body="get-property 8">Get Property 8</CMD>
+
+    <!--Default is 1(enable verify flash program)-->
+    <CMD state="Blhost" type="blhost" body="get-property 10">Get Property 10</CMD>
+    <CMD state="Blhost" type="blhost" body="set-property 10 0">Set Property 10</CMD>
+    <CMD state="Blhost" type="blhost" body="get-property 10">Get Property 10</CMD>
+    <CMD state="Blhost" type="blhost" body="set-property 10 1">Set Property 10</CMD>
+    <CMD state="Blhost" type="blhost" body="get-property 10">Get Property 10</CMD>
+    
+    <CMD state="Blhost" type="blhost" body="get-property 11">Get Property 11</CMD>
+    <CMD state="Blhost" type="blhost" body="get-property 12">Get Property 12</CMD>
+    <CMD state="Blhost" type="blhost" body="get-property 14">Get Property 14</CMD>
+    <CMD state="Blhost" type="blhost" body="get-property 15">Get Property 15</CMD>
+    <CMD state="Blhost" type="blhost" body="get-property 16">Get Property 16</CMD>
+    <CMD state="Blhost" type="blhost" body="get-property 17">Get Property 17</CMD>
+    <CMD state="Blhost" type="blhost" body="get-property 18">Get Property 18</CMD>
+    <CMD state="Blhost" type="blhost" body="get-property 19">Get Property 19</CMD>
+    <CMD state="Blhost" type="blhost" body="get-property 20">Get Property 20</CMD>
+    <CMD state="Blhost" type="blhost" body="get-property 21">Get Property 21</CMD>
+
+    <!--Default is 1(user margin)-->
+    <CMD state="Blhost" type="blhost" body="get-property 22">Get Property 22</CMD>
+    <CMD state="Blhost" type="blhost" body="set-property 22 0">Set Property 22</CMD>
+    <CMD state="Blhost" type="blhost" body="get-property 22">Get Property 22</CMD>
+    <CMD state="Blhost" type="blhost" body="set-property 22 1">Set Property 22</CMD>
+    <CMD state="Blhost" type="blhost" body="get-property 22">Get Property 22</CMD>
+
+    <!--Please check the target device's reference manual to check whether these properties are supported.-->
+    <!--CMD state="Blhost" type="blhost" body="get-property 23">Get Property 23</CMD-->
+    <!--CMD state="Blhost" type="blhost" body="get-property 24">Get Property 24</CMD-->
+    <!--CMD state="Blhost" type="blhost" body="get-property 25 1">Get Property 25</CMD-->
+    
+    <!--Fill flash memory-->
+    <CMD state="Blhost" type="blhost" body="flash-erase-region 0xA000 0x10">Flash Erase Region</CMD>
+    <CMD state="Blhost" type="blhost" body="read-memory 0xA000 0x10">Read Memory</CMD>
+    <CMD state="Blhost" type="blhost" body="fill-memory 0xA000 0x10 0x5a byte">Fill Memory</CMD>
+    <CMD state="Blhost" type="blhost" body="read-memory 0xA000 0x10">Read Memory</CMD>
+
+    <CMD state="Blhost" type="blhost" body="flash-erase-region 0xA000 0x10">Flash Erase Region</CMD>
+    <CMD state="Blhost" type="blhost" body="read-memory 0xA000 0x10">Read Memory</CMD>
+    <CMD state="Blhost" type="blhost" body="fill-memory 0xA000 0x10 0x55aa short">Fill Memory</CMD>
+    <CMD state="Blhost" type="blhost" body="read-memory 0xA000 0x10">Read Memory</CMD>
+
+    <CMD state="Blhost" type="blhost" body="flash-erase-region 0xA000 0x10">Flash Erase Region</CMD>
+    <CMD state="Blhost" type="blhost" body="read-memory 0xA000 0x10">Read Memory</CMD>
+    <CMD state="Blhost" type="blhost" body="fill-memory 0xA000 0x10 0x5555aaaa word">Fill Memory</CMD>
+    <CMD state="Blhost" type="blhost" body="read-memory 0xA000 0x10">Read Memory</CMD>
+
+    <!--Write memory-->
+    <CMD state="Blhost" type="blhost" body="flash-erase-region 0xA000 0x10">Flash Erase Region</CMD>
+    <CMD state="Blhost" type="blhost" body="read-memory 0xA000 0x10">Read Memory</CMD>
+    <CMD state="Blhost" type="blhost" body="write-memory 0xA000 {{00112233445566778899aabbccddeeff}}">Write Memory</CMD>
+    <CMD state="Blhost" type="blhost" body="read-memory 0xA000 0x10">Read Memory</CMD>
+
+    <CMD state="Blhost" type="blhost" body="flash-erase-region 0xA000 0x800">Flash Erase Region</CMD>
+    <CMD state="Blhost" type="blhost" body="read-memory 0xA000 0x800">Read Memory</CMD>
+    <CMD state="Blhost" type="blhost" body="write-memory 0xA000 \"Profiles\\Kinetis Bootloader\\OS Firmware\\files\\simple.bin\"">Write Memory</CMD>
+    <CMD state="Blhost" type="blhost" body="read-memory 0xA000 0x800">Read Memory</CMD>
+
+    <!--Flash HEX/Srecord image file-->
+    <CMD state="Blhost" type="blhost" body="flash-image \"Profiles\\Kinetis Bootloader\\OS Firmware\\files\\simple.srec\" erase">Flash Image</CMD>
+    <CMD state="Blhost" type="blhost" body="read-memory 0xA000 0x800">Read Memory</CMD>
+
+    <CMD state="Blhost" type="blhost" body="flash-image \"Profiles\\Kinetis Bootloader\\OS Firmware\\files\\simple.hex\" erase">Flash Image</CMD>
+    <CMD state="Blhost" type="blhost" body="read-memory 0xA000 0x800">Read Memory</CMD>
+    
+    <!--Send SB file-->
+    <CMD state="Blhost" type="blhost" body="receive-sb-file \"Profiles\\Kinetis Bootloader\\OS Firmware\\files\\simple.sb\"">Receive SB File</CMD>
+    <CMD state="Blhost" type="blhost" body="read-memory 0xA000 0x800">Read Memory</CMD>
+
+    <!--Erase all flash memory-->
+    <!--CMD state="Blhost" type="blhost" body="read-memory 0xA000 0x800">Read Memory</CMD>
+    <CMD state="Blhost" type="blhost" body="read-memory 0x400 0x10">Read Memory</CMD>
+    <CMD state="Blhost" type="blhost" body="flash-erase-all">Flash Erase All</CMD>
+    <CMD state="Blhost" type="blhost" body="read-memory 0xA000 0x800">Read Memory</CMD-->
+    
+    <!--For ROM bootloader, FTFx.FSEC will be cleared(1),-->
+    <!--For Flash bootloader, FTFx.FSEC locates at reserved region, no change.-->
+    <!--CMD state="Blhost" type="blhost" body="read-memory 0x400 0x10">Read Memory</CMD-->
+
+    <!--For ROM bootloader, after reset, device will fall into secure state.-->
+    <!--For Flash bootloader, security will not be changed.-->
+    <!--CMD state="Blhost" type="blhost" body="reset">Reset</CMD>
+    <CMD state="Blhost" type="blhost" body="get-property 17">Get Property 17</CMD-->
+
+    <!--Erase all flash memory and unsecure the device(for ROM only)-->
+    <!--Flash bootloader doesn't support this command.-->
+    <!--CMD state="Blhost" type="blhost" body="flash-erase-all-unsecure">Flash Erase All Unsecure</CMD>
+    <CMD state="Blhost" type="blhost" body="get-property 17">Get Property 17</CMD-->
+
+    <!--Unlock device by backdoor key(for ROM only)-->
+    <!--For Flash bootloader, FTFx.FSEC locates at reserved region.-->
+    <!--CMD state="Blhost" type="blhost" body="flash-erase-all">Flash Erase All</CMD>
+    <CMD state="Blhost" type="blhost" body="write-memory 0x400 \"Profiles\\Kinetis Bootloader\\OS Firmware\\files\\flashConfig.bin\"">Write Memory</CMD>
+    <CMD state="Blhost" type="blhost" body="reset">Reset</CMD>
+    <CMD state="Blhost" type="blhost" body="get-property 17">Get Property 17</CMD>
+    <CMD state="Blhost" type="blhost" body="flash-security-disable 0102030405060708">Flash Security Disable</CMD>
+    <CMD state="Blhost" type="blhost" body="get-property 17">Get Property 17</CMD>
+    <CMD state="Blhost" type="blhost" body="reset">Reset</CMD>
+    <CMD state="Blhost" type="blhost" body="get-property 17">Get Property 17</CMD>
+    <CMD state="Blhost" type="blhost" body="flash-erase-all-unsecure">Flash Erase All Unsecure</CMD-->
+
+    <!--Program IFR-->
+    <!--This command is not supported by all kinetis bootloader devices. Please refer to device's reference manual
+        to check whether it is supported and the supported index and length-->
+    <!--CMD state="Blhost" type="blhost" body="flash-read-once 0x30 4">Flash Read Once</CMD>
+    <CMD state="Blhost" type="blhost" body="flash-program-once 0x30 4 12345678">Flash Program Once</CMD>
+    <CMD state="Blhost" type="blhost" body="flash-read-once 0x30 4">Flash Read Once</CMD>
+    <CMD state="Blhost" type="blhost" body="flash-erase-all-unsecure">Flash Erase All Unsecure</CMD>
+    <CMD state="Blhost" type="blhost" body="flash-read-once 0x30 4">Flash Read Once</CMD-->
+
+    <CMD state="Blhost" type="blhost" body="flash-erase-region 0xA000 0x800">Flash Erase Region</CMD>
+    <CMD state="Blhost" type="blhost" body="write-memory 0xA000 \"Profiles\\Kinetis Bootloader\\OS Firmware\\files\\demo.bin\"">Write Memory</CMD>
+    <!-- Due to RAM size and RAM reserved regions are differ on different devices, User need to update the SP address before perform the execute command-->
+    <!--CMD state="Blhost" type="blhost" body="execute 0xA39D 0 0x1fff0400">Execute</CMD-->
+    <CMD state="Blhost" type="blhost" body="Update Completed!">Done</CMD>
+</LIST>
+</UCL>

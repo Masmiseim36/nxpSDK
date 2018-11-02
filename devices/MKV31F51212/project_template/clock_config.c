@@ -64,7 +64,6 @@
 !!ClocksProfile
 product: Clocks v1.0
 processor: MKV31F512xxx12
-package_id: MKV31F512VLL12
 mcu_data: ksdk2_0
 processor_version: 1.0.1
 board: TWR-KV31F120M

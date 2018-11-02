@@ -6,11 +6,10 @@ for an ASCII string. Several CRC protocols are implemented using the CRC driver 
 
 Toolchain supported
 ===================
-- IAR embedded Workbench 8.11.3
-- Keil MDK 5.23
-- GCC ARM Embedded 6-2017-q2
-- Kinetis Development Studio IDE 3.2.0
-- MCUXpresso10.1.0
+- Keil MDK 5.24a
+- IAR embedded Workbench 8.22.2
+- GCC ARM Embedded 7-2017-q4-major
+- MCUXpresso10.2.0
 
 Hardware requirements
 =====================
@@ -37,8 +36,8 @@ Prepare the Demo
 
 Running the demo
 ================
-Example output on terminal:
-
+When the example runs successfully, you can see the similar information from the terminal as below.
+~~~~~~~~~~~~~~~~~~~~~
 CRC Peripheral Driver Example
 
 Test string: 123456789
@@ -47,6 +46,7 @@ CRC-16 MAXIM: 0x44c2
 CRC-16 KERMIT: 0x2189
 CRC-32: 0xcbf43926
 CRC-32 POSIX: 0x765e7680
+~~~~~~~~~~~~~~~~~~~~~
 Customization options
 =====================
 

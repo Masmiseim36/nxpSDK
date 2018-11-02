@@ -6,7 +6,7 @@
  *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
+ *  that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -236,6 +236,14 @@ struct _uart_handle
 #if defined(__cplusplus)
 extern "C" {
 #endif /* _cplusplus */
+
+/*!
+ * @brief Get the UART instance from peripheral base address.
+ *
+ * @param base UART peripheral base address.
+ * @return UART instance.
+ */
+uint32_t UART_GetInstance(UART_Type *base);
 
 /*!
  * @name Initialization and deinitialization

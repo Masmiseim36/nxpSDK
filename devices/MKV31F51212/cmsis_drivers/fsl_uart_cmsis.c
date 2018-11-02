@@ -18,7 +18,14 @@
  * limitations under the License.
  */
 
+
 #include "fsl_uart_cmsis.h"
+
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.uart_cmsis"
+#endif
+
 
 #if ((RTE_USART0 && defined(UART0)) || (RTE_USART1 && defined(UART1)) || (RTE_USART2 && defined(UART2)) || \
      (RTE_USART3 && defined(UART3)) || (RTE_USART4 && defined(UART4)) || (RTE_USART5 && defined(UART5)))

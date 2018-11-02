@@ -3,10 +3,10 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
+ *  that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -33,6 +33,12 @@
  */
 
 #include "fsl_ftm.h"
+
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.ftm"
+#endif
+
 
 /*******************************************************************************
  * Prototypes
@@ -703,31 +709,16 @@ void FTM_SetupFault(FTM_Type *base, ftm_fault_input_t faultNumber, const ftm_fau
 {
     assert(faultParams);
 
-    uint32_t reg;
-
-    reg = base->FLTCTRL;
-    if (faultParams->enableFaultInput)
-    {
-        /* Enable the fault input */
-        reg |= (FTM_FLTCTRL_FAULT0EN_MASK << faultNumber);
-    }
-    else
-    {
-        /* Disable the fault input */
-        reg &= ~(FTM_FLTCTRL_FAULT0EN_MASK << faultNumber);
-    }
-
     if (faultParams->useFaultFilter)
     {
         /* Enable the fault filter */
-        reg |= (FTM_FLTCTRL_FFLTR0EN_MASK << (FTM_FLTCTRL_FFLTR0EN_SHIFT + faultNumber));
+        base->FLTCTRL |= (FTM_FLTCTRL_FFLTR0EN_MASK << (FTM_FLTCTRL_FFLTR0EN_SHIFT + faultNumber));
     }
     else
     {
         /* Disable the fault filter */
-        reg &= ~(FTM_FLTCTRL_FFLTR0EN_MASK << (FTM_FLTCTRL_FFLTR0EN_SHIFT + faultNumber));
+        base->FLTCTRL &= ~(FTM_FLTCTRL_FFLTR0EN_MASK << (FTM_FLTCTRL_FFLTR0EN_SHIFT + faultNumber));
     }
-    base->FLTCTRL = reg;
 
     if (faultParams->faultLevel)
     {
@@ -738,6 +729,17 @@ void FTM_SetupFault(FTM_Type *base, ftm_fault_input_t faultNumber, const ftm_fau
     {
         /* Active high polarity for the fault input pin */
         base->FLTPOL &= ~(1U << faultNumber);
+    }
+
+    if (faultParams->enableFaultInput)
+    {
+        /* Enable the fault input */
+        base->FLTCTRL |= (FTM_FLTCTRL_FAULT0EN_MASK << faultNumber);
+    }
+    else
+    {
+        /* Disable the fault input */
+        base->FLTCTRL &= ~(FTM_FLTCTRL_FAULT0EN_MASK << faultNumber);
     }
 }
 

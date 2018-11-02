@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.3.xsd" format_version="3.3" api_version="2.0.0" name="SDK version 2.4.1 package for FRDM-K22F board" brief="This is SDK version 2.4.1 manifest file. It describes the content of the SDK version 2.4.1 package for FRDM-K22F board and additional settings for tools that support SDK version 2.4.1" id="SDK_2.x_FRDM-K22F" configuration="b97737140cc880ffe1ef6cf178130acf">
+<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.3.xsd" format_version="3.3" api_version="2.0.0" name="SDK version 2.4.1 package for FRDM-K22F board" brief="This is SDK version 2.4.1 manifest file. It describes the content of the SDK version 2.4.1 package for FRDM-K22F board and additional settings for tools that support SDK version 2.4.1" id="SDK_2.x_FRDM-K22F" configuration="5449ca4d89fd34b5c8a094fe2c5a89b0">
   <defines>
     <define name="CPU_$|package|" value=""/>
     <define name="CPU_$|package|_$|core|" value=""/>
@@ -7,7 +7,7 @@
   <externalDefinitions>
     <definition extID="twrk22f120m"/>
   </externalDefinitions>
-  <ksdk id="KSDK241" name="KSDK241" version="2.4.1" revision="19f8bd257a1 2018-06-18"/>
+  <ksdk id="KSDK241" name="KSDK241" version="2.4.1" revision="a7aaae4b2db 2018-09-14"/>
   <compilers>
     <compiler id="compiler_arm" type="arm" name="arm"/>
     <compiler id="compiler_gcc" type="gcc" name="gcc"/>
@@ -93,144 +93,6 @@ ${run}
     <toolchain id="mdk" name="Keil_MDK" full_name="Keil MDK" type="mdk" compiler="compiler_arm" version="5.24" vendor="ARM" vendor_url="http://www.arm.com"/>
   </toolchains>
   <boards>
-    <board id="frdmk22f_om13588" name="FRDM-K22F-OM13588" package="MK22FN512VLH12" type="kit" version="1.0.0" href="http://www.nxp.com/products/interfaces/usb-interfaces/usb-type-c-shield-board-for-kinetis-freedom-board:OM13588">
-      <description>
-USB Type-C Shield Board for Kinetis Freedom Board
-        </description>
-      <image type="image" path="docs/images">
-        <files mask="FRDM-K22F-OM13588.gif"/>
-      </image>
-      <metadataSet>
-        <metadata key="vendor" value="NXP"/>
-        <metadata key="html">
-          <specific>
-            <content>
-The USB Type-C shield board combined with a Kinetis Power Delivery SDK allows a system designer to tether a USB Type-C connector to any Kinetis development platform.
-        </content>
-          </specific>
-        </metadata>
-      </metadataSet>
-      <examples/>
-    </board>
-    <board id="frdmk22f_agmp03" name="FRDM-K22F-AGMP03" package="MK22FN512VLH12" type="kit" version="1.0.0" href="http://www.nxp.com/AGMP03">
-      <description>
-Sensor Toolbox Development Platform for FXLS8962, FXAS21002C, MAG3110 and MPL3115 10-Axis Solution
-        </description>
-      <image type="image" path="docs/images">
-        <files mask="FRDM-K22F-AGMP03.gif"/>
-      </image>
-      <metadataSet>
-        <metadata key="vendor" value="NXP"/>
-        <metadata key="html">
-          <specific>
-            <content>
-Demonstration Kits (FRDM-STBC-AGMP03 Sensor Shield Development Board with FRDM-K22F Board):
-&lt;ul&gt;
-&lt;li&gt;Enables an ‘Out of the box’ Sensor demonstrations using the Freedom Sensor Toolbox Ecosystem.&lt;/li&gt;
-&lt;li&gt;Enables quick and easy visualization of 10-Axis (3 Axis Accelerometer, 3 Axis Magnetometer, 3 Axis Gyroscope and 1-Axis Pressure) sensor data and results.&lt;/li&gt;
-&lt;/ul&gt;
-        </content>
-          </specific>
-        </metadata>
-      </metadataSet>
-      <examples>
-        <example id="frdmk22f_agmp03_pedometer_agmp03" name="pedometer_agmp03" category="issdk/algorithms" path="boards/frdmk22f_agmp03/issdk_examples/algorithms/pedometer/pedometer_agmp03" toolchain="iar mcuxpresso">
-          <external path="boards/frdmk22f_agmp03/issdk_examples/algorithms/pedometer/pedometer_agmp03" type="xml">
-            <files mask="pedometer_agmp03.xml"/>
-          </external>
-        </example>
-        <example id="frdmk22f_agmp03_sensorfusion_freertos_agmp03" name="sensorfusion_freertos_agmp03" category="issdk/algorithms" path="boards/frdmk22f_agmp03/issdk_examples/algorithms/sensorfusion/freertos_agmp03" toolchain="armgcc iar mcuxpresso">
-          <external path="boards/frdmk22f_agmp03/issdk_examples/algorithms/sensorfusion/freertos_agmp03" type="xml">
-            <files mask="sensorfusion_freertos_agmp03.xml"/>
-          </external>
-        </example>
-        <example id="frdmk22f_agmp03_fifo_fxas21002" name="fifo_fxas21002" category="issdk/sensors" path="boards/frdmk22f_agmp03/issdk_examples/sensors/fxas21002/fxas21002_fifo" toolchain="armgcc iar mcuxpresso mdk">
-          <external path="boards/frdmk22f_agmp03/issdk_examples/sensors/fxas21002/fxas21002_fifo" type="xml">
-            <files mask="fifo_fxas21002.xml"/>
-          </external>
-        </example>
-        <example id="frdmk22f_agmp03_interrupt_fxas21002" name="interrupt_fxas21002" category="issdk/sensors" path="boards/frdmk22f_agmp03/issdk_examples/sensors/fxas21002/fxas21002_interrupt" toolchain="armgcc iar mcuxpresso mdk">
-          <external path="boards/frdmk22f_agmp03/issdk_examples/sensors/fxas21002/fxas21002_interrupt" type="xml">
-            <files mask="interrupt_fxas21002.xml"/>
-          </external>
-        </example>
-        <example id="frdmk22f_agmp03_poll_fxas21002" name="poll_fxas21002" category="issdk/sensors" path="boards/frdmk22f_agmp03/issdk_examples/sensors/fxas21002/fxas21002_poll" toolchain="armgcc iar mcuxpresso mdk">
-          <external path="boards/frdmk22f_agmp03/issdk_examples/sensors/fxas21002/fxas21002_poll" type="xml">
-            <files mask="poll_fxas21002.xml"/>
-          </external>
-        </example>
-        <example id="frdmk22f_agmp03_fxls8962_freefall" name="fxls8962_freefall" category="issdk/sensors" path="boards/frdmk22f_agmp03/issdk_examples/sensors/fxls8962/fxls8962_freefall" toolchain="armgcc iar mcuxpresso mdk">
-          <external path="boards/frdmk22f_agmp03/issdk_examples/sensors/fxls8962/fxls8962_freefall" type="xml">
-            <files mask="fxls8962_freefall.xml"/>
-          </external>
-        </example>
-        <example id="frdmk22f_agmp03_fxls8962_interrupt" name="fxls8962_interrupt" category="issdk/sensors" path="boards/frdmk22f_agmp03/issdk_examples/sensors/fxls8962/fxls8962_interrupt" toolchain="armgcc iar mcuxpresso mdk">
-          <external path="boards/frdmk22f_agmp03/issdk_examples/sensors/fxls8962/fxls8962_interrupt" type="xml">
-            <files mask="fxls8962_interrupt.xml"/>
-          </external>
-        </example>
-        <example id="frdmk22f_agmp03_fxls8962_normal" name="fxls8962_normal" category="issdk/sensors" path="boards/frdmk22f_agmp03/issdk_examples/sensors/fxls8962/fxls8962_normal" toolchain="armgcc iar mcuxpresso mdk">
-          <external path="boards/frdmk22f_agmp03/issdk_examples/sensors/fxls8962/fxls8962_normal" type="xml">
-            <files mask="fxls8962_normal.xml"/>
-          </external>
-        </example>
-        <example id="frdmk22f_agmp03_fxls8962_normal_spi" name="fxls8962_normal_spi" category="issdk/sensors" path="boards/frdmk22f_agmp03/issdk_examples/sensors/fxls8962/fxls8962_normal_spi" toolchain="armgcc iar mcuxpresso mdk">
-          <external path="boards/frdmk22f_agmp03/issdk_examples/sensors/fxls8962/fxls8962_normal_spi" type="xml">
-            <files mask="fxls8962_normal_spi.xml"/>
-          </external>
-        </example>
-        <example id="frdmk22f_agmp03_hostdemo_agmp03" name="hostdemo_agmp03" category="issdk/sensors" path="boards/frdmk22f_agmp03/issdk_examples/sensors/hostdemo/host_demo_template" toolchain="armgcc iar mcuxpresso mdk">
-          <external path="boards/frdmk22f_agmp03/issdk_examples/sensors/hostdemo/host_demo_template" type="xml">
-            <files mask="hostdemo_agmp03.xml"/>
-          </external>
-        </example>
-        <example id="frdmk22f_agmp03_k22f_agmp03_mag3110_normal" name="k22f_agmp03_mag3110_normal" category="issdk/sensors" path="boards/frdmk22f_agmp03/issdk_examples/sensors/mag3110/mag3110_normal" toolchain="armgcc iar mcuxpresso mdk">
-          <external path="boards/frdmk22f_agmp03/issdk_examples/sensors/mag3110/mag3110_normal" type="xml">
-            <files mask="k22f_agmp03_mag3110_normal.xml"/>
-          </external>
-        </example>
-        <example id="frdmk22f_agmp03_mag3110_normal_interrupt" name="mag3110_normal_interrupt" category="issdk/sensors" path="boards/frdmk22f_agmp03/issdk_examples/sensors/mag3110/mag3110_normal_interrupt" toolchain="armgcc iar mcuxpresso mdk">
-          <external path="boards/frdmk22f_agmp03/issdk_examples/sensors/mag3110/mag3110_normal_interrupt" type="xml">
-            <files mask="mag3110_normal_interrupt.xml"/>
-          </external>
-        </example>
-        <example id="frdmk22f_agmp03_mag3110_oneshot" name="mag3110_oneshot" category="issdk/sensors" path="boards/frdmk22f_agmp03/issdk_examples/sensors/mag3110/mag3110_oneshot" toolchain="armgcc iar mcuxpresso mdk">
-          <external path="boards/frdmk22f_agmp03/issdk_examples/sensors/mag3110/mag3110_oneshot" type="xml">
-            <files mask="mag3110_oneshot.xml"/>
-          </external>
-        </example>
-        <example id="frdmk22f_agmp03_mpl3115_altitude" name="mpl3115_altitude" category="issdk/sensors" path="boards/frdmk22f_agmp03/issdk_examples/sensors/mpl3115/mpl3115_altitude" toolchain="armgcc iar mcuxpresso mdk">
-          <external path="boards/frdmk22f_agmp03/issdk_examples/sensors/mpl3115/mpl3115_altitude" type="xml">
-            <files mask="mpl3115_altitude.xml"/>
-          </external>
-        </example>
-        <example id="frdmk22f_agmp03_mpl3115_fifo" name="mpl3115_fifo" category="issdk/sensors" path="boards/frdmk22f_agmp03/issdk_examples/sensors/mpl3115/mpl3115_fifo" toolchain="armgcc iar mcuxpresso mdk">
-          <external path="boards/frdmk22f_agmp03/issdk_examples/sensors/mpl3115/mpl3115_fifo" type="xml">
-            <files mask="mpl3115_fifo.xml"/>
-          </external>
-        </example>
-        <example id="frdmk22f_agmp03_mpl3115_fifo_interrupt" name="mpl3115_fifo_interrupt" category="issdk/sensors" path="boards/frdmk22f_agmp03/issdk_examples/sensors/mpl3115/mpl3115_fifo_interrupt" toolchain="armgcc iar mcuxpresso mdk">
-          <external path="boards/frdmk22f_agmp03/issdk_examples/sensors/mpl3115/mpl3115_fifo_interrupt" type="xml">
-            <files mask="mpl3115_fifo_interrupt.xml"/>
-          </external>
-        </example>
-        <example id="frdmk22f_agmp03_mpl3115_normal" name="mpl3115_normal" category="issdk/sensors" path="boards/frdmk22f_agmp03/issdk_examples/sensors/mpl3115/mpl3115_normal" toolchain="armgcc iar mcuxpresso mdk">
-          <external path="boards/frdmk22f_agmp03/issdk_examples/sensors/mpl3115/mpl3115_normal" type="xml">
-            <files mask="mpl3115_normal.xml"/>
-          </external>
-        </example>
-        <example id="frdmk22f_agmp03_mpl3115_normal_interrupt" name="mpl3115_normal_interrupt" category="issdk/sensors" path="boards/frdmk22f_agmp03/issdk_examples/sensors/mpl3115/mpl3115_normal_interrupt" toolchain="armgcc iar mcuxpresso mdk">
-          <external path="boards/frdmk22f_agmp03/issdk_examples/sensors/mpl3115/mpl3115_normal_interrupt" type="xml">
-            <files mask="mpl3115_normal_interrupt.xml"/>
-          </external>
-        </example>
-        <example id="frdmk22f_agmp03_mpl3115_oneshot" name="mpl3115_oneshot" category="issdk/sensors" path="boards/frdmk22f_agmp03/issdk_examples/sensors/mpl3115/mpl3115_oneshot" toolchain="armgcc iar mcuxpresso mdk">
-          <external path="boards/frdmk22f_agmp03/issdk_examples/sensors/mpl3115/mpl3115_oneshot" type="xml">
-            <files mask="mpl3115_oneshot.xml"/>
-          </external>
-        </example>
-      </examples>
-    </board>
     <board id="frdmk22f" name="FRDM-K22F" package="MK22FN512VLH12" version="1.0.0" href="http://www.nxp.com/frdm-k22f">
       <description>The NXP Freedom K22F is an ultra-low-cost development platform for Kinetis K22 MCUs</description>
       <image type="image" path="docs/images">
@@ -251,6 +113,31 @@ Demonstration Kits (FRDM-STBC-AGMP03 Sensor Shield Development Board with FRDM-K
         </metadata>
       </metadataSet>
       <examples>
+        <example id="frdmk22f_led_demo_freedom_0000" name="led_demo_freedom_0000" category="bootloader_examples/demo_apps" path="boards/frdmk22f/bootloader_examples/demo_apps/led_demo_freedom_0000" toolchain="iar mcuxpresso mdk">
+          <external path="boards/frdmk22f/bootloader_examples/demo_apps/led_demo_freedom_0000" type="xml">
+            <files mask="led_demo_freedom_0000.xml"/>
+          </external>
+        </example>
+        <example id="frdmk22f_led_demo_freedom_a000" name="led_demo_freedom_a000" category="bootloader_examples/demo_apps" path="boards/frdmk22f/bootloader_examples/demo_apps/led_demo_freedom_a000" toolchain="iar mcuxpresso mdk">
+          <external path="boards/frdmk22f/bootloader_examples/demo_apps/led_demo_freedom_a000" type="xml">
+            <files mask="led_demo_freedom_a000.xml"/>
+          </external>
+        </example>
+        <example id="frdmk22f_flashloader" name="flashloader" category="bootloader_examples" path="boards/frdmk22f/bootloader_examples/flashloader" toolchain="iar mcuxpresso mdk">
+          <external path="boards/frdmk22f/bootloader_examples/flashloader" type="xml">
+            <files mask="flashloader.xml"/>
+          </external>
+        </example>
+        <example id="frdmk22f_flashloader_loader" name="flashloader_loader" category="bootloader_examples" path="boards/frdmk22f/bootloader_examples/flashloader_loader" toolchain="iar mcuxpresso mdk">
+          <external path="boards/frdmk22f/bootloader_examples/flashloader_loader" type="xml">
+            <files mask="flashloader_loader.xml"/>
+          </external>
+        </example>
+        <example id="frdmk22f_freedom_bootloader" name="freedom_bootloader" category="bootloader_examples" path="boards/frdmk22f/bootloader_examples/freedom_bootloader" toolchain="iar mcuxpresso mdk">
+          <external path="boards/frdmk22f/bootloader_examples/freedom_bootloader" type="xml">
+            <files mask="freedom_bootloader.xml"/>
+          </external>
+        </example>
         <example id="frdmk22f_cmsis_dspi_edma_b2b_transfer_master" name="cmsis_dspi_edma_b2b_transfer_master" category="cmsis_driver_examples/dspi" path="boards/frdmk22f/cmsis_driver_examples/dspi/edma_b2b_transfer/master" toolchain="armgcc iar mcuxpresso mdk">
           <external path="boards/frdmk22f/cmsis_driver_examples/dspi/edma_b2b_transfer/master" type="xml">
             <files mask="cmsis_dspi_edma_b2b_transfer_master.xml"/>
@@ -1163,120 +1050,6 @@ Demonstration Kits (FRDM-STBC-AGMP03 Sensor Shield Development Board with FRDM-K
         </example>
       </examples>
     </board>
-    <board id="frdmk22f_agm01" name="FRDM-K22F-AGM01" package="MK22FN512VLH12" type="kit" version="1.0.0" href="http://www.nxp.com/FRDM-STBC-AGM01">
-      <description>
-Sensor Toolbox Development Platform for FXAS21002C and FXOS8700C 9-Axis Solution
-        </description>
-      <image type="image" path="docs/images">
-        <files mask="FRDM-K22F-AGM01.gif"/>
-      </image>
-      <metadataSet>
-        <metadata key="vendor" value="NXP"/>
-        <metadata key="html">
-          <specific>
-            <content>
-Demonstration Kits (FRDMSTBC-AGM01 Sensor Shield Development Board with FRDM-K22F Board):
-&lt;ul&gt;
-&lt;li&gt;Enables an ‘Out of the box’ Sensor Fusion demo using the Freedom Sensor Ecosystem.&lt;/li&gt;
-&lt;li&gt;Enables quick and easy visualization of 9-Axis (3 Axis Gyroscope + 6-Axis E-compass) sensor data and results.&lt;/li&gt;
-&lt;/ul&gt;
-        </content>
-          </specific>
-        </metadata>
-      </metadataSet>
-      <examples>
-        <example id="frdmk22f_agm01_pedometer_agm01" name="pedometer_agm01" category="issdk/algorithms" path="boards/frdmk22f_agm01/issdk_examples/algorithms/pedometer/pedometer_agm01" toolchain="iar mcuxpresso">
-          <external path="boards/frdmk22f_agm01/issdk_examples/algorithms/pedometer/pedometer_agm01" type="xml">
-            <files mask="pedometer_agm01.xml"/>
-          </external>
-        </example>
-        <example id="frdmk22f_agm01_sensorfusion_bm_agm01" name="sensorfusion_bm_agm01" category="issdk/algorithms" path="boards/frdmk22f_agm01/issdk_examples/algorithms/sensorfusion/baremetal_agm01" toolchain="armgcc iar mcuxpresso">
-          <external path="boards/frdmk22f_agm01/issdk_examples/algorithms/sensorfusion/baremetal_agm01" type="xml">
-            <files mask="sensorfusion_bm_agm01.xml"/>
-          </external>
-        </example>
-        <example id="frdmk22f_agm01_sensorfusion_freertos_agm01" name="sensorfusion_freertos_agm01" category="issdk/algorithms" path="boards/frdmk22f_agm01/issdk_examples/algorithms/sensorfusion/freertos_agm01" toolchain="armgcc iar mcuxpresso">
-          <external path="boards/frdmk22f_agm01/issdk_examples/algorithms/sensorfusion/freertos_agm01" type="xml">
-            <files mask="sensorfusion_freertos_agm01.xml"/>
-          </external>
-        </example>
-        <example id="frdmk22f_agm01_fxas21002_fifo" name="fxas21002_fifo" category="issdk/sensors" path="boards/frdmk22f_agm01/issdk_examples/sensors/fxas21002/fxas21002_fifo" toolchain="armgcc iar mcuxpresso mdk">
-          <external path="boards/frdmk22f_agm01/issdk_examples/sensors/fxas21002/fxas21002_fifo" type="xml">
-            <files mask="fxas21002_fifo.xml"/>
-          </external>
-        </example>
-        <example id="frdmk22f_agm01_fxas21002_interrupt" name="fxas21002_interrupt" category="issdk/sensors" path="boards/frdmk22f_agm01/issdk_examples/sensors/fxas21002/fxas21002_interrupt" toolchain="armgcc iar mcuxpresso mdk">
-          <external path="boards/frdmk22f_agm01/issdk_examples/sensors/fxas21002/fxas21002_interrupt" type="xml">
-            <files mask="fxas21002_interrupt.xml"/>
-          </external>
-        </example>
-        <example id="frdmk22f_agm01_fxas21002_poll" name="fxas21002_poll" category="issdk/sensors" path="boards/frdmk22f_agm01/issdk_examples/sensors/fxas21002/fxas21002_poll" toolchain="armgcc iar mcuxpresso mdk">
-          <external path="boards/frdmk22f_agm01/issdk_examples/sensors/fxas21002/fxas21002_poll" type="xml">
-            <files mask="fxas21002_poll.xml"/>
-          </external>
-        </example>
-        <example id="frdmk22f_agm01_fxos8700_fifo" name="fxos8700_fifo" category="issdk/sensors" path="boards/frdmk22f_agm01/issdk_examples/sensors/fxos8700/fxos8700_fifo" toolchain="armgcc iar mcuxpresso mdk">
-          <external path="boards/frdmk22f_agm01/issdk_examples/sensors/fxos8700/fxos8700_fifo" type="xml">
-            <files mask="fxos8700_fifo.xml"/>
-          </external>
-        </example>
-        <example id="frdmk22f_agm01_fxos8700_interrupt" name="fxos8700_interrupt" category="issdk/sensors" path="boards/frdmk22f_agm01/issdk_examples/sensors/fxos8700/fxos8700_interrupt" toolchain="armgcc iar mcuxpresso mdk">
-          <external path="boards/frdmk22f_agm01/issdk_examples/sensors/fxos8700/fxos8700_interrupt" type="xml">
-            <files mask="fxos8700_interrupt.xml"/>
-          </external>
-        </example>
-        <example id="frdmk22f_agm01_fxos8700_poll" name="fxos8700_poll" category="issdk/sensors" path="boards/frdmk22f_agm01/issdk_examples/sensors/fxos8700/fxos8700_poll" toolchain="armgcc iar mcuxpresso mdk">
-          <external path="boards/frdmk22f_agm01/issdk_examples/sensors/fxos8700/fxos8700_poll" type="xml">
-            <files mask="fxos8700_poll.xml"/>
-          </external>
-        </example>
-        <example id="frdmk22f_agm01_hostdemo_agm01" name="hostdemo_agm01" category="issdk/sensors" path="boards/frdmk22f_agm01/issdk_examples/sensors/hostdemo/host_demo_template" toolchain="armgcc iar mcuxpresso mdk">
-          <external path="boards/frdmk22f_agm01/issdk_examples/sensors/hostdemo/host_demo_template" type="xml">
-            <files mask="hostdemo_agm01.xml"/>
-          </external>
-        </example>
-      </examples>
-    </board>
-    <board id="frdmk22f_sa9500" name="FRDM-K22F-SA9500" package="MK22FN512VLH12" type="kit" version="1.0.0" href="http://www.nxp.com/products/software-and-tools/hardware-development-tools/freedom-development-boards/sensor-toolbox-development-platform-for-fxlc95000cl-intelligent-motion-sensor:FRDM-STBC-SA9500">
-      <description>
-Sensor Toolbox Development Platform for FXLC95000CL Intelligent Motion Sensor
-        </description>
-      <image type="image" path="docs/images">
-        <files mask="FRDM-K22F-SA9500.gif"/>
-      </image>
-      <metadataSet>
-        <metadata key="vendor" value="NXP"/>
-        <metadata key="html">
-          <specific>
-            <content>
-This is your ecosystem for NXP’s FXLC95000CL Intelligent Motion Sensor. This includes a Demo Kit, Sensor Shield Development Board and Breakout Board. Each of these boards is supported by the NXP® Software: Sensor Toolbox Ecosystem.
-&lt;ul&gt;
-&lt;li&gt;The Demo Kit (FRDM-K22F-SA9500) enables an ‘Out of the Box’ demonstration using ISF and the Sensor Toolbox – CE.&lt;/li&gt;
-&lt;li&gt;The Sensor Shield Development Board (FRDM-STBC-SA9500) enables sensor evaluation and development. The Sensor Shield Development board is compatible with most NXP Freedom development boards.&lt;/li&gt;
-&lt;li&gt;The Breakout Board (BRKT-STBC-SA9500) enables prototyping of your sensor designs.&lt;/li&gt;
-&lt;/ul&gt;
-        </content>
-          </specific>
-        </metadata>
-      </metadataSet>
-      <examples>
-        <example id="frdmk22f_sa9500_fxlc95000_accel_i2c" name="fxlc95000_accel_i2c" category="issdk/sensors" path="boards/frdmk22f_sa9500/issdk_examples/sensors/fxlc95000/fxlc95000_accel_i2c" toolchain="armgcc iar mcuxpresso mdk">
-          <external path="boards/frdmk22f_sa9500/issdk_examples/sensors/fxlc95000/fxlc95000_accel_i2c" type="xml">
-            <files mask="fxlc95000_accel_i2c.xml"/>
-          </external>
-        </example>
-        <example id="frdmk22f_sa9500_fxlc95000_accel_spi" name="fxlc95000_accel_spi" category="issdk/sensors" path="boards/frdmk22f_sa9500/issdk_examples/sensors/fxlc95000/fxlc95000_accel_spi" toolchain="armgcc iar mcuxpresso mdk">
-          <external path="boards/frdmk22f_sa9500/issdk_examples/sensors/fxlc95000/fxlc95000_accel_spi" type="xml">
-            <files mask="fxlc95000_accel_spi.xml"/>
-          </external>
-        </example>
-        <example id="frdmk22f_sa9500_hostdemo_sa9500" name="hostdemo_sa9500" category="issdk/sensors" path="boards/frdmk22f_sa9500/issdk_examples/sensors/hostdemo/host_demo_template" toolchain="armgcc iar mcuxpresso mdk">
-          <external path="boards/frdmk22f_sa9500/issdk_examples/sensors/hostdemo/host_demo_template" type="xml">
-            <files mask="hostdemo_sa9500.xml"/>
-          </external>
-        </example>
-      </examples>
-    </board>
   </boards>
   <devices>
     <device id="MK22FN512xxx12" full_name="MK22FN512xxx12" name="MK22F51212" version="1.0.0" href="http://www.nxp.com/kinetis">
@@ -1322,10 +1095,6 @@ Kinetis® K22 MCUs have been optimized for cost-sensitive applications requiring
       <evaluation_boards>
         <evaluation_board name="frdmk22f"/>
         <evaluation_board name="twrk22f120m"/>
-        <evaluation_board name="frdmk22f_agmp03"/>
-        <evaluation_board name="frdmk22f_om13588"/>
-        <evaluation_board name="frdmk22f_sa9500"/>
-        <evaluation_board name="frdmk22f_agm01"/>
       </evaluation_boards>
       <debug_configurations>
         <debug_configuration id_refs="com.crt.advproject.config.exe.debug com.crt.advproject.config.exe.release">
@@ -1770,22 +1539,10 @@ Kinetis® K22 MCUs have been optimized for cost-sensitive applications requiring
     </component>
     <component id="docs.images.MK22F51212" name="images" type="other" devices="MK22FN512xxx12" version="1.0.0" user_visible="true">
       <source path="docs/images" type="image">
-        <files mask="FRDM-K22F-OM13588.gif"/>
+        <files mask="device.jpg"/>
       </source>
       <source path="docs/images" type="image">
         <files mask="FRDM-K22F.gif"/>
-      </source>
-      <source path="docs/images" type="image">
-        <files mask="FRDM-K22F-AGM01.gif"/>
-      </source>
-      <source path="docs/images" type="image">
-        <files mask="FRDM-K22F-AGMP03.gif"/>
-      </source>
-      <source path="docs/images" type="image">
-        <files mask="FRDM-K22F-SA9500.gif"/>
-      </source>
-      <source path="docs/images" type="image">
-        <files mask="device.jpg"/>
       </source>
     </component>
     <component id="middleware.fatfs.unused_files.MK22F51212" name="unused_files" type="other" brief="fatfs files unused by projects" devices="MK22FN512xxx12" version="3.9.8" revision="3" user_visible="false">
@@ -1910,323 +1667,6 @@ Kinetis® K22 MCUs have been optimized for cost-sensitive applications requiring
     <component id="middleware.freertos.heap.heap_5.MK22F51212" name="heap_5" full_name="FreeRTOS_heap_5" type="other" brief="FreeRTOS heap_5 allocator" category="Operating System/FreeRTOS Operating System" dependency="middleware.freertos.MK22F51212 middleware.template_application.freertos.MK22F51212" devices="MK22FN512xxx12" version="1.0.0" user_visible="true">
       <source path="rtos/amazon-freertos/lib/FreeRTOS/portable/MemMang" target_path="amazon-freertos/FreeRTOS/portable" type="src">
         <files mask="heap_5.c"/>
-      </source>
-    </component>
-    <component id="middleware.issdk.scr.MK22F51212" name="issdk_scr" type="other" brief="ISSDK Software Content Register" devices="MK22FN512xxx12" version="1.0.0" user_visible="false">
-      <source path="middleware/issdk" type="doc">
-        <files mask="SW-Content-Register.txt"/>
-      </source>
-    </component>
-    <component id="middleware.issdk.sensor.boardkit.MK22F51212" name="issdk_boardkit" type="other" brief="ISSDK Board-Kit files" devices="MK22FN512xxx12" version="1.0.0" user_visible="false">
-      <source path="middleware/issdk/boardkit/evk-mimxrt1050/frdm-stbc-agm01" type="c_include">
-        <files mask="frdm_stbc_agm01_shield.h"/>
-        <files mask="issdk_hal.h"/>
-      </source>
-      <source path="middleware/issdk/boardkit/evk-mimxrt1050" type="src">
-        <files mask="board.c"/>
-        <files mask="clock_config.c"/>
-        <files mask="evkmimxrt1050.c"/>
-        <files mask="pin_mux.c"/>
-      </source>
-      <source path="middleware/issdk/boardkit/evk-mimxrt1050" type="c_include">
-        <files mask="board.h"/>
-        <files mask="clock_config.h"/>
-        <files mask="evkmimxrt1050.h"/>
-        <files mask="pin_mux.h"/>
-        <files mask="RTE_Device.h"/>
-      </source>
-      <source path="middleware/issdk/boardkit/evkb-imxrt1050/frdm-stbc-agm01" type="c_include">
-        <files mask="frdm_stbc_agm01_shield.h"/>
-        <files mask="issdk_hal.h"/>
-      </source>
-      <source path="middleware/issdk/boardkit/evkb-imxrt1050" type="src">
-        <files mask="board.c"/>
-        <files mask="clock_config.c"/>
-        <files mask="evkbimxrt1050.c"/>
-        <files mask="pin_mux.c"/>
-      </source>
-      <source path="middleware/issdk/boardkit/evkb-imxrt1050" type="c_include">
-        <files mask="board.h"/>
-        <files mask="clock_config.h"/>
-        <files mask="evkbimxrt1050.h"/>
-        <files mask="pin_mux.h"/>
-        <files mask="RTE_Device.h"/>
-      </source>
-      <source path="middleware/issdk/boardkit/frdm-k22f/frdm-stbc-agm01" type="c_include">
-        <files mask="frdm_stbc_agm01_shield.h"/>
-        <files mask="issdk_hal.h"/>
-      </source>
-      <source path="middleware/issdk/boardkit/frdm-k22f/frdm-stbc-agmp03" type="c_include">
-        <files mask="frdm_stbc_agmp03_shield.h"/>
-        <files mask="issdk_hal.h"/>
-      </source>
-      <source path="middleware/issdk/boardkit/frdm-k22f/frdm-stbc-sa9500" type="c_include">
-        <files mask="frdm_stbc_sa9500_shield.h"/>
-        <files mask="issdk_hal.h"/>
-      </source>
-      <source path="middleware/issdk/boardkit/frdm-k22f" type="src">
-        <files mask="board.c"/>
-        <files mask="clock_config.c"/>
-        <files mask="frdm_k22f.c"/>
-        <files mask="pin_mux.c"/>
-      </source>
-      <source path="middleware/issdk/boardkit/frdm-k22f" type="c_include">
-        <files mask="board.h"/>
-        <files mask="clock_config.h"/>
-        <files mask="frdm_k22f.h"/>
-        <files mask="pin_mux.h"/>
-        <files mask="RTE_Device.h"/>
-      </source>
-      <source path="middleware/issdk/boardkit/frdm-k32w042/frdm-stbc-agm01" type="c_include">
-        <files mask="frdm_stbc_agm01_shield.h"/>
-        <files mask="issdk_hal.h"/>
-      </source>
-      <source path="middleware/issdk/boardkit/frdm-k32w042" type="src">
-        <files mask="board.c"/>
-        <files mask="clock_config.c"/>
-        <files mask="frdm_k32w042.c"/>
-        <files mask="pin_mux.c"/>
-      </source>
-      <source path="middleware/issdk/boardkit/frdm-k32w042" type="c_include">
-        <files mask="board.h"/>
-        <files mask="clock_config.h"/>
-        <files mask="frdm_k32w042.h"/>
-        <files mask="pin_mux.h"/>
-        <files mask="RTE_Device.h"/>
-      </source>
-      <source path="middleware/issdk/boardkit/frdm-k64f/frdm-fxs-mult2-b" type="c_include">
-        <files mask="frdm_fxs_mult2b_shield.h"/>
-        <files mask="issdk_hal.h"/>
-      </source>
-      <source path="middleware/issdk/boardkit/frdm-k64f/frdm-stbc-agm01" type="c_include">
-        <files mask="frdm_stbc_agm01_shield.h"/>
-        <files mask="issdk_hal.h"/>
-      </source>
-      <source path="middleware/issdk/boardkit/frdm-k64f/frdm-stbc-agm04" type="c_include">
-        <files mask="frdm_stbc_agm04_shield.h"/>
-        <files mask="issdk_hal.h"/>
-      </source>
-      <source path="middleware/issdk/boardkit/frdm-k64f" type="src">
-        <files mask="board.c"/>
-        <files mask="clock_config.c"/>
-        <files mask="frdm_k64f.c"/>
-        <files mask="pin_mux.c"/>
-      </source>
-      <source path="middleware/issdk/boardkit/frdm-k64f" type="c_include">
-        <files mask="board.h"/>
-        <files mask="clock_config.h"/>
-        <files mask="frdm_k64f.h"/>
-        <files mask="pin_mux.h"/>
-        <files mask="RTE_Device.h"/>
-      </source>
-      <source path="middleware/issdk/boardkit/frdm-ke15z/frdm-stbc-dp5004" type="c_include">
-        <files mask="frdm-stbc-dp5004_shield.h"/>
-        <files mask="issdk_hal.h"/>
-      </source>
-      <source path="middleware/issdk/boardkit/frdm-ke15z/frdm-stbi-dp300x" type="c_include">
-        <files mask="frdm-stbi-dp300x_shield.h"/>
-        <files mask="issdk_hal.h"/>
-      </source>
-      <source path="middleware/issdk/boardkit/frdm-ke15z" type="src">
-        <files mask="board.c"/>
-        <files mask="clock_config.c"/>
-        <files mask="frdm_ke15z.c"/>
-        <files mask="pin_mux.c"/>
-      </source>
-      <source path="middleware/issdk/boardkit/frdm-ke15z" type="c_include">
-        <files mask="board.h"/>
-        <files mask="clock_config.h"/>
-        <files mask="frdm_ke15z.h"/>
-        <files mask="pin_mux.h"/>
-        <files mask="RTE_Device.h"/>
-      </source>
-      <source path="middleware/issdk/boardkit/frdm-kl25z/frdm-stbc-a8471" type="c_include">
-        <files mask="frdm_stbc_a8471_shield.h"/>
-        <files mask="issdk_hal.h"/>
-      </source>
-      <source path="middleware/issdk/boardkit/frdm-kl25z/frdm-stbc-a8491" type="c_include">
-        <files mask="frdm_stbc_a8491_shield.h"/>
-        <files mask="issdk_hal.h"/>
-      </source>
-      <source path="middleware/issdk/boardkit/frdm-kl25z/frdm-stbc-p3115" type="c_include">
-        <files mask="frdm_stbc_p3115_shield.h"/>
-        <files mask="issdk_hal.h"/>
-      </source>
-      <source path="middleware/issdk/boardkit/frdm-kl25z/frdm" type="c_include">
-        <files mask="issdk_hal.h"/>
-      </source>
-      <source path="middleware/issdk/boardkit/frdm-kl25z/rd-kl25z" type="c_include">
-        <files mask="issdk_hal.h"/>
-        <files mask="rd_kl25z_gdl.h"/>
-      </source>
-      <source path="middleware/issdk/boardkit/frdm-kl25z/virtual_shield" type="c_include">
-        <files mask="issdk_hal.h"/>
-        <files mask="virtual_shield.h"/>
-      </source>
-      <source path="middleware/issdk/boardkit/frdm-kl25z" type="src">
-        <files mask="board.c"/>
-        <files mask="clock_config.c"/>
-        <files mask="frdm_kl25z.c"/>
-        <files mask="pin_mux.c"/>
-      </source>
-      <source path="middleware/issdk/boardkit/frdm-kl25z" type="c_include">
-        <files mask="board.h"/>
-        <files mask="clock_config.h"/>
-        <files mask="frdm_kl25z.h"/>
-        <files mask="pin_mux.h"/>
-        <files mask="RTE_Device.h"/>
-      </source>
-      <source path="middleware/issdk/boardkit/frdm-kl27z/frdm-stbc-agmp03" type="c_include">
-        <files mask="frdm_stbc_agmp03_shield.h"/>
-        <files mask="issdk_hal.h"/>
-      </source>
-      <source path="middleware/issdk/boardkit/frdm-kl27z/frdm-stbc-b3115" type="c_include">
-        <files mask="frdm_stbc_b3115_shield.h"/>
-        <files mask="issdk_hal.h"/>
-      </source>
-      <source path="middleware/issdk/boardkit/frdm-kl27z/frdm" type="c_include">
-        <files mask="issdk_hal.h"/>
-      </source>
-      <source path="middleware/issdk/boardkit/frdm-kl27z" type="src">
-        <files mask="board.c"/>
-        <files mask="clock_config.c"/>
-        <files mask="frdm_kl27z.c"/>
-        <files mask="pin_mux.c"/>
-      </source>
-      <source path="middleware/issdk/boardkit/frdm-kl27z" type="c_include">
-        <files mask="board.h"/>
-        <files mask="clock_config.h"/>
-        <files mask="frdm_kl27z.h"/>
-        <files mask="pin_mux.h"/>
-        <files mask="RTE_Device.h"/>
-      </source>
-      <source path="middleware/issdk/boardkit/lpcxpresso54114/frdm-stbc-agm01" type="c_include">
-        <files mask="frdm_stbc_agm01_shield.h"/>
-        <files mask="issdk_hal.h"/>
-      </source>
-      <source path="middleware/issdk/boardkit/lpcxpresso54114/frdm-stbc-agmp03" type="c_include">
-        <files mask="frdm_stbc_agmp03_shield.h"/>
-        <files mask="issdk_hal.h"/>
-      </source>
-      <source path="middleware/issdk/boardkit/lpcxpresso54114" type="src">
-        <files mask="board.c"/>
-        <files mask="clock_config.c"/>
-        <files mask="lpc54114.c"/>
-        <files mask="pin_mux.c"/>
-      </source>
-      <source path="middleware/issdk/boardkit/lpcxpresso54114" type="c_include">
-        <files mask="board.h"/>
-        <files mask="clock_config.h"/>
-        <files mask="lpc54114.h"/>
-        <files mask="pin_mux.h"/>
-        <files mask="RTE_Device.h"/>
-      </source>
-    </component>
-    <component id="middleware.issdk.sensor.driverexamples.MK22F51212" name="issdk_driverexamples" type="other" brief="ISSDK Sensor Driver Examples files" devices="MK22FN512xxx12" version="1.0.0" user_visible="false">
-      <source path="middleware/issdk/driverexamples/demos" type="src">
-        <files mask="data_logger_demo.c"/>
-        <files mask="demo_11_axis_mult2b.c"/>
-        <files mask="diff_p_demo.c"/>
-        <files mask="dp5004_demo.c"/>
-        <files mask="fxas21002_demo.c"/>
-        <files mask="fxas21002_poll_demo.c"/>
-        <files mask="fxlc95000_flash_demo.c"/>
-        <files mask="fxls8471_demo.c"/>
-        <files mask="fxls8471_demo_kl25z.c"/>
-        <files mask="fxls8962_demo.c"/>
-        <files mask="fxos8700_demo.c"/>
-        <files mask="fxos8700_poll_demo.c"/>
-        <files mask="fxpq3115_demo.c"/>
-        <files mask="host_demo.c"/>
-        <files mask="mag3110_demo.c"/>
-        <files mask="mag3110_poll_demo.c"/>
-        <files mask="mma845x_demo.c"/>
-        <files mask="mma8491q_demo.c"/>
-        <files mask="mma865x_demo.c"/>
-        <files mask="mma9553_demo.c"/>
-        <files mask="mpl3115_demo.c"/>
-        <files mask="mpl3115_poll_demo.c"/>
-        <files mask="orientaion_application_baremetal_agm01.c"/>
-        <files mask="orientaion_application_baremetal_agm04.c"/>
-        <files mask="orientaion_application_baremetal_agmp03.c"/>
-      </source>
-      <source path="middleware/issdk/driverexamples/dp5004" type="src">
-        <files mask="dp5004_interrupt.c"/>
-      </source>
-      <source path="middleware/issdk/driverexamples/fxas21002" type="src">
-        <files mask="fxas21002_fifo.c"/>
-        <files mask="fxas21002_interrupt.c"/>
-        <files mask="fxas21002_poll.c"/>
-        <files mask="fxas21002_poll_spi.c"/>
-      </source>
-      <source path="middleware/issdk/driverexamples/fxlc95000" type="src">
-        <files mask="fxlc95000_accel_i2c.c"/>
-        <files mask="fxlc95000_accel_spi.c"/>
-      </source>
-      <source path="middleware/issdk/driverexamples/fxls8471q" type="src">
-        <files mask="fxls8471q_spi_fifo.c"/>
-        <files mask="fxls8471q_spi_interrupt.c"/>
-        <files mask="fxls8471q_spi_poll.c"/>
-      </source>
-      <source path="middleware/issdk/driverexamples/fxls8962" type="src">
-        <files mask="fxls8962_fifo_spi.c"/>
-        <files mask="fxls8962_freefall.c"/>
-        <files mask="fxls8962_interrupt.c"/>
-        <files mask="fxls8962_motion_detection.c"/>
-        <files mask="fxls8962_normal.c"/>
-        <files mask="fxls8962_normal_spi.c"/>
-        <files mask="fxls8962_orientation_detection.c"/>
-      </source>
-      <source path="middleware/issdk/driverexamples/fxos8700" type="src">
-        <files mask="fxos8700_fifo.c"/>
-        <files mask="fxos8700_interrupt.c"/>
-        <files mask="fxos8700_poll.c"/>
-        <files mask="fxos8700_poll_spi.c"/>
-      </source>
-      <source path="middleware/issdk/driverexamples/fxpq3115" type="src">
-        <files mask="fxpq3115_altitude.c"/>
-        <files mask="fxpq3115_fifo.c"/>
-        <files mask="fxpq3115_fifo_interrupt.c"/>
-        <files mask="fxpq3115_normal.c"/>
-        <files mask="fxpq3115_normal_interrupt.c"/>
-        <files mask="fxpq3115_oneshot.c"/>
-      </source>
-      <source path="middleware/issdk/driverexamples/mag3110" type="src">
-        <files mask="mag3110_normal.c"/>
-        <files mask="mag3110_normal_interrupt.c"/>
-        <files mask="mag3110_oneshot.c"/>
-      </source>
-      <source path="middleware/issdk/driverexamples/mma845x" type="src">
-        <files mask="mma845x_fifo.c"/>
-        <files mask="mma845x_interrupt.c"/>
-        <files mask="mma845x_poll.c"/>
-      </source>
-      <source path="middleware/issdk/driverexamples/mma8491q" type="src">
-        <files mask="mma8491q_example.c"/>
-      </source>
-      <source path="middleware/issdk/driverexamples/mma865x" type="src">
-        <files mask="mma865x_fifo.c"/>
-        <files mask="mma865x_freefall.c"/>
-        <files mask="mma865x_interrupt.c"/>
-        <files mask="mma865x_poll.c"/>
-      </source>
-      <source path="middleware/issdk/driverexamples/mma9553" type="src">
-        <files mask="mma9553_pedometer_i2c.c"/>
-        <files mask="mma9553_pedometer_interrupt.c"/>
-        <files mask="mma9553_pedometer_spi.c"/>
-      </source>
-      <source path="middleware/issdk/driverexamples/mpl3115" type="src">
-        <files mask="mpl3115_altitude.c"/>
-        <files mask="mpl3115_fifo.c"/>
-        <files mask="mpl3115_fifo_interrupt.c"/>
-        <files mask="mpl3115_normal.c"/>
-        <files mask="mpl3115_normal_interrupt.c"/>
-        <files mask="mpl3115_oneshot.c"/>
-      </source>
-    </component>
-    <component id="middleware.issdk.sensor.tools.MK22F51212" name="issdk_tools" type="other" brief="ISSDK Serial to MQTT bridge application" devices="MK22FN512xxx12" version="1.0.0" user_visible="false">
-      <source path="middleware/issdk/tools/Serial_To_MQTT" type="script">
-        <files mask="CloudBridgeNXPDemo.py"/>
       </source>
     </component>
     <component id="middleware.littlefs.unused_files.MK22F51212" name="unused_files" type="other" brief="littlefs files unused by projects" devices="MK22FN512xxx12" version="1.3" user_visible="false">
@@ -3025,6 +2465,635 @@ Kinetis® K22 MCUs have been optimized for cost-sensitive applications requiring
         <files mask="LICENSE"/>
         <files mask="Makefile"/>
         <files mask="README.md"/>
+      </source>
+    </component>
+    <component id="middleware.mcu-boot.MK22F_files.MK22F51212" name="MK22F_files" type="other" brief="K22F family mcu-boot files" devices="MK22FN512xxx12" version="1.0.0" user_visible="false">
+      <source path="middleware/mcu-boot/apps/led_demo/MK02F12810/src" type="src">
+        <files mask="main.c"/>
+      </source>
+      <source path="middleware/mcu-boot/apps/led_demo/MK22F12810/src" type="src">
+        <files mask="main.c"/>
+      </source>
+      <source path="middleware/mcu-boot/apps/led_demo/MK22F25612/src" type="src">
+        <files mask="main.c"/>
+      </source>
+      <source path="middleware/mcu-boot/apps/led_demo/MK22F51212/src" type="src">
+        <files mask="main.c"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/MK02F12810/src/startup/arm" type="asm_include" toolchain="mdk">
+        <files mask="startup_MK02F12810.s"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/MK02F12810/src/startup/gcc" type="asm_include" toolchain="mcuxpresso">
+        <files mask="startup_MK02F12810.S"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/MK02F12810/src/startup/iar" type="asm_include" toolchain="iar">
+        <files mask="startup_MK02F12810.s"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/MK02F12810/src" type="src">
+        <files mask="clock_config_MK02F12810.c"/>
+        <files mask="hardware_init_MK02F12810.c"/>
+        <files mask="memory_map_MK02F12810.c"/>
+        <files mask="peripherals_MK02F12810.c"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/MK02F12810/src" type="c_include">
+        <files mask="bootloader_config.h"/>
+        <files mask="peripherals_pinmux.h"/>
+        <files mask="target_config.h"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/MK22F12810/src/startup/arm" type="asm_include" toolchain="mdk">
+        <files mask="startup_MK22F12810.s"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/MK22F12810/src/startup/gcc" type="asm_include" toolchain="mcuxpresso">
+        <files mask="startup_MK22F12810.S"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/MK22F12810/src/startup/iar" type="asm_include" toolchain="iar">
+        <files mask="startup_MK22F12810.s"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/MK22F12810/src" type="src">
+        <files mask="clock_config_MK22F12810.c"/>
+        <files mask="hardware_init_MK22F12810.c"/>
+        <files mask="memory_map_MK22F12810.c"/>
+        <files mask="peripherals_MK22F12810.c"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/MK22F12810/src" type="c_include">
+        <files mask="bootloader_config.h"/>
+        <files mask="peripherals_pinmux.h"/>
+        <files mask="target_config.h"/>
+        <files mask="usb_device_config.h"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/MK22F25612/src/startup/arm" type="asm_include" toolchain="mdk">
+        <files mask="startup_MK22F25612.s"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/MK22F25612/src/startup/gcc" type="asm_include" toolchain="mcuxpresso">
+        <files mask="startup_MK22F25612.S"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/MK22F25612/src/startup/iar" type="asm_include" toolchain="iar">
+        <files mask="startup_MK22F25612.s"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/MK22F25612/src" type="src">
+        <files mask="clock_config_MK22F25612.c"/>
+        <files mask="hardware_init_MK22F25612.c"/>
+        <files mask="memory_map_MK22F25612.c"/>
+        <files mask="peripherals_MK22F25612.c"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/MK22F25612/src" type="c_include">
+        <files mask="bootloader_config.h"/>
+        <files mask="peripherals_pinmux.h"/>
+        <files mask="target_config.h"/>
+        <files mask="usb_device_config.h"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/common/linker/arm/MK02F12810" type="linker" toolchain="mdk">
+        <files mask="MK02FN128xxx10_application_0x0000.scf"/>
+        <files mask="MK02FN128xxx10_application_0xa000.scf"/>
+        <files mask="MK02FN128xxx10_flashloader_loader.scf"/>
+        <files mask="MK02FN128xxx10_ram_flashloader.scf"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/common/linker/arm/MK22F12810" type="linker" toolchain="mdk">
+        <files mask="MK22FN128xxx10_application_0x0000.scf"/>
+        <files mask="MK22FN128xxx10_application_0xa000.scf"/>
+        <files mask="MK22FN128xxx10_flashloader_loader.scf"/>
+        <files mask="MK22FN128xxx10_ram_flashloader.scf"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/common/linker/arm/MK22F25612" type="linker" toolchain="mdk">
+        <files mask="MK22FN256xxx12_application_0x0000.scf"/>
+        <files mask="MK22FN256xxx12_application_0xa000.scf"/>
+        <files mask="MK22FN256xxx12_flashloader_loader.scf"/>
+        <files mask="MK22FN256xxx12_ram_flashloader.scf"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/common/linker/gcc/MK02F12810" type="linker" toolchain="mcuxpresso">
+        <files mask="MK02FN128xxx10_application_0x0000.ld"/>
+        <files mask="MK02FN128xxx10_application_0xa000.ld"/>
+        <files mask="MK02FN128xxx10_flashloader_loader.ld"/>
+        <files mask="MK02FN128xxx10_ram_flashloader.ld"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/common/linker/gcc/MK22F12810" type="linker" toolchain="mcuxpresso">
+        <files mask="MK22FN128xxx10_application_0x0000.ld"/>
+        <files mask="MK22FN128xxx10_application_0xa000.ld"/>
+        <files mask="MK22FN128xxx10_flashloader_loader.ld"/>
+        <files mask="MK22FN128xxx10_ram_flashloader.ld"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/common/linker/gcc/MK22F25612" type="linker" toolchain="mcuxpresso">
+        <files mask="MK22FN256xxx12_application_0x0000.ld"/>
+        <files mask="MK22FN256xxx12_application_0xa000.ld"/>
+        <files mask="MK22FN256xxx12_flashloader_loader.ld"/>
+        <files mask="MK22FN256xxx12_ram_flashloader.ld"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/common/linker/iar/MK02F12810" type="linker" toolchain="iar">
+        <files mask="MK02FN128xxx10_application_0x0000.icf"/>
+        <files mask="MK02FN128xxx10_application_0xA000.icf"/>
+        <files mask="MK02FN128xxx10_flashloader_loader.icf"/>
+        <files mask="MK02FN128xxx10_ram_flashloader.icf"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/common/linker/iar/MK22F12810" type="linker" toolchain="iar">
+        <files mask="MK22FN128xxx10_application_0x0000.icf"/>
+        <files mask="MK22FN128xxx10_application_0xA000.icf"/>
+        <files mask="MK22FN128xxx10_flashloader_loader.icf"/>
+        <files mask="MK22FN128xxx10_ram_flashloader.icf"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/common/linker/iar/MK22F25612" type="linker" toolchain="iar">
+        <files mask="MK22FN256xxx12_application_0x0000.icf"/>
+        <files mask="MK22FN256xxx12_application_0xA000.icf"/>
+        <files mask="MK22FN256xxx12_flashloader_loader.icf"/>
+        <files mask="MK22FN256xxx12_ram_flashloader.icf"/>
+      </source>
+    </component>
+    <component id="middleware.mcu-boot.all_files.MK22F51212" name="all_files" type="other" brief="kboot files" devices="MK22FN512xxx12" version="1.0.0" user_visible="false">
+      <source path="middleware/mcu-boot/apps/elftosb/common" exclude="true" type="src">
+        <files mask="aes128_key_wrap_unwrap.c"/>
+        <files mask="AESKey.cpp"/>
+        <files mask="Blob.cpp"/>
+        <files mask="bytes_aes.c"/>
+        <files mask="crc.cpp"/>
+        <files mask="DataSource.cpp"/>
+        <files mask="DataSourceImager.cpp"/>
+        <files mask="DataTarget.cpp"/>
+        <files mask="ELFSourceFile.cpp"/>
+        <files mask="EncoreBootImage.cpp"/>
+        <files mask="EncoreBootImageReader.cpp"/>
+        <files mask="EvalContext.cpp"/>
+        <files mask="ExcludesListMatcher.cpp"/>
+        <files mask="format_string.cpp"/>
+        <files mask="GHSSecInfo.cpp"/>
+        <files mask="GlobMatcher.cpp"/>
+        <files mask="HexValues.cpp"/>
+        <files mask="iMXImage.cpp"/>
+        <files mask="IVTDataSource.cpp"/>
+        <files mask="Keyblob.cpp"/>
+        <files mask="Logging.cpp"/>
+        <files mask="Operation.cpp"/>
+        <files mask="OptionDictionary.cpp"/>
+        <files mask="options.cpp"/>
+        <files mask="OutputSection.cpp"/>
+        <files mask="Random.cpp"/>
+        <files mask="rijndael.cpp"/>
+        <files mask="RijndaelCBCMAC.cpp"/>
+        <files mask="RijndaelCTR.cpp"/>
+        <files mask="SB2Image.cpp"/>
+        <files mask="SearchPath.cpp"/>
+        <files mask="SHA1.cpp"/>
+        <files mask="SourceFile.cpp"/>
+        <files mask="SRecordSourceFile.cpp"/>
+        <files mask="stdafx.cpp"/>
+        <files mask="StELFFile.cpp"/>
+        <files mask="StExecutableImage.cpp"/>
+        <files mask="StSRecordFile.cpp"/>
+        <files mask="Value.cpp"/>
+        <files mask="Version.cpp"/>
+      </source>
+      <source path="middleware/mcu-boot/apps/elftosb/common" exclude="true" type="c_include">
+        <files mask="aes128_key_wrap_unwrap.h"/>
+        <files mask="AESCounter.h"/>
+        <files mask="AESKey.h"/>
+        <files mask="Blob.h"/>
+        <files mask="BootImage.h"/>
+        <files mask="crc.h"/>
+        <files mask="DataSource.h"/>
+        <files mask="DataSourceImager.h"/>
+        <files mask="DataTarget.h"/>
+        <files mask="ELF.h"/>
+        <files mask="ELFSourceFile.h"/>
+        <files mask="EncoreBootImage.h"/>
+        <files mask="EncoreBootImageReader.h"/>
+        <files mask="EndianUtilities.h"/>
+        <files mask="EvalContext.h"/>
+        <files mask="ExcludesListMatcher.h"/>
+        <files mask="format_string.h"/>
+        <files mask="GHSSecInfo.h"/>
+        <files mask="GlobMatcher.h"/>
+        <files mask="HexValues.h"/>
+        <files mask="iMXImage.h"/>
+        <files mask="int_size.h"/>
+        <files mask="IVTDataSource.h"/>
+        <files mask="Keyblob.h"/>
+        <files mask="KeyblobEntry.h"/>
+        <files mask="Logging.h"/>
+        <files mask="Operation.h"/>
+        <files mask="OptionContext.h"/>
+        <files mask="OptionDictionary.h"/>
+        <files mask="options.h"/>
+        <files mask="OutputSection.h"/>
+        <files mask="Random.h"/>
+        <files mask="rijndael.h"/>
+        <files mask="RijndaelCBCMAC.h"/>
+        <files mask="RijndaelCTR.h"/>
+        <files mask="SB2Image.h"/>
+        <files mask="SearchPath.h"/>
+        <files mask="SHA1.h"/>
+        <files mask="smart_ptr.h"/>
+        <files mask="SourceFile.h"/>
+        <files mask="SRecordSourceFile.h"/>
+        <files mask="stdafx.h"/>
+        <files mask="StELFFile.h"/>
+        <files mask="StExecutableImage.h"/>
+        <files mask="StringMatcher.h"/>
+        <files mask="StSRecordFile.h"/>
+        <files mask="Value.h"/>
+        <files mask="Version.h"/>
+      </source>
+      <source path="middleware/mcu-boot/apps/elftosb/elftosb.xcodeproj/project.xcworkspace" exclude="true" type="other">
+        <files mask="contents.xcworkspacedata"/>
+      </source>
+      <source path="middleware/mcu-boot/apps/elftosb/elftosb.xcodeproj" exclude="true" type="other">
+        <files mask="project.pbxproj"/>
+      </source>
+      <source path="middleware/mcu-boot/apps/elftosb/elftosb2" exclude="true" type="other">
+        <files mask="elftosb2.vcproj"/>
+        <files mask="elftosb2.vcxproj"/>
+        <files mask="elftosb2.vcxproj.filters"/>
+        <files mask="elftosb_lexer.l"/>
+        <files mask="elftosb_parser.tab.hpp"/>
+        <files mask="elftosb_parser.y"/>
+      </source>
+      <source path="middleware/mcu-boot/apps/elftosb/elftosb2" exclude="true" type="src">
+        <files mask="BootImageGenerator.cpp"/>
+        <files mask="ConversionController.cpp"/>
+        <files mask="elftosb.cpp"/>
+        <files mask="elftosb_lexer.cpp"/>
+        <files mask="elftosb_parser.tab.cpp"/>
+        <files mask="ElftosbAST.cpp"/>
+        <files mask="ElftosbLexer.cpp"/>
+        <files mask="EncoreBootImageGenerator.cpp"/>
+        <files mask="iMXImageGenerator.cpp"/>
+        <files mask="SB2ImageGenerator.cpp"/>
+      </source>
+      <source path="middleware/mcu-boot/apps/elftosb/elftosb2" exclude="true" type="c_include">
+        <files mask="BootImageGenerator.h"/>
+        <files mask="ConversionController.h"/>
+        <files mask="ElftosbAST.h"/>
+        <files mask="ElftosbErrors.h"/>
+        <files mask="ElftosbLexer.h"/>
+        <files mask="EncoreBootImageGenerator.h"/>
+        <files mask="FlexLexer.h"/>
+        <files mask="iMXImageGenerator.h"/>
+        <files mask="SB2ImageGenerator.h"/>
+      </source>
+      <source path="middleware/mcu-boot/apps/elftosb/winsupport" exclude="true" type="c_include">
+        <files mask="unistd.h"/>
+      </source>
+      <source path="middleware/mcu-boot/apps/elftosb" exclude="true" type="other">
+        <files mask="elftosb.sln"/>
+        <files mask="makefile"/>
+        <files mask="makefile.rules"/>
+      </source>
+      <source path="middleware/mcu-boot/apps/elftosb" exclude="true" type="c_include">
+        <files mask="stdafx.h"/>
+      </source>
+      <source path="middleware/mcu-boot/apps/led_demo/src" exclude="true" type="other">
+        <files mask="led_demo.bd"/>
+      </source>
+      <source path="middleware/mcu-boot/apps/led_demo/src" type="src">
+        <files mask="milliseconds_delay.c"/>
+      </source>
+      <source path="middleware/mcu-boot/apps/led_demo/src" exclude="true" type="src">
+        <files mask="milliseconds_delay.c"/>
+      </source>
+      <source path="middleware/mcu-boot/apps/led_demo/src" type="c_include">
+        <files mask="milliseconds_delay.h"/>
+      </source>
+      <source path="middleware/mcu-boot/bin/Tools/blhost/linux/amd64" exclude="true" type="other">
+        <files mask="blhost"/>
+      </source>
+      <source path="middleware/mcu-boot/bin/Tools/blhost/linux/i386" exclude="true" type="other">
+        <files mask="blhost"/>
+      </source>
+      <source path="middleware/mcu-boot/bin/Tools/blhost/mac" exclude="true" type="other">
+        <files mask="blhost"/>
+      </source>
+      <source path="middleware/mcu-boot/bin/Tools/blhost/win" exclude="true" type="other">
+        <files mask="blhost.exe"/>
+      </source>
+      <source path="middleware/mcu-boot/bin/Tools/elftosb/linux/amd64" exclude="true" type="other">
+        <files mask="elftosb"/>
+      </source>
+      <source path="middleware/mcu-boot/bin/Tools/elftosb/linux/i386" exclude="true" type="other">
+        <files mask="elftosb"/>
+      </source>
+      <source path="middleware/mcu-boot/bin/Tools/elftosb/win" exclude="true" type="other">
+        <files mask="elftosb.exe"/>
+      </source>
+      <source path="middleware/mcu-boot/bin" type="script">
+        <files mask="create_fl_image.py"/>
+        <files mask="create_fl_image_mcux.py"/>
+        <files mask="create_fl_image_mdk.py"/>
+        <files mask="create_flashloader_image.bat"/>
+        <files mask="create_flashloader_image_mcux.bat"/>
+        <files mask="create_flashloader_image_mdk.bat"/>
+        <files mask="elf.py"/>
+      </source>
+      <source path="middleware/mcu-boot/doc" exclude="true" type="doc">
+        <files mask="blhost User's Guide.pdf"/>
+        <files mask="elftosb User's Guide.pdf"/>
+      </source>
+      <source path="middleware/mcu-boot/mk" exclude="true" type="script">
+        <files mask="config.mk"/>
+        <files mask="flags.mk"/>
+        <files mask="paths.mk"/>
+        <files mask="targets.mk"/>
+      </source>
+      <source path="middleware/mcu-boot/src/drivers/smc" type="c_include">
+        <files mask="smc.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/utilities/src" type="src">
+        <files mask="bootloader_tree_stub.c"/>
+        <files mask="fsl_assert.c"/>
+        <files mask="fsl_rtos_abstraction.c"/>
+        <files mask="ring_buffer.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/utilities" type="c_include">
+        <files mask="fsl_assert.h"/>
+        <files mask="fsl_rtos_abstraction.h"/>
+        <files mask="kinetis_family.h"/>
+        <files mask="ring_buffer.h"/>
+        <files mask="vector_table_info.h"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/mk" type="script">
+        <files mask="common.mk"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/src/blfwk/doc" type="other">
+        <files mask="blfwk.md"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/src/blfwk/src" type="src">
+        <files mask="AESCounter.cpp"/>
+        <files mask="AESKey.cpp"/>
+        <files mask="Blob.cpp"/>
+        <files mask="Bootloader.cpp"/>
+        <files mask="BusPal.cpp"/>
+        <files mask="BusPalPeripheral.cpp"/>
+        <files mask="Command.cpp"/>
+        <files mask="Crc.cpp"/>
+        <files mask="DataSource.cpp"/>
+        <files mask="DataSourceImager.cpp"/>
+        <files mask="DataTarget.cpp"/>
+        <files mask="ELFSourceFile.cpp"/>
+        <files mask="ExcludesListMatcher.cpp"/>
+        <files mask="format_string.cpp"/>
+        <files mask="GHSSecInfo.cpp"/>
+        <files mask="GlobMatcher.cpp"/>
+        <files mask="HexValues.cpp"/>
+        <files mask="hid-linux.c"/>
+        <files mask="hid-mac.c"/>
+        <files mask="hid-windows.c"/>
+        <files mask="IntelHexSourceFile.cpp"/>
+        <files mask="jsoncpp.cpp"/>
+        <files mask="Logging.cpp"/>
+        <files mask="options.cpp"/>
+        <files mask="Random.cpp"/>
+        <files mask="rijndael.cpp"/>
+        <files mask="RijndaelCTR.cpp"/>
+        <files mask="SBSourceFile.cpp"/>
+        <files mask="SDPCommand.cpp"/>
+        <files mask="SDPUsbHidPacketizer.cpp"/>
+        <files mask="SearchPath.cpp"/>
+        <files mask="serial.c"/>
+        <files mask="SerialPacketizer.cpp"/>
+        <files mask="SimPacketizer.cpp"/>
+        <files mask="SimPeripheral.cpp"/>
+        <files mask="Simulator.cpp"/>
+        <files mask="SimulatorMemory.cpp"/>
+        <files mask="SourceFile.cpp"/>
+        <files mask="SRecordSourceFile.cpp"/>
+        <files mask="StELFFile.cpp"/>
+        <files mask="StExecutableImage.cpp"/>
+        <files mask="StIntelHexFile.cpp"/>
+        <files mask="StSRecordFile.cpp"/>
+        <files mask="UartPeripheral.cpp"/>
+        <files mask="Updater.cpp"/>
+        <files mask="UsbHidPacketizer.cpp"/>
+        <files mask="UsbHidPeripheral.cpp"/>
+        <files mask="utils.cpp"/>
+        <files mask="Value.cpp"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/src/blfwk" type="c_include">
+        <files mask="AESCounter.h"/>
+        <files mask="AESKey.h"/>
+        <files mask="BlfwkErrors.h"/>
+        <files mask="Blob.h"/>
+        <files mask="Bootloader.h"/>
+        <files mask="bootloader_config.h"/>
+        <files mask="BusPal.h"/>
+        <files mask="BusPalPeripheral.h"/>
+        <files mask="Command.h"/>
+        <files mask="Crc.h"/>
+        <files mask="DataSource.h"/>
+        <files mask="DataSourceImager.h"/>
+        <files mask="DataTarget.h"/>
+        <files mask="ELF.h"/>
+        <files mask="ELFSourceFile.h"/>
+        <files mask="EndianUtilities.h"/>
+        <files mask="ExcludesListMatcher.h"/>
+        <files mask="format_string.h"/>
+        <files mask="GHSSecInfo.h"/>
+        <files mask="GlobMatcher.h"/>
+        <files mask="HexValues.h"/>
+        <files mask="hidapi.h"/>
+        <files mask="host_types.h"/>
+        <files mask="int_size.h"/>
+        <files mask="IntelHexSourceFile.h"/>
+        <files mask="json.h"/>
+        <files mask="Logging.h"/>
+        <files mask="OptionContext.h"/>
+        <files mask="options.h"/>
+        <files mask="Packetizer.h"/>
+        <files mask="Peripheral.h"/>
+        <files mask="Progress.h"/>
+        <files mask="Random.h"/>
+        <files mask="rijndael.h"/>
+        <files mask="RijndaelCTR.h"/>
+        <files mask="SBSourceFile.h"/>
+        <files mask="SDPCommand.h"/>
+        <files mask="SDPUartPacketizer.h"/>
+        <files mask="SDPUsbHidPacketizer.h"/>
+        <files mask="SearchPath.h"/>
+        <files mask="serial.h"/>
+        <files mask="SerialPacketizer.h"/>
+        <files mask="SimPacketizer.h"/>
+        <files mask="SimPeripheral.h"/>
+        <files mask="Simulator.h"/>
+        <files mask="SimulatorMemory.h"/>
+        <files mask="smart_ptr.h"/>
+        <files mask="SourceFile.h"/>
+        <files mask="SRecordSourceFile.h"/>
+        <files mask="stdafx.h"/>
+        <files mask="StELFFile.h"/>
+        <files mask="StExecutableImage.h"/>
+        <files mask="StIntelHexFile.h"/>
+        <files mask="StringMatcher.h"/>
+        <files mask="StSRecordFile.h"/>
+        <files mask="UartPeripheral.h"/>
+        <files mask="Updater.h"/>
+        <files mask="UsbHidPacketizer.h"/>
+        <files mask="UsbHidPeripheral.h"/>
+        <files mask="utils.h"/>
+        <files mask="Value.h"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/src/bootloader" type="c_include">
+        <files mask="bl_peripheral.h"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/src/crc/src" type="src">
+        <files mask="crc16.c"/>
+        <files mask="crc32.c"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/src/crc" type="c_include">
+        <files mask="crc16.h"/>
+        <files mask="crc32.h"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/src/include" type="c_include">
+        <files mask="bootloader_common.h"/>
+        <files mask="bootloader_hid_report_ids.h"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/src/memory" type="c_include">
+        <files mask="memory.h"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/src/packet" type="c_include">
+        <files mask="command_packet.h"/>
+        <files mask="serial_packet.h"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/src/property" type="c_include">
+        <files mask="property.h"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/blhost.xcodeproj/project.xcworkspace" exclude="true" type="other">
+        <files mask="contents.xcworkspacedata"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/blhost.xcodeproj" exclude="true" type="other">
+        <files mask="project.pbxproj"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/blhost/gcc" exclude="true" type="other">
+        <files mask="Makefile"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/blhost/mac-gcc" exclude="true" type="other">
+        <files mask="Makefile"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/blhost/src" exclude="true" type="other">
+        <files mask="blhost.vcxproj"/>
+        <files mask="blhost.vcxproj.filters"/>
+        <files mask="blhost.vcxproj.user"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/blhost/src" type="src">
+        <files mask="blhost.cpp"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/blhost/src" type="c_include">
+        <files mask="targetver.h"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/blhost" exclude="true" type="other">
+        <files mask="blhost.sln"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/common/blfwk/blfwk.xcodeproj/project.xcworkspace/xcshareddata" exclude="true" type="other">
+        <files mask="blfwk.xccheckout"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/common/blfwk/blfwk.xcodeproj/project.xcworkspace" exclude="true" type="other">
+        <files mask="contents.xcworkspacedata"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/common/blfwk/blfwk.xcodeproj" exclude="true" type="other">
+        <files mask="project.pbxproj"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/common/blfwk" exclude="true" type="other">
+        <files mask="blfwk.vcxproj"/>
+        <files mask="blfwk.vcxproj.filters"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/common/blfwkdll" exclude="true" type="other">
+        <files mask="blfwk.vcxproj"/>
+        <files mask="blfwk.vcxproj.filters"/>
+        <files mask="blfwk.vcxproj.user"/>
+        <files mask="blfwkdll.vcxproj"/>
+        <files mask="blfwkdll.vcxproj.filters"/>
+        <files mask="blfwkdll.vcxproj.user"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/common/blfwkdll" exclude="true" type="src">
+        <files mask="blfwkdll.cpp"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/common/blfwkdll" exclude="true" type="c_include">
+        <files mask="blfwkdll.h"/>
+      </source>
+    </component>
+    <component id="middleware.mcu-boot.kinetis_files.MK22F51212" name="kinetis_files" type="other" brief="kinetis files" devices="MK22FN512xxx12" version="1.0.0" user_visible="false">
+      <source path="middleware/mcu-boot/bin/Tools/KinetisFlashTool/win" exclude="true" type="other">
+        <files mask="blfwkdll.dll"/>
+        <files mask="KinetisFlashTool.exe"/>
+      </source>
+      <source path="middleware/mcu-boot/bin/Tools/elftosb/mac" exclude="true" type="other">
+        <files mask="elftosb"/>
+      </source>
+      <source path="middleware/mcu-boot/bin/Tools/mfgtools-rel/Profiles/Kinetis Bootloader/OS Firmware/files" exclude="true" type="binary">
+        <files mask="demo.bin"/>
+        <files mask="flashConfig.bin"/>
+        <files mask="simple.bin"/>
+      </source>
+      <source path="middleware/mcu-boot/bin/Tools/mfgtools-rel/Profiles/Kinetis Bootloader/OS Firmware/files" exclude="true" type="doc">
+        <files mask="Readme.txt"/>
+      </source>
+      <source path="middleware/mcu-boot/bin/Tools/mfgtools-rel/Profiles/Kinetis Bootloader/OS Firmware/files" exclude="true" type="other">
+        <files mask="simple.bd"/>
+        <files mask="simple.hex"/>
+        <files mask="simple.sb"/>
+        <files mask="simple.srec"/>
+      </source>
+      <source path="middleware/mcu-boot/bin/Tools/mfgtools-rel/Profiles/Kinetis Bootloader/OS Firmware" exclude="true" type="xml">
+        <files mask="ucl2(for binary).xml"/>
+        <files mask="ucl2(for HEX).xml"/>
+        <files mask="ucl2(for SB).xml"/>
+        <files mask="ucl2(for SRecord).xml"/>
+        <files mask="ucl2.xml"/>
+      </source>
+      <source path="middleware/mcu-boot/bin/Tools/mfgtools-rel/Profiles/Kinetis Bootloader" exclude="true" type="configuration">
+        <files mask="player.ini"/>
+      </source>
+      <source path="middleware/mcu-boot/bin/Tools/mfgtools-rel" exclude="true" type="other">
+        <files mask="MfgTool2.exe"/>
+        <files mask="MfgToolLib.dll"/>
+      </source>
+      <source path="middleware/mcu-boot/bin/Tools/mfgtools-rel" exclude="true" type="configuration">
+        <files mask="cfg.ini"/>
+        <files mask="UICfg.ini"/>
+      </source>
+      <source path="middleware/mcu-boot/doc" exclude="true" type="doc">
+        <files mask="Getting Started with the Flashloader for Kinetis.pdf"/>
+        <files mask="Kinetis Flash Tool User's Guide.pdf"/>
+        <files mask="Kinetis MCU Manufacturing Tool User's Guide.pdf"/>
+        <files mask="MCU Bootloader Demo Application User's Guide.pdf"/>
+        <files mask="MCU Bootloader Release Notes.pdf"/>
+        <files mask="MCU Bootloader v2.6.0 Reference Manual.pdf"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/KinetisFlashTool/KinetisFlashTool/res" exclude="true" type="other">
+        <files mask="Freescale.ico"/>
+        <files mask="KinetisFlashTool.rc2"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/KinetisFlashTool/KinetisFlashTool" exclude="true" type="other">
+        <files mask="KinetisFlashTool.rc"/>
+        <files mask="KinetisFlashTool.vcxproj"/>
+        <files mask="KinetisFlashTool.vcxproj.filters"/>
+        <files mask="KinetisFlashTool.vcxproj.user"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/KinetisFlashTool/KinetisFlashTool" exclude="true" type="src">
+        <files mask="Bootloader.cpp"/>
+        <files mask="BootloaderConfigDlg.cpp"/>
+        <files mask="ConfigDlg.cpp"/>
+        <files mask="FlashDlg.cpp"/>
+        <files mask="HistoryData.cpp"/>
+        <files mask="KinetisFlashTool.cpp"/>
+        <files mask="KinetisFlashToolDlg.cpp"/>
+        <files mask="SerialList.cpp"/>
+        <files mask="stdafx.cpp"/>
+        <files mask="UpdateDlg.cpp"/>
+        <files mask="utility.cpp"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/KinetisFlashTool/KinetisFlashTool" exclude="true" type="c_include">
+        <files mask="Bootloader.h"/>
+        <files mask="BootloaderConfigDlg.h"/>
+        <files mask="BootloaderConfigText.h"/>
+        <files mask="ConfigDlg.h"/>
+        <files mask="FlashDlg.h"/>
+        <files mask="HistoryData.h"/>
+        <files mask="KinetisFlashTool.h"/>
+        <files mask="KinetisFlashToolDlg.h"/>
+        <files mask="resource.h"/>
+        <files mask="SerialList.h"/>
+        <files mask="stdafx.h"/>
+        <files mask="targetver.h"/>
+        <files mask="UpdateDlg.h"/>
+        <files mask="utility.h"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/KinetisFlashTool" exclude="true" type="other">
+        <files mask="KinetisFlashTool.sln"/>
       </source>
     </component>
     <component id="middleware.multicore.MK22F51212" name="multicore" full_name="Multicore Software Development Kit" type="other" brief="Multicore SDK" devices="MK22FN512xxx12" version="2.3.0" user_visible="true">
@@ -5579,241 +5648,6 @@ Kinetis® K22 MCUs have been optimized for cost-sensitive applications requiring
         <files mask="fsl_usb_disk.h"/>
       </source>
     </component>
-    <component id="middleware.issdk.algorithms.pedometer.MK22F51212" name="pedometer" type="middleware" brief="ISSDK Pedometer Algorithm Common" dependency="platform.CMSIS_Driver_Include.Common_CMSISInclude.MK22F51212 platform.CMSIS_Driver_Include.I2C_CMSISInclude.MK22F51212 platform.CMSIS_Driver_Include.SPI_CMSISInclude.MK22F51212" devices="MK22FN512xxx12" version="1.0.0" user_visible="false">
-      <source path="middleware/issdk/algorithms/pedometer/include/libinclude" target_path="pedometer" type="c_include">
-        <files mask="KeynetikPedometer.h"/>
-      </source>
-      <source path="middleware/issdk/algorithms/pedometer/include" target_path="pedometer" type="c_include">
-        <files mask="pedometer.h"/>
-      </source>
-      <source path="middleware/issdk/algorithms/pedometer/source" target_path="pedometer" type="src">
-        <files mask="pedometer.c"/>
-      </source>
-    </component>
-    <component id="middleware.issdk.algorithms.pedometer.lib_cm4.MK22F51212" name="pedometer_lib_cm4" type="middleware" brief="ISSDK Pedometer Algorithm Library for CM4" devices="MK22FN512xxx12" version="1.0.0" user_visible="false">
-      <source path="middleware/issdk/algorithms/pedometer/lib" target_path="libs" type="lib">
-        <files mask="libpedometerm4.a"/>
-      </source>
-    </component>
-    <component id="middleware.issdk.algorithms.sensor_fusion_agm01.MK22F51212" name="sensor_fusion_agm01" type="middleware" brief="ISSDK Sensor Fusion Algorithm Common for Kinetis MCU with AGM01" dependency="platform.CMSIS_Driver_Include.Common_CMSISInclude.MK22F51212 platform.CMSIS_Driver_Include.I2C_CMSISInclude.MK22F51212 platform.CMSIS_Driver_Include.SPI_CMSISInclude.MK22F51212" devices="MK22FN512xxx12" version="1.0.0" user_visible="false">
-      <source path="middleware/issdk/algorithms/sensorfusion/sources" target_path="sensor_fusion" type="src">
-        <files mask="approximations.c"/>
-        <files mask="calibration_storage.c"/>
-        <files mask="control.c"/>
-        <files mask="debug.c"/>
-        <files mask="DecodeCommandBytes.c"/>
-        <files mask="driver_FXAS21002.c"/>
-        <files mask="driver_FXOS8700.c"/>
-        <files mask="driver_KSDK_NVM.c"/>
-        <files mask="driver_MPL3115.c"/>
-        <files mask="driver_pit.c"/>
-        <files mask="driver_systick.c"/>
-        <files mask="fusion.c"/>
-        <files mask="hal_frdm_fxs_mult2_b.c"/>
-        <files mask="magnetic.c"/>
-        <files mask="matrix.c"/>
-        <files mask="orientation.c"/>
-        <files mask="output_stream.c"/>
-        <files mask="precisionAccelerometer.c"/>
-        <files mask="sensor_fusion.c"/>
-        <files mask="status.c"/>
-      </source>
-      <source path="middleware/issdk/algorithms/sensorfusion/sources" target_path="sensor_fusion" type="c_include">
-        <files mask="approximations.h"/>
-        <files mask="calibration_storage.h"/>
-        <files mask="control.h"/>
-        <files mask="debug.h"/>
-        <files mask="driver_KSDK_NVM.h"/>
-        <files mask="driver_pit.h"/>
-        <files mask="drivers.h"/>
-        <files mask="fusion.h"/>
-        <files mask="magnetic.h"/>
-        <files mask="matrix.h"/>
-        <files mask="orientation.h"/>
-        <files mask="precisionAccelerometer.h"/>
-        <files mask="sensor_fusion.h"/>
-        <files mask="status.h"/>
-      </source>
-    </component>
-    <component id="middleware.issdk.algorithms.sensor_fusion_agmp03.MK22F51212" name="sensor_fusion_agmp03" type="middleware" brief="ISSDK Sensor Fusion Algorithm Common for Kinetis MCU with AGMP03" dependency="platform.CMSIS_Driver_Include.Common_CMSISInclude.MK22F51212 platform.CMSIS_Driver_Include.I2C_CMSISInclude.MK22F51212 platform.CMSIS_Driver_Include.SPI_CMSISInclude.MK22F51212" devices="MK22FN512xxx12" version="1.0.0" user_visible="false">
-      <source path="middleware/issdk/algorithms/sensorfusion/sources" target_path="sensor_fusion" type="src">
-        <files mask="approximations.c"/>
-        <files mask="calibration_storage.c"/>
-        <files mask="control.c"/>
-        <files mask="debug.c"/>
-        <files mask="DecodeCommandBytes.c"/>
-        <files mask="driver_FXAS21002.c"/>
-        <files mask="driver_FXLS8962.c"/>
-        <files mask="driver_KSDK_NVM.c"/>
-        <files mask="driver_MAG3110.c"/>
-        <files mask="driver_MPL3115.c"/>
-        <files mask="driver_pit.c"/>
-        <files mask="driver_systick.c"/>
-        <files mask="fusion.c"/>
-        <files mask="hal_frdm_fxs_mult2_b.c"/>
-        <files mask="magnetic.c"/>
-        <files mask="matrix.c"/>
-        <files mask="orientation.c"/>
-        <files mask="output_stream.c"/>
-        <files mask="precisionAccelerometer.c"/>
-        <files mask="sensor_fusion.c"/>
-        <files mask="status.c"/>
-      </source>
-      <source path="middleware/issdk/algorithms/sensorfusion/sources" target_path="sensor_fusion" type="c_include">
-        <files mask="approximations.h"/>
-        <files mask="calibration_storage.h"/>
-        <files mask="control.h"/>
-        <files mask="debug.h"/>
-        <files mask="driver_KSDK_NVM.h"/>
-        <files mask="driver_pit.h"/>
-        <files mask="drivers.h"/>
-        <files mask="fusion.h"/>
-        <files mask="magnetic.h"/>
-        <files mask="matrix.h"/>
-        <files mask="orientation.h"/>
-        <files mask="precisionAccelerometer.h"/>
-        <files mask="sensor_fusion.h"/>
-        <files mask="status.h"/>
-      </source>
-    </component>
-    <component id="middleware.issdk.drivers.ads.MK22F51212" name="ads" type="middleware" brief="ISSDK Auto Detection Service for Kinetis Kits" devices="MK22FN512xxx12" version="1.0.0" user_visible="false">
-      <source path="middleware/issdk/drivers/ads/kinetis" target_path="ads" type="src">
-        <files mask="auto_detection_service.c"/>
-      </source>
-      <source path="middleware/issdk/drivers/ads/kinetis" target_path="ads" type="c_include">
-        <files mask="auto_detection_service.h"/>
-      </source>
-      <source path="middleware/issdk/drivers/ads" target_path="ads" type="c_include">
-        <files mask="auto_detection_shield.h"/>
-      </source>
-    </component>
-    <component id="middleware.issdk.drivers.gpio_kinetis.MK22F51212" name="gpio_kinetis" type="middleware" brief="ISSDK GPIO Driver for Kinetis" devices="MK22FN512xxx12" version="1.0.0" user_visible="false">
-      <source path="middleware/issdk/drivers/gpio/kinetis" target_path="gpio_driver" type="src">
-        <files mask="gpio_driver.c"/>
-        <files mask="gpio_driver_irq.c"/>
-      </source>
-      <source path="middleware/issdk/drivers/gpio/kinetis" target_path="gpio_driver" type="c_include">
-        <files mask="gpio_driver.h"/>
-      </source>
-      <source path="middleware/issdk/drivers/gpio" target_path="gpio_driver" type="c_include">
-        <files mask="Driver_GPIO.h"/>
-      </source>
-    </component>
-    <component id="middleware.issdk.drivers.host.MK22F51212" name="issdk_host" type="middleware" brief="ISSDK Host Interface Service" devices="MK22FN512xxx12" version="1.0.0" user_visible="false">
-      <source path="middleware/issdk/drivers/host" target_path="host" type="src">
-        <files mask="comm_if_uart.c"/>
-        <files mask="data_format_hdlc.c"/>
-        <files mask="data_format_json.c"/>
-        <files mask="host_interface_service.c"/>
-      </source>
-      <source path="middleware/issdk/drivers/host" target_path="host" type="c_include">
-        <files mask="comm_interface.h"/>
-        <files mask="data_format_hdlc.h"/>
-        <files mask="data_format_json.h"/>
-        <files mask="data_format_service.h"/>
-        <files mask="host_interface_service.h"/>
-      </source>
-      <source path="middleware/issdk/sensors" target_path="host" type="src">
-        <files mask="host_io_uart.c"/>
-      </source>
-      <source path="middleware/issdk/sensors" target_path="host" type="c_include">
-        <files mask="host_io_uart.h"/>
-      </source>
-    </component>
-    <component id="middleware.issdk.drivers.systick_utils.MK22F51212" name="systick_utils" type="middleware" brief="ISSDK Utils" devices="MK22FN512xxx12" version="1.0.0" user_visible="false">
-      <source path="middleware/issdk/drivers/systick" target_path="utilities" type="src">
-        <files mask="systick_utils.c"/>
-      </source>
-      <source path="middleware/issdk/drivers/systick" target_path="utilities" type="c_include">
-        <files mask="systick_utils.h"/>
-      </source>
-    </component>
-    <component id="middleware.issdk.sensor.allregdefs.MK22F51212" name="issdk_allregdefs" type="middleware" brief="ISSDK Sensors RegDefs" dependency="platform.CMSIS_Driver_Include.Common_CMSISInclude.MK22F51212 platform.CMSIS_Driver_Include.I2C_CMSISInclude.MK22F51212 platform.CMSIS_Driver_Include.SPI_CMSISInclude.MK22F51212" devices="MK22FN512xxx12" version="1.0.0" user_visible="false">
-      <source path="middleware/issdk/sensors" target_path="sensors" type="c_include">
-        <files mask="diff_p.h"/>
-        <files mask="fxas21002.h"/>
-        <files mask="fxlc95000.h"/>
-        <files mask="fxls8471q.h"/>
-        <files mask="fxls8962.h"/>
-        <files mask="fxos8700.h"/>
-        <files mask="fxpq3115.h"/>
-        <files mask="mag3110.h"/>
-        <files mask="mma845x.h"/>
-        <files mask="mma8491q.h"/>
-        <files mask="mma865x.h"/>
-        <files mask="mma9553.h"/>
-        <files mask="mpl3115.h"/>
-      </source>
-    </component>
-    <component id="middleware.issdk.sensor.fxas21002.MK22F51212" name="issdk_fxas21002" type="middleware" brief="ISSDK FXAS21002 Sensor Driver Files" dependency="platform.CMSIS_Driver_Include.Common_CMSISInclude.MK22F51212 platform.CMSIS_Driver_Include.I2C_CMSISInclude.MK22F51212 platform.CMSIS_Driver_Include.SPI_CMSISInclude.MK22F51212" devices="MK22FN512xxx12" version="1.0.0" user_visible="false">
-      <source path="middleware/issdk/sensors" target_path="sensors" type="src">
-        <files mask="fxas21002_drv.c"/>
-      </source>
-      <source path="middleware/issdk/sensors" target_path="sensors" type="c_include">
-        <files mask="fxas21002.h"/>
-        <files mask="fxas21002_drv.h"/>
-      </source>
-    </component>
-    <component id="middleware.issdk.sensor.fxlc95000.MK22F51212" name="issdk_fxlc95000" type="middleware" brief="ISSDK FXLC95000 Sensor Driver Files" dependency="platform.CMSIS_Driver_Include.Common_CMSISInclude.MK22F51212 platform.CMSIS_Driver_Include.I2C_CMSISInclude.MK22F51212 platform.CMSIS_Driver_Include.SPI_CMSISInclude.MK22F51212" devices="MK22FN512xxx12" version="1.0.0" user_visible="false">
-      <source path="middleware/issdk/sensors" target_path="sensors" type="src">
-        <files mask="fxlc95000_drv.c"/>
-      </source>
-      <source path="middleware/issdk/sensors" target_path="sensors" type="c_include">
-        <files mask="fxlc95000.h"/>
-        <files mask="fxlc95000_drv.h"/>
-      </source>
-    </component>
-    <component id="middleware.issdk.sensor.fxls8962.MK22F51212" name="issdk_fxls8962" type="middleware" brief="ISSDK FXLS8962 Sensor Driver Files" dependency="platform.CMSIS_Driver_Include.Common_CMSISInclude.MK22F51212 platform.CMSIS_Driver_Include.I2C_CMSISInclude.MK22F51212 platform.CMSIS_Driver_Include.SPI_CMSISInclude.MK22F51212" devices="MK22FN512xxx12" version="1.0.0" user_visible="false">
-      <source path="middleware/issdk/sensors" target_path="sensors" type="src">
-        <files mask="fxls8962_drv.c"/>
-      </source>
-      <source path="middleware/issdk/sensors" target_path="sensors" type="c_include">
-        <files mask="fxls8962.h"/>
-        <files mask="fxls8962_drv.h"/>
-      </source>
-    </component>
-    <component id="middleware.issdk.sensor.fxos8700.MK22F51212" name="issdk_fxos8700" type="middleware" brief="ISSDK FXOS8700 Sensor Driver Files" dependency="platform.CMSIS_Driver_Include.Common_CMSISInclude.MK22F51212 platform.CMSIS_Driver_Include.I2C_CMSISInclude.MK22F51212 platform.CMSIS_Driver_Include.SPI_CMSISInclude.MK22F51212" devices="MK22FN512xxx12" version="1.0.0" user_visible="false">
-      <source path="middleware/issdk/sensors" target_path="sensors" type="src">
-        <files mask="fxos8700_drv.c"/>
-      </source>
-      <source path="middleware/issdk/sensors" target_path="sensors" type="c_include">
-        <files mask="fxos8700.h"/>
-        <files mask="fxos8700_drv.h"/>
-      </source>
-    </component>
-    <component id="middleware.issdk.sensor.interface.common.MK22F51212" name="issdk_interfaces" type="middleware" brief="ISSDK Sensor Interface Common" dependency="platform.CMSIS_Driver_Include.Common_CMSISInclude.MK22F51212 platform.CMSIS_Driver_Include.I2C_CMSISInclude.MK22F51212 platform.CMSIS_Driver_Include.SPI_CMSISInclude.MK22F51212" devices="MK22FN512xxx12" version="1.0.0" user_visible="false">
-      <source path="middleware/issdk/sensors" target_path="interfaces" type="src">
-        <files mask="register_io_i2c.c"/>
-        <files mask="register_io_spi.c"/>
-        <files mask="sensor_io_i2c.c"/>
-        <files mask="sensor_io_spi.c"/>
-      </source>
-      <source path="middleware/issdk/sensors" target_path="interfaces" type="c_include">
-        <files mask="register_io_i2c.h"/>
-        <files mask="register_io_spi.h"/>
-        <files mask="sensor_drv.h"/>
-        <files mask="sensor_io_i2c.h"/>
-        <files mask="sensor_io_spi.h"/>
-      </source>
-    </component>
-    <component id="middleware.issdk.sensor.mag3110.MK22F51212" name="issdk_mag3110" type="middleware" brief="ISSDK MAG3110 Sensor Driver Files" dependency="platform.CMSIS_Driver_Include.Common_CMSISInclude.MK22F51212 platform.CMSIS_Driver_Include.I2C_CMSISInclude.MK22F51212 platform.CMSIS_Driver_Include.SPI_CMSISInclude.MK22F51212" devices="MK22FN512xxx12" version="1.0.0" user_visible="false">
-      <source path="middleware/issdk/sensors" target_path="sensors" type="src">
-        <files mask="mag3110_drv.c"/>
-      </source>
-      <source path="middleware/issdk/sensors" target_path="sensors" type="c_include">
-        <files mask="mag3110.h"/>
-        <files mask="mag3110_drv.h"/>
-      </source>
-    </component>
-    <component id="middleware.issdk.sensor.mpl3115.MK22F51212" name="issdk_mpl3115" type="middleware" brief="ISSDK MPL3115 Sensor Driver Files" dependency="platform.CMSIS_Driver_Include.Common_CMSISInclude.MK22F51212 platform.CMSIS_Driver_Include.I2C_CMSISInclude.MK22F51212 platform.CMSIS_Driver_Include.SPI_CMSISInclude.MK22F51212" devices="MK22FN512xxx12" version="1.0.0" user_visible="false">
-      <source path="middleware/issdk/sensors" target_path="sensors" type="src">
-        <files mask="mpl3115_drv.c"/>
-      </source>
-      <source path="middleware/issdk/sensors" target_path="sensors" type="c_include">
-        <files mask="mpl3115.h"/>
-        <files mask="mpl3115_drv.h"/>
-      </source>
-    </component>
     <component id="middleware.littlefs.MK22F51212" name="LittleFS" full_name="LittleFS File System stack" type="middleware" brief="littlefs" category="File System/LittleFS File System" devices="MK22FN512xxx12" version="1.3" user_visible="true">
       <source path="middleware/littlefs" target_path="littlefs/littlefs_source" type="src">
         <files mask="lfs.c"/>
@@ -5983,6 +5817,314 @@ Kinetis® K22 MCUs have been optimized for cost-sensitive applications requiring
       <include_paths>
         <include_path path="mbedTLS/include"/>
       </include_paths>
+    </component>
+    <component id="middleware.mcu-boot.MK22F51212_application_0x0000_linker.MK22F51212" name="MK22F51212_application_0x0000_linker" type="middleware" devices="MK22FN512xxx12" version="1.0.0" user_visible="true">
+      <source path="middleware/mcu-boot/targets/common/linker/arm/MK22F51212" type="linker" toolchain="mdk">
+        <files mask="MK22FN512xxx12_application_0x0000.scf"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/common/linker/gcc/MK22F51212" type="linker" toolchain="mcuxpresso">
+        <files mask="MK22FN512xxx12_application_0x0000.ld"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/common/linker/iar/MK22F51212" type="linker" toolchain="iar">
+        <files mask="MK22FN512xxx12_application_0x0000.icf"/>
+      </source>
+    </component>
+    <component id="middleware.mcu-boot.MK22F51212_application_0xA000_linker.MK22F51212" name="MK22F51212_application_0xA000_linker" type="middleware" devices="MK22FN512xxx12" version="1.0.0" user_visible="true">
+      <source path="middleware/mcu-boot/targets/common/linker/arm/MK22F51212" type="linker" toolchain="mdk">
+        <files mask="MK22FN512xxx12_application_0xa000.scf"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/common/linker/gcc/MK22F51212" type="linker" toolchain="mcuxpresso">
+        <files mask="MK22FN512xxx12_application_0xa000.ld"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/common/linker/iar/MK22F51212" type="linker" toolchain="iar">
+        <files mask="MK22FN512xxx12_application_0xA000.icf"/>
+      </source>
+    </component>
+    <component id="middleware.mcu-boot.MK22F51212_flashloader_loader_linker.MK22F51212" name="MK22F51212_flashloader_loader_linker" type="middleware" devices="MK22FN512xxx12" version="1.0.0" user_visible="true">
+      <source path="middleware/mcu-boot/targets/common/linker/arm/MK22F51212" type="linker" toolchain="mdk">
+        <files mask="MK22FN512xxx12_flashloader_loader.scf"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/common/linker/gcc/MK22F51212" type="linker" toolchain="mcuxpresso">
+        <files mask="MK22FN512xxx12_flashloader_loader.ld"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/common/linker/iar/MK22F51212" type="linker" toolchain="iar">
+        <files mask="MK22FN512xxx12_flashloader_loader.icf"/>
+      </source>
+    </component>
+    <component id="middleware.mcu-boot.MK22F51212_loader_startup.MK22F51212" name="MK22F51212_loader_startup" type="middleware" devices="MK22FN512xxx12" version="1.0.0" user_visible="true">
+      <source path="devices/MK22F51212" target_path="startup" type="src" toolchain="iar">
+        <files mask="system_MK22F51212.c"/>
+      </source>
+      <source path="devices/MK22F51212" target_path="startup" type="src" toolchain="mdk">
+        <files mask="system_MK22F51212.c"/>
+      </source>
+      <source path="devices/MK22F51212" target_path="startup" type="c_include" toolchain="iar">
+        <files mask="system_MK22F51212.h"/>
+      </source>
+      <source path="devices/MK22F51212" target_path="startup" type="c_include" toolchain="mdk">
+        <files mask="system_MK22F51212.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/memory/src" target_path="source/memory/src" type="asm_include" toolchain="mcuxpresso">
+        <files mask="pattern_fill_gcc.S"/>
+      </source>
+      <source path="middleware/mcu-boot/src/memory/src" target_path="source/memory/src" type="asm_include" toolchain="iar">
+        <files mask="pattern_fill.s"/>
+      </source>
+      <source path="middleware/mcu-boot/src/memory/src" target_path="source/memory/src" type="asm_include" toolchain="mdk">
+        <files mask="pattern_fill.s"/>
+      </source>
+      <source path="middleware/mcu-boot/src/startup" target_path="startup" type="asm_include" toolchain="mcuxpresso">
+        <files mask="crt0_gcc.S"/>
+      </source>
+      <source path="middleware/mcu-boot/src/startup" target_path="startup" type="asm_include" toolchain="iar">
+        <files mask="crt0.s"/>
+      </source>
+      <source path="middleware/mcu-boot/src/startup" target_path="startup" type="src">
+        <files mask="startup.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/startup" target_path="startup" type="c_include">
+        <files mask="ar_asm_macros.h"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/MK22F51212/src/startup/arm" target_path="startup" type="asm_include" toolchain="mdk">
+        <files mask="startup_MK22F51212.s"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/MK22F51212/src/startup/gcc" target_path="startup" type="asm_include" toolchain="mcuxpresso">
+        <files mask="startup_MK22F51212.S"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/MK22F51212/src/startup/iar" target_path="startup" type="asm_include" toolchain="iar">
+        <files mask="startup_MK22F51212.s"/>
+      </source>
+    </component>
+    <component id="middleware.mcu-boot.MK22F51212_ram_flashloader_linker.MK22F51212" name="MK22F51212_ram_flashloader_linker" type="middleware" devices="MK22FN512xxx12" version="1.0.0" user_visible="true">
+      <source path="middleware/mcu-boot/targets/common/linker/arm/MK22F51212" type="linker" toolchain="mdk">
+        <files mask="MK22FN512xxx12_ram_flashloader.scf"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/common/linker/gcc/MK22F51212" type="linker" toolchain="mcuxpresso">
+        <files mask="MK22FN512xxx12_ram_flashloader.ld"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/common/linker/iar/MK22F51212" type="linker" toolchain="iar">
+        <files mask="MK22FN512xxx12_ram_flashloader.icf"/>
+      </source>
+    </component>
+    <component id="middleware.mcu-boot.MK22F51212_sources.MK22F51212" name="MK22F51212_sources" type="middleware" devices="MK22FN512xxx12" version="1.0.0" user_visible="true">
+      <source path="middleware/mcu-boot/src/bootloader/src" target_path="source/bootloader/src" type="src">
+        <files mask="dspi_peripheral_interface.c"/>
+        <files mask="i2c_peripheral_interface.c"/>
+        <files mask="scuart_peripheral_interface.c"/>
+        <files mask="usb_hid_msc_peripheral_interface.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/drivers/microseconds/src" target_path="source/drivers/microseconds" type="src">
+        <files mask="microseconds_sysclk.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/memory/src" target_path="source/memory/src" type="src">
+        <files mask="sram_init_cm4.c"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/MK22F51212/src" target_path="MK22F51212" type="src">
+        <files mask="clock_config_MK22F51212.c"/>
+        <files mask="hardware_init_MK22F51212.c"/>
+        <files mask="memory_map_MK22F51212.c"/>
+        <files mask="peripherals_MK22F51212.c"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/MK22F51212/src" target_path="MK22F51212" type="c_include">
+        <files mask="bootloader_config.h"/>
+        <files mask="peripherals_pinmux.h"/>
+        <files mask="target_config.h"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/MK22F51212/src" target_path="source/usb/bm_composite" type="c_include">
+        <files mask="usb_device_config.h"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/common/src" target_path="MK22F51212" type="src">
+        <files mask="bl_dspi_irq_config_common.c"/>
+        <files mask="bl_i2c_irq_config_common.c"/>
+        <files mask="bl_uart_irq_config_common.c"/>
+        <files mask="pinmux_utility_common.c"/>
+      </source>
+    </component>
+    <component id="middleware.mcu-boot.MK22F51212_startup.MK22F51212" name="MK22F51212_startup" type="middleware" devices="MK22FN512xxx12" version="1.0.0" user_visible="true">
+      <source path="devices/MK22F51212" target_path="startup" type="src" toolchain="iar">
+        <files mask="system_MK22F51212.c"/>
+      </source>
+      <source path="devices/MK22F51212" target_path="startup" type="src" toolchain="mdk">
+        <files mask="system_MK22F51212.c"/>
+      </source>
+      <source path="devices/MK22F51212" target_path="startup" type="c_include" toolchain="iar">
+        <files mask="system_MK22F51212.h"/>
+      </source>
+      <source path="devices/MK22F51212" target_path="startup" type="c_include" toolchain="mdk">
+        <files mask="system_MK22F51212.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/include" target_path="source/include" type="c_include">
+        <files mask="bootloader_core.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/startup" target_path="startup" type="asm_include" toolchain="mcuxpresso">
+        <files mask="crt0_gcc.S"/>
+      </source>
+      <source path="middleware/mcu-boot/src/startup" target_path="startup" type="asm_include" toolchain="iar">
+        <files mask="crt0.s"/>
+      </source>
+      <source path="middleware/mcu-boot/src/startup" target_path="startup" type="src">
+        <files mask="startup.c"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/MK22F51212/src/startup/arm" target_path="startup" type="asm_include" toolchain="mdk">
+        <files mask="startup_MK22F51212.s"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/MK22F51212/src/startup/gcc" target_path="startup" type="asm_include" toolchain="mcuxpresso">
+        <files mask="startup_MK22F51212.S"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/MK22F51212/src/startup/iar" target_path="startup" type="asm_include" toolchain="iar">
+        <files mask="startup_MK22F51212.s"/>
+      </source>
+    </component>
+    <component id="middleware.mcu-boot.bootsources.MK22F51212" name="bootsources" type="middleware" devices="MK22FN512xxx12" version="1.0.0" user_visible="true">
+      <source path="middleware/mcu-boot/src/autobaud/src" target_path="source/autobaud" type="src">
+        <files mask="autobaud_irq.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/autobaud" target_path="source/autobaud" type="c_include">
+        <files mask="autobaud.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/bootloader/src" target_path="source/bootloader/src" type="src">
+        <files mask="bl_command.c"/>
+        <files mask="bl_context.c"/>
+        <files mask="bl_exception_handler.c"/>
+        <files mask="bl_main.c"/>
+        <files mask="bl_shutdown_cleanup.c"/>
+        <files mask="bl_tree_root.c"/>
+        <files mask="bl_user_entry.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/bootloader" target_path="source/bootloader" type="c_include">
+        <files mask="bl_command.h"/>
+        <files mask="bl_context.h"/>
+        <files mask="bl_irq_common.h"/>
+        <files mask="bl_peripheral.h"/>
+        <files mask="bl_peripheral_interface.h"/>
+        <files mask="bl_reliable_update.h"/>
+        <files mask="bl_shutdown_cleanup.h"/>
+        <files mask="bl_user_entry.h"/>
+        <files mask="bl_version.h"/>
+        <files mask="bootloader.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/crc/src" target_path="source/crc" type="src">
+        <files mask="crc16.c"/>
+        <files mask="crc32.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/crc" target_path="source/crc" type="c_include">
+        <files mask="crc16.h"/>
+        <files mask="crc32.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/drivers/microseconds" target_path="source/drivers/microseconds" type="c_include">
+        <files mask="microseconds.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/include" target_path="source/include" type="c_include">
+        <files mask="bootloader_common.h"/>
+        <files mask="bootloader_core.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/memory/src" target_path="source/memory/src" type="src">
+        <files mask="device_memory.c"/>
+        <files mask="memory.c"/>
+        <files mask="normal_memory.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/memory/src" target_path="source/memory/src" type="c_include">
+        <files mask="device_memory.h"/>
+        <files mask="normal_memory.h"/>
+        <files mask="pattern_fill.h"/>
+        <files mask="sram_init.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/memory" target_path="source/memory" type="c_include">
+        <files mask="memory.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/packet/src" target_path="source/packet/src" type="src">
+        <files mask="serial_packet.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/packet" target_path="source/packet" type="c_include">
+        <files mask="command_packet.h"/>
+        <files mask="serial_packet.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/property" target_path="source/property" type="c_include">
+        <files mask="property.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/sbloader/src" target_path="source/sbloader/src" type="src">
+        <files mask="sbloader.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/sbloader" target_path="source/sbloader" type="c_include">
+        <files mask="sb_file_format.h"/>
+        <files mask="sbloader.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/utilities/src" target_path="source/utilities/src" type="src">
+        <files mask="fsl_assert.c"/>
+        <files mask="fsl_rtos_abstraction.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/utilities" target_path="source/utilities" type="c_include">
+        <files mask="fsl_assert.h"/>
+        <files mask="fsl_rtos_abstraction.h"/>
+        <files mask="vector_table_info.h"/>
+      </source>
+    </component>
+    <component id="middleware.mcu-boot.bootsources_kinetis.MK22F51212" name="bootsources_kinetis" type="middleware" devices="MK22FN512xxx12" version="1.0.0" user_visible="true">
+      <source path="middleware/mcu-boot/src/drivers/smc" target_path="source/drivers/smc" type="src">
+        <files mask="smc.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/drivers/smc" target_path="source/drivers/smc" type="c_include">
+        <files mask="smc.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/memory/src" target_path="source/memory/src" type="src">
+        <files mask="flash_memory.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/memory/src" target_path="source/memory/src" type="c_include">
+        <files mask="flash_memory.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/property/src" target_path="source/property/src" type="src">
+        <files mask="property_kinetis.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/utilities" target_path="source/utilities" type="c_include">
+        <files mask="kinetis_family.h"/>
+      </source>
+    </component>
+    <component id="middleware.mcu-boot.loadersources.MK22F51212" name="loadersources" type="middleware" devices="MK22FN512xxx12" version="1.0.0" user_visible="true">
+      <source path="middleware/mcu-boot/src/bootloader/src" target_path="source/bootloader" type="src">
+        <files mask="bl_exception_handler.c"/>
+        <files mask="bl_flashloader.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/bootloader" target_path="source/bootloader" type="c_include">
+        <files mask="flashloader_image.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/include" target_path="source/include" type="c_include">
+        <files mask="bootloader_common.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/utilities" target_path="source/utilities" type="c_include">
+        <files mask="vector_table_info.h"/>
+      </source>
+    </component>
+    <component id="middleware.mcu-boot.postaction.MK22F51212" name="postaction" type="middleware" devices="MK22FN512xxx12" version="1.0.0" user_visible="true">
+      <source path="middleware/mcu-boot/bin" target_path="postaction" exclude="true" type="script" toolchain="mcuxpresso">
+        <files mask="create_fl_image_mcux.py"/>
+        <files mask="elf.py"/>
+      </source>
+    </component>
+    <component id="middleware.mcu-boot.src_bm_usb.MK22F51212" name="src_bm_usb" type="middleware" devices="MK22FN512xxx12" version="1.0.0" user_visible="true">
+      <source path="middleware/mcu-boot/src/bm_usb" target_path="source/usb/bm_composite" type="src">
+        <files mask="composite.c"/>
+        <files mask="hid_bootloader.c"/>
+        <files mask="msc_disk.c"/>
+        <files mask="usb_descriptor.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/bm_usb" target_path="source/usb/bm_composite" type="c_include">
+        <files mask="bootloader_hid_report_ids.h"/>
+        <files mask="composite.h"/>
+        <files mask="fat_directory_entry.h"/>
+        <files mask="hid_bootloader.h"/>
+        <files mask="msc_disk.h"/>
+        <files mask="usb_descriptor.h"/>
+      </source>
+    </component>
+    <component id="middleware.mcu-boot.src_bootloader.MK22F51212" name="src_bootloader" type="middleware" devices="MK22FN512xxx12" version="1.0.0" user_visible="true">
+      <source path="middleware/mcu-boot/src/bootloader/src" target_path="source/bootloader/src" type="src">
+        <files mask="bl_app_crc_check.c"/>
+        <files mask="bl_misc.c"/>
+        <files mask="bl_reliable_update.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/bootloader" target_path="source/bootloader" type="c_include">
+        <files mask="bl_app_crc_check.h"/>
+      </source>
     </component>
     <component id="middleware.mmcau_cm0p.MK22F51212" name="mmcau_cm0p" type="middleware" brief="MMCAU library for ARM Cortex M0 core" category="Security/MMCAU library" device_cores="core0_MK22FN512xxx12" core="cm4" dependency="platform.Include_common.MK22F51212 platform.Include_core_cm4.MK22F51212 platform.devices.MK22F51212_CMSIS.MK22F51212 platform.drivers.clock.MK22F51212 platform.drivers.common.MK22F51212 platform.drivers.lpuart.MK22F51212 platform.drivers.uart.MK22F51212 platform.utilities.debug_console.MK22F51212" devices="MK22FN512xxx12" version="2.0.1" user_visible="true">
       <source path="middleware/mmcau/asm-cm0p" target_path="libs" type="lib" toolchain="armgcc">
@@ -7709,62 +7851,6 @@ Kinetis® K22 MCUs have been optimized for cost-sensitive applications requiring
         <files mask="pin_mux.c"/>
       </source>
       <source path="boards/frdmk22f/project_template" type="c_include">
-        <files mask="board.h"/>
-        <files mask="clock_config.h"/>
-        <files mask="peripherals.h"/>
-        <files mask="pin_mux.h"/>
-      </source>
-    </component>
-    <component id="project_template.frdmk22f_agm01.MK22F51212" name="frdmk22f_agm01" type="project_template" device_cores="core0_MK22FN512xxx12" core="cm4" dependency="platform.Include_common.MK22F51212 platform.Include_core_cm4.MK22F51212 platform.devices.MK22F51212_CMSIS.MK22F51212 platform.devices.MK22F51212_startup.MK22F51212 platform.drivers.clock.MK22F51212 platform.drivers.common.MK22F51212 platform.drivers.flash.MK22F51212 platform.drivers.gpio.MK22F51212 platform.drivers.lpuart.MK22F51212 platform.drivers.port.MK22F51212 platform.drivers.smc.MK22F51212 platform.drivers.uart.MK22F51212 platform.utilities.debug_console.MK22F51212" devices="MK22FN512xxx12" version="1.0.0" user_visible="true">
-      <source path="boards/frdmk22f_agm01/project_template" type="src">
-        <files mask="board.c"/>
-        <files mask="clock_config.c"/>
-        <files mask="peripherals.c"/>
-        <files mask="pin_mux.c"/>
-      </source>
-      <source path="boards/frdmk22f_agm01/project_template" type="c_include">
-        <files mask="board.h"/>
-        <files mask="clock_config.h"/>
-        <files mask="peripherals.h"/>
-        <files mask="pin_mux.h"/>
-      </source>
-    </component>
-    <component id="project_template.frdmk22f_agmp03.MK22F51212" name="frdmk22f_agmp03" type="project_template" device_cores="core0_MK22FN512xxx12" core="cm4" dependency="platform.Include_common.MK22F51212 platform.Include_core_cm4.MK22F51212 platform.devices.MK22F51212_CMSIS.MK22F51212 platform.devices.MK22F51212_startup.MK22F51212 platform.drivers.clock.MK22F51212 platform.drivers.common.MK22F51212 platform.drivers.flash.MK22F51212 platform.drivers.gpio.MK22F51212 platform.drivers.lpuart.MK22F51212 platform.drivers.port.MK22F51212 platform.drivers.smc.MK22F51212 platform.drivers.uart.MK22F51212 platform.utilities.debug_console.MK22F51212" devices="MK22FN512xxx12" version="1.0.0" user_visible="true">
-      <source path="boards/frdmk22f_agmp03/project_template" type="src">
-        <files mask="board.c"/>
-        <files mask="clock_config.c"/>
-        <files mask="peripherals.c"/>
-        <files mask="pin_mux.c"/>
-      </source>
-      <source path="boards/frdmk22f_agmp03/project_template" type="c_include">
-        <files mask="board.h"/>
-        <files mask="clock_config.h"/>
-        <files mask="peripherals.h"/>
-        <files mask="pin_mux.h"/>
-      </source>
-    </component>
-    <component id="project_template.frdmk22f_om13588.MK22F51212" name="frdmk22f_om13588" type="project_template" category="Board Support/SDK Project Template" device_cores="core0_MK22FN512xxx12" core="cm4" dependency="platform.Include_common.MK22F51212 platform.Include_core_cm4.MK22F51212 platform.devices.MK22F51212_CMSIS.MK22F51212 platform.devices.MK22F51212_startup.MK22F51212 platform.drivers.clock.MK22F51212 platform.drivers.common.MK22F51212 platform.drivers.flash.MK22F51212 platform.drivers.gpio.MK22F51212 platform.drivers.lpuart.MK22F51212 platform.drivers.port.MK22F51212 platform.drivers.smc.MK22F51212 platform.drivers.uart.MK22F51212 platform.utilities.debug_console.MK22F51212" devices="MK22FN512xxx12" version="1.0.0" user_visible="true">
-      <source path="boards/frdmk22f_om13588/project_template" type="src">
-        <files mask="board.c"/>
-        <files mask="clock_config.c"/>
-        <files mask="peripherals.c"/>
-        <files mask="pin_mux.c"/>
-      </source>
-      <source path="boards/frdmk22f_om13588/project_template" type="c_include">
-        <files mask="board.h"/>
-        <files mask="clock_config.h"/>
-        <files mask="peripherals.h"/>
-        <files mask="pin_mux.h"/>
-      </source>
-    </component>
-    <component id="project_template.frdmk22f_sa9500.MK22F51212" name="frdmk22f_sa9500" type="project_template" device_cores="core0_MK22FN512xxx12" core="cm4" dependency="platform.Include_common.MK22F51212 platform.Include_core_cm4.MK22F51212 platform.devices.MK22F51212_CMSIS.MK22F51212 platform.devices.MK22F51212_startup.MK22F51212 platform.drivers.clock.MK22F51212 platform.drivers.common.MK22F51212 platform.drivers.flash.MK22F51212 platform.drivers.gpio.MK22F51212 platform.drivers.lpuart.MK22F51212 platform.drivers.port.MK22F51212 platform.drivers.smc.MK22F51212 platform.drivers.uart.MK22F51212 platform.utilities.debug_console.MK22F51212" devices="MK22FN512xxx12" version="1.0.0" user_visible="true">
-      <source path="boards/frdmk22f_sa9500/project_template" type="src">
-        <files mask="board.c"/>
-        <files mask="clock_config.c"/>
-        <files mask="peripherals.c"/>
-        <files mask="pin_mux.c"/>
-      </source>
-      <source path="boards/frdmk22f_sa9500/project_template" type="c_include">
         <files mask="board.h"/>
         <files mask="clock_config.h"/>
         <files mask="peripherals.h"/>

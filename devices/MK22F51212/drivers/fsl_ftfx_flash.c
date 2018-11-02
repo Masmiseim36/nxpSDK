@@ -526,8 +526,8 @@ status_t FLASH_Swap(flash_config_t *config, uint32_t address, bool isSetEnable)
                 case kFTFx_SwapStateUpdate:
                     /* If current swap mode is Update, Erase indicator sector in non active block
                      * to proceed swap system to update-erased state */
-                    returnCode = FTFx_CMD_Erase(ftfxConfig, address + (ftfxConfig->flashDesc.totalSize >> 1),
-                                                 ftfxConfig->opsConfig.addrAligment.sectorCmd, kFTFx_ApiEraseKey);
+                    returnCode = FLASH_Erase(config, address + (ftfxConfig->flashDesc.totalSize >> 1),
+                                              ftfxConfig->opsConfig.addrAligment.sectorCmd, kFTFx_ApiEraseKey);
                     break;
                 case kFTFx_SwapStateUpdateErased:
                     /* If current swap mode is Update or Update-Erased, progress Swap to COMPLETE State */

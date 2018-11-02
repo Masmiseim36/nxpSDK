@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
+  <externalDefinitions>
+    <definition extID="com.nxp.mcuxpresso"/>
+    <definition extID="middleware.mcu-boot.MK22F51212_application_0x0000_linker.MK22F51212"/>
+    <definition extID="middleware.mcu-boot.MK22F51212_startup.MK22F51212"/>
+    <definition extID="platform.devices.MK22F51212_CMSIS.MK22F51212"/>
+    <definition extID="mdk"/>
+    <definition extID="iar"/>
+    <definition extID="mcuxpresso"/>
+  </externalDefinitions>
+  <example id="frdmk22f_led_demo_freedom_0000" name="led_demo_freedom_0000" category="bootloader_examples/demo_apps" dependency="middleware.mcu-boot.MK22F51212_application_0x0000_linker.MK22F51212 platform.devices.MK22F51212_CMSIS.MK22F51212 middleware.mcu-boot.MK22F51212_startup.MK22F51212" toolchain="mdk iar mcuxpresso">
+    <projects>
+      <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
+    </projects>
+    <toolchainSettings>
+      <toolchainSetting id_refs="com.nxp.mcuxpresso">
+        <option id="com.crt.advproject.gas.fpu" type="enum">
+          <value>com.crt.advproject.gas.fpu.fpv4.hard</value>
+        </option>
+        <option id="com.crt.advproject.gcc.fpu" type="enum">
+          <value>com.crt.advproject.gcc.fpu.fpv4.hard</value>
+        </option>
+        <option id="com.crt.advproject.c.misc.dialect" type="enum">
+          <value>com.crt.advproject.misc.dialect.gnu99</value>
+        </option>
+        <option id="com.crt.advproject.gcc.exe.debug.option.debugging.level" type="enum">
+          <value>gnu.c.debugging.level.default</value>
+        </option>
+        <option id="com.crt.advproject.gcc.exe.release.option.debugging.level" type="enum">
+          <value>gnu.c.debugging.level.default</value>
+        </option>
+        <option id="com.crt.advproject.gcc.exe.debug.option.optimization.level" type="enum">
+          <value>gnu.c.optimization.level.size</value>
+        </option>
+        <option id="com.crt.advproject.gcc.exe.release.option.optimization.level" type="enum">
+          <value>gnu.c.optimization.level.size</value>
+        </option>
+        <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
+          <value>__SEMIHOST_HARDFAULT_DISABLE=1</value>
+          <value>CPU_MK22FN512VLH12</value>
+          <value>FREEDOM</value>
+          <value>FRDM_K22F</value>
+        </option>
+        <option id="gnu.c.compiler.option.optimization.flags" type="string">
+          <value>-fno-common</value>
+        </option>
+        <option id="gnu.c.compiler.option.misc.other" type="string">
+          <value>-c  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin</value>
+        </option>
+        <option id="gnu.c.compiler.option.warnings.allwarn" type="boolean">
+          <value>false</value>
+          <value>true</value>
+        </option>
+        <option id="com.crt.advproject.link.fpu" type="enum">
+          <value>com.crt.advproject.link.fpu.fpv4.hard</value>
+        </option>
+        <option id="gnu.c.link.option.nostdlibs" type="boolean">
+          <value>true</value>
+        </option>
+        <option id="gnu.c.link.option.other" type="stringList">
+          <value>--gc-sections</value>
+          <value>-Map=${BuildArtifactFileBaseName}.map</value>
+          <value>--defsym=__ram_vector_table__=1</value>
+        </option>
+        <option id="com.crt.advproject.gas.hdrlib" type="enum">
+          <value>com.crt.advproject.gas.hdrlib.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.gas.specs" type="enum">
+          <value>com.crt.advproject.gas.specs.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.gcc.hdrlib" type="enum">
+          <value>com.crt.advproject.gcc.hdrlib.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.gcc.specs" type="enum">
+          <value>com.crt.advproject.gcc.specs.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.link.gcc.hdrlib" type="enum">
+          <value>com.crt.advproject.gcc.link.hdrlib.newlibnano.none</value>
+        </option>
+      </toolchainSetting>
+    </toolchainSettings>
+    <source path="boards/frdmk22f/bootloader_examples/demo_apps/led_demo_freedom_0000" target_path="MK22F51212" type="src">
+      <files mask="main.c"/>
+    </source>
+    <source path="middleware/mcu-boot/apps/led_demo/src" target_path="MK22F51212" type="c_include">
+      <files mask="milliseconds_delay.h"/>
+    </source>
+    <source path="middleware/mcu-boot/apps/led_demo/src" target_path="MK22F51212" type="src">
+      <files mask="milliseconds_delay.c"/>
+    </source>
+  </example>
+</ksdk:examples>

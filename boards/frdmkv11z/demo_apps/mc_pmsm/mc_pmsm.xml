@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
+  <externalDefinitions>
+    <definition extID="com.nxp.mcuxpresso"/>
+    <definition extID="middleware.motor_control.pmsm.MKV11Z7"/>
+    <definition extID="middleware.rtcesl.cm0p.MKV11Z7"/>
+    <definition extID="platform.devices.MKV11Z7_CMSIS.MKV11Z7"/>
+    <definition extID="platform.devices.MKV11Z7_startup.MKV11Z7"/>
+    <definition extID="platform.drivers.clock.MKV11Z7"/>
+    <definition extID="platform.drivers.common.MKV11Z7"/>
+    <definition extID="platform.drivers.dmamux.MKV11Z7"/>
+    <definition extID="platform.drivers.flash.MKV11Z7"/>
+    <definition extID="platform.drivers.gpio.MKV11Z7"/>
+    <definition extID="platform.drivers.port.MKV11Z7"/>
+    <definition extID="platform.drivers.sim.MKV11Z7"/>
+    <definition extID="platform.drivers.smc.MKV11Z7"/>
+    <definition extID="platform.drivers.uart.MKV11Z7"/>
+    <definition extID="platform.utilities.assert.MKV11Z7"/>
+    <definition extID="platform.utilities.debug_console.MKV11Z7"/>
+    <definition extID="mdk"/>
+    <definition extID="iar"/>
+    <definition extID="mcuxpresso"/>
+  </externalDefinitions>
+  <example id="frdmkv11z_mc_pmsm" name="mc_pmsm" category="demo_apps" dependency="platform.drivers.sim.MKV11Z7 platform.drivers.common.MKV11Z7 platform.drivers.clock.MKV11Z7 platform.drivers.port.MKV11Z7 platform.drivers.dmamux.MKV11Z7 middleware.rtcesl.cm0p.MKV11Z7 platform.drivers.flash.MKV11Z7 platform.devices.MKV11Z7_CMSIS.MKV11Z7 platform.devices.MKV11Z7_startup.MKV11Z7 platform.drivers.uart.MKV11Z7 platform.drivers.smc.MKV11Z7 platform.utilities.debug_console.MKV11Z7 platform.drivers.gpio.MKV11Z7 platform.utilities.assert.MKV11Z7 middleware.motor_control.pmsm.MKV11Z7" toolchain="mdk iar mcuxpresso">
+    <projects>
+      <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
+    </projects>
+    <toolchainSettings>
+      <toolchainSetting id_refs="com.nxp.mcuxpresso">
+        <option id="com.crt.advproject.gas.fpu" type="enum">
+          <value>com.crt.advproject.gas.fpu.none</value>
+        </option>
+        <option id="com.crt.advproject.gcc.fpu" type="enum">
+          <value>com.crt.advproject.gcc.fpu.none</value>
+        </option>
+        <option id="com.crt.advproject.c.misc.dialect" type="enum">
+          <value>com.crt.advproject.misc.dialect.gnu99</value>
+        </option>
+        <option id="com.crt.advproject.gcc.exe.debug.option.debugging.level" type="enum">
+          <value>gnu.c.debugging.level.default</value>
+        </option>
+        <option id="com.crt.advproject.gcc.exe.release.option.debugging.level" type="enum">
+          <value>gnu.c.debugging.level.default</value>
+        </option>
+        <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
+          <value>CPU_MKV11Z128VLH7</value>
+          <value>ARM_MATH_CM0PLUS</value>
+          <value>FRDM_KV11Z</value>
+          <value>FREEDOM</value>
+        </option>
+        <option id="gnu.c.compiler.option.optimization.flags" type="string">
+          <value>-fno-common</value>
+        </option>
+        <option id="gnu.c.compiler.option.misc.other" type="string">
+          <value>-c  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin</value>
+        </option>
+        <option id="com.crt.advproject.link.fpu" type="enum">
+          <value>com.crt.advproject.link.fpu.none</value>
+        </option>
+        <option id="gnu.c.link.option.nostdlibs" type="boolean">
+          <value>true</value>
+        </option>
+      </toolchainSetting>
+    </toolchainSettings>
+    <source path="boards/frdmkv11z/demo_apps/mc_pmsm" target_path="board" type="c_include">
+      <files mask="board.h"/>
+      <files mask="clock_config.h"/>
+      <files mask="mcdrv.h"/>
+      <files mask="mcdrv_frdmkv11z.h"/>
+      <files mask="pin_mux.h"/>
+    </source>
+    <source path="boards/frdmkv11z/demo_apps/mc_pmsm" target_path="board" type="src">
+      <files mask="board.c"/>
+      <files mask="clock_config.c"/>
+      <files mask="mcdrv_frdmkv11z.c"/>
+      <files mask="pin_mux.c"/>
+    </source>
+    <source path="boards/frdmkv11z/demo_apps/mc_pmsm" target_path="doc" type="doc">
+      <files mask="readme.txt"/>
+    </source>
+    <source path="boards/frdmkv11z/demo_apps/mc_pmsm" target_path="mc_drivers" type="c_include">
+      <files mask="mcdrv_adc_adc16.h"/>
+      <files mask="mcdrv_pwm3ph_ftm.h"/>
+    </source>
+    <source path="boards/frdmkv11z/demo_apps/mc_pmsm" target_path="mc_drivers" type="src">
+      <files mask="mcdrv_adc_adc16.c"/>
+      <files mask="mcdrv_pwm3ph_ftm.c"/>
+    </source>
+    <source path="boards/frdmkv11z/demo_apps/mc_pmsm" target_path="source" type="c_include">
+      <files mask="m1_pmsm_appconfig.h"/>
+    </source>
+    <source path="boards/frdmkv11z/demo_apps/mc_pmsm" target_path="source" type="src">
+      <files mask="main.c"/>
+    </source>
+    <source path="middleware/rtcesl/CM0_RTCESL_4.5_IAR/AMCLIB" type="lib" method="copy" toolchain="iar">
+      <files mask="AMCLIB.a"/>
+    </source>
+    <source path="middleware/rtcesl/CM0_RTCESL_4.5_IAR/GDFLIB" type="lib" method="copy" toolchain="iar">
+      <files mask="GDFLIB.a"/>
+    </source>
+    <source path="middleware/rtcesl/CM0_RTCESL_4.5_IAR/GFLIB" type="lib" method="copy" toolchain="iar">
+      <files mask="GFLIB.a"/>
+    </source>
+    <source path="middleware/rtcesl/CM0_RTCESL_4.5_IAR/GMCLIB" type="lib" method="copy" toolchain="iar">
+      <files mask="GMCLIB.a"/>
+    </source>
+    <source path="middleware/rtcesl/CM0_RTCESL_4.5_IAR/MLIB" type="lib" method="copy" toolchain="iar">
+      <files mask="MLIB.a"/>
+    </source>
+    <source path="middleware/rtcesl/CM0_RTCESL_4.5_KEIL/AMCLIB" type="lib" method="copy" toolchain="mdk">
+      <files mask="AMCLIB.lib"/>
+    </source>
+    <source path="middleware/rtcesl/CM0_RTCESL_4.5_KEIL/GDFLIB" type="lib" method="copy" toolchain="mdk">
+      <files mask="GDFLIB.lib"/>
+    </source>
+    <source path="middleware/rtcesl/CM0_RTCESL_4.5_KEIL/GFLIB" type="lib" method="copy" toolchain="mdk">
+      <files mask="GFLIB.lib"/>
+    </source>
+    <source path="middleware/rtcesl/CM0_RTCESL_4.5_KEIL/GMCLIB" type="lib" method="copy" toolchain="mdk">
+      <files mask="GMCLIB.lib"/>
+    </source>
+    <source path="middleware/rtcesl/CM0_RTCESL_4.5_KEIL/MLIB" type="lib" method="copy" toolchain="mdk">
+      <files mask="MLIB.lib"/>
+    </source>
+  </example>
+</ksdk:examples>

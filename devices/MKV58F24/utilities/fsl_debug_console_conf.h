@@ -6,7 +6,7 @@
  *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
+ *  that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -113,6 +113,8 @@
 #else
 #define DEBUG_CONSOLE_SYNCHRONIZATION_MODE DEBUG_CONSOLE_SYNCHRONIZATION_BM
 #endif /* FSL_RTOS_FREE_RTOS */
+#else
+#define DEBUG_CONSOLE_SYNCHRONIZATION_MODE DEBUG_CONSOLE_SYNCHRONIZATION_BM
 #endif /* DEBUG_CONSOLE_TRANSFER_NON_BLOCKING */
 #endif /* DEBUG_CONSOLE_DISABLE_RTOS_SYNCHRONIZATION */
 
@@ -149,6 +151,10 @@
 #define SCANF_ADVANCED_ENABLE 0U
 #endif /* SCANF_ADVANCED_ENABLE */
 
+/*! @brief Definition to select virtual com(USB CDC) as the debug console. */
+#ifndef BOARD_USE_VIRTUALCOM
+#define BOARD_USE_VIRTUALCOM 0U
+#endif
 /*******************************************************************/
 
 #endif /* _FSL_DEBUG_CONSOLE_CONF_H_ */

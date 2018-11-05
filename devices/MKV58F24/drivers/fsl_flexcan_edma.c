@@ -3,10 +3,10 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
+ *  that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -35,8 +35,14 @@
 #include "fsl_flexcan_edma.h"
 
 /*******************************************************************************
- * Definitons
+ * Definitions
  ******************************************************************************/
+
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.flexcan_edma"
+#endif
+
 
 /*<! Structure definition for flexcan_edma_private_handle_t. The structure is private. */
 typedef struct _flexcan_edma_private_handle
@@ -74,14 +80,6 @@ static flexcan_edma_private_handle_t s_edmaPrivateHandle[FSL_FEATURE_SOC_FLEXCAN
  * @param param Callback function parameter.
  */
 static void FLEXCAN_ReceiveFifoEDMACallback(edma_handle_t *handle, void *param, bool transferDone, uint32_t tcds);
-
-/*!
- * @brief Get the FlexCAN instance from peripheral base address.
- *
- * @param base FlexCAN peripheral base address.
- * @return FlexCAN instance.
- */
-extern uint32_t FLEXCAN_GetInstance(CAN_Type *base);
 
 /*******************************************************************************
  * Code

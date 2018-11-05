@@ -6,7 +6,7 @@
  *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
+ *  that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -36,6 +36,12 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.hsadc"
+#endif
+
 /*
  * Define the MACROs to help calculating the position of register field for specific sample index.
  */
@@ -633,7 +639,7 @@ static void HSADC_SetChannel67Mux(HSADC_Type *base,
  * Mask table for channel differential pair setting.
  * The item's value would be set into CTRL1[CHNCFG_L] or CTRL2[CHNCFG_H].
  */
-const uint16_t g_HSADCChannelConfigDifferentialMask[] = {
+static const uint16_t g_HSADCChannelConfigDifferentialMask[] = {
     0x0010U, /* CHN0-1,   ANA0-ANA1, CTRL1[CHNCFG_L]. */
     0x0020U, /* CHN2-3,   ANA2-ANA3. CTRL1[CHNCFG_L]. */
     0x0080U, /* CHN4-5,   ANA4-ANA5. CTRL2[CHNCFG_H]. */

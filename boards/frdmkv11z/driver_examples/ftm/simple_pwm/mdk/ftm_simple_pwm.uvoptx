@@ -17,7 +17,7 @@
     <dwHighDateTime>0</dwHighDateTime>
   </DaveTm>
   <Target>
-    <TargetName>ftm_simple_pwm Debug</TargetName>
+    <TargetName>ftm_simple_pwm debug</TargetName>
     <ToolsetNumber>0x4</ToolsetNumber>
     <ToolsetName>ARM-ADS</ToolsetName>
     <TargetOption>
@@ -155,7 +155,7 @@
     </TargetOption>
   </Target>
   <Target>
-    <TargetName>ftm_simple_pwm Release</TargetName>
+    <TargetName>ftm_simple_pwm release</TargetName>
     <ToolsetNumber>0x4</ToolsetNumber>
     <ToolsetName>ARM-ADS</ToolsetName>
     <TargetOption>

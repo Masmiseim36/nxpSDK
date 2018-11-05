@@ -17,7 +17,7 @@
     <dwHighDateTime>0</dwHighDateTime>
   </DaveTm>
   <Target>
-    <TargetName>flexcan_loopback Debug</TargetName>
+    <TargetName>flexcan_loopback debug</TargetName>
     <ToolsetNumber>0x4</ToolsetNumber>
     <ToolsetName>ARM-ADS</ToolsetName>
     <TargetOption>
@@ -155,7 +155,7 @@
     </TargetOption>
   </Target>
   <Target>
-    <TargetName>flexcan_loopback Release</TargetName>
+    <TargetName>flexcan_loopback release</TargetName>
     <ToolsetNumber>0x4</ToolsetNumber>
     <ToolsetName>ARM-ADS</ToolsetName>
     <TargetOption>

@@ -3,10 +3,10 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
+ *  that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -74,11 +74,11 @@
 #define kAdcChannelBandgap (27U)     /*! ADC channel of BANDGAP */
 
 #define UPPER_VALUE_LIMIT (1U) /*! This value/10 is going to be added to current Temp to set the upper boundary*/
-#define LOWER_VALUE_LIMIT                                                                 \
-    (1U) /*! This Value/10 is going to be subtracted from current Temp to set the lower \ \
+#define LOWER_VALUE_LIMIT                                                               \
+    (1U) /*! This Value/10 is going to be subtracted from current Temp to set the lower \
             boundary*/
-#define UPDATE_BOUNDARIES_TIME                                                         \
-    (20U) /*! This value indicates the number of cycles needed to update boundaries. \ \
+#define UPDATE_BOUNDARIES_TIME                                                       \
+    (20U) /*! This value indicates the number of cycles needed to update boundaries. \
               To know the Time it will take, multiply this value times LPTMR_COMPARE_VALUE*/
 
 #define LPTMR_COMPARE_VALUE (500U) /* Low Power Timer interrupt time in miliseconds */
@@ -261,14 +261,7 @@ static void ADC16_CalibrateParams(ADC_Type *base)
 
 #if defined(FSL_FEATURE_ADC16_HAS_CALIBRATION) && FSL_FEATURE_ADC16_HAS_CALIBRATION
     /* Auto calibration */
-    if (kStatus_Success == ADC16_DoAutoCalibration(base))
-    {
-        PRINTF("ADC16_DoAutoCalibration() Done.\r\n");
-    }
-    else
-    {
-        PRINTF("ADC16_DoAutoCalibration() Failed.\r\n");
-    }
+    ADC16_DoAutoCalibration(base);
 #endif
 
 #if defined(FSL_FEATURE_ADC16_HAS_HW_AVERAGE) && FSL_FEATURE_ADC16_HAS_HW_AVERAGE
@@ -318,10 +311,7 @@ static bool ADC16_InitHardwareTrigger(ADC_Type *base)
 
 #if defined(FSL_FEATURE_ADC16_HAS_CALIBRATION) && FSL_FEATURE_ADC16_HAS_CALIBRATION
     /* Auto calibration */
-    if (kStatus_Success != ADC16_DoAutoCalibration(base))
-    {
-        return false;
-    }
+    ADC16_DoAutoCalibration(base);
     offsetValue = base->OFS;
     ADC16_SetOffsetValue(base, offsetValue);
 #endif
@@ -410,8 +400,8 @@ void DEMO_ADC16_IRQ_HANDLER_FUNC(void)
     adcValue = ADC16_GetChannelConversionValue(DEMO_ADC16_BASEADDR, DEMO_ADC16_CHANNEL_GROUP);
     /* Set conversionCompleted flag. This prevents an wrong conversion in main function */
     conversionCompleted = true;
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
+    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
+      exception return operation might vector to incorrect interrupt */
 #if defined __CORTEX_M && (__CORTEX_M == 4U)
     __DSB();
 #endif

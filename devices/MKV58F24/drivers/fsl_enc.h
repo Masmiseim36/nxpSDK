@@ -3,10 +3,10 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
+ *  that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -306,6 +306,22 @@ void ENC_DoSoftwareLoadInitialPositionValue(ENC_Type *base);
  * @param config Pointer to configuration structure. See to "enc_self_test_config_t". Pass "NULL" to disable.
  */
 void ENC_SetSelfTestConfig(ENC_Type *base, const enc_self_test_config_t *config);
+
+/*!
+ * @brief Enable watchdog for ENC module.
+ *
+ * @param base ENC peripheral base address
+ * @param enable Enables or disables the watchdog
+ */
+void ENC_EnableWatchdog(ENC_Type *base, bool enable);
+
+/*!
+ * @brief Set initial position value for ENC module.
+ *
+ * @param base ENC peripheral base address
+ * @param value Positive initial value
+ */
+void ENC_SetInitialPositionValue(ENC_Type *base, uint32_t value);
 
 /* @} */
 

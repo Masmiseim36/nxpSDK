@@ -174,6 +174,11 @@ int main(void)
     flexcanConfig.timingConfig.phaseSeg1 = PSEG1;
     flexcanConfig.timingConfig.phaseSeg2 = PSEG2;
     flexcanConfig.timingConfig.propSeg = PROPSEG;
+#if (defined(FSL_FEATURE_FLEXCAN_HAS_FLEXIBLE_DATA_RATE) && FSL_FEATURE_FLEXCAN_HAS_FLEXIBLE_DATA_RATE)
+    flexcanConfig.timingConfig.fphaseSeg1 = FPSEG1;
+    flexcanConfig.timingConfig.fphaseSeg2 = FPSEG2;
+    flexcanConfig.timingConfig.fpropSeg = FPROPSEG;
+#endif
 #endif
     FLEXCAN_Init(EXAMPLE_CAN, &flexcanConfig, EXAMPLE_CAN_CLK_FREQ);
 #if (defined(FSL_FEATURE_FLEXCAN_HAS_FLEXIBLE_DATA_RATE) && FSL_FEATURE_FLEXCAN_HAS_FLEXIBLE_DATA_RATE)

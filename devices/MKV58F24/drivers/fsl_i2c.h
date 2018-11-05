@@ -3,10 +3,10 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
+ *  that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -268,6 +268,12 @@ struct _i2c_slave_handle
 };
 
 /*******************************************************************************
+ * Variables
+ ******************************************************************************/
+/*! @brief Pointers to i2c bases for each instance. */
+extern I2C_Type *const s_i2cBases[];
+
+/*******************************************************************************
  * API
  ******************************************************************************/
 
@@ -349,6 +355,13 @@ void I2C_MasterDeinit(I2C_Type *base);
  * @param base I2C base pointer
  */
 void I2C_SlaveDeinit(I2C_Type *base);
+
+/*!
+ * @brief Get instance number for I2C module.
+ *
+ * @param base I2C peripheral base address.
+ */
+uint32_t I2C_GetInstance(I2C_Type *base);
 
 /*!
  * @brief  Sets the I2C master configuration structure to default values.

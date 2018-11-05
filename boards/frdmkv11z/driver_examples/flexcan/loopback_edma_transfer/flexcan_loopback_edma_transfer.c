@@ -3,10 +3,10 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
+ *  that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -37,8 +37,9 @@
 #include "fsl_flexcan.h"
 #include "fsl_flexcan_edma.h"
 #include "board.h"
+#if defined(FSL_FEATURE_SOC_DMAMUX_COUNT) && FSL_FEATURE_SOC_DMAMUX_COUNT
 #include "fsl_dmamux.h"
-
+#endif
 #include "fsl_common.h"
 #include "pin_mux.h"
 #include "clock_config.h"
@@ -48,6 +49,7 @@
 #define EXAMPLE_CAN CAN0
 #define EXAMPLE_CAN_CLKSRC kCLOCK_CoreSysClk
 #define EXAMPLE_CAN_CLK_FREQ CLOCK_GetFreq(kCLOCK_CoreSysClk)
+#define EXAMPLE_CAN_DMA DMA0
 #define EXAMPLE_CAN_DMA_CHANNEL 0
 #define EXAMPLE_CAN_DMA_REQUEST kDmaRequestMux0Reserved14
 #define TX_MESSAGE_BUFFER_NUM (9)
@@ -66,7 +68,8 @@ flexcan_edma_handle_t flexcanEdmaHandle;
 edma_handle_t flexcanRxFifoEdmaHandle;
 flexcan_mb_transfer_t txXfer;
 flexcan_fifo_transfer_t rxFifoXfer;
-flexcan_frame_t txFrame, rxFrame;
+flexcan_frame_t txFrame;
+AT_NONCACHEABLE_SECTION(flexcan_frame_t rxFrame);
 
 /*******************************************************************************
  * Code
@@ -133,10 +136,12 @@ int main(void)
     flexcanConfig.enableLoopBack = true;
     FLEXCAN_Init(EXAMPLE_CAN, &flexcanConfig, EXAMPLE_CAN_CLK_FREQ);
 
+#if defined(FSL_FEATURE_SOC_DMAMUX_COUNT) && FSL_FEATURE_SOC_DMAMUX_COUNT
     /* Configure DMA. */
     DMAMUX_Init(DMAMUX0);
     DMAMUX_SetSource(DMAMUX0, EXAMPLE_CAN_DMA_CHANNEL, EXAMPLE_CAN_DMA_REQUEST);
     DMAMUX_EnableChannel(DMAMUX0, EXAMPLE_CAN_DMA_CHANNEL);
+#endif
 
     /*
      * edmaConfig.enableRoundRobinArbitration = false;
@@ -145,10 +150,10 @@ int main(void)
      * edmaConfig.enableDebugMode = false;
      */
     EDMA_GetDefaultConfig(&edmaConfig);
-    EDMA_Init(DMA0, &edmaConfig);
+    EDMA_Init(EXAMPLE_CAN_DMA, &edmaConfig);
 
     /* Create EDMA handle. */
-    EDMA_CreateHandle(&flexcanRxFifoEdmaHandle, DMA0, EXAMPLE_CAN_DMA_CHANNEL);
+    EDMA_CreateHandle(&flexcanRxFifoEdmaHandle, EXAMPLE_CAN_DMA, EXAMPLE_CAN_DMA_CHANNEL);
 
     /* Setup Tx Message Buffer. */
     FLEXCAN_SetTxMbConfig(EXAMPLE_CAN, TX_MESSAGE_BUFFER_NUM, true);

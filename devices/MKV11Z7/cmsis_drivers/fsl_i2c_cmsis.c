@@ -18,7 +18,14 @@
  * limitations under the License.
  */
 
+
 #include "fsl_i2c_cmsis.h"
+
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.i2c_cmsis"
+#endif
+
 
 #if ((RTE_I2C0 && defined(I2C0)) || (RTE_I2C1 && defined(I2C1)) || (RTE_I2C2 && defined(I2C2)) || \
      (RTE_I2C3 && defined(I2C3)))

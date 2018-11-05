@@ -3,10 +3,10 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
+ *  that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -46,7 +46,7 @@
 
 /*! @name Driver version */
 /*@{*/
-#define FSL_SIM_DRIVER_VERSION (MAKE_VERSION(2, 1, 0)) /*!< Driver version 2.1.0 */
+#define FSL_SIM_DRIVER_VERSION (MAKE_VERSION(2, 1, 0)) /*!< Driver version 2.0.0 */
 /*@}*/
 
 #if (defined(FSL_FEATURE_SIM_OPT_HAS_USB_VOLTAGE_REGULATOR) && FSL_FEATURE_SIM_OPT_HAS_USB_VOLTAGE_REGULATOR)

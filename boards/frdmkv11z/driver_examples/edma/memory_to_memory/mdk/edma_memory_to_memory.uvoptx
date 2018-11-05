@@ -17,7 +17,7 @@
     <dwHighDateTime>0</dwHighDateTime>
   </DaveTm>
   <Target>
-    <TargetName>edma_memory_to_memory Debug</TargetName>
+    <TargetName>edma_memory_to_memory debug</TargetName>
     <ToolsetNumber>0x4</ToolsetNumber>
     <ToolsetName>ARM-ADS</ToolsetName>
     <TargetOption>
@@ -155,7 +155,7 @@
     </TargetOption>
   </Target>
   <Target>
-    <TargetName>edma_memory_to_memory Release</TargetName>
+    <TargetName>edma_memory_to_memory release</TargetName>
     <ToolsetNumber>0x4</ToolsetNumber>
     <ToolsetName>ARM-ADS</ToolsetName>
     <TargetOption>

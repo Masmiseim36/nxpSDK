@@ -50,6 +50,8 @@ SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -mcpu=cortex-m0plus")
 
 SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -mfloat-abi=soft")
 
+SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -DNDEBUG")
+
 SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -D__STARTUP_CLEAR_BSS")
 
 SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -Wall")
@@ -85,6 +87,8 @@ SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DFREEDOM")
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DPRINTF_FLOAT_ENABLE=1")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DPRINTF_ADVANCED_ENABLE=1")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DSDK_I2C_BASED_COMPONENT_USED=1")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -g")
 
@@ -127,6 +131,8 @@ SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DFREEDOM")
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DPRINTF_FLOAT_ENABLE=1")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DPRINTF_ADVANCED_ENABLE=1")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DSDK_I2C_BASED_COMPONENT_USED=1")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Os")
 
@@ -189,6 +195,8 @@ SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -mfloat-abi=soft")
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -MMD")
 
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -MP")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DNDEBUG")
 
 SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Os")
 
@@ -332,7 +340,17 @@ add_executable(ecompass.elf
 "${ProjDirPath}/../clock_config.h"
 "${ProjDirPath}/../../../../../devices/MKV11Z7/drivers/fsl_clock.h"
 "${ProjDirPath}/../../../../../devices/MKV11Z7/drivers/fsl_clock.c"
-"${ProjDirPath}/../../../../../devices/MKV11Z7/drivers/fsl_flash.c"
+"${ProjDirPath}/../../../../../devices/MKV11Z7/drivers/fsl_ftfx_adapter.h"
+"${ProjDirPath}/../../../../../devices/MKV11Z7/drivers/fsl_ftfx_utilities.h"
+"${ProjDirPath}/../../../../../devices/MKV11Z7/drivers/fsl_ftfx_features.h"
+"${ProjDirPath}/../../../../../devices/MKV11Z7/drivers/fsl_ftfx_controller.c"
+"${ProjDirPath}/../../../../../devices/MKV11Z7/drivers/fsl_ftfx_controller.h"
+"${ProjDirPath}/../../../../../devices/MKV11Z7/drivers/fsl_ftfx_flash.c"
+"${ProjDirPath}/../../../../../devices/MKV11Z7/drivers/fsl_ftfx_flash.h"
+"${ProjDirPath}/../../../../../devices/MKV11Z7/drivers/fsl_ftfx_cache.c"
+"${ProjDirPath}/../../../../../devices/MKV11Z7/drivers/fsl_ftfx_cache.h"
+"${ProjDirPath}/../../../../../devices/MKV11Z7/drivers/fsl_ftfx_flexnvm.c"
+"${ProjDirPath}/../../../../../devices/MKV11Z7/drivers/fsl_ftfx_flexnvm.h"
 "${ProjDirPath}/../../../../../devices/MKV11Z7/drivers/fsl_flash.h"
 "${ProjDirPath}/../../../../../devices/MKV11Z7/drivers/fsl_common.h"
 "${ProjDirPath}/../../../../../devices/MKV11Z7/drivers/fsl_common.c"

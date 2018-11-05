@@ -17,7 +17,7 @@
     <dwHighDateTime>0</dwHighDateTime>
   </DaveTm>
   <Target>
-    <TargetName>pdb_dac_trigger Debug</TargetName>
+    <TargetName>pdb_dac_trigger debug</TargetName>
     <ToolsetNumber>0x4</ToolsetNumber>
     <ToolsetName>ARM-ADS</ToolsetName>
     <TargetOption>
@@ -155,7 +155,7 @@
     </TargetOption>
   </Target>
   <Target>
-    <TargetName>pdb_dac_trigger Release</TargetName>
+    <TargetName>pdb_dac_trigger release</TargetName>
     <ToolsetNumber>0x4</ToolsetNumber>
     <ToolsetName>ARM-ADS</ToolsetName>
     <TargetOption>

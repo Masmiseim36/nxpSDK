@@ -3,10 +3,10 @@
  * Copyright (c) 2013 - 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
+ *  that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -59,8 +59,8 @@
 #define DEMO_ADC_IRQ_HANDLER1 ADC1_IRQHandler
 
 #define DEMO_PDB_BASE PDB0
-#define DEMO_PDB_TRIGGER_CHANNEL0 0U
-#define DEMO_PDB_TRIGGER_CHANNEL1 1U
+#define DEMO_PDB_TRIGGER_CHANNEL0 kPDB_ADCTriggerChannel0
+#define DEMO_PDB_TRIGGER_CHANNEL1 kPDB_ADCTriggerChannel1
 #define DEMO_PDB_PRETRIGGER_CHANNEL0_MASK 1U
 #define DEMO_PDB_PRETRIGGER_CHANNEL1_MASK 2U
 
@@ -172,7 +172,7 @@ static void DEMO_Init_PDB(void)
     PDB_SetCounterDelayValue(DEMO_PDB_BASE, PDB_INT_VALUE);
 
     /* Configure the ADC Pre-Trigger. */
-    PDB_SetADCPreTriggerDelayValue(DEMO_PDB_BASE, DEMO_PDB_TRIGGER_CHANNEL0, DEMO_PDB_PRETRIGGER_CHANNEL0_MASK,
+    PDB_SetADCPreTriggerDelayValue(DEMO_PDB_BASE, DEMO_PDB_TRIGGER_CHANNEL0, (pdb_adc_pretrigger_t)DEMO_PDB_PRETRIGGER_CHANNEL0_MASK,
                                    PRETRIGGER_DELAY_VALUE);
 
     pdbAdcPreTriggerConfigStruct.enableBackToBackOperationMask = DEMO_PDB_PRETRIGGER_CHANNEL1_MASK;

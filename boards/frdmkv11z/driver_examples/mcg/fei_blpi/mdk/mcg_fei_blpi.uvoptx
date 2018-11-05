@@ -17,7 +17,7 @@
     <dwHighDateTime>0</dwHighDateTime>
   </DaveTm>
   <Target>
-    <TargetName>mcg_fei_blpi Debug</TargetName>
+    <TargetName>mcg_fei_blpi debug</TargetName>
     <ToolsetNumber>0x4</ToolsetNumber>
     <ToolsetName>ARM-ADS</ToolsetName>
     <TargetOption>
@@ -155,7 +155,7 @@
     </TargetOption>
   </Target>
   <Target>
-    <TargetName>mcg_fei_blpi Release</TargetName>
+    <TargetName>mcg_fei_blpi release</TargetName>
     <ToolsetNumber>0x4</ToolsetNumber>
     <ToolsetName>ARM-ADS</ToolsetName>
     <TargetOption>

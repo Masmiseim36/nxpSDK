@@ -2,7 +2,7 @@
 <project>
   <fileVersion>2</fileVersion>
   <configuration>
-    <name>Debug</name>
+    <name>debug</name>
     <toolchain>
       <name>ARM</name>
     </toolchain>
@@ -1580,7 +1580,7 @@
     </debuggerPlugins>
   </configuration>
   <configuration>
-    <name>Release</name>
+    <name>release</name>
     <toolchain>
       <name>ARM</name>
     </toolchain>
@@ -3158,7 +3158,7 @@
     </debuggerPlugins>
   </configuration>
   <configuration>
-    <name>Int Flash SramData Debug</name>
+    <name>int flash sramdata debug</name>
     <toolchain>
       <name>ARM</name>
     </toolchain>
@@ -4736,7 +4736,7 @@
     </debuggerPlugins>
   </configuration>
   <configuration>
-    <name>Int Flash SramData Release</name>
+    <name>int flash sramdata release</name>
     <toolchain>
       <name>ARM</name>
     </toolchain>
@@ -6314,7 +6314,7 @@
     </debuggerPlugins>
   </configuration>
   <configuration>
-    <name>Int Flash DDRData Debug</name>
+    <name>int flash ddrdata debug</name>
     <toolchain>
       <name>ARM</name>
     </toolchain>
@@ -7892,7 +7892,7 @@
     </debuggerPlugins>
   </configuration>
   <configuration>
-    <name>Int Flash DDRData Release</name>
+    <name>int flash ddrdata release</name>
     <toolchain>
       <name>ARM</name>
     </toolchain>
@@ -9470,7 +9470,7 @@
     </debuggerPlugins>
   </configuration>
   <configuration>
-    <name>Int Ram Debug</name>
+    <name>int ram debug</name>
     <toolchain>
       <name>ARM</name>
     </toolchain>

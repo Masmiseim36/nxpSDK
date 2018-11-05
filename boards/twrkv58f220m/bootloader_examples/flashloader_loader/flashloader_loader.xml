@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
+  <externalDefinitions>
+    <definition extID="com.nxp.mcuxpresso"/>
+    <definition extID="middleware.mcu-boot.MKV58F24_flashloader_loader_linker.MKV58F24"/>
+    <definition extID="middleware.mcu-boot.MKV58F24_startup.MKV58F24"/>
+    <definition extID="middleware.mcu-boot.loadersources.MKV58F24"/>
+    <definition extID="platform.devices.MKV58F24_CMSIS.MKV58F24"/>
+    <definition extID="platform.drivers.clock.MKV58F24"/>
+    <definition extID="platform.drivers.common.MKV58F24"/>
+    <definition extID="platform.drivers.uart.MKV58F24"/>
+    <definition extID="mdk"/>
+    <definition extID="iar"/>
+    <definition extID="mcuxpresso"/>
+  </externalDefinitions>
+  <example id="twrkv58f220m_flashloader_loader" name="flashloader_loader" category="bootloader_examples" dependency="middleware.mcu-boot.MKV58F24_flashloader_loader_linker.MKV58F24 platform.drivers.clock.MKV58F24 platform.devices.MKV58F24_CMSIS.MKV58F24 middleware.mcu-boot.MKV58F24_startup.MKV58F24 middleware.mcu-boot.loadersources.MKV58F24 platform.drivers.uart.MKV58F24 platform.drivers.common.MKV58F24" toolchain="mdk iar mcuxpresso">
+    <projects>
+      <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
+    </projects>
+    <toolchainSettings>
+      <toolchainSetting id_refs="com.nxp.mcuxpresso">
+        <option id="com.crt.advproject.gas.fpu" type="enum">
+          <value>com.crt.advproject.gas.fpu.fpv5sp.hard</value>
+        </option>
+        <option id="com.crt.advproject.gcc.fpu" type="enum">
+          <value>com.crt.advproject.gcc.fpu.fpv5sp.hard</value>
+        </option>
+        <option id="com.crt.advproject.c.misc.dialect" type="enum">
+          <value>com.crt.advproject.misc.dialect.gnu99</value>
+        </option>
+        <option id="com.crt.advproject.gcc.exe.debug.option.debugging.level" type="enum">
+          <value>gnu.c.debugging.level.default</value>
+        </option>
+        <option id="com.crt.advproject.gcc.exe.release.option.debugging.level" type="enum">
+          <value>gnu.c.debugging.level.default</value>
+        </option>
+        <option id="com.crt.advproject.gcc.exe.debug.option.optimization.level" type="enum">
+          <value>gnu.c.optimization.level.size</value>
+        </option>
+        <option id="com.crt.advproject.gcc.exe.release.option.optimization.level" type="enum">
+          <value>gnu.c.optimization.level.size</value>
+        </option>
+        <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
+          <value>__SEMIHOST_HARDFAULT_DISABLE=1</value>
+          <value>CPU_MKV58F1M0VLQ24</value>
+          <value>CPU_IS_ARM_CORTEX_M7=1</value>
+          <value>BL_TARGET_FLASH</value>
+          <value>TWR_KV58F220M</value>
+        </option>
+        <option id="gnu.c.compiler.option.optimization.flags" type="string">
+          <value>-fno-common</value>
+        </option>
+        <option id="gnu.c.compiler.option.misc.other" type="string">
+          <value>-c  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin</value>
+        </option>
+        <option id="gnu.c.compiler.option.warnings.allwarn" type="boolean">
+          <value>false</value>
+          <value>true</value>
+        </option>
+        <option id="com.crt.advproject.link.fpu" type="enum">
+          <value>com.crt.advproject.link.fpu.fpv5sp.hard</value>
+        </option>
+        <option id="gnu.c.link.option.nostdlibs" type="boolean">
+          <value>true</value>
+        </option>
+        <option id="gnu.c.link.option.other" type="stringList">
+          <value>--gc-sections</value>
+          <value>-Map=${BuildArtifactFileBaseName}.map</value>
+        </option>
+        <option id="com.crt.advproject.link.memory.heapAndStack" type="string">
+          <value>&amp;Heap:Default;Default;0x200&amp;Stack:Default;Default;0x200</value>
+        </option>
+        <option id="com.crt.advproject.gas.hdrlib" type="enum">
+          <value>com.crt.advproject.gas.hdrlib.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.gas.specs" type="enum">
+          <value>com.crt.advproject.gas.specs.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.gcc.hdrlib" type="enum">
+          <value>com.crt.advproject.gcc.hdrlib.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.gcc.specs" type="enum">
+          <value>com.crt.advproject.gcc.specs.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.link.gcc.hdrlib" type="enum">
+          <value>com.crt.advproject.gcc.link.hdrlib.newlibnano.none</value>
+        </option>
+      </toolchainSetting>
+    </toolchainSettings>
+    <source path="middleware/mcu-boot/targets/MKV58F24/src" target_path="MKV58F24" type="c_include">
+      <files mask="bootloader_config.h"/>
+      <files mask="target_config.h"/>
+    </source>
+  </example>
+</ksdk:examples>

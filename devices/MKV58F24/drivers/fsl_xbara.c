@@ -3,10 +3,10 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
+ *  that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -37,6 +37,12 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.xbara"
+#endif
+
 
 /*******************************************************************************
  * Prototypes
@@ -146,7 +152,11 @@ void XBARA_SetOutputSignalConfig(XBARA_Type *base,
     /* Set active edge for edge detection, set interrupt or DMA function. */
     switch ((uint16_t)output)
     {
+#if defined(FSL_FEATURE_XBARA_OUTPUT_DMA_CH_MUX_REQ_30) && FSL_FEATURE_XBARA_OUTPUT_DMA_CH_MUX_REQ_30 
+        case kXBARA1_OutputDmaChMuxReq30:
+#else
         case kXBARA_OutputDmamux18:
+#endif
             /* Assign regVal to CTRL0 register's value */
             regVal = (base->CTRL0);
             /* Perform this command to avoid writing 1 into interrupt flag bits and clears bit DEN0, IEN0 */
@@ -158,7 +168,11 @@ void XBARA_SetOutputSignalConfig(XBARA_Type *base,
             /* Write regVal value into CTRL0 register */
             base->CTRL0 = regVal;
             break;
+#if defined(FSL_FEATURE_XBARA_OUTPUT_DMA_CH_MUX_REQ_31) && FSL_FEATURE_XBARA_OUTPUT_DMA_CH_MUX_REQ_31 
+        case kXBARA1_OutputDmaChMuxReq31:
+#else
         case kXBARA_OutputDmamux19:
+#endif
             /* Assign regVal to CTRL0 register's value */
             regVal = (base->CTRL0);
             /* Perform this command to avoid writing 1 into interrupt flag bits and clears bit DEN1, IEN1 */
@@ -170,7 +184,11 @@ void XBARA_SetOutputSignalConfig(XBARA_Type *base,
             /* Write regVal value into CTRL0 register */
             base->CTRL0 = regVal;
             break;
+#if defined(FSL_FEATURE_XBARA_OUTPUT_DMA_CH_MUX_REQ_94) && FSL_FEATURE_XBARA_OUTPUT_DMA_CH_MUX_REQ_94 
+        case kXBARA1_OutputDmaChMuxReq94:
+#else
         case kXBARA_OutputDmamux20:
+#endif
             /* Assign regVal to CTRL1 register's value */
             regVal = (base->CTRL1);
             /* Perform this command to avoid writing 1 into interrupt flag bits and clears bit DEN2, IEN2 */
@@ -182,7 +200,11 @@ void XBARA_SetOutputSignalConfig(XBARA_Type *base,
             /* Write regVal value into CTRL1 register */
             base->CTRL1 = regVal;
             break;
-        case kXBARA_OutputDmamux21:
+#if defined(FSL_FEATURE_XBARA_OUTPUT_DMA_CH_MUX_REQ_95) && FSL_FEATURE_XBARA_OUTPUT_DMA_CH_MUX_REQ_95 
+        case kXBARA1_OutputDmaChMuxReq95:
+#else
+             case kXBARA_OutputDmamux21:
+#endif
             /* Assign regVal to CTRL1 register's value */
             regVal = (base->CTRL1);
             /* Perform this command to avoid writing 1 into interrupt flag bits and clears bit DEN3, IEN3 */

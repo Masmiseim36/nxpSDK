@@ -64,7 +64,6 @@
 !!ClocksProfile
 product: Clocks v1.0
 processor: MKV11Z128xxx7
-package_id: MKV11Z128VLH7
 mcu_data: ksdk2_0
 processor_version: 1.1.0
 board: TWR-KV11Z75M

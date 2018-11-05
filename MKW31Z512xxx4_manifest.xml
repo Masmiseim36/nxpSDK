@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.0.xsd" format_version="3.0" api_version="2.0.0" name="SDK version 2.2.0 package for MKW31Z512xxx4 device" brief="This is SDK version 2.2.0 manifest file. It describes the content of the SDK version 2.2.0 package for MKW31Z512xxx4 device and additional settings for tools that support SDK version 2.2.0" id="SDK_2.x_MKW31Z512xxx4" configuration="49ce621fad8e6552dff3c91433226ccc">
+<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.0.xsd" format_version="3.0" api_version="2.0.0" name="SDK version 2.2.0 package for MKW31Z512xxx4 device" brief="This is SDK version 2.2.0 manifest file. It describes the content of the SDK version 2.2.0 package for MKW31Z512xxx4 device and additional settings for tools that support SDK version 2.2.0" id="SDK_2.x_MKW31Z512xxx4" configuration="281dca580df3b294fb1f3022c73e7393">
   <defines>
-    <define name="CPU_$|package|_$|core|" value=""/>
     <define name="CPU_$|package|" value=""/>
+    <define name="CPU_$|package|_$|core|" value=""/>
   </defines>
   <externalDefinitions>
     <definition extID="frdmk22f"/>
@@ -853,77 +853,6 @@ The USB Dongle used as a wireless packet sniffer can monitor over-the-air commun
         <example id="usbkw41z_kw41z_wireless_examples_thread_router_eligible_device_freertos" name="freertos" category="wireless_examples/thread/router_eligible_device" toolchain="iar mcuxpresso">
           <external path="boards/usbkw41z_kw41z/wireless_examples/thread/router_eligible_device/freertos" type="xml">
             <files mask="router_eligible_device_freertos.xml"/>
-          </external>
-        </example>
-      </examples>
-    </board>
-    <board id="usbkw41z_k22f" name="USB-KW41Z_K22F" package="MK22FN512VMP12" version="1.0.0" href="http://www.nxp.com/usb-kw41z">
-      <description>
-USB-KW41Z: Bluetooth Low Energy/IEEE® 802.15.4 Packet Sniffer/USB Dongle
-        </description>
-      <metadataSet>
-        <metadata key="vendor" value="NXP"/>
-        <metadata key="html">
-          <specific>
-            <content>
-The USB-KW41Z is a development platform enabled by the Kinetis® W series KW41Z/31Z/21Z (KW41Z) family built on the ARM® Cortex®-M0+ processor in a convenient USB dongle form factor.
-
-The USB-KW41Z can be used as a Bluetooth® Smart/Bluetooth® Low Energy and/or IEEE® 802.15.4 packet sniffer or development board.
-
-The USB Dongle used as a wireless packet sniffer can monitor over-the-air communications. Alternatively the USB dongle can be used as a wireless network node with a simple connection to a PC or other USB enabled device.
-        </content>
-          </specific>
-        </metadata>
-      </metadataSet>
-      <examples>
-        <example id="usbkw41z_k22f_demo_apps_hello_world" name="hello_world" category="demo_apps" toolchain="iar mcuxpresso">
-          <external path="boards/usbkw41z_k22f/demo_apps/hello_world" type="xml">
-            <files mask="hello_world.xml"/>
-          </external>
-        </example>
-        <example id="usbkw41z_k22f_usb_examples_usb_device_cdc_vcom_bm" name="bm" category="usb_examples/usb_device_cdc_vcom" toolchain="iar mcuxpresso">
-          <external path="boards/usbkw41z_k22f/usb_examples/usb_device_cdc_vcom/bm" type="xml">
-            <files mask="dev_cdc_vcom_bm.xml"/>
-          </external>
-        </example>
-        <example id="usbkw41z_k22f_usb_examples_usb_device_cdc_vcom_freertos" name="freertos" category="usb_examples/usb_device_cdc_vcom" toolchain="iar mcuxpresso">
-          <external path="boards/usbkw41z_k22f/usb_examples/usb_device_cdc_vcom/freertos" type="xml">
-            <files mask="dev_cdc_vcom_freertos.xml"/>
-          </external>
-        </example>
-        <example id="usbkw41z_k22f_usb_examples_usb_device_cdc_vcom_lite_bm" name="bm" category="usb_examples/usb_device_cdc_vcom_lite" toolchain="iar mcuxpresso">
-          <external path="boards/usbkw41z_k22f/usb_examples/usb_device_cdc_vcom_lite/bm" type="xml">
-            <files mask="dev_cdc_vcom_lite_bm.xml"/>
-          </external>
-        </example>
-        <example id="usbkw41z_k22f_wireless_examples_bluetooth_ble_fsci_host_heart_rate_sensor_bm" name="bm" category="wireless_examples/bluetooth/ble_fsci_host_heart_rate_sensor" toolchain="iar mcuxpresso">
-          <external path="boards/usbkw41z_k22f/wireless_examples/bluetooth/ble_fsci_host_heart_rate_sensor/bm" type="xml">
-            <files mask="ble_fsci_host_heart_rate_sensor_bm.xml"/>
-          </external>
-        </example>
-        <example id="usbkw41z_k22f_wireless_examples_bluetooth_ble_fsci_host_heart_rate_sensor_freertos" name="freertos" category="wireless_examples/bluetooth/ble_fsci_host_heart_rate_sensor" toolchain="iar mcuxpresso">
-          <external path="boards/usbkw41z_k22f/wireless_examples/bluetooth/ble_fsci_host_heart_rate_sensor/freertos" type="xml">
-            <files mask="ble_fsci_host_heart_rate_sensor_freertos.xml"/>
-          </external>
-        </example>
-        <example id="usbkw41z_k22f_wireless_examples_ieee_802_15_4_mwa_coordinator_fsci_host_bm" name="bm" category="wireless_examples/ieee_802_15_4/mwa_coordinator_fsci_host" toolchain="iar mcuxpresso">
-          <external path="boards/usbkw41z_k22f/wireless_examples/ieee_802_15_4/mwa_coordinator_fsci_host/bm" type="xml">
-            <files mask="mwa_coordinator_fsci_host_bm.xml"/>
-          </external>
-        </example>
-        <example id="usbkw41z_k22f_wireless_examples_ieee_802_15_4_mwa_coordinator_fsci_host_freertos" name="freertos" category="wireless_examples/ieee_802_15_4/mwa_coordinator_fsci_host" toolchain="iar mcuxpresso">
-          <external path="boards/usbkw41z_k22f/wireless_examples/ieee_802_15_4/mwa_coordinator_fsci_host/freertos" type="xml">
-            <files mask="mwa_coordinator_fsci_host_freertos.xml"/>
-          </external>
-        </example>
-        <example id="usbkw41z_k22f_wireless_examples_ieee_802_15_4_mwa_end_device_fsci_host_bm" name="bm" category="wireless_examples/ieee_802_15_4/mwa_end_device_fsci_host" toolchain="iar mcuxpresso">
-          <external path="boards/usbkw41z_k22f/wireless_examples/ieee_802_15_4/mwa_end_device_fsci_host/bm" type="xml">
-            <files mask="mwa_end_device_fsci_host_bm.xml"/>
-          </external>
-        </example>
-        <example id="usbkw41z_k22f_wireless_examples_ieee_802_15_4_mwa_end_device_fsci_host_freertos" name="freertos" category="wireless_examples/ieee_802_15_4/mwa_end_device_fsci_host" toolchain="iar mcuxpresso">
-          <external path="boards/usbkw41z_k22f/wireless_examples/ieee_802_15_4/mwa_end_device_fsci_host/freertos" type="xml">
-            <files mask="mwa_end_device_fsci_host_freertos.xml"/>
           </external>
         </example>
       </examples>
@@ -1939,6 +1868,77 @@ The FRDM-KW41Z highly-sensitive, optimized 2.4 GHz radio features a PCB F-antenn
         </example>
       </examples>
     </board>
+    <board id="usbkw41z_k22f" name="USB-KW41Z_K22F" package="MK22FN512VMP12" version="1.0.0" href="http://www.nxp.com/usb-kw41z">
+      <description>
+USB-KW41Z: Bluetooth Low Energy/IEEE® 802.15.4 Packet Sniffer/USB Dongle
+        </description>
+      <metadataSet>
+        <metadata key="vendor" value="NXP"/>
+        <metadata key="html">
+          <specific>
+            <content>
+The USB-KW41Z is a development platform enabled by the Kinetis® W series KW41Z/31Z/21Z (KW41Z) family built on the ARM® Cortex®-M0+ processor in a convenient USB dongle form factor.
+
+The USB-KW41Z can be used as a Bluetooth® Smart/Bluetooth® Low Energy and/or IEEE® 802.15.4 packet sniffer or development board.
+
+The USB Dongle used as a wireless packet sniffer can monitor over-the-air communications. Alternatively the USB dongle can be used as a wireless network node with a simple connection to a PC or other USB enabled device.
+        </content>
+          </specific>
+        </metadata>
+      </metadataSet>
+      <examples>
+        <example id="usbkw41z_k22f_demo_apps_hello_world" name="hello_world" category="demo_apps" toolchain="iar mcuxpresso">
+          <external path="boards/usbkw41z_k22f/demo_apps/hello_world" type="xml">
+            <files mask="hello_world.xml"/>
+          </external>
+        </example>
+        <example id="usbkw41z_k22f_usb_examples_usb_device_cdc_vcom_bm" name="bm" category="usb_examples/usb_device_cdc_vcom" toolchain="iar mcuxpresso">
+          <external path="boards/usbkw41z_k22f/usb_examples/usb_device_cdc_vcom/bm" type="xml">
+            <files mask="dev_cdc_vcom_bm.xml"/>
+          </external>
+        </example>
+        <example id="usbkw41z_k22f_usb_examples_usb_device_cdc_vcom_freertos" name="freertos" category="usb_examples/usb_device_cdc_vcom" toolchain="iar mcuxpresso">
+          <external path="boards/usbkw41z_k22f/usb_examples/usb_device_cdc_vcom/freertos" type="xml">
+            <files mask="dev_cdc_vcom_freertos.xml"/>
+          </external>
+        </example>
+        <example id="usbkw41z_k22f_usb_examples_usb_device_cdc_vcom_lite_bm" name="bm" category="usb_examples/usb_device_cdc_vcom_lite" toolchain="iar mcuxpresso">
+          <external path="boards/usbkw41z_k22f/usb_examples/usb_device_cdc_vcom_lite/bm" type="xml">
+            <files mask="dev_cdc_vcom_lite_bm.xml"/>
+          </external>
+        </example>
+        <example id="usbkw41z_k22f_wireless_examples_bluetooth_ble_fsci_host_heart_rate_sensor_bm" name="bm" category="wireless_examples/bluetooth/ble_fsci_host_heart_rate_sensor" toolchain="iar mcuxpresso">
+          <external path="boards/usbkw41z_k22f/wireless_examples/bluetooth/ble_fsci_host_heart_rate_sensor/bm" type="xml">
+            <files mask="ble_fsci_host_heart_rate_sensor_bm.xml"/>
+          </external>
+        </example>
+        <example id="usbkw41z_k22f_wireless_examples_bluetooth_ble_fsci_host_heart_rate_sensor_freertos" name="freertos" category="wireless_examples/bluetooth/ble_fsci_host_heart_rate_sensor" toolchain="iar mcuxpresso">
+          <external path="boards/usbkw41z_k22f/wireless_examples/bluetooth/ble_fsci_host_heart_rate_sensor/freertos" type="xml">
+            <files mask="ble_fsci_host_heart_rate_sensor_freertos.xml"/>
+          </external>
+        </example>
+        <example id="usbkw41z_k22f_wireless_examples_ieee_802_15_4_mwa_coordinator_fsci_host_bm" name="bm" category="wireless_examples/ieee_802_15_4/mwa_coordinator_fsci_host" toolchain="iar mcuxpresso">
+          <external path="boards/usbkw41z_k22f/wireless_examples/ieee_802_15_4/mwa_coordinator_fsci_host/bm" type="xml">
+            <files mask="mwa_coordinator_fsci_host_bm.xml"/>
+          </external>
+        </example>
+        <example id="usbkw41z_k22f_wireless_examples_ieee_802_15_4_mwa_coordinator_fsci_host_freertos" name="freertos" category="wireless_examples/ieee_802_15_4/mwa_coordinator_fsci_host" toolchain="iar mcuxpresso">
+          <external path="boards/usbkw41z_k22f/wireless_examples/ieee_802_15_4/mwa_coordinator_fsci_host/freertos" type="xml">
+            <files mask="mwa_coordinator_fsci_host_freertos.xml"/>
+          </external>
+        </example>
+        <example id="usbkw41z_k22f_wireless_examples_ieee_802_15_4_mwa_end_device_fsci_host_bm" name="bm" category="wireless_examples/ieee_802_15_4/mwa_end_device_fsci_host" toolchain="iar mcuxpresso">
+          <external path="boards/usbkw41z_k22f/wireless_examples/ieee_802_15_4/mwa_end_device_fsci_host/bm" type="xml">
+            <files mask="mwa_end_device_fsci_host_bm.xml"/>
+          </external>
+        </example>
+        <example id="usbkw41z_k22f_wireless_examples_ieee_802_15_4_mwa_end_device_fsci_host_freertos" name="freertos" category="wireless_examples/ieee_802_15_4/mwa_end_device_fsci_host" toolchain="iar mcuxpresso">
+          <external path="boards/usbkw41z_k22f/wireless_examples/ieee_802_15_4/mwa_end_device_fsci_host/freertos" type="xml">
+            <files mask="mwa_end_device_fsci_host_freertos.xml"/>
+          </external>
+        </example>
+      </examples>
+    </board>
   </boards>
   <devices>
     <device id="MK22FN512xxx12" full_name="MK22FN512xxx12" name="MK22F51212" version="1.0.0" href="http://www.nxp.com/kinetis">
@@ -2153,6 +2153,14 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
     </device>
   </devices>
   <components>
+    <component id="platform.drivers.adc16.MKW41Z4" name="adc16" full_name="ADC16 Driver" type="driver" brief="ADC16 Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MKW41Z4_CMSIS.MKW41Z4 platform.drivers.clock.MKW41Z4 platform.drivers.common.MKW41Z4 platform.drivers.lpuart.MKW41Z4 platform.utilities.debug_console.MKW41Z4" devices="MKW41Z512xxx4" version="2.0.0">
+      <source path="devices/MKW41Z4/drivers" type="src">
+        <files mask="fsl_adc16.c"/>
+      </source>
+      <source path="devices/MKW41Z4/drivers" type="c_include">
+        <files mask="fsl_adc16.h"/>
+      </source>
+    </component>
     <component id="platform.drivers.adc16.MK22F51212" name="adc16" full_name="ADC16 Driver" type="driver" brief="ADC16 Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MK22F51212_CMSIS.MK22F51212 platform.drivers.clock.MK22F51212 platform.drivers.common.MK22F51212 platform.drivers.lpuart.MK22F51212 platform.drivers.uart.MK22F51212 platform.utilities.debug_console.MK22F51212" devices="MK22FN512xxx12" version="2.0.0">
       <source path="devices/MK22F51212/drivers" type="src">
         <files mask="fsl_adc16.c"/>
@@ -2169,19 +2177,11 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="fsl_adc16.h"/>
       </source>
     </component>
-    <component id="platform.drivers.adc16.MKW41Z4" name="adc16" full_name="ADC16 Driver" type="driver" brief="ADC16 Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MKW41Z4_CMSIS.MKW41Z4 platform.drivers.clock.MKW41Z4 platform.drivers.common.MKW41Z4 platform.drivers.lpuart.MKW41Z4 platform.utilities.debug_console.MKW41Z4" devices="MKW41Z512xxx4" version="2.0.0">
+    <component id="platform.drivers.clock.MKW41Z4" name="clock" full_name="Clock Driver" type="driver" brief="Clock Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MKW41Z4_CMSIS.MKW41Z4 platform.drivers.clock.MKW41Z4 platform.drivers.common.MKW41Z4 platform.drivers.lpuart.MKW41Z4 platform.utilities.debug_console.MKW41Z4" devices="MKW41Z512xxx4" version="2.1.0">
       <source path="devices/MKW41Z4/drivers" type="src">
-        <files mask="fsl_adc16.c"/>
-      </source>
-      <source path="devices/MKW41Z4/drivers" type="c_include">
-        <files mask="fsl_adc16.h"/>
-      </source>
-    </component>
-    <component id="platform.drivers.clock.MKW31Z4" name="clock" full_name="Clock Driver" type="driver" brief="Clock Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MKW31Z4_CMSIS.MKW31Z4 platform.drivers.clock.MKW31Z4 platform.drivers.common.MKW31Z4 platform.drivers.lpuart.MKW31Z4 platform.utilities.debug_console.MKW31Z4" devices="MKW31Z512xxx4" version="2.1.0">
-      <source path="devices/MKW31Z4/drivers" type="src">
         <files mask="fsl_clock.c"/>
       </source>
-      <source path="devices/MKW31Z4/drivers" type="c_include">
+      <source path="devices/MKW41Z4/drivers" type="c_include">
         <files mask="fsl_clock.h"/>
       </source>
     </component>
@@ -2193,11 +2193,11 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="fsl_clock.h"/>
       </source>
     </component>
-    <component id="platform.drivers.clock.MKW41Z4" name="clock" full_name="Clock Driver" type="driver" brief="Clock Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MKW41Z4_CMSIS.MKW41Z4 platform.drivers.clock.MKW41Z4 platform.drivers.common.MKW41Z4 platform.drivers.lpuart.MKW41Z4 platform.utilities.debug_console.MKW41Z4" devices="MKW41Z512xxx4" version="2.1.0">
-      <source path="devices/MKW41Z4/drivers" type="src">
+    <component id="platform.drivers.clock.MKW31Z4" name="clock" full_name="Clock Driver" type="driver" brief="Clock Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MKW31Z4_CMSIS.MKW31Z4 platform.drivers.clock.MKW31Z4 platform.drivers.common.MKW31Z4 platform.drivers.lpuart.MKW31Z4 platform.utilities.debug_console.MKW31Z4" devices="MKW31Z512xxx4" version="2.1.0">
+      <source path="devices/MKW31Z4/drivers" type="src">
         <files mask="fsl_clock.c"/>
       </source>
-      <source path="devices/MKW41Z4/drivers" type="c_include">
+      <source path="devices/MKW31Z4/drivers" type="c_include">
         <files mask="fsl_clock.h"/>
       </source>
     </component>
@@ -2209,19 +2209,19 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="fsl_cmp.h"/>
       </source>
     </component>
-    <component id="platform.drivers.cmp.MKW41Z4" name="cmp" full_name="CMP Driver" type="driver" brief="CMP Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MKW41Z4_CMSIS.MKW41Z4 platform.drivers.clock.MKW41Z4 platform.drivers.common.MKW41Z4 platform.drivers.lpuart.MKW41Z4 platform.utilities.debug_console.MKW41Z4" devices="MKW41Z512xxx4" version="2.0.0">
-      <source path="devices/MKW41Z4/drivers" type="src">
-        <files mask="fsl_cmp.c"/>
-      </source>
-      <source path="devices/MKW41Z4/drivers" type="c_include">
-        <files mask="fsl_cmp.h"/>
-      </source>
-    </component>
     <component id="platform.drivers.cmp.MKW31Z4" name="cmp" full_name="CMP Driver" type="driver" brief="CMP Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MKW31Z4_CMSIS.MKW31Z4 platform.drivers.clock.MKW31Z4 platform.drivers.common.MKW31Z4 platform.drivers.lpuart.MKW31Z4 platform.utilities.debug_console.MKW31Z4" devices="MKW31Z512xxx4" version="2.0.0">
       <source path="devices/MKW31Z4/drivers" type="src">
         <files mask="fsl_cmp.c"/>
       </source>
       <source path="devices/MKW31Z4/drivers" type="c_include">
+        <files mask="fsl_cmp.h"/>
+      </source>
+    </component>
+    <component id="platform.drivers.cmp.MKW41Z4" name="cmp" full_name="CMP Driver" type="driver" brief="CMP Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MKW41Z4_CMSIS.MKW41Z4 platform.drivers.clock.MKW41Z4 platform.drivers.common.MKW41Z4 platform.drivers.lpuart.MKW41Z4 platform.utilities.debug_console.MKW41Z4" devices="MKW41Z512xxx4" version="2.0.0">
+      <source path="devices/MKW41Z4/drivers" type="src">
+        <files mask="fsl_cmp.c"/>
+      </source>
+      <source path="devices/MKW41Z4/drivers" type="c_include">
         <files mask="fsl_cmp.h"/>
       </source>
     </component>
@@ -2289,14 +2289,6 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="fsl_crc.h"/>
       </source>
     </component>
-    <component id="platform.drivers.dac.MKW31Z4" name="dac" full_name="DAC Driver" type="driver" brief="DAC Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MKW31Z4_CMSIS.MKW31Z4 platform.drivers.clock.MKW31Z4 platform.drivers.common.MKW31Z4 platform.drivers.lpuart.MKW31Z4 platform.utilities.debug_console.MKW31Z4" devices="MKW31Z512xxx4" version="2.0.1">
-      <source path="devices/MKW31Z4/drivers" type="src">
-        <files mask="fsl_dac.c"/>
-      </source>
-      <source path="devices/MKW31Z4/drivers" type="c_include">
-        <files mask="fsl_dac.h"/>
-      </source>
-    </component>
     <component id="platform.drivers.dac.MKW41Z4" name="dac" full_name="DAC Driver" type="driver" brief="DAC Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MKW41Z4_CMSIS.MKW41Z4 platform.drivers.clock.MKW41Z4 platform.drivers.common.MKW41Z4 platform.drivers.lpuart.MKW41Z4 platform.utilities.debug_console.MKW41Z4" devices="MKW41Z512xxx4" version="2.0.1">
       <source path="devices/MKW41Z4/drivers" type="src">
         <files mask="fsl_dac.c"/>
@@ -2313,12 +2305,12 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="fsl_dac.h"/>
       </source>
     </component>
-    <component id="platform.drivers.dcdc.MKW41Z4" name="dcdc" full_name="DCDC Driver" type="driver" brief="DCDC Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MKW41Z4_CMSIS.MKW41Z4 platform.drivers.clock.MKW41Z4 platform.drivers.common.MKW41Z4 platform.drivers.lpuart.MKW41Z4 platform.utilities.debug_console.MKW41Z4" devices="MKW41Z512xxx4" version="2.0.1">
-      <source path="devices/MKW41Z4/drivers" type="src">
-        <files mask="fsl_dcdc.c"/>
+    <component id="platform.drivers.dac.MKW31Z4" name="dac" full_name="DAC Driver" type="driver" brief="DAC Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MKW31Z4_CMSIS.MKW31Z4 platform.drivers.clock.MKW31Z4 platform.drivers.common.MKW31Z4 platform.drivers.lpuart.MKW31Z4 platform.utilities.debug_console.MKW31Z4" devices="MKW31Z512xxx4" version="2.0.1">
+      <source path="devices/MKW31Z4/drivers" type="src">
+        <files mask="fsl_dac.c"/>
       </source>
-      <source path="devices/MKW41Z4/drivers" type="c_include">
-        <files mask="fsl_dcdc.h"/>
+      <source path="devices/MKW31Z4/drivers" type="c_include">
+        <files mask="fsl_dac.h"/>
       </source>
     </component>
     <component id="platform.drivers.dcdc.MKW31Z4" name="dcdc" full_name="DCDC Driver" type="driver" brief="DCDC Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MKW31Z4_CMSIS.MKW31Z4 platform.drivers.clock.MKW31Z4 platform.drivers.common.MKW31Z4 platform.drivers.lpuart.MKW31Z4 platform.utilities.debug_console.MKW31Z4" devices="MKW31Z512xxx4" version="2.0.1">
@@ -2327,6 +2319,22 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
       </source>
       <source path="devices/MKW31Z4/drivers" type="c_include">
         <files mask="fsl_dcdc.h"/>
+      </source>
+    </component>
+    <component id="platform.drivers.dcdc.MKW41Z4" name="dcdc" full_name="DCDC Driver" type="driver" brief="DCDC Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MKW41Z4_CMSIS.MKW41Z4 platform.drivers.clock.MKW41Z4 platform.drivers.common.MKW41Z4 platform.drivers.lpuart.MKW41Z4 platform.utilities.debug_console.MKW41Z4" devices="MKW41Z512xxx4" version="2.0.1">
+      <source path="devices/MKW41Z4/drivers" type="src">
+        <files mask="fsl_dcdc.c"/>
+      </source>
+      <source path="devices/MKW41Z4/drivers" type="c_include">
+        <files mask="fsl_dcdc.h"/>
+      </source>
+    </component>
+    <component id="platform.drivers.dmamux.MK22F51212" name="dmamux" full_name="DMAMUX Driver" type="driver" brief="DMAMUX Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MK22F51212_CMSIS.MK22F51212 platform.drivers.clock.MK22F51212 platform.drivers.common.MK22F51212 platform.drivers.lpuart.MK22F51212 platform.drivers.uart.MK22F51212 platform.utilities.debug_console.MK22F51212" devices="MK22FN512xxx12" version="2.0.2">
+      <source path="devices/MK22F51212/drivers" type="src">
+        <files mask="fsl_dmamux.c"/>
+      </source>
+      <source path="devices/MK22F51212/drivers" type="c_include">
+        <files mask="fsl_dmamux.h"/>
       </source>
     </component>
     <component id="platform.drivers.dmamux.MKW41Z4" name="dmamux" full_name="DMAMUX Driver" type="driver" brief="DMAMUX Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MKW41Z4_CMSIS.MKW41Z4 platform.drivers.clock.MKW41Z4 platform.drivers.common.MKW41Z4 platform.drivers.lpuart.MKW41Z4 platform.utilities.debug_console.MKW41Z4" devices="MKW41Z512xxx4" version="2.0.2">
@@ -2342,14 +2350,6 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="fsl_dmamux.c"/>
       </source>
       <source path="devices/MKW31Z4/drivers" type="c_include">
-        <files mask="fsl_dmamux.h"/>
-      </source>
-    </component>
-    <component id="platform.drivers.dmamux.MK22F51212" name="dmamux" full_name="DMAMUX Driver" type="driver" brief="DMAMUX Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MK22F51212_CMSIS.MK22F51212 platform.drivers.clock.MK22F51212 platform.drivers.common.MK22F51212 platform.drivers.lpuart.MK22F51212 platform.drivers.uart.MK22F51212 platform.utilities.debug_console.MK22F51212" devices="MK22FN512xxx12" version="2.0.2">
-      <source path="devices/MK22F51212/drivers" type="src">
-        <files mask="fsl_dmamux.c"/>
-      </source>
-      <source path="devices/MK22F51212/drivers" type="c_include">
         <files mask="fsl_dmamux.h"/>
       </source>
     </component>
@@ -2373,26 +2373,6 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="fsl_dspi_freertos.h"/>
       </source>
     </component>
-    <component id="platform.drivers.dspi.MKW41Z4" name="dspi" full_name="DSPI Driver" type="driver" brief="DSPI Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MKW41Z4_CMSIS.MKW41Z4 platform.drivers.clock.MKW41Z4 platform.drivers.common.MKW41Z4 platform.drivers.lpuart.MKW41Z4 platform.utilities.debug_console.MKW41Z4" devices="MKW41Z512xxx4" version="2.1.4">
-      <source path="devices/MKW41Z4/drivers" type="src">
-        <files mask="fsl_dspi.c"/>
-      </source>
-      <source path="devices/MKW41Z4/drivers" condition="platform.drivers.edma.MKW41Z4" type="src">
-        <files mask="fsl_dspi_edma.c"/>
-      </source>
-      <source path="devices/MKW41Z4/drivers" condition="middleware.freertos.MKW41Z4" type="src">
-        <files mask="fsl_dspi_freertos.c"/>
-      </source>
-      <source path="devices/MKW41Z4/drivers" type="c_include">
-        <files mask="fsl_dspi.h"/>
-      </source>
-      <source path="devices/MKW41Z4/drivers" condition="platform.drivers.edma.MKW41Z4" type="c_include">
-        <files mask="fsl_dspi_edma.h"/>
-      </source>
-      <source path="devices/MKW41Z4/drivers" condition="middleware.freertos.MKW41Z4" type="c_include">
-        <files mask="fsl_dspi_freertos.h"/>
-      </source>
-    </component>
     <component id="platform.drivers.dspi.MK22F51212" name="dspi" full_name="DSPI Driver" type="driver" brief="DSPI Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MK22F51212_CMSIS.MK22F51212 platform.drivers.clock.MK22F51212 platform.drivers.common.MK22F51212 platform.drivers.lpuart.MK22F51212 platform.drivers.uart.MK22F51212 platform.utilities.debug_console.MK22F51212" devices="MK22FN512xxx12" version="2.1.4">
       <source path="devices/MK22F51212/drivers" type="src">
         <files mask="fsl_dspi.c"/>
@@ -2413,11 +2393,31 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="fsl_dspi_freertos.h"/>
       </source>
     </component>
-    <component id="platform.drivers.edma.MKW41Z4" name="edma" full_name="EDMA Driver" type="driver" brief="EDMA Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MKW41Z4_CMSIS.MKW41Z4 platform.drivers.clock.MKW41Z4 platform.drivers.common.MKW41Z4 platform.drivers.dmamux.MKW41Z4 platform.drivers.lpuart.MKW41Z4 platform.utilities.debug_console.MKW41Z4" devices="MKW41Z512xxx4" version="2.1.1">
+    <component id="platform.drivers.dspi.MKW41Z4" name="dspi" full_name="DSPI Driver" type="driver" brief="DSPI Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MKW41Z4_CMSIS.MKW41Z4 platform.drivers.clock.MKW41Z4 platform.drivers.common.MKW41Z4 platform.drivers.lpuart.MKW41Z4 platform.utilities.debug_console.MKW41Z4" devices="MKW41Z512xxx4" version="2.1.4">
       <source path="devices/MKW41Z4/drivers" type="src">
-        <files mask="fsl_edma.c"/>
+        <files mask="fsl_dspi.c"/>
+      </source>
+      <source path="devices/MKW41Z4/drivers" condition="platform.drivers.edma.MKW41Z4" type="src">
+        <files mask="fsl_dspi_edma.c"/>
+      </source>
+      <source path="devices/MKW41Z4/drivers" condition="middleware.freertos.MKW41Z4" type="src">
+        <files mask="fsl_dspi_freertos.c"/>
       </source>
       <source path="devices/MKW41Z4/drivers" type="c_include">
+        <files mask="fsl_dspi.h"/>
+      </source>
+      <source path="devices/MKW41Z4/drivers" condition="platform.drivers.edma.MKW41Z4" type="c_include">
+        <files mask="fsl_dspi_edma.h"/>
+      </source>
+      <source path="devices/MKW41Z4/drivers" condition="middleware.freertos.MKW41Z4" type="c_include">
+        <files mask="fsl_dspi_freertos.h"/>
+      </source>
+    </component>
+    <component id="platform.drivers.edma.MKW31Z4" name="edma" full_name="EDMA Driver" type="driver" brief="EDMA Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MKW31Z4_CMSIS.MKW31Z4 platform.drivers.clock.MKW31Z4 platform.drivers.common.MKW31Z4 platform.drivers.dmamux.MKW31Z4 platform.drivers.lpuart.MKW31Z4 platform.utilities.debug_console.MKW31Z4" devices="MKW31Z512xxx4" version="2.1.1">
+      <source path="devices/MKW31Z4/drivers" type="src">
+        <files mask="fsl_edma.c"/>
+      </source>
+      <source path="devices/MKW31Z4/drivers" type="c_include">
         <files mask="fsl_edma.h"/>
       </source>
     </component>
@@ -2429,11 +2429,11 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="fsl_edma.h"/>
       </source>
     </component>
-    <component id="platform.drivers.edma.MKW31Z4" name="edma" full_name="EDMA Driver" type="driver" brief="EDMA Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MKW31Z4_CMSIS.MKW31Z4 platform.drivers.clock.MKW31Z4 platform.drivers.common.MKW31Z4 platform.drivers.dmamux.MKW31Z4 platform.drivers.lpuart.MKW31Z4 platform.utilities.debug_console.MKW31Z4" devices="MKW31Z512xxx4" version="2.1.1">
-      <source path="devices/MKW31Z4/drivers" type="src">
+    <component id="platform.drivers.edma.MKW41Z4" name="edma" full_name="EDMA Driver" type="driver" brief="EDMA Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MKW41Z4_CMSIS.MKW41Z4 platform.drivers.clock.MKW41Z4 platform.drivers.common.MKW41Z4 platform.drivers.dmamux.MKW41Z4 platform.drivers.lpuart.MKW41Z4 platform.utilities.debug_console.MKW41Z4" devices="MKW41Z512xxx4" version="2.1.1">
+      <source path="devices/MKW41Z4/drivers" type="src">
         <files mask="fsl_edma.c"/>
       </source>
-      <source path="devices/MKW31Z4/drivers" type="c_include">
+      <source path="devices/MKW41Z4/drivers" type="c_include">
         <files mask="fsl_edma.h"/>
       </source>
     </component>
@@ -2445,11 +2445,11 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="fsl_ewm.h"/>
       </source>
     </component>
-    <component id="platform.drivers.flash.MKW31Z4" name="flash" full_name="Flash Driver" type="driver" brief="Flash Driver" devices="MKW31Z512xxx4" version="2.2.0">
-      <source path="devices/MKW31Z4/drivers" type="src">
+    <component id="platform.drivers.flash.MKW41Z4" name="flash" full_name="Flash Driver" type="driver" brief="Flash Driver" devices="MKW41Z512xxx4" version="2.2.0">
+      <source path="devices/MKW41Z4/drivers" type="src">
         <files mask="fsl_flash.c"/>
       </source>
-      <source path="devices/MKW31Z4/drivers" type="c_include">
+      <source path="devices/MKW41Z4/drivers" type="c_include">
         <files mask="fsl_flash.h"/>
       </source>
     </component>
@@ -2461,11 +2461,11 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="fsl_flash.h"/>
       </source>
     </component>
-    <component id="platform.drivers.flash.MKW41Z4" name="flash" full_name="Flash Driver" type="driver" brief="Flash Driver" devices="MKW41Z512xxx4" version="2.2.0">
-      <source path="devices/MKW41Z4/drivers" type="src">
+    <component id="platform.drivers.flash.MKW31Z4" name="flash" full_name="Flash Driver" type="driver" brief="Flash Driver" devices="MKW31Z512xxx4" version="2.2.0">
+      <source path="devices/MKW31Z4/drivers" type="src">
         <files mask="fsl_flash.c"/>
       </source>
-      <source path="devices/MKW41Z4/drivers" type="c_include">
+      <source path="devices/MKW31Z4/drivers" type="c_include">
         <files mask="fsl_flash.h"/>
       </source>
     </component>
@@ -2485,19 +2485,19 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="fsl_ftm.h"/>
       </source>
     </component>
-    <component id="platform.drivers.gpio.MKW31Z4" name="gpio" full_name="GPIO Driver" type="driver" brief="GPIO Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MKW31Z4_CMSIS.MKW31Z4 platform.drivers.clock.MKW31Z4 platform.drivers.common.MKW31Z4 platform.drivers.lpuart.MKW31Z4 platform.utilities.debug_console.MKW31Z4" devices="MKW31Z512xxx4" version="2.1.1">
-      <source path="devices/MKW31Z4/drivers" type="src">
-        <files mask="fsl_gpio.c"/>
-      </source>
-      <source path="devices/MKW31Z4/drivers" type="c_include">
-        <files mask="fsl_gpio.h"/>
-      </source>
-    </component>
     <component id="platform.drivers.gpio.MKW41Z4" name="gpio" full_name="GPIO Driver" type="driver" brief="GPIO Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MKW41Z4_CMSIS.MKW41Z4 platform.drivers.clock.MKW41Z4 platform.drivers.common.MKW41Z4 platform.drivers.lpuart.MKW41Z4 platform.utilities.debug_console.MKW41Z4" devices="MKW41Z512xxx4" version="2.1.1">
       <source path="devices/MKW41Z4/drivers" type="src">
         <files mask="fsl_gpio.c"/>
       </source>
       <source path="devices/MKW41Z4/drivers" type="c_include">
+        <files mask="fsl_gpio.h"/>
+      </source>
+    </component>
+    <component id="platform.drivers.gpio.MKW31Z4" name="gpio" full_name="GPIO Driver" type="driver" brief="GPIO Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MKW31Z4_CMSIS.MKW31Z4 platform.drivers.clock.MKW31Z4 platform.drivers.common.MKW31Z4 platform.drivers.lpuart.MKW31Z4 platform.utilities.debug_console.MKW31Z4" devices="MKW31Z512xxx4" version="2.1.1">
+      <source path="devices/MKW31Z4/drivers" type="src">
+        <files mask="fsl_gpio.c"/>
+      </source>
+      <source path="devices/MKW31Z4/drivers" type="c_include">
         <files mask="fsl_gpio.h"/>
       </source>
     </component>
@@ -2529,26 +2529,6 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="fsl_i2c_freertos.h"/>
       </source>
     </component>
-    <component id="platform.drivers.i2c.MK22F51212" name="i2c" full_name="I2C Driver" type="driver" brief="I2C Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MK22F51212_CMSIS.MK22F51212 platform.drivers.clock.MK22F51212 platform.drivers.common.MK22F51212 platform.drivers.lpuart.MK22F51212 platform.drivers.uart.MK22F51212 platform.utilities.debug_console.MK22F51212" devices="MK22FN512xxx12" version="2.0.3">
-      <source path="devices/MK22F51212/drivers" type="src">
-        <files mask="fsl_i2c.c"/>
-      </source>
-      <source path="devices/MK22F51212/drivers" condition="platform.drivers.edma.MK22F51212" type="src">
-        <files mask="fsl_i2c_edma.c"/>
-      </source>
-      <source path="devices/MK22F51212/drivers" condition="middleware.freertos.MK22F51212" type="src">
-        <files mask="fsl_i2c_freertos.c"/>
-      </source>
-      <source path="devices/MK22F51212/drivers" type="c_include">
-        <files mask="fsl_i2c.h"/>
-      </source>
-      <source path="devices/MK22F51212/drivers" condition="platform.drivers.edma.MK22F51212" type="c_include">
-        <files mask="fsl_i2c_edma.h"/>
-      </source>
-      <source path="devices/MK22F51212/drivers" condition="middleware.freertos.MK22F51212" type="c_include">
-        <files mask="fsl_i2c_freertos.h"/>
-      </source>
-    </component>
     <component id="platform.drivers.i2c.MKW41Z4" name="i2c" full_name="I2C Driver" type="driver" brief="I2C Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MKW41Z4_CMSIS.MKW41Z4 platform.drivers.clock.MKW41Z4 platform.drivers.common.MKW41Z4 platform.drivers.lpuart.MKW41Z4 platform.utilities.debug_console.MKW41Z4" devices="MKW41Z512xxx4" version="2.0.3">
       <source path="devices/MKW41Z4/drivers" type="src">
         <files mask="fsl_i2c.c"/>
@@ -2569,6 +2549,26 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="fsl_i2c_freertos.h"/>
       </source>
     </component>
+    <component id="platform.drivers.i2c.MK22F51212" name="i2c" full_name="I2C Driver" type="driver" brief="I2C Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MK22F51212_CMSIS.MK22F51212 platform.drivers.clock.MK22F51212 platform.drivers.common.MK22F51212 platform.drivers.lpuart.MK22F51212 platform.drivers.uart.MK22F51212 platform.utilities.debug_console.MK22F51212" devices="MK22FN512xxx12" version="2.0.3">
+      <source path="devices/MK22F51212/drivers" type="src">
+        <files mask="fsl_i2c.c"/>
+      </source>
+      <source path="devices/MK22F51212/drivers" condition="platform.drivers.edma.MK22F51212" type="src">
+        <files mask="fsl_i2c_edma.c"/>
+      </source>
+      <source path="devices/MK22F51212/drivers" condition="middleware.freertos.MK22F51212" type="src">
+        <files mask="fsl_i2c_freertos.c"/>
+      </source>
+      <source path="devices/MK22F51212/drivers" type="c_include">
+        <files mask="fsl_i2c.h"/>
+      </source>
+      <source path="devices/MK22F51212/drivers" condition="platform.drivers.edma.MK22F51212" type="c_include">
+        <files mask="fsl_i2c_edma.h"/>
+      </source>
+      <source path="devices/MK22F51212/drivers" condition="middleware.freertos.MK22F51212" type="c_include">
+        <files mask="fsl_i2c_freertos.h"/>
+      </source>
+    </component>
     <component id="platform.drivers.llwu.MKW41Z4" name="llwu" full_name="LLWU Driver" type="driver" brief="LLWU Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MKW41Z4_CMSIS.MKW41Z4 platform.drivers.clock.MKW41Z4 platform.drivers.common.MKW41Z4 platform.drivers.lpuart.MKW41Z4 platform.utilities.debug_console.MKW41Z4" devices="MKW41Z512xxx4" version="2.0.1">
       <source path="devices/MKW41Z4/drivers" type="src">
         <files mask="fsl_llwu.c"/>
@@ -2577,19 +2577,19 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="fsl_llwu.h"/>
       </source>
     </component>
-    <component id="platform.drivers.llwu.MK22F51212" name="llwu" full_name="LLWU Driver" type="driver" brief="LLWU Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MK22F51212_CMSIS.MK22F51212 platform.drivers.clock.MK22F51212 platform.drivers.common.MK22F51212 platform.drivers.lpuart.MK22F51212 platform.drivers.uart.MK22F51212 platform.utilities.debug_console.MK22F51212" devices="MK22FN512xxx12" version="2.0.1">
-      <source path="devices/MK22F51212/drivers" type="src">
-        <files mask="fsl_llwu.c"/>
-      </source>
-      <source path="devices/MK22F51212/drivers" type="c_include">
-        <files mask="fsl_llwu.h"/>
-      </source>
-    </component>
     <component id="platform.drivers.llwu.MKW31Z4" name="llwu" full_name="LLWU Driver" type="driver" brief="LLWU Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MKW31Z4_CMSIS.MKW31Z4 platform.drivers.clock.MKW31Z4 platform.drivers.common.MKW31Z4 platform.drivers.lpuart.MKW31Z4 platform.utilities.debug_console.MKW31Z4" devices="MKW31Z512xxx4" version="2.0.1">
       <source path="devices/MKW31Z4/drivers" type="src">
         <files mask="fsl_llwu.c"/>
       </source>
       <source path="devices/MKW31Z4/drivers" type="c_include">
+        <files mask="fsl_llwu.h"/>
+      </source>
+    </component>
+    <component id="platform.drivers.llwu.MK22F51212" name="llwu" full_name="LLWU Driver" type="driver" brief="LLWU Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MK22F51212_CMSIS.MK22F51212 platform.drivers.clock.MK22F51212 platform.drivers.common.MK22F51212 platform.drivers.lpuart.MK22F51212 platform.drivers.uart.MK22F51212 platform.utilities.debug_console.MK22F51212" devices="MK22FN512xxx12" version="2.0.1">
+      <source path="devices/MK22F51212/drivers" type="src">
+        <files mask="fsl_llwu.c"/>
+      </source>
+      <source path="devices/MK22F51212/drivers" type="c_include">
         <files mask="fsl_llwu.h"/>
       </source>
     </component>
@@ -2617,23 +2617,23 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="fsl_lptmr.h"/>
       </source>
     </component>
-    <component id="platform.drivers.lpuart.MKW41Z4" name="lpuart" full_name="LPUART Driver" type="driver" brief="LPUART Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MKW41Z4_CMSIS.MKW41Z4 platform.drivers.clock.MKW41Z4 platform.drivers.common.MKW41Z4 platform.drivers.lpuart.MKW41Z4 platform.utilities.debug_console.MKW41Z4" devices="MKW41Z512xxx4" version="2.2.3">
-      <source path="devices/MKW41Z4/drivers" type="src">
+    <component id="platform.drivers.lpuart.MKW31Z4" name="lpuart" full_name="LPUART Driver" type="driver" brief="LPUART Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MKW31Z4_CMSIS.MKW31Z4 platform.drivers.clock.MKW31Z4 platform.drivers.common.MKW31Z4 platform.drivers.lpuart.MKW31Z4 platform.utilities.debug_console.MKW31Z4" devices="MKW31Z512xxx4" version="2.2.3">
+      <source path="devices/MKW31Z4/drivers" type="src">
         <files mask="fsl_lpuart.c"/>
       </source>
-      <source path="devices/MKW41Z4/drivers" condition="platform.drivers.edma.MKW41Z4" type="src">
+      <source path="devices/MKW31Z4/drivers" condition="platform.drivers.edma.MKW31Z4" type="src">
         <files mask="fsl_lpuart_edma.c"/>
       </source>
-      <source path="devices/MKW41Z4/drivers" condition="middleware.freertos.MKW41Z4" type="src">
+      <source path="devices/MKW31Z4/drivers" condition="middleware.freertos.MKW31Z4" type="src">
         <files mask="fsl_lpuart_freertos.c"/>
       </source>
-      <source path="devices/MKW41Z4/drivers" type="c_include">
+      <source path="devices/MKW31Z4/drivers" type="c_include">
         <files mask="fsl_lpuart.h"/>
       </source>
-      <source path="devices/MKW41Z4/drivers" condition="platform.drivers.edma.MKW41Z4" type="c_include">
+      <source path="devices/MKW31Z4/drivers" condition="platform.drivers.edma.MKW31Z4" type="c_include">
         <files mask="fsl_lpuart_edma.h"/>
       </source>
-      <source path="devices/MKW41Z4/drivers" condition="middleware.freertos.MKW41Z4" type="c_include">
+      <source path="devices/MKW31Z4/drivers" condition="middleware.freertos.MKW31Z4" type="c_include">
         <files mask="fsl_lpuart_freertos.h"/>
       </source>
     </component>
@@ -2657,38 +2657,24 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="fsl_lpuart_freertos.h"/>
       </source>
     </component>
-    <component id="platform.drivers.lpuart.MKW31Z4" name="lpuart" full_name="LPUART Driver" type="driver" brief="LPUART Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MKW31Z4_CMSIS.MKW31Z4 platform.drivers.clock.MKW31Z4 platform.drivers.common.MKW31Z4 platform.drivers.lpuart.MKW31Z4 platform.utilities.debug_console.MKW31Z4" devices="MKW31Z512xxx4" version="2.2.3">
-      <source path="devices/MKW31Z4/drivers" type="src">
+    <component id="platform.drivers.lpuart.MKW41Z4" name="lpuart" full_name="LPUART Driver" type="driver" brief="LPUART Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MKW41Z4_CMSIS.MKW41Z4 platform.drivers.clock.MKW41Z4 platform.drivers.common.MKW41Z4 platform.drivers.lpuart.MKW41Z4 platform.utilities.debug_console.MKW41Z4" devices="MKW41Z512xxx4" version="2.2.3">
+      <source path="devices/MKW41Z4/drivers" type="src">
         <files mask="fsl_lpuart.c"/>
       </source>
-      <source path="devices/MKW31Z4/drivers" condition="platform.drivers.edma.MKW31Z4" type="src">
+      <source path="devices/MKW41Z4/drivers" condition="platform.drivers.edma.MKW41Z4" type="src">
         <files mask="fsl_lpuart_edma.c"/>
       </source>
-      <source path="devices/MKW31Z4/drivers" condition="middleware.freertos.MKW31Z4" type="src">
+      <source path="devices/MKW41Z4/drivers" condition="middleware.freertos.MKW41Z4" type="src">
         <files mask="fsl_lpuart_freertos.c"/>
       </source>
-      <source path="devices/MKW31Z4/drivers" type="c_include">
+      <source path="devices/MKW41Z4/drivers" type="c_include">
         <files mask="fsl_lpuart.h"/>
       </source>
-      <source path="devices/MKW31Z4/drivers" condition="platform.drivers.edma.MKW31Z4" type="c_include">
+      <source path="devices/MKW41Z4/drivers" condition="platform.drivers.edma.MKW41Z4" type="c_include">
         <files mask="fsl_lpuart_edma.h"/>
       </source>
-      <source path="devices/MKW31Z4/drivers" condition="middleware.freertos.MKW31Z4" type="c_include">
+      <source path="devices/MKW41Z4/drivers" condition="middleware.freertos.MKW41Z4" type="c_include">
         <files mask="fsl_lpuart_freertos.h"/>
-      </source>
-    </component>
-    <component id="platform.drivers.ltc.MKW31Z4" name="ltc" full_name="LTC Driver" type="driver" brief="LTC Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MKW31Z4_CMSIS.MKW31Z4 platform.drivers.clock.MKW31Z4 platform.drivers.common.MKW31Z4 platform.drivers.lpuart.MKW31Z4 platform.utilities.debug_console.MKW31Z4" devices="MKW31Z512xxx4" version="2.0.4">
-      <source path="devices/MKW31Z4/drivers" type="src">
-        <files mask="fsl_ltc.c"/>
-      </source>
-      <source path="devices/MKW31Z4/drivers" condition="platform.drivers.edma.MKW31Z4" type="src">
-        <files mask="fsl_ltc_edma.c"/>
-      </source>
-      <source path="devices/MKW31Z4/drivers" type="c_include">
-        <files mask="fsl_ltc.h"/>
-      </source>
-      <source path="devices/MKW31Z4/drivers" condition="platform.drivers.edma.MKW31Z4" type="c_include">
-        <files mask="fsl_ltc_edma.h"/>
       </source>
     </component>
     <component id="platform.drivers.ltc.MKW41Z4" name="ltc" full_name="LTC Driver" type="driver" brief="LTC Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MKW41Z4_CMSIS.MKW41Z4 platform.drivers.clock.MKW41Z4 platform.drivers.common.MKW41Z4 platform.drivers.lpuart.MKW41Z4 platform.utilities.debug_console.MKW41Z4" devices="MKW41Z512xxx4" version="2.0.4">
@@ -2705,20 +2691,26 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="fsl_ltc_edma.h"/>
       </source>
     </component>
+    <component id="platform.drivers.ltc.MKW31Z4" name="ltc" full_name="LTC Driver" type="driver" brief="LTC Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MKW31Z4_CMSIS.MKW31Z4 platform.drivers.clock.MKW31Z4 platform.drivers.common.MKW31Z4 platform.drivers.lpuart.MKW31Z4 platform.utilities.debug_console.MKW31Z4" devices="MKW31Z512xxx4" version="2.0.4">
+      <source path="devices/MKW31Z4/drivers" type="src">
+        <files mask="fsl_ltc.c"/>
+      </source>
+      <source path="devices/MKW31Z4/drivers" condition="platform.drivers.edma.MKW31Z4" type="src">
+        <files mask="fsl_ltc_edma.c"/>
+      </source>
+      <source path="devices/MKW31Z4/drivers" type="c_include">
+        <files mask="fsl_ltc.h"/>
+      </source>
+      <source path="devices/MKW31Z4/drivers" condition="platform.drivers.edma.MKW31Z4" type="c_include">
+        <files mask="fsl_ltc_edma.h"/>
+      </source>
+    </component>
     <component id="platform.drivers.pdb.MK22F51212" name="pdb" full_name="PDB Driver" type="driver" brief="PDB Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MK22F51212_CMSIS.MK22F51212 platform.drivers.clock.MK22F51212 platform.drivers.common.MK22F51212 platform.drivers.lpuart.MK22F51212 platform.drivers.uart.MK22F51212 platform.utilities.debug_console.MK22F51212" devices="MK22FN512xxx12" version="2.0.1">
       <source path="devices/MK22F51212/drivers" type="src">
         <files mask="fsl_pdb.c"/>
       </source>
       <source path="devices/MK22F51212/drivers" type="c_include">
         <files mask="fsl_pdb.h"/>
-      </source>
-    </component>
-    <component id="platform.drivers.pit.MKW31Z4" name="pit" full_name="PIT Driver" type="driver" brief="PIT Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MKW31Z4_CMSIS.MKW31Z4 platform.drivers.clock.MKW31Z4 platform.drivers.common.MKW31Z4 platform.drivers.lpuart.MKW31Z4 platform.utilities.debug_console.MKW31Z4" devices="MKW31Z512xxx4" version="2.0.0">
-      <source path="devices/MKW31Z4/drivers" type="src">
-        <files mask="fsl_pit.c"/>
-      </source>
-      <source path="devices/MKW31Z4/drivers" type="c_include">
-        <files mask="fsl_pit.h"/>
       </source>
     </component>
     <component id="platform.drivers.pit.MK22F51212" name="pit" full_name="PIT Driver" type="driver" brief="PIT Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MK22F51212_CMSIS.MK22F51212 platform.drivers.clock.MK22F51212 platform.drivers.common.MK22F51212 platform.drivers.lpuart.MK22F51212 platform.drivers.uart.MK22F51212 platform.utilities.debug_console.MK22F51212" devices="MK22FN512xxx12" version="2.0.0">
@@ -2734,6 +2726,14 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="fsl_pit.c"/>
       </source>
       <source path="devices/MKW41Z4/drivers" type="c_include">
+        <files mask="fsl_pit.h"/>
+      </source>
+    </component>
+    <component id="platform.drivers.pit.MKW31Z4" name="pit" full_name="PIT Driver" type="driver" brief="PIT Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MKW31Z4_CMSIS.MKW31Z4 platform.drivers.clock.MKW31Z4 platform.drivers.common.MKW31Z4 platform.drivers.lpuart.MKW31Z4 platform.utilities.debug_console.MKW31Z4" devices="MKW31Z512xxx4" version="2.0.0">
+      <source path="devices/MKW31Z4/drivers" type="src">
+        <files mask="fsl_pit.c"/>
+      </source>
+      <source path="devices/MKW31Z4/drivers" type="c_include">
         <files mask="fsl_pit.h"/>
       </source>
     </component>
@@ -2766,14 +2766,22 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="fsl_port.h"/>
       </source>
     </component>
+    <component id="platform.drivers.port.MKW31Z4" name="port" full_name="PORT Driver" type="driver" brief="PORT Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MKW31Z4_CMSIS.MKW31Z4 platform.drivers.clock.MKW31Z4 platform.drivers.common.MKW31Z4 platform.drivers.lpuart.MKW31Z4 platform.utilities.debug_console.MKW31Z4" devices="MKW31Z512xxx4" version="2.0.2">
+      <source path="devices/MKW31Z4/drivers" type="c_include">
+        <files mask="fsl_port.h"/>
+      </source>
+    </component>
     <component id="platform.drivers.port.MK22F51212" name="port" full_name="PORT Driver" type="driver" brief="PORT Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MK22F51212_CMSIS.MK22F51212 platform.drivers.clock.MK22F51212 platform.drivers.common.MK22F51212 platform.drivers.lpuart.MK22F51212 platform.drivers.uart.MK22F51212 platform.utilities.debug_console.MK22F51212" devices="MK22FN512xxx12" version="2.0.2">
       <source path="devices/MK22F51212/drivers" type="c_include">
         <files mask="fsl_port.h"/>
       </source>
     </component>
-    <component id="platform.drivers.port.MKW31Z4" name="port" full_name="PORT Driver" type="driver" brief="PORT Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MKW31Z4_CMSIS.MKW31Z4 platform.drivers.clock.MKW31Z4 platform.drivers.common.MKW31Z4 platform.drivers.lpuart.MKW31Z4 platform.utilities.debug_console.MKW31Z4" devices="MKW31Z512xxx4" version="2.0.2">
-      <source path="devices/MKW31Z4/drivers" type="c_include">
-        <files mask="fsl_port.h"/>
+    <component id="platform.drivers.rcm.MK22F51212" name="rcm" full_name="RCM Driver" type="driver" brief="RCM Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MK22F51212_CMSIS.MK22F51212 platform.drivers.clock.MK22F51212 platform.drivers.common.MK22F51212 platform.drivers.lpuart.MK22F51212 platform.drivers.uart.MK22F51212 platform.utilities.debug_console.MK22F51212" devices="MK22FN512xxx12" version="2.0.1">
+      <source path="devices/MK22F51212/drivers" type="src">
+        <files mask="fsl_rcm.c"/>
+      </source>
+      <source path="devices/MK22F51212/drivers" type="c_include">
+        <files mask="fsl_rcm.h"/>
       </source>
     </component>
     <component id="platform.drivers.rcm.MKW41Z4" name="rcm" full_name="RCM Driver" type="driver" brief="RCM Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MKW41Z4_CMSIS.MKW41Z4 platform.drivers.clock.MKW41Z4 platform.drivers.common.MKW41Z4 platform.drivers.lpuart.MKW41Z4 platform.utilities.debug_console.MKW41Z4" devices="MKW41Z512xxx4" version="2.0.1">
@@ -2792,14 +2800,6 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="fsl_rcm.h"/>
       </source>
     </component>
-    <component id="platform.drivers.rcm.MK22F51212" name="rcm" full_name="RCM Driver" type="driver" brief="RCM Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MK22F51212_CMSIS.MK22F51212 platform.drivers.clock.MK22F51212 platform.drivers.common.MK22F51212 platform.drivers.lpuart.MK22F51212 platform.drivers.uart.MK22F51212 platform.utilities.debug_console.MK22F51212" devices="MK22FN512xxx12" version="2.0.1">
-      <source path="devices/MK22F51212/drivers" type="src">
-        <files mask="fsl_rcm.c"/>
-      </source>
-      <source path="devices/MK22F51212/drivers" type="c_include">
-        <files mask="fsl_rcm.h"/>
-      </source>
-    </component>
     <component id="platform.drivers.rnga.MK22F51212" name="rnga" full_name="RNGA Driver" type="driver" brief="RNGA Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MK22F51212_CMSIS.MK22F51212 platform.drivers.clock.MK22F51212 platform.drivers.common.MK22F51212 platform.drivers.lpuart.MK22F51212 platform.drivers.uart.MK22F51212 platform.utilities.debug_console.MK22F51212" devices="MK22FN512xxx12" version="2.0.1">
       <source path="devices/MK22F51212/drivers" type="src">
         <files mask="fsl_rnga.c"/>
@@ -2808,19 +2808,19 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="fsl_rnga.h"/>
       </source>
     </component>
-    <component id="platform.drivers.rtc.MKW31Z4" name="rtc" full_name="RTC Driver" type="driver" brief="RTC Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MKW31Z4_CMSIS.MKW31Z4 platform.drivers.clock.MKW31Z4 platform.drivers.common.MKW31Z4 platform.drivers.lpuart.MKW31Z4 platform.utilities.debug_console.MKW31Z4" devices="MKW31Z512xxx4" version="2.0.0">
-      <source path="devices/MKW31Z4/drivers" type="src">
-        <files mask="fsl_rtc.c"/>
-      </source>
-      <source path="devices/MKW31Z4/drivers" type="c_include">
-        <files mask="fsl_rtc.h"/>
-      </source>
-    </component>
     <component id="platform.drivers.rtc.MKW41Z4" name="rtc" full_name="RTC Driver" type="driver" brief="RTC Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MKW41Z4_CMSIS.MKW41Z4 platform.drivers.clock.MKW41Z4 platform.drivers.common.MKW41Z4 platform.drivers.lpuart.MKW41Z4 platform.utilities.debug_console.MKW41Z4" devices="MKW41Z512xxx4" version="2.0.0">
       <source path="devices/MKW41Z4/drivers" type="src">
         <files mask="fsl_rtc.c"/>
       </source>
       <source path="devices/MKW41Z4/drivers" type="c_include">
+        <files mask="fsl_rtc.h"/>
+      </source>
+    </component>
+    <component id="platform.drivers.rtc.MKW31Z4" name="rtc" full_name="RTC Driver" type="driver" brief="RTC Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MKW31Z4_CMSIS.MKW31Z4 platform.drivers.clock.MKW31Z4 platform.drivers.common.MKW31Z4 platform.drivers.lpuart.MKW31Z4 platform.utilities.debug_console.MKW31Z4" devices="MKW31Z512xxx4" version="2.0.0">
+      <source path="devices/MKW31Z4/drivers" type="src">
+        <files mask="fsl_rtc.c"/>
+      </source>
+      <source path="devices/MKW31Z4/drivers" type="c_include">
         <files mask="fsl_rtc.h"/>
       </source>
     </component>
@@ -2846,14 +2846,6 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="fsl_sai_edma.h"/>
       </source>
     </component>
-    <component id="platform.drivers.sim.MK22F51212" name="sim" full_name="SIM Driver" type="driver" brief="SIM Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MK22F51212_CMSIS.MK22F51212 platform.drivers.clock.MK22F51212 platform.drivers.common.MK22F51212 platform.drivers.lpuart.MK22F51212 platform.drivers.uart.MK22F51212 platform.utilities.debug_console.MK22F51212" devices="MK22FN512xxx12" version="2.0.0">
-      <source path="devices/MK22F51212/drivers" type="src">
-        <files mask="fsl_sim.c"/>
-      </source>
-      <source path="devices/MK22F51212/drivers" type="c_include">
-        <files mask="fsl_sim.h"/>
-      </source>
-    </component>
     <component id="platform.drivers.sim.MKW31Z4" name="sim" full_name="SIM Driver" type="driver" brief="SIM Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MKW31Z4_CMSIS.MKW31Z4 platform.drivers.clock.MKW31Z4 platform.drivers.common.MKW31Z4 platform.drivers.lpuart.MKW31Z4 platform.utilities.debug_console.MKW31Z4" devices="MKW31Z512xxx4" version="2.0.0">
       <source path="devices/MKW31Z4/drivers" type="src">
         <files mask="fsl_sim.c"/>
@@ -2870,11 +2862,19 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="fsl_sim.h"/>
       </source>
     </component>
-    <component id="platform.drivers.smc.MK22F51212" name="smc" full_name="SMC Driver" type="driver" brief="SMC Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MK22F51212_CMSIS.MK22F51212 platform.drivers.clock.MK22F51212 platform.drivers.common.MK22F51212 platform.drivers.flash.MK22F51212 platform.drivers.lpuart.MK22F51212 platform.drivers.uart.MK22F51212 platform.utilities.debug_console.MK22F51212" devices="MK22FN512xxx12" version="2.0.3">
+    <component id="platform.drivers.sim.MK22F51212" name="sim" full_name="SIM Driver" type="driver" brief="SIM Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MK22F51212_CMSIS.MK22F51212 platform.drivers.clock.MK22F51212 platform.drivers.common.MK22F51212 platform.drivers.lpuart.MK22F51212 platform.drivers.uart.MK22F51212 platform.utilities.debug_console.MK22F51212" devices="MK22FN512xxx12" version="2.0.0">
       <source path="devices/MK22F51212/drivers" type="src">
-        <files mask="fsl_smc.c"/>
+        <files mask="fsl_sim.c"/>
       </source>
       <source path="devices/MK22F51212/drivers" type="c_include">
+        <files mask="fsl_sim.h"/>
+      </source>
+    </component>
+    <component id="platform.drivers.smc.MKW41Z4" name="smc" full_name="SMC Driver" type="driver" brief="SMC Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MKW41Z4_CMSIS.MKW41Z4 platform.drivers.clock.MKW41Z4 platform.drivers.common.MKW41Z4 platform.drivers.flash.MKW41Z4 platform.drivers.lpuart.MKW41Z4 platform.utilities.debug_console.MKW41Z4" devices="MKW41Z512xxx4" version="2.0.3">
+      <source path="devices/MKW41Z4/drivers" type="src">
+        <files mask="fsl_smc.c"/>
+      </source>
+      <source path="devices/MKW41Z4/drivers" type="c_include">
         <files mask="fsl_smc.h"/>
       </source>
     </component>
@@ -2886,20 +2886,12 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="fsl_smc.h"/>
       </source>
     </component>
-    <component id="platform.drivers.smc.MKW41Z4" name="smc" full_name="SMC Driver" type="driver" brief="SMC Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MKW41Z4_CMSIS.MKW41Z4 platform.drivers.clock.MKW41Z4 platform.drivers.common.MKW41Z4 platform.drivers.flash.MKW41Z4 platform.drivers.lpuart.MKW41Z4 platform.utilities.debug_console.MKW41Z4" devices="MKW41Z512xxx4" version="2.0.3">
-      <source path="devices/MKW41Z4/drivers" type="src">
+    <component id="platform.drivers.smc.MK22F51212" name="smc" full_name="SMC Driver" type="driver" brief="SMC Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MK22F51212_CMSIS.MK22F51212 platform.drivers.clock.MK22F51212 platform.drivers.common.MK22F51212 platform.drivers.flash.MK22F51212 platform.drivers.lpuart.MK22F51212 platform.drivers.uart.MK22F51212 platform.utilities.debug_console.MK22F51212" devices="MK22FN512xxx12" version="2.0.3">
+      <source path="devices/MK22F51212/drivers" type="src">
         <files mask="fsl_smc.c"/>
       </source>
-      <source path="devices/MKW41Z4/drivers" type="c_include">
+      <source path="devices/MK22F51212/drivers" type="c_include">
         <files mask="fsl_smc.h"/>
-      </source>
-    </component>
-    <component id="platform.drivers.tpm.MKW41Z4" name="tpm" full_name="TPM Driver" type="driver" brief="TPM Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MKW41Z4_CMSIS.MKW41Z4 platform.drivers.clock.MKW41Z4 platform.drivers.common.MKW41Z4 platform.drivers.lpuart.MKW41Z4 platform.utilities.debug_console.MKW41Z4" devices="MKW41Z512xxx4" version="2.0.2">
-      <source path="devices/MKW41Z4/drivers" type="src">
-        <files mask="fsl_tpm.c"/>
-      </source>
-      <source path="devices/MKW41Z4/drivers" type="c_include">
-        <files mask="fsl_tpm.h"/>
       </source>
     </component>
     <component id="platform.drivers.tpm.MKW31Z4" name="tpm" full_name="TPM Driver" type="driver" brief="TPM Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MKW31Z4_CMSIS.MKW31Z4 platform.drivers.clock.MKW31Z4 platform.drivers.common.MKW31Z4 platform.drivers.lpuart.MKW31Z4 platform.utilities.debug_console.MKW31Z4" devices="MKW31Z512xxx4" version="2.0.2">
@@ -2910,12 +2902,12 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="fsl_tpm.h"/>
       </source>
     </component>
-    <component id="platform.drivers.trng.MKW31Z4" name="trng" full_name="TRNG Driver" type="driver" brief="TRNG Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MKW31Z4_CMSIS.MKW31Z4 platform.drivers.clock.MKW31Z4 platform.drivers.common.MKW31Z4 platform.drivers.lpuart.MKW31Z4 platform.utilities.debug_console.MKW31Z4" devices="MKW31Z512xxx4" version="2.0.1">
-      <source path="devices/MKW31Z4/drivers" type="src">
-        <files mask="fsl_trng.c"/>
+    <component id="platform.drivers.tpm.MKW41Z4" name="tpm" full_name="TPM Driver" type="driver" brief="TPM Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MKW41Z4_CMSIS.MKW41Z4 platform.drivers.clock.MKW41Z4 platform.drivers.common.MKW41Z4 platform.drivers.lpuart.MKW41Z4 platform.utilities.debug_console.MKW41Z4" devices="MKW41Z512xxx4" version="2.0.2">
+      <source path="devices/MKW41Z4/drivers" type="src">
+        <files mask="fsl_tpm.c"/>
       </source>
-      <source path="devices/MKW31Z4/drivers" type="c_include">
-        <files mask="fsl_trng.h"/>
+      <source path="devices/MKW41Z4/drivers" type="c_include">
+        <files mask="fsl_tpm.h"/>
       </source>
     </component>
     <component id="platform.drivers.trng.MKW41Z4" name="trng" full_name="TRNG Driver" type="driver" brief="TRNG Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MKW41Z4_CMSIS.MKW41Z4 platform.drivers.clock.MKW41Z4 platform.drivers.common.MKW41Z4 platform.drivers.lpuart.MKW41Z4 platform.utilities.debug_console.MKW41Z4" devices="MKW41Z512xxx4" version="2.0.1">
@@ -2923,6 +2915,14 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="fsl_trng.c"/>
       </source>
       <source path="devices/MKW41Z4/drivers" type="c_include">
+        <files mask="fsl_trng.h"/>
+      </source>
+    </component>
+    <component id="platform.drivers.trng.MKW31Z4" name="trng" full_name="TRNG Driver" type="driver" brief="TRNG Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MKW31Z4_CMSIS.MKW31Z4 platform.drivers.clock.MKW31Z4 platform.drivers.common.MKW31Z4 platform.drivers.lpuart.MKW31Z4 platform.utilities.debug_console.MKW31Z4" devices="MKW31Z512xxx4" version="2.0.1">
+      <source path="devices/MKW31Z4/drivers" type="src">
+        <files mask="fsl_trng.c"/>
+      </source>
+      <source path="devices/MKW31Z4/drivers" type="c_include">
         <files mask="fsl_trng.h"/>
       </source>
     </component>
@@ -2970,19 +2970,19 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="fsl_vref.h"/>
       </source>
     </component>
-    <component id="platform.drivers.vref.MKW31Z4" name="vref" full_name="VREF Driver" type="driver" brief="VREF Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MKW31Z4_CMSIS.MKW31Z4 platform.drivers.clock.MKW31Z4 platform.drivers.common.MKW31Z4 platform.drivers.lpuart.MKW31Z4 platform.utilities.debug_console.MKW31Z4" devices="MKW31Z512xxx4" version="2.1.0">
-      <source path="devices/MKW31Z4/drivers" type="src">
-        <files mask="fsl_vref.c"/>
-      </source>
-      <source path="devices/MKW31Z4/drivers" type="c_include">
-        <files mask="fsl_vref.h"/>
-      </source>
-    </component>
     <component id="platform.drivers.vref.MKW41Z4" name="vref" full_name="VREF Driver" type="driver" brief="VREF Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MKW41Z4_CMSIS.MKW41Z4 platform.drivers.clock.MKW41Z4 platform.drivers.common.MKW41Z4 platform.drivers.lpuart.MKW41Z4 platform.utilities.debug_console.MKW41Z4" devices="MKW41Z512xxx4" version="2.1.0">
       <source path="devices/MKW41Z4/drivers" type="src">
         <files mask="fsl_vref.c"/>
       </source>
       <source path="devices/MKW41Z4/drivers" type="c_include">
+        <files mask="fsl_vref.h"/>
+      </source>
+    </component>
+    <component id="platform.drivers.vref.MKW31Z4" name="vref" full_name="VREF Driver" type="driver" brief="VREF Driver" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MKW31Z4_CMSIS.MKW31Z4 platform.drivers.clock.MKW31Z4 platform.drivers.common.MKW31Z4 platform.drivers.lpuart.MKW31Z4 platform.utilities.debug_console.MKW31Z4" devices="MKW31Z512xxx4" version="2.1.0">
+      <source path="devices/MKW31Z4/drivers" type="src">
+        <files mask="fsl_vref.c"/>
+      </source>
+      <source path="devices/MKW31Z4/drivers" type="c_include">
         <files mask="fsl_vref.h"/>
       </source>
     </component>
@@ -2992,14 +2992,6 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
       </source>
       <source path="devices/MK22F51212/drivers" type="c_include">
         <files mask="fsl_wdog.h"/>
-      </source>
-    </component>
-    <component id="platform.utilities.debug_console.MKW31Z4" name="debug_console" type="utilities" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MKW31Z4_CMSIS.MKW31Z4 platform.drivers.clock.MKW31Z4 platform.drivers.common.MKW31Z4 platform.drivers.lpuart.MKW31Z4 platform.utilities.debug_console.MKW31Z4" devices="MKW31Z512xxx4" version="1.0.0">
-      <source path="devices/MKW31Z4/utilities" type="src">
-        <files mask="fsl_debug_console.c"/>
-      </source>
-      <source path="devices/MKW31Z4/utilities" type="c_include">
-        <files mask="fsl_debug_console.h"/>
       </source>
     </component>
     <component id="platform.utilities.debug_console.MK22F51212" name="debug_console" type="utilities" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MK22F51212_CMSIS.MK22F51212 platform.drivers.clock.MK22F51212 platform.drivers.common.MK22F51212 platform.drivers.lpuart.MK22F51212 platform.drivers.uart.MK22F51212 platform.utilities.debug_console.MK22F51212" devices="MK22FN512xxx12" version="1.0.0">
@@ -3018,12 +3010,12 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="fsl_debug_console.h"/>
       </source>
     </component>
-    <component id="platform.utilities.notifier.MK22F51212" name="notifier" type="utilities" devices="MK22FN512xxx12" version="1.0.0">
-      <source path="devices/MK22F51212/utilities" type="src">
-        <files mask="fsl_notifier.c"/>
+    <component id="platform.utilities.debug_console.MKW31Z4" name="debug_console" type="utilities" dependency="platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MKW31Z4_CMSIS.MKW31Z4 platform.drivers.clock.MKW31Z4 platform.drivers.common.MKW31Z4 platform.drivers.lpuart.MKW31Z4 platform.utilities.debug_console.MKW31Z4" devices="MKW31Z512xxx4" version="1.0.0">
+      <source path="devices/MKW31Z4/utilities" type="src">
+        <files mask="fsl_debug_console.c"/>
       </source>
-      <source path="devices/MK22F51212/utilities" type="c_include">
-        <files mask="fsl_notifier.h"/>
+      <source path="devices/MKW31Z4/utilities" type="c_include">
+        <files mask="fsl_debug_console.h"/>
       </source>
     </component>
     <component id="platform.utilities.notifier.MKW41Z4" name="notifier" type="utilities" devices="MKW41Z512xxx4" version="1.0.0">
@@ -3031,6 +3023,14 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="fsl_notifier.c"/>
       </source>
       <source path="devices/MKW41Z4/utilities" type="c_include">
+        <files mask="fsl_notifier.h"/>
+      </source>
+    </component>
+    <component id="platform.utilities.notifier.MK22F51212" name="notifier" type="utilities" devices="MK22FN512xxx12" version="1.0.0">
+      <source path="devices/MK22F51212/utilities" type="src">
+        <files mask="fsl_notifier.c"/>
+      </source>
+      <source path="devices/MK22F51212/utilities" type="c_include">
         <files mask="fsl_notifier.h"/>
       </source>
     </component>
@@ -12009,8 +12009,8 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
     </component>
     <component id="middleware.baremetal.MKW31Z4" name="baremetal" full_name="Baremetal" type="OS" devices="MKW31Z512xxx4" version="1.0.0">
       <defines>
-        <define name="FSL_RTOS_BM" value=""/>
         <define name="SDK_OS_BAREMETAL" value=""/>
+        <define name="FSL_RTOS_BM" value=""/>
       </defines>
     </component>
     <component id="middleware.baremetal.MKW41Z4" name="baremetal" full_name="Baremetal" type="OS" devices="MKW41Z512xxx4" version="1.0.0">
@@ -12021,8 +12021,8 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
     </component>
     <component id="middleware.freertos.MK22F51212" name="freertos" full_name="FreeRTOS" type="OS" brief="FreeRTOS, Real Time Operating System" dependency="middleware.freertos.MK22F51212 middleware.template_application.freertos.MK22F51212" devices="MK22FN512xxx12" version="9.0.0" revision="2">
       <defines>
-        <define name="FSL_RTOS_FREE_RTOS" value=""/>
         <define name="SDK_OS_FREE_RTOS" value=""/>
+        <define name="FSL_RTOS_FREE_RTOS" value=""/>
       </defines>
       <source path="rtos/freertos_9.0.0/License" type="doc">
         <files mask="license.txt"/>
@@ -16312,14 +16312,6 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="system_MKW41Z4.h"/>
       </source>
     </component>
-    <component id="platform.drivers.dspi_cmsis.MK22F51212" name="dspi_cmsis" type="CMSIS_driver" brief="DSPI CMSIS Driver" dependency="RTE_Device_usbkw41z_k22f.MK22F51212 platform.CMSIS_Driver_Include.MK22F51212 platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MK22F51212_CMSIS.MK22F51212 platform.drivers.clock.MK22F51212 platform.drivers.common.MK22F51212 platform.drivers.dmamux.MK22F51212 platform.drivers.dspi.MK22F51212 platform.drivers.edma.MK22F51212 platform.drivers.lpuart.MK22F51212 platform.drivers.uart.MK22F51212 platform.utilities.debug_console.MK22F51212" devices="MK22FN512xxx12" version="2.0.0">
-      <source path="devices/MK22F51212/cmsis_drivers" type="src">
-        <files mask="fsl_dspi_cmsis.c"/>
-      </source>
-      <source path="devices/MK22F51212/cmsis_drivers" type="c_include">
-        <files mask="fsl_dspi_cmsis.h"/>
-      </source>
-    </component>
     <component id="platform.drivers.dspi_cmsis.MKW41Z4" name="dspi_cmsis" type="CMSIS_driver" brief="DSPI CMSIS Driver" dependency="RTE_Device_frdmkw41z.MKW41Z4 platform.CMSIS_Driver_Include.MKW41Z4 platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MKW41Z4_CMSIS.MKW41Z4 platform.drivers.clock.MKW41Z4 platform.drivers.common.MKW41Z4 platform.drivers.dmamux.MKW41Z4 platform.drivers.dspi.MKW41Z4 platform.drivers.edma.MKW41Z4 platform.drivers.lpuart.MKW41Z4 platform.utilities.debug_console.MKW41Z4" devices="MKW41Z512xxx4" version="2.0.0">
       <source path="devices/MKW41Z4/cmsis_drivers" type="src">
         <files mask="fsl_dspi_cmsis.c"/>
@@ -16328,12 +16320,12 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="fsl_dspi_cmsis.h"/>
       </source>
     </component>
-    <component id="platform.drivers.i2c_cmsis.MK22F51212" name="i2c_cmsis" type="CMSIS_driver" brief="I2C CMSIS Driver" dependency="RTE_Device_usbkw41z_k22f.MK22F51212 platform.CMSIS_Driver_Include.MK22F51212 platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MK22F51212_CMSIS.MK22F51212 platform.drivers.clock.MK22F51212 platform.drivers.common.MK22F51212 platform.drivers.dmamux.MK22F51212 platform.drivers.edma.MK22F51212 platform.drivers.i2c.MK22F51212 platform.drivers.lpuart.MK22F51212 platform.drivers.uart.MK22F51212 platform.utilities.debug_console.MK22F51212" devices="MK22FN512xxx12" version="2.0.1">
+    <component id="platform.drivers.dspi_cmsis.MK22F51212" name="dspi_cmsis" type="CMSIS_driver" brief="DSPI CMSIS Driver" dependency="RTE_Device_usbkw41z_k22f.MK22F51212 platform.CMSIS_Driver_Include.MK22F51212 platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MK22F51212_CMSIS.MK22F51212 platform.drivers.clock.MK22F51212 platform.drivers.common.MK22F51212 platform.drivers.dmamux.MK22F51212 platform.drivers.dspi.MK22F51212 platform.drivers.edma.MK22F51212 platform.drivers.lpuart.MK22F51212 platform.drivers.uart.MK22F51212 platform.utilities.debug_console.MK22F51212" devices="MK22FN512xxx12" version="2.0.0">
       <source path="devices/MK22F51212/cmsis_drivers" type="src">
-        <files mask="fsl_i2c_cmsis.c"/>
+        <files mask="fsl_dspi_cmsis.c"/>
       </source>
       <source path="devices/MK22F51212/cmsis_drivers" type="c_include">
-        <files mask="fsl_i2c_cmsis.h"/>
+        <files mask="fsl_dspi_cmsis.h"/>
       </source>
     </component>
     <component id="platform.drivers.i2c_cmsis.MKW41Z4" name="i2c_cmsis" type="CMSIS_driver" brief="I2C CMSIS Driver" dependency="RTE_Device_frdmkw41z.MKW41Z4 platform.CMSIS_Driver_Include.MKW41Z4 platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MKW41Z4_CMSIS.MKW41Z4 platform.drivers.clock.MKW41Z4 platform.drivers.common.MKW41Z4 platform.drivers.dmamux.MKW41Z4 platform.drivers.edma.MKW41Z4 platform.drivers.i2c.MKW41Z4 platform.drivers.lpuart.MKW41Z4 platform.utilities.debug_console.MKW41Z4" devices="MKW41Z512xxx4" version="2.0.1">
@@ -16344,12 +16336,12 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="fsl_i2c_cmsis.h"/>
       </source>
     </component>
-    <component id="platform.drivers.lpuart_cmsis.MKW41Z4" name="lpuart_cmsis" type="CMSIS_driver" brief="LPUART CMSIS Driver" dependency="RTE_Device_frdmkw41z.MKW41Z4 platform.CMSIS_Driver_Include.MKW41Z4 platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MKW41Z4_CMSIS.MKW41Z4 platform.drivers.clock.MKW41Z4 platform.drivers.common.MKW41Z4 platform.drivers.dmamux.MKW41Z4 platform.drivers.edma.MKW41Z4 platform.drivers.lpuart.MKW41Z4 platform.utilities.debug_console.MKW41Z4" devices="MKW41Z512xxx4" version="2.0.0">
-      <source path="devices/MKW41Z4/cmsis_drivers" type="src">
-        <files mask="fsl_lpuart_cmsis.c"/>
+    <component id="platform.drivers.i2c_cmsis.MK22F51212" name="i2c_cmsis" type="CMSIS_driver" brief="I2C CMSIS Driver" dependency="RTE_Device_usbkw41z_k22f.MK22F51212 platform.CMSIS_Driver_Include.MK22F51212 platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MK22F51212_CMSIS.MK22F51212 platform.drivers.clock.MK22F51212 platform.drivers.common.MK22F51212 platform.drivers.dmamux.MK22F51212 platform.drivers.edma.MK22F51212 platform.drivers.i2c.MK22F51212 platform.drivers.lpuart.MK22F51212 platform.drivers.uart.MK22F51212 platform.utilities.debug_console.MK22F51212" devices="MK22FN512xxx12" version="2.0.1">
+      <source path="devices/MK22F51212/cmsis_drivers" type="src">
+        <files mask="fsl_i2c_cmsis.c"/>
       </source>
-      <source path="devices/MKW41Z4/cmsis_drivers" type="c_include">
-        <files mask="fsl_lpuart_cmsis.h"/>
+      <source path="devices/MK22F51212/cmsis_drivers" type="c_include">
+        <files mask="fsl_i2c_cmsis.h"/>
       </source>
     </component>
     <component id="platform.drivers.lpuart_cmsis.MK22F51212" name="lpuart_cmsis" type="CMSIS_driver" brief="LPUART CMSIS Driver" dependency="RTE_Device_usbkw41z_k22f.MK22F51212 platform.CMSIS_Driver_Include.MK22F51212 platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MK22F51212_CMSIS.MK22F51212 platform.drivers.clock.MK22F51212 platform.drivers.common.MK22F51212 platform.drivers.dmamux.MK22F51212 platform.drivers.edma.MK22F51212 platform.drivers.lpuart.MK22F51212 platform.drivers.uart.MK22F51212 platform.utilities.debug_console.MK22F51212" devices="MK22FN512xxx12" version="2.0.0">
@@ -16357,6 +16349,14 @@ The KW41Z is an ideal solution for true single chip designs that require concurr
         <files mask="fsl_lpuart_cmsis.c"/>
       </source>
       <source path="devices/MK22F51212/cmsis_drivers" type="c_include">
+        <files mask="fsl_lpuart_cmsis.h"/>
+      </source>
+    </component>
+    <component id="platform.drivers.lpuart_cmsis.MKW41Z4" name="lpuart_cmsis" type="CMSIS_driver" brief="LPUART CMSIS Driver" dependency="RTE_Device_frdmkw41z.MKW41Z4 platform.CMSIS_Driver_Include.MKW41Z4 platform.Include_common platform.Include_core_cm0plus platform.Include_core_cm4 platform.devices.MKW41Z4_CMSIS.MKW41Z4 platform.drivers.clock.MKW41Z4 platform.drivers.common.MKW41Z4 platform.drivers.dmamux.MKW41Z4 platform.drivers.edma.MKW41Z4 platform.drivers.lpuart.MKW41Z4 platform.utilities.debug_console.MKW41Z4" devices="MKW41Z512xxx4" version="2.0.0">
+      <source path="devices/MKW41Z4/cmsis_drivers" type="src">
+        <files mask="fsl_lpuart_cmsis.c"/>
+      </source>
+      <source path="devices/MKW41Z4/cmsis_drivers" type="c_include">
         <files mask="fsl_lpuart_cmsis.h"/>
       </source>
     </component>

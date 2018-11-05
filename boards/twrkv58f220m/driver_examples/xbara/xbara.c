@@ -3,10 +3,10 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
+ *  that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -42,7 +42,8 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
+#define DEMO_XBARA_USER_CHANNEL_INPUT kXBARA_InputPitTrigger0
+#define DEMO_XBARA_USER_CHANNEL_OUTPUT kXBARA_OutputDmamux18
 #define BUS_CLK_FREQ CLOCK_GetFreq(kCLOCK_BusClk)
 /* Channel of PIT module. */
 #define PIT_CHANNEL kPIT_Chnl_0
@@ -108,12 +109,12 @@ int main(void)
     XBARA_Init(XBARA);
 
     /* Configure the XBARA signal connections. */
-    XBARA_SetSignalsConnection(XBARA, kXBARA_InputPitTrigger0, kXBARA_OutputDmamux18);
+    XBARA_SetSignalsConnection(XBARA, DEMO_XBARA_USER_CHANNEL_INPUT, DEMO_XBARA_USER_CHANNEL_OUTPUT);
 
     /* Configure the XBARA interrupt. */
     xbaraConfig.activeEdge = kXBARA_EdgeRising;
     xbaraConfig.requestType = kXBARA_RequestInterruptEnalbe;
-    XBARA_SetOutputSignalConfig(XBARA, kXBARA_OutputDmamux18, &xbaraConfig);
+    XBARA_SetOutputSignalConfig(XBARA, DEMO_XBARA_USER_CHANNEL_OUTPUT, &xbaraConfig);
 
     /* Enable at the NVIC. */
     EnableIRQ(XBARA_IRQn);

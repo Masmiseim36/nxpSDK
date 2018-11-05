@@ -38,7 +38,6 @@
 !!GlobalInfo
 product: Pins v3.0
 processor: MKV58F1M0xxx24
-package_id: MKV58F1M0VLQ24
 mcu_data: ksdk2_0
 processor_version: 0.0.8
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********

@@ -6,11 +6,10 @@ show how to use the UART, and to provide a simple project for debugging and furt
 
 Toolchain supported
 ===================
-- IAR embedded Workbench 8.11.3
-- Keil MDK 5.23
-- GCC ARM Embedded 6-2017-q2
-- Kinetis Development Studio IDE 3.2.0
-- MCUXpresso10.1.0
+- Keil MDK 5.24a
+- IAR embedded Workbench 8.22.2
+- GCC ARM Embedded 7-2017-q4-major
+- MCUXpresso10.2.0
 
 Hardware requirements
 =====================

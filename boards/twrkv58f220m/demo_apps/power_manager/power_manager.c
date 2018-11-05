@@ -751,6 +751,9 @@ int main(void)
     NOTIFIER_CreateHandle(&powerModeHandle, powerConfigs, ARRAY_SIZE(powerConfigs), callbacks, 1U, APP_PowerModeSwitch,
                           NULL);
 
+    /* Must configure pins before PMC_ClearPeriphIOIsolationFlag */
+    BOARD_InitPins();
+
     /* Power related. */
     SMC_SetPowerModeProtection(SMC, kSMC_AllowPowerModeAll);
     if (kRCM_SourceWakeup & RCM_GetPreviousResetSources(RCM)) /* Wakeup from VLLS. */
@@ -759,7 +762,6 @@ int main(void)
         NVIC_ClearPendingIRQ(LLWU_IRQn);
     }
 
-    BOARD_InitPins();
     BOARD_BootClockRUN();
     APP_InitDebugConsole();
 

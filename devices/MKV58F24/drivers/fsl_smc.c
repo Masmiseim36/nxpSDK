@@ -3,10 +3,10 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
+ *  that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -36,6 +36,12 @@
 #include "fsl_flash.h"
 #include "fsl_common.h"
 
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.smc"
+#endif
+
+
 static uint32_t g_savedPrimask;
 
 #if (defined(FSL_FEATURE_SMC_HAS_PARAM) && FSL_FEATURE_SMC_HAS_PARAM)
@@ -51,30 +57,44 @@ void SMC_GetParam(SMC_Type *base, smc_param_t *param)
 
 void SMC_PreEnterStopModes(void)
 {
-    flash_prefetch_speculation_status_t speculationStatus = {
-        kFLASH_prefetchSpeculationOptionDisable, /* Disable instruction speculation.*/
-        kFLASH_prefetchSpeculationOptionDisable, /* Disable data speculation.*/
+    ftfx_prefetch_speculation_status_t speculationStatus = {
+        true, /* Disable instruction speculation.*/
+        true, /* Disable data speculation.*/
     };
 
     g_savedPrimask = DisableGlobalIRQ();
     __ISB();
+
+#if defined(__ICACHE_PRESENT) && __ICACHE_PRESENT
+    SCB_DisableICache();
+#endif
+#if defined(__DCACHE_PRESENT) && __DCACHE_PRESENT
+    SCB_DisableDCache();
+#endif
 
     /*
      * Before enter stop modes, the flash cache prefetch should be disabled.
      * Otherwise the prefetch might be interrupted by stop, then the data and
      * and instruction from flash are wrong.
      */
-    FLASH_PflashSetPrefetchSpeculation(&speculationStatus);
+    FTFx_CACHE_PflashSetPrefetchSpeculation(&speculationStatus);
 }
 
 void SMC_PostExitStopModes(void)
 {
-    flash_prefetch_speculation_status_t speculationStatus = {
-        kFLASH_prefetchSpeculationOptionEnable, /* Enable instruction speculation.*/
-        kFLASH_prefetchSpeculationOptionEnable, /* Enable data speculation.*/
+    ftfx_prefetch_speculation_status_t speculationStatus = {
+        false, /* Enable instruction speculation.*/
+        false, /* Enable data speculation.*/
     };
 
-    FLASH_PflashSetPrefetchSpeculation(&speculationStatus);
+    FTFx_CACHE_PflashSetPrefetchSpeculation(&speculationStatus);
+
+#if defined(__ICACHE_PRESENT) && __ICACHE_PRESENT
+    SCB_EnableICache();
+#endif
+#if defined(__DCACHE_PRESENT) && __DCACHE_PRESENT
+    SCB_EnableDCache();
+#endif
 
     EnableGlobalIRQ(g_savedPrimask);
     __ISB();

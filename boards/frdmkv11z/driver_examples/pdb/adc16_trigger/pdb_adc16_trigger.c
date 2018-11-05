@@ -3,10 +3,10 @@
  * Copyright (c) 2013 - 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
+ *  that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -46,8 +46,8 @@
 #define DEMO_PDB_IRQ_ID PDB0_PDB1_IRQn
 #define DEMO_PDB_IRQ_HANDLER PDB0_PDB1_IRQHandler
 
-#define DEMO_PDB_ADC_TRIGGER_CHANNEL 0U    /* For ADC0. */
-#define DEMO_PDB_ADC_PRETRIGGER_CHANNEL 0U /* For ADC0_SC1[0]. */
+#define DEMO_PDB_ADC_TRIGGER_CHANNEL kPDB_ADCTriggerChannel0 /* For ADC0. */
+#define DEMO_PDB_ADC_PRETRIGGER_CHANNEL kPDB_ADCPreTrigger0  /* For ADC0_SC1[0]. */
 
 #define DEMO_ADC_BASE ADC0
 #define DEMO_ADC_CHANNEL_GROUP 0U

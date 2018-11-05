@@ -64,7 +64,6 @@
 !!ClocksProfile
 product: Clocks v1.0
 processor: MKV58F1M0xxx24
-package_id: MKV58F1M0VLQ24
 mcu_data: ksdk2_0
 processor_version: 1.1.0
 board: TWR-KV58F220M

@@ -4,7 +4,7 @@
   <Header>### uVision Project, (C) Keil Software</Header>
   <Targets>
     <Target>
-      <TargetName>enet_txrx_ptp1588_transfer Debug</TargetName>
+      <TargetName>enet_txrx_ptp1588_transfer debug</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <TargetOption>
@@ -433,6 +433,21 @@
               <FilePath>../pin_mux.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_phy.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../fsl_phy.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_phy.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../fsl_phy.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>board-src</GroupName>
+          <Files>
+            <File>
               <FileName>board.c</FileName>
               <FileType>1</FileType>
               <FilePath>../board.c</FilePath>
@@ -451,16 +466,6 @@
               <FileName>clock_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../clock_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_phy.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../fsl_phy.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_phy.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../fsl_phy.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -488,9 +493,59 @@
               <FilePath>../../../../../../devices/MKV58F24/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_flash.c</FileName>
+              <FileName>fsl_ftfx_adapter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MKV58F24/drivers/fsl_ftfx_adapter.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_utilities.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MKV58F24/drivers/fsl_ftfx_utilities.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_features.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MKV58F24/drivers/fsl_ftfx_features.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_controller.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MKV58F24/drivers/fsl_flash.c</FilePath>
+              <FilePath>../../../../../../devices/MKV58F24/drivers/fsl_ftfx_controller.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_controller.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MKV58F24/drivers/fsl_ftfx_controller.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MKV58F24/drivers/fsl_ftfx_flash.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flash.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MKV58F24/drivers/fsl_ftfx_flash.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_cache.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MKV58F24/drivers/fsl_ftfx_cache.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_cache.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MKV58F24/drivers/fsl_ftfx_cache.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flexnvm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MKV58F24/drivers/fsl_ftfx_flexnvm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flexnvm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MKV58F24/drivers/fsl_ftfx_flexnvm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_flash.h</FileName>
@@ -652,7 +707,7 @@
       </Groups>
     </Target>
     <Target>
-      <TargetName>enet_txrx_ptp1588_transfer Release</TargetName>
+      <TargetName>enet_txrx_ptp1588_transfer release</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <TargetOption>
@@ -1030,7 +1085,7 @@
             <useXO>0</useXO>
             <VariousControls>
               <MiscControls/>
-              <Define>__STARTUP_INITIALIZE_NONCACHEDATA</Define>
+              <Define>NDEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
               <Undefine/>
               <IncludePath/>
             </VariousControls>
@@ -1081,6 +1136,21 @@
               <FilePath>../pin_mux.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_phy.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../fsl_phy.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_phy.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../fsl_phy.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>board-src</GroupName>
+          <Files>
+            <File>
               <FileName>board.c</FileName>
               <FileType>1</FileType>
               <FilePath>../board.c</FilePath>
@@ -1099,16 +1169,6 @@
               <FileName>clock_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../clock_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_phy.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../fsl_phy.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_phy.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../fsl_phy.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1136,9 +1196,59 @@
               <FilePath>../../../../../../devices/MKV58F24/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_flash.c</FileName>
+              <FileName>fsl_ftfx_adapter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MKV58F24/drivers/fsl_ftfx_adapter.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_utilities.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MKV58F24/drivers/fsl_ftfx_utilities.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_features.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MKV58F24/drivers/fsl_ftfx_features.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_controller.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MKV58F24/drivers/fsl_flash.c</FilePath>
+              <FilePath>../../../../../../devices/MKV58F24/drivers/fsl_ftfx_controller.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_controller.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MKV58F24/drivers/fsl_ftfx_controller.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MKV58F24/drivers/fsl_ftfx_flash.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flash.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MKV58F24/drivers/fsl_ftfx_flash.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_cache.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MKV58F24/drivers/fsl_ftfx_cache.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_cache.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MKV58F24/drivers/fsl_ftfx_cache.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flexnvm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MKV58F24/drivers/fsl_ftfx_flexnvm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_flexnvm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MKV58F24/drivers/fsl_ftfx_flexnvm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_flash.h</FileName>

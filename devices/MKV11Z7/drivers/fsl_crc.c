@@ -3,10 +3,10 @@
  * Copyright (c) 2015-2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
+ *  that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -36,6 +36,12 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.crc"
+#endif
+
 /*! @internal @brief Has data register with name CRC. */
 #if defined(FSL_FEATURE_CRC_HAS_CRC_REG) && FSL_FEATURE_CRC_HAS_CRC_REG
 #define DATA CRC

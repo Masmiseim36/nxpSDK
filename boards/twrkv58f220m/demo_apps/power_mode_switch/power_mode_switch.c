@@ -650,6 +650,9 @@ int main(void)
     bool needSetWakeup; /* Need to set wakeup. */
     lptmr_config_t lptmrConfig;
 
+    /* Must configure pins before PMC_ClearPeriphIOIsolationFlag */
+    BOARD_InitPins();
+
     /* Power related. */
     SMC_SetPowerModeProtection(SMC, kSMC_AllowPowerModeAll);
     if (kRCM_SourceWakeup & RCM_GetPreviousResetSources(RCM)) /* Wakeup from VLLS. */
@@ -658,7 +661,6 @@ int main(void)
         NVIC_ClearPendingIRQ(LLWU_IRQn);
     }
 
-    BOARD_InitPins();
     BOARD_BootClockRUN();
     APP_InitDebugConsole();
 

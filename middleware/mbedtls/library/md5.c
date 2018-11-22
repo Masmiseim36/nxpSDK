@@ -465,17 +465,17 @@ int mbedtls_md5_self_test( int verbose )
         }
 
         if( verbose != 0 )
-            mbedtls_printf( "passed\r\n" );
+            mbedtls_printf( "passed\n\r" );
     }
 
     if( verbose != 0 )
-        mbedtls_printf( "\r\n" );
+        mbedtls_printf( "\n\r" );
 
     return( 0 );
 
 fail:
     if( verbose != 0 )
-        mbedtls_printf( "failed\r\n" );
+        mbedtls_printf( "failed\n\r" );
 
     return( ret );
 }

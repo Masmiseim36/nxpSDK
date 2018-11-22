@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2018 NXP
  * All rights reserved.
- * 
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- *  that the following conditions are met:
  *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #ifndef _FSL_SDMMC_SPEC_H_
@@ -891,6 +865,28 @@ typedef struct _sdio_func_cis
     uint16_t ioLowCurrentMaxCurrent;  /*!< the max peak current (mA)
                                       when IO operating in lower current mode */
 } sdio_func_cis_t;
+
+/*! @brief SD AU start value */
+#define SD_AU_START_VALUE (1U)
+/*! @brief SD UHS AU start value */
+#define SD_UHS_AU_START_VALUE (7U)
+
+/*! @brief SD card status */
+typedef struct _sd_status
+{
+    uint8_t busWidth;        /*!< current buswidth */
+    uint8_t secureMode;      /*!< secured mode */
+    uint16_t cardType;       /*!< sdcard type */
+    uint32_t protectedSize;  /*!< size of protected area */
+    uint8_t speedClass;      /*!< speed class of card */
+    uint8_t performanceMove; /*!< Performance of move indicated by 1[MB/S]step */
+    uint8_t auSize;          /*!< size of AU */
+    uint16_t eraseSize;      /*!< number of AUs to be erased at a time */
+    uint8_t eraseTimeout;    /*!< timeout value for erasing areas specified by UNIT OF ERASE AU */
+    uint8_t eraseOffset;     /*!< fixed offset value added to erase time */
+    uint8_t uhsSpeedGrade;   /*!< speed grade for UHS mode */
+    uint8_t uhsAuSize;       /*!< size of AU for UHS mode */
+} sd_status_t;
 
 /*! @brief SD card CID register */
 typedef struct _sd_cid

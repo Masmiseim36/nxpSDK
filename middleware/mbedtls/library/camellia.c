@@ -937,18 +937,18 @@ int mbedtls_camellia_self_test( int verbose )
         if( memcmp( buf, dst, 16 ) != 0 )
         {
             if( verbose != 0 )
-                mbedtls_printf( "failed\r\n" );
+                mbedtls_printf( "failed\n\r" );
 
             return( 1 );
         }
     }
 
     if( verbose != 0 )
-        mbedtls_printf( "passed\r\n" );
+        mbedtls_printf( "passed\n\r" );
     }
 
     if( verbose != 0 )
-        mbedtls_printf( "\r\n" );
+        mbedtls_printf( "\n\r" );
 
 #if defined(MBEDTLS_CIPHER_MODE_CBC)
     /*
@@ -990,19 +990,19 @@ int mbedtls_camellia_self_test( int verbose )
             if( memcmp( buf, dst, 16 ) != 0 )
             {
                 if( verbose != 0 )
-                    mbedtls_printf( "failed\r\n" );
+                    mbedtls_printf( "failed\n\r" );
 
                 return( 1 );
             }
         }
 
         if( verbose != 0 )
-            mbedtls_printf( "passed\r\n" );
+            mbedtls_printf( "passed\n\r" );
     }
 #endif /* MBEDTLS_CIPHER_MODE_CBC */
 
     if( verbose != 0 )
-        mbedtls_printf( "\r\n" );
+        mbedtls_printf( "\n\r" );
 
 #if defined(MBEDTLS_CIPHER_MODE_CTR)
     /*
@@ -1034,7 +1034,7 @@ int mbedtls_camellia_self_test( int verbose )
             if( memcmp( buf, camellia_test_ctr_pt[u], len ) != 0 )
             {
                 if( verbose != 0 )
-                    mbedtls_printf( "failed\r\n" );
+                    mbedtls_printf( "failed\n\r" );
 
                 return( 1 );
             }
@@ -1050,18 +1050,18 @@ int mbedtls_camellia_self_test( int verbose )
             if( memcmp( buf, camellia_test_ctr_ct[u], len ) != 0 )
             {
                 if( verbose != 0 )
-                    mbedtls_printf( "failed\r\n" );
+                    mbedtls_printf( "failed\n\r" );
 
                 return( 1 );
             }
         }
 
         if( verbose != 0 )
-            mbedtls_printf( "passed\r\n" );
+            mbedtls_printf( "passed\n\r" );
     }
 
     if( verbose != 0 )
-        mbedtls_printf( "\r\n" );
+        mbedtls_printf( "\n\r" );
 #endif /* MBEDTLS_CIPHER_MODE_CTR */
 
     return( 0 );

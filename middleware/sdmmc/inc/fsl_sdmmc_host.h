@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
- * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright 2016-2018 NXP
  * All rights reserved.
- * 
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- *  that the following conditions are met:
  *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #ifndef _FSL_SDMMC_HOST_H
@@ -43,11 +17,6 @@
 #include "fsl_sdif.h"
 #elif defined(FSL_FEATURE_SOC_USDHC_COUNT) && FSL_FEATURE_SOC_USDHC_COUNT > 0U
 #include "fsl_usdhc.h"
-#if (FSL_FEATURE_SOC_IOMUXC_COUNT != 0U)
-#include "fsl_iomuxc.h"
-#else
-#include "fsl_port.h"
-#endif
 #endif
 
 /*!
@@ -84,7 +53,7 @@
 #endif
 
 /* Common definition for SDMMCHOST transfer complete timeout */
-#define SDMMCHOST_TRANSFER_COMPLETE_TIMEOUT (1000U)
+#define SDMMCHOST_TRANSFER_COMPLETE_TIMEOUT (500U)
 /* Common definition for card detect timeout */
 #define SDMMCHOST_CARD_DETECT_TIMEOUT (~0U)
 
@@ -174,7 +143,8 @@
 #define SDMMCHOST_CHECK_TUNING_ERROR(base) (0U)
 #define SDMMCHOST_ADJUST_TUNING_DELAY(base, delay)
 #define SDMMCHOST_AUTO_STANDARD_RETUNING_TIMER(base)
-
+#define SDMMCHOST_TRANSFER_DATA_ERROR kStatus_SDHC_TransferDataFailed
+#define SDMMCHOST_TRANSFER_CMD_ERROR kStatus_SDHC_SendCommandFailed
 #define SDMMCHOST_ENABLE_HS400_MODE(base, flag)
 #define SDMMCHOST_RESET_STROBE_DLL(base)
 #define SDMMCHOST_ENABLE_STROBE_DLL(base, flag)
@@ -215,6 +185,8 @@
 #else
 #define SDMMCHOST_CARD_INSERT_CD_LEVEL (0U)
 #endif
+#define SDMMCHOST_AUTO_TUNING_ENABLE(base, flag)
+
 /*! @brief SDHC host capability*/
 enum _host_capability
 {
@@ -362,13 +334,15 @@ enum _host_capability
 #define SDMMCHOST_CARD_DETECT_INTERRUPT_CLEAR(flag) BOARD_SDIF_CD_CLEAR_INTERRUPT(flag)
 #define SDMMCHOST_CARD_DETECT_GPIO_INTERRUPT_HANDLER BOARD_SDIF_CD_PORT_IRQ_HANDLER
 #define SDMMCHOST_CARD_DETECT_IRQ BOARD_SDIF_CD_PORT_IRQ
+#define SDMMCHOST_TRANSFER_DATA_ERROR kStatus_SDIF_DataTransferFail
+#define SDMMCHOST_TRANSFER_CMD_ERROR kStatus_SDIF_SendCmdFail
 /* define card detect pin voltage level when card inserted */
 #if defined BOARD_SDIF_CARD_INSERT_CD_LEVEL
 #define SDMMCHOST_CARD_INSERT_CD_LEVEL BOARD_SDIF_CARD_INSERT_CD_LEVEL
 #else
 #define SDMMCHOST_CARD_INSERT_CD_LEVEL (0U)
 #endif
-
+#define SDMMCHOST_AUTO_TUNING_ENABLE(base, flag)
 /* sd card detect through host CD */
 #define SDMMCHOST_CARD_DETECT_INSERT_ENABLE(base) (SDIF_EnableInterrupt(base, kSDIF_CardDetect))
 #define SDMMCHOST_CARD_DETECT_INSERT_STATUS(base, data3) (SDIF_DetectCardInsert(base, data3))
@@ -440,6 +414,8 @@ enum _host_capability
 #define SDMMCHOST_TUNING_DELAY_MAX (0x7FU)
 #define SDMMCHOST_RETUNING_REQUEST kStatus_USDHC_ReTuningRequest
 #define SDMMCHOST_TUNING_ERROR kStatus_USDHC_TuningError
+#define SDMMCHOST_TRANSFER_DATA_ERROR kStatus_USDHC_TransferDataFailed
+#define SDMMCHOST_TRANSFER_CMD_ERROR kStatus_USDHC_SendCommandFailed
 /* define for card bus speed/strength cnofig */
 #define CARD_BUS_FREQ_50MHZ (0U)
 #define CARD_BUS_FREQ_100MHZ0 (1U)
@@ -470,8 +446,8 @@ enum _host_capability
 #define SDMMCHOST_SEND_CARD_ACTIVE(base, timeout) (USDHC_SetCardActive(base, timeout))
 #define SDMMCHOST_SWITCH_VOLTAGE180V(base, enable18v) (UDSHC_SelectVoltage(base, enable18v))
 #define SDMMCHOST_SWITCH_VOLTAGE120V(base, enable12v)
-#define SDMMCHOST_CONFIG_SD_IO(speed, strength) BOARD_SD_PIN_CONFIG(speed, strength)
-#define SDMMCHOST_CONFIG_MMC_IO(speed, strength) BOARD_MMC_PIN_CONFIG(speed, strength)
+#define SDMMCHOST_CONFIG_SD_IO(speed, strength) BOARD_SD_Pin_Config(speed, strength)
+#define SDMMCHOST_CONFIG_MMC_IO(speed, strength) BOARD_MMC_Pin_Config(speed, strength)
 #define SDMMCHOST_SWITCH_VCC_TO_180V()
 #define SDMMCHOST_SWITCH_VCC_TO_330V()
 

@@ -99,12 +99,12 @@ FatFs                      Approved Open Source License: Yes
                            Description: FatFs is a generic FAT file system   
                            module for small embedded systems.                
                            Format: source code                               
-                           License: Open Source - FatFs License,             
-                           <rootfolder>/middleware/fatfs/doc/en/appnote.html 
+                           License: Open Source - FatFs License, <rootfolder>
+                           /middleware/fatfs/documents/doc/appnote.html      
                            Location: middleware/fatfs                        
                            name: FatFs                                       
                            URL: http://elm-chan.org/fsw/ff/00index_e.html    
-                           version: 0.12c                                    
+                           version: 0.13a                                    
 
 Gradle                     version: 4.1                                      
                            Location: boards/<board>/aws_examples/remote_contr
@@ -158,7 +158,7 @@ ISSDK                      version: 1.7
                            Description: Freescale IoT Sensing SDK. It        
                            combines a set of robust Sensor Drivers and       
                            Algorithms along with example applications.       
-                           License: Open Source - BSD-3-Clause Clear         
+                           License: Open Source - BSD-3-Clause               
                            Author: Freescale                                 
                            name: ISSDK                                       
                            Format: source code                               
@@ -178,9 +178,20 @@ KSDK Peripheral Driver     Description: Peripheral drivers are designed for
                            the underlying hardware block.                    
                            Author: Freescale                                 
                            Version: 2.x.x                                    
-                           License: Open Source - BSD-3-Clause Clear         
+                           License: Open Source - BSD-3-Clause               
                            Format: source code                               
                            Location: devices/<device_name>/drivers           
+
+LIBJPEG                    version: 9b                                       
+                           Location: middleware/libjpeg                      
+                           Description: JPEG image encoding, decoding, and   
+                           transcoding                                       
+                           License: IJG, See                                 
+                           <rootfolder>/middleware/libjpeg/README            
+                           Author: IJG (http://www.ijg.org/)                 
+                           name: LIBJPEG                                     
+                           Format: source code                               
+                           URL: http://www.ijg.org                           
 
 LittleFS                   version: 1.3                                      
                            Location: middleware/littlefs                     
@@ -201,7 +212,7 @@ MBED TLS stack             Author: ARM
                            Location: middleware/mbedtls                      
                            name: MBED TLS stack                              
                            URL: https://tls.mbed.org/                        
-                           version: 2.6.0                                    
+                           version: 2.9.0                                    
 
 Multicore SDK              version: 2.2.0                                    
                            Location: middleware/multicore                    
@@ -261,7 +272,7 @@ Remote_Control_GUI         version: 1.0
 
 SD MMC Card middleware     name: SD MMC Card middleware                      
                            Location: middleware/sdmmc                        
-                           License: Open Source - BSD-3-Clause Clear         
+                           License: Open Source - BSD-3-Clause               
                            Description: A software component support SD card,
                            eMMC card.                                        
                            Author: Freescale                                 
@@ -312,7 +323,7 @@ USB                        version: 1.6.3
                            Description: Freescale USB stack. This is a       
                            version of the USB stack that has been integrated 
                            with the MCUXpresso SDK.                          
-                           License: Open Source - BSD-3-Clause Clear         
+                           License: Open Source - BSD-3-Clause               
                            Author: Freescale                                 
                            name: USB                                         
                            Format: source code                               
@@ -376,7 +387,7 @@ mmCAU S/W Library          Author: Freescale
                            memory-mapped cryptographic acceleration unit     
                            present on some MCUXpresso SoCs                   
                            Format: source code                               
-                           License: Open Source - BSD-3-Clause Clear         
+                           License: Open Source - BSD-3-Clause               
                            Location: middleware/mmcau                        
                            name: mmCAU S/W Library                           
                            version: 2.0.1                                    

@@ -1057,7 +1057,7 @@ int mbedtls_x509_self_test( int verbose )
     if( ret != 0 )
     {
         if( verbose != 0 )
-            mbedtls_printf( "failed\r\n" );
+            mbedtls_printf( "failed\n\r" );
 
         return( ret );
     }
@@ -1069,25 +1069,25 @@ int mbedtls_x509_self_test( int verbose )
     if( ret != 0 )
     {
         if( verbose != 0 )
-            mbedtls_printf( "failed\r\n" );
+            mbedtls_printf( "failed\n\r" );
 
         return( ret );
     }
 
     if( verbose != 0 )
-        mbedtls_printf( "passed\r\n  X.509 signature verify: ");
+        mbedtls_printf( "passed\n\r  X.509 signature verify: ");
 
     ret = mbedtls_x509_crt_verify( &clicert, &cacert, NULL, NULL, &flags, NULL, NULL );
     if( ret != 0 )
     {
         if( verbose != 0 )
-            mbedtls_printf( "failed\r\n" );
+            mbedtls_printf( "failed\n\r" );
 
         return( ret );
     }
 
     if( verbose != 0 )
-        mbedtls_printf( "passed\r\n\r\n");
+        mbedtls_printf( "passed\n\n\r");
 
     mbedtls_x509_crt_free( &cacert  );
     mbedtls_x509_crt_free( &clicert );

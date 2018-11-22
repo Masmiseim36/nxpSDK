@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2018 NXP
  * All rights reserved.
- * 
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- *  that the following conditions are met:
  *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #ifndef _FSL_SDMMC_COMMON_H_
@@ -44,7 +18,7 @@
  * Definitions
  ******************************************************************************/
 /*! @brief Middleware version. */
-#define FSL_SDMMC_DRIVER_VERSION (MAKE_VERSION(2U, 2U, 4U)) /*2.2.4*/
+#define FSL_SDMMC_DRIVER_VERSION (MAKE_VERSION(2U, 2U, 6U)) /*2.2.6*/
 
 /*! @brief Reverse byte sequence in uint32_t */
 #define SWAP_WORD_BYTE_SEQUENCE(x) (__REV(x))
@@ -56,9 +30,12 @@
 #define FSL_SDMMC_MAX_CMD_RETRIES (10U)
 /*! @brief Default block size */
 #define FSL_SDMMC_DEFAULT_BLOCK_SIZE (512U)
+#ifndef SDMMC_GLOBAL_BUFFER_SIZE
 /*! @brief SDMMC global data buffer size, word unit*/
 #define SDMMC_GLOBAL_BUFFER_SIZE (128U)
-
+#endif
+/*! @brief SDMMC enable software tuning */
+#define SDMMC_ENABLE_SOFTWARE_TUNING (0U)
 /* Common definition for cache line size align */
 #if defined(FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL) && FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL
 #if defined(FSL_FEATURE_L1DCACHE_LINESIZE_BYTE)
@@ -72,6 +49,14 @@
 #endif
 #else
 #define SDMMC_DATA_BUFFER_ALIGN_CACHE 1
+#endif
+
+/*! @brief SD/MMC error log. */
+#if defined SDMMC_ENABLE_LOG_PRINT
+#include "fsl_debug_console.h"
+#define SDMMC_LOG(...) PRINTF(__VA_ARGS__)
+#else
+#define SDMMC_LOG(format, ...)
 #endif
 
 /*! @brief SD/MMC card API's running status. */
@@ -116,12 +101,17 @@ enum _sdmmc_status
     kStatus_SDMMC_SDIO_ReadCISFail = MAKE_STATUS(kStatusGroup_SDMMC, 31U),         /*!<  read CIS fail */
     kStatus_SDMMC_SDIO_InvalidCard = MAKE_STATUS(kStatusGroup_SDMMC, 32U),         /*!<  invaild SDIO card */
     kStatus_SDMMC_TuningFail = MAKE_STATUS(kStatusGroup_SDMMC, 33U),               /*!<  tuning fail */
-    kStatus_SDMMC_SwitchVoltageFail = MAKE_STATUS(kStatusGroup_SDMMC, 34U),        /*!< switch voltage fail*/
-    kStatus_SDMMC_ReTuningRequest = MAKE_STATUS(kStatusGroup_SDMMC, 35U),          /*!<  retuning request */
-    kStatus_SDMMC_SetDriverStrengthFail = MAKE_STATUS(kStatusGroup_SDMMC, 36U),    /*!<  set driver strength fail */
-    kStatus_SDMMC_SetPowerClassFail = MAKE_STATUS(kStatusGroup_SDMMC, 37U),        /*!<  set power class fail */
-    kStatus_SDMMC_HostNotReady = MAKE_STATUS(kStatusGroup_SDMMC, 38U),             /*!<  host controller not ready */
-    kStatus_SDMMC_CardDetectFailed = MAKE_STATUS(kStatusGroup_SDMMC, 39U),         /*!<  card detect failed */
+
+    kStatus_SDMMC_SwitchVoltageFail = MAKE_STATUS(kStatusGroup_SDMMC, 34U),              /*!< switch voltage fail*/
+    kStatus_SDMMC_SwitchVoltage18VFail33VSuccess = MAKE_STATUS(kStatusGroup_SDMMC, 35U), /*!< switch voltage fail*/
+
+    kStatus_SDMMC_ReTuningRequest = MAKE_STATUS(kStatusGroup_SDMMC, 36U),       /*!<  retuning request */
+    kStatus_SDMMC_SetDriverStrengthFail = MAKE_STATUS(kStatusGroup_SDMMC, 37U), /*!<  set driver strength fail */
+    kStatus_SDMMC_SetPowerClassFail = MAKE_STATUS(kStatusGroup_SDMMC, 38U),     /*!<  set power class fail */
+    kStatus_SDMMC_HostNotReady = MAKE_STATUS(kStatusGroup_SDMMC, 39U),          /*!<  host controller not ready */
+    kStatus_SDMMC_CardDetectFailed = MAKE_STATUS(kStatusGroup_SDMMC, 40U),      /*!<  card detect failed */
+    kStatus_SDMMC_AuSizeNotSetProperly = MAKE_STATUS(kStatusGroup_SDMMC, 41U),  /*!<  AU size not set properly */
+
 };
 
 /*! @brief card operation voltage */

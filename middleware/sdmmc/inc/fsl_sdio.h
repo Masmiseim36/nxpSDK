@@ -1,37 +1,10 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2018 NXP
  * All rights reserved.
- * 
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- *  that the following conditions are met:
  *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
-
 #ifndef _FSL_SDIO_H_
 #define _FSL_SDIO_H_
 
@@ -45,6 +18,9 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+/*! @brief Middleware version. */
+#define FSL_SDIO_DRIVER_VERSION (MAKE_VERSION(2U, 2U, 6U)) /*2.2.6*/
+
 /*! @brief card user parameter, user can define the parameter according the board, card capability */
 typedef struct _sdiocard_usr_param
 {
@@ -380,6 +356,35 @@ status_t SDIO_WaitCardDetectStatus(SDMMCHOST_TYPE *hostBase, const sdmmchost_det
  * @param card card descriptor.
  */
 bool SDIO_IsCardPresent(sdio_card_t *card);
+
+/*!
+ * @brief sdio card io transfer function.
+ * This function can be used for trnansfer direct/extend command.
+ * Please pay attention to the non-align data buffer address transfer,
+ * if data buffer address can not meet host controller internal DMA requirement, sdio driver will try to use internal
+ align buffer if data size is not bigger than internal buffer size,
+ * Align address transfer always can get a better performance, so if application want sdio driver make sure buffer
+ address align,
+ * please redefine the SDMMC_GLOBAL_BUFFER_SIZE macro to a value which is big enough for your application.
+ *
+ * @param card card descriptor.
+ * @param cmd command to transfer
+ * @param argument argument to transfer
+ * @param blockSize used for block mode.
+ * @param txData tx buffer pointer or NULL
+ * @param rxData rx buffer pointer or NULL
+ * @param dataSize transfer data size
+ * @param response reponse pointer, if application want read response back, please set it to a NON-NULL pointer.
+
+ */
+status_t SDIO_IO_Transfer(sdio_card_t *card,
+                          sdio_command_t cmd,
+                          uint32_t argument,
+                          uint32_t blockSize,
+                          uint8_t *txData,
+                          uint8_t *rxData,
+                          uint16_t dataSize,
+                          uint32_t *response);
 
 /* @} */
 

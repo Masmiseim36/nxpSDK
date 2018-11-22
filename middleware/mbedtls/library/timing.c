@@ -39,7 +39,7 @@
 #if !defined(MBEDTLS_TIMING_ALT)
 
 #if !defined(unix) && !defined(__unix__) && !defined(__unix) && \
-    !defined(__APPLE__) && !defined(_WIN32)
+    !defined(__APPLE__) && !defined(_WIN32) && !defined(__QNXNTO__)
 #error "This module only works on Unix and Windows, see MBEDTLS_TIMING_C in config.h"
 #endif
 
@@ -397,11 +397,11 @@ static void busy_msleep( unsigned long msec )
     {                                                                   \
         if( verbose != 0 )                                              \
         {                                                               \
-            mbedtls_printf( "failed at line %d\r\n", __LINE__ );          \
-            mbedtls_printf( " cycles=%lu ratio=%lu millisecs=%lu secs=%lu hardfail=%d a=%lu b=%lu\r\n", \
+            mbedtls_printf( "failed at line %d\n", __LINE__ );          \
+            mbedtls_printf( " cycles=%lu ratio=%lu millisecs=%lu secs=%lu hardfail=%d a=%lu b=%lu\n", \
                             cycles, ratio, millisecs, secs, hardfail,   \
                             (unsigned long) a, (unsigned long) b );     \
-            mbedtls_printf( " elapsed(hires)=%lu elapsed(ctx)=%lu status(ctx)=%d\r\n", \
+            mbedtls_printf( " elapsed(hires)=%lu elapsed(ctx)=%lu status(ctx)=%d\n", \
                             mbedtls_timing_get_timer( &hires, 0 ),      \
                             mbedtls_timing_get_timer( &ctx.timer, 0 ),  \
                             mbedtls_timing_get_delay( &ctx ) );         \
@@ -425,7 +425,7 @@ int mbedtls_timing_self_test( int verbose )
     mbedtls_timing_delay_context ctx;
 
     if( verbose != 0 )
-        mbedtls_printf( "  TIMING tests note: will take some time!\r\n" );
+        mbedtls_printf( "  TIMING tests note: will take some time!\n\r" );
 
     if( verbose != 0 )
         mbedtls_printf( "  TIMING test #1 (set_alarm / get_timer): " );
@@ -448,7 +448,7 @@ int mbedtls_timing_self_test( int verbose )
     }
 
     if( verbose != 0 )
-        mbedtls_printf( "passed\r\n" );
+        mbedtls_printf( "passed\n\r" );
 
     if( verbose != 0 )
         mbedtls_printf( "  TIMING test #2 (set/get_delay        ): " );
@@ -477,7 +477,7 @@ int mbedtls_timing_self_test( int verbose )
         FAIL;
 
     if( verbose != 0 )
-        mbedtls_printf( "passed\r\n" );
+        mbedtls_printf( "passed\n\r" );
 
     if( verbose != 0 )
         mbedtls_printf( "  TIMING test #3 (hardclock / get_timer): " );
@@ -492,7 +492,7 @@ hard_test:
     if( hardfail > 1 )
     {
         if( verbose != 0 )
-            mbedtls_printf( "failed (ignored)\r\n" );
+            mbedtls_printf( "failed (ignored)\n\r" );
 
         goto hard_test_done;
     }
@@ -521,12 +521,12 @@ hard_test:
     }
 
     if( verbose != 0 )
-        mbedtls_printf( "passed\r\n" );
+        mbedtls_printf( "passed\n\r" );
 
 hard_test_done:
 
     if( verbose != 0 )
-        mbedtls_printf( "\r\n" );
+        mbedtls_printf( "\n\r" );
 
     return( 0 );
 }

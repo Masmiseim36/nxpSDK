@@ -437,7 +437,7 @@ int mbedtls_ccm_self_test( int verbose )
             memcmp( out, res[i], msg_len[i] + tag_len[i] ) != 0 )
         {
             if( verbose != 0 )
-                mbedtls_printf( "failed\r\n" );
+                mbedtls_printf( "failed\n\r" );
 
             return( 1 );
         }
@@ -451,19 +451,19 @@ int mbedtls_ccm_self_test( int verbose )
             memcmp( out, msg, msg_len[i] ) != 0 )
         {
             if( verbose != 0 )
-                mbedtls_printf( "failed\r\n" );
+                mbedtls_printf( "failed\n\r" );
 
             return( 1 );
         }
 
         if( verbose != 0 )
-            mbedtls_printf( "passed\r\n" );
+            mbedtls_printf( "passed\n\r" );
     }
 
     mbedtls_ccm_free( &ctx );
 
     if( verbose != 0 )
-        mbedtls_printf( "\r\n" );
+        mbedtls_printf( "\n\r" );
 
     return( 0 );
 }

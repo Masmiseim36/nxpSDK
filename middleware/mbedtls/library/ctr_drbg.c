@@ -590,7 +590,7 @@ static int ctr_drbg_self_test_entropy( void *data, unsigned char *buf,
 #define CHK( c )    if( (c) != 0 )                          \
                     {                                       \
                         if( verbose != 0 )                  \
-                            mbedtls_printf( "failed\r\n" );  \
+                            mbedtls_printf( "failed\n" );  \
                         return( 1 );                        \
                     }
 
@@ -621,7 +621,7 @@ int mbedtls_ctr_drbg_self_test( int verbose )
     mbedtls_ctr_drbg_free( &ctx );
 
     if( verbose != 0 )
-        mbedtls_printf( "passed\r\n" );
+        mbedtls_printf( "passed\n\r" );
 
     /*
      * Based on a NIST CTR_DRBG test vector (PR = FALSE)
@@ -642,10 +642,10 @@ int mbedtls_ctr_drbg_self_test( int verbose )
     mbedtls_ctr_drbg_free( &ctx );
 
     if( verbose != 0 )
-        mbedtls_printf( "passed\r\n" );
+        mbedtls_printf( "passed\n\r" );
 
     if( verbose != 0 )
-            mbedtls_printf( "\r\n" );
+            mbedtls_printf( "\n\r" );
 
     return( 0 );
 }

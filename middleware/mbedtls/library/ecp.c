@@ -26,6 +26,7 @@
  * GECC = Guide to Elliptic Curve Cryptography - Hankerson, Menezes, Vanstone
  * FIPS 186-3 http://csrc.nist.gov/publications/fips/fips186-3/fips_186-3.pdf
  * RFC 4492 for the related TLS structures and constants
+ * RFC 7748 for the Curve448 and Curve25519 curve definitions
  *
  * [Curve25519] http://cr.yp.to/ecdh/curve25519-20060209.pdf
  *
@@ -99,7 +100,8 @@ static unsigned long add_count, dbl_count, mul_count;
 #define ECP_SHORTWEIERSTRASS
 #endif
 
-#if defined(MBEDTLS_ECP_DP_CURVE25519_ENABLED)
+#if defined(MBEDTLS_ECP_DP_CURVE25519_ENABLED) || \
+    defined(MBEDTLS_ECP_DP_CURVE448_ENABLED)
 #define ECP_MONTGOMERY
 #endif
 
@@ -1906,6 +1908,8 @@ cleanup:
 static int ecp_check_pubkey_mx( const mbedtls_ecp_group *grp, const mbedtls_ecp_point *pt )
 {
     /* [Curve25519 p. 5] Just check X is the correct number of bytes */
+    /* Allow any public value, if it's too big then we'll just reduce it mod p
+     * (RFC 7748 sec. 5 para. 3). */
     if( mbedtls_mpi_size( &pt->X ) > ( grp->nbits + 7 ) / 8 )
         return( MBEDTLS_ERR_ECP_INVALID_KEY );
 
@@ -1941,14 +1945,18 @@ int mbedtls_ecp_check_privkey( const mbedtls_ecp_group *grp, const mbedtls_mpi *
 #if defined(ECP_MONTGOMERY)
     if( ecp_get_type( grp ) == ECP_TYPE_MONTGOMERY )
     {
-        /* see [Curve25519] page 5 */
+        /* see RFC 7748 sec. 5 para. 5 */
         if( mbedtls_mpi_get_bit( d, 0 ) != 0 ||
             mbedtls_mpi_get_bit( d, 1 ) != 0 ||
-            mbedtls_mpi_get_bit( d, 2 ) != 0 ||
             mbedtls_mpi_bitlen( d ) - 1 != grp->nbits ) /* mbedtls_mpi_bitlen is one-based! */
             return( MBEDTLS_ERR_ECP_INVALID_KEY );
         else
-            return( 0 );
+
+        /* see [Curve25519] page 5 */
+        if( grp->nbits == 254 && mbedtls_mpi_get_bit( d, 2 ) != 0 )
+            return( MBEDTLS_ERR_ECP_INVALID_KEY );
+
+        return( 0 );
     }
 #endif /* ECP_MONTGOMERY */
 #if defined(ECP_SHORTWEIERSTRASS)
@@ -1995,10 +2003,14 @@ int mbedtls_ecp_gen_keypair_base( mbedtls_ecp_group *grp,
         else
             MBEDTLS_MPI_CHK( mbedtls_mpi_set_bit( d, grp->nbits, 1 ) );
 
-        /* Make sure the last three bits are unset */
+        /* Make sure the last two bits are unset for Curve448, three bits for
+           Curve25519 */
         MBEDTLS_MPI_CHK( mbedtls_mpi_set_bit( d, 0, 0 ) );
         MBEDTLS_MPI_CHK( mbedtls_mpi_set_bit( d, 1, 0 ) );
-        MBEDTLS_MPI_CHK( mbedtls_mpi_set_bit( d, 2, 0 ) );
+        if( grp->nbits == 254 )
+        {
+            MBEDTLS_MPI_CHK( mbedtls_mpi_set_bit( d, 2, 0 ) );
+        }
     }
     else
 #endif /* ECP_MONTGOMERY */
@@ -2179,7 +2191,7 @@ int mbedtls_ecp_self_test( int verbose )
             mul_count != mul_c_prev )
         {
             if( verbose != 0 )
-                mbedtls_printf( "failed (%u)\r\n", (unsigned int) i );
+                mbedtls_printf( "failed (%u)\n\r", (unsigned int) i );
 
             ret = 1;
             goto cleanup;
@@ -2187,7 +2199,7 @@ int mbedtls_ecp_self_test( int verbose )
     }
 
     if( verbose != 0 )
-        mbedtls_printf( "passed\r\n" );
+        mbedtls_printf( "passed\n\r" );
 
     if( verbose != 0 )
         mbedtls_printf( "  ECP test #2 (constant op_count, other point): " );
@@ -2216,7 +2228,7 @@ int mbedtls_ecp_self_test( int verbose )
             mul_count != mul_c_prev )
         {
             if( verbose != 0 )
-                mbedtls_printf( "failed (%u)\r\n", (unsigned int) i );
+                mbedtls_printf( "failed (%u)\n\r", (unsigned int) i );
 
             ret = 1;
             goto cleanup;
@@ -2224,12 +2236,12 @@ int mbedtls_ecp_self_test( int verbose )
     }
 
     if( verbose != 0 )
-        mbedtls_printf( "passed\r\n" );
+        mbedtls_printf( "passed\n\r" );
 
 cleanup:
 
     if( ret < 0 && verbose != 0 )
-        mbedtls_printf( "Unexpected error, return code = %08X\r\n", ret );
+        mbedtls_printf( "Unexpected error, return code = %08X\n\r", ret );
 
     mbedtls_ecp_group_free( &grp );
     mbedtls_ecp_point_free( &R );
@@ -2237,7 +2249,7 @@ cleanup:
     mbedtls_mpi_free( &m );
 
     if( verbose != 0 )
-        mbedtls_printf( "\r\n" );
+        mbedtls_printf( "\n" );
 
     return( ret );
 }

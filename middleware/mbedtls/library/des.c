@@ -939,18 +939,18 @@ int mbedtls_des_self_test( int verbose )
                 memcmp( buf, des3_test_ecb_enc[u], 8 ) != 0 ) )
         {
             if( verbose != 0 )
-                mbedtls_printf( "failed\r\n" );
+                mbedtls_printf( "failed\n\r" );
 
             ret = 1;
             goto exit;
         }
 
         if( verbose != 0 )
-            mbedtls_printf( "passed\r\n" );
+            mbedtls_printf( "passed\n\r" );
     }
 
     if( verbose != 0 )
-        mbedtls_printf( "\r\n" );
+        mbedtls_printf( "\n\r" );
 
 #if defined(MBEDTLS_CIPHER_MODE_CBC)
     /*
@@ -1035,19 +1035,19 @@ int mbedtls_des_self_test( int verbose )
                 memcmp( buf, des3_test_cbc_enc[u], 8 ) != 0 ) )
         {
             if( verbose != 0 )
-                mbedtls_printf( "failed\r\n" );
+                mbedtls_printf( "failed\n\r" );
 
             ret = 1;
             goto exit;
         }
 
         if( verbose != 0 )
-            mbedtls_printf( "passed\r\n" );
+            mbedtls_printf( "passed\n\r" );
     }
 #endif /* MBEDTLS_CIPHER_MODE_CBC */
 
     if( verbose != 0 )
-        mbedtls_printf( "\r\n" );
+        mbedtls_printf( "\n\r" );
 
 exit:
     mbedtls_des_free( &ctx );

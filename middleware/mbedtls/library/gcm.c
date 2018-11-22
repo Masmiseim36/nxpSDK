@@ -785,7 +785,7 @@ int mbedtls_gcm_self_test( int verbose )
              */
             if( ret == MBEDTLS_ERR_AES_FEATURE_UNAVAILABLE && key_len == 192 )
             {
-                mbedtls_printf( "skipped\r\n" );
+                mbedtls_printf( "skipped\n\r" );
                 break;
             }
             else if( ret != 0 )
@@ -811,7 +811,7 @@ int mbedtls_gcm_self_test( int verbose )
             mbedtls_gcm_free( &ctx );
 
             if( verbose != 0 )
-                mbedtls_printf( "passed\r\n" );
+                mbedtls_printf( "passed\n\r" );
 
             mbedtls_gcm_init( &ctx );
 
@@ -843,7 +843,7 @@ int mbedtls_gcm_self_test( int verbose )
             mbedtls_gcm_free( &ctx );
 
             if( verbose != 0 )
-                mbedtls_printf( "passed\r\n" );
+                mbedtls_printf( "passed\n\r" );
 
             mbedtls_gcm_init( &ctx );
 
@@ -895,7 +895,7 @@ int mbedtls_gcm_self_test( int verbose )
             mbedtls_gcm_free( &ctx );
 
             if( verbose != 0 )
-                mbedtls_printf( "passed\r\n" );
+                mbedtls_printf( "passed\n\r" );
 
             mbedtls_gcm_init( &ctx );
 
@@ -948,12 +948,12 @@ int mbedtls_gcm_self_test( int verbose )
             mbedtls_gcm_free( &ctx );
 
             if( verbose != 0 )
-                mbedtls_printf( "passed\r\n" );
+                mbedtls_printf( "passed\n\r" );
         }
     }
 
     if( verbose != 0 )
-        mbedtls_printf( "\r\n" );
+        mbedtls_printf( "\n\r" );
 
     ret = 0;
 
@@ -961,7 +961,7 @@ exit:
     if( ret != 0 )
     {
         if( verbose != 0 )
-            mbedtls_printf( "failed\r\n" );
+            mbedtls_printf( "failed\n\r" );
         mbedtls_gcm_free( &ctx );
     }
 

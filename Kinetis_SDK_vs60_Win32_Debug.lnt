@@ -1784,6 +1784,30 @@ boards\evkmimxrt1020\driver_examples\flexspi\nor\polling_transfer\flexspi_nor_po
                                 // RelativePath = "boards\evkmimxrt1020\driver_examples\flexspi\nor\polling_transfer\flexspi_nor_polling_transfer.c"
 boards\evkmimxrt1020\driver_examples\flexspi\nor\polling_transfer\pin_mux.c
                                 // RelativePath = "boards\evkmimxrt1020\driver_examples\flexspi\nor\polling_transfer\pin_mux.c"
+boards\evkmimxrt1020\driver_examples\flexcan\loopback\board.c
+                                // RelativePath = "boards\evkmimxrt1020\driver_examples\flexcan\loopback\board.c"
+boards\evkmimxrt1020\driver_examples\flexcan\loopback\clock_config.c
+                                // RelativePath = "boards\evkmimxrt1020\driver_examples\flexcan\loopback\clock_config.c"
+boards\evkmimxrt1020\driver_examples\flexcan\loopback\flexcan_loopback.c
+                                // RelativePath = "boards\evkmimxrt1020\driver_examples\flexcan\loopback\flexcan_loopback.c"
+boards\evkmimxrt1020\driver_examples\flexcan\loopback\pin_mux.c
+                                // RelativePath = "boards\evkmimxrt1020\driver_examples\flexcan\loopback\pin_mux.c"
+boards\evkmimxrt1020\driver_examples\flexcan\interrupt_transfer\board.c
+                                // RelativePath = "boards\evkmimxrt1020\driver_examples\flexcan\interrupt_transfer\board.c"
+boards\evkmimxrt1020\driver_examples\flexcan\interrupt_transfer\clock_config.c
+                                // RelativePath = "boards\evkmimxrt1020\driver_examples\flexcan\interrupt_transfer\clock_config.c"
+boards\evkmimxrt1020\driver_examples\flexcan\interrupt_transfer\flexcan_interrupt_transfer.c
+                                // RelativePath = "boards\evkmimxrt1020\driver_examples\flexcan\interrupt_transfer\flexcan_interrupt_transfer.c"
+boards\evkmimxrt1020\driver_examples\flexcan\interrupt_transfer\pin_mux.c
+                                // RelativePath = "boards\evkmimxrt1020\driver_examples\flexcan\interrupt_transfer\pin_mux.c"
+boards\evkmimxrt1020\driver_examples\flexcan\loopback_transfer\board.c
+                                // RelativePath = "boards\evkmimxrt1020\driver_examples\flexcan\loopback_transfer\board.c"
+boards\evkmimxrt1020\driver_examples\flexcan\loopback_transfer\clock_config.c
+                                // RelativePath = "boards\evkmimxrt1020\driver_examples\flexcan\loopback_transfer\clock_config.c"
+boards\evkmimxrt1020\driver_examples\flexcan\loopback_transfer\flexcan_loopback_transfer.c
+                                // RelativePath = "boards\evkmimxrt1020\driver_examples\flexcan\loopback_transfer\flexcan_loopback_transfer.c"
+boards\evkmimxrt1020\driver_examples\flexcan\loopback_transfer\pin_mux.c
+                                // RelativePath = "boards\evkmimxrt1020\driver_examples\flexcan\loopback_transfer\pin_mux.c"
 boards\frdmk28f\driver_examples\qspi\edma_transfer\board.c
                                 // RelativePath = "boards\frdmk28f\driver_examples\qspi\edma_transfer\board.c"
 boards\frdmk28f\driver_examples\qspi\edma_transfer\clock_config.c
@@ -2286,6 +2310,111 @@ middleware\dhara\ecc\hamming.c
 middleware\dhara\dhara\journal.c
                                 // RelativePath = "middleware\dhara\dhara\journal.c"
 middleware\dhara\dhara\map.c    // RelativePath = "middleware\dhara\dhara\map.c"
+middleware\aml\tmr_aml\ftm_aml.c
+                                // RelativePath = "middleware\aml\tmr_aml\ftm_aml.c"
+middleware\aml\spi_aml\spi_aml.c
+                                // RelativePath = "middleware\aml\spi_aml\spi_aml.c"
+middleware\aml\tmr_aml\tpm_aml.c
+                                // RelativePath = "middleware\aml\tmr_aml\tpm_aml.c"
+middleware\aml\wait_aml\wait_aml.c
+                                // RelativePath = "middleware\aml\wait_aml\wait_aml.c"
+middleware\dma_manager\fsl_dma_manager.c
+                                // RelativePath = "middleware\dma_manager\fsl_dma_manager.c"
+middleware\emv\src\emvl1_core.c
+                                // RelativePath = "middleware\emv\src\emvl1_core.c"
+middleware\libjpeg\src\jaricom.c
+                                // RelativePath = "middleware\libjpeg\src\jaricom.c"
+middleware\libjpeg\src\jcapimin.c
+                                // RelativePath = "middleware\libjpeg\src\jcapimin.c"
+middleware\libjpeg\src\jcapistd.c
+                                // RelativePath = "middleware\libjpeg\src\jcapistd.c"
+middleware\libjpeg\src\jcarith.c
+                                // RelativePath = "middleware\libjpeg\src\jcarith.c"
+middleware\libjpeg\src\jccoefct.c
+                                // RelativePath = "middleware\libjpeg\src\jccoefct.c"
+middleware\libjpeg\src\jccolor.c
+                                // RelativePath = "middleware\libjpeg\src\jccolor.c"
+middleware\libjpeg\src\jcdctmgr.c
+                                // RelativePath = "middleware\libjpeg\src\jcdctmgr.c"
+middleware\libjpeg\src\jchuff.c
+                                // RelativePath = "middleware\libjpeg\src\jchuff.c"
+middleware\libjpeg\src\jcinit.c
+                                // RelativePath = "middleware\libjpeg\src\jcinit.c"
+middleware\libjpeg\src\jcmainct.c
+                                // RelativePath = "middleware\libjpeg\src\jcmainct.c"
+middleware\libjpeg\src\jcmarker.c
+                                // RelativePath = "middleware\libjpeg\src\jcmarker.c"
+middleware\libjpeg\src\jcmaster.c
+                                // RelativePath = "middleware\libjpeg\src\jcmaster.c"
+middleware\libjpeg\src\jcomapi.c
+                                // RelativePath = "middleware\libjpeg\src\jcomapi.c"
+middleware\libjpeg\src\jcparam.c
+                                // RelativePath = "middleware\libjpeg\src\jcparam.c"
+middleware\libjpeg\src\jcprepct.c
+                                // RelativePath = "middleware\libjpeg\src\jcprepct.c"
+middleware\libjpeg\src\jcsample.c
+                                // RelativePath = "middleware\libjpeg\src\jcsample.c"
+middleware\libjpeg\src\jctrans.c
+                                // RelativePath = "middleware\libjpeg\src\jctrans.c"
+middleware\libjpeg\src\jdapimin.c
+                                // RelativePath = "middleware\libjpeg\src\jdapimin.c"
+middleware\libjpeg\src\jdapistd.c
+                                // RelativePath = "middleware\libjpeg\src\jdapistd.c"
+middleware\libjpeg\src\jdarith.c
+                                // RelativePath = "middleware\libjpeg\src\jdarith.c"
+middleware\libjpeg\src\jdatadst.c
+                                // RelativePath = "middleware\libjpeg\src\jdatadst.c"
+middleware\libjpeg\src\jdatasrc.c
+                                // RelativePath = "middleware\libjpeg\src\jdatasrc.c"
+middleware\libjpeg\src\jdcoefct.c
+                                // RelativePath = "middleware\libjpeg\src\jdcoefct.c"
+middleware\libjpeg\src\jdcolor.c
+                                // RelativePath = "middleware\libjpeg\src\jdcolor.c"
+middleware\libjpeg\src\jddctmgr.c
+                                // RelativePath = "middleware\libjpeg\src\jddctmgr.c"
+middleware\libjpeg\src\jdhuff.c
+                                // RelativePath = "middleware\libjpeg\src\jdhuff.c"
+middleware\libjpeg\src\jdinput.c
+                                // RelativePath = "middleware\libjpeg\src\jdinput.c"
+middleware\libjpeg\src\jdmainct.c
+                                // RelativePath = "middleware\libjpeg\src\jdmainct.c"
+middleware\libjpeg\src\jdmarker.c
+                                // RelativePath = "middleware\libjpeg\src\jdmarker.c"
+middleware\libjpeg\src\jdmaster.c
+                                // RelativePath = "middleware\libjpeg\src\jdmaster.c"
+middleware\libjpeg\src\jdmerge.c
+                                // RelativePath = "middleware\libjpeg\src\jdmerge.c"
+middleware\libjpeg\src\jdpostct.c
+                                // RelativePath = "middleware\libjpeg\src\jdpostct.c"
+middleware\libjpeg\src\jdsample.c
+                                // RelativePath = "middleware\libjpeg\src\jdsample.c"
+middleware\libjpeg\src\jdtrans.c
+                                // RelativePath = "middleware\libjpeg\src\jdtrans.c"
+middleware\libjpeg\src\jerror.c
+                                // RelativePath = "middleware\libjpeg\src\jerror.c"
+middleware\libjpeg\src\jfdctflt.c
+                                // RelativePath = "middleware\libjpeg\src\jfdctflt.c"
+middleware\libjpeg\src\jfdctfst.c
+                                // RelativePath = "middleware\libjpeg\src\jfdctfst.c"
+middleware\libjpeg\src\jfdctint.c
+                                // RelativePath = "middleware\libjpeg\src\jfdctint.c"
+middleware\libjpeg\src\jidctflt.c
+                                // RelativePath = "middleware\libjpeg\src\jidctflt.c"
+middleware\libjpeg\src\jidctfst.c
+                                // RelativePath = "middleware\libjpeg\src\jidctfst.c"
+middleware\libjpeg\src\jidctint.c
+                                // RelativePath = "middleware\libjpeg\src\jidctint.c"
+middleware\libjpeg\src\jmemmgr.c
+                                // RelativePath = "middleware\libjpeg\src\jmemmgr.c"
+middleware\libjpeg\src\jmemnobs.c
+                                // RelativePath = "middleware\libjpeg\src\jmemnobs.c"
+middleware\libjpeg\src\jquant1.c
+                                // RelativePath = "middleware\libjpeg\src\jquant1.c"
+middleware\libjpeg\src\jquant2.c
+                                // RelativePath = "middleware\libjpeg\src\jquant2.c"
+middleware\libjpeg\src\jutils.c
+                                // RelativePath = "middleware\libjpeg\src\jutils.c"
+middleware\lvhb\lvhb.c          // RelativePath = "middleware\lvhb\lvhb.c"
 rtos\freertos_9.0.0\Source\croutine.c
                                 // RelativePath = "rtos\freertos_9.0.0\Source\croutine.c"
 rtos\freertos_9.0.0\Source\event_groups.c

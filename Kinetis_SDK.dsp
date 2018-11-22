@@ -2306,7 +2306,7 @@ SOURCE=.\devices\MK64F12\system_MK64F12.h
 # Begin Group "MIMXRT1052"
 
 # PROP Default_Filter ""
-# Begin Group "MIMXRT drivers"
+# Begin Group "1052 drivers"
 
 # PROP Default_Filter ""
 # Begin Source File
@@ -2810,7 +2810,7 @@ SOURCE=.\devices\MIMXRT1052\drivers\fsl_xbarb.c
 SOURCE=.\devices\MIMXRT1052\drivers\fsl_xbarb.h
 # End Source File
 # End Group
-# Begin Group "MIMXRT CMSIS drivers"
+# Begin Group "1052 CMSIS drivers"
 
 # PROP Default_Filter ""
 # Begin Source File
@@ -5758,6 +5758,70 @@ SOURCE=.\devices\MIMXRT1021\cmsis_drivers\fsl_lpuart_cmsis.c
 SOURCE=.\devices\MIMXRT1021\cmsis_drivers\fsl_lpuart_cmsis.h
 # End Source File
 # End Group
+# Begin Group "1021 project_template"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1021\project_template\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1021\project_template\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1021\project_template\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1021\project_template\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1021\project_template\peripherals.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1021\project_template\peripherals.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1021\project_template\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1021\project_template\pin_mux.h
+# End Source File
+# End Group
+# Begin Group "1021 XiP"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1021\xip\evkmimxrt1020_flexspi_nor_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1021\xip\evkmimxrt1020_flexspi_nor_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1021\xip\evkmimxrt1020_sdram_ini_dcd.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1021\xip\evkmimxrt1020_sdram_ini_dcd.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1021\xip\fsl_flexspi_nor_boot.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1021\xip\fsl_flexspi_nor_boot.h
+# End Source File
+# End Group
 # Begin Source File
 
 SOURCE=.\devices\MIMXRT1021\fsl_device_registers.h
@@ -5777,6 +5841,1262 @@ SOURCE=.\devices\MIMXRT1021\system_MIMXRT1021.c
 # Begin Source File
 
 SOURCE=.\devices\MIMXRT1021\system_MIMXRT1021.h
+# End Source File
+# End Group
+# Begin Group "MIMXRT1062"
+
+# PROP Default_Filter ""
+# Begin Group "1062 cmsis_drivers"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\cmsis_drivers\fsl_lpi2c_cmsis.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\cmsis_drivers\fsl_lpi2c_cmsis.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\cmsis_drivers\fsl_lpspi_cmsis.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\cmsis_drivers\fsl_lpspi_cmsis.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\cmsis_drivers\fsl_lpuart_cmsis.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\cmsis_drivers\fsl_lpuart_cmsis.h
+# End Source File
+# End Group
+# Begin Group "1062 drivers"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_adc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_adc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_adc_etc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_adc_etc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_aipstz.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_aipstz.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_aoi.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_aoi.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_bee.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_bee.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_cache.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_cache.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_clock.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_clock.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_cmp.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_cmp.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_common.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_common.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_csi.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_csi.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_dcdc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_dcdc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_dcp.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_dcp.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_dmamux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_dmamux.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_elcdif.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_elcdif.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_enc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_enc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_enet.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_enet.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_ewm.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_ewm.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_flexcan.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_flexcan.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_flexio.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_flexio.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_flexio_i2c_master.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_flexio_i2c_master.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_flexio_i2s.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_flexio_i2s.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_flexio_i2s_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_flexio_i2s_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_flexio_spi.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_flexio_spi.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_flexio_spi_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_flexio_spi_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_flexio_uart.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_flexio_uart.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_flexio_uart_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_flexio_uart_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_flexram.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_flexram.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_flexspi.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_flexspi.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_gpc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_gpc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_gpio.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_gpio.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_gpt.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_gpt.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_iomuxc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_kpp.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_kpp.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_lpi2c.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_lpi2c.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_lpi2c_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_lpi2c_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_lpi2c_freertos.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_lpi2c_freertos.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_lpspi.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_lpspi.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_lpspi_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_lpspi_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_lpspi_freertos.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_lpspi_freertos.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_lpuart.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_lpuart.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_lpuart_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_lpuart_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_lpuart_freertos.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_lpuart_freertos.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_pit.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_pit.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_pmu.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_pmu.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_pwm.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_pwm.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_pxp.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_pxp.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_qtmr.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_qtmr.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_rtwdog.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_rtwdog.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_sai.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_sai.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_sai_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_sai_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_semc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_semc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_snvs_hp.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_snvs_hp.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_snvs_lp.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_snvs_lp.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_spdif.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_spdif.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_spdif_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_spdif_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_src.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_src.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_tempmon.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_tempmon.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_trng.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_trng.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_tsc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_tsc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_usdhc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_usdhc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_wdog.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_wdog.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_xbara.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_xbara.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_xbarb.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\drivers\fsl_xbarb.h
+# End Source File
+# End Group
+# Begin Group "1062 project_template"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\project_template\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\project_template\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\project_template\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\project_template\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\project_template\peripherals.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\project_template\peripherals.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\project_template\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\project_template\pin_mux.h
+# End Source File
+# End Group
+# Begin Group "1062 XiP"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\xip\evkmimxrt1060_flexspi_nor_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\xip\evkmimxrt1060_flexspi_nor_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\xip\evkmimxrt1060_sdram_ini_dcd.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\xip\evkmimxrt1060_sdram_ini_dcd.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\xip\fsl_flexspi_nor_boot.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\xip\fsl_flexspi_nor_boot.h
+# End Source File
+# End Group
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\fsl_device_registers.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\MIMXRT1062.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\MIMXRT1062_features.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\system_MIMXRT1062.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1062\system_MIMXRT1062.h
+# End Source File
+# End Group
+# Begin Group "MIMXRT1064"
+
+# PROP Default_Filter ""
+# Begin Group "1064 cmsis_drivers"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\cmsis_drivers\fsl_lpi2c_cmsis.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\cmsis_drivers\fsl_lpi2c_cmsis.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\cmsis_drivers\fsl_lpspi_cmsis.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\cmsis_drivers\fsl_lpspi_cmsis.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\cmsis_drivers\fsl_lpuart_cmsis.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\cmsis_drivers\fsl_lpuart_cmsis.h
+# End Source File
+# End Group
+# Begin Group "1064 drivers"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_adc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_adc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_adc_etc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_adc_etc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_aipstz.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_aipstz.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_aoi.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_aoi.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_bee.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_bee.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_cache.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_cache.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_clock.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_clock.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_cmp.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_cmp.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_common.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_common.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_csi.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_csi.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_dcdc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_dcdc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_dcp.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_dcp.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_dmamux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_dmamux.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_elcdif.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_elcdif.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_enc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_enc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_enet.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_enet.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_ewm.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_ewm.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_flexcan.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_flexcan.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_flexio.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_flexio.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_flexio_i2c_master.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_flexio_i2c_master.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_flexio_i2s.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_flexio_i2s.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_flexio_i2s_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_flexio_i2s_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_flexio_spi.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_flexio_spi.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_flexio_spi_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_flexio_spi_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_flexio_uart.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_flexio_uart.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_flexio_uart_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_flexio_uart_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_flexram.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_flexram.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_flexspi.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_flexspi.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_gpc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_gpc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_gpio.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_gpio.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_gpt.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_gpt.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_iomuxc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_kpp.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_kpp.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_lpi2c.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_lpi2c.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_lpi2c_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_lpi2c_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_lpi2c_freertos.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_lpi2c_freertos.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_lpspi.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_lpspi.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_lpspi_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_lpspi_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_lpspi_freertos.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_lpspi_freertos.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_lpuart.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_lpuart.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_lpuart_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_lpuart_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_lpuart_freertos.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_lpuart_freertos.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_pit.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_pit.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_pmu.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_pmu.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_pwm.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_pwm.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_pxp.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_pxp.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_qtmr.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_qtmr.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_rtwdog.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_rtwdog.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_sai.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_sai.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_sai_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_sai_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_semc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_semc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_snvs_hp.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_snvs_hp.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_snvs_lp.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_snvs_lp.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_spdif.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_spdif.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_spdif_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_spdif_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_src.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_src.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_tempmon.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_tempmon.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_trng.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_trng.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_tsc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_tsc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_usdhc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_usdhc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_wdog.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_wdog.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_xbara.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_xbara.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_xbarb.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\drivers\fsl_xbarb.h
+# End Source File
+# End Group
+# Begin Group "1064 project_template"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\project_template\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\project_template\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\project_template\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\project_template\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\project_template\peripherals.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\project_template\peripherals.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\project_template\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\project_template\pin_mux.h
+# End Source File
+# End Group
+# Begin Group "1064 XiP"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\xip\evkmimxrt1064_flexspi_nor_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\xip\evkmimxrt1064_flexspi_nor_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\xip\evkmimxrt1064_sdram_ini_dcd.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\xip\evkmimxrt1064_sdram_ini_dcd.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\xip\fsl_flexspi_nor_boot.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\xip\fsl_flexspi_nor_boot.h
+# End Source File
+# End Group
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\fsl_device_registers.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\MIMXRT1064.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\MIMXRT1064_features.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\system_MIMXRT1064.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1064\system_MIMXRT1064.h
 # End Source File
 # End Group
 # End Group
@@ -7507,7 +8827,7 @@ SOURCE=.\boards\frdmk22f\wifi_qca_examples\qca_throughput\wlan_qcom.h
 # End Group
 # End Group
 # End Group
-# Begin Group "EVK-bimxrt1050"
+# Begin Group "EVK-iMXRT1050B"
 
 # PROP Default_Filter ""
 # Begin Group "driver_examples Nr. 1"
@@ -7639,6 +8959,38 @@ SOURCE=.\boards\evkbimxrt1050\driver_examples\flexram\ram_allocate\pin_mux.c
 # Begin Source File
 
 SOURCE=.\boards\evkbimxrt1050\driver_examples\flexram\ram_allocate\pin_mux.h
+# End Source File
+# End Group
+# Begin Group "LPSPI_interrupt"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\driver_examples\lpspi\interrupt\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\driver_examples\lpspi\interrupt\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\driver_examples\lpspi\interrupt\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\driver_examples\lpspi\interrupt\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\driver_examples\lpspi\interrupt\lpspi_interrupt.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\driver_examples\lpspi\interrupt\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\driver_examples\lpspi\interrupt\pin_mux.h
 # End Source File
 # End Group
 # End Group

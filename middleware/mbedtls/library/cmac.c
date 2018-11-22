@@ -775,7 +775,7 @@ static int cmac_test_subkeys( int verbose,
                               int block_size,
                               int num_tests )
 {
-    int i, ret;
+    int i, ret = 0;
     mbedtls_cipher_context_t ctx;
     const mbedtls_cipher_info_t *cipher_info;
     unsigned char K1[MBEDTLS_CIPHER_BLKSIZE_MAX];
@@ -798,7 +798,7 @@ static int cmac_test_subkeys( int verbose,
         if( ( ret = mbedtls_cipher_setup( &ctx, cipher_info ) ) != 0 )
         {
             if( verbose != 0 )
-                mbedtls_printf( "test execution failed\n\r" );
+                mbedtls_printf( "test execution failed\n" );
 
             goto cleanup;
         }
@@ -807,7 +807,7 @@ static int cmac_test_subkeys( int verbose,
                                        MBEDTLS_ENCRYPT ) ) != 0 )
         {
             if( verbose != 0 )
-                mbedtls_printf( "test execution failed\n\r" );
+                mbedtls_printf( "test execution failed\n" );
 
             goto cleanup;
         }
@@ -816,7 +816,7 @@ static int cmac_test_subkeys( int verbose,
         if( ret != 0 )
         {
            if( verbose != 0 )
-                mbedtls_printf( "failed\n\r" );
+                mbedtls_printf( "failed\n" );
 
             goto cleanup;
         }
@@ -825,13 +825,13 @@ static int cmac_test_subkeys( int verbose,
             ( ret = memcmp( K2, &subkeys[block_size], block_size ) ) != 0 )
         {
             if( verbose != 0 )
-                mbedtls_printf( "failed\n\r" );
+                mbedtls_printf( "failed\n" );
 
             goto cleanup;
         }
 
         if( verbose != 0 )
-            mbedtls_printf( "passed\n\r" );
+            mbedtls_printf( "passed\n" );
 
         mbedtls_cipher_free( &ctx );
     }
@@ -857,7 +857,7 @@ static int cmac_test_wth_cipher( int verbose,
                                  int num_tests )
 {
     const mbedtls_cipher_info_t *cipher_info;
-    int i, ret;
+    int i, ret = 0;
     unsigned char output[MBEDTLS_CIPHER_BLKSIZE_MAX];
 
     cipher_info = mbedtls_cipher_info_from_type( cipher_type );
@@ -877,19 +877,19 @@ static int cmac_test_wth_cipher( int verbose,
                                          message_lengths[i], output ) ) != 0 )
         {
             if( verbose != 0 )
-                mbedtls_printf( "failed\n\r" );
+                mbedtls_printf( "failed\n" );
             goto exit;
         }
 
         if( ( ret = memcmp( output, &expected_result[i * block_size], block_size ) ) != 0 )
         {
             if( verbose != 0 )
-                mbedtls_printf( "failed\n\r" );
+                mbedtls_printf( "failed\n" );
             goto exit;
         }
 
         if( verbose != 0 )
-            mbedtls_printf( "passed\n\r" );
+            mbedtls_printf( "passed\n" );
     }
 
 exit:
@@ -912,13 +912,13 @@ static int test_aes128_cmac_prf( int verbose )
         {
 
             if( verbose != 0 )
-                mbedtls_printf( "failed\n\r" );
+                mbedtls_printf( "failed\n" );
 
             return( ret );
         }
         else if( verbose != 0 )
         {
-            mbedtls_printf( "passed\n\r" );
+            mbedtls_printf( "passed\n" );
         }
     }
     return( ret );

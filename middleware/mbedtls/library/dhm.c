@@ -643,14 +643,14 @@ int mbedtls_dhm_self_test( int verbose )
                     mbedtls_test_dhm_params_len ) ) != 0 )
     {
         if( verbose != 0 )
-            mbedtls_printf( "failed\r\n" );
+            mbedtls_printf( "failed\n\r" );
 
         ret = 1;
         goto exit;
     }
 
     if( verbose != 0 )
-        mbedtls_printf( "passed\r\n\r\n" );
+        mbedtls_printf( "passed\n\n\r" );
 
 exit:
     mbedtls_dhm_free( &dhm );

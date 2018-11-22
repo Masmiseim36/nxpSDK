@@ -628,11 +628,11 @@ cleanup:
     if( verbose != 0 )
     {
         if( ret != 0 )
-            mbedtls_printf( "failed\r\n" );
+            mbedtls_printf( "failed\n" );
         else
-            mbedtls_printf( "passed\r\n" );
+            mbedtls_printf( "passed\n" );
 
-        mbedtls_printf( "\r\n" );
+        mbedtls_printf( "\n" );
     }
 
     return( ret != 0 );
@@ -711,11 +711,11 @@ cleanup:
     if( verbose != 0 )
     {
         if( ret != 0 )
-            mbedtls_printf( "failed\r\n" );
+            mbedtls_printf( "failed\n\r" );
         else
-            mbedtls_printf( "passed\r\n" );
+            mbedtls_printf( "passed\n\r" );
 
-        mbedtls_printf( "\r\n" );
+        mbedtls_printf( "\n\r" );
     }
 
     return( ret != 0 );

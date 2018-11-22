@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
- * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright 2016-2018 NXP
  * All rights reserved.
- * 
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- *  that the following conditions are met:
  *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_sdio.h"
@@ -83,7 +57,6 @@ static status_t inline SDIO_GoIdle(sdio_card_t *card);
  */
 static status_t SDIO_DecodeCIS(
     sdio_card_t *card, sdio_func_num_t func, uint8_t *dataBuffer, uint32_t tplCode, uint32_t tplLink);
-
 /*******************************************************************************
  * Variables
  ******************************************************************************/
@@ -92,6 +65,8 @@ static const uint32_t g_tupleList[SDIO_COMMON_CIS_TUPLE_NUM] = {
     SDIO_TPL_CODE_MANIFID, SDIO_TPL_CODE_FUNCID, SDIO_TPL_CODE_FUNCE,
 };
 
+/* g_sdmmc statement */
+extern uint32_t g_sdmmc[SDK_SIZEALIGN(SDMMC_GLOBAL_BUFFER_SIZE, SDMMC_DATA_BUFFER_ALIGN_CACHE)];
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -422,6 +397,104 @@ status_t SDIO_IO_Read_Extended(
     }
 
     return kStatus_Success;
+}
+
+status_t SDIO_IO_Transfer(sdio_card_t *card,
+                          sdio_command_t cmd,
+                          uint32_t argument,
+                          uint32_t blockSize,
+                          uint8_t *txData,
+                          uint8_t *rxData,
+                          uint16_t dataSize,
+                          uint32_t *response)
+{
+    assert(card != NULL);
+    assert((dataSize != 0U) && ((txData != NULL) || (rxData != NULL)));
+
+    uint32_t actualSize = dataSize;
+    SDMMCHOST_TRANSFER content = {0U};
+    SDMMCHOST_COMMAND command = {0U};
+    SDMMCHOST_DATA data = {0U};
+    uint32_t i = SDIO_RETRY_TIMES;
+    bool internalAlign = false;
+    uint32_t *dataAddr = (uint32_t *)(txData == NULL ? rxData : txData);
+
+    command.index = cmd;
+    command.argument = argument;
+    command.responseType = kCARD_ResponseTypeR5;
+    command.responseErrorFlags = (kSDIO_StatusCmdCRCError | kSDIO_StatusIllegalCmd | kSDIO_StatusError |
+                                  kSDIO_StatusFunctionNumError | kSDIO_StatusOutofRange);
+    content.command = &command;
+    content.data = NULL;
+
+    if (dataSize)
+    {
+        /* if block size bigger than 1, then use block mode */
+        if (argument & SDIO_EXTEND_CMD_BLOCK_MODE_MASK)
+        {
+            if (dataSize % blockSize != 0)
+            {
+                actualSize = ((dataSize / blockSize) + 1) * blockSize;
+            }
+
+            data.blockCount = actualSize / blockSize;
+            data.blockSize = blockSize;
+        }
+        else
+        {
+            data.blockCount = 1;
+            data.blockSize = dataSize;
+        }
+        /* if data buffer address can not meet host controller internal DMA requirement, sdio driver will try to use
+        * internal align buffer if data size is not bigger than internal buffer size,
+        * Align address transfer always can get a better performance, so if you want sdio driver make buffer address
+        * align, you should
+        * redefine the SDMMC_GLOBAL_BUFFER_SIZE macro to a value which is big enough for your application.
+        */
+        if (((uint32_t)dataAddr & (SDMMCHOST_DMA_BUFFER_ADDR_ALIGN - 1U)) &&
+            (actualSize <= (SDMMC_GLOBAL_BUFFER_SIZE * sizeof(uint32_t))))
+        {
+            internalAlign = true;
+            dataAddr = (uint32_t *)g_sdmmc;
+            memset(g_sdmmc, 0U, actualSize);
+            if (txData)
+            {
+                memcpy(g_sdmmc, txData, dataSize);
+            }
+        }
+
+        if (rxData)
+        {
+            data.rxData = dataAddr;
+        }
+        else
+        {
+            data.txData = dataAddr;
+        }
+
+        content.data = &data;
+    }
+
+    do
+    {
+        if (kStatus_Success == card->host.transfer(card->host.base, &content))
+        {
+            if (internalAlign && rxData)
+            {
+                memcpy(rxData, g_sdmmc, dataSize);
+            }
+
+            if (response != NULL)
+            {
+                *response = command.response[0];
+            }
+
+            return kStatus_Success;
+        }
+
+    } while (i--);
+
+    return kStatus_Fail;
 }
 
 status_t SDIO_GetCardCapability(sdio_card_t *card, sdio_func_num_t func)
@@ -924,7 +997,7 @@ status_t SDIO_HostInit(sdio_card_t *card)
 {
     assert(card);
 
-    if ((!card->isHostReady) && SDMMCHOST_Init(&(card->host), (void *)(&(card->usrParam.cd))) != kStatus_Success)
+    if ((!card->isHostReady) && SDMMCHOST_Init(&(card->host), (void *)(card->usrParam.cd)) != kStatus_Success)
     {
         return kStatus_Fail;
     }

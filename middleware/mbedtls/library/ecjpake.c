@@ -993,7 +993,7 @@ int mbedtls_ecjpake_self_test( int verbose )
             sizeof( ecjpake_test_password ) ) == 0 );
 
     if( verbose != 0 )
-        mbedtls_printf( "passed\r\n" );
+        mbedtls_printf( "passed\n\r" );
 
     if( verbose != 0 )
         mbedtls_printf( "  ECJPAKE test #1 (random handshake): " );
@@ -1028,7 +1028,7 @@ int mbedtls_ecjpake_self_test( int verbose )
     TEST_ASSERT( memcmp( buf, pms, len ) == 0 );
 
     if( verbose != 0 )
-        mbedtls_printf( "passed\r\n" );
+        mbedtls_printf( "passed\n\r" );
 
     if( verbose != 0 )
         mbedtls_printf( "  ECJPAKE test #2 (reference handshake): " );
@@ -1077,7 +1077,7 @@ int mbedtls_ecjpake_self_test( int verbose )
     TEST_ASSERT( memcmp( buf, ecjpake_test_pms, len ) == 0 );
 
     if( verbose != 0 )
-        mbedtls_printf( "passed\r\n" );
+        mbedtls_printf( "passed\n\r" );
 
 cleanup:
     mbedtls_ecjpake_free( &cli );
@@ -1086,13 +1086,13 @@ cleanup:
     if( ret != 0 )
     {
         if( verbose != 0 )
-            mbedtls_printf( "failed\r\n" );
+            mbedtls_printf( "failed\n\r" );
 
         ret = 1;
     }
 
     if( verbose != 0 )
-        mbedtls_printf( "\r\n" );
+        mbedtls_printf( "\n\r" );
 
     return( ret );
 }

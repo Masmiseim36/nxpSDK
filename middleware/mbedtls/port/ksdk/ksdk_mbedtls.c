@@ -1,36 +1,10 @@
 /*
- * The Clear BSD License
  * Copyright 2015-2016, Freescale Semiconductor, Inc.
  * Copyright 2017 NXP
  * All rights reserved.
  *
  * 
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- *  that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of Freescale Semiconductor, Inc. nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #if !defined(MBEDTLS_CONFIG_FILE)
@@ -83,14 +57,14 @@ static cau3_handle_t s_cau3Handle = {.taskDone = MBEDTLS_CAU3_COMPLETION_SIGNAL,
 /**************************** DCP *********************************************/
 /******************************************************************************/
 #if defined(FSL_FEATURE_SOC_DCP_COUNT) && (FSL_FEATURE_SOC_DCP_COUNT > 0)
-static dcp_handle_t s_dcpHandle = {.channel = kDCP_Channel0, .keySlot = kDCP_KeySlot0};
+static dcp_handle_t s_dcpHandle = {.channel = kDCP_Channel0, .keySlot = kDCP_KeySlot0, .swapConfig = kDCP_NoSwap};
 #endif
 
 /******************************************************************************/
 /************************* Key slot management ********************************/
 /******************************************************************************/
 #if (defined(FSL_FEATURE_SOC_CAU3_COUNT) && (FSL_FEATURE_SOC_CAU3_COUNT > 0)) || \
-    (defined(FSL_FEATURE_SOC_DCP_COUNT) && (FSL_FEATURE_SOC_DCP_COUNT > 0) && (defined(MBEDTLS_FREESCALE_DCP_AES)))
+    (defined(MBEDTLS_FREESCALE_DCP_AES))
 static const void *s_mbedtlsCtx[4] = {0};
 
 static void crypto_attach_ctx_to_key_slot(const void *ctx, uint8_t keySlot)
@@ -170,6 +144,10 @@ void CRYPTO_InitHardware(void)
 
     DCP_GetDefaultConfig(&dcpConfig);
     DCP_Init(DCP, &dcpConfig);
+#endif
+#if defined(FSL_FEATURE_SOC_CASPER_COUNT) && (FSL_FEATURE_SOC_CASPER_COUNT > 0)
+    /* Initialize CASPER */
+    CASPER_Init(CASPER);
 #endif
     { /* Init RNG module.*/
 #if defined(FSL_FEATURE_SOC_TRNG_COUNT) && (FSL_FEATURE_SOC_TRNG_COUNT > 0)
@@ -3205,6 +3183,67 @@ cleanup:
 
 #endif /* MBEDTLS_FREESCALE_LTC_PKHA */
 
+#if defined(MBEDTLS_RSA_PUBLIC_ALT)
+#if defined(MBEDTLS_FREESCALE_CASPER_PKHA)
+
+#include "mbedtls/bignum.h"
+#include "mbedtls/rsa.h"
+
+/*
+ * Do an RSA public key operation
+ */
+static inline __attribute__((always_inline)) int mbedtls_mpi_exp_mod_shim(mbedtls_mpi *X,
+                                                                          const mbedtls_mpi *A,
+                                                                          const mbedtls_mpi *E,
+                                                                          const mbedtls_mpi *N /*, mbedtls_mpi *_RR */)
+{
+    return CASPER_ModExp(CASPER, (const uint8_t *)A->p, (const uint8_t *)N->p, N->n, E->p[0], (uint8_t *)A->p);
+}
+
+int mbedtls_rsa_public(mbedtls_rsa_context *ctx, const unsigned char *input, unsigned char *output)
+{
+    int ret;
+    size_t olen;
+    mbedtls_mpi T;
+
+    mbedtls_mpi_init(&T);
+
+#if defined(MBEDTLS_THREADING_C)
+    if ((ret = mbedtls_mutex_lock(&ctx->mutex)) != 0)
+        return (ret);
+#endif
+
+    MBEDTLS_MPI_CHK(mbedtls_mpi_read_binary(&T, input, ctx->len));
+
+    if (mbedtls_mpi_cmp_mpi(&T, &ctx->N) >= 0)
+    {
+        ret = MBEDTLS_ERR_MPI_BAD_INPUT_DATA;
+        goto cleanup;
+    }
+
+    olen = ctx->len;
+
+    MBEDTLS_MPI_CHK(mbedtls_mpi_exp_mod_shim(&T, &T, &ctx->E, &ctx->N /*, &ctx->RN */));
+
+    MBEDTLS_MPI_CHK(mbedtls_mpi_write_binary(&T, output, olen));
+
+cleanup:
+#if defined(MBEDTLS_THREADING_C)
+    if (mbedtls_mutex_unlock(&ctx->mutex) != 0)
+        return (MBEDTLS_ERR_THREADING_MUTEX_ERROR);
+#endif
+
+    mbedtls_mpi_free(&T);
+
+    if (ret != 0)
+        return (MBEDTLS_ERR_RSA_PUBLIC_FAILED + ret);
+
+    return (0);
+}
+
+#endif /* MBEDTLS_FREESCALE_CASPER_PKHA */
+#endif /* MBEDTLS_RSA_PUBLIC_ALT */
+
 /******************************************************************************/
 /*************************** MD5 **********************************************/
 /******************************************************************************/
@@ -3622,6 +3661,33 @@ int mbedtls_sha1_finish_ret(mbedtls_sha1_context *ctx, unsigned char output[20])
 }
 
 #endif /* MBEDTLS_FREESCALE_LPC_SHA1 */
+#if !defined(MBEDTLS_DEPRECATED_REMOVED) && defined(MBEDTLS_SHA1_ALT)
+#include "mbedtls/sha1.h"
+
+void mbedtls_sha1_starts( mbedtls_sha1_context *ctx )
+{
+    mbedtls_sha1_starts_ret( ctx );
+}
+
+void mbedtls_sha1_update( mbedtls_sha1_context *ctx,
+                          const unsigned char *input,
+                          size_t ilen )
+{
+    mbedtls_sha1_update_ret( ctx, input, ilen );
+}
+
+void mbedtls_sha1_finish( mbedtls_sha1_context *ctx,
+                          unsigned char output[20] )
+{
+    mbedtls_sha1_finish_ret( ctx, output );
+}
+
+void mbedtls_sha1_process( mbedtls_sha1_context *ctx,
+                           const unsigned char data[64] )
+{
+    mbedtls_internal_sha1_process( ctx, data );
+}
+#endif /* MBEDTLS_DEPRECATED_REMOVED */
 #endif /* MBEDTLS_SHA1_C */
 
 /******************************************************************************/
@@ -4041,6 +4107,34 @@ int mbedtls_sha256_finish_ret(mbedtls_sha256_context *ctx, unsigned char output[
     return 0;
 }
 #endif /* MBEDTLS_FREESCALE_LTC_SHA256 */
+#if !defined(MBEDTLS_DEPRECATED_REMOVED) && defined(MBEDTLS_SHA256_ALT)
+#include "mbedtls/sha256.h"
+
+void mbedtls_sha256_starts( mbedtls_sha256_context *ctx,
+                            int is224 )
+{
+    mbedtls_sha256_starts_ret( ctx, is224 );
+}
+
+void mbedtls_sha256_update( mbedtls_sha256_context *ctx,
+                            const unsigned char *input,
+                            size_t ilen )
+{
+    mbedtls_sha256_update_ret( ctx, input, ilen );
+}
+
+void mbedtls_sha256_finish( mbedtls_sha256_context *ctx,
+                            unsigned char output[32] )
+{
+    mbedtls_sha256_finish_ret( ctx, output );
+}
+
+void mbedtls_sha256_process( mbedtls_sha256_context *ctx,
+                             const unsigned char data[64] )
+{
+    mbedtls_internal_sha256_process( ctx, data );
+}
+#endif /* MBEDTLS_DEPRECATED_REMOVED */
 #endif /* MBEDTLS_SHA256_C */
 
 /* Entropy poll callback for a hardware source */

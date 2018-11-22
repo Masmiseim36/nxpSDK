@@ -83,13 +83,7 @@ int mbedtls_asn1_write_len( unsigned char **p, unsigned char *start, size_t len 
         return( 4 );
     }
 
-/*
- * Relevant only for 64 bit platforms.
- * On 32 bit platforms, unsigned int cannot exceed 32 bits
- */
-#if defined(MBEDTLS_HAVE_INT64)
-     if( len <= 0xFFFFFFFF )
-#endif
+    if( len <= 0xFFFFFFFF )
     {
         if( *p - start < 5 )
             return( MBEDTLS_ERR_ASN1_BUF_TOO_SMALL );
@@ -102,9 +96,7 @@ int mbedtls_asn1_write_len( unsigned char **p, unsigned char *start, size_t len 
         return( 5 );
     }
 
-#if defined(MBEDTLS_HAVE_INT64)
     return( MBEDTLS_ERR_ASN1_INVALID_LENGTH );
-#endif
 }
 
 int mbedtls_asn1_write_tag( unsigned char **p, unsigned char *start, unsigned char tag )

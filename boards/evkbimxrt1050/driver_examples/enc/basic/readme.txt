@@ -7,14 +7,6 @@ In this example, user needs to connect a real encoder to the board. Actually, on
 
 The ENC hardware is created with a special synchronize mechanism. There are actually 4 counters (the 32-bit position counter is combined with the two 16-bit counter registers) for position with responding hold registers. When any of the counter registers is read, the contents of each counter register is written to the corresponding hold register. Taking a snapshot of the counters' values provides a consistent view of a system position and a velocity to be attained.
 
-
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
-
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -62,6 +54,11 @@ Position revolution value: 0
 ...
 
 
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

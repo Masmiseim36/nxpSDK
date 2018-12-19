@@ -18,14 +18,12 @@
  * limitations under the License.
  */
 
-
 #include "fsl_lpspi_cmsis.h"
 
 /* Component ID definition, used by tools. */
 #ifndef FSL_COMPONENT_ID
 #define FSL_COMPONENT_ID "platform.drivers.lpspi_cmsis"
 #endif
-
 
 #if ((RTE_SPI0 && defined(LPSPI0)) || (RTE_SPI1 && defined(LPSPI1)) || (RTE_SPI2 && defined(LPSPI2)) || \
      (RTE_SPI3 && defined(LPSPI3)) || (RTE_SPI4 && defined(LPSPI4)) || (RTE_SPI5 && defined(LPSPI5)))
@@ -36,7 +34,7 @@
  * ARMCC does not support split the data section automatically, so the driver
  * needs to split the data to separate sections explicitly, to reduce codesize.
  */
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 #define ARMCC_SECTION(section_name) __attribute__((section(section_name)))
 #endif
 
@@ -1229,7 +1227,7 @@ AT_NONCACHEABLE_SECTION(cmsis_lpspi_edma_handle_t LPSPI0_EdmaHandle);
 edma_handle_t LPSPI0_EdmaTxDataToTxRegHandle;
 edma_handle_t LPSPI0_EdmaRxRegToRxDataHandle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("lpspi0_edma_driver_state")
 cmsis_lpspi_edma_driver_state_t LPSPI0_EdmaDriverState = {
 #else
@@ -1295,7 +1293,7 @@ static ARM_SPI_STATUS LPSPI0_EdmaGetStatus(void)
 
 cmsis_lpspi_handle_t LPSPI0_Handle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("lpspi0_interrupt_driver_state")
 cmsis_lpspi_interrupt_driver_state_t LPSPI0_InterruptDriverState = {
 #else
@@ -1392,7 +1390,7 @@ AT_NONCACHEABLE_SECTION(cmsis_lpspi_edma_handle_t LPSPI1_EdmaHandle);
 edma_handle_t LPSPI1_EdmaTxDataToTxRegHandle;
 edma_handle_t LPSPI1_EdmaRxRegToRxDataHandle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("lpspi1_edma_driver_state")
 cmsis_lpspi_edma_driver_state_t LPSPI1_EdmaDriverState = {
 #else
@@ -1458,7 +1456,7 @@ static ARM_SPI_STATUS LPSPI1_EdmaGetStatus(void)
 
 cmsis_lpspi_handle_t LPSPI1_Handle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("lpspi1_interrupt_driver_state")
 cmsis_lpspi_interrupt_driver_state_t LPSPI1_InterruptDriverState = {
 #else
@@ -1555,7 +1553,7 @@ AT_NONCACHEABLE_SECTION(cmsis_lpspi_edma_handle_t LPSPI2_EdmaHandle);
 edma_handle_t LPSPI2_EdmaTxDataToTxRegHandle;
 edma_handle_t LPSPI2_EdmaRxRegToRxDataHandle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("lpspi2_edma_driver_state")
 cmsis_lpspi_edma_driver_state_t LPSPI2_EdmaDriverState = {
 #else
@@ -1621,7 +1619,7 @@ static ARM_SPI_STATUS LPSPI2_EdmaGetStatus(void)
 
 cmsis_lpspi_handle_t LPSPI2_Handle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("lpspi2_interrupt_driver_state")
 cmsis_lpspi_interrupt_driver_state_t LPSPI2_InterruptDriverState = {
 #else
@@ -1718,7 +1716,7 @@ AT_NONCACHEABLE_SECTION(cmsis_lpspi_edma_handle_t LPSPI3_EdmaHandle);
 edma_handle_t LPSPI3_EdmaTxDataToTxRegHandle;
 edma_handle_t LPSPI3_EdmaRxRegToRxDataHandle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("lpspi3_edma_driver_state")
 cmsis_lpspi_edma_driver_state_t LPSPI3_EdmaDriverState = {
 #else
@@ -1784,7 +1782,7 @@ static ARM_SPI_STATUS LPSPI3_EdmaGetStatus(void)
 
 cmsis_lpspi_handle_t LPSPI3_Handle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("lpspi3_interrupt_driver_state")
 cmsis_lpspi_interrupt_driver_state_t LPSPI3_InterruptDriverState = {
 #else
@@ -1881,7 +1879,7 @@ AT_NONCACHEABLE_SECTION(cmsis_lpspi_edma_handle_t LPSPI4_EdmaHandle);
 edma_handle_t LPSPI4_EdmaTxDataToTxRegHandle;
 edma_handle_t LPSPI4_EdmaRxRegToRxDataHandle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("lpspi4_edma_driver_state")
 cmsis_lpspi_edma_driver_state_t LPSPI4_EdmaDriverState = {
 #else
@@ -1947,7 +1945,7 @@ static ARM_SPI_STATUS LPSPI4_EdmaGetStatus(void)
 
 cmsis_lpspi_handle_t LPSPI4_Handle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("lpspi4_interrupt_driver_state")
 cmsis_lpspi_interrupt_driver_state_t LPSPI4_InterruptDriverState = {
 #else
@@ -2044,7 +2042,7 @@ AT_NONCACHEABLE_SECTION(cmsis_lpspi_edma_handle_t LPSPI5_EdmaHandle);
 edma_handle_t LPSPI5_EdmaTxDataToTxRegHandle;
 edma_handle_t LPSPI5_EdmaRxRegToRxDataHandle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("lpspi5_edma_driver_state")
 cmsis_lpspi_edma_driver_state_t LPSPI5_EdmaDriverState = {
 #else
@@ -2110,7 +2108,7 @@ static ARM_SPI_STATUS LPSPI5_EdmaGetStatus(void)
 
 cmsis_lpspi_handle_t LPSPI5_Handle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("lpspi5_interrupt_driver_state")
 cmsis_lpspi_interrupt_driver_state_t LPSPI5_InterruptDriverState = {
 #else

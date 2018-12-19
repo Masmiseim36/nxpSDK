@@ -2,33 +2,9 @@ Overview
 ========
 The simple Shadow lightbulb example to illustrate how client application and things communicate with the Shadow service.
 
-
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
-
-Hardware requirements
-=====================
-
-Board settings
-==============
-Plug GT202 Adaptor board to FRDM stackable headers (J1, J2, J3, J4).
-Remove the resistor R137.
-
-Please use external power supply (J2), USB may not be sufficient.
-
-
-Note:
-To debug in qspiflash, following steps are needed:
-1. Select the flash target and compile.
-3. Set the SW8: 1 off 2 off 3 on 4 off, then power on the board and connect USB cable to J23.
-4. Start debugging in IDE.
-   - Keil: Click "Download (F8)" to program the image to qspiflash first then clicking "Start/Stop Debug Session (Ctrl+F5)" to start debugging.
 Prepare the Demo
 ================
+Please update WiFi firmware to version 3.3.6 using "qca_fwupdate" demo.
 Before running the demo it is need to configure AWS IoT Console and update some of project files:
 
 1.  Create AWS Account: https://console.aws.amazon.com/console/home
@@ -68,7 +44,7 @@ Before running the demo it is need to configure AWS IoT Console and update some 
 
 5.  Connect a USB cable between the PC host and the OpenSDA port on the target board.
 
-6.  Download the program to the target board with a J-Link debugger.
+6.  Download the program to the target board with the CMSIS-DAP or J-Link debugger.
 
 7.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
 
@@ -86,106 +62,94 @@ The log below shows the output of the demo in the terminal window. The log can b
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 0 0 [Tmr Svc] Starting key provisioning...
 1 0 [Tmr Svc] Write root certificate...
-2 0 [Tmr Svc] Write device private key...
-3 9 [Tmr Svc] Write device certificate...
-4 19 [Tmr Svc] Key provisioning done...
-5 19 [Tmr Svc] Starting WiFi...
-6 1271 [Tmr Svc] WiFi module initialized.
-7 4274 [Tmr Svc] WiFi connected to AP AndroidAP.
-8 5278 [Tmr Svc] IP Address acquired 192.168.43.203
-9 5284 [MainDemoTask] [Shadow 0] MQTT: Creation of dedicated MQTT client succeeded.
-10 5291 [MainDemoTask] Sending command to MQTT task.
-11 5296 [MQTT] Received message 10000 from queue.
-12 5613 [MQTT] Looked up a254jqzk0kcvf0.iot.us-west-2.amazonaws.com as 52.41.156.217
-13 11915 [MQTT] MQTT Connect was accepted. Connection established.
-14 11915 [MQTT] Notifying task.
-15 11924 [MainDemoTask] Command sent to MQTT task passed.
-16 11929 [MainDemoTask] [Shadow 0] MQTT: Connect succeeded.
-17 11934 [MainDemoTask] Sending command to MQTT task.
-18 12915 [MQTT] Received message 20000 from queue.
-19 14201 [MQTT] MQTT Subscribe was accepted. Subscribed.
-20 14201 [MQTT] Notifying task.
-21 14209 [MainDemoTask] Command sent to MQTT task passed.
-22 14214 [MainDemoTask] [Shadow 0] MQTT: Subscribe to callback topic succeeded.
-23 14221 [MainDemoTask] Sending command to MQTT task.
-24 15201 [MQTT] Received message 30000 from queue.
-25 16676 [MQTT] MQTT Subscribe was accepted. Subscribed.
-26 16676 [MQTT] Notifying task.
-27 16684 [MainDemoTask] Command sent to MQTT task passed.
-28 16689 [MainDemoTask] [Shadow 0] MQTT: Subscribe to callback topic succeeded.
-29 16696 [MainDemoTask] Sending command to MQTT task.
-30 17676 [MQTT] Received message 40000 from queue.
-31 18947 [MQTT] MQTT Subscribe was accepted. Subscribed.
-32 18947 [MQTT] Notifying task.
-33 18955 [MainDemoTask] Command sent to MQTT task passed.
-34 18960 [MainDemoTask] [Shadow 0] MQTT: Subscribe to callback topic succeeded.
-35 18967 [MainDemoTask] Sending command to MQTT task.
-36 19947 [MQTT] Received message 50000 from queue.
-37 21237 [MQTT] MQTT Subscribe was accepted. Subscribed.
-38 21237 [MQTT] Notifying task.
-39 21245 [MainDemoTask] Command sent to MQTT task passed.
-40 21250 [MainDemoTask] [Shadow 0] MQTT: Subscribe to accepted topic succeeded.
-41 21257 [MainDemoTask] Sending command to MQTT task.
-42 22237 [MQTT] Received message 60000 from queue.
-43 23534 [MQTT] MQTT Subscribe was accepted. Subscribed.
-44 23534 [MQTT] Notifying task.
-45 23542 [MainDemoTask] Command sent to MQTT task passed.
-46 23547 [MainDemoTask] [Shadow 0] MQTT: Subscribe to rejected topic succeeded.
-47 23554 [MainDemoTask] Sending command to MQTT task.
-48 24534 [MQTT] Received message 70000 from queue.
-49 24534 [MQTT] Notifying task.
-50 24542 [MainDemoTask] Command sent to MQTT task passed.
-51 24547 [MainDemoTask] [Shadow 0] MQTT: Publish to operation topic succeeded.
-52 25854 [Shd-IOT-0] Sending command to MQTT task.
-53 26853 [MQTT] Received message 80000 from queue.
-54 28123 [MQTT] MQTT Subscribe was accepted. Subscribed.
-55 28123 [MQTT] Notifying task.
-56 28131 [Shd-IOT-0] Command sent to MQTT task passed.
-57 28136 [Shd-IOT-0] [Shadow 0] MQTT: Subscribe to accepted topic succeeded.
-58 28143 [Shd-IOT-0] Sending command to MQTT task.
-59 29123 [MQTT] Received message 90000 from queue.
-60 30398 [MQTT] MQTT Subscribe was accepted. Subscribed.
-61 30398 [MQTT] Notifying task.
-62 30406 [Shd-IOT-0] Command sent to MQTT task passed.
-63 30411 [Shd-IOT-0] [Shadow 0] MQTT: Subscribe to rejected topic succeeded.
-64 30418 [Shd-IOT-0] Sending command to MQTT task.
-65 31398 [MQTT] Received message a0000 from queue.
-66 31399 [MQTT] Notifying task.
-67 31406 [Shd-IOT-0] Command sent to MQTT task passed.
-68 31411 [Shd-IOT-0] [Shadow 0] MQTT: Publish to operation topic succeeded.
-69 32726 [Shd-IOT-0] Shadow Demo initialized.
-70 32730 [Shd-IOT-0] Client request to change color of light bulb.
-71 32736 [Shd-IOT-0] Sending command to MQTT task.
-72 33726 [MQTT] Received message b0000 from queue.
-73 33727 [MQTT] Notifying task.
-74 33734 [Shd-IOT-0] Command sent to MQTT task passed.
-75 33739 [Shd-IOT-0] [Shadow 0] MQTT: Publish to operation topic succeeded.
-76 35176 [ShDemoUpdt] Performing thing update.
-77 35181 [Shd-IOT-0] Client change done in thing shadow.
-78 35187 [ShDemoUpdt] Sending command to MQTT task.
-79 36177 [MQTT] Received message c0000 from queue.
-80 36178 [MQTT] Notifying task.
-81 36185 [ShDemoUpdt] Command sent to MQTT task passed.
-82 36190 [ShDemoUpdt] [Shadow 0] MQTT: Publish to operation topic succeeded.
-83 37524 [ShDemoUpdt] Performing thing update complete.
-84 37726 [Shd-IOT-0] Client request to change color of light bulb.
-85 37732 [Shd-IOT-0] Sending command to MQTT task.
-86 38524 [MQTT] Received message d0000 from queue.
-87 38525 [MQTT] Notifying task.
-88 38532 [Shd-IOT-0] Command sent to MQTT task passed.
-89 38537 [Shd-IOT-0] [Shadow 0] MQTT: Publish to operation topic succeeded.
-90 39827 [Shd-IOT-0] Client change done in thing shadow.
-91 39833 [ShDemoUpdt] Performing thing update.
-92 39838 [ShDemoUpdt] Sending command to MQTT task.
-93 40828 [MQTT] Received message e0000 from queue.
-94 40829 [MQTT] Notifying task.
-95 40836 [ShDemoUpdt] Command sent to MQTT task passed.
-96 40841 [ShDemoUpdt] [Shadow 0] MQTT: Publish to operation topic succeeded.
-97 42150 [ShDemoUpdt] Performing thing update complete.
+2 15 [Tmr Svc] Write device private key...
+3 488 [Tmr Svc] Write device certificate...
+4 508 [Tmr Svc] Key provisioning done...
+5 509 [Tmr Svc] Starting WiFi...
+6 2086 [Tmr Svc] WiFi module initialized.
+7 5237 [Tmr Svc] WiFi connected to AP External-Internet.
+8 5238 [Tmr Svc] IP Address acquired 192.168.0.245
+9 5248 [MainDemoTask] [Shadow 0] MQTT: Creation of dedicated MQTT client succeeded.
+10 5511 [MQTT] Looked up ah7mkbw0r336-ats.iot.us-west-2.amazonaws.com as 54.69.21.148
+11 18642 [MainDemoTask] [Shadow 0] MQTT: Connect succeeded.
+12 18963 [MainDemoTask] [Shadow 0] MQTT: Subscribe to accepted topic succeeded.
+13 19283 [MainDemoTask] [Shadow 0] MQTT: Subscribe to rejected topic succeeded.
+14 19297 [MainDemoTask] [Shadow 0] MQTT: Publish to operation topic succeeded.
+15 19931 [MainDemoTask] [Shadow 0] MQTT: Unsubscribe from rejected topic succeeded.
+16 20252 [MainDemoTask] [Shadow 0] MQTT: Subscribe to callback topic succeeded.
+17 20255 [MainDemoTask] Shadow client initialized.
+18 20260 [ShDemoUpdt] Performing Thing Shadow update.
+19 20579 [ShDemoUpdt] [Shadow 0] MQTT: Subscribe to accepted topic succeeded.
+20 20899 [ShDemoUpdt] [Shadow 0] MQTT: Subscribe to rejected topic succeeded.
+21 20913 [ShDemoUpdt] [Shadow 0] MQTT: Publish to operation topic succeeded.
+22 21231 [ShDemoUpdt] Successfully performed update.
+23 21234 [Shd-IOT-0] Shd-IOT-0 changing desired state.
+24 21237 [ShDemoUpdt] Performing Thing Shadow update.
+25 21251 [ShDemoUpdt] [Shadow 0] MQTT: Publish to operation topic succeeded.
+26 21669 [ShDemoUpdt] Successfully performed update.
+27 21672 [Shd-IOT-0] Shd-IOT-0 done changing desired state.
+28 26234 [Shd-IOT-0] Shd-IOT-0 changing desired state.
+29 26237 [ShDemoUpdt] Performing Thing Shadow update.
+30 26250 [ShDemoUpdt] [Shadow 0] MQTT: Publish to operation topic succeeded.
+31 26589 [MQTT] Successfully added new reported state to update queue.
+32 26592 [ShDemoUpdt] Successfully performed update.
+34 26596 [ShDemoUpdt] Performing Thing Shadow update.
+33 26595 [Shd-IOT-0] Shd-IOT-0 done changing desired state.
+35 26611 [ShDemoUpdt] [Shadow 0] MQTT: Publish to operation topic succeeded.
+36 26927 [ShDemoUpdt] Successfully performed update.
+37 31234 [Shd-IOT-0] Shd-IOT-0 changing desired state.
+38 31237 [ShDemoUpdt] Performing Thing Shadow update.
+39 31250 [ShDemoUpdt] [Shadow 0] MQTT: Publish to operation topic succeeded.
+40 31583 [MQTT] Successfully added new reported state to update queue.
+41 31587 [ShDemoUpdt] Successfully performed update.
+42 31589 [ShDemoUpdt] Performing Thing Shadow update.
+43 31591 [Shd-IOT-0] Shd-IOT-0 done changing desired state.
+44 31603 [ShDemoUpdt] [Shadow 0] MQTT: Publish to operation topic succeeded.
+45 31931 [ShDemoUpdt] Successfully performed update.
+46 36234 [Shd-IOT-0] Shd-IOT-0 changing desired state.
+47 36237 [ShDemoUpdt] Performing Thing Shadow update.
+48 36250 [ShDemoUpdt] [Shadow 0] MQTT: Publish to operation topic succeeded.
+49 36584 [MQTT] Successfully added new reported state to update queue.
+50 36588 [ShDemoUpdt] Successfully performed update.
+51 36590 [ShDemoUpdt] Performing Thing Shadow update.
+52 36592 [Shd-IOT-0] Shd-IOT-0 done changing desired state.
+53 36604 [ShDemoUpdt] [Shadow 0] MQTT: Publish to operation topic succeeded.
+54 36922 [ShDemoUpdt] Successfully performed update.
+55 41234 [Shd-IOT-0] Shd-IOT-0 changing desired state.
+56 41237 [ShDemoUpdt] Performing Thing Shadow update.
+57 41250 [ShDemoUpdt] [Shadow 0] MQTT: Publish to operation topic succeeded.
+58 41585 [MQTT] Successfully added new reported state to update queue.
+59 41588 [ShDemoUpdt] Successfully performed update.
 .
 .
 .
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
+Hardware requirements
 =====================
+- Mini/micro USB cable
+- EVK-MIMXRT1020 board
+- GT202 Adaptor V1.04
+- Personal Computer
+
+Board settings
+==============
+Plug GT202 Adaptor board to FRDM stackable headers (J1, J2, J3, J4).
+Remove the resistor R137.
+
+Please use external power supply (J2), USB may not be sufficient.
+
+
+Note:
+To debug in qspiflash, following steps are needed:
+1. Select the flash target and compile.
+3. Set the SW8: 1 off 2 off 3 on 4 off, then power on the board and connect USB cable to J23.
+4. Start debugging in IDE.
+   - Keil: Click "Download (F8)" to program the image to qspiflash first then clicking "Start/Stop Debug Session (Ctrl+F5)" to start debugging.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

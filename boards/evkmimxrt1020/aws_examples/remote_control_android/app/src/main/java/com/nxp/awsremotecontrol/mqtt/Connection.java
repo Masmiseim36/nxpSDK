@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 NXP
+ * Copyright 2017-2018 NXP
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -47,6 +47,7 @@ public class Connection {
     public static final String LOG_TAG = Connection.class.getCanonicalName();
 
     private AWSIotMqttManager mqttManager;
+    private AwsConstants awsConstants;
     private CognitoCachingCredentialsProvider credentialsProvider;
 
     public Connection(Context appContext, AwsConstants awsConstants) {
@@ -59,9 +60,7 @@ public class Connection {
             awsConstants.getMyRegion()
         );
 
-        // Create MQTT Client
-        String clientId = UUID.randomUUID().toString(); // MQTT client IDs are required to be unique per AWS IoT account
-        mqttManager = new AWSIotMqttManager(clientId, awsConstants.getCustomerSpecificEndpoint());
+        this.awsConstants = awsConstants;
     }
 
     /**
@@ -70,6 +69,11 @@ public class Connection {
      */
     public boolean connect(AWSIotMqttClientStatusCallback callback) {
         try {
+            if (mqttManager == null) {
+                // Create MQTT Client
+                String clientId = UUID.randomUUID().toString(); // MQTT client IDs are required to be unique per AWS IoT account
+                mqttManager = new AWSIotMqttManager(clientId, awsConstants.getCustomerSpecificEndpoint());
+            }
             mqttManager.connect(credentialsProvider, callback);
         } catch (final Exception e) {
             Log.e(LOG_TAG, "Connection error.", e);
@@ -82,12 +86,14 @@ public class Connection {
     /**
      * Disconnect from AWS IoT via MQTT client.
      */
-    public void disconnect() {
+    public boolean disconnect() {
         try {
-            mqttManager.disconnect();
+            return mqttManager.disconnect();
         } catch (Exception e) {
             Log.e(LOG_TAG, "Disconnect error.", e);
         }
+
+        return false;
     }
 
     /**

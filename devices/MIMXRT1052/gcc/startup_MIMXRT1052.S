@@ -2,44 +2,16 @@
 /*  @file:    startup_MIMXRT1052.s                                           */
 /*  @purpose: CMSIS Cortex-M7 Core Device Startup File                       */
 /*            MIMXRT1052                                                     */
-/*  @version: 0.1                                                            */
-/*  @date:    2017-1-10                                                      */
-/*  @build:   b180509                                                        */
+/*  @version: 1.0                                                            */
+/*  @date:    2018-9-21                                                      */
+/*  @build:   b180921                                                        */
 /* ------------------------------------------------------------------------- */
 /*                                                                           */
-/* The Clear BSD License                                                     */
 /* Copyright 1997-2016 Freescale Semiconductor, Inc.                         */
 /* Copyright 2016-2018 NXP                                                   */
 /* All rights reserved.                                                      */
 /*                                                                           */
-/* Redistribution and use in source and binary forms, with or without        */
-/* modification, are permitted (subject to the limitations in the            */
-/* disclaimer below) provided that the following conditions are met:         */
-/*                                                                           */
-/* * Redistributions of source code must retain the above copyright          */
-/*   notice, this list of conditions and the following disclaimer.           */
-/*                                                                           */
-/* * Redistributions in binary form must reproduce the above copyright       */
-/*   notice, this list of conditions and the following disclaimer in the     */
-/*   documentation and/or other materials provided with the distribution.    */
-/*                                                                           */
-/* * Neither the name of the copyright holder nor the names of its           */
-/*   contributors may be used to endorse or promote products derived from    */
-/*   this software without specific prior written permission.                */
-/*                                                                           */
-/* NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE           */
-/* GRANTED BY THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT       */
-/* HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED               */
-/* WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF      */
-/* MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE                  */
-/* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE     */
-/* LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR       */
-/* CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF      */
-/* SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR           */
-/* BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,     */
-/* WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE      */
-/* OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN    */
-/* IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.                             */
+/* SPDX-License-Identifier: BSD-3-Clause                                     */
 /*****************************************************************************/
 /* Version: GCC for ARM Embedded Processors                                  */
 /*****************************************************************************/
@@ -129,10 +101,10 @@ __isr_vector:
     .long   SAI3_RX_IRQHandler                              /* SAI3 interrupt*/
     .long   SAI3_TX_IRQHandler                              /* SAI3 interrupt*/
     .long   SPDIF_IRQHandler                                /* SPDIF interrupt*/
-    .long   ANATOP_EVENT0_IRQHandler                        /* ANATOP interrupt*/
-    .long   ANATOP_EVENT1_IRQHandler                        /* ANATOP interrupt*/
-    .long   ANATOP_TAMP_LOW_HIGH_IRQHandler                 /* ANATOP interrupt*/
-    .long   ANATOP_TEMP_PANIC_IRQHandler                    /* ANATOP interrupt*/
+    .long   PMU_EVENT_IRQHandler                            /* Brown-out event interrupt*/
+    .long   Reserved78_IRQHandler                           /* Reserved interrupt*/
+    .long   TEMP_LOW_HIGH_IRQHandler                        /* TempSensor low/high interrupt*/
+    .long   TEMP_PANIC_IRQHandler                           /* TempSensor panic interrupt*/
     .long   USB_PHY1_IRQHandler                             /* USBPHY (UTMI0), Interrupt*/
     .long   USB_PHY2_IRQHandler                             /* USBPHY (UTMI0), Interrupt*/
     .long   ADC1_IRQHandler                                 /* ADC1 interrupt*/
@@ -220,14 +192,14 @@ __isr_vector:
     .long   PWM4_2_IRQHandler                               /* PWM4 capture 2, compare 2, or reload 0 interrupt*/
     .long   PWM4_3_IRQHandler                               /* PWM4 capture 3, compare 3, or reload 0 interrupt*/
     .long   PWM4_FAULT_IRQHandler                           /* PWM4 fault or reload error interrupt*/
-    .long   Reserved168_IRQHandler                          /* Reserved interrupt*/
-    .long   Reserved169_IRQHandler                          /* Reserved interrupt*/
-    .long   Reserved170_IRQHandler                          /* Reserved interrupt*/
-    .long   Reserved171_IRQHandler                          /* Reserved interrupt*/
-    .long   Reserved172_IRQHandler                          /* Reserved interrupt*/
-    .long   Reserved173_IRQHandler                          /* Reserved interrupt*/
-    .long   SJC_ARM_DEBUG_IRQHandler                        /* SJC ARM debug interrupt*/
-    .long   NMI_WAKEUP_IRQHandler                           /* NMI wake up*/
+    .long   DefaultISR                                      /* 168*/
+    .long   DefaultISR                                      /* 169*/
+    .long   DefaultISR                                      /* 170*/
+    .long   DefaultISR                                      /* 171*/
+    .long   DefaultISR                                      /* 172*/
+    .long   DefaultISR                                      /* 173*/
+    .long   DefaultISR                                      /* 174*/
+    .long   DefaultISR                                      /* 175*/
     .long   DefaultISR                                      /* 176*/
     .long   DefaultISR                                      /* 177*/
     .long   DefaultISR                                      /* 178*/
@@ -483,15 +455,6 @@ SysTick_Handler:
     ldr   r0,=SysTick_Handler
     bx    r0
     .size SysTick_Handler, . - SysTick_Handler
-
-    .align 1
-    .thumb_func
-    .weak NMI_WAKEUP_IRQHandler
-    .type NMI_WAKEUP_IRQHandler, %function
-NMI_WAKEUP_IRQHandler:
-    ldr   r0,=NMI_WAKEUP_IRQHandler
-    bx    r0
-    .size NMI_WAKEUP_IRQHandler, . - NMI_WAKEUP_IRQHandler
 
     .align 1
     .thumb_func
@@ -991,10 +954,10 @@ ENET_1588_Timer_IRQHandler:
     def_irq_handler    SAI3_RX_DriverIRQHandler
     def_irq_handler    SAI3_TX_DriverIRQHandler
     def_irq_handler    SPDIF_DriverIRQHandler
-    def_irq_handler    ANATOP_EVENT0_IRQHandler
-    def_irq_handler    ANATOP_EVENT1_IRQHandler
-    def_irq_handler    ANATOP_TAMP_LOW_HIGH_IRQHandler
-    def_irq_handler    ANATOP_TEMP_PANIC_IRQHandler
+    def_irq_handler    PMU_EVENT_IRQHandler
+    def_irq_handler    Reserved78_IRQHandler
+    def_irq_handler    TEMP_LOW_HIGH_IRQHandler
+    def_irq_handler    TEMP_PANIC_IRQHandler
     def_irq_handler    USB_PHY1_IRQHandler
     def_irq_handler    USB_PHY2_IRQHandler
     def_irq_handler    ADC1_IRQHandler
@@ -1082,12 +1045,5 @@ ENET_1588_Timer_IRQHandler:
     def_irq_handler    PWM4_2_IRQHandler
     def_irq_handler    PWM4_3_IRQHandler
     def_irq_handler    PWM4_FAULT_IRQHandler
-    def_irq_handler    Reserved168_IRQHandler
-    def_irq_handler    Reserved169_IRQHandler
-    def_irq_handler    Reserved170_IRQHandler
-    def_irq_handler    Reserved171_IRQHandler
-    def_irq_handler    Reserved172_IRQHandler
-    def_irq_handler    Reserved173_IRQHandler
-    def_irq_handler    SJC_ARM_DEBUG_IRQHandler
 
     .end

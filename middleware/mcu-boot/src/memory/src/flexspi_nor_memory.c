@@ -395,13 +395,12 @@ status_t flexspi_nor_mem_config(uint32_t *config)
             bool isParallelMode = flexspi_is_parallel_mode(&s_flexspiNorConfigBlock.memConfig);
             volatile uint8_t *config_buffer = (uint8_t *)&s_flexspiNorConfigBlock;
             bool hasError = false;
-
+            uint8_t temp_buf[sizeof(s_flexspiNorConfigBlock)];
             do
             {
                 // Clear parallel mode setting temporarily
                 if (isParallelMode)
                 {
-                    volatile uint32_t temp_buf[sizeof(s_flexspiNorConfigBlock) / sizeof(uint32_t)];
                     memcpy((void *)&temp_buf, &s_flexspiNorConfigBlock, sizeof(temp_buf));
                     config_buffer = (uint8_t *)temp_buf;
 
@@ -425,7 +424,6 @@ status_t flexspi_nor_mem_config(uint32_t *config)
                     // Swap before write
                     if (needSwapConfigBlock)
                     {
-                        volatile uint8_t temp_buf[sizeof(s_flexspiNorConfigBlock)];
                         uint8_t *configBlock = (uint8_t *)&s_flexspiNorConfigBlock;
                         for (uint32_t i = 0; i < sizeof(s_flexspiNorConfigBlock); i += 2)
                         {

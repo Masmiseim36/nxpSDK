@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2018 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "mcdrv_evkbimxrt1050.h"
@@ -50,8 +24,6 @@ mcdrv_pwm3ph_pwma_t g_sM1Pwm3ph;
 
 /* Clock setup structure */
 clock_setup_t g_sClockSetup;
-
-extern const clock_arm_pll_config_t armPllConfig;
 
 /*******************************************************************************
  * Code
@@ -86,6 +58,7 @@ void MCDRV_Init_M1(void)
     
     /* 6-channel PWM peripheral init for M1 */
     M1_MCDRV_PWM_PERIPH_INIT();
+
 }
 
 /*!
@@ -309,7 +282,7 @@ void M1_InitPWM(void)
     PWM_Type *PWMBase = (PWM_Type *)PWM1;
 
     /* PWM clock gating register: enabled */
-    CCM->CCGR4 = (CCM->CCGR4 & ~(CCM_CCGR4_CG8_MASK)) | CCM_CCGR4_CG8(0x3);
+    CCM->CCGR4 = (CCM->CCGR4 & ~(uint16_t)(CCM_CCGR4_CG8_MASK)) | CCM_CCGR4_CG8(0x3);
   
     /* Full cycle reload */
     PWMBase->SM[0].CTRL |= PWM_CTRL_FULL_MASK;
@@ -358,51 +331,51 @@ void M1_InitPWM(void)
     PWMBase->SM[3].DTCNT1 = PWM_DTCNT1_DTCNT1(g_sClockSetup.ui16M1PwmDeadTime);
 
     /* Channels A and B disabled when fault 0 occurs */
-    PWMBase->SM[0].DISMAP[0] = ((PWMBase->SM[0].DISMAP[0] & ~PWM_DISMAP_DIS0A_MASK) | PWM_DISMAP_DIS0A(0x1));
-    PWMBase->SM[1].DISMAP[0] = ((PWMBase->SM[0].DISMAP[0] & ~PWM_DISMAP_DIS0A_MASK) | PWM_DISMAP_DIS0A(0x1));
-    PWMBase->SM[3].DISMAP[0] = ((PWMBase->SM[0].DISMAP[0] & ~PWM_DISMAP_DIS0A_MASK) | PWM_DISMAP_DIS0A(0x1));
-    PWMBase->SM[0].DISMAP[0] = ((PWMBase->SM[0].DISMAP[0] & ~PWM_DISMAP_DIS0B_MASK) | PWM_DISMAP_DIS0B(0x1));
-    PWMBase->SM[1].DISMAP[0] = ((PWMBase->SM[0].DISMAP[0] & ~PWM_DISMAP_DIS0B_MASK) | PWM_DISMAP_DIS0B(0x1));
-    PWMBase->SM[3].DISMAP[0] = ((PWMBase->SM[0].DISMAP[0] & ~PWM_DISMAP_DIS0B_MASK) | PWM_DISMAP_DIS0B(0x1));
+    PWMBase->SM[0].DISMAP[0] = ((PWMBase->SM[0].DISMAP[0] & ~(uint16_t)PWM_DISMAP_DIS0A_MASK) | PWM_DISMAP_DIS0A(0x1));
+    PWMBase->SM[1].DISMAP[0] = ((PWMBase->SM[0].DISMAP[0] & ~(uint16_t)PWM_DISMAP_DIS0A_MASK) | PWM_DISMAP_DIS0A(0x1));
+    PWMBase->SM[3].DISMAP[0] = ((PWMBase->SM[0].DISMAP[0] & ~(uint16_t)PWM_DISMAP_DIS0A_MASK) | PWM_DISMAP_DIS0A(0x1));
+    PWMBase->SM[0].DISMAP[0] = ((PWMBase->SM[0].DISMAP[0] & ~(uint16_t)PWM_DISMAP_DIS0B_MASK) | PWM_DISMAP_DIS0B(0x1));
+    PWMBase->SM[1].DISMAP[0] = ((PWMBase->SM[0].DISMAP[0] & ~(uint16_t)PWM_DISMAP_DIS0B_MASK) | PWM_DISMAP_DIS0B(0x1));
+    PWMBase->SM[3].DISMAP[0] = ((PWMBase->SM[0].DISMAP[0] & ~(uint16_t)PWM_DISMAP_DIS0B_MASK) | PWM_DISMAP_DIS0B(0x1));
 
     /* Modules one and two gets clock from module zero */
-    PWMBase->SM[1].CTRL2 = (PWMBase->SM[1].CTRL2 & ~PWM_CTRL2_CLK_SEL_MASK) | PWM_CTRL2_CLK_SEL(0x2);
-    PWMBase->SM[3].CTRL2 = (PWMBase->SM[3].CTRL2 & ~PWM_CTRL2_CLK_SEL_MASK) | PWM_CTRL2_CLK_SEL(0x2);
+    PWMBase->SM[1].CTRL2 = (PWMBase->SM[1].CTRL2 & ~(uint16_t)PWM_CTRL2_CLK_SEL_MASK) | PWM_CTRL2_CLK_SEL(0x2);
+    PWMBase->SM[3].CTRL2 = (PWMBase->SM[3].CTRL2 & ~(uint16_t)PWM_CTRL2_CLK_SEL_MASK) | PWM_CTRL2_CLK_SEL(0x2);
 
     /* Master reload active for modules one and three */
     PWMBase->SM[1].CTRL2 |= PWM_CTRL2_RELOAD_SEL_MASK;
     PWMBase->SM[3].CTRL2 |= PWM_CTRL2_RELOAD_SEL_MASK;
 
     /* Master reload is generated every one opportunity */
-    PWMBase->SM[0].CTRL = (PWMBase->SM[0].CTRL & ~PWM_CTRL_LDFQ_MASK) | PWM_CTRL_LDFQ(M1_FOC_FREQ_VS_PWM_FREQ - 1);
+    PWMBase->SM[0].CTRL = (PWMBase->SM[0].CTRL & ~(uint16_t)PWM_CTRL_LDFQ_MASK) | PWM_CTRL_LDFQ(M1_FOC_FREQ_VS_PWM_FREQ - 1);
 
     /* Master sync active for modules one and three*/
-    PWMBase->SM[1].CTRL2 = (PWMBase->SM[1].CTRL2 & ~PWM_CTRL2_INIT_SEL_MASK) | PWM_CTRL2_INIT_SEL(0x2);
-    PWMBase->SM[3].CTRL2 = (PWMBase->SM[3].CTRL2 & ~PWM_CTRL2_INIT_SEL_MASK) | PWM_CTRL2_INIT_SEL(0x2);
+    PWMBase->SM[1].CTRL2 = (PWMBase->SM[1].CTRL2 & ~(uint16_t)PWM_CTRL2_INIT_SEL_MASK) | PWM_CTRL2_INIT_SEL(0x2);
+    PWMBase->SM[3].CTRL2 = (PWMBase->SM[3].CTRL2 & ~(uint16_t)PWM_CTRL2_INIT_SEL_MASK) | PWM_CTRL2_INIT_SEL(0x2);
 
     /* Fault 0 active in logic level one, automatic clearing */
-    PWMBase->FCTRL = (PWMBase->FCTRL & ~PWM_FCTRL_FLVL_MASK) | PWM_FCTRL_FLVL(0x1);
-    PWMBase->FCTRL = (PWMBase->FCTRL & ~PWM_FCTRL_FAUTO_MASK) | PWM_FCTRL_FAUTO(0x1);
+    PWMBase->FCTRL = (PWMBase->FCTRL & ~(uint16_t)PWM_FCTRL_FLVL_MASK) | PWM_FCTRL_FLVL(0x1);
+    PWMBase->FCTRL = (PWMBase->FCTRL & ~(uint16_t)PWM_FCTRL_FAUTO_MASK) | PWM_FCTRL_FAUTO(0x1);
 
     /* Clear fault flags */
-    PWMBase->FSTS = (PWMBase->FCTRL & ~PWM_FSTS_FFLAG_MASK) | PWM_FSTS_FFLAG(0xF);
+    PWMBase->FSTS = (PWMBase->FCTRL & ~(uint16_t)PWM_FSTS_FFLAG_MASK) | PWM_FSTS_FFLAG(0xF);
 
     /* PWMs are re-enabled at PWM full cycle */
-    PWMBase->FSTS = (PWMBase->FSTS & ~PWM_FSTS_FFULL_MASK) | PWM_FSTS_FFULL(0x1);
+    PWMBase->FSTS = (PWMBase->FSTS & ~(uint16_t)PWM_FSTS_FFULL_MASK) | PWM_FSTS_FFULL(0x1);
 
     /* PWM fault filter - 5 Fast peripheral clocks sample rate, 5 agreeing
        samples to activate */
-    PWMBase->FFILT = (PWMBase->FFILT & ~PWM_FFILT_FILT_PER_MASK) | PWM_FFILT_FILT_PER(5);
-    PWMBase->FFILT = (PWMBase->FFILT & ~PWM_FFILT_FILT_CNT_MASK) | PWM_FFILT_FILT_CNT(5);
+    PWMBase->FFILT = (PWMBase->FFILT & ~(uint16_t)PWM_FFILT_FILT_PER_MASK) | PWM_FFILT_FILT_PER(5);
+    PWMBase->FFILT = (PWMBase->FFILT & ~(uint16_t)PWM_FFILT_FILT_CNT_MASK) | PWM_FFILT_FILT_CNT(5);
 
     /* Enable A&B PWM outputs for submodules zero, one and three */
-    PWMBase->OUTEN = (PWMBase->OUTEN & ~PWM_OUTEN_PWMA_EN_MASK) | PWM_OUTEN_PWMA_EN(0xB);
-    PWMBase->OUTEN = (PWMBase->OUTEN & ~PWM_OUTEN_PWMB_EN_MASK) | PWM_OUTEN_PWMB_EN(0xB);
+    PWMBase->OUTEN = (PWMBase->OUTEN & ~(uint16_t)PWM_OUTEN_PWMA_EN_MASK) | PWM_OUTEN_PWMA_EN(0xB);
+    PWMBase->OUTEN = (PWMBase->OUTEN & ~(uint16_t)PWM_OUTEN_PWMB_EN_MASK) | PWM_OUTEN_PWMB_EN(0xB);
 
     /* Start PWMs (set load OK flags and run) */
-    PWMBase->MCTRL = (PWMBase->MCTRL & ~PWM_MCTRL_CLDOK_MASK) | PWM_MCTRL_CLDOK(0xF);
-    PWMBase->MCTRL = (PWMBase->MCTRL & ~PWM_MCTRL_LDOK_MASK) | PWM_MCTRL_LDOK(0xF);
-    PWMBase->MCTRL = (PWMBase->MCTRL & ~PWM_MCTRL_RUN_MASK) | PWM_MCTRL_RUN(0xF);
+    PWMBase->MCTRL = (PWMBase->MCTRL & ~(uint16_t)PWM_MCTRL_CLDOK_MASK) | PWM_MCTRL_CLDOK(0xF);
+    PWMBase->MCTRL = (PWMBase->MCTRL & ~(uint16_t)PWM_MCTRL_LDOK_MASK) | PWM_MCTRL_LDOK(0xF);
+    PWMBase->MCTRL = (PWMBase->MCTRL & ~(uint16_t)PWM_MCTRL_RUN_MASK) | PWM_MCTRL_RUN(0xF);
     
     /* Initialize MC driver */
     g_sM1Pwm3ph.pui32PwmBaseAddress = (PWM_Type *)PWMBase;
@@ -429,10 +402,7 @@ void InitXBARA(void)
     XBARA_Init(XBARA1); 
     
     /* Configure the XBARA signal connections. (set for sync mode in ADC_ETC) */       
-    XBARA_SetSignalsConnection(XBARA1, kXBARA1_InputFlexpwm1Pwm1OutTrig01, kXBARA1_OutputAdcEtcXbar0Trig0);
-    
-    /* trigger connected to GPIO output */
-    XBARA_SetSignalsConnection(XBARA1, kXBARA1_InputFlexpwm1Pwm1OutTrig01, kXBARA1_OutputIomuxXbarInout10);       
+    XBARA_SetSignalsConnection(XBARA1, kXBARA1_InputFlexpwm1Pwm1OutTrig01, kXBARA1_OutputAdcEtcXbar0Trig0);     
 }
 
 /*!

@@ -1,34 +1,8 @@
 /*
- * The Clear BSD License
- * Copyright 2017 NXP
+ * Copyright 2018 NXP
  * All rights reserved.
- * 
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- *  that the following conditions are met:
  *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 /*
  * How to setup clock using clock driver functions:
@@ -151,18 +125,15 @@ sources:
 /*******************************************************************************
  * Variables for BOARD_BootClockRUN configuration
  ******************************************************************************/
-const clock_enet_pll_config_t enetPllConfig_BOARD_BootClockRUN =
-    {
-        .enableClkOutput500M = true,
-    };
-const clock_sys_pll_config_t sysPllConfig_BOARD_BootClockRUN =
-    {
-        .loopDivider = 1,                         /* PLL loop divider, Fout = Fin * 22 */
-    };
-const clock_usb_pll_config_t usb1PllConfig_BOARD_BootClockRUN =
-    {
-        .loopDivider = 0,                         /* PLL loop divider, Fout = Fin * 20 */
-    };
+const clock_enet_pll_config_t enetPllConfig_BOARD_BootClockRUN = {
+    .enableClkOutput500M = true,
+};
+const clock_sys_pll_config_t sysPllConfig_BOARD_BootClockRUN = {
+    .loopDivider = 1, /* PLL loop divider, Fout = Fin * 22 */
+};
+const clock_usb_pll_config_t usb1PllConfig_BOARD_BootClockRUN = {
+    .loopDivider = 0, /* PLL loop divider, Fout = Fin * 20 */
+};
 /*******************************************************************************
  * Code for BOARD_BootClockRUN configuration
  ******************************************************************************/
@@ -177,32 +148,12 @@ void BOARD_BootClockRUN(void)
     CLOCK_SetMux(kCLOCK_PeriphMux, 0x1);     /* Set PERIPH_CLK MUX to PERIPH_CLK2 */
 
     DCDC->REG3 = (DCDC->REG3 & (~DCDC_REG3_TRG_MASK)) | DCDC_REG3_TRG(0x12);
-#ifndef SKIP_SYSCLK_INIT
-    /* Init System PLL (PLL2). */
-    CLOCK_InitSysPll(&sysPllConfig_BOARD_BootClockRUN);
-    CLOCK_InitSysPfd(kCLOCK_Pfd2, 18);
-    CLOCK_InitSysPfd(kCLOCK_Pfd3, 18);
-#endif
-#ifndef XIP_EXTERNAL_FLASH
-    /* Init Usb1 PLL (PLL3). */
-    CLOCK_InitUsb1Pll(&usb1PllConfig_BOARD_BootClockRUN);
-    CLOCK_InitUsb1Pfd(kCLOCK_Pfd3, 18);
-#endif
-    CLOCK_InitEnetPll(&enetPllConfig_BOARD_BootClockRUN);
     /* Set AHB_PODF. */
     CLOCK_SetDiv(kCLOCK_AhbDiv, 0x0);
     /* Set ARM_PODF. */
     CLOCK_SetDiv(kCLOCK_ArmDiv, 0x0);
     /* Set IPG_PODF. */
     CLOCK_SetDiv(kCLOCK_IpgDiv, 0x3);
-    /* Set preperiph clock source. */
-    CLOCK_SetMux(kCLOCK_PrePeriphMux, 0x3);
-    /* Set periph clock source. */
-    CLOCK_SetMux(kCLOCK_PeriphMux, 0x0);
-    /* Set PERIPH_CLK2_PODF. */
-    CLOCK_SetDiv(kCLOCK_PeriphClk2Div, 0x0);
-    /* Set periph clock2 clock source. */
-    CLOCK_SetMux(kCLOCK_PeriphClk2Mux, 0x0);
     /* Set PERCLK_PODF. */
     CLOCK_SetDiv(kCLOCK_PerclkDiv, 0x1);
     /* Set per clock source. */
@@ -275,7 +226,6 @@ void BOARD_BootClockRUN(void)
     CLOCK_SetDiv(kCLOCK_Flexio1Div, 0x7);
     /* Set Flexio1 clock source. */
     CLOCK_SetMux(kCLOCK_Flexio1Mux, 0x3);
-
     /* Set Pll3 sw clock source. */
     CLOCK_SetMux(kCLOCK_Pll3SwMux, 0x0);
     /* Set UART_CLK_PODF. */
@@ -283,6 +233,26 @@ void BOARD_BootClockRUN(void)
     /* Set Uart clock source. */
     CLOCK_SetMux(kCLOCK_UartMux, 0x0);
 
+#ifndef SKIP_SYSCLK_INIT
+    /* Init System PLL (PLL2). */
+    CLOCK_InitSysPll(&sysPllConfig_BOARD_BootClockRUN);
+    CLOCK_InitSysPfd(kCLOCK_Pfd2, 18);
+    CLOCK_InitSysPfd(kCLOCK_Pfd3, 18);
+#endif
+#ifndef XIP_EXTERNAL_FLASH
+    /* Init Usb1 PLL (PLL3). */
+    CLOCK_InitUsb1Pll(&usb1PllConfig_BOARD_BootClockRUN);
+    CLOCK_InitUsb1Pfd(kCLOCK_Pfd3, 18);
+#endif
+    CLOCK_InitEnetPll(&enetPllConfig_BOARD_BootClockRUN);
+    /* Set preperiph clock source. */
+    CLOCK_SetMux(kCLOCK_PrePeriphMux, 0x3);
+    /* Set periph clock source. */
+    CLOCK_SetMux(kCLOCK_PeriphMux, 0x0);
+    /* Set PERIPH_CLK2_PODF. */
+    CLOCK_SetDiv(kCLOCK_PeriphClk2Div, 0x0);
+    /* Set periph clock2 clock source. */
+    CLOCK_SetMux(kCLOCK_PeriphClk2Mux, 0x0);
+
     SystemCoreClockUpdate();
 }
-

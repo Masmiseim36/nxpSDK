@@ -6,14 +6,6 @@ In this example , we need two boards, one board used as LPSPI master and another
 The file 'cmsis_lpspi_edma_b2b_transfer_slave.c' includes the LPSPI slave code.
 
 1. LPSPI master send/received data to/from LPSPI slave in edma . 
-
-Toolchain supported
-===================
-- Keil MDK 5.25
-- IAR embedded Workbench 8.30.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.1
-
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -68,6 +60,11 @@ Slave transmit data to master has completed!
 
  Slave example is running...
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

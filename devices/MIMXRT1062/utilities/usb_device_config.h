@@ -10,8 +10,13 @@
 #define _USB_DEVICE_CONFIG_H_
 
 /*******************************************************************************
-* Definitions
-******************************************************************************/
+ * Definitions
+ ******************************************************************************/
+/*!
+ * @addtogroup usb_device_configuration
+ * @{
+ */
+
 /*!
  * @name Hardware instance define
  * @{
@@ -35,10 +40,7 @@
 
 /* @} */
 
-/*!
- * @addtogroup usb_device_configuration
- * @{
- */
+/* @} */
 
 /*!
  * @name class instance define
@@ -98,9 +100,9 @@
 
 #if ((defined(USB_DEVICE_CONFIG_COMPLIANCE_TEST)) && (USB_DEVICE_CONFIG_COMPLIANCE_TEST > 0U))
 
-/*! @brief Undefine the marco USB_DEVICE_CONFIG_USB20_TEST_MODE. */
+/*! @brief Undefine the macro USB_DEVICE_CONFIG_USB20_TEST_MODE. */
 #undef USB_DEVICE_CONFIG_USB20_TEST_MODE
-/*! @brief Undefine the marco USB_DEVICE_CONFIG_CV_TEST. */
+/*! @brief Undefine the macro USB_DEVICE_CONFIG_CV_TEST. */
 #undef USB_DEVICE_CONFIG_CV_TEST
 
 /*! @brief enable the test mode. */
@@ -120,7 +122,6 @@
 #if ((defined(USB_DEVICE_CONFIG_EHCI)) && (USB_DEVICE_CONFIG_EHCI > 0U))
 /*! @brief How many the DTD are supported. */
 #define USB_DEVICE_CONFIG_EHCI_MAX_DTD (16U)
-
 /*! @brief Whether the EHCI ID pin detect feature enabled. */
 #define USB_DEVICE_CONFIG_EHCI_ID_PIN_DETECT (0U)
 #endif
@@ -151,6 +152,9 @@
 
 /*! @brief Whether handle the USB bus error. */
 #define USB_DEVICE_CONFIG_ERROR_HANDLING (0U)
+
+/*! @brief Whether the device charger detect feature is enabled or not. */
+#define USB_DEVICE_CHARGER_DETECT_ENABLE (0U)
 
 /* @} */
 

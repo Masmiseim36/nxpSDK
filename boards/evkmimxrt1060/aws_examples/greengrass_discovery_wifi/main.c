@@ -1,14 +1,8 @@
 /*
- * Copyright (c) 2013 - 2014, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
- * All rights reserved.
- *
- * SPDX-License-Identifier: BSD-3-Clause
- */
-
-/*
  * Amazon FreeRTOS V1.0.0
  * Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * Copyright (c) 2013 - 2014, Freescale Semiconductor, Inc.
+ * Copyright 2016-2017 NXP
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -129,18 +123,31 @@ static int prvWifiConnect(void)
     configPRINTF(("Starting WiFi...\r\n"));
 
     result = WIFI_On();
-    assert(eWiFiSuccess == result);
+    if (result != eWiFiSuccess)
+    {
+        configPRINTF(("Could not enable WiFi, reason %d.\r\n", result));
+        return result;
+    }
 
     configPRINTF(("WiFi module initialized.\r\n"));
 
     result = WIFI_ConnectAP(&pxNetworkParams);
-    assert(eWiFiSuccess == result);
+    if (result != eWiFiSuccess)
+    {
+        configPRINTF(("Could not connect to WiFi, reason %d.\r\n", result));
+        return result;
+    }
 
     configPRINTF(("WiFi connected to AP %s.\r\n", pxNetworkParams.pcSSID));
 
     uint8_t tmp_ip[4] = {0};
     result = WIFI_GetIP(tmp_ip);
-    assert(eWiFiSuccess == result);
+
+    if (result != eWiFiSuccess)
+    {
+        configPRINTF(("Could not get IP address, reason %d.\r\n", result));
+        return result;
+    }
 
     configPRINTF(("IP Address acquired %d.%d.%d.%d\r\n", tmp_ip[0], tmp_ip[1], tmp_ip[2], tmp_ip[3]));
 
@@ -233,14 +240,14 @@ void vApplicationStackOverflowHook(TaskHandle_t xTask, char *pcTaskName)
         ;
 }
 
-void *pvPortCalloc(size_t xSize)
+void *pvPortCalloc(size_t xNum, size_t xSize)
 {
     void *pvReturn;
 
-    pvReturn = pvPortMalloc(xSize);
+    pvReturn = pvPortMalloc(xNum * xSize);
     if (pvReturn != NULL)
     {
-        memset(pvReturn, 0x00, xSize);
+        memset(pvReturn, 0x00, xNum * xSize);
     }
 
     return pvReturn;

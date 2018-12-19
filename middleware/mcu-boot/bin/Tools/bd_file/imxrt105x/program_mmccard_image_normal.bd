@@ -1,0 +1,27 @@
+
+# The source block assign file name to identifiers
+sources {
+    myBootImageFile = extern (0);
+}
+
+# The section block specifies the sequence of boot commands to be written to the SB file
+section (0) {
+
+    #1. Prepare MMC Card option block
+    #   1bit SDR, Normal Speed, User Data Area Selected for access.
+    load 0xC0000000 > 0x100;
+    load 0x00000000 > 0x104;
+
+    #2. Configure MMC Card 
+    enable mmccard 0x100;
+
+    #3. Erase blocks as needed.
+    erase mmccard 0x400..0x14000;
+
+    #4. Program MMC Card Image
+    load mmccard myBootImageFile > 0x400;
+    
+    #5. Program Efuse for optimal read performance (optional)
+    #load fuse 0x00000000 > 0x07;
+
+}

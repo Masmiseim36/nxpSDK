@@ -1,34 +1,8 @@
 /*
- * The Clear BSD License
  * Copyright 2017 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #ifndef _FSL_CLOCK_H_
@@ -49,7 +23,7 @@
  *
  * When set to 0, peripheral drivers will enable clock in initialize function
  * and disable clock in de-initialize function. When set to 1, peripheral
- * driver will not control the clock, application could contol the clock out of
+ * driver will not control the clock, application could control the clock out of
  * the driver.
  *
  * @note All drivers share this feature switcher. If it is set to 1, application
@@ -65,8 +39,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief CLOCK driver version 2.1.2. */
-#define FSL_CLOCK_DRIVER_VERSION (MAKE_VERSION(2, 1, 2))
+/*! @brief CLOCK driver version 2.1.5. */
+#define FSL_CLOCK_DRIVER_VERSION (MAKE_VERSION(2, 1, 5))
 
 /* analog pll definition */
 #define CCM_ANALOG_PLL_BYPASS_SHIFT (16U)
@@ -74,9 +48,9 @@
 #define CCM_ANALOG_PLL_BYPASS_CLK_SRC_SHIFT (14U)
 
 /*@}*/
-#define CCM_TUPLE(reg, shift, mask, busyShift)                                                                     \
-    ((((uint32_t)(&((CCM_Type *)0U)->reg)) & 0xFFU) | ((shift) << 8U) | ((((mask) >> (shift)) & 0x1FFFU) << 13U) | \
-     ((busyShift) << 26U))
+#define CCM_TUPLE(reg, shift, mask, busyShift)                               \
+    (int)((((uint32_t)(&((CCM_Type *)0U)->reg)) & 0xFFU) | ((shift) << 8U) | \
+          ((((mask) >> (shift)) & 0x1FFFU) << 13U) | ((busyShift) << 26U))
 #define CCM_TUPLE_REG(base, tuple) (*((volatile uint32_t *)(((uint32_t)(base)) + ((tuple)&0xFFU))))
 #define CCM_TUPLE_SHIFT(tuple) (((tuple) >> 8U) & 0x1FU)
 #define CCM_TUPLE_MASK(tuple) ((uint32_t)((((tuple) >> 13U) & 0x1FFFU) << ((((tuple) >> 8U) & 0x1FU))))
@@ -108,14 +82,14 @@
  * CLOCK_SetXtalFreq(240000000); // Set the XTAL value to clock driver.
  * @endcode
  */
-extern uint32_t g_xtalFreq;
+extern volatile uint32_t g_xtalFreq;
 
 /*! @brief External RTC XTAL (32K OSC) clock frequency.
  *
  * The RTC XTAL (32K OSC) clock frequency in Hz, when the clock is setup, use the
  * function CLOCK_SetRtcXtalFreq to set the value in to clock driver.
  */
-extern uint32_t g_rtcXtalFreq;
+extern volatile uint32_t g_rtcXtalFreq;
 
 /* For compatible with other platforms */
 #define CLOCK_SetXtal0Freq CLOCK_SetXtalFreq
@@ -394,31 +368,32 @@ typedef enum _clock_name
     kCLOCK_AhbClk = 0x1U,  /*!< AHB clock */
     kCLOCK_SemcClk = 0x2U, /*!< SEMC clock */
     kCLOCK_IpgClk = 0x3U,  /*!< IPG clock */
+    kCLOCK_PerClk = 0x4U,  /*!< PER clock */
 
-    kCLOCK_OscClk = 0x4U, /*!< OSC clock selected by PMU_LOWPWR_CTRL[OSC_SEL]. */
-    kCLOCK_RtcClk = 0x5U, /*!< RTC clock. (RTCCLK) */
+    kCLOCK_OscClk = 0x5U, /*!< OSC clock selected by PMU_LOWPWR_CTRL[OSC_SEL]. */
+    kCLOCK_RtcClk = 0x6U, /*!< RTC clock. (RTCCLK) */
 
-    kCLOCK_ArmPllClk = 0x6U, /*!< ARMPLLCLK. */
+    kCLOCK_ArmPllClk = 0x7U, /*!< ARMPLLCLK. */
 
-    kCLOCK_Usb1PllClk = 0x7U,     /*!< USB1PLLCLK. */
-    kCLOCK_Usb1PllPfd0Clk = 0x8U, /*!< USB1PLLPDF0CLK. */
-    kCLOCK_Usb1PllPfd1Clk = 0x9U, /*!< USB1PLLPFD1CLK. */
-    kCLOCK_Usb1PllPfd2Clk = 0xAU, /*!< USB1PLLPFD2CLK. */
-    kCLOCK_Usb1PllPfd3Clk = 0xBU, /*!< USB1PLLPFD3CLK. */
+    kCLOCK_Usb1PllClk = 0x8U,     /*!< USB1PLLCLK. */
+    kCLOCK_Usb1PllPfd0Clk = 0x9U, /*!< USB1PLLPDF0CLK. */
+    kCLOCK_Usb1PllPfd1Clk = 0xAU, /*!< USB1PLLPFD1CLK. */
+    kCLOCK_Usb1PllPfd2Clk = 0xBU, /*!< USB1PLLPFD2CLK. */
+    kCLOCK_Usb1PllPfd3Clk = 0xCU, /*!< USB1PLLPFD3CLK. */
 
-    kCLOCK_Usb2PllClk = 0xCU, /*!< USB2PLLCLK. */
+    kCLOCK_Usb2PllClk = 0xDU, /*!< USB2PLLCLK. */
 
-    kCLOCK_SysPllClk = 0xDU,      /*!< SYSPLLCLK. */
-    kCLOCK_SysPllPfd0Clk = 0xEU,  /*!< SYSPLLPDF0CLK. */
-    kCLOCK_SysPllPfd1Clk = 0xFU,  /*!< SYSPLLPFD1CLK. */
-    kCLOCK_SysPllPfd2Clk = 0x10U, /*!< SYSPLLPFD2CLK. */
-    kCLOCK_SysPllPfd3Clk = 0x11U, /*!< SYSPLLPFD3CLK. */
+    kCLOCK_SysPllClk = 0xEU,      /*!< SYSPLLCLK. */
+    kCLOCK_SysPllPfd0Clk = 0xFU,  /*!< SYSPLLPDF0CLK. */
+    kCLOCK_SysPllPfd1Clk = 0x10U, /*!< SYSPLLPFD1CLK. */
+    kCLOCK_SysPllPfd2Clk = 0x11U, /*!< SYSPLLPFD2CLK. */
+    kCLOCK_SysPllPfd3Clk = 0x12U, /*!< SYSPLLPFD3CLK. */
 
-    kCLOCK_EnetPll0Clk = 0x12U, /*!< Enet PLLCLK ref_enetpll0. */
-    kCLOCK_EnetPll1Clk = 0x13U, /*!< Enet PLLCLK ref_enetpll1. */
+    kCLOCK_EnetPll0Clk = 0x13U, /*!< Enet PLLCLK ref_enetpll0. */
+    kCLOCK_EnetPll1Clk = 0x14U, /*!< Enet PLLCLK ref_enetpll1. */
 
-    kCLOCK_AudioPllClk = 0x14U, /*!< Audio PLLCLK. */
-    kCLOCK_VideoPllClk = 0x15U, /*!< Video PLLCLK. */
+    kCLOCK_AudioPllClk = 0x15U, /*!< Audio PLLCLK. */
+    kCLOCK_VideoPllClk = 0x16U, /*!< Video PLLCLK. */
 } clock_name_t;
 
 #define kCLOCK_CoreSysClk kCLOCK_CpuClk             /*!< For compatible with other platforms without CCM. */
@@ -778,8 +753,8 @@ typedef enum _clock_div
 /*! @brief USB clock source definition. */
 typedef enum _clock_usb_src
 {
-    kCLOCK_Usb480M = 0,                /*!< Use 480M.      */
-    kCLOCK_UsbSrcUnused = 0xFFFFFFFFU, /*!< Used when the function does not
+    kCLOCK_Usb480M = 0,                     /*!< Use 480M.      */
+    kCLOCK_UsbSrcUnused = (int)0xFFFFFFFFU, /*!< Used when the function does not
                                             care the clock source. */
 } clock_usb_src_t;
 
@@ -822,6 +797,9 @@ typedef struct _clock_sys_pll_config
     uint32_t numerator;   /*!< 30 bit numerator of fractional loop divider.*/
     uint32_t denominator; /*!< 30 bit denominator of fractional loop divider */
     uint8_t src;          /*!< Pll clock source, reference _clock_pll_clk_src */
+    uint16_t ss_stop;     /*!< Stop value to get frequency change. */
+    uint8_t ss_enable;    /*!< Enable spread spectrum modulation */
+    uint16_t ss_step;     /*!< Step value to get frequency change step. */
 
 } clock_sys_pll_config_t;
 
@@ -1032,6 +1010,34 @@ static inline uint32_t CLOCK_GetOscFreq(void)
 }
 
 /*!
+ * @brief Gets the AHB clock frequency.
+ *
+ * @return  The AHB clock frequency value in hertz.
+ */
+uint32_t CLOCK_GetAhbFreq(void);
+
+/*!
+ * @brief Gets the SEMC clock frequency.
+ *
+ * @return  The SEMC clock frequency value in hertz.
+ */
+uint32_t CLOCK_GetSemcFreq(void);
+
+/*!
+ * @brief Gets the IPG clock frequency.
+ *
+ * @return  The IPG clock frequency value in hertz.
+ */
+uint32_t CLOCK_GetIpgFreq(void);
+
+/*!
+ * @brief Gets the PER clock frequency.
+ *
+ * @return  The PER clock frequency value in hertz.
+ */
+uint32_t CLOCK_GetPerClkFreq(void);
+
+/*!
  * @brief Gets the clock frequency for a specific clock name.
  *
  * This function checks the current clock configurations and then calculates
@@ -1132,7 +1138,6 @@ void CLOCK_InitRcOsc24M(void);
  */
 void CLOCK_DeinitRcOsc24M(void);
 /* @} */
-
 
 /*! @brief Enable USB HS clock.
  *

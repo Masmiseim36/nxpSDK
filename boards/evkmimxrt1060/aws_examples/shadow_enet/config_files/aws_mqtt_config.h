@@ -36,7 +36,7 @@
  *
  * This gives the user flexibility of registering a callback per topic.
  */
-#define mqttconfigENABLE_SUBSCRIPTION_MANAGEMENT
+#define mqttconfigENABLE_SUBSCRIPTION_MANAGEMENT            ( 1 )
 
 /**
  * @brief Maximum length of the topic which can be stored in subscription

@@ -8,10 +8,10 @@
 
 #include <stdint.h>
 #include <stdbool.h>
+#include "fsl_sdmmc_event.h"
 #include "FreeRTOS.h"
 #include "semphr.h"
 #include "event_groups.h"
-#include "fsl_sdmmc_event.h"
 
 /*******************************************************************************
  * Definitons

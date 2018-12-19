@@ -57,6 +57,7 @@ typedef struct _usb_device_endpoint_struct
     uint8_t endpointAddress; /*!< Endpoint address*/
     uint8_t transferType;    /*!< Endpoint transfer type*/
     uint16_t maxPacketSize;  /*!< Endpoint maximum packet size */
+    uint8_t interval;        /*!< Endpoint interval*/
 } usb_device_endpoint_struct_t;
 
 /*!

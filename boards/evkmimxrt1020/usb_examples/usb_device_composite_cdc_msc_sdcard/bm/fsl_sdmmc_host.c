@@ -1,44 +1,13 @@
 /*
- * The Clear BSD License
- * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright 2016-2018 NXP
  * All rights reserved.
- * 
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- *  that the following conditions are met:
  *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_sdmmc_host.h"
-#include "board.h"
 #include "fsl_sdmmc_event.h"
-#include "fsl_gpio.h"
-#ifdef BOARD_USDHC_CD_PORT_BASE
-#include "fsl_port.h"
-#endif
 
 /*******************************************************************************
 * Definitions
@@ -111,7 +80,7 @@ static status_t SDMMCHOST_CardDetectInit(SDMMCHOST_TYPE *base, const sdmmchost_d
 AT_NONCACHEABLE_SECTION_ALIGN(uint32_t g_usdhcAdma2Table[USDHC_ADMA_TABLE_WORDS], USDHC_ADMA2_ADDR_ALIGN);
 
 usdhc_handle_t g_usdhcHandle;
-volatile bool g_usdhcTransferSuccessFlag = true;
+volatile status_t g_usdhcTransferStatus = kStatus_Success;
 static volatile bool s_sdInsertedFlag = false;
 volatile status_t g_reTuningFlag = false;
 
@@ -175,17 +144,13 @@ static void SDMMCHOST_TransferCompleteCallback(SDMMCHOST_TYPE *base,
                                                status_t status,
                                                void *userData)
 {
+    /* if reading data from sdcard, ignore the command error, usdhc will continue transfer data */
+    if (!((handle->data) && (status == kStatus_USDHC_SendCommandFailed)))
+    {
+        SDMMCEVENT_Notify(kSDMMCEVENT_TransferComplete);
+    }
     /* wait the target status and then notify the transfer complete */
-    if (status == kStatus_Success)
-    {
-        g_usdhcTransferSuccessFlag = true;
-    }
-    else
-    {
-        g_usdhcTransferSuccessFlag = false;
-    }
-
-    SDMMCEVENT_Notify(kSDMMCEVENT_TransferComplete);
+    g_usdhcTransferStatus = status;
 }
 
 static void SDMMCHOST_ReTuningCallback(SDMMCHOST_TYPE *base, void *userData)
@@ -210,6 +175,9 @@ static status_t SDMMCHOST_TransferFunction(SDMMCHOST_TYPE *base, SDMMCHOST_TRANS
         dmaConfig.admaTableWords = USDHC_ADMA_TABLE_WORDS;
     }
 
+    /* make sure complete event is cleared. */
+    SDMMCEVENT_Delete(kSDMMCEVENT_TransferComplete);
+
     do
     {
         error = USDHC_TransferNonBlocking(base, &g_usdhcHandle, &dmaConfig, content);
@@ -217,7 +185,7 @@ static status_t SDMMCHOST_TransferFunction(SDMMCHOST_TYPE *base, SDMMCHOST_TRANS
 
     if ((error != kStatus_Success) ||
         (false == SDMMCEVENT_Wait(kSDMMCEVENT_TransferComplete, SDMMCHOST_TRANSFER_COMPLETE_TIMEOUT)) ||
-        (g_reTuningFlag) || (!g_usdhcTransferSuccessFlag))
+        (g_reTuningFlag) || (g_usdhcTransferStatus != kStatus_Success))
     {
         if (g_reTuningFlag || (error == kStatus_USDHC_ReTuningRequest))
         {
@@ -229,13 +197,11 @@ static status_t SDMMCHOST_TransferFunction(SDMMCHOST_TYPE *base, SDMMCHOST_TRANS
         }
         else
         {
-            error = kStatus_Fail;
+            error = g_usdhcTransferStatus;
             /* host error recovery */
             SDMMCHOST_ErrorRecovery(base);
         }
     }
-
-    SDMMCEVENT_Delete(kSDMMCEVENT_TransferComplete);
 
     return error;
 }

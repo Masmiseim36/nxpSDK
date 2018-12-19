@@ -123,7 +123,7 @@ extern usb_status_t USB_DeviceGetVendorReceiveBuffer(usb_device_handle handle,
 
 /* standard request */
 /*!
- * @brief Get the descritpor.
+ * @brief Get the descriptor.
  *
  * The function is used to get the descriptor, including the device descriptor, configuration descriptor, and string
  * descriptor, etc.
@@ -885,7 +885,7 @@ usb_status_t USB_DeviceControlCallback(usb_device_handle handle,
                 }
             }
         }
-        /* Send the reponse to the host. */
+        /* Send the response to the host. */
         error = USB_DeviceControlCallbackFeedback(handle, deviceSetup, error, kUSB_DeviceControlPipeSetupStage, &buffer,
                                                   &length);
     }
@@ -919,7 +919,7 @@ usb_status_t USB_DeviceControlCallback(usb_device_handle handle,
         else
         {
         }
-        /* Send the reponse to the host. */
+        /* Send the response to the host. */
         error = USB_DeviceControlCallbackFeedback(handle, deviceSetup, error, kUSB_DeviceControlPipeDataStage, &buffer,
                                                   &length);
     }

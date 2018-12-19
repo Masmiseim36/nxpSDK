@@ -56,6 +56,8 @@ SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -mfpu=fpv5-d16")
 
 SET(CMAKE_ASM_FLAGS_SDRAM_DEBUG "${CMAKE_ASM_FLAGS_SDRAM_DEBUG} -D__STARTUP_CLEAR_BSS")
 
+SET(CMAKE_ASM_FLAGS_SDRAM_DEBUG "${CMAKE_ASM_FLAGS_SDRAM_DEBUG} -DDEBUG")
+
 SET(CMAKE_ASM_FLAGS_SDRAM_DEBUG "${CMAKE_ASM_FLAGS_SDRAM_DEBUG} -D__STARTUP_INITIALIZE_NONCACHEDATA")
 
 SET(CMAKE_ASM_FLAGS_SDRAM_DEBUG "${CMAKE_ASM_FLAGS_SDRAM_DEBUG} -g")
@@ -116,6 +118,8 @@ SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -mfpu=fpv5-d16")
 
 SET(CMAKE_ASM_FLAGS_SDRAM_RELEASE "${CMAKE_ASM_FLAGS_SDRAM_RELEASE} -D__STARTUP_CLEAR_BSS")
 
+SET(CMAKE_ASM_FLAGS_SDRAM_RELEASE "${CMAKE_ASM_FLAGS_SDRAM_RELEASE} -DNDEBUG")
+
 SET(CMAKE_ASM_FLAGS_SDRAM_RELEASE "${CMAKE_ASM_FLAGS_SDRAM_RELEASE} -D__STARTUP_INITIALIZE_NONCACHEDATA")
 
 SET(CMAKE_ASM_FLAGS_SDRAM_RELEASE "${CMAKE_ASM_FLAGS_SDRAM_RELEASE} -Wall")
@@ -143,6 +147,8 @@ SET(CMAKE_ASM_FLAGS_SDRAM_RELEASE "${CMAKE_ASM_FLAGS_SDRAM_RELEASE} -mfloat-abi=
 SET(CMAKE_ASM_FLAGS_SDRAM_RELEASE "${CMAKE_ASM_FLAGS_SDRAM_RELEASE} -mfpu=fpv5-d16")
 
 SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG} -D__STARTUP_CLEAR_BSS")
+
+SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG} -DDEBUG")
 
 SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG} -D__STARTUP_INITIALIZE_NONCACHEDATA")
 
@@ -174,6 +180,8 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG} -mfp
 
 SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE} -D__STARTUP_CLEAR_BSS")
 
+SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE} -DNDEBUG")
+
 SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE} -D__STARTUP_INITIALIZE_NONCACHEDATA")
 
 SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE} -Wall")
@@ -204,9 +212,9 @@ SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DDEBUG")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DCPU_MIMXRT1062DVL6A")
 
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DFSL_RTOS_FREE_RTOS")
-
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DA_LITTLE_ENDIAN")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DFSL_RTOS_FREE_RTOS")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -mcpu=cortex-m7")
 
@@ -242,11 +250,13 @@ SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -O1")
 
 SET(CMAKE_C_FLAGS_SDRAM_DEBUG "${CMAKE_C_FLAGS_SDRAM_DEBUG} -DSKIP_SYSCLK_INIT")
 
+SET(CMAKE_C_FLAGS_SDRAM_DEBUG "${CMAKE_C_FLAGS_SDRAM_DEBUG} -DDEBUG")
+
 SET(CMAKE_C_FLAGS_SDRAM_DEBUG "${CMAKE_C_FLAGS_SDRAM_DEBUG} -DCPU_MIMXRT1062DVL6A")
 
-SET(CMAKE_C_FLAGS_SDRAM_DEBUG "${CMAKE_C_FLAGS_SDRAM_DEBUG} -DFSL_RTOS_FREE_RTOS")
-
 SET(CMAKE_C_FLAGS_SDRAM_DEBUG "${CMAKE_C_FLAGS_SDRAM_DEBUG} -DA_LITTLE_ENDIAN")
+
+SET(CMAKE_C_FLAGS_SDRAM_DEBUG "${CMAKE_C_FLAGS_SDRAM_DEBUG} -DFSL_RTOS_FREE_RTOS")
 
 SET(CMAKE_C_FLAGS_SDRAM_DEBUG "${CMAKE_C_FLAGS_SDRAM_DEBUG} -mcpu=cortex-m7")
 
@@ -284,9 +294,9 @@ SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DNDEBUG")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DCPU_MIMXRT1062DVL6A")
 
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DFSL_RTOS_FREE_RTOS")
-
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DA_LITTLE_ENDIAN")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DFSL_RTOS_FREE_RTOS")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Os")
 
@@ -320,11 +330,13 @@ SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -MP")
 
 SET(CMAKE_C_FLAGS_SDRAM_RELEASE "${CMAKE_C_FLAGS_SDRAM_RELEASE} -DSKIP_SYSCLK_INIT")
 
+SET(CMAKE_C_FLAGS_SDRAM_RELEASE "${CMAKE_C_FLAGS_SDRAM_RELEASE} -DNDEBUG")
+
 SET(CMAKE_C_FLAGS_SDRAM_RELEASE "${CMAKE_C_FLAGS_SDRAM_RELEASE} -DCPU_MIMXRT1062DVL6A")
 
-SET(CMAKE_C_FLAGS_SDRAM_RELEASE "${CMAKE_C_FLAGS_SDRAM_RELEASE} -DFSL_RTOS_FREE_RTOS")
-
 SET(CMAKE_C_FLAGS_SDRAM_RELEASE "${CMAKE_C_FLAGS_SDRAM_RELEASE} -DA_LITTLE_ENDIAN")
+
+SET(CMAKE_C_FLAGS_SDRAM_RELEASE "${CMAKE_C_FLAGS_SDRAM_RELEASE} -DFSL_RTOS_FREE_RTOS")
 
 SET(CMAKE_C_FLAGS_SDRAM_RELEASE "${CMAKE_C_FLAGS_SDRAM_RELEASE} -Os")
 
@@ -360,11 +372,13 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DXIP_EX
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DXIP_BOOT_HEADER_ENABLE=1")
 
+SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DDEBUG")
+
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DCPU_MIMXRT1062DVL6A")
 
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DFSL_RTOS_FREE_RTOS")
-
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DA_LITTLE_ENDIAN")
+
+SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DFSL_RTOS_FREE_RTOS")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -g")
 
@@ -402,11 +416,13 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DXI
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DXIP_BOOT_HEADER_ENABLE=1")
 
+SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DNDEBUG")
+
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DCPU_MIMXRT1062DVL6A")
 
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DFSL_RTOS_FREE_RTOS")
-
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DA_LITTLE_ENDIAN")
+
+SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DFSL_RTOS_FREE_RTOS")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -Os")
 
@@ -474,39 +490,7 @@ SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g")
 
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O1")
 
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DNDEBUG")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Os")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -fno-common")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -ffunction-sections")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -fdata-sections")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -ffreestanding")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -fno-builtin")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -mthumb")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -mapcs")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -fno-rtti")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -fno-exceptions")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -mcpu=cortex-m7")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -mfloat-abi=hard")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -mfpu=fpv5-d16")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -MMD")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -MP")
+SET(CMAKE_CXX_FLAGS_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_DEBUG} -DDEBUG")
 
 SET(CMAKE_CXX_FLAGS_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_DEBUG} -mcpu=cortex-m7")
 
@@ -542,6 +526,42 @@ SET(CMAKE_CXX_FLAGS_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_DEBUG} -g")
 
 SET(CMAKE_CXX_FLAGS_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_SDRAM_DEBUG} -O1")
 
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DNDEBUG")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Os")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -fno-common")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -ffunction-sections")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -fdata-sections")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -ffreestanding")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -fno-builtin")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -mthumb")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -mapcs")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -fno-rtti")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -fno-exceptions")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -mcpu=cortex-m7")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -mfloat-abi=hard")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -mfpu=fpv5-d16")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -MMD")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -MP")
+
+SET(CMAKE_CXX_FLAGS_SDRAM_RELEASE "${CMAKE_CXX_FLAGS_SDRAM_RELEASE} -DNDEBUG")
+
 SET(CMAKE_CXX_FLAGS_SDRAM_RELEASE "${CMAKE_CXX_FLAGS_SDRAM_RELEASE} -Os")
 
 SET(CMAKE_CXX_FLAGS_SDRAM_RELEASE "${CMAKE_CXX_FLAGS_SDRAM_RELEASE} -Wall")
@@ -573,6 +593,8 @@ SET(CMAKE_CXX_FLAGS_SDRAM_RELEASE "${CMAKE_CXX_FLAGS_SDRAM_RELEASE} -mfpu=fpv5-d
 SET(CMAKE_CXX_FLAGS_SDRAM_RELEASE "${CMAKE_CXX_FLAGS_SDRAM_RELEASE} -MMD")
 
 SET(CMAKE_CXX_FLAGS_SDRAM_RELEASE "${CMAKE_CXX_FLAGS_SDRAM_RELEASE} -MP")
+
+SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG} -DDEBUG")
 
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG} -g")
 
@@ -607,6 +629,8 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG} -mfp
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG} -MMD")
 
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG} -MP")
+
+SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -DNDEBUG")
 
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -Os")
 
@@ -678,6 +702,10 @@ SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")
 
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} muldefs")
 
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Map=output.map")
+
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -mcpu=cortex-m7")
 
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -mfloat-abi=hard")
@@ -722,6 +750,10 @@ SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_DEBUG "${CMAKE_EXE_LINKER_FLAGS_SDRAM_DEBUG} -X
 
 SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_DEBUG "${CMAKE_EXE_LINKER_FLAGS_SDRAM_DEBUG} muldefs")
 
+SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_DEBUG "${CMAKE_EXE_LINKER_FLAGS_SDRAM_DEBUG} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_DEBUG "${CMAKE_EXE_LINKER_FLAGS_SDRAM_DEBUG} -Map=output.map")
+
 SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_DEBUG "${CMAKE_EXE_LINKER_FLAGS_SDRAM_DEBUG} -mcpu=cortex-m7")
 
 SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_DEBUG "${CMAKE_EXE_LINKER_FLAGS_SDRAM_DEBUG} -mfloat-abi=hard")
@@ -764,6 +796,10 @@ SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
 
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} muldefs")
 
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Map=output.map")
+
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mcpu=cortex-m7")
 
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mfloat-abi=hard")
@@ -805,6 +841,10 @@ SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_RELEASE "${CMAKE_EXE_LINKER_FLAGS_SDRAM_RELEASE
 SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_RELEASE "${CMAKE_EXE_LINKER_FLAGS_SDRAM_RELEASE} -Xlinker")
 
 SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_RELEASE "${CMAKE_EXE_LINKER_FLAGS_SDRAM_RELEASE} muldefs")
+
+SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_RELEASE "${CMAKE_EXE_LINKER_FLAGS_SDRAM_RELEASE} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_RELEASE "${CMAKE_EXE_LINKER_FLAGS_SDRAM_RELEASE} -Map=output.map")
 
 SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_RELEASE "${CMAKE_EXE_LINKER_FLAGS_SDRAM_RELEASE} -mcpu=cortex-m7")
 
@@ -850,6 +890,10 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_N
 
 SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG} muldefs")
 
+SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG} -Map=output.map")
+
 SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG} -mcpu=cortex-m7")
 
 SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG} -mfloat-abi=hard")
@@ -892,6 +936,10 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI
 
 SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE} muldefs")
 
+SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE} -Map=output.map")
+
 SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE} -mcpu=cortex-m7")
 
 SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE} -mfloat-abi=hard")
@@ -924,23 +972,19 @@ include_directories(${ProjDirPath}/..)
 
 include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/GCC/ARM_CM4F)
 
-include_directories(${ProjDirPath}/../../../../../CMSIS/Include)
-
-include_directories(${ProjDirPath}/../../../../../devices)
-
 include_directories(${ProjDirPath}/../../..)
 
 include_directories(${ProjDirPath}/..)
+
+include_directories(${ProjDirPath}/../../../../../CMSIS/Include)
+
+include_directories(${ProjDirPath}/../../../../../devices)
 
 include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include)
 
 include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private)
 
 include_directories(${ProjDirPath}/../../../../../middleware/wifi_qca/port/boards/evkmimxrt1060/freertos/silex2401)
-
-include_directories(${ProjDirPath}/../../../../../middleware/wifi_qca/port/boards/evkmimxrt1060/freertos)
-
-include_directories(${ProjDirPath}/../../../../../middleware/wifi_qca/port/env/freertos)
 
 include_directories(${ProjDirPath}/../../../../../middleware/wifi_qca)
 
@@ -966,21 +1010,29 @@ include_directories(${ProjDirPath}/../../../../../middleware/wifi_qca/common_src
 
 include_directories(${ProjDirPath}/../../../../../middleware/wifi_qca/port)
 
-include_directories(${ProjDirPath}/../../../../../middleware/wifi_qca/port/drivers/lpspi_edma_freertos)
-
 include_directories(${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers)
 
 include_directories(${ProjDirPath}/../../../../../devices/MIMXRT1062)
 
-include_directories(${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities/io)
-
 include_directories(${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities/str)
 
-include_directories(${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities/log)
+include_directories(${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities/debug_console)
 
-include_directories(${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities)
+include_directories(${ProjDirPath}/../../../../../components/uart)
+
+include_directories(${ProjDirPath}/../../../../../components/serial_manager)
+
+include_directories(${ProjDirPath}/../../../../../components/lists)
 
 include_directories(${ProjDirPath}/../../../../../devices/MIMXRT1062/xip)
+
+include_directories(${ProjDirPath}/../../../xip)
+
+include_directories(${ProjDirPath}/../../../../../middleware/wifi_qca/port/boards/evkmimxrt1060/freertos)
+
+include_directories(${ProjDirPath}/../../../../../middleware/wifi_qca/port/env/freertos)
+
+include_directories(${ProjDirPath}/../../../../../middleware/wifi_qca/port/drivers/lpspi_edma_freertos)
 
 add_executable(qca_demo.elf 
 "${ProjDirPath}/../FreeRTOSConfig.h"
@@ -995,39 +1047,7 @@ add_executable(qca_demo.elf
 "${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../clock_config.h"
 "${ProjDirPath}/../../../../../middleware/wifi_qca/port/boards/evkmimxrt1060/freertos/silex2401/wifi_shield_silex2401.h"
-"${ProjDirPath}/../../../../../middleware/wifi_qca/port/boards/evkmimxrt1060/freertos/wifi_shield.h"
-"${ProjDirPath}/../../../../../middleware/wifi_qca/port/boards/evkmimxrt1060/freertos/wifi_shield.c"
-"${ProjDirPath}/../../../../../middleware/wifi_qca/port/env/freertos/wifi_port.h"
-"${ProjDirPath}/../../../../../middleware/wifi_qca/port/env/freertos/wifi_env_port.h"
-"${ProjDirPath}/../../../../../middleware/wifi_qca/port/env/freertos/wifi_env.c"
-"${ProjDirPath}/../../../../../middleware/wifi_qca/port/env/freertos/wifi_env.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/LICENSE"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/event_groups.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/FreeRTOS.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/message_buffer.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/queue.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/semphr.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/stream_buffer.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/task.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/timers.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/freertos_tasks_c_additions.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/deprecated_definitions.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/list.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/mpu_wrappers.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/portable.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/projdefs.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/stack_macros.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/event_groups.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/list.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/queue.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/stream_buffer.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/tasks.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/timers.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/readme.txt"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/GCC/ARM_CM4F/fsl_tickless_generic.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/GCC/ARM_CM4F/fsl_tickless_systick.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/GCC/ARM_CM4F/port.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/GCC/ARM_CM4F/portmacro.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/MemMang/heap_4.c"
 "${ProjDirPath}/../../../../../middleware/wifi_qca/common_src/wmi/wmi.c"
 "${ProjDirPath}/../../../../../middleware/wifi_qca/common_src/storerecall/dset_api.c"
 "${ProjDirPath}/../../../../../middleware/wifi_qca/common_src/stack_common/common_stack_offload.h"
@@ -1118,53 +1138,105 @@ add_executable(qca_demo.elf
 "${ProjDirPath}/../../../../../middleware/wifi_qca/atheros_wifi_internal.h"
 "${ProjDirPath}/../../../../../middleware/wifi_qca/atheros_wifi_api.h"
 "${ProjDirPath}/../../../../../middleware/wifi_qca/atheros_wifi.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/LICENSE"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/event_groups.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/FreeRTOS.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/message_buffer.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/queue.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/semphr.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/stream_buffer.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/task.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/timers.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/freertos_tasks_c_additions.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/deprecated_definitions.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/list.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/mpu_wrappers.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/portable.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/projdefs.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/stack_macros.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/event_groups.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/list.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/queue.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/stream_buffer.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/tasks.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/timers.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/GCC/ARM_CM4F/fsl_tickless_generic.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/GCC/ARM_CM4F/fsl_tickless_systick.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/GCC/ARM_CM4F/port.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/GCC/ARM_CM4F/portmacro.h"
+"${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_clock.h"
+"${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_clock.c"
+"${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_common.h"
+"${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_common.c"
+"${ProjDirPath}/../../../../../devices/MIMXRT1062/fsl_device_registers.h"
+"${ProjDirPath}/../../../../../devices/MIMXRT1062/MIMXRT1062.h"
+"${ProjDirPath}/../../../../../devices/MIMXRT1062/MIMXRT1062_features.h"
+"${ProjDirPath}/../../../../../devices/MIMXRT1062/system_MIMXRT1062.c"
+"${ProjDirPath}/../../../../../devices/MIMXRT1062/system_MIMXRT1062.h"
+"${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c"
+"${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h"
+"${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console.c"
+"${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console.h"
+"${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console_conf.h"
+"${ProjDirPath}/../../../../../components/uart/uart.h"
+"${ProjDirPath}/../../../../../components/uart/lpuart_adapter.c"
+"${ProjDirPath}/../../../../../components/serial_manager/serial_manager.h"
+"${ProjDirPath}/../../../../../components/serial_manager/serial_manager.c"
+"${ProjDirPath}/../../../../../components/serial_manager/serial_port_uart.h"
+"${ProjDirPath}/../../../../../components/serial_manager/serial_port_uart.c"
+"${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_lpuart.h"
+"${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_lpuart.c"
+"${ProjDirPath}/../../../../../components/lists/generic_list.h"
+"${ProjDirPath}/../../../../../components/lists/generic_list.c"
+"${ProjDirPath}/../../../../../devices/MIMXRT1062/gcc/startup_MIMXRT1062.S"
+"${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_iomuxc.h"
+"${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities/fsl_assert.c"
+"${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_gpio.h"
+"${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_gpio.c"
+"${ProjDirPath}/../../../../../devices/MIMXRT1062/xip/fsl_flexspi_nor_boot.h"
+"${ProjDirPath}/../../../../../devices/MIMXRT1062/xip/fsl_flexspi_nor_boot.c"
+"${ProjDirPath}/../../../xip/evkmimxrt1060_flexspi_nor_config.c"
+"${ProjDirPath}/../../../xip/evkmimxrt1060_flexspi_nor_config.h"
+"${ProjDirPath}/../../../xip/evkmimxrt1060_sdram_ini_dcd.c"
+"${ProjDirPath}/../../../xip/evkmimxrt1060_sdram_ini_dcd.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/port/boards/evkmimxrt1060/freertos/wifi_shield.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/port/boards/evkmimxrt1060/freertos/wifi_shield.c"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/port/env/freertos/wifi_port.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/port/env/freertos/wifi_env_port.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/port/env/freertos/wifi_env.c"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/port/env/freertos/wifi_env.h"
 "${ProjDirPath}/../../../../../middleware/wifi_qca/port/drivers/lpspi_edma_freertos/wifi_spi.h"
 "${ProjDirPath}/../../../../../middleware/wifi_qca/port/drivers/lpspi_edma_freertos/wifi_spi.c"
 "${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_lpspi.c"
 "${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_lpspi.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_common.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_common.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_clock.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_clock.c"
+"${ProjDirPath}/../../../../../CMSIS/Include/core_cm7.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armcc.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armclang.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_gcc.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_compiler.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_version.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv7.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/core_armv8mbl.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/core_armv8mml.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/arm_common_tables.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/arm_const_structs.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/arm_math.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_iccarm.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv8.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_lpspi_edma.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_lpspi_edma.c"
 "${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_edma.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_edma.c"
 "${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_dmamux.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_dmamux.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_gpio.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_gpio.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/system_MIMXRT1062.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/system_MIMXRT1062.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/gcc/startup_MIMXRT1062.S"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_lpuart.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_lpuart.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities/io/fsl_io.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities/io/fsl_io.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities/log/fsl_log.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities/log/fsl_log.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities/fsl_debug_console.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities/fsl_debug_console.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities/fsl_debug_console_conf.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_iomuxc.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities/fsl_assert.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/xip/fsl_flexspi_nor_boot.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/xip/fsl_flexspi_nor_boot.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/xip/evkmimxrt1060_flexspi_nor_config.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/xip/evkmimxrt1060_flexspi_nor_config.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/xip/evkmimxrt1060_sdram_ini_dcd.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/xip/evkmimxrt1060_sdram_ini_dcd.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/MemMang/heap_4.c"
 )
 
 
 set(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -T${ProjDirPath}/MIMXRT1062xxxxx_ram.ld -static")
 
-set(CMAKE_EXE_LINKER_FLAGS_SDRAM_DEBUG "${CMAKE_EXE_LINKER_FLAGS_SDRAM_DEBUG} -T${ProjDirPath}/MIMXRT1062xxxxx_sdram.ld -static")
-
 set(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -T${ProjDirPath}/MIMXRT1062xxxxx_ram.ld -static")
+
+set(CMAKE_EXE_LINKER_FLAGS_SDRAM_DEBUG "${CMAKE_EXE_LINKER_FLAGS_SDRAM_DEBUG} -T${ProjDirPath}/MIMXRT1062xxxxx_sdram.ld -static")
 
 set(CMAKE_EXE_LINKER_FLAGS_SDRAM_RELEASE "${CMAKE_EXE_LINKER_FLAGS_SDRAM_RELEASE} -T${ProjDirPath}/MIMXRT1062xxxxx_sdram.ld -static")
 

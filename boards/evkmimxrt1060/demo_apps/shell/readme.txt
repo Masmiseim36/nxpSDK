@@ -1,14 +1,6 @@
 Overview
 ========
 The Shell Demo application demonstrates to control Leds by commands.
-
-Toolchain supported
-===================
-- Keil MDK 5.25
-- IAR embedded Workbench 8.30.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.1
-
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -60,6 +52,11 @@ LED index is wrongs
 SHELL>>
 ~~~~~~~~~~~~~~~~~~~~~
 
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

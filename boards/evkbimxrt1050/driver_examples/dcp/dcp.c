@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright 2017 NXP
  * All rights reserved.
  *
  * 
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- *  that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 /*******************************************************************************
@@ -48,6 +22,8 @@
  ******************************************************************************/
 
 
+#define DCP_TEST_USE_OTP_KEY 0 /* Set to 1 to select OTP key for AES encryption/decryption. */
+
 #define TEST_ASSERT(a)       \
     if (!(a))                \
     {                        \
@@ -57,6 +33,16 @@
         } while (1);         \
     }
 
+#if DCP_TEST_USE_OTP_KEY
+typedef enum _dcp_otp_key_select
+{
+    kDCP_OTPMKKeyLow = 1U,  /* Use [127:0] from snvs key as dcp key */
+    kDCP_OTPMKKeyHigh = 2U, /* Use [255:128] from snvs key as dcp key */
+    kDCP_OCOTPKeyLow = 3U,  /* Use [127:0] from ocotp key as dcp key */
+    kDCP_OCOTPKeyHigh = 4U  /* Use [255:128] from ocotp key as dcp key */
+} dcp_otp_key_select;
+#endif
+
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -64,6 +50,42 @@
 /*******************************************************************************
  * Code
  ******************************************************************************/
+#if DCP_TEST_USE_OTP_KEY
+status_t DCP_OTPKeySelect(dcp_otp_key_select keySelect)
+{
+    if(keySelect == kDCP_OTPMKKeyLow)
+    {
+       IOMUXC_GPR->GPR3 &= ~(1 << IOMUXC_GPR_GPR3_DCP_KEY_SEL_SHIFT);
+       IOMUXC_GPR->GPR10 &= ~(1 << IOMUXC_GPR_GPR10_DCPKEY_OCOTP_OR_KEYMUX_SHIFT);
+    }
+
+    else if(keySelect == kDCP_OTPMKKeyHigh)
+    {
+       IOMUXC_GPR->GPR3 |= (1 << IOMUXC_GPR_GPR3_DCP_KEY_SEL_SHIFT);
+       IOMUXC_GPR->GPR10 &= ~(1 << IOMUXC_GPR_GPR10_DCPKEY_OCOTP_OR_KEYMUX_SHIFT);
+    }
+
+    else if(keySelect == kDCP_OCOTPKeyLow)
+    {
+       IOMUXC_GPR->GPR3 &= ~(1 << IOMUXC_GPR_GPR3_DCP_KEY_SEL_SHIFT);
+       IOMUXC_GPR->GPR10 |= (1 << IOMUXC_GPR_GPR10_DCPKEY_OCOTP_OR_KEYMUX_SHIFT);
+    }
+
+    else if(keySelect == kDCP_OCOTPKeyHigh)
+    {
+       IOMUXC_GPR->GPR3 |= (1 << IOMUXC_GPR_GPR3_DCP_KEY_SEL_SHIFT);
+       IOMUXC_GPR->GPR10 |= (1 << IOMUXC_GPR_GPR10_DCPKEY_OCOTP_OR_KEYMUX_SHIFT);
+    }
+
+    else
+    {
+        return kStatus_InvalidArgument;
+    }
+
+    return kStatus_Success;
+}
+#endif
+
 void TestAesEcb(void)
 {
     static const uint8_t keyAes128[] __attribute__((aligned)) = {0x2b, 0x7e, 0x15, 0x16, 0x28, 0xae, 0xd2, 0xa6,
@@ -72,6 +94,10 @@ void TestAesEcb(void)
                                           0xe9, 0x3d, 0x7e, 0x11, 0x73, 0x93, 0x17, 0x2a};
     static const uint8_t cipherAes128[] = {0x3a, 0xd7, 0x7b, 0xb4, 0x0d, 0x7a, 0x36, 0x60,
                                            0xa8, 0x9e, 0xca, 0xf3, 0x24, 0x66, 0xef, 0x97};
+#if DCP_TEST_USE_OTP_KEY
+#warning Please update cipherAes128 variables to match expected AES ciphertext for your OTP key.
+#endif
+
     uint8_t cipher[16];
     uint8_t output[16];
     status_t status;
@@ -79,7 +105,13 @@ void TestAesEcb(void)
     dcp_handle_t m_handle;
 
     m_handle.channel = kDCP_Channel0;
+    m_handle.swapConfig = kDCP_NoSwap;
+
+#if DCP_TEST_USE_OTP_KEY
+    m_handle.keySlot = kDCP_OtpKey;
+#else
     m_handle.keySlot = kDCP_KeySlot0;
+#endif
 
     status = DCP_AES_SetKey(DCP, &m_handle, keyAes128, 16);
     TEST_ASSERT(kStatus_Success == status);
@@ -104,6 +136,9 @@ void TestAesCbc(void)
 
     static const uint8_t cipherAes128[] = {0x76, 0x49, 0xab, 0xac, 0x81, 0x19, 0xb2, 0x46,
                                            0xce, 0xe9, 0x8e, 0x9b, 0x12, 0xe9, 0x19, 0x7d};
+#if DCP_TEST_USE_OTP_KEY
+#warning Please update cipherAes128 variables to match expected AES ciphertext for your OTP key.
+#endif
 
     uint8_t cipher[16];
     uint8_t output[16];
@@ -112,7 +147,13 @@ void TestAesCbc(void)
     dcp_handle_t m_handle;
 
     m_handle.channel = kDCP_Channel0;
+    m_handle.swapConfig = kDCP_NoSwap;
+
+#if DCP_TEST_USE_OTP_KEY
+    m_handle.keySlot = kDCP_OtpKey;
+#else
     m_handle.keySlot = kDCP_KeySlot0;
+#endif
 
     status = DCP_AES_SetKey(DCP, &m_handle, keyAes128, 16);
     TEST_ASSERT(kStatus_Success == status);
@@ -143,6 +184,7 @@ void TestSha1(void)
 
     m_handle.channel = kDCP_Channel0;
     m_handle.keySlot = kDCP_KeySlot0;
+    m_handle.swapConfig = kDCP_NoSwap;
 
     length = sizeof(message) - 1;
     outLength = sizeof(output);
@@ -181,6 +223,7 @@ void TestSha256(void)
 
     m_handle.channel = kDCP_Channel0;
     m_handle.keySlot = kDCP_KeySlot0;
+    m_handle.swapConfig = kDCP_NoSwap;
 
     length = sizeof(message) - 1;
     outLength = sizeof(output);
@@ -215,6 +258,7 @@ void TestCrc32(void)
 
     m_handle.channel = kDCP_Channel0;
     m_handle.keySlot = kDCP_KeySlot0;
+    m_handle.swapConfig = kDCP_NoSwap;
 
     length = sizeof(message) - 1;
     outLength = sizeof(output);
@@ -249,6 +293,14 @@ int main(void)
 
     /* Initialize DCP */
     DCP_GetDefaultConfig(&dcpConfig);
+
+#if DCP_TEST_USE_OTP_KEY
+    /* Set OTP key type in IOMUX registers before initializing DCP. */
+    /* Software reset of DCP must be issued after changing the OTP key type. */
+    DCP_OTPKeySelect(kDCP_OTPMKKeyLow);
+#endif
+
+    /* Reset and initialize DCP */
     DCP_Init(DCP, &dcpConfig);
 
     /* Call DCP APIs */

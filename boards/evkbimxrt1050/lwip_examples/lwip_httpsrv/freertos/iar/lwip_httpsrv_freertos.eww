@@ -5,18 +5,6 @@
       <name>all</name>
       <member>
         <project>lwip_httpsrv_freertos</project>
-        <configuration>sdram_debug</configuration>
-      </member>
-      <member>
-        <project>lwip_httpsrv_freertos</project>
-        <configuration>sdram_release</configuration>
-      </member>
-      <member>
-        <project>lwip_httpsrv_freertos</project>
-        <configuration>debug</configuration>
-      </member>
-      <member>
-        <project>lwip_httpsrv_freertos</project>
         <configuration>release</configuration>
       </member>
       <member>
@@ -26,27 +14,6 @@
       <member>
         <project>lwip_httpsrv_freertos</project>
         <configuration>flexspi_nor_release</configuration>
-      </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>sdram_debug</name>
-      <member>
-        <project>lwip_httpsrv_freertos</project>
-        <configuration>sdram_debug</configuration>
-      </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>sdram_release</name>
-      <member>
-        <project>lwip_httpsrv_freertos</project>
-        <configuration>sdram_release</configuration>
-      </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>debug</name>
-      <member>
-        <project>lwip_httpsrv_freertos</project>
-        <configuration>debug</configuration>
       </member>
     </batchDefinition>
     <batchDefinition>

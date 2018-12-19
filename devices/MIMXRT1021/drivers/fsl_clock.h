@@ -1,34 +1,8 @@
 /*
- * The Clear BSD License
- * Copyright 2017 NXP
+ * Copyright 2018 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #ifndef _FSL_CLOCK_H_
@@ -49,7 +23,7 @@
  *
  * When set to 0, peripheral drivers will enable clock in initialize function
  * and disable clock in de-initialize function. When set to 1, peripheral
- * driver will not control the clock, application could contol the clock out of
+ * driver will not control the clock, application could control the clock out of
  * the driver.
  *
  * @note All drivers share this feature switcher. If it is set to 1, application
@@ -65,8 +39,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief CLOCK driver version 2.1.2. */
-#define FSL_CLOCK_DRIVER_VERSION (MAKE_VERSION(2, 1, 2))
+/*! @brief CLOCK driver version 2.1.5. */
+#define FSL_CLOCK_DRIVER_VERSION (MAKE_VERSION(2, 1, 5))
 
 /* analog pll definition */
 #define CCM_ANALOG_PLL_BYPASS_SHIFT (16U)
@@ -74,9 +48,9 @@
 #define CCM_ANALOG_PLL_BYPASS_CLK_SRC_SHIFT (14U)
 
 /*@}*/
-#define CCM_TUPLE(reg, shift, mask, busyShift)                                                                     \
-    ((((uint32_t)(&((CCM_Type *)0U)->reg)) & 0xFFU) | ((shift) << 8U) | ((((mask) >> (shift)) & 0x1FFFU) << 13U) | \
-     ((busyShift) << 26U))
+#define CCM_TUPLE(reg, shift, mask, busyShift)                               \
+    (int)((((uint32_t)(&((CCM_Type *)0U)->reg)) & 0xFFU) | ((shift) << 8U) | \
+          ((((mask) >> (shift)) & 0x1FFFU) << 13U) | ((busyShift) << 26U))
 #define CCM_TUPLE_REG(base, tuple) (*((volatile uint32_t *)(((uint32_t)(base)) + ((tuple)&0xFFU))))
 #define CCM_TUPLE_SHIFT(tuple) (((tuple) >> 8U) & 0x1FU)
 #define CCM_TUPLE_MASK(tuple) ((uint32_t)((((tuple) >> 13U) & 0x1FFFU) << ((((tuple) >> 8U) & 0x1FU))))
@@ -132,9 +106,9 @@ extern volatile uint32_t g_rtcXtalFreq;
     }
 
 /*! @brief Clock ip name array for AOI. */
-#define AOI_CLOCKS                    \
-    {                                 \
-        kCLOCK_IpInvalid, kCLOCK_Aoi1 \
+#define AOI_CLOCKS \
+    {              \
+        kCLOCK_Aoi \
     }
 
 /*! @brief Clock ip name array for BEE. */
@@ -349,9 +323,9 @@ extern volatile uint32_t g_rtcXtalFreq;
     }
 
 /*! @brief Clock ip name array for XBARB. */
-#define XBARB_CLOCKS                                     \
-    {                                                    \
-        kCLOCK_IpInvalid, kCLOCK_IpInvalid, kCLOCK_Xbar2 \
+#define XBARB_CLOCKS \
+    {                \
+        kCLOCK_Xbar2 \
     }
 
 /*! @brief Clock name used to get clock frequency. */
@@ -361,27 +335,28 @@ typedef enum _clock_name
     kCLOCK_AhbClk = 0x1U,  /*!< AHB clock */
     kCLOCK_SemcClk = 0x2U, /*!< SEMC clock */
     kCLOCK_IpgClk = 0x3U,  /*!< IPG clock */
+    kCLOCK_PerClk = 0x4U,  /*!< PER clock */
 
-    kCLOCK_OscClk = 0x4U, /*!< OSC clock selected by PMU_LOWPWR_CTRL[OSC_SEL]. */
-    kCLOCK_RtcClk = 0x5U, /*!< RTC clock. (RTCCLK) */
+    kCLOCK_OscClk = 0x5U, /*!< OSC clock selected by PMU_LOWPWR_CTRL[OSC_SEL]. */
+    kCLOCK_RtcClk = 0x6U, /*!< RTC clock. (RTCCLK) */
 
-    kCLOCK_Usb1PllClk = 0x6U,     /*!< USB1PLLCLK. */
-    kCLOCK_Usb1PllPfd0Clk = 0x7U, /*!< USB1PLLPDF0CLK. */
-    kCLOCK_Usb1PllPfd1Clk = 0x8U, /*!< USB1PLLPFD1CLK. */
-    kCLOCK_Usb1PllPfd2Clk = 0x9U, /*!< USB1PLLPFD2CLK. */
-    kCLOCK_Usb1PllPfd3Clk = 0xAU, /*!< USB1PLLPFD3CLK. */
+    kCLOCK_Usb1PllClk = 0x7U,     /*!< USB1PLLCLK. */
+    kCLOCK_Usb1PllPfd0Clk = 0x8U, /*!< USB1PLLPDF0CLK. */
+    kCLOCK_Usb1PllPfd1Clk = 0x9U, /*!< USB1PLLPFD1CLK. */
+    kCLOCK_Usb1PllPfd2Clk = 0xAU, /*!< USB1PLLPFD2CLK. */
+    kCLOCK_Usb1PllPfd3Clk = 0xBU, /*!< USB1PLLPFD3CLK. */
 
-    kCLOCK_SysPllClk = 0xBU,     /*!< SYSPLLCLK. */
-    kCLOCK_SysPllPfd0Clk = 0xCU, /*!< SYSPLLPDF0CLK. */
-    kCLOCK_SysPllPfd1Clk = 0xDU, /*!< SYSPLLPFD1CLK. */
-    kCLOCK_SysPllPfd2Clk = 0xEU, /*!< SYSPLLPFD2CLK. */
-    kCLOCK_SysPllPfd3Clk = 0xFU, /*!< SYSPLLPFD3CLK. */
+    kCLOCK_SysPllClk = 0xCU,      /*!< SYSPLLCLK. */
+    kCLOCK_SysPllPfd0Clk = 0xDU,  /*!< SYSPLLPDF0CLK. */
+    kCLOCK_SysPllPfd1Clk = 0xEU,  /*!< SYSPLLPFD1CLK. */
+    kCLOCK_SysPllPfd2Clk = 0xFU,  /*!< SYSPLLPFD2CLK. */
+    kCLOCK_SysPllPfd3Clk = 0x10U, /*!< SYSPLLPFD3CLK. */
 
-    kCLOCK_EnetPllClk = 0x10U,     /*!< Enet PLLCLK ref_enetpll. */
-    kCLOCK_EnetPll25MClk = 0x11U,  /*!< Enet PLLCLK ref_enetpll25M. */
-    kCLOCK_EnetPll500MClk = 0x12U, /*!< Enet PLLCLK ref_enetpll500M. */
+    kCLOCK_EnetPllClk = 0x11U,     /*!< Enet PLLCLK ref_enetpll. */
+    kCLOCK_EnetPll25MClk = 0x12U,  /*!< Enet PLLCLK ref_enetpll25M. */
+    kCLOCK_EnetPll500MClk = 0x13U, /*!< Enet PLLCLK ref_enetpll500M. */
 
-    kCLOCK_AudioPllClk = 0x13U, /*!< Audio PLLCLK. */
+    kCLOCK_AudioPllClk = 0x14U, /*!< Audio PLLCLK. */
 } clock_name_t;
 
 #define kCLOCK_CoreSysClk kCLOCK_CpuClk             /*!< For compatible with other platforms without CCM. */
@@ -453,7 +428,7 @@ typedef enum _clock_ip_name
     kCLOCK_Lpuart5 = (3U << 8U) | CCM_CCGR3_CG1_SHIFT,        /*!< CCGR3, CG1   */
     kCLOCK_Semc = (3U << 8U) | CCM_CCGR3_CG2_SHIFT,           /*!< CCGR3, CG2   */
     kCLOCK_Lpuart6 = (3U << 8U) | CCM_CCGR3_CG3_SHIFT,        /*!< CCGR3, CG3   */
-    kCLOCK_Aoi1 = (3U << 8U) | CCM_CCGR3_CG4_SHIFT,           /*!< CCGR3, CG4   */
+    kCLOCK_Aoi = (3U << 8U) | CCM_CCGR3_CG4_SHIFT,            /*!< CCGR3, CG4   */
                                                               /*!< CCGR3, CG5, Reserved */
                                                               /*!< CCGR3, CG6, Reserved */
     kCLOCK_Ewm0 = (3U << 8U) | CCM_CCGR3_CG7_SHIFT,           /*!< CCGR3, CG7   */
@@ -634,23 +609,56 @@ typedef enum _clock_mux
  */
 typedef enum _clock_div
 {
-    kCLOCK_ArmDiv			= CCM_TUPLE(CACRR,  CCM_CACRR_ARM_PODF_SHIFT, CCM_CACRR_ARM_PODF_MASK, CCM_CDHIPR_ARM_PODF_BUSY_SHIFT), /*!< core div name */
-    kCLOCK_PeriphClk2Div	= CCM_TUPLE(CBCDR,  CCM_CBCDR_PERIPH_CLK2_PODF_SHIFT,CCM_CBCDR_PERIPH_CLK2_PODF_MASK,CCM_NO_BUSY_WAIT), /*!< periph clock2 div name */
-    kCLOCK_SemcDiv			= CCM_TUPLE(CBCDR,  CCM_CBCDR_SEMC_PODF_SHIFT,      CCM_CBCDR_SEMC_PODF_MASK,CCM_CDHIPR_SEMC_PODF_BUSY_SHIFT), /*!< semc div name */
-    kCLOCK_AhbDiv			= CCM_TUPLE(CBCDR,  CCM_CBCDR_AHB_PODF_SHIFT,       CCM_CBCDR_AHB_PODF_MASK, CCM_CDHIPR_AHB_PODF_BUSY_SHIFT), /*!< ahb div name */
-    kCLOCK_IpgDiv			= CCM_TUPLE(CBCDR,  CCM_CBCDR_IPG_PODF_SHIFT,       CCM_CBCDR_IPG_PODF_MASK, CCM_NO_BUSY_WAIT), /*!< ipg div name */
-    kCLOCK_LpspiDiv			= CCM_TUPLE(CBCMR,  CCM_CBCMR_LPSPI_PODF_SHIFT,     CCM_CBCMR_LPSPI_PODF_MASK, CCM_NO_BUSY_WAIT), /*!< lpspi div name */
-    kCLOCK_FlexspiDiv		= CCM_TUPLE(CSCMR1, CCM_CSCMR1_FLEXSPI_PODF_SHIFT,  CCM_CSCMR1_FLEXSPI_PODF_MASK, CCM_NO_BUSY_WAIT), /*!< flexspi div name */
-    kCLOCK_PerclkDiv		= CCM_TUPLE(CSCMR1, CCM_CSCMR1_PERCLK_PODF_SHIFT,   CCM_CSCMR1_PERCLK_PODF_MASK, CCM_NO_BUSY_WAIT), /*!< perclk div name */
-    kCLOCK_CanDiv			= CCM_TUPLE(CSCMR2, CCM_CSCMR2_CAN_CLK_PODF_SHIFT,  CCM_CSCMR2_CAN_CLK_PODF_MASK, CCM_NO_BUSY_WAIT), /*!< can div name */
-    kCLOCK_TraceDiv			= CCM_TUPLE(CSCDR1, CCM_CSCDR1_TRACE_PODF_SHIFT,    CCM_CSCDR1_TRACE_PODF_MASK, CCM_NO_BUSY_WAIT), /*!< trace div name */
-    kCLOCK_Usdhc2Div		= CCM_TUPLE(CSCDR1, CCM_CSCDR1_USDHC2_PODF_SHIFT,   CCM_CSCDR1_USDHC2_PODF_MASK, CCM_NO_BUSY_WAIT), /*!< usdhc2 div name */
-    kCLOCK_Usdhc1Div		= CCM_TUPLE(CSCDR1, CCM_CSCDR1_USDHC1_PODF_SHIFT,   CCM_CSCDR1_USDHC1_PODF_MASK, CCM_NO_BUSY_WAIT), /*!< usdhc1 div name */
-    kCLOCK_UartDiv			= CCM_TUPLE(CSCDR1, CCM_CSCDR1_UART_CLK_PODF_SHIFT, CCM_CSCDR1_UART_CLK_PODF_MASK, CCM_NO_BUSY_WAIT), /*!< uart div name */
-    kCLOCK_Flexio1Div		= CCM_TUPLE(CS1CDR, CCM_CS1CDR_FLEXIO1_CLK_PODF_SHIFT, CCM_CS1CDR_FLEXIO1_CLK_PODF_MASK, CCM_NO_BUSY_WAIT), /*!< flexio1 pre div name */
-    kCLOCK_Sai3PreDiv		= CCM_TUPLE(CS1CDR, CCM_CS1CDR_SAI3_CLK_PRED_SHIFT, CCM_CS1CDR_SAI3_CLK_PRED_MASK, CCM_NO_BUSY_WAIT), /*!< sai3 pre div name */
-    kCLOCK_Sai3Div			= CCM_TUPLE(CS1CDR, CCM_CS1CDR_SAI3_CLK_PODF_SHIFT, CCM_CS1CDR_SAI3_CLK_PODF_MASK, CCM_NO_BUSY_WAIT), /*!< sai3 div name */
-    kCLOCK_Flexio1PreDiv	= CCM_TUPLE(CS1CDR, CCM_CS1CDR_FLEXIO1_CLK_PRED_SHIFT,CCM_CS1CDR_FLEXIO1_CLK_PRED_MASK, CCM_NO_BUSY_WAIT), /*!< flexio1 pre div name */
+    kCLOCK_ArmDiv = CCM_TUPLE(
+        CACRR, CCM_CACRR_ARM_PODF_SHIFT, CCM_CACRR_ARM_PODF_MASK, CCM_CDHIPR_ARM_PODF_BUSY_SHIFT), /*!< core div name */
+
+    kCLOCK_PeriphClk2Div = CCM_TUPLE(CBCDR,
+                                     CCM_CBCDR_PERIPH_CLK2_PODF_SHIFT,
+                                     CCM_CBCDR_PERIPH_CLK2_PODF_MASK,
+                                     CCM_NO_BUSY_WAIT), /*!< periph clock2 div name */
+    kCLOCK_SemcDiv = CCM_TUPLE(CBCDR,
+                               CCM_CBCDR_SEMC_PODF_SHIFT,
+                               CCM_CBCDR_SEMC_PODF_MASK,
+                               CCM_CDHIPR_SEMC_PODF_BUSY_SHIFT), /*!< semc div name */
+    kCLOCK_AhbDiv = CCM_TUPLE(
+        CBCDR, CCM_CBCDR_AHB_PODF_SHIFT, CCM_CBCDR_AHB_PODF_MASK, CCM_CDHIPR_AHB_PODF_BUSY_SHIFT), /*!< ahb div name */
+    kCLOCK_IpgDiv =
+        CCM_TUPLE(CBCDR, CCM_CBCDR_IPG_PODF_SHIFT, CCM_CBCDR_IPG_PODF_MASK, CCM_NO_BUSY_WAIT), /*!< ipg div name */
+
+    kCLOCK_LpspiDiv = CCM_TUPLE(
+        CBCMR, CCM_CBCMR_LPSPI_PODF_SHIFT, CCM_CBCMR_LPSPI_PODF_MASK, CCM_NO_BUSY_WAIT), /*!< lpspi div name */
+
+    kCLOCK_FlexspiDiv = CCM_TUPLE(
+        CSCMR1, CCM_CSCMR1_FLEXSPI_PODF_SHIFT, CCM_CSCMR1_FLEXSPI_PODF_MASK, CCM_NO_BUSY_WAIT), /*!< flexspi div name */
+    kCLOCK_PerclkDiv = CCM_TUPLE(
+        CSCMR1, CCM_CSCMR1_PERCLK_PODF_SHIFT, CCM_CSCMR1_PERCLK_PODF_MASK, CCM_NO_BUSY_WAIT), /*!< perclk div name */
+
+    kCLOCK_CanDiv = CCM_TUPLE(
+        CSCMR2, CCM_CSCMR2_CAN_CLK_PODF_SHIFT, CCM_CSCMR2_CAN_CLK_PODF_MASK, CCM_NO_BUSY_WAIT), /*!< can div name */
+
+    kCLOCK_TraceDiv = CCM_TUPLE(
+        CSCDR1, CCM_CSCDR1_TRACE_PODF_SHIFT, CCM_CSCDR1_TRACE_PODF_MASK, CCM_NO_BUSY_WAIT), /*!< trace div name */
+    kCLOCK_Usdhc2Div = CCM_TUPLE(
+        CSCDR1, CCM_CSCDR1_USDHC2_PODF_SHIFT, CCM_CSCDR1_USDHC2_PODF_MASK, CCM_NO_BUSY_WAIT), /*!< usdhc2 div name */
+    kCLOCK_Usdhc1Div = CCM_TUPLE(
+        CSCDR1, CCM_CSCDR1_USDHC1_PODF_SHIFT, CCM_CSCDR1_USDHC1_PODF_MASK, CCM_NO_BUSY_WAIT), /*!< usdhc1 div name */
+    kCLOCK_UartDiv = CCM_TUPLE(
+        CSCDR1, CCM_CSCDR1_UART_CLK_PODF_SHIFT, CCM_CSCDR1_UART_CLK_PODF_MASK, CCM_NO_BUSY_WAIT), /*!< uart div name */
+
+    kCLOCK_Flexio1Div = CCM_TUPLE(CS1CDR,
+                                  CCM_CS1CDR_FLEXIO1_CLK_PODF_SHIFT,
+                                  CCM_CS1CDR_FLEXIO1_CLK_PODF_MASK,
+                                  CCM_NO_BUSY_WAIT), /*!< flexio1 pre div name */
+    kCLOCK_Sai3PreDiv = CCM_TUPLE(CS1CDR,
+                                  CCM_CS1CDR_SAI3_CLK_PRED_SHIFT,
+                                  CCM_CS1CDR_SAI3_CLK_PRED_MASK,
+                                  CCM_NO_BUSY_WAIT), /*!< sai3 pre div name */
+    kCLOCK_Sai3Div = CCM_TUPLE(
+        CS1CDR, CCM_CS1CDR_SAI3_CLK_PODF_SHIFT, CCM_CS1CDR_SAI3_CLK_PODF_MASK, CCM_NO_BUSY_WAIT), /*!< sai3 div name */
+    kCLOCK_Flexio1PreDiv = CCM_TUPLE(CS1CDR,
+                                     CCM_CS1CDR_FLEXIO1_CLK_PRED_SHIFT,
+                                     CCM_CS1CDR_FLEXIO1_CLK_PRED_MASK,
+                                     CCM_NO_BUSY_WAIT), /*!< flexio1 pre div name */
     kCLOCK_Sai1PreDiv = CCM_TUPLE(CS1CDR,
                                   CCM_CS1CDR_SAI1_CLK_PRED_SHIFT,
                                   CCM_CS1CDR_SAI1_CLK_PRED_MASK,
@@ -683,8 +691,8 @@ typedef enum _clock_div
 /*! @brief USB clock source definition. */
 typedef enum _clock_usb_src
 {
-    kCLOCK_Usb480M = 0,                /*!< Use 480M.      */
-    kCLOCK_UsbSrcUnused = 0xFFFFFFFFU, /*!< Used when the function does not
+    kCLOCK_Usb480M = 0,                     /*!< Use 480M.      */
+    kCLOCK_UsbSrcUnused = (int)0xFFFFFFFFU, /*!< Used when the function does not
                                             care the clock source. */
 } clock_usb_src_t;
 
@@ -720,6 +728,9 @@ typedef struct _clock_sys_pll_config
     uint32_t numerator;   /*!< 30 bit numerator of fractional loop divider.*/
     uint32_t denominator; /*!< 30 bit denominator of fractional loop divider */
     uint8_t src;          /*!< Pll clock source, reference _clock_pll_clk_src */
+    uint16_t ss_stop;     /*!< Stop value to get frequency change. */
+    uint8_t ss_enable;    /*!< Enable spread spectrum modulation */
+    uint16_t ss_step;     /*!< Step value to get frequency change step. */
 
 } clock_sys_pll_config_t;
 
@@ -917,6 +928,34 @@ static inline uint32_t CLOCK_GetOscFreq(void)
 {
     return (XTALOSC24M->LOWPWR_CTRL & XTALOSC24M_LOWPWR_CTRL_OSC_SEL_MASK) ? 24000000UL : g_xtalFreq;
 }
+
+/*!
+ * @brief Gets the AHB clock frequency.
+ *
+ * @return  The AHB clock frequency value in hertz.
+ */
+uint32_t CLOCK_GetAhbFreq(void);
+
+/*!
+ * @brief Gets the SEMC clock frequency.
+ *
+ * @return  The SEMC clock frequency value in hertz.
+ */
+uint32_t CLOCK_GetSemcFreq(void);
+
+/*!
+ * @brief Gets the IPG clock frequency.
+ *
+ * @return  The IPG clock frequency value in hertz.
+ */
+uint32_t CLOCK_GetIpgFreq(void);
+
+/*!
+ * @brief Gets the PER clock frequency.
+ *
+ * @return  The PER clock frequency value in hertz.
+ */
+uint32_t CLOCK_GetPerClkFreq(void);
 
 /*!
  * @brief Gets the clock frequency for a specific clock name.

@@ -208,7 +208,7 @@ void USB_DeviceMscApp(void)
 static void USB_BmEnterCritical(uint8_t *sr)
 {
     *sr = DisableGlobalIRQ();
-    __ASM("CPSID I");
+    __ASM("CPSID i");
 }
 /*!
  * @brief msc exit critical.
@@ -632,12 +632,12 @@ usb_status_t USB_DeviceMscProcessUfiCommand(usb_device_msc_struct_t *mscHandle)
 /*!
  * @brief Bulk IN endpoint callback function.
  *
- * This callback function is used to notify uplayer the tranfser result of a transfer.
+ * This callback function is used to notify uplayer the transfser result of a transfer.
  * This callback pointer is passed when the Bulk IN pipe initialized.
  *
  * @param handle          The device handle. It equals the value returned from USB_DeviceInit.
  * @param event          The result of the Bulk IN pipe transfer.
- * @param arg             The paramter for this callback. It is same with
+ * @param arg             The parameter for this callback. It is same with
  * usb_device_endpoint_callback_struct_t::callbackParam. In the class, the value is the MSC class handle.
  *
  * @return A USB error code or kStatus_USB_Success.
@@ -715,12 +715,12 @@ usb_status_t USB_DeviceMscBulkIn(usb_device_handle deviceHandle,
 /*!
  * @brief Bulk OUT endpoint callback function.
  *
- * This callback function is used to notify uplayer the tranfser result of a transfer.
+ * This callback function is used to notify uplayer the transfser result of a transfer.
  * This callback pointer is passed when the Bulk OUT pipe initialized.
  *
  * @param handle          The device handle. It equals the value returned from USB_DeviceInit.
  * @param message         The result of the Bulk OUT pipe transfer.
- * @param callbackParam  The paramter for this callback. It is same with
+ * @param callbackParam  The parameter for this callback. It is same with
  * usb_device_endpoint_callback_struct_t::callbackParam. In the class, the value is the MSC class handle.
  *
  * @return A USB error code or kStatus_USB_Success.
@@ -1313,7 +1313,7 @@ void USB_DeviceApplicationInit(void)
     USB_DeviceRun(g_msc.deviceHandle);
 }
 
-#if defined(__CC_ARM) || defined(__GNUC__)
+#if defined(__CC_ARM) || (defined(__ARMCC_VERSION)) || defined(__GNUC__)
 int main(void)
 #else
 void main(void)

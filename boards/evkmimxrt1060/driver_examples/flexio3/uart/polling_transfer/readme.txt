@@ -4,14 +4,6 @@ The flexio_uart_polling example shows how to use flexio uart driver in polling w
 
 In this example, a flexio simulated uart connect to PC through USB-Serial, the board will send back
 all characters that PC send to the board.
-
-Toolchain supported
-===================
-- Keil MDK 5.25
-- IAR embedded Workbench 8.30.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.1
-
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -46,6 +38,11 @@ When the demo runs successfully, the log would be seen on the UART Terminal port
 Flexio uart polling example
 Board will send back received characters
 ~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

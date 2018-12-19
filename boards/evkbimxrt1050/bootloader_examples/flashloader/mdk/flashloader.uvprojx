@@ -364,13 +364,12 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>--library_interface=armcc 
---library_type=standardlib 
 --diag_suppress=66,1296,186,1295,177,61,111 
---gnu 
+--library_type=standardlib  --gnu 
 </MiscControls>
               <Define>NDEBUG, CPU_MIMXRT1052DVL6B, CPU_IS_ARM_CORTEX_M7=1, BL_TARGET_RAM, MIMXRT1052, USB_STACK_BM</Define>
               <Undefine/>
-              <IncludePath>../../../../../devices;../../../../../CMSIS/Include;../../../../../middleware/usb/include;../../../../../middleware/usb/device;../../../../../middleware/usb/device/class;../../../../../middleware/usb/osa;../../../../../middleware/usb;../../../../../middleware/mcu-boot/src;../../../../../middleware/mcu-boot/src/bootloader;../../../../../middleware/mcu-boot/src/bm_usb;../../../../../middleware/mcu-boot/src/include;../../../../../middleware/mcu-boot/src/startup;../../../../../middleware/mcu-boot/src/utilities;../../../../../middleware/mcu-boot/src/drivers;../../../../../middleware/mcu-boot/src/drivers/crc;../../../../../middleware/mcu-boot/src/drivers/microseconds;../../../../../middleware/mcu-boot/src/drivers/smc;../../../../../middleware/mcu-boot/targets/MIMXRT1052/src;../../../../../middleware/mcu-boot/src/autobaud;../../../../../middleware/mcu-boot/src/drivers/sdmmc/inc;../../../../../devices/MIMXRT1052;../../../../../devices/MIMXRT1052/drivers;../../../../../project-root-path;..</IncludePath>
+              <IncludePath>../../../../../CMSIS/Include;../../../../../middleware/mcu-boot/src;../../../../../middleware/mcu-boot/src/bootloader;../../../../../middleware/mcu-boot/src/bm_usb;../../../../../middleware/mcu-boot/src/include;../../../../../middleware/mcu-boot/src/startup;../../../../../middleware/mcu-boot/src/utilities;../../../../../middleware/mcu-boot/src/drivers;../../../../../middleware/mcu-boot/src/drivers/crc;../../../../../middleware/mcu-boot/src/drivers/microseconds;../../../../../middleware/mcu-boot/src/drivers/smc;../../../../../middleware/mcu-boot/targets/MIMXRT1052/src;../../../../../middleware/mcu-boot/src/autobaud;../../../../../middleware/mcu-boot/src/drivers/sdmmc/inc;../../../../../devices/MIMXRT1052;../../../../../devices/MIMXRT1052/drivers;..;../../../../../middleware/usb/device;../../../../../middleware/usb/include;../../../../../middleware/usb/osa;../../../../../middleware/usb/phy</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -418,7 +417,7 @@ off
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>startup</GroupName>
+          <GroupName>device</GroupName>
           <Files>
             <File>
               <FileName>system_MIMXRT1052.h</FileName>
@@ -445,140 +444,25 @@ off
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1052/MIMXRT1052_features.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>startup</GroupName>
+          <Files>
             <File>
               <FileName>startup_MIMXRT1052.s</FileName>
               <FileType>2</FileType>
               <FilePath>../../../../../middleware/mcu-boot/targets/MIMXRT1052/src/startup/arm/startup_MIMXRT1052.s</FilePath>
             </File>
             <File>
-              <FileName>startup.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/startup/startup.c</FilePath>
-            </File>
-            <File>
               <FileName>ar_asm_macros.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mcu-boot/src/startup/ar_asm_macros.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>source-memory-src</GroupName>
-          <Files>
             <File>
-              <FileName>pattern_fill.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/pattern_fill.s</FilePath>
-            </File>
-            <File>
-              <FileName>sram_init.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/sram_init.h</FilePath>
-            </File>
-            <File>
-              <FileName>memory.c</FileName>
+              <FileName>startup.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/memory.c</FilePath>
-            </File>
-            <File>
-              <FileName>device_memory.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/device_memory.h</FilePath>
-            </File>
-            <File>
-              <FileName>device_memory.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/device_memory.c</FilePath>
-            </File>
-            <File>
-              <FileName>normal_memory.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/normal_memory.h</FilePath>
-            </File>
-            <File>
-              <FileName>normal_memory.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/normal_memory.c</FilePath>
-            </File>
-            <File>
-              <FileName>pattern_fill.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/pattern_fill.h</FilePath>
-            </File>
-            <File>
-              <FileName>spinand_memory.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/spinand_memory.c</FilePath>
-            </File>
-            <File>
-              <FileName>spinand_memory.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/spinand_memory.h</FilePath>
-            </File>
-            <File>
-              <FileName>flexspi_nor_memory.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/flexspi_nor_memory.c</FilePath>
-            </File>
-            <File>
-              <FileName>flexspi_nor_memory.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/flexspi_nor_memory.h</FilePath>
-            </File>
-            <File>
-              <FileName>semc_nand_memory.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/semc_nand_memory.c</FilePath>
-            </File>
-            <File>
-              <FileName>semc_nand_memory.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/semc_nand_memory.h</FilePath>
-            </File>
-            <File>
-              <FileName>semc_nor_memory.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/semc_nor_memory.c</FilePath>
-            </File>
-            <File>
-              <FileName>semc_nor_memory.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/semc_nor_memory.h</FilePath>
-            </File>
-            <File>
-              <FileName>spi_nor_eeprom_memory.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/spi_nor_eeprom_memory.c</FilePath>
-            </File>
-            <File>
-              <FileName>spi_nor_eeprom_memory.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/spi_nor_eeprom_memory.h</FilePath>
-            </File>
-            <File>
-              <FileName>sd_memory.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/sd_memory.c</FilePath>
-            </File>
-            <File>
-              <FileName>sd_memory.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/sd_memory.h</FilePath>
-            </File>
-            <File>
-              <FileName>mmc_memory.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/mmc_memory.c</FilePath>
-            </File>
-            <File>
-              <FileName>mmc_memory.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/mmc_memory.h</FilePath>
-            </File>
-            <File>
-              <FileName>sram_init_MIMXRT1052.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/targets/MIMXRT1052/src/sram_init_MIMXRT1052.c</FilePath>
+              <FilePath>../../../../../middleware/mcu-boot/src/startup/startup.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -701,11 +585,6 @@ off
               <FilePath>../../../../../middleware/mcu-boot/src/bootloader/bl_shutdown_cleanup.h</FilePath>
             </File>
             <File>
-              <FileName>bl_reliable_update.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/bootloader/bl_reliable_update.h</FilePath>
-            </File>
-            <File>
               <FileName>bl_irq_common.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mcu-boot/src/bootloader/bl_irq_common.h</FilePath>
@@ -766,16 +645,6 @@ off
               <FilePath>../../../../../middleware/mcu-boot/src/bootloader/src/bl_shutdown_cleanup.c</FilePath>
             </File>
             <File>
-              <FileName>lpuart_peripheral_interface.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/bootloader/src/lpuart_peripheral_interface.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_hid_msc_peripheral_interface.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/bootloader/src/usb_hid_msc_peripheral_interface.c</FilePath>
-            </File>
-            <File>
               <FileName>bl_app_crc_check.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mcu-boot/src/bootloader/src/bl_app_crc_check.c</FilePath>
@@ -784,6 +653,16 @@ off
               <FileName>bl_misc.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mcu-boot/src/bootloader/src/bl_misc.c</FilePath>
+            </File>
+            <File>
+              <FileName>lpuart_peripheral_interface.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/bootloader/src/lpuart_peripheral_interface.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_hid_msc_peripheral_interface.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/bootloader/src/usb_hid_msc_peripheral_interface.c</FilePath>
             </File>
             <File>
               <FileName>bl_nor_encrypt_bee.c</FileName>
@@ -828,21 +707,6 @@ off
           </Files>
         </Group>
         <Group>
-          <GroupName>source-drivers-microseconds</GroupName>
-          <Files>
-            <File>
-              <FileName>microseconds.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/drivers/microseconds/microseconds.h</FilePath>
-            </File>
-            <File>
-              <FileName>microseconds_pit.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/drivers/microseconds/src/microseconds_pit.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>source-include</GroupName>
           <Files>
             <File>
@@ -864,6 +728,126 @@ off
               <FileName>memory.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mcu-boot/src/memory/memory.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>source-memory-src</GroupName>
+          <Files>
+            <File>
+              <FileName>sram_init.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/sram_init.h</FilePath>
+            </File>
+            <File>
+              <FileName>memory.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/memory.c</FilePath>
+            </File>
+            <File>
+              <FileName>device_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/device_memory.h</FilePath>
+            </File>
+            <File>
+              <FileName>device_memory.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/device_memory.c</FilePath>
+            </File>
+            <File>
+              <FileName>normal_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/normal_memory.h</FilePath>
+            </File>
+            <File>
+              <FileName>normal_memory.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/normal_memory.c</FilePath>
+            </File>
+            <File>
+              <FileName>pattern_fill.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/pattern_fill.s</FilePath>
+            </File>
+            <File>
+              <FileName>pattern_fill.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/pattern_fill.h</FilePath>
+            </File>
+            <File>
+              <FileName>spinand_memory.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/spinand_memory.c</FilePath>
+            </File>
+            <File>
+              <FileName>spinand_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/spinand_memory.h</FilePath>
+            </File>
+            <File>
+              <FileName>flexspi_nor_memory.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/flexspi_nor_memory.c</FilePath>
+            </File>
+            <File>
+              <FileName>flexspi_nor_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/flexspi_nor_memory.h</FilePath>
+            </File>
+            <File>
+              <FileName>semc_nand_memory.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/semc_nand_memory.c</FilePath>
+            </File>
+            <File>
+              <FileName>semc_nand_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/semc_nand_memory.h</FilePath>
+            </File>
+            <File>
+              <FileName>semc_nor_memory.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/semc_nor_memory.c</FilePath>
+            </File>
+            <File>
+              <FileName>semc_nor_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/semc_nor_memory.h</FilePath>
+            </File>
+            <File>
+              <FileName>spi_nor_eeprom_memory.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/spi_nor_eeprom_memory.c</FilePath>
+            </File>
+            <File>
+              <FileName>spi_nor_eeprom_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/spi_nor_eeprom_memory.h</FilePath>
+            </File>
+            <File>
+              <FileName>sd_memory.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/sd_memory.c</FilePath>
+            </File>
+            <File>
+              <FileName>sd_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/sd_memory.h</FilePath>
+            </File>
+            <File>
+              <FileName>mmc_memory.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/mmc_memory.c</FilePath>
+            </File>
+            <File>
+              <FileName>mmc_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/mmc_memory.h</FilePath>
+            </File>
+            <File>
+              <FileName>sram_init_MIMXRT1052.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/targets/MIMXRT1052/src/sram_init_MIMXRT1052.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -998,6 +982,51 @@ off
           </Files>
         </Group>
         <Group>
+          <GroupName>source-drivers-lpuart</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_lpuart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/drivers/lpuart/fsl_lpuart.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_lpuart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/drivers/lpuart/fsl_lpuart.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>source-drivers-dcp</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_dcp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/drivers/dcp/fsl_dcp.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dcp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/drivers/dcp/fsl_dcp.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>source-drivers-trng</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_trng.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/drivers/trng/fsl_trng.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_trng.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/drivers/trng/fsl_trng.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>source-property-src</GroupName>
           <Files>
             <File>
@@ -1123,271 +1152,6 @@ off
           </Files>
         </Group>
         <Group>
-          <GroupName>source-drivers-lpuart</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_lpuart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/drivers/lpuart/fsl_lpuart.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_lpuart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/drivers/lpuart/fsl_lpuart.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>source-drivers-lpspi</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_lpspi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/drivers/lpspi/fsl_lpspi.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_lpspi.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/drivers/lpspi/fsl_lpspi.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>source-drivers-ocotp</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_ocotp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/drivers/ocotp/fsl_ocotp.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_ocotp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/drivers/ocotp/fsl_ocotp.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>source-drivers-gpio</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_gpio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/drivers/gpio/fsl_gpio.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>source-drivers-flexspi</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_flexspi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/drivers/flexspi/fsl_flexspi.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_flexspi.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/drivers/flexspi/fsl_flexspi.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>source-drivers-flexspi_nand</GroupName>
-          <Files>
-            <File>
-              <FileName>flexspi_nand_flash.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/drivers/flexspi_nand/flexspi_nand_flash.c</FilePath>
-            </File>
-            <File>
-              <FileName>flexspi_nand_flash.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/drivers/flexspi_nand/flexspi_nand_flash.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>source-drivers-flexspi_nor</GroupName>
-          <Files>
-            <File>
-              <FileName>flexspi_nor_flash.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/drivers/flexspi_nor/flexspi_nor_flash.c</FilePath>
-            </File>
-            <File>
-              <FileName>flexspi_nor_flash.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/drivers/flexspi_nor/flexspi_nor_flash.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>source-drivers-semc</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_semc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/drivers/semc/fsl_semc.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_semc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/drivers/semc/fsl_semc.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>source-drivers-nand_ecc</GroupName>
-          <Files>
-            <File>
-              <FileName>nand_ecc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/drivers/nand_ecc/nand_ecc.c</FilePath>
-            </File>
-            <File>
-              <FileName>nand_ecc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/drivers/nand_ecc/nand_ecc.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>source-drivers-semc_nand</GroupName>
-          <Files>
-            <File>
-              <FileName>semc_nand_flash.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/drivers/semc_nand/semc_nand_flash.c</FilePath>
-            </File>
-            <File>
-              <FileName>semc_nand_flash.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/drivers/semc_nand/semc_nand_flash.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>source-drivers-semc_nor</GroupName>
-          <Files>
-            <File>
-              <FileName>semc_nor_flash.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/drivers/semc_nor/semc_nor_flash.c</FilePath>
-            </File>
-            <File>
-              <FileName>semc_nor_flash.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/drivers/semc_nor/semc_nor_flash.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>source-drivers-serial_nor_eeprom</GroupName>
-          <Files>
-            <File>
-              <FileName>serial_nor_eeprom.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/drivers/serial_nor_eeprom/serial_nor_eeprom.c</FilePath>
-            </File>
-            <File>
-              <FileName>serial_nor_eeprom.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/drivers/serial_nor_eeprom/serial_nor_eeprom.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>source-drivers-dcp</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_dcp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/drivers/dcp/fsl_dcp.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_dcp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/drivers/dcp/fsl_dcp.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>source-drivers-trng</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_trng.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/drivers/trng/fsl_trng.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_trng.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/drivers/trng/fsl_trng.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>source-drivers-usdhc</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_usdhc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/drivers/usdhc/fsl_usdhc.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_usdhc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/drivers/usdhc/fsl_usdhc.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>source-drivers-sdmmc</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_card.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/drivers/sdmmc/inc/fsl_card.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_host.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/drivers/sdmmc/inc/fsl_host.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_sdmmc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/drivers/sdmmc/inc/fsl_sdmmc.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_specification.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/drivers/sdmmc/inc/fsl_specification.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_host.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/drivers/sdmmc/port/usdhc/polling/fsl_host.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_sd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/drivers/sdmmc/src/fsl_sd.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_mmc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/drivers/sdmmc/src/fsl_mmc.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_sdmmc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/drivers/sdmmc/src/fsl_sdmmc.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>usb-device-source-ehci</GroupName>
           <Files>
             <File>
@@ -1399,11 +1163,6 @@ off
               <FileName>usb_device_ehci.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/usb/device/usb_device_ehci.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_ehci.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/usb/include/usb_ehci.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1534,6 +1293,276 @@ off
               <FileName>usb_device.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/usb/device/usb_device.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>source-drivers-microseconds</GroupName>
+          <Files>
+            <File>
+              <FileName>microseconds.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/drivers/microseconds/microseconds.h</FilePath>
+            </File>
+            <File>
+              <FileName>microseconds_pit.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/drivers/microseconds/src/microseconds_pit.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>source-drivers-flexspi</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_flexspi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/drivers/flexspi/fsl_flexspi.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_flexspi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/drivers/flexspi/fsl_flexspi.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_flexspi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/drivers/flexspi/fsl_flexspi.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_flexspi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/drivers/flexspi/fsl_flexspi.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>source-drivers-flexspi_nor</GroupName>
+          <Files>
+            <File>
+              <FileName>flexspi_nor_flash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/drivers/flexspi_nor/flexspi_nor_flash.c</FilePath>
+            </File>
+            <File>
+              <FileName>flexspi_nor_flash.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/drivers/flexspi_nor/flexspi_nor_flash.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>source-drivers-flexspi_nand</GroupName>
+          <Files>
+            <File>
+              <FileName>flexspi_nand_flash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/drivers/flexspi_nand/flexspi_nand_flash.c</FilePath>
+            </File>
+            <File>
+              <FileName>flexspi_nand_flash.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/drivers/flexspi_nand/flexspi_nand_flash.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>source-drivers-semc</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_semc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/drivers/semc/fsl_semc.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_semc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/drivers/semc/fsl_semc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_semc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/drivers/semc/fsl_semc.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_semc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/drivers/semc/fsl_semc.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>source-drivers-semc_nor</GroupName>
+          <Files>
+            <File>
+              <FileName>semc_nor_flash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/drivers/semc_nor/semc_nor_flash.c</FilePath>
+            </File>
+            <File>
+              <FileName>semc_nor_flash.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/drivers/semc_nor/semc_nor_flash.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>source-drivers-semc_nand</GroupName>
+          <Files>
+            <File>
+              <FileName>semc_nand_flash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/drivers/semc_nand/semc_nand_flash.c</FilePath>
+            </File>
+            <File>
+              <FileName>semc_nand_flash.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/drivers/semc_nand/semc_nand_flash.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>source-drivers-nand_ecc</GroupName>
+          <Files>
+            <File>
+              <FileName>nand_ecc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/drivers/nand_ecc/nand_ecc.c</FilePath>
+            </File>
+            <File>
+              <FileName>nand_ecc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/drivers/nand_ecc/nand_ecc.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>source-drivers-gpio</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/drivers/gpio/fsl_gpio.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>source-drivers-usdhc</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_usdhc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/drivers/usdhc/fsl_usdhc.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_usdhc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/drivers/usdhc/fsl_usdhc.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>source-drivers-sdmmc</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_card.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/drivers/sdmmc/inc/fsl_card.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_host.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/drivers/sdmmc/inc/fsl_host.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sdmmc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/drivers/sdmmc/inc/fsl_sdmmc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_specification.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/drivers/sdmmc/inc/fsl_specification.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_host.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/drivers/sdmmc/port/usdhc/polling/fsl_host.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/drivers/sdmmc/src/fsl_sd.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_mmc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/drivers/sdmmc/src/fsl_mmc.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sdmmc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/drivers/sdmmc/src/fsl_sdmmc.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>source-drivers-lpspi</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_lpspi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/drivers/lpspi/fsl_lpspi.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_lpspi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/drivers/lpspi/fsl_lpspi.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>source-drivers-serial_nor_eeprom</GroupName>
+          <Files>
+            <File>
+              <FileName>serial_nor_eeprom.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/drivers/serial_nor_eeprom/serial_nor_eeprom.c</FilePath>
+            </File>
+            <File>
+              <FileName>serial_nor_eeprom.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/drivers/serial_nor_eeprom/serial_nor_eeprom.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>source-drivers-ocotp</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_ocotp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/drivers/ocotp/fsl_ocotp.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ocotp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/drivers/ocotp/fsl_ocotp.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb-phy</GroupName>
+          <Files>
+            <File>
+              <FileName>usb_phy.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/usb/phy/usb_phy.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_phy.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/usb/phy/usb_phy.h</FilePath>
             </File>
           </Files>
         </Group>

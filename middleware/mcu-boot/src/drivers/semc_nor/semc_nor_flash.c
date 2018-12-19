@@ -756,6 +756,7 @@ status_t semc_nor_flash_verify_program(uint32_t startAddr, const uint8_t * src, 
     return kStatus_Success;
 }
 
+#if BL_FEATURE_SEMC_NOR_MODULE
 // Initialize Parallel NOR Flash device
 status_t semc_nor_flash_init(semc_nor_config_t *config)
 {
@@ -796,6 +797,7 @@ status_t semc_nor_flash_init(semc_nor_config_t *config)
 
     return kStatus_Success;
 }
+#endif //BL_FEATURE_SEMC_NOR_MODULE
 
 // Program buffer data to Parallel NOR Flash device
 status_t semc_nor_flash_page_program(semc_nor_config_t *config,

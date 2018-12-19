@@ -44,8 +44,8 @@
 #define democonfigGREENGRASS_DISCOVERY_TASK_PRIORITY       ( tskIDLE_PRIORITY + 1 )
 
 /* Shadow lightbulb example task parameters. */
-#define democonfigSHADOW_LIGHTBULB_TASK_STACK_SIZE         ( configMINIMAL_STACK_SIZE * 12 )
-#define democonfigSHADOW_LIGHTBULB_TASK_PRIORITY           ( tskIDLE_PRIORITY + 1 )
+#define democonfigSHADOW_DEMO_TASK_STACK_SIZE              ( configMINIMAL_STACK_SIZE * 12 )
+#define democonfigSHADOW_DEMO_TASK_PRIORITY                ( tskIDLE_PRIORITY + 1 )
 
 /* TCP Echo Client tasks single example parameters */
 #define democonfigTCP_ECHO_TASKS_SINGLE_TASK_STACK_SIZE    ( configMINIMAL_STACK_SIZE * 4 )
@@ -65,6 +65,9 @@ negotiation. */
 
 /* Timeout used when performing MQTT operations that do not need extra time
 to perform a TLS negotiation. */
-#define democonfigMQTT_TIMEOUT						pdMS_TO_TICKS( 2500 )
+#define democonfigMQTT_TIMEOUT				   pdMS_TO_TICKS( 2500 )
+
+/* Send AWS IoT MQTT traffic encrypted. */
+#define democonfigMQTT_AGENT_CONNECT_FLAGS          	   ( mqttagentREQUIRE_TLS )
 
 #endif /* _AWS_DEMO_CONFIG_H_ */

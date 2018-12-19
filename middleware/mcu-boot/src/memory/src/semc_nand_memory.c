@@ -16,6 +16,9 @@
 #include "crc/crc32.h"
 #include "utilities/fsl_assert.h"
 #include "utilities/fsl_rtos_abstraction.h"
+#if BL_FEATURE_GEN_KEYBLOB
+#include "bootloader/bl_keyblob.h"
+#endif // BL_FEATURE_GEN_KEYBLOB
 
 #if BL_FEATURE_SEMC_NAND_MODULE
 ////////////////////////////////////////////////////////////////////////////////
@@ -54,6 +57,11 @@ typedef struct _semc_nand_mem_context
     uint32_t writePageIndex;
 
     uint32_t skippedBlockCount;
+
+#if BL_FEATURE_GEN_KEYBLOB
+    bool has_keyblob;
+    uint32_t keyblob_offset; //!< Key blob offset in application image
+#endif                       // BL_FEATURE_GEN_KEYBLOB
 } semc_nand_mem_context_t;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -125,6 +133,10 @@ static bool has_semc_nand_block_been_written_once(uint32_t blockIndex);
 
 // Determine if page to write is cached in writePageBuffer
 static bool is_semc_nand_write_page_cached(uint32_t pageIndex);
+
+#if BL_FEATURE_GEN_KEYBLOB
+static status_t check_update_keyblob_info(void *config);
+#endif // BL_FEATURE_GEN_KEYBLOB
 
 ////////////////////////////////////////////////////////////////////////////////
 // Variables
@@ -233,6 +245,105 @@ status_t semc_nand_mem_init(void)
     return status;
 }
 
+#if BL_FEATURE_GEN_KEYBLOB
+status_t check_update_keyblob_info(void *config)
+{
+    status_t status = kStatus_InvalidArgument;
+
+    do
+    {
+        if ((config == NULL) || (s_semcNandContext.isConfigured == false))
+        {
+            break;
+        }
+
+        // Try to read Key blob info based on config
+        keyblob_info_t *keyblob_info = (keyblob_info_t *)config;
+        if (keyblob_info->option.B.tag != kKeyBlobInfoOption_Tag)
+        {
+            break;
+        }
+
+        int32_t keyblob_info_type = keyblob_info->option.B.type;
+        if ((keyblob_info_type != kKeyBlobInfoType_Program) && (keyblob_info_type != kKeyBlobInfoType_Update))
+        {
+            break;
+        }
+
+        if (keyblob_info_type == kKeyBlobInfoType_Update)
+        {
+            status = keyblob_update(keyblob_info);
+            if (status != kStatus_Success)
+            {
+                s_semcNandContext.has_keyblob = false;
+                break;
+            }
+            s_semcNandContext.keyblob_offset = keyblob_info->keyblob_offset;
+            s_semcNandContext.has_keyblob = true;
+        }
+        else if (keyblob_info_type == kKeyBlobInfoType_Program)
+        {
+            if (!s_semcNandContext.has_keyblob)
+            {
+                break;
+            }
+            uint32_t index = keyblob_info->option.B.image_index;
+            if (index >= SEMC_NAND_FW_MAX_NUM)
+            {
+                status = kStatus_InvalidArgument;
+                break;
+            }
+
+            uint32_t image_page_start = s_semcNandFcb.firmwareTable[index].startPage;
+            uint32_t image_max_page_size = s_semcNandFcb.firmwareTable[index].pagesInFirmware;
+
+            uint32_t page_size = s_semcNandFcb.nandConfig.bytesInPageDataArea;
+            uint32_t keyblob_offset = s_semcNandContext.keyblob_offset;
+            uint32_t keyblob_addr = image_page_start * page_size + keyblob_offset;
+            uint8_t *keyblob_buffer;
+            uint32_t keyblob_size;
+            status = keyblob_get(&keyblob_buffer, &keyblob_size);
+            if (status != kStatus_Success)
+            {
+                break;
+            }
+
+            // Check key blob address range
+            if ((keyblob_size + keyblob_offset) / page_size > image_max_page_size)
+            {
+                status = kStatus_InvalidArgument;
+                break;
+            }
+
+            // Invalid key blob address, key blob must be page size aligned.
+            if (keyblob_addr & (page_size - 1))
+            {
+                status = kStatus_InvalidArgument;
+                break;
+            }
+
+            uint32_t keyblob_page_index = keyblob_addr / page_size;
+#if BL_FEATURE_FLASH_CHECK_CUMULATIVE_WRITE
+            if (semc_nand_flash_verify_erase(&s_semcNandFcb.nandConfig, keyblob_page_index, 1) != kStatus_Success)
+            {
+                status = kStatusMemoryCumulativeWrite;
+                break;
+            }
+#endif
+            status = semc_nand_mem_write(keyblob_addr, keyblob_size, keyblob_buffer);
+            if (status != kStatus_Success)
+            {
+                break;
+            }
+
+            status = semc_nand_mem_flush();
+        }
+    } while (0);
+
+    return status;
+}
+#endif // #if BL_FEATURE_GEN_KEYBLOB
+
 //! @brief Configure SEMC NAND memory
 status_t semc_nand_mem_config(uint32_t *config)
 {
@@ -247,6 +358,10 @@ status_t semc_nand_mem_config(uint32_t *config)
 
     // Try to get FCB based on an option
     semc_nand_img_option_t *nandImgOption = (semc_nand_img_option_t *)config;
+    
+#if BL_FEATURE_GEN_KEYBLOB
+    keyblob_info_t *keyblob_info = (keyblob_info_t *)config;
+#endif // BL_FEATURE_GEN_KEYBLOB
 
     // Validate user FCB
     if (semc_nand_validate_bcb(kSemcNandBootControlBlockType_FCB, config))
@@ -362,6 +477,16 @@ status_t semc_nand_mem_config(uint32_t *config)
         s_semcNandFcb.DBBTSerachAreaStartPage = searchCount * searchStride;
         s_semcNandFcb.firmwareCopies = imageCopies;
     }
+#if BL_FEATURE_GEN_KEYBLOB
+    else if (keyblob_info->option.B.tag == kKeyBlobInfoOption_Tag)
+    {
+        status = check_update_keyblob_info(config);
+        if (status != kStatus_Success)
+        {
+            return status;
+        }
+    }
+#endif
     else
     {
         return kStatus_SemcNAND_InvalidCfgTag;
@@ -600,7 +725,7 @@ status_t semc_nand_mem_write(uint32_t address, uint32_t length, const uint8_t *b
 //! @brief  Erase SEMC NAND memory
 status_t semc_nand_mem_erase(uint32_t address, uint32_t length)
 {
-    status_t status;
+    status_t status = kStatus_Fail;
     uint32_t startBlockIndex;
     uint32_t endBlockIndex;
     uint32_t blockCount;

@@ -16,35 +16,6 @@ Other hook types used for RTOS and resource statistics are also demonstrated in 
 * vApplicationMallocFailedHook
 
 
-
-Toolchain supported
-===================
-- Keil MDK 5.25
-- IAR embedded Workbench 8.30.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.1
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- EVK-MIMXRT1060 board
-- Personal Computer
-
-Board settings
-==============
-No special settings are required.
-
-Prepare the Demo
-================
-1.  Connect a USB cable between the host PC and the OpenSDA USB port on the target board. 
-2.  Open a serial terminal with the following settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-3.  Download the program to the target board.
-4.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
 Running the demo
 ================
 After the board is flashed the Tera Term will start periodically printing the state of generic example.
@@ -67,6 +38,32 @@ Event task is running.
 Receive message counter: 13.
 Receive message counter: 14.
 ...
-Customization options
+Hardware requirements
 =====================
+- Mini/micro USB cable
+- EVK-MIMXRT1060 board
+- Personal Computer
+
+Board settings
+==============
+No special settings are required.
+
+Prepare the Demo
+================
+1.  Connect a USB cable between the host PC and the OpenSDA USB port on the target board. 
+2.  Open a serial terminal with the following settings:
+    - 115200 baud rate
+    - 8 data bits
+    - No parity
+    - One stop bit
+    - No flow control
+3.  Download the program to the target board.
+4.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

@@ -382,7 +382,7 @@ void clear_kf_profile(void);
 void output_kf_pfm(void);
 
 // Shell functions
-int ipconfig_query(p_shell_context_t context, int argc, char **argv);
+int ipconfig_query(shell_handle_t context, int argc, char **argv);
 
 int32_t wmiconfig_handler(int32_t argc, char *argv[]);
 int32_t wmi_iwconfig(int32_t argc, char *argv[]);
@@ -395,7 +395,7 @@ extern wps_context_t wps_context;
 extern int active_device;
 
 // Shell command helper function
-int RunInWmiTaskThread(p_shell_context_t context, int argc, char **argv);
+int RunInWmiTaskThread(shell_handle_t context, int argc, char **argv);
 
 // These two pointers are of type ENET_CONTEXT_STRUCT_PTR
 extern _qca_handle handle;

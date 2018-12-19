@@ -215,7 +215,7 @@ void app_task(void *param)
 {
     while (1)
     {
-        USB_HosCdcTask(&g_cdc);
+        USB_HostCdcTask(&g_cdc);
     }
 }
 

@@ -2,10 +2,18 @@
 <ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
   <externalDefinitions>
     <definition extID="com.nxp.mcuxpresso"/>
+    <definition extID="component.lists.MIMXRT1052"/>
+    <definition extID="component.lpuart_adapter.MIMXRT1052"/>
+    <definition extID="component.serial_manager.MIMXRT1052"/>
+    <definition extID="component.serial_manager_uart.MIMXRT1052"/>
+    <definition extID="device.MIMXRT1052_CMSIS.MIMXRT1052"/>
+    <definition extID="device.MIMXRT1052_startup.MIMXRT1052"/>
+    <definition extID="driver.phyksz8081.MIMXRT1052"/>
     <definition extID="middleware.tcpip.lwip.MIMXRT1052"/>
     <definition extID="middleware.tcpip.lwip.contrib.tcpecho_raw.MIMXRT1052"/>
-    <definition extID="platform.devices.MIMXRT1052_CMSIS.MIMXRT1052"/>
-    <definition extID="platform.devices.MIMXRT1052_startup.MIMXRT1052"/>
+    <definition extID="middleware.tcpip.lwip.ethernetif.MIMXRT1052"/>
+    <definition extID="platform.Include_common.MIMXRT1052"/>
+    <definition extID="platform.Include_core_cm7.MIMXRT1052"/>
     <definition extID="platform.drivers.cache_armv7_m7.MIMXRT1052"/>
     <definition extID="platform.drivers.clock.MIMXRT1052"/>
     <definition extID="platform.drivers.common.MIMXRT1052"/>
@@ -13,15 +21,16 @@
     <definition extID="platform.drivers.igpio.MIMXRT1052"/>
     <definition extID="platform.drivers.iomuxc.MIMXRT1052"/>
     <definition extID="platform.drivers.lpuart.MIMXRT1052"/>
-    <definition extID="platform.drivers.xip.MIMXRT1052"/>
+    <definition extID="platform.drivers.xip_board.MIMXRT1052"/>
+    <definition extID="platform.drivers.xip_device.MIMXRT1052"/>
     <definition extID="platform.utilities.assert.MIMXRT1052"/>
-    <definition extID="platform.utilities.debug_console.MIMXRT1052"/>
+    <definition extID="utility.debug_console.MIMXRT1052"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
-    <definition extID="mcuxpresso"/>
     <definition extID="armgcc"/>
+    <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="evkbimxrt1050_lwip_tcpecho_bm" name="lwip_tcpecho_bm" category="lwip_examples" dependency="platform.drivers.cache_armv7_m7.MIMXRT1052 platform.drivers.common.MIMXRT1052 platform.drivers.clock.MIMXRT1052 platform.devices.MIMXRT1052_CMSIS.MIMXRT1052 platform.devices.MIMXRT1052_startup.MIMXRT1052 platform.drivers.lpuart.MIMXRT1052 platform.utilities.debug_console.MIMXRT1052 platform.drivers.iomuxc.MIMXRT1052 platform.utilities.assert.MIMXRT1052 platform.drivers.igpio.MIMXRT1052 platform.drivers.xip.MIMXRT1052 middleware.tcpip.lwip.contrib.tcpecho_raw.MIMXRT1052 middleware.tcpip.lwip.MIMXRT1052 platform.drivers.enet.MIMXRT1052" toolchain="mdk iar armgcc mcuxpresso">
+  <example id="evkbimxrt1050_lwip_tcpecho_bm" name="lwip_tcpecho_bm" category="lwip_examples" dependency="driver.phyksz8081.MIMXRT1052 platform.drivers.cache_armv7_m7.MIMXRT1052 middleware.tcpip.lwip.contrib.tcpecho_raw.MIMXRT1052 middleware.tcpip.lwip.ethernetif.MIMXRT1052 platform.drivers.clock.MIMXRT1052 platform.drivers.enet.MIMXRT1052 platform.drivers.common.MIMXRT1052 device.MIMXRT1052_CMSIS.MIMXRT1052 utility.debug_console.MIMXRT1052 component.lpuart_adapter.MIMXRT1052 component.serial_manager.MIMXRT1052 component.serial_manager_uart.MIMXRT1052 platform.drivers.lpuart.MIMXRT1052 component.lists.MIMXRT1052 device.MIMXRT1052_startup.MIMXRT1052 platform.drivers.iomuxc.MIMXRT1052 platform.utilities.assert.MIMXRT1052 platform.drivers.igpio.MIMXRT1052 platform.drivers.xip_device.MIMXRT1052 platform.drivers.xip_board.MIMXRT1052 platform.Include_core_cm7.MIMXRT1052 platform.Include_common.MIMXRT1052 middleware.tcpip.lwip.MIMXRT1052" toolchain="iar mdk armgcc mcuxpresso">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -43,12 +52,6 @@
         <option id="com.crt.advproject.c.misc.dialect" type="enum">
           <value>com.crt.advproject.misc.dialect.gnu99</value>
         </option>
-        <option id="com.crt.advproject.gcc.exe.debug.option.debugging.level" type="enum">
-          <value>gnu.c.debugging.level.default</value>
-        </option>
-        <option id="com.crt.advproject.gcc.exe.release.option.debugging.level" type="enum">
-          <value>gnu.c.debugging.level.default</value>
-        </option>
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
           <value>FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE</value>
           <value>CPU_MIMXRT1052DVL6B</value>
@@ -59,7 +62,6 @@
           <value>SCANF_ADVANCED_ENABLE=0</value>
           <value>XIP_EXTERNAL_FLASH=1</value>
           <value>XIP_BOOT_HEADER_ENABLE=1</value>
-          <value>XIP_BOOT_HEADER_DCD_ENABLE=1</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
           <value>-fno-common</value>
@@ -86,28 +88,36 @@
       </toolchainSetting>
     </toolchainSettings>
     <include_paths>
-      <include_path path="lwip/contrib/apps"/>
       <include_path path="lwip/port"/>
       <include_path path="lwip/src"/>
       <include_path path="lwip/src/include"/>
     </include_paths>
-    <source path="boards/evkbimxrt1050/lwip_examples/lwip_tcpecho/bm" target_path="board/src" type="c_include">
-      <files mask="board.h"/>
-      <files mask="clock_config.h"/>
+    <source path="boards/evkbimxrt1050/lwip_examples/lwip_tcpecho/bm/armgcc" target_path="src" type="linker" toolchain="armgcc">
+      <files mask="MIMXRT1052xxxxx_ram.ld"/>
     </source>
-    <source path="boards/evkbimxrt1050/lwip_examples/lwip_tcpecho/bm" target_path="board/src" type="src">
-      <files mask="board.c"/>
-      <files mask="clock_config.c"/>
+    <source path="boards/evkbimxrt1050/lwip_examples/lwip_tcpecho/bm/iar" target_path="src" type="linker" toolchain="iar">
+      <files mask="MIMXRT1052xxxxx_ram.icf"/>
+    </source>
+    <source path="boards/evkbimxrt1050/lwip_examples/lwip_tcpecho/bm/iar" target_path="src" type="other" toolchain="iar">
+      <files mask="evkbimxrt1050.mac"/>
+    </source>
+    <source path="boards/evkbimxrt1050/lwip_examples/lwip_tcpecho/bm/mdk" target_path="src" type="configuration" toolchain="mdk">
+      <files mask="evkbimxrt1050_ram.ini"/>
+    </source>
+    <source path="boards/evkbimxrt1050/lwip_examples/lwip_tcpecho/bm/mdk" target_path="src" type="linker" toolchain="mdk">
+      <files mask="MIMXRT1052xxxxx_ram.scf"/>
     </source>
     <source path="boards/evkbimxrt1050/lwip_examples/lwip_tcpecho/bm" target_path="board" type="c_include">
-      <files mask="fsl_phy.h"/>
+      <files mask="board.h"/>
+      <files mask="clock_config.h"/>
       <files mask="pin_mux.h"/>
     </source>
     <source path="boards/evkbimxrt1050/lwip_examples/lwip_tcpecho/bm" target_path="board" type="src">
-      <files mask="fsl_phy.c"/>
+      <files mask="board.c"/>
+      <files mask="clock_config.c"/>
       <files mask="pin_mux.c"/>
     </source>
-    <source path="boards/evkbimxrt1050/lwip_examples/lwip_tcpecho/bm" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso">
+    <source path="boards/evkbimxrt1050/lwip_examples/lwip_tcpecho/bm" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso armgcc">
       <files mask="readme.txt"/>
     </source>
     <source path="boards/evkbimxrt1050/lwip_examples/lwip_tcpecho/bm" target_path="source" type="c_include">

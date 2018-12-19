@@ -2,14 +2,9 @@ Overview
 ========
 The example demonstrates graphical widgets of the emWin library.
 
-
-Toolchain supported
-===================
-- Keil MDK 5.25
-- IAR embedded Workbench 8.30.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.1
-
+Running the demo
+================
+If this example runs correctly, the sample GUI is displayed.
 Hardware requirements
 =====================
 - Micro USB cable
@@ -33,9 +28,11 @@ Prepare the Demo
 3.  Download the program to the target board.
 4.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
 
-Running the demo
-================
-If this example runs correctly, the sample GUI is displayed.
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

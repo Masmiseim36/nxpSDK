@@ -5,6 +5,14 @@
       <name>all</name>
       <member>
         <project>flexspi_nor_polling_transfer</project>
+        <configuration>flexspi_nor_debug</configuration>
+      </member>
+      <member>
+        <project>flexspi_nor_polling_transfer</project>
+        <configuration>flexspi_nor_release</configuration>
+      </member>
+      <member>
+        <project>flexspi_nor_polling_transfer</project>
         <configuration>release</configuration>
       </member>
       <member>
@@ -18,6 +26,20 @@
       <member>
         <project>flexspi_nor_polling_transfer</project>
         <configuration>sdram_release</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>flexspi_nor_debug</name>
+      <member>
+        <project>flexspi_nor_polling_transfer</project>
+        <configuration>flexspi_nor_debug</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>flexspi_nor_release</name>
+      <member>
+        <project>flexspi_nor_polling_transfer</project>
+        <configuration>flexspi_nor_release</configuration>
       </member>
     </batchDefinition>
     <batchDefinition>

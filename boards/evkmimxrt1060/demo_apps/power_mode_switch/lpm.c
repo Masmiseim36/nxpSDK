@@ -172,14 +172,14 @@ void LPM_SwitchFlexspiClock(lpm_power_mode_t power_mode)
     CCM->CCGR0 &= (~CCM_CCGR0_CG3_MASK);
 
     /* Periph_clk output will be used as SEMC clock root */
-    CLOCK_SET_MUX(kCLOCK_SemcMux, 0x0);
+    CLOCK_SET_MUX((uint32_t)kCLOCK_SemcMux, 0x0);
     /* Set post divider for SEMC clock as 0. */
     CLOCK_SET_DIV(kCLOCK_SemcDiv, 0x0);
 
     /* Semc_clk_root_pre will be used as flexspi clock. */
-    CLOCK_SET_MUX(kCLOCK_FlexspiMux, 0x0);
+    CLOCK_SET_MUX((uint32_t)kCLOCK_FlexspiMux, 0x0);
     /* Set divider for flexspi clock root 0. */
-    CLOCK_SET_DIV(kCLOCK_FlexspiDiv, 0x0);
+    CLOCK_SET_DIV((uint32_t)kCLOCK_FlexspiDiv, 0x0);
 
     /* Enable clock gate of flexspi. */
     CCM->CCGR6 |= (CCM_CCGR6_CG5_MASK);
@@ -211,9 +211,9 @@ void LPM_RestoreFlexspiClock(void)
     CCM->CCGR0 &= (~CCM_CCGR0_CG3_MASK);
 
     /* PLL3 PFD0 will be used as flexspi clock. */
-    CLOCK_SET_MUX(kCLOCK_FlexspiMux, 0x3);
+    CLOCK_SET_MUX((uint32_t)kCLOCK_FlexspiMux, 0x3);
     /* Set divider for flexspi clock root 0. */
-    CLOCK_SET_DIV(kCLOCK_FlexspiDiv, 0x1);
+    CLOCK_SET_DIV((uint32_t)kCLOCK_FlexspiDiv, 0x1);
 
     /* Enable clock gate of flexspi. */
     CCM->CCGR6 |= (CCM_CCGR6_CG5_MASK);
@@ -338,8 +338,8 @@ void LPM_DisablePLLs(lpm_power_mode_t power_mode)
         /*Select ARM_PLL for pre_periph_clock */
         CLOCK_SetMux(kCLOCK_PrePeriphMux, 3);
         CLOCK_SetMux(kCLOCK_PeriphMux, 0);
-        
-        if(LPM_PowerModeLowSpeedRun == power_mode)
+
+        if (LPM_PowerModeLowSpeedRun == power_mode)
         {
             /* SET AHB to 132MHz, IPG to 33MHz */
             CLOCK_SetDiv(kCLOCK_IpgDiv, 3);
@@ -372,8 +372,8 @@ void LPM_DisablePLLs(lpm_power_mode_t power_mode)
         CLOCK_SetDiv(kCLOCK_ArmDiv, 0x0);
         CLOCK_SetMux(kCLOCK_PrePeriphMux, 0x3);
         CLOCK_SetMux(kCLOCK_PeriphMux, 0x0);
-        
-        if(LPM_PowerModeLowPowerRun == power_mode)
+
+        if (LPM_PowerModeLowPowerRun == power_mode)
         {
             /* SET AHB to 24MHz, IPG to 12MHz */
             CLOCK_SetDiv(kCLOCK_IpgDiv, 1);
@@ -424,7 +424,7 @@ void LPM_RestorePLLs(lpm_power_mode_t power_mode)
         /* Restore USB1 PLL */
         CCM_ANALOG->PLL_USB1_SET = CCM_ANALOG_PLL_USB1_BYPASS_MASK;
         CCM_ANALOG->PLL_USB1 =
-            (s_clockContext.pllUsb1 & (~(CCM_ANALOG_PLL_USB1_POWER_MASK))) | CCM_ANALOG_PLL_USB1_BYPASS_MASK;       
+            (s_clockContext.pllUsb1 & (~(CCM_ANALOG_PLL_USB1_POWER_MASK))) | CCM_ANALOG_PLL_USB1_BYPASS_MASK;
         CCM_ANALOG->PLL_USB1_SET = CCM_ANALOG_PLL_USB1_POWER_MASK;
         CCM_ANALOG->PFD_480_CLR = CCM_ANALOG_PFD_480_PFD0_FRAC_MASK;
         CCM_ANALOG->PFD_480_SET = CCM_ANALOG_PFD_480_PFD0_FRAC(35);
@@ -719,20 +719,6 @@ static void LPM_SystemDsm()
     /* Turn off FlexRAM0 */
     GPC->CNTR |= GPC_CNTR_PDRAM0_PGE_MASK;
 
-/* Set resume entry */
-#if defined(__CC_ARM)
-    extern uint32_t __Vectors[];
-#define __VECTOR_TABLE __Vectors
-#elif defined(__MCUXPRESSO)
-    extern uint32_t __Vectors[];
-#define __VECTOR_TABLE __Vectors
-#elif defined(__ICCARM__)
-    extern uint32_t __VECTOR_TABLE[];
-#elif defined(__GNUC__)
-    extern uint32_t __VECTOR_TABLE[];
-#endif
-    IOMUXC_GPR->GPR16 = (uint32_t)((uint32_t)__VECTOR_TABLE | 3);
-
     /* Clean and disable data cache to make sure context is saved into DDR */
     SCB_CleanDCache();
     SCB_DisableDCache();
@@ -765,7 +751,7 @@ static void LPM_SystemDsm()
         GPC->IMR[i] = 0xFFFFFFFFU;
     }
 
-    /* 
+    /*
      * ERR006223: CCM: Failure to resuem from wait/stop mode with power gating
      *   Configure REG_BYPASS_COUNTER to 2
      *   Enable the RBC bypass counter here to hold off the interrupts. RBC counter
@@ -804,8 +790,6 @@ void LPM_SystemRestoreDsm(void)
     PMU->REG_CORE_CLR = PMU_REG_CORE_FET_ODRIVE_MASK;
     /* Disconnect vdd_snvs_in and connect vdd_high_in */
     CCM_ANALOG->MISC0_CLR = CCM_ANALOG_MISC0_DISCON_HIGH_SNVS_MASK;
-
-    IOMUXC_GPR->GPR16 = (uint32_t)((uint32_t)ROM_CODE_ENTRY_ADDR | 3);
 }
 
 void LPM_SystemResumeDsm(void)

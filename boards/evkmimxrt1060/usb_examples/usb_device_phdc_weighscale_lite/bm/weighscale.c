@@ -488,6 +488,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
         case kUSB_DeviceEventBusReset:
         {
             g_shimAgent.attach = 0U;
+            g_shimAgent.currentConfig = 0U;
             USB_DeviceControlPipeInit(handle);
 #if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)) || \
     (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
@@ -533,19 +534,26 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
         }
         break;
         case kUSB_DeviceEventSetConfiguration:
-            if (USB_PHDC_WEIGHT_SCALE_CONFIGURE_INDEX == (*temp8))
+            if (0U ==(*temp8))
             {
+                g_shimAgent.attach = 0;
+                g_shimAgent.currentConfig = 0U;
+            }
+            else if (USB_PHDC_WEIGHT_SCALE_CONFIGURE_INDEX == (*temp8))
+            {
+                g_shimAgent.attach = 1U;
+                g_shimAgent.currentConfig = *temp8;
                 USB_DeviceWeightScaleSetConfigure(handle, (*temp8));
+                /* send the first NULL data to establish a connection between the device and host */
+                USB_ShimAgentSendData((uint32_t)handle, AGENT_SEND_DATA_QOS, NULL, 0U);
+                /* prepare for the first receiving */
+                USB_DeviceRecvRequest(handle, g_shimAgent.bulkOutData.epNumber, g_shimAgent.recvDataBuffer,
+                                      g_shimAgent.bulkOutData.epMaxPacketSize);
             }
             else
             {
+                error = kStatus_USB_InvalidRequest;
             }
-            g_shimAgent.attach = 1U;
-            /* send the first NULL data to establish a connection between the device and host */
-            USB_ShimAgentSendData((uint32_t)handle, AGENT_SEND_DATA_QOS, NULL, 0U);
-            /* prepare for the first receiving */
-            USB_DeviceRecvRequest(handle, g_shimAgent.bulkOutData.epNumber, g_shimAgent.recvDataBuffer,
-                                  g_shimAgent.bulkOutData.epMaxPacketSize);
             break;
         default:
             break;
@@ -1026,7 +1034,7 @@ static void USB_DeviceApplicationTask(uint32_t handle)
     }
 }
 
-#if defined(__CC_ARM) || defined(__GNUC__)
+#if defined(__CC_ARM) || (defined(__ARMCC_VERSION)) || defined(__GNUC__)
 int main(void)
 #else
 void main(void)

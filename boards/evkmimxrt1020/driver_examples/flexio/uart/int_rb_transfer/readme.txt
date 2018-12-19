@@ -7,14 +7,6 @@ In this example, a flexio simulated uart connect to PC through USB-Serial, the b
 send back all characters that PC send to the board.
 
 Note: The example echo every 8 characters, so input 8 characters every time.
-
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
-
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -57,6 +49,11 @@ To debug in qspiflash, following steps are needed:
 3. Set the SW8: 1 off 2 off 3 on 4 off, then power on the board and connect USB cable to J23.
 4. Start debugging in IDE.
    - Keil: Click "Download (F8)" to program the image to qspiflash first then clicking "Start/Stop Debug Session (Ctrl+F5)" to start debugging.
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

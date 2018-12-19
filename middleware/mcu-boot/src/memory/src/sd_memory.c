@@ -709,7 +709,6 @@ status_t sd_get_property(uint32_t whichProperty, uint32_t *value)
 static status_t sd_mem_load_buffer(uint32_t blockAddr)
 {
     status_t status;
-    sd_card_t *card = &s_sdContext.sd;
 
     s_sdContext.isReadBufferValid = false; // Mark read buffer invalid.
 

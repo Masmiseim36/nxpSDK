@@ -2,12 +2,20 @@
 <ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
   <externalDefinitions>
     <definition extID="com.nxp.mcuxpresso"/>
+    <definition extID="component.lists.MIMXRT1021"/>
+    <definition extID="component.lpuart_adapter.MIMXRT1021"/>
+    <definition extID="component.serial_manager.MIMXRT1021"/>
+    <definition extID="component.serial_manager_uart.MIMXRT1021"/>
+    <definition extID="device.MIMXRT1021_CMSIS.MIMXRT1021"/>
+    <definition extID="device.MIMXRT1021_startup.MIMXRT1021"/>
+    <definition extID="driver.phyksz8081.MIMXRT1021"/>
     <definition extID="middleware.freertos.MIMXRT1021"/>
     <definition extID="middleware.freertos.heap.heap_3.MIMXRT1021"/>
     <definition extID="middleware.tcpip.lwip.MIMXRT1021"/>
     <definition extID="middleware.tcpip.lwip.contrib.udpecho.MIMXRT1021"/>
-    <definition extID="platform.devices.MIMXRT1021_CMSIS.MIMXRT1021"/>
-    <definition extID="platform.devices.MIMXRT1021_startup.MIMXRT1021"/>
+    <definition extID="middleware.tcpip.lwip.ethernetif.MIMXRT1021"/>
+    <definition extID="platform.Include_common.MIMXRT1021"/>
+    <definition extID="platform.Include_core_cm7.MIMXRT1021"/>
     <definition extID="platform.drivers.cache_armv7_m7.MIMXRT1021"/>
     <definition extID="platform.drivers.clock.MIMXRT1021"/>
     <definition extID="platform.drivers.common.MIMXRT1021"/>
@@ -15,22 +23,26 @@
     <definition extID="platform.drivers.igpio.MIMXRT1021"/>
     <definition extID="platform.drivers.iomuxc.MIMXRT1021"/>
     <definition extID="platform.drivers.lpuart.MIMXRT1021"/>
-    <definition extID="platform.drivers.xip.MIMXRT1021"/>
+    <definition extID="platform.drivers.xip_board.MIMXRT1021"/>
+    <definition extID="platform.drivers.xip_device.MIMXRT1021"/>
     <definition extID="platform.utilities.assert.MIMXRT1021"/>
-    <definition extID="platform.utilities.debug_console.MIMXRT1021"/>
     <definition extID="platform.utilities.misc_utilities.MIMXRT1021"/>
+    <definition extID="utility.debug_console.MIMXRT1021"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
-    <definition extID="mcuxpresso"/>
     <definition extID="armgcc"/>
+    <definition extID="mcuxpresso"/>
+    <definition extID="com.nxp.mcuxpresso.core.debug.support.segger.debug"/>
+    <definition extID="com.nxp.mcuxpresso.core.debug.support.segger.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt1020_lwip_udpecho_freertos" name="lwip_udpecho_freertos" category="lwip_examples" dependency="platform.drivers.cache_armv7_m7.MIMXRT1021 platform.drivers.common.MIMXRT1021 platform.drivers.clock.MIMXRT1021 platform.devices.MIMXRT1021_CMSIS.MIMXRT1021 platform.devices.MIMXRT1021_startup.MIMXRT1021 platform.drivers.lpuart.MIMXRT1021 platform.utilities.debug_console.MIMXRT1021 platform.drivers.iomuxc.MIMXRT1021 platform.utilities.assert.MIMXRT1021 platform.drivers.igpio.MIMXRT1021 platform.drivers.xip.MIMXRT1021 middleware.tcpip.lwip.contrib.udpecho.MIMXRT1021 middleware.tcpip.lwip.MIMXRT1021 platform.drivers.enet.MIMXRT1021 middleware.freertos.heap.heap_3.MIMXRT1021 platform.utilities.misc_utilities.MIMXRT1021 middleware.freertos.MIMXRT1021" toolchain="mdk iar armgcc mcuxpresso">
+  <example id="evkmimxrt1020_lwip_udpecho_freertos" name="lwip_udpecho_freertos" category="lwip_examples" dependency="driver.phyksz8081.MIMXRT1021 platform.drivers.cache_armv7_m7.MIMXRT1021 middleware.tcpip.lwip.contrib.udpecho.MIMXRT1021 middleware.tcpip.lwip.ethernetif.MIMXRT1021 platform.drivers.clock.MIMXRT1021 platform.drivers.enet.MIMXRT1021 middleware.freertos.heap.heap_3.MIMXRT1021 middleware.freertos.MIMXRT1021 platform.drivers.common.MIMXRT1021 device.MIMXRT1021_CMSIS.MIMXRT1021 utility.debug_console.MIMXRT1021 component.lpuart_adapter.MIMXRT1021 component.serial_manager.MIMXRT1021 component.serial_manager_uart.MIMXRT1021 platform.drivers.lpuart.MIMXRT1021 component.lists.MIMXRT1021 device.MIMXRT1021_startup.MIMXRT1021 platform.drivers.iomuxc.MIMXRT1021 platform.utilities.assert.MIMXRT1021 platform.drivers.igpio.MIMXRT1021 platform.drivers.xip_device.MIMXRT1021 platform.drivers.xip_board.MIMXRT1021 platform.Include_core_cm7.MIMXRT1021 platform.Include_common.MIMXRT1021 middleware.tcpip.lwip.MIMXRT1021 platform.utilities.misc_utilities.MIMXRT1021" toolchain="iar mdk armgcc mcuxpresso">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
     <memory>
       <memoryBlock addr="60000000" size="00800000" access="RO" type="ExtFlash" id="BOARD_FLASH_evkmimxrt1020" name="BOARD_FLASH"/>
-      <memoryBlock addr="80000000" size="02000000" access="RW" type="RAM" id="BOARD_SDRAM_evkmimxrt1020" name="BOARD_SDRAM"/>
+      <memoryBlock addr="80000000" size="01E00000" access="RW" type="RAM" id="BOARD_SDRAM_evkmimxrt1020" name="BOARD_SDRAM"/>
+      <memoryBlock addr="81E00000" size="00200000" access="RW" type="RAM" id="BOARD_SDRAM_NONCACHEABLE_evkmimxrt1020" name="BOARD_SDRAM_NONCACHEABLE"/>
       <memoryBlock addr="20000000" size="00010000" access="RW" type="RAM" id="SRAM_DTC_evkmimxrt1020" name="SRAM_DTC"/>
       <memoryBlock addr="00000000" size="00010000" access="RW" type="RAM" id="SRAM_ITC_evkmimxrt1020" name="SRAM_ITC"/>
       <memoryBlock addr="20200000" size="00020000" access="RW" type="RAM" id="SRAM_OC_evkmimxrt1020" name="SRAM_OC"/>
@@ -46,12 +58,9 @@
         <option id="com.crt.advproject.c.misc.dialect" type="enum">
           <value>com.crt.advproject.misc.dialect.gnu99</value>
         </option>
-        <option id="com.crt.advproject.gcc.exe.debug.option.debugging.level" type="enum">
-          <value>gnu.c.debugging.level.default</value>
-        </option>
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
-          <value>FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE</value>
           <value>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</value>
+          <value>XIP_BOOT_HEADER_DCD_ENABLE=1</value>
           <value>SKIP_SYSCLK_INIT</value>
           <value>CPU_MIMXRT1021DAG5A</value>
           <value>SDK_DEBUGCONSOLE=1</value>
@@ -61,7 +70,7 @@
           <value>SCANF_ADVANCED_ENABLE=0</value>
           <value>XIP_EXTERNAL_FLASH=1</value>
           <value>XIP_BOOT_HEADER_ENABLE=1</value>
-          <value>XIP_BOOT_HEADER_DCD_ENABLE=1</value>
+          <value>FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE</value>
           <value>USE_RTOS=1</value>
           <value>PRINTF_ADVANCED_ENABLE=1</value>
           <value>FSL_RTOS_FREE_RTOS</value>
@@ -82,38 +91,50 @@
           <value>&amp;Heap:Default;Default;0x6400&amp;Stack:Default;Default;0x800</value>
         </option>
         <option id="com.crt.advproject.link.memory.sections" type="stringList">
-          <value>isd=*(NonCacheable.init);region=SRAM_DTC;type=.data</value>
-          <value>isd=*(NonCacheable);region=SRAM_DTC;type=.bss</value>
-        </option>
-        <option id="com.crt.advproject.gcc.exe.release.option.debugging.level" type="enum">
-          <value>gnu.c.debugging.level.none</value>
+          <value>isd=*(NonCacheable.init);region=BOARD_SDRAM_NONCACHEABLE;type=.data</value>
+          <value>isd=*(NonCacheable);region=BOARD_SDRAM_NONCACHEABLE;type=.bss</value>
         </option>
       </toolchainSetting>
     </toolchainSettings>
+    <debug_configurations>
+      <debug_configuration id_refs="com.nxp.mcuxpresso.core.debug.support.segger.debug">
+        <scripts>
+          <script type="segger_script">
+            <source path="boards/evkmimxrt1020/lwip_examples/lwip_udpecho/freertos" type="script">
+              <files mask="evkmimxrt1020_sdram_init.jlinkscript"/>
+            </source>
+          </script>
+        </scripts>
+      </debug_configuration>
+      <debug_configuration id_refs="com.nxp.mcuxpresso.core.debug.support.segger.release">
+        <scripts>
+          <script type="segger_script">
+            <source path="boards/evkmimxrt1020/lwip_examples/lwip_udpecho/freertos" type="script">
+              <files mask="evkmimxrt1020_sdram_init.jlinkscript"/>
+            </source>
+          </script>
+        </scripts>
+      </debug_configuration>
+    </debug_configurations>
     <include_paths>
-      <include_path path="lwip/contrib/apps"/>
       <include_path path="lwip/port"/>
       <include_path path="lwip/src"/>
       <include_path path="lwip/src/include"/>
-      <include_path path="lwip/src/include/lwip/apps"/>
     </include_paths>
-    <source path="boards/evkmimxrt1020/lwip_examples/lwip_udpecho/freertos" target_path="board/src" type="c_include">
-      <files mask="board.h"/>
-      <files mask="clock_config.h"/>
-    </source>
-    <source path="boards/evkmimxrt1020/lwip_examples/lwip_udpecho/freertos" target_path="board/src" type="src">
-      <files mask="board.c"/>
-      <files mask="clock_config.c"/>
+    <source path="boards/evkmimxrt1020/lwip_examples/lwip_udpecho/freertos/mdk" target_path="src" type="configuration" toolchain="mdk">
+      <files mask="evkmimxrt1020_ram.ini"/>
     </source>
     <source path="boards/evkmimxrt1020/lwip_examples/lwip_udpecho/freertos" target_path="board" type="c_include">
-      <files mask="fsl_phy.h"/>
+      <files mask="board.h"/>
+      <files mask="clock_config.h"/>
       <files mask="pin_mux.h"/>
     </source>
     <source path="boards/evkmimxrt1020/lwip_examples/lwip_udpecho/freertos" target_path="board" type="src">
-      <files mask="fsl_phy.c"/>
+      <files mask="board.c"/>
+      <files mask="clock_config.c"/>
       <files mask="pin_mux.c"/>
     </source>
-    <source path="boards/evkmimxrt1020/lwip_examples/lwip_udpecho/freertos" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso">
+    <source path="boards/evkmimxrt1020/lwip_examples/lwip_udpecho/freertos" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso armgcc">
       <files mask="readme.txt"/>
     </source>
     <source path="boards/evkmimxrt1020/lwip_examples/lwip_udpecho/freertos" target_path="source" type="c_include">
@@ -122,6 +143,15 @@
     </source>
     <source path="boards/evkmimxrt1020/lwip_examples/lwip_udpecho/freertos" target_path="source" type="src">
       <files mask="lwip_udpecho_freertos.c"/>
+    </source>
+    <source path="devices/MIMXRT1021/arm" target_path="src" type="linker" toolchain="mdk">
+      <files mask="MIMXRT1021xxxxx_ram.scf"/>
+    </source>
+    <source path="devices/MIMXRT1021/gcc" target_path="src" type="linker" toolchain="armgcc">
+      <files mask="MIMXRT1021xxxxx_ram.ld"/>
+    </source>
+    <source path="devices/MIMXRT1021/iar" target_path="src" type="linker" toolchain="iar">
+      <files mask="MIMXRT1021xxxxx_ram.icf"/>
     </source>
   </example>
 </ksdk:examples>

@@ -173,7 +173,7 @@ static usb_status_t USB_DeviceClassAllocateHandle(uint8_t controllerId, usb_devi
  *
  * @param controllerId   The controller id of the USB IP. Please refer to the enumeration usb_controller_index_t.
  *
- * @retval kStatus_USB_Success              Free device hanlde successfully.
+ * @retval kStatus_USB_Success              Free device handle successfully.
  * @retval kStatus_USB_InvalidParameter     The common class can not be found.
  */
 static usb_status_t USB_DeviceClassFreeHandle(uint8_t controllerId)
@@ -208,7 +208,7 @@ static usb_status_t USB_DeviceClassFreeHandle(uint8_t controllerId)
  * @param handle          It is out parameter, is used to return pointer of the device common class handle to the
  * caller.
  *
- * @retval kStatus_USB_Success              Free device hanlde successfully.
+ * @retval kStatus_USB_Success              Free device handle successfully.
  * @retval kStatus_USB_InvalidParameter     The common class can not be found.
  */
 static usb_status_t USB_DeviceClassGetHandleByControllerId(uint8_t controllerId,
@@ -241,7 +241,7 @@ static usb_status_t USB_DeviceClassGetHandleByControllerId(uint8_t controllerId,
  * @param handle                 It is out parameter, is used to return pointer of the device common class handle to the
  * caller.
  *
- * @retval kStatus_USB_Success              Free device hanlde successfully.
+ * @retval kStatus_USB_Success              Free device handle successfully.
  * @retval kStatus_USB_InvalidParameter     The common class can not be found.
  */
 static usb_status_t USB_DeviceClassGetHandleByDeviceHandle(usb_device_handle deviceHandle,
@@ -272,7 +272,7 @@ static usb_status_t USB_DeviceClassGetHandleByDeviceHandle(usb_device_handle dev
  * @param controllerId   The controller id of the USB IP. Please refer to the enumeration usb_controller_index_t.
  * @param handle          It is out parameter, is used to return pointer of the device handle to the caller.
  *
- * @retval kStatus_USB_Success              Free device hanlde successfully.
+ * @retval kStatus_USB_Success              Free device handle successfully.
  * @retval kStatus_USB_InvalidParameter     The device handle not be found.
  */
 usb_status_t USB_DeviceClassGetDeviceHandle(uint8_t controllerId, usb_device_handle *handle)
@@ -403,10 +403,10 @@ usb_status_t USB_DeviceClassCallback(usb_device_handle handle, uint32_t event, v
  * This function is used to initialize the common class and the supported classes.
  *
  * @param[in] controllerId   The controller id of the USB IP. Please refer to the enumeration #usb_controller_index_t.
- * @param[in] configList     The class configurations. The pointer must point to the goblal variable.
+ * @param[in] configList     The class configurations. The pointer must point to the global variable.
  *                           Please refer to the structure #usb_device_class_config_list_struct_t.
  * @param[out] handle        It is out parameter, is used to return pointer of the device handle to the caller.
- *                           The value of parameter is a pointer points the device handle, and this design is uesd to
+ *                           The value of parameter is a pointer points the device handle, and this design is used to
  *                           make simple device align with composite device. For composite device, there are many
  *                           kinds of class handle, but there is only one device handle. So the handle points to
  *                           a device instead of a class. And the class handle can be got from the

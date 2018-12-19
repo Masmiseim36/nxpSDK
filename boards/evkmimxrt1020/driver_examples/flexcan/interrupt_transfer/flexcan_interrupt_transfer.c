@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2018 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_debug_console.h"
@@ -44,6 +18,20 @@
 #define EXAMPLE_CAN CAN1
 #define EXAMPLE_FLEXCAN_IRQn CAN1_IRQn
 #define EXAMPLE_FLEXCAN_IRQHandler CAN1_IRQHandler
+#define RX_MESSAGE_BUFFER_NUM (9)
+#define TX_MESSAGE_BUFFER_NUM (8)
+#define DLC (8)
+/* To get most precise baud rate under some circumstances, users need to set
+   quantum which is composed of PSEG1/PSEG2/PROPSEG. Because CAN clock prescaler
+   = source clock/(baud rate * quantum), for e.g. 84M clock and 1M baud rate, the
+   quantum should be .e.g 14=(6+3+1)+4, so prescaler is 6. By default, quantum
+   is set to 10=(3+2+1)+4, because for most platforms e.g. 120M source clock/(1M
+   baud rate * 10) is an integer. Remember users must ensure the calculated
+   prescaler an integer thus to get precise baud rate. */
+#define SET_CAN_QUANTUM 0
+#define PSEG1 3
+#define PSEG2 2
+#define PROPSEG 1
 
 /* Select 80M clock divided by USB1 PLL (480 MHz) as master flexcan clock source */
 #define FLEXCAN_CLOCK_SOURCE_SELECT (2U)
@@ -51,9 +39,24 @@
 #define FLEXCAN_CLOCK_SOURCE_DIVIDER (3U)
 /* Get frequency of flexcan clock */
 #define EXAMPLE_CAN_CLK_FREQ ((CLOCK_GetFreq(kCLOCK_Usb1PllClk) / 6) / (FLEXCAN_CLOCK_SOURCE_DIVIDER + 1U))
-#define RX_MESSAGE_BUFFER_NUM (9)
-#define TX_MESSAGE_BUFFER_NUM (8)
-
+#if (defined(FSL_FEATURE_FLEXCAN_HAS_ERRATA_5829) && FSL_FEATURE_FLEXCAN_HAS_ERRATA_5829)
+/* To consider the First valid MB must be used as Reserved TX MB for ERR005829
+   If RX FIFO enable(RFEN bit in MCE set as 1) and RFFN in CTRL2 is set default zero, the first valid TX MB Number is 8
+   If RX FIFO enable(RFEN bit in MCE set as 1) and RFFN in CTRL2 is set by other value(0x1~0xF), User should consider
+   detail first valid MB number
+   If RX FIFO disable(RFEN bit in MCE set as 0) , the first valid MB number is zero */
+#ifdef RX_MESSAGE_BUFFER_NUM
+#undef RX_MESSAGE_BUFFER_NUM
+#define RX_MESSAGE_BUFFER_NUM (10)
+#endif
+#ifdef TX_MESSAGE_BUFFER_NUM
+#undef TX_MESSAGE_BUFFER_NUM
+#define TX_MESSAGE_BUFFER_NUM (9)
+#endif
+#endif
+#ifndef DEMO_FORCE_CAN_SRC_OSC
+#define DEMO_FORCE_CAN_SRC_OSC 0
+#endif
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -64,8 +67,9 @@
 flexcan_handle_t flexcanHandle;
 volatile bool txComplete = false;
 volatile bool rxComplete = false;
+volatile bool wakenUp = false;
 flexcan_mb_transfer_t txXfer, rxXfer;
-#if (defined(FSL_FEATURE_FLEXCAN_HAS_FLEXIBLE_DATA_RATE) && FSL_FEATURE_FLEXCAN_HAS_FLEXIBLE_DATA_RATE)
+#if (defined(USE_CANFD) && USE_CANFD)
 flexcan_fd_frame_t frame;
 #else
 flexcan_frame_t frame;
@@ -91,10 +95,15 @@ static void flexcan_callback(CAN_Type *base, flexcan_handle_t *handle, status_t 
             break;
 
         case kStatus_FLEXCAN_TxIdle:
+        case kStatus_FLEXCAN_TxSwitchToRx:
             if (TX_MESSAGE_BUFFER_NUM == result)
             {
                 txComplete = true;
             }
+            break;
+
+        case kStatus_FLEXCAN_WakeUp:
+            wakenUp = true;
             break;
 
         default:
@@ -155,6 +164,7 @@ int main(void)
     /*
      * flexcanConfig.clkSrc = kFLEXCAN_ClkSrcOsc;
      * flexcanConfig.baudRate = 1000000U;
+     * flexcanConfig.baudRateFD = 2000000U;
      * flexcanConfig.maxMbNum = 16;
      * flexcanConfig.enableLoopBack = false;
      * flexcanConfig.enableSelfWakeup = false;
@@ -163,11 +173,19 @@ int main(void)
      * flexcanConfig.timingConfig = timingConfig;
      */
     FLEXCAN_GetDefaultConfig(&flexcanConfig);
-
     /* Init FlexCAN module. */
+#if (!defined(DEMO_FORCE_CAN_SRC_OSC)) || !DEMO_FORCE_CAN_SRC_OSC
 #if (!defined(FSL_FEATURE_FLEXCAN_SUPPORT_ENGINE_CLK_SEL_REMOVE)) || !FSL_FEATURE_FLEXCAN_SUPPORT_ENGINE_CLK_SEL_REMOVE
     flexcanConfig.clkSrc = kFLEXCAN_ClkSrcPeri;
+#else
+#if defined(CAN_CTRL1_CLKSRC_MASK)
+    if (!FSL_FEATURE_FLEXCAN_INSTANCE_SUPPORT_ENGINE_CLK_SEL_REMOVEn(EXAMPLE_CAN))
+    {
+        flexcanConfig.clkSrc = kFLEXCAN_ClkSrcPeri;
+    }
+#endif
 #endif /* FSL_FEATURE_FLEXCAN_SUPPORT_ENGINE_CLK_SEL_REMOVE */
+#endif /* DEMO_FORCE_CAN_SRC_OSC */
     /* If special quantum setting is needed, set the timing parameters. */
 #if (defined(SET_CAN_QUANTUM) && SET_CAN_QUANTUM)
     flexcanConfig.timingConfig.phaseSeg1 = PSEG1;
@@ -179,10 +197,11 @@ int main(void)
     flexcanConfig.timingConfig.fpropSeg = FPROPSEG;
 #endif
 #endif
+
+#if (defined(USE_CANFD) && USE_CANFD)
+    FLEXCAN_FDInit(EXAMPLE_CAN, &flexcanConfig, EXAMPLE_CAN_CLK_FREQ, BYTES_IN_MB, true);
+#else
     FLEXCAN_Init(EXAMPLE_CAN, &flexcanConfig, EXAMPLE_CAN_CLK_FREQ);
-#if (defined(FSL_FEATURE_FLEXCAN_HAS_FLEXIBLE_DATA_RATE) && FSL_FEATURE_FLEXCAN_HAS_FLEXIBLE_DATA_RATE)
-    /* Enable CAN FD operation with flexible payload and data rate. */
-    FLEXCAN_FDEnable(EXAMPLE_CAN, BYTES_IN_MB, false);
 #endif
 
     /* Create FlexCAN handle structure and set call back function. */
@@ -195,14 +214,14 @@ int main(void)
     mbConfig.format = kFLEXCAN_FrameFormatStandard;
     mbConfig.type = kFLEXCAN_FrameTypeData;
     mbConfig.id = FLEXCAN_ID_STD(rxIdentifier);
-#if (defined(FSL_FEATURE_FLEXCAN_HAS_FLEXIBLE_DATA_RATE) && FSL_FEATURE_FLEXCAN_HAS_FLEXIBLE_DATA_RATE)
+#if (defined(USE_CANFD) && USE_CANFD)
     FLEXCAN_SetFDRxMbConfig(EXAMPLE_CAN, RX_MESSAGE_BUFFER_NUM, &mbConfig, true);
 #else
     FLEXCAN_SetRxMbConfig(EXAMPLE_CAN, RX_MESSAGE_BUFFER_NUM, &mbConfig, true);
 #endif
 
     /* Setup Tx Message Buffer. */
-#if (defined(FSL_FEATURE_FLEXCAN_HAS_FLEXIBLE_DATA_RATE) && FSL_FEATURE_FLEXCAN_HAS_FLEXIBLE_DATA_RATE)
+#if (defined(USE_CANFD) && USE_CANFD)
     FLEXCAN_SetFDTxMbConfig(EXAMPLE_CAN, TX_MESSAGE_BUFFER_NUM, true);
 #else
     FLEXCAN_SetTxMbConfig(EXAMPLE_CAN, TX_MESSAGE_BUFFER_NUM, true);
@@ -227,9 +246,12 @@ int main(void)
             frame.id = FLEXCAN_ID_STD(txIdentifier);
             frame.format = kFLEXCAN_FrameFormatStandard;
             frame.type = kFLEXCAN_FrameTypeData;
-            frame.length = 1;
+            frame.length = DLC;
+#if (defined(USE_CANFD) && USE_CANFD)
+            frame.brs = 1;
+#endif
             txXfer.mbIdx = TX_MESSAGE_BUFFER_NUM;
-#if (defined(FSL_FEATURE_FLEXCAN_HAS_FLEXIBLE_DATA_RATE) && FSL_FEATURE_FLEXCAN_HAS_FLEXIBLE_DATA_RATE)
+#if (defined(USE_CANFD) && USE_CANFD)
             txXfer.framefd = &frame;
             FLEXCAN_TransferFDSendNonBlocking(EXAMPLE_CAN, &flexcanHandle, &txXfer);
 #else
@@ -244,7 +266,7 @@ int main(void)
 
             /* Start receive data through Rx Message Buffer. */
             rxXfer.mbIdx = RX_MESSAGE_BUFFER_NUM;
-#if (defined(FSL_FEATURE_FLEXCAN_HAS_FLEXIBLE_DATA_RATE) && FSL_FEATURE_FLEXCAN_HAS_FLEXIBLE_DATA_RATE)
+#if (defined(USE_CANFD) && USE_CANFD)
             rxXfer.framefd = &frame;
             FLEXCAN_TransferFDReceiveNonBlocking(EXAMPLE_CAN, &flexcanHandle, &rxXfer);
 #else
@@ -258,15 +280,29 @@ int main(void)
             };
             rxComplete = false;
 
-            PRINTF("Rx MB ID: 0x%3x, Rx MB data: 0x%x\r\n", frame.id >> CAN_ID_STD_SHIFT, frame.dataByte0);
+            PRINTF("Rx MB ID: 0x%3x, Rx MB data: 0x%x, Time stamp: %d\r\n", frame.id >> CAN_ID_STD_SHIFT,
+                   frame.dataByte0, frame.timestamp);
             PRINTF("Press any key to trigger the next transmission!\r\n\r\n");
             frame.dataByte0++;
+            frame.dataByte1 = 0x55;
         }
         else
         {
+            /* Before this , should first make node B enter STOP mode after FlexCAN
+             * initialized with enableSelfWakeup=true and Rx MB configured, then A
+             * sends frame N which wakes up node B. A will continue to send frame N
+             * since no acknowledgement, then B received the second frame N(In the
+             * application it seems that B received the frame that woke it up which
+             * is not expected as stated in the reference manual, but actually the
+             * output in the terminal B received is the same second frame N). */
+            if (wakenUp)
+            {
+                PRINTF("B has been waken up!\r\n\r\n");
+            }
+
             /* Start receive data through Rx Message Buffer. */
             rxXfer.mbIdx = RX_MESSAGE_BUFFER_NUM;
-#if (defined(FSL_FEATURE_FLEXCAN_HAS_FLEXIBLE_DATA_RATE) && FSL_FEATURE_FLEXCAN_HAS_FLEXIBLE_DATA_RATE)
+#if (defined(USE_CANFD) && USE_CANFD)
             rxXfer.framefd = &frame;
             FLEXCAN_TransferFDReceiveNonBlocking(EXAMPLE_CAN, &flexcanHandle, &rxXfer);
 #else
@@ -280,11 +316,13 @@ int main(void)
             };
             rxComplete = false;
 
-            PRINTF("Rx MB ID: 0x%3x, Rx MB data: 0x%x\r\n", frame.id >> CAN_ID_STD_SHIFT, frame.dataByte0);
+            PRINTF("Rx MB ID: 0x%3x, Rx MB data: 0x%x, Time stamp: %d\r\n", frame.id >> CAN_ID_STD_SHIFT,
+                   frame.dataByte0, frame.timestamp);
 
             frame.id = FLEXCAN_ID_STD(txIdentifier);
             txXfer.mbIdx = TX_MESSAGE_BUFFER_NUM;
-#if (defined(FSL_FEATURE_FLEXCAN_HAS_FLEXIBLE_DATA_RATE) && FSL_FEATURE_FLEXCAN_HAS_FLEXIBLE_DATA_RATE)
+#if (defined(USE_CANFD) && USE_CANFD)
+            frame.brs = 1;
             txXfer.framefd = &frame;
             FLEXCAN_TransferFDSendNonBlocking(EXAMPLE_CAN, &flexcanHandle, &txXfer);
 #else

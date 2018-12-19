@@ -14,14 +14,21 @@ Second part is application of this simple logging mechanism. Each of two tasks w
 write_task_2 print 5 messages into log.
 
 
+Running the demo
+================
+After the board is flashed the Tera Term will show debug console output.
 
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
-
+Example output:
+Log 0: Task1 Message 0
+Log 1: Task2 Message 0
+Log 2: Task1 Message 1
+Log 3: Task2 Message 1
+Log 4: Task1 Message 2
+Log 5: Task2 Message 2
+Log 6: Task1 Message 3
+Log 7: Task2 Message 3
+Log 8: Task1 Message 4
+Log 9: Task2 Message 4
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -43,21 +50,11 @@ Prepare the Demo
     - No flow control
 3.  Download the program to the target board.
 4.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
-Running the demo
-================
-After the board is flashed the Tera Term will show debug console output.
 
-Example output:
-Log 0: Task1 Message 0
-Log 1: Task2 Message 0
-Log 2: Task1 Message 1
-Log 3: Task2 Message 1
-Log 4: Task1 Message 2
-Log 5: Task2 Message 2
-Log 6: Task1 Message 3
-Log 7: Task2 Message 3
-Log 8: Task1 Message 4
-Log 9: Task2 Message 4
-Customization options
-=====================
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

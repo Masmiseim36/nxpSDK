@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 NXP
+ * Copyright 2018 NXP
  *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
@@ -39,21 +39,24 @@ _clock_init()
   __writeMemory32(0xffffffff, 0x400FC07C, "Memory");
   __writeMemory32(0xffffffff, 0x400FC080, "Memory");
 
-  // Enable SYS PLL
-  __writeMemory32(0x00002001, 0x400D8030, "Memory");  
+  // IPG_PODF: 2 divide by 3
+  __writeMemory32(0x000A8200, 0x400FC014, "Memory");  
+  // PERCLK_PODF: 1 divide by 2
+  __writeMemory32(0x04900001, 0x400FC01C, "Memory");  
+  // Enable SYS PLL but keep it bypassed.
+  __writeMemory32(0x00012001, 0x400D8030, "Memory"); 
   do
   {
     reg = __readMemory32(0x400D8030, "Memory");
   }while((reg & 0x80000000) == 0);
+  // Disable bypass of SYS PLL
+  __writeMemory32(0x00002001, 0x400D8030, "Memory");  
 
   // Ungate SYS PLL PFD2
   reg = __readMemory32(0x400D8100, "Memory");
   reg &= ~0x800000;
   __writeMemory32(reg, 0x400D8100, "Memory");   
 
-  // SEMC clock source selection.
-  // SDRAM running at 133Mhz
-  // CBCDR:
   //   SEMC_ALT_CLK_SEL: 0 PLL2 (SYS PLL) PFD2
   //   SEMC_CLK_SEL: 1 SEMC_ALT_CLK
   //   SEMC_PODF: 2 divide by 3

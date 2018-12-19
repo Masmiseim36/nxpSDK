@@ -5,11 +5,11 @@
       <name>all</name>
       <member>
         <project>emwin_gui_demo</project>
-        <configuration>flexspi_nor_debug</configuration>
+        <configuration>flexspi_nor_sdram_debug</configuration>
       </member>
       <member>
         <project>emwin_gui_demo</project>
-        <configuration>flexspi_nor_release</configuration>
+        <configuration>flexspi_nor_sdram_release</configuration>
       </member>
       <member>
         <project>emwin_gui_demo</project>
@@ -21,17 +21,17 @@
       </member>
     </batchDefinition>
     <batchDefinition>
-      <name>flexspi_nor_debug</name>
+      <name>flexspi_nor_sdram_debug</name>
       <member>
         <project>emwin_gui_demo</project>
-        <configuration>flexspi_nor_debug</configuration>
+        <configuration>flexspi_nor_sdram_debug</configuration>
       </member>
     </batchDefinition>
     <batchDefinition>
-      <name>flexspi_nor_release</name>
+      <name>flexspi_nor_sdram_release</name>
       <member>
         <project>emwin_gui_demo</project>
-        <configuration>flexspi_nor_release</configuration>
+        <configuration>flexspi_nor_sdram_release</configuration>
       </member>
     </batchDefinition>
     <batchDefinition>

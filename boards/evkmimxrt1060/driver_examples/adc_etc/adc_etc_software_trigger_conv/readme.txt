@@ -5,14 +5,6 @@ The adc_etc_software_trigger_conv example shows how to use the ADC_ETC to genera
 
 In this example, the ADC is configured with hardware trigger. Once ADC gets the trigger from the ADC_ETC, the conversion goes,
 then the ADC_ETC ISR would be executed.
-
-Toolchain supported
-===================
-- Keil MDK 5.25
-- IAR embedded Workbench 8.30.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.1
-
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -41,6 +33,7 @@ The log below shows the output of the hello world demo in the terminal window:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ADC_ETC_Software_Trigger_Conv Example Start!
 ADC_DoAntoCalibration() Done.
+ADC Full Range: XXXX
 Press any key to get user channel's ADC value.
 ADC conversion vaule is 16
 Press any key to get user channel's ADC value.
@@ -58,6 +51,11 @@ Press any key to get user channel's ADC value.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

@@ -1,34 +1,8 @@
 /*
- * The Clear BSD License
- * Copyright 2017-2018 NXP
+ * Copyright 2018 NXP.
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 /***********************************************************************************************************************
@@ -43,7 +17,7 @@ product: Pins v4.1
 processor: MIMXRT1052xxxxB
 package_id: MIMXRT1052DVL6B
 mcu_data: ksdk2_0
-processor_version: 0.0.0
+processor_version: 4.0.0
 board: IMXRT1050-EVKB
 pin_labels:
 - {pin_num: E3, pin_signal: GPIO_EMC_00, label: SEMC_D0, identifier: SEMC_D0}
@@ -253,7 +227,7 @@ pin_labels:
  * END ****************************************************************************************************************/
 void BOARD_InitBootPins(void) {
     BOARD_InitPins();
-    BOARD_InitDEBUG_UART();
+    BOARD_InitDEBUG_UARTPins();
 }
 
 /*
@@ -276,7 +250,7 @@ void BOARD_InitPins(void) {
 
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
-BOARD_InitDEBUG_UART:
+BOARD_InitDEBUG_UARTPins:
 - options: {callFromInitBoot: 'true', coreID: core0, enableClock: 'true'}
 - pin_list:
   - {pin_num: K14, peripheral: LPUART1, signal: TX, pin_signal: GPIO_AD_B0_12, software_input_on: Disable, hysteresis_enable: Disable, pull_up_down_config: Pull_Down_100K_Ohm,
@@ -288,11 +262,11 @@ BOARD_InitDEBUG_UART:
 
 /* FUNCTION ************************************************************************************************************
  *
- * Function Name : BOARD_InitDEBUG_UART
+ * Function Name : BOARD_InitDEBUG_UARTPins
  * Description   : Configures pin routing and optionally pin electrical features.
  *
  * END ****************************************************************************************************************/
-void BOARD_InitDEBUG_UART(void) {
+void BOARD_InitDEBUG_UARTPins(void) {
   CLOCK_EnableClock(kCLOCK_Iomuxc);           /* iomuxc clock (iomuxc_clk_enable): 0x03u */
 
   IOMUXC_SetPinMux(
@@ -326,8 +300,8 @@ void BOARD_InitDEBUG_UART(void) {
 
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
-BOARD_InitSDRAM:
-- options: {coreID: core0, enableClock: 'true'}
+BOARD_InitSDRAMPins:
+- options: {callFromInitBoot: 'false', coreID: core0, enableClock: 'true'}
 - pin_list:
   - {pin_num: C2, peripheral: SEMC, signal: 'ADDR, 00', pin_signal: GPIO_EMC_09}
   - {pin_num: G1, peripheral: SEMC, signal: 'ADDR, 01', pin_signal: GPIO_EMC_10}
@@ -373,11 +347,11 @@ BOARD_InitSDRAM:
 
 /* FUNCTION ************************************************************************************************************
  *
- * Function Name : BOARD_InitSDRAM
+ * Function Name : BOARD_InitSDRAMPins
  * Description   : Configures pin routing and optionally pin electrical features.
  *
  * END ****************************************************************************************************************/
-void BOARD_InitSDRAM(void) {
+void BOARD_InitSDRAMPins(void) {
   CLOCK_EnableClock(kCLOCK_Iomuxc);           /* iomuxc clock (iomuxc_clk_enable): 0x03u */
 
   IOMUXC_SetPinMux(
@@ -502,8 +476,8 @@ void BOARD_InitSDRAM(void) {
 
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
-BOARD_InitCSI:
-- options: {coreID: core0, enableClock: 'true'}
+BOARD_InitCSIPins:
+- options: {callFromInitBoot: 'false', coreID: core0, enableClock: 'true'}
 - pin_list:
   - {pin_num: H13, peripheral: CSI, signal: 'csi_data, 09', pin_signal: GPIO_AD_B1_08}
   - {pin_num: M13, peripheral: CSI, signal: 'csi_data, 08', pin_signal: GPIO_AD_B1_09}
@@ -527,11 +501,11 @@ BOARD_InitCSI:
 
 /* FUNCTION ************************************************************************************************************
  *
- * Function Name : BOARD_InitCSI
+ * Function Name : BOARD_InitCSIPins
  * Description   : Configures pin routing and optionally pin electrical features.
  *
  * END ****************************************************************************************************************/
-void BOARD_InitCSI(void) {
+void BOARD_InitCSIPins(void) {
   CLOCK_EnableClock(kCLOCK_Iomuxc);           /* iomuxc clock (iomuxc_clk_enable): 0x03u */
 
   IOMUXC_SetPinMux(
@@ -604,8 +578,8 @@ void BOARD_InitCSI(void) {
 
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
-BOARD_InitLCD:
-- options: {coreID: core0, enableClock: 'true'}
+BOARD_InitLCDPins:
+- options: {callFromInitBoot: 'false', coreID: core0, enableClock: 'true'}
 - pin_list:
   - {pin_num: C8, peripheral: LCDIF, signal: 'lcdif_data, 00', pin_signal: GPIO_B0_04, hysteresis_enable: Enable, pull_up_down_config: Pull_Up_100K_Ohm, pull_keeper_select: Pull}
   - {pin_num: B8, peripheral: LCDIF, signal: 'lcdif_data, 01', pin_signal: GPIO_B0_05, hysteresis_enable: Enable, pull_up_down_config: Pull_Up_100K_Ohm, pull_keeper_select: Pull}
@@ -633,11 +607,11 @@ BOARD_InitLCD:
 
 /* FUNCTION ************************************************************************************************************
  *
- * Function Name : BOARD_InitLCD
+ * Function Name : BOARD_InitLCDPins
  * Description   : Configures pin routing and optionally pin electrical features.
  *
  * END ****************************************************************************************************************/
-void BOARD_InitLCD(void) {
+void BOARD_InitLCDPins(void) {
   CLOCK_EnableClock(kCLOCK_Iomuxc);           /* iomuxc clock (iomuxc_clk_enable): 0x03u */
 
   IOMUXC_SetPinMux(
@@ -918,8 +892,8 @@ void BOARD_InitLCD(void) {
 
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
-BOARD_InitCAN:
-- options: {coreID: core0, enableClock: 'true'}
+BOARD_InitCANPins:
+- options: {callFromInitBoot: 'false', coreID: core0, enableClock: 'true'}
 - pin_list:
   - {pin_num: H14, peripheral: CAN2, signal: TX, pin_signal: GPIO_AD_B0_14}
   - {pin_num: L10, peripheral: CAN2, signal: RX, pin_signal: GPIO_AD_B0_15}
@@ -928,11 +902,11 @@ BOARD_InitCAN:
 
 /* FUNCTION ************************************************************************************************************
  *
- * Function Name : BOARD_InitCAN
+ * Function Name : BOARD_InitCANPins
  * Description   : Configures pin routing and optionally pin electrical features.
  *
  * END ****************************************************************************************************************/
-void BOARD_InitCAN(void) {
+void BOARD_InitCANPins(void) {
   CLOCK_EnableClock(kCLOCK_Iomuxc);           /* iomuxc clock (iomuxc_clk_enable): 0x03u */
 
   IOMUXC_SetPinMux(
@@ -946,8 +920,8 @@ void BOARD_InitCAN(void) {
 
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
-BOARD_InitENET:
-- options: {coreID: core0, enableClock: 'true'}
+BOARD_InitENETPins:
+- options: {callFromInitBoot: 'false', coreID: core0, enableClock: 'true'}
 - pin_list:
   - {pin_num: A7, peripheral: ENET, signal: enet_mdc, pin_signal: GPIO_EMC_40}
   - {pin_num: C7, peripheral: ENET, signal: enet_mdio, pin_signal: GPIO_EMC_41}
@@ -964,11 +938,11 @@ BOARD_InitENET:
 
 /* FUNCTION ************************************************************************************************************
  *
- * Function Name : BOARD_InitENET
+ * Function Name : BOARD_InitENETPins
  * Description   : Configures pin routing and optionally pin electrical features.
  *
  * END ****************************************************************************************************************/
-void BOARD_InitENET(void) {
+void BOARD_InitENETPins(void) {
   CLOCK_EnableClock(kCLOCK_Iomuxc);           /* iomuxc clock (iomuxc_clk_enable): 0x03u */
 
   IOMUXC_SetPinMux(
@@ -1006,8 +980,8 @@ void BOARD_InitENET(void) {
 
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
-BOARD_InitUSDHC:
-- options: {coreID: core0, enableClock: 'true'}
+BOARD_InitUSDHCPins:
+- options: {callFromInitBoot: 'false', coreID: core0, enableClock: 'true'}
 - pin_list:
   - {pin_num: J2, peripheral: USDHC1, signal: 'usdhc_data, 3', pin_signal: GPIO_SD_B0_05}
   - {pin_num: H2, peripheral: USDHC1, signal: 'usdhc_data, 2', pin_signal: GPIO_SD_B0_04}
@@ -1020,11 +994,11 @@ BOARD_InitUSDHC:
 
 /* FUNCTION ************************************************************************************************************
  *
- * Function Name : BOARD_InitUSDHC
+ * Function Name : BOARD_InitUSDHCPins
  * Description   : Configures pin routing and optionally pin electrical features.
  *
  * END ****************************************************************************************************************/
-void BOARD_InitUSDHC(void) {
+void BOARD_InitUSDHCPins(void) {
   CLOCK_EnableClock(kCLOCK_Iomuxc);           /* iomuxc clock (iomuxc_clk_enable): 0x03u */
 
   IOMUXC_SetPinMux(
@@ -1050,8 +1024,8 @@ void BOARD_InitUSDHC(void) {
 
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
-BOARD_InitHyperFlash:
-- options: {coreID: core0, enableClock: 'true'}
+BOARD_InitHyperFlashPins:
+- options: {callFromInitBoot: 'false', coreID: core0, enableClock: 'true'}
 - pin_list:
   - {pin_num: L4, peripheral: FLEXSPI, signal: FLEXSPI_A_SCLK, pin_signal: GPIO_SD_B1_07}
   - {pin_num: P4, peripheral: FLEXSPI, signal: FLEXSPI_A_DATA2, pin_signal: GPIO_SD_B1_10}
@@ -1070,11 +1044,11 @@ BOARD_InitHyperFlash:
 
 /* FUNCTION ************************************************************************************************************
  *
- * Function Name : BOARD_InitHyperFlash
+ * Function Name : BOARD_InitHyperFlashPins
  * Description   : Configures pin routing and optionally pin electrical features.
  *
  * END ****************************************************************************************************************/
-void BOARD_InitHyperFlash(void) {
+void BOARD_InitHyperFlashPins(void) {
   CLOCK_EnableClock(kCLOCK_Iomuxc);           /* iomuxc clock (iomuxc_clk_enable): 0x03u */
 
   IOMUXC_SetPinMux(

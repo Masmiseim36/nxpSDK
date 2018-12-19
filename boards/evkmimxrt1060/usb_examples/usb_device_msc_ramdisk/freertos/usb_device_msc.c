@@ -257,12 +257,6 @@ usb_status_t USB_DeviceMscProcessUfiCommand(usb_device_msc_struct_t *mscHandle)
             break;
         default:
             error = USB_DeviceMscUfiUnsupportCommand(mscHandle);
-            mscHandle->dataOutFlag = 0;
-            mscHandle->dataInFlag = 0;
-            mscHandle->outEndpointStallFlag = 0;
-            mscHandle->inEndpointStallFlag = 0;
-            mscHandle->needOutStallFlag = 0;
-            mscHandle->needInStallFlag = 0;
             break;
     }
     if ((USB_DEVICE_MSC_UFI_NO_SENSE != ufi->requestSense->senseKey) &&
@@ -642,6 +636,7 @@ usb_status_t USB_DeviceMscEndpointsInit(usb_device_msc_struct_t *mscHandle)
         usb_device_endpoint_init_struct_t epInitStruct;
         usb_device_endpoint_callback_struct_t epCallback;
         epInitStruct.zlt = 0;
+        epInitStruct.interval = interface->endpointList.endpoint[count].interval;
         epInitStruct.endpointAddress = interface->endpointList.endpoint[count].endpointAddress;
         epInitStruct.maxPacketSize = interface->endpointList.endpoint[count].maxPacketSize;
         epInitStruct.transferType = interface->endpointList.endpoint[count].transferType;

@@ -2,7 +2,7 @@
  * Copyright 2017 NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -37,7 +37,6 @@ static void OCRAM_Access(void);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-static bool s_flexram_ocram_magic_addr_match = false;
 static bool s_flexram_ocram_access_error_match = false;
 
 /*******************************************************************************
@@ -49,12 +48,6 @@ void APP_FLEXRAM_IRQ_HANDLER(void)
     {
         FLEXRAM_ClearInterruptStatus(APP_FLEXRAM, kFLEXRAM_OCRAMAccessError);
         s_flexram_ocram_access_error_match = true;
-    }
-
-    if (FLEXRAM_GetInterruptStatus(APP_FLEXRAM) & kFLEXRAM_OCRAMMagicAddrMatch)
-    {
-        FLEXRAM_ClearInterruptStatus(APP_FLEXRAM, kFLEXRAM_OCRAMMagicAddrMatch);
-        s_flexram_ocram_magic_addr_match = true;
     }
 
 /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
@@ -99,11 +92,7 @@ static void OCRAM_Access(void)
     uint8_t *ocramAddr = (uint8_t *)APP_FLEXRAM_OCRAM_START_ADDR;
 
     /* enable FLEXRAM OCRAM access error interrupt and OCRAM magic address match interrupt */
-    FLEXRAM_EnableInterruptSignal(APP_FLEXRAM, kFLEXRAM_OCRAMAccessError | kFLEXRAM_OCRAMMagicAddrMatch);
-    /* config ocram magic address
-    * read access hit magic address will generate interrupt
-    */
-    FLEXRAM_SetOCRAMMagicAddr(APP_FLEXRAM, (uint16_t)APP_FLEXRAM_OCRAM_MAGIC_ADDR, kFLEXRAM_Write);
+    FLEXRAM_EnableInterruptSignal(APP_FLEXRAM, kFLEXRAM_OCRAMAccessError);
 
     for (;;)
     {
@@ -111,12 +100,7 @@ static void OCRAM_Access(void)
         /* Synchronizes the execution stream with memory accesses */
         APP_DSB();
         APP_ISB();
-        /* check ocram magic addr match event */
-        if (s_flexram_ocram_magic_addr_match)
-        {
-            PRINTF("\r\nOCRAM Magic address 0x%x match\r\n", (uint32_t)(ocramAddr));
-            s_flexram_ocram_magic_addr_match = false;
-        }
+
         /* check ocram access error event */
         if (s_flexram_ocram_access_error_match)
         {

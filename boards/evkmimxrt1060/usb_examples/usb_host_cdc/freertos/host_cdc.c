@@ -501,7 +501,7 @@ void USB_HostCdcControlCallback(void *param, uint8_t *data, uint32_t dataLength,
  *
  * @param param   the host cdc instance pointer.
  */
-void USB_HosCdcTask(void *param)
+void USB_HostCdcTask(void *param)
 {
     usb_status_t status = kStatus_USB_Success;
     cdc_instance_struct_t *cdcInstance = (cdc_instance_struct_t *)param;

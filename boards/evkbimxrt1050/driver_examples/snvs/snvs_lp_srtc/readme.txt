@@ -2,14 +2,6 @@ Overview
 ========
 The SNVS LP SRTC project is a simple demonstration program of the SDK SNVS LP driver. The test will set up secure RTC (SRTC) date and time to a predefined value and starts the counter, then the SRTC counter value is synchronized with non secure RTC (RTC). RTC then triggers an alarm after a user specified time period. The alarm will be set with reference to this predefined date
 and time.
-
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
-
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -49,6 +41,11 @@ Please input the number of second to wait for alarm and press enter
 The second must be positive value
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

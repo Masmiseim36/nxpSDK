@@ -29,9 +29,9 @@
 /*! @brief Available common EVENT types in PHDC class callback */
 typedef enum
 {
-    kUSB_DevicePhdcEventInterruptInSendComplete = 0x01, /*!< Send data completed */
-    kUSB_DevicePhdcEventBulkInSendComplete,             /*!< Send data completed */
-    kUSB_DevicePhdcEventDataReceived,                   /*!< Data received */
+    kUSB_DevicePhdcEventInterruptInSendComplete = 0x01, /*!< Send data completed or cancelled etc*/
+    kUSB_DevicePhdcEventBulkInSendComplete,             /*!< Send data completed or cancelled etc*/
+    kUSB_DevicePhdcEventDataReceived,                   /*!< Data received or cancelled etc*/
     kUSB_DevicePhdcEventSetFeature,                     /*!< Set feature request */
     kUSB_DevicePhdcEventClearFeature,                   /*!< Clear feature request */
     kUSB_DevicePhdcEventGetStatus,                      /*!< Get status request */
@@ -132,6 +132,8 @@ extern usb_status_t USB_DevicePhdcEvent(void *handle, uint32_t event, void *para
  * @retval kStatus_USB_InvalidHandle        The device handle is not found.
  * @retval kStatus_USB_Busy                 The previous transfer is pending.
  * @retval kStatus_USB_Success              The sending is successful.
+ *
+ * @note The function can only be called in the same context. 
  */
 extern usb_status_t USB_DevicePhdcSend(class_handle_t handle, uint8_t ep, uint8_t *buffer, uint32_t length);
 
@@ -149,6 +151,8 @@ extern usb_status_t USB_DevicePhdcSend(class_handle_t handle, uint8_t ep, uint8_
  * @retval kStatus_USB_InvalidHandle        The device handle is not found.
  * @retval kStatus_USB_Busy                 The previous transfer is pending.
  * @retval kStatus_USB_Success              The receiving is successful.
+ *
+ * @note The function can only be called in the same context. 
  */
 extern usb_status_t USB_DevicePhdcRecv(class_handle_t handle, uint8_t ep, uint8_t *buffer, uint32_t length);
 

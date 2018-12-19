@@ -210,9 +210,9 @@
 /*! @brief Available common EVENT types in audio class callback */
 typedef enum
 {
-    kUSB_DeviceAudioEventStreamSendResponse = 0x01U, /*!< Send data completed in stream pipe */
-    kUSB_DeviceAudioEventStreamRecvResponse,         /*!< Data received in stream pipe */
-    kUSB_DeviceAudioEventControlSendResponse,        /*!< Send data completed in audio control pipe */
+    kUSB_DeviceAudioEventStreamSendResponse = 0x01U, /*!< Send data completed or cancelled etc in stream pipe */
+    kUSB_DeviceAudioEventStreamRecvResponse,         /*!< Data received or cancelled etc in stream pipe */
+    kUSB_DeviceAudioEventControlSendResponse,        /*!< Send data completed or cancelled etc in audio control pipe */
 } usb_device_audio_event_t;
 
 /*!
@@ -361,6 +361,8 @@ extern usb_status_t USB_DeviceAudioEvent(void *handle, uint32_t event, void *par
  * @retval kStatus_USB_Busy The endpoint is busy in transferring.
  * @retval kStatus_USB_InvalidHandle The audio device handle or the audio class handle is invalid.
  * @retval kStatus_USB_ControllerNotFound The controller interface is invalid.
+ *
+ * @note The function can only be called in the same context. 
  */
 extern usb_status_t USB_DeviceAudioSend(class_handle_t handle, uint8_t ep, uint8_t *buffer, uint32_t length);
 
@@ -380,6 +382,8 @@ extern usb_status_t USB_DeviceAudioSend(class_handle_t handle, uint8_t ep, uint8
  * @retval kStatus_USB_Busy The endpoint is busy in transferring.
  * @retval kStatus_USB_InvalidHandle The audio device handle or the audio class handle is invalid.
  * @retval kStatus_USB_ControllerNotFound The controller interface is invalid.
+ *
+ * @note The function can only be called in the same context. 
  */
 extern usb_status_t USB_DeviceAudioRecv(class_handle_t handle, uint8_t ep, uint8_t *buffer, uint32_t length);
 

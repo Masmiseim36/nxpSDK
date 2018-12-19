@@ -1,36 +1,10 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016 NXP
  * All rights reserved.
  *
- * 
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- *  that the following conditions are met:
  *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_debug_console.h"
@@ -83,6 +57,7 @@ void EXAMPLE_SNVS_IRQHandler(void)
 int main(void)
 {
     uint32_t sec;
+    uint32_t min;
     uint8_t index;
     snvs_hp_rtc_datetime_t rtcDate;
     snvs_lp_srtc_datetime_t srtcDate;
@@ -144,6 +119,7 @@ int main(void)
         busyWait = true;
         index = 0;
         sec = 0;
+        min = 0;
 
         /* Get date time */
         SNVS_HP_RTC_GetDatetime(SNVS, &rtcDate);
@@ -167,15 +143,30 @@ int main(void)
         }
         PRINTF("\r\n");
 
-        SNVS_HP_RTC_GetDatetime(SNVS, &rtcDate);
+        /* alam can be set only for one day*/
+        if (sec > (24 * 60 * 60))
+        {
+            continue;
+        }
+        // SNVS_HP_RTC_GetDatetime(SNVS, &rtcDate);
         if ((rtcDate.second + sec) < 60)
         {
             rtcDate.second += sec;
         }
         else
         {
-            rtcDate.minute += (rtcDate.second + sec) / 60U;
+            min += (rtcDate.second + sec) / 60U;
             rtcDate.second = (rtcDate.second + sec) % 60U;
+        }
+
+        if ((rtcDate.minute + min) < 60)
+        {
+            rtcDate.minute += min;
+        }
+        else
+        {
+            rtcDate.hour += (rtcDate.minute + min) / 60U;
+            rtcDate.minute = (rtcDate.minute + min) % 60U;
         }
 
         SNVS_HP_RTC_SetAlarm(SNVS, &rtcDate);

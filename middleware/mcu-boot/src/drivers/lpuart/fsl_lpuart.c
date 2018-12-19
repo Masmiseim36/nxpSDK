@@ -59,7 +59,7 @@ static bool LPUART_IsRxRingBufferFull(LPUART_Type *base, lpuart_handle_t *handle
  * finished.
  *
  * @param base LPUART peripheral base address.
- * @param data Start addresss of the data to write.
+ * @param data Start address of the data to write.
  * @param length Size of the buffer to be sent.
  */
 static void LPUART_WriteNonBlocking(LPUART_Type *base, const uint8_t *data, size_t length);
@@ -71,7 +71,7 @@ static void LPUART_WriteNonBlocking(LPUART_Type *base, const uint8_t *data, size
  * sure the RX register is full or TX FIFO has data before calling this function.
  *
  * @param base LPUART peripheral base address.
- * @param data Start addresss of the buffer to store the received data.
+ * @param data Start address of the buffer to store the received data.
  * @param length Size of the buffer.
  */
 static void LPUART_ReadNonBlocking(LPUART_Type *base, uint8_t *data, size_t length);
@@ -851,7 +851,7 @@ void LPUART_HandleIRQ(LPUART_Type *base, lpuart_handle_t *handle)
                     }
                 }
 
-                /* If ring buffer is still full after callback function, the oldest data is overrided. */
+                /* If ring buffer is still full after callback function, the oldest data is overridden. */
                 if (LPUART_IsRxRingBufferFull(base, handle))
                 {
                     /* Increase handle->rxRingBufferTail to make room for new data. */

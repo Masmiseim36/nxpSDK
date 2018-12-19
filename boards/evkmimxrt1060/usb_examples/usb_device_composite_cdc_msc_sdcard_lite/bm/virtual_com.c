@@ -29,7 +29,7 @@
 /*******************************************************************************
 * Variables
 ******************************************************************************/
-/* Line codinig of cdc device */
+/* Line coding of cdc device */
 USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_lineCoding[LINE_CODING_SIZE] = {
     /* E.g. 0x00,0xC2,0x01,0x00 : 0x0001C200 is 115200 bits per second */
     (LINE_CODING_DTERATE >> 0U) & 0x000000FFU,
@@ -288,11 +288,12 @@ usb_status_t USB_DeviceCdcVcomClassRequest(usb_device_handle handle,
                 acmInfo->uartState &= (uint16_t)~USB_DEVICE_CDC_UART_STATE_TX_CARRIER;
             }
 
-            /* activate carrier and DTE */
+            /* activate carrier and DTE. Com port of terminal tool running on PC is open now */
             if (acmInfo->dteStatus & USB_DEVICE_CDC_CONTROL_SIG_BITMAP_DTE_PRESENCE)
             {
                 acmInfo->uartState |= USB_DEVICE_CDC_UART_STATE_RX_CARRIER;
             }
+            /* Com port of terminal tool running on PC is closed now */
             else
             {
                 acmInfo->uartState &= (uint16_t)~USB_DEVICE_CDC_UART_STATE_RX_CARRIER;
@@ -310,7 +311,7 @@ usb_status_t USB_DeviceCdcVcomClassRequest(usb_device_handle handle,
             acmInfo->serialStateBuf[5] = 0x00;
             acmInfo->serialStateBuf[6] = UART_BITMAP_SIZE; /* wLength */
             acmInfo->serialStateBuf[7] = 0x00;
-            /* Notifiy to host the line state */
+            /* Notify to host the line state */
             acmInfo->serialStateBuf[4] = setup->wIndex;
             /* Lower byte of UART BITMAP */
             uartBitmap = (uint8_t *)&acmInfo->serialStateBuf[NOTIF_PACKET_SIZE + UART_BITMAP_SIZE - 2];

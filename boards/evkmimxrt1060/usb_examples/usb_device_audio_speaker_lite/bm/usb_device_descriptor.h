@@ -18,7 +18,7 @@
 
 #define USB_DEVICE_MAX_POWER (0x32U)
 
-/* usb descritpor length */
+/* usb descriptor length */
 #define USB_DESCRIPTOR_LENGTH_CONFIGURATION_ALL (sizeof(g_UsbDeviceConfigurationDescriptor))
 
 #define USB_ENDPOINT_AUDIO_DESCRIPTOR_LENGTH (9)
@@ -120,7 +120,7 @@
  * current speed.
  * As the default, the device descriptors and configurations are configured by using FS parameters for both EHCI and
  * KHCI.
- * When the EHCI is enabled, the application needs to call this fucntion to update device by using current speed.
+ * When the EHCI is enabled, the application needs to call this function to update device by using current speed.
  * The updated information includes endpoint max packet size, endpoint interval, etc.
  *
  * @param speed Speed type. USB_SPEED_HIGH/USB_SPEED_FULL/USB_SPEED_LOW.

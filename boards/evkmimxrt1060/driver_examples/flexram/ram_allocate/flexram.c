@@ -2,7 +2,7 @@
  * Copyright 2017 NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -56,28 +56,10 @@ static status_t OCRAM_Reallocate(void);
  */
 static void OCRAM_Access(void);
 
-/*!
- * @brief DTCM access function.
- *
- * @param base FLEXRAM base address.
- */
-static void DTCM_Access(void);
-
-/*!
- * @brief ITCM access function.
- *
- * @param base FLEXRAM base address.
- */
-static void ITCM_Access(void);
-
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-static bool s_flexram_ocram_magic_addr_match = false;
 static bool s_flexram_ocram_access_error_match = false;
-
-static bool s_flexram_dtcm_magic_addr_match = false;
-static bool s_flexram_itcm_magic_addr_match = false;
 
 /*******************************************************************************
  * Code
@@ -90,23 +72,7 @@ void APP_FLEXRAM_IRQ_HANDLER(void)
         s_flexram_ocram_access_error_match = true;
     }
 
-    if (FLEXRAM_GetInterruptStatus(APP_FLEXRAM) & kFLEXRAM_OCRAMMagicAddrMatch)
-    {
-        FLEXRAM_ClearInterruptStatus(APP_FLEXRAM, kFLEXRAM_OCRAMMagicAddrMatch);
-        s_flexram_ocram_magic_addr_match = true;
-    }
-
-    if (FLEXRAM_GetInterruptStatus(APP_FLEXRAM) & kFLEXRAM_DTCMMagicAddrMatch)
-    {
-        FLEXRAM_ClearInterruptStatus(APP_FLEXRAM, kFLEXRAM_DTCMMagicAddrMatch);
-        s_flexram_dtcm_magic_addr_match = true;
-    }
-
-    if (FLEXRAM_GetInterruptStatus(APP_FLEXRAM) & kFLEXRAM_ITCMMagicAddrMatch)
-    {
-        FLEXRAM_ClearInterruptStatus(APP_FLEXRAM, kFLEXRAM_ITCMMagicAddrMatch);
-        s_flexram_itcm_magic_addr_match = true;
-    }
+    __DSB();
 }
 
 /*!
@@ -133,10 +99,6 @@ int main(void)
     FLEXRAM_Init(APP_FLEXRAM);
     /*test OCRAM access*/
     OCRAM_Access();
-    /*test dtcm access*/
-    DTCM_Access();
-    /*test itcm access*/
-    ITCM_Access();
 
     PRINTF("\r\nFLEXRAM ram allocate example finish.\r\n");
 
@@ -175,12 +137,8 @@ static void OCRAM_Access(void)
 {
     uint32_t *ocramAddr = (uint32_t *)APP_FLEXRAM_OCRAM_START_ADDR;
 
-    /* enable FLEXRAM OCRAM access error interrupt and OCRAM magic address match interrupt */
-    FLEXRAM_EnableInterruptSignal(APP_FLEXRAM, kFLEXRAM_OCRAMAccessError | kFLEXRAM_OCRAMMagicAddrMatch);
-    /* config ocram magic address
-    * read access hit magic address will generate interrupt
-    */
-    FLEXRAM_SetOCRAMMagicAddr(APP_FLEXRAM, (uint16_t)APP_FLEXRAM_OCRAM_MAGIC_ADDR, kFLEXRAM_Write);
+    /* enable FLEXRAM OCRAM access error interrupt*/
+    FLEXRAM_EnableInterruptSignal(APP_FLEXRAM, kFLEXRAM_OCRAMAccessError);
 
     for (;;)
     {
@@ -188,12 +146,7 @@ static void OCRAM_Access(void)
         /* Synchronizes the execution stream with memory accesses */
         APP_DSB();
         APP_ISB();
-        /* check ocram magic addr match event */
-        if (s_flexram_ocram_magic_addr_match)
-        {
-            PRINTF("\r\nOCRAM Magic address 0x%x match.\r\n", ocramAddr);
-            s_flexram_ocram_magic_addr_match = false;
-        }
+
         /* check ocram access error event */
         if (s_flexram_ocram_access_error_match)
         {
@@ -203,64 +156,5 @@ static void OCRAM_Access(void)
         }
 
         ocramAddr++;
-    }
-}
-
-static void DTCM_Access(void)
-{
-    uint32_t *dtcmAddr = (uint32_t *)APP_FLEXRAM_DTCM_START_ADDR;
-
-    /* config ocram magic address
-    * read access hit magic address will generate interrupt
-    */
-    FLEXRAM_SetDTCMMagicAddr(APP_FLEXRAM, (uint16_t)APP_FLEXRAM_DTCM_MAGIC_ADDR, kFLEXRAM_Write);
-    /* enable FLEXRAM DTCM access error interrupt and DTCM magic address match interrupt */
-    FLEXRAM_EnableInterruptSignal(APP_FLEXRAM, kFLEXRAM_DTCMMagicAddrMatch);
-    for (;;)
-    {
-        *dtcmAddr = 0xDDU;
-        /* Synchronizes the execution stream with memory accesses */
-        APP_DSB();
-        /* check ocram magic addr match event */
-        if (s_flexram_dtcm_magic_addr_match)
-        {
-            PRINTF("\r\nDTCM Magic address 0x%x match.\r\n", dtcmAddr);
-            s_flexram_dtcm_magic_addr_match = false;
-            break;
-        }
-
-        dtcmAddr++;
-    }
-}
-
-static void ITCM_Access(void)
-{
-    uint32_t *itcmAddr = (uint32_t *)APP_FLEXRAM_ITCM_START_ADDR;
-
-    /* config ocram magic address
-    * read access hit magic address will generate interrupt
-    */
-    FLEXRAM_SetITCMMagicAddr(APP_FLEXRAM, (uint16_t)APP_FLEXRAM_ITCM_MAGIC_ADDR, kFLEXRAM_Write);
-    /* clear interrupt status first */
-    FLEXRAM_ClearInterruptStatus(APP_FLEXRAM, kFLEXRAM_ITCMMagicAddrMatch);
-    /* reset flag */
-    s_flexram_itcm_magic_addr_match = false;
-    /* enable FLEXRAM ITCM access error interrupt and ITCM magic address match interrupt */
-    FLEXRAM_EnableInterruptSignal(APP_FLEXRAM, kFLEXRAM_ITCMMagicAddrMatch);
-
-    for (;;)
-    {
-        *itcmAddr = 0xEEU;
-        /* Synchronizes the execution stream with memory accesses */
-        APP_DSB();
-        /* check ocram magic addr match event */
-        if (s_flexram_itcm_magic_addr_match)
-        {
-            s_flexram_itcm_magic_addr_match = false;
-            PRINTF("\r\nITCM Magic address 0x%x match.\r\n", itcmAddr);
-            break;
-        }
-
-        itcmAddr++;
     }
 }

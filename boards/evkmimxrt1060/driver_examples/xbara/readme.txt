@@ -5,14 +5,6 @@ of this module is to provide a flexible crossbar switch function that allows any
 connected to any output under user control.It sets up the Xbara hardware block to trigger a periodic
 interrupt after every 1 second. When the Xbar interrupt is triggered a message a printed on the UART
 terminal.
-
-Toolchain supported
-===================
-- Keil MDK 5.25
-- IAR embedded Workbench 8.30.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.1
-
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -47,6 +39,11 @@ XBARA interrupt is occured !
 ............................
 ............................
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

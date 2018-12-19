@@ -4,25 +4,7 @@ Overview
 The lwip_https_client_mbedTLS demo application demonstrates an HTTPS client set up on lwIP TCP/IP and the MbedTLS stack with
 FreeRTOS. The board acts as an HTTP client and sends a request to the HTTPServer.
 
-Demo requires DHCP and DNS servers.
-
-
-Toolchain supported
-===================
-- Keil MDK 5.25
-- IAR embedded Workbench 8.30.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.1
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- EVK-MIMXRT1060 board
-- Personal Computer
-
-Board settings
-==============
-No special settings are required.
+Demo requires DHCP and DNS servers. The address of the DNS server is obtained from DHCP.
 
 Prepare the Demo
 ================
@@ -33,7 +15,7 @@ Prepare the Demo
     - No parity
     - One stop bit
     - No flow control
-3.  Insert the Ethernet Cable into the target board's RJ45 port and connect it to your PC network adapter.
+3.  Insert the Ethernet Cable into the target board's RJ45 port and connect it to a computer network which has a DHCP server and access to the internet.
 4.  Download the program to the target board.
 5.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
 
@@ -177,6 +159,21 @@ Strict-Transport-Security: max-age=31536000; includeSubdomains
 
 Hello world!
 
-Customization options
+Hardware requirements
 =====================
+- Mini/micro USB cable
+- EVK-MIMXRT1060 board
+- Personal Computer
+
+Board settings
+==============
+No special settings are required.
+
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

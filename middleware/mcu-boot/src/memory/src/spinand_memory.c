@@ -615,7 +615,7 @@ status_t spinand_mem_read(uint32_t address, uint32_t length, uint8_t *restrict b
 
         if (s_spinandContext.nandAddressType == kNandAddressType_BlockAddress)
         {
-            // If the Write tranfer is not started yet, log the address as block address (index)
+            // If the Write transfer is not started yet, log the address as block address (index)
             if (!s_spinandContext.readwriteInProgress)
             {
                 // Ensure the block address is a valid block address
@@ -744,7 +744,7 @@ status_t spinand_mem_write(uint32_t address, uint32_t length, const uint8_t *buf
         static uint32_t expectedNextActualAddr;
         if (s_spinandContext.nandAddressType == kNandAddressType_BlockAddress)
         {
-            // If the Write tranfer is not started yet, log the address as block address (index)
+            // If the Write transfer is not started yet, log the address as block address (index)
             if (!s_spinandContext.readwriteInProgress)
             {
                 // Ensure the block address is a valid block address
@@ -770,7 +770,7 @@ status_t spinand_mem_write(uint32_t address, uint32_t length, const uint8_t *buf
                 columnAddr = actualAddress % pageSize;
                 pageAddr = actualAddress / pageSize;
 
-                // The address is continuous in a tranfer, so once the address is not continuous,
+                // The address is continuous in a transfer, so once the address is not continuous,
                 // Flush data in buffer into SPI NAND and then re-start a new transfer
                 if (actualAddress != expectedNextActualAddr)
                 {
@@ -779,7 +779,7 @@ status_t spinand_mem_write(uint32_t address, uint32_t length, const uint8_t *buf
                         status = spinand_mem_flush_buffer();
                         if (status != kStatus_Success)
                         {
-                            // Terminate tranfer if error occurs.
+                            // Terminate transfer if error occurs.
                             s_spinandContext.readwriteInProgress = false;
                             break;
                         }

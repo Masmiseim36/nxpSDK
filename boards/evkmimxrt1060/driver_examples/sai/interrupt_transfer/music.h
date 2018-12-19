@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 #ifndef _MUSIC_H_
@@ -20,8 +20,8 @@
 #define __ALIGN_END
 #endif
 #ifndef __ALIGN_BEGIN
-#if defined(__CC_ARM) /* ARM Compiler */
-#define __ALIGN_BEGIN __align(4)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION) /* ARM Compiler */
+#define __ALIGN_BEGIN __attribute__((aligned(4)))
 #elif defined(__ICCARM__) /* IAR Compiler */
 #define __ALIGN_BEGIN
 #endif

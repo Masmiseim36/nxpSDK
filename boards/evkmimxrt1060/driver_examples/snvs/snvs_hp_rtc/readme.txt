@@ -1,14 +1,6 @@
 Overview
 ========
 The SNVS HP RTC project is a simple demonstration program of the SDK SNVS HP driver. The test will set up RTC date and time to a predefined value and starts the counter. RTC then triggers an alarm after a user specified time period. The alarm will be set with reference to this predefined date and time.
-
-Toolchain supported
-===================
-- Keil MDK 5.25
-- IAR embedded Workbench 8.30.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.1
-
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -47,6 +39,11 @@ Please input the number of second to wait for alarm and press enter
 The second must be positive value
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

@@ -4,14 +4,6 @@ The Power mode switch demo application demonstrates the use of power modes in th
 through the debug console, where the user can set the MCU to a specific power mode. User can wakeup the core by key interrupt.
 The purpose of this demo is to show how to switch between different power  modes, and how to configure a wakeup source and
 wakeup the MCU from low power modes.
-
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
-
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -127,6 +119,11 @@ To debug in hyper flash in MDK, following steps are needed:
 4. Set the SW7: 1 off 2 on 3 on 4 off, then power on the board
 5. Push SW4 to reset.
 6. Start to debug.
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

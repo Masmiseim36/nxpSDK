@@ -394,7 +394,7 @@ usb_status_t USB_DeviceGetStringDescriptor(usb_device_handle handle,
  * configurations need to be updated to match current speed. As the default,
  * the device descriptors and configurations are configured by using FS parameters
  * for both EHCI and KHCI. When the EHCI is enabled, the application needs to call
- * this fucntion to update device by using current speed. The updated information
+ * this function to update device by using current speed. The updated information
  * includes endpoint max packet size, endpoint interval, etc..
  *
  * @param handle The USB device handle.

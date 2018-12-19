@@ -3,7 +3,7 @@
  * Copyright 2016-2017 NXP
  *
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -11,8 +11,9 @@
 #include <string.h>
 #include <stdlib.h>
 #include "board.h"
-#include "fsl_shell.h"
 #include "fsl_debug_console.h"
+#include "serial_manager.h"
+#include "fsl_shell.h"
 
 #include "pin_mux.h"
 #include "clock_config.h"
@@ -29,22 +30,21 @@
  ******************************************************************************/
 void Led_Init(void);
 
-/* SHELL user send data callback */
-void SHELL_SendDataCallback(uint8_t *buf, uint32_t len);
-
-/* SHELL user receive data callback */
-void SHELL_ReceiveDataCallback(uint8_t *buf, uint32_t len);
-
-static int32_t LedControl(p_shell_context_t context, int32_t argc, char **argv);
+static shell_status_t LedControl(shell_handle_t shellHandle, int32_t argc, char **argv);
 
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-static const shell_command_context_t xLedCommand = {"led",
-                                                    "\r\n\"led arg1 arg2\":\r\n Usage:\r\n    arg1: 1|2|3|4...         "
-                                                    "   Led index\r\n    arg2: on|off                Led status\r\n",
-                                                    LedControl, 2};
+SHELL_COMMAND_DEFINE(led,
+                     "\r\n\"led arg1 arg2\":\r\n Usage:\r\n    arg1: 1|2|3|4...         "
+                     "   Led index\r\n    arg2: on|off                Led status\r\n",
+                     LedControl,
+                     2);
 
+SDK_ALIGN(static uint8_t s_shellHandleBuffer[SHELL_HANDLE_SIZE], 4);
+static shell_handle_t s_shellHandle;
+
+extern serial_handle_t g_serialHandle;
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -54,23 +54,7 @@ void Led_Init(void)
     LED_1_INIT();
 }
 
-void SHELL_SendDataCallback(uint8_t *buf, uint32_t len)
-{
-    while (len--)
-    {
-        PUTCHAR(*(buf++));
-    }
-}
-
-void SHELL_ReceiveDataCallback(uint8_t *buf, uint32_t len)
-{
-    while (len--)
-    {
-        *(buf++) = GETCHAR();
-    }
-}
-
-static int32_t LedControl(p_shell_context_t context, int32_t argc, char **argv)
+static shell_status_t LedControl(shell_handle_t shellHandle, int32_t argc, char **argv)
 {
     int32_t kLedIndex = ((int32_t)atoi(argv[1]));
     char *kLedCommand = argv[2];
@@ -146,14 +130,12 @@ static int32_t LedControl(p_shell_context_t context, int32_t argc, char **argv)
             SHELL_Printf("LED index is wrong\r\n");
             break;
     }
-    return 0;
+    return kStatus_SHELL_Success;
 }
 
 /*! @brief Main function */
 int main(void)
 {
-    shell_context_struct user_context;
-
     BOARD_ConfigMPU();
     BOARD_InitPins();
     BOARD_BootClockRUN();
@@ -166,12 +148,15 @@ int main(void)
     Led_Init();
 
     /* Init SHELL */
-    SHELL_Init(&user_context, SHELL_SendDataCallback, SHELL_ReceiveDataCallback, SHELL_Printf, "SHELL>> ");
+    s_shellHandle = &s_shellHandleBuffer[0];
+    SHELL_Init(s_shellHandle, g_serialHandle, "SHELL>> ");
 
     /* Add new command to commands list */
-    SHELL_RegisterCommand(&xLedCommand);
+    SHELL_RegisterCommand(s_shellHandle, SHELL_COMMAND(led));
 
-    SHELL_Main(&user_context);
+#if !(defined(SHELL_NON_BLOCKING_MODE) && (SHELL_NON_BLOCKING_MODE > 0U))
+    SHELL_Task(s_shellHandle);
+#endif
 
     while (1)
     {

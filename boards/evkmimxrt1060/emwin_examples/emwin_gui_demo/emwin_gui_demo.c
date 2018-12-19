@@ -2,7 +2,7 @@
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -369,6 +369,10 @@ int main(void)
         PROGBAR_CreateEx(GUI_SCALE_RECT(60, 10, 200, 40), hPageWin, WM_CF_SHOW, PROGBAR_CF_HORIZONTAL, GUI_ID_PROGBAR0);
     PROGBAR_SetFont(hProgbar0, GUI_LARGE_FONT);
     PROGBAR_SetValue(hProgbar0, 50);
+    PROGBAR_SKINFLEX_PROPS pProps = {0};
+    PROGBAR_GetSkinFlexProps(&pProps, 0);
+    pProps.ColorText = GUI_BLACK;
+    PROGBAR_SetSkinFlexProps(&pProps, 0);
 
     WM_SetDesktopColor(GUI_WHITE);
     WM_Exec();

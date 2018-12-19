@@ -91,9 +91,9 @@
 
 #if ((defined(USB_DEVICE_CONFIG_COMPLIANCE_TEST)) && (USB_DEVICE_CONFIG_COMPLIANCE_TEST > 0U))
 
-/*! @brief Undefine the marco USB_DEVICE_CONFIG_USB20_TEST_MODE. */
+/*! @brief Undefine the macro USB_DEVICE_CONFIG_USB20_TEST_MODE. */
 #undef USB_DEVICE_CONFIG_USB20_TEST_MODE
-/*! @brief Undefine the marco USB_DEVICE_CONFIG_CV_TEST. */
+/*! @brief Undefine the macro USB_DEVICE_CONFIG_CV_TEST. */
 #undef USB_DEVICE_CONFIG_CV_TEST
 
 /*! @brief enable the test mode. */

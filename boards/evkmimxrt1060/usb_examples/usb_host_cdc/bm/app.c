@@ -217,6 +217,6 @@ int main(void)
     while (1)
     {
         USB_HostTaskFn(g_hostHandle);
-        USB_HosCdcTask(&g_cdc);
+        USB_HostCdcTask(&g_cdc);
     }
 }

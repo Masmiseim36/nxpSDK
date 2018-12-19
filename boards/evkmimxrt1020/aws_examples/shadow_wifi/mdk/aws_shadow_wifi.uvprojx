@@ -4,10 +4,9 @@
   <Header>### uVision Project, (C) Keil Software</Header>
   <Targets>
     <Target>
-      <TargetName>aws_shadow_wifi flexspi_nor_debug</TargetName>
+      <TargetName>aws_shadow_wifi flexspi_nor_sdram_debug</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>5060183::V5.06 update 2 (build 183)::ARMCC</pCCUsed>
       <TargetOption>
         <TargetCommonOption>
           <Device>MIMXRT1021DAG5A</Device>
@@ -44,7 +43,7 @@
             <NotGenerated>0</NotGenerated>
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
-          <OutputDirectory>flexspi_nor_debug\</OutputDirectory>
+          <OutputDirectory>flexspi_nor_sdram_debug\</OutputDirectory>
           <OutputName>aws_shadow_wifi.out</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
@@ -321,8 +320,8 @@
             <uSurpInc>0</uSurpInc>
             <uC99>1</uC99>
             <useXO>0</useXO>
-            <v6Lang>1</v6Lang>
-            <v6LangP>1</v6LangP>
+            <v6Lang>3</v6Lang>
+            <v6LangP>3</v6LangP>
             <vShortEn>1</vShortEn>
             <vShortWch>1</vShortWch>
             <v6Lto>0</v6Lto>
@@ -330,14 +329,14 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>--library_interface=armcc 
---library_type=standardlib 
 --diag_suppress=66,1296,186 
+--diag_suppress=1296,186 
 --diag_suppress=177 
  
 </MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, CPU_MIMXRT1021DAG5A, SKIP_SYSCLK_INIT, USE_RTOS=1, MBEDTLS_CONFIG_FILE='\"aws_mbedtls_config.h\"', FSL_RTOS_FREE_RTOS, A_LITTLE_ENDIAN</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SKIP_SYSCLK_INIT, DEBUG, CPU_MIMXRT1021DAG5A, USE_RTOS=1, MBEDTLS_CONFIG_FILE='\"aws_mbedtls_config.h\"', A_LITTLE_ENDIAN, FSL_RTOS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/RVDS/ARM_CM4F;../../../../../CMSIS/Include;../../../../../devices;../../..;..;../../../../src/aws_examples/common;../config_files;../../../../../platform/utilities/virtual_com;../../../../../rtos/amazon-freertos/lib/include;../../../../../rtos/amazon-freertos/lib/include/private;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/port/ksdk;../../../../../devices/MIMXRT1021/drivers;../../../../../middleware/wifi_qca/port/boards/evkmimxrt1020/freertos/gt202;../../../../../middleware/wifi_qca/port/boards/evkmimxrt1020/freertos;../../../../../middleware/wifi_qca/port/env/freertos;../../../../../middleware/wifi_qca;../../../../../middleware/wifi_qca/include;../../../../../middleware/wifi_qca/include/AR6002;../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw;../../../../../middleware/wifi_qca/include/AR6002/hw4.0/hw;../../../../../middleware/wifi_qca/custom_src/stack_custom;../../../../../middleware/wifi_qca/custom_src/include;../../../../../middleware/wifi_qca/common_src/include;../../../../../middleware/wifi_qca/common_src/stack_common;../../../../../middleware/wifi_qca/common_src/hcd;../../../../../middleware/wifi_qca/common_src/wmi;../../../../../middleware/wifi_qca/port;../../../../../middleware/wifi_qca/port/drivers/lpspi_edma_freertos;../../../../../rtos/amazon-freertos/lib/third_party/mcu_vendor/nxp/MIMXRT1021/drivers;../../../../../rtos/amazon-freertos/demos/common/include;../../../../../rtos/amazon-freertos/lib/third_party/pkcs11;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/utilities/io;../../../../../devices/MIMXRT1021/utilities/str;../../../../../devices/MIMXRT1021/utilities/log;../../../../../devices/MIMXRT1021/utilities;../../../../../devices/MIMXRT1021/xip;../../../../../rtos/amazon-freertos/lib/third_party/jsmn</IncludePath>
+              <IncludePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/RVDS/ARM_CM4F;../../..;..;../../../../src/aws_examples/common;../config_files;../../../../../platform/utilities/virtual_com;../../../../../CMSIS/Include;../../../../../devices;../../../../../rtos/amazon-freertos/lib/include;../../../../../rtos/amazon-freertos/lib/include/private;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/port/ksdk;../../../../../devices/MIMXRT1021/drivers;../../../../../devices/MIMXRT1021/drivers;../../../../../devices/MIMXRT1021/drivers;../../../../../devices/MIMXRT1021/drivers;../../../../../middleware/wifi_qca/port/boards/evkmimxrt1020/freertos/gt202;../../../../../rtos/amazon-freertos/lib/third_party/mcu_vendor/nxp/MIMXRT1021/drivers;../../../../../middleware/wifi_qca;../../../../../middleware/wifi_qca/include;../../../../../middleware/wifi_qca/include/AR6002;../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw;../../../../../middleware/wifi_qca/include/AR6002/hw4.0/hw;../../../../../middleware/wifi_qca/custom_src/stack_custom;../../../../../middleware/wifi_qca/custom_src/include;../../../../../middleware/wifi_qca/common_src/include;../../../../../middleware/wifi_qca/common_src/stack_common;../../../../../middleware/wifi_qca/common_src/hcd;../../../../../middleware/wifi_qca/common_src/wmi;../../../../../middleware/wifi_qca/port;../../../../../rtos/amazon-freertos/lib/include;../../../../../rtos/amazon-freertos/lib/include/private;../../../../../rtos/amazon-freertos/lib/third_party/pkcs11;../../../../../rtos/amazon-freertos/lib/third_party;../../../../../rtos/amazon-freertos/lib/third_party/jsmn;../../../../../rtos/amazon-freertos/lib/include;../../../../../rtos/amazon-freertos/demos/common/include;../../../../../devices/MIMXRT1021/drivers;../../../../../devices/MIMXRT1021/drivers;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/utilities/str;../../../../../devices/MIMXRT1021/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/serial_manager;../../../../../devices/MIMXRT1021/drivers;../../../../../components/lists;../../../../../devices/MIMXRT1021/drivers;../../../../../devices/MIMXRT1021/drivers;../../../../../devices/MIMXRT1021/xip;../../../xip;../../../../../middleware/wifi_qca/port/boards/evkmimxrt1020/freertos;../../../../../middleware/wifi_qca/port/env/freertos;../../../../../middleware/wifi_qca/port/drivers/lpspi_edma_freertos;../../../../../devices/MIMXRT1021/drivers;../../../../../devices/MIMXRT1021/drivers;../../../../../devices/MIMXRT1021/drivers;../../../../../devices/MIMXRT1021/drivers</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -353,7 +352,7 @@
             <uClangAs>0</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>__STARTUP_INITIALIZE_NONCACHEDATA</Define>
+              <Define>DEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
               <Undefine/>
               <IncludePath>../../..;..;../../remote_control_wifi/config_files</IncludePath>
             </VariousControls>
@@ -376,6 +375,8 @@
 --keep=*(.boot_hdr.boot_data) 
 --keep=*(.boot_hdr.dcd_data) 
 --keep=*(.boot_hdr.conf) 
+--predefine="-D__stack_size__=0x200" 
+--predefine="-D__heap_size__=0x200" 
 </Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
@@ -416,6 +417,26 @@
               <FileType>5</FileType>
               <FilePath>../pin_mux.h</FilePath>
             </File>
+            <File>
+              <FileName>board.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../board.c</FilePath>
+            </File>
+            <File>
+              <FileName>board.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../board.h</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../clock_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../clock_config.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -425,11 +446,6 @@
               <FileName>FreeRTOSConfig.h</FileName>
               <FileType>5</FileType>
               <FilePath>../FreeRTOSConfig.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_bufferpool_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../config_files/aws_bufferpool_config.h</FilePath>
             </File>
             <File>
               <FileName>aws_demo_config.h</FileName>
@@ -445,6 +461,11 @@
               <FileName>aws_mqtt_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../config_files/aws_mqtt_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_pkcs11_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../config_files/aws_pkcs11_config.h</FilePath>
             </File>
             <File>
               <FileName>aws_secure_sockets_config.h</FileName>
@@ -469,27 +490,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>board-src</GroupName>
+          <GroupName>amazon-freertos:config_files</GroupName>
           <Files>
             <File>
-              <FileName>board.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../board.c</FilePath>
-            </File>
-            <File>
-              <FileName>board.h</FileName>
+              <FileName>aws_bufferpool_config.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../board.h</FilePath>
-            </File>
-            <File>
-              <FileName>clock_config.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../clock_config.c</FilePath>
-            </File>
-            <File>
-              <FileName>clock_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../clock_config.h</FilePath>
+              <FilePath>../config_files/aws_bufferpool_config.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -515,26 +521,6 @@
               <FileName>fsl_trng.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_trng.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_clock.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
               <FileName>fsl_dcp.c</FileName>
@@ -565,6 +551,51 @@
               <FileName>fsl_flexspi.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_flexspi.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_clock.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_clock.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_lpuart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_lpuart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_lpuart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_lpuart.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_iomuxc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_iomuxc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_gpio.c</FilePath>
             </File>
             <File>
               <FileName>fsl_lpspi.c</FileName>
@@ -606,31 +637,6 @@
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_dmamux.c</FilePath>
             </File>
-            <File>
-              <FileName>fsl_gpio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_gpio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_gpio.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_lpuart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_lpuart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_lpuart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_lpuart.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_iomuxc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_iomuxc.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -644,397 +650,42 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>wifi_qca-port-shields</GroupName>
+          <GroupName>amazon-freertos-drivers</GroupName>
           <Files>
             <File>
-              <FileName>wifi_shield.h</FileName>
+              <FileName>mflash_drv.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/port/boards/evkmimxrt1020/freertos/wifi_shield.h</FilePath>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/third_party/mcu_vendor/nxp/MIMXRT1021/drivers/mflash_drv.h</FilePath>
             </File>
             <File>
-              <FileName>wifi_shield.c</FileName>
+              <FileName>mflash_drv.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/port/boards/evkmimxrt1020/freertos/wifi_shield.c</FilePath>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/third_party/mcu_vendor/nxp/MIMXRT1021/drivers/mflash_drv.c</FilePath>
+            </File>
+            <File>
+              <FileName>mflash_file.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/third_party/mcu_vendor/nxp/MIMXRT1021/drivers/mflash_file.h</FilePath>
+            </File>
+            <File>
+              <FileName>mflash_file.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/third_party/mcu_vendor/nxp/MIMXRT1021/drivers/mflash_file.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>wifi_qca-port-env-freertos</GroupName>
+          <GroupName>amazon-freertos-pkcs11</GroupName>
           <Files>
             <File>
-              <FileName>wifi_port.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/port/env/freertos/wifi_port.h</FilePath>
-            </File>
-            <File>
-              <FileName>wifi_env_port.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/port/env/freertos/wifi_env_port.h</FilePath>
-            </File>
-            <File>
-              <FileName>wifi_env.c</FileName>
+              <FileName>aws_pkcs11_mbedtls.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/port/env/freertos/wifi_env.c</FilePath>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/pkcs11/mbedtls/aws_pkcs11_mbedtls.c</FilePath>
             </File>
             <File>
-              <FileName>wifi_env.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/port/env/freertos/wifi_env.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>amazon-freertos-license</GroupName>
-          <Files>
-            <File>
-              <FileName>LICENSE</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/LICENSE</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>amazon-freertos-include</GroupName>
-          <Files>
-            <File>
-              <FileName>event_groups.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/event_groups.h</FilePath>
-            </File>
-            <File>
-              <FileName>FreeRTOS.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/FreeRTOS.h</FilePath>
-            </File>
-            <File>
-              <FileName>message_buffer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/message_buffer.h</FilePath>
-            </File>
-            <File>
-              <FileName>queue.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/queue.h</FilePath>
-            </File>
-            <File>
-              <FileName>semphr.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/semphr.h</FilePath>
-            </File>
-            <File>
-              <FileName>stream_buffer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/stream_buffer.h</FilePath>
-            </File>
-            <File>
-              <FileName>task.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/task.h</FilePath>
-            </File>
-            <File>
-              <FileName>timers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/timers.h</FilePath>
-            </File>
-            <File>
-              <FileName>freertos_tasks_c_additions.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/freertos_tasks_c_additions.h</FilePath>
-            </File>
-            <File>
-              <FileName>deprecated_definitions.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/deprecated_definitions.h</FilePath>
-            </File>
-            <File>
-              <FileName>list.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/list.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_wrappers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/mpu_wrappers.h</FilePath>
-            </File>
-            <File>
-              <FileName>portable.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/portable.h</FilePath>
-            </File>
-            <File>
-              <FileName>projdefs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/projdefs.h</FilePath>
-            </File>
-            <File>
-              <FileName>stack_macros.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/stack_macros.h</FilePath>
-            </File>
-            <File>
-              <FileName>FreeRTOS.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/FreeRTOS.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_crypto.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/aws_crypto.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_greengrass_discovery.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/aws_greengrass_discovery.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_mqtt_agent.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/aws_mqtt_agent.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_mqtt_lib.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/aws_mqtt_lib.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_pkcs11.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/aws_pkcs11.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_secure_sockets.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/aws_secure_sockets.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_shadow.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/aws_shadow.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_system_init.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/aws_system_init.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_tls.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/aws_tls.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_wifi.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/aws_wifi.h</FilePath>
-            </File>
-            <File>
-              <FileName>event_groups.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/event_groups.h</FilePath>
-            </File>
-            <File>
-              <FileName>message_buffer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/message_buffer.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_bufferpool.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/aws_bufferpool.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_default_root_certificates.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/aws_default_root_certificates.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_doubly_linked_list.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/aws_doubly_linked_list.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_ggd_config_defaults.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/aws_ggd_config_defaults.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_greengrass_lib_private.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/aws_greengrass_lib_private.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_helper_secure_connect.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/aws_helper_secure_connect.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_lib_init.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/aws_lib_init.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_mqtt_agent_config_defaults.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/aws_mqtt_agent_config_defaults.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_mqtt_buffer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/aws_mqtt_buffer.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_mqtt_config_defaults.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/aws_mqtt_config_defaults.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_mqtt_lib_private.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/aws_mqtt_lib_private.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_rsprintf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/aws_rsprintf.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_secure_sockets_config_defaults.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/aws_secure_sockets_config_defaults.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_shadow_config_defaults.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/aws_shadow_config_defaults.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_shadow_json.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/aws_shadow_json.h</FilePath>
-            </File>
-            <File>
-              <FileName>deprecated_definitions.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/deprecated_definitions.h</FilePath>
-            </File>
-            <File>
-              <FileName>list.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/list.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_wrappers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/mpu_wrappers.h</FilePath>
-            </File>
-            <File>
-              <FileName>portable.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/portable.h</FilePath>
-            </File>
-            <File>
-              <FileName>projdefs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/projdefs.h</FilePath>
-            </File>
-            <File>
-              <FileName>stack_macros.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/stack_macros.h</FilePath>
-            </File>
-            <File>
-              <FileName>queue.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/queue.h</FilePath>
-            </File>
-            <File>
-              <FileName>semphr.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/semphr.h</FilePath>
-            </File>
-            <File>
-              <FileName>stream_buffer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/stream_buffer.h</FilePath>
-            </File>
-            <File>
-              <FileName>task.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/task.h</FilePath>
-            </File>
-            <File>
-              <FileName>timers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/timers.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_clientcredential.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/demos/common/include/aws_clientcredential.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_clientcredential_keys.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/demos/common/include/aws_clientcredential_keys.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_demo.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/demos/common/include/aws_demo.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_dev_mode_key_provisioning.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/demos/common/include/aws_dev_mode_key_provisioning.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_logging_task.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/demos/common/include/aws_logging_task.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_shadow_lightbulb_on_off.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/demos/common/include/aws_shadow_lightbulb_on_off.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_greengrass_discovery_demo.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/demos/common/include/aws_greengrass_discovery_demo.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>amazon-freertos-FreeRTOS</GroupName>
-          <Files>
-            <File>
-              <FileName>event_groups.c</FileName>
+              <FileName>aws_pkcs11_pal.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/event_groups.c</FilePath>
-            </File>
-            <File>
-              <FileName>list.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/list.c</FilePath>
-            </File>
-            <File>
-              <FileName>queue.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/queue.c</FilePath>
-            </File>
-            <File>
-              <FileName>stream_buffer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/stream_buffer.c</FilePath>
-            </File>
-            <File>
-              <FileName>tasks.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/tasks.c</FilePath>
-            </File>
-            <File>
-              <FileName>timers.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/timers.c</FilePath>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/pkcs11/portable/nxp/evkbimxrt1020/aws_pkcs11_pal.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1042,9 +693,24 @@
           <GroupName>amazon-freertos-FreeRTOS-portable</GroupName>
           <Files>
             <File>
+              <FileName>heap_4.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/MemMang/heap_4.c</FilePath>
+            </File>
+            <File>
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/readme.txt</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_tickless_systick.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/RVDS/ARM_CM4F/fsl_tickless_systick.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_tickless_generic.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/RVDS/ARM_CM4F/fsl_tickless_generic.h</FilePath>
             </File>
             <File>
               <FileName>port.c</FileName>
@@ -1055,26 +721,6 @@
               <FileName>portmacro.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/RVDS/ARM_CM4F/portmacro.h</FilePath>
-            </File>
-            <File>
-              <FileName>heap_4.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/MemMang/heap_4.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>amazon-freertos-portable</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_tickless_systick.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/RVDS/ARM_CM4F/fsl_tickless_systick.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_tickless_generic.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/RVDS/ARM_CM4F/fsl_tickless_generic.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1649,257 +1295,347 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>wifi_qca-port-drivers-lpspi_edma_freertos</GroupName>
+          <GroupName>amazon-freertos-license</GroupName>
           <Files>
             <File>
-              <FileName>wifi_spi.h</FileName>
+              <FileName>LICENSE</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/port/drivers/lpspi_edma_freertos/wifi_spi.h</FilePath>
-            </File>
-            <File>
-              <FileName>wifi_spi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/port/drivers/lpspi_edma_freertos/wifi_spi.c</FilePath>
+              <FilePath>../../../../../rtos/amazon-freertos/LICENSE</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-drivers</GroupName>
+          <GroupName>amazon-freertos-include</GroupName>
           <Files>
             <File>
-              <FileName>mflash_drv.h</FileName>
+              <FileName>event_groups.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/third_party/mcu_vendor/nxp/MIMXRT1021/drivers/mflash_drv.h</FilePath>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/event_groups.h</FilePath>
             </File>
             <File>
-              <FileName>mflash_drv.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/third_party/mcu_vendor/nxp/MIMXRT1021/drivers/mflash_drv.c</FilePath>
-            </File>
-            <File>
-              <FileName>mflash_file.h</FileName>
+              <FileName>FreeRTOS.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/third_party/mcu_vendor/nxp/MIMXRT1021/drivers/mflash_file.h</FilePath>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/FreeRTOS.h</FilePath>
             </File>
             <File>
-              <FileName>mflash_file.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/third_party/mcu_vendor/nxp/MIMXRT1021/drivers/mflash_file.c</FilePath>
+              <FileName>message_buffer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/message_buffer.h</FilePath>
+            </File>
+            <File>
+              <FileName>queue.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/queue.h</FilePath>
+            </File>
+            <File>
+              <FileName>semphr.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/semphr.h</FilePath>
+            </File>
+            <File>
+              <FileName>stream_buffer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/stream_buffer.h</FilePath>
+            </File>
+            <File>
+              <FileName>task.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/task.h</FilePath>
+            </File>
+            <File>
+              <FileName>timers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/timers.h</FilePath>
+            </File>
+            <File>
+              <FileName>freertos_tasks_c_additions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/freertos_tasks_c_additions.h</FilePath>
+            </File>
+            <File>
+              <FileName>deprecated_definitions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/deprecated_definitions.h</FilePath>
+            </File>
+            <File>
+              <FileName>list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/list.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_wrappers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/mpu_wrappers.h</FilePath>
+            </File>
+            <File>
+              <FileName>portable.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/portable.h</FilePath>
+            </File>
+            <File>
+              <FileName>projdefs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/projdefs.h</FilePath>
+            </File>
+            <File>
+              <FileName>stack_macros.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/stack_macros.h</FilePath>
+            </File>
+            <File>
+              <FileName>FreeRTOS.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/FreeRTOS.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_crypto.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/aws_crypto.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_greengrass_discovery.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/aws_greengrass_discovery.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_mqtt_agent.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/aws_mqtt_agent.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_mqtt_lib.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/aws_mqtt_lib.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_pkcs11.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/aws_pkcs11.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_secure_sockets.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/aws_secure_sockets.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_shadow.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/aws_shadow.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_system_init.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/aws_system_init.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_tls.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/aws_tls.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_wifi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/aws_wifi.h</FilePath>
+            </File>
+            <File>
+              <FileName>event_groups.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/event_groups.h</FilePath>
+            </File>
+            <File>
+              <FileName>message_buffer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/message_buffer.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_bufferpool.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/aws_bufferpool.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_default_root_certificates.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/aws_default_root_certificates.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_doubly_linked_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/aws_doubly_linked_list.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_ggd_config_defaults.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/aws_ggd_config_defaults.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_helper_secure_connect.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/aws_helper_secure_connect.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_lib_init.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/aws_lib_init.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_mqtt_agent_config_defaults.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/aws_mqtt_agent_config_defaults.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_mqtt_buffer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/aws_mqtt_buffer.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_mqtt_config_defaults.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/aws_mqtt_config_defaults.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_secure_sockets_config_defaults.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/aws_secure_sockets_config_defaults.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_shadow_config_defaults.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/aws_shadow_config_defaults.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_shadow_json.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/aws_shadow_json.h</FilePath>
+            </File>
+            <File>
+              <FileName>deprecated_definitions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/deprecated_definitions.h</FilePath>
+            </File>
+            <File>
+              <FileName>list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/list.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_wrappers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/mpu_wrappers.h</FilePath>
+            </File>
+            <File>
+              <FileName>portable.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/portable.h</FilePath>
+            </File>
+            <File>
+              <FileName>projdefs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/projdefs.h</FilePath>
+            </File>
+            <File>
+              <FileName>stack_macros.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/stack_macros.h</FilePath>
+            </File>
+            <File>
+              <FileName>queue.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/queue.h</FilePath>
+            </File>
+            <File>
+              <FileName>semphr.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/semphr.h</FilePath>
+            </File>
+            <File>
+              <FileName>stream_buffer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/stream_buffer.h</FilePath>
+            </File>
+            <File>
+              <FileName>task.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/task.h</FilePath>
+            </File>
+            <File>
+              <FileName>timers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/timers.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_clientcredential.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/demos/common/include/aws_clientcredential.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_clientcredential_keys.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/demos/common/include/aws_clientcredential_keys.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_demo.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/demos/common/include/aws_demo.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_dev_mode_key_provisioning.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/demos/common/include/aws_dev_mode_key_provisioning.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_logging_task.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/demos/common/include/aws_logging_task.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_shadow_lightbulb_on_off.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/demos/common/include/aws_shadow_lightbulb_on_off.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_greengrass_discovery_demo.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/demos/common/include/aws_greengrass_discovery_demo.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-pkcs11</GroupName>
+          <GroupName>amazon-freertos-FreeRTOS</GroupName>
           <Files>
             <File>
-              <FileName>pkcs11.c</FileName>
+              <FileName>event_groups.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/pkcs11/portable/nxp/common/pkcs11.c</FilePath>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/event_groups.c</FilePath>
             </File>
             <File>
-              <FileName>pkcs11.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/third_party/pkcs11/pkcs11.h</FilePath>
+              <FileName>list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/list.c</FilePath>
             </File>
             <File>
-              <FileName>pkcs11f.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/third_party/pkcs11/pkcs11f.h</FilePath>
+              <FileName>queue.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/queue.c</FilePath>
             </File>
             <File>
-              <FileName>pkcs11t.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/third_party/pkcs11/pkcs11t.h</FilePath>
+              <FileName>stream_buffer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/stream_buffer.c</FilePath>
+            </File>
+            <File>
+              <FileName>tasks.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/tasks.c</FilePath>
+            </File>
+            <File>
+              <FileName>timers.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/timers.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-mqtt</GroupName>
-          <Files>
-            <File>
-              <FileName>aws_mqtt_agent.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/mqtt/aws_mqtt_agent.c</FilePath>
-            </File>
-            <File>
-              <FileName>aws_mqtt_lib.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/mqtt/aws_mqtt_lib.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>amazon-freertos-tls</GroupName>
-          <Files>
-            <File>
-              <FileName>aws_tls.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/tls/aws_tls.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>amazon-freertos-bufferpool</GroupName>
-          <Files>
-            <File>
-              <FileName>aws_bufferpool_static_thread_safe.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/bufferpool/aws_bufferpool_static_thread_safe.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>amazon-freertos-logging</GroupName>
-          <Files>
-            <File>
-              <FileName>aws_logging_task_dynamic_buffers.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/demos/common/logging/aws_logging_task_dynamic_buffers.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>amazon-freertos-crypto</GroupName>
-          <Files>
-            <File>
-              <FileName>aws_crypto.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/crypto/aws_crypto.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>amazon-freertos-utils</GroupName>
-          <Files>
-            <File>
-              <FileName>aws_system_init.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/utils/aws_system_init.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>amazon-freertos-devmode_key_provisioning</GroupName>
-          <Files>
-            <File>
-              <FileName>aws_dev_mode_key_provisioning.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/demos/common/devmode_key_provisioning/aws_dev_mode_key_provisioning.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>startup</GroupName>
-          <Files>
-            <File>
-              <FileName>system_MIMXRT1021.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/system_MIMXRT1021.c</FilePath>
-            </File>
-            <File>
-              <FileName>system_MIMXRT1021.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/system_MIMXRT1021.h</FilePath>
-            </File>
-            <File>
-              <FileName>startup_MIMXRT1021.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/arm/startup_MIMXRT1021.s</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>utilities</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_io.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/utilities/io/fsl_io.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_io.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/utilities/io/fsl_io.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_log.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/utilities/log/fsl_log.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_log.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/utilities/log/fsl_log.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/utilities/fsl_debug_console.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/utilities/fsl_debug_console.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/utilities/fsl_debug_console_conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_assert.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/utilities/fsl_assert.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>xip</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_flexspi_nor_boot.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/xip/fsl_flexspi_nor_boot.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_flexspi_nor_boot.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/xip/fsl_flexspi_nor_boot.c</FilePath>
-            </File>
-            <File>
-              <FileName>evkmimxrt1020_flexspi_nor_config.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/xip/evkmimxrt1020_flexspi_nor_config.c</FilePath>
-            </File>
-            <File>
-              <FileName>evkmimxrt1020_flexspi_nor_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/xip/evkmimxrt1020_flexspi_nor_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>evkmimxrt1020_sdram_ini_dcd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/xip/evkmimxrt1020_sdram_ini_dcd.c</FilePath>
-            </File>
-            <File>
-              <FileName>evkmimxrt1020_sdram_ini_dcd.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/xip/evkmimxrt1020_sdram_ini_dcd.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>mbedTLS-mbedTLS_include</GroupName>
+          <GroupName>mbedtls-mbedtls_include</GroupName>
           <Files>
             <File>
               <FileName>aes.h</FileName>
@@ -1915,6 +1651,11 @@
               <FileName>arc4.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls/include/mbedtls/arc4.h</FilePath>
+            </File>
+            <File>
+              <FileName>aria.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/include/mbedtls/aria.h</FilePath>
             </File>
             <File>
               <FileName>asn1.h</FileName>
@@ -1960,6 +1701,16 @@
               <FileName>certs.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls/include/mbedtls/certs.h</FilePath>
+            </File>
+            <File>
+              <FileName>chacha20.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/include/mbedtls/chacha20.h</FilePath>
+            </File>
+            <File>
+              <FileName>chachapoly.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/include/mbedtls/chachapoly.h</FilePath>
             </File>
             <File>
               <FileName>check_config.h</FileName>
@@ -2062,6 +1813,11 @@
               <FilePath>../../../../../middleware/mbedtls/include/mbedtls/havege.h</FilePath>
             </File>
             <File>
+              <FileName>hkdf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/include/mbedtls/hkdf.h</FilePath>
+            </File>
+            <File>
               <FileName>hmac_drbg.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls/include/mbedtls/hmac_drbg.h</FilePath>
@@ -2105,6 +1861,11 @@
               <FileName>net_sockets.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls/include/mbedtls/net_sockets.h</FilePath>
+            </File>
+            <File>
+              <FileName>nist_kw.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/include/mbedtls/nist_kw.h</FilePath>
             </File>
             <File>
               <FileName>oid.h</FileName>
@@ -2157,6 +1918,16 @@
               <FilePath>../../../../../middleware/mbedtls/include/mbedtls/platform_time.h</FilePath>
             </File>
             <File>
+              <FileName>platform_util.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/include/mbedtls/platform_util.h</FilePath>
+            </File>
+            <File>
+              <FileName>poly1305.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/include/mbedtls/poly1305.h</FilePath>
+            </File>
+            <File>
               <FileName>ripemd160.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls/include/mbedtls/ripemd160.h</FilePath>
@@ -2165,6 +1936,11 @@
               <FileName>rsa.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls/include/mbedtls/rsa.h</FilePath>
+            </File>
+            <File>
+              <FileName>rsa_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/include/mbedtls/rsa_internal.h</FilePath>
             </File>
             <File>
               <FileName>sha1.h</FileName>
@@ -2254,7 +2030,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mbedTLS-mbedTLS_source</GroupName>
+          <GroupName>mbedtls-mbedtls_source</GroupName>
           <Files>
             <File>
               <FileName>aes.c</FileName>
@@ -2270,6 +2046,11 @@
               <FileName>arc4.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/library/arc4.c</FilePath>
+            </File>
+            <File>
+              <FileName>aria.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/aria.c</FilePath>
             </File>
             <File>
               <FileName>asn1parse.c</FileName>
@@ -2320,6 +2101,16 @@
               <FileName>cipher_wrap.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/library/cipher_wrap.c</FilePath>
+            </File>
+            <File>
+              <FileName>chacha20.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/chacha20.c</FilePath>
+            </File>
+            <File>
+              <FileName>chachapoly.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/chachapoly.c</FilePath>
             </File>
             <File>
               <FileName>cmac.c</FileName>
@@ -2397,6 +2188,11 @@
               <FilePath>../../../../../middleware/mbedtls/library/havege.c</FilePath>
             </File>
             <File>
+              <FileName>hkdf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/hkdf.c</FilePath>
+            </File>
+            <File>
               <FileName>hmac_drbg.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/library/hmac_drbg.c</FilePath>
@@ -2435,6 +2231,11 @@
               <FileName>net_sockets.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/library/net_sockets.c</FilePath>
+            </File>
+            <File>
+              <FileName>nist_kw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/nist_kw.c</FilePath>
             </File>
             <File>
               <FileName>oid.c</FileName>
@@ -2487,6 +2288,16 @@
               <FilePath>../../../../../middleware/mbedtls/library/platform.c</FilePath>
             </File>
             <File>
+              <FileName>platform_util.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/platform_util.c</FilePath>
+            </File>
+            <File>
+              <FileName>poly1305.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/poly1305.c</FilePath>
+            </File>
+            <File>
               <FileName>ripemd160.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/library/ripemd160.c</FilePath>
@@ -2495,6 +2306,11 @@
               <FileName>rsa.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/library/rsa.c</FilePath>
+            </File>
+            <File>
+              <FileName>rsa_internal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/rsa_internal.c</FilePath>
             </File>
             <File>
               <FileName>sha1.c</FileName>
@@ -2609,7 +2425,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mbedTLS-mbedTLS_port</GroupName>
+          <GroupName>mbedtls-mbedtls_port</GroupName>
           <Files>
             <File>
               <FileName>ksdk_mbedtls.c</FileName>
@@ -2645,6 +2461,91 @@
               <FileName>des_alt.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/port/ksdk/des_alt.c</FilePath>
+            </File>
+            <File>
+              <FileName>aes_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/aes_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>aes_alt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/aes_alt.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>amazon-freertos-mqtt</GroupName>
+          <Files>
+            <File>
+              <FileName>aws_mqtt_agent.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/mqtt/aws_mqtt_agent.c</FilePath>
+            </File>
+            <File>
+              <FileName>aws_mqtt_lib.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/mqtt/aws_mqtt_lib.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>amazon-freertos-tls</GroupName>
+          <Files>
+            <File>
+              <FileName>aws_tls.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/tls/aws_tls.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>amazon-freertos-bufferpool</GroupName>
+          <Files>
+            <File>
+              <FileName>aws_bufferpool_static_thread_safe.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/bufferpool/aws_bufferpool_static_thread_safe.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>amazon-freertos-crypto</GroupName>
+          <Files>
+            <File>
+              <FileName>aws_crypto.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/crypto/aws_crypto.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>amazon-freertos-third_party-pkcs11</GroupName>
+          <Files>
+            <File>
+              <FileName>pkcs11.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/third_party/pkcs11/pkcs11.h</FilePath>
+            </File>
+            <File>
+              <FileName>pkcs11f.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/third_party/pkcs11/pkcs11f.h</FilePath>
+            </File>
+            <File>
+              <FileName>pkcs11t.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/third_party/pkcs11/pkcs11t.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>amazon-freertos-utils</GroupName>
+          <Files>
+            <File>
+              <FileName>aws_system_init.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/utils/aws_system_init.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2698,10 +2599,325 @@
             </File>
           </Files>
         </Group>
+        <Group>
+          <GroupName>amazon-freertos-logging</GroupName>
+          <Files>
+            <File>
+              <FileName>aws_logging_task_dynamic_buffers.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/demos/common/logging/aws_logging_task_dynamic_buffers.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>amazon-freertos-devmode_key_provisioning</GroupName>
+          <Files>
+            <File>
+              <FileName>aws_dev_mode_key_provisioning.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/demos/common/devmode_key_provisioning/aws_dev_mode_key_provisioning.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>device</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_device_registers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/fsl_device_registers.h</FilePath>
+            </File>
+            <File>
+              <FileName>MIMXRT1021.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/MIMXRT1021.h</FilePath>
+            </File>
+            <File>
+              <FileName>MIMXRT1021_features.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/MIMXRT1021_features.h</FilePath>
+            </File>
+            <File>
+              <FileName>system_MIMXRT1021.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/system_MIMXRT1021.c</FilePath>
+            </File>
+            <File>
+              <FileName>system_MIMXRT1021.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/system_MIMXRT1021.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>utilities</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/utilities/debug_console/fsl_debug_console.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/utilities/debug_console/fsl_debug_console.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console_conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/utilities/fsl_assert.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/uart</GroupName>
+          <Files>
+            <File>
+              <FileName>uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/uart/uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>lpuart_adapter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/uart/lpuart_adapter.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/serial_manager</GroupName>
+          <Files>
+            <File>
+              <FileName>serial_manager.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/serial_manager/serial_manager.h</FilePath>
+            </File>
+            <File>
+              <FileName>serial_manager.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/serial_manager/serial_manager.c</FilePath>
+            </File>
+            <File>
+              <FileName>serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/serial_manager/serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/serial_manager/serial_port_uart.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/lists</GroupName>
+          <Files>
+            <File>
+              <FileName>generic_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/lists/generic_list.h</FilePath>
+            </File>
+            <File>
+              <FileName>generic_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/lists/generic_list.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>startup</GroupName>
+          <Files>
+            <File>
+              <FileName>startup_MIMXRT1021.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/arm/startup_MIMXRT1021.s</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>xip</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_flexspi_nor_boot.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/xip/fsl_flexspi_nor_boot.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_flexspi_nor_boot.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/xip/fsl_flexspi_nor_boot.c</FilePath>
+            </File>
+            <File>
+              <FileName>evkmimxrt1020_flexspi_nor_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../xip/evkmimxrt1020_flexspi_nor_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>evkmimxrt1020_flexspi_nor_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../xip/evkmimxrt1020_flexspi_nor_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>evkmimxrt1020_sdram_ini_dcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../xip/evkmimxrt1020_sdram_ini_dcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>evkmimxrt1020_sdram_ini_dcd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../xip/evkmimxrt1020_sdram_ini_dcd.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS</GroupName>
+          <Files>
+            <File>
+              <FileName>core_cm7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_gcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_armv8mbl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_armv8mml.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_common_tables.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_const_structs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/arm_math.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_iccarm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv8.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi_qca-port-shields</GroupName>
+          <Files>
+            <File>
+              <FileName>wifi_shield.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/port/boards/evkmimxrt1020/freertos/wifi_shield.h</FilePath>
+            </File>
+            <File>
+              <FileName>wifi_shield.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/port/boards/evkmimxrt1020/freertos/wifi_shield.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi_qca-port-env-freertos</GroupName>
+          <Files>
+            <File>
+              <FileName>wifi_port.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/port/env/freertos/wifi_port.h</FilePath>
+            </File>
+            <File>
+              <FileName>wifi_env_port.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/port/env/freertos/wifi_env_port.h</FilePath>
+            </File>
+            <File>
+              <FileName>wifi_env.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/port/env/freertos/wifi_env.c</FilePath>
+            </File>
+            <File>
+              <FileName>wifi_env.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/port/env/freertos/wifi_env.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi_qca-port-drivers-lpspi_edma_freertos</GroupName>
+          <Files>
+            <File>
+              <FileName>wifi_spi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/port/drivers/lpspi_edma_freertos/wifi_spi.h</FilePath>
+            </File>
+            <File>
+              <FileName>wifi_spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/port/drivers/lpspi_edma_freertos/wifi_spi.c</FilePath>
+            </File>
+          </Files>
+        </Group>
       </Groups>
     </Target>
     <Target>
-      <TargetName>aws_shadow_wifi flexspi_nor_release</TargetName>
+      <TargetName>aws_shadow_wifi flexspi_nor_sdram_release</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <TargetOption>
@@ -2740,7 +2956,7 @@
             <NotGenerated>0</NotGenerated>
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
-          <OutputDirectory>flexspi_nor_release\</OutputDirectory>
+          <OutputDirectory>flexspi_nor_sdram_release\</OutputDirectory>
           <OutputName>aws_shadow_wifi.out</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
@@ -3017,8 +3233,8 @@
             <uSurpInc>0</uSurpInc>
             <uC99>1</uC99>
             <useXO>0</useXO>
-            <v6Lang>1</v6Lang>
-            <v6LangP>1</v6LangP>
+            <v6Lang>3</v6Lang>
+            <v6LangP>3</v6LangP>
             <vShortEn>1</vShortEn>
             <vShortWch>1</vShortWch>
             <v6Lto>0</v6Lto>
@@ -3026,14 +3242,14 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>--library_interface=armcc 
---library_type=standardlib 
 --diag_suppress=66,1296,186 
+--diag_suppress=1296,186 
 --diag_suppress=177 
  
 </MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, CPU_MIMXRT1021DAG5A, SKIP_SYSCLK_INIT, USE_RTOS=1, MBEDTLS_CONFIG_FILE='\"aws_mbedtls_config.h\"', FSL_RTOS_FREE_RTOS, A_LITTLE_ENDIAN</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SKIP_SYSCLK_INIT, NDEBUG, CPU_MIMXRT1021DAG5A, USE_RTOS=1, MBEDTLS_CONFIG_FILE='\"aws_mbedtls_config.h\"', A_LITTLE_ENDIAN, FSL_RTOS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/RVDS/ARM_CM4F;../../../../../CMSIS/Include;../../../../../devices;../../..;..;../../../../src/aws_examples/common;../config_files;../../../../../platform/utilities/virtual_com;../../../../../rtos/amazon-freertos/lib/include;../../../../../rtos/amazon-freertos/lib/include/private;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/port/ksdk;../../../../../devices/MIMXRT1021/drivers;../../../../../middleware/wifi_qca/port/boards/evkmimxrt1020/freertos/gt202;../../../../../middleware/wifi_qca/port/boards/evkmimxrt1020/freertos;../../../../../middleware/wifi_qca/port/env/freertos;../../../../../middleware/wifi_qca;../../../../../middleware/wifi_qca/include;../../../../../middleware/wifi_qca/include/AR6002;../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw;../../../../../middleware/wifi_qca/include/AR6002/hw4.0/hw;../../../../../middleware/wifi_qca/custom_src/stack_custom;../../../../../middleware/wifi_qca/custom_src/include;../../../../../middleware/wifi_qca/common_src/include;../../../../../middleware/wifi_qca/common_src/stack_common;../../../../../middleware/wifi_qca/common_src/hcd;../../../../../middleware/wifi_qca/common_src/wmi;../../../../../middleware/wifi_qca/port;../../../../../middleware/wifi_qca/port/drivers/lpspi_edma_freertos;../../../../../rtos/amazon-freertos/lib/third_party/mcu_vendor/nxp/MIMXRT1021/drivers;../../../../../rtos/amazon-freertos/demos/common/include;../../../../../rtos/amazon-freertos/lib/third_party/pkcs11;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/utilities/io;../../../../../devices/MIMXRT1021/utilities/str;../../../../../devices/MIMXRT1021/utilities/log;../../../../../devices/MIMXRT1021/utilities;../../../../../devices/MIMXRT1021/xip;../../../../../rtos/amazon-freertos/lib/third_party/jsmn</IncludePath>
+              <IncludePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/RVDS/ARM_CM4F;../../..;..;../../../../src/aws_examples/common;../config_files;../../../../../platform/utilities/virtual_com;../../../../../CMSIS/Include;../../../../../devices;../../../../../rtos/amazon-freertos/lib/include;../../../../../rtos/amazon-freertos/lib/include/private;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/port/ksdk;../../../../../devices/MIMXRT1021/drivers;../../../../../devices/MIMXRT1021/drivers;../../../../../devices/MIMXRT1021/drivers;../../../../../devices/MIMXRT1021/drivers;../../../../../middleware/wifi_qca/port/boards/evkmimxrt1020/freertos/gt202;../../../../../rtos/amazon-freertos/lib/third_party/mcu_vendor/nxp/MIMXRT1021/drivers;../../../../../middleware/wifi_qca;../../../../../middleware/wifi_qca/include;../../../../../middleware/wifi_qca/include/AR6002;../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw;../../../../../middleware/wifi_qca/include/AR6002/hw4.0/hw;../../../../../middleware/wifi_qca/custom_src/stack_custom;../../../../../middleware/wifi_qca/custom_src/include;../../../../../middleware/wifi_qca/common_src/include;../../../../../middleware/wifi_qca/common_src/stack_common;../../../../../middleware/wifi_qca/common_src/hcd;../../../../../middleware/wifi_qca/common_src/wmi;../../../../../middleware/wifi_qca/port;../../../../../rtos/amazon-freertos/lib/include;../../../../../rtos/amazon-freertos/lib/include/private;../../../../../rtos/amazon-freertos/lib/third_party/pkcs11;../../../../../rtos/amazon-freertos/lib/third_party;../../../../../rtos/amazon-freertos/lib/third_party/jsmn;../../../../../rtos/amazon-freertos/lib/include;../../../../../rtos/amazon-freertos/demos/common/include;../../../../../devices/MIMXRT1021/drivers;../../../../../devices/MIMXRT1021/drivers;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/utilities/str;../../../../../devices/MIMXRT1021/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/serial_manager;../../../../../devices/MIMXRT1021/drivers;../../../../../components/lists;../../../../../devices/MIMXRT1021/drivers;../../../../../devices/MIMXRT1021/drivers;../../../../../devices/MIMXRT1021/xip;../../../xip;../../../../../middleware/wifi_qca/port/boards/evkmimxrt1020/freertos;../../../../../middleware/wifi_qca/port/env/freertos;../../../../../middleware/wifi_qca/port/drivers/lpspi_edma_freertos;../../../../../devices/MIMXRT1021/drivers;../../../../../devices/MIMXRT1021/drivers;../../../../../devices/MIMXRT1021/drivers;../../../../../devices/MIMXRT1021/drivers</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3049,7 +3265,7 @@
             <uClangAs>0</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>__STARTUP_INITIALIZE_NONCACHEDATA</Define>
+              <Define>NDEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
               <Undefine/>
               <IncludePath>../../..;..;../../remote_control_wifi/config_files</IncludePath>
             </VariousControls>
@@ -3072,6 +3288,8 @@
 --keep=*(.boot_hdr.boot_data) 
 --keep=*(.boot_hdr.dcd_data) 
 --keep=*(.boot_hdr.conf) 
+--predefine="-D__stack_size__=0x200" 
+--predefine="-D__heap_size__=0x200" 
 </Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
@@ -3112,6 +3330,26 @@
               <FileType>5</FileType>
               <FilePath>../pin_mux.h</FilePath>
             </File>
+            <File>
+              <FileName>board.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../board.c</FilePath>
+            </File>
+            <File>
+              <FileName>board.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../board.h</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../clock_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../clock_config.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -3121,11 +3359,6 @@
               <FileName>FreeRTOSConfig.h</FileName>
               <FileType>5</FileType>
               <FilePath>../FreeRTOSConfig.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_bufferpool_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../config_files/aws_bufferpool_config.h</FilePath>
             </File>
             <File>
               <FileName>aws_demo_config.h</FileName>
@@ -3141,6 +3374,11 @@
               <FileName>aws_mqtt_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../config_files/aws_mqtt_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_pkcs11_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../config_files/aws_pkcs11_config.h</FilePath>
             </File>
             <File>
               <FileName>aws_secure_sockets_config.h</FileName>
@@ -3165,27 +3403,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>board-src</GroupName>
+          <GroupName>amazon-freertos:config_files</GroupName>
           <Files>
             <File>
-              <FileName>board.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../board.c</FilePath>
-            </File>
-            <File>
-              <FileName>board.h</FileName>
+              <FileName>aws_bufferpool_config.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../board.h</FilePath>
-            </File>
-            <File>
-              <FileName>clock_config.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../clock_config.c</FilePath>
-            </File>
-            <File>
-              <FileName>clock_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../clock_config.h</FilePath>
+              <FilePath>../config_files/aws_bufferpool_config.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3211,26 +3434,6 @@
               <FileName>fsl_trng.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_trng.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_clock.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
               <FileName>fsl_dcp.c</FileName>
@@ -3261,6 +3464,51 @@
               <FileName>fsl_flexspi.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_flexspi.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_clock.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_clock.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_lpuart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_lpuart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_lpuart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_lpuart.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_iomuxc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_iomuxc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_gpio.c</FilePath>
             </File>
             <File>
               <FileName>fsl_lpspi.c</FileName>
@@ -3302,31 +3550,6 @@
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_dmamux.c</FilePath>
             </File>
-            <File>
-              <FileName>fsl_gpio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_gpio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_gpio.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_lpuart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_lpuart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_lpuart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_lpuart.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_iomuxc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_iomuxc.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -3340,397 +3563,42 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>wifi_qca-port-shields</GroupName>
+          <GroupName>amazon-freertos-drivers</GroupName>
           <Files>
             <File>
-              <FileName>wifi_shield.h</FileName>
+              <FileName>mflash_drv.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/port/boards/evkmimxrt1020/freertos/wifi_shield.h</FilePath>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/third_party/mcu_vendor/nxp/MIMXRT1021/drivers/mflash_drv.h</FilePath>
             </File>
             <File>
-              <FileName>wifi_shield.c</FileName>
+              <FileName>mflash_drv.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/port/boards/evkmimxrt1020/freertos/wifi_shield.c</FilePath>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/third_party/mcu_vendor/nxp/MIMXRT1021/drivers/mflash_drv.c</FilePath>
+            </File>
+            <File>
+              <FileName>mflash_file.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/third_party/mcu_vendor/nxp/MIMXRT1021/drivers/mflash_file.h</FilePath>
+            </File>
+            <File>
+              <FileName>mflash_file.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/third_party/mcu_vendor/nxp/MIMXRT1021/drivers/mflash_file.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>wifi_qca-port-env-freertos</GroupName>
+          <GroupName>amazon-freertos-pkcs11</GroupName>
           <Files>
             <File>
-              <FileName>wifi_port.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/port/env/freertos/wifi_port.h</FilePath>
-            </File>
-            <File>
-              <FileName>wifi_env_port.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/port/env/freertos/wifi_env_port.h</FilePath>
-            </File>
-            <File>
-              <FileName>wifi_env.c</FileName>
+              <FileName>aws_pkcs11_mbedtls.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/port/env/freertos/wifi_env.c</FilePath>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/pkcs11/mbedtls/aws_pkcs11_mbedtls.c</FilePath>
             </File>
             <File>
-              <FileName>wifi_env.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/port/env/freertos/wifi_env.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>amazon-freertos-license</GroupName>
-          <Files>
-            <File>
-              <FileName>LICENSE</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/LICENSE</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>amazon-freertos-include</GroupName>
-          <Files>
-            <File>
-              <FileName>event_groups.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/event_groups.h</FilePath>
-            </File>
-            <File>
-              <FileName>FreeRTOS.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/FreeRTOS.h</FilePath>
-            </File>
-            <File>
-              <FileName>message_buffer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/message_buffer.h</FilePath>
-            </File>
-            <File>
-              <FileName>queue.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/queue.h</FilePath>
-            </File>
-            <File>
-              <FileName>semphr.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/semphr.h</FilePath>
-            </File>
-            <File>
-              <FileName>stream_buffer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/stream_buffer.h</FilePath>
-            </File>
-            <File>
-              <FileName>task.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/task.h</FilePath>
-            </File>
-            <File>
-              <FileName>timers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/timers.h</FilePath>
-            </File>
-            <File>
-              <FileName>freertos_tasks_c_additions.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/freertos_tasks_c_additions.h</FilePath>
-            </File>
-            <File>
-              <FileName>deprecated_definitions.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/deprecated_definitions.h</FilePath>
-            </File>
-            <File>
-              <FileName>list.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/list.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_wrappers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/mpu_wrappers.h</FilePath>
-            </File>
-            <File>
-              <FileName>portable.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/portable.h</FilePath>
-            </File>
-            <File>
-              <FileName>projdefs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/projdefs.h</FilePath>
-            </File>
-            <File>
-              <FileName>stack_macros.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/stack_macros.h</FilePath>
-            </File>
-            <File>
-              <FileName>FreeRTOS.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/FreeRTOS.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_crypto.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/aws_crypto.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_greengrass_discovery.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/aws_greengrass_discovery.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_mqtt_agent.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/aws_mqtt_agent.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_mqtt_lib.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/aws_mqtt_lib.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_pkcs11.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/aws_pkcs11.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_secure_sockets.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/aws_secure_sockets.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_shadow.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/aws_shadow.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_system_init.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/aws_system_init.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_tls.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/aws_tls.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_wifi.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/aws_wifi.h</FilePath>
-            </File>
-            <File>
-              <FileName>event_groups.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/event_groups.h</FilePath>
-            </File>
-            <File>
-              <FileName>message_buffer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/message_buffer.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_bufferpool.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/aws_bufferpool.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_default_root_certificates.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/aws_default_root_certificates.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_doubly_linked_list.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/aws_doubly_linked_list.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_ggd_config_defaults.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/aws_ggd_config_defaults.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_greengrass_lib_private.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/aws_greengrass_lib_private.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_helper_secure_connect.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/aws_helper_secure_connect.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_lib_init.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/aws_lib_init.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_mqtt_agent_config_defaults.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/aws_mqtt_agent_config_defaults.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_mqtt_buffer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/aws_mqtt_buffer.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_mqtt_config_defaults.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/aws_mqtt_config_defaults.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_mqtt_lib_private.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/aws_mqtt_lib_private.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_rsprintf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/aws_rsprintf.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_secure_sockets_config_defaults.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/aws_secure_sockets_config_defaults.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_shadow_config_defaults.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/aws_shadow_config_defaults.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_shadow_json.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/aws_shadow_json.h</FilePath>
-            </File>
-            <File>
-              <FileName>deprecated_definitions.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/deprecated_definitions.h</FilePath>
-            </File>
-            <File>
-              <FileName>list.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/list.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_wrappers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/mpu_wrappers.h</FilePath>
-            </File>
-            <File>
-              <FileName>portable.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/portable.h</FilePath>
-            </File>
-            <File>
-              <FileName>projdefs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/projdefs.h</FilePath>
-            </File>
-            <File>
-              <FileName>stack_macros.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/stack_macros.h</FilePath>
-            </File>
-            <File>
-              <FileName>queue.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/queue.h</FilePath>
-            </File>
-            <File>
-              <FileName>semphr.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/semphr.h</FilePath>
-            </File>
-            <File>
-              <FileName>stream_buffer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/stream_buffer.h</FilePath>
-            </File>
-            <File>
-              <FileName>task.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/task.h</FilePath>
-            </File>
-            <File>
-              <FileName>timers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/include/timers.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_clientcredential.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/demos/common/include/aws_clientcredential.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_clientcredential_keys.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/demos/common/include/aws_clientcredential_keys.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_demo.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/demos/common/include/aws_demo.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_dev_mode_key_provisioning.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/demos/common/include/aws_dev_mode_key_provisioning.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_logging_task.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/demos/common/include/aws_logging_task.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_shadow_lightbulb_on_off.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/demos/common/include/aws_shadow_lightbulb_on_off.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_greengrass_discovery_demo.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/demos/common/include/aws_greengrass_discovery_demo.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>amazon-freertos-FreeRTOS</GroupName>
-          <Files>
-            <File>
-              <FileName>event_groups.c</FileName>
+              <FileName>aws_pkcs11_pal.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/event_groups.c</FilePath>
-            </File>
-            <File>
-              <FileName>list.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/list.c</FilePath>
-            </File>
-            <File>
-              <FileName>queue.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/queue.c</FilePath>
-            </File>
-            <File>
-              <FileName>stream_buffer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/stream_buffer.c</FilePath>
-            </File>
-            <File>
-              <FileName>tasks.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/tasks.c</FilePath>
-            </File>
-            <File>
-              <FileName>timers.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/timers.c</FilePath>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/pkcs11/portable/nxp/evkbimxrt1020/aws_pkcs11_pal.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3738,9 +3606,24 @@
           <GroupName>amazon-freertos-FreeRTOS-portable</GroupName>
           <Files>
             <File>
+              <FileName>heap_4.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/MemMang/heap_4.c</FilePath>
+            </File>
+            <File>
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/readme.txt</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_tickless_systick.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/RVDS/ARM_CM4F/fsl_tickless_systick.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_tickless_generic.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/RVDS/ARM_CM4F/fsl_tickless_generic.h</FilePath>
             </File>
             <File>
               <FileName>port.c</FileName>
@@ -3751,26 +3634,6 @@
               <FileName>portmacro.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/RVDS/ARM_CM4F/portmacro.h</FilePath>
-            </File>
-            <File>
-              <FileName>heap_4.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/MemMang/heap_4.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>amazon-freertos-portable</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_tickless_systick.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/RVDS/ARM_CM4F/fsl_tickless_systick.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_tickless_generic.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/RVDS/ARM_CM4F/fsl_tickless_generic.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4345,257 +4208,347 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>wifi_qca-port-drivers-lpspi_edma_freertos</GroupName>
+          <GroupName>amazon-freertos-license</GroupName>
           <Files>
             <File>
-              <FileName>wifi_spi.h</FileName>
+              <FileName>LICENSE</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/port/drivers/lpspi_edma_freertos/wifi_spi.h</FilePath>
-            </File>
-            <File>
-              <FileName>wifi_spi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_qca/port/drivers/lpspi_edma_freertos/wifi_spi.c</FilePath>
+              <FilePath>../../../../../rtos/amazon-freertos/LICENSE</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-drivers</GroupName>
+          <GroupName>amazon-freertos-include</GroupName>
           <Files>
             <File>
-              <FileName>mflash_drv.h</FileName>
+              <FileName>event_groups.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/third_party/mcu_vendor/nxp/MIMXRT1021/drivers/mflash_drv.h</FilePath>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/event_groups.h</FilePath>
             </File>
             <File>
-              <FileName>mflash_drv.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/third_party/mcu_vendor/nxp/MIMXRT1021/drivers/mflash_drv.c</FilePath>
-            </File>
-            <File>
-              <FileName>mflash_file.h</FileName>
+              <FileName>FreeRTOS.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/third_party/mcu_vendor/nxp/MIMXRT1021/drivers/mflash_file.h</FilePath>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/FreeRTOS.h</FilePath>
             </File>
             <File>
-              <FileName>mflash_file.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/third_party/mcu_vendor/nxp/MIMXRT1021/drivers/mflash_file.c</FilePath>
+              <FileName>message_buffer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/message_buffer.h</FilePath>
+            </File>
+            <File>
+              <FileName>queue.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/queue.h</FilePath>
+            </File>
+            <File>
+              <FileName>semphr.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/semphr.h</FilePath>
+            </File>
+            <File>
+              <FileName>stream_buffer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/stream_buffer.h</FilePath>
+            </File>
+            <File>
+              <FileName>task.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/task.h</FilePath>
+            </File>
+            <File>
+              <FileName>timers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/timers.h</FilePath>
+            </File>
+            <File>
+              <FileName>freertos_tasks_c_additions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/freertos_tasks_c_additions.h</FilePath>
+            </File>
+            <File>
+              <FileName>deprecated_definitions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/deprecated_definitions.h</FilePath>
+            </File>
+            <File>
+              <FileName>list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/list.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_wrappers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/mpu_wrappers.h</FilePath>
+            </File>
+            <File>
+              <FileName>portable.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/portable.h</FilePath>
+            </File>
+            <File>
+              <FileName>projdefs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/projdefs.h</FilePath>
+            </File>
+            <File>
+              <FileName>stack_macros.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/stack_macros.h</FilePath>
+            </File>
+            <File>
+              <FileName>FreeRTOS.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/FreeRTOS.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_crypto.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/aws_crypto.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_greengrass_discovery.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/aws_greengrass_discovery.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_mqtt_agent.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/aws_mqtt_agent.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_mqtt_lib.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/aws_mqtt_lib.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_pkcs11.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/aws_pkcs11.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_secure_sockets.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/aws_secure_sockets.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_shadow.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/aws_shadow.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_system_init.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/aws_system_init.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_tls.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/aws_tls.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_wifi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/aws_wifi.h</FilePath>
+            </File>
+            <File>
+              <FileName>event_groups.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/event_groups.h</FilePath>
+            </File>
+            <File>
+              <FileName>message_buffer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/message_buffer.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_bufferpool.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/aws_bufferpool.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_default_root_certificates.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/aws_default_root_certificates.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_doubly_linked_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/aws_doubly_linked_list.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_ggd_config_defaults.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/aws_ggd_config_defaults.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_helper_secure_connect.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/aws_helper_secure_connect.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_lib_init.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/aws_lib_init.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_mqtt_agent_config_defaults.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/aws_mqtt_agent_config_defaults.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_mqtt_buffer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/aws_mqtt_buffer.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_mqtt_config_defaults.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/aws_mqtt_config_defaults.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_secure_sockets_config_defaults.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/aws_secure_sockets_config_defaults.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_shadow_config_defaults.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/aws_shadow_config_defaults.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_shadow_json.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/aws_shadow_json.h</FilePath>
+            </File>
+            <File>
+              <FileName>deprecated_definitions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/deprecated_definitions.h</FilePath>
+            </File>
+            <File>
+              <FileName>list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/list.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_wrappers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/mpu_wrappers.h</FilePath>
+            </File>
+            <File>
+              <FileName>portable.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/portable.h</FilePath>
+            </File>
+            <File>
+              <FileName>projdefs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/projdefs.h</FilePath>
+            </File>
+            <File>
+              <FileName>stack_macros.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/stack_macros.h</FilePath>
+            </File>
+            <File>
+              <FileName>queue.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/queue.h</FilePath>
+            </File>
+            <File>
+              <FileName>semphr.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/semphr.h</FilePath>
+            </File>
+            <File>
+              <FileName>stream_buffer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/stream_buffer.h</FilePath>
+            </File>
+            <File>
+              <FileName>task.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/task.h</FilePath>
+            </File>
+            <File>
+              <FileName>timers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/timers.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_clientcredential.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/demos/common/include/aws_clientcredential.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_clientcredential_keys.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/demos/common/include/aws_clientcredential_keys.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_demo.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/demos/common/include/aws_demo.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_dev_mode_key_provisioning.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/demos/common/include/aws_dev_mode_key_provisioning.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_logging_task.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/demos/common/include/aws_logging_task.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_shadow_lightbulb_on_off.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/demos/common/include/aws_shadow_lightbulb_on_off.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_greengrass_discovery_demo.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/demos/common/include/aws_greengrass_discovery_demo.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-pkcs11</GroupName>
+          <GroupName>amazon-freertos-FreeRTOS</GroupName>
           <Files>
             <File>
-              <FileName>pkcs11.c</FileName>
+              <FileName>event_groups.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/pkcs11/portable/nxp/common/pkcs11.c</FilePath>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/event_groups.c</FilePath>
             </File>
             <File>
-              <FileName>pkcs11.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/third_party/pkcs11/pkcs11.h</FilePath>
+              <FileName>list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/list.c</FilePath>
             </File>
             <File>
-              <FileName>pkcs11f.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/third_party/pkcs11/pkcs11f.h</FilePath>
+              <FileName>queue.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/queue.c</FilePath>
             </File>
             <File>
-              <FileName>pkcs11t.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/third_party/pkcs11/pkcs11t.h</FilePath>
+              <FileName>stream_buffer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/stream_buffer.c</FilePath>
+            </File>
+            <File>
+              <FileName>tasks.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/tasks.c</FilePath>
+            </File>
+            <File>
+              <FileName>timers.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/FreeRTOS/timers.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-mqtt</GroupName>
-          <Files>
-            <File>
-              <FileName>aws_mqtt_agent.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/mqtt/aws_mqtt_agent.c</FilePath>
-            </File>
-            <File>
-              <FileName>aws_mqtt_lib.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/mqtt/aws_mqtt_lib.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>amazon-freertos-tls</GroupName>
-          <Files>
-            <File>
-              <FileName>aws_tls.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/tls/aws_tls.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>amazon-freertos-bufferpool</GroupName>
-          <Files>
-            <File>
-              <FileName>aws_bufferpool_static_thread_safe.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/bufferpool/aws_bufferpool_static_thread_safe.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>amazon-freertos-logging</GroupName>
-          <Files>
-            <File>
-              <FileName>aws_logging_task_dynamic_buffers.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/demos/common/logging/aws_logging_task_dynamic_buffers.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>amazon-freertos-crypto</GroupName>
-          <Files>
-            <File>
-              <FileName>aws_crypto.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/crypto/aws_crypto.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>amazon-freertos-utils</GroupName>
-          <Files>
-            <File>
-              <FileName>aws_system_init.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/lib/utils/aws_system_init.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>amazon-freertos-devmode_key_provisioning</GroupName>
-          <Files>
-            <File>
-              <FileName>aws_dev_mode_key_provisioning.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/demos/common/devmode_key_provisioning/aws_dev_mode_key_provisioning.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>startup</GroupName>
-          <Files>
-            <File>
-              <FileName>system_MIMXRT1021.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/system_MIMXRT1021.c</FilePath>
-            </File>
-            <File>
-              <FileName>system_MIMXRT1021.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/system_MIMXRT1021.h</FilePath>
-            </File>
-            <File>
-              <FileName>startup_MIMXRT1021.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/arm/startup_MIMXRT1021.s</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>utilities</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_io.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/utilities/io/fsl_io.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_io.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/utilities/io/fsl_io.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_log.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/utilities/log/fsl_log.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_log.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/utilities/log/fsl_log.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/utilities/fsl_debug_console.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/utilities/fsl_debug_console.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/utilities/fsl_debug_console_conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_assert.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/utilities/fsl_assert.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>xip</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_flexspi_nor_boot.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/xip/fsl_flexspi_nor_boot.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_flexspi_nor_boot.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/xip/fsl_flexspi_nor_boot.c</FilePath>
-            </File>
-            <File>
-              <FileName>evkmimxrt1020_flexspi_nor_config.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/xip/evkmimxrt1020_flexspi_nor_config.c</FilePath>
-            </File>
-            <File>
-              <FileName>evkmimxrt1020_flexspi_nor_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/xip/evkmimxrt1020_flexspi_nor_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>evkmimxrt1020_sdram_ini_dcd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/xip/evkmimxrt1020_sdram_ini_dcd.c</FilePath>
-            </File>
-            <File>
-              <FileName>evkmimxrt1020_sdram_ini_dcd.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1021/xip/evkmimxrt1020_sdram_ini_dcd.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>mbedTLS-mbedTLS_include</GroupName>
+          <GroupName>mbedtls-mbedtls_include</GroupName>
           <Files>
             <File>
               <FileName>aes.h</FileName>
@@ -4611,6 +4564,11 @@
               <FileName>arc4.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls/include/mbedtls/arc4.h</FilePath>
+            </File>
+            <File>
+              <FileName>aria.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/include/mbedtls/aria.h</FilePath>
             </File>
             <File>
               <FileName>asn1.h</FileName>
@@ -4656,6 +4614,16 @@
               <FileName>certs.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls/include/mbedtls/certs.h</FilePath>
+            </File>
+            <File>
+              <FileName>chacha20.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/include/mbedtls/chacha20.h</FilePath>
+            </File>
+            <File>
+              <FileName>chachapoly.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/include/mbedtls/chachapoly.h</FilePath>
             </File>
             <File>
               <FileName>check_config.h</FileName>
@@ -4758,6 +4726,11 @@
               <FilePath>../../../../../middleware/mbedtls/include/mbedtls/havege.h</FilePath>
             </File>
             <File>
+              <FileName>hkdf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/include/mbedtls/hkdf.h</FilePath>
+            </File>
+            <File>
               <FileName>hmac_drbg.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls/include/mbedtls/hmac_drbg.h</FilePath>
@@ -4801,6 +4774,11 @@
               <FileName>net_sockets.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls/include/mbedtls/net_sockets.h</FilePath>
+            </File>
+            <File>
+              <FileName>nist_kw.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/include/mbedtls/nist_kw.h</FilePath>
             </File>
             <File>
               <FileName>oid.h</FileName>
@@ -4853,6 +4831,16 @@
               <FilePath>../../../../../middleware/mbedtls/include/mbedtls/platform_time.h</FilePath>
             </File>
             <File>
+              <FileName>platform_util.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/include/mbedtls/platform_util.h</FilePath>
+            </File>
+            <File>
+              <FileName>poly1305.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/include/mbedtls/poly1305.h</FilePath>
+            </File>
+            <File>
               <FileName>ripemd160.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls/include/mbedtls/ripemd160.h</FilePath>
@@ -4861,6 +4849,11 @@
               <FileName>rsa.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls/include/mbedtls/rsa.h</FilePath>
+            </File>
+            <File>
+              <FileName>rsa_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/include/mbedtls/rsa_internal.h</FilePath>
             </File>
             <File>
               <FileName>sha1.h</FileName>
@@ -4950,7 +4943,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mbedTLS-mbedTLS_source</GroupName>
+          <GroupName>mbedtls-mbedtls_source</GroupName>
           <Files>
             <File>
               <FileName>aes.c</FileName>
@@ -4966,6 +4959,11 @@
               <FileName>arc4.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/library/arc4.c</FilePath>
+            </File>
+            <File>
+              <FileName>aria.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/aria.c</FilePath>
             </File>
             <File>
               <FileName>asn1parse.c</FileName>
@@ -5016,6 +5014,16 @@
               <FileName>cipher_wrap.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/library/cipher_wrap.c</FilePath>
+            </File>
+            <File>
+              <FileName>chacha20.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/chacha20.c</FilePath>
+            </File>
+            <File>
+              <FileName>chachapoly.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/chachapoly.c</FilePath>
             </File>
             <File>
               <FileName>cmac.c</FileName>
@@ -5093,6 +5101,11 @@
               <FilePath>../../../../../middleware/mbedtls/library/havege.c</FilePath>
             </File>
             <File>
+              <FileName>hkdf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/hkdf.c</FilePath>
+            </File>
+            <File>
               <FileName>hmac_drbg.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/library/hmac_drbg.c</FilePath>
@@ -5131,6 +5144,11 @@
               <FileName>net_sockets.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/library/net_sockets.c</FilePath>
+            </File>
+            <File>
+              <FileName>nist_kw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/nist_kw.c</FilePath>
             </File>
             <File>
               <FileName>oid.c</FileName>
@@ -5183,6 +5201,16 @@
               <FilePath>../../../../../middleware/mbedtls/library/platform.c</FilePath>
             </File>
             <File>
+              <FileName>platform_util.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/platform_util.c</FilePath>
+            </File>
+            <File>
+              <FileName>poly1305.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/poly1305.c</FilePath>
+            </File>
+            <File>
               <FileName>ripemd160.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/library/ripemd160.c</FilePath>
@@ -5191,6 +5219,11 @@
               <FileName>rsa.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/library/rsa.c</FilePath>
+            </File>
+            <File>
+              <FileName>rsa_internal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/rsa_internal.c</FilePath>
             </File>
             <File>
               <FileName>sha1.c</FileName>
@@ -5305,7 +5338,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mbedTLS-mbedTLS_port</GroupName>
+          <GroupName>mbedtls-mbedtls_port</GroupName>
           <Files>
             <File>
               <FileName>ksdk_mbedtls.c</FileName>
@@ -5341,6 +5374,91 @@
               <FileName>des_alt.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/port/ksdk/des_alt.c</FilePath>
+            </File>
+            <File>
+              <FileName>aes_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/aes_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>aes_alt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/aes_alt.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>amazon-freertos-mqtt</GroupName>
+          <Files>
+            <File>
+              <FileName>aws_mqtt_agent.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/mqtt/aws_mqtt_agent.c</FilePath>
+            </File>
+            <File>
+              <FileName>aws_mqtt_lib.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/mqtt/aws_mqtt_lib.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>amazon-freertos-tls</GroupName>
+          <Files>
+            <File>
+              <FileName>aws_tls.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/tls/aws_tls.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>amazon-freertos-bufferpool</GroupName>
+          <Files>
+            <File>
+              <FileName>aws_bufferpool_static_thread_safe.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/bufferpool/aws_bufferpool_static_thread_safe.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>amazon-freertos-crypto</GroupName>
+          <Files>
+            <File>
+              <FileName>aws_crypto.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/crypto/aws_crypto.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>amazon-freertos-third_party-pkcs11</GroupName>
+          <Files>
+            <File>
+              <FileName>pkcs11.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/third_party/pkcs11/pkcs11.h</FilePath>
+            </File>
+            <File>
+              <FileName>pkcs11f.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/third_party/pkcs11/pkcs11f.h</FilePath>
+            </File>
+            <File>
+              <FileName>pkcs11t.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/third_party/pkcs11/pkcs11t.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>amazon-freertos-utils</GroupName>
+          <Files>
+            <File>
+              <FileName>aws_system_init.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/utils/aws_system_init.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -5391,6 +5509,321 @@
               <FileName>aws_wifi.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/amazon-freertos/lib/wifi/portable/nxp/common/aws_wifi.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>amazon-freertos-logging</GroupName>
+          <Files>
+            <File>
+              <FileName>aws_logging_task_dynamic_buffers.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/demos/common/logging/aws_logging_task_dynamic_buffers.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>amazon-freertos-devmode_key_provisioning</GroupName>
+          <Files>
+            <File>
+              <FileName>aws_dev_mode_key_provisioning.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/demos/common/devmode_key_provisioning/aws_dev_mode_key_provisioning.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>device</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_device_registers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/fsl_device_registers.h</FilePath>
+            </File>
+            <File>
+              <FileName>MIMXRT1021.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/MIMXRT1021.h</FilePath>
+            </File>
+            <File>
+              <FileName>MIMXRT1021_features.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/MIMXRT1021_features.h</FilePath>
+            </File>
+            <File>
+              <FileName>system_MIMXRT1021.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/system_MIMXRT1021.c</FilePath>
+            </File>
+            <File>
+              <FileName>system_MIMXRT1021.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/system_MIMXRT1021.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>utilities</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/utilities/debug_console/fsl_debug_console.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/utilities/debug_console/fsl_debug_console.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console_conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/utilities/fsl_assert.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/uart</GroupName>
+          <Files>
+            <File>
+              <FileName>uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/uart/uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>lpuart_adapter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/uart/lpuart_adapter.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/serial_manager</GroupName>
+          <Files>
+            <File>
+              <FileName>serial_manager.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/serial_manager/serial_manager.h</FilePath>
+            </File>
+            <File>
+              <FileName>serial_manager.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/serial_manager/serial_manager.c</FilePath>
+            </File>
+            <File>
+              <FileName>serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/serial_manager/serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/serial_manager/serial_port_uart.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/lists</GroupName>
+          <Files>
+            <File>
+              <FileName>generic_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/lists/generic_list.h</FilePath>
+            </File>
+            <File>
+              <FileName>generic_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/lists/generic_list.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>startup</GroupName>
+          <Files>
+            <File>
+              <FileName>startup_MIMXRT1021.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/arm/startup_MIMXRT1021.s</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>xip</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_flexspi_nor_boot.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/xip/fsl_flexspi_nor_boot.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_flexspi_nor_boot.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/xip/fsl_flexspi_nor_boot.c</FilePath>
+            </File>
+            <File>
+              <FileName>evkmimxrt1020_flexspi_nor_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../xip/evkmimxrt1020_flexspi_nor_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>evkmimxrt1020_flexspi_nor_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../xip/evkmimxrt1020_flexspi_nor_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>evkmimxrt1020_sdram_ini_dcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../xip/evkmimxrt1020_sdram_ini_dcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>evkmimxrt1020_sdram_ini_dcd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../xip/evkmimxrt1020_sdram_ini_dcd.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS</GroupName>
+          <Files>
+            <File>
+              <FileName>core_cm7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_gcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_armv8mbl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_armv8mml.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_common_tables.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_const_structs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/arm_math.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_iccarm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv8.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi_qca-port-shields</GroupName>
+          <Files>
+            <File>
+              <FileName>wifi_shield.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/port/boards/evkmimxrt1020/freertos/wifi_shield.h</FilePath>
+            </File>
+            <File>
+              <FileName>wifi_shield.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/port/boards/evkmimxrt1020/freertos/wifi_shield.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi_qca-port-env-freertos</GroupName>
+          <Files>
+            <File>
+              <FileName>wifi_port.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/port/env/freertos/wifi_port.h</FilePath>
+            </File>
+            <File>
+              <FileName>wifi_env_port.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/port/env/freertos/wifi_env_port.h</FilePath>
+            </File>
+            <File>
+              <FileName>wifi_env.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/port/env/freertos/wifi_env.c</FilePath>
+            </File>
+            <File>
+              <FileName>wifi_env.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/port/env/freertos/wifi_env.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi_qca-port-drivers-lpspi_edma_freertos</GroupName>
+          <Files>
+            <File>
+              <FileName>wifi_spi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/port/drivers/lpspi_edma_freertos/wifi_spi.h</FilePath>
+            </File>
+            <File>
+              <FileName>wifi_spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_qca/port/drivers/lpspi_edma_freertos/wifi_spi.c</FilePath>
             </File>
           </Files>
         </Group>

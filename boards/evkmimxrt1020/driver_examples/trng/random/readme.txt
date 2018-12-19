@@ -5,14 +5,19 @@ entropy as needed by an entropy consuming module or by other post processing fun
 Example project is a demonstration program that uses the KSDK software to generate random numbers
 and prints them to the terminal.
 
+NOTE:
 
+On i.MXRT1020/1050/1060, the TRNG entropy register is initialized by the ROM boot process
+with 128 entropy bits (read from registers ENT12-ENT15, sampleSize = 128).
+ 
+The TRNG driver version <= 2.0.2 has issue that TRNG_Init() function doesn't flush
+these entropy bits, thus, the first TRNG_GetRandomData(base, data, 64) after TRNG_Init()
+only reads 384 non-random bits followed by 128 random bits. After the first call, next calls
+to TRNG_GetRandomData() return entropy bits collected with new TRNG settings.
 
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
+The issue is fixed in TRNG driver version 2.0.3, by regenerating entropy bits with new
+TRNG settings already during TRNG_Init().
+
 
 Hardware requirements
 =====================
@@ -61,6 +66,11 @@ To debug in qspiflash, following steps are needed:
 3. Set the SW8: 1 off 2 off 3 on 4 off, then power on the board and connect USB cable to J23.
 4. Start debugging in IDE.
    - Keil: Click "Download (F8)" to program the image to qspiflash first then clicking "Start/Stop Debug Session (Ctrl+F5)" to start debugging.
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

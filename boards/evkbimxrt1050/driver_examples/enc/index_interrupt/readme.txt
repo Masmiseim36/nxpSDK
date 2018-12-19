@@ -13,14 +13,6 @@ TRIGGER: This input can be used to clear the position counters or to take a snap
 
 This example uses INDEX to response the external event. When running the project, user can turn the encoder so that ENC module can monitor the position change. Also, a variable counter would count the time of INDEX interrupt for rising edge on INDEX signal line.
 
-
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
-
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -75,6 +67,11 @@ g_EncIndexCounter: 2
 ...
 
 
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

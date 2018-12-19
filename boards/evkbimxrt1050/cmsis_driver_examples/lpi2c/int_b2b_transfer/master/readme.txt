@@ -3,7 +3,7 @@ Overview
 CMSIS-Driver defines generic peripheral driver interfaces for middleware making it reusable across a wide 
 range of supported microcontroller devices. The API connects microcontroller peripherals with middleware 
 that implements for example communication stacks, file systems, or graphic user interfaces. 
-More information and usage methord please refer to http://www.keil.com/pack/doc/cmsis/Driver/html/index.html.
+More information and usage method please refer to http://www.keil.com/pack/doc/cmsis/Driver/html/index.html.
 
 The lpi2c_int_b2b_transfer_master example shows how to use CMSIS i2c driver as master to do board to board transfer 
 with interrupt:
@@ -11,14 +11,6 @@ with interrupt:
 In this example, one lpi2c instance as master and another lpi2c instance on the other board as slave. Master sends a 
 piece of data to slave, and receive a piece of data from slave. This example checks if the data received from 
 slave is correct.
-
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
-
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -73,6 +65,11 @@ End of I2C example .
 ~~~~~~~~~~~~~~~~~~~~~~~~
 0x10  0x11  0x12  0x13  0x14  0x15  0x16  0x17
 0x18  0x19  0x1a  0x1b  0x1c  0x1d  0x1e  0x1f 
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

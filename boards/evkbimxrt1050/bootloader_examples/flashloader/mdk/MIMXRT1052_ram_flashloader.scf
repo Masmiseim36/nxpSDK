@@ -7,9 +7,6 @@
 **                          MIMXRT1052DVL6B
 **
 **     Compiler:            Keil ARM C/C++ Compiler
-**     Reference manual:    IMXRT1050RM Rev.1, 03/2018
-**     Version:             rev. 0.1, 2017-01-10
-**     Build:               b180509
 **
 **     Abstract:
 **         Linker file for the Keil ARM C/C++ Compiler

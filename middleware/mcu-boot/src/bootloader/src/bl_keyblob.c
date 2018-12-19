@@ -48,8 +48,9 @@ int32_t keyblob_update(keyblob_info_t *key_info)
 
         if (keyblob_info_type == kKeyBlobInfoType_Update)
         {
-            uint32_t dek_size = key_info->option.B.dek_size;
-            switch (dek_size)
+            uint32_t dek_size = 0;
+            uint32_t dek_size_option = key_info->option.B.dek_size;
+            switch (dek_size_option)
             {
                 case kDekSize_128bits:
                     dek_size = 128;

@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- *  that the following conditions are met:
  *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_flexspi.h"
@@ -38,7 +12,6 @@
 #ifndef FSL_COMPONENT_ID
 #define FSL_COMPONENT_ID "platform.drivers.flexspi"
 #endif
-
 
 /*******************************************************************************
  * Definitations
@@ -106,12 +79,6 @@ status_t FLEXSPI_CheckAndClearError(FLEXSPI_Type *base, uint32_t status);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-
-#if defined(FSL_DRIVER_TRANSFER_DOUBLE_WEAK_IRQ) && FSL_DRIVER_TRANSFER_DOUBLE_WEAK_IRQ
-/*! @brief Pointers to flexspi handles for each instance. */
-static void *s_flexspiHandle[FSL_FEATURE_SOC_FLEXSPI_COUNT];
-#endif
-
 /*! @brief Pointers to flexspi bases for each instance. */
 static FLEXSPI_Type *const s_flexspiBases[] = FLEXSPI_BASE_PTRS;
 
@@ -123,6 +90,11 @@ static const IRQn_Type s_flexspiIrqs[] = FLEXSPI_IRQS;
 static const clock_ip_name_t s_flexspiClock[] = FLEXSPI_CLOCKS;
 #endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
 
+#if defined(FSL_DRIVER_TRANSFER_DOUBLE_WEAK_IRQ) && FSL_DRIVER_TRANSFER_DOUBLE_WEAK_IRQ
+/*! @brief Pointers to flexspi handles for each instance. */
+static void *s_flexspiHandle[ARRAY_SIZE(s_flexspiBases)];
+#endif
+
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -132,7 +104,7 @@ uint32_t FLEXSPI_GetInstance(FLEXSPI_Type *base)
     uint32_t instance;
 
     /* Find the instance index from base address mappings. */
-    for (instance = 0; instance < FSL_FEATURE_SOC_FLEXSPI_COUNT; instance++)
+    for (instance = 0; instance < ARRAY_SIZE(s_flexspiBases); instance++)
     {
         if (s_flexspiBases[instance] == base)
         {
@@ -140,7 +112,7 @@ uint32_t FLEXSPI_GetInstance(FLEXSPI_Type *base)
         }
     }
 
-    assert(instance < FSL_FEATURE_SOC_FLEXSPI_COUNT);
+    assert(instance < ARRAY_SIZE(s_flexspiBases));
 
     return instance;
 }
@@ -236,6 +208,15 @@ status_t FLEXSPI_CheckAndClearError(FLEXSPI_Type *base, uint32_t status)
     return result;
 }
 
+/*!
+ * brief Initializes the FLEXSPI module and internal state.
+ *
+ * This function enables the clock for FLEXSPI and also configures the FLEXSPI with the
+ * input configure parameters. Users should call this function before any FLEXSPI operations.
+ *
+ * param base FLEXSPI peripheral base address.
+ * param config FLEXSPI configure structure.
+ */
 void FLEXSPI_Init(FLEXSPI_Type *base, const flexspi_config_t *config)
 {
     uint32_t configValue = 0;
@@ -298,7 +279,7 @@ void FLEXSPI_Init(FLEXSPI_Type *base, const flexspi_config_t *config)
         configValue |= FLEXSPI_AHBRXBUFCR0_PREFETCHEN(config->ahbConfig.buffer[i].enablePrefetch) |
                        FLEXSPI_AHBRXBUFCR0_PRIORITY(config->ahbConfig.buffer[i].priority) |
                        FLEXSPI_AHBRXBUFCR0_MSTRID(config->ahbConfig.buffer[i].masterIndex) |
-                       FLEXSPI_AHBRXBUFCR0_BUFSZ(config->ahbConfig.buffer[i].bufferSize * 8);
+                       FLEXSPI_AHBRXBUFCR0_BUFSZ(config->ahbConfig.buffer[i].bufferSize / 8);
         base->AHBRXBUFCR0[i] = configValue;
     }
 
@@ -307,10 +288,24 @@ void FLEXSPI_Init(FLEXSPI_Type *base, const flexspi_config_t *config)
     base->IPRXFCR |= FLEXSPI_IPRXFCR_RXWMRK(config->rxWatermark / 8 - 1);
     base->IPTXFCR &= ~FLEXSPI_IPTXFCR_TXWMRK_MASK;
     base->IPTXFCR |= FLEXSPI_IPTXFCR_TXWMRK(config->txWatermark / 8 - 1);
+
+    /* Reset flash size on all ports */
+    for (i = 0; i < kFLEXSPI_PortCount; i++)
+    {
+        base->FLSHCR0[i] = 0;
+    }
 }
 
+/*!
+ * brief Gets default settings for FLEXSPI.
+ *
+ * param config FLEXSPI configuration structure.
+ */
 void FLEXSPI_GetDefaultConfig(flexspi_config_t *config)
 {
+    /* Initializes the configure structure to zero. */
+    memset(config, 0, sizeof(*config));
+
     config->rxSampleClock = kFLEXSPI_ReadSampleClkLoopbackInternally;
     config->enableSckFreeRunning = false;
     config->enableCombination = false;
@@ -339,12 +334,29 @@ void FLEXSPI_GetDefaultConfig(flexspi_config_t *config)
     config->ahbConfig.enableAHBCachable = false;
 }
 
+/*!
+ * brief Deinitializes the FLEXSPI module.
+ *
+ * Clears the FLEXSPI state and  FLEXSPI module registers.
+ * param base FLEXSPI peripheral base address.
+ */
 void FLEXSPI_Deinit(FLEXSPI_Type *base)
 {
     /* Reset peripheral. */
     FLEXSPI_SoftwareReset(base);
 }
 
+/*!
+ * brief Configures the connected device parameter.
+ *
+ * This function configures the connected device relevant parameters, such as the size, command, and so on.
+ * The flash configuration value cannot have a default value. The user needs to configure it according to the
+ * connected device.
+ *
+ * param base FLEXSPI peripheral base address.
+ * param config Flash configuration parameters.
+ * param port FLEXSPI Operation port.
+ */
 void FLEXSPI_SetFlashConfig(FLEXSPI_Type *base, flexspi_device_config_t *config, flexspi_port_t port)
 {
     uint32_t configValue = 0;
@@ -356,7 +368,6 @@ void FLEXSPI_SetFlashConfig(FLEXSPI_Type *base, flexspi_device_config_t *config,
     }
 
     /* Configure flash size. */
-    base->FLSHCR0[index] = 0;
     base->FLSHCR0[port] = config->flashSize;
 
     /* Configure flash parameters. */
@@ -376,12 +387,14 @@ void FLEXSPI_SetFlashConfig(FLEXSPI_Type *base, flexspi_device_config_t *config,
 
     if (config->AWRSeqNumber > 0U)
     {
-        configValue |= FLEXSPI_FLSHCR2_AWRSEQID(config->AWRSeqIndex) | FLEXSPI_FLSHCR2_AWRSEQNUM(config->AWRSeqNumber - 1U);
+        configValue |=
+            FLEXSPI_FLSHCR2_AWRSEQID(config->AWRSeqIndex) | FLEXSPI_FLSHCR2_AWRSEQNUM(config->AWRSeqNumber - 1U);
     }
 
     if (config->ARDSeqNumber > 0U)
     {
-        configValue |= FLEXSPI_FLSHCR2_ARDSEQID(config->ARDSeqIndex) | FLEXSPI_FLSHCR2_ARDSEQNUM(config->ARDSeqNumber - 1U);
+        configValue |=
+            FLEXSPI_FLSHCR2_ARDSEQID(config->ARDSeqIndex) | FLEXSPI_FLSHCR2_ARDSEQNUM(config->ARDSeqNumber - 1U);
     }
 
     base->FLSHCR2[port] = configValue;
@@ -414,6 +427,15 @@ void FLEXSPI_SetFlashConfig(FLEXSPI_Type *base, flexspi_device_config_t *config,
     base->MCR0 &= ~FLEXSPI_MCR0_MDIS_MASK;
 }
 
+/*! brief Updates the LUT table.
+*
+* param base FLEXSPI peripheral base address.
+* param index From which index start to update. It could be any index of the LUT table, which
+* also allows user to update command content inside a command. Each command consists of up to
+* 8 instructions and occupy 4*32-bit memory.
+* param cmd Command sequence array.
+* param count Number of sequences.
+*/
 void FLEXSPI_UpdateLUT(FLEXSPI_Type *base, uint32_t index, const uint32_t *cmd, uint32_t count)
 {
     assert(index < 64U);
@@ -431,7 +453,7 @@ void FLEXSPI_UpdateLUT(FLEXSPI_Type *base, uint32_t index, const uint32_t *cmd, 
     base->LUTCR = 0x02;
 
     lutBase = &base->LUT[index];
-    for (i = index; i < count; i++)
+    for (i = 0; i < count; i++)
     {
         *lutBase++ = *cmd++;
     }
@@ -441,6 +463,17 @@ void FLEXSPI_UpdateLUT(FLEXSPI_Type *base, uint32_t index, const uint32_t *cmd, 
     base->LUTCR = 0x01;
 }
 
+/*!
+ * brief Sends a buffer of data bytes using blocking method.
+ * note This function blocks via polling until all bytes have been sent.
+ * param base FLEXSPI peripheral base address
+ * param buffer The data bytes to send
+ * param size The number of data bytes to send
+ * retval kStatus_Success write success without error
+ * retval kStatus_FLEXSPI_SequenceExecutionTimeout sequence execution timeout
+ * retval kStatus_FLEXSPI_IpCommandSequenceError IP command sequencen error detected
+ * retval kStatus_FLEXSPI_IpCommandGrantTimeout IP command grant timeout detected
+ */
 status_t FLEXSPI_WriteBlocking(FLEXSPI_Type *base, uint32_t *buffer, size_t size)
 {
     uint8_t txWatermark = ((base->IPTXFCR & FLEXSPI_IPTXFCR_TXWMRK_MASK) >> FLEXSPI_IPTXFCR_TXWMRK_SHIFT) + 1;
@@ -489,6 +522,17 @@ status_t FLEXSPI_WriteBlocking(FLEXSPI_Type *base, uint32_t *buffer, size_t size
     return result;
 }
 
+/*!
+ * brief Receives a buffer of data bytes using a blocking method.
+ * note This function blocks via polling until all bytes have been sent.
+ * param base FLEXSPI peripheral base address
+ * param buffer The data bytes to send
+ * param size The number of data bytes to receive
+ * retval kStatus_Success read success without error
+ * retval kStatus_FLEXSPI_SequenceExecutionTimeout sequence execution timeout
+ * retval kStatus_FLEXSPI_IpCommandSequenceError IP command sequencen error detected
+ * retval kStatus_FLEXSPI_IpCommandGrantTimeout IP command grant timeout detected
+ */
 status_t FLEXSPI_ReadBlocking(FLEXSPI_Type *base, uint32_t *buffer, size_t size)
 {
     uint8_t rxWatermark = ((base->IPRXFCR & FLEXSPI_IPRXFCR_RXWMRK_MASK) >> FLEXSPI_IPRXFCR_RXWMRK_SHIFT) + 1;
@@ -559,6 +603,15 @@ status_t FLEXSPI_ReadBlocking(FLEXSPI_Type *base, uint32_t *buffer, size_t size)
     return result;
 }
 
+/*!
+ * brief Execute command to transfer a buffer data bytes using a blocking method.
+ * param base FLEXSPI peripheral base address
+ * param xfer pointer to the transfer structure.
+ * retval kStatus_Success command transfer success without error
+ * retval kStatus_FLEXSPI_SequenceExecutionTimeout sequence execution timeout
+ * retval kStatus_FLEXSPI_IpCommandSequenceError IP command sequencen error detected
+ * retval kStatus_FLEXSPI_IpCommandGrantTimeout IP command grant timeout detected
+*/
 status_t FLEXSPI_TransferBlocking(FLEXSPI_Type *base, flexspi_transfer_t *xfer)
 {
     uint32_t configValue = 0;
@@ -567,10 +620,11 @@ status_t FLEXSPI_TransferBlocking(FLEXSPI_Type *base, flexspi_transfer_t *xfer)
     /* Clear sequence pointer before sending data to external devices. */
     base->FLSHCR2[xfer->port] |= FLEXSPI_FLSHCR2_CLRINSTRPTR_MASK;
 
-    /* Clear former pending status before start this transfer. */
-    base->INTR |= FLEXSPI_INTR_AHBCMDERR_MASK | FLEXSPI_INTR_IPCMDERR_MASK | FLEXSPI_INTR_AHBCMDGE_MASK | FLEXSPI_INTR_IPCMDGE_MASK;
+    /* Clear former pending status before start this tranfer. */
+    base->INTR |= FLEXSPI_INTR_AHBCMDERR_MASK | FLEXSPI_INTR_IPCMDERR_MASK | FLEXSPI_INTR_AHBCMDGE_MASK |
+                  FLEXSPI_INTR_IPCMDGE_MASK;
 
-    /* Configure base address. */
+    /* Configure base addresss. */
     base->IPCR0 = xfer->deviceAddress;
 
     /* Reset fifos. */
@@ -615,7 +669,18 @@ status_t FLEXSPI_TransferBlocking(FLEXSPI_Type *base, flexspi_transfer_t *xfer)
     return result;
 }
 
-void FLEXSPI_TransferCreateHandle (FLEXSPI_Type *base, flexspi_handle_t *handle, flexspi_transfer_callback_t callback, void *userData)
+/*!
+ * brief Initializes the FLEXSPI handle which is used in transactional functions.
+ *
+ * param base FLEXSPI peripheral base address.
+ * param handle pointer to flexspi_handle_t structure to store the transfer state.
+ * param callback pointer to user callback function.
+ * param userData user parameter passed to the callback function.
+ */
+void FLEXSPI_TransferCreateHandle(FLEXSPI_Type *base,
+                                  flexspi_handle_t *handle,
+                                  flexspi_transfer_callback_t callback,
+                                  void *userData)
 {
     assert(handle);
 
@@ -637,6 +702,21 @@ void FLEXSPI_TransferCreateHandle (FLEXSPI_Type *base, flexspi_handle_t *handle,
     EnableIRQ(s_flexspiIrqs[instance]);
 }
 
+/*!
+ * brief Performs a interrupt non-blocking transfer on the FLEXSPI bus.
+ *
+ * note Calling the API returns immediately after transfer initiates. The user needs
+ * to call FLEXSPI_GetTransferCount to poll the transfer status to check whether
+ * the transfer is finished. If the return status is not kStatus_FLEXSPI_Busy, the transfer
+ * is finished. For FLEXSPI_Read, the dataSize should be multiple of rx watermark levle, or
+ * FLEXSPI could not read data properly.
+ *
+ * param base FLEXSPI peripheral base address.
+ * param handle pointer to flexspi_handle_t structure which stores the transfer state.
+ * param xfer pointer to flexspi_transfer_t structure.
+ * retval kStatus_Success Successfully start the data transmission.
+ * retval kStatus_FLEXSPI_Busy Previous transmission still not finished.
+ */
 status_t FLEXSPI_TransferNonBlocking(FLEXSPI_Type *base, flexspi_handle_t *handle, flexspi_transfer_t *xfer)
 {
     uint32_t configValue = 0;
@@ -703,6 +783,15 @@ status_t FLEXSPI_TransferNonBlocking(FLEXSPI_Type *base, flexspi_handle_t *handl
     return result;
 }
 
+/*!
+ * brief Gets the master transfer status during a interrupt non-blocking transfer.
+ *
+ * param base FLEXSPI peripheral base address.
+ * param handle pointer to flexspi_handle_t structure which stores the transfer state.
+ * param count Number of bytes transferred so far by the non-blocking transaction.
+ * retval kStatus_InvalidArgument count is Invalid.
+ * retval kStatus_Success Successfully return the count.
+ */
 status_t FLEXSPI_TransferGetCount(FLEXSPI_Type *base, flexspi_handle_t *handle, size_t *count)
 {
     assert(handle);
@@ -721,6 +810,15 @@ status_t FLEXSPI_TransferGetCount(FLEXSPI_Type *base, flexspi_handle_t *handle, 
     return result;
 }
 
+/*!
+ * brief Aborts an interrupt non-blocking transfer early.
+ *
+ * note This API can be called at any time when an interrupt non-blocking transfer initiates
+ * to abort the transfer early.
+ *
+ * param base FLEXSPI peripheral base address.
+ * param handle pointer to flexspi_handle_t structure which stores the transfer state
+ */
 void FLEXSPI_TransferAbort(FLEXSPI_Type *base, flexspi_handle_t *handle)
 {
     assert(handle);
@@ -729,6 +827,12 @@ void FLEXSPI_TransferAbort(FLEXSPI_Type *base, flexspi_handle_t *handle)
     handle->state = kFLEXSPI_Idle;
 }
 
+/*!
+ * brief Master interrupt handler.
+ *
+ * param base FLEXSPI peripheral base address.
+ * param handle pointer to flexspi_handle_t structure.
+ */
 void FLEXSPI_TransferHandleIRQ(FLEXSPI_Type *base, flexspi_handle_t *handle)
 {
     uint8_t status;
@@ -859,4 +963,28 @@ void FLEXSPI1_DriverIRQHandler(void)
 #endif
 }
 #endif
+
+#if defined(LSIO__FLEXSPI0)
+void LSIO_OCTASPI0_INT_DriverIRQHandler(void)
+{
+    FLEXSPI_TransferHandleIRQ(LSIO__FLEXSPI0, s_flexspiHandle[0]);
+/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
+  exception return operation might vector to incorrect interrupt */
+#if defined __CORTEX_M && (__CORTEX_M == 4U)
+    __DSB();
+#endif
+}
+#endif
+#if defined(LSIO__FLEXSPI1)
+void LSIO_OCTASPI1_INT_DriverIRQHandler(void)
+{
+    FLEXSPI_TransferHandleIRQ(LSIO__FLEXSPI1, s_flexspiHandle[1]);
+/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
+  exception return operation might vector to incorrect interrupt */
+#if defined __CORTEX_M && (__CORTEX_M == 4U)
+    __DSB();
+#endif
+}
+#endif
+
 #endif

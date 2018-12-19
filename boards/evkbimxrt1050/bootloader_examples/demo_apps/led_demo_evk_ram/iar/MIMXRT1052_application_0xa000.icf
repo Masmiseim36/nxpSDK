@@ -6,9 +6,6 @@
 **                          MIMXRT1052DVL6B
 **
 **     Compiler:            IAR ANSI C/C++ Compiler for ARM
-**     Reference manual:    IMXRT1050RM Rev.1, 03/2018
-**     Version:             rev. 0.1, 2017-01-10
-**     Build:               b180509
 **
 **     Abstract:
 **         Linker file for the IAR ANSI C/C++ Compiler for ARM

@@ -1,14 +1,8 @@
 /*
- * Copyright (c) 2013 - 2014, Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
- * All rights reserved.
- *
- * SPDX-License-Identifier: BSD-3-Clause
- */
-
-/*
  * Amazon FreeRTOS V1.0.0
  * Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * Copyright (c) 2013 - 2014, Freescale Semiconductor, Inc.
+ * Copyright 2016-2018 NXP
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -96,7 +90,7 @@ static struct netif fsl_netif0;
  ******************************************************************************/
 void BOARD_InitModuleClock(void)
 {
-    const clock_enet_pll_config_t config = {true, false, 1};
+    const clock_enet_pll_config_t config = {.enableClkOutput = true, .enableClkOutput25M = false, .loopDivider = 1};
     CLOCK_InitEnetPll(&config);
 }
 
@@ -144,7 +138,7 @@ void BOARD_InitNetwork(void)
                       ((u8_t *)&fsl_netif0.ip_addr.addr)[1], ((u8_t *)&fsl_netif0.ip_addr.addr)[2],
                       ((u8_t *)&fsl_netif0.ip_addr.addr)[3]));
     }
-    configPRINTF(("DHCP OK\n"));
+    configPRINTF(("DHCP OK\r\n"));
 }
 
 void vApplicationDaemonTaskStartupHook(void)
@@ -277,14 +271,14 @@ void vApplicationStackOverflowHook(TaskHandle_t xTask, char *pcTaskName)
         ;
 }
 
-void *pvPortCalloc(size_t xSize)
+void *pvPortCalloc(size_t xNum, size_t xSize)
 {
     void *pvReturn;
 
-    pvReturn = pvPortMalloc(xSize);
+    pvReturn = pvPortMalloc(xNum * xSize);
     if (pvReturn != NULL)
     {
-        memset(pvReturn, 0x00, xSize);
+        memset(pvReturn, 0x00, xNum * xSize);
     }
 
     return pvReturn;

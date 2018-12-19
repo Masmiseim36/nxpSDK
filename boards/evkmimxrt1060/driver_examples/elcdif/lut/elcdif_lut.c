@@ -66,6 +66,7 @@ extern void APP_LCDIF_IRQHandler(void);
 void LCDIF_IRQHandler(void)
 {
     APP_LCDIF_IRQHandler();
+    __DSB();
 }
 
 /* Enable interrupt. */
@@ -77,22 +78,9 @@ void BOARD_EnableLcdInterrupt(void)
 /* Initialize the LCD_DISP. */
 void BOARD_InitLcd(void)
 {
-    volatile uint32_t i = 0x100U;
-
     gpio_pin_config_t config = {
         kGPIO_DigitalOutput, 0,
     };
-
-    /* Reset the LCD. */
-    GPIO_PinInit(LCD_DISP_GPIO, LCD_DISP_GPIO_PIN, &config);
-
-    GPIO_PinWrite(LCD_DISP_GPIO, LCD_DISP_GPIO_PIN, 0);
-
-    while (i--)
-    {
-    }
-
-    GPIO_PinWrite(LCD_DISP_GPIO, LCD_DISP_GPIO_PIN, 1);
 
     /* Backlight. */
     config.outputLogic = 1;

@@ -5,6 +5,7 @@ You will need device (A Mac, Windows PC, or UNIX-like system) for running AWS Gr
 This demo needs WiFi network with internet access and opened 8883 and 8443 ports.
 
 Prepare the AWS Greengrass and AWS IoT
+Please update WiFi firmware to version 3.3.6 using "qca_fwupdate" demo.
 Before running the demo it is needed to configure AWS IoT Console, AWS Greengrass:
 
 1.  Create AWS Account: https://console.aws.amazon.com/console/home
@@ -24,31 +25,6 @@ Before running the demo it is needed to configure AWS IoT Console, AWS Greengras
 5.  Go to AWS IoT, find your Greengrass group and deploy it again. You should do new deployment after every configuration change.
 
 
-
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
-
-Hardware requirements
-=====================
-
-Board settings
-==============
-Plug GT202 Adaptor board to FRDM stackable headers (J1, J2, J3, J4).
-Remove the resistor R137.
-
-Please use external power supply (J2), USB may not be sufficient.
-
-
-Note:
-To debug in qspiflash, following steps are needed:
-1. Select the flash target and compile.
-3. Set the SW8: 1 off 2 off 3 on 4 off, then power on the board and connect USB cable to J23.
-4. Start debugging in IDE.
-   - Keil: Click "Download (F8)" to program the image to qspiflash first then clicking "Start/Stop Debug Session (Ctrl+F5)" to start debugging.
 Prepare the Demo
 ================
 
@@ -85,132 +61,78 @@ Prepare the Demo
 
 4.  Connect a USB cable between the PC host and the OpenSDA port on the target board.
 
-5.  Download the program to the target board with a J-Link debugger.
-
-6.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
-
-7.  Open a serial terminal on PC for serial device with these settings:
+5.  Open a serial terminal on PC for serial device with these settings:
     - 115200 baud rate
     - 8 data bits
     - No parity
     - One stop bit
     - No flow control
 
+6.  Download the program to the target board.
+
+7.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
+
 Running the demo
 ================
 
-Demo is by default set to send message "Hello #1 from device to Greengrass Core." 5 times (can be changed with ggdDEMO_MAX_MQTT_MESSAGES).
+Demo is by default set to send message "Hello #0 from Amazon FreeRTOS to Greengrass Core." 3 times (can be changed with ggdDEMO_MAX_MQTT_MESSAGES).
 
 You can check connection log in Greengrass device on path: /greengrass/ggc/var/log/system/connection_manager.log
 
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 0 0 [Tmr Svc] Starting key provisioning...
-
 1 0 [Tmr Svc] Write root certificate...
-
-2 0 [Tmr Svc] Write device private key...
-
-3 9 [Tmr Svc] Write device certificate...
-
-4 18 [Tmr Svc] Key provisioning done...
-
-5 18 [Tmr Svc] Starting WiFi...
-
-6 1266 [Tmr Svc] WiFi module initialized.
-
-7 5274 [Tmr Svc] WiFi connected to AP AWS_WiFi.
-
-8 9278 [Tmr Svc] IP Address acquired 192.168.1.10
-
-9 9278 [IoT_GGD] Attempting automated selection of Greengrass device
-
-10 9954 [IoT_GGD] Looked up a254jqzk0kcvf0.iot.us-west-2.amazonaws.com as 52.34.174.227
-
-11 22301 [IoT_GGD] About to close socket.
-
-12 22306 [IoT_GGD] Socket closed.
-
-13 22319 [IoT_GGD] Looked up 192.168.1.20 as 192.168.1.20
-
-14 26478 [IoT_GGD] About to close socket.
-
-15 26482 [IoT_GGD] Socket closed.
-
-16 26482 [IoT_GGD] Greengrass device discovered.
-
-17 26482 [IoT_GGD] Establishing MQTT communication to Greengrass...
-
-18 26484 [IoT_GGD] Sending command to MQTT task.
-
-19 26484 [MQTT] Received message 10000 from queue.
-
-20 26495 [MQTT] Looked up 192.168.1.20 as 192.168.1.20
-
-21 30786 [MQTT] MQTT Connect was accepted. Connection established.
-
-22 30786 [MQTT] Notifying task.
-
-23 30786 [IoT_GGD] Command sent to MQTT task passed.
-
-24 30786 [IoT_GGD] Sending command to MQTT task.
-
-25 30787 [MQTT] Received message 20000 from queue.
-
-26 30788 [MQTT] Notifying task.
-
-27 30788 [IoT_GGD] Command sent to MQTT task passed.
-
-28 32288 [IoT_GGD] Sending command to MQTT task.
-
-29 32288 [MQTT] Received message 30000 from queue.
-
-30 32289 [MQTT] Notifying task.
-
-31 32289 [IoT_GGD] Command sent to MQTT task passed.
-
-32 33789 [IoT_GGD] Sending command to MQTT task.
-
-33 33789 [MQTT] Received message 40000 from queue.
-
-34 33790 [MQTT] Notifying task.
-
-35 33790 [IoT_GGD] Command sent to MQTT task passed.
-
-36 35290 [IoT_GGD] Sending command to MQTT task.
-
-37 35290 [MQTT] Received message 50000 from queue.
-
-38 35291 [MQTT] Notifying task.
-
-39 35291 [IoT_GGD] Command sent to MQTT task passed.
-
-40 36791 [IoT_GGD] Sending command to MQTT task.
-
-41 36791 [MQTT] Received message 60000 from queue.
-
-42 36792 [MQTT] Notifying task.
-
-43 36792 [IoT_GGD] Command sent to MQTT task passed.
-
-44 38292 [IoT_GGD] Disconnecting from broker.
-
-45 38292 [IoT_GGD] Sending command to MQTT task.
-
-46 38292 [MQTT] Received message 70000 from queue.
-
-47 38293 [MQTT] About to close socket.
-
-48 38298 [MQTT] Socket closed.
-
-49 38298 [MQTT] Notifying task.
-
-50 38299 [IoT_GGD] Command sent to MQTT task passed.
-
-51 38299 [IoT_GGD] Disconnected from the broker.
-
-52 38299 [IoT_GGD] Deleted Client.
+2 14 [Tmr Svc] Write device private key...
+3 488 [Tmr Svc] Write device certificate...
+4 506 [Tmr Svc] Key provisioning done...
+5 507 [Tmr Svc] Starting WiFi...
+6 2075 [Tmr Svc] WiFi module initialized.
+7 10233 [Tmr Svc] WiFi connected to AP RedmiAWS.
+8 10234 [Tmr Svc] IP Address acquired 192.168.43.251
+9 10242 [IoT_GGD] Attempting automated selection of Greengrass device
+11 28394 [IoT_GGD] About to close socket.
+12 28437 [IoT_GGD] Socket closed.
+13 28440 [IoT_GGD] Stack high watermark for discovery helper task: 1556.
+14 28479 [IoT_GGD] Looked up 192.168.43.248 as 192.168.43.248
+15 39777 [IoT_GGD] About to close socket.
+16 39826 [IoT_GGD] Socket closed.
+17 39828 [IoT_GGD] Stack high watermark for discovery helper task: 898.
+18 39829 [IoT_GGD] Greengrass device discovered.
+19 39831 [IoT_GGD] Establishing MQTT communication to Greengrass...
+20 39833 [MQTT] Looked up 192.168.43.248 as 192.168.43.248
+21 55890 [IoT_GGD] Disconnecting from broker.
+22 55965 [IoT_GGD] Disconnected from the broker.
+23 55966 [IoT_GGD] Deleted Client.
+24 55970 [IoT_GGD] Heap low watermark: 3632. Stack high watermark: 898.
+25 55972 [IoT_GGD] ----Demo finished----
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
+Hardware requirements
 =====================
+- Mini/micro USB cable
+- EVK-MIMXRT1020 board
+- GT202 Adaptor V1.04
+- Personal Computer
+
+Board settings
+==============
+Plug GT202 Adaptor board to FRDM stackable headers (J1, J2, J3, J4).
+Remove the resistor R137.
+
+Please use external power supply (J2), USB may not be sufficient.
+
+
+Note:
+To debug in qspiflash, following steps are needed:
+1. Select the flash target and compile.
+3. Set the SW8: 1 off 2 off 3 on 4 off, then power on the board and connect USB cable to J23.
+4. Start debugging in IDE.
+   - Keil: Click "Download (F8)" to program the image to qspiflash first then clicking "Start/Stop Debug Session (Ctrl+F5)" to start debugging.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

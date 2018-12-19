@@ -1,0 +1,18 @@
+options {
+    flags = 0x00;
+    # Note: This is an example address, it can be any non-zero address in ITCM region
+    startAddress = 0x400;
+    ivtOffset = 0x400;
+    initialLoadSize = 0x1000;
+    # Note: This is required if the default entrypoint is not the Reset_Handler 
+    #       Please set the entryPointAddress to the base address of vector table 
+    // entryPointAddress = 0x1400;
+}
+
+sources {
+    elfFile = extern(0);
+}
+
+section (0)
+{
+}

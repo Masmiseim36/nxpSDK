@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  * 
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- *  that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include <stdio.h>
@@ -119,23 +93,26 @@ static bool s_cardInserted = false;
  ******************************************************************************/
 static void BOARD_USDHCClockConfiguration(void)
 {
-    /*configure system pll PFD2 fractional divider to 18*/
-    CLOCK_InitSysPfd(kCLOCK_Pfd0, 0x12U);
+    CLOCK_InitSysPll(&sysPllConfig_BOARD_BootClockRUN);
+    /*configure system pll PFD2 fractional divider to 24*/
+    CLOCK_InitSysPfd(kCLOCK_Pfd2, 24U);
     /* Configure USDHC clock source and divider */
     CLOCK_SetDiv(kCLOCK_Usdhc1Div, 0U);
-    CLOCK_SetMux(kCLOCK_Usdhc1Mux, 1U);
+    CLOCK_SetMux(kCLOCK_Usdhc1Mux, 0U);
 }
 
 void BOARD_PowerOffSDCARD(void)
 {
-    /* 
+    /*
         Do nothing here.
 
-        SD card will not be detected correctly if the card VDD is power off, 
-       the reason is caused by card VDD supply to the card detect circuit, this issue is exist on EVK board rev A1 and A2.
+        SD card will not be detected correctly if the card VDD is power off,
+       the reason is caused by card VDD supply to the card detect circuit, this issue is exist on EVK board rev A1 and
+       A2.
 
-        If power off function is not implemented after soft reset and prior to SD Host initialization without remove/insert card, 
-       a UHS-I card may not reach its highest speed mode during the second card initialization. 
+        If power off function is not implemented after soft reset and prior to SD Host initialization without
+       remove/insert card,
+       a UHS-I card may not reach its highest speed mode during the second card initialization.
        Application can avoid this issue by toggling the SD_VDD (GPIO) before the SD host initialization.
     */
 }

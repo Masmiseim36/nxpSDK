@@ -1,44 +1,16 @@
 /*
 ** ###################################################################
-**     Version:             rev. 0.1, 2017-06-06
-**     Build:               b180502
+**     Version:             rev. 1.0, 2018-11-16
+**     Build:               b181120
 **
 **     Abstract:
 **         Chip specific module features.
 **
-**     The Clear BSD License
 **     Copyright 2016 Freescale Semiconductor, Inc.
 **     Copyright 2016-2018 NXP
 **     All rights reserved.
 **
-**     Redistribution and use in source and binary forms, with or without
-**     modification, are permitted (subject to the limitations in the
-**     disclaimer below) provided that the following conditions are met:
-**
-**     * Redistributions of source code must retain the above copyright
-**       notice, this list of conditions and the following disclaimer.
-**
-**     * Redistributions in binary form must reproduce the above copyright
-**       notice, this list of conditions and the following disclaimer in the
-**       documentation and/or other materials provided with the distribution.
-**
-**     * Neither the name of the copyright holder nor the names of its
-**       contributors may be used to endorse or promote products derived from
-**       this software without specific prior written permission.
-**
-**     NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE
-**     GRANTED BY THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT
-**     HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
-**     WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
-**     MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-**     DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
-**     LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-**     CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-**     SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
-**     BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
-**     WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-**     OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
-**     IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+**     SPDX-License-Identifier: BSD-3-Clause
 **
 **     http:                 www.nxp.com
 **     mail:                 support@nxp.com
@@ -46,6 +18,8 @@
 **     Revisions:
 **     - rev. 0.1 (2017-06-06)
 **         Initial version.
+**     - rev. 1.0 (2018-11-16)
+**         Update feature files to align with IMXRT1020RM Rev.1.
 **
 ** ###################################################################
 */
@@ -177,20 +151,34 @@
 #define FSL_FEATURE_FLEXCAN_HAS_MESSAGE_BUFFER_MAX_NUMBERn(x) (64)
 /* @brief Has doze mode support (register bit field MCR[DOZE]). */
 #define FSL_FEATURE_FLEXCAN_HAS_DOZE_MODE_SUPPORT (0)
+/* @brief Insatnce has doze mode support (register bit field MCR[DOZE]). */
+#define FSL_FEATURE_FLEXCAN_INSTANCE_HAS_DOZE_MODE_SUPPORTn(x) (0)
 /* @brief Has a glitch filter on the receive pin (register bit field MCR[WAKSRC]). */
 #define FSL_FEATURE_FLEXCAN_HAS_GLITCH_FILTER (1)
 /* @brief Has extended interrupt mask and flag register (register IMASK2, IFLAG2). */
 #define FSL_FEATURE_FLEXCAN_HAS_EXTENDED_FLAG_REGISTER (1)
-/* @brief Has extended bit timing register (register CBT). */
-#define FSL_FEATURE_FLEXCAN_HAS_EXTENDED_TIMING_REGISTER (0)
+/* @brief Instance has extended bit timing register (register CBT). */
+#define FSL_FEATURE_FLEXCAN_INSTANCE_HAS_EXTENDED_TIMING_REGISTERn(x) (0)
 /* @brief Has a receive FIFO DMA feature (register bit field MCR[DMA]). */
 #define FSL_FEATURE_FLEXCAN_HAS_RX_FIFO_DMA (0)
+/* @brief Instance has a receive FIFO DMA feature (register bit field MCR[DMA]). */
+#define FSL_FEATURE_FLEXCAN_INSTANCE_HAS_RX_FIFO_DMAn(x) (0)
 /* @brief Remove CAN Engine Clock Source Selection from unsupported part. */
 #define FSL_FEATURE_FLEXCAN_SUPPORT_ENGINE_CLK_SEL_REMOVE (1)
+/* @brief Instance remove CAN Engine Clock Source Selection from unsupported part. */
+#define FSL_FEATURE_FLEXCAN_INSTANCE_SUPPORT_ENGINE_CLK_SEL_REMOVEn(x) (1)
 /* @brief Is affected by errata with ID 5641 (Module does not transmit a message that is enabled to be transmitted at a specific moment during the arbitration process). */
 #define FSL_FEATURE_FLEXCAN_HAS_ERRATA_5641 (0)
+/* @brief Is affected by errata with ID 5829 (FlexCAN: FlexCAN does not transmit a message that is enabled to be transmitted in a specific moment during the arbitration process). */
+#define FSL_FEATURE_FLEXCAN_HAS_ERRATA_5829 (1)
+/* @brief Is affected by errata with ID 6032 (FlexCAN: A frame with wrong ID or payload is transmitted into the CAN bus when the Message Buffer under transmission is either aborted or deactivated while the CAN bus is in the Bus Idle state). */
+#define FSL_FEATURE_FLEXCAN_HAS_ERRATA_6032 (1)
+/* @brief Is affected by errata with ID 9595 (FlexCAN: Corrupt frame possible if the Freeze Mode or the Low-Power Mode are entered during a Bus-Off state). */
+#define FSL_FEATURE_FLEXCAN_HAS_ERRATA_9595 (1)
 /* @brief Has CAN with Flexible Data rate (CAN FD) protocol. */
 #define FSL_FEATURE_FLEXCAN_HAS_FLEXIBLE_DATA_RATE (0)
+/* @brief CAN instance support Flexible Data rate (CAN FD) protocol. */
+#define FSL_FEATURE_FLEXCAN_INSTANCE_HAS_FLEXIBLE_DATA_RATEn(x) (0)
 /* @brief Has extra MB interrupt or common one. */
 #define FSL_FEATURE_FLEXCAN_HAS_EXTRA_MB_INT (1)
 
@@ -248,6 +236,13 @@
 /* @brief Has Additional 1588 Timer Channel Interrupt. */
 #define FSL_FEATURE_ENET_HAS_ADD_1588_TIMER_CHN_INT (0)
 
+/* EWM module features */
+
+/* @brief Has clock select (register CLKCTRL). */
+#define FSL_FEATURE_EWM_HAS_CLOCK_SELECT  (1)
+/* @brief Has clock prescaler (register CLKPRESCALER). */
+#define FSL_FEATURE_EWM_HAS_PRESCALER  (1)
+
 /* FLEXIO module features */
 
 /* @brief Has Shifter Status Register (FLEXIO_SHIFTSTAT) */
@@ -274,9 +269,9 @@
 /* FLEXRAM module features */
 
 /* @brief Bank size */
-#define FSL_FEATURE_FLEXRAM_INTERNAL_RAM_BANK_SIZE (32 * 1024)
+#define FSL_FEATURE_FLEXRAM_INTERNAL_RAM_BANK_SIZE (32768)
 /* @brief Total Bank numbers */
-#define FSL_FEATURE_FLEXRAM_INTERNAL_RAM_TOTAL_BANK_NUMBERS (16)
+#define FSL_FEATURE_FLEXRAM_INTERNAL_RAM_TOTAL_BANK_NUMBERS (8)
 
 /* FLEXSPI module features */
 
@@ -474,8 +469,19 @@
 #define FSL_FEATURE_SAI_INT_SOURCE_NUM (2)
 /* @brief Has register of MCR. */
 #define FSL_FEATURE_SAI_HAS_MCR (0)
+/* @brief Has bit field MICS of the MCR register. */
+#define FSL_FEATURE_SAI_HAS_NO_MCR_MICS (1)
 /* @brief Has register of MDR */
 #define FSL_FEATURE_SAI_HAS_MDR (0)
+/* @brief Has support the BCLK bypass mode when BCLK = MCLK. */
+#define FSL_FEATURE_SAI_HAS_BCLK_BYPASS (0)
+
+/* SEMC module features */
+
+/* @brief Has WDH time in NOR controller (register bit field NORCR2[WDH]). */
+#define FSL_FEATURE_SEMC_HAS_NOR_WDH_TIME (1)
+/* @brief Has WDS time in NOR controller (register bit field NORCR2[WDS]).) */
+#define FSL_FEATURE_SEMC_HAS_NOR_WDS_TIME (1)
 
 /* SNVS module features */
 

@@ -1,36 +1,9 @@
 /*
- * The Clear BSD License
- * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2018 NXP
  * All rights reserved.
  *
- * 
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- *  that the following conditions are met:
  *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_debug_console.h"
@@ -83,28 +56,28 @@ const uint8_t g_accel_address[] = {0x1CU, 0x1DU, 0x1EU, 0x1FU};
 static void Timer_Init(void)
 {
     qtmr_config_t qtmrConfig;
-    
-      /*
-     * qtmrConfig.debugMode = kQTMR_RunNormalInDebug;
-     * qtmrConfig.enableExternalForce = false;
-     * qtmrConfig.enableMasterMode = false;
-     * qtmrConfig.faultFilterCount = 0;
-     * qtmrConfig.faultFilterPeriod = 0;
-     * qtmrConfig.primarySource = kQTMR_ClockDivide_2;
-     * qtmrConfig.secondarySource = kQTMR_Counter0InputPin;
-     */
+
+    /*
+   * qtmrConfig.debugMode = kQTMR_RunNormalInDebug;
+   * qtmrConfig.enableExternalForce = false;
+   * qtmrConfig.enableMasterMode = false;
+   * qtmrConfig.faultFilterCount = 0;
+   * qtmrConfig.faultFilterPeriod = 0;
+   * qtmrConfig.primarySource = kQTMR_ClockDivide_2;
+   * qtmrConfig.secondarySource = kQTMR_Counter0InputPin;
+   */
     QTMR_GetDefaultConfig(&qtmrConfig);
     qtmrConfig.primarySource = kQTMR_ClockDivide_128;
     QTMR_Init(BOARD_QTMR_BASEADDR, BOARD_QTMR_FIRST_CHANNEL, &qtmrConfig);
-    
+
     /* Enable timer compare interrupt */
-    QTMR_EnableInterrupts(BOARD_QTMR_BASEADDR, BOARD_QTMR_FIRST_CHANNEL, kQTMR_Compare1InterruptEnable\
-                          | kQTMR_Compare2InterruptEnable);  
+    QTMR_EnableInterrupts(BOARD_QTMR_BASEADDR, BOARD_QTMR_FIRST_CHANNEL,
+                          kQTMR_Compare1InterruptEnable | kQTMR_Compare2InterruptEnable);
     NVIC_EnableIRQ(QTMR_IRQ_ID);
-    
-      /* Generate a 50Khz PWM signal with 50% dutycycle */
+
+    /* Generate a 50Khz PWM signal with 50% dutycycle */
     QTMR_SetupPwm(BOARD_QTMR_BASEADDR, BOARD_QTMR_FIRST_CHANNEL, 50000, 50, false, QTMR_SOURCE_CLOCK / 128);
-      /* Start the counter */
+    /* Start the counter */
     QTMR_StartTimer(BOARD_QTMR_BASEADDR, BOARD_QTMR_FIRST_CHANNEL, kQTMR_PriSrcRiseEdge);
 }
 
@@ -123,6 +96,7 @@ void QTMR_IRQ_HANDLER(void)
         Board_UpdatePwm(g_xDuty);
         QTMR_ClearStatusFlags(BOARD_QTMR_BASEADDR, BOARD_QTMR_FIRST_CHANNEL, kQTMR_Compare2Flag);
     }
+    __DSB();
 }
 
 void UpdatePwmDutycycle(TMR_Type *base, qtmr_channel_selection_t channel, uint32_t pwmFreqHz, uint8_t dutyCyclePercent)
@@ -151,7 +125,7 @@ int main(void)
 {
     fxos_handle_t fxosHandle = {0};
     fxos_data_t sensorData = {0};
-    fxos_config_t config = {0}; 
+    fxos_config_t config = {0};
     status_t result;
     gpio_pin_config_t led_config = {kGPIO_DigitalOutput, 0, kGPIO_NoIntmode};
     uint8_t sensorRange = 0;
@@ -160,7 +134,7 @@ int main(void)
     int16_t yData = 0;
     uint8_t i = 0;
     uint8_t array_addr_size = 0;
-    
+
     /* Board pin, clock, debug console init */
     BOARD_ConfigMPU();
     BOARD_InitPins();
@@ -172,12 +146,12 @@ int main(void)
     CLOCK_SetMux(kCLOCK_Lpi2cMux, BOARD_ACCEL_I2C_CLOCK_SOURCE_SELECT);
     CLOCK_SetDiv(kCLOCK_Lpi2cDiv, BOARD_ACCEL_I2C_CLOCK_SOURCE_DIVIDER);
 
-    
+
     /* Init output LED GPIO. */
     GPIO_PinInit(BOARD_USER_LED_GPIO, BOARD_USER_LED_GPIO_PIN, &led_config);
     /* Initialize LED pins below */
     USER_LED_INIT(LOGIC_LED_OFF);
-    
+
     /* I2C initialize */
     BOARD_Accel_I2C_Init();
     /* Configure the I2C function */
@@ -201,10 +175,10 @@ int main(void)
     {
         PRINTF("\r\nSensor device initialize failed!\r\n");
         PRINTF("\r\nPlease check the sensor chip U26\r\n");
-        while(1)
+        while (1)
         {
-          delay();
-          GPIO_PortToggle(EXAMPLE_LED_GPIO, 1u << EXAMPLE_LED_GPIO_PIN);
+            delay();
+            GPIO_PortToggle(EXAMPLE_LED_GPIO, 1u << EXAMPLE_LED_GPIO_PIN);
         }
     }
 

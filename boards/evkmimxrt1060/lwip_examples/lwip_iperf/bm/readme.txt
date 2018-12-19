@@ -6,25 +6,6 @@ It is currently a minimal implementation providing an IPv4 TCP server only.
 
 Instead of the command line IPerf application, for more convenience, it is recommended to use the JPerf2 graphical tool, which can be downloaded here: https://sourceforge.net/projects/iperf/files/jperf/jperf%202.0.0/jperf-2.0.0.zip/download
 
-
-Toolchain supported
-===================
-- Keil MDK 5.25
-- IAR embedded Workbench 8.30.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.1
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- Network cable RJ45 standard
-- EVK-MIMXRT1060 board
-- Personal Computer
-
-Board settings
-==============
-No special settings are required.
-
 Prepare the Demo
 ================
 1.  Connect a USB cable between the PC host and the OpenSDA(or USB to Serial) USB port on the target board.
@@ -85,6 +66,22 @@ Running the demo
 		 Duration (ms) N
 		 Bandwidth (kbitpsec) N
 
-Customization options
+Hardware requirements
 =====================
+- Mini/micro USB cable
+- Network cable RJ45 standard
+- EVK-MIMXRT1060 board
+- Personal Computer
+
+Board settings
+==============
+No special settings are required.
+
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

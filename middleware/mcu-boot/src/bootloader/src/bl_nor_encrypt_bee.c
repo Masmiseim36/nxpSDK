@@ -669,7 +669,10 @@ status_t bl_nor_encrypt_data(uint32_t addr, uint32_t size, uint32_t *data_start)
                 break;
             }
         }
-
+        if (bee_region_index > 1)
+        {
+            break;
+        }
         key_sel.option = s_img_gen_ctx.bee_key_sel[bee_region_index].option;
 
         dcp_aes_init(&dcp_ctx);

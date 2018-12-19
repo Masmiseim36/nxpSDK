@@ -9,14 +9,6 @@ NOTE:
 This example must run continously to get the right result, breaking during debug
 will results to handshake fail. Because the PXP must be started before every LCD
 frame, if system is halt, the PXP does not start correctly.
-
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
-
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -45,6 +37,11 @@ Running the demo
 When the demo runs successfully, the log would be seen on the OpenSDA terminal like:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 PXP LCDIF hand shake example start...
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

@@ -5,14 +5,35 @@ The flexio_spi_master_interrupt_lpspi_slave example shows how to use flexio spi 
 In this example, a flexio simulated master connect to a lpspi slave .
 
 
+Running the demo
+================
+You can see the similar message shows following in the terminal if the example runs successfully.
 
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+FLEXIO Master - LPSPI Slave interrupt example start.
 
+This example use one flexio spi as master and one lpspi instance as slave on one board.
+
+Master and slave are both use interrupt way.
+
+Please make sure you make the correct line connection. Basically, the connection is:
+
+FLEXIO_SPI_master -- LPSPI_slave
+
+      CLK        --    CLK
+
+      PCS        --    PCS
+
+      SOUT       --    SIN
+
+      SIN        --    SOUT
+
+This is LPSPI slave call back.
+
+FLEXIO SPI master <-> LPSPI slave transfer all data matched!
+
+End of example.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -46,35 +67,11 @@ Prepare the Demo
 4. Either press the reset button on your board or launch the debugger in your IDE to begin running
    the demo.
 
-Running the demo
-================
-You can see the similar message shows following in the terminal if the example runs successfully.
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-FLEXIO Master - LPSPI Slave interrupt example start.
-
-This example use one flexio spi as master and one lpspi instance as slave on one board.
-
-Master and slave are both use interrupt way.
-
-Please make sure you make the correct line connection. Basically, the connection is:
-
-FLEXIO_SPI_master -- LPSPI_slave
-
-      CLK        --    CLK
-
-      PCS        --    PCS
-
-      SOUT       --    SIN
-
-      SIN        --    SOUT
-
-This is LPSPI slave call back.
-
-FLEXIO SPI master <-> LPSPI slave transfer all data matched!
-
-End of example.
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

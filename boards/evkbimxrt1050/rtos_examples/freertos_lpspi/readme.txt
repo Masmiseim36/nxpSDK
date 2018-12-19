@@ -6,15 +6,47 @@ In this example , one lpspi instance used as LPSPI master and another lpspi inst
 
 1. LPSPI master send/received data to/from LPSPI slave in interrupt . (LPSPI Slave using interrupt to receive/send the data)
 
+The example supports board to board connection.
 
+With board to board connection, one LPSPI instance on one board is used as LPSPI master and the LPSPI instance on other board is used as LPSPI slave. Tasks are created to run on each board to handle LPSPI communication.
+    File freertos_lpspi.c should have following definitions:
+    #define EXAMPLE_CONNECT_SPI BOARD_TO_BOARD
+    For board used as LPSPI master:
+        #define SPI_MASTER_SLAVE isMASTER
+    For board used as LPSPI slave:
+        #define SPI_MASTER_SLAVE isSLAVE
 
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
+Running the demo
+================
+The following message shows in the terminal if the example runs successfully.
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+FreeRTOS LPSPI example start.
+
+This example use one lpspi instance as master and another as slave on a single board.
+
+Master and slave are both use interrupt way.
+
+Please make sure you make the correct line connection. Basically, the connection is:
+
+LPSPI_master -- LPSPI_slave
+
+    CLK      --    CLK
+
+    PCS0     --    PCS0
+
+    SOUT     --    SIN
+
+    SIN      --    SOUT
+
+LPSPI master transfer completed successfully.
+
+Slave-to-master data verified ok.
+
+LPSPI slave transfer completed successfully.
+
+Master-to-slave data verified ok.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -48,37 +80,11 @@ Prepare the Demo
 4. Either press the reset button on your board or launch the debugger in your IDE to begin running
    the demo.
 
-Running the demo
-================
-The following message shows in the terminal if the example runs successfully.
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-FreeRTOS LPSPI example start.
-
-This example use one lpspi instance as master and another as slave on a single board.
-
-Master and slave are both use interrupt way.
-
-Please make sure you make the correct line connection. Basically, the connection is:
-
-LPSPI_master -- LPSPI_slave
-
-    CLK      --    CLK
-
-    PCS0     --    PCS0
-
-    SOUT     --    SIN
-
-    SIN      --    SOUT
-
-LPSPI master transfer completed successfully.
-
-Slave-to-master data verified ok.
-
-LPSPI slave transfer completed successfully.
-
-Master-to-slave data verified ok.
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

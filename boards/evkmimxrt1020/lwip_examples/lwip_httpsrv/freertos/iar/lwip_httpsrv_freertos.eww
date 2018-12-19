@@ -5,25 +5,25 @@
       <name>all</name>
       <member>
         <project>lwip_httpsrv_freertos</project>
-        <configuration>flexspi_nor_debug</configuration>
+        <configuration>flexspi_nor_sdram_debug</configuration>
       </member>
       <member>
         <project>lwip_httpsrv_freertos</project>
-        <configuration>flexspi_nor_release</configuration>
-      </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>flexspi_nor_debug</name>
-      <member>
-        <project>lwip_httpsrv_freertos</project>
-        <configuration>flexspi_nor_debug</configuration>
+        <configuration>flexspi_nor_sdram_release</configuration>
       </member>
     </batchDefinition>
     <batchDefinition>
-      <name>flexspi_nor_release</name>
+      <name>flexspi_nor_sdram_debug</name>
       <member>
         <project>lwip_httpsrv_freertos</project>
-        <configuration>flexspi_nor_release</configuration>
+        <configuration>flexspi_nor_sdram_debug</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>flexspi_nor_sdram_release</name>
+      <member>
+        <project>lwip_httpsrv_freertos</project>
+        <configuration>flexspi_nor_sdram_release</configuration>
       </member>
     </batchDefinition>
   </batchBuild>

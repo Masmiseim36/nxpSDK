@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- *  that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_lpi2c_edma.h"
@@ -113,6 +87,23 @@ static void LPI2C_MasterEDMACallback(edma_handle_t *dmaHandle, void *userData, b
  * Code
  ******************************************************************************/
 
+/*!
+ * brief Create a new handle for the LPI2C master DMA APIs.
+ *
+ * The creation of a handle is for use with the DMA APIs. Once a handle
+ * is created, there is not a corresponding destroy handle. If the user wants to
+ * terminate a transfer, the LPI2C_MasterTransferAbortEDMA() API shall be called.
+ *
+ * For devices where the LPI2C send and receive DMA requests are OR'd together, the a txDmaHandle
+ * parameter is ignored and may be set to NULL.
+ *
+ * param base The LPI2C peripheral base address.
+ * param[out] handle Pointer to the LPI2C master driver handle.
+ * param rxDmaHandle Handle for the eDMA receive channel. Created by the user prior to calling this function.
+ * param txDmaHandle Handle for the eDMA transmit channel. Created by the user prior to calling this function.
+ * param callback User provided pointer to the asynchronous callback function.
+ * param userData User provided pointer to the application callback data.
+ */
 void LPI2C_MasterCreateEDMAHandle(LPI2C_Type *base,
                                   lpi2c_master_edma_handle_t *handle,
                                   edma_handle_t *rxDmaHandle,
@@ -204,6 +195,19 @@ static uint32_t LPI2C_GenerateCommands(lpi2c_master_edma_handle_t *handle)
     return cmdCount;
 }
 
+/*!
+ * brief Performs a non-blocking DMA-based transaction on the I2C bus.
+ *
+ * The callback specified when the a handle was created is invoked when the transaction has
+ * completed.
+ *
+ * param base The LPI2C peripheral base address.
+ * param handle Pointer to the LPI2C master driver handle.
+ * param transfer The pointer to the transfer descriptor.
+ * retval #kStatus_Success The transaction was started successfully.
+ * retval #kStatus_LPI2C_Busy Either another master is currently utilizing the bus, or another DMA
+ *      transaction is already in progress.
+ */
 status_t LPI2C_MasterTransferEDMA(LPI2C_Type *base,
                                   lpi2c_master_edma_handle_t *handle,
                                   lpi2c_master_transfer_t *transfer)
@@ -372,6 +376,15 @@ status_t LPI2C_MasterTransferEDMA(LPI2C_Type *base,
     return result;
 }
 
+/*!
+ * brief Returns number of bytes transferred so far.
+ *
+ * param base The LPI2C peripheral base address.
+ * param handle Pointer to the LPI2C master driver handle.
+ * param[out] count Number of bytes transferred so far by the non-blocking transaction.
+ * retval #kStatus_Success
+ * retval #kStatus_NoTransferInProgress There is not a DMA transaction currently in progress.
+ */
 status_t LPI2C_MasterTransferGetCountEDMA(LPI2C_Type *base, lpi2c_master_edma_handle_t *handle, size_t *count)
 {
     assert(handle);
@@ -411,6 +424,17 @@ status_t LPI2C_MasterTransferGetCountEDMA(LPI2C_Type *base, lpi2c_master_edma_ha
     return kStatus_Success;
 }
 
+/*!
+ * brief Terminates a non-blocking LPI2C master transmission early.
+ *
+ * note It is not safe to call this function from an IRQ handler that has a higher priority than the
+ *      eDMA peripheral's IRQ priority.
+ *
+ * param base The LPI2C peripheral base address.
+ * param handle Pointer to the LPI2C master driver handle.
+ * retval #kStatus_Success A transaction was successfully aborted.
+ * retval #kStatus_LPI2C_Idle There is not a DMA transaction currently in progress.
+ */
 status_t LPI2C_MasterTransferAbortEDMA(LPI2C_Type *base, lpi2c_master_edma_handle_t *handle)
 {
     /* Catch when there is not an active transfer. */

@@ -28,8 +28,6 @@
 #include "fsl_sysmpu.h"
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
 
-
-
 #include "usb_phy.h"
 #include <stdbool.h>
 #include "fsl_pit.h"
@@ -435,15 +433,24 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
             }
             break;
         case kUSB_DeviceEventSetConfiguration:
-            if (param)
+            if (0U ==(*temp8))
+            {
+                g_UsbDeviceHidMouse.attach = 0;
+                g_UsbDeviceHidMouse.currentConfiguration = 0U;
+                g_UsbDeviceHidMouse.remoteWakeup = 0U;
+                g_UsbDeviceHidMouse.suspend = kStatus_MouseIdle;
+                g_UsbDeviceHidMouse.isResume = 0U;
+            }
+            else if (USB_HID_MOUSE_CONFIGURE_INDEX == (*temp8))
             {
                 /* Set device configuration request */
                 g_UsbDeviceHidMouse.attach = 1U;
                 g_UsbDeviceHidMouse.currentConfiguration = *temp8;
-                if (USB_HID_MOUSE_CONFIGURE_INDEX == (*temp8))
-                {
-                    error = USB_DeviceHidMouseAction();
-                }
+                error = USB_DeviceHidMouseAction();
+            }
+            else
+            {
+                error = kStatus_USB_InvalidRequest;
             }
             break;
         case kUSB_DeviceEventSetInterface:
@@ -669,10 +676,10 @@ void USB_DeviceSuspendResumeTask(void)
                 g_UsbDeviceHidMouse.selfWakeup = 0U;
                 if (g_UsbDeviceHidMouse.remoteWakeup)
                 {
+                    usb_echo("Remote wakeup the host.\r\n");
                     if (kStatus_USB_Success ==
                         USB_DeviceSetStatus(g_UsbDeviceHidMouse.deviceHandle, kUSB_DeviceStatusBusResume, NULL))
                     {
-                        usb_echo("Remote wakeup the host.\r\n");
                         g_UsbDeviceHidMouse.suspend = kStatus_MouseResuming;
                     }
                     else
@@ -752,7 +759,7 @@ void APP_task(void *handle)
     }
 }
 
-#if defined(__CC_ARM) || defined(__GNUC__)
+#if defined(__CC_ARM) || (defined(__ARMCC_VERSION)) || defined(__GNUC__)
 int main(void)
 #else
 void main(void)
@@ -791,7 +798,7 @@ void main(void)
                     ) != pdPASS)
     {
         usb_echo("app task create failed!\r\n");
-#if (defined(__CC_ARM) || defined(__GNUC__))
+#if (defined(__CC_ARM) || (defined(__ARMCC_VERSION)) || defined(__GNUC__))
         return 1U;
 #else
         return;
@@ -800,7 +807,7 @@ void main(void)
 
     vTaskStartScheduler();
 
-#if (defined(__CC_ARM) || defined(__GNUC__))
+#if (defined(__CC_ARM) || (defined(__ARMCC_VERSION)) || defined(__GNUC__))
     return 1U;
 #endif
 }

@@ -1108,6 +1108,9 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
     {
         case kUSB_DeviceEventBusReset:
         {
+            /* The device BUS reset signal detected */
+            s_audioGenerator.attach = 0U;
+            s_audioGenerator.currentConfiguration = 0U;
             USB_DeviceControlPipeInit(s_audioGenerator.deviceHandle);
 #if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)) || \
     (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
@@ -1117,14 +1120,24 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
             {
                 USB_DeviceSetSpeed(s_audioGenerator.speed);
             }
-
 #endif
         }
         break;
         case kUSB_DeviceEventSetConfiguration:
-            if (USB_AUDIO_GENERATOR_CONFIGURE_INDEX == (*temp8))
+            if (0U == (*temp8))
             {
+                s_audioGenerator.attach = 0U;
+                s_audioGenerator.currentConfiguration = 0U;
+            }
+            else if (USB_AUDIO_GENERATOR_CONFIGURE_INDEX == (*temp8))
+            {
+                /* Set the configuration request */
                 s_audioGenerator.attach = 1U;
+                s_audioGenerator.currentConfiguration = *temp8;
+            }
+            else
+            {
+                error = kStatus_USB_InvalidRequest;
             }
             break;
         case kUSB_DeviceEventSetInterface:
@@ -1210,7 +1223,7 @@ void APPInit(void)
     USB_DeviceRun(s_audioGenerator.deviceHandle);
 }
 
-#if defined(__CC_ARM) || defined(__GNUC__)
+#if defined(__CC_ARM) || (defined(__ARMCC_VERSION)) || defined(__GNUC__)
 int main(void)
 #else
 void main(void)

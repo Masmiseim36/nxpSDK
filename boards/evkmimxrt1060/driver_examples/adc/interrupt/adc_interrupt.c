@@ -1,8 +1,8 @@
 /*
  * Copyright (c) 2013 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2018 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -32,6 +32,7 @@
 volatile bool g_AdcConversionDoneFlag;
 volatile uint32_t g_AdcConversionValue;
 volatile uint32_t g_AdcInterruptCounter;
+const uint32_t g_Adc_12bitFullRange = 4096U;
 
 /*******************************************************************************
 * Code
@@ -43,8 +44,8 @@ void EXAMPLE_ADC_IRQHandler(void)
     /* Read conversion result to clear the conversion completed flag. */
     g_AdcConversionValue = ADC_GetChannelConversionValue(DEMO_ADC_BASE, DEMO_ADC_CHANNEL_GROUP);
     g_AdcInterruptCounter++;
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
+/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
+  exception return operation might vector to incorrect interrupt */
 #if defined __CORTEX_M && (__CORTEX_M == 4U)
     __DSB();
 #endif
@@ -100,6 +101,7 @@ int main(void)
     adcChannelConfigStruct.enableInterruptOnConversionCompleted = true;
     g_AdcInterruptCounter = 0U; /* Clear the interrupt counter. */
 
+    PRINTF("ADC Full Range: %d\r\n", g_Adc_12bitFullRange);
     while (1)
     {
         PRINTF("Press any key to get user channel's ADC value.\r\n");

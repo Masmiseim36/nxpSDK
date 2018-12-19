@@ -145,6 +145,7 @@ void APP_WAKEUP_GPT_IRQn_HANDLER(void)
         xSemaphoreGiveFromISR(s_wakeupSig, NULL);
         portYIELD_FROM_ISR(pdTRUE);
     }
+    __DSB();
 }
 
 void APP_WAKEUP_BUTTON_IRQ_HANDLER(void)
@@ -162,6 +163,7 @@ void APP_WAKEUP_BUTTON_IRQ_HANDLER(void)
         xSemaphoreGiveFromISR(s_wakeupSig, NULL);
         portYIELD_FROM_ISR(pdTRUE);
     }
+    __DSB();
 }
 
 void APP_PowerPreSwitchHook(lpm_power_mode_t targetMode)

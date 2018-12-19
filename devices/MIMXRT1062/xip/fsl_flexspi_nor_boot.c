@@ -7,8 +7,13 @@
 
 #include "fsl_flexspi_nor_boot.h"
 
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.xip_device"
+#endif
+
 #if defined(XIP_BOOT_HEADER_ENABLE) && (XIP_BOOT_HEADER_ENABLE == 1)
-#if defined(__CC_ARM) || defined(__GNUC__)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION) || defined(__GNUC__)
     __attribute__((section(".boot_hdr.ivt")))
 #elif defined(__ICCARM__)
 #pragma location=".boot_hdr.ivt"
@@ -27,7 +32,7 @@ const ivt image_vector_table = {
   IVT_RSVD                            /* Reserved = 0 */
 };
 
-#if defined(__CC_ARM) || defined(__GNUC__)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION) || defined(__GNUC__)
     __attribute__((section(".boot_hdr.boot_data")))
 #elif defined(__ICCARM__)
 #pragma location=".boot_hdr.boot_data"

@@ -6,16 +6,11 @@ interrupt signals if the temperature is above two high-temperature thresholds an
 a low temperature threshold, the system can then use this module to monitor the on-die
 temperature and take appropriate actions such as throttling back the core frequency when
 a the high temperature interrupt is set.
-
-Toolchain supported
-===================
-- Keil MDK 5.25
-- IAR embedded Workbench 8.30.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.1
-
-Hardware requirements
-=====================
+﻿Hardware requirements
+======================
+- Mini/micro USB cable
+- EVK-MIMXRT1020 board
+- Personal Computer
 
 Board settings
 ==============
@@ -53,6 +48,11 @@ To debug in qspiflash, following steps are needed:
 3. Set the SW7: 1 off 2 off 3 on 4 off, then power on the board and connect USB cable to J41.
 4. Start debugging in IDE.
    - Keil: Click "Download (F8)" to program the image to qspiflash first then clicking "Start/Stop Debug Session (Ctrl+F5)" to start debugging.
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

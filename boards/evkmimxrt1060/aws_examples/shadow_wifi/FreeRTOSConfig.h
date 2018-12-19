@@ -61,7 +61,7 @@
 #define configTICK_RATE_HZ                           ( ( TickType_t ) 1000 )
 #define configMAX_PRIORITIES                         ( 7 )
 #define configMINIMAL_STACK_SIZE                     ( ( uint16_t ) 90 )
-#define configTOTAL_HEAP_SIZE                        ( ( size_t ) ( 70 * 1024 ) )    /* 70 Kbytes. */
+#define configTOTAL_HEAP_SIZE                        ( ( size_t ) ( 75 * 1024 ) )    /* 75 Kbytes. */
 #define configMAX_TASK_NAME_LEN                      ( 16 )
 #define configUSE_TRACE_FACILITY                     1
 #define configUSE_16_BIT_TICKS                       0
@@ -85,7 +85,7 @@
 #define configUSE_TIMERS                             1
 #define configTIMER_TASK_PRIORITY                    ( configMAX_PRIORITIES - 3 )
 #define configTIMER_QUEUE_LENGTH                     10
-#define configTIMER_TASK_STACK_DEPTH                 ( configMINIMAL_STACK_SIZE * 4 )
+#define configTIMER_TASK_STACK_DEPTH                 ( configMINIMAL_STACK_SIZE * 8 )
 
 /* Set the following definitions to 1 to include the API function, or zero
  * to exclude the API function. */
@@ -99,6 +99,8 @@
 #define INCLUDE_xTaskGetSchedulerState               1
 #define INCLUDE_xTimerPendFunctionCall               1
 #define INCLUDE_xSemaphoreGetMutexHolder             1
+#define INCLUDE_uxTaskGetStackHighWaterMark          1
+
 
 /* Normal assert() semantics without relying on the provision of an assert.h
  * header file. */
@@ -127,10 +129,10 @@
  * called pre and post the low power SLEEP mode being entered and exited.  These
  * macros can be used to turn turn off and on IO, clocks, the Flash etc. to obtain
  * the lowest power possible while the tick is off. */
-#if defined( __ICCARM__ ) || defined( __CC_ARM ) || defined( __GNUC__ )
+#if defined( __ICCARM__ ) || defined(__CC_ARM) || defined(__ARMCC_VERSION) || defined( __GNUC__ )
     void vMainPreStopProcessing( void );
     void vMainPostStopProcessing( void );
-#endif /* defined(__ICCARM__) || defined(__CC_ARM) || defined(__GNUC__) */
+#endif /* defined(__ICCARM__) || defined(__CC_ARM) || defined(__ARMCC_VERSION) || defined(__GNUC__) */
 
 #define configPRE_STOP_PROCESSING     vMainPreStopProcessing
 #define configPOST_STOP_PROCESSING    vMainPostStopProcessing

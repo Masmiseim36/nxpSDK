@@ -334,7 +334,7 @@ void APP_init(void)
     ehciRegisterBase->OTGSC |= USBHS_OTGSC_IDIE_MASK;
 }
 
-#if defined(__CC_ARM) || defined(__GNUC__)
+#if defined(__CC_ARM) || (defined(__ARMCC_VERSION)) || defined(__GNUC__)
 int main(void)
 #else
 void main(void)

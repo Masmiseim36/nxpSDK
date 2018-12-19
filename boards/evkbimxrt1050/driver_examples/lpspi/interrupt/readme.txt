@@ -7,14 +7,35 @@ In this example , one lpspi instance used as LPSPI master and another lpspi inst
 1. LPSPI master send/received data to/from LPSPI slave in interrupt . (LPSPI Slave using interrupt to receive/send the data)
 
 
+Running the demo
+================
+When the example runs successfully, you can see the similar information from the terminal as below.
 
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+LPSPI functional interrupt example start.
 
+This example use one lpspi instance as master and another as slave on one board.
+
+Master uses interrupt way and slave uses interrupt way.
+
+Note that some LPSPI instances interrupt is in INTMUX ,you should set the intmux when you porting this example accordingly
+
+Please make sure you make the correct line connection. Basically, the connection is:
+
+LPSPI_master -- LPSPI_slave
+
+   CLK      --    CLK
+
+   PCS      --    PCS
+
+   SOUT     --    SIN
+
+   SIN      --    SOUT
+
+LPSPI transfer all data matched!
+
+End of example.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -48,35 +69,11 @@ Prepare the Demo
 4. Either press the reset button on your board or launch the debugger in your IDE to begin running
    the demo.
 
-Running the demo
-================
-When the example runs successfully, you can see the similar information from the terminal as below.
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-LPSPI functional interrupt example start.
-
-This example use one lpspi instance as master and another as slave on one board.
-
-Master uses interrupt way and slave uses interrupt way.
-
-Note that some LPSPI instances interrupt is in INTMUX ,you should set the intmux when you porting this example accordingly
-
-Please make sure you make the correct line connection. Basically, the connection is:
-
-LPSPI_master -- LPSPI_slave
-
-   CLK      --    CLK
-
-   PCS      --    PCS
-
-   SOUT     --    SIN
-
-   SIN      --    SOUT
-
-LPSPI transfer all data matched!
-
-End of example.
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

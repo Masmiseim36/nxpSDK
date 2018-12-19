@@ -2,6 +2,12 @@
 <ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
   <externalDefinitions>
     <definition extID="com.nxp.mcuxpresso"/>
+    <definition extID="component.lists.MIMXRT1062"/>
+    <definition extID="component.lpuart_adapter.MIMXRT1062"/>
+    <definition extID="component.serial_manager.MIMXRT1062"/>
+    <definition extID="component.serial_manager_uart.MIMXRT1062"/>
+    <definition extID="device.MIMXRT1062_CMSIS.MIMXRT1062"/>
+    <definition extID="device.MIMXRT1062_startup.MIMXRT1062"/>
     <definition extID="middleware.freertos.MIMXRT1062"/>
     <definition extID="middleware.freertos.heap.heap_4.MIMXRT1062"/>
     <definition extID="middleware.wifi_qca.MIMXRT1062"/>
@@ -9,8 +15,8 @@
     <definition extID="middleware.wifi_qca.evkmimxrt1060.freertos.shields.silex2401.MIMXRT1062"/>
     <definition extID="middleware.wifi_qca.freertos.MIMXRT1062"/>
     <definition extID="middleware.wifi_qca.freertos.drivers.lpspi_edma.MIMXRT1062"/>
-    <definition extID="platform.devices.MIMXRT1062_CMSIS.MIMXRT1062"/>
-    <definition extID="platform.devices.MIMXRT1062_startup.MIMXRT1062"/>
+    <definition extID="platform.Include_common.MIMXRT1062"/>
+    <definition extID="platform.Include_core_cm7.MIMXRT1062"/>
     <definition extID="platform.drivers.clock.MIMXRT1062"/>
     <definition extID="platform.drivers.common.MIMXRT1062"/>
     <definition extID="platform.drivers.dmamux.MIMXRT1062"/>
@@ -20,15 +26,16 @@
     <definition extID="platform.drivers.lpspi.MIMXRT1062"/>
     <definition extID="platform.drivers.lpspi_edma.MIMXRT1062"/>
     <definition extID="platform.drivers.lpuart.MIMXRT1062"/>
-    <definition extID="platform.drivers.xip.MIMXRT1062"/>
+    <definition extID="platform.drivers.xip_board.MIMXRT1062"/>
+    <definition extID="platform.drivers.xip_device.MIMXRT1062"/>
     <definition extID="platform.utilities.assert.MIMXRT1062"/>
-    <definition extID="platform.utilities.debug_console.MIMXRT1062"/>
+    <definition extID="utility.debug_console.MIMXRT1062"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
-    <definition extID="mcuxpresso"/>
     <definition extID="armgcc"/>
+    <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="evkmimxrt1060_qca_demo" name="qca_demo" category="wifi_qca_examples" dependency="middleware.wifi_qca.evkmimxrt1060.freertos.shields.silex2401.MIMXRT1062 middleware.wifi_qca.evkmimxrt1060.freertos.shields.MIMXRT1062 middleware.wifi_qca.freertos.MIMXRT1062 middleware.freertos.MIMXRT1062 middleware.wifi_qca.MIMXRT1062 middleware.wifi_qca.freertos.drivers.lpspi_edma.MIMXRT1062 platform.drivers.lpspi.MIMXRT1062 platform.drivers.common.MIMXRT1062 platform.drivers.clock.MIMXRT1062 platform.drivers.lpspi_edma.MIMXRT1062 platform.drivers.edma.MIMXRT1062 platform.drivers.dmamux.MIMXRT1062 platform.drivers.igpio.MIMXRT1062 platform.devices.MIMXRT1062_CMSIS.MIMXRT1062 platform.devices.MIMXRT1062_startup.MIMXRT1062 platform.drivers.lpuart.MIMXRT1062 platform.utilities.debug_console.MIMXRT1062 platform.drivers.iomuxc.MIMXRT1062 platform.utilities.assert.MIMXRT1062 platform.drivers.xip.MIMXRT1062 middleware.freertos.heap.heap_4.MIMXRT1062" toolchain="mdk iar armgcc mcuxpresso">
+  <example id="evkmimxrt1060_qca_demo" name="qca_demo" category="wifi_qca_examples" dependency="middleware.wifi_qca.evkmimxrt1060.freertos.shields.silex2401.MIMXRT1062 middleware.freertos.heap.heap_4.MIMXRT1062 middleware.wifi_qca.MIMXRT1062 middleware.freertos.MIMXRT1062 platform.drivers.clock.MIMXRT1062 platform.drivers.common.MIMXRT1062 device.MIMXRT1062_CMSIS.MIMXRT1062 utility.debug_console.MIMXRT1062 component.lpuart_adapter.MIMXRT1062 component.serial_manager.MIMXRT1062 component.serial_manager_uart.MIMXRT1062 platform.drivers.lpuart.MIMXRT1062 component.lists.MIMXRT1062 device.MIMXRT1062_startup.MIMXRT1062 platform.drivers.iomuxc.MIMXRT1062 platform.utilities.assert.MIMXRT1062 platform.drivers.igpio.MIMXRT1062 platform.drivers.xip_device.MIMXRT1062 platform.drivers.xip_board.MIMXRT1062 middleware.wifi_qca.evkmimxrt1060.freertos.shields.MIMXRT1062 middleware.wifi_qca.freertos.MIMXRT1062 middleware.wifi_qca.freertos.drivers.lpspi_edma.MIMXRT1062 platform.drivers.lpspi.MIMXRT1062 platform.Include_core_cm7.MIMXRT1062 platform.Include_common.MIMXRT1062 platform.drivers.lpspi_edma.MIMXRT1062 platform.drivers.edma.MIMXRT1062 platform.drivers.dmamux.MIMXRT1062" toolchain="iar mdk armgcc mcuxpresso">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -50,9 +57,6 @@
         <option id="com.crt.advproject.c.misc.dialect" type="enum">
           <value>com.crt.advproject.misc.dialect.gnu99</value>
         </option>
-        <option id="com.crt.advproject.gcc.exe.debug.option.debugging.level" type="enum">
-          <value>gnu.c.debugging.level.default</value>
-        </option>
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
           <value>CPU_MIMXRT1062DVL6A</value>
           <value>SDK_DEBUGCONSOLE=1</value>
@@ -62,8 +66,8 @@
           <value>SCANF_ADVANCED_ENABLE=0</value>
           <value>XIP_EXTERNAL_FLASH=1</value>
           <value>XIP_BOOT_HEADER_ENABLE=1</value>
-          <value>FSL_RTOS_FREE_RTOS</value>
           <value>A_LITTLE_ENDIAN</value>
+          <value>FSL_RTOS_FREE_RTOS</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
           <value>-fno-common</value>
@@ -80,26 +84,34 @@
         <option id="com.crt.advproject.link.memory.heapAndStack" type="string">
           <value>&amp;Heap:Default;Default;0x200&amp;Stack:Default;Default;0x100</value>
         </option>
-        <option id="com.crt.advproject.gcc.exe.release.option.debugging.level" type="enum">
-          <value>gnu.c.debugging.level.none</value>
-        </option>
       </toolchainSetting>
     </toolchainSettings>
-    <source path="boards/evkmimxrt1060/wifi_qca_examples/qca_demo" target_path="board/src" type="c_include">
-      <files mask="board.h"/>
-      <files mask="clock_config.h"/>
+    <source path="boards/evkmimxrt1060/wifi_qca_examples/qca_demo/armgcc" target_path="src" type="linker" toolchain="armgcc">
+      <files mask="MIMXRT1062xxxxx_ram.ld"/>
     </source>
-    <source path="boards/evkmimxrt1060/wifi_qca_examples/qca_demo" target_path="board/src" type="src">
-      <files mask="board.c"/>
-      <files mask="clock_config.c"/>
+    <source path="boards/evkmimxrt1060/wifi_qca_examples/qca_demo/iar" target_path="src" type="linker" toolchain="iar">
+      <files mask="MIMXRT1062xxxxx_ram.icf"/>
+    </source>
+    <source path="boards/evkmimxrt1060/wifi_qca_examples/qca_demo/iar" target_path="src" type="other" toolchain="iar">
+      <files mask="evkmimxrt1060.mac"/>
+    </source>
+    <source path="boards/evkmimxrt1060/wifi_qca_examples/qca_demo/mdk" target_path="src" type="configuration" toolchain="mdk">
+      <files mask="evkmimxrt1060_ram.ini"/>
+    </source>
+    <source path="boards/evkmimxrt1060/wifi_qca_examples/qca_demo/mdk" target_path="src" type="linker" toolchain="mdk">
+      <files mask="MIMXRT1062xxxxx_ram.scf"/>
     </source>
     <source path="boards/evkmimxrt1060/wifi_qca_examples/qca_demo" target_path="board" type="c_include">
+      <files mask="board.h"/>
+      <files mask="clock_config.h"/>
       <files mask="pin_mux.h"/>
     </source>
     <source path="boards/evkmimxrt1060/wifi_qca_examples/qca_demo" target_path="board" type="src">
+      <files mask="board.c"/>
+      <files mask="clock_config.c"/>
       <files mask="pin_mux.c"/>
     </source>
-    <source path="boards/evkmimxrt1060/wifi_qca_examples/qca_demo" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso">
+    <source path="boards/evkmimxrt1060/wifi_qca_examples/qca_demo" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso armgcc">
       <files mask="readme.txt"/>
     </source>
     <source path="boards/evkmimxrt1060/wifi_qca_examples/qca_demo" target_path="source" type="c_include">

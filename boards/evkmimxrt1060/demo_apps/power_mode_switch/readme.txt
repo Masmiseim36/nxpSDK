@@ -4,14 +4,6 @@ The Power mode switch demo application demonstrates the use of power modes in th
 through the debug console, where the user can set the MCU to a specific power mode. User can wakeup the core by key interrupt.
 The purpose of this demo is to show how to switch between different power  modes, and how to configure a wakeup source and
 wakeup the MCU from low power modes.
-
-Toolchain supported
-===================
-- Keil MDK 5.25
-- IAR embedded Workbench 8.30.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.1
-
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -116,6 +108,11 @@ To download binary into qspiflash and boot from qspiflash directly, following st
 4. Drop the binaray into disk "RT1060-EVK" on PC.
 5. Wait for the disk disappear and appear again which will take couple of seconds.
 7. Reset the board by pressing SW3 or power off and on the board. 
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

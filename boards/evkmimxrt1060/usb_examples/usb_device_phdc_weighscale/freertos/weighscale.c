@@ -491,6 +491,7 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
         case kUSB_DeviceEventBusReset:
         {
             g_shimAgent.attach = 0U;
+            g_shimAgent.currentConfig = 0U;
 #if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)) || \
     (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
             /* Get USB speed to configure the device, including max packet size and interval of the endpoints. */
@@ -536,16 +537,25 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
         }
         break;
         case kUSB_DeviceEventSetConfiguration:
-            if (param)
+            if (0U ==(*temp8))
+            {
+                g_shimAgent.attach = 0;
+                g_shimAgent.currentConfig = 0U;
+            }
+            else if (USB_PHDC_WEIGHT_SCALE_CONFIGURE_INDEX == (*temp8))
             {
                 g_shimAgent.attach = 1;
                 g_shimAgent.currentConfig = *temp8;
-            }
-            /* send the first NULL data to establish a connection between the device and host */
-            USB_ShimAgentSendData(g_shimAgent.classHandle, AGENT_SEND_DATA_QOS, NULL, 0U);
-            /* prepare for the first receiving */
-            USB_DevicePhdcRecv(g_shimAgent.classHandle, g_shimAgent.bulkOutData.epNumber, g_shimAgent.recvDataBuffer,
+                /* send the first NULL data to establish a connection between the device and host */
+                USB_ShimAgentSendData(g_shimAgent.classHandle, AGENT_SEND_DATA_QOS, NULL, 0U);
+                /* prepare for the first receiving */
+                USB_DevicePhdcRecv(g_shimAgent.classHandle, g_shimAgent.bulkOutData.epNumber, g_shimAgent.recvDataBuffer,
                                g_shimAgent.bulkOutData.epMaxPacketSize);
+            }
+            else
+            {
+                error = kStatus_USB_InvalidRequest;
+            }
             break;
         case kUSB_DeviceEventSetInterface:
             if (g_shimAgent.attach)
@@ -789,7 +799,7 @@ void APP_task(void *handle)
     }
 }
 
-#if defined(__CC_ARM) || defined(__GNUC__)
+#if defined(__CC_ARM) || (defined(__ARMCC_VERSION)) || defined(__GNUC__)
 int main(void)
 #else
 void main(void)
@@ -809,14 +819,14 @@ void main(void)
                     ) != pdPASS)
     {
         usb_echo("app task create failed!\r\n");
-#if (defined(__CC_ARM) || defined(__GNUC__))
+#if (defined(__CC_ARM) || (defined(__ARMCC_VERSION)) || defined(__GNUC__))
         return 1U;
 #else
         return;
 #endif
     }
     vTaskStartScheduler();
-#if (defined(__CC_ARM) || defined(__GNUC__))
+#if (defined(__CC_ARM) || (defined(__ARMCC_VERSION)) || defined(__GNUC__))
     return 1U;
 #endif
 }

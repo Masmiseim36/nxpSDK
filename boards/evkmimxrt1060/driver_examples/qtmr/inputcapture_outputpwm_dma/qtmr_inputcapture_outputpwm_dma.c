@@ -88,6 +88,8 @@ int main(void)
     edma_transfer_config_t transferConfig;
     uint8_t updatedDutycycle = 50U;
     uint8_t getCharValue = 0U;
+    uint32_t time1 = 0, time2 = 0, counterClock;
+    uint32_t timediff = 0;
 
     /* Board pin, clock, debug console init */
     BOARD_ConfigMPU();
@@ -146,9 +148,23 @@ int main(void)
     /* Wait input Edge*/
     while (!(QTMR_GetStatus(BOARD_QTMR_BASEADDR, BOARD_QTMR_INPUT_CAPTURE_CHANNEL) & kQTMR_EdgeFlag))
     {
+        time1 = BOARD_QTMR_BASEADDR->CHANNEL[BOARD_QTMR_INPUT_CAPTURE_CHANNEL].CAPT;
+    }
+    QTMR_ClearStatusFlags(BOARD_QTMR_BASEADDR, BOARD_QTMR_INPUT_CAPTURE_CHANNEL, kQTMR_EdgeFlag);
+    while (!(QTMR_GetStatus(BOARD_QTMR_BASEADDR, BOARD_QTMR_INPUT_CAPTURE_CHANNEL) & kQTMR_EdgeFlag))
+    {
+        time2 = BOARD_QTMR_BASEADDR->CHANNEL[BOARD_QTMR_INPUT_CAPTURE_CHANNEL].CAPT;
+    }
+    if (time1 < time2)
+    {
+        timediff = time2 - time1;
+    }
+    else /* Consider counter overflow and wrap situation */
+    {
+        timediff = 65536 - time1 + time2;
     }
 
-    QTMR_ClearStatusFlags(BOARD_QTMR_BASEADDR, BOARD_QTMR_INPUT_CAPTURE_CHANNEL, kQTMR_EdgeFlag);
+    counterClock = QTMR_SOURCE_CLOCK / 8000;
 
     EDMA_StartTransfer(&g_EDMA_Handle);
 
@@ -156,7 +172,7 @@ int main(void)
     while (g_Transfer_Done != true)
     {
     }
-    PRINTF("\r\nInput Captured value=%x\n", captValue);
+    PRINTF("\r\nCaptured Period time=%d us\n", timediff * 1000 / counterClock);
     QTMR_DisableDma(BOARD_QTMR_BASEADDR, BOARD_QTMR_INPUT_CAPTURE_CHANNEL, kQTMR_InputEdgeFlagDmaEnable);
 
     DMAMUX_DisableChannel(EXAMPLE_QTMR_DMA_MUX, 0);

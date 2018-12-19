@@ -3,14 +3,6 @@ Overview
 The sai_interrupt_record_playback example shows how to use sai driver with record and playback features:
 
 In this example, one sai instance record the audio data from input and playbacks the audio data.
-
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
-
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -37,6 +29,7 @@ Prepare the Demo
 
 Running the demo
 ================
+
 Note: This demo uses both headphone mic and board main mic(P1) as input source. The headphone mic provides left
 channel data, and main mic (P1) provides right channel data. If users found there is noise while do record operation,
 most probably it is the headphone standard issue (OMTP and CTIA standard difference). You should use the OMTP
@@ -48,6 +41,11 @@ When the demo runs successfully, you can hear the tone and the log would be seen
 SAI example started!
 SAI example finished!
  ~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

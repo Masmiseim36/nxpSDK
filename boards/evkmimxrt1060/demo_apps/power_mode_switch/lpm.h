@@ -142,8 +142,6 @@ typedef enum _lpm_power_mode
 
 typedef bool (*lpm_power_mode_callback_t)(lpm_power_mode_t curMode, lpm_power_mode_t newMode, void *data);
 
-#define ROM_CODE_ENTRY_ADDR (0x200000U)
-
 /*! @name Time sensitive region */
 /* @{ */
 #if defined(XIP_EXTERNAL_FLASH) && (XIP_EXTERNAL_FLASH == 1)

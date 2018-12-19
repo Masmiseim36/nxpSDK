@@ -3,14 +3,6 @@ Overview
 The SNVS LP MC project shows how to use the Monotonic Counter (MC) based on
 SDK SNVS LP driver. In this example, the MC value is increased and checked
 several times.
-
-Toolchain supported
-===================
-- Keil MDK 5.25
-- IAR embedded Workbench 8.30.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.1
-
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -47,6 +39,11 @@ Current Monotonic Counter value is 0x0000000000000082
 SNVS LP MC example finished successfully
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

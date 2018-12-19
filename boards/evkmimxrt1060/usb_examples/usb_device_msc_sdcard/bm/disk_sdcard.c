@@ -200,7 +200,7 @@ void USB_DeviceMscApp(void)
 static void USB_BmEnterCritical(uint8_t *sr)
 {
     *sr = DisableGlobalIRQ();
-    __ASM("CPSID I");
+    __ASM("CPSID i");
 }
 /*!
  * @brief msc exit critical.
@@ -520,6 +520,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
         case kUSB_DeviceEventBusReset:
         {
             g_msc.attach = 0;
+            g_msc.currentConfiguration = 0U;
             error = kStatus_USB_Success;
 #if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)) || \
     (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
@@ -538,10 +539,19 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
 #endif
             break;
         case kUSB_DeviceEventSetConfiguration:
-            if (param)
+            if (0U ==(*temp8))
+            {
+                g_msc.attach = 0;
+                g_msc.currentConfiguration = 0U;
+            }
+            else if (USB_MSC_CONFIGURE_INDEX == (*temp8))
             {
                 g_msc.attach = 1;
                 g_msc.currentConfiguration = *temp8;
+            }
+            else
+            {
+                error = kStatus_USB_InvalidRequest; 
             }
             break;
         case kUSB_DeviceEventSetInterface:
@@ -674,7 +684,7 @@ void USB_DeviceApplicationInit(void)
     USB_DeviceRun(g_msc.deviceHandle);
 }
 
-#if defined(__CC_ARM) || defined(__GNUC__)
+#if defined(__CC_ARM) || (defined(__ARMCC_VERSION)) || defined(__GNUC__)
 int main(void)
 #else
 void main(void)

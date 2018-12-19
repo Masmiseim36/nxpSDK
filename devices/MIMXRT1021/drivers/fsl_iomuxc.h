@@ -1,37 +1,8 @@
 /*
- * The Clear BSD License
  * Copyright 2016 Freescale Semiconductor, Inc.
  * Copyright 2016-2018 NXP
- * All rights reserved.
- * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted (subject to the limitations in the
- * disclaimer below) provided that the following conditions are met:
- * 
- * * Redistributions of source code must retain the above copyright
- *   notice, this list of conditions and the following disclaimer.
- * 
- * * Redistributions in binary form must reproduce the above copyright
- *   notice, this list of conditions and the following disclaimer in the
- *   documentation and/or other materials provided with the distribution.
- * 
- * * Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from
- *   this software without specific prior written permission.
- * 
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE
- * GRANTED BY THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT
- * HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
- * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
- * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
- * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
- * BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
- * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
- * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #ifndef _FSL_IOMUXC_H_
@@ -63,21 +34,20 @@
 /*! @name Pin function ID */
 /*@{*/
 /*! @brief The pin function ID is a tuple of <muxRegister muxMode inputRegister inputDaisy configRegister> */
-#define IOMUXC_SNVS_WAKEUP_GPIO5_IO00 0x400A8000U, 0x5U, 0,			0x0U, 0x400A8018U
+#define IOMUXC_SNVS_WAKEUP_GPIO5_IO00 0x400A8000U, 0x5U, 0, 0, 0x400A8018U
 #define IOMUXC_SNVS_WAKEUP_NMI_GLUE_NMI 0x400A8000U, 0x7U, 0x401F840CU, 0x1U, 0x400A8018U
 
-#define IOMUXC_SNVS_PMIC_ON_REQ_SNVS_LP_PMIC_ON_REQ 0x400A8004U, 0x0U, 0,			0x0U, 0x400A801CU
-#define IOMUXC_SNVS_PMIC_ON_REQ_GPIO5_IO01 0x400A8004U, 0x5U, 0,			0x0U, 0x400A801CU
+#define IOMUXC_SNVS_PMIC_ON_REQ_SNVS_LP_PMIC_ON_REQ 0x400A8004U, 0x0U, 0, 0, 0x400A801CU
+#define IOMUXC_SNVS_PMIC_ON_REQ_GPIO5_IO01 0x400A8004U, 0x5U, 0, 0, 0x400A801CU
 
-#define IOMUXC_SNVS_PMIC_STBY_REQ_CCM_PMIC_VSTBY_REQ 0x400A8008U, 0x0U, 0,			0x0U, 0x400A8020U
-#define IOMUXC_SNVS_PMIC_STBY_REQ_GPIO5_IO02 0x400A8008U, 0x5U, 0,			0x0U, 0x400A8020U
+#define IOMUXC_SNVS_PMIC_STBY_REQ_CCM_PMIC_VSTBY_REQ 0x400A8008U, 0x0U, 0, 0, 0x400A8020U
+#define IOMUXC_SNVS_PMIC_STBY_REQ_GPIO5_IO02 0x400A8008U, 0x5U, 0, 0, 0x400A8020U
 
-#define IOMUXC_SNVS_TEST_MODE 0, 0,			0x0U, 0, 0x400A800CU
+#define IOMUXC_SNVS_TEST_MODE 0, 0, 0, 0, 0x400A800CU
 
-#define IOMUXC_SNVS_POR_B 0, 0,			0x0U, 0, 0x400A8010U
+#define IOMUXC_SNVS_POR_B 0, 0, 0, 0, 0x400A8010U
 
-#define IOMUXC_SNVS_ONOFF 0, 0,			0x0U, 0, 0x400A8014U
-
+#define IOMUXC_SNVS_ONOFF 0, 0, 0, 0, 0x400A8014U
 
 //												muxRegister,muxMode, inputRegister, inputDaisy, configRegister
 #define IOMUXC_GPIO_EMC_00_SEMC_DATA00			0x401F8014U, 0x0U, 0,			0x0U, 0x401F8188U
@@ -837,16 +807,16 @@ typedef enum _iomuxc_gpr_mode
     kIOMUXC_GPR_SAI3MClkOutputDir = IOMUXC_GPR_GPR1_SAI3_MCLK_DIR_MASK,
     kIOMUXC_GPR_ExcMonitorSlavErrResponse = IOMUXC_GPR_GPR1_EXC_MON_MASK,
     kIOMUXC_GPR_ENETIpgClkOn = IOMUXC_GPR_GPR1_ENET_IPG_CLK_S_EN_MASK,
-    kIOMUXC_GPR_AHBClockEnable = IOMUXC_GPR_GPR1_CM7_FORCE_HCLK_EN_MASK,  
-}  iomuxc_gpr_mode_t;
+    kIOMUXC_GPR_AHBClockEnable = (int)IOMUXC_GPR_GPR1_CM7_FORCE_HCLK_EN_MASK,
+} iomuxc_gpr_mode_t;
 
 typedef enum _iomuxc_gpr_saimclk
 {
     kIOMUXC_GPR_SAI1MClk1Sel = IOMUXC_GPR_GPR1_SAI1_MCLK1_SEL_SHIFT,
     kIOMUXC_GPR_SAI1MClk2Sel = IOMUXC_GPR_GPR1_SAI1_MCLK2_SEL_SHIFT,
-    kIOMUXC_GPR_SAI1MClk3Sel = IOMUXC_GPR_GPR1_SAI1_MCLK3_SEL_SHIFT, 
-    kIOMUXC_GPR_SAI2MClk3Sel = IOMUXC_GPR_GPR1_SAI2_MCLK3_SEL_SHIFT, 
-    kIOMUXC_GPR_SAI3MClk3Sel = IOMUXC_GPR_GPR1_SAI3_MCLK3_SEL_SHIFT,  
+    kIOMUXC_GPR_SAI1MClk3Sel = IOMUXC_GPR_GPR1_SAI1_MCLK3_SEL_SHIFT,
+    kIOMUXC_GPR_SAI2MClk3Sel = IOMUXC_GPR_GPR1_SAI2_MCLK3_SEL_SHIFT,
+    kIOMUXC_GPR_SAI3MClk3Sel = IOMUXC_GPR_GPR1_SAI3_MCLK3_SEL_SHIFT,
 } iomuxc_gpr_saimclk_t;
 
 typedef enum _iomuxc_mqs_pwm_oversample_rate
@@ -939,11 +909,9 @@ static inline void IOMUXC_SetPinConfig(uint32_t muxRegister,
  */
 static inline void IOMUXC_EnableMode(IOMUXC_GPR_Type *base, uint32_t mode, bool enable)
 {
-    mode &= ~(IOMUXC_GPR_GPR1_SAI1_MCLK1_SEL_MASK
-            | IOMUXC_GPR_GPR1_SAI1_MCLK2_SEL_MASK
-            | IOMUXC_GPR_GPR1_SAI1_MCLK3_SEL_MASK
-            | IOMUXC_GPR_GPR1_SAI2_MCLK3_SEL_MASK
-            | IOMUXC_GPR_GPR1_SAI3_MCLK3_SEL_MASK);
+    mode &= ~(IOMUXC_GPR_GPR1_SAI1_MCLK1_SEL_MASK | IOMUXC_GPR_GPR1_SAI1_MCLK2_SEL_MASK |
+              IOMUXC_GPR_GPR1_SAI1_MCLK3_SEL_MASK | IOMUXC_GPR_GPR1_SAI2_MCLK3_SEL_MASK |
+              IOMUXC_GPR_GPR1_SAI3_MCLK3_SEL_MASK);
 
     if (enable)
     {
@@ -969,17 +937,17 @@ static inline void IOMUXC_SetSaiMClkClockSource(IOMUXC_GPR_Type *base, iomuxc_gp
     if (mclk > kIOMUXC_GPR_SAI1MClk2Sel)
     {
         gpr = base->GPR1 & ~(IOMUXC_GPR_SAIMCLK_HIGHBITMASK << mclk);
-        base->GPR1 = ((clkSrc & IOMUXC_GPR_SAIMCLK_HIGHBITMASK) << mclk) | gpr;    
+        base->GPR1 = ((clkSrc & IOMUXC_GPR_SAIMCLK_HIGHBITMASK) << mclk) | gpr;
     }
     else
     {
         gpr = base->GPR1 & ~(IOMUXC_GPR_SAIMCLK_LOWBITMASK << mclk);
-        base->GPR1 = ((clkSrc & IOMUXC_GPR_SAIMCLK_LOWBITMASK) << mclk) | gpr;            
+        base->GPR1 = ((clkSrc & IOMUXC_GPR_SAIMCLK_LOWBITMASK) << mclk) | gpr;
     }
 }
 
 /*!
- * @brief Enters or exit MQS software reset.  
+ * @brief Enters or exit MQS software reset.
  *
  * @param base     The IOMUXC GPR base address.
  * @param enable   Enter or exit MQS software reset.
@@ -988,17 +956,16 @@ static inline void IOMUXC_MQSEnterSoftwareReset(IOMUXC_GPR_Type *base, bool enab
 {
     if (enable)
     {
-        base->GPR2 |= IOMUXC_GPR_GPR2_MQS_SW_RST_MASK;        
+        base->GPR2 |= IOMUXC_GPR_GPR2_MQS_SW_RST_MASK;
     }
     else
     {
-        base->GPR2 &= ~IOMUXC_GPR_GPR2_MQS_SW_RST_MASK;        
+        base->GPR2 &= ~IOMUXC_GPR_GPR2_MQS_SW_RST_MASK;
     }
 }
 
-
 /*!
- * @brief Enables or disables MQS.  
+ * @brief Enables or disables MQS.
  *
  * @param base     The IOMUXC GPR base address.
  * @param enable   Enable or disable the MQS.
@@ -1007,16 +974,16 @@ static inline void IOMUXC_MQSEnable(IOMUXC_GPR_Type *base, bool enable)
 {
     if (enable)
     {
-        base->GPR2 |= IOMUXC_GPR_GPR2_MQS_EN_MASK;   
+        base->GPR2 |= IOMUXC_GPR_GPR2_MQS_EN_MASK;
     }
     else
     {
-        base->GPR2 &= ~IOMUXC_GPR_GPR2_MQS_EN_MASK;           
+        base->GPR2 &= ~IOMUXC_GPR_GPR2_MQS_EN_MASK;
     }
 }
 
 /*!
- * @brief Configure MQS PWM oversampling rate compared with mclk and divider ratio control for mclk from hmclk.  
+ * @brief Configure MQS PWM oversampling rate compared with mclk and divider ratio control for mclk from hmclk.
  *
  * @param base     The IOMUXC GPR base address.
  * @param rate     The MQS PWM oversampling rate, refer to "iomuxc_mqs_pwm_oversample_rate_t".
@@ -1026,7 +993,7 @@ static inline void IOMUXC_MQSEnable(IOMUXC_GPR_Type *base, bool enable)
 static inline void IOMUXC_MQSConfig(IOMUXC_GPR_Type *base, iomuxc_mqs_pwm_oversample_rate_t rate, uint8_t divider)
 {
     uint32_t gpr = base->GPR2 & ~(IOMUXC_GPR_GPR2_MQS_OVERSAMPLE_MASK | IOMUXC_GPR_GPR2_MQS_CLK_DIV_MASK);
-    
+
     base->GPR2 = gpr | IOMUXC_GPR_GPR2_MQS_OVERSAMPLE(rate) | IOMUXC_GPR_GPR2_MQS_CLK_DIV(divider);
 }
 
@@ -1039,4 +1006,3 @@ static inline void IOMUXC_MQSConfig(IOMUXC_GPR_Type *base, iomuxc_mqs_pwm_oversa
 /*! @}*/
 
 #endif /* _FSL_IOMUXC_H_ */
-

@@ -1830,7 +1830,7 @@ static status_t MMC_BL_SelectBusTiming(mmc_card_t *card)
 {
     assert(card);
 
-    bool switchHS400 = false, switchHighSpeed = false;
+    bool switchHighSpeed = false;
     uint32_t targetFreq = 0U;
     mmc_high_speed_timing_t targetTiming = card->userConfig.timing;
 

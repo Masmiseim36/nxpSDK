@@ -223,7 +223,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pe177,Pe186,Ms014</state>
+          <state>Pa082,Pe177,Pe186,Ms014,Pa182</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -318,7 +318,7 @@
           <state>$PROJ_DIR$/../../../../../../middleware/mcu-boot/src/startup</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mcu-boot/src/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mcu-boot/apps/led_demo/src</state>
-          <state>$PROJ_DIR$/../../../../../../project-root-path</state>
+          <state>$PROJ_DIR$/..</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -389,11 +389,11 @@
         </option>
         <option>
           <name>IccExceptions</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccRTTI</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccStaticDestr</name>
@@ -767,9 +767,6 @@
         </option>
         <option>
           <name>IlinkExtraOptions</name>
-          <state/>
-          <state> --redirect __aeabi_idiv=__iar_small___aeabi_idiv </state>
-          <state> --redirect __aeabi_idivmod=__iar_small___aeabi_idivmod </state>
         </option>
         <option>
           <name>IlinkLowLevelInterfaceSlave</name>
@@ -969,15 +966,9 @@
     <file>
       <name>$PROJ_DIR$/../main.c</name>
     </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../middleware/mcu-boot/apps/led_demo/src/milliseconds_delay.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../middleware/mcu-boot/apps/led_demo/src/milliseconds_delay.c</name>
-    </file>
   </group>
   <group>
-    <name>startup</name>
+    <name>device</name>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/system_MIMXRT1052.h</name>
     </file>
@@ -993,14 +984,29 @@
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/MIMXRT1052_features.h</name>
     </file>
+  </group>
+  <group>
+    <name>startup</name>
     <file>
       <name>$PROJ_DIR$/../../../../../../middleware/mcu-boot/targets/MIMXRT1052/src/startup/iar/startup_MIMXRT1052.s</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../middleware/mcu-boot/src/include/bootloader_core.h</name>
+      <name>$PROJ_DIR$/../../../../../../middleware/mcu-boot/src/startup/startup.c</name>
+    </file>
+  </group>
+  <group>
+    <name>source</name>
+    <group>
+      <name>include</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mcu-boot/src/include/bootloader_core.h</name>
+      </file>
+    </group>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../middleware/mcu-boot/apps/led_demo/src/milliseconds_delay.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../middleware/mcu-boot/src/startup/startup.c</name>
+      <name>$PROJ_DIR$/../../../../../../middleware/mcu-boot/apps/led_demo/src/milliseconds_delay.c</name>
     </file>
   </group>
 </project>

@@ -1,3 +1,10 @@
+/*
+ * Copyright 2016-2017 NXP
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+
 #ifndef __WORKER_SHELL__H__
 #define __WORKER_SHELL__H__
 

@@ -9,6 +9,7 @@
 #define __FSL_SEMC_H__
 
 #include "fsl_common.h"
+#include "bootloader_config.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -38,45 +39,45 @@ enum __semc_config_block_tags
 #define SEMC_DRIVER_VERSION (MAKE_VERSION(1, 0, 0)) /*!< Version 1.0.0. */
 
 // Allocated memory region of SEMC
-#define SEMC_MEM0_BASE                   (0x80000000u)
-#define SEMC_MEM1_BASE                   (0x90000000u)
-#define SEMC_MEM2_BASE                   (0xA0000000u)
-#define SEMC_MEM3_BASE                   (0xC0000000u)
-#define SEMC_MEM_NOR_AXI_BASE            SEMC_MEM1_BASE
-#define SEMC_MEM_NAND_AXI_BASE           (SEMC_MEM1_BASE + 0xE000000u)
-#define SEMC_MEM_NAND_AXI_SIZE           (0x2000000u)
-#define SEMC_MEM_NAND_IPG_BASE           (0U)
-#define SEMC_MEM_NAND_IPG_SIZE           (2U*1024*1024*1024)  // 16Gb
+#define SEMC_MEM0_BASE (0x80000000u)
+#define SEMC_MEM1_BASE (0x90000000u)
+#define SEMC_MEM2_BASE (0xA0000000u)
+#define SEMC_MEM3_BASE (0xC0000000u)
+#define SEMC_MEM_NOR_AXI_BASE SEMC_MEM1_BASE
+#define SEMC_MEM_NAND_AXI_BASE (SEMC_MEM1_BASE + 0xE000000u)
+#define SEMC_MEM_NAND_AXI_SIZE (0x2000000u)
+#define SEMC_MEM_NAND_IPG_BASE (0U)
+#define SEMC_MEM_NAND_IPG_SIZE (2U * 1024 * 1024 * 1024) // 16Gb
 
 //! @brief SEMC IP command defintions
-#define SEMC_IPCMD_NOR_AXI_READ                   (0x000Ou)  // AXI CMD Read
-#define SEMC_IPCMD_NOR_AXI_WRITE                  (0x0001u)  // AXI CMD Write
-#define SEMC_IPCMD_NOR_IPG_READ_ARRAY             (0x0002u)  // IP CMD Read Array
-#define SEMC_IPCMD_NOR_IPG_WRITE_ARRAY            (0x0003u)  // IP CMD Write Array
-#define SEMC_IPCMD_NOR_IPG_READ_REG               (0x0004u)  // IP CMD Read Reg
-#define SEMC_IPCMD_NOR_IPG_WRITE_REG              (0x0005u)  // IP CMD Write Reg
+#define SEMC_IPCMD_NOR_AXI_READ (0x000Ou)        // AXI CMD Read
+#define SEMC_IPCMD_NOR_AXI_WRITE (0x0001u)       // AXI CMD Write
+#define SEMC_IPCMD_NOR_IPG_READ_ARRAY (0x0002u)  // IP CMD Read Array
+#define SEMC_IPCMD_NOR_IPG_WRITE_ARRAY (0x0003u) // IP CMD Write Array
+#define SEMC_IPCMD_NOR_IPG_READ_REG (0x0004u)    // IP CMD Read Reg
+#define SEMC_IPCMD_NOR_IPG_WRITE_REG (0x0005u)   // IP CMD Write Reg
 
-#define SEMC_IPCMD_NAND_AM_COL_ROW_ADDR              (0x0u)  // X Byte determined by NANDCR3[OPT]
-#define SEMC_IPCMD_NAND_AM_COL_ADDR_1BYTE            (0x1u)  // 1 Byte-CA0
-#define SEMC_IPCMD_NAND_AM_COL_ADDR_2BYTE            (0x2u)  // 2 Byte-CA0/CA1
-#define SEMC_IPCMD_NAND_AM_ROW_ADDR_1BYTE            (0x3u)  // 1 Byte-RA0
-#define SEMC_IPCMD_NAND_AM_ROW_ADDR_2BYTE            (0x4u)  // 2 Byte-RA0/RA1
-#define SEMC_IPCMD_NAND_AM_ROW_ADDR_3BYTE            (0x5u)  // 3 Byte-RA0/RA1/RA2
+#define SEMC_IPCMD_NAND_AM_COL_ROW_ADDR (0x0u)   // X Byte determined by NANDCR3[OPT]
+#define SEMC_IPCMD_NAND_AM_COL_ADDR_1BYTE (0x1u) // 1 Byte-CA0
+#define SEMC_IPCMD_NAND_AM_COL_ADDR_2BYTE (0x2u) // 2 Byte-CA0/CA1
+#define SEMC_IPCMD_NAND_AM_ROW_ADDR_1BYTE (0x3u) // 1 Byte-RA0
+#define SEMC_IPCMD_NAND_AM_ROW_ADDR_2BYTE (0x4u) // 2 Byte-RA0/RA1
+#define SEMC_IPCMD_NAND_AM_ROW_ADDR_3BYTE (0x5u) // 3 Byte-RA0/RA1/RA2
 
-#define SEMC_IPCMD_NAND_CM_AXI_CMD_ADDR_CMD_READ     (0x0u)  // CMD(0x05) + ADDR(CA0/1)) + CMD(0xE0) + READ
-#define SEMC_IPCMD_NAND_CM_AXI_CMD_ADDR_WRITE        (0x1u)  // CMD(0x85) + ADDR(CA0/1)) + WRITE + CMD(0x15)
-#define SEMC_IPCMD_NAND_CM_IPG_CMD_ONLY              (0x2u)  // CMD Only
-#define SEMC_IPCMD_NAND_CM_IPG_CMD_HOLD              (0x3u)  // CMD + HOLD(tWB)
-#define SEMC_IPCMD_NAND_CM_IPG_CMD_ADDR              (0x4u)
-#define SEMC_IPCMD_NAND_CM_IPG_CMD_ADDR_HOLD         (0x5u)  // CMD + ADDR + HOLD(tWB)
-#define SEMC_IPCMD_NAND_CM_IPG_CMD_ADDR_READ         (0x6u)
-#define SEMC_IPCMD_NAND_CM_IPG_CMD_ADDR_WRITE        (0x7u)
-#define SEMC_IPCMD_NAND_CM_IPG_CMD_READ              (0x8u)
-#define SEMC_IPCMD_NAND_CM_IPG_CMD_WRITE             (0x9u)
-#define SEMC_IPCMD_NAND_CM_IPG_READ_ONLY             (0xAu)  // Read Only
-#define SEMC_IPCMD_NAND_CM_IPG_WRITE_ONLY            (0xBu)  // Write Only
+#define SEMC_IPCMD_NAND_CM_AXI_CMD_ADDR_CMD_READ (0x0u) // CMD(0x05) + ADDR(CA0/1)) + CMD(0xE0) + READ
+#define SEMC_IPCMD_NAND_CM_AXI_CMD_ADDR_WRITE (0x1u)    // CMD(0x85) + ADDR(CA0/1)) + WRITE + CMD(0x15)
+#define SEMC_IPCMD_NAND_CM_IPG_CMD_ONLY (0x2u)          // CMD Only
+#define SEMC_IPCMD_NAND_CM_IPG_CMD_HOLD (0x3u)          // CMD + HOLD(tWB)
+#define SEMC_IPCMD_NAND_CM_IPG_CMD_ADDR (0x4u)
+#define SEMC_IPCMD_NAND_CM_IPG_CMD_ADDR_HOLD (0x5u) // CMD + ADDR + HOLD(tWB)
+#define SEMC_IPCMD_NAND_CM_IPG_CMD_ADDR_READ (0x6u)
+#define SEMC_IPCMD_NAND_CM_IPG_CMD_ADDR_WRITE (0x7u)
+#define SEMC_IPCMD_NAND_CM_IPG_CMD_READ (0x8u)
+#define SEMC_IPCMD_NAND_CM_IPG_CMD_WRITE (0x9u)
+#define SEMC_IPCMD_NAND_CM_IPG_READ_ONLY (0xAu)  // Read Only
+#define SEMC_IPCMD_NAND_CM_IPG_WRITE_ONLY (0xBu) // Write Only
 
-#define SMEC_MAX_DEVICE_MEMORY_SIZE_IN_BYTES         (0x80000000u)
+#define SMEC_MAX_DEVICE_MEMORY_SIZE_IN_BYTES (0x80000000u)
 
 //! @brief Error codes of SEMC driver
 typedef enum _semc_status
@@ -119,7 +120,8 @@ enum __semc_misc_property
 };
 
 //!@brief SEMC Clock Frequency
-typedef enum _semc_clock_freq {
+typedef enum _semc_clock_freq
+{
     kSemcClkFreq_33MHz = 0x00U,
     kSemcClkFreq_40MHz = 0x01U,
     kSemcClkFreq_50MHz = 0x02U,
@@ -129,21 +131,21 @@ typedef enum _semc_clock_freq {
     kSemcClkFreq_166MHz = 0x06U,
 } semc_clk_freq_t;
 
-#if defined(MCIMXRM2_SERIES) || defined(MIMXRT1051_SERIES) || defined(MIMXRT1052_SERIES)
-//i.MX RT1050
-#define SEMC_MAX_CLK_FREQ     kSemcClkFreq_166MHz
+#if defined(MIMXRT1062_SERIES) || defined(MIMXRT1051_SERIES) || defined(MIMXRT1052_SERIES)
+// i.MX RT1050 or i.MX RT1060
+#define SEMC_MAX_CLK_FREQ kSemcClkFreq_166MHz
 #define SEMC_2ND_MAX_CLK_FREQ kSemcClkFreq_133MHz
 #elif defined(MIMXRT1021_SERIES)
-//i.MX RT1020
-#define SEMC_MAX_CLK_FREQ     kSemcClkFreq_133MHz
+// i.MX RT1020
+#define SEMC_MAX_CLK_FREQ kSemcClkFreq_133MHz
 #define SEMC_2ND_MAX_CLK_FREQ kSemcClkFreq_108MHz
 #endif
 
 //!@brief SEMC Clock Type
 typedef enum _semc_clock_type
 {
-    kSemcClkType_IpgClock = 0U,        //!< IPBUS clock
-    kSemcClkType_AxiClock = 1U,        //!< AXI32 clock
+    kSemcClkType_IpgClock = 0U, //!< IPBUS clock
+    kSemcClkType_AxiClock = 1U, //!< AXI32 clock
 } semc_clock_type_t;
 
 //!@brief SEMC device memory type
@@ -191,9 +193,9 @@ typedef enum _semc_dqs_mode
 //!@brief SEMC NOR address mode
 typedef enum _semc_nor_address_mode
 {
-    kSemcNorAddressMode_ADM = 0U,             /*!< Address/Data MUX mode*/
-    kSemcNorAddressMode_AADM = 1U,            /*!< Advanced Address/Data MUX mode*/
-    kSemcNorAddressMode_ADP = 2U,             /*!< Address/Data non-MUX mode*/
+    kSemcNorAddressMode_ADM = 0U,  /*!< Address/Data MUX mode*/
+    kSemcNorAddressMode_AADM = 1U, /*!< Advanced Address/Data MUX mode*/
+    kSemcNorAddressMode_ADP = 2U,  /*!< Address/Data non-MUX mode*/
 } semc_nor_address_mode_t;
 
 //!@brief SEMC NOR Memory Configuration Block
@@ -244,12 +246,12 @@ typedef enum _semc_nand_edo_mode
 //!@brief SEMC NAND address option
 typedef enum _semc_nand_address_option
 {
-    kSemcNandAddressOption_5byte_CA2RA3 = 0U,             /*!< CA0+CA1+RA0+RA1+RA2 */
-    kSemcNandAddressOption_4byte_CA2RA2 = 2U,             /*!< CA0+CA1+RA0+RA1 */
-    kSemcNandAddressOption_3byte_CA2RA1 = 4U,             /*!< CA0+CA1+RA0 */
-    kSemcNandAddressOption_4byte_CA1RA3 = 1U,             /*!< CA0+RA0+RA1+RA2 */
-    kSemcNandAddressOption_3byte_CA1RA2 = 3U,             /*!< CA0+RA0+RA1 */
-    kSemcNandAddressOption_2byte_CA1RA1 = 7U,             /*!< CA0+RA0 */
+    kSemcNandAddressOption_5byte_CA2RA3 = 0U, /*!< CA0+CA1+RA0+RA1+RA2 */
+    kSemcNandAddressOption_4byte_CA2RA2 = 2U, /*!< CA0+CA1+RA0+RA1 */
+    kSemcNandAddressOption_3byte_CA2RA1 = 4U, /*!< CA0+CA1+RA0 */
+    kSemcNandAddressOption_4byte_CA1RA3 = 1U, /*!< CA0+RA0+RA1+RA2 */
+    kSemcNandAddressOption_3byte_CA1RA2 = 3U, /*!< CA0+RA0+RA1 */
+    kSemcNandAddressOption_2byte_CA1RA1 = 7U, /*!< CA0+RA0 */
 } semc_nand_address_option_t;
 
 //!@brief SEMC NAND column Address option
@@ -336,10 +338,16 @@ status_t semc_ipg_command_set_data_size(uint8_t sizeInBytes);
 uint8_t semc_ipg_command_get_data_size(void);
 
 //!@brief Write device data(max 4 bytes) via SEMC IP commmand
-status_t semc_ipg_command_device_write(uint32_t slaveAddress, uint16_t commandCode, uint32_t writeData, uint8_t lengthInBytes);
+status_t semc_ipg_command_device_write(uint32_t slaveAddress,
+                                       uint16_t commandCode,
+                                       uint32_t writeData,
+                                       uint8_t lengthInBytes);
 
 //!@brief Read device data(max 4 bytes) via SEMC IP commmand
-status_t semc_ipg_command_device_read(uint32_t slaveAddress, uint16_t commandCode, uint8_t *readoutData, uint8_t lengthInBytes);
+status_t semc_ipg_command_device_read(uint32_t slaveAddress,
+                                      uint16_t commandCode,
+                                      uint8_t *readoutData,
+                                      uint8_t lengthInBytes);
 
 //!@brief Read memory data via SEMC IPG commmand
 status_t semc_ipg_memory_read(semc_mem_config_t *config, uint8_t *readoutData, uint32_t lengthInBytes);
@@ -363,7 +371,10 @@ uint16_t semc_ipg_command_get_nand_code(uint8_t userCommandCode, uint8_t address
 uint32_t semc_ipg_command_convert_nand_address(semc_mem_config_t *config, uint32_t slaveAddress);
 
 //!@brief Access NAND via SEMC IP commmand
-status_t semc_ipg_command_nand_access(uint32_t slaveAddress, uint16_t commandCode, uint32_t writeData, uint32_t *readoutData);
+status_t semc_ipg_command_nand_access(uint32_t slaveAddress,
+                                      uint16_t commandCode,
+                                      uint32_t writeData,
+                                      uint32_t *readoutData);
 
 //!@brief Convert NOR salve address for SEMC IP commmand
 uint32_t semc_ipg_command_convert_nor_address(semc_mem_config_t *config, uint32_t slaveAddress);

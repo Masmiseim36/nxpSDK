@@ -115,7 +115,7 @@ uint8_t USB_DeviceMscCardInit(void)
 static void USB_BmEnterCritical(uint8_t *sr)
 {
     *sr = DisableGlobalIRQ();
-    __ASM("CPSID I");
+    __ASM("CPSID i");
 }
 /*!
  * @brief msc exit critical.

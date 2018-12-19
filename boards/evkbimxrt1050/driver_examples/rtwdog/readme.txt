@@ -5,14 +5,6 @@ In this example, fast testing is first implemented to test the rtwdog.
 After this, refreshing the watchdog in None-window mode and window mode is executed.
 Note rtwdog is disabled in SystemInit function which means rtwdog is disabled
 after chip emerges from reset.
-
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
-
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -81,6 +73,11 @@ Refresh rtwdog 2 time
 
 ----- End of RTWDOG example  -----
 ~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

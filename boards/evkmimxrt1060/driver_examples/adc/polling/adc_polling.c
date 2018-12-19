@@ -1,8 +1,8 @@
 /*
  * Copyright (c) 2013 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2018 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -26,6 +26,7 @@
 /*******************************************************************************
  * Variables
  ******************************************************************************/
+const uint32_t g_Adc_12bitFullRange = 4096U;
 
 /*******************************************************************************
  * Code
@@ -79,6 +80,7 @@ int main(void)
     adcChannelConfigStruct.channelNumber = DEMO_ADC_USER_CHANNEL;
     adcChannelConfigStruct.enableInterruptOnConversionCompleted = false;
 
+    PRINTF("ADC Full Range: %d\r\n", g_Adc_12bitFullRange);
     while (1)
     {
         PRINTF("Press any key to get user channel's ADC value.\r\n");

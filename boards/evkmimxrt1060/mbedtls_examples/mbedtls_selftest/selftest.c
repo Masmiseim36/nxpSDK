@@ -313,6 +313,8 @@ static int bench_print_features(void)
     text = "CAU3 HW accelerated";
 #elif defined(MBEDTLS_FREESCALE_DCP_SHA256)
     text = "DCP HW accelerated";
+#elif defined(MBEDTLS_FREESCALE_HASHCRYPT_SHA256)
+    text = "HASHCRYPT HW accelerated";
 #else
     text = "Software implementation";
 #endif
@@ -327,6 +329,8 @@ static int bench_print_features(void)
     text = "CAU3 HW accelerated";
 #elif defined(MBEDTLS_FREESCALE_DCP_AES)
     text = "DCP HW accelerated";
+#elif defined(MBEDTLS_FREESCALE_HASHCRYPT_AES)
+    text = "HASHCRYPT HW accelerated";
 #else
     text = "Software implementation";
 #endif

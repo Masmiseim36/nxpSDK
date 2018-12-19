@@ -2,7 +2,7 @@
 <project>
   <fileVersion>2</fileVersion>
   <configuration>
-    <name>flexspi_nor_debug</name>
+    <name>flexspi_nor_sdram_debug</name>
     <toolchain>
       <name>ARM</name>
     </toolchain>
@@ -16,15 +16,15 @@
         <debug>1</debug>
         <option>
           <name>ExePath</name>
-          <state>$PROJ_DIR$/flexspi_nor_debug</state>
+          <state>$PROJ_DIR$/flexspi_nor_sdram_debug</state>
         </option>
         <option>
           <name>ObjPath</name>
-          <state>$PROJ_DIR$/flexspi_nor_debug/obj</state>
+          <state>$PROJ_DIR$/flexspi_nor_sdram_debug/obj</state>
         </option>
         <option>
           <name>ListPath</name>
-          <state>$PROJ_DIR$/flexspi_nor_debug/list</state>
+          <state>$PROJ_DIR$/flexspi_nor_sdram_debug/list</state>
         </option>
         <option>
           <name>GEndianMode</name>
@@ -184,13 +184,13 @@
           <state>XIP_EXTERNAL_FLASH=1</state>
           <state>XIP_BOOT_HEADER_ENABLE=1</state>
           <state>XIP_BOOT_HEADER_DCD_ENABLE=1</state>
+          <state>SKIP_SYSCLK_INIT</state>
           <state>FSL_DRIVER_TRANSFER_DOUBLE_WEAK_IRQ=0</state>
           <state>CPU_MIMXRT1021DAG5A</state>
           <state>FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE</state>
           <state>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</state>
           <state>BOARD_ACCEL_FXOS</state>
           <state>SDK_I2C_BASED_COMPONENT_USED</state>
-          <state>SKIP_SYSCLK_INIT</state>
           <state>USE_RTOS=1</state>
           <state>MBEDTLS_CONFIG_FILE="aws_mbedtls_config.h"</state>
           <state>FSL_RTOS_FREE_RTOS</state>
@@ -233,7 +233,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050,Pe167</state>
+          <state>Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -274,7 +274,7 @@
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state/>
+          <state>--diag_suppress Pa084</state>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -323,32 +323,49 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM4F</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../devices</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../..</state>
           <state>$PROJ_DIR$/../config_files</state>
           <state>$PROJ_DIR$/../../../../src/aws_examples/common</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
+          <state>$PROJ_DIR$/../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include</state>
           <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private</state>
           <state>$PROJ_DIR$/../../../../../middleware/mbedtls/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk</state>
+          <state>$PROJ_DIR$/../../../../../components/phyksz8081</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers</state>
           <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/third_party/mcu_vendor/nxp/MIMXRT1021/drivers</state>
-          <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/demos/common/include</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers</state>
+          <state>$PROJ_DIR$/../../../../../components/fxos8700cq</state>
+          <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include</state>
+          <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private</state>
           <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/third_party/pkcs11</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/io</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/log</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/xip</state>
+          <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/third_party</state>
           <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/third_party/jsmn</state>
+          <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers</state>
+          <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/demos/common/include</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers</state>
+          <state>$PROJ_DIR$/../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/xip</state>
+          <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/port</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip/apps</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lwip/contrib/apps</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -419,11 +436,11 @@
         </option>
         <option>
           <name>IccExceptions</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccRTTI</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccStaticDestr</name>
@@ -734,6 +751,8 @@
         </option>
         <option>
           <name>IlinkConfigDefines</name>
+          <state>__stack_size__=0x200</state>
+          <state>__heap_size__=0x200</state>
         </option>
         <option>
           <name>IlinkMapFile</name>
@@ -801,7 +820,6 @@
         </option>
         <option>
           <name>IlinkExtraOptions</name>
-          <state/>
         </option>
         <option>
           <name>IlinkLowLevelInterfaceSlave</name>
@@ -1005,7 +1023,7 @@
     </settings>
   </configuration>
   <configuration>
-    <name>flexspi_nor_release</name>
+    <name>flexspi_nor_sdram_release</name>
     <toolchain>
       <name>ARM</name>
     </toolchain>
@@ -1019,15 +1037,15 @@
         <debug>0</debug>
         <option>
           <name>ExePath</name>
-          <state>$PROJ_DIR$/flexspi_nor_release</state>
+          <state>$PROJ_DIR$/flexspi_nor_sdram_release</state>
         </option>
         <option>
           <name>ObjPath</name>
-          <state>$PROJ_DIR$/flexspi_nor_release/obj</state>
+          <state>$PROJ_DIR$/flexspi_nor_sdram_release/obj</state>
         </option>
         <option>
           <name>ListPath</name>
-          <state>$PROJ_DIR$/flexspi_nor_release/list</state>
+          <state>$PROJ_DIR$/flexspi_nor_sdram_release/list</state>
         </option>
         <option>
           <name>GEndianMode</name>
@@ -1186,13 +1204,14 @@
           <state>XIP_EXTERNAL_FLASH=1</state>
           <state>XIP_BOOT_HEADER_ENABLE=1</state>
           <state>XIP_BOOT_HEADER_DCD_ENABLE=1</state>
+          <state>SKIP_SYSCLK_INIT</state>
+          <state>NDEBUG</state>
           <state>FSL_DRIVER_TRANSFER_DOUBLE_WEAK_IRQ=0</state>
           <state>CPU_MIMXRT1021DAG5A</state>
           <state>FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE</state>
           <state>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</state>
           <state>BOARD_ACCEL_FXOS</state>
           <state>SDK_I2C_BASED_COMPONENT_USED</state>
-          <state>SKIP_SYSCLK_INIT</state>
           <state>USE_RTOS=1</state>
           <state>MBEDTLS_CONFIG_FILE="aws_mbedtls_config.h"</state>
           <state>FSL_RTOS_FREE_RTOS</state>
@@ -1235,7 +1254,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050,Pe167</state>
+          <state>Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -1276,7 +1295,7 @@
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state/>
+          <state>--diag_suppress Pa084</state>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -1325,32 +1344,49 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM4F</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../devices</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../..</state>
           <state>$PROJ_DIR$/../config_files</state>
           <state>$PROJ_DIR$/../../../../src/aws_examples/common</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
+          <state>$PROJ_DIR$/../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include</state>
           <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private</state>
           <state>$PROJ_DIR$/../../../../../middleware/mbedtls/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk</state>
+          <state>$PROJ_DIR$/../../../../../components/phyksz8081</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers</state>
           <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/third_party/mcu_vendor/nxp/MIMXRT1021/drivers</state>
-          <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/demos/common/include</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers</state>
+          <state>$PROJ_DIR$/../../../../../components/fxos8700cq</state>
+          <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include</state>
+          <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private</state>
           <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/third_party/pkcs11</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/io</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/log</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/xip</state>
+          <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/third_party</state>
           <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/third_party/jsmn</state>
+          <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers</state>
+          <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/demos/common/include</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers</state>
+          <state>$PROJ_DIR$/../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1021/xip</state>
+          <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/port</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip/apps</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lwip/contrib/apps</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1421,11 +1457,11 @@
         </option>
         <option>
           <name>IccExceptions</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccRTTI</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccStaticDestr</name>
@@ -1516,6 +1552,7 @@
         </option>
         <option>
           <name>ADefines</name>
+          <state>NDEBUG</state>
           <state>__STARTUP_INITIALIZE_NONCACHEDATA</state>
         </option>
         <option>
@@ -1735,6 +1772,8 @@
         </option>
         <option>
           <name>IlinkConfigDefines</name>
+          <state>__stack_size__=0x200</state>
+          <state>__heap_size__=0x200</state>
         </option>
         <option>
           <name>IlinkMapFile</name>
@@ -1802,7 +1841,6 @@
         </option>
         <option>
           <name>IlinkExtraOptions</name>
-          <state/>
         </option>
         <option>
           <name>IlinkLowLevelInterfaceSlave</name>
@@ -2028,26 +2066,23 @@
     <file>
       <name>$PROJ_DIR$/../pin_mux.h</name>
     </file>
-    <group>
-      <name>src</name>
-      <file>
-        <name>$PROJ_DIR$/../board.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../board.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../clock_config.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../clock_config.h</name>
-      </file>
-    </group>
     <file>
-      <name>$PROJ_DIR$/../fsl_phy.h</name>
+      <name>$PROJ_DIR$/../board.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../fsl_phy.c</name>
+      <name>$PROJ_DIR$/../board.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../clock_config.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../clock_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../components/phyksz8081/fsl_phy.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../components/phyksz8081/fsl_phy.c</name>
     </file>
   </group>
   <group>
@@ -2068,6 +2103,9 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../config_files/aws_mqtt_config.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../config_files/aws_pkcs11_config.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../config_files/aws_secure_sockets_config.h</name>
@@ -2100,20 +2138,65 @@
     <group>
       <name>pkcs11</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/pkcs11/portable/nxp/common/pkcs11.c</name>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/pkcs11/mbedtls/aws_pkcs11_mbedtls.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/third_party/pkcs11/pkcs11.h</name>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/pkcs11/portable/nxp/evkbimxrt1020/aws_pkcs11_pal.c</name>
       </file>
+    </group>
+    <group>
+      <name>license</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/third_party/pkcs11/pkcs11f.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/third_party/pkcs11/pkcs11t.h</name>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/LICENSE</name>
       </file>
     </group>
     <group>
       <name>include</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/event_groups.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/FreeRTOS.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/message_buffer.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/queue.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/semphr.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/stream_buffer.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/task.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/timers.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/freertos_tasks_c_additions.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private/deprecated_definitions.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private/list.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private/mpu_wrappers.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private/portable.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private/projdefs.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private/stack_macros.h</name>
+      </file>
       <file>
         <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/FreeRTOS.h</name>
       </file>
@@ -2166,9 +2249,6 @@
         <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private/aws_ggd_config_defaults.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private/aws_greengrass_lib_private.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private/aws_helper_secure_connect.h</name>
       </file>
       <file>
@@ -2182,12 +2262,6 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private/aws_mqtt_config_defaults.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private/aws_mqtt_lib_private.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private/aws_rsprintf.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private/aws_secure_sockets_config_defaults.h</name>
@@ -2252,102 +2326,6 @@
       <file>
         <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/demos/common/include/aws_greengrass_discovery_demo.h</name>
       </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/event_groups.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/FreeRTOS.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/message_buffer.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/queue.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/semphr.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/stream_buffer.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/task.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/timers.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/freertos_tasks_c_additions.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private/deprecated_definitions.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private/list.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private/mpu_wrappers.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private/portable.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private/projdefs.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private/stack_macros.h</name>
-      </file>
-    </group>
-    <group>
-      <name>mqtt</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/mqtt/aws_mqtt_agent.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/mqtt/aws_mqtt_lib.c</name>
-      </file>
-    </group>
-    <group>
-      <name>tls</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/tls/aws_tls.c</name>
-      </file>
-    </group>
-    <group>
-      <name>bufferpool</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/bufferpool/aws_bufferpool_static_thread_safe.c</name>
-      </file>
-    </group>
-    <group>
-      <name>logging</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/demos/common/logging/aws_logging_task_dynamic_buffers.c</name>
-      </file>
-    </group>
-    <group>
-      <name>crypto</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/crypto/aws_crypto.c</name>
-      </file>
-    </group>
-    <group>
-      <name>utils</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/utils/aws_system_init.c</name>
-      </file>
-    </group>
-    <group>
-      <name>devmode_key_provisioning</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/demos/common/devmode_key_provisioning/aws_dev_mode_key_provisioning.c</name>
-      </file>
-    </group>
-    <group>
-      <name>license</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/LICENSE</name>
-      </file>
     </group>
     <group>
       <name>FreeRTOS</name>
@@ -2375,6 +2353,12 @@
           <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/readme.txt</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM4F/fsl_tickless_systick.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM4F/fsl_tickless_generic.h</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM4F/port.c</name>
         </file>
         <file>
@@ -2389,16 +2373,46 @@
       </group>
     </group>
     <group>
-      <name>portable</name>
+      <name>mqtt</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM4F/fsl_tickless_systick.c</name>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/mqtt/aws_mqtt_agent.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM4F/fsl_tickless_generic.h</name>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/mqtt/aws_mqtt_lib.c</name>
+      </file>
+    </group>
+    <group>
+      <name>tls</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/tls/aws_tls.c</name>
+      </file>
+    </group>
+    <group>
+      <name>bufferpool</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/bufferpool/aws_bufferpool_static_thread_safe.c</name>
+      </file>
+    </group>
+    <group>
+      <name>crypto</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/crypto/aws_crypto.c</name>
       </file>
     </group>
     <group>
       <name>third_party</name>
+      <group>
+        <name>pkcs11</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/third_party/pkcs11/pkcs11.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/third_party/pkcs11/pkcs11f.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/third_party/pkcs11/pkcs11t.h</name>
+        </file>
+      </group>
       <group>
         <name>jsmn</name>
         <file>
@@ -2408,6 +2422,12 @@
           <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/third_party/jsmn/jsmn.h</name>
         </file>
       </group>
+    </group>
+    <group>
+      <name>utils</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/utils/aws_system_init.c</name>
+      </file>
     </group>
     <group>
       <name>shadow</name>
@@ -2424,6 +2444,18 @@
         <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/secure_sockets/portable/nxp/lwip/aws_secure_sockets.c</name>
       </file>
     </group>
+    <group>
+      <name>logging</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/demos/common/logging/aws_logging_task_dynamic_buffers.c</name>
+      </file>
+    </group>
+    <group>
+      <name>devmode_key_provisioning</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/demos/common/devmode_key_provisioning/aws_dev_mode_key_provisioning.c</name>
+      </file>
+    </group>
   </group>
   <group>
     <name>doc</name>
@@ -2438,18 +2470,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers/fsl_trng.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers/fsl_common.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers/fsl_common.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers/fsl_clock.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers/fsl_clock.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers/fsl_dcp.c</name>
@@ -2476,6 +2496,24 @@
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers/fsl_lpi2c.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers/fsl_clock.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers/fsl_clock.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers/fsl_enet.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers/fsl_enet.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers/fsl_common.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers/fsl_common.c</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers/fsl_lpuart.h</name>
     </file>
     <file>
@@ -2490,86 +2528,14 @@
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers/fsl_gpio.c</name>
     </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers/fsl_enet.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/drivers/fsl_enet.c</name>
-    </file>
   </group>
   <group>
     <name>accel</name>
     <file>
-      <name>$PROJ_DIR$/../fsl_fxos.h</name>
+      <name>$PROJ_DIR$/../../../../../components/fxos8700cq/fsl_fxos.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../fsl_fxos.c</name>
-    </file>
-  </group>
-  <group>
-    <name>startup</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/system_MIMXRT1021.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/system_MIMXRT1021.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/iar/startup_MIMXRT1021.s</name>
-    </file>
-  </group>
-  <group>
-    <name>utilities</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/io/fsl_io.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/io/fsl_io.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/log/fsl_log.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/log/fsl_log.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/fsl_debug_console.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/fsl_debug_console.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/fsl_debug_console_conf.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/fsl_assert.c</name>
-    </file>
-  </group>
-  <group>
-    <name>xip</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/xip/fsl_flexspi_nor_boot.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/xip/fsl_flexspi_nor_boot.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/xip/evkmimxrt1020_flexspi_nor_config.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/xip/evkmimxrt1020_flexspi_nor_config.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/xip/evkmimxrt1020_sdram_ini_dcd.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/xip/evkmimxrt1020_sdram_ini_dcd.h</name>
+      <name>$PROJ_DIR$/../../../../../components/fxos8700cq/fsl_fxos.c</name>
     </file>
   </group>
   <group>
@@ -3170,9 +3136,9 @@
     </group>
   </group>
   <group>
-    <name>mbedTLS</name>
+    <name>mbedtls</name>
     <group>
-      <name>mbedTLS_include</name>
+      <name>mbedtls_include</name>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/mbedtls/aes.h</name>
       </file>
@@ -3181,6 +3147,9 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/mbedtls/arc4.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/mbedtls/aria.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/mbedtls/asn1.h</name>
@@ -3208,6 +3177,12 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/mbedtls/certs.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/mbedtls/chacha20.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/mbedtls/chachapoly.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/mbedtls/check_config.h</name>
@@ -3270,6 +3245,9 @@
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/mbedtls/havege.h</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/mbedtls/hkdf.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/mbedtls/hmac_drbg.h</name>
       </file>
       <file>
@@ -3295,6 +3273,9 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/mbedtls/net_sockets.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/mbedtls/nist_kw.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/mbedtls/oid.h</name>
@@ -3327,10 +3308,19 @@
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/mbedtls/platform_time.h</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/mbedtls/platform_util.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/mbedtls/poly1305.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/mbedtls/ripemd160.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/mbedtls/rsa.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/mbedtls/rsa_internal.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/mbedtls/sha1.h</name>
@@ -3385,7 +3375,7 @@
       </file>
     </group>
     <group>
-      <name>mbedTLS_source</name>
+      <name>mbedtls_source</name>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/aes.c</name>
       </file>
@@ -3394,6 +3384,9 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/arc4.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/aria.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/asn1parse.c</name>
@@ -3424,6 +3417,12 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/cipher_wrap.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/chacha20.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/chachapoly.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/cmac.c</name>
@@ -3471,6 +3470,9 @@
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/havege.c</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/hkdf.c</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/hmac_drbg.c</name>
       </file>
       <file>
@@ -3493,6 +3495,9 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/net_sockets.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/nist_kw.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/oid.c</name>
@@ -3525,10 +3530,19 @@
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/platform.c</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/platform_util.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/poly1305.c</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/ripemd160.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/rsa.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/rsa_internal.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/sha1.c</name>
@@ -3598,7 +3612,7 @@
       </file>
     </group>
     <group>
-      <name>mbedTLS_port</name>
+      <name>mbedtls_port</name>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls.c</name>
       </file>
@@ -3620,6 +3634,159 @@
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk/des_alt.c</name>
       </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk/aes_alt.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk/aes_alt.c</name>
+      </file>
     </group>
+  </group>
+  <group>
+    <name>device</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/fsl_device_registers.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/MIMXRT1021.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/MIMXRT1021_features.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/system_MIMXRT1021.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/system_MIMXRT1021.h</name>
+    </file>
+  </group>
+  <group>
+    <name>utilities</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/str/fsl_str.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/debug_console/fsl_debug_console.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/debug_console/fsl_debug_console.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/debug_console/fsl_debug_console_conf.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/utilities/fsl_assert.c</name>
+    </file>
+  </group>
+  <group>
+    <name>component</name>
+    <group>
+      <name>uart</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/uart/uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/uart/lpuart_adapter.c</name>
+      </file>
+    </group>
+    <group>
+      <name>serial_manager</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_manager.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_manager.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_uart.c</name>
+      </file>
+    </group>
+    <group>
+      <name>lists</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.c</name>
+      </file>
+    </group>
+  </group>
+  <group>
+    <name>startup</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/iar/startup_MIMXRT1021.s</name>
+    </file>
+  </group>
+  <group>
+    <name>xip</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/xip/fsl_flexspi_nor_boot.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1021/xip/fsl_flexspi_nor_boot.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../xip/evkmimxrt1020_flexspi_nor_config.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../xip/evkmimxrt1020_flexspi_nor_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../xip/evkmimxrt1020_sdram_ini_dcd.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../xip/evkmimxrt1020_sdram_ini_dcd.h</name>
+    </file>
+  </group>
+  <group>
+    <name>CMSIS</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_cm7.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armcc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armclang.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_gcc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_compiler.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_version.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv7.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mbl.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mml.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_common_tables.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_const_structs.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_math.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_iccarm.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv8.h</name>
+    </file>
   </group>
 </project>

@@ -3,14 +3,6 @@ Overview
 The gpt_timer project is a simple demonstration program of the SDK GPT driver. It sets up the GPT
 hardware block to trigger a periodic interrupt after every 1 second. When the GPT interrupt is triggered
 a message a printed on the UART terminal.
-
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
-
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -39,6 +31,8 @@ When the example runs successfully, following information can be seen on the ter
 
 ~~~~~~~~~~~~~~~~~~~~~
 
+Press any key to start the example
+s
 Starting GPT timer ...
  GPT interrupt is occured !
  GPT interrupt is occured !
@@ -52,6 +46,11 @@ Starting GPT timer ...
  .
  .
 ~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

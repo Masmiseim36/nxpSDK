@@ -76,7 +76,7 @@ uint32_t g_UartActive;
 static void USB_BmEnterCritical(uint8_t *sr)
 {
     *sr = DisableGlobalIRQ();
-    __ASM("CPSID I");
+    __ASM("CPSID i");
 }
 /*!
  * @brief host cdc exit critical.
@@ -488,7 +488,7 @@ void USB_HostCdcControlCallback(void *param, uint8_t *data, uint32_t dataLength,
  *
  * @param param   the host cdc instance pointer.
  */
-void USB_HosCdcTask(void *param)
+void USB_HostCdcTask(void *param)
 {
     uint8_t usbOsaCurrentSr;
     usb_status_t status = kStatus_USB_Success;

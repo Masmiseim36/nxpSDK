@@ -2,32 +2,12 @@ Overview
 ========
 This example demonstrates how the board can be controlled by Android mobile application with usage the AWS IoT.
 User LEDs on the board can be controlled and also an action can be invoked to read data from accelerometer and report it to AWS IoT device shadow.
-
-
-
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- EVKB-IMXRT1050 board
-- GT202 Adaptor V1.04
-- Personal Computer
-
-Board settings
-==============
-Plug GT202 Adaptor board to FRDM stackable headers (J1, J2, J3, J4).
-Remove the resistor R334, dis-connect J15, and weld 0Ω resistor to R278,R279,R280,R281.
-
-Please use external power supply (J2), USB may not be sufficient.
+Please take look into section "Board settings" if there are some board limitations to control LEDs or read data from accelerometer.
+===================================================================================================================================
 
 Prepare the Demo
 ================
+Please update WiFi firmware to version 3.3.6 using "qca_fwupdate" demo.
 Before running the demo it is need to configure AWS IoT Console and update some of project files:
 
 1.  Create AWS Account: https://console.aws.amazon.com/console/home
@@ -166,97 +146,61 @@ Every mentioned action takes approximately 1-3 seconds.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 0 0 [Tmr Svc] Starting key provisioning...
 1 0 [Tmr Svc] Write root certificate...
-2 0 [Tmr Svc] Write device private key...
-3 6 [Tmr Svc] Write device certificate...
-4 13 [Tmr Svc] Key provisioning done...
-5 14 [Tmr Svc] Starting WiFi...
-6 1264 [Tmr Svc] WiFi module initialized.
-7 6281 [Tmr Svc] WiFi connected to AP RedmiAWS.
-8 9284 [Tmr Svc] IP Address acquired 192.168.43.251
-9 9289 [AWS-RemoteCtrl] [Shadow 0] MQTT: Creation of dedicated MQTT client succeeded.
-10 9297 [AWS-RemoteCtrl] Sending command to MQTT task.
-11 9302 [MQTT] Received message 10000 from queue.
-12 13738 [MQTT] Looked up a254jqzk0kcvf0.iot.us-west-2.amazonaws.com as 35.165.74.145
-13 30852 [MQTT] MQTT Connect was accepted. Connection established.
-14 30852 [MQTT] Notifying task.
-15 30861 [AWS-RemoteCtrl] Command sent to MQTT task passed.
-16 30866 [AWS-RemoteCtrl] [Shadow 0] MQTT: Connect succeeded.
-17 30872 [AWS-RemoteCtrl] Sending command to MQTT task.
-18 30877 [MQTT] Received message 20000 from queue.
-19 31486 [MQTT] MQTT Subscribe was accepted. Subscribed.
-20 31486 [MQTT] Notifying task.
-21 31494 [AWS-RemoteCtrl] Command sent to MQTT task passed.
-22 31499 [AWS-RemoteCtrl] [Shadow 0] MQTT: Subscribe to accepted topic succeeded.
-23 31507 [AWS-RemoteCtrl] Sending command to MQTT task.
-24 31512 [MQTT] Received message 30000 from queue.
-25 32222 [MQTT] MQTT Subscribe was accepted. Subscribed.
-26 32222 [MQTT] Notifying task.
-27 32230 [AWS-RemoteCtrl] Command sent to MQTT task passed.
-28 32235 [AWS-RemoteCtrl] [Shadow 0] MQTT: Subscribe to rejected topic succeeded.
-29 32243 [AWS-RemoteCtrl] Sending command to MQTT task.
-30 32248 [MQTT] Received message 40000 from queue.
-31 32250 [MQTT] Notifying task.
-32 32257 [AWS-RemoteCtrl] Command sent to MQTT task passed.
-33 32263 [AWS-RemoteCtrl] [Shadow 0] MQTT: Publish to operation topic succeeded.
-34 33060 [AWS-RemoteCtrl] Sending command to MQTT task.
-35 33065 [MQTT] Received message 50000 from queue.
-36 33775 [MQTT] MQTT Unsubscribe was successful.
-37 33775 [MQTT] Notifying task.
-38 33782 [AWS-RemoteCtrl] Command sent to MQTT task passed.
-39 33788 [AWS-RemoteCtrl] [Shadow 0] MQTT: Unsubscribe from rejected topic succeeded.
-40 33796 [AWS-RemoteCtrl] Sending command to MQTT task.
-41 33801 [MQTT] Received message 60000 from queue.
-42 34511 [MQTT] MQTT Subscribe was accepted. Subscribed.
-43 34511 [MQTT] Notifying task.
-44 34519 [AWS-RemoteCtrl] Command sent to MQTT task passed.
-45 34524 [AWS-RemoteCtrl] [Shadow 0] MQTT: Subscribe to callback topic succeeded.
-46 34532 [AWS-RemoteCtrl] Sending command to MQTT task.
-47 34537 [MQTT] Received message 70000 from queue.
-48 35247 [MQTT] MQTT Subscribe was accepted. Subscribed.
-49 35247 [MQTT] Notifying task.
-50 35255 [AWS-RemoteCtrl] Command sent to MQTT task passed.
-51 35260 [AWS-RemoteCtrl] [Shadow 0] MQTT: Subscribe to accepted topic succeeded.
-52 35268 [AWS-RemoteCtrl] Sending command to MQTT task.
-53 35273 [MQTT] Received message 80000 from queue.
-54 35882 [MQTT] MQTT Subscribe was accepted. Subscribed.
-55 35882 [MQTT] Notifying task.
-56 35890 [AWS-RemoteCtrl] Command sent to MQTT task passed.
-57 35895 [AWS-RemoteCtrl] [Shadow 0] MQTT: Subscribe to rejected topic succeeded.
-58 35903 [AWS-RemoteCtrl] Sending command to MQTT task.
-59 35908 [MQTT] Received message 90000 from queue.
-60 35911 [MQTT] Notifying task.
-61 35918 [AWS-RemoteCtrl] Command sent to MQTT task passed.
-62 35923 [AWS-RemoteCtrl] [Shadow 0] MQTT: Publish to operation topic succeeded.
-63 37432 [AWS-RemoteCtrl] AWS Remote Control Demo initialized.
-64 37438 [AWS-RemoteCtrl] Use mobile application to control the remote device.
-65 57537 [AWS-RemoteCtrl] Turn on LED1
-66 57540 [AWS-RemoteCtrl] Sending command to MQTT task.
-67 57546 [MQTT] Received message a0000 from queue.
-68 57548 [MQTT] Notifying task.
-69 57555 [AWS-RemoteCtrl] Command sent to MQTT task passed.
-70 57560 [AWS-RemoteCtrl] [Shadow 0] MQTT: Publish to operation topic succeeded.
-71 57854 [AWS-RemoteCtrl] Successfully performed update.
-72 57860 [AWS-RemoteCtrl] [Shadow 0] MQTT: Return MQTT buffer succeeded.
-73 69273 [AWS-RemoteCtrl] Turn off LED1
-74 69277 [AWS-RemoteCtrl] Sending command to MQTT task.
-75 69282 [MQTT] Received message b0000 from queue.
-76 69284 [MQTT] Notifying task.
-77 69291 [AWS-RemoteCtrl] Command sent to MQTT task passed.
-78 69297 [AWS-RemoteCtrl] [Shadow 0] MQTT: Publish to operation topic succeeded.
-79 70297 [AWS-RemoteCtrl] Successfully performed update.
-80 70303 [AWS-RemoteCtrl] [Shadow 0] MQTT: Return MQTT buffer succeeded.
-81 72020 [AWS-RemoteCtrl] Update accelerometer.
-82 72028 [AWS-RemoteCtrl] Sending command to MQTT task.
-83 72033 [MQTT] Received message c0000 from queue.
-84 72035 [MQTT] Notifying task.
-85 72042 [AWS-RemoteCtrl] Command sent to MQTT task passed.
-86 72048 [AWS-RemoteCtrl] [Shadow 0] MQTT: Publish to operation topic succeeded.
-87 73757 [AWS-RemoteCtrl] Successfully performed update.
-88 73762 [AWS-RemoteCtrl] [Shadow 0] MQTT: Return MQTT buffer succeeded.
+2 14 [Tmr Svc] Write device private key...
+3 448 [Tmr Svc] Write device certificate...
+4 467 [Tmr Svc] Key provisioning done...
+5 468 [Tmr Svc] Starting WiFi...
+6 2037 [Tmr Svc] WiFi module initialized.
+7 6195 [Tmr Svc] WiFi connected to AP External-Internet.
+8 6196 [Tmr Svc] IP Address acquired 192.168.0.245
+9 6214 [AWS-RemoteCtrl] [Shadow 0] MQTT: Creation of dedicated MQTT client succeeded.
+10 6578 [MQTT] Looked up a39m6stfia5skz.iot.us-west-2.amazonaws.com as 35.164.107.11
+11 19375 [AWS-RemoteCtrl] [Shadow 0] MQTT: Connect succeeded.
+12 19700 [AWS-RemoteCtrl] [Shadow 0] MQTT: Subscribe to accepted topic succeeded.
+13 20027 [AWS-RemoteCtrl] [Shadow 0] MQTT: Subscribe to rejected topic succeeded.
+14 20048 [AWS-RemoteCtrl] [Shadow 0] MQTT: Publish to operation topic succeeded.
+15 20682 [AWS-RemoteCtrl] [Shadow 0] MQTT: Unsubscribe from rejected topic succeeded.
+16 21010 [AWS-RemoteCtrl] [Shadow 0] MQTT: Subscribe to callback topic succeeded.
+17 21338 [AWS-RemoteCtrl] [Shadow 0] MQTT: Subscribe to accepted topic succeeded.
+18 21665 [AWS-RemoteCtrl] [Shadow 0] MQTT: Subscribe to rejected topic succeeded.
+19 21686 [AWS-RemoteCtrl] [Shadow 0] MQTT: Publish to operation topic succeeded.
+20 22009 [AWS-RemoteCtrl] AWS Remote Control Demo initialized.
+21 22017 [AWS-RemoteCtrl] Use mobile application to control the remote device.
+22 29514 [AWS-RemoteCtrl] Turn on LED1
+23 29531 [AWS-RemoteCtrl] [Shadow 0] MQTT: Publish to operation topic succeeded.
+24 29850 [AWS-RemoteCtrl] Successfully performed update.
+25 29858 [AWS-RemoteCtrl] [Shadow 0] MQTT: Return MQTT buffer succeeded.
+26 39678 [AWS-RemoteCtrl] Turn off LED1
+27 39696 [AWS-RemoteCtrl] [Shadow 0] MQTT: Publish to operation topic succeeded.
+28 41022 [AWS-RemoteCtrl] Successfully performed update.
+29 41030 [AWS-RemoteCtrl] [Shadow 0] MQTT: Return MQTT buffer succeeded.
+30 41962 [AWS-RemoteCtrl] Update accelerometer.
+31 41984 [AWS-RemoteCtrl] [Shadow 0] MQTT: Publish to operation topic succeeded.
+32 42303 [AWS-RemoteCtrl] Successfully performed update.
+33 42310 [AWS-RemoteCtrl] [Shadow 0] MQTT: Return MQTT buffer succeeded.
 .
 .
 .
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
+Hardware requirements
 =====================
+- Mini/micro USB cable
+- EVKB-IMXRT1050 board
+- GT202 Adaptor V1.04
+- Personal Computer
+
+Board settings
+==============
+Plug GT202 Adaptor board to FRDM stackable headers (J1, J2, J3, J4).
+Remove the resistor R334, dis-connect J15, and weld 0Ω resistor to R278,R279,R280,R281.
+
+Please use external power supply (J2), USB may not be sufficient.
+
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

@@ -3,7 +3,7 @@
  * Copyright 2016 NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -57,6 +57,7 @@ void EXAMPLE_SNVS_IRQHandler(void)
 int main(void)
 {
     uint32_t sec;
+    uint32_t min;
     uint8_t index;
     snvs_hp_rtc_datetime_t rtcDate;
     snvs_lp_srtc_datetime_t srtcDate;
@@ -118,6 +119,7 @@ int main(void)
         busyWait = true;
         index = 0;
         sec = 0;
+        min = 0;
 
         /* Get date time */
         SNVS_HP_RTC_GetDatetime(SNVS, &rtcDate);
@@ -141,15 +143,30 @@ int main(void)
         }
         PRINTF("\r\n");
 
-        SNVS_HP_RTC_GetDatetime(SNVS, &rtcDate);
+        /* alam can be set only for one day*/
+        if (sec > (24 * 60 * 60))
+        {
+            continue;
+        }
+        // SNVS_HP_RTC_GetDatetime(SNVS, &rtcDate);
         if ((rtcDate.second + sec) < 60)
         {
             rtcDate.second += sec;
         }
         else
         {
-            rtcDate.minute += (rtcDate.second + sec) / 60U;
+            min += (rtcDate.second + sec) / 60U;
             rtcDate.second = (rtcDate.second + sec) % 60U;
+        }
+
+        if ((rtcDate.minute + min) < 60)
+        {
+            rtcDate.minute += min;
+        }
+        else
+        {
+            rtcDate.hour += (rtcDate.minute + min) / 60U;
+            rtcDate.minute = (rtcDate.minute + min) % 60U;
         }
 
         SNVS_HP_RTC_SetAlarm(SNVS, &rtcDate);

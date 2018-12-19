@@ -1718,6 +1718,7 @@ status_t semc_nand_write_ecc_data_in_spare_area(semc_nand_config_t *config,
     return status;
 }
 
+#if BL_FEATURE_SEMC_NAND_MODULE
 // Initialize Parallel NAND Flash device
 status_t semc_nand_flash_init(semc_nand_config_t *config)
 {
@@ -1838,6 +1839,7 @@ status_t semc_nand_flash_init(semc_nand_config_t *config)
 
     return status;
 }
+#endif //BL_FEATURE_SEMC_NAND_MODULE
 
 //!@brief Read page data from Parallel NAND via SEMC
 status_t semc_nand_flash_read_page(semc_nand_config_t *config, uint32_t pageIndex, uint8_t *buffer, uint32_t length)
@@ -1959,6 +1961,11 @@ status_t semc_nand_flash_page_program(semc_nand_config_t *config, uint32_t pageI
     uint32_t memoryAccessAddr = 0;
     uint32_t ipgCmdAddr = pageIndex * config->bytesInPageDataArea;
 
+    // Validate given length
+    if (length < 1)
+    {
+        return kStatus_InvalidArgument;
+    }
     // Validate given page address
     if (ipgCmdAddr >= config->memConfig.nandMemConfig.ipgMemSizeInByte)
     {
@@ -2004,7 +2011,7 @@ status_t semc_nand_flash_page_program(semc_nand_config_t *config, uint32_t pageI
         assert(!(config->bytesInPageDataArea / sizeof(s_nandReadbackBlockBuffer)));
         while (payloadedBytes < config->bytesInPageDataArea)
         {
-            uint32_t writeBytes;
+            uint32_t writeBytes = 0;
             if (requiredBytes)
             {
                 if (requiredBytes >= sizeof(s_nandReadbackBlockBuffer))

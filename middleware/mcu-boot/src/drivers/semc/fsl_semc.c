@@ -664,8 +664,12 @@ static status_t semc_config_nor_flash_control_registers(semc_mem_config_t *confi
             base->IOCR |= SEMC_IOCR_MUX_RDY(4);
             break;
         default:
-            return kStatus_SEMC_InvalidSwPinmuxSelection;
+            status = kStatus_SEMC_InvalidSwPinmuxSelection;
             break;
+    }
+    if (status != kStatus_Success)
+    {
+        return status;
     }
 
     /////////////////////////////////////////////
@@ -813,9 +817,14 @@ static status_t semc_config_nand_flash_control_registers(semc_mem_config_t *conf
             base->IOCR |= SEMC_IOCR_MUX_CSX3(4);
             break;
         default:
-            return kStatus_SEMC_InvalidSwPinmuxSelection;
+            status = kStatus_SEMC_InvalidSwPinmuxSelection;
             break;
     }
+    if (status != kStatus_Success)
+    {
+        return status;
+    }
+    
     // Set NAND RDY port pinmux
     base->IOCR |= SEMC_IOCR_MUX_RDY(0);
 
@@ -904,6 +913,7 @@ static status_t semc_config_nand_flash_control_registers(semc_mem_config_t *conf
     return status;
 }
 
+#if BL_FEATURE_SEMC_NAND_MODULE || BL_FEATURE_SEMC_NOR_MODULE
 //!@brief Initialize SEMC module
 status_t semc_init(semc_mem_config_t *config)
 {
@@ -985,6 +995,7 @@ status_t semc_init(semc_mem_config_t *config)
 
     return status;
 }
+#endif //BL_FEATURE_SEMC_NAND_MODULE || BL_FEATURE_SEMC_NOR_MODULE
 
 ////////////////////////////////////////////////////////////////////////////////
 // EOF

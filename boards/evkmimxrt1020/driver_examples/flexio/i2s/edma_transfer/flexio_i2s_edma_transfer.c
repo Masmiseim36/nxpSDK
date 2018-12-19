@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2018 NXP
  * All rights reserved.
- * 
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- *  that the following conditions are met:
  *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "board.h"
@@ -91,8 +65,9 @@
 #define EXAMPLE_RX_DMA_SOURCE kDmaRequestMuxFlexIO1Request2Request3
 #define OVER_SAMPLE_RATE (384)
 #define BUFFER_SIZE (128)
-#define BUFFER_NUM (2)
+#define BUFFER_NUM (4)
 #define PLAY_COUNT (5000)
+#define ZERO_BUFFER_SIZE (BUFFER_SIZE * 2U)
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -112,6 +87,8 @@ AT_NONCACHEABLE_SECTION_INIT(flexio_i2s_edma_handle_t rxHandle) = {0};
 edma_handle_t txDmaHandle = {0};
 edma_handle_t rxDmaHandle = {0};
 AT_NONCACHEABLE_SECTION_ALIGN_INIT(static uint8_t audioBuff[BUFFER_SIZE * BUFFER_NUM], 4) = {0};
+AT_NONCACHEABLE_SECTION_ALIGN_INIT(static uint8_t zeroBuff[ZERO_BUFFER_SIZE], 4) = {0};
+
 codec_handle_t codecHandle = {0};
 extern codec_config_t boardCodecConfig;
 FLEXIO_I2S_Type base;
@@ -120,9 +97,8 @@ static volatile bool isRxFinished = false;
 static volatile uint32_t beginCount = 0;
 static volatile uint32_t sendCount = 0;
 static volatile uint32_t receiveCount = 0;
-static volatile uint8_t fullBlock = 0;
 static volatile uint8_t emptyBlock = 0;
-
+static volatile bool isZeroBuffer = true;
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -140,8 +116,16 @@ void BOARD_EnableSaiMclkOutput(bool enable)
 
 static void txCallback(FLEXIO_I2S_Type *i2sBase, flexio_i2s_edma_handle_t *handle, status_t status, void *userData)
 {
-    sendCount++;
-    emptyBlock++;
+    if ((emptyBlock < BUFFER_NUM) && (!isZeroBuffer))
+    {
+        emptyBlock++;
+        sendCount++;
+    }
+
+    if (isZeroBuffer)
+    {
+        isZeroBuffer = false;
+    }
 
     if (sendCount == beginCount)
     {
@@ -151,8 +135,11 @@ static void txCallback(FLEXIO_I2S_Type *i2sBase, flexio_i2s_edma_handle_t *handl
 
 static void rxCallback(FLEXIO_I2S_Type *i2sBase, flexio_i2s_edma_handle_t *handle, status_t status, void *userData)
 {
-    receiveCount++;
-    fullBlock++;
+    if (emptyBlock > 0)
+    {
+        emptyBlock--;
+        receiveCount++;
+    }
 
     if (receiveCount == beginCount)
     {
@@ -232,7 +219,7 @@ int main(void)
 
     /* Configure the audio format */
     sai_transfer_format_t saiFormat = {0};
-    saiFormat.bitWidth = kSAI_WordWidth16bits;
+    saiFormat.bitWidth = kSAI_WordWidth32bits;
     saiFormat.channel = 0U;
     saiFormat.sampleRate_Hz = kSAI_SampleRate16KHz;
 #if defined(FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) && (FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER)
@@ -277,7 +264,7 @@ int main(void)
     FLEXIO_I2S_Init(&base, &config);
 
     /* Configure the audio format */
-    format.bitWidth = kFLEXIO_I2S_WordWidth16bits;
+    format.bitWidth = kFLEXIO_I2S_WordWidth32bits;
     format.sampleRate_Hz = kFLEXIO_I2S_SampleRate16KHz;
 
     /* Use default setting to init codec */
@@ -292,28 +279,33 @@ int main(void)
     FLEXIO_I2S_TransferSetFormatEDMA(&base, &rxHandle, &format, sourceClockHz);
 
     emptyBlock = BUFFER_NUM;
-    fullBlock = 1;
     beginCount = PLAY_COUNT;
-    txXfer.dataSize = BUFFER_SIZE;
-    rxXfer.dataSize = BUFFER_SIZE;
+    /* send zero buffer fistly to make sure RX data is put into TX queue */
+    txXfer.dataSize = ZERO_BUFFER_SIZE;
+    txXfer.data = zeroBuff;
+    FLEXIO_I2S_TransferSendEDMA(&base, &txHandle, &txXfer);
 
     /* Wait until finished */
     while ((isTxFinished != true) || (isRxFinished != true))
     {
-        if ((isTxFinished != true) && (fullBlock > 0))
-        {
-            txXfer.data = audioBuff + txIndex * BUFFER_SIZE;
-            FLEXIO_I2S_TransferSendEDMA(&base, &txHandle, &txXfer);
-            fullBlock--;
-            txIndex = (txIndex + 1) % BUFFER_NUM;
-        }
-
-        if ((isRxFinished != true) && (emptyBlock > 0))
+        if (emptyBlock > 0)
         {
             rxXfer.data = audioBuff + rxIndex * BUFFER_SIZE;
-            FLEXIO_I2S_TransferReceiveEDMA(&base, &rxHandle, &rxXfer);
-            emptyBlock--;
-            rxIndex = (rxIndex + 1) % BUFFER_NUM;
+            rxXfer.dataSize = BUFFER_SIZE;
+            if (FLEXIO_I2S_TransferReceiveEDMA(&base, &rxHandle, &rxXfer) == kStatus_Success)
+            {
+                rxIndex = (rxIndex + 1) % BUFFER_NUM;
+            }
+        }
+
+        if (emptyBlock < BUFFER_NUM)
+        {
+            txXfer.dataSize = BUFFER_SIZE;
+            txXfer.data = audioBuff + txIndex * BUFFER_SIZE;
+            if (FLEXIO_I2S_TransferSendEDMA(&base, &txHandle, &txXfer) == kStatus_Success)
+            {
+                txIndex = (txIndex + 1) % BUFFER_NUM;
+            }
         }
     }
 

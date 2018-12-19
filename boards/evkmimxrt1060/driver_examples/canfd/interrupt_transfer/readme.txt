@@ -7,13 +7,24 @@ Endpoint B(board B) when user press space key in terminal. Endpoint B receive th
 the message content to terminal and echo back the message. Endpoint A will increase the received
 message and waiting for the next transmission of the user initiated.
 
-Toolchain supported
-===================
-- Keil MDK 5.25
-- IAR embedded Workbench 8.30.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.1
-
+For self wake up from STOP mode, since steps which MCU enters STOP mode differs on different MCUs,
+take flexcan_interrupt_transfer of twrke18f for example, user should do like this:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#include "fsl_smc.h"
+...
+...
+flexcanConfig.enableSelfWakeup = true;
+FLEXCAN_Init();
+...
+...
+SMC_SetPowerModeStop(SMC, kSMC_PartialStop1);
+if (wakenUp)
+{
+    PRINTF("B has been waken up!\r\n\r\n");
+}
+...
+...
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -45,12 +56,14 @@ One board must be chosen as node A and the other board as node B. (Note: Node B 
 Data is sent continuously between the node A and the node B.
 
 ~~~~~~~~~~~~~~~~~~~~~
+Consider special errata 005829 feature, the 1st valid MB should be used as reserved one.
+The TX MB number will change from 8 to 9, while RX MB number will change from 9 to 10 
 This message displays on the node A terminal:
 
 ********* FLEXCAN Interrupt EXAMPLE *********
     Message format: Standard (11 bit id)
-    Message buffer 9 used for Rx.
-    Message buffer 8 used for Tx.
+    Message buffer 10 used for Rx.
+    Message buffer 9 used for Tx.
     Interrupt Mode: Enabled
     Operation Mode: TX and RX --> Normal
 *********************************************
@@ -70,8 +83,8 @@ This message displays on the node B terminal:
 
 ********* FLEXCAN Interrupt EXAMPLE *********
     Message format: Standard (11 bit id)
-    Message buffer 9 used for Rx.
-    Message buffer 8 used for Tx.
+    Message buffer 10 used for Rx.
+    Message buffer 9 used for Tx.
     Interrupt Mode: Enabled
     Operation Mode: TX and RX --> Normal
 *********************************************
@@ -87,6 +100,11 @@ Wait Node A to trigger the next transmission!
 Rx MB ID: 0x321, Rx MB data: 0x1
 Wait Node A to trigger the next transmission!
 ~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

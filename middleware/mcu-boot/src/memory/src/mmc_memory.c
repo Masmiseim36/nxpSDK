@@ -777,7 +777,6 @@ status_t mmc_get_property(uint32_t whichProperty, uint32_t *value)
 static status_t mmc_mem_load_buffer(uint32_t blockAddr)
 {
     status_t status;
-    mmc_card_t *card = &s_mmcContext.mmc;
 
     s_mmcContext.isReadBufferValid = false; // Mark read buffer invalid.
 
@@ -847,7 +846,6 @@ static bool is_erased_memory(uint32_t blockAddr, uint32_t blockCount, uint32_t e
 {
     status_t status = kStatus_Success;
     mmc_card_t *card = &s_mmcContext.mmc;
-    uint32_t blockSize = card->blockSize;
     uint32_t offset, *buffer, readblock;
     while (blockCount)
     {
@@ -903,6 +901,7 @@ static bool is_write_block_cached(uint32_t blockAddr)
 
 static status_t get_current_block_count(mmc_card_t *card, uint32_t *partitionBlocks)
 {
+    status_t status = kStatus_Success;
     switch (card->currentPartition)
     {
         case kMMC_AccessPartitionUserAera:
@@ -938,9 +937,9 @@ static status_t get_current_block_count(mmc_card_t *card, uint32_t *partitionBlo
             break;
         }
         default:
-            return kStatus_InvalidArgument;
+            status = kStatus_InvalidArgument;
             break;
     }
-    return kStatus_Success;
+    return status;
 }
 #endif // #if BL_FEATURE_MMC_MODULE

@@ -35,10 +35,10 @@ typedef void (*printfCb)(char *buf, int32_t *indicator, char val, int len);
  * @note I/O is performed by calling given function pointer using following
  * (*func_ptr)(c);
  *
- * @param[in] fmt_ptr   Format string for printf.
- * @param[in] args_ptr  Arguments to printf.
+ * @param[in] fmt   Format string for printf.
+ * @param[in] ap  Arguments to printf.
  * @param[in] buf  pointer to the buffer
- * @param cb print callback function pointer
+ * @param cb print callbck function pointer
  *
  * @return Number of characters to be print
  */

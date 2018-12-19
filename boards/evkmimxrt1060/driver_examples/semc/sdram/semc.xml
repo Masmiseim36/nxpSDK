@@ -2,24 +2,30 @@
 <ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
   <externalDefinitions>
     <definition extID="com.nxp.mcuxpresso"/>
-    <definition extID="platform.devices.MIMXRT1062_CMSIS.MIMXRT1062"/>
-    <definition extID="platform.devices.MIMXRT1062_startup.MIMXRT1062"/>
+    <definition extID="component.lists.MIMXRT1062"/>
+    <definition extID="component.lpuart_adapter.MIMXRT1062"/>
+    <definition extID="component.serial_manager.MIMXRT1062"/>
+    <definition extID="component.serial_manager_uart.MIMXRT1062"/>
+    <definition extID="device.MIMXRT1062_CMSIS.MIMXRT1062"/>
+    <definition extID="device.MIMXRT1062_startup.MIMXRT1062"/>
+    <definition extID="platform.Include_common.MIMXRT1062"/>
+    <definition extID="platform.Include_core_cm7.MIMXRT1062"/>
     <definition extID="platform.drivers.clock.MIMXRT1062"/>
     <definition extID="platform.drivers.common.MIMXRT1062"/>
     <definition extID="platform.drivers.igpio.MIMXRT1062"/>
     <definition extID="platform.drivers.iomuxc.MIMXRT1062"/>
     <definition extID="platform.drivers.lpuart.MIMXRT1062"/>
     <definition extID="platform.drivers.semc.MIMXRT1062"/>
-    <definition extID="platform.drivers.xip.MIMXRT1062"/>
+    <definition extID="platform.drivers.xip_board.MIMXRT1062"/>
+    <definition extID="platform.drivers.xip_device.MIMXRT1062"/>
     <definition extID="platform.utilities.assert.MIMXRT1062"/>
-    <definition extID="platform.utilities.debug_console.MIMXRT1062"/>
+    <definition extID="utility.debug_console.MIMXRT1062"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
-    <definition extID="atl"/>
-    <definition extID="mcuxpresso"/>
     <definition extID="armgcc"/>
+    <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="evkmimxrt1060_semc" name="semc" category="driver_examples/semc" dependency="platform.drivers.clock.MIMXRT1062 platform.drivers.common.MIMXRT1062 platform.devices.MIMXRT1062_CMSIS.MIMXRT1062 platform.devices.MIMXRT1062_startup.MIMXRT1062 platform.drivers.lpuart.MIMXRT1062 platform.utilities.debug_console.MIMXRT1062 platform.drivers.iomuxc.MIMXRT1062 platform.utilities.assert.MIMXRT1062 platform.drivers.igpio.MIMXRT1062 platform.drivers.xip.MIMXRT1062 platform.drivers.semc.MIMXRT1062" toolchain="mdk iar armgcc mcuxpresso">
+  <example id="evkmimxrt1060_semc" name="semc" category="driver_examples/semc" dependency="platform.drivers.semc.MIMXRT1062 platform.drivers.clock.MIMXRT1062 platform.drivers.common.MIMXRT1062 device.MIMXRT1062_CMSIS.MIMXRT1062 utility.debug_console.MIMXRT1062 component.lpuart_adapter.MIMXRT1062 component.serial_manager.MIMXRT1062 component.serial_manager_uart.MIMXRT1062 platform.drivers.lpuart.MIMXRT1062 component.lists.MIMXRT1062 device.MIMXRT1062_startup.MIMXRT1062 platform.drivers.iomuxc.MIMXRT1062 platform.utilities.assert.MIMXRT1062 platform.drivers.igpio.MIMXRT1062 platform.drivers.xip_device.MIMXRT1062 platform.drivers.xip_board.MIMXRT1062 platform.Include_core_cm7.MIMXRT1062 platform.Include_common.MIMXRT1062" toolchain="iar mdk armgcc mcuxpresso">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -40,9 +46,6 @@
         </option>
         <option id="com.crt.advproject.c.misc.dialect" type="enum">
           <value>com.crt.advproject.misc.dialect.gnu99</value>
-        </option>
-        <option id="com.crt.advproject.gcc.exe.debug.option.debugging.level" type="enum">
-          <value>gnu.c.debugging.level.default</value>
         </option>
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
           <value>CPU_MIMXRT1062DVL6A</value>
@@ -71,26 +74,34 @@
           <value>isd=*(NonCacheable.init);region=SRAM_DTC;type=.data</value>
           <value>isd=*(NonCacheable);region=SRAM_DTC;type=.bss</value>
         </option>
-        <option id="com.crt.advproject.gcc.exe.release.option.debugging.level" type="enum">
-          <value>gnu.c.debugging.level.none</value>
-        </option>
       </toolchainSetting>
     </toolchainSettings>
-    <source path="boards/evkmimxrt1060/driver_examples/semc/sdram" target_path="board/src" type="c_include">
-      <files mask="board.h"/>
-      <files mask="clock_config.h"/>
+    <source path="boards/evkmimxrt1060/driver_examples/semc/sdram/armgcc" target_path="src" type="linker" toolchain="armgcc">
+      <files mask="MIMXRT1062xxxxx_ram.ld"/>
     </source>
-    <source path="boards/evkmimxrt1060/driver_examples/semc/sdram" target_path="board/src" type="src">
-      <files mask="board.c"/>
-      <files mask="clock_config.c"/>
+    <source path="boards/evkmimxrt1060/driver_examples/semc/sdram/iar" target_path="src" type="linker" toolchain="iar">
+      <files mask="MIMXRT1062xxxxx_ram.icf"/>
+    </source>
+    <source path="boards/evkmimxrt1060/driver_examples/semc/sdram/iar" target_path="src" type="other" toolchain="iar">
+      <files mask="evkmimxrt1060.mac"/>
+    </source>
+    <source path="boards/evkmimxrt1060/driver_examples/semc/sdram/mdk" target_path="src" type="configuration" toolchain="mdk">
+      <files mask="evkmimxrt1060_ram.ini"/>
+    </source>
+    <source path="boards/evkmimxrt1060/driver_examples/semc/sdram/mdk" target_path="src" type="linker" toolchain="mdk">
+      <files mask="MIMXRT1062xxxxx_ram.scf"/>
     </source>
     <source path="boards/evkmimxrt1060/driver_examples/semc/sdram" target_path="board" type="c_include">
+      <files mask="board.h"/>
+      <files mask="clock_config.h"/>
       <files mask="pin_mux.h"/>
     </source>
     <source path="boards/evkmimxrt1060/driver_examples/semc/sdram" target_path="board" type="src">
+      <files mask="board.c"/>
+      <files mask="clock_config.c"/>
       <files mask="pin_mux.c"/>
     </source>
-    <source path="boards/evkmimxrt1060/driver_examples/semc/sdram" target_path="doc" type="doc" toolchain="iar mdk atl mcuxpresso">
+    <source path="boards/evkmimxrt1060/driver_examples/semc/sdram" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso armgcc">
       <files mask="readme.txt"/>
     </source>
     <source path="boards/evkmimxrt1060/driver_examples/semc/sdram" target_path="source" type="src">

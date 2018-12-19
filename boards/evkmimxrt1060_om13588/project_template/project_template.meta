@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<metadata>
+  <components>
+    <component name="project_template.evkmimxrt1060_om13588" provides="project_template" requires="platform.devices.device platform.devices.MIMXRT1062 platform.devices.MIMXRT1062_startup platform.drivers platform.drivers.lpuart platform.drivers.common platform.drivers.iomuxc platform.drivers.igpio platform.drivers.xip platform.utilities platform.utilities.debug_console platform.drivers.clock kits.EVK-MIMXRT1060-OM13588" type="project_template" component_bundle="bundles.board_project_templates" variant="evkmimxrt1060_om13588">
+      <source path="./">
+        <files mask="board.c"/>
+        <files mask="board.h"/>
+        <files mask="clock_config.c"/>
+        <files mask="clock_config.h"/>
+        <files mask="pin_mux.c"/>
+        <files mask="pin_mux.h"/>
+        <files mask="peripherals.c"/>
+        <files mask="peripherals.h"/>
+        <files mask="project_template.meta"/>
+      </source>
+    </component>
+    <component name="project_generator_template.evkmimxrt1060_om13588" provides="project_template" requires="devices.boards.evkmimxrt1060_om13588" type="other">
+      <source path="./cproject_generator_templates/iar/" requires="iar">
+        <files mask="*.*"/>
+      </source>
+      <source path="./cproject_generator_templates/iar/settings/" requires="iar">
+        <files mask="*.*"/>
+      </source>
+      <source path="./cproject_generator_templates/mdk/" requires="mdk">
+        <files mask="*.*"/>
+      </source>
+      <source path="./cproject_generator_templates/armgcc/" requires="armgcc">
+        <files mask="*.*"/>
+      </source>
+      <source path="./cproject_generator_templates/kds/" requires="kds">
+        <files mask="*.*"/>
+      </source>
+      <source path="./cproject_generator_templates/kds/settings/" requires="kds">
+        <files mask="*.*"/>
+      </source>
+      <source path="./cppproject_generator_templates/iar/" requires="iar">
+        <files mask="*.*"/>
+      </source>
+      <source path="./cppproject_generator_templates/iar/settings/" requires="iar">
+        <files mask="*.*"/>
+      </source>
+      <source path="./cppproject_generator_templates/mdk/" requires="mdk">
+        <files mask="*.*"/>
+      </source>
+      <source path="./cppproject_generator_templates/armgcc/" requires="armgcc">
+        <files mask="*.*"/>
+      </source>
+      <source path="./cppproject_generator_templates/kds/" requires="kds">
+        <files mask="*.*"/>
+      </source>
+      <source path="./cppproject_generator_templates/kds/settings/" requires="kds">
+        <files mask="*.*"/>
+      </source>
+    </component>
+  </components>
+</metadata>

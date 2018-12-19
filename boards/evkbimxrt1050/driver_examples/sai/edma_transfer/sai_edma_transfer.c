@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- *  that the following conditions are met:
  *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "board.h"
@@ -94,7 +68,7 @@ AT_NONCACHEABLE_SECTION_INIT(sai_edma_handle_t txHandle) = {0};
 edma_handle_t dmaHandle = {0};
 codec_handle_t codecHandle = {0};
 extern codec_config_t boardCodecConfig;
-AT_NONCACHEABLE_SECTION_ALIGN(static uint8_t buffer[BUFFER_NUM*BUFFER_SIZE], 4);
+AT_NONCACHEABLE_SECTION_ALIGN(static uint8_t buffer[BUFFER_NUM * BUFFER_SIZE], 4);
 volatile bool isFinished = false;
 volatile uint32_t finishIndex = 0U;
 volatile uint32_t emptyBlock = BUFFER_NUM;
@@ -128,7 +102,7 @@ void BOARD_EnableSaiMclkOutput(bool enable)
 
 static void callback(I2S_Type *base, sai_edma_handle_t *handle, status_t status, void *userData)
 {
-    if(kStatus_SAI_RxError == status)
+    if (kStatus_SAI_RxError == status)
     {
     }
     else
@@ -136,7 +110,7 @@ static void callback(I2S_Type *base, sai_edma_handle_t *handle, status_t status,
         finishIndex++;
         emptyBlock++;
         /* Judge whether the music array is completely transfered. */
-        if(MUSIC_LEN/BUFFER_SIZE == finishIndex)
+        if (MUSIC_LEN / BUFFER_SIZE == finishIndex)
         {
             isFinished = true;
         }
@@ -153,7 +127,7 @@ int main(void)
     sai_transfer_format_t format;
     sai_transfer_t xfer;
     edma_config_t dmaConfig = {0};
-    uint32_t cpy_index = 0U, tx_index=0U;
+    uint32_t cpy_index = 0U, tx_index = 0U;
     uint32_t delayCycle = 500000U;
 
     BOARD_ConfigMPU();
@@ -174,6 +148,8 @@ int main(void)
     /*Enable MCLK clock*/
     BOARD_EnableSaiMclkOutput(true);
     BOARD_Codec_I2C_Init();
+
+    memset(&format, 0U, sizeof(sai_transfer_format_t));
 
     PRINTF("SAI example started!\n\r");
 
@@ -220,7 +196,7 @@ int main(void)
 #endif
     format.protocol = config.protocol;
     format.stereo = kSAI_Stereo;
-    format.isFrameSyncCompact = false;
+    format.isFrameSyncCompact = true;
 #if defined(FSL_FEATURE_SAI_FIFO_COUNT) && (FSL_FEATURE_SAI_FIFO_COUNT > 1)
     format.watermark = FSL_FEATURE_SAI_FIFO_COUNT / 2U;
 #endif
@@ -238,7 +214,6 @@ int main(void)
     codecConfig.protocol = kWM8524_ProtocolI2S;
     WM8524_Init(&codecHandle, &codecConfig);
 #endif
-
 
 /* If need to handle audio error, enable sai interrupt */
 #if defined(DEMO_SAI_IRQ)
@@ -261,28 +236,29 @@ int main(void)
     SAI_TransferTxSetFormatEDMA(DEMO_SAI, &txHandle, &format, mclkSourceClockHz, format.masterClockHz);
 
     /* Waiting until finished. */
-    while(!isFinished)
+    while (!isFinished)
     {
-        if((emptyBlock > 0U) && (cpy_index < MUSIC_LEN/BUFFER_SIZE))
+        if ((emptyBlock > 0U) && (cpy_index < MUSIC_LEN / BUFFER_SIZE))
         {
-             /* Fill in the buffers. */
-             memcpy((uint8_t *)&buffer[BUFFER_SIZE*(cpy_index%BUFFER_NUM)],(uint8_t *)&music[cpy_index*BUFFER_SIZE],sizeof(uint8_t)*BUFFER_SIZE); 
-             emptyBlock--;
-             cpy_index++;
+            /* Fill in the buffers. */
+            memcpy((uint8_t *)&buffer[BUFFER_SIZE * (cpy_index % BUFFER_NUM)],
+                   (uint8_t *)&music[cpy_index * BUFFER_SIZE], sizeof(uint8_t) * BUFFER_SIZE);
+            emptyBlock--;
+            cpy_index++;
         }
-        if(emptyBlock < BUFFER_NUM)
+        if (emptyBlock < BUFFER_NUM)
         {
             /*  xfer structure */
-            xfer.data = (uint8_t *)&buffer[BUFFER_SIZE*(tx_index%BUFFER_NUM)];
-            xfer.dataSize = BUFFER_SIZE;  
+            xfer.data = (uint8_t *)&buffer[BUFFER_SIZE * (tx_index % BUFFER_NUM)];
+            xfer.dataSize = BUFFER_SIZE;
             /* Wait for available queue. */
-            if(kStatus_Success == SAI_TransferSendEDMA(DEMO_SAI, &txHandle, &xfer))
-            {  
+            if (kStatus_Success == SAI_TransferSendEDMA(DEMO_SAI, &txHandle, &xfer))
+            {
                 tx_index++;
             }
         }
     }
-    
+
     /* Once transfer finish, disable SAI instance. */
     SAI_TransferAbortSendEDMA(DEMO_SAI, &txHandle);
     SAI_Deinit(DEMO_SAI);

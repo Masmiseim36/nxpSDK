@@ -6,23 +6,6 @@ the middleware/wolfssl/wolfssl/wolfcrypt/settings.h header file. FREESCALE_USE_M
 and FREESCALE_USE_LPC_SHA macros can be used to compile the wolfssl_benchmark project source code with support for
 the Freescale hardware cryptographic accelerator, or when none of these macros is defined, all algorithms are implemented in software only.
 
-
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- EVKB-IMXRT1050 board
-- Personal Computer
-
-Board settings
-==============
-No special settings are required.
 Prepare the Demo
 ================
 Connect a serial cable from the debug UART port of the board to the PC. Start TeraTerm
@@ -156,6 +139,20 @@ ECC  256 key generation  557.645 milliseconds, avg over 5 iterations
 EC-DHE   key agreement   554.486 milliseconds, avg over 5 iterations
 EC-DSA   sign   time     564.837 milliseconds, avg over 5 iterations
 EC-DSA   verify time     1109.984 milliseconds, avg over 5 iterations
-Customization options
+Hardware requirements
 =====================
+- Mini/micro USB cable
+- EVKB-IMXRT1050 board
+- Personal Computer
+
+Board settings
+==============
+No special settings are required.
+
+Toolchain supported
+===================
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
 

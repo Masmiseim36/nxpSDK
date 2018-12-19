@@ -144,6 +144,8 @@ int main(void)
     BOARD_EnableSaiMclkOutput(true);
     BOARD_Codec_I2C_Init();
 
+    memset(&format, 0U, sizeof(sai_transfer_format_t));
+
     PRINTF("SAI example started!\n\r");
 
     /*

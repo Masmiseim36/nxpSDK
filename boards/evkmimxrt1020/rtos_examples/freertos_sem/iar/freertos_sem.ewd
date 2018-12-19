@@ -3342,11 +3342,11 @@
         </option>
         <option>
           <name>CExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>CExtraOptions</name>
-          <state>--jlink_script_file=$PROJ_DIR$/../evkmimxrt1020_sdram_init.jlinkscript</state>
+          <state/>
         </option>
         <option>
           <name>CFpuProcessor</name>
@@ -8271,11 +8271,11 @@
         </option>
         <option>
           <name>CExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>CExtraOptions</name>
-          <state>--jlink_script_file=$PROJ_DIR$/../evkmimxrt1020_sdram_init.jlinkscript</state>
+          <state/>
         </option>
         <option>
           <name>CFpuProcessor</name>

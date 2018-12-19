@@ -220,27 +220,6 @@ ELFtoSB - MBED TLS stack   Description: Cryptographic and SSL/TLS Library
                            Location:                                         
                            middleware/mcu-boot/tools/tools/elftosb/mbedtls   
 
-jsmn                       version: NA                                       
-                           Location:                                         
-                           rtos/amazon-freertos/lib/third_party/jsmn         
-                           Description: JSMN (Jasmine) JSON parser.          
-                           License: MIT                                      
-                           Author: Serge A. Zaitsev                          
-                           name: JSMN                                        
-                           Format: source code                               
-                           URL: http://zserge.com/jsmn.html                  
-
-Amazon_FreeRTOS            Author: Real Time Engineers, Ltd.                 
-                           Description: IoT operating system for             
-                           microcontrollers                                  
-                           Format: source code                               
-                           License: MIT. See                                 
-                           ,<rootfolder>/rtos/amazon-freertos/License.       
-                           Location: rtos/amazon-freertos                    
-                           name: Amazon FreeRTOS                             
-                           URL: https://aws.amazon.com/freertos/             
-                           version: 1.4.0                                    
-
 multicore                  version: 2.5.0                                    
                            Location: middleware/multicore                    
                            Description: NXP Multicore Software Development   
@@ -344,6 +323,37 @@ driver                     version: 2.0.3.1
                            Description: NXP FreeMASTER. Real time non        
                            intrusive debugger.                               
 
+jsmn                       version: NA                                       
+                           Location:                                         
+                           rtos/amazon-freertos/lib/third_party/jsmn         
+                           Description: JSMN (Jasmine) JSON parser.          
+                           License: MIT                                      
+                           Author: Serge A. Zaitsev                          
+                           name: JSMN                                        
+                           Format: source code                               
+                           URL: http://zserge.com/jsmn.html                  
+
+Amazon_FreeRTOS            Author: Real Time Engineers, Ltd.                 
+                           Description: IoT operating system for             
+                           microcontrollers                                  
+                           Format: source code                               
+                           License: MIT. See                                 
+                           ,<rootfolder>/rtos/amazon-freertos/License.       
+                           Location: rtos/amazon-freertos                    
+                           name: Amazon FreeRTOS                             
+                           URL: https://aws.amazon.com/freertos/             
+                           version: 1.4.0                                    
+
+wifi_qca                   version: 2.0.0                                    
+                           Location: middleware/wifi_qca                     
+                           Description: Qualcomm Wi-Fi stack                 
+                           License: Open Source - BSD-3-Clause               
+                           Author: Qualcomm Atheros, Inc.                    
+                           name: wifi_qca                                    
+                           Format: source code                               
+                           URL:                                              
+                           https://www.qualcomm.com/products/wifi-platforms  
+
 gradle                     version: 4.1                                      
                            Location:                                         
                            boards/<board>/aws_examples/remote_control_android
@@ -381,6 +391,14 @@ AwsDeviceConfiguration     Location:
                            version: 1.0                                      
                            Format: binary                                    
 
+SE_hostlib                 version: 1.4.2                                    
+                           Location: middleware/se_hostlib                   
+                           Description: Secure element host library          
+                           License: NXP proprietary license                  
+                           Author: NXP                                       
+                           name: se_hostlib                                  
+                           Format: source code                               
+
 FNET                       version: 4.4.1                                    
                            Location:                                         
                            boards/<board>/aws_examples/device_configuration_e
@@ -413,15 +431,6 @@ lwip                       Author: Swedish Institute of Computer Science
                            name: lwIP TCP/IP Stack                           
                            URL: http://savannah.nongnu.org/projects/lwip     
                            version: 2.0.3                                    
-wifi_qca                   version: 2.0.0                                    
-                           Location: middleware/wifi_qca                     
-                           Description: Qualcomm Wi-Fi stack                 
-                           License: Open Source - BSD-3-Clause               
-                           Author: Qualcomm Atheros, Inc.                    
-                           name: wifi_qca                                    
-                           Format: source code                               
-                           URL:                                              
-                           https://www.qualcomm.com/products/wifi-platforms  
 
 emwin                      version: 5.48                                     
                            Location: middleware/emwin                        
@@ -433,16 +442,6 @@ emwin                      version: 5.48
                            URL:                                              
                            http://www.nxp.com/pages/emwin-graphics-library:EM
                            WIN-GRAPHICS-LIBRARY                              
-
-Azure IoT                  version: 1.2.8                                    
-                           Location: middleware/azure_iot                    
-                           Description: Azure C SDK for Internet of Things   
-                           Service.                                          
-                           License: MIT License                              
-                           Author: Microsoft Corporation                     
-                           name: Azure IoT sdk c                             
-                           Format: source code                               
-                           URL: https://github.com/Azure/azure-iot-sdk-c.git 
 
 issdk                      version: 1.7                                      
                            Location: middleware/issdk                        
@@ -463,3 +462,57 @@ Pedometer_Library          version: 1.0
                            Author: KEYnetik, Inc                             
                            name: Pedometer Library                           
                            Format: binary library                            
+
+libjpeg                    Location: middleware/libjpeg                      
+                           version: 9b                                       
+                           Description: JPEG image encoding, decoding, and   
+                           transcoding                                       
+                           License: IJG, See middleware/libjpeg/README       
+                           Author: IJG (http://www.ijg.org/)                 
+                           name: LIBJPEG                                     
+                           Format: source code                               
+                           URL: http://www.ijg.org                           
+
+LittleFS                   version: 1.3                                      
+                           Location: middleware/littlefs                     
+                           Description: LittleFS - A little fail-safe        
+                           filesystem designed for microcontrollers          
+                           License: Apache License 2.0, See                  
+                           <rootfolder>/middleware/littlefs/LICENSE.md       
+                           Author: Christopher Haster                        
+                           (https://github.com/geky)                         
+                           name: LittleFS                                    
+                           Format: source code                               
+                           URL: https://github.com/geky/littlefs             
+
+CJSON                      version: 1.7.4                                    
+                           Location: middleware/cjson                        
+                           Description: CJSON - Ultralightweight JSON parser 
+                           in ANSI C                                         
+                           License: MIT, See                                 
+                           <rootfolder>/middleware/cJSON/LICENSE             
+                           Author: Dave Gamble                               
+                           (https://github.com/DaveGamble)                   
+                           name: CJSON                                       
+                           Format: source code                               
+                           URL: https://github.com/DaveGamble/cJSON          
+
+PicoHTTPParser             version: 1.0.0                                    
+                           Location: middleware/picohttpparser               
+                           Description: PicoHTTPParser is a tiny, primitive, 
+                           fast HTTP request/response parser                 
+                           License: MIT                                      
+                           Author: H2O (https://github.com/h2o)              
+                           name: PicoHTTPParser                              
+                           Format: source code                               
+                           URL: https://github.com/h2o/picohttpparser        
+
+Azure IoT                  version: 1.2.8                                    
+                           Location: middleware/azure_iot                    
+                           Description: Azure C SDK for Internet of Things   
+                           Service.                                          
+                           License: MIT License                              
+                           Author: Microsoft Corporation                     
+                           name: Azure IoT sdk c                             
+                           Format: source code                               
+                           URL: https://github.com/Azure/azure-iot-sdk-c.git 

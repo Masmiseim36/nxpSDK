@@ -1,30 +1,3 @@
-Overview
-========
-The qca_demo example provides basic commands to show the functionality of qca_wifi stack.
-The default IP configuration is "addr: 192.168.1.10 mask: 255.255.255.0 gw: 192.168.1.1".
-To obtain a valid IP configuration from DHCP server, press 'd' after WiFi connection is established.
-
-Toolchain supported
-===================
-- Keil MDK 5.25
-- IAR embedded Workbench 8.30.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.1
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- EVK-MIMXRT1060 board
-- SX-ULPAN-2401-SHIELD(US)
-- Personal Computer
-
-Board settings
-==============
-Plug SX-ULPAN-2401-SHIELD(US) board to J22, J23, J24, J25.
-Dis-connect J15, and weld 0Ω resistor to R278,R279,R280,R281.
-
-Please use external power supply (J2), USB may not be sufficient.
-
 Prepare the Demo
 ================
 
@@ -82,6 +55,37 @@ When the demo runs successfully, the log would be seen on the CMSIS DAP terminal
 - Press 'd' to get an IP address by DHCP.
 - Press 'g' to download several bytes of NXP website.
 
-Customization options
+Overview
+========
+The qca_demo example provides basic commands to show the functionality of qca_wifi stack.
+The default IP configuration is "addr: 192.168.1.10 mask: 255.255.255.0 gw: 192.168.1.1".
+To obtain a valid IP configuration from DHCP server, press 'd' after WiFi connection is established.
+Hardware requirements
 =====================
+- Mini/micro USB cable
+- EVK-MIMXRT1060 board
+- SX-ULPAN-2401-SHIELD(US)
+- Personal Computer
+
+Board settings
+==============
+Plug SX-ULPAN-2401-SHIELD(US) board to J22, J23, J24, J25.
+Dis-connect J15, and weld 0Ω resistor to R278,R279,R280,R281.
+
+Please use external power supply (J2), USB may not be sufficient.
+
+The default shield support is set to SX-ULPAN-2401 shield. To enable 
+GT202, please open "wifi_shield.h" and uncomment following lines:
+//#define WIFISHIELD_IS_GT202
+
+and comment out:
+#define WIFISHIELD_IS_SILEX2401
+
+
+Toolchain supported
+===================
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
 

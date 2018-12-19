@@ -2,8 +2,14 @@
 <ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
   <externalDefinitions>
     <definition extID="com.nxp.mcuxpresso"/>
-    <definition extID="platform.devices.MIMXRT1062_CMSIS.MIMXRT1062"/>
-    <definition extID="platform.devices.MIMXRT1062_startup.MIMXRT1062"/>
+    <definition extID="component.lists.MIMXRT1062"/>
+    <definition extID="component.lpuart_adapter.MIMXRT1062"/>
+    <definition extID="component.serial_manager.MIMXRT1062"/>
+    <definition extID="component.serial_manager_uart.MIMXRT1062"/>
+    <definition extID="device.MIMXRT1062_CMSIS.MIMXRT1062"/>
+    <definition extID="device.MIMXRT1062_startup.MIMXRT1062"/>
+    <definition extID="platform.Include_common.MIMXRT1062"/>
+    <definition extID="platform.Include_core_cm7.MIMXRT1062"/>
     <definition extID="platform.drivers.clock.MIMXRT1062"/>
     <definition extID="platform.drivers.common.MIMXRT1062"/>
     <definition extID="platform.drivers.elcdif.MIMXRT1062"/>
@@ -11,27 +17,28 @@
     <definition extID="platform.drivers.iomuxc.MIMXRT1062"/>
     <definition extID="platform.drivers.lpuart.MIMXRT1062"/>
     <definition extID="platform.drivers.pxp.MIMXRT1062"/>
-    <definition extID="platform.drivers.xip.MIMXRT1062"/>
+    <definition extID="platform.drivers.xip_board.MIMXRT1062"/>
+    <definition extID="platform.drivers.xip_device.MIMXRT1062"/>
     <definition extID="platform.utilities.assert.MIMXRT1062"/>
-    <definition extID="platform.utilities.debug_console.MIMXRT1062"/>
+    <definition extID="utility.debug_console.MIMXRT1062"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
-    <definition extID="atl"/>
+    <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
     <definition extID="com.nxp.mcuxpresso.core.debug.support.segger.debug"/>
     <definition extID="com.nxp.mcuxpresso.core.debug.support.segger.release"/>
-    <definition extID="armgcc"/>
   </externalDefinitions>
-  <example id="evkmimxrt1060_pxp_scale" name="pxp_scale" category="driver_examples/pxp" dependency="platform.drivers.clock.MIMXRT1062 platform.drivers.common.MIMXRT1062 platform.devices.MIMXRT1062_CMSIS.MIMXRT1062 platform.devices.MIMXRT1062_startup.MIMXRT1062 platform.drivers.lpuart.MIMXRT1062 platform.utilities.debug_console.MIMXRT1062 platform.drivers.iomuxc.MIMXRT1062 platform.utilities.assert.MIMXRT1062 platform.drivers.igpio.MIMXRT1062 platform.drivers.xip.MIMXRT1062 platform.drivers.pxp.MIMXRT1062 platform.drivers.elcdif.MIMXRT1062" toolchain="mdk iar armgcc mcuxpresso">
+  <example id="evkmimxrt1060_pxp_scale" name="pxp_scale" category="driver_examples/pxp" dependency="platform.drivers.igpio.MIMXRT1062 platform.drivers.pxp.MIMXRT1062 platform.drivers.elcdif.MIMXRT1062 platform.drivers.clock.MIMXRT1062 platform.drivers.common.MIMXRT1062 device.MIMXRT1062_CMSIS.MIMXRT1062 utility.debug_console.MIMXRT1062 component.lpuart_adapter.MIMXRT1062 component.serial_manager.MIMXRT1062 component.serial_manager_uart.MIMXRT1062 platform.drivers.lpuart.MIMXRT1062 component.lists.MIMXRT1062 device.MIMXRT1062_startup.MIMXRT1062 platform.drivers.iomuxc.MIMXRT1062 platform.utilities.assert.MIMXRT1062 platform.drivers.xip_device.MIMXRT1062 platform.drivers.xip_board.MIMXRT1062 platform.Include_core_cm7.MIMXRT1062 platform.Include_common.MIMXRT1062" toolchain="iar mdk armgcc mcuxpresso">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
     <memory>
       <memoryBlock addr="60000000" size="00800000" access="RO" type="ExtFlash" id="BOARD_FLASH_evkmimxrt1060" name="BOARD_FLASH"/>
+      <memoryBlock addr="80000000" size="01E00000" access="RW" type="RAM" id="BOARD_SDRAM_evkmimxrt1060" name="BOARD_SDRAM"/>
+      <memoryBlock addr="81E00000" size="00200000" access="RW" type="RAM" id="BOARD_SDRAM_NONCACHEABLE_evkmimxrt1060" name="BOARD_SDRAM_NONCACHEABLE"/>
       <memoryBlock addr="20000000" size="00020000" access="RW" type="RAM" id="SRAM_DTC_evkmimxrt1060" name="SRAM_DTC"/>
       <memoryBlock addr="00000000" size="00020000" access="RW" type="RAM" id="SRAM_ITC_evkmimxrt1060" name="SRAM_ITC"/>
       <memoryBlock addr="20200000" size="000C0000" access="RW" type="RAM" id="SRAM_OC_evkmimxrt1060" name="SRAM_OC"/>
-      <memoryBlock addr="80000000" size="02000000" access="RW" type="RAM" id="BOARD_SDRAM_evkmimxrt1060" name="BOARD_SDRAM"/>
     </memory>
     <toolchainSettings>
       <toolchainSetting id_refs="com.nxp.mcuxpresso">
@@ -44,15 +51,9 @@
         <option id="com.crt.advproject.c.misc.dialect" type="enum">
           <value>com.crt.advproject.misc.dialect.gnu99</value>
         </option>
-        <option id="com.crt.advproject.gcc.exe.debug.option.debugging.level" type="enum">
-          <value>gnu.c.debugging.level.default</value>
-        </option>
-        <option id="com.crt.advproject.gcc.exe.release.option.debugging.level" type="enum">
-          <value>gnu.c.debugging.level.default</value>
-        </option>
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
-          <value>SKIP_SYSCLK_INIT</value>
           <value>XIP_BOOT_HEADER_DCD_ENABLE=1</value>
+          <value>SKIP_SYSCLK_INIT</value>
           <value>CPU_MIMXRT1062DVL6A</value>
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>PRINTF_FLOAT_ENABLE=0</value>
@@ -75,8 +76,8 @@
           <value>true</value>
         </option>
         <option id="com.crt.advproject.link.memory.sections" type="stringList">
-          <value>isd=*(NonCacheable.init);region=SRAM_DTC;type=.data</value>
-          <value>isd=*(NonCacheable);region=SRAM_DTC;type=.bss</value>
+          <value>isd=*(NonCacheable.init);region=BOARD_SDRAM_NONCACHEABLE;type=.data</value>
+          <value>isd=*(NonCacheable);region=BOARD_SDRAM_NONCACHEABLE;type=.bss</value>
         </option>
       </toolchainSetting>
     </toolchainSettings>
@@ -100,28 +101,36 @@
         </scripts>
       </debug_configuration>
     </debug_configurations>
-    <source path="boards/evkmimxrt1060/driver_examples/pxp/scale" target_path="board/src" type="c_include">
-      <files mask="board.h"/>
-      <files mask="clock_config.h"/>
+    <source path="boards/evkmimxrt1060/driver_examples/pxp/scale/iar" target_path="src" type="other" toolchain="iar">
+      <files mask="evkmimxrt1060.mac"/>
     </source>
-    <source path="boards/evkmimxrt1060/driver_examples/pxp/scale" target_path="board/src" type="src">
-      <files mask="board.c"/>
-      <files mask="clock_config.c"/>
+    <source path="boards/evkmimxrt1060/driver_examples/pxp/scale/mdk" target_path="src" type="configuration" toolchain="mdk">
+      <files mask="evkmimxrt1060_ram.ini"/>
     </source>
     <source path="boards/evkmimxrt1060/driver_examples/pxp/scale" target_path="board" type="c_include">
+      <files mask="board.h"/>
+      <files mask="clock_config.h"/>
       <files mask="pin_mux.h"/>
     </source>
     <source path="boards/evkmimxrt1060/driver_examples/pxp/scale" target_path="board" type="src">
+      <files mask="board.c"/>
+      <files mask="clock_config.c"/>
       <files mask="pin_mux.c"/>
     </source>
-    <source path="boards/evkmimxrt1060/driver_examples/pxp/scale" target_path="doc" type="doc" toolchain="iar mdk atl mcuxpresso">
+    <source path="boards/evkmimxrt1060/driver_examples/pxp/scale" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso armgcc">
       <files mask="readme.txt"/>
-    </source>
-    <source path="boards/evkmimxrt1060/driver_examples/pxp/scale" target_path="linker" type="linker" toolchain="mcuxpresso">
-      <files mask="MIMXRT1062xxxxx_flexspi_nor.ld"/>
     </source>
     <source path="boards/evkmimxrt1060/driver_examples/pxp/scale" target_path="source" type="src">
       <files mask="pxp_scale.c"/>
+    </source>
+    <source path="devices/MIMXRT1062/arm" target_path="src" type="linker" toolchain="mdk">
+      <files mask="MIMXRT1062xxxxx_ram.scf"/>
+    </source>
+    <source path="devices/MIMXRT1062/gcc" target_path="src" type="linker" toolchain="armgcc">
+      <files mask="MIMXRT1062xxxxx_ram.ld"/>
+    </source>
+    <source path="devices/MIMXRT1062/iar" target_path="src" type="linker" toolchain="iar">
+      <files mask="MIMXRT1062xxxxx_ram.icf"/>
     </source>
   </example>
 </ksdk:examples>

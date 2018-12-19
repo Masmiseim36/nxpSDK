@@ -1,17 +1,24 @@
 /*
-* Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
-* All rights reserved.
-*
-* 
-* SPDX-License-Identifier: BSD-3-Clause
-*/
+ * Copyright (c) 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016-2018 NXP
+ * All rights reserved.
+ *
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
 
 /*******************************************************************************
  * Includes
  ******************************************************************************/
 #include "httpsclient.h"
 #include "board.h"
+#include "lwip/netifapi.h"
+#include "lwip/opt.h"
+#include "lwip/tcpip.h"
+#include "lwip/dhcp.h"
+#include "lwip/prot/dhcp.h"
+#include "netif/ethernet.h"
+#include "ethernetif.h"
 #include "ksdk_mbedtls.h"
 
 #include "fsl_debug_console.h"
@@ -20,12 +27,6 @@
 #include "clock_config.h"
 #include "fsl_gpio.h"
 #include "fsl_iomuxc.h"
-#include "lwip/opt.h"
-#include "lwip/tcpip.h"
-#include "lwip/dhcp.h"
-#include "lwip/prot/dhcp.h"
-#include "netif/ethernet.h"
-#include "ethernetif.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -46,19 +47,17 @@
 /*******************************************************************************
 * Prototypes
 ******************************************************************************/
-void BOARD_InitNetwork(void);
 
 /*******************************************************************************
 * Variables
 ******************************************************************************/
-static struct netif fsl_netif0;
 
 /*******************************************************************************
  * Code
  ******************************************************************************/
 void BOARD_InitModuleClock(void)
 {
-    const clock_enet_pll_config_t config = {true, false, 1};
+    const clock_enet_pll_config_t config = {.enableClkOutput = true, .enableClkOutput25M = false, .loopDivider = 1};
     CLOCK_InitEnetPll(&config);
 }
 
@@ -72,8 +71,13 @@ void delay(void)
 }
 
 
-void BOARD_InitNetwork(void)
+
+/*!
+ * @brief The main function containing client thread.
+ */
+static void httpsclient_task(void *arg)
 {
+    static struct netif fsl_netif0;
     ip4_addr_t fsl_netif0_ipaddr, fsl_netif0_netmask, fsl_netif0_gw;
     ethernetif_config_t fsl_enet_config0 = {
         .phyAddress = EXAMPLE_PHY_ADDRESS, .clockName = EXAMPLE_CLOCK_NAME, .macAddress = configMAC_ADDR,
@@ -85,20 +89,20 @@ void BOARD_InitNetwork(void)
 
     tcpip_init(NULL, NULL);
 
-    netif_add(&fsl_netif0, &fsl_netif0_ipaddr, &fsl_netif0_netmask, &fsl_netif0_gw, &fsl_enet_config0, ethernetif0_init,
-              tcpip_input);
-    netif_set_default(&fsl_netif0);
-    netif_set_up(&fsl_netif0);
+    netifapi_netif_add(&fsl_netif0, &fsl_netif0_ipaddr, &fsl_netif0_netmask, &fsl_netif0_gw, &fsl_enet_config0,
+                       ethernetif0_init, tcpip_input);
+    netifapi_netif_set_default(&fsl_netif0);
+    netifapi_netif_set_up(&fsl_netif0);
 
     PRINTF("Getting IP address from DHCP ...\n");
-    dhcp_start(&fsl_netif0);
+    netifapi_dhcp_start(&fsl_netif0);
 
     struct dhcp *dhcp;
-    dhcp = (struct dhcp *)netif_get_client_data(&fsl_netif0, LWIP_NETIF_CLIENT_DATA_INDEX_DHCP);
+    dhcp = netif_dhcp_data(&fsl_netif0);
 
     while (dhcp->state != DHCP_STATE_BOUND)
     {
-        vTaskDelay(1000);
+        vTaskDelay(100);
     }
 
     if (dhcp->state == DHCP_STATE_BOUND)
@@ -108,19 +112,11 @@ void BOARD_InitNetwork(void)
                ((u8_t *)&fsl_netif0.ip_addr.addr)[3]);
     }
     PRINTF("DHCP OK");
-}
 
-/*!
- * @brief The main function containing client thread.
- */
-static void httpsclient_task(void *arg)
-{
-    BOARD_InitNetwork();
     https_client_tls_init();
 
     vTaskDelete(NULL);
 }
-
 
 /*!
  * @brief Main function.
@@ -148,10 +144,10 @@ int main(void)
     delay();
     GPIO_WritePinOutput(GPIO1, 9, 1);
     CRYPTO_InitHardware();
-    
+
     if (xTaskCreate(httpsclient_task, "httpsclient_task", 6000, NULL, configMAX_PRIORITIES - 4 /*3*/, NULL) != pdPASS)
     {
-        PRINTF("Task creation failed!.\r\n");
+        PRINTF("Task creation failed!\r\n");
         while (1)
             ;
     }
@@ -163,4 +159,3 @@ int main(void)
     for (;;)
         ;
 }
-

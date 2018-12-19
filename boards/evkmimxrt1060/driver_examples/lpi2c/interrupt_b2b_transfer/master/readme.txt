@@ -6,14 +6,6 @@ with interrupt:
 In this example, one lpi2c instance as master and another lpi2c instance on the other board as slave. Master sends a 
 piece of data to slave, and receive a piece of data from slave. This example checks if the data received from 
 slave is correct.
-
-Toolchain supported
-===================
-- Keil MDK 5.25
-- IAR embedded Workbench 8.30.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.1
-
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -66,6 +58,11 @@ Receive sent data from slave :
 
 End of LPI2C example .
 ~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

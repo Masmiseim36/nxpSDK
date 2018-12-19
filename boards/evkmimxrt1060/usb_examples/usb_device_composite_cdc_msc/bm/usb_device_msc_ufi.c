@@ -651,7 +651,7 @@ usb_status_t USB_DeviceMscUfiReadCapacityCommand(usb_device_msc_struct_t *mscHan
  *
  *@return A USB error code or kStatus_USB_Success.
 */
-usb_status_t USB_DeviceMscUfiReadFormatCapacityCommand(usb_device_msc_struct_t *mscHandle)
+usb_status_t   USB_DeviceMscUfiReadFormatCapacityCommand(usb_device_msc_struct_t *mscHandle)
 {
     usb_device_msc_ufi_struct_t *ufi = NULL;
     usb_status_t error = kStatus_USB_TransferFailed;
@@ -896,17 +896,20 @@ usb_status_t USB_DeviceMscUfiStartStopUnitCommand(usb_device_msc_struct_t *mscHa
 usb_status_t USB_DeviceMscUfiUnsupportCommand(usb_device_msc_struct_t *mscHandle)
 {
     usb_device_msc_ufi_struct_t *ufi = NULL;
-
+    usb_status_t error;
     ufi = &mscHandle->mscUfi;
 
     mscHandle->mscCsw->dataResidue = 0;
     mscHandle->mscCsw->cswStatus = USB_DEVICE_MSC_COMMAND_FAILED;
 
+    ufi->thirteenCase.deviceExpectedDataLength = 0;
     ufi->requestSense->senseKey = USB_DEVICE_MSC_UFI_ILLEGAL_REQUEST;
     ufi->requestSense->additionalSenseCode = USB_DEVICE_MSC_UFI_INVALID_COMMAND_OPCODE;
     ufi->requestSense->additionalSenseQualifer = USB_DEVICE_MSC_UFI_NO_SENSE;
 
-    return kStatus_USB_Success;
+    error = USB_DeviceMscUfiThirteenCasesCheck(mscHandle);
+    
+    return error;
 }
 
 #endif

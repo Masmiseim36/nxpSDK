@@ -2,12 +2,19 @@
 <ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
   <externalDefinitions>
     <definition extID="com.nxp.mcuxpresso"/>
+    <definition extID="component.lists.MIMXRT1062"/>
+    <definition extID="component.lpuart_adapter.MIMXRT1062"/>
+    <definition extID="component.serial_manager.MIMXRT1062"/>
+    <definition extID="component.serial_manager_uart.MIMXRT1062"/>
+    <definition extID="device.MIMXRT1062_CMSIS.MIMXRT1062"/>
+    <definition extID="device.MIMXRT1062_startup.MIMXRT1062"/>
     <definition extID="middleware.amazon_freertos.aws_iot.MIMXRT1062"/>
     <definition extID="middleware.amazon_freertos.aws_iot.drivers_rt1060.MIMXRT1062"/>
     <definition extID="middleware.amazon_freertos.aws_iot.greengrass.MIMXRT1062"/>
     <definition extID="middleware.amazon_freertos.aws_iot.jsmn.MIMXRT1062"/>
     <definition extID="middleware.amazon_freertos.aws_iot.secure_sockets_wifi_qca.MIMXRT1062"/>
     <definition extID="middleware.amazon_freertos.aws_iot.wifi.MIMXRT1062"/>
+    <definition extID="middleware.amazon_freertos.aws_iot_demos.MIMXRT1062"/>
     <definition extID="middleware.freertos.MIMXRT1062"/>
     <definition extID="middleware.freertos.heap.heap_4.MIMXRT1062"/>
     <definition extID="middleware.mbedtls.MIMXRT1062"/>
@@ -16,8 +23,8 @@
     <definition extID="middleware.wifi_qca.evkmimxrt1060.freertos.shields.silex2401.MIMXRT1062"/>
     <definition extID="middleware.wifi_qca.freertos.MIMXRT1062"/>
     <definition extID="middleware.wifi_qca.freertos.drivers.lpspi_edma.MIMXRT1062"/>
-    <definition extID="platform.devices.MIMXRT1062_CMSIS.MIMXRT1062"/>
-    <definition extID="platform.devices.MIMXRT1062_startup.MIMXRT1062"/>
+    <definition extID="platform.Include_common.MIMXRT1062"/>
+    <definition extID="platform.Include_core_cm7.MIMXRT1062"/>
     <definition extID="platform.drivers.cache_armv7_m7.MIMXRT1062"/>
     <definition extID="platform.drivers.clock.MIMXRT1062"/>
     <definition extID="platform.drivers.common.MIMXRT1062"/>
@@ -31,15 +38,16 @@
     <definition extID="platform.drivers.lpspi_edma.MIMXRT1062"/>
     <definition extID="platform.drivers.lpuart.MIMXRT1062"/>
     <definition extID="platform.drivers.trng.MIMXRT1062"/>
-    <definition extID="platform.drivers.xip.MIMXRT1062"/>
+    <definition extID="platform.drivers.xip_board.MIMXRT1062"/>
+    <definition extID="platform.drivers.xip_device.MIMXRT1062"/>
     <definition extID="platform.utilities.assert.MIMXRT1062"/>
-    <definition extID="platform.utilities.debug_console.MIMXRT1062"/>
-    <definition extID="mcuxpresso"/>
+    <definition extID="utility.debug_console.MIMXRT1062"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
     <definition extID="armgcc"/>
+    <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="evkmimxrt1060_aws_greengrass_discovery_wifi" name="aws_greengrass_discovery_wifi" category="aws_examples" dependency="platform.drivers.trng.MIMXRT1062 platform.drivers.common.MIMXRT1062 platform.drivers.clock.MIMXRT1062 platform.drivers.dcp.MIMXRT1062 platform.drivers.cache_armv7_m7.MIMXRT1062 platform.drivers.flexspi.MIMXRT1062 middleware.wifi_qca.evkmimxrt1060.freertos.shields.silex2401.MIMXRT1062 middleware.wifi_qca.evkmimxrt1060.freertos.shields.MIMXRT1062 middleware.wifi_qca.freertos.MIMXRT1062 middleware.freertos.MIMXRT1062 middleware.wifi_qca.MIMXRT1062 middleware.wifi_qca.freertos.drivers.lpspi_edma.MIMXRT1062 platform.drivers.lpspi.MIMXRT1062 platform.drivers.lpspi_edma.MIMXRT1062 platform.drivers.edma.MIMXRT1062 platform.drivers.dmamux.MIMXRT1062 platform.drivers.igpio.MIMXRT1062 middleware.amazon_freertos.aws_iot.drivers_rt1060.MIMXRT1062 middleware.amazon_freertos.aws_iot.MIMXRT1062 platform.devices.MIMXRT1062_CMSIS.MIMXRT1062 platform.devices.MIMXRT1062_startup.MIMXRT1062 platform.drivers.lpuart.MIMXRT1062 platform.utilities.debug_console.MIMXRT1062 platform.drivers.iomuxc.MIMXRT1062 platform.utilities.assert.MIMXRT1062 platform.drivers.xip.MIMXRT1062 middleware.freertos.heap.heap_4.MIMXRT1062 middleware.mbedtls.MIMXRT1062 middleware.amazon_freertos.aws_iot.jsmn.MIMXRT1062 middleware.amazon_freertos.aws_iot.secure_sockets_wifi_qca.MIMXRT1062 middleware.amazon_freertos.aws_iot.wifi.MIMXRT1062 middleware.amazon_freertos.aws_iot.greengrass.MIMXRT1062" toolchain="mdk iar armgcc mcuxpresso">
+  <example id="evkmimxrt1060_aws_greengrass_discovery_wifi" name="aws_greengrass_discovery_wifi" category="aws_examples" dependency="platform.drivers.trng.MIMXRT1062 platform.drivers.dcp.MIMXRT1062 platform.drivers.cache_armv7_m7.MIMXRT1062 platform.drivers.flexspi.MIMXRT1062 middleware.wifi_qca.evkmimxrt1060.freertos.shields.silex2401.MIMXRT1062 middleware.amazon_freertos.aws_iot.drivers_rt1060.MIMXRT1062 middleware.freertos.heap.heap_4.MIMXRT1062 middleware.wifi_qca.MIMXRT1062 middleware.freertos.MIMXRT1062 middleware.mbedtls.MIMXRT1062 middleware.amazon_freertos.aws_iot.MIMXRT1062 middleware.amazon_freertos.aws_iot.jsmn.MIMXRT1062 middleware.amazon_freertos.aws_iot.secure_sockets_wifi_qca.MIMXRT1062 middleware.amazon_freertos.aws_iot.wifi.MIMXRT1062 middleware.amazon_freertos.aws_iot.greengrass.MIMXRT1062 middleware.amazon_freertos.aws_iot_demos.MIMXRT1062 platform.drivers.clock.MIMXRT1062 platform.drivers.common.MIMXRT1062 device.MIMXRT1062_CMSIS.MIMXRT1062 utility.debug_console.MIMXRT1062 component.lpuart_adapter.MIMXRT1062 component.serial_manager.MIMXRT1062 component.serial_manager_uart.MIMXRT1062 platform.drivers.lpuart.MIMXRT1062 component.lists.MIMXRT1062 device.MIMXRT1062_startup.MIMXRT1062 platform.drivers.iomuxc.MIMXRT1062 platform.utilities.assert.MIMXRT1062 platform.drivers.igpio.MIMXRT1062 platform.drivers.xip_device.MIMXRT1062 platform.drivers.xip_board.MIMXRT1062 platform.Include_core_cm7.MIMXRT1062 platform.Include_common.MIMXRT1062 middleware.wifi_qca.evkmimxrt1060.freertos.shields.MIMXRT1062 middleware.wifi_qca.freertos.MIMXRT1062 middleware.wifi_qca.freertos.drivers.lpspi_edma.MIMXRT1062 platform.drivers.lpspi.MIMXRT1062 platform.drivers.lpspi_edma.MIMXRT1062 platform.drivers.edma.MIMXRT1062 platform.drivers.dmamux.MIMXRT1062" toolchain="iar mdk armgcc mcuxpresso">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -61,9 +69,6 @@
         <option id="com.crt.advproject.c.misc.dialect" type="enum">
           <value>com.crt.advproject.misc.dialect.gnu99</value>
         </option>
-        <option id="com.crt.advproject.gcc.exe.debug.option.debugging.level" type="enum">
-          <value>gnu.c.debugging.level.default</value>
-        </option>
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
           <value>CPU_MIMXRT1062DVL6A</value>
           <value>SDK_DEBUGCONSOLE=1</value>
@@ -75,8 +80,8 @@
           <value>XIP_BOOT_HEADER_ENABLE=1</value>
           <value>USE_RTOS=1</value>
           <value>MBEDTLS_CONFIG_FILE='"aws_mbedtls_config.h"'</value>
-          <value>FSL_RTOS_FREE_RTOS</value>
           <value>A_LITTLE_ENDIAN</value>
+          <value>FSL_RTOS_FREE_RTOS</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
           <value>-fno-common</value>
@@ -93,13 +98,11 @@
         <option id="com.crt.advproject.link.memory.heapAndStack" type="string">
           <value>&amp;Heap:Default;Default;0x200&amp;Stack:Default;Default;0x200</value>
         </option>
-        <option id="com.crt.advproject.gcc.exe.release.option.debugging.level" type="enum">
-          <value>gnu.c.debugging.level.none</value>
-        </option>
       </toolchainSetting>
     </toolchainSettings>
     <include_paths>
-      <include_path path="mbedTLS/include"/>
+      <include_path path="amazon-freertos/third_party"/>
+      <include_path path="mbedtls/include"/>
     </include_paths>
     <source path="boards/evkmimxrt1060/aws_examples/greengrass_discovery_wifi/config_files" target_path="amazon-freertos/config_files" type="c_include">
       <files mask="FreeRTOSIPConfig.h"/>
@@ -108,32 +111,35 @@
       <files mask="aws_ggd_config.h"/>
       <files mask="aws_mqtt_agent_config.h"/>
       <files mask="aws_mqtt_config.h"/>
+      <files mask="aws_pkcs11_config.h"/>
       <files mask="aws_secure_sockets_config.h"/>
       <files mask="aws_wifi_config.h"/>
+    </source>
+    <source path="boards/evkmimxrt1060/aws_examples/greengrass_discovery_wifi/iar" target_path="src" type="other" toolchain="iar">
+      <files mask="evkmimxrt1060.mac"/>
     </source>
     <source path="boards/evkmimxrt1060/aws_examples/greengrass_discovery_wifi/linkscripts" target_path="linkscripts" type="src" toolchain="mcuxpresso">
       <files mask="bss.ldt"/>
       <files mask="data.ldt"/>
       <files mask="main_text.ldt"/>
     </source>
+    <source path="boards/evkmimxrt1060/aws_examples/greengrass_discovery_wifi/mdk" target_path="src" type="configuration" toolchain="mdk">
+      <files mask="evkmimxrt1060_ram.ini"/>
+    </source>
     <source path="boards/evkmimxrt1060/aws_examples/greengrass_discovery_wifi" target_path="amazon-freertos/config_files" type="c_include">
       <files mask="FreeRTOSConfig.h"/>
     </source>
-    <source path="boards/evkmimxrt1060/aws_examples/greengrass_discovery_wifi" target_path="board/src" type="c_include">
+    <source path="boards/evkmimxrt1060/aws_examples/greengrass_discovery_wifi" target_path="board" type="c_include">
       <files mask="board.h"/>
       <files mask="clock_config.h"/>
-    </source>
-    <source path="boards/evkmimxrt1060/aws_examples/greengrass_discovery_wifi" target_path="board/src" type="src">
-      <files mask="board.c"/>
-      <files mask="clock_config.c"/>
-    </source>
-    <source path="boards/evkmimxrt1060/aws_examples/greengrass_discovery_wifi" target_path="board" type="c_include">
       <files mask="pin_mux.h"/>
     </source>
     <source path="boards/evkmimxrt1060/aws_examples/greengrass_discovery_wifi" target_path="board" type="src">
+      <files mask="board.c"/>
+      <files mask="clock_config.c"/>
       <files mask="pin_mux.c"/>
     </source>
-    <source path="boards/evkmimxrt1060/aws_examples/greengrass_discovery_wifi" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso">
+    <source path="boards/evkmimxrt1060/aws_examples/greengrass_discovery_wifi" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso armgcc">
       <files mask="readme.txt"/>
     </source>
     <source path="boards/evkmimxrt1060/aws_examples/greengrass_discovery_wifi" target_path="source" type="c_include">

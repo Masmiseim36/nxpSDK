@@ -18,7 +18,7 @@
 
 #define USB_DEVICE_MAX_POWER (0x32U)
 
-/* usb descritpor length */
+/* usb descriptor length */
 #define USB_DESCRIPTOR_LENGTH_CONFIGURATION_ALL (sizeof(g_UsbDeviceConfigurationDescriptor))
 #define USB_ENDPOINT_AUDIO_DESCRIPTOR_LENGTH (9)
 #define USB_AUDIO_CONTROL_INTERFACE_HEADER_LENGTH (9)

@@ -30,7 +30,7 @@
  * ARMCC does not support split the data section automatically, so the driver
  * needs to split the data to separate sections explicitly, to reduce codesize.
  */
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 #define ARMCC_SECTION(section_name) __attribute__((section(section_name)))
 #endif
 
@@ -915,7 +915,7 @@ AT_NONCACHEABLE_SECTION(lpi2c_master_edma_handle_t LPI2C0_EdmaHandle);
 edma_handle_t LPI2C0_EdmaTxHandle;
 edma_handle_t LPI2C0_EdmaRxHandle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("lpi2c0_edma_driver_state")
 cmsis_lpi2c_edma_driver_state_t LPI2C0_EdmaDriverState = {
 #else
@@ -972,7 +972,7 @@ ARM_I2C_STATUS LPI2C0_Master_EdmaGetStatus(void)
 
 cmsis_i2c_handle_t LPI2C0_Handle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("lpi2c0_interrupt_driver_state")
 cmsis_lpi2c_interrupt_driver_state_t LPI2C0_InterruptDriverState = {
 #else
@@ -1083,7 +1083,7 @@ AT_NONCACHEABLE_SECTION(lpi2c_master_edma_handle_t LPI2C1_EdmaHandle);
 edma_handle_t LPI2C1_EdmaTxHandle;
 edma_handle_t LPI2C1_EdmaRxHandle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("lpi2c1_edma_driver_state")
 cmsis_lpi2c_edma_driver_state_t LPI2C1_EdmaDriverState = {
 #else
@@ -1140,7 +1140,7 @@ ARM_I2C_STATUS LPI2C1_Master_EdmaGetStatus(void)
 
 cmsis_i2c_handle_t LPI2C1_Handle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("lpi2c1_interrupt_driver_state")
 cmsis_lpi2c_interrupt_driver_state_t LPI2C1_InterruptDriverState = {
 #else
@@ -1250,7 +1250,7 @@ AT_NONCACHEABLE_SECTION(lpi2c_master_edma_handle_t LPI2C2_EdmaHandle);
 edma_handle_t LPI2C2_EdmaTxHandle;
 edma_handle_t LPI2C2_EdmaRxHandle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("lpi2c2_edma_driver_state")
 cmsis_lpi2c_edma_driver_state_t LPI2C2_EdmaDriverState = {
 #else
@@ -1307,7 +1307,7 @@ ARM_I2C_STATUS LPI2C2_Master_EdmaGetStatus(void)
 
 cmsis_i2c_handle_t LPI2C2_Handle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("lpi2c2_interrupt_driver_state")
 cmsis_lpi2c_interrupt_driver_state_t LPI2C2_InterruptDriverState = {
 #else
@@ -1418,7 +1418,7 @@ AT_NONCACHEABLE_SECTION(lpi2c_master_edma_handle_t LPI2C3_EdmaHandle);
 edma_handle_t LPI2C3_EdmaTxHandle;
 edma_handle_t LPI2C3_EdmaRxHandle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("lpi2c3_edma_driver_state")
 cmsis_lpi2c_edma_driver_state_t LPI2C3_EdmaDriverState = {
 #else
@@ -1474,7 +1474,7 @@ ARM_I2C_STATUS LPI2C3_Master_EdmaGetStatus(void)
 #else
 
 cmsis_i2c_handle_t LPI2C3_Handle;
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("lpi2c3_interrupt_driver_state")
 cmsis_lpi2c_interrupt_driver_state_t LPI2C3_InterruptDriverState = {
 #else
@@ -1584,7 +1584,7 @@ AT_NONCACHEABLE_SECTION(lpi2c_master_edma_handle_t LPI2C4_EdmaHandle);
 edma_handle_t LPI2C4_EdmaTxHandle;
 edma_handle_t LPI2C4_EdmaRxHandle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("lpi2c4_edma_driver_state")
 cmsis_lpi2c_edma_driver_state_t LPI2C4_EdmaDriverState = {
 #else
@@ -1640,7 +1640,7 @@ ARM_I2C_STATUS LPI2C4_Master_EdmaGetStatus(void)
 #else
 
 cmsis_i2c_handle_t LPI2C4_Handle;
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("lpi2c4_interrupt_driver_state")
 cmsis_lpi2c_interrupt_driver_state_t LPI2C4_InterruptDriverState = {
 #else
@@ -1750,7 +1750,7 @@ AT_NONCACHEABLE_SECTION(lpi2c_master_edma_handle_t LPI2C5_EdmaHandle);
 edma_handle_t LPI2C5_EdmaTxHandle;
 edma_handle_t LPI2C5_EdmaRxHandle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("lpi2c5_edma_driver_state")
 cmsis_lpi2c_edma_driver_state_t LPI2C5_EdmaDriverState = {
 #else
@@ -1806,7 +1806,7 @@ ARM_I2C_STATUS LPI2C5_Master_EdmaGetStatus(void)
 #else
 
 cmsis_i2c_handle_t LPI2C5_Handle;
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("lpi2c5_interrupt_driver_state")
 cmsis_lpi2c_interrupt_driver_state_t LPI2C5_InterruptDriverState = {
 #else
@@ -1916,7 +1916,7 @@ AT_NONCACHEABLE_SECTION(lpi2c_master_edma_handle_t LPI2C6_EdmaHandle);
 edma_handle_t LPI2C6_EdmaTxHandle;
 edma_handle_t LPI2C6_EdmaRxHandle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("lpi2c6_edma_driver_state")
 cmsis_lpi2c_edma_driver_state_t LPI2C6_EdmaDriverState = {
 #else
@@ -1972,7 +1972,7 @@ ARM_I2C_STATUS LPI2C6_Master_EdmaGetStatus(void)
 #else
 
 cmsis_i2c_handle_t LPI2C6_Handle;
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("lpi2c6_interrupt_driver_state")
 cmsis_lpi2c_interrupt_driver_state_t LPI2C6_InterruptDriverState = {
 #else

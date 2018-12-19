@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
  * Copyright 2016 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "usb_device_config.h"
@@ -141,13 +115,13 @@ static usb_status_t USB_DeviceAudioAllocateHandle(usb_device_audio_struct_t **ha
 }
 
 /*!
- * @brief Free a device audio class hanlde.
+ * @brief Free a device audio class handle.
  *
- * This function frees a device audio class hanlde.
+ * This function frees a device audio class handle.
  *
  * @param handle          The device audio class handle.
  *
- * @retval kStatus_USB_Success              Free device audio class hanlde successfully.
+ * @retval kStatus_USB_Success              Free device audio class handle successfully.
  */
 static usb_status_t USB_DeviceAudioFreeHandle(usb_device_audio_struct_t *handle)
 {
@@ -166,12 +140,12 @@ static usb_status_t USB_DeviceAudioFreeHandle(usb_device_audio_struct_t *handle)
 /*!
  * @brief Interrupt IN endpoint callback function.
  *
- * This callback function is used to notify uplayer the tranfser result of a transfer.
+ * This callback function is used to notify uplayer the transfser result of a transfer.
  * This callback pointer is passed when the interrupt IN pipe initialized.
  *
  * @param handle          The device handle. It equals the value returned from USB_DeviceInit.
  * @param message         The result of the interrupt IN pipe transfer.
- * @param callbackParam  The paramter for this callback. It is same with
+ * @param callbackParam  The parameter for this callback. It is same with
  * usb_device_endpoint_callback_struct_t::callbackParam. In the class, the value is the audio class handle.
  *
  * @return A USB error code or kStatus_USB_Success.
@@ -206,12 +180,12 @@ usb_status_t USB_DeviceAudioInterruptIn(usb_device_handle handle,
 /*!
  * @brief ISO IN endpoint callback function.
  *
- * This callback function is used to notify uplayer the tranfser result of a transfer.
+ * This callback function is used to notify uplayer the transfser result of a transfer.
  * This callback pointer is passed when the ISO IN pipe initialized.
  *
  * @param handle          The device handle. It equals the value returned from USB_DeviceInit.
  * @param message         The result of the ISO IN pipe transfer.
- * @param callbackParam  The paramter for this callback. It is same with
+ * @param callbackParam  The parameter for this callback. It is same with
  * usb_device_endpoint_callback_struct_t::callbackParam. In the class, the value is the audio class handle.
  *
  * @return A USB error code or kStatus_USB_Success.
@@ -245,12 +219,12 @@ usb_status_t USB_DeviceAudioIsochronousIn(usb_device_handle handle,
 /*!
  * @brief ISO OUT endpoint callback function.
  *
- * This callback function is used to notify uplayer the tranfser result of a transfer.
+ * This callback function is used to notify uplayer the transfser result of a transfer.
  * This callback pointer is passed when the ISO OUT pipe initialized.
  *
  * @param handle          The device handle. It equals the value returned from USB_DeviceInit.
  * @param message         The result of the ISO OUT pipe transfer.
- * @param callbackParam  The paramter for this callback. It is same with
+ * @param callbackParam  The parameter for this callback. It is same with
  * usb_device_endpoint_callback_struct_t::callbackParam. In the class, the value is the audio class handle.
  *
  * @return A USB error code or kStatus_USB_Success.
@@ -347,6 +321,7 @@ usb_status_t USB_DeviceAudioStreamEndpointsInit(usb_device_audio_struct_t *audio
         usb_device_endpoint_init_struct_t epInitStruct;
         usb_device_endpoint_callback_struct_t epCallback;
         epInitStruct.zlt = 0U;
+        epInitStruct.interval = interface->endpointList.endpoint[count].interval;
         epInitStruct.endpointAddress = interface->endpointList.endpoint[count].endpointAddress;
         epInitStruct.maxPacketSize = interface->endpointList.endpoint[count].maxPacketSize;
         epInitStruct.transferType = interface->endpointList.endpoint[count].transferType;
@@ -488,6 +463,7 @@ usb_status_t USB_DeviceAudioControlEndpointsInit(usb_device_audio_struct_t *audi
         usb_device_endpoint_init_struct_t epInitStruct;
         usb_device_endpoint_callback_struct_t epCallback;
         epInitStruct.zlt = 0U;
+        epInitStruct.interval = interface->endpointList.endpoint[count].interval;
         epInitStruct.endpointAddress = interface->endpointList.endpoint[count].endpointAddress;
         epInitStruct.maxPacketSize = interface->endpointList.endpoint[count].maxPacketSize;
         epInitStruct.transferType = interface->endpointList.endpoint[count].transferType;
@@ -1508,6 +1484,51 @@ usb_status_t USB_DeviceAudioEvent(void *handle, uint32_t event, void *param)
                                 case USB_DESCRIPTOR_SUBTYPE_AUDIO_CONTROL_OUTPUT_TERMINAL:
                                     break;
                                 case USB_DESCRIPTOR_SUBTYPE_AUDIO_CONTROL_FEATURE_UNIT:
+                                    if (((controlRequest->setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) ==
+                                         USB_REQUEST_TYPE_DIR_IN))
+                                    {
+                                        switch (controlRequest->setup->wValue >> 8)
+                                        {
+                                            case USB_DEVICE_AUDIO_FU_MUTE_CONTROL:
+                                                audioCommand = USB_DEVICE_AUDIO_GET_CUR_MUTE_CONTROL_AUDIO20;
+                                                break;
+                                            case USB_DEVICE_AUDIO_FU_VOLUME_CONTROL:
+                                                if (controlRequest->setup->bRequest == USB_DEVICE_AUDIO_REQUEST_CUR)
+                                                {
+                                                    audioCommand = USB_DEVICE_AUDIO_GET_CUR_VOLUME_CONTROL_AUDIO20;
+                                                }
+                                                else if (controlRequest->setup->bRequest ==
+                                                         USB_DEVICE_AUDIO_REQUEST_RANGE)
+                                                {
+                                                    audioCommand = USB_DEVICE_AUDIO_GET_RANGE_VOLUME_CONTROL_AUDIO20;
+                                                }
+                                                else
+                                                {
+                                                }
+                                                break;                                          
+                                            default:
+                                                break;
+                                        }
+                                    }
+                                    else if (((controlRequest->setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) ==
+                                          USB_REQUEST_TYPE_DIR_OUT))
+                                    {
+                                        switch (controlRequest->setup->wValue >> 8)
+                                        {
+                                            case USB_DEVICE_AUDIO_FU_MUTE_CONTROL:
+                                                audioCommand = USB_DEVICE_AUDIO_SET_CUR_MUTE_CONTROL_AUDIO20;
+                                                break;
+                                            case USB_DEVICE_AUDIO_FU_VOLUME_CONTROL:
+                                                if (controlRequest->setup->bRequest == USB_DEVICE_AUDIO_REQUEST_CUR)
+                                                {
+                                                    audioCommand = USB_DEVICE_AUDIO_SET_CUR_VOLUME_CONTROL_AUDIO20;
+                                                }
+                                                break;
+                                            default:
+                                                break;
+                                        }
+                                    }
+                                                
                                     break;
                                 case USB_DESCRIPTOR_SUBTYPE_AUDIO_CONTROL_CLOCK_SOURCE_UNIT:
                                     if (((controlRequest->setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) ==
@@ -1737,11 +1758,12 @@ usb_status_t USB_DeviceAudioSend(class_handle_t handle, uint8_t ep, uint8_t *buf
     {
         return kStatus_USB_Busy;
     }
+    audioHandle->streamInPipeBusy = 1U;
 
     error = USB_DeviceSendRequest(audioHandle->handle, ep, buffer, length);
-    if (kStatus_USB_Success == error)
+    if (kStatus_USB_Success != error)
     {
-        audioHandle->streamInPipeBusy = 1U;
+        audioHandle->streamInPipeBusy = 0U;
     }
     return error;
 }
@@ -1782,11 +1804,12 @@ usb_status_t USB_DeviceAudioRecv(class_handle_t handle, uint8_t ep, uint8_t *buf
     {
         return kStatus_USB_Busy;
     }
-
+    audioHandle->streamOutPipeBusy = 1U;
+    
     error = USB_DeviceRecvRequest(audioHandle->handle, ep, buffer, length);
-    if (kStatus_USB_Success == error)
+    if (kStatus_USB_Success != error)
     {
-        audioHandle->streamOutPipeBusy = 1U;
+        audioHandle->streamOutPipeBusy = 0U;
     }
     return error;
 }

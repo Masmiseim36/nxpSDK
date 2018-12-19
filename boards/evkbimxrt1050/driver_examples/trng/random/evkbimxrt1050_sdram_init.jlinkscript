@@ -75,6 +75,7 @@ void Load_Dcdc_Trim()
  
 void Clock_Init() 
 {
+  unsigned int reg;
   // Enable all clocks
   MEM_WriteU32(0x400FC068,0xffffffff);
   MEM_WriteU32(0x400FC06C,0xffffffff);
@@ -84,9 +85,25 @@ void Clock_Init()
   MEM_WriteU32(0x400FC07C,0xffffffff);
   MEM_WriteU32(0x400FC080,0xffffffff);
 
-  MEM_WriteU32(0x400D8030,0x00002001);   
-  MEM_WriteU32(0x400D8100,0x001d0000);  
-  MEM_WriteU32(0x400FC014,0x00010D40);    
+  // PERCLK_PODF: 1 divide by 2
+  MEM_WriteU32(0x400FC01C, 0x04900001);
+  // Enable SYS PLL but keep it bypassed.
+  MEM_WriteU32(0x400D8030, 0x00012001);
+  do
+  {
+    reg = MEM_ReadU32(0x400D8030);
+  }while((reg & 0x80000000) == 0);
+  // Disable bypass of SYS PLL
+  MEM_WriteU32(0x400D8030, 0x00002001);
+  
+  // PFD2_FRAC: 29, PLL2 PFD2=528*18/PFD2_FRAC=327
+  // Ungate SYS PLL PFD2
+  MEM_WriteU32(0x400D8100, 0x001d0000);
+  
+  // SEMC_PODF: 001, AHB_PODF: 011, IPG_PODF: 01
+  // SEMC_ALT_CLK_SEL: 0 PLL2 (SYS PLL) PFD2
+  // SEMC_CLK_SEL: 1 SEMC_ALT_CLK
+  MEM_WriteU32(0x400FC014, 0x00010D40);
 
   Report("Clock Init Done");
 }
@@ -238,36 +255,8 @@ void SetupTarget(void) {
   SDRAM_Init();
 }
 
-/* ResetTarget */
-void ResetTarget(void) {
-  unsigned int v;
-  unsigned int Tmp;
-  //
-  // J-Link DLL expects CPU to be reset and halted when leaving this function
-  //
-  Report("J-Link script: ResetTarget()");
-  // Read IDCODE
-  v=JLINK_CORESIGHT_ReadDP(0);
-  Report1("DP0: ", v);
-
-  // Power up Debugger
-  JLINK_CORESIGHT_WriteDP(1, 0x50000000);
-  v=JLINK_CORESIGHT_ReadDP(1);
-  Report1("DP1: ", v);
-
-
-  JLINK_CORESIGHT_WriteAP(0, 0x23000042);
-  v=JLINK_CORESIGHT_ReadAP(0);
-  Report1("AHB-AP0: ", v);  
-
-  JLINK_CORESIGHT_WriteAP(1, 0xE000EDF0);
-  v=JLINK_CORESIGHT_ReadAP(1);
-  Report1("AHB-AP1: ", v); 
-  v=JLINK_CORESIGHT_ReadAP(3);
-  Report1("AHB-AP3: ", v); 
-  JLINK_CORESIGHT_WriteAP(3, 0xa05f0003);
-  v=JLINK_CORESIGHT_ReadAP(3);
-  Report1("AHB-AP3: ", v);
+/* AfterResetTarget */
+void AfterResetTarget(void) {
 
   Load_Dcdc_Trim();
   Clock_Init();

@@ -1,35 +1,3 @@
-Overview
-========
-The qca_throughput demo tests transfer throughput.
-
-
-
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- EVKB-IMXRT1050 board
-- GT202 Adaptor V1.04
-- Personal Computer
-
-Board settings
-==============
-Plug GT202 Adaptor board to FRDM stackable headers (J1, J2, J3, J4).
-Remove the resistor R334, dis-connect J15, and weld 0Ω resistor to R278,R279,R280,R281.
-
-Known issues:
-- IMX RT1050 is missing in FRDMGT202QSG_KSDK2.pdf
-- A hardfault may occurs when running RX throughput benchmark.
-- Output shell may be broken into two lines
-
-Please use external power supply (J2), USB may not be sufficient.
-
 Prepare the Demo
 ================
 
@@ -114,6 +82,35 @@ Full description of former throughput demo is available at "GT202 Demo Applicati
 GT202 communication is described in "GT202 MQX PDK Demo Applications 1.3.pdf".
 https://static4.arrow.com/-/media/images/part-detail-pages/gt202-kits/gt202-mqx-pdk-demo-applications-user-guide-1-3.pdf
 
-Customization options
+Overview
+========
+The qca_throughput demo tests transfer throughput.
+
+
+Hardware requirements
 =====================
+- Mini/micro USB cable
+- EVKB-IMXRT1050 board
+- GT202 Adaptor V1.04
+- Personal Computer
+
+Board settings
+==============
+Plug GT202 Adaptor board to FRDM stackable headers (J1, J2, J3, J4).
+Remove the resistor R334, dis-connect J15, and weld 0Ω resistor to R278,R279,R280,R281.
+
+Known issues:
+- IMX RT1050 is missing in FRDMGT202QSG_KSDK2.pdf
+- A hardfault may occurs when running RX throughput benchmark.
+- Output shell may be broken into two lines
+
+Please use external power supply (J2), USB may not be sufficient.
+
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

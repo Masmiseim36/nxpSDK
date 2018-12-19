@@ -1,7 +1,7 @@
 /*
  * Copyright 2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 #include "board.h"
@@ -107,7 +107,6 @@ int main(void)
     SEMC_SDRAMReadWrite8Bit();
 
     PRINTF("\r\n SEMC SDRAM Example End.\r\n");
-    SEMC_Deinit(SEMC);
     while (1)
     {
     }

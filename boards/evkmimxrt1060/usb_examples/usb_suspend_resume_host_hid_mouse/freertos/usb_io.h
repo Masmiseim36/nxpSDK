@@ -31,7 +31,7 @@ void USB_GpioInt(uint8_t instance, uint8_t enable);
 void USB_GpioInterruptInit(
     uint8_t instance, uint8_t port, uint32_t pin, uint8_t trrigger, usb_gpio_callback_t callback);
 void USB_GpioInterruptEnable(uint8_t instance, uint8_t port, uint32_t pin, uint8_t enable);
-void USB_GpioOutputInit(uint8_t instance, uint32_t port, uint32_t pin);
+void USB_GpioOutputInit(uint8_t instance, uint32_t port, uint32_t pin, uint8_t defaultValue);
 void USB_GpioOutputWritePin(uint8_t instance, uint32_t port, uint32_t pin, uint8_t output);
 void USB_GpioInputInit(uint8_t instance, uint32_t port, uint32_t pin);
 uint8_t USB_GpioInputReadPin(uint8_t instance, uint32_t port, uint32_t pin);

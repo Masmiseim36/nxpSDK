@@ -4,14 +4,6 @@ The CSI RGB565 project shows how to receive the camera data using CSI driver.
 In this example, you will see the camera input image shown in the LCD. Please
 note that the camera input image resolution might be smaller than the LCD
 panel, so part of the LCD panel might be blank.
-
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
-
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -44,6 +36,11 @@ csi_rgb565.c.
 Running the demo
 ================
 When the demo runs successfully, the camera received pictures are shown in the LCD.
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

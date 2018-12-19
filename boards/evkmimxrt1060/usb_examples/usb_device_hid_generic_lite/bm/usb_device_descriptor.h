@@ -35,7 +35,8 @@
 
 #define USB_HID_GENERIC_CONFIGURE_INDEX (1U)
 #define USB_HID_GENERIC_INTERFACE_COUNT (1U)
-
+/*IN lenght is same with out lenght, in case in length is not equal to out length, pleae check*/
+/*USB_DeviceHidSend/Recv to make sure the length parameter is right*/
 #define USB_HID_GENERIC_IN_BUFFER_LENGTH (8U)
 #define USB_HID_GENERIC_OUT_BUFFER_LENGTH (8U)
 #define USB_HID_GENERIC_ENDPOINT_COUNT (2U)

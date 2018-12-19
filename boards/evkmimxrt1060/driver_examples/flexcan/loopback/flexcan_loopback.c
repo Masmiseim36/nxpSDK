@@ -18,6 +18,21 @@
 #define EXAMPLE_CAN CAN2
 #define EXAMPLE_FLEXCAN_IRQn CAN2_IRQn
 #define EXAMPLE_FLEXCAN_IRQHandler CAN2_IRQHandler
+#define RX_MESSAGE_BUFFER_NUM (9)
+#define TX_MESSAGE_BUFFER_NUM (8)
+#define DLC (8)
+
+/* To get most precise baud rate under some circumstances, users need to set
+   quantum which is composed of PSEG1/PSEG2/PROPSEG. Because CAN clock prescaler
+   = source clock/(baud rate * quantum), for e.g. 84M clock and 1M baud rate, the
+   quantum should be .e.g 14=(6+3+1)+4, so prescaler is 6. By default, quantum
+   is set to 10=(3+2+1)+4, because for most platforms e.g. 120M source clock/(1M
+   baud rate * 10) is an integer. Remember users must ensure the calculated
+   prescaler an integer thus to get precise baud rate. */
+#define SET_CAN_QUANTUM 0
+#define PSEG1 3
+#define PSEG2 2
+#define PROPSEG 1
 
 /* Select 80M clock divided by USB1 PLL (480 MHz) as master flexcan clock source */
 #define FLEXCAN_CLOCK_SOURCE_SELECT (2U)
@@ -25,9 +40,21 @@
 #define FLEXCAN_CLOCK_SOURCE_DIVIDER (3U)
 /* Get frequency of flexcan clock */
 #define EXAMPLE_CAN_CLK_FREQ ((CLOCK_GetFreq(kCLOCK_Usb1PllClk) / 6) / (FLEXCAN_CLOCK_SOURCE_DIVIDER + 1U))
-#define RX_MESSAGE_BUFFER_NUM (8)
+#if (defined(FSL_FEATURE_FLEXCAN_HAS_ERRATA_5829) && FSL_FEATURE_FLEXCAN_HAS_ERRATA_5829)
+/* To consider the First valid MB must be used as Reserved TX MB for ERR005829
+   If RX FIFO enable(RFEN bit in MCE set as 1) and RFFN in CTRL2 is set default zero, the first valid TX MB Number is 8
+   If RX FIFO enable(RFEN bit in MCE set as 1) and RFFN in CTRL2 is set by other value(0x1~0xF), User should consider
+   detail first valid MB number
+   If RX FIFO disable(RFEN bit in MCE set as 0) , the first valid MB number is zero */
+#ifdef RX_MESSAGE_BUFFER_NUM
+#undef RX_MESSAGE_BUFFER_NUM
+#define RX_MESSAGE_BUFFER_NUM (10)
+#endif
+#ifdef TX_MESSAGE_BUFFER_NUM
+#undef TX_MESSAGE_BUFFER_NUM
 #define TX_MESSAGE_BUFFER_NUM (9)
-
+#endif
+#endif
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -140,11 +167,9 @@ int main(void)
     txFrame.format = kFLEXCAN_FrameFormatStandard;
     txFrame.type = kFLEXCAN_FrameTypeData;
     txFrame.id = FLEXCAN_ID_STD(0x123);
-#if (defined(USE_CANFD) && USE_CANFD)
     txFrame.length = DLC;
+#if (defined(USE_CANFD) && USE_CANFD)
     txFrame.brs = 1;
-#else
-    txFrame.length = 8;
 #endif
 #if (defined(USE_CANFD) && USE_CANFD)
     uint8_t i = 0;

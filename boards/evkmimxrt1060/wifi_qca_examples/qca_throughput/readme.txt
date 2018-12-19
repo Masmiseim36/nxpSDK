@@ -1,30 +1,3 @@
-Overview
-========
-The qca_throughput demo tests transfer throughput.
-
-
-
-Toolchain supported
-===================
-- Keil MDK 5.25
-- IAR embedded Workbench 8.30.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.1
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- EVK-MIMXRT1060 board
-- SX-ULPAN-2401-SHIELD(US)
-- Personal Computer
-
-Board settings
-==============
-Plug SX-ULPAN-2401-SHIELD(US) board to J22, J23, J24, J25.
-Dis-connect J15, and weld 0Ω resistor to R278,R279,R280,R281.
-
-Please use external power supply (J2), USB may not be sufficient.
-
 Prepare the Demo
 ================
 
@@ -109,6 +82,37 @@ Full description of former throughput demo is available at "GT202 Demo Applicati
 GT202 communication is described in "GT202 MQX PDK Demo Applications 1.3.pdf".
 https://static4.arrow.com/-/media/images/part-detail-pages/gt202-kits/gt202-mqx-pdk-demo-applications-user-guide-1-3.pdf
 
-Customization options
+Overview
+========
+The qca_throughput demo tests transfer throughput.
+
+
+Hardware requirements
 =====================
+- Mini/micro USB cable
+- EVK-MIMXRT1060 board
+- SX-ULPAN-2401-SHIELD(US)
+- Personal Computer
+
+Board settings
+==============
+Plug SX-ULPAN-2401-SHIELD(US) board to J22, J23, J24, J25.
+Dis-connect J15, and weld 0Ω resistor to R278,R279,R280,R281.
+
+Please use external power supply (J2), USB may not be sufficient.
+
+The default shield support is set to SX-ULPAN-2401 shield. To enable 
+GT202, please open "wifi_shield.h" and uncomment following lines:
+//#define WIFISHIELD_IS_GT202
+
+and comment out:
+#define WIFISHIELD_IS_SILEX2401
+
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

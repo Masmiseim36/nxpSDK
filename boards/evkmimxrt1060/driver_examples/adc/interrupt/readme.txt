@@ -13,14 +13,6 @@ The point is that the adc interrupt configuration is set when configuring the ad
 software trigger mode, the conversion would be launched by the operation of configuring channel, just like writing a
 conversion command. So if user wants to generate the interrupt every time the conversion is completed, the channel's 
 configuration with enabling interrupt setting would be used for each conversion.
-
-Toolchain supported
-===================
-- Keil MDK 5.25
-- IAR embedded Workbench 8.30.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.1
-
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -49,6 +41,7 @@ These instructions are displayed/shown on the terminal window:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ADC interrupt Example.
 ADC_DoAntoCalibration() Done.
+ADC Full Range: XXXX
 Press any key to get user channel's ADC value.
 ADC Value: 1211
 ADC Interrupt Counter: 1
@@ -65,6 +58,11 @@ Press any key to get user channel's ADC value.
 ...
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

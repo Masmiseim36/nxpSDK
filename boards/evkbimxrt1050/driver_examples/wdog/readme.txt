@@ -6,14 +6,6 @@ And then after 10 times of refreshing the watchdog, a timeout reset is generated
 We also try to refresh out of window to trigger reset after 10 times of refreshing.
 Please notice that because WDOG control registers are write-once only, so the 
 WDOG_Init function and the WDOG_Disable function can be called only once after reset.
-
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
-
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -38,23 +30,54 @@ Prepare the Demo
 
 Running the demo
 ================
+
+Note:
+To download binary into hyper flash and boot from hyperflash directly, following steps are needed:
+1. Select the target flexspi_nor_debug or flexspi_nor_release.
+2. Compile the project, and get the binaray file "rtwdog.bin"
+3. Set the SW7: 1 off 2 off 3 off 4 on, then power on the board and connect USB cable to J28
+4. Drop the binaray into disk "EVK-MIMXRT"
+5. Wait for the disk disappear and appear again which will take around ~10s, then power off the board
+6. Set the SW7: 1 off 2 on 3 on 4 off, then power on the board
+7. After power on the baord, program has already started to run, reset SW4 is recommended. 
+ 
+Note:
+To debug in hyper flash in MDK, following steps are needed:
+1. Select the target flexspi_nor_debug or flexspi_nor_release.
+2. Compile the project.
+3. Press F8 or click the download button, to program the application into hyper flash.
+4. Set the SW7: 1 off 2 on 3 on 4 off, then power on the board
+5. Push SW4 to reset.
+6. Start to debug.
+
 These instructions are displayed/shown on the terminal window:
 ~~~~~~~~~~~~~~~~~~~~~~~
---- Start Wdog Ultra test ---
---- wdog Init done---
---- Refresh wdog 1 time ---
---- Refresh wdog 2 time ---
---- Refresh wdog 3 time ---
---- Refresh wdog 4 time ---
---- Refresh wdog 5 time ---
---- Refresh wdog 6 time ---
---- Refresh wdog 7 time ---
---- Refresh wdog 8 time ---
---- Refresh wdog 9 time ---
---- Refresh wdog 10 time ---
+******** System Start ********
+System reset by: Power On Reset!
 
-End of Wdog example!
+- 1.Testing System reset by software trigger.
+******** System Start ********
+System reset by: Software Reset!
+
+- 2.Testing system reset by WDOG timeout.
+--- wdog Init done---
+
+******** System Start ********
+System reset by: Time Out Reset!
+
+- 3.Test the WDOG refresh function by using interrupt.
+--- wdog Init done---
+
+WDOG has be refreshed!
+WDOG has be refreshed!
+WDOG has be refreshed!
+
 ~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

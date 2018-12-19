@@ -422,15 +422,24 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
             }
             break;
         case kUSB_DeviceEventSetConfiguration:
-            if (param)
+            if (0U ==(*temp8))
+            {
+                g_UsbDeviceHidMouse.attach = 0;
+                g_UsbDeviceHidMouse.currentConfiguration = 0U;
+                g_UsbDeviceHidMouse.remoteWakeup = 0U;
+                g_UsbDeviceHidMouse.suspend = kStatus_MouseIdle;
+                g_UsbDeviceHidMouse.isResume = 0U;
+            }
+            else if (USB_HID_MOUSE_CONFIGURE_INDEX == (*temp8))
             {
                 /* Set device configuration request */
                 g_UsbDeviceHidMouse.attach = 1U;
                 g_UsbDeviceHidMouse.currentConfiguration = *temp8;
-                if (USB_HID_MOUSE_CONFIGURE_INDEX == (*temp8))
-                {
-                    error = USB_DeviceHidMouseAction();
-                }
+                error = USB_DeviceHidMouseAction();
+            }
+            else
+            {
+                error = kStatus_USB_InvalidRequest;
             }
             break;
         case kUSB_DeviceEventSetInterface:
@@ -686,7 +695,7 @@ void USB_DeviceSuspendResumeTask(void)
     }
 }
 
-#if defined(__CC_ARM) || defined(__GNUC__)
+#if defined(__CC_ARM) || (defined(__ARMCC_VERSION)) || defined(__GNUC__)
 int main(void)
 #else
 void main(void)

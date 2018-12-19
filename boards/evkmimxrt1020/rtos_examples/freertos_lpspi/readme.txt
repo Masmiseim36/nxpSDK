@@ -6,43 +6,15 @@ In this example , one lpspi instance used as LPSPI master and another lpspi inst
 
 1. LPSPI master send/received data to/from LPSPI slave in interrupt . (LPSPI Slave using interrupt to receive/send the data)
 
+The example supports board to board connection.
 
-
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
-
-Hardware requirements
-=====================
-
-Board settings
-==============
-
-LPSPI:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-       MASTER           connect to           SLAVE
-Pin Name   Board Location     Pin Name    Board Location
-SOUT       J18-6                SIN       J19-5
-SIN        J18-5                SOUT      J19-4
-SCK        J18-3                SCK       J19-6
-PCS0       J18-4                PCS0      J19-3
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Prepare the Demo
-================
-1. Connect a mini USB cable between the PC host and the OpenSDA USB port on the board.
-2. Open a serial terminal on PC for OpenSDA serial device with these settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-3. Download the program to the target board.
-4. Either press the reset button on your board or launch the debugger in your IDE to begin running
-   the demo.
+With board to board connection, one LPSPI instance on one board is used as LPSPI master and the LPSPI instance on other board is used as LPSPI slave. Tasks are created to run on each board to handle LPSPI communication.
+    File freertos_lpspi.c should have following definitions:
+    #define EXAMPLE_CONNECT_SPI BOARD_TO_BOARD
+    For board used as LPSPI master:
+        #define SPI_MASTER_SLAVE isMASTER
+    For board used as LPSPI slave:
+        #define SPI_MASTER_SLAVE isSLAVE
 
 Running the demo
 ================
@@ -78,6 +50,43 @@ To debug in qspiflash, following steps are needed:
 3. Set the SW8: 1 off 2 off 3 on 4 off, then power on the board and connect USB cable to J23.
 4. Start debugging in IDE.
    - Keil: Click "Download (F8)" to program the image to qspiflash first then clicking "Start/Stop Debug Session (Ctrl+F5)" to start debugging.
-Customization options
-=====================
+﻿Hardware requirements
+======================
+- Mini/micro USB cable
+- EVK-MIMXRT1020 board
+- Personal Computer
+
+Board settings
+==============
+
+LPSPI:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+       MASTER           connect to           SLAVE
+Pin Name   Board Location     Pin Name    Board Location
+SOUT       J18-6                SIN       J19-5
+SIN        J18-5                SOUT      J19-4
+SCK        J18-3                SCK       J19-6
+PCS0       J18-4                PCS0      J19-3
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Prepare the Demo
+================
+1. Connect a mini USB cable between the PC host and the OpenSDA USB port on the board.
+2. Open a serial terminal on PC for OpenSDA serial device with these settings:
+    - 115200 baud rate
+    - 8 data bits
+    - No parity
+    - One stop bit
+    - No flow control
+3. Download the program to the target board.
+4. Either press the reset button on your board or launch the debugger in your IDE to begin running
+   the demo.
+
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

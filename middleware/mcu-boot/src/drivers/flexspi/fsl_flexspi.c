@@ -982,10 +982,10 @@ status_t flexspi_command_xfer(uint32_t instance, flexspi_xfer_t *xfer)
         // Clear sequence pointer before sending data to external devices
         flexspi_clear_sequence_pointer(instance);
 
-        // Clear former pending status before start this tranfer.
+        // Clear former pending status before start this transfer.
         flexspi_clear_error_status(base);
 
-        // Configure base addresss
+        // Configure base address
         base->IPCR0 = xfer->baseAddress;
 
         if (xfer->operation == kFlexSpiOperation_Write)

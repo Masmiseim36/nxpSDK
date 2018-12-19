@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright 2017 NXP
  * All rights reserved.
  *
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- *  that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #ifdef FSL_RTOS_FREE_RTOS
@@ -121,20 +95,6 @@ IRQn_Type vPortGetGptIrqn(void);
  * Code
  ******************************************************************************/
 
-/*
- * ERR007265: CCM: When improper low-power sequence is used,
- * the SoC enters low power mode before the ARM core executes WFI.
- *
- * Software workaround:
- * 1) Software should trigger IRQ #32 (IOMUX) to be always pending
- *    by setting IOMUX_GPR1_GINT.
- * 2) Software should then unmask IRQ #32 in GPC before setting CCM
- *    Low-Power mode.
- * 3) Software should mask IRQ #32 right after CCM Low-Power mode
- *    is set (set bits 0-1 of CCM_CLPCR).
- *
- * Note that IRQ #32 is GIC SPI #0.
- */
 static void LPM_SetClockMode(clock_mode_t mode, uint32_t clpcr)
 {
     switch (mode)
@@ -143,7 +103,22 @@ static void LPM_SetClockMode(clock_mode_t mode, uint32_t clpcr)
             CCM->CLPCR = clpcr;
             break;
         default:
+            /*
+             * ERR007265: CCM: When improper low-power sequence is used,
+             * the SoC enters low power mode before the ARM core executes WFI.
+             *
+             * Software workaround:
+             * 1) Software should trigger IRQ #41 (GPR_IRQ) to be always pending
+             *    by setting IOMUXC_GPR_GPR1_GINT.
+             * 2) Software should then unmask IRQ #41 in GPC before setting CCM
+             *    Low-Power mode.
+             * 3) Software should mask IRQ #41 right after CCM Low-Power mode
+             *    is set (set bits 0-1 of CCM_CLPCR).
+             *
+             */
+            LPM_EnableWakeupSource(GPR_IRQ_IRQn);
             CCM->CLPCR = clpcr;
+            LPM_DisableWakeupSource(GPR_IRQ_IRQn);
             break;
     }
 }
@@ -196,14 +171,14 @@ void LPM_SwitchFlexspiClock(lpm_power_mode_t power_mode)
     CCM->CCGR6 &= (~CCM_CCGR6_CG5_MASK);
 
     /* Periph_clk output will be used as SEMC clock root */
-    CLOCK_SET_MUX(kCLOCK_SemcMux, 0x0);
+    CLOCK_SET_MUX((uint32_t)kCLOCK_SemcMux, 0x0);
     /* Set post divider for SEMC clock as 0. */
     CLOCK_SET_DIV(kCLOCK_SemcDiv, 0x0);
 
     /* Semc_clk_root_pre will be used as flexspi clock. */
-    CLOCK_SET_MUX(kCLOCK_FlexspiMux, 0x0);
+    CLOCK_SET_MUX((uint32_t)kCLOCK_FlexspiMux, 0x0);
     /* Set divider for flexspi clock root 0. */
-    CLOCK_SET_DIV(kCLOCK_FlexspiDiv, 0x0);
+    CLOCK_SET_DIV((uint32_t)kCLOCK_FlexspiDiv, 0x0);
 
     /* Enable clock gate of flexspi. */
     CCM->CCGR6 |= (CCM_CCGR6_CG5_MASK);
@@ -241,9 +216,9 @@ void LPM_RestoreFlexspiClock(void)
     CCM->CCGR6 &= (~CCM_CCGR6_CG5_MASK);
 
     /* PLL3 PFD0 will be used as flexspi clock. */
-    CLOCK_SET_MUX(kCLOCK_FlexspiMux, 0x3);
+    CLOCK_SET_MUX((uint32_t)kCLOCK_FlexspiMux, 0x3);
     /* Set divider for flexspi clock root 0. */
-    CLOCK_SET_DIV(kCLOCK_FlexspiDiv, 0x0);
+    CLOCK_SET_DIV((uint32_t)kCLOCK_FlexspiDiv, 0x0);
 
     /* Enable clock gate of flexspi. */
     CCM->CCGR6 |= (CCM_CCGR6_CG5_MASK);
@@ -367,8 +342,8 @@ void LPM_DisablePLLs(lpm_power_mode_t power_mode)
         /*Select ARM_PLL for pre_periph_clock */
         CLOCK_SetMux(kCLOCK_PrePeriphMux, 3);
         CLOCK_SetMux(kCLOCK_PeriphMux, 0);
-        
-        if(LPM_PowerModeLowSpeedRun == power_mode)
+
+        if (LPM_PowerModeLowSpeedRun == power_mode)
         {
             /* SET AHB to 132MHz, IPG to 33MHz */
             CLOCK_SetDiv(kCLOCK_IpgDiv, 3);
@@ -401,8 +376,8 @@ void LPM_DisablePLLs(lpm_power_mode_t power_mode)
         CLOCK_SetDiv(kCLOCK_ArmDiv, 0x0);
         CLOCK_SetMux(kCLOCK_PrePeriphMux, 0x3);
         CLOCK_SetMux(kCLOCK_PeriphMux, 0x0);
-        
-        if(LPM_PowerModeLowPowerRun == power_mode)
+
+        if (LPM_PowerModeLowPowerRun == power_mode)
         {
             /* SET AHB to 24MHz, IPG to 12MHz */
             CLOCK_SetDiv(kCLOCK_IpgDiv, 1);
@@ -466,9 +441,6 @@ void LPM_RestorePLLs(lpm_power_mode_t power_mode)
             while ((CCM_ANALOG->PLL_USB1 & CCM_ANALOG_PLL_USB1_LOCK_MASK) == 0)
             {
             }
-        }
-        while (!(CCM_ANALOG->PFD_480 & CCM_ANALOG_PFD_480_PFD0_STABLE_MASK))
-        {
         }
         /* Wait CCM operation finishes */
         while (CCM->CDHIPR != 0)
@@ -705,6 +677,8 @@ void LPM_SystemRestoreIdle(void)
     CCM_ANALOG->MISC0_CLR = CCM_ANALOG_MISC0_DISCON_HIGH_SNVS_MASK;
     /* Increase OSC current to normal */
     CCM_ANALOG->MISC0_CLR = CCM_ANALOG_MISC0_OSC_I_MASK;
+    /* Clear FET ODRIVE */
+    PMU->REG_CORE_CLR = PMU_REG_CORE_FET_ODRIVE_MASK;
 
     LPM_EnterCritical();
     LPM_SwitchToXtalOSC();
@@ -748,20 +722,6 @@ static void LPM_SystemDsm()
     /* Turn off FlexRAM0 */
     GPC->CNTR |= GPC_CNTR_PDRAM0_PGE_MASK;
 
-/* Set resume entry */
-#if defined(__CC_ARM)
-    extern uint32_t __Vectors[];
-#define __VECTOR_TABLE __Vectors
-#elif defined(__MCUXPRESSO)
-    extern uint32_t __Vectors[];
-#define __VECTOR_TABLE __Vectors
-#elif defined(__ICCARM__)
-    extern uint32_t __VECTOR_TABLE[];
-#elif defined(__GNUC__)
-    extern uint32_t __VECTOR_TABLE[];
-#endif
-    IOMUXC_GPR->GPR16 = (uint32_t)((uint32_t)__VECTOR_TABLE | 3);
-
     /* Clean and disable data cache to make sure context is saved into DDR */
     SCB_CleanDCache();
     SCB_DisableDCache();
@@ -794,7 +754,7 @@ static void LPM_SystemDsm()
         GPC->IMR[i] = 0xFFFFFFFFU;
     }
 
-    /* 
+    /*
      * ERR006223: CCM: Failure to resuem from wait/stop mode with power gating
      *   Configure REG_BYPASS_COUNTER to 2
      *   Enable the RBC bypass counter here to hold off the interrupts. RBC counter
@@ -833,8 +793,6 @@ void LPM_SystemRestoreDsm(void)
     PMU->REG_CORE_CLR = PMU_REG_CORE_FET_ODRIVE_MASK;
     /* Disconnect vdd_snvs_in and connect vdd_high_in */
     CCM_ANALOG->MISC0_CLR = CCM_ANALOG_MISC0_DISCON_HIGH_SNVS_MASK;
-
-    IOMUXC_GPR->GPR16 = (uint32_t)((uint32_t)ROM_CODE_ENTRY_ADDR | 3);
 }
 
 void LPM_SystemResumeDsm(void)
@@ -1054,6 +1012,9 @@ bool LPM_Init(lpm_power_mode_t run_mode)
     XTALOSC24M->OSC_CONFIG1 = tmp_reg;
 
     s_DllBackupValue = FLEXSPI->DLLCR[0];
+
+    /* ERR007265 */
+    IOMUXC_GPR->GPR1 |= IOMUXC_GPR_GPR1_GINT_MASK;
 
     /* Initialize GPC to mask all IRQs */
     for (i = 0; i < LPM_GPC_IMR_NUM; i++)

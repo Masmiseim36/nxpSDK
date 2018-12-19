@@ -116,6 +116,7 @@ extern void APP_LCDIF_IRQHandler(void);
 void LCDIF_IRQHandler(void)
 {
     APP_LCDIF_IRQHandler();
+    __DSB();
 }
 
 /* Enable interrupt. */
@@ -127,22 +128,9 @@ void BOARD_EnableLcdInterrupt(void)
 /* Initialize the LCD_DISP. */
 void BOARD_InitLcd(void)
 {
-    volatile uint32_t i = 0x100U;
-
     gpio_pin_config_t config = {
         kGPIO_DigitalOutput, 0,
     };
-
-    /* Reset the LCD. */
-    GPIO_PinInit(LCD_DISP_GPIO, LCD_DISP_GPIO_PIN, &config);
-
-    GPIO_PinWrite(LCD_DISP_GPIO, LCD_DISP_GPIO_PIN, 0);
-
-    while (i--)
-    {
-    }
-
-    GPIO_PinWrite(LCD_DISP_GPIO, LCD_DISP_GPIO_PIN, 1);
 
     /* Backlight. */
     config.outputLogic = 1;
@@ -184,11 +172,12 @@ void BOARD_InitLcdifPixelClock(void)
 
 static void BOARD_USDHCClockConfiguration(void)
 {
-    /*configure system pll PFD2 fractional divider to 18*/
-    CLOCK_InitSysPfd(kCLOCK_Pfd0, 0x12U);
+    CLOCK_InitSysPll(&sysPllConfig_BOARD_BootClockRUN);
+    /*configure system pll PFD2 fractional divider to 24*/
+    CLOCK_InitSysPfd(kCLOCK_Pfd2, 24U);
     /* Configure USDHC clock source and divider */
     CLOCK_SetDiv(kCLOCK_Usdhc1Div, 0U);
-    CLOCK_SetMux(kCLOCK_Usdhc1Mux, 1U);
+    CLOCK_SetMux(kCLOCK_Usdhc1Mux, 0U);
 }
 
 
@@ -349,6 +338,7 @@ void APP_LCDIF_IRQHandler(void)
             g_lcdFramePending = false;
         }
     }
+    __DSB();
 }
 
 void APP_ELCDIF_Init(void)

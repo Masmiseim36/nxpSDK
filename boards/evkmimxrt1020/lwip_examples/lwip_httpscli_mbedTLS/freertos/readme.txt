@@ -4,33 +4,8 @@ Overview
 The lwip_https_client_mbedTLS demo application demonstrates an HTTPS client set up on lwIP TCP/IP and the MbedTLS stack with
 FreeRTOS. The board acts as an HTTP client and sends a request to the HTTPServer.
 
-Demo requires DHCP and DNS servers.
+Demo requires DHCP and DNS servers. The address of the DNS server is obtained from DHCP.
 
-
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- EVK-MIMXRT1020 board
-- Personal Computer
-
-Board settings
-==============
-No special settings are required.
-
-
-Note:
-To debug in qspiflash, following steps are needed:
-1. Select the flash target and compile.
-3. Set the SW8: 1 off 2 off 3 on 4 off, then power on the board and connect USB cable to J23.
-4. Start debugging in IDE.
-   - Keil: Click "Download (F8)" to program the image to qspiflash first then clicking "Start/Stop Debug Session (Ctrl+F5)" to start debugging.
 Prepare the Demo
 ================
 1.  Connect a USB cable between the PC host and the OpenSDA USB port on the target board.
@@ -40,7 +15,7 @@ Prepare the Demo
     - No parity
     - One stop bit
     - No flow control
-3.  Insert the Ethernet Cable into the target board's RJ45 port and connect it to your PC network adapter.
+3.  Insert the Ethernet Cable into the target board's RJ45 port and connect it to a computer network which has a DHCP server and access to the internet.
 4.  Download the program to the target board.
 5.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
 
@@ -184,6 +159,28 @@ Strict-Transport-Security: max-age=31536000; includeSubdomains
 
 Hello world!
 
-Customization options
+Hardware requirements
 =====================
+- Mini/micro USB cable
+- EVK-MIMXRT1020 board
+- Personal Computer
+
+Board settings
+==============
+No special settings are required.
+
+
+Note:
+To debug in qspiflash, following steps are needed:
+1. Select the flash target and compile.
+3. Set the SW8: 1 off 2 off 3 on 4 off, then power on the board and connect USB cable to J23.
+4. Start debugging in IDE.
+   - Keil: Click "Download (F8)" to program the image to qspiflash first then clicking "Start/Stop Debug Session (Ctrl+F5)" to start debugging.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

@@ -1,7 +1,7 @@
 /*
- * Copyright 2017 NXP
+ * Copyright 2017-2018 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -34,6 +34,8 @@ void ADC_Configuration(void);
  ******************************************************************************/
 volatile bool g_AdcConversionDoneFlag;
 volatile uint32_t g_AdcConversionValue;
+const uint32_t g_Adc_12bitFullRange = 4096U;
+
 /*******************************************************************************
 * Code
 ******************************************************************************/
@@ -42,6 +44,7 @@ void EXAMPLE_ADC_ETC_DONE0_Handler(void)
     ADC_ETC_ClearInterruptStatusFlags(DEMO_ADC_ETC_BASE, kADC_ETC_Trg0TriggerSource, kADC_ETC_Done0StatusFlagMask);
     g_AdcConversionDoneFlag = true;
     g_AdcConversionValue = ADC_ETC_GetADCConversionValue(DEMO_ADC_ETC_BASE, 0U, 0U); /* Get trigger0 chain0 result. */
+    __DSB();
 }
 
 /*!
@@ -89,6 +92,7 @@ int main(void)
     /* Enable the NVIC. */
     EnableIRQ(ADC_ETC_IRQ0_IRQn);
 
+    PRINTF("ADC Full Range: %d\r\n", g_Adc_12bitFullRange);
     while (1)
     {
         g_AdcConversionDoneFlag = false;

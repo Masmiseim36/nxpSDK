@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2018 NXP
  * All rights reserved.
- * 
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- *  that the following conditions are met:
  *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_debug_console.h"
@@ -43,61 +17,117 @@
  * Definitions
  ******************************************************************************/
 #define DEMO_WDOG_BASE WDOG1
-#define WDOG_WCT_INSTRUCITON_COUNT (256U)
+#define DEMO_WDOG_IRQHandler WDOG1_IRQHandler
+
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
- 
+
 /*******************************************************************************
 * Variables
 ******************************************************************************/
-static WDOG_Type *wdog_base = DEMO_WDOG_BASE;
 
 /*******************************************************************************
  * Code
  ******************************************************************************/
-static void WaitWctRefresh()
+void DEMO_WDOG_IRQHandler(void)
 {
-    for (uint32_t i = 0; i < WDOG_WCT_INSTRUCITON_COUNT; i++)
-    {
-    }
+    WDOG_Refresh(DEMO_WDOG_BASE);
+    WDOG_ClearInterruptStatus(DEMO_WDOG_BASE, kWDOG_InterruptFlag);
+    /*User code. */
+    PRINTF(" \r\nWDOG has be refreshed!");
 }
+
 /*!
  * @brief Main function
  */
 int main(void)
 {
+    uint16_t resetFlag = 0U;
     wdog_config_t config;
     BOARD_ConfigMPU();
     BOARD_InitPins();
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
-    PRINTF("--- Start Wdog test ---\r\n");
-    /*
-    * wdogConfig->enableWdog = true;
-    * wdogConfig->workMode.enableWait = true;
-    * wdogConfig->workMode.enableStop = false;
-    * wdogConfig->workMode.enableDebug = false;
-    * wdogConfig->enableInterrupt = false;
-    * wdogConfig->enablePowerdown = false;
-    * wdogConfig->resetExtension = flase;
-    * wdogConfig->timeoutValue = 0xFFU;
-    * wdogConfig->interruptTimeValue = 0x04u;
-    */
-    WDOG_GetDefaultConfig(&config);
-    config.timeoutValue = 0xffu;
-    config.interruptTimeValue = 0x08u;
-    WDOG_Init(wdog_base, &config);
-    PRINTF("--- wdog Init done---\r\n");
 
-    for (uint32_t i = 0; i < 10; i++)
+    PRINTF("\r\n******** System Start ********\r\n");
+    PRINTF("System reset by:");
+
+    resetFlag = WDOG_GetStatusFlags(DEMO_WDOG_BASE);
+
+    switch (resetFlag & (kWDOG_PowerOnResetFlag | kWDOG_TimeoutResetFlag | kWDOG_SoftwareResetFlag))
     {
-        WDOG_Refresh(wdog_base);
-        PRINTF("--- Refresh wdog %d time ---\r\n", i + 1);
-        WaitWctRefresh();
+        case kWDOG_PowerOnResetFlag:
+            PRINTF(" Power On Reset!\r\n");
+            break;
+        case kWDOG_TimeoutResetFlag:
+            PRINTF(" Time Out Reset!\r\n");
+            break;
+        case kWDOG_SoftwareResetFlag:
+            PRINTF(" Software Reset!\r\n");
+            break;
+        default:
+            PRINTF(" Error status!\r\n");
+            break;
+    }
+/* Disable wdog reset function test for some devices can't using this feature. */
+#if (!(defined(EXAMPLE_DISABLE_WDOG_RESET_FUNCTION) && EXAMPLE_DISABLE_WDOG_RESET_FUNCTION))
+    /* If system reset from power on, trigger a software reset. */
+    if (resetFlag & kWDOG_PowerOnResetFlag)
+    {
+        PRINTF("\r\n- 1.Testing System reset by software trigger...   ");
+        WDOG_TriggerSystemSoftwareReset(DEMO_WDOG_BASE);
     }
 
-    PRINTF("\r\nEnd of Wdog example!\r\n");
+    /* If system reset from software trigger, testing the timeout reset. */
+    if (resetFlag & kWDOG_SoftwareResetFlag)
+    {
+        PRINTF("\r\n- 2.Testing system reset by WDOG timeout.\r\n");
+        /*
+         * wdogConfig->enableWdog = true;
+         * wdogConfig->workMode.enableWait = true;
+         * wdogConfig->workMode.enableStop = false;
+         * wdogConfig->workMode.enableDebug = false;
+         * wdogConfig->enableInterrupt = false;
+         * wdogConfig->enablePowerdown = false;
+         * wdogConfig->resetExtension = flase;
+         * wdogConfig->timeoutValue = 0xFFU;
+         * wdogConfig->interruptTimeValue = 0x04u;
+         */
+        WDOG_GetDefaultConfig(&config);
+        config.timeoutValue = 0xFU; /* Timeout value is 2.5 sec. */
+        WDOG_Init(DEMO_WDOG_BASE, &config);
+        PRINTF("--- wdog Init done---\r\n");
+    }
+
+    /* If system reset from WDOG timeout, testing the refresh function using interrupt. */
+    if (resetFlag & kWDOG_TimeoutResetFlag)
+    {
+#endif
+        PRINTF("\r\n- 3.Test the WDOG refresh function by using interrupt.\r\n");
+        /*
+         * wdogConfig->enableWdog = true;
+         * wdogConfig->workMode.enableWait = true;
+         * wdogConfig->workMode.enableStop = false;
+         * wdogConfig->workMode.enableDebug = false;
+         * wdogConfig->enableInterrupt = false;
+         * wdogConfig->enablePowerdown = false;
+         * wdogConfig->resetExtension = flase;
+         * wdogConfig->timeoutValue = 0xFFU;
+         * wdogConfig->interruptTimeValue = 0x04u;
+         */
+        WDOG_GetDefaultConfig(&config);
+        config.timeoutValue = 0xFU; /* Timeout value is 8 sec. */
+        config.enableInterrupt = true;
+        config.interruptTimeValue = 0x4U; /* Interrupt occurred 2 sec before WDOG timeout. */
+        WDOG_Init(DEMO_WDOG_BASE, &config);
+
+        PRINTF("--- wdog Init done---\r\n");
+
+#if (!(defined(EXAMPLE_DISABLE_WDOG_RESET_FUNCTION) && EXAMPLE_DISABLE_WDOG_RESET_FUNCTION))
+    }
+#endif
+
     while (1)
     {
     }

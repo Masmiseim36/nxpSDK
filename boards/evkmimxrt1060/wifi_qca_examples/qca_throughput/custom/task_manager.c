@@ -107,7 +107,7 @@ static void DoPeriodic(void)
 *
 * DESCRIPTION: Called when user enters "benchquit"
 ************************************************************************/
-int worker_cmd_quit(p_shell_context_t context, int argc, char **argv)
+int worker_cmd_quit(shell_handle_t context, int argc, char **argv)
 {
     bench_quit = 1;
     return 0;
@@ -121,7 +121,7 @@ worker_shell_msg_t g_msg = {0};
 *
 * DESCRIPTION: Handles incoming commands from Shell task
 ************************************************************************/
-int32_t worker_cmd_handler(p_shell_context_t context, int32_t argc, char **argv)
+int32_t worker_cmd_handler(shell_handle_t context, int32_t argc, char **argv)
 {
     assert(argc < WORKER_SHELL_ARGC);
     g_msg.argc = argc;

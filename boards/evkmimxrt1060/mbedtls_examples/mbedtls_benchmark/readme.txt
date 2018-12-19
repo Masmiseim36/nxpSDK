@@ -3,26 +3,6 @@ Overview
 The mbdedTLS Benchmark demo application performs cryptographic algorithm benchmarking and prints results to the
 terminal.
 
-
-Toolchain supported
-===================
-- Keil MDK 5.25
-- IAR embedded Workbench 8.30.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.1
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- EVK-MIMXRT1060 board
-- Personal Computer
-
-Board settings
-==============
-No special settings are required.
-
-Note:
-This example can't run pass on MCUXpresso IDE v10.2.1, it will be fixed in MCUXpresso IDE v10.3.0.
 Prepare the Demo
 ================
 Connect a serial cable from the debug UART port of the target board to the PC. Start TeraTerm (http://ttssh2.osdn.jp)
@@ -49,7 +29,7 @@ Running the demo
 ================
 When the demo runs successfully, which takes a couple of minutes, the terminal displays similar information like the following:
 
-mbedTLS version 2.3.0
+mbedTLS version 2.12.0
 fsys=120000000
 Using following implementations:
   SHA: MMCAU HW accelerated
@@ -59,54 +39,64 @@ Using following implementations:
   Asymmetric encryption: Software implementation
 
 
-  MD5                      :  7160.47 KB/s,   16.14 cycles/byte
-  SHA-1                    :  3857.61 KB/s,   30.15 cycles/byte
-  SHA-256                  :  2543.23 KB/s,   45.87 cycles/byte
-  SHA-512                  :  789.87 KB/s,  148.33 cycles/byte
-  3DES                     :  1325.74 KB/s,   88.24 cycles/byte
-  DES                      :  2622.42 KB/s,   44.47 cycles/byte
-  AES-CBC-128              :  2842.23 KB/s,   41.02 cycles/byte
-  AES-CBC-192              :  2660.79 KB/s,   43.83 cycles/byte
-  AES-CBC-256              :  2517.95 KB/s,   46.33 cycles/byte
-  AES-GCM-128              :  818.67 KB/s,  143.08 cycles/byte
-  AES-GCM-192              :  804.44 KB/s,  145.62 cycles/byte
-  AES-GCM-256              :  790.74 KB/s,  148.17 cycles/byte
-  AES-CCM-128              :  1087.19 KB/s,  107.66 cycles/byte
-  AES-CCM-192              :  1044.11 KB/s,  112.12 cycles/byte
-  AES-CCM-256              :  993.71 KB/s,  117.82 cycles/byte
-  AES-CTR-128              :  2698.71 KB/s,   43.22 cycles/byte
-  AES-CTR-192              :  2534.63 KB/s,   46.04 cycles/byte
-  AES-CTR-256              :  2404.68 KB/s,   48.54 cycles/byte
-  CAMELLIA-CBC-128         :  673.79 KB/s,  173.95 cycles/byte
-  CAMELLIA-CBC-192         :  524.56 KB/s,  223.58 cycles/byte
-  CAMELLIA-CBC-256         :  524.62 KB/s,  223.58 cycles/byte
-  CTR_DRBG (NOPR)          :  2674.09 KB/s,   43.61 cycles/byte
-  CTR_DRBG (PR)            :  1869.33 KB/s,   62.49 cycles/byte
-  HMAC_DRBG SHA-1 (NOPR)   :  253.28 KB/s,  464.28 cycles/byte
-  HMAC_DRBG SHA-1 (PR)     :  234.75 KB/s,  501.11 cycles/byte
-  HMAC_DRBG SHA-256 (NOPR) :  275.84 KB/s,  426.16 cycles/byte
-  HMAC_DRBG SHA-256 (PR)   :  242.44 KB/s,  485.13 cycles/byte
-  RSA-2048                 :   45.00  public/s
-  RSA-2048                 :    1.33 private/s
-  DHE-2048                 :    0.33 handshake/s
-  DH-2048                  :    0.33 handshake/s
-  ECDSA-secp384r1          :    2.33 sign/s
-  ECDSA-secp256r1          :    4.00 sign/s
-  ECDSA-secp224r1          :    5.67 sign/s
-  ECDSA-secp192r1          :    7.33 sign/s
-  ECDSA-secp384r1          :    1.33 verify/s
-  ECDSA-secp256r1          :    2.33 verify/s
-  ECDSA-secp224r1          :    3.00 verify/s
-  ECDSA-secp192r1          :    4.00 verify/s
-  ECDHE-secp384r1          :    1.33 handshake/s
-  ECDHE-secp256r1          :    2.33 handshake/s
-  ECDHE-secp224r1          :    3.33 handshake/s
-  ECDHE-secp192r1          :    4.33 handshake/s
-  ECDH-secp384r1           :    2.33 handshake/s
-  ECDH-secp256r1           :    4.33 handshake/s
-  ECDH-secp224r1           :    6.00 handshake/s
-  ECDH-secp192r1           :    7.67 handshake/s
-
-Customization options
+  MD5                      :  6505.98 KB/s,   17.62 cycles/byte
+  SHA-1                    :  3688.66 KB/s,   31.38 cycles/byte
+  SHA-256                  :  2450.96 KB/s,   47.43 cycles/byte
+  SHA-512                  :  451.70 KB/s,  259.62 cycles/byte
+  3DES                     :  849.94 KB/s,  137.65 cycles/byte
+  DES                      :  1740.01 KB/s,   66.99 cycles/byte
+  AES-CBC-128              :  2099.88 KB/s,   55.42 cycles/byte
+  AES-CBC-192              :  1999.21 KB/s,   58.24 cycles/byte
+  AES-CBC-256              :  1917.44 KB/s,   60.74 cycles/byte
+  AES-GCM-128              :  518.11 KB/s,  226.22 cycles/byte
+  AES-GCM-192              :  511.61 KB/s,  229.08 cycles/byte
+  AES-GCM-256              :  505.44 KB/s,  231.92 cycles/byte
+  AES-CCM-128              :  699.82 KB/s,  167.29 cycles/byte
+  AES-CCM-192              :  676.79 KB/s,  173.01 cycles/byte
+  AES-CCM-256              :  655.23 KB/s,  178.73 cycles/byte
+  CTR_DRBG (NOPR)          :  2181.05 KB/s,   53.36 cycles/byte
+  CTR_DRBG (PR)            :  1484.93 KB/s,   78.58 cycles/byte
+  HMAC_DRBG SHA-1 (NOPR)   :  244.85 KB/s,  480.17 cycles/byte
+  HMAC_DRBG SHA-1 (PR)     :  226.67 KB/s,  518.88 cycles/byte
+  HMAC_DRBG SHA-256 (NOPR) :  268.80 KB/s,  437.21 cycles/byte
+  HMAC_DRBG SHA-256 (PR)   :  235.97 KB/s,  498.34 cycles/byte
+  RSA-1024                 :   94.00  public/s
+  RSA-1024                 :    3.00 private/s
+  DHE-2048                 :    0.18 handshake/s
+  DH-2048                  :    0.18 handshake/s
+  ECDSA-secp384r1          :    1.67 sign/s
+  ECDSA-secp256r1          :    2.67 sign/s
+  ECDSA-secp224r1          :    4.33 sign/s
+  ECDSA-secp192r1          :    5.33 sign/s
+  ECDSA-secp384r1          :    1.00 verify/s
+  ECDSA-secp256r1          :    1.67 verify/s
+  ECDSA-secp224r1          :    2.33 verify/s
+  ECDSA-secp192r1          :    3.00 verify/s
+  ECDHE-secp384r1          :    1.00 handshake/s
+  ECDHE-secp256r1          :    1.67 handshake/s
+  ECDHE-secp224r1          :    2.67 handshake/s
+  ECDHE-secp192r1          :    3.33 handshake/s
+  ECDH-secp384r1           :    2.00 handshake/s
+  ECDH-secp256r1           :    3.00 handshake/s
+  ECDH-secp224r1           :    4.67 handshake/s
+  ECDH-secp192r1           :    6.00 handshake/s
+Hardware requirements
 =====================
+- Mini/micro USB cable
+- EVK-MIMXRT1060 board
+- Personal Computer
+
+Board settings
+==============
+No special settings are required.
+
+Note:
+This example can't run pass on MCUXpresso IDE v10.2.1, it will be fixed in MCUXpresso IDE v10.3.0.
+
+Toolchain supported
+===================
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
 

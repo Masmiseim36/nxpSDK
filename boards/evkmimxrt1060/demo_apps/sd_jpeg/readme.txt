@@ -2,14 +2,7 @@ Overview
 ========
 The SD JPEG Demo application reads the JPEG pictures from the SD card, decodes
 them, and shows them in the LCD panel one by one.
-
-Toolchain supported
-===================
-- Keil MDK 5.25
-- IAR embedded Workbench 8.30.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.1
-
+Note: Please make sure the card you are using is FAT32 format.
 Hardware requirements
 =====================
 - Micro USB cable
@@ -44,6 +37,11 @@ Running the demo
 If this example runs correctly, pictures are shown in the lcd panel one by one.
 
 Known issue: Example built by MDK runs slow, it will be fixed in next release.
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

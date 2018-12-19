@@ -129,7 +129,7 @@ int main(void)
     EnableIRQ(GPT1_IRQn);
 #endif
 
-    PRINTF("\r\nPress any key to start the example");
+    PRINTF("Press any key to start the example\r\n");
     GETCHAR();
 
     /* Print a note to terminal. */

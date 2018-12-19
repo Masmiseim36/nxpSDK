@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- *  that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 #ifndef _FSL_LPSPI_H_
 #define _FSL_LPSPI_H_
@@ -47,8 +21,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief LPSPI driver version 2.0.1. */
-#define FSL_LPSPI_DRIVER_VERSION (MAKE_VERSION(2, 0, 2))
+/*! @brief LPSPI driver version 2.0.3. */
+#define FSL_LPSPI_DRIVER_VERSION (MAKE_VERSION(2, 0, 3))
 /*@}*/
 
 #ifndef LPSPI_DUMMY_DATA
@@ -230,17 +204,17 @@ enum _lpspi_transfer_config_flag_for_master
 
     kLPSPI_MasterByteSwap =
         1U << 22 /*!< Is master swap the byte.
-                     * For example, when want to send data 1 2 3 4 5 6 7 8 (suppose you set
-                     * lpspi_shift_direction_t to MSB).
-                     * 1. If you set bitPerFrame = 8 , no matter the kLPSPI_MasterByteSwapyou flag is used
-                     * or not, the waveform is 1 2 3 4 5 6 7 8.
-                     * 2. If you set bitPerFrame = 16 :
-                     * (1) the waveform is 2 1 4 3 6 5 8 7 if you do not use the kLPSPI_MasterByteSwap flag.
-                     * (2) the waveform is 1 2 3 4 5 6 7 8 if you use the kLPSPI_MasterByteSwap flag.
-                     * 3. If you set bitPerFrame = 32 :
-                     * (1) the waveform is 4 3 2 1 8 7 6 5 if you do not use the kLPSPI_MasterByteSwap flag.
-                     * (2) the waveform is 1 2 3 4 5 6 7 8 if you use the kLPSPI_MasterByteSwap flag.
-                     */
+                       * For example, when want to send data 1 2 3 4 5 6 7 8 (suppose you set
+                       * lpspi_shift_direction_t to MSB).
+                       * 1. If you set bitPerFrame = 8 , no matter the kLPSPI_MasterByteSwapyou flag is used
+                       * or not, the waveform is 1 2 3 4 5 6 7 8.
+                       * 2. If you set bitPerFrame = 16 :
+                       * (1) the waveform is 2 1 4 3 6 5 8 7 if you do not use the kLPSPI_MasterByteSwap flag.
+                       * (2) the waveform is 1 2 3 4 5 6 7 8 if you use the kLPSPI_MasterByteSwap flag.
+                       * 3. If you set bitPerFrame = 32 :
+                       * (1) the waveform is 4 3 2 1 8 7 6 5 if you do not use the kLPSPI_MasterByteSwap flag.
+                       * (2) the waveform is 1 2 3 4 5 6 7 8 if you use the kLPSPI_MasterByteSwap flag.
+                       */
 };
 
 #define LPSPI_SLAVE_PCS_SHIFT (4U)   /*!< LPSPI slave PCS shift macro , internal used. */
@@ -256,17 +230,17 @@ enum _lpspi_transfer_config_flag_for_slave
 
     kLPSPI_SlaveByteSwap =
         1U << 22 /*!< Is slave swap the byte.
-                      * For example, when want to send data 1 2 3 4 5 6 7 8 (suppose you set
-                      * lpspi_shift_direction_t to MSB).
-                      * 1. If you set bitPerFrame = 8 , no matter the kLPSPI_SlaveByteSwap flag is used
-                      * or not, the waveform is 1 2 3 4 5 6 7 8.
-                      * 2. If you set bitPerFrame = 16 :
-                      * (1) the waveform is 2 1 4 3 6 5 8 7 if you do not use the kLPSPI_SlaveByteSwap flag.
-                      * (2) the waveform is 1 2 3 4 5 6 7 8 if you use the kLPSPI_SlaveByteSwap flag.
-                      * 3. If you set bitPerFrame = 32 :
-                      * (1) the waveform is 4 3 2 1 8 7 6 5 if you do not use the kLPSPI_SlaveByteSwap flag.
-                      * (2) the waveform is 1 2 3 4 5 6 7 8 if you use the kLPSPI_SlaveByteSwap flag.
-                      */
+                        * For example, when want to send data 1 2 3 4 5 6 7 8 (suppose you set
+                        * lpspi_shift_direction_t to MSB).
+                        * 1. If you set bitPerFrame = 8 , no matter the kLPSPI_SlaveByteSwap flag is used
+                        * or not, the waveform is 1 2 3 4 5 6 7 8.
+                        * 2. If you set bitPerFrame = 16 :
+                        * (1) the waveform is 2 1 4 3 6 5 8 7 if you do not use the kLPSPI_SlaveByteSwap flag.
+                        * (2) the waveform is 1 2 3 4 5 6 7 8 if you use the kLPSPI_SlaveByteSwap flag.
+                        * 3. If you set bitPerFrame = 32 :
+                        * (1) the waveform is 4 3 2 1 8 7 6 5 if you do not use the kLPSPI_SlaveByteSwap flag.
+                        * (2) the waveform is 1 2 3 4 5 6 7 8 if you use the kLPSPI_SlaveByteSwap flag.
+                        */
 };
 
 /*! @brief LPSPI transfer state, which is used for LPSPI transactional API state machine. */
@@ -724,14 +698,6 @@ static inline uint32_t LPSPI_GetRxRegisterAddress(LPSPI_Type *base)
  * @name Bus Operations
  * @{
  */
-
-/*!
-* @brief Get instance number for LPSPI module.
-*
-* @param base LPSPI peripheral base address.
-* @return Return the value of LPSPI instance.
-*/
-uint32_t LPSPI_GetInstance(LPSPI_Type *base);
 
 /*!
 * @brief Check the argument for transfer .

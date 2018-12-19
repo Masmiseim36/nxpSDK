@@ -41,8 +41,8 @@
 /*! @brief Available common EVENT types in printer class callback */
 typedef enum _usb_device_printer_event
 {
-    kUSB_DevicePrinterEventRecvResponse = 0x01U, /*!< Data received */
-    kUSB_DevicePrinterEventSendResponse,         /*!< Data send done */
+    kUSB_DevicePrinterEventRecvResponse = 0x01U, /*!< Data received or cancelled etc*/
+    kUSB_DevicePrinterEventSendResponse,         /*!< Data send done or cancelled etc */
     kUSB_DevicePrinterEventGetDeviceId,          /*!< Get device ID request */
     kUSB_DevicePrinterEventGetPortStatus,        /*!< Get port status request */
     kUSB_DevicePrinterEventSoftReset,            /*!< Soft reset request */
@@ -145,6 +145,8 @@ extern usb_status_t USB_DevicePrinterEvent(void *handle, uint32_t event, void *p
  *
  * @return A USB error code or kStatus_USB_Success.
  *
+ * @note The function can only be called in the same context. 
+ *
  * @note The return value indicates whether the sending request is successful or not.
  * Currently, only one transfer request can be supported for one specific endpoint.
  * If there is a specific requirement to support multiple transfer requests for a specific endpoint, the application
@@ -166,6 +168,8 @@ extern usb_status_t USB_DevicePrinterSend(class_handle_t handle, uint8_t ep, uin
  * @param[in] length The data length to be sent.
  *
  * @return A USB error code or kStatus_USB_Success.
+ *
+ * @note The function can only be called in the same context. 
  *
  * @note The return value indicates whether the sending request is successful or not.
  * Currently, only one transfer request can be supported for one specific endpoint.

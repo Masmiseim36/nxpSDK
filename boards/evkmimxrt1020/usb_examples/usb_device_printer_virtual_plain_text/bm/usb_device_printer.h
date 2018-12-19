@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #ifndef __USB_DEVICE_PRINTER_H__
@@ -67,8 +41,8 @@
 /*! @brief Available common EVENT types in printer class callback */
 typedef enum _usb_device_printer_event
 {
-    kUSB_DevicePrinterEventRecvResponse = 0x01U, /*!< Data received */
-    kUSB_DevicePrinterEventSendResponse,         /*!< Data send done */
+    kUSB_DevicePrinterEventRecvResponse = 0x01U, /*!< Data received or cancelled etc*/
+    kUSB_DevicePrinterEventSendResponse,         /*!< Data send done or cancelled etc */
     kUSB_DevicePrinterEventGetDeviceId,          /*!< Get device ID request */
     kUSB_DevicePrinterEventGetPortStatus,        /*!< Get port status request */
     kUSB_DevicePrinterEventSoftReset,            /*!< Soft reset request */
@@ -171,6 +145,8 @@ extern usb_status_t USB_DevicePrinterEvent(void *handle, uint32_t event, void *p
  *
  * @return A USB error code or kStatus_USB_Success.
  *
+ * @note The function can only be called in the same context. 
+ *
  * @note The return value indicates whether the sending request is successful or not.
  * Currently, only one transfer request can be supported for one specific endpoint.
  * If there is a specific requirement to support multiple transfer requests for a specific endpoint, the application
@@ -192,6 +168,8 @@ extern usb_status_t USB_DevicePrinterSend(class_handle_t handle, uint8_t ep, uin
  * @param[in] length The data length to be sent.
  *
  * @return A USB error code or kStatus_USB_Success.
+ *
+ * @note The function can only be called in the same context. 
  *
  * @note The return value indicates whether the sending request is successful or not.
  * Currently, only one transfer request can be supported for one specific endpoint.

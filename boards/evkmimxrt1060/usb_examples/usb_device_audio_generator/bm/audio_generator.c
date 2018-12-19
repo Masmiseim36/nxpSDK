@@ -105,7 +105,7 @@ static usb_device_class_config_struct_t s_audioConfig[1] = {{
     USB_DeviceAudioCallback, (class_handle_t)NULL, &g_UsbDeviceAudioClass,
 }};
 
-/* USB device class configuraion information */
+/* USB device class configuration information */
 static usb_device_class_config_list_struct_t s_audioConfigList = {
     s_audioConfig, USB_DeviceCallback, 1U,
 };
@@ -519,6 +519,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
         {
             /* The device BUS reset signal detected */
             s_audioGenerator.attach = 0U;
+            s_audioGenerator.currentConfiguration = 0U;
             error = kStatus_USB_Success;
 #if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)) || \
     (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
@@ -531,11 +532,20 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
         }
         break;
         case kUSB_DeviceEventSetConfiguration:
-            if (USB_AUDIO_GENERATOR_CONFIGURE_INDEX == (*temp8))
+            if (0U == (*temp8))
+            {
+                s_audioGenerator.attach = 0U;
+                s_audioGenerator.currentConfiguration = 0U;
+            }
+            else if (USB_AUDIO_GENERATOR_CONFIGURE_INDEX == (*temp8))
             {
                 /* Set the configuration request */
                 s_audioGenerator.attach = 1U;
                 s_audioGenerator.currentConfiguration = *temp8;
+            }
+            else
+            {
+                error = kStatus_USB_InvalidRequest;
             }
             break;
         case kUSB_DeviceEventSetInterface:
@@ -648,7 +658,7 @@ void APPInit(void)
  *
  * @return None.
  */
-#if defined(__CC_ARM) || defined(__GNUC__)
+#if defined(__CC_ARM) || (defined(__ARMCC_VERSION)) || defined(__GNUC__)
 int main(void)
 #else
 void main(void)

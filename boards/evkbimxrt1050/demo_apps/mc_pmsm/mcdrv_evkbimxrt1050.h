@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2018 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #ifndef _MCDRV_MIMXRT1050_EVK_H_
@@ -42,6 +16,7 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+
 /* Structure used during clocks and modulo calculations */
 typedef struct _clock_setup
 {
@@ -59,18 +34,6 @@ typedef struct _clock_setup
     uint16_t ui16M2PwmModulo;
     uint16_t ui16M2PwmDeadTime;
 } clock_setup_t;
-
-/* Define motor 1 driver */
-#define M1_MCDRV_SPI_DRV3PH (MCDRV_SPI_DRV)
-
-/* Define common ADC periphery for motor */
-#define M1_MCDRV_ADC (MCDRV_ADC)
-
-/* Define motor 1 slow control loop timer */
-#define M1_MCDRV_TMR_SLOWLOOP (MCDRV_TMR1)
-
-/* Define motor 1 3-ph PWM periphery */
-#define M1_MCDRV_PWM3PH (MCDRV_PWMA)
 
 /*******************************************************************************
  * FreeMASTER communication constants
@@ -143,8 +106,7 @@ typedef struct _clock_setup
 /******************************************************************************
  * Define common ADC control functions for motor 1
  ******************************************************************************/
-#ifdef MCDRV_ADC
-#if (M1_MCDRV_ADC == MCDRV_ADC)
+ 
 #define M1_MCDRV_ADC_PERIPH_INIT() (InitADC())
 #define M1_MCDRV_ADC_GET(par) \
     MCDRV_Curr3Ph2ShGet(par); \
@@ -154,42 +116,22 @@ typedef struct _clock_setup
 #define M1_MCDRV_CURR_3PH_CALIB_INIT(par) (MCDRV_Curr3Ph2ShCalibInit(par))
 #define M1_MCDRV_CURR_3PH_CALIB(par) (MCDRV_Curr3Ph2ShCalib(par))
 #define M1_MCDRV_CURR_3PH_CALIB_SET(par) (MCDRV_Curr3Ph2ShCalibSet(par))
-#else
-#error MCDRV: Unsupported ADC periphery!
-#endif
-#else
-#error MCDRV: ADC periphery was not specified!
-#endif
 
 /******************************************************************************
  * Define motor 1 slow control loop timer
  ******************************************************************************/
-#ifdef M1_MCDRV_TMR_SLOWLOOP
-#if (M1_MCDRV_TMR_SLOWLOOP == MCDRV_TMR1)
+
 #define M1_MCDRV_TMR_SLOWLOOP_INIT() InitTMR1()
-#else
-#error MCDRV: Unsupported Timer periphery!
-#endif
-#else
-#error MCDRV: Timer periphery was not specified!
-#endif
     
 /******************************************************************************
  * Define 3-ph PWM control functions for motor 1
  ******************************************************************************/
-#ifdef M1_MCDRV_PWM3PH
-#if (M1_MCDRV_PWM3PH == MCDRV_PWMA)
+
 #define M1_MCDRV_PWM_PERIPH_INIT() (M1_InitPWM())
 #define M1_MCDRV_PWM3PH_SET(par) (MCDRV_eFlexPwm3PhSet(par))
 #define M1_MCDRV_PWM3PH_EN(par) (MCDRV_eFlexPwm3PhOutEn(par))
 #define M1_MCDRV_PWM3PH_DIS(par) (MCDRV_eFlexPwm3PhOutDis(par))
 #define M1_MCDRV_PWM3PH_FLT_GET(par) (MCDRV_eFlexPwm3PhFltGet(par))
-#else
-#error MCDRV: Unsupported PWM periphery!
-#endif
-#else
-#error MCDRV: PWM periphery was not specified!
-#endif
     
 /******************************************************************************
  * Global variable definitions

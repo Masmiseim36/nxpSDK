@@ -6,14 +6,6 @@ To demonstrates this example, only one board is needed. The example will config 
 Buffer to Rx Message Buffer and the other FlexCAN Message Buffer to Tx Message Buffer with same ID.
 After that, the example will send a CAN Message from the Tx Message Buffer to the Rx Message Buffer
 throuth internal loopback interconnect and print out the Message payload to terminal.
-
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
-
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -39,6 +31,8 @@ Prepare the Demo
 
 Running the demo
 ================
+Consider special errata 005829 feature, the 1st valid MB should be used as reserved one.
+The TX MB number will change from 8 to 9, while RX MB number will change from 9 to 10
 When the example runs successfully, following information can be seen on the OpenSDA terminal:
 
 ~~~~~~~~~~~~~~~~~~~~~
@@ -46,14 +40,14 @@ When the example runs successfully, following information can be seen on the Ope
 ==FlexCAN loopback functional example -- Start.==
 
 
-Send message from MB9 to MB8
+Send message from MB9 to MB10
 
 tx word0 = 0x11223344
 
 tx word1 = 0x55667788
 
 
-Receved message from MB8
+Receved message from MB10
 
 rx word0 = 0x11223344
 
@@ -69,6 +63,11 @@ To debug in qspiflash, following steps are needed:
 3. Set the SW8: 1 off 2 off 3 on 4 off, then power on the board and connect USB cable to J23.
 4. Start debugging in IDE.
    - Keil: Click "Download (F8)" to program the image to qspiflash first then clicking "Start/Stop Debug Session (Ctrl+F5)" to start debugging.
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

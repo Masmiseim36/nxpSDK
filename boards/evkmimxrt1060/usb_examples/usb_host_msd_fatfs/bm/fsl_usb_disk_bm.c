@@ -3,11 +3,17 @@
  * Copyright 2016 NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
+
 #include "ffconf.h"
+/* This fatfs subcomponent is disabled by default
+ * To enable it, define following macro in ffconf.h */
+#ifdef USB_DISK_ENABLE
+
 #include "fsl_usb_disk.h" /* FatFs lower layer API */
+
 
 /*******************************************************************************
  * Definitons
@@ -364,3 +370,4 @@ DRESULT USB_HostMsdIoctlDisk(BYTE pdrv, BYTE cmd, void *buff)
     }
     return fatfs_code;
 }
+#endif /* USB_DISK_ENABLE */

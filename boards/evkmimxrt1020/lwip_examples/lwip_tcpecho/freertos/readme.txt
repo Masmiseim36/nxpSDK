@@ -5,32 +5,6 @@ The lwip_tcpecho demo application demonstrates a TCP echo demo on the lwIP TCP/I
 FreeRTOS. The demo uses the TCP protocol and acts as an echo server. The application sends back the received TCP
 packets from the PC, which can be used to test whether a TCP connection is available.
 
-
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- Network cable RJ45 standard
-- EVK-MIMXRT1020 board
-- Personal Computer
-
-Board settings
-==============
-No special settings are required.
-
-
-Note:
-To debug in qspiflash, following steps are needed:
-1. Select the flash target and compile.
-3. Set the SW8: 1 off 2 off 3 on 4 off, then power on the board and connect USB cable to J23.
-4. Start debugging in IDE.
-   - Keil: Click "Download (F8)" to program the image to qspiflash first then clicking "Start/Stop Debug Session (Ctrl+F5)" to start debugging.
 Prepare the Demo
 ================
 1.  Connect a USB cable between the PC host and the OpenSDA(or USB to Serial) USB port on the target board.
@@ -67,6 +41,29 @@ Running the demo
 		Reply from 192.168.0.102:7, time 0 ms OK
 
 		Statistics: Received=5, Corrupted=0
-Customization options
+Hardware requirements
 =====================
+- Mini/micro USB cable
+- Network cable RJ45 standard
+- EVK-MIMXRT1020 board
+- Personal Computer
+
+Board settings
+==============
+No special settings are required.
+
+
+Note:
+To debug in qspiflash, following steps are needed:
+1. Select the flash target and compile.
+3. Set the SW8: 1 off 2 off 3 on 4 off, then power on the board and connect USB cable to J23.
+4. Start debugging in IDE.
+   - Keil: Click "Download (F8)" to program the image to qspiflash first then clicking "Start/Stop Debug Session (Ctrl+F5)" to start debugging.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

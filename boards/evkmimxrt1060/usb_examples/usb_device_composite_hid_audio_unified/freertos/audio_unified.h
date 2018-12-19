@@ -11,9 +11,6 @@
 /*******************************************************************************
 * Definitions
 ******************************************************************************/
-#define AUDIO_DMA_EDMA_MODE (1U)
-#define AUDIO_INTERRUPT_IRQ_MODE (0U)
-
 #define AUDIO_SAMPLING_RATE_KHZ (48)
 #define AUDIO_SAMPLING_RATE_16KHZ (16)
 #define AUDIO_SAMPLING_RATE (AUDIO_SAMPLING_RATE_KHZ * 1000)

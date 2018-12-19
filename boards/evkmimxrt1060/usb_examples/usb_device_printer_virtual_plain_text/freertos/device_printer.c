@@ -226,6 +226,7 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
             g_DevicePrinterApp.printerState = kPrinter_Idle;
             g_DevicePrinterApp.sendBuffer = NULL;
             g_DevicePrinterApp.sendLength = 0;
+            g_DevicePrinterApp.currentConfiguration = 0U;
 #if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)) || \
     (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
             /* Get USB speed to configure the device, including max packet size and interval of the endpoints. */
@@ -252,25 +253,35 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
 #endif
 
         case kUSB_DeviceEventSetConfiguration:
-            if (param)
+            if (0 == *param8p)
+            {
+                g_DevicePrinterApp.attach = 0U;
+                g_DevicePrinterApp.currentConfiguration = 0U;
+                g_DevicePrinterApp.printerState = kPrinter_Idle;
+                g_DevicePrinterApp.sendBuffer = NULL;
+                g_DevicePrinterApp.sendLength = 0;
+            }
+            else if (USB_PRINTER_CONFIGURE_INDEX == *param8p)
             {
                 /* Set device configuration request */
                 g_DevicePrinterApp.attach = 1U;
                 g_DevicePrinterApp.printerState = kPrinter_Idle;
                 g_DevicePrinterApp.currentConfiguration = *param8p;
-                if (USB_PRINTER_CONFIGURE_INDEX == *param8p)
-                {
-                    /* demo run */
-                    status = USB_DevicePrinterRecv(g_DevicePrinterApp.classHandle, USB_PRINTER_BULK_ENDPOINT_OUT,
-                                                   g_DevicePrinterApp.printerBuffer, USB_PRINTER_BUFFER_SIZE);
-                    if (status == kStatus_USB_Success)
-                    {
-                        g_DevicePrinterApp.printerState = kPrinter_Receiving;
-                    }
 
-                    USB_DevicePrinterSend(g_DevicePrinterApp.classHandle, USB_PRINTER_BULK_ENDPOINT_IN,
-                                          g_DevicePrinterApp.sendBuffer, g_DevicePrinterApp.sendLength);
+                /* demo run */
+                status = USB_DevicePrinterRecv(g_DevicePrinterApp.classHandle, USB_PRINTER_BULK_ENDPOINT_OUT,
+                                               g_DevicePrinterApp.printerBuffer, USB_PRINTER_BUFFER_SIZE);
+                if (status == kStatus_USB_Success)
+                {
+                    g_DevicePrinterApp.printerState = kPrinter_Receiving;
                 }
+
+                USB_DevicePrinterSend(g_DevicePrinterApp.classHandle, USB_PRINTER_BULK_ENDPOINT_IN,
+                                      g_DevicePrinterApp.sendBuffer, g_DevicePrinterApp.sendLength);
+            }
+            else
+            {
+                status = kStatus_USB_InvalidRequest;
             }
             break;
 
@@ -461,7 +472,7 @@ void APP_task(void *handle)
     }
 }
 
-#if defined(__CC_ARM) || defined(__GNUC__)
+#if defined(__CC_ARM) || (defined(__ARMCC_VERSION)) || defined(__GNUC__)
 int main(void)
 #else
 void main(void)
@@ -482,7 +493,7 @@ void main(void)
                     ) != pdPASS)
     {
         usb_echo("app task create failed!\r\n");
-#if (defined(__CC_ARM) || defined(__GNUC__))
+#if (defined(__CC_ARM) || (defined(__ARMCC_VERSION)) || defined(__GNUC__))
         return 1U;
 #else
         return;
@@ -491,7 +502,7 @@ void main(void)
 
     vTaskStartScheduler();
 
-#if (defined(__CC_ARM) || defined(__GNUC__))
+#if (defined(__CC_ARM) || (defined(__ARMCC_VERSION)) || defined(__GNUC__))
     return 1U;
 #endif
 }

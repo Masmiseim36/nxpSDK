@@ -92,6 +92,7 @@ void QTMR_IRQ_HANDLER(void)
         Board_UpdatePwm(g_xDuty);
         QTMR_ClearStatusFlags(BOARD_QTMR_BASEADDR, BOARD_QTMR_FIRST_CHANNEL, kQTMR_Compare2Flag);
     }
+    __DSB();
 }
 
 void UpdatePwmDutycycle(TMR_Type *base, qtmr_channel_selection_t channel, uint32_t pwmFreqHz, uint8_t dutyCyclePercent)
@@ -111,7 +112,7 @@ int main(void)
 {
     fxos_handle_t fxosHandle = {0};
     fxos_data_t sensorData = {0};
-    fxos_config_t config = {0}; 
+    fxos_config_t config = {0};
     status_t result;
     gpio_pin_config_t led_config = {kGPIO_DigitalOutput, 0, kGPIO_NoIntmode};
     uint8_t sensorRange = 0;
@@ -161,9 +162,9 @@ int main(void)
     {
         PRINTF("\r\nSensor device initialize failed!\r\n");
         PRINTF("\r\nPlease check the sensor chip U32\r\n");
-        while(1)
+        while (1)
         {
-            for(j = 0; j < 30000000; j++)
+            for (j = 0; j < 30000000; j++)
             {
                 __NOP();
             }

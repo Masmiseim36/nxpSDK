@@ -7,14 +7,6 @@ and multi-channel features.
 It sets up the QTMR hardware block to trigger an interrupt every 50 millisecond.
 When chaining the first channel and the second channel, Timer interrupt occur every 10 second.
 When the QTMR interrupt is triggered a message a printed on the UART terminal.
-
-Toolchain supported
-===================
-- Keil MDK 5.25
-- IAR embedded Workbench 8.30.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.1
-
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -63,6 +55,11 @@ When the demo runs successfully, the following message is displayed in the termi
  Timer interrupt has occured !
 *********QUADTIMER EXAMPLE END.*********
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

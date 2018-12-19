@@ -6,32 +6,6 @@ It is currently a minimal implementation providing an IPv4 TCP server only.
 
 Instead of the command line IPerf application, for more convenience, it is recommended to use the JPerf2 graphical tool, which can be downloaded here: https://sourceforge.net/projects/iperf/files/jperf/jperf%202.0.0/jperf-2.0.0.zip/download
 
-
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- Network cable RJ45 standard
-- EVK-MIMXRT1020 board
-- Personal Computer
-
-Board settings
-==============
-No special settings are required.
-
-
-Note:
-To debug in qspiflash, following steps are needed:
-1. Select the flash target and compile.
-3. Set the SW8: 1 off 2 off 3 on 4 off, then power on the board and connect USB cable to J23.
-4. Start debugging in IDE.
-   - Keil: Click "Download (F8)" to program the image to qspiflash first then clicking "Start/Stop Debug Session (Ctrl+F5)" to start debugging.
 Prepare the Demo
 ================
 1.  Connect a USB cable between the PC host and the OpenSDA(or USB to Serial) USB port on the target board.
@@ -92,6 +66,29 @@ Running the demo
 		 Duration (ms) N
 		 Bandwidth (kbitpsec) N
 
-Customization options
+Hardware requirements
 =====================
+- Mini/micro USB cable
+- Network cable RJ45 standard
+- EVK-MIMXRT1020 board
+- Personal Computer
+
+Board settings
+==============
+No special settings are required.
+
+
+Note:
+To debug in qspiflash, following steps are needed:
+1. Select the flash target and compile.
+3. Set the SW8: 1 off 2 off 3 on 4 off, then power on the board and connect USB cable to J23.
+4. Start debugging in IDE.
+   - Keil: Click "Download (F8)" to program the image to qspiflash first then clicking "Start/Stop Debug Session (Ctrl+F5)" to start debugging.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

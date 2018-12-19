@@ -169,13 +169,22 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
         }
         break;
         case kUSB_DeviceEventSetConfiguration:
-            if (param)
+            if (0U == (*temp8))
+            {
+                g_composite.attach = 0U;
+                g_composite.currentConfiguration = 0U;
+            }
+            else if (USB_COMPOSITE_CONFIGURE_INDEX == (*temp8))
             {
                 g_composite.attach = 1;
                 USB_DeviceCdcVcomSetConfigure(handle, *temp8);
                 USB_DeviceMscDiskSetConfigure(handle, *temp8);
                 g_composite.currentConfiguration = *temp8;
                 error = kStatus_USB_Success;
+            }
+            else
+            {
+                error = kStatus_USB_InvalidRequest;
             }
             break;
         default:
@@ -396,7 +405,7 @@ void APPTask(void)
     USB_DeviceCdcVcomTask();
 }
 
-#if defined(__CC_ARM) || defined(__GNUC__)
+#if defined(__CC_ARM) || (defined(__ARMCC_VERSION)) || defined(__GNUC__)
 int main(void)
 #else
 void main(void)

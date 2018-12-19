@@ -5,14 +5,6 @@ system based on a SD card then does "creat directory/read directory/create file/
 operation. The file sdhc_config.h has default SDHC configuration which can be adjusted to let card
 driver has different performance. The purpose of this example is to show how to use SDCARD driver 
 based FATFS disk in SDK software.
-
-Toolchain supported
-===================
-- Keil MDK 5.25
-- IAR embedded Workbench 8.30.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.1
-
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -70,6 +62,11 @@ The read/write content is consistent.
 Input 'q' to quit read/write.
 Input other char to read/write file again.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

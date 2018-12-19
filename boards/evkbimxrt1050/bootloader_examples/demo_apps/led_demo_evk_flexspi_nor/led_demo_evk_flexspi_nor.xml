@@ -3,13 +3,14 @@
   <externalDefinitions>
     <definition extID="com.nxp.mcuxpresso"/>
     <definition extID="middleware.mcu-boot.CMSIS_cm7_headers.MIMXRT1052"/>
-    <definition extID="middleware.mcu-boot.MIMXRT1052_application_0x60002000_linker.MIMXRT1052"/>
     <definition extID="middleware.mcu-boot.MIMXRT1052_startup.MIMXRT1052"/>
-    <definition extID="mdk"/>
+    <definition extID="middleware.mcu-boot.milliseconds.MIMXRT1052"/>
+    <definition extID="middleware.mcu-boot.src_startup.MIMXRT1052"/>
     <definition extID="iar"/>
+    <definition extID="mdk"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="evkbimxrt1050_led_demo_evk_flexspi_nor" name="led_demo_evk_flexspi_nor" category="bootloader_examples/demo_apps" dependency="middleware.mcu-boot.MIMXRT1052_application_0x60002000_linker.MIMXRT1052 middleware.mcu-boot.MIMXRT1052_startup.MIMXRT1052 middleware.mcu-boot.CMSIS_cm7_headers.MIMXRT1052" toolchain="mdk iar mcuxpresso">
+  <example id="evkbimxrt1050_led_demo_evk_flexspi_nor" name="led_demo_evk_flexspi_nor" category="bootloader_examples/demo_apps" dependency="middleware.mcu-boot.MIMXRT1052_startup.MIMXRT1052 middleware.mcu-boot.CMSIS_cm7_headers.MIMXRT1052 middleware.mcu-boot.src_startup.MIMXRT1052 middleware.mcu-boot.milliseconds.MIMXRT1052" toolchain="iar mdk mcuxpresso">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -80,14 +81,17 @@
         </option>
       </toolchainSetting>
     </toolchainSettings>
+    <source path="boards/evkbimxrt1050/bootloader_examples/demo_apps/led_demo_evk_flexspi_nor/iar" target_path="middleware/mcu-boot" type="linker" toolchain="iar">
+      <files mask="MIMXRT1052_application_0x60002000.icf"/>
+    </source>
+    <source path="boards/evkbimxrt1050/bootloader_examples/demo_apps/led_demo_evk_flexspi_nor/mcux" target_path="middleware/mcu-boot" type="linker" toolchain="mcuxpresso">
+      <files mask="MIMXRT1052_application_0x60002000.ld"/>
+    </source>
+    <source path="boards/evkbimxrt1050/bootloader_examples/demo_apps/led_demo_evk_flexspi_nor/mdk" target_path="middleware/mcu-boot" type="linker" toolchain="mdk">
+      <files mask="MIMXRT1052_application_0x60002000.scf"/>
+    </source>
     <source path="boards/evkbimxrt1050/bootloader_examples/demo_apps/led_demo_evk_flexspi_nor" target_path="MIMXRT1052" type="src">
       <files mask="main.c"/>
-    </source>
-    <source path="middleware/mcu-boot/apps/led_demo/src" target_path="MIMXRT1052" type="c_include">
-      <files mask="milliseconds_delay.h"/>
-    </source>
-    <source path="middleware/mcu-boot/apps/led_demo/src" target_path="MIMXRT1052" type="src">
-      <files mask="milliseconds_delay.c"/>
     </source>
   </example>
 </ksdk:examples>

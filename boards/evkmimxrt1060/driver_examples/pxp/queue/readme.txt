@@ -4,14 +4,6 @@ The PXP queue project shows how to use the PXP command queue. This example
 use the command queue to rotate the process surface. If this example
 runs correctly, you will see a square with three color(red, green and blue).
 The rotate degree is changing.
-
-Toolchain supported
-===================
-- Keil MDK 5.25
-- IAR embedded Workbench 8.30.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.1
-
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -40,6 +32,11 @@ Running the demo
 When the demo runs successfully, the log would be seen on the OpenSDA terminal like:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 PXP command queue example start...
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

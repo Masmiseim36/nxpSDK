@@ -1,8 +1,8 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2018 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -53,9 +53,10 @@
 #define TX_DATA_PIN (6U)
 #define RX_DATA_PIN (5U)
 #define OVER_SAMPLE_RATE (384)
-#define BUFFER_SIZE (128)
-#define BUFFER_NUM (2)
+#define BUFFER_SIZE (256)
+#define BUFFER_NUM (4)
 #define PLAY_COUNT (5000)
+#define ZERO_BUFFER_SIZE (BUFFER_SIZE * 2)
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -75,14 +76,14 @@ flexio_i2s_handle_t rxHandle = {0};
 static volatile bool isTxFinished = false;
 static volatile bool isRxFinished = false;
 AT_NONCACHEABLE_SECTION_ALIGN(uint8_t audioBuff[BUFFER_SIZE * BUFFER_NUM], 4);
+AT_NONCACHEABLE_SECTION_ALIGN_INIT(static uint8_t zeroBuff[ZERO_BUFFER_SIZE], 4) = {0};
 codec_handle_t codecHandle = {0};
 extern codec_config_t boardCodecConfig;
 static volatile uint32_t beginCount = 0;
 static volatile uint32_t sendCount = 0;
 static volatile uint32_t receiveCount = 0;
-static volatile uint8_t fullBlock = 0;
 static volatile uint8_t emptyBlock = 0;
-
+static volatile bool isZeroBuffer = true;
 FLEXIO_I2S_Type base;
 /*******************************************************************************
  * Code
@@ -101,8 +102,16 @@ void BOARD_EnableSaiMclkOutput(bool enable)
 
 static void txCallback(FLEXIO_I2S_Type *i2sBase, flexio_i2s_handle_t *handle, status_t status, void *userData)
 {
-    sendCount++;
-    emptyBlock++;
+    if ((emptyBlock < BUFFER_NUM) && (!isZeroBuffer))
+    {
+        emptyBlock++;
+        sendCount++;
+    }
+
+    if (isZeroBuffer)
+    {
+        isZeroBuffer = false;
+    }
 
     if (sendCount == beginCount)
     {
@@ -112,8 +121,11 @@ static void txCallback(FLEXIO_I2S_Type *i2sBase, flexio_i2s_handle_t *handle, st
 
 static void rxCallback(FLEXIO_I2S_Type *i2sBase, flexio_i2s_handle_t *handle, status_t status, void *userData)
 {
-    receiveCount++;
-    fullBlock++;
+    if (emptyBlock > 0)
+    {
+        emptyBlock--;
+        receiveCount++;
+    }
 
     if (receiveCount == beginCount)
     {
@@ -163,7 +175,7 @@ int main(void)
     base.txPinIndex = TX_DATA_PIN;
     base.rxPinIndex = RX_DATA_PIN;
     base.txShifterIndex = 0;
-    base.rxShifterIndex = 1;
+    base.rxShifterIndex = 2;
     base.bclkTimerIndex = 0;
     base.fsTimerIndex = 1;
     base.flexioBase = DEMO_FLEXIO_BASE;
@@ -213,7 +225,7 @@ int main(void)
     /* Use default setting to init codec */
     CODEC_Init(&codecHandle, &boardCodecConfig);
     CODEC_SetFormat(&codecHandle, format.sampleRate_Hz * OVER_SAMPLE_RATE, format.sampleRate_Hz, format.bitWidth);
-    
+
     FLEXIO_I2S_TransferTxCreateHandle(&base, &txHandle, txCallback, NULL);
     FLEXIO_I2S_TransferRxCreateHandle(&base, &rxHandle, rxCallback, NULL);
     sourceClockHz = DEMO_FLEXIO_CLK_FREQ;
@@ -223,28 +235,34 @@ int main(void)
     FLEXIO_I2S_TransferSetFormat(&base, &rxHandle, &format, sourceClockHz);
 
     emptyBlock = BUFFER_NUM;
-    fullBlock = 1;
     beginCount = PLAY_COUNT;
-    txXfer.dataSize = BUFFER_SIZE;
-    rxXfer.dataSize = BUFFER_SIZE;
+
+    /* send zero buffer fistly to make sure RX data is put into TX queue */
+    txXfer.dataSize = ZERO_BUFFER_SIZE;
+    txXfer.data = zeroBuff;
+    FLEXIO_I2S_TransferSendNonBlocking(&base, &txHandle, &txXfer);
 
     /* Wait until finished */
     while ((isTxFinished != true) || (isRxFinished != true))
     {
-        if ((isTxFinished != true) && (fullBlock > 0))
+        if (emptyBlock > 0)
         {
-            txXfer.data = audioBuff + txIndex * BUFFER_SIZE;
-            FLEXIO_I2S_TransferSendNonBlocking(&base, &txHandle, &txXfer);
-            fullBlock--;
-            txIndex = (txIndex + 1) % BUFFER_NUM;
+            rxXfer.data = (uint8_t *)((uint32_t)audioBuff + rxIndex * BUFFER_SIZE);
+            rxXfer.dataSize = BUFFER_SIZE;
+            if (FLEXIO_I2S_TransferReceiveNonBlocking(&base, &rxHandle, &rxXfer) == kStatus_Success)
+            {
+                rxIndex = (rxIndex + 1) % BUFFER_NUM;
+            }
         }
 
-        if ((isRxFinished != true) && (emptyBlock > 0))
+        if ((emptyBlock < BUFFER_NUM))
         {
-            rxXfer.data = audioBuff + rxIndex * BUFFER_SIZE;
-            FLEXIO_I2S_TransferReceiveNonBlocking(&base, &rxHandle, &rxXfer);
-            emptyBlock--;
-            rxIndex = (rxIndex + 1) % BUFFER_NUM;
+            txXfer.data = (uint8_t *)((uint32_t)audioBuff + txIndex * BUFFER_SIZE);
+            txXfer.dataSize = BUFFER_SIZE;
+            if (FLEXIO_I2S_TransferSendNonBlocking(&base, &txHandle, &txXfer) == kStatus_Success)
+            {
+                txIndex = (txIndex + 1) % BUFFER_NUM;
+            }
         }
     }
     PRINTF("\n\r FLEXIO_I2S interrupt example finished!\n\r ");

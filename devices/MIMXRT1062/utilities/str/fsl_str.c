@@ -21,10 +21,6 @@
 #define HUGE_VAL (99.e99)
 #endif /* HUGE_VAL */
 
-#if SCANF_FLOAT_ENABLE
-static double fnum = 0.0;
-#endif /* SCANF_FLOAT_ENABLE */
-
 #if PRINTF_ADVANCED_ENABLE
 /*! @brief Specification modifier flags for printf. */
 enum _debugconsole_printf_flag
@@ -58,7 +54,7 @@ enum _debugconsole_scanf_flag
     kSCANF_LengthLongInt = 0x400U,     /*!< Length LongInt Flag. */
     kSCANF_LengthLongLongInt = 0x800U, /*!< Length LongLongInt Flag. */
 #endif                                 /* SCANF_ADVANCED_ENABLE */
-#if PRINTF_FLOAT_ENABLE
+#if SCANF_FLOAT_ENABLE
     kSCANF_LengthLongLongDouble = 0x1000U, /*!< Length LongLongDuoble Flag. */
 #endif                                     /*PRINTF_FLOAT_ENABLE */
     kSCANF_TypeSinged = 0x2000U,           /*!< TypeSinged Flag. */
@@ -335,6 +331,19 @@ static int32_t ConvertFloatRadixNumToString(char *numstr, void *nump, int32_t ra
 }
 #endif /* PRINTF_FLOAT_ENABLE */
 
+/*!
+ * brief This function outputs its parameters according to a formatted string.
+ *
+ * note I/O is performed by calling given function pointer using following
+ * (*func_ptr)(c);
+ *
+ * param[in] fmt_ptr   Format string for printf.
+ * param[in] args_ptr  Arguments to printf.
+ * param[in] buf  pointer to the buffer
+ * param cb print callback function pointer
+ *
+ * return Number of characters to be print
+ */
 int StrFormatPrintf(const char *fmt, va_list ap, char *buf, printfCb cb)
 {
     /* va_list ap; */
@@ -850,6 +859,17 @@ int StrFormatPrintf(const char *fmt, va_list ap, char *buf, printfCb cb)
     return count;
 }
 
+/*!
+ * brief Converts an input line of ASCII characters based upon a provided
+ * string format.
+ *
+ * param[in] line_ptr The input line of ASCII data.
+ * param[in] format   Format first points to the format string.
+ * param[in] args_ptr The list of parameters.
+ *
+ * return Number of input items converted and assigned.
+ * retval IO_EOF When line_ptr is empty string "".
+ */
 int StrFormatScanf(const char *line_ptr, char *format, va_list args_ptr)
 {
     uint8_t base;
@@ -873,6 +893,9 @@ int StrFormatScanf(const char *line_ptr, char *format, va_list args_ptr)
     /* Identifier for the input string. */
     const char *p = line_ptr;
 
+#if SCANF_FLOAT_ENABLE
+    double fnum = 0.0;
+#endif /* SCANF_FLOAT_ENABLE */
     /* Return EOF error before any conversion. */
     if (*p == '\0')
     {
@@ -906,7 +929,7 @@ int StrFormatScanf(const char *line_ptr, char *format, va_list args_ptr)
         }
         else
         {
-            /* conversion specification */
+            /* convernsion specification */
             c++;
             /* Reset. */
             flag = 0;

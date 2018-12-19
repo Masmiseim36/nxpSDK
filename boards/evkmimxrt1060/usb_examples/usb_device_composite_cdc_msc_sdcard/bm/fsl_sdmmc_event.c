@@ -1,11 +1,10 @@
 /*
- * Copyright (c) 2016, Freescale Semiconductor, Inc.
+ * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2018 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-
 #include "fsl_sdmmc_event.h"
 
 /*******************************************************************************

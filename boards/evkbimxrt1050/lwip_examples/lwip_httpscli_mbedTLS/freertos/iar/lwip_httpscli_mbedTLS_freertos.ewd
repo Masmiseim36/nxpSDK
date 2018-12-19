@@ -1645,7 +1645,7 @@
     </debuggerPlugins>
   </configuration>
   <configuration>
-    <name>flexspi_nor_debug</name>
+    <name>sdram_debug</name>
     <toolchain>
       <name>ARM</name>
     </toolchain>
@@ -1675,11 +1675,11 @@
         </option>
         <option>
           <name>MacOverride</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>MacFile</name>
-          <state/>
+          <state>$PROJ_DIR$/evkbimxrt1050_sdram_init.mac</state>
         </option>
         <option>
           <name>MemOverride</name>
@@ -1974,7 +1974,7 @@
         <option>
           <name>CMSISDAPResetList</name>
           <version>1</version>
-          <state>2</state>
+          <state>5</state>
         </option>
         <option>
           <name>CMSISDAPHWResetDuration</name>
@@ -3288,7 +3288,7 @@
     </debuggerPlugins>
   </configuration>
   <configuration>
-    <name>sdram_debug</name>
+    <name>flexspi_nor_sdram_debug</name>
     <toolchain>
       <name>ARM</name>
     </toolchain>
@@ -3342,11 +3342,11 @@
         </option>
         <option>
           <name>CExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>CExtraOptions</name>
-          <state>--jlink_script_file=$PROJ_DIR$/../evkbimxrt1050_sdram_init.jlinkscript</state>
+          <state/>
         </option>
         <option>
           <name>CFpuProcessor</name>
@@ -3617,7 +3617,7 @@
         <option>
           <name>CMSISDAPResetList</name>
           <version>1</version>
-          <state>5</state>
+          <state>2</state>
         </option>
         <option>
           <name>CMSISDAPHWResetDuration</name>
@@ -6574,7 +6574,7 @@
     </debuggerPlugins>
   </configuration>
   <configuration>
-    <name>flexspi_nor_release</name>
+    <name>sdram_release</name>
     <toolchain>
       <name>ARM</name>
     </toolchain>
@@ -6604,11 +6604,11 @@
         </option>
         <option>
           <name>MacOverride</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>MacFile</name>
-          <state/>
+          <state>$PROJ_DIR$/evkbimxrt1050_sdram_init.mac</state>
         </option>
         <option>
           <name>MemOverride</name>
@@ -6903,7 +6903,7 @@
         <option>
           <name>CMSISDAPResetList</name>
           <version>1</version>
-          <state>2</state>
+          <state>5</state>
         </option>
         <option>
           <name>CMSISDAPHWResetDuration</name>
@@ -8217,7 +8217,7 @@
     </debuggerPlugins>
   </configuration>
   <configuration>
-    <name>sdram_release</name>
+    <name>flexspi_nor_sdram_release</name>
     <toolchain>
       <name>ARM</name>
     </toolchain>
@@ -8271,11 +8271,11 @@
         </option>
         <option>
           <name>CExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>CExtraOptions</name>
-          <state>--jlink_script_file=$PROJ_DIR$/../evkbimxrt1050_sdram_init.jlinkscript</state>
+          <state/>
         </option>
         <option>
           <name>CFpuProcessor</name>
@@ -8546,7 +8546,7 @@
         <option>
           <name>CMSISDAPResetList</name>
           <version>1</version>
-          <state>5</state>
+          <state>2</state>
         </option>
         <option>
           <name>CMSISDAPHWResetDuration</name>

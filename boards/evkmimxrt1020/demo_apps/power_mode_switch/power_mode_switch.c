@@ -1,36 +1,9 @@
 /*
- * The Clear BSD License
- * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2018 NXP
  * All rights reserved.
  *
- * 
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- *  that the following conditions are met:
  *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_common.h"
@@ -60,9 +33,9 @@
  ******************************************************************************/
 #define BOARD_SDRAM0_BASE_ADDRESS  0x80000000U
 
- /*******************************************************************************
- * Prototypes
- ******************************************************************************/
+/*******************************************************************************
+* Prototypes
+******************************************************************************/
 #if defined(__GNUC__)  
 void Board_CopyToRam();
 #endif 
@@ -77,21 +50,11 @@ static lpm_power_mode_t s_targetPowerMode;
 static lpm_power_mode_t s_curRunMode = LPM_PowerModeOverRun;
 static SemaphoreHandle_t s_wakeupSig;
 
-static const char *s_modeNames[] =
-{
-    "Over RUN",
-    "Full Run",
-    "Low Speed Run",
-    "Low Power Run",
-    "System Idle",
-    "Low Power Idle",
-    "Suspend",
-    "SNVS"
-};
+static const char *s_modeNames[] = {"Over RUN",    "Full Run",       "Low Speed Run", "Low Power Run",
+                                    "System Idle", "Low Power Idle", "Suspend",       "SNVS"};
 
-int32_t is_suspend_reset = 0;    
-    
-    
+int32_t is_suspend_reset = 0;
+
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -182,12 +145,13 @@ void APP_WAKEUP_GPT_IRQn_HANDLER(void)
     GPT_ClearStatusFlags(APP_WAKEUP_GPT_BASE, kGPT_OutputCompare1Flag);
     GPT_StopTimer(APP_WAKEUP_GPT_BASE);
     LPM_DisableWakeupSource(APP_WAKEUP_GPT_IRQn);
-  
+
     if (!is_suspend_reset)
     {
         xSemaphoreGiveFromISR(s_wakeupSig, NULL);
         portYIELD_FROM_ISR(pdTRUE);
     }
+    __DSB();
 }
 
 void APP_WAKEUP_BUTTON_IRQ_HANDLER(void)
@@ -205,7 +169,8 @@ void APP_WAKEUP_BUTTON_IRQ_HANDLER(void)
         xSemaphoreGiveFromISR(s_wakeupSig, NULL);
         portYIELD_FROM_ISR(pdTRUE);
     }
-} 
+    __DSB();
+}
 
 void APP_PowerPreSwitchHook(lpm_power_mode_t targetMode)
 {
@@ -224,7 +189,8 @@ void APP_PowerPreSwitchHook(lpm_power_mode_t targetMode)
          */
         IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B0_13_GPIO1_IO13, 0);
         IOMUXC_SetPinConfig(IOMUXC_GPIO_AD_B0_13_GPIO1_IO13, IOMUXC_SW_PAD_CTL_PAD_PKE_MASK |
-                            IOMUXC_SW_PAD_CTL_PAD_PUS(2) | IOMUXC_SW_PAD_CTL_PAD_PUE_MASK);
+                                                                 IOMUXC_SW_PAD_CTL_PAD_PUS(2) |
+                                                                 IOMUXC_SW_PAD_CTL_PAD_PUE_MASK);
     }
 }
 
@@ -238,8 +204,8 @@ void APP_PowerPostSwitchHook(lpm_power_mode_t targetMode)
          */
         IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B0_07_LPUART1_RX, 0);
         IOMUXC_SetPinConfig(IOMUXC_GPIO_AD_B0_07_LPUART1_RX, IOMUXC_SW_PAD_CTL_PAD_SPEED(2));
-        
-        BOARD_InitDebugConsole();                
+
+        BOARD_InitDebugConsole();
     }
 }
 
@@ -332,8 +298,9 @@ static void APP_SetWakeupConfig(lpm_power_mode_t targetMode)
     {
         GPT_StopTimer(APP_WAKEUP_GPT_BASE);
         /* Update compare channel1 value will reset counter */
-        GPT_SetOutputCompareValue(APP_WAKEUP_GPT_BASE, kGPT_OutputCompare_Channel1, (CLOCK_GetRtcFreq() * s_wakeupTimeout) - 1U);
-        
+        GPT_SetOutputCompareValue(APP_WAKEUP_GPT_BASE, kGPT_OutputCompare_Channel1,
+                                  (CLOCK_GetRtcFreq() * s_wakeupTimeout) - 1U);
+
         /* Enable GPT Output Compare1 interrupt */
         GPT_EnableInterrupts(APP_WAKEUP_GPT_BASE, kGPT_OutputCompare1InterruptEnable);
         NVIC_SetPriority(APP_WAKEUP_GPT_IRQn, configMAX_SYSCALL_INTERRUPT_PRIORITY + 2);
@@ -428,8 +395,8 @@ static void PowerModeSwitchTask(void *pvParameters)
     /* Init GPT for wakeup as FreeRTOS tell us */
     GPT_GetDefaultConfig(&gptConfig);
     gptConfig.clockSource = kGPT_ClockSource_LowFreq; /* 32K RTC OSC */
-    //gptConfig.enableMode = false;                     /* Keep counter when stop */
-    gptConfig.enableMode = true;                     /* Don't keep counter when stop */
+    // gptConfig.enableMode = false;                     /* Keep counter when stop */
+    gptConfig.enableMode = true; /* Don't keep counter when stop */
     gptConfig.enableRunInDoze = true;
     /* Initialize GPT module */
     GPT_Init(APP_WAKEUP_GPT_BASE, &gptConfig);
@@ -447,7 +414,7 @@ static void PowerModeSwitchTask(void *pvParameters)
         PRINTF("    Core Clock = %dHz \r\n", freq);
 
         APP_ShowPowerMode(s_curRunMode);
-        
+
         PRINTF("\r\nSelect the desired operation \n\r\n");
         PRINTF("Press  %c for enter: Over RUN       - System Over Run mode (500MHz)\r\n",
                (uint8_t)'A' + (uint8_t)LPM_PowerModeOverRun);
@@ -457,10 +424,13 @@ static void PowerModeSwitchTask(void *pvParameters)
                (uint8_t)'A' + (uint8_t)LPM_PowerModeLowSpeedRun);
         PRINTF("Press  %c for enter: Low Power RUN  - System Low Power Run mode (24MHz)\r\n",
                (uint8_t)'A' + (uint8_t)LPM_PowerModeLowPowerRun);
-        PRINTF("Press  %c for enter: System Idle    - System Wait mode\r\n",     (uint8_t)'A' + (uint8_t)LPM_PowerModeSysIdle);
-        PRINTF("Press  %c for enter: Low Power Idle - Low Power Idle mode\r\n",  (uint8_t)'A' + (uint8_t)LPM_PowerModeLPIdle);
-        PRINTF("Press  %c for enter: Suspend        - Suspend mode\r\n",         (uint8_t)'A' + (uint8_t)LPM_PowerModeSuspend);
-        PRINTF("Press  %c for enter: SNVS           - Shutdown the system\r\n",  (uint8_t)'A' + (uint8_t)LPM_PowerModeSNVS);
+        PRINTF("Press  %c for enter: System Idle    - System Wait mode\r\n",
+               (uint8_t)'A' + (uint8_t)LPM_PowerModeSysIdle);
+        PRINTF("Press  %c for enter: Low Power Idle - Low Power Idle mode\r\n",
+               (uint8_t)'A' + (uint8_t)LPM_PowerModeLPIdle);
+        PRINTF("Press  %c for enter: Suspend        - Suspend mode\r\n", (uint8_t)'A' + (uint8_t)LPM_PowerModeSuspend);
+        PRINTF("Press  %c for enter: SNVS           - Shutdown the system\r\n",
+               (uint8_t)'A' + (uint8_t)LPM_PowerModeSNVS);
 
         PRINTF("\r\nWaiting for power mode select..\r\n\r\n");
 
@@ -481,25 +451,25 @@ static void PowerModeSwitchTask(void *pvParameters)
                 PRINTF("Some task doesn't allow to enter mode %s\r\n", s_modeNames[s_targetPowerMode]);
             }
             else
-            {                
+            {
                 if (s_targetPowerMode <= LPM_PowerModeRunEnd)
                 {
                     switch (s_targetPowerMode)
                     {
-                    case LPM_PowerModeOverRun:
-                        LPM_SystemOverRun();
-                        break;
-                    case LPM_PowerModeFullRun:
-                        LPM_SystemFullRun();
-                        break;
-                    case LPM_PowerModeLowSpeedRun:
-                        LPM_SystemLowSpeedRun();
-                        break;
-                    case LPM_PowerModeLowPowerRun:
-                        LPM_SystemLowPowerRun();
-                        break;
-                    default:
-                        break;
+                        case LPM_PowerModeOverRun:
+                            LPM_SystemOverRun();
+                            break;
+                        case LPM_PowerModeFullRun:
+                            LPM_SystemFullRun();
+                            break;
+                        case LPM_PowerModeLowSpeedRun:
+                            LPM_SystemLowSpeedRun();
+                            break;
+                        case LPM_PowerModeLowPowerRun:
+                            LPM_SystemLowPowerRun();
+                            break;
+                        default:
+                            break;
                     }
                     s_curRunMode = s_targetPowerMode;
                     continue;
@@ -552,43 +522,43 @@ int main(void)
     BaseType_t xReturn;
 
     if (PGC->CPU_SR & PGC_CPU_SR_PSR_MASK)
-    {      
-        /* MPU config */  
+    {
+        /* MPU config */
         BOARD_ConfigMPU();
-        
+
 /* For ARM GCC, need to copy text from flash to RAM. This also can be done in start up code. */
 #if defined(__MCUXPRESSO) && defined(XIP_EXTERNAL_FLASH)
 #elif defined(__GNUC__) && defined(XIP_EXTERNAL_FLASH)
         Board_CopyToRam();
-        #endif           
-        
-        /* Boot ROM did initialize the XTAL, here we only sets external XTAL OSC freq */        
+#endif
+
+        /* Boot ROM did initialize the XTAL, here we only sets external XTAL OSC freq */
         CLOCK_SetXtalFreq(BOARD_XTAL0_CLK_HZ);
         CLOCK_SetRtcXtalFreq(BOARD_XTAL32K_CLK_HZ);
-        
-        /* Restore when wakeup from suspend reset */        
+
+        /* Restore when wakeup from suspend reset */
         LPM_SystemResumeDsm();
 
         /* Recover handshaking */
-        IOMUXC_GPR->GPR4  = 0x00000000;
-        IOMUXC_GPR->GPR7  = 0x00000000;
-        IOMUXC_GPR->GPR8  = 0x00000000;
+        IOMUXC_GPR->GPR4 = 0x00000000;
+        IOMUXC_GPR->GPR7 = 0x00000000;
+        IOMUXC_GPR->GPR8 = 0x00000000;
         IOMUXC_GPR->GPR12 = 0x00000000;
 
         CCM->CCR &= ~CCM_CCR_REG_BYPASS_COUNT_MASK;
-        
-        /* Set the flag to mark system reeset from SUSPEND */ 
+
+        /* Set the flag to mark system reeset from SUSPEND */
         is_suspend_reset = 1;
 
         EnableIRQ(APP_WAKEUP_BUTTON_IRQ);
         EnableIRQ(APP_WAKEUP_GPT_IRQn);
-        
+
         APP_PowerPostSwitchHook(LPM_PowerModeSuspend);
 
         PRINTF("\r\nWakeup from suspend reset!\r\n");
-        
+
         /* Recover to Over Run after suspend reset */
-        LPM_SystemOverRun();                     
+        LPM_SystemOverRun();
     }
     else
     {
@@ -622,10 +592,10 @@ int main(void)
 #endif    
 
     BOARD_InitDebugConsole();
-    }    
-     
-    PRINTF("\r\nCPU wakeup source 0x%x...\r\n", SRC->SRSR);    
-    
+    }
+
+    PRINTF("\r\nCPU wakeup source 0x%x...\r\n", SRC->SRSR);
+
     PRINTF("\r\n***********************************************************\r\n");
     PRINTF("\tPower Mode Switch Demo for iMXRT1020\r\n");
     PRINTF("***********************************************************\r\n");
@@ -642,17 +612,17 @@ int main(void)
     xSemaphoreTake(s_wakeupSig, 0);
 
     xReturn = xTaskCreate(PowerModeSwitchTask, "Power Mode Switch Task", configMINIMAL_STACK_SIZE + 512, NULL,
-                tskIDLE_PRIORITY + 1U, NULL);
-    configASSERT( xReturn );
-    
-    xReturn = xTaskCreate(WorkingTask, "Working Task1", configMINIMAL_STACK_SIZE, (void *)1,
-                tskIDLE_PRIORITY + 2U, NULL);
-    configASSERT( xReturn );
-    
-    xReturn = xTaskCreate(WorkingTask, "Working Task2", configMINIMAL_STACK_SIZE, (void *)2,
-                tskIDLE_PRIORITY + 3U, NULL);
-    configASSERT( xReturn );   
-    
+                          tskIDLE_PRIORITY + 1U, NULL);
+    configASSERT(xReturn);
+
+    xReturn =
+        xTaskCreate(WorkingTask, "Working Task1", configMINIMAL_STACK_SIZE, (void *)1, tskIDLE_PRIORITY + 2U, NULL);
+    configASSERT(xReturn);
+
+    xReturn =
+        xTaskCreate(WorkingTask, "Working Task2", configMINIMAL_STACK_SIZE, (void *)2, tskIDLE_PRIORITY + 3U, NULL);
+    configASSERT(xReturn);
+
     vTaskStartScheduler();
 
     /* Application should never reach this point. */

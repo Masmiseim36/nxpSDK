@@ -499,6 +499,8 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
         {
             /* The device BUS reset signal detected */
             USB_DeviceVideoApplicationSetDefault();
+            g_UsbDeviceVideoVirtualCamera.attach = 0U;
+            g_UsbDeviceVideoVirtualCamera.currentConfiguration = 0U;
 #if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)) || \
     (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
             /* Get USB speed to configure the device, including max packet size and interval of the endpoints. */
@@ -517,12 +519,22 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
         }
         break;
         case kUSB_DeviceEventSetConfiguration:
-            if (USB_VIDEO_VIRTUAL_CAMERA_CONFIGURE_INDEX == (*temp8))
+            if (0 == (*temp8))
+            {
+                g_UsbDeviceVideoVirtualCamera.attach = 0U; 
+                g_UsbDeviceVideoVirtualCamera.currentConfiguration = 0U;
+            }
+            else if (USB_VIDEO_VIRTUAL_CAMERA_CONFIGURE_INDEX == (*temp8))
             {
                 /* Set the configuration request */
                 g_UsbDeviceVideoVirtualCamera.attach = 1U;
                 g_UsbDeviceVideoVirtualCamera.currentConfiguration = *temp8;
             }
+            else
+            {
+                error = kStatus_USB_InvalidRequest;
+            }
+
             break;
         case kUSB_DeviceEventSetInterface:
             if ((g_UsbDeviceVideoVirtualCamera.attach) && param)
@@ -628,7 +640,7 @@ static void USB_DeviceApplicationInit(void)
     USB_DeviceRun(g_UsbDeviceVideoVirtualCamera.deviceHandle);
 }
 
-#if defined(__CC_ARM) || defined(__GNUC__)
+#if defined(__CC_ARM) || (defined(__ARMCC_VERSION)) || defined(__GNUC__)
 int main(void)
 #else
 void main(void)

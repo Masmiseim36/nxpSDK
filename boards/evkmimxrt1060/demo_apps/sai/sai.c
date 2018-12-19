@@ -143,11 +143,12 @@ void BOARD_EnableSaiMclkOutput(bool enable)
 
 static void BOARD_USDHCClockConfiguration(void)
 {
-    /*configure system pll PFD2 fractional divider to 18*/
-    CLOCK_InitSysPfd(kCLOCK_Pfd0, 0x12U);
+    CLOCK_InitSysPll(&sysPllConfig_BOARD_BootClockRUN);
+    /*configure system pll PFD2 fractional divider to 24*/
+    CLOCK_InitSysPfd(kCLOCK_Pfd2, 24U);
     /* Configure USDHC clock source and divider */
     CLOCK_SetDiv(kCLOCK_Usdhc1Div, 0U);
-    CLOCK_SetMux(kCLOCK_Usdhc1Mux, 1U);
+    CLOCK_SetMux(kCLOCK_Usdhc1Mux, 0U);
 }
 
 static void txCallback(I2S_Type *base, sai_edma_handle_t *handle, status_t status, void *userData)
@@ -462,13 +463,14 @@ void SAI_UserRxIRQHandler(void)
 
 void SAI_UserIRQHandler(void)
 {
-    if (DEMO_SAI->TCSR & kSAI_FIFOErrorFlag)
+    if (SAI_TxGetStatusFlag(DEMO_SAI) & kSAI_FIFOErrorFlag)
     {
         SAI_UserTxIRQHandler();
     }
 
-    if (DEMO_SAI->RCSR & kSAI_FIFOErrorFlag)
+    if (SAI_RxGetStatusFlag(DEMO_SAI) & kSAI_FIFOErrorFlag)
     {
         SAI_UserRxIRQHandler();
     }
+    __DSB();
 }

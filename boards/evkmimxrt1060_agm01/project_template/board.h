@@ -1,7 +1,7 @@
 /*
  * Copyright 2018 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -19,7 +19,7 @@
 #define BOARD_NAME "MIMXRT1060-EVK"
 
 /* The UART to use for debug messages. */
-#define BOARD_DEBUG_UART_TYPE DEBUG_CONSOLE_DEVICE_TYPE_LPUART
+#define BOARD_DEBUG_UART_TYPE kSerialPort_Uart
 #define BOARD_DEBUG_UART_BASEADDR (uint32_t) LPUART1
 #define BOARD_DEBUG_UART_INSTANCE 1U
 
@@ -64,7 +64,7 @@
 #define BOARD_USER_BUTTON_NAME "SW8"
 
 /*! @brief The hyper flash size */
-#define BOARD_FLASH_SIZE    (0x4000000U)
+#define BOARD_FLASH_SIZE (0x4000000U)
 
 /*! @brief The Enet instance used for board. */
 #define BOARD_ENET_BASEADDR ENET

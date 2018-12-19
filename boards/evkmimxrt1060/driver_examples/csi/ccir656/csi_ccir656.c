@@ -96,27 +96,15 @@ extern void CSI_DriverIRQHandler(void);
 void CSI_IRQHandler(void)
 {
     CSI_DriverIRQHandler();
+    __DSB();
 }
 
 /* Initialize the LCD_DISP. */
 void BOARD_InitLcd(void)
 {
-    volatile uint32_t i = 0x100U;
-
     gpio_pin_config_t config = {
         kGPIO_DigitalOutput, 0,
     };
-
-    /* Reset the LCD. */
-    GPIO_PinInit(LCD_DISP_GPIO, LCD_DISP_GPIO_PIN, &config);
-
-    GPIO_PinWrite(LCD_DISP_GPIO, LCD_DISP_GPIO_PIN, 0);
-
-    while (i--)
-    {
-    }
-
-    GPIO_PinWrite(LCD_DISP_GPIO, LCD_DISP_GPIO_PIN, 1);
 
     /* Backlight. */
     config.outputLogic = 1;

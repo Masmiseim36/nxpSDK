@@ -180,6 +180,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
         case kUSB_DeviceEventBusReset:
         {
             g_composite.attach = 0;
+            g_composite.currentConfiguration = 0U;
             error = kStatus_USB_Success;
 #if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)) || \
     (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
@@ -192,13 +193,22 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
         }
         break;
         case kUSB_DeviceEventSetConfiguration:
-            if (param)
+            if (0U == (*temp8))
+            {
+                g_composite.attach = 0U;
+                g_composite.currentConfiguration = 0U;
+            }
+            else if (USB_COMPOSITE_CONFIGURE_INDEX == (*temp8))
             {
                 g_composite.attach = 1;
-                g_composite.currentConfiguration = *temp8;
                 USB_DeviceCdcVcomSetConfigure(g_composite.cdcVcom.cdcAcmHandle, *temp8);
                 USB_DeviceMscDiskSetConfigure(g_composite.mscDisk.mscHandle, *temp8);
+                g_composite.currentConfiguration = *temp8;
                 error = kStatus_USB_Success;
+            }
+            else
+            {
+                error = kStatus_USB_InvalidRequest; 
             }
             break;
         case kUSB_DeviceEventSetInterface:
@@ -382,7 +392,7 @@ void APPTask(void *handle)
     }
 }
 
-#if defined(__CC_ARM) || defined(__GNUC__)
+#if defined(__CC_ARM) || (defined(__ARMCC_VERSION)) || defined(__GNUC__)
 int main(void)
 #else
 void main(void)
@@ -404,7 +414,7 @@ void main(void)
                     ) != pdPASS)
     {
         usb_echo("app task create failed!\r\n");
-#if (defined(__CC_ARM) || defined(__GNUC__))
+#if (defined(__CC_ARM) || (defined(__ARMCC_VERSION)) || defined(__GNUC__))
         return 1;
 #else
         return;
@@ -413,7 +423,7 @@ void main(void)
 
     vTaskStartScheduler();
 
-#if (defined(__CC_ARM) || defined(__GNUC__))
+#if (defined(__CC_ARM) || (defined(__ARMCC_VERSION)) || defined(__GNUC__))
     return 1;
 #endif
 }

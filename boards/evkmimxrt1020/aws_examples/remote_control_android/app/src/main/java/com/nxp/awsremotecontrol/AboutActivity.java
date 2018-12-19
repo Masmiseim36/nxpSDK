@@ -52,7 +52,7 @@ public class AboutActivity extends AppCompatActivity {
         TextView tvVersion = (TextView) findViewById(R.id.tvVersion);
         try {
             PackageInfo packageInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-            tvVersion.setText("v" + packageInfo.versionName);
+            tvVersion.setText(String.format("v%s", packageInfo.versionName));
         } catch (PackageManager.NameNotFoundException e) {
             tvVersion.setText("");
         }

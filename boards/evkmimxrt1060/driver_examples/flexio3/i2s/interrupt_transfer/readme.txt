@@ -3,14 +3,6 @@ Overview
 The flexio_i2s_interrupt example shows how to use flexio_i2s driver with interrupt:
 
 In this example, flexio acts as I2S module to record data from line-in line and playbacks the recorded data at the same time using interrupt.
-
-Toolchain supported
-===================
-- Keil MDK 5.25
-- IAR embedded Workbench 8.30.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.1
-
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -62,6 +54,11 @@ FLEXIO_I2S interrupt example finished!
 
 Note:
 This example's right/left channel data is swapped due to the buffer maintain issue. This issue will be fixed in later release.
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

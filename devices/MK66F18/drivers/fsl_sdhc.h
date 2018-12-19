@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- *  that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 #ifndef _FSL_SDHC_H_
 #define _FSL_SDHC_H_
@@ -47,8 +21,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief Driver version 2.1.7. */
-#define FSL_SDHC_DRIVER_VERSION (MAKE_VERSION(2U, 1U, 7U))
+/*! @brief Driver version 2.1.8. */
+#define FSL_SDHC_DRIVER_VERSION (MAKE_VERSION(2U, 1U, 8U))
 /*@}*/
 
 /*! @brief Maximum block count can be set one time */
@@ -141,14 +115,15 @@ enum _sdhc_present_status_flag
     kSDHC_BufferReadEnableFlag = SDHC_PRSSTAT_BREN_MASK,   /*!< Buffer read enable */
     kSDHC_CardInsertedFlag = SDHC_PRSSTAT_CINS_MASK,       /*!< Card inserted */
     kSDHC_CommandLineLevelFlag = SDHC_PRSSTAT_CLSL_MASK,   /*!< Command line signal level */
-    kSDHC_Data0LineLevelFlag = (1U << 24U),                /*!< Data0 line signal level */
-    kSDHC_Data1LineLevelFlag = (1U << 25U),                /*!< Data1 line signal level */
-    kSDHC_Data2LineLevelFlag = (1U << 26U),                /*!< Data2 line signal level */
-    kSDHC_Data3LineLevelFlag = (1U << 27U),                /*!< Data3 line signal level */
-    kSDHC_Data4LineLevelFlag = (1U << 28U),                /*!< Data4 line signal level */
-    kSDHC_Data5LineLevelFlag = (1U << 29U),                /*!< Data5 line signal level */
-    kSDHC_Data6LineLevelFlag = (1U << 30U),                /*!< Data6 line signal level */
-    kSDHC_Data7LineLevelFlag = (1U << 31U),                /*!< Data7 line signal level */
+
+    kSDHC_Data0LineLevelFlag = (1U << 24U),      /*!< Data0 line signal level */
+    kSDHC_Data1LineLevelFlag = (1U << 25U),      /*!< Data1 line signal level */
+    kSDHC_Data2LineLevelFlag = (1U << 26U),      /*!< Data2 line signal level */
+    kSDHC_Data3LineLevelFlag = (1U << 27U),      /*!< Data3 line signal level */
+    kSDHC_Data4LineLevelFlag = (1U << 28U),      /*!< Data4 line signal level */
+    kSDHC_Data5LineLevelFlag = (1U << 29U),      /*!< Data5 line signal level */
+    kSDHC_Data6LineLevelFlag = (1U << 30U),      /*!< Data6 line signal level */
+    kSDHC_Data7LineLevelFlag = (int)(1U << 31U), /*!< Data7 line signal level */
 };
 
 /*! @brief Interrupt status flag mask */
@@ -218,7 +193,7 @@ typedef enum _sdhc_adma_error_state
     kSDHC_AdmaErrorStateTransferData = 0x03U,    /*!< Transfer data */
 } sdhc_adma_error_state_t;
 
-/*! @brief Force event mask */
+/*! @brief Force event bit position */
 enum _sdhc_force_event
 {
     kSDHC_ForceEventAutoCommand12NotExecuted = SDHC_FEVT_AC12NE_MASK,  /*!< Auto CMD12 not executed error */
@@ -235,16 +210,14 @@ enum _sdhc_force_event
     kSDHC_ForceEventDataCrcError = SDHC_FEVT_DCE_MASK,                 /*!< Data CRC error */
     kSDHC_ForceEventDataEndBitError = SDHC_FEVT_DEBE_MASK,             /*!< Data end bit error */
     kSDHC_ForceEventAutoCommand12Error = SDHC_FEVT_AC12E_MASK,         /*!< Auto CMD12 error */
-    kSDHC_ForceEventCardInt = SDHC_FEVT_CINT_MASK,                     /*!< Card interrupt */
+    kSDHC_ForceEventCardInt = (int)SDHC_FEVT_CINT_MASK,                /*!< Card interrupt */
     kSDHC_ForceEventDmaError = SDHC_FEVT_DMAE_MASK,                    /*!< Dma error */
 
-    kSDHC_ForceEventsAll =
-        (kSDHC_ForceEventAutoCommand12NotExecuted | kSDHC_ForceEventAutoCommand12Timeout |
-         kSDHC_ForceEventAutoCommand12CrcError | kSDHC_ForceEventEndBitError | kSDHC_ForceEventAutoCommand12IndexError |
-         kSDHC_ForceEventAutoCommand12NotIssued | kSDHC_ForceEventCommandTimeout | kSDHC_ForceEventCommandCrcError |
-         kSDHC_ForceEventCommandEndBitError | kSDHC_ForceEventCommandIndexError | kSDHC_ForceEventDataTimeout |
-         kSDHC_ForceEventDataCrcError | kSDHC_ForceEventDataEndBitError | kSDHC_ForceEventAutoCommand12Error |
-         kSDHC_ForceEventCardInt | kSDHC_ForceEventDmaError), /*!< All force event flags mask */
+    kSDHC_ForceEventsAll = (int)(SDHC_FEVT_AC12NE_MASK | SDHC_FEVT_AC12TOE_MASK | SDHC_FEVT_AC12CE_MASK |
+                                 SDHC_FEVT_AC12EBE_MASK | SDHC_FEVT_AC12IE_MASK | SDHC_FEVT_CNIBAC12E_MASK |
+                                 SDHC_FEVT_CTOE_MASK | SDHC_FEVT_CCE_MASK | SDHC_FEVT_CEBE_MASK | SDHC_FEVT_CIE_MASK |
+                                 SDHC_FEVT_DTOE_MASK | SDHC_FEVT_DCE_MASK | SDHC_FEVT_DEBE_MASK | SDHC_FEVT_AC12E_MASK |
+                                 SDHC_FEVT_CINT_MASK | SDHC_FEVT_DMAE_MASK), /*!< All force event flags mask */
 };
 
 /*! @brief Data transfer width */

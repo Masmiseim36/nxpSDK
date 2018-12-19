@@ -3,28 +3,16 @@
  * @author NXP Semiconductors
  * @version 1.0
  * @par License
- * Copyright(C) NXP Semiconductors, 2017
- * All rights reserved.
+ * Copyright 2017 NXP
  *
- * Software that is described herein is for illustrative purposes only
- * which provides customers with programming information regarding the
- * A7-series security ICs.  This software is supplied "AS IS" without any
- * warranties of any kind, and NXP Semiconductors and its licensor disclaim any and
- * all warranties, express or implied, including all implied warranties of
- * merchantability, fitness for a particular purpose and non-infringement of
- * intellectual property rights.  NXP Semiconductors assumes no responsibility
- * or liability for the use of the software, conveys no license or rights under any
- * patent, copyright, mask work right, or any other intellectual property rights in
- * or to any products. NXP Semiconductors reserves the right to make changes
- * in the software without notification. NXP Semiconductors also makes no
- * representation or warranty that such application will be suitable for the
- * specified use without further testing or modification.
+ * This software is owned or controlled by NXP and may only be used
+ * strictly in accordance with the applicable license terms.  By expressly
+ * accepting such terms or by downloading, installing, activating and/or
+ * otherwise using the software, you are agreeing that you have read, and
+ * that you agree to comply with and are bound by, such license terms.  If
+ * you do not agree to be bound by the applicable license terms, then you
+ * may not retain, install, activate or otherwise use the software.
  *
- * Permission to use, copy and modify this software is hereby granted,
- * under NXP Semiconductors' and its licensor's relevant copyrights in
- * the software, without fee, provided that it is used in conjunction with
- * NXP Semiconductors products. This copyright, permission, and disclaimer notice
- * must appear in all copies of this code.
  * @par Description
  * Host Lib wrapper API implementation over the A71CH host library
  *
@@ -37,6 +25,8 @@
 #include "ax_api.h"
 #include "a71_debug.h"
 #include "hcAsn.h"
+#include "sm_apdu.h"
+#include <a71ch_const.h>
 
 /// Key Operations
 typedef struct {
@@ -84,11 +74,7 @@ typedef struct {
 /// Set this to 1 if more than one process acesses the SE and may update the mapping table
 //#define HLSE_MULTI_PROCESS              1
 
-// currently supporting 1 chunk =32 bytes of Gp Data table
-// this is a preparaion if more is required to hold more than 5 logical objects
-#define HLSE_GP_DATA_CHUNKS_NUM         1       //!< Num of chunks in GP Table
-
-#define HLSE_GP_DATA_CHUNK              32      //!< GP Data chunk size byted
+#define HLSE_GP_DATA_CHUNK              32      //!< GP Data chunk size bytes
 
 #define HLSE_FREE_CHUNK                 0       //!< Free chunk indication
 #define HLSE_OCCUPIED_CHUNK             1       //!< Occupied chunk indication
@@ -96,8 +82,11 @@ typedef struct {
 
 #define HLSE_INDIRECT_LENGTH            0x8000  //!< indirect length indication - obtain from TLV
 
-/// Alligned Size
+/// Alligned number of chunks in which 'size' bytes occupies
 #define HLSE_ALIGN_SIZE(size)           ((size + HLSE_GP_DATA_CHUNK - 1) / HLSE_GP_DATA_CHUNK)
+
+// Max chunks which could be allowed in GP Data table
+#define HLSE_GP_DATA_CHUNKS_NUM HLSE_ALIGN_SIZE(((HLSE_MAX_OBJECTS_IN_TABLE * 6) + 2))
 
 /// To hold GP Size
 static U16 gGPSize = 0;
@@ -112,8 +101,9 @@ typedef struct {
 
 #define HLSE_GP_DATA_TABLE_ENTRY_SIZE   6   //!< GP Table Entry size in bytes
 
-/// Max number of objects that can be in GP Data (5 in case of 1 chunk is used)
-#define HLSE_MAX_OBJECTS_IN_TABLE       (((HLSE_GP_DATA_CHUNK * HLSE_GP_DATA_CHUNKS_NUM) - 2 )/ 6)
+// This is a theoritical max , as it is stored as one byte in the beginning of the Gp Table - up to max 254 entries (0xFE) 
+// elements might be created .  value of 0xFF is reserved for a deleted/invalid entry
+#define HLSE_MAX_OBJECTS_IN_TABLE 254
 
 /// GP Data Table
 typedef struct {
@@ -126,6 +116,43 @@ typedef struct {
 static HLSE_GP_DATA_TABLE gMappingTable;
 /// indication whether cahced mapping table already read
 static U8                 gMappingTableRead = 0;
+
+
+/**
+* Internal
+* find out if a requested area in the gp storage is unlocked
+*
+* \param [in] dataOffset Offset for the data in the GP Storage.
+* \param [in] dataLen Amount of data to write
+* \param [in] map IN: credentials info map
+* \param [in] mapLen IN: credentials info mapLen
+* \retval true if memory is not locked
+*/
+static U8 MemoryIsUnlocked(U16 dataOffset, U16 dataLen, U8* map, U16 mapLen)
+{
+    U16 gpdataOffset = dataOffset;
+
+    int gpStatusOffset;     // GP Storage offsets in CredentialinfoTable returned from GetCredentialInfo
+    int gpStatusN;          // size of GP storage map in CredentialinfoTable returned from GetCredentialInfo
+    U8 credtialstateLocked = 0x0F;   // nibble of lock state in map
+    U8 fLocked = 0;         // flag to indicate that a locked segment was found
+
+    gpStatusN = (A71CH_GP_STORAGE_SIZE_B / A71CH_GP_STORAGE_GRANULARITY);
+    gpStatusOffset = mapLen - gpStatusN;
+
+    // loop over each segment in required write area to find out weather it is locked
+
+    while (gpdataOffset < (dataOffset + dataLen))
+    {
+        fLocked = ((map[(gpdataOffset / A71CH_GP_STORAGE_GRANULARITY) + gpStatusOffset] & 0x0F) == credtialstateLocked) ? 0x01 : 0x00;
+        if (fLocked) {
+            break;
+        }
+        gpdataOffset += A71CH_GP_STORAGE_GRANULARITY;
+    }
+
+    return (!fLocked);
+}
 
 
 /**
@@ -170,6 +197,9 @@ static HLSE_RET_CODE GetGPDataSize(U16* gpSize)
 /**
  * Sort GP mapping Table
  *
+ * Note : Since sorted by offset any deleted/invalid entries (value 0xFFFF) are moved 
+ *        to the end of the table when function is finished
+ *
  * \param[in,out] table IN: pointer to gp mapping table, OUT: sorted table
  */
 static void SortTable(HLSE_GP_DATA_TABLE* table)
@@ -202,14 +232,14 @@ static void SortTable(HLSE_GP_DATA_TABLE* table)
  */
 static HLSE_RET_CODE ReadGPDataTable(HLSE_GP_DATA_TABLE* table, U8 forceReadFromGPData)
 {
-    // NOTE: only one chunk is read. To be updated if a table with more than 5 objects is used
-
     U16 gpSize;
     HLSE_RET_CODE lReturn = HLSE_SW_OK;
+    // Storage to be able to read from GP memoy up to theortical max number of entries in the GP table
+    // this storage will mirror the end of GP Memory containing the GP table
     U8 dataRead[HLSE_GP_DATA_CHUNK * HLSE_GP_DATA_CHUNKS_NUM];
     U8 entryNum;
 
-    U8 dataReadByteSize = sizeof(dataRead);
+    U16 dataReadByteSize = sizeof(dataRead);
     int nObj;
     U8 bValidEntry;
     U8 nMaxObj;
@@ -232,10 +262,14 @@ static HLSE_RET_CODE ReadGPDataTable(HLSE_GP_DATA_TABLE* table, U8 forceReadFrom
     table->numOfEntries = 0;
     table->updateCounter = 0;
 
-    // Read the entire table
-    lReturn = A71_GetGpData(gpSize - dataReadByteSize, dataRead, dataReadByteSize);
-    if (lReturn != HLSE_SW_OK)
+    // Read last chunk of Gp table to fetch the actual number of entries in it , then read additional chunks of the GP table if required
+    memset(dataRead, 0xFF, sizeof(dataRead));
+    lReturn = A71_GetGpData(gpSize - HLSE_GP_DATA_CHUNK,                        // start address of last chunk in GP memory to read from 
+                            (dataRead + dataReadByteSize - HLSE_GP_DATA_CHUNK), // destination
+                            HLSE_GP_DATA_CHUNK);                                // num of bytes to read (= 1 chunk)
+    if (lReturn != HLSE_SW_OK) {
         return lReturn;
+    }
 
     table->numOfEntries = dataRead[dataReadByteSize - 1];
     if (table->numOfEntries == 0xFF) {
@@ -247,14 +281,29 @@ static HLSE_RET_CODE ReadGPDataTable(HLSE_GP_DATA_TABLE* table, U8 forceReadFrom
 
     table->updateCounter = dataRead[dataReadByteSize - 2];
 
+    // if num of entries is more than 5 then we should read additional chunks into the correct address of 'dataRead', notice no need to read last chunk which was already read
+    if (table->numOfEntries > 5) {
+        U8 nCurGpTableChunks = HLSE_ALIGN_SIZE(((table->numOfEntries * 6) + 2));
+
+        // read the additional table chunks from GP memory, up till the last chunk which we already read
+        lReturn = A71_GetGpData(gpSize - (HLSE_GP_DATA_CHUNK * nCurGpTableChunks),                          // start address to read from  
+                                (dataRead + dataReadByteSize - (HLSE_GP_DATA_CHUNK * nCurGpTableChunks)),   // destination
+                                (HLSE_GP_DATA_CHUNK * (nCurGpTableChunks-1)));                              // num of bytes to read
+        if (lReturn != HLSE_SW_OK) {
+            return lReturn;
+        }
+    }
+
     // Read only Valid entries up to numOfEntries starting from end of GP storage ( high address to low address )
+    // note : it is assumed that the table is consecutive with valid entries - since whenever an object is deleted 
+    //        in DeleteGPDataTableEntry() - the table is sorted and compacted so any invalid entries are moved to the end
     nObj = 1; // first object to check if valid in GP Table
     for (entryNum = 0; entryNum < table->numOfEntries; ++entryNum) {
         //  Notes:
         //      X + 1 is the address of the last byte of the GP Storage.
         //      N is the object number from 1 to N
 
-        // read from object 1 to numOfEntries (skipping invalid =(deleted) entries)
+        // read from object 1 to numOfEntries 
 
         /*
         Address     Value
@@ -268,12 +317,12 @@ static HLSE_RET_CODE ReadGPDataTable(HLSE_GP_DATA_TABLE* table, U8 forceReadFrom
         */
 
         // Note : Since the table is kept compacted with invalid entries moved to its end whenever an entry is deleted -
-        //        the following code to skip invalid entries is here just to be on the safe side in case provisioning was done incorrectly somehow,
+        //        the following code to skip invalid entries is here just to be on the safe side in case provisioning was done incorrectly somehow, 
         //        with the table created initially not with consecutive valid entries
         // {
         bValidEntry = 0;
         // max objects that could be held in the gp data table
-        nMaxObj = HLSE_MAX_OBJECTS_IN_TABLE; //((HLSE_GP_DATA_CHUNK * HLSE_GP_DATA_CHUNKS_NUM) - 2) / 6;
+        nMaxObj = HLSE_MAX_OBJECTS_IN_TABLE; 
 
         while (!bValidEntry && nObj <= nMaxObj) {
             // check if entry is valid
@@ -285,7 +334,7 @@ static HLSE_RET_CODE ReadGPDataTable(HLSE_GP_DATA_TABLE* table, U8 forceReadFrom
                 // this is a valid entry
                 bValidEntry = 1;
                 break;
-            }
+            }       
             nObj++;     // skip to next object
         }
 
@@ -301,7 +350,7 @@ static HLSE_RET_CODE ReadGPDataTable(HLSE_GP_DATA_TABLE* table, U8 forceReadFrom
         table->entries[entryNum].length = dataRead[dataReadByteSize - 2 - nObj * 6 + 2] * 256 | dataRead[dataReadByteSize - 2 - nObj * 6 + 3];
         table->entries[entryNum].offset = dataRead[dataReadByteSize - 2 - nObj * 6 + 4] * 256 | dataRead[dataReadByteSize - 2 - nObj * 6 + 5];
 
-        nObj++;
+        nObj++; // skip to next object
     }
 
     // sort the entries in ascending order of the offset
@@ -329,7 +378,8 @@ static HLSE_RET_CODE WriteGPDataTable(HLSE_GP_DATA_TABLE* table)
     U8 dataToBeWritten[HLSE_GP_DATA_CHUNK * HLSE_GP_DATA_CHUNKS_NUM];
     U8 entryNum;
 
-    U8 dataToBeWrittenSize = sizeof(dataToBeWritten);
+    U16 dataToBeWrittenSize = sizeof(dataToBeWritten);
+    U8 nCurGpTableChunks;
 
     lReturn = GetGPDataSize(&gpSize);
     if (lReturn != HLSE_SW_OK) {
@@ -352,8 +402,16 @@ static HLSE_RET_CODE WriteGPDataTable(HLSE_GP_DATA_TABLE* table)
         dataToBeWritten[dataToBeWrittenSize - 2 - (entryNum + 1) * 6 + 5] = table->entries[entryNum].offset & 0xFF;
     }
 
-    lReturn = A71_SetGpData(gpSize - dataToBeWrittenSize, dataToBeWritten, dataToBeWrittenSize);
+    // Write the number of Gp Table chunks required according to 'numOfEntries'
+    nCurGpTableChunks = HLSE_ALIGN_SIZE(((table->numOfEntries * 6) + 2));
+    lReturn = A71_SetGpData(gpSize - (nCurGpTableChunks * HLSE_GP_DATA_CHUNK),                                  // offset in GP memory to write 
+                            dataToBeWritten + dataToBeWrittenSize - (nCurGpTableChunks * HLSE_GP_DATA_CHUNK),   // data to write
+                            (nCurGpTableChunks * HLSE_GP_DATA_CHUNK));                                          // data len
     if (lReturn != HLSE_SW_OK) {
+        if (lReturn == SW_COMMAND_NOT_ALLOWED) {
+            // propagates a clear meaning to the user, usefull for Usecase when GP table is locked but still direct partial update of object might be allowed
+            lReturn = HLSE_OBJ_GP_TABLE_LOCKED; 
+        }
         return lReturn;
     }
 
@@ -399,6 +457,8 @@ static HLSE_RET_CODE UpdateGPDataTableEntry(HLSE_GP_DATA_TABLE_ENTRY* entry)
  * Delete an entry in  the General Purpose mapping Data Table in Gp Memory and to cached variable
  *
  * for internal use
+ * An entry is marked as deleted/invalid  by setting all its memory bytes to 0xFF, the table is then sorted by offset, resulting 
+ * all deleted/invalid entries to be moved to the end of the table
  *
  * \param [in] index index idntifier of object entry to delete
  * \param [in] objClass class identifier of object entry to delete
@@ -427,7 +487,7 @@ static HLSE_RET_CODE DeleteGPDataTableEntry(U8 index, U8 objClass)
         }
     }
 
-    // sort the entries in ascending order of the offset
+    // sort the entries in ascending order of the offset, note : any invalid/deleted entries will be moved to the end
     SortTable(&table);
 
     lReturn = WriteGPDataTable(&table);
@@ -442,9 +502,9 @@ static U16 GetFileSize(U8* data)
 
     // calculate the Tag's length
     U8 TagLen = 1;
-    if ((data[1] & 0x1F) == 0x1F) {
+    if ((data[0] & 0x1F) == 0x1F) {
         TagLen = 2;
-        if (data[2] & 0x80) {
+        if (data[1] & 0x80) {
             TagLen = 3;
         }
     }
@@ -480,6 +540,7 @@ static HLSE_RET_CODE GetObjectOffsetAndLength(U8 index, U8 objClass, U16* offset
     HLSE_GP_DATA_TABLE table;
     HLSE_RET_CODE lReturn = HLSE_SW_OK;
     U8 entryNum;
+    U8 nCurGpTableChunks;
 
     lReturn = ReadGPDataTable(&table, 0);
     if (lReturn != HLSE_SW_OK)
@@ -524,7 +585,8 @@ static HLSE_RET_CODE GetObjectOffsetAndLength(U8 index, U8 objClass, U16* offset
                 }
                 else // this is the last entry so we need to find the max length till beginning of GP table data
                 {
-                    *availLength = gGPSize - (HLSE_GP_DATA_TABLE_ENTRY_SIZE * HLSE_MAX_OBJECTS_IN_TABLE - 2) - table.entries[entryNum].offset;
+                    nCurGpTableChunks = HLSE_ALIGN_SIZE(((table.numOfEntries * 6) + 2));
+                    *availLength = gGPSize - (nCurGpTableChunks * HLSE_GP_DATA_CHUNK) - table.entries[entryNum].offset;
                 }
             }
             else // assume a data object
@@ -688,6 +750,11 @@ static HLSE_RET_CODE GetOffsetForNewObjectAndAddNewEntry(U16 newObjectSize, HLSE
     U8 entryNum;
     U8 bEntryAlreadyExists = 0;
 
+    // required for retrieving cerdtials map to know if a segment is locked
+    U16 rv = 0;
+    U8 map[A71CH_MAP_SIZE_MAX];
+    U16 mapLen = sizeof(map);
+
     lReturn = ReadGPDataTable(&table, 0);
     if (lReturn != HLSE_SW_OK)
         return lReturn;
@@ -726,7 +793,13 @@ static HLSE_RET_CODE GetOffsetForNewObjectAndAddNewEntry(U16 newObjectSize, HLSE
     if (lReturn != HLSE_SW_OK)
         return lReturn;
 
-    // now find a unoccupied large enough offset for the new object, assuming the table is sorted in ascending order of offsets
+    // obtain the credentials info map, to be able to check for locked segments
+    rv = A71_GetCredentialInfo(map, &mapLen);
+    if (rv != SW_OK) {
+        return HLSE_ERR_API_ERROR;
+    }
+
+    // now find a unoccupied (and unlocked) large enough offset for the new object, assuming the table is sorted in ascending order of offsets
     newObjectSizeInChunks = HLSE_ALIGN_SIZE(newObjectSize);
 
     entry->offset = 0;
@@ -735,8 +808,10 @@ static HLSE_RET_CODE GetOffsetForNewObjectAndAddNewEntry(U16 newObjectSize, HLSE
 
     // check if it possible to insert the object at the begining of the GP Storage
     if (table.numOfEntries == 0 || (table.entries[0].offset / HLSE_GP_DATA_CHUNK) >= newObjectSizeInChunks) {
-        entry->offset = 0;
-        found = 1;
+        if (MemoryIsUnlocked(0, newObjectSize, map, mapLen)) {
+            entry->offset = 0;
+            found = 1;
+        }
     }
     else {
         U8 leftEntry, rightEntry;
@@ -747,12 +822,20 @@ static HLSE_RET_CODE GetOffsetForNewObjectAndAddNewEntry(U16 newObjectSize, HLSE
                 if (rightEntry < table.numOfEntries && table.entries[rightEntry].index != 0xFF && table.entries[rightEntry].klass != 0xFF) {
                     // rightEntry is a valid entry
                     U16 leftEnd = HLSE_ALIGN_SIZE(table.entries[leftEntry].offset + (table.entries[leftEntry].length & 0x7FFF));
-                    if (((table.entries[rightEntry].offset / HLSE_GP_DATA_CHUNK) - leftEnd) >= newObjectSizeInChunks) {
-                        entry->offset = leftEnd;
-                        found = 1;
+                    // Check the validiy of candidate chunks from leftEnd to beginning of 'rightEntry' object 
+                    while (!found && (((table.entries[rightEntry].offset / HLSE_GP_DATA_CHUNK) - leftEnd) >= newObjectSizeInChunks)) {
+                        // Verify memory area is unlocked
+                        if (MemoryIsUnlocked(leftEnd * HLSE_GP_DATA_CHUNK, newObjectSize, map, mapLen)) {
+                            entry->offset = leftEnd;
+                            found = 1;
+                        }
+                        else {
+                            // skip to next chunk to begin check 
+                            leftEnd++;
+                        }
                     }
                 }
-             }
+            }
         }
 
         if (!found) {
@@ -760,21 +843,32 @@ static HLSE_RET_CODE GetOffsetForNewObjectAndAddNewEntry(U16 newObjectSize, HLSE
 
             // find the last valid entry
             S8 lastValidEntry = table.numOfEntries - 1;
+			U8 nCurGpTableChunks;
             for (; lastValidEntry >= 0; --lastValidEntry) {
                 if (table.entries[lastValidEntry].index != 0xFF)
                     break;
             }
 
-            // no valid entries - check that the gpData is big enough (exclude last chunk for table)
-            if (lastValidEntry == 0 && table.entries[lastValidEntry].index == 0xFF && (HLSE_ALIGN_SIZE(gpSize) - 1) >= newObjectSizeInChunks) {
-                entry->offset = 0;
-                found = 1;
+            // no valid entries - check that the gpData is big enough (excluding last chunk(s) of gp table)
+            nCurGpTableChunks = HLSE_ALIGN_SIZE(((table.numOfEntries * 6) + 2));
+            if (lastValidEntry == 0 && table.entries[lastValidEntry].index == 0xFF && (HLSE_ALIGN_SIZE(gpSize) - nCurGpTableChunks) >= newObjectSizeInChunks) {
+                if (MemoryIsUnlocked(0, newObjectSize, map, mapLen)) {
+                    entry->offset = 0;
+                    found = 1;
+                }
             }
             else {
+                // check for valid free memory area after the last object
                 U16 prevObjectEnd = HLSE_ALIGN_SIZE(table.entries[lastValidEntry].offset + (table.entries[lastValidEntry].length & 0x7FFF));
-                if (((HLSE_ALIGN_SIZE(gpSize) - 1) - prevObjectEnd) >= newObjectSizeInChunks) {
-                    entry->offset = prevObjectEnd;
-                    found = 1;
+                while (!found && ((HLSE_ALIGN_SIZE(gpSize) - nCurGpTableChunks - prevObjectEnd) >= newObjectSizeInChunks)) {
+                    if (MemoryIsUnlocked(prevObjectEnd * HLSE_GP_DATA_CHUNK, newObjectSize, map, mapLen)) {
+                        entry->offset = prevObjectEnd;
+                        found = 1;
+                    }
+                    else {
+                        // skip to next chunk to begin check 
+                        prevObjectEnd++;
+                    }
                 }
             }
         }
@@ -813,6 +907,7 @@ static HLSE_RET_CODE GetOffsetForNewObjectAndAddNewEntry(U16 newObjectSize, HLSE
 
     return lReturn;
 }
+
 
 //*******************************************************************
 // Object Operations - defined in HLSEObjects.h
@@ -1317,7 +1412,7 @@ HLSE_RET_CODE   HLSE_GetObjectAttribute(HLSE_OBJECT_HANDLE hObject, HLSE_ATTRIBU
                 }
             }
             else if (attribute->type == HLSE_ATTR_MODULE_APPLET_NAME && attribute->valueLen >= 5) {
-                U8 appletAID[] = { 0x61, 0x37, 0x31, 0x63, 0x68 };
+                U8 appletAID[] = APPLET_NAME;
 
                 memcpy(attribute->value, appletAID, sizeof(appletAID));
                 attribute->valueLen = 5;
@@ -1350,6 +1445,21 @@ HLSE_RET_CODE   HLSE_GetObjectAttribute(HLSE_OBJECT_HANDLE hObject, HLSE_ATTRIBU
         else if (HLSE_GET_OBJECT_TYPE(hObject) == HLSE_CERTIFICATE || HLSE_GET_OBJECT_TYPE(hObject) == HLSE_DATA) {
             if (attribute->type == HLSE_ATTR_OBJECT_VALUE) {
                 return GetObjectData(HLSE_GET_OBJECT_INDEX(hObject), HLSE_GET_LOGICAL_OBJECT_CLASS(hObject), attribute->value, &attribute->valueLen);
+            }
+            else if (attribute->type == HLSE_ATTR_OBJECT_OFFSET) {
+                // fetch object offset from Gp table
+                HLSE_RET_CODE lReturn = HLSE_SW_OK;
+                U16 offset; // to be fetched
+                U16 length, availLength; // dummy args
+
+                lReturn = GetObjectOffsetAndLength(HLSE_GET_OBJECT_INDEX(hObject), HLSE_GET_LOGICAL_OBJECT_CLASS(hObject), &offset, &length, &availLength);
+                if (lReturn != HLSE_SW_OK) {
+                    return lReturn;
+                }
+
+                memcpy(attribute->value, &offset, sizeof(offset));
+                attribute->valueLen = sizeof(offset);
+                return lReturn;
             }
             else if (attribute->type == HLSE_ATTR_DIRECT_ACCESS_OBJECT_VALUE && HLSE_GET_OBJECT_TYPE(hObject) == HLSE_DATA) {
                 HLSE_DIRECT_ACCESS_ATTRIBUTE_VALUE* params;
@@ -1410,6 +1520,12 @@ HLSE_RET_CODE   HLSE_CreateObject(HLSE_ATTRIBUTE* attributes, U16 attributesNum,
 
     // Create the table entry and the object handle , and set the object value in GP storage
     if (objType == HLSE_CERTIFICATE || objType == HLSE_DATA) {
+        // verify new object to be created has valid len and value
+        if (attributes[valAttrIndex].type == HLSE_ATTR_OBJECT_VALUE) {
+            if (attributes[valAttrIndex].valueLen == 0 || attributes[valAttrIndex].value == NULL)
+                return HLSE_ERR_API_ERROR;
+        }
+
         entry.index = (U8)objIndex;
         entry.klass = HLSE_GET_LOGICAL_OBJECT_CLASS(objType);
         entry.length = attributes[valAttrIndex].valueLen;
@@ -1418,12 +1534,19 @@ HLSE_RET_CODE   HLSE_CreateObject(HLSE_ATTRIBUTE* attributes, U16 attributesNum,
         if (lReturn != HLSE_SW_OK) {
             return lReturn;
         }
-    }
 
-    lReturn = HLSE_SetObjectAttribute(*hObject, &attributes[valAttrIndex]);
-    if (lReturn != HLSE_SW_OK) {
-        return lReturn;
-     }
+        // No lock check necessary here since we've done it in GetOffsetForNewObjectAndAddNewEntry()
+        lReturn = A71_SetGpData(entry.offset, (U8*)(attributes[valAttrIndex].value), attributes[valAttrIndex].valueLen);
+        if (lReturn != HLSE_SW_OK) {
+            return lReturn;
+        }
+    }
+    else {
+        lReturn = HLSE_SetObjectAttribute(*hObject, &attributes[valAttrIndex]);
+        if (lReturn != HLSE_SW_OK) {
+            return lReturn;
+        }
+    }
 
     // if read only, freeze the data
     if (readOnly) {
@@ -1884,7 +2007,7 @@ HLSE_RET_CODE HLSE_CloseConnection(HLSE_CLOSE_CONNECTION_MODE mode)
 
 HLSE_RET_CODE HLSE_Connect(HLSE_CONNECTION_PARAMS* params, HLSE_COMMUNICATION_STATE *commState)
 {
-#if defined(RJCT_SOCKET)
+#if defined(RJCT_SOCKET) || defined(RJCT_JRCP) || defined(RJCT_VCOM)
         SmCommState_t a71SmCommState;
         U16 lReturn;
 #ifndef HLSE_IGNORE_PARAM_CHECK

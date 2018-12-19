@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_debug_console.h"
@@ -48,7 +22,7 @@
 /* The Flextimer instance/channel used for board */
 #define BOARD_TIMER_BASEADDR FTM0
 #define BOARD_FIRST_TIMER_CHANNEL 5U
-#define BOARD_SECOND_TIMER_CHANNEL 6U
+#define BOARD_SECOND_TIMER_CHANNEL 7U
 /* Get source clock for TPM driver */
 #define BOARD_TIMER_SOURCE_CLOCK CLOCK_GetFreq(kCLOCK_BusClk)
 /* I2C source clock */
@@ -61,18 +35,17 @@
 #define I2C_RELEASE_SCL_GPIO GPIOB
 #define I2C_RELEASE_SCL_PIN 2U
 #define I2C_RELEASE_BUS_COUNT 100U
-/* Upper bound and lower bound angle values */
-#define ANGLE_UPPER_BOUND 85U
-#define ANGLE_LOWER_BOUND 5U
 
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
 void BOARD_I2C_ReleaseBus(void);
-
+static void Board_UpdatePwm(uint16_t x, uint16_t y);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
+volatile int16_t xAngle = 0;
+volatile int16_t yAngle = 0;
 /* FXOS device address */
 const uint8_t g_accel_address[] = {0x1CU, 0x1DU, 0x1EU, 0x1FU};
 
@@ -145,7 +118,7 @@ static void Timer_Init(void)
     ftm_config_t ftmInfo;
     ftm_chnl_pwm_signal_param_t ftmParam[2];
 
-    /* Configure ftm params with frequency 24kHZ */
+    /* Configure ftm params with frequency 24KHZ */
     ftmParam[0].chnlNumber = (ftm_chnl_t)BOARD_FIRST_TIMER_CHANNEL;
     ftmParam[0].level = kFTM_LowTrue;
     ftmParam[0].dutyCyclePercent = 0U;
@@ -193,17 +166,13 @@ int main(void)
     fxos_handle_t fxosHandle = {0};
     fxos_data_t sensorData = {0};
     fxos_config_t config = {0}; 
-    status_t result; 
     uint8_t sensorRange = 0;
     uint8_t dataScale = 0;
     int16_t xData = 0;
     int16_t yData = 0;
-    int16_t xAngle = 0;
-    int16_t yAngle = 0;
-    int16_t xDuty = 0;
-    int16_t yDuty = 0;
     uint8_t i = 0;
     uint8_t array_addr_size = 0;
+    status_t result = kStatus_Fail;
 
     /* Board pin, clock, debug console init */
     BOARD_InitPins();
@@ -211,8 +180,6 @@ int main(void)
     BOARD_I2C_ReleaseBus();
     BOARD_I2C_ConfigurePins();
     BOARD_InitDebugConsole();
-
-    LED_GREEN_INIT(LOGIC_LED_OFF);
 
     /* I2C initialize */
     BOARD_Accel_I2C_Init();
@@ -258,12 +225,13 @@ int main(void)
     else
     {
     }
+
     /* Init timer */
     Timer_Init();
 
     /* Print a note to terminal */
     PRINTF("\r\nWelcome to the BUBBLE example\r\n");
-    PRINTF("\r\nYou will see angle data change in the console when change the angles of board\r\n");
+    PRINTF("\r\nYou will see the change of angle data and LED brightness when change the angles of board\r\n");
 
     /* Main loop. Get sensor data and update duty cycle */
     while (1)
@@ -289,27 +257,9 @@ int main(void)
         {
             yAngle *= -1;
         }
-        /* Update duty cycle to turn on LEDs when angles ~ 90 */
-        if (xAngle > ANGLE_UPPER_BOUND)
-        {
-            xDuty = 100;
-        }
-        if (yAngle > ANGLE_UPPER_BOUND)
-        {
-            yDuty = 100;
-        }
-        /* Update duty cycle to turn off LEDs when angles ~ 0 */
-        if (xAngle < ANGLE_LOWER_BOUND)
-        {
-            xDuty = 0;
-        }
-        if (yAngle < ANGLE_LOWER_BOUND)
-        {
-            yDuty = 0;
-        }
 
-        Board_UpdatePwm(xDuty, yDuty);
-
+        Board_UpdatePwm(xAngle, yAngle);
+        
         /* Print out the angle data. */
         PRINTF("x= %2d y = %2d\r\n", xAngle, yAngle);
     }

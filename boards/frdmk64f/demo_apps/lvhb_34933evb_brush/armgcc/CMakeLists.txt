@@ -270,6 +270,10 @@ SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")
 
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} muldefs")
 
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Map=output.map")
+
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -mcpu=cortex-m4")
 
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -mfloat-abi=hard")
@@ -312,33 +316,39 @@ SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
 
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} muldefs")
 
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Map=output.map")
+
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mcpu=cortex-m4")
 
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mfloat-abi=hard")
 
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mfpu=fpv4-sp-d16")
 
-include_directories(${ProjDirPath}/../../../../../CMSIS/Include)
-
-include_directories(${ProjDirPath}/../../../../../devices)
-
 include_directories(${ProjDirPath}/..)
 
 include_directories(${ProjDirPath}/../../../../../middleware/lvhb/boards/frdmk64f)
 
-include_directories(${ProjDirPath}/../../../../../devices/MK64F12/utilities/io)
+include_directories(${ProjDirPath}/../../../../../CMSIS/Include)
 
-include_directories(${ProjDirPath}/../../../../../devices/MK64F12/utilities/str)
+include_directories(${ProjDirPath}/../../../../../devices)
 
-include_directories(${ProjDirPath}/../../../../../devices/MK64F12/utilities/log)
-
-include_directories(${ProjDirPath}/../../../../../devices/MK64F12/utilities)
+include_directories(${ProjDirPath}/../../../../../middleware/lvhb)
 
 include_directories(${ProjDirPath}/../../../../../devices/MK64F12/drivers)
 
 include_directories(${ProjDirPath}/../../../../../devices/MK64F12)
 
-include_directories(${ProjDirPath}/../../../../../middleware/lvhb)
+include_directories(${ProjDirPath}/../../../../../devices/MK64F12/utilities/str)
+
+include_directories(${ProjDirPath}/../../../../../devices/MK64F12/utilities/debug_console)
+
+include_directories(${ProjDirPath}/../../../../../components/uart)
+
+include_directories(${ProjDirPath}/../../../../../components/serial_manager)
+
+include_directories(${ProjDirPath}/../../../../../components/lists)
 
 include_directories(${ProjDirPath}/../../../../../middleware/aml)
 
@@ -346,20 +356,12 @@ add_executable(lvhb_34933evb_brush.elf
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../main.c"
-"${ProjDirPath}/../readme.txt"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../clock_config.h"
-"${ProjDirPath}/../../../../../devices/MK64F12/utilities/io/fsl_io.c"
-"${ProjDirPath}/../../../../../devices/MK64F12/utilities/io/fsl_io.h"
-"${ProjDirPath}/../../../../../devices/MK64F12/utilities/log/fsl_log.c"
-"${ProjDirPath}/../../../../../devices/MK64F12/utilities/log/fsl_log.h"
-"${ProjDirPath}/../../../../../devices/MK64F12/utilities/str/fsl_str.c"
-"${ProjDirPath}/../../../../../devices/MK64F12/utilities/str/fsl_str.h"
-"${ProjDirPath}/../../../../../devices/MK64F12/utilities/fsl_debug_console.c"
-"${ProjDirPath}/../../../../../devices/MK64F12/utilities/fsl_debug_console.h"
-"${ProjDirPath}/../../../../../devices/MK64F12/utilities/fsl_debug_console_conf.h"
+"${ProjDirPath}/../../../../../middleware/lvhb/lvhb.c"
+"${ProjDirPath}/../../../../../middleware/lvhb/lvhb.h"
 "${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_clock.h"
 "${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_clock.c"
 "${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_adapter.h"
@@ -376,6 +378,9 @@ add_executable(lvhb_34933evb_brush.elf
 "${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_flash.h"
 "${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_common.h"
 "${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_common.c"
+"${ProjDirPath}/../../../../../devices/MK64F12/fsl_device_registers.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/MK64F12.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/MK64F12_features.h"
 "${ProjDirPath}/../../../../../devices/MK64F12/system_MK64F12.c"
 "${ProjDirPath}/../../../../../devices/MK64F12/system_MK64F12.h"
 "${ProjDirPath}/../../../../../devices/MK64F12/gcc/startup_MK64F12.S"
@@ -391,10 +396,20 @@ add_executable(lvhb_34933evb_brush.elf
 "${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_dspi.h"
 "${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_dspi.c"
 "${ProjDirPath}/../../../../../devices/MK64F12/utilities/fsl_assert.c"
-"${ProjDirPath}/../../../../../middleware/lvhb/lvhb.c"
-"${ProjDirPath}/../../../../../middleware/lvhb/lvhb.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/utilities/str/fsl_str.c"
+"${ProjDirPath}/../../../../../devices/MK64F12/utilities/str/fsl_str.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/utilities/debug_console/fsl_debug_console.c"
+"${ProjDirPath}/../../../../../devices/MK64F12/utilities/debug_console/fsl_debug_console.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/utilities/debug_console/fsl_debug_console_conf.h"
+"${ProjDirPath}/../../../../../components/uart/uart.h"
+"${ProjDirPath}/../../../../../components/uart/uart_adapter.c"
+"${ProjDirPath}/../../../../../components/serial_manager/serial_manager.h"
+"${ProjDirPath}/../../../../../components/serial_manager/serial_manager.c"
+"${ProjDirPath}/../../../../../components/serial_manager/serial_port_uart.h"
+"${ProjDirPath}/../../../../../components/serial_manager/serial_port_uart.c"
+"${ProjDirPath}/../../../../../components/lists/generic_list.h"
+"${ProjDirPath}/../../../../../components/lists/generic_list.c"
 "${ProjDirPath}/../../../../../middleware/aml/common_aml.h"
-"${ProjDirPath}/../../../../../middleware/aml/readme.txt"
 "${ProjDirPath}/../../../../../middleware/aml/gpio_aml.h"
 "${ProjDirPath}/../../../../../middleware/aml/spi_aml/spi_aml.c"
 "${ProjDirPath}/../../../../../middleware/aml/spi_aml/spi_aml.h"
@@ -405,6 +420,20 @@ add_executable(lvhb_34933evb_brush.elf
 "${ProjDirPath}/../../../../../middleware/aml/tmr_aml/tpm_aml.h"
 "${ProjDirPath}/../../../../../middleware/aml/wait_aml/wait_aml.c"
 "${ProjDirPath}/../../../../../middleware/aml/wait_aml/wait_aml.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/core_cm4.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armcc.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armclang.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_gcc.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_compiler.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_version.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv7.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/core_armv8mbl.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/core_armv8mml.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/arm_common_tables.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/arm_const_structs.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/arm_math.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_iccarm.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv8.h"
 )
 
 

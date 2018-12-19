@@ -18,14 +18,12 @@
  * limitations under the License.
  */
 
-
 #include "fsl_i2c_cmsis.h"
 
 /* Component ID definition, used by tools. */
 #ifndef FSL_COMPONENT_ID
 #define FSL_COMPONENT_ID "platform.drivers.i2c_cmsis"
 #endif
-
 
 #if ((RTE_I2C0 && defined(I2C0)) || (RTE_I2C1 && defined(I2C1)) || (RTE_I2C2 && defined(I2C2)) || \
      (RTE_I2C3 && defined(I2C3)))
@@ -36,7 +34,7 @@
  * ARMCC does not support split the data section automatically, so the driver
  * needs to split the data to separate sections explicitly, to reduce codesize.
  */
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 #define ARMCC_SECTION(section_name) __attribute__((section(section_name)))
 #endif
 
@@ -1187,7 +1185,7 @@ cmsis_i2c_dma_resource_t I2C0_DmaResource = {RTE_I2C0_Master_DMA_BASE, RTE_I2C0_
 i2c_master_dma_handle_t I2C0_DmaHandle;
 dma_handle_t I2C0_DmaTxRxHandle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("i2c0_dma_driver_state")
 cmsis_i2c_dma_driver_state_t I2C0_DmaDriverState = {
 #else
@@ -1248,7 +1246,7 @@ cmsis_i2c_edma_resource_t I2C0_EdmaResource = {RTE_I2C0_Master_DMA_BASE, RTE_I2C
 i2c_master_edma_handle_t I2C0_EdmaHandle;
 edma_handle_t I2C0_EdmaTxRxHandle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("i2c0_edma_driver_state")
 cmsis_i2c_edma_driver_state_t I2C0_EdmaDriverState = {
 #else
@@ -1305,7 +1303,7 @@ ARM_I2C_STATUS I2C0_Master_EdmaGetStatus(void)
 
 cmsis_i2c_handle_t I2C0_handle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("i2c0_interrupt_driver_state")
 cmsis_i2c_interrupt_driver_state_t I2C0_InterruptDriverState = {
 #else
@@ -1410,7 +1408,7 @@ cmsis_i2c_dma_resource_t I2C1_DmaResource = {RTE_I2C1_Master_DMA_BASE, RTE_I2C1_
 i2c_master_dma_handle_t I2C1_DmaHandle;
 dma_handle_t I2C1_DmaTxRxHandle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("i2c1_dma_driver_state")
 cmsis_i2c_dma_driver_state_t I2C1_DmaDriverState = {
 #else
@@ -1471,7 +1469,7 @@ cmsis_i2c_edma_resource_t I2C1_EdmaResource = {RTE_I2C1_Master_DMA_BASE, RTE_I2C
 i2c_master_edma_handle_t I2C1_EdmaHandle;
 edma_handle_t I2C1_EdmaTxRxHandle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("i2c1_edma_driver_state")
 cmsis_i2c_edma_driver_state_t I2C1_EdmaDriverState = {
 #else
@@ -1528,7 +1526,7 @@ ARM_I2C_STATUS I2C1_Master_EdmaGetStatus(void)
 
 cmsis_i2c_handle_t I2C1_Handle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("i2c1_interrupt_driver_state")
 cmsis_i2c_interrupt_driver_state_t I2C1_InterruptDriverState = {
 #else
@@ -1632,7 +1630,7 @@ cmsis_i2c_dma_resource_t I2C2_DmaResource = {RTE_I2C2_Master_DMA_BASE, RTE_I2C2_
 i2c_master_dma_handle_t I2C2_DmaHandle;
 dma_handle_t I2C2_DmaTxRxHandle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("i2c2_dma_driver_state")
 cmsis_i2c_dma_driver_state_t I2C2_DmaDriverState = {
 #else
@@ -1693,7 +1691,7 @@ cmsis_i2c_edma_resource_t I2C2_EdmaResource = {RTE_I2C2_Master_DMA_BASE, RTE_I2C
 i2c_master_edma_handle_t I2C2_EdmaHandle;
 edma_handle_t I2C2_EdmaTxRxHandle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("i2c2_edma_driver_state")
 cmsis_i2c_edma_driver_state_t I2C2_EdmaDriverState = {
 #else
@@ -1750,7 +1748,7 @@ ARM_I2C_STATUS I2C2_Master_EdmaGetStatus(void)
 
 cmsis_i2c_handle_t I2C2_Handle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("i2c2_interrupt_driver_state")
 cmsis_i2c_interrupt_driver_state_t I2C2_InterruptDriverState = {
 #else
@@ -1855,7 +1853,7 @@ cmsis_i2c_dma_resource_t I2C3_DmaResource = {RTE_I2C3_Master_DMA_BASE, RTE_I2C3_
 i2c_master_dma_handle_t I2C3_DmaHandle;
 dma_handle_t I2C3_DmaTxRxHandle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("i2c3_dma_driver_state")
 cmsis_i2c_dma_driver_state_t I2C3_DmaDriverState = {
 #else
@@ -1916,7 +1914,7 @@ cmsis_i2c_edma_resource_t I2C3_EdmaResource = {RTE_I2C3_Master_DMA_BASE, RTE_I2C
 i2c_master_edma_handle_t I2C3_EdmaHandle;
 edma_handle_t I2C3_EdmaTxRxHandle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("i2c3_edma_driver_state")
 cmsis_i2c_edma_driver_state_t I2C3_EdmaDriverState = {
 #else
@@ -1973,7 +1971,7 @@ ARM_I2C_STATUS I2C3_Master_EdmaGetStatus(void)
 
 cmsis_i2c_handle_t I2C3_Handle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("i2c3_interrupt_driver_state")
 cmsis_i2c_interrupt_driver_state_t I2C3_InterruptDriverState = {
 #else

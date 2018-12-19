@@ -6,23 +6,6 @@ the middleware/wolfssl/wolfssl/wolfcrypt/settings.h header file. FREESCALE_USE_M
 be used to compile the wolfssl_benchmark project source code with support for the Freescale hardware cryptographic
 accelerator, or when none of these macros is defined, all algorithms are implemented in software only.
 
-
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- FRDM-K64F board
-- Personal Computer
-
-Board settings
-==============
-No special settings are required.
 Prepare the Demo
 ================
 Connect a serial cable from the debug UART port of the board to the PC. Start TeraTerm
@@ -85,6 +68,20 @@ DH       test passed!
 DSA      test passed!
 PWDBASED test passed!
 ECC      test passed!
-Customization options
+Hardware requirements
 =====================
+- Mini/micro USB cable
+- FRDM-K64F board
+- Personal Computer
+
+Board settings
+==============
+No special settings are required.
+
+Toolchain supported
+===================
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
 

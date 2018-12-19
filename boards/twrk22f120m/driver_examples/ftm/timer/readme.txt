@@ -3,15 +3,6 @@ Overview
 The FTM project is a simple demonstration program of the SDK FTM driver to use FTM as a timer.
 It sets up the FTM hardware block to trigger an interrupt every 1 millisecond.
 When the FTM interrupt is triggered a message a printed on the UART terminal.
-
-Toolchain supported
-===================
-- IAR embedded Workbench 7.80.4
-- Keil MDK 5.21a
-- GCC ARM Embedded 2016-5.4-q3
-- Kinetis Development Studio IDE 3.2.0
-- MCUXpresso0.8
-
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -45,6 +36,11 @@ FTM example to simulate a timer
 You will see a "-" or "|" in terminal every 1 second:
 -|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
 ~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

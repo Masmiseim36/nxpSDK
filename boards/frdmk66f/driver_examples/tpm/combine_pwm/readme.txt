@@ -6,14 +6,6 @@ and deadtime insertion.
 On boards that have 2 LEDs connected to the TPM pins, the user will see
 a change in LED brightness if user enter different values.
 And if the board do not support LEDs to show, the outputs can be observed by oscilloscope.
-
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
-
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -59,6 +51,11 @@ Value:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Use oscilloscope to measure output signal pin at PTB18(J2-2),PTB19(J2-4) pin of FRDM-K66F board.
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

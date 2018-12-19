@@ -3,28 +3,15 @@
  * @author NXP Semiconductors
  * @version 1.0
  * @par License
- * Copyright(C) NXP Semiconductors, 2016
- * All rights reserved.
+ * Copyright 2016 NXP
  *
- * Software that is described herein is for illustrative purposes only
- * which provides customers with programming information regarding the
- * A7-series security ICs.  This software is supplied "AS IS" without any
- * warranties of any kind, and NXP Semiconductors and its licensor disclaim any and
- * all warranties, express or implied, including all implied warranties of
- * merchantability, fitness for a particular purpose and non-infringement of
- * intellectual property rights.  NXP Semiconductors assumes no responsibility
- * or liability for the use of the software, conveys no license or rights under any
- * patent, copyright, mask work right, or any other intellectual property rights in
- * or to any products. NXP Semiconductors reserves the right to make changes
- * in the software without notification. NXP Semiconductors also makes no
- * representation or warranty that such application will be suitable for the
- * specified use without further testing or modification.
- *
- * Permission to use, copy and modify this software is hereby granted,
- * under NXP Semiconductors' and its licensor's relevant copyrights in
- * the software, without fee, provided that it is used in conjunction with
- * NXP Semiconductors products. This copyright, permission, and disclaimer notice
- * must appear in all copies of this code.
+ * This software is owned or controlled by NXP and may only be used
+ * strictly in accordance with the applicable license terms.  By expressly
+ * accepting such terms or by downloading, installing, activating and/or
+ * otherwise using the software, you are agreeing that you have read, and
+ * that you agree to comply with and are bound by, such license terms.  If
+ * you do not agree to be bound by the applicable license terms, then you
+ * may not retain, install, activate or otherwise use the software.
  *
  * @par Description
  * This file implements the SCI2C Protocol Specification.
@@ -233,7 +220,7 @@ static eSci2c_Error_t sci2c_Wakeup(void)
 
     pSci2cData->pcb = PCB_WAKEUP;
     pSci2cData->dataLen = 0;
-#if defined(FREEDOM)|| defined(IMX_RT)
+#if AX_EMBEDDED
     axI2CResetBackoffDelay();
 #endif
     i2cErr = sci2c_SendByte(pSci2cData);
@@ -244,7 +231,7 @@ static eSci2c_Error_t sci2c_Wakeup(void)
     // The SCI2C specification mandates a minimum delay of 180 microsec between the
     // end of the wakeup command and the start of the next command.
 
-#if defined(FREEDOM) || defined(IMX_RT)
+#if AX_EMBEDDED
     if (i2cErr == i2c_NoAddrAck ) {
         sm_usleep(SCI2C_T_CMDG);
         return eSci2c_No_Error;

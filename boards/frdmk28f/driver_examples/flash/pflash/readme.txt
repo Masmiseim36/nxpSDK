@@ -3,14 +3,25 @@ Overview
 The pflash example shows how to use flash driver to operate program flash:
 
 
+Running the demo
+================
+These instructions are displayed/shown on the terminal window:
+~~~~~~~~~~~~
+PFlash Example Start 
 
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
+ PFlash Information: 
+ Total Program Flash Size:	2048 KB, Hex: (0x200000)
+ Program Flash Sector Size:	4 KB, Hex: (0x1000) 
+ Flash is UNSECURE!
 
+ Erase a sector of flash
+ Successfully Erased Sector 0x1fe000 -> 0x1ff000
+
+ Program a buffer to a sector of flash 
+ Successfully Programmed and Verified Location 0x1fe000 -> 0x1fe010 
+
+ End of PFlash Example 
+~~~~~~~~~~~~
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -35,25 +46,11 @@ Prepare the Demo
 3. Download the program to the target board.
 4. Either press the reset button on your board or launch the debugger in your IDE to begin running the example.
 
-Running the demo
-================
-These instructions are displayed/shown on the terminal window:
-~~~~~~~~~~~~
-PFlash Example Start 
 
- PFlash Information: 
- Total Program Flash Size:	2048 KB, Hex: (0x200000)
- Program Flash Sector Size:	4 KB, Hex: (0x1000) 
- Flash is UNSECURE!
-
- Erase a sector of flash
- Successfully Erased Sector 0x1fe000 -> 0x1ff000
-
- Program a buffer to a sector of flash 
- Successfully Programmed and Verified Location 0x1fe000 -> 0x1fe010 
-
- End of PFlash Example 
-~~~~~~~~~~~~
-Customization options
-=====================
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

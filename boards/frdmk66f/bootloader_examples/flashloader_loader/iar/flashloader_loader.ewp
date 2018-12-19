@@ -225,7 +225,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa039,Pe068,Pe069,Pa082,Pe177,Pe186,Pe550,Pa050,Pe1105,Pe1305</state>
+          <state>Pa039,Pe068,Pe069,Pa082,Pe177,Pe186,Pe550,Pa050,Pe1105,Pe1305,Pa182</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -262,7 +262,7 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
@@ -315,7 +315,6 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/../../flashloader/iar</state>
-          <state>$PROJ_DIR$/../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader</state>
@@ -327,6 +326,10 @@
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers/microseconds</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MK66F18/src</state>
           <state>$PROJ_DIR$/../../../../../devices/MK66F18</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK66F18/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK66F18/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK66F18</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK66F18/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MK66F18/drivers</state>
         </option>
         <option>
@@ -398,11 +401,11 @@
         </option>
         <option>
           <name>IccExceptions</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccRTTI</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccStaticDestr</name>
@@ -778,9 +781,6 @@
         </option>
         <option>
           <name>IlinkExtraOptions</name>
-          <state/>
-          <state> --redirect __aeabi_idiv=__iar_small___aeabi_idiv </state>
-          <state> --redirect __aeabi_idivmod=__iar_small___aeabi_idivmod </state>
         </option>
         <option>
           <name>IlinkLowLevelInterfaceSlave</name>
@@ -1199,7 +1199,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa039,Pe068,Pe069,Pa082,Pe177,Pe186,Pe550,Pa050,Pe1105,Pe1305</state>
+          <state>Pa039,Pe068,Pe069,Pa082,Pe177,Pe186,Pe550,Pa050,Pe1105,Pe1305,Pa182</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -1289,7 +1289,6 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/../../flashloader/iar</state>
-          <state>$PROJ_DIR$/../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader</state>
@@ -1301,6 +1300,10 @@
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers/microseconds</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MK66F18/src</state>
           <state>$PROJ_DIR$/../../../../../devices/MK66F18</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK66F18/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK66F18/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK66F18</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK66F18/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MK66F18/drivers</state>
         </option>
         <option>
@@ -1372,11 +1375,11 @@
         </option>
         <option>
           <name>IccExceptions</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccRTTI</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccStaticDestr</name>
@@ -1751,9 +1754,6 @@
         </option>
         <option>
           <name>IlinkExtraOptions</name>
-          <state/>
-          <state> --redirect __aeabi_idiv=__iar_small___aeabi_idiv </state>
-          <state> --redirect __aeabi_idivmod=__iar_small___aeabi_idivmod </state>
         </option>
         <option>
           <name>IlinkLowLevelInterfaceSlave</name>
@@ -1979,13 +1979,25 @@
     </file>
   </group>
   <group>
-    <name>startup</name>
+    <name>device</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK66F18/fsl_device_registers.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK66F18/MK66F18.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK66F18/MK66F18_features.h</name>
+    </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK66F18/system_MK66F18.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK66F18/system_MK66F18.h</name>
     </file>
+  </group>
+  <group>
+    <name>startup</name>
     <file>
       <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/startup/crt0.s</name>
     </file>
@@ -1999,15 +2011,6 @@
   <group>
     <name>source</name>
     <group>
-      <name>include</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/include/bootloader_core.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/include/bootloader_common.h</name>
-      </file>
-    </group>
-    <group>
       <name>bootloader</name>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/flashloader_image.h</name>
@@ -2020,10 +2023,64 @@
       </file>
     </group>
     <group>
+      <name>include</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/include/bootloader_common.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/include/bootloader_core.h</name>
+      </file>
+    </group>
+    <group>
       <name>utilities</name>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities/vector_table_info.h</name>
       </file>
     </group>
+  </group>
+  <group>
+    <name>CMSIS</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_cm4.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armcc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armclang.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_gcc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_compiler.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_version.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv7.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mbl.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mml.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_common_tables.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_const_structs.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_math.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_iccarm.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv8.h</name>
+    </file>
   </group>
 </project>

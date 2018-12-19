@@ -1,35 +1,8 @@
 /*
- * The Clear BSD License
- * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2018 NXP.
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 /***********************************************************************************************************************
@@ -46,6 +19,7 @@
  * Definitions
  ******************************************************************************/
 #define BOARD_XTAL0_CLK_HZ                         12000000U  /*!< Board xtal0 frequency in Hz */
+#define BOARD_XTAL32K_CLK_HZ                          32768U  /*!< Board RTC xtal frequency in Hz */
 
 /*******************************************************************************
  ************************ BOARD_InitBootClocks function ************************
@@ -60,76 +34,6 @@ extern "C" {
  *
  */
 void BOARD_InitBootClocks(void);
-
-#if defined(__cplusplus)
-}
-#endif /* __cplusplus*/
-
-/*******************************************************************************
- ********************** Configuration BOARD_BootClockRUN ***********************
- ******************************************************************************/
-/*******************************************************************************
- * Definitions for BOARD_BootClockRUN configuration
- ******************************************************************************/
-#define BOARD_BOOTCLOCKRUN_CORE_CLOCK             120000000U  /*!< Core clock frequency: 120000000Hz */
-
-/*! @brief MCG set for BOARD_BootClockRUN configuration.
- */
-extern const mcg_config_t mcgConfig_BOARD_BootClockRUN;
-/*! @brief SIM module set for BOARD_BootClockRUN configuration.
- */
-extern const sim_clock_config_t simConfig_BOARD_BootClockRUN;
-/*! @brief OSC set for BOARD_BootClockRUN configuration.
- */
-extern const osc_config_t oscConfig_BOARD_BootClockRUN;
-
-/*******************************************************************************
- * API for BOARD_BootClockRUN configuration
- ******************************************************************************/
-#if defined(__cplusplus)
-extern "C" {
-#endif /* __cplusplus*/
-
-/*!
- * @brief This function executes configuration of clocks.
- *
- */
-void BOARD_BootClockRUN(void);
-
-#if defined(__cplusplus)
-}
-#endif /* __cplusplus*/
-
-/*******************************************************************************
- ********************* Configuration BOARD_BootClockVLPR ***********************
- ******************************************************************************/
-/*******************************************************************************
- * Definitions for BOARD_BootClockVLPR configuration
- ******************************************************************************/
-#define BOARD_BOOTCLOCKVLPR_CORE_CLOCK              4000000U  /*!< Core clock frequency: 4000000Hz */
-
-/*! @brief MCG set for BOARD_BootClockVLPR configuration.
- */
-extern const mcg_config_t mcgConfig_BOARD_BootClockVLPR;
-/*! @brief SIM module set for BOARD_BootClockVLPR configuration.
- */
-extern const sim_clock_config_t simConfig_BOARD_BootClockVLPR;
-/*! @brief OSC set for BOARD_BootClockVLPR configuration.
- */
-extern const osc_config_t oscConfig_BOARD_BootClockVLPR;
-
-/*******************************************************************************
- * API for BOARD_BootClockVLPR configuration
- ******************************************************************************/
-#if defined(__cplusplus)
-extern "C" {
-#endif /* __cplusplus*/
-
-/*!
- * @brief This function executes configuration of clocks.
- *
- */
-void BOARD_BootClockVLPR(void);
 
 #if defined(__cplusplus)
 }
@@ -171,25 +75,25 @@ void BOARD_BootClockHSRUN(void);
 #endif /* __cplusplus*/
 
 /*******************************************************************************
- ******************** Configuration BOARD_BootClockFRO12M **********************
+ ********************* Configuration BOARD_BootClockVLPR ***********************
  ******************************************************************************/
 /*******************************************************************************
- * Definitions for BOARD_BootClockFRO12M configuration
+ * Definitions for BOARD_BootClockVLPR configuration
  ******************************************************************************/
-#define BOARD_BOOTCLOCKFRO12M_CORE_CLOCK           20971520U  /*!< Core clock frequency: 20971520Hz */
+#define BOARD_BOOTCLOCKVLPR_CORE_CLOCK              4000000U  /*!< Core clock frequency: 4000000Hz */
 
-/*! @brief MCG set for BOARD_BootClockFRO12M configuration.
+/*! @brief MCG set for BOARD_BootClockVLPR configuration.
  */
-extern const mcg_config_t mcgConfig_BOARD_BootClockFRO12M;
-/*! @brief SIM module set for BOARD_BootClockFRO12M configuration.
+extern const mcg_config_t mcgConfig_BOARD_BootClockVLPR;
+/*! @brief SIM module set for BOARD_BootClockVLPR configuration.
  */
-extern const sim_clock_config_t simConfig_BOARD_BootClockFRO12M;
-/*! @brief OSC set for BOARD_BootClockFRO12M configuration.
+extern const sim_clock_config_t simConfig_BOARD_BootClockVLPR;
+/*! @brief OSC set for BOARD_BootClockVLPR configuration.
  */
-extern const osc_config_t oscConfig_BOARD_BootClockFRO12M;
+extern const osc_config_t oscConfig_BOARD_BootClockVLPR;
 
 /*******************************************************************************
- * API for BOARD_BootClockFRO12M configuration
+ * API for BOARD_BootClockVLPR configuration
  ******************************************************************************/
 #if defined(__cplusplus)
 extern "C" {
@@ -199,147 +103,7 @@ extern "C" {
  * @brief This function executes configuration of clocks.
  *
  */
-void BOARD_BootClockFRO12M(void);
-
-#if defined(__cplusplus)
-}
-#endif /* __cplusplus*/
-
-/*******************************************************************************
- ******************* Configuration BOARD_BootClockFROHF48M *********************
- ******************************************************************************/
-/*******************************************************************************
- * Definitions for BOARD_BootClockFROHF48M configuration
- ******************************************************************************/
-#define BOARD_BOOTCLOCKFROHF48M_CORE_CLOCK         20971520U  /*!< Core clock frequency: 20971520Hz */
-
-/*! @brief MCG set for BOARD_BootClockFROHF48M configuration.
- */
-extern const mcg_config_t mcgConfig_BOARD_BootClockFROHF48M;
-/*! @brief SIM module set for BOARD_BootClockFROHF48M configuration.
- */
-extern const sim_clock_config_t simConfig_BOARD_BootClockFROHF48M;
-/*! @brief OSC set for BOARD_BootClockFROHF48M configuration.
- */
-extern const osc_config_t oscConfig_BOARD_BootClockFROHF48M;
-
-/*******************************************************************************
- * API for BOARD_BootClockFROHF48M configuration
- ******************************************************************************/
-#if defined(__cplusplus)
-extern "C" {
-#endif /* __cplusplus*/
-
-/*!
- * @brief This function executes configuration of clocks.
- *
- */
-void BOARD_BootClockFROHF48M(void);
-
-#if defined(__cplusplus)
-}
-#endif /* __cplusplus*/
-
-/*******************************************************************************
- ******************* Configuration BOARD_BootClockFROHF96M *********************
- ******************************************************************************/
-/*******************************************************************************
- * Definitions for BOARD_BootClockFROHF96M configuration
- ******************************************************************************/
-#define BOARD_BOOTCLOCKFROHF96M_CORE_CLOCK         20971520U  /*!< Core clock frequency: 20971520Hz */
-
-/*! @brief MCG set for BOARD_BootClockFROHF96M configuration.
- */
-extern const mcg_config_t mcgConfig_BOARD_BootClockFROHF96M;
-/*! @brief SIM module set for BOARD_BootClockFROHF96M configuration.
- */
-extern const sim_clock_config_t simConfig_BOARD_BootClockFROHF96M;
-/*! @brief OSC set for BOARD_BootClockFROHF96M configuration.
- */
-extern const osc_config_t oscConfig_BOARD_BootClockFROHF96M;
-
-/*******************************************************************************
- * API for BOARD_BootClockFROHF96M configuration
- ******************************************************************************/
-#if defined(__cplusplus)
-extern "C" {
-#endif /* __cplusplus*/
-
-/*!
- * @brief This function executes configuration of clocks.
- *
- */
-void BOARD_BootClockFROHF96M(void);
-
-#if defined(__cplusplus)
-}
-#endif /* __cplusplus*/
-
-/*******************************************************************************
- ******************** Configuration BOARD_BootClockPLL180M *********************
- ******************************************************************************/
-/*******************************************************************************
- * Definitions for BOARD_BootClockPLL180M configuration
- ******************************************************************************/
-#define BOARD_BOOTCLOCKPLL180M_CORE_CLOCK          20971520U  /*!< Core clock frequency: 20971520Hz */
-
-/*! @brief MCG set for BOARD_BootClockPLL180M configuration.
- */
-extern const mcg_config_t mcgConfig_BOARD_BootClockPLL180M;
-/*! @brief SIM module set for BOARD_BootClockPLL180M configuration.
- */
-extern const sim_clock_config_t simConfig_BOARD_BootClockPLL180M;
-/*! @brief OSC set for BOARD_BootClockPLL180M configuration.
- */
-extern const osc_config_t oscConfig_BOARD_BootClockPLL180M;
-
-/*******************************************************************************
- * API for BOARD_BootClockPLL180M configuration
- ******************************************************************************/
-#if defined(__cplusplus)
-extern "C" {
-#endif /* __cplusplus*/
-
-/*!
- * @brief This function executes configuration of clocks.
- *
- */
-void BOARD_BootClockPLL180M(void);
-
-#if defined(__cplusplus)
-}
-#endif /* __cplusplus*/
-
-/*******************************************************************************
- ******************** Configuration BOARD_BootClockPLL220M *********************
- ******************************************************************************/
-/*******************************************************************************
- * Definitions for BOARD_BootClockPLL220M configuration
- ******************************************************************************/
-#define BOARD_BOOTCLOCKPLL220M_CORE_CLOCK          20971520U  /*!< Core clock frequency: 20971520Hz */
-
-/*! @brief MCG set for BOARD_BootClockPLL220M configuration.
- */
-extern const mcg_config_t mcgConfig_BOARD_BootClockPLL220M;
-/*! @brief SIM module set for BOARD_BootClockPLL220M configuration.
- */
-extern const sim_clock_config_t simConfig_BOARD_BootClockPLL220M;
-/*! @brief OSC set for BOARD_BootClockPLL220M configuration.
- */
-extern const osc_config_t oscConfig_BOARD_BootClockPLL220M;
-
-/*******************************************************************************
- * API for BOARD_BootClockPLL220M configuration
- ******************************************************************************/
-#if defined(__cplusplus)
-extern "C" {
-#endif /* __cplusplus*/
-
-/*!
- * @brief This function executes configuration of clocks.
- *
- */
-void BOARD_BootClockPLL220M(void);
+void BOARD_BootClockVLPR(void);
 
 #if defined(__cplusplus)
 }

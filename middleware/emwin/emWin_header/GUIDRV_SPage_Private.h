@@ -1,15 +1,15 @@
 /*********************************************************************
-*                SEGGER Microcontroller GmbH & Co. KG                *
+*                SEGGER Microcontroller GmbH                         *
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2016  SEGGER Microcontroller GmbH & Co. KG       *
+*        (c) 1996 - 2018  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
 **********************************************************************
 
-** emWin V5.38 - Graphical user interface for embedded applications **
+** emWin V5.48 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -26,15 +26,16 @@ Full source code is available at: www.segger.com
 We appreciate your understanding and fairness.
 ----------------------------------------------------------------------
 Licensing information
-
 Licensor:                 SEGGER Microcontroller Systems LLC
 Licensed to:              NXP Semiconductors, 1109 McKay Dr, M/S 76, San Jose, CA 95131, USA
 Licensed SEGGER software: emWin
 License number:           GUI-00186
-License model:            emWin License Agreement, dated August 20th 2011
-Licensed product:         -
-Licensed platform:        NXP's ARM 7/9, Cortex-M0,M3,M4
-Licensed number of seats: -
+License model:            emWin License Agreement, dated August 20th 2011 and Amendment, dated October 19th 2017
+Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7
+----------------------------------------------------------------------
+Support and Update Agreement (SUA)
+SUA period:               2011-08-19 - 2018-09-02
+Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : GUIDRV_SPage_Private.h
 Purpose     : Private interface of GUIDRV_SPage driver
@@ -235,7 +236,9 @@ int  GUIDRV__SPage_ControlCache(GUI_DEVICE * pDevice, int Cmd);
   void SIM_SPage_SetFunc1502 (GUI_DEVICE * pDevice);
   void SIM_SPage_SetFunc1510 (GUI_DEVICE * pDevice);
   void SIM_SPage_SetFunc1512 (GUI_DEVICE * pDevice);
+  void SIM_SPage_SetFunc1801 (GUI_DEVICE * pDevice);
   void SIM_SPage_SetFunc1802 (GUI_DEVICE * pDevice);
+  void SIM_SPage_SetFunc1628 (GUI_DEVICE * pDevice);
   void SIM_SPage_SetFunc1638 (GUI_DEVICE * pDevice);
   void SIM_SPage_SetFunc75256(GUI_DEVICE * pDevice);
   void SIM_SPage_SetFunc75320(GUI_DEVICE * pDevice);

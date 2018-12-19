@@ -3,28 +3,16 @@
 * @author NXP Semiconductors
 * @version 1.0
 * @par License
-* Copyright(C) NXP Semiconductors, 2016
-* All rights reserved.
+* Copyright 2016 NXP
 *
-* Software that is described herein is for illustrative purposes only
-* which provides customers with programming information regarding the
-* A7-series security ICs.  This software is supplied "AS IS" without any
-* warranties of any kind, and NXP Semiconductors and its licensor disclaim any and
-* all warranties, express or implied, including all implied warranties of
-* merchantability, fitness for a particular purpose and non-infringement of
-* intellectual property rights.  NXP Semiconductors assumes no responsibility
-* or liability for the use of the software, conveys no license or rights under any
-* patent, copyright, mask work right, or any other intellectual property rights in
-* or to any products. NXP Semiconductors reserves the right to make changes
-* in the software without notification. NXP Semiconductors also makes no
-* representation or warranty that such application will be suitable for the
-* specified use without further testing or modification.
+* This software is owned or controlled by NXP and may only be used
+* strictly in accordance with the applicable license terms.  By expressly
+* accepting such terms or by downloading, installing, activating and/or
+* otherwise using the software, you are agreeing that you have read, and
+* that you agree to comply with and are bound by, such license terms.  If
+* you do not agree to be bound by the applicable license terms, then you
+* may not retain, install, activate or otherwise use the software.
 *
-* Permission to use, copy and modify this software is hereby granted,
-* under NXP Semiconductors' and its licensor's relevant copyrights in
-* the software, without fee, provided that it is used in conjunction with
-* NXP Semiconductors products. This copyright, permission, and disclaimer notice
-* must appear in all copies of this code.
 * @par Description
 * This file provides the public interface of the A71CH module.
 * @par History
@@ -96,6 +84,7 @@ typedef U8 SST_Index_t;
 
 #define A71CH_MODULE_UNLOCK_CHALLENGE_LEN 16  //!< Length (in byte) of challenge created by secure module to get it unlocked
 #define A71CH_MODULE_UNIQUE_ID_LEN        18  //!< Length (in byte) of unique identifier contained in secure module
+#define A71CH_MODULE_CERT_UID_LEN         10  //!< Length (in byte) of cert unique identifier
 #define A71CH_WRAPPED_KEY_LEN             24  //!< Length (in byte) of an RFC3394 wrapped AES key of 128 bits
 #define A71CH_PUB_KEY_LEN                 65  //!< Length (in byte) of an ECC P-256 Public Key in ANSI X9.62 uncompressed format
 #define AX_SHA256_LEN                     32  //!< Length (in byte) of the result of a SHA256 hash operation
@@ -109,6 +98,13 @@ typedef U8 SST_Index_t;
 #define A71CH_SCP_KEYS_SET   0x03            //!< Successfully written SCP keys (with GP_PutKey), SCP03 binding has not yet been set up
 #define A71CH_SCP_CHANNEL_STATE_UNKNOWN 0x0F //!< SCP channel state not known
 
+/// @cond
+#define A71CH_UID_IC_TYPE_OFFSET               2
+#define A71CH_UID_IC_FABRICATION_DATA_OFFSET   8
+#define A71CH_UID_IC_SERIAL_NR_OFFSET         10
+#define A71CH_UID_IC_BATCH_ID_OFFSET          13
+/// @endcond
+
 /* ------------------------------ */
 
 /** \name Module functions
@@ -120,6 +116,7 @@ U16 A71_CreateClientHelloRandom(U8 *clientHello, U8 clientHelloLen);
 U16 A71_GetRestrictedKeyPairInfo(U8 *idx, U16 *nBlocks, U8 *blockInfo, U16 *blockInfoLen);
 U16 A71_GetSha256(U8 *data, U16 dataLen, U8 *sha, U16 *shaLen);
 U16 A71_GetUniqueID(U8 *uid, U16 *uidLen);
+U16 A71_GetCertUid(U8 *certUid, U16 *certUidLen);
 U16 A71_GetKeyPairChallenge(U8 *challenge, U16 *challengeLen);
 U16 A71_GetPublicKeyChallenge(U8 *challenge, U16 *challengeLen);
 U16 A71_GetUnlockChallenge(U8 *challenge, U16 *challengeLen);
@@ -224,16 +221,18 @@ U16 A71_SetRfc3394WrappedConfigKey(SST_Index_t index, const U8 *Key, U16 keyLen)
 #error "Not yet tested"
 #elif defined(RJCT_SOCKET)
 #define MAX_CHUNK_LENGTH_LINK     256    //!< Limited by A71CH applet capability
+#elif defined(RJCT_JRCP)
+#define MAX_CHUNK_LENGTH_LINK     256    //!< Limited by A71CH applet capability
 #elif defined(IPC)
 #define MAX_CHUNK_LENGTH_LINK     256    //!< Limited by A71CH applet capability
-#elif defined(RJCT_VCOM)
+#elif defined(RJCT_VCOM) || defined (RJCT_SOCKET) || defined (RJCT_JRCP)
 #define MAX_CHUNK_LENGTH_LINK     256    //!< Limited by A71CH applet capability
 #else
 #error "Define a communication layer as a preprocessor constant"
 #endif
 
 #define AX_HOST_LIB_MAJOR 0x01  //!< Major number A71CH Host Library
-#define AX_HOST_LIB_MINOR 0x30  //!< Minor (High Nibble)/Patch number (Low Nibble) of A71CH Host Library
+#define AX_HOST_LIB_MINOR 0x40  //!< Minor (High Nibble)/Patch number (Low Nibble) of A71CH Host Library
 
 #ifdef __cplusplus
 }

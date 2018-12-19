@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
  * Copyright 2016 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "usb_host_config.h"
@@ -590,10 +564,7 @@ extern usb_status_t USB_HostStandardSetGetDescriptor(usb_host_device_instance_t 
 USB_RAM_ADDRESS_ALIGNMENT(4096)
 USB_CONTROLLER_DATA static uint8_t s_UsbHostEhciFrameList1[USB_HOST_CONFIG_EHCI_FRAME_LIST_SIZE * 4];
 
-#define USB_HOST_EHCI_FRAME_LIST_ARRAY \
-    {                                  \
-        &s_UsbHostEhciFrameList1[0]    \
-    }
+static uint8_t usbHostEhciFramListStatus[1] = {0};
 
 USB_RAM_ADDRESS_ALIGNMENT(64) USB_CONTROLLER_DATA static usb_host_ehci_data_t s_UsbHostEhciData1;
 #define USB_HOST_EHCI_DATA_ARRAY \
@@ -605,10 +576,7 @@ USB_RAM_ADDRESS_ALIGNMENT(4096)
 USB_CONTROLLER_DATA static uint8_t s_UsbHostEhciFrameList1[USB_HOST_CONFIG_EHCI_FRAME_LIST_SIZE * 4];
 USB_RAM_ADDRESS_ALIGNMENT(4096)
 USB_CONTROLLER_DATA static uint8_t s_UsbHostEhciFrameList2[USB_HOST_CONFIG_EHCI_FRAME_LIST_SIZE * 4];
-#define USB_HOST_EHCI_FRAME_LIST_ARRAY                           \
-    {                                                            \
-        &s_UsbHostEhciFrameList1[0], &s_UsbHostEhciFrameList2[0] \
-    }
+static uint8_t usbHostEhciFramListStatus[2] = {0, 0};
 
 USB_RAM_ADDRESS_ALIGNMENT(64) USB_CONTROLLER_DATA static usb_host_ehci_data_t s_UsbHostEhciData1;
 USB_RAM_ADDRESS_ALIGNMENT(64) USB_CONTROLLER_DATA static usb_host_ehci_data_t s_UsbHostEhciData2;
@@ -621,6 +589,7 @@ USB_RAM_ADDRESS_ALIGNMENT(64) USB_CONTROLLER_DATA static usb_host_ehci_data_t s_
 #endif
 
 static uint8_t s_SlotMaxBandwidth[8] = {125, 125, 125, 125, 125, 125, 50, 0};
+static uint8_t s_SlotMaxBandwidthHs[8] = {100, 100, 100, 100, 100, 100, 100, 100};
 
 /*******************************************************************************
  * Code
@@ -1246,14 +1215,16 @@ static void USB_HostBandwidthHsHostComputeCurrentHsAll(usb_host_ehci_instance_t 
         ehciPipePointer = (usb_host_ehci_pipe_t *)ehciPipePointer->pipeCommon.next;
     }
 
+#if 0
     for (index = 0; index < 7; ++index) /*  */
     {
-        if (frameBandwidths[index] > s_SlotMaxBandwidth[index])
+        if (frameBandwidths[index] > s_SlotMaxBandwidthHs[index])
         {
-            frameBandwidths[index + 1] += (frameBandwidths[index] - s_SlotMaxBandwidth[index]);
-            frameBandwidths[index] = s_SlotMaxBandwidth[index];
+            frameBandwidths[index + 1] += (frameBandwidths[index] - s_SlotMaxBandwidthHs[index]);
+            frameBandwidths[index] = s_SlotMaxBandwidthHs[index];
         }
     }
+#endif
 }
 
 /*!
@@ -1293,7 +1264,7 @@ static usb_status_t USB_HostBandwidthHsHostAllocateHsCommon(usb_host_ehci_instan
                     frameTimes); /* compute the allocated bandwidths in the new frameIndex frame */
             }
             if (frameTimes[uframeIndex & 0x0007] + timeData >
-                s_SlotMaxBandwidth[(uframeIndex & 0x0007)]) /* micro-frame has enough idle bandwidth? */
+                s_SlotMaxBandwidthHs[(uframeIndex & 0x0007)]) /* micro-frame has enough idle bandwidth? */
             {
                 break; /* fail */
             }
@@ -1415,7 +1386,7 @@ static usb_status_t USB_HostBandwidthHsHostAllocateIso(usb_host_ehci_instance_t 
                             index = uframeIntervalIndex;
                             for (; index < (uframeIntervalIndex + SsCsNumber); ++index)
                             {
-                                if (frameTimes[index] + timeStartSplit > s_SlotMaxBandwidth[index])
+                                if (frameTimes[index] + timeStartSplit > s_SlotMaxBandwidthHs[index])
                                 {
                                     allocateOk = 0;
                                     break;
@@ -1425,7 +1396,7 @@ static usb_status_t USB_HostBandwidthHsHostAllocateIso(usb_host_ehci_instance_t 
                         else /* ISO IN */
                         {
                             index = uframeIntervalIndex;
-                            if (frameTimes[index] + timeStartSplit > s_SlotMaxBandwidth[index])
+                            if (frameTimes[index] + timeStartSplit > s_SlotMaxBandwidthHs[index])
                             {
                                 allocateOk = 0;
                             }
@@ -1436,7 +1407,7 @@ static usb_status_t USB_HostBandwidthHsHostAllocateIso(usb_host_ehci_instance_t 
                                     2; /* there are two micro-frames interval between start-split and complete-split */
                                 for (; index < (uframeIntervalIndex + 2 + SsCsNumber); ++index)
                                 {
-                                    if (frameTimes[index] + timeCompleteSplit > s_SlotMaxBandwidth[index])
+                                    if (frameTimes[index] + timeCompleteSplit > s_SlotMaxBandwidthHs[index])
                                     {
                                         allocateOk = 0;
                                         break;
@@ -1647,7 +1618,8 @@ static usb_status_t USB_HostBandwidthHsHostAllocateInterrupt(usb_host_ehci_insta
                     {
                         USB_HostBandwidthHsHostComputeCurrentHsAll(ehciInstance, frameIndex, frameTimes);
                         /* allocate start_split bandwidth */
-                        if (frameTimes[uframeIntervalIndex] + timeStartSplit > s_SlotMaxBandwidth[uframeIntervalIndex])
+                        if (frameTimes[uframeIntervalIndex] + timeStartSplit >
+                            s_SlotMaxBandwidthHs[uframeIntervalIndex])
                         {
                             allocateOk = 0;
                         }
@@ -1659,7 +1631,7 @@ static usb_status_t USB_HostBandwidthHsHostAllocateInterrupt(usb_host_ehci_insta
                              * is 2. */
                             for (; (index <= (uframeIntervalIndex + 1 + SsCsNumber)) && (index < 8); ++index)
                             {
-                                if (frameTimes[index] + timeCompleteSplit > s_SlotMaxBandwidth[index])
+                                if (frameTimes[index] + timeCompleteSplit > s_SlotMaxBandwidthHs[index])
                                 {
                                     allocateOk = 0;
                                     break;
@@ -2812,7 +2784,7 @@ static uint32_t USB_HostEhciGetItdLinkFrame(usb_host_ehci_instance_t *ehciInstan
                     EHCI_MAX_UFRAME_VALUE); /* get the distance */
         /* shouldLinkUframe has add uframeInterval, think about the align with interval, so here add (uframeInterval
          * * 2) */
-        if ((distance <= (int32_t)(USB_HOST_EHCI_ISO_BOUNCE_UFRAME_NUMBER + (uframeInterval * 2))) && (distance > 2))
+        if ((distance <= (int32_t)(USB_HOST_EHCI_ISO_BOUNCE_UFRAME_NUMBER + (uframeInterval * 3))) && (distance > 2))
         {
             currentUframe = shouldLinkUframe;
         }
@@ -2826,7 +2798,7 @@ static uint32_t USB_HostEhciGetItdLinkFrame(usb_host_ehci_instance_t *ehciInstan
             }
             /* uframe should align with interval */
             currentUframe -= startUframe;
-            currentUframe = ((uint32_t)(currentUframe + uframeInterval - 1) &
+            currentUframe = ((uint32_t)(currentUframe + uframeInterval) &
                              (~((uint32_t)uframeInterval - 1))); /* uframeInterval is power of 2 */
             currentUframe += startUframe;
         }
@@ -2837,7 +2809,7 @@ static uint32_t USB_HostEhciGetItdLinkFrame(usb_host_ehci_instance_t *ehciInstan
         currentUframe = ((uint32_t)(currentUframe + USB_HOST_EHCI_ISO_BOUNCE_UFRAME_NUMBER) & EHCI_MAX_UFRAME_VALUE);
         /* uframe should align with interval */
         currentUframe -= startUframe;
-        currentUframe = ((uint32_t)(currentUframe + uframeInterval - 1) &
+        currentUframe = ((uint32_t)(currentUframe + uframeInterval) &
                          (~((uint32_t)uframeInterval - 1))); /* uframeInterval is power of 2 */
         currentUframe += startUframe;
     }
@@ -2851,6 +2823,7 @@ static usb_status_t USB_HostEhciItdArrayInit(usb_host_ehci_instance_t *ehciInsta
 {
     usb_host_ehci_iso_t *isoPointer;
     usb_host_ehci_itd_t *itdPointer = NULL;
+    usb_host_ehci_itd_t *itdHead = NULL;
     usb_host_ehci_itd_t *tmpItdPointer;
     uint32_t dataLength;        /* the remaining data for sending */
     uint32_t transactionLength; /* the initializing transaction descriptor data length */
@@ -2906,6 +2879,7 @@ static usb_status_t USB_HostEhciItdArrayInit(usb_host_ehci_instance_t *ehciInsta
     {
         linkUframe = lastShouldLinkUframe;
     }
+    itdHead = ehciInstance->ehciItdList;
     while (dataLength)
     {
         /* get one idle itd */
@@ -2967,13 +2941,14 @@ static usb_status_t USB_HostEhciItdArrayInit(usb_host_ehci_instance_t *ehciInsta
     transfer->union2.unitTail = (uint32_t)itdPointer;
     itdPointer->transactions[index] |= (1 << EHCI_HOST_ITD_IOC_SHIFT); /* last set IOC */
 
+    itdPointer = itdHead;
     /* link itd to frame list (note: initialize frameEntryIndex)*/
     while (itdPointer)
     {
-        itdPointer->frameEntryIndex = linkUframe;
+        itdPointer->frameEntryIndex = linkUframe >> 3;
         /* add to frame head */
         itdPointer->nextLinkPointer = ((uint32_t *)ehciInstance->ehciFrameList)[linkUframe >> 3];
-        *(uint32_t *)((uint32_t *)ehciInstance->ehciFrameList)[linkUframe >> 3] =
+        ((uint32_t *)ehciInstance->ehciFrameList)[linkUframe >> 3] =
             ((uint32_t)itdPointer | EHCI_HOST_POINTER_TYPE_ITD);
         itdPointer = itdPointer->nextItdPointer;
         if (itdPointer == NULL)
@@ -4068,6 +4043,41 @@ static void USB_HostEhciTimer1(usb_host_ehci_instance_t *ehciInstance)
 }
 #endif
 
+void *USB_EhciGetValidFrameList(usb_host_ehci_instance_t *ehciInstance, uint8_t *instanceIndex)
+{
+    if (ehciInstance->controllerId < kUSB_ControllerEhci0)
+    {
+        return NULL;
+    }
+
+#if (USB_HOST_CONFIG_EHCI == 1U)
+    if (!usbHostEhciFramListStatus[0])
+    {
+        usbHostEhciFramListStatus[0] = 1;
+        *instanceIndex = 0;
+        return &s_UsbHostEhciFrameList1[0];
+    }
+#elif(USB_HOST_CONFIG_EHCI == 2U)
+    if (!usbHostEhciFramListStatus[0])
+    {
+        usbHostEhciFramListStatus[0] = 1;
+        *instanceIndex = 0;
+        return &s_UsbHostEhciFrameList1[0];
+    }
+    else if (!usbHostEhciFramListStatus[1])
+    {
+        usbHostEhciFramListStatus[1] = 1;
+        *instanceIndex = 1;
+        return &s_UsbHostEhciFrameList2[0];
+    }
+    else
+    {
+    }
+#endif
+
+    return NULL;
+}
+
 usb_status_t USB_HostEhciCreate(uint8_t controllerId,
                                 usb_host_handle upperLayerHandle,
                                 usb_host_controller_handle *controllerHandle)
@@ -4077,8 +4087,8 @@ usb_status_t USB_HostEhciCreate(uint8_t controllerId,
     usb_host_ehci_instance_t *ehciInstance;
     uint32_t usbhsBaseAddrs[] = USBHS_BASE_ADDRS;
     usb_host_ehci_data_t *usbHostEhciData[] = USB_HOST_EHCI_DATA_ARRAY;
-    uint8_t *usbHostEhciFrameList[] = USB_HOST_EHCI_FRAME_LIST_ARRAY;
     uint32_t *framePointer;
+    uint8_t instanceIndex;
 
     if ((uint32_t)(controllerId - kUSB_ControllerEhci0) >= (sizeof(usbhsBaseAddrs) / sizeof(usbhsBaseAddrs[0])))
     {
@@ -4118,10 +4128,14 @@ usb_status_t USB_HostEhciCreate(uint8_t controllerId,
     }
 
     /* initialize ehci frame list */
-    ehciInstance->ehciFrameList = usbHostEhciFrameList[ehciInstance->controllerId - kUSB_ControllerEhci0];
+    ehciInstance->ehciFrameList = USB_EhciGetValidFrameList(ehciInstance, &instanceIndex);
+    if (ehciInstance->ehciFrameList == NULL)
+    {
+        return kStatus_USB_Error;
+    }
 
     /* initialize ehci units */
-    ehciInstance->ehciUnitBase = (uint32_t *)(usbHostEhciData[ehciInstance->controllerId - kUSB_ControllerEhci0]);
+    ehciInstance->ehciUnitBase = (uint32_t *)(usbHostEhciData[instanceIndex]);
     /* initialize qh/qtd/itd/sitd/iso list */
     ehciInstance->ehciQhList = (usb_host_ehci_qh_t *)((uint32_t)(ehciInstance->ehciUnitBase));
     ehciInstance->ehciQtdHead = (usb_host_ehci_qtd_t *)((uint32_t)ehciInstance->ehciQhList +
@@ -4237,7 +4251,25 @@ usb_status_t USB_HostEhciDestory(usb_host_controller_handle controllerHandle)
     ehciInstance->ehciIpBase->USBINTR = 0;
     /* stop the controller */
     ehciInstance->ehciIpBase->USBCMD = 0;
-    /* free memory */
+/* free memory */
+#if (USB_HOST_CONFIG_EHCI == 1U)
+    if (ehciInstance->ehciFrameList == &s_UsbHostEhciFrameList1[0])
+    {
+        usbHostEhciFramListStatus[0] = 0;
+    }
+#elif(USB_HOST_CONFIG_EHCI == 2U)
+    if (ehciInstance->ehciFrameList == &s_UsbHostEhciFrameList1[0])
+    {
+        usbHostEhciFramListStatus[0] = 0;
+    }
+    else if (ehciInstance->ehciFrameList == &s_UsbHostEhciFrameList2[0])
+    {
+        usbHostEhciFramListStatus[1] = 0;
+    }
+    else
+    {
+    }
+#endif
     USB_OsaMutexDestroy(ehciInstance->ehciMutex);
     USB_OsaEventDestroy(ehciInstance->taskEventHandle);
     USB_OsaMemoryFree(ehciInstance);
@@ -4517,6 +4549,7 @@ usb_status_t USB_HostEhciIoctl(usb_host_controller_handle controllerHandle, uint
             USB_HostHelperGetPeripheralInformation(ehciPipePointer->pipeCommon.deviceHandle, kUSB_HostGetDeviceAddress,
                                                    &deviceAddress);
             vltQhPointer->staticEndpointStates[0] |= deviceAddress;
+            USB_HostEhciDelay(ehciInstance->ehciIpBase, 2U);
             break;
 
         case kUSB_HostUpdateControlPacketSize:

@@ -6,14 +6,6 @@ Demo should use NFC application on the PC or Mobile phone as a counterpart.
 Android Mobile app could be found on Play Store by name NTAG I2C Demoboard, PC app could be found on NXP site on the following address:
 http://www.nxp.com/products/identification-and-security/nfc-and-reader-ics/connected-tag-solutions/ntag-ic-plus-explorer-kit-with-nfc-reader-development-kit:OM5569-NT322ER?tab=Design_Tools_Tab
 The name of windows application is NTAG I2C Demo for windows PC, link to zip archive with application is here: http://www.nxp.com/downloads/en/software-support/SW3651.zip
-
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
-
 Hardware requirements
 =====================
 - Mini/Micro USB cable
@@ -28,11 +20,21 @@ Board settings
 ==============
 The example is configured to communicate with all NTAG pins
 The connection should be set as following:
+
+FRDM-K64F REV D:
 Board - NTAG
 J3-08 - VCC
 J3-12 - GND
 J2-20 - SCL
 J2-18 - SDA
+J1-12 - FD
+
+FRDM-K64F REV C and older:
+Board - NTAG
+J3-08 - VCC
+J3-12 - GND
+J2-18 - SCL
+J2-20 - SDA
 J1-12 - FD
 
 Prepare the Demo
@@ -71,6 +73,11 @@ Board Ver.: K64 FW    Ver.: 2.0
 Board Ver.: K64 FW    Ver.: 2.0
 Button status: 4
 Button status: 0
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

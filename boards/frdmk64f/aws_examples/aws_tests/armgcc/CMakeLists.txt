@@ -1,0 +1,1001 @@
+INCLUDE(CMakeForceCompiler)
+
+# CROSS COMPILER SETTING
+SET(CMAKE_SYSTEM_NAME Generic)
+CMAKE_MINIMUM_REQUIRED (VERSION 2.6)
+
+# THE VERSION NUMBER
+SET (Tutorial_VERSION_MAJOR 1)
+SET (Tutorial_VERSION_MINOR 0)
+
+# ENABLE ASM
+ENABLE_LANGUAGE(ASM)
+
+SET(CMAKE_STATIC_LIBRARY_PREFIX)
+SET(CMAKE_STATIC_LIBRARY_SUFFIX)
+
+SET(CMAKE_EXECUTABLE_LIBRARY_PREFIX)
+SET(CMAKE_EXECUTABLE_LIBRARY_SUFFIX)
+
+ 
+# CURRENT DIRECTORY
+SET(ProjDirPath ${CMAKE_CURRENT_SOURCE_DIR})
+
+
+SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -DDEBUG")
+
+SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -D__STARTUP_CLEAR_BSS")
+
+SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -g")
+
+SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -Wall")
+
+SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -fno-common")
+
+SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -ffunction-sections")
+
+SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -fdata-sections")
+
+SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -ffreestanding")
+
+SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -fno-builtin")
+
+SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -mthumb")
+
+SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -mapcs")
+
+SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -std=gnu99")
+
+SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -mcpu=cortex-m4")
+
+SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -mfloat-abi=hard")
+
+SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -mfpu=fpv4-sp-d16")
+
+SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -DNDEBUG")
+
+SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -D__STARTUP_CLEAR_BSS")
+
+SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -Wall")
+
+SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -fno-common")
+
+SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -ffunction-sections")
+
+SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -fdata-sections")
+
+SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -ffreestanding")
+
+SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -fno-builtin")
+
+SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -mthumb")
+
+SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -mapcs")
+
+SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -std=gnu99")
+
+SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -mcpu=cortex-m4")
+
+SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -mfloat-abi=hard")
+
+SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -mfpu=fpv4-sp-d16")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DDEBUG")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DCPU_MK64FN1M0VLL12")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DSDK_DEBUGCONSOLE=1")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DSDK_I2C_BASED_COMPONENT_USED=1")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DUSE_RTOS=1")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DMBEDTLS_CONFIG_FILE='\"aws_mbedtls_config.h\"'")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DFRDM_K64F")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DFREEDOM")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DA_LITTLE_ENDIAN")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DFSL_RTOS_FREE_RTOS")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DAMAZON_FREERTOS_ENABLE_UNIT_TESTS=1")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -g")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -O0")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -Wall")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -fno-common")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -ffunction-sections")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -fdata-sections")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -ffreestanding")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -fno-builtin")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -mthumb")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -mapcs")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -std=gnu99")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -mcpu=cortex-m4")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -mfloat-abi=hard")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -mfpu=fpv4-sp-d16")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -MMD")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -MP")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -fomit-frame-pointer")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DNDEBUG")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DCPU_MK64FN1M0VLL12")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DSDK_DEBUGCONSOLE=1")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DSDK_I2C_BASED_COMPONENT_USED=1")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DUSE_RTOS=1")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DMBEDTLS_CONFIG_FILE='\"aws_mbedtls_config.h\"'")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DFRDM_K64F")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DFREEDOM")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DA_LITTLE_ENDIAN")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DFSL_RTOS_FREE_RTOS")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DAMAZON_FREERTOS_ENABLE_UNIT_TESTS=1")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Os")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Wall")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -fno-common")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -ffunction-sections")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -fdata-sections")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -ffreestanding")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -fno-builtin")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -mthumb")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -mapcs")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -std=gnu99")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -mcpu=cortex-m4")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -mfloat-abi=hard")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -mfpu=fpv4-sp-d16")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -MMD")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -MP")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -fomit-frame-pointer")
+
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG")
+
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DCPU_MK64FN1M0VLL12")
+
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g")
+
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O0")
+
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall")
+
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fno-common")
+
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -ffunction-sections")
+
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fdata-sections")
+
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -ffreestanding")
+
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fno-builtin")
+
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -mthumb")
+
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -mapcs")
+
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fno-rtti")
+
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fno-exceptions")
+
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -mcpu=cortex-m4")
+
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -mfloat-abi=hard")
+
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -mfpu=fpv4-sp-d16")
+
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -MMD")
+
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -MP")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DNDEBUG")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DCPU_MK64FN1M0VLL12")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Os")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -fno-common")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -ffunction-sections")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -fdata-sections")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -ffreestanding")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -fno-builtin")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -mthumb")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -mapcs")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -fno-rtti")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -fno-exceptions")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -mcpu=cortex-m4")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -mfloat-abi=hard")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -mfpu=fpv4-sp-d16")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -MMD")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -MP")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -g")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} --specs=nano.specs")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} --specs=nosys.specs")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Wall")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -fno-common")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -ffunction-sections")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -fdata-sections")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -ffreestanding")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -fno-builtin")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -mthumb")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -mapcs")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} --gc-sections")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -static")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -z")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} muldefs")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Map=output.map")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -mcpu=cortex-m4")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -mfloat-abi=hard")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -mfpu=fpv4-sp-d16")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} --defsym=__stack_size__=0x200")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} --defsym=__heap_size__=0x200")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} --defsym=XIP_IMAGE=1")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} --specs=nano.specs")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} --specs=nosys.specs")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Wall")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -fno-common")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -ffunction-sections")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -fdata-sections")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -ffreestanding")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -fno-builtin")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mthumb")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mapcs")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} --gc-sections")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -static")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -z")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} muldefs")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Map=output.map")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mcpu=cortex-m4")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mfloat-abi=hard")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mfpu=fpv4-sp-d16")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} --defsym=__stack_size__=0x200")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} --defsym=__heap_size__=0x200")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} --defsym=XIP_IMAGE=1")
+
+include_directories(${ProjDirPath}/../../..)
+
+include_directories(${ProjDirPath}/..)
+
+include_directories(${ProjDirPath}/../config_files)
+
+include_directories(${ProjDirPath}/../../..)
+
+include_directories(${ProjDirPath}/..)
+
+include_directories(${ProjDirPath}/../config_files)
+
+include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/GCC/ARM_CM4F)
+
+include_directories(${ProjDirPath}/../../..)
+
+include_directories(${ProjDirPath}/..)
+
+include_directories(${ProjDirPath}/../../../../../CMSIS/Include)
+
+include_directories(${ProjDirPath}/../../../../../devices)
+
+include_directories(${ProjDirPath}/../../../../../middleware/mmcau)
+
+include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include)
+
+include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private)
+
+include_directories(${ProjDirPath}/../../../../../middleware/mbedtls/include)
+
+include_directories(${ProjDirPath}/../../../../../middleware/mbedtls/port/ksdk)
+
+include_directories(${ProjDirPath}/../config_files)
+
+include_directories(${ProjDirPath}/../../../../../middleware/wifi_qca/port/boards/frdmk64f/freertos/gt202)
+
+include_directories(${ProjDirPath}/../../../../../middleware/wifi_qca/port/boards/frdmk64f/freertos/silex2401)
+
+include_directories(${ProjDirPath}/../../../../../devices/MK64F12/drivers)
+
+include_directories(${ProjDirPath}/../../../../../components/fxos8700cq)
+
+include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/third_party/mcu_vendor/nxp/FRDMK64F/drivers)
+
+include_directories(${ProjDirPath}/../../../../../middleware/wifi_qca)
+
+include_directories(${ProjDirPath}/../../../../../middleware/wifi_qca/include)
+
+include_directories(${ProjDirPath}/../../../../../middleware/wifi_qca/include/AR6002)
+
+include_directories(${ProjDirPath}/../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw)
+
+include_directories(${ProjDirPath}/../../../../../middleware/wifi_qca/include/AR6002/hw4.0/hw)
+
+include_directories(${ProjDirPath}/../../../../../middleware/wifi_qca/custom_src/stack_custom)
+
+include_directories(${ProjDirPath}/../../../../../middleware/wifi_qca/custom_src/include)
+
+include_directories(${ProjDirPath}/../../../../../middleware/wifi_qca/common_src/include)
+
+include_directories(${ProjDirPath}/../../../../../middleware/wifi_qca/common_src/stack_common)
+
+include_directories(${ProjDirPath}/../../../../../middleware/wifi_qca/common_src/hcd)
+
+include_directories(${ProjDirPath}/../../../../../middleware/wifi_qca/common_src/wmi)
+
+include_directories(${ProjDirPath}/../../../../../middleware/wifi_qca/port)
+
+include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/third_party/pkcs11)
+
+include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/third_party)
+
+include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/third_party/jsmn)
+
+include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/common/include)
+
+include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/third_party/unity/src)
+
+include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/third_party/unity/extras/fixture/src)
+
+include_directories(${ProjDirPath}/../../../../../devices/MK64F12/utilities/str)
+
+include_directories(${ProjDirPath}/../../../../../devices/MK64F12/utilities/debug_console)
+
+include_directories(${ProjDirPath}/../../../../../devices/MK64F12)
+
+include_directories(${ProjDirPath}/../../../../../components/uart)
+
+include_directories(${ProjDirPath}/../../../../../components/serial_manager)
+
+include_directories(${ProjDirPath}/../../../../../components/lists)
+
+include_directories(${ProjDirPath}/../../../../../middleware/wifi_qca/port/boards/frdmk64f/freertos)
+
+include_directories(${ProjDirPath}/../../../../../middleware/wifi_qca/port/env/freertos)
+
+include_directories(${ProjDirPath}/../../../../../middleware/wifi_qca/port/drivers/dspi_edma_freertos)
+
+add_executable(aws_tests.elf 
+"${ProjDirPath}/../config_files/aws_bufferpool_config.h"
+"${ProjDirPath}/../config_files/aws_ggd_config.h"
+"${ProjDirPath}/../config_files/aws_mbedtls_config.h"
+"${ProjDirPath}/../config_files/aws_mqtt_agent_config.h"
+"${ProjDirPath}/../config_files/aws_mqtt_config.h"
+"${ProjDirPath}/../config_files/aws_pkcs11_config.h"
+"${ProjDirPath}/../config_files/aws_secure_sockets_config.h"
+"${ProjDirPath}/../config_files/aws_shadow_config.h"
+"${ProjDirPath}/../config_files/aws_test_pkcs11_config.h"
+"${ProjDirPath}/../config_files/aws_test_runner_config.h"
+"${ProjDirPath}/../config_files/aws_test_tcp_config.h"
+"${ProjDirPath}/../config_files/aws_test_wifi_config.h"
+"${ProjDirPath}/../config_files/aws_wifi_config.h"
+"${ProjDirPath}/../config_files/FreeRTOSConfig.h"
+"${ProjDirPath}/../config_files/FreeRTOSIPConfig.h"
+"${ProjDirPath}/../config_files/unity_config.h"
+"${ProjDirPath}/../pin_mux.c"
+"${ProjDirPath}/../pin_mux.h"
+"${ProjDirPath}/../application_code/main.c"
+"${ProjDirPath}/../board.c"
+"${ProjDirPath}/../board.h"
+"${ProjDirPath}/../clock_config.c"
+"${ProjDirPath}/../clock_config.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/port/boards/frdmk64f/freertos/gt202/wifi_shield_gt202.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/port/boards/frdmk64f/freertos/silex2401/wifi_shield_silex2401.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_rnga.c"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_rnga.h"
+"${ProjDirPath}/../../../../../middleware/mmcau/cau_api.h"
+"${ProjDirPath}/../../../../../middleware/mmcau/fsl_mmcau.h"
+"${ProjDirPath}/../../../../../middleware/mmcau/fsl_mmcau.c"
+"${ProjDirPath}/../../../../../components/fxos8700cq/fsl_fxos.h"
+"${ProjDirPath}/../../../../../components/fxos8700cq/fsl_fxos.c"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_i2c.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_i2c.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/third_party/mcu_vendor/nxp/FRDMK64F/drivers/mflash_drv.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/third_party/mcu_vendor/nxp/FRDMK64F/drivers/mflash_drv.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/third_party/mcu_vendor/nxp/FRDMK64F/drivers/mflash_file.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/third_party/mcu_vendor/nxp/FRDMK64F/drivers/mflash_file.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/pkcs11/mbedtls/aws_pkcs11_mbedtls.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/pkcs11/portable/nxp/frdmk64f/aws_pkcs11_pal.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/MemMang/heap_4.c"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/common_src/wmi/wmi.c"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/common_src/storerecall/dset_api.c"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/common_src/stack_common/common_stack_offload.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/common_src/stack_common/api_stack_offload.c"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/common_src/qapi/qcom_api.c"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/common_src/qapi/qcom_dns.c"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/common_src/include/dset_api.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/common_src/include/driver_cxt.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/common_src/include/a_drv_api.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/common_src/htc/htc.c"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/common_src/hcd/spi_hcd.c"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/common_src/driver/driver_main.c"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/common_src/api_interface/api_wmi_rx.c"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/common_src/api_interface/api_ioctl.c"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/common_src/include/wlan_api.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/common_src/hw_interface/hw_api.c"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/common_src/storerecall/dset.c"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/common_src/include/wmi_api.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/common_src/include/hif_internal.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/common_src/include/dset.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/common_src/include/dbglog_api.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/common_src/include/common_api.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/common_src/include/bmi.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/common_src/include/aggr_recv_api.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/common_src/include/a_drv.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/common_src/include/a_debug.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/common_src/hcd/hcd_api.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/common_src/driver/driver_txrx.c"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/common_src/driver/driver_netbuf.c"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/common_src/driver/driver_init.c"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/common_src/driver/driver_diag.c"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/common_src/bmi/bmi.c"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/common_src/api_interface/api_txrx.c"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/common_src/api_interface/api_init.c"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/common_src/include/spi_hcd_if.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/common_src/wmi/wmi_host.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/common_src/util/util.c"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/common_src/storerecall/storerecall.c"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/common_src/reorder/rcv_aggr.c"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/common_src/qapi/qcom_legacy.c"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/common_src/include/netbuf.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/common_src/include/ieee80211.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/common_src/include/htc_api.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/custom_src/stack_custom/cust_api_stack_offload.c"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/custom_src/qapi/custom_qcom_api.c"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/custom_src/include/cust_netbuf.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/custom_src/include/a_osapi.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/custom_src/include/a_config.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/custom_src/api_interface/cust_api_wmi_rx.c"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/custom_src/api_interface/cust_api_ioctl.c"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/custom_src/driver/cust_driver_netbuf.c"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/custom_src/include/wlan_config.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/custom_src/stack_custom/qca_structs.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/custom_src/stack_custom/custom_stack_offload.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/custom_src/stack_custom/cust_api_stack_txrx.c"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/custom_src/include/custom_wlan_api.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/custom_src/include/a_types.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/custom_src/hw_interface/cust_spi_hcd.c"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/custom_src/driver/cust_driver_main.c"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/custom_src/api_interface/cust_api_txrx.c"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/custom_src/api_interface/cust_api_init.c"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/include/wmi.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/include/dbglog.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/include/athdefs.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/include/dbglog_id.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/include/bmi_msg.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw/hw20_gpio_reg.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw/hw20_apb_map.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/include/AR6002/AR6K_version.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/include/AR6002/hw4.0/hw/hw40_rtc_wlan_reg.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/include/AR6002/hw4.0/hw/hw40_rtc_reg.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/include/wlan_defs.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/include/targaddrs.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/include/pmu.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/include/pkt_log.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/include/p2p.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/include/htc_services.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/include/htc.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw/hw20_vmc_reg.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw/hw20_uart_reg.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw/hw20_si_reg.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw/hw20_rtc_reg.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw/hw20_mbox_reg.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw/hw20_mbox_host_reg.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/port/wifi_common.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/qcom_api.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/atheros_stack_offload.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/atheros_wifi_internal.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/atheros_wifi_api.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/atheros_wifi.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/LICENSE"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/event_groups.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/FreeRTOS.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/message_buffer.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/queue.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/semphr.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/stream_buffer.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/task.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/timers.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/freertos_tasks_c_additions.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/deprecated_definitions.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/list.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/mpu_wrappers.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/portable.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/projdefs.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/stack_macros.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/event_groups.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/list.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/queue.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/stream_buffer.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/tasks.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/timers.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/GCC/ARM_CM4F/fsl_tickless_generic.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/GCC/ARM_CM4F/fsl_tickless_systick.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/GCC/ARM_CM4F/port.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/GCC/ARM_CM4F/portmacro.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/aes.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/aesni.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/arc4.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/aria.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/asn1.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/asn1write.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/base64.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/bignum.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/blowfish.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/bn_mul.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/camellia.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/ccm.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/certs.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/chacha20.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/chachapoly.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/check_config.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/cipher.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/cipher_internal.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/cmac.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/compat-1.3.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/config.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/ctr_drbg.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/debug.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/des.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/dhm.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/ecdh.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/ecdsa.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/ecjpake.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/ecp.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/ecp_internal.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/entropy.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/entropy_poll.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/error.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/gcm.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/havege.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/hkdf.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/hmac_drbg.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/md.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/md_internal.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/md2.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/md4.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/md5.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/memory_buffer_alloc.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/net.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/net_sockets.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/nist_kw.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/oid.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/padlock.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/pem.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/pk.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/pk_internal.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/pkcs5.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/pkcs11.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/pkcs12.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/platform.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/platform_time.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/platform_util.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/poly1305.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/ripemd160.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/rsa.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/rsa_internal.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/sha1.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/sha256.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/sha512.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/ssl.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/ssl_cache.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/ssl_ciphersuites.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/ssl_cookie.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/ssl_internal.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/ssl_ticket.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/threading.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/timing.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/version.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/x509.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/x509_crl.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/x509_crt.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/x509_csr.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/xtea.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/aes.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/aesni.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/arc4.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/aria.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/asn1parse.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/asn1write.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/base64.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/bignum.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/blowfish.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/camellia.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/ccm.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/certs.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/cipher.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/cipher_wrap.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/chacha20.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/chachapoly.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/cmac.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/ctr_drbg.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/debug.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/des.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/dhm.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/ecdh.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/ecdsa.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/ecjpake.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/ecp.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/ecp_curves.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/entropy.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/entropy_poll.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/error.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/gcm.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/havege.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/hkdf.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/hmac_drbg.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/md.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/md_wrap.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/md2.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/md4.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/md5.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/memory_buffer_alloc.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/net_sockets.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/nist_kw.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/oid.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/padlock.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/pem.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/pk.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/pk_wrap.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/pkcs5.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/pkcs12.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/pkparse.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/pkwrite.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/platform.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/platform_util.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/poly1305.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/ripemd160.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/rsa.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/rsa_internal.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/sha1.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/sha256.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/sha512.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/ssl_cache.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/ssl_ciphersuites.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/ssl_cli.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/ssl_cookie.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/ssl_srv.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/ssl_ticket.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/ssl_tls.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/threading.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/timing.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/version.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/version_features.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/x509.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/x509_create.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/x509_crl.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/x509_crt.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/x509_csr.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/x509write_crt.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/x509write_csr.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/xtea.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls_config.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/port/ksdk/sha1_alt.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/port/ksdk/sha256_alt.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/port/ksdk/des_alt.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/port/ksdk/des_alt.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/port/ksdk/aes_alt.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/port/ksdk/aes_alt.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/FreeRTOS.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/aws_crypto.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/aws_greengrass_discovery.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/aws_mqtt_agent.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/aws_mqtt_lib.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/aws_pkcs11.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/aws_secure_sockets.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/aws_shadow.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/aws_system_init.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/aws_tls.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/aws_wifi.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/event_groups.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/message_buffer.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/aws_bufferpool.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/aws_default_root_certificates.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/aws_doubly_linked_list.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/aws_ggd_config_defaults.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/aws_helper_secure_connect.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/aws_lib_init.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/aws_mqtt_agent_config_defaults.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/aws_mqtt_buffer.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/aws_mqtt_config_defaults.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/aws_secure_sockets_config_defaults.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/aws_shadow_config_defaults.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/aws_shadow_json.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/deprecated_definitions.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/list.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/mpu_wrappers.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/portable.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/projdefs.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/stack_macros.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/queue.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/semphr.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/stream_buffer.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/task.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/timers.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/mqtt/aws_mqtt_agent.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/mqtt/aws_mqtt_lib.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/tls/aws_tls.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/bufferpool/aws_bufferpool_static_thread_safe.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/crypto/aws_crypto.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/third_party/pkcs11/pkcs11.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/third_party/pkcs11/pkcs11f.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/third_party/pkcs11/pkcs11t.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/utils/aws_system_init.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/third_party/jsmn/jsmn.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/third_party/jsmn/jsmn.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/shadow/aws_shadow.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/shadow/aws_shadow_json.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/secure_sockets/portable/nxp/wifi_qca/aws_secure_sockets.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/wifi/portable/nxp/common/aws_wifi.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/common/crypto/aws_test_crypto.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/common/framework/aws_test_framework.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/common/greengrass/aws_test_greengrass_discovery.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/common/greengrass/aws_test_helper_secure_connect.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/common/include/aws_application_version.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/common/include/aws_clientcredential.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/common/include/aws_clientcredential_keys.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/common/include/aws_dev_mode_key_provisioning.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/common/include/aws_greengrass_discovery_test_access_declare.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/common/include/aws_greengrass_discovery_test_access_define.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/common/include/aws_logging_task.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/common/include/aws_mqtt_lib_test_access_declare.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/common/include/aws_mqtt_lib_test_access_define.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/common/include/aws_test_framework.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/common/include/aws_test_runner.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/common/include/aws_test_tcp.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/common/include/aws_test_tls.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/common/memory_leak/aws_memory_leak.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/common/mqtt/aws_test_mqtt_agent.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/common/mqtt/aws_test_mqtt_lib.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/common/pkcs11/aws_test_pkcs11.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/common/secure_sockets/aws_test_tcp.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/common/shadow/aws_test_shadow.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/common/test_runner/aws_test_runner.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/common/tls/aws_test_tls.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/tests/common/wifi/aws_test_wifi.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/aws_appversion32.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/third_party/unity/src/unity.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/third_party/unity/src/unity.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/third_party/unity/src/unity_internals.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/third_party/unity/extras/fixture/src/unity_fixture.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/third_party/unity/extras/fixture/src/unity_fixture.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/third_party/unity/extras/fixture/src/unity_fixture_internals.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/third_party/unity/extras/fixture/src/unity_fixture_malloc_overrides.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/demos/common/devmode_key_provisioning/aws_dev_mode_key_provisioning.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/demos/common/logging/aws_logging_task_dynamic_buffers.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/greengrass/aws_greengrass_discovery.c"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/greengrass/aws_helper_secure_connect.c"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_adapter.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_utilities.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_features.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_controller.c"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_controller.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_flash.c"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_flash.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_cache.c"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_cache.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_flexnvm.c"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_flexnvm.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_flash.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_gpio.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_gpio.c"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_clock.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_clock.c"
+"${ProjDirPath}/../../../../../devices/MK64F12/utilities/str/fsl_str.c"
+"${ProjDirPath}/../../../../../devices/MK64F12/utilities/str/fsl_str.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/utilities/debug_console/fsl_debug_console.c"
+"${ProjDirPath}/../../../../../devices/MK64F12/utilities/debug_console/fsl_debug_console.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/utilities/debug_console/fsl_debug_console_conf.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_port.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_uart.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_uart.c"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_smc.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_smc.c"
+"${ProjDirPath}/../../../../../devices/MK64F12/fsl_device_registers.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/MK64F12.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/MK64F12_features.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/system_MK64F12.c"
+"${ProjDirPath}/../../../../../devices/MK64F12/system_MK64F12.h"
+"${ProjDirPath}/../../../../../components/uart/uart.h"
+"${ProjDirPath}/../../../../../components/uart/uart_adapter.c"
+"${ProjDirPath}/../../../../../components/serial_manager/serial_manager.h"
+"${ProjDirPath}/../../../../../components/serial_manager/serial_manager.c"
+"${ProjDirPath}/../../../../../components/serial_manager/serial_port_uart.h"
+"${ProjDirPath}/../../../../../components/serial_manager/serial_port_uart.c"
+"${ProjDirPath}/../../../../../components/lists/generic_list.h"
+"${ProjDirPath}/../../../../../components/lists/generic_list.c"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_common.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_common.c"
+"${ProjDirPath}/../../../../../devices/MK64F12/gcc/startup_MK64F12.S"
+"${ProjDirPath}/../../../../../devices/MK64F12/utilities/fsl_assert.c"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/port/boards/frdmk64f/freertos/wifi_shield.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/port/boards/frdmk64f/freertos/wifi_shield.c"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/port/env/freertos/wifi_port.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/port/env/freertos/wifi_env_port.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/port/env/freertos/wifi_env.c"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/port/env/freertos/wifi_env.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/port/drivers/dspi_edma_freertos/wifi_spi.h"
+"${ProjDirPath}/../../../../../middleware/wifi_qca/port/drivers/dspi_edma_freertos/wifi_spi.c"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_dspi.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_dspi.c"
+"${ProjDirPath}/../../../../../CMSIS/Include/core_cm4.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armcc.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armclang.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_gcc.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_compiler.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_version.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv7.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/core_armv8mbl.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/core_armv8mml.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/arm_common_tables.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/arm_const_structs.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/arm_math.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_iccarm.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv8.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_dspi_edma.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_dspi_edma.c"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_edma.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_edma.c"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_dmamux.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_dmamux.c"
+)
+
+
+set(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -T${ProjDirPath}/MK64FN1M0xxx12_flash_data.ld -static")
+
+set(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -T${ProjDirPath}/MK64FN1M0xxx12_flash_data.ld -static")
+
+TARGET_LINK_LIBRARIES(aws_tests.elf -Wl,--start-group)
+target_link_libraries(aws_tests.elf debug m)
+
+target_link_libraries(aws_tests.elf debug c)
+
+target_link_libraries(aws_tests.elf debug gcc)
+
+target_link_libraries(aws_tests.elf debug nosys)
+
+target_link_libraries(aws_tests.elf optimized m)
+
+target_link_libraries(aws_tests.elf optimized c)
+
+target_link_libraries(aws_tests.elf optimized gcc)
+
+target_link_libraries(aws_tests.elf optimized nosys)
+
+link_directories(${ProjDirPath}/../../../../../middleware/mmcau/asm-cm4-cm7)
+
+target_link_libraries(aws_tests.elf debug ${ProjDirPath}/../../../../../middleware/mmcau/asm-cm4-cm7/lib_mmcau.a)
+
+link_directories(${ProjDirPath}/../../../../../middleware/mmcau/asm-cm4-cm7)
+
+target_link_libraries(aws_tests.elf optimized ${ProjDirPath}/../../../../../middleware/mmcau/asm-cm4-cm7/lib_mmcau.a)
+
+TARGET_LINK_LIBRARIES(aws_tests.elf -Wl,--end-group)
+

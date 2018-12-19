@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- *  that the following conditions are met:
  *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #ifndef _FSL_QSPI_H_
@@ -38,7 +12,7 @@
 #include "fsl_common.h"
 
 /*!
- * @addtogroup qspi
+ * @addtogroup qspi_driver
  * @{
  */
 
@@ -128,13 +102,13 @@ typedef enum _qspi_endianness
 /*! @brief QSPI error flags */
 enum _qspi_error_flags
 {
-    kQSPI_DataLearningFail = QuadSPI_FR_DLPFF_MASK,    /*!< Data learning pattern failure flag */
-    kQSPI_TxBufferFill = QuadSPI_FR_TBFF_MASK,         /*!< Tx buffer fill flag */
-    kQSPI_TxBufferUnderrun = QuadSPI_FR_TBUF_MASK,     /*!< Tx buffer underrun flag */
-    kQSPI_IllegalInstruction = QuadSPI_FR_ILLINE_MASK, /*!< Illegal instruction error flag */
-    kQSPI_RxBufferOverflow = QuadSPI_FR_RBOF_MASK,     /*!< Rx buffer overflow flag */
-    kQSPI_RxBufferDrain = QuadSPI_FR_RBDF_MASK,        /*!< Rx buffer drain flag */
-    kQSPI_AHBSequenceError = QuadSPI_FR_ABSEF_MASK,    /*!< AHB sequence error flag */
+    kQSPI_DataLearningFail = (int)QuadSPI_FR_DLPFF_MASK, /*!< Data learning pattern failure flag */
+    kQSPI_TxBufferFill = QuadSPI_FR_TBFF_MASK,           /*!< Tx buffer fill flag */
+    kQSPI_TxBufferUnderrun = QuadSPI_FR_TBUF_MASK,       /*!< Tx buffer underrun flag */
+    kQSPI_IllegalInstruction = QuadSPI_FR_ILLINE_MASK,   /*!< Illegal instruction error flag */
+    kQSPI_RxBufferOverflow = QuadSPI_FR_RBOF_MASK,       /*!< Rx buffer overflow flag */
+    kQSPI_RxBufferDrain = QuadSPI_FR_RBDF_MASK,          /*!< Rx buffer drain flag */
+    kQSPI_AHBSequenceError = QuadSPI_FR_ABSEF_MASK,      /*!< AHB sequence error flag */
 #if !defined(FSL_FEATURE_QSPI_HAS_NO_AITEF) || (!FSL_FEATURE_QSPI_HAS_NO_AITEF)
     kQSPI_AHBIllegalTransaction = QuadSPI_FR_AITEF_MASK, /*!< AHB illegal transaction error flag */
 #endif                                                   /* FSL_FEATURE_QSPI_HAS_NO_AITEF */
@@ -149,14 +123,14 @@ enum _qspi_error_flags
     kQSPI_IPCommandTriggerDuringIPAccess = QuadSPI_FR_IPIEF_MASK,  /*!< IP command trigger cannot be executed */
     kQSPI_IPCommandTriggerDuringAHBGrant = QuadSPI_FR_IPGEF_MASK,  /*!< IP command trigger during AHB grant error */
     kQSPI_IPCommandTransactionFinished = QuadSPI_FR_TFF_MASK,      /*!< IP command transaction finished flag */
-    kQSPI_FlagAll = 0x8C83F8D1U                                    /*!< All error flag */
+    kQSPI_FlagAll = (int)0x8C83F8D1U                               /*!< All error flag */
 };
 
 /*! @brief QSPI state bit */
 enum _qspi_flags
 {
-    kQSPI_DataLearningSamplePoint = QuadSPI_SR_DLPSMP_MASK, /*!< Data learning sample point */
-    kQSPI_TxBufferFull = QuadSPI_SR_TXFULL_MASK,            /*!< Tx buffer full flag */
+    kQSPI_DataLearningSamplePoint = (int)QuadSPI_SR_DLPSMP_MASK, /*!< Data learning sample point */
+    kQSPI_TxBufferFull = QuadSPI_SR_TXFULL_MASK,                 /*!< Tx buffer full flag */
 #if !defined(FSL_FEATURE_QSPI_HAS_NO_TXDMA) || (!FSL_FEATURE_QSPI_HAS_NO_TXDMA)
     kQSPI_TxDMA = QuadSPI_SR_TXDMA_MASK,                      /*!< Tx DMA is requested or running */
     kQSPI_TxWatermark = QuadSPI_SR_TXWA_MASK,                 /*!< Tx buffer watermark available */
@@ -178,14 +152,14 @@ enum _qspi_flags
     kQSPI_AHBAccess = QuadSPI_SR_AHB_ACC_MASK,                /*!< AHB access */
     kQSPI_IPAccess = QuadSPI_SR_IP_ACC_MASK,                  /*!< IP access */
     kQSPI_Busy = QuadSPI_SR_BUSY_MASK,                        /*!< Module busy */
-    kQSPI_StateAll = 0xEF897FE7U                              /*!< All flags */
+    kQSPI_StateAll = (int)0xEF897FE7U                         /*!< All flags */
 };
 
 /*! @brief QSPI interrupt enable */
 enum _qspi_interrupt_enable
 {
     kQSPI_DataLearningFailInterruptEnable =
-        QuadSPI_RSER_DLPFIE_MASK,                                /*!< Data learning pattern failure interrupt enable */
+        (int)QuadSPI_RSER_DLPFIE_MASK,                           /*!< Data learning pattern failure interrupt enable */
     kQSPI_TxBufferFillInterruptEnable = QuadSPI_RSER_TBFIE_MASK, /*!< Tx buffer fill interrupt enable */
     kQSPI_TxBufferUnderrunInterruptEnable = QuadSPI_RSER_TBUIE_MASK, /*!< Tx buffer underrun interrupt enable */
     kQSPI_IllegalInstructionInterruptEnable =
@@ -212,8 +186,8 @@ enum _qspi_interrupt_enable
     kQSPI_IPCommandTriggerDuringAHBGrantInterruptEnable =
         QuadSPI_RSER_IPGEIE_MASK, /*!< IP command trigger during AHB grant error */
     kQSPI_IPCommandTransactionFinishedInterruptEnable =
-        QuadSPI_RSER_TFIE_MASK,            /*!< IP command transaction finished interrupt enable */
-    kQSPI_AllInterruptEnable = 0x8C83F8D1U /*!< All error interrupt enable */
+        QuadSPI_RSER_TFIE_MASK,                 /*!< IP command transaction finished interrupt enable */
+    kQSPI_AllInterruptEnable = (int)0x8C83F8D1U /*!< All error interrupt enable */
 };
 
 /*! @brief QSPI DMA request flag */

@@ -2,14 +2,9 @@ Overview
 ========
 The example demonstrates graphical widgets of the emWin library.
 
-
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
-
+Running the demo
+================
+When the demo runs successfully, the object on the LCD screen react to your touch.
 Hardware requirements
 =====================
 - Micro USB cable
@@ -27,9 +22,11 @@ Prepare the Demo
 2.  Build the project.
 3.  Download the program to the target board.
 4.  Reset the SoC and run the project.
-Running the demo
-================
-When the demo runs successfully, the object on the LCD screen react to your touch.
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

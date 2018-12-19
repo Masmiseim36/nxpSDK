@@ -1,15 +1,15 @@
 /*********************************************************************
-*                SEGGER Microcontroller GmbH & Co. KG                *
+*                SEGGER Microcontroller GmbH                         *
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2016  SEGGER Microcontroller GmbH & Co. KG       *
+*        (c) 1996 - 2018  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
 **********************************************************************
 
-** emWin V5.38 - Graphical user interface for embedded applications **
+** emWin V5.48 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -26,15 +26,16 @@ Full source code is available at: www.segger.com
 We appreciate your understanding and fairness.
 ----------------------------------------------------------------------
 Licensing information
-
 Licensor:                 SEGGER Microcontroller Systems LLC
 Licensed to:              NXP Semiconductors, 1109 McKay Dr, M/S 76, San Jose, CA 95131, USA
 Licensed SEGGER software: emWin
 License number:           GUI-00186
-License model:            emWin License Agreement, dated August 20th 2011
-Licensed product:         -
-Licensed platform:        NXP's ARM 7/9, Cortex-M0,M3,M4
-Licensed number of seats: -
+License model:            emWin License Agreement, dated August 20th 2011 and Amendment, dated October 19th 2017
+Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7
+----------------------------------------------------------------------
+Support and Update Agreement (SUA)
+SUA period:               2011-08-19 - 2018-09-02
+Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : GUI_Private.h
 Purpose     : GUI internal declarations
@@ -104,7 +105,6 @@ extern "C" {     /* Make sure we have C-declarations in C++ programs */
 #define GUI_180DEG (4 * GUI_45DEG)
 #define GUI_360DEG (8 * GUI_45DEG)
 
-
 /*********************************************************************
 *
 *       Locking checks
@@ -145,8 +145,6 @@ typedef struct tsUSAGE_APIList tUSAGE_APIList;
 typedef struct GUI_Usage GUI_USAGE;
 #define GUI_USAGE_h GUI_USAGE_Handle
 
-
-
 typedef GUI_USAGE_h tUSAGE_CreateCompatible(GUI_USAGE * p);
 typedef void        tUSAGE_AddPixel        (GUI_USAGE * p, int x, int y);
 typedef void        tUSAGE_AddHLine        (GUI_USAGE * p, int x0, int y0, int len);
@@ -154,7 +152,6 @@ typedef void        tUSAGE_Clear           (GUI_USAGE * p);
 typedef void        tUSAGE_Delete          (GUI_USAGE_h h);
 typedef int         tUSAGE_GetNextDirty    (GUI_USAGE * p, int * pxOff, int yOff);
 #define GUI_USAGE_LOCK_H(h) ((GUI_USAGE *)GUI_LOCK_H(h))
-
 
 void GUI_USAGE_DecUseCnt(GUI_USAGE_Handle  hUsage);
 
@@ -181,7 +178,6 @@ struct GUI_Usage {
   const tUSAGE_APIList * pAPI;
   I16 UseCnt;
 };
-
 
 /*********************************************************************
 *
@@ -232,7 +228,6 @@ extern unsigned GUI_MEMDEV__TimePerFrame;
 
 #endif
 
-
 /*********************************************************************
 *
 *       LCD_HL_ level defines
@@ -242,14 +237,13 @@ extern unsigned GUI_MEMDEV__TimePerFrame;
 #define LCD_HL_DrawHLine             GUI_pContext->pLCD_HL->pfDrawHLine
 #define LCD_HL_DrawPixel             GUI_pContext->pLCD_HL->pfDrawPixel
 
-
 /*********************************************************************
 *
 *       Helper functions
 *
 **********************************************************************
 */
-#define GUI_ZEROINIT(Obj) GUI_MEMSET(Obj, 0, sizeof(Obj))
+#define GUI_ZEROINIT(Obj) GUI__MEMSET(Obj, 0, sizeof(Obj))
 int  GUI_cos(int angle);
 int  GUI_sin(int angle);
 extern const U32 GUI_Pow10[10];
@@ -263,6 +257,7 @@ int  GUI_AA_Init_HiRes (int x0, int x1);
 void GUI_AA_Exit       (void);
 I16  GUI_AA_HiRes2Pixel(int HiRes);
 
+void GL_DrawCircleAA_HiRes(int x0, int y0, int r);
 void GL_FillCircleAA_HiRes (int x0, int y0, int r);
 void GL_FillEllipseAA_HiRes(int x0, int y0, int rx, int ry);
 
@@ -303,7 +298,6 @@ void       GUI_XBF__ClearLine    (const char * s, int Len);
 void GUI_AddHex     (U32 v, U8 Len, char ** ps);
 void GUI_AddBin     (U32 v, U8 Len, char ** ps);
 void GUI_AddDecMin  (I32 v, char ** ps);
-void GUI_AddDec     (I32 v, U8 Len, char ** ps);
 void GUI_AddDecShift(I32 v, U8 Len, U8 Shift, char ** ps);
 long GUI_AddSign    (long v, char ** ps);
 int  GUI_Long2Len   (I32 v);
@@ -322,6 +316,7 @@ int  GUI__GetOverlap       (U16 Char);
 int  GUI__GetLineDistX     (const char * s, int Len);
 int  GUI__GetFontSizeY     (void);
 int  GUI__HandleEOLine     (const char ** ps);
+void GUI__InvertRectColors (int x0, int y0, int x1, int y1);
 void GUI__DispLine         (const char * s, int Len, const GUI_RECT * pr);
 void GUI__AddSpaceHex      (U32 v, U8 Len, char ** ps);
 void GUI__CalcTextRect     (const char * pText, const GUI_RECT * pTextRectIn, GUI_RECT * pTextRectOut, int TextAlign);
@@ -331,7 +326,7 @@ void GUI__ClearTextBackground(int xDist, int yDist);
 int  GUI__WrapGetNumCharsDisp       (const char * pText, int xSize, GUI_WRAPMODE WrapMode);
 int  GUI__WrapGetNumCharsToNextLine (const char * pText, int xSize, GUI_WRAPMODE WrapMode);
 int  GUI__WrapGetNumBytesToNextLine (const char * pText, int xSize, GUI_WRAPMODE WrapMode);
-void GUI__memset    (U8  * p, U8 Fill, int NumBytes);
+//void GUI__memset    (U8  * p, U8 Fill, int NumBytes);
 void GUI__memset16  (U16 * p, U16 Fill, int NumWords);
 int  GUI__strlen    (const char * s);
 int  GUI__strcmp    (const char * s0, const char * s1);
@@ -390,7 +385,7 @@ int  GUI__BIDI_GetBaseDir        (void);
 
 #endif
 
-const char * GUI__BIDI_Log2VisBuffered(const char * s, int * pMaxNumChars);
+const char * GUI__BIDI_Log2VisBuffered(const char * s, int * pMaxNumChars, int Mode);
 
 extern int GUI__BIDI_Enabled;
 
@@ -402,7 +397,7 @@ extern int (* _pfGUI__BIDI_GetCharDir      )(const char * s, int NumChars, int I
 extern int (* _pfGUI__BIDI_IsNSM           )(U16 Char);
 
 /* BiDi-related function pointers */
-extern const char * (* GUI_CharLine_pfLog2Vis)(const char * s, int * pMaxNumChars);
+extern const char * (* GUI_CharLine_pfLog2Vis)(const char * s, int * pMaxNumChars, int Mode);
 
 extern int (* GUI__GetCursorPos_pfGetPosX)     (const char * s, int MaxNumChars, int Index);
 extern int (* GUI__GetCursorPos_pfGetPosChar)  (const char * s, int MaxNumChars, int x);
@@ -431,9 +426,8 @@ void GUI__SetOrgHook(void(* pfHook)(int x, int y));
 /* Timer support */
 int              GUI_TIMER__IsActive       (void);
 GUI_TIMER_TIME   GUI_TIMER__GetPeriod      (void);
-GUI_TIMER_HANDLE GUI_TIMER__GetNextTimer   (GUI_TIMER_HANDLE hTimer, U32 * pContext);
-GUI_TIMER_HANDLE GUI_TIMER__GetFirstTimer  (U32 * pContext);
-GUI_TIMER_HANDLE GUI_TIMER__GetNextTimerLin(GUI_TIMER_HANDLE hTimer, U32 * pContext);
+GUI_TIMER_HANDLE GUI_TIMER__GetFirstTimer  (PTR_ADDR * pContext);
+GUI_TIMER_HANDLE GUI_TIMER__GetNextTimerLin(GUI_TIMER_HANDLE hTimer, PTR_ADDR * pContext);
 
 /* Get function pointers for color conversion */
 tLCDDEV_Index2Color * GUI_GetpfIndex2ColorEx(int LayerIndex);
@@ -480,7 +474,6 @@ void GUI_SetFuncGetpPalConvTable(LCD_PIXELINDEX * (* pFunc)(const LCD_LOGPALETTE
 #define GUI_STREAM_FORMAT_AM565      28  /* DO NOT CHANGE */
 #define GUI_STREAM_FORMAT_M8888I     29  /* DO NOT CHANGE */
 
-
 void GUI__ReadHeaderFromStream  (GUI_BITMAP_STREAM * pBitmapHeader, const U8 * pData);
 void GUI__CreateBitmapFromStream(const GUI_BITMAP_STREAM * pBitmapHeader, const void * pData, GUI_BITMAP * pBMP, GUI_LOGPALETTE * pPAL, const GUI_BITMAP_METHODS * pMethods);
 
@@ -516,6 +509,26 @@ void GL_FillEllipse      (int x0, int y0, int rx, int ry);
 void GL_FillPolygon      (const GUI_POINT * pPoints, int NumPoints, int x0, int y0);
 void GL_SetDefault       (void);
 
+/*********************************************************************
+*
+*       Replacement of memcpy() and memset()
+*
+**********************************************************************
+*/
+//
+// Configurable function pointers
+//
+extern void * (* GUI__pfMemset)(void * pDest, int Fill, size_t Cnt);
+extern void * (* GUI__pfMemcpy)(void * pDest, const void * pSrc, size_t Cnt);
+
+extern int    (* GUI__pfStrcmp)(const char *, const char *);
+extern size_t (* GUI__pfStrlen)(const char *);
+extern char * (* GUI__pfStrcpy)(char *, const char *);
+//
+// Macros for typesave use of function pointers
+//
+#define GUI__MEMSET(pDest, Fill, Cnt) GUI__pfMemset((void *)(pDest), (int)(Fill), (size_t)(Cnt))
+#define GUI__MEMCPY(pDest, pSrc, Cnt) GUI__pfMemcpy((void *)(pDest), (const void *)(pSrc), (size_t)(Cnt))
 
 /*********************************************************************
 *
@@ -526,25 +539,6 @@ Dynamic linkage pointers reduces configuration hassles.
 */
 typedef int  GUI_tfTimer(void);
 typedef int  WM_tfHandlePID(void);
-
-
-/*********************************************************************
-*
-*       Cursors
-*
-**********************************************************************
-*/
-extern GUI_CONST_STORAGE unsigned char  GUI_Pixels_ArrowS[45];
-extern GUI_CONST_STORAGE unsigned char  GUI_Pixels_ArrowM[60];
-extern GUI_CONST_STORAGE unsigned char  GUI_Pixels_ArrowL[150];
-extern GUI_CONST_STORAGE unsigned char  GUI_Pixels_CrossS[33];
-extern GUI_CONST_STORAGE unsigned char  GUI_Pixels_CrossM[126];
-extern GUI_CONST_STORAGE unsigned char  GUI_Pixels_CrossL[248];
-extern GUI_CONST_STORAGE unsigned char  GUI_PixelsHeaderM[5 * 17];
-
-extern GUI_CONST_STORAGE GUI_LOGPALETTE GUI_CursorPal;
-extern GUI_CONST_STORAGE GUI_LOGPALETTE GUI_CursorPalI;
-
 
 /*********************************************************************
 *
@@ -677,11 +671,15 @@ extern LCD_COLOR (* LCD_AA_pfMixColors16)(LCD_COLOR Color, LCD_COLOR BkColor, U8
 // Function pointer for drawing alpha memory devices
 //
 extern GUI_DRAWMEMDEV_FUNC   * GUI__pfDrawAlphaMemdevFunc;
+extern GUI_DRAWMEMDEV_FUNC   * GUI__pfDrawM565MemdevFunc;
 
 //
 // Function pointer for drawing alpha bitmaps
 //
-extern GUI_DRAWBITMAP32_FUNC * GUI__pfDrawAlphaBitmapFunc;
+extern GUI_DRAWBITMAP_FUNC * GUI__pfDrawAlphaBitmapFunc;
+extern GUI_DRAWBITMAP_FUNC * GUI__pfDrawM565BitmapFunc;
+
+extern U8 GUI__DrawStreamedBitmap;
 
 //
 // API list to be used for MultiBuffering
@@ -699,8 +697,6 @@ extern const GUI_MULTIBUF_API_EX GUI_MULTIBUF_APIListEx;
 GUI_EXTERN   void (* GUI_pfExecAnimations)(void);
 GUI_EXTERN   int  (* GUI_pfUpdateSoftLayer)(void);
 
-GUI_EXTERN   void (* GUI_pfAfterInitHook)(void);
-
 #ifdef WIN32
   GUI_EXTERN void (* GUI_pfSoftlayerGetPixel)(int x, int y, void * p);
 #endif
@@ -713,6 +709,7 @@ GUI_EXTERN GUI_SADDR char             GUI_DecChar;
 GUI_EXTERN           GUI_tfTimer    * GUI_pfTimerExec;
 GUI_EXTERN           WM_tfHandlePID * WM_pfHandlePID;
 GUI_EXTERN   void (* GUI_pfDispCharStyle)(U16 Char);
+GUI_EXTERN   void (* GUI_pfDispCharLine)(int x0);
 
 GUI_EXTERN           int GUI__BufferSize; // Required buffer size in pixels for alpha blending and/or antialiasing
 GUI_EXTERN           int GUI_AA__ClipX0;  // x0-clipping value for AA module

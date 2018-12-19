@@ -274,6 +274,10 @@ SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")
 
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} muldefs")
 
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Map=output.map")
+
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -mcpu=cortex-m4")
 
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -mfloat-abi=hard")
@@ -316,6 +320,10 @@ SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
 
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} muldefs")
 
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Map=output.map")
+
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mcpu=cortex-m4")
 
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mfloat-abi=hard")
@@ -338,13 +346,17 @@ include_directories(${ProjDirPath}/../../../../../../../devices/MK66F18/cmsis_dr
 
 include_directories(${ProjDirPath}/../../../../../../../devices/MK66F18)
 
-include_directories(${ProjDirPath}/../../../../../../../devices/MK66F18/utilities/io)
-
 include_directories(${ProjDirPath}/../../../../../../../devices/MK66F18/utilities/str)
 
-include_directories(${ProjDirPath}/../../../../../../../devices/MK66F18/utilities/log)
+include_directories(${ProjDirPath}/../../../../../../../devices/MK66F18/utilities/debug_console)
 
-include_directories(${ProjDirPath}/../../../../../../../devices/MK66F18/utilities)
+include_directories(${ProjDirPath}/../../../../../../../components/uart)
+
+include_directories(${ProjDirPath}/../../../../../../../components/serial_manager)
+
+include_directories(${ProjDirPath}/../../../../../../../components/lists)
+
+include_directories(${ProjDirPath}/../../../../../../../devices/MK66F18/template)
 
 add_executable(cmsis_dspi_edma_b2b_transfer_slave.elf 
 "${ProjDirPath}/../cmsis_dspi_edma_b2b_transfer_slave.c"
@@ -356,8 +368,6 @@ add_executable(cmsis_dspi_edma_b2b_transfer_slave.elf
 "${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../clock_config.h"
 "${ProjDirPath}/../../../../../../../devices/MK66F18/drivers/fsl_port.h"
-"${ProjDirPath}/../../../../../../../devices/MK66F18/drivers/fsl_common.h"
-"${ProjDirPath}/../../../../../../../devices/MK66F18/drivers/fsl_common.c"
 "${ProjDirPath}/../../../../../../../devices/MK66F18/drivers/fsl_clock.h"
 "${ProjDirPath}/../../../../../../../devices/MK66F18/drivers/fsl_clock.c"
 "${ProjDirPath}/../../../../../../../devices/MK66F18/drivers/fsl_gpio.h"
@@ -374,6 +384,8 @@ add_executable(cmsis_dspi_edma_b2b_transfer_slave.elf
 "${ProjDirPath}/../../../../../../../devices/MK66F18/drivers/fsl_dspi_edma.c"
 "${ProjDirPath}/../../../../../../../devices/MK66F18/cmsis_drivers/fsl_dspi_cmsis.h"
 "${ProjDirPath}/../../../../../../../devices/MK66F18/cmsis_drivers/fsl_dspi_cmsis.c"
+"${ProjDirPath}/../../../../../../../devices/MK66F18/drivers/fsl_common.h"
+"${ProjDirPath}/../../../../../../../devices/MK66F18/drivers/fsl_common.c"
 "${ProjDirPath}/../../../../../../../devices/MK66F18/drivers/fsl_ftfx_adapter.h"
 "${ProjDirPath}/../../../../../../../devices/MK66F18/drivers/fsl_ftfx_utilities.h"
 "${ProjDirPath}/../../../../../../../devices/MK66F18/drivers/fsl_ftfx_features.h"
@@ -386,23 +398,47 @@ add_executable(cmsis_dspi_edma_b2b_transfer_slave.elf
 "${ProjDirPath}/../../../../../../../devices/MK66F18/drivers/fsl_ftfx_flexnvm.c"
 "${ProjDirPath}/../../../../../../../devices/MK66F18/drivers/fsl_ftfx_flexnvm.h"
 "${ProjDirPath}/../../../../../../../devices/MK66F18/drivers/fsl_flash.h"
+"${ProjDirPath}/../../../../../../../devices/MK66F18/fsl_device_registers.h"
+"${ProjDirPath}/../../../../../../../devices/MK66F18/MK66F18.h"
+"${ProjDirPath}/../../../../../../../devices/MK66F18/MK66F18_features.h"
 "${ProjDirPath}/../../../../../../../devices/MK66F18/system_MK66F18.c"
 "${ProjDirPath}/../../../../../../../devices/MK66F18/system_MK66F18.h"
-"${ProjDirPath}/../../../../../../../devices/MK66F18/gcc/startup_MK66F18.S"
-"${ProjDirPath}/../../../../../../../devices/MK66F18/drivers/fsl_uart.h"
-"${ProjDirPath}/../../../../../../../devices/MK66F18/drivers/fsl_uart.c"
-"${ProjDirPath}/../../../../../../../devices/MK66F18/drivers/fsl_smc.h"
-"${ProjDirPath}/../../../../../../../devices/MK66F18/drivers/fsl_smc.c"
-"${ProjDirPath}/../../../../../../../devices/MK66F18/utilities/io/fsl_io.c"
-"${ProjDirPath}/../../../../../../../devices/MK66F18/utilities/io/fsl_io.h"
-"${ProjDirPath}/../../../../../../../devices/MK66F18/utilities/log/fsl_log.c"
-"${ProjDirPath}/../../../../../../../devices/MK66F18/utilities/log/fsl_log.h"
 "${ProjDirPath}/../../../../../../../devices/MK66F18/utilities/str/fsl_str.c"
 "${ProjDirPath}/../../../../../../../devices/MK66F18/utilities/str/fsl_str.h"
-"${ProjDirPath}/../../../../../../../devices/MK66F18/utilities/fsl_debug_console.c"
-"${ProjDirPath}/../../../../../../../devices/MK66F18/utilities/fsl_debug_console.h"
-"${ProjDirPath}/../../../../../../../devices/MK66F18/utilities/fsl_debug_console_conf.h"
+"${ProjDirPath}/../../../../../../../devices/MK66F18/utilities/debug_console/fsl_debug_console.c"
+"${ProjDirPath}/../../../../../../../devices/MK66F18/utilities/debug_console/fsl_debug_console.h"
+"${ProjDirPath}/../../../../../../../devices/MK66F18/utilities/debug_console/fsl_debug_console_conf.h"
+"${ProjDirPath}/../../../../../../../components/uart/uart.h"
+"${ProjDirPath}/../../../../../../../components/uart/uart_adapter.c"
+"${ProjDirPath}/../../../../../../../components/serial_manager/serial_manager.h"
+"${ProjDirPath}/../../../../../../../components/serial_manager/serial_manager.c"
+"${ProjDirPath}/../../../../../../../components/serial_manager/serial_port_uart.h"
+"${ProjDirPath}/../../../../../../../components/serial_manager/serial_port_uart.c"
+"${ProjDirPath}/../../../../../../../devices/MK66F18/drivers/fsl_uart.h"
+"${ProjDirPath}/../../../../../../../devices/MK66F18/drivers/fsl_uart.c"
+"${ProjDirPath}/../../../../../../../components/lists/generic_list.h"
+"${ProjDirPath}/../../../../../../../components/lists/generic_list.c"
+"${ProjDirPath}/../../../../../../../devices/MK66F18/gcc/startup_MK66F18.S"
+"${ProjDirPath}/../../../../../../../devices/MK66F18/drivers/fsl_smc.h"
+"${ProjDirPath}/../../../../../../../devices/MK66F18/drivers/fsl_smc.c"
 "${ProjDirPath}/../../../../../../../devices/MK66F18/utilities/fsl_assert.c"
+"${ProjDirPath}/../../../../../../../CMSIS/Include/core_cm4.h"
+"${ProjDirPath}/../../../../../../../CMSIS/Include/cmsis_armcc.h"
+"${ProjDirPath}/../../../../../../../CMSIS/Include/cmsis_armclang.h"
+"${ProjDirPath}/../../../../../../../CMSIS/Include/cmsis_gcc.h"
+"${ProjDirPath}/../../../../../../../CMSIS/Include/cmsis_compiler.h"
+"${ProjDirPath}/../../../../../../../CMSIS/Include/cmsis_version.h"
+"${ProjDirPath}/../../../../../../../CMSIS/Include/mpu_armv7.h"
+"${ProjDirPath}/../../../../../../../CMSIS/Include/core_armv8mbl.h"
+"${ProjDirPath}/../../../../../../../CMSIS/Include/core_armv8mml.h"
+"${ProjDirPath}/../../../../../../../CMSIS/Include/arm_common_tables.h"
+"${ProjDirPath}/../../../../../../../CMSIS/Include/arm_const_structs.h"
+"${ProjDirPath}/../../../../../../../CMSIS/Include/arm_math.h"
+"${ProjDirPath}/../../../../../../../CMSIS/Include/cmsis_iccarm.h"
+"${ProjDirPath}/../../../../../../../CMSIS/Include/mpu_armv8.h"
+"${ProjDirPath}/../../../../../../../CMSIS/Driver/Include/Driver_SPI.h"
+"${ProjDirPath}/../../../../../../../CMSIS/Driver/Include/Driver_Common.h"
+"${ProjDirPath}/../../../../../../../devices/MK66F18/template/RTE_Device.h"
 )
 
 

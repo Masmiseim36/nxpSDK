@@ -1,24 +1,3 @@
-Overview
-========
-
-
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- FRDM-K22F board
-- GT202 Adaptor V1.04
-- Personal Computer
-
-Board settings
-==============
-Plug GT202 Adaptor board to FRDM stackable headers (J1, J2, J3, J4).
 Prepare the Demo
 ================
 No special requirements
@@ -31,10 +10,10 @@ Running the demo
 <SDK_PATH>\boards\<BOARD>\demo_apps\wifi_qca_examples\qca_fwupdate\fw\
 
 3. Open the command line from windows and execute the host.exe application as follows:
-   > host.exe COM59 flashotp_3_3_5.bin 845dd7490e4c -b115200
+   > host.exe COM59 flashotp_3_3_6.bin 845dd7490e4c -b115200
    where:
       COM59                - is board serial port name
-      flashotp_3_3_5.bin   - is the path to firmware binary
+      flashotp_3_3_6.bin   - is the path to firmware binary
       845dd7490e4c         - is the MAC address of the WiFi module
       -b115200             - is a communication baudrate
 
@@ -49,6 +28,34 @@ NOTES:
 IMPORTANT:
  - Do not try to update firmware on Silex shield !!!
 
-Customization options
+Hardware requirements
 =====================
+- Mini/micro USB cable
+- FRDM-K22F board
+- GT202 Adaptor V1.04 or Silex SX-ULPAN-2401
+- Personal Computer
+
+Board settings
+==============
+Plug WiFi shield to FRDM stackable headers (J1, J2, J3, J4).
+The default shield support is set to GT202 shield. To enable 
+Silex SX-ULPAN-2401, please open "wifi_shield.h" and uncomment
+following lines:
+
+//#define WIFISHIELD_IS_SILEX2041
+
+//#elif defined(WIFISHIELD_IS_SILEX2041)
+//#include "wifi_shield_silex2401.h"
+
+and comment out:
+
+#define WIFISHIELD_IS_GT202
+
+
+Toolchain supported
+===================
+- MCUXpresso 10.3.0
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
 

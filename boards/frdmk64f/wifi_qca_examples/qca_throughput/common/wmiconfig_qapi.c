@@ -5248,7 +5248,7 @@ static int32_t set_ap_params(uint16_t param_cmd, uint8_t *data_val)
 *                   Queries IP parameters from target.
 *
 *END*-----------------------------------------------------------------*/
-int ipconfig_query(p_shell_context_t context, int argc, char **argv)
+int ipconfig_query(shell_handle_t context, int argc, char **argv)
 {
     uint32_t enet_device, addr = 0, mask = 0, gw = 0, num;
     IP6_ADDR_T v6Global;

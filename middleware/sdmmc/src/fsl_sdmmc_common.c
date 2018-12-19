@@ -39,7 +39,7 @@ status_t SDMMC_SelectCard(SDMMCHOST_TYPE *base,
 
     content.command = &command;
     content.data = NULL;
-    if ((kStatus_Success != transfer(base, &content)) || (command.response[0U] & kSDMMC_R1ErrorAllFlag))
+    if ((kStatus_Success != transfer(base, &content)) || (command.response[0U] & SDMMC_R1_ALL_ERROR_FLAG))
     {
         return kStatus_SDMMC_TransferFailed;
     }
@@ -63,12 +63,12 @@ status_t SDMMC_SendApplicationCommand(SDMMCHOST_TYPE *base,
 
     content.command = &command;
     content.data = 0U;
-    if ((kStatus_Success != transfer(base, &content)) || (command.response[0U] & kSDMMC_R1ErrorAllFlag))
+    if ((kStatus_Success != transfer(base, &content)) || (command.response[0U] & SDMMC_R1_ALL_ERROR_FLAG))
     {
         return kStatus_SDMMC_TransferFailed;
     }
 
-    if (!(command.response[0U] & kSDMMC_R1ApplicationCommandFlag))
+    if (!(command.response[0U] & SDMMC_MASK(kSDMMC_R1ApplicationCommandFlag)))
     {
         return kStatus_SDMMC_CardNotSupport;
     }
@@ -89,7 +89,7 @@ status_t SDMMC_SetBlockCount(SDMMCHOST_TYPE *base, SDMMCHOST_TRANSFER_FUNCTION t
 
     content.command = &command;
     content.data = 0U;
-    if ((kStatus_Success != transfer(base, &content)) || (command.response[0U] & kSDMMC_R1ErrorAllFlag))
+    if ((kStatus_Success != transfer(base, &content)) || (command.response[0U] & SDMMC_R1_ALL_ERROR_FLAG))
     {
         return kStatus_SDMMC_TransferFailed;
     }
@@ -129,7 +129,7 @@ status_t SDMMC_SetBlockSize(SDMMCHOST_TYPE *base, SDMMCHOST_TRANSFER_FUNCTION tr
 
     content.command = &command;
     content.data = 0U;
-    if ((kStatus_Success != transfer(base, &content)) || (command.response[0U] & kSDMMC_R1ErrorAllFlag))
+    if ((kStatus_Success != transfer(base, &content)) || (command.response[0U] & SDMMC_R1_ALL_ERROR_FLAG))
     {
         return kStatus_SDMMC_TransferFailed;
     }

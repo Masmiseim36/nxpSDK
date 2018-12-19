@@ -3,14 +3,6 @@ Overview
 The bubble level demo demonstrates basic usage of the on-board accelerometer to implement a bubble level. A bubble
 level utilizes two axes to visually show deviation from a level plane (0 degrees) on a given axis.
 
-
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
-
 Hardware requirements
 =====================
 - Mini/Micro USB cable
@@ -42,7 +34,7 @@ information from the terminal as shown below.
 
 Welcome to the BUBBLE example
 
-You will see angle data change in the console when change the angles of board
+You will see the change of angle data and LED brightness when change the angles of board
 
 x=  6 y = 22
 x=  8 y = 26
@@ -50,6 +42,11 @@ x= 10 y = 28
 x= 10 y = 28
 x= 11 y = 29
 x= 11 y = 29
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

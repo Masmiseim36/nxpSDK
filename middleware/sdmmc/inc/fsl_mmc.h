@@ -36,6 +36,12 @@ enum _mmc_card_flag
     kMMC_SupportHighSpeedBootFlag = (1U << 11U),           /*!< support high speed boot flag*/
 };
 
+/*! @brief card user parameter, user can define the parameter according the board, card capability */
+typedef struct _mmccard_usr_param
+{
+    const sdmmchost_pwr_card_t *pwr; /*!< power control configuration */
+} mmccard_usr_param_t;
+
 /*!
  * @brief mmc card state
  *
@@ -43,7 +49,8 @@ enum _mmc_card_flag
  */
 typedef struct _mmc_card
 {
-    SDMMCHOST_CONFIG host; /*!< Host information */
+    SDMMCHOST_CONFIG host;        /*!< Host information */
+    mmccard_usr_param_t usrParam; /*!< user parameter */
 
     bool isHostReady;                /*!< Use this flag to indicate if need host re-init or not*/
     bool noInteralAlign;             /*!< use this flag to disable sdmmc align. If disable, sdmmc will not make sure the
@@ -164,6 +171,24 @@ void MMC_HostDeinit(mmc_card_t *card);
  * @param host host descriptor.
  */
 void MMC_HostReset(SDMMCHOST_CONFIG *host);
+
+/*!
+ * @brief power on card.
+ *
+ * The power on operation depend on host or the user define power on function.
+ * @param base host base address.
+ * @param pwr user define power control configuration
+ */
+void MMC_PowerOnCard(SDMMCHOST_TYPE *base, const sdmmchost_pwr_card_t *pwr);
+
+/*!
+ * @brief power off card.
+ *
+ * The power off operation depend on host or the user define power on function.
+ * @param base host base address.
+ * @param pwr user define power control configuration
+ */
+void MMC_PowerOffCard(SDMMCHOST_TYPE *base, const sdmmchost_pwr_card_t *pwr);
 
 /*!
  * @brief Checks if the card is read-only.

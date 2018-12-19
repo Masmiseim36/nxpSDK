@@ -1,40 +1,8 @@
 /*
- * The Clear BSD License
- * Copyright (c) 2013 - 2014, Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
-
-/*
  * Amazon FreeRTOS V1.0.0
  * Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * Copyright (c) 2013 - 2014, Freescale Semiconductor, Inc.
+ * Copyright 2016-2018 NXP
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -321,6 +289,7 @@ void BOARD_InitNetwork(void)
     configPRINTF(("DHCP OK\n"));
 }
 
+#if defined(BOARD_ACCEL_FXOS) || defined(BOARD_ACCEL_MMA)
 /*!
  * @brief Initialize accelerometer sensor
  */
@@ -351,6 +320,7 @@ status_t init_mag_accel(uint8_t *accelDataScale, uint8_t *accelResolution)
     if (result != kStatus_Success)
     {
         PRINTF("\r\nSensor device initialize failed!\r\n");
+        PRINTF("\r\nPlease check the sensor chip\r\n");
         return result;
     }
 
@@ -376,6 +346,7 @@ status_t init_mag_accel(uint8_t *accelDataScale, uint8_t *accelResolution)
 
     return kStatus_Success;
 }
+#endif
 
 void vApplicationDaemonTaskStartupHook(void)
 {
@@ -406,6 +377,7 @@ int main(void)
     BOARD_I2C_ConfigurePins();
     CRYPTO_InitHardware();
 
+#if defined(BOARD_ACCEL_FXOS) || defined(BOARD_ACCEL_MMA)
     /* Initialize I2C */
     BOARD_Accel_I2C_Init();
 
@@ -416,6 +388,7 @@ int main(void)
         for (;;)
             ;
     }
+#endif
 
     xLoggingTaskInitialize(LOGGING_TASK_STACK_SIZE, LOGGING_TASK_PRIORITY, LOGGING_QUEUE_LENGTH);
 
@@ -510,14 +483,14 @@ void vApplicationStackOverflowHook(TaskHandle_t xTask, char *pcTaskName)
         ;
 }
 
-void *pvPortCalloc(size_t xSize)
+void *pvPortCalloc(size_t xNum, size_t xSize)
 {
     void *pvReturn;
 
-    pvReturn = pvPortMalloc(xSize);
+    pvReturn = pvPortMalloc(xNum * xSize);
     if (pvReturn != NULL)
     {
-        memset(pvReturn, 0x00, xSize);
+        memset(pvReturn, 0x00, xNum * xSize);
     }
 
     return pvReturn;

@@ -3,28 +3,16 @@
  * @author NXP Semiconductors
  * @version 1.0
  * @par License
- * Copyright(C) NXP Semiconductors, 2016
- * All rights reserved.
+ * Copyright 2016 NXP
  *
- * Software that is described herein is for illustrative purposes only
- * which provides customers with programming information regarding the
- * A7-series security ICs.  This software is supplied "AS IS" without any
- * warranties of any kind, and NXP Semiconductors and its licensor disclaim any and
- * all warranties, express or implied, including all implied warranties of
- * merchantability, fitness for a particular purpose and non-infringement of
- * intellectual property rights.  NXP Semiconductors assumes no responsibility
- * or liability for the use of the software, conveys no license or rights under any
- * patent, copyright, mask work right, or any other intellectual property rights in
- * or to any products. NXP Semiconductors reserves the right to make changes
- * in the software without notification. NXP Semiconductors also makes no
- * representation or warranty that such application will be suitable for the
- * specified use without further testing or modification.
+ * This software is owned or controlled by NXP and may only be used
+ * strictly in accordance with the applicable license terms.  By expressly
+ * accepting such terms or by downloading, installing, activating and/or
+ * otherwise using the software, you are agreeing that you have read, and
+ * that you agree to comply with and are bound by, such license terms.  If
+ * you do not agree to be bound by the applicable license terms, then you
+ * may not retain, install, activate or otherwise use the software.
  *
- * Permission to use, copy and modify this software is hereby granted,
- * under NXP Semiconductors' and its licensor's relevant copyrights in
- * the software, without fee, provided that it is used in conjunction with
- * NXP Semiconductors products. This copyright, permission, and disclaimer notice
- * must appear in all copies of this code.
  * @par Description
  */
 
@@ -64,7 +52,7 @@ U8 exHlseDebugMode(U8 testMode)
     axTimeMeasurement_t mPair;
     int nPoint = 0;
 
-    printf( "\r\n-----------\r\nStart exDebugMode(extended_test=%s, measure_exec_time=%s)\r\n------------\r\n",
+    PRINTF( "\r\n-----------\r\nStart exDebugMode(extended_test=%s, measure_exec_time=%s)\r\n------------\r\n",
         ((testMode & EXTENDED_TEST) == EXTENDED_TEST)? "ON":"OFF",
         ((testMode & MEASURE_EXEC_TIME) == MEASURE_EXEC_TIME)? "ON":"OFF");
 
@@ -98,7 +86,7 @@ U8 exHlseDebugMode(U8 testMode)
         // * Measure transfer time for mixed packet sizes
         concludeMeasurement(&mPair);
         msArray[nPoint] = getMeasurement(&mPair);
-        printf("exDbgReflect: Exec time for mixed packet sizes = %ld ms\r\n", msArray[nPoint]);
+        PRINTF("exDbgReflect: Exec time for mixed packet sizes = %ld ms\r\n", msArray[nPoint]);
         nPoint++;
     }
 
@@ -107,11 +95,11 @@ U8 exHlseDebugMode(U8 testMode)
     {
         for (i=0; i<20; i++)
         {
-            printf("exDbgReflect_duration (iter==%d).\r\n", i);
+            PRINTF("exDbgReflect_duration (iter==%d).\r\n", i);
             result &= exDbgReflect(1, 255);
             if (result == 0)
             {
-                printf("exDbgReflect_duration failed (iter==%d).\r\n", i);
+                PRINTF("exDbgReflect_duration failed (iter==%d).\r\n", i);
                 break;
             }
         }
@@ -121,37 +109,37 @@ U8 exHlseDebugMode(U8 testMode)
     if ((testMode & MEASURE_EXEC_TIME) == MEASURE_EXEC_TIME)
     {
         // * Measure transfer time for small packets
-        printf("exDbgReflect: Measure exec time for packets between 16 & 32 byte.\r\n");
+        PRINTF("exDbgReflect: Measure exec time for packets between 16 & 32 byte.\r\n");
         initMeasurement(&mPair);
         for (i=0; i<3; i++)
         {
             result &= exDbgReflect(16, 32);
             if (result == 0)
             {
-                printf("exDbgReflect failed (iter==%d) at line %d.\r\n", i, __LINE__);
+                PRINTF("exDbgReflect failed (iter==%d) at line %d.\r\n", i, __LINE__);
                 break;
             }
         }
         concludeMeasurement(&mPair);
         msArray[nPoint] = getMeasurement(&mPair);
-        printf("exDbgReflect: Exec time for packets between 16 & 32 byte = %ld ms\r\n", msArray[nPoint]);
+        PRINTF("exDbgReflect: Exec time for packets between 16 & 32 byte = %ld ms\r\n", msArray[nPoint]);
         nPoint++;
 
         // * Measure transfer time for big packets
-        printf("exDbgReflect: Measure exec time for packets between 230 & 246 byte.\r\n");
+        PRINTF("exDbgReflect: Measure exec time for packets between 230 & 246 byte.\r\n");
         initMeasurement(&mPair);
         for (i=0; i<3; i++)
         {
             result &= exDbgReflect(230, 246);
             if (result == 0)
             {
-                printf("exDbgReflect failed (iter==%d) at line %d.\r\n", i, __LINE__);
+                PRINTF("exDbgReflect failed (iter==%d) at line %d.\r\n", i, __LINE__);
                 break;
             }
         }
         concludeMeasurement(&mPair);
         msArray[nPoint] = getMeasurement(&mPair);
-        printf("exDbgReflect: Exec time for packets between 230 & 246 byte = %ld ms\r\n", msArray[nPoint]);
+        PRINTF("exDbgReflect: Exec time for packets between 230 & 246 byte = %ld ms\r\n", msArray[nPoint]);
         nPoint++;
     }
 
@@ -160,14 +148,14 @@ U8 exHlseDebugMode(U8 testMode)
     {
         if (result == 1)
         {
-            printf("exDbgReflect: Exec time for mixed packet sizes = %ld ms\r\n", msArray[0]);
-            printf("exDbgReflect: Exec time for packets between 16 & 32 byte = %ld ms\r\n", msArray[1]);
-            printf("exDbgReflect: Exec time for packets between 230 & 246 byte = %ld ms\r\n",     msArray[2]);
+            PRINTF("exDbgReflect: Exec time for mixed packet sizes = %ld ms\r\n", msArray[0]);
+            PRINTF("exDbgReflect: Exec time for packets between 16 & 32 byte = %ld ms\r\n", msArray[1]);
+            PRINTF("exDbgReflect: Exec time for packets between 230 & 246 byte = %ld ms\r\n",     msArray[2]);
         }
     }
 
     // overall result
-    printf( "\r\n-----------\r\nEnd exDebugMode(extended_test=%s, measure_exec_time=%s), result = %s\r\n------------\r\n",
+    PRINTF( "\r\n-----------\r\nEnd exDebugMode(extended_test=%s, measure_exec_time=%s), result = %s\r\n------------\r\n",
         ((testMode & EXTENDED_TEST) == EXTENDED_TEST)? "ON":"OFF",
         ((testMode & MEASURE_EXEC_TIME) == MEASURE_EXEC_TIME)? "ON":"OFF",
         ((result == 1)? "OK": "FAILED"));
@@ -194,7 +182,7 @@ static U8 exDbgReflect(int nLower, int nUpper)
 
     if (nLower > nUpper)
     {
-        printf("exDbgReflect: Invalid arguments.\r\n");
+        PRINTF("exDbgReflect: Invalid arguments.\r\n");
         return 0;
     }
 
@@ -212,7 +200,7 @@ static U8 exDbgReflect(int nLower, int nUpper)
 #endif
         if (sw != SW_OK)
         {
-            printf("Call to A71_DbgReflect() failed: sw = 0x%04X.\r\n", sw);
+            PRINTF("Call to A71_DbgReflect() failed: sw = 0x%04X.\r\n", sw);
             result &= 0;
         }
         else
@@ -221,7 +209,7 @@ static U8 exDbgReflect(int nLower, int nUpper)
             // Is length as expected?
             if (rcvBufLen != sndBufLen)
             {
-                printf("Not enough data returned: rcv=%d != snd=%d.\r\n", rcvBufLen, sndBufLen);
+                PRINTF("Not enough data returned: rcv=%d != snd=%d.\r\n", rcvBufLen, sndBufLen);
                 result &= 0;
             }
             else
@@ -232,7 +220,7 @@ static U8 exDbgReflect(int nLower, int nUpper)
         if (result == 0)
         {
             // Drop out of loop if an error has occured.
-            printf("exDbgReflect: Failed on packetsize %d\r\n", i);
+            PRINTF("exDbgReflect: Failed on packetsize %d\r\n", i);
             break;
         }
     }

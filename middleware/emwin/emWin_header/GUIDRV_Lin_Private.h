@@ -1,15 +1,15 @@
 /*********************************************************************
-*                SEGGER Microcontroller GmbH & Co. KG                *
+*                SEGGER Microcontroller GmbH                         *
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2016  SEGGER Microcontroller GmbH & Co. KG       *
+*        (c) 1996 - 2018  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
 **********************************************************************
 
-** emWin V5.38 - Graphical user interface for embedded applications **
+** emWin V5.48 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -26,15 +26,16 @@ Full source code is available at: www.segger.com
 We appreciate your understanding and fairness.
 ----------------------------------------------------------------------
 Licensing information
-
 Licensor:                 SEGGER Microcontroller Systems LLC
 Licensed to:              NXP Semiconductors, 1109 McKay Dr, M/S 76, San Jose, CA 95131, USA
 Licensed SEGGER software: emWin
 License number:           GUI-00186
-License model:            emWin License Agreement, dated August 20th 2011
-Licensed product:         -
-Licensed platform:        NXP's ARM 7/9, Cortex-M0,M3,M4
-Licensed number of seats: -
+License model:            emWin License Agreement, dated August 20th 2011 and Amendment, dated October 19th 2017
+Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7
+----------------------------------------------------------------------
+Support and Update Agreement (SUA)
+SUA period:               2011-08-19 - 2018-09-02
+Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : GUIDRV_Lin_Private.h
 Purpose     : Common definitions and common code for all LIN-drivers
@@ -87,10 +88,10 @@ extern "C" {     /* Make sure we have C-declarations in C++ programs */
   #define LCD_WRITE_MEM08P(p, Data)            SIM_Lin_WriteMem08p(p, Data)
   #define LCD_WRITE_MEM16P(p, Data)            SIM_Lin_WriteMem16p(p, Data)
   #define LCD_WRITE_MEM32P(p, Data)            SIM_Lin_WriteMem32p(p, Data)
-  #undef  GUI_MEMCPY
-  #define GUI_MEMCPY(pDst, pSrc, Len)          SIM_Lin_memcpy(pDst, pSrc, Len)
-  #undef  GUI_MEMSET
-  #define GUI_MEMSET(pDst, Value, Len)         SIM_Lin_memset(pDst, Value, Len)
+  #undef  GUI__MEMCPY
+  #define GUI__MEMCPY(pDst, pSrc, Len)         SIM_Lin_memcpy(pDst, pSrc, Len)
+  #undef  GUI__MEMSET
+  #define GUI__MEMSET(pDst, Value, Len)        SIM_Lin_memset(pDst, Value, Len)
 #else
   //
   // Access macro definition for hardware
@@ -147,8 +148,9 @@ extern "C" {     /* Make sure we have C-declarations in C++ programs */
 // Definition of default members for DRIVER_CONTEXT structure
 //
 #define DEFAULT_CONTEXT_MEMBERS                               \
-  U32 VRAMAddr;                                               \
-  U32 BaseAddr;                                               \
+  void * VRAMAddr;                                            \
+  void * BaseAddr;                                            \
+  void ** aBufferPTR;                                         \
   int BufferIndex;                                            \
   int xSize, ySize;                                           \
   int vxSize, vySize;                                         \
@@ -203,6 +205,8 @@ extern "C" {     /* Make sure we have C-declarations in C++ programs */
 #define DEFAULT_MANAGEMENT_GETDEVFUNC()                                             \
   case LCD_DEVFUNC_SET_VRAM_ADDR:                                                   \
     return (void (*)(void))_SetVRAMAddr;                                            \
+  case LCD_DEVFUNC_SET_BUFFERPTR:                                                   \
+    return (void (*)(void))_SetVRAM_BufferPTR;                                      \
   case LCD_DEVFUNC_SET_VSIZE:                                                       \
     return (void (*)(void))_SetVSize;                                               \
   case LCD_DEVFUNC_SET_SIZE:                                                        \
@@ -241,6 +245,26 @@ extern "C" {     /* Make sure we have C-declarations in C++ programs */
     return (void (*)(void))((DRIVER_CONTEXT *)(*ppDevice)->u.pContext)->pfDrawBMP8; \
   case LCD_DEVFUNC_COPYRECT:                                                        \
     return (void (*)(void))((DRIVER_CONTEXT *)(*ppDevice)->u.pContext)->pfCopyRect;
+
+//
+// Definition of default function management for _GetDevProp()
+//
+#define DEFAULT_MANAGEMENT_GETDEVPROP() \
+  case LCD_DEVCAP_XSIZE:                \
+    return pContext->xSize;             \
+  case LCD_DEVCAP_YSIZE:                \
+    return pContext->ySize;             \
+  case LCD_DEVCAP_VXSIZE:               \
+    return pContext->vxSize;            \
+  case LCD_DEVCAP_VYSIZE:               \
+    return pContext->vySize;
+
+//
+// Definition of default function management for _GetDevData()
+//
+#define DEFAULT_MANAGEMENT_GETDEVDATA() \
+  case LCD_DEVDATA_VRAMADDR:            \
+    return (void *)pContext->VRAMAddr;
 
 //
 // Definition of private function management for _GetDevFunc()
@@ -318,6 +342,8 @@ typedef struct {
 *
 **********************************************************************
 */
+static I32 _GetDevProp(GUI_DEVICE * pDevice, int Index);
+
 /*********************************************************************
 *
 *       _InitOnce
@@ -579,7 +605,9 @@ static void _SetChroma(GUI_DEVICE * pDevice, LCD_COLOR ChromaMin, LCD_COLOR Chro
 static void _CopyBuffer(GUI_DEVICE * pDevice, int IndexSrc, int IndexDst) {
   DRIVER_CONTEXT * pContext;
   #if (!defined(WIN32))
-    U32 AddrSrc, AddrDst;
+    //U32 AddrSrc, AddrDst;
+    void * pSrc;
+    void * pDst;
     I32 BufferSize;
     int BitsPerPixel;
   #endif
@@ -592,9 +620,18 @@ static void _CopyBuffer(GUI_DEVICE * pDevice, int IndexSrc, int IndexDst) {
         SIM_Lin_CopyBuffer(IndexSrc, IndexDst);
       #else
         BitsPerPixel = pDevice->pDeviceAPI->pfGetDevProp(pDevice, LCD_DEVCAP_BITSPERPIXEL);
-        BufferSize = (((U32)pContext->xSize * pContext->ySize * BitsPerPixel) >> 3);
-        AddrSrc = pContext->BaseAddr + BufferSize * IndexSrc;
-        AddrDst = pContext->BaseAddr + BufferSize * IndexDst;
+        BufferSize = (((U32)pContext->vxSize * pContext->ySize * BitsPerPixel) >> 3);
+        if (pContext->aBufferPTR) {
+          //AddrSrc = *(pContext->aBufferPTR + IndexSrc);
+          //AddrDst = *(pContext->aBufferPTR + IndexDst);
+          pSrc = pContext->aBufferPTR[IndexSrc];
+          pDst = pContext->aBufferPTR[IndexDst];
+        } else {
+          //AddrSrc = pContext->BaseAddr + BufferSize * IndexSrc;
+          //AddrDst = pContext->BaseAddr + BufferSize * IndexDst;
+          pSrc = (U8 *)pContext->BaseAddr + BufferSize * IndexSrc;
+          pDst = (U8 *)pContext->BaseAddr + BufferSize * IndexDst;
+        }
         if (pContext->pfCopyBuffer) {
           //
           // Use custom callback function for copy operation
@@ -604,12 +641,12 @@ static void _CopyBuffer(GUI_DEVICE * pDevice, int IndexSrc, int IndexDst) {
           //
           // Calculate pointers for copy operation
           //
-          GUI_MEMCPY((void *)AddrDst, (void *)AddrSrc, BufferSize);
+          GUI__MEMCPY(pDst, pSrc, BufferSize);
         }
         //
         // Set destination buffer as target for further drawing operations
         //
-        pContext->VRAMAddr = AddrDst;
+        pContext->VRAMAddr = pDst;
       #endif
     }
   }
@@ -708,13 +745,28 @@ static void _SetVRAMAddr(GUI_DEVICE * pDevice, void * pVRAM) {
   _InitOnce(pDevice);
   if (pDevice->u.pContext) {
     pContext = (DRIVER_CONTEXT *)pDevice->u.pContext;
-    pContext->VRAMAddr = pContext->BaseAddr = (U32)pVRAM;
+    pContext->VRAMAddr = pContext->BaseAddr = (void *)pVRAM;
     Data.pVRAM = pVRAM;
     LCD_X_DisplayDriver(pDevice->LayerIndex, LCD_X_SETVRAMADDR, (void *)&Data);
   }
   #if defined(WIN32)
     SIM_Lin_SetVRAMAddr(pDevice->LayerIndex, pVRAM);
   #endif
+}
+
+/*********************************************************************
+*
+*       _SetVRAM_BufferPTR
+*/
+static void _SetVRAM_BufferPTR(GUI_DEVICE * pDevice, void ** pBufferPTR) {
+  DRIVER_CONTEXT * pContext;
+
+  _InitOnce(pDevice);
+  if (pDevice->u.pContext) {
+    pContext = (DRIVER_CONTEXT *)pDevice->u.pContext;
+    pContext->aBufferPTR = pBufferPTR;
+    pContext->VRAMAddr = *(pBufferPTR + 0);
+  }
 }
 
 /*********************************************************************
@@ -733,7 +785,7 @@ static void _SetVSize(GUI_DEVICE * pDevice, int xSize, int ySize) {
       NumBuffers = GUI_MULTIBUF_GetNumBuffers();
     #endif
     pContext = (DRIVER_CONTEXT *)pDevice->u.pContext;
-    if (LCD_GetSwapXYEx(pDevice->LayerIndex)) {
+    if (_GetDevProp(pDevice, LCD_DEVCAP_SWAP_XY)) {
       #if defined(WIN32)
         pContext->vxSize = xSize * NumBuffers;
       #else
@@ -768,7 +820,7 @@ static void _SetSize(GUI_DEVICE * pDevice, int xSize, int ySize) {
   if (pDevice->u.pContext) {
     pContext = (DRIVER_CONTEXT *)pDevice->u.pContext;
     if (pContext->vxSizePhys == 0) {
-      if (LCD_GetSwapXYEx(pDevice->LayerIndex)) {
+      if (_GetDevProp(pDevice, LCD_DEVCAP_SWAP_XY)) {
         pContext->vxSizePhys = ySize;
       } else {
         pContext->vxSizePhys = xSize;

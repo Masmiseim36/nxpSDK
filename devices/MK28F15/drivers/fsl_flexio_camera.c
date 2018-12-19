@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- *  that the following conditions are met:
  *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_flexio_camera.h"
@@ -39,11 +13,9 @@
 #define FSL_COMPONENT_ID "platform.drivers.flexio_camera"
 #endif
 
-
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-
 
 /*******************************************************************************
  * Variables
@@ -58,9 +30,22 @@ static uint32_t FLEXIO_CAMERA_GetInstance(FLEXIO_CAMERA_Type *base)
     return FLEXIO_GetInstance(base->flexioBase);
 }
 
+/*!
+ * brief Gets the default configuration to configure the FlexIO Camera. The configuration
+ * can be used directly for calling the FLEXIO_CAMERA_Init().
+ * Example:
+   code
+   flexio_camera_config_t config;
+   FLEXIO_CAMERA_GetDefaultConfig(&userConfig);
+   endcode
+ * param config Pointer to the flexio_camera_config_t structure
+*/
 void FLEXIO_CAMERA_GetDefaultConfig(flexio_camera_config_t *config)
 {
     assert(config);
+
+    /* Initializes the configure structure to zero. */
+    memset(config, 0, sizeof(*config));
 
     config->enablecamera = false;
     config->enableInDoze = false;
@@ -68,6 +53,12 @@ void FLEXIO_CAMERA_GetDefaultConfig(flexio_camera_config_t *config)
     config->enableFastAccess = false;
 }
 
+/*!
+ * brief Ungates the FlexIO clock, resets the FlexIO module, and configures the FlexIO Camera.
+ *
+ * param base Pointer to FLEXIO_CAMERA_Type structure
+ * param config Pointer to flexio_camera_config_t structure
+*/
 void FLEXIO_CAMERA_Init(FLEXIO_CAMERA_Type *base, const flexio_camera_config_t *config)
 {
     assert(base && config);
@@ -142,6 +133,13 @@ void FLEXIO_CAMERA_Init(FLEXIO_CAMERA_Type *base, const flexio_camera_config_t *
     FLEXIO_ClearTimerStatusFlags(base->flexioBase, 1U << (base->timerIdx));
 }
 
+/*!
+ * brief Resets the FLEXIO_CAMERA shifer and timer config.
+ *
+ * note After calling this API, call FLEXO_CAMERA_Init to use the FlexIO Camera module.
+ *
+ * param base Pointer to FLEXIO_CAMERA_Type structure
+*/
 void FLEXIO_CAMERA_Deinit(FLEXIO_CAMERA_Type *base)
 {
     base->flexioBase->SHIFTCFG[base->shifterStartIdx] = 0;
@@ -155,6 +153,14 @@ void FLEXIO_CAMERA_Deinit(FLEXIO_CAMERA_Type *base)
     base->flexioBase->TIMSTAT = (1U << base->timerIdx);
 }
 
+/*!
+ * brief Gets the FlexIO Camera status flags.
+ *
+ * param base Pointer to FLEXIO_CAMERA_Type structure
+ * return FlexIO shifter status flags
+ *          arg FLEXIO_SHIFTSTAT_SSF_MASK
+ *          arg 0
+*/
 uint32_t FLEXIO_CAMERA_GetStatusFlags(FLEXIO_CAMERA_Type *base)
 {
     uint32_t status = 0;
@@ -163,6 +169,15 @@ uint32_t FLEXIO_CAMERA_GetStatusFlags(FLEXIO_CAMERA_Type *base)
     return status;
 }
 
+/*!
+ * brief Clears the receive buffer full flag manually.
+ *
+ * param base Pointer to the device.
+ * param mask status flag
+ *      The parameter can be any combination of the following values:
+ *          arg kFLEXIO_CAMERA_RxDataRegFullFlag
+ *          arg kFLEXIO_CAMERA_RxErrorFlag
+ */
 void FLEXIO_CAMERA_ClearStatusFlags(FLEXIO_CAMERA_Type *base, uint32_t mask)
 {
     if (mask & kFLEXIO_CAMERA_RxDataRegFullFlag)
@@ -176,11 +191,22 @@ void FLEXIO_CAMERA_ClearStatusFlags(FLEXIO_CAMERA_Type *base, uint32_t mask)
     }
 }
 
+/*!
+ * brief Switches on the interrupt for receive buffer full event.
+ *
+ * param base Pointer to the device.
+ */
 void FLEXIO_CAMERA_EnableInterrupt(FLEXIO_CAMERA_Type *base)
 {
     FLEXIO_EnableShifterStatusInterrupts(base->flexioBase, 1U << (base->shifterStartIdx));
 }
 
+/*!
+ * brief Switches off the interrupt for receive buffer full event.
+ *
+ * param base Pointer to the device.
+ *
+ */
 void FLEXIO_CAMERA_DisableInterrupt(FLEXIO_CAMERA_Type *base)
 {
     FLEXIO_DisableShifterStatusInterrupts(base->flexioBase, 1U << (base->shifterStartIdx));

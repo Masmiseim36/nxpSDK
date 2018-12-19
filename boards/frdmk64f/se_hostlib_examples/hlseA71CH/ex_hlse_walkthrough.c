@@ -3,28 +3,16 @@
  * @author NXP Semiconductors
  * @version 1.0
  * @par License
- * Copyright(C) NXP Semiconductors, 2016
- * All rights reserved.
+ * Copyright 2016 NXP
  *
- * Software that is described herein is for illustrative purposes only
- * which provides customers with programming information regarding the
- * A7-series security ICs.  This software is supplied "AS IS" without any
- * warranties of any kind, and NXP Semiconductors and its licensor disclaim any and
- * all warranties, express or implied, including all implied warranties of
- * merchantability, fitness for a particular purpose and non-infringement of
- * intellectual property rights.  NXP Semiconductors assumes no responsibility
- * or liability for the use of the software, conveys no license or rights under any
- * patent, copyright, mask work right, or any other intellectual property rights in
- * or to any products. NXP Semiconductors reserves the right to make changes
- * in the software without notification. NXP Semiconductors also makes no
- * representation or warranty that such application will be suitable for the
- * specified use without further testing or modification.
+ * This software is owned or controlled by NXP and may only be used
+ * strictly in accordance with the applicable license terms.  By expressly
+ * accepting such terms or by downloading, installing, activating and/or
+ * otherwise using the software, you are agreeing that you have read, and
+ * that you agree to comply with and are bound by, such license terms.  If
+ * you do not agree to be bound by the applicable license terms, then you
+ * may not retain, install, activate or otherwise use the software.
  *
- * Permission to use, copy and modify this software is hereby granted,
- * under NXP Semiconductors' and its licensor's relevant copyrights in
- * the software, without fee, provided that it is used in conjunction with
- * NXP Semiconductors products. This copyright, permission, and disclaimer notice
- * must appear in all copies of this code.
  * @par Description
  * Refer to \ref walkthrough for more information
  */
@@ -105,7 +93,7 @@ U8 exHlseWalkthrough()
     U8 scpKeyDekBase[SCP_KEY_SIZE];
 #endif
 
-    printf("\r\n-----------\r\nStart exHlseWalkthrough(%s)\r\n------------\r\n", getInitModeAsString(initMode));
+    PRINTF("\r\n-----------\r\nStart exHlseWalkthrough(%s)\r\n------------\r\n", getInitModeAsString(initMode));
 
     DEV_ClearChannelState();
 
@@ -140,7 +128,7 @@ U8 exHlseWalkthrough()
     HOSTCRYPTO_FreeEccKey(&eccKeyRootCA_1);
 
     // overall result
-    printf("\r\n-----------\r\nEnd exHlseWalkthrough(%s), result = %s\r\n------------\r\n",
+    PRINTF("\r\n-----------\r\nEnd exHlseWalkthrough(%s), result = %s\r\n------------\r\n",
         getInitModeAsString(initMode), ((result == 1)? "OK": "FAILED"));
 
     return result;
@@ -156,27 +144,27 @@ static U8 exHlseWtSetConfigKeys(U8 *moduleConfigKey, U8 *privateKeyConfigKey, U8
 
     U8 indexCfgKey = A71CH_CFG_KEY_IDX_MODULE_LOCK;
 
-    printf("\r\n-----------\r\nStart exWtSetConfigKeys()\r\n------------\r\n");
+    PRINTF("\r\n-----------\r\nStart exWtSetConfigKeys()\r\n------------\r\n");
     // Store all configure keys (value is stored in variables with module scope)
     indexCfgKey = A71CH_CFG_KEY_IDX_MODULE_LOCK;
-    printf("\r\nA71_SetConfigKey(0x%02x)\r\n", indexCfgKey);
+    PRINTF("\r\nA71_SetConfigKey(0x%02x)\r\n", indexCfgKey);
     err = A71_SetConfigKey((SST_Index_t)indexCfgKey, moduleConfigKey, 16);
     result &= AX_CHECK_SW(err, SW_OK, "err");
     axPrintByteArray("configKeyModuleLock", moduleConfigKey, 16, AX_COLON_32);
 
     indexCfgKey = A71CH_CFG_KEY_IDX_PRIVATE_KEYS;
-    printf("\r\nA71_SetConfigKey(0x%02x)\r\n", indexCfgKey);
+    PRINTF("\r\nA71_SetConfigKey(0x%02x)\r\n", indexCfgKey);
     err = A71_SetConfigKey((SST_Index_t)indexCfgKey, privateKeyConfigKey, 16);
     result &= AX_CHECK_SW(err, SW_OK, "err");
     axPrintByteArray("configKeyPrivateKey", privateKeyConfigKey, 16, AX_COLON_32);
 
     indexCfgKey = A71CH_CFG_KEY_IDX_PUBLIC_KEYS;
-    printf("\r\nA71_SetConfigKey(0x%02x)\r\n", indexCfgKey);
+    PRINTF("\r\nA71_SetConfigKey(0x%02x)\r\n", indexCfgKey);
     err = A71_SetConfigKey((SST_Index_t)indexCfgKey, publicKeyConfigKey, 16);
     result &= AX_CHECK_SW(err, SW_OK, "err");
     axPrintByteArray("configKeyPublicKey", publicKeyConfigKey, 16, AX_COLON_32);
 
-    printf( "\r\n-----------\r\nEnd exWtSetConfigKeys(), result = %s\r\n------------\r\n", ((result == 1)? "OK": "FAILED"));
+    PRINTF( "\r\n-----------\r\nEnd exWtSetConfigKeys(), result = %s\r\n------------\r\n", ((result == 1)? "OK": "FAILED"));
 
     return result;
 }
@@ -251,7 +239,7 @@ static U8 exHlseWtUseCrypto()
     HLSE_OBJECT_HANDLE keyPairHandles[A71CH_KEY_PAIR_MAX];
     U16 kpHandleNum = A71CH_KEY_PAIR_MAX;
 
-    printf( "\r\n-----------\r\nStart exWtUseCrypto()\r\n------------\r\n");
+    PRINTF( "\r\n-----------\r\nStart exWtUseCrypto()\r\n------------\r\n");
 
     err = HLSE_EnumerateObjects(HLSE_KEY_PAIR, keyPairHandles, &kpHandleNum);
     result &= AX_CHECK_SW(err, HLSE_SW_OK, "err");
@@ -259,7 +247,7 @@ static U8 exHlseWtUseCrypto()
     // Sign a precooked hash on the A71CH with the first key pair, do the subsequent verification on the Host
     // ------------------------------------------------------------------------------------------------------
     index = A71CH_KEY_PAIR_0;
-    printf("\r\nA71_EccSign(0x%02x) on A71CH.\r\n", index);
+    PRINTF("\r\nA71_EccSign(0x%02x) on A71CH.\r\n", index);
     signatureLen = sizeof(signature);
 #if 0
     err = A71_EccSign(index, preCookedSha256, sizeof(preCookedSha256), signature, &signatureLen);
@@ -274,17 +262,17 @@ static U8 exHlseWtUseCrypto()
     // We've already built the eccKcTls_0 data structure while provisioning the A71CH.
     err = HOSTCRYPTO_EccCreateOpenSslEccFromComponents(&eccKeyTls_0, &eccKcTls_0);
     result &= AX_CHECK_SW(err, SW_OK, "err");
-    printf("\r\n(Host)ECDSA_verify API with eccKeyTls_0 (verify signature created on A71CH).\r\n");
+    PRINTF("\r\n(Host)ECDSA_verify API with eccKeyTls_0 (verify signature created on A71CH).\r\n");
     memset(&mechInfo, 0, sizeof(mechInfo));
     mechInfo.mechanism = HLSE_ECDSA_VERIFY;
     retcode = HLCRYPT_Verify(&mechInfo,(U8 *)eccKeyTls_0,0,preCookedSha256,sizeof(preCookedSha256),signature,signatureLen);
     if (retcode == HLSE_SW_OK)
     {
-        printf("Verification OK for eccKeyTls_0.\r\n");
+        PRINTF("Verification OK for eccKeyTls_0.\r\n");
     }
     else
     {
-        printf("Return value: %d, Verification Not OK for eccKeyTls_0. Test Failed!\r\n", retcode);
+        PRINTF("Return value: %d, Verification Not OK for eccKeyTls_0. Test Failed!\r\n", retcode);
         result &= 0;
     }
 
@@ -297,14 +285,14 @@ static U8 exHlseWtUseCrypto()
     if ( nRet != HOST_CRYPTO_OK)
         result &= 0;
 
-    printf("\r\n(Host)ECDSA_sign API with eccKeyRootCA_0.\r\n");
+    PRINTF("\r\n(Host)ECDSA_sign API with eccKeyRootCA_0.\r\n");
     memset(&mechInfo, 0, sizeof(mechInfo));
     mechInfo.mechanism = HLSE_ECDSA_SIGN;
     retcode = HLCRYPT_Sign(&mechInfo, (U8 *)eccKeyRootCA_0, 0,hashSha256, hashSha256Len, signatureOnHost, &nSigLen);
-    printf("ECDSA_sign returned: 0x%02X, Siglen is %ld\r\n", retcode, nSigLen);
+    PRINTF("ECDSA_sign returned: 0x%02X, Siglen is %ld\r\n", retcode, nSigLen);
     if (retcode != HLSE_SW_OK)
     {
-        printf("ECDSA_sign operation failed.\r\n");
+        PRINTF("ECDSA_sign operation failed.\r\n");
         result &= 0;
     }
     else
@@ -314,7 +302,7 @@ static U8 exHlseWtUseCrypto()
 
     // ... do the subsequent verification on the A71CH with the matching public key object.
     index = A71CH_PUBLIC_KEY_0;
-    printf("\r\nA71_EccVerify(0x%02x) on A71CH.\r\n", index);
+    PRINTF("\r\nA71_EccVerify(0x%02x) on A71CH.\r\n", index);
     signatureOnHostLen = (U16)nSigLen;
     isOk = 0x00;
 #if 0
@@ -326,12 +314,12 @@ static U8 exHlseWtUseCrypto()
     result &= AX_CHECK_U8(isOk, 1, "Signature verification failed");
     if (isOk == 1)
     {
-        printf("Verification on A71CH is OK, Test Passed\r\n");
+        PRINTF("Verification on A71CH is OK, Test Passed\r\n");
     }
 
     // NEGATIVE TEST: verifying the signature with the wrong public key must fail
     index = A71CH_PUBLIC_KEY_1;
-    printf("\r\nA71_EccVerify(0x%02x) on A71CH.\r\n", index);
+    PRINTF("\r\nA71_EccVerify(0x%02x) on A71CH.\r\n", index);
     signatureOnHostLen = (U16)nSigLen;
     isOk = 0x00;
 #if 0
@@ -344,7 +332,7 @@ static U8 exHlseWtUseCrypto()
     result &= AX_CHECK_U8(isOk, 0, "Negative test: Signature verification must fail");
     if (isOk == 0)
     {
-        printf("Negative Test Passed\r\n");
+        PRINTF("Negative Test Passed\r\n");
     }
 
     // Create and compare a shared secret on A71CH and Host
@@ -364,7 +352,7 @@ static U8 exHlseWtUseCrypto()
     eccKcTls_Host.curve = eccCurve;
 
     index = A71CH_KEY_PAIR_1;
-    printf("\r\nA71_EcdhGetSharedSecret(0x%02x) on A71CH\r\n", index);
+    PRINTF("\r\nA71_EcdhGetSharedSecret(0x%02x) on A71CH\r\n", index);
     sharedSecretOnA71CHLen = sizeof(sharedSecretOnA71CH);
 #if 0
     err = A71_EcdhGetSharedSecret(index, eccKcTls_Host.pub, eccKcTls_Host.pubLen, sharedSecretOnA71CH, &sharedSecretOnA71CHLen);
@@ -376,7 +364,7 @@ static U8 exHlseWtUseCrypto()
     result &= AX_CHECK_SW(err, SW_OK, "err");
     axPrintByteArray("sharedSecretOnA71CH", sharedSecretOnA71CH, sharedSecretOnA71CHLen, AX_COLON_32);
 
-    printf("\r\nA71_EcdhGetSharedSecret() on Host\r\n");
+    PRINTF("\r\nA71_EcdhGetSharedSecret() on Host\r\n");
     sharedSecretOnHostLen = sizeof(sharedSecretOnHost);
     err = HOSTCRYPTO_ECC_ComputeSharedSecret(eccKeyTls_Host, eccKcTls_1.pub, eccKcTls_1.pubLen, sharedSecretOnHost, &sharedSecretOnHostLen);
     result &= AX_CHECK_SW(err, SW_OK, "err");
@@ -404,7 +392,7 @@ static U8 exHlseWtUseCrypto()
     nBlock = 1;
     derivedDataLen = 16;
 
-    printf("\r\nA71_HkdfSymKey() on Host\r\n");
+    PRINTF("\r\nA71_HkdfSymKey() on Host\r\n");
 #if 0
     err = A71_HkdfSymKey(A71CH_SYM_KEY_0, nBlock,
         salt, saltLen,
@@ -441,7 +429,7 @@ static U8 exHlseWtUseCrypto()
     // calculate the same derived data and use this
     memcpy(symSecret, aesBasePattern, 16);
     symSecret[0] = 0x00;
-    printf("\r\nHOSTCRYPTO_HkdfFullSha256(KeyLen=%d, infoLen=%d, derivedDataLen=%d)\r\n", 16, infoLen, derivedDataLen);
+    PRINTF("\r\nHOSTCRYPTO_HkdfFullSha256(KeyLen=%d, infoLen=%d, derivedDataLen=%d)\r\n", 16, infoLen, derivedDataLen);
     err = HOSTCRYPTO_HkdfFullSha256(salt, saltLen, symSecret, 16, info, infoLen, derivedDataOnHost, derivedDataLen);
     result &= AX_CHECK_SW(err, SW_OK, "err");
 
@@ -452,7 +440,7 @@ static U8 exHlseWtUseCrypto()
     HOSTCRYPTO_FreeEccKey(&eccKeyTls_0);
 
 
-    printf( "\r\n-----------\r\nEnd exWtUseCrypto(), result = %s\r\n------------\r\n",
+    PRINTF( "\r\n-----------\r\nEnd exWtUseCrypto(), result = %s\r\n------------\r\n",
         ((result == 1)? "OK": "FAILED"));
 
     return result;
@@ -483,7 +471,7 @@ static U8 exHlseWtProvision()
     HLSE_OBJECT_HANDLE pubkeyHandles[2];
     HLSE_OBJECT_HANDLE aesKeyHandles[A71CH_SYM_KEY_MAX];
 
-    printf( "\r\n-----------\r\nStart exWtProvision()\r\n------------\r\n");
+    PRINTF( "\r\n-----------\r\nStart exWtProvision()\r\n------------\r\n");
 
     // In a typical provisioning scenario the keypair matching the public key
     // to be inserted would be created and stored securely on a back-end system.
@@ -512,7 +500,7 @@ static U8 exHlseWtProvision()
 
     // Generate the first ECC keyPair (Extract the public key)
     index = A71CH_KEY_PAIR_0;
-    printf("\r\nA71_GenerateEccKeyPair(0x%02x)\r\n", index);
+    PRINTF("\r\nA71_GenerateEccKeyPair(0x%02x)\r\n", index);
 #if 0
     err = A71_GenerateEccKeyPair(index);
 #else
@@ -522,7 +510,7 @@ static U8 exHlseWtProvision()
 
     // Generate the second ECC keyPair (Extract the public key)
     index = A71CH_KEY_PAIR_1;
-    printf("\r\nA71_GenerateEccKeyPair(0x%02x)\r\n", index);
+    PRINTF("\r\nA71_GenerateEccKeyPair(0x%02x)\r\n", index);
 #if 0
     err = A71_GenerateEccKeyPair(index);
 #else
@@ -532,7 +520,7 @@ static U8 exHlseWtProvision()
 
     // Both ECC Key pairs have been created, now extract the value of the public key
     index = A71CH_KEY_PAIR_0;
-    printf( "\r\nSST_GetPublicKeyECCKeyPair(0x%02x)\r\n", index);
+    PRINTF( "\r\nSST_GetPublicKeyECCKeyPair(0x%02x)\r\n", index);
     eccKcTls_0.pubLen = sizeof(eccKcTls_0.pub);
 #if 0
     err = A71_GetPublicKeyEccKeyPair(index, eccKcTls_0.pub, &(eccKcTls_0.pubLen));
@@ -550,7 +538,7 @@ static U8 exHlseWtProvision()
     }
 
     index = A71CH_KEY_PAIR_1;
-    printf( "\r\nSST_GetPublicKeyECCKeyPair(0x%02x)\r\n", index);
+    PRINTF( "\r\nSST_GetPublicKeyECCKeyPair(0x%02x)\r\n", index);
     eccKcTls_1.pubLen = sizeof(eccKcTls_1.pub);
 #if 0
     err = A71_GetPublicKeyEccKeyPair(index, eccKcTls_1.pub, &(eccKcTls_1.pubLen));
@@ -569,7 +557,7 @@ static U8 exHlseWtProvision()
 
     // Set the public key of eccKcRootCA_0 on the A71CH (index=0)
     index = A71CH_PUBLIC_KEY_0;
-    printf("\r\nA71_SetEccPublicKey(0x%02x)\r\n", index);
+    PRINTF("\r\nA71_SetEccPublicKey(0x%02x)\r\n", index);
 #if 0
     err = A71_SetEccPublicKey(index, eccKcRootCA_0.pub, eccKcRootCA_0.pubLen);
 #else
@@ -579,7 +567,7 @@ static U8 exHlseWtProvision()
 
     // Set the public key of eccKcRootCA_1 on the A71CH (index=1)
     index = A71CH_PUBLIC_KEY_1;
-    printf("\r\nA71_SetEccPublicKey(0x%02x)\r\n", index);
+    PRINTF("\r\nA71_SetEccPublicKey(0x%02x)\r\n", index);
 #if 0
     err = A71_SetEccPublicKey(index, eccKcRootCA_1.pub, eccKcRootCA_1.pubLen);
 #else
@@ -600,7 +588,7 @@ static U8 exHlseWtProvision()
         // Put the 0x00 marker
         aesRef[indexAesKey][indexAesKey] = (U8)0x00;
         // Write the key (unwrapped)
-        printf( "\r\nA71_SetSymKey(0x%02x)\r\n", indexAesKey);
+        PRINTF( "\r\nA71_SetSymKey(0x%02x)\r\n", indexAesKey);
 #if 0
         err = A71_SetSymKey((SST_Index_t)indexAesKey, aesRef[indexAesKey], sizeof(aesRef[indexAesKey]));
 #else
@@ -634,7 +622,7 @@ static U8 exHlseWtProvision()
     // - Store a certificate (or the hash of a certificate) in GP storage
     // - Store public keys in GP storage
 
-    printf( "\r\n-----------\r\nEnd exWtProvision(), result = %s\r\n------------\r\n",
+    PRINTF( "\r\n-----------\r\nEnd exWtProvision(), result = %s\r\n------------\r\n",
         ((result == 1)? "OK": "FAILED"));
 
     return result;
@@ -650,7 +638,7 @@ static U8 exHlseWtPrepareShipment()
 
     SST_Index_t index;
 
-    printf( "\r\n-----------\r\nStart exWtPrepareShipment()\r\n------------\r\n");
+    PRINTF( "\r\n-----------\r\nStart exWtPrepareShipment()\r\n------------\r\n");
 
 #if 0
     sw = A71_InjectLock();
@@ -678,7 +666,7 @@ static U8 exHlseWtPrepareShipment()
 #endif
     result &= AX_CHECK_SW(sw, SW_OK, "Unable to freeze public key");
 
-    printf( "\r\n-----------\r\nEnd exWtPrepareShipment(), result = %s\r\n------------\r\n",
+    PRINTF( "\r\n-----------\r\nEnd exWtPrepareShipment(), result = %s\r\n------------\r\n",
         ((result == 1)? "OK": "FAILED"));
 
     return result;

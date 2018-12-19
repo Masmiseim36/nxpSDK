@@ -14,6 +14,7 @@
 #include "fsl_common.h"
 
 static mflash_file_t *g_file_table = NULL;
+static bool g_mflash_initialized = false;
 
 /* Help to identify mfile without knowing an address */
 #define MFLASH_META_MAGIC_NO (0xABECEDA8)
@@ -23,6 +24,10 @@ typedef struct {
     uint32_t magic_no;
 } mfile_meta_t;
 
+bool mflash_is_initialized()
+{
+    return g_mflash_initialized;
+}
 
 BaseType_t mflash_init(mflash_file_t *user_file_table, bool init_drv)
 {
@@ -56,6 +61,7 @@ BaseType_t mflash_init(mflash_file_t *user_file_table, bool init_drv)
         mflash_drv_init();
     }
 
+    g_mflash_initialized = true;
     return pdTRUE;
 }
 

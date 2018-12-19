@@ -1,14 +1,12 @@
 <map id="erpc_transport.h" name="erpc_transport.h">
 <area shape="rect" id="node2" href="$erpc__codec_8h.html" title="erpc_codec.h" alt="" coords="399,87,499,114"/>
 <area shape="rect" id="node5" href="$erpc__transport__arbitrator_8h.html" title="erpc_transport_arbitrator.h" alt="" coords="5,266,180,293"/>
-<area shape="rect" id="node11" href="$erpc__framed__transport_8h.html" title="erpc_framed_transport.h" alt="" coords="1194,87,1357,114"/>
-<area shape="rect" id="node19" href="$erpc__message__loggers_8h.html" title="erpc_message_loggers.h" alt="" coords="1381,87,1548,114"/>
-<area shape="rect" id="node20" href="$erpc__inter__thread__buffer__transport_8h.html" title="erpc_inter_thread_buffer\l_transport.h" alt="" coords="1573,80,1733,121"/>
-<area shape="rect" id="node21" href="$erpc__mu__transport_8h.html" title="erpc_mu_transport.h" alt="" coords="1757,87,1898,114"/>
-<area shape="rect" id="node22" href="$erpc__rpmsg__linux__transport_8h_source.html" title="erpc_rpmsg_linux_transport.h" alt="" coords="1923,87,2116,114"/>
-<area shape="rect" id="node23" href="$erpc__rpmsg__lite__base__transport_8h.html" title="erpc_rpmsg_lite_base\l_transport.h" alt="" coords="2141,80,2290,121"/>
-<area shape="rect" id="node27" href="$rpmsg__linux__transport_8h_8_b_a_s_e_8h_source.html" title="rpmsg_linux_transport.h.\lBASE.h" alt="" coords="2314,80,2479,121"/>
-<area shape="rect" id="node28" href="$rpmsg__linux__transport_8h_8_r_e_m_o_t_e_8h_source.html" title="rpmsg_linux_transport.h.\lREMOTE.h" alt="" coords="2503,80,2669,121"/>
+<area shape="rect" id="node11" href="$erpc__framed__transport_8h.html" title="erpc_framed_transport.h" alt="" coords="1097,87,1259,114"/>
+<area shape="rect" id="node19" href="$erpc__message__loggers_8h.html" title="erpc_message_loggers.h" alt="" coords="1284,87,1451,114"/>
+<area shape="rect" id="node20" href="$erpc__inter__thread__buffer__transport_8h.html" title="erpc_inter_thread_buffer\l_transport.h" alt="" coords="1475,80,1635,121"/>
+<area shape="rect" id="node21" href="$erpc__mu__transport_8h.html" title="erpc_mu_transport.h" alt="" coords="1659,87,1801,114"/>
+<area shape="rect" id="node22" href="$erpc__rpmsg__linux__transport_8h_source.html" title="erpc_rpmsg_linux_transport.h" alt="" coords="1825,87,2019,114"/>
+<area shape="rect" id="node23" href="$erpc__rpmsg__lite__base__transport_8h.html" title="erpc_rpmsg_lite_base\l_transport.h" alt="" coords="2147,80,2297,121"/>
 <area shape="rect" id="node3" href="$erpc__client__manager_8h.html" title="erpc_client_manager.h" alt="" coords="201,177,355,203"/>
 <area shape="rect" id="node8" href="$erpc__basic__codec_8h.html" title="erpc_basic_codec.h" alt="" coords="379,177,518,203"/>
 <area shape="rect" id="node9" href="$erpc__server_8h.html" title="erpc_server.h" alt="" coords="542,177,641,203"/>

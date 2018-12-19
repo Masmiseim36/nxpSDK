@@ -53,9 +53,6 @@ var hierarchy =
         [ "erpc::RPMsgTTYRTOSTransport", "classerpc_1_1_r_p_msg_t_t_y_r_t_o_s_transport.html", null ]
       ] ],
       [ "erpc::RPMsgLinuxTransport", "classerpc_1_1_r_p_msg_linux_transport.html", null ],
-      [ "erpc::RPMsgLinuxTransport", "classerpc_1_1_r_p_msg_linux_transport.html", null ],
-      [ "erpc::RPMsgLinuxTransport", "classerpc_1_1_r_p_msg_linux_transport.html", null ],
-      [ "erpc::RPMsgLinuxTransport", "classerpc_1_1_r_p_msg_linux_transport.html", null ],
       [ "erpc::TransportArbitrator", "classerpc_1_1_transport_arbitrator.html", null ]
     ] ],
     [ "erpc::TransportFactory", "classerpc_1_1_transport_factory.html", null ]

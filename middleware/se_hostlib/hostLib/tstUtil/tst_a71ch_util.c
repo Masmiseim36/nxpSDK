@@ -3,28 +3,15 @@
  * @author NXP Semiconductors
  * @version 1.0
  * @par License
- * Copyright(C) NXP Semiconductors, 2016
- * All rights reserved.
+ * Copyright 2016 NXP
  *
- * Software that is described herein is for illustrative purposes only
- * which provides customers with programming information regarding the
- * A7-series security ICs.  This software is supplied "AS IS" without any
- * warranties of any kind, and NXP Semiconductors and its licensor disclaim any and
- * all warranties, express or implied, including all implied warranties of
- * merchantability, fitness for a particular purpose and non-infringement of
- * intellectual property rights.  NXP Semiconductors assumes no responsibility
- * or liability for the use of the software, conveys no license or rights under any
- * patent, copyright, mask work right, or any other intellectual property rights in
- * or to any products. NXP Semiconductors reserves the right to make changes
- * in the software without notification. NXP Semiconductors also makes no
- * representation or warranty that such application will be suitable for the
- * specified use without further testing or modification.
- *
- * Permission to use, copy and modify this software is hereby granted,
- * under NXP Semiconductors' and its licensor's relevant copyrights in
- * the software, without fee, provided that it is used in conjunction with
- * NXP Semiconductors products. This copyright, permission, and disclaimer notice
- * must appear in all copies of this code.
+ * This software is owned or controlled by NXP and may only be used
+ * strictly in accordance with the applicable license terms.  By expressly
+ * accepting such terms or by downloading, installing, activating and/or
+ * otherwise using the software, you are agreeing that you have read, and
+ * that you agree to comply with and are bound by, such license terms.  If
+ * you do not agree to be bound by the applicable license terms, then you
+ * may not retain, install, activate or otherwise use the software.
  *
  * @par Description
  * This module implements test bench utility functions specific to the a71ch
@@ -76,22 +63,22 @@ U8 a71chInitModule(U8 initMode)
     U8 response[256];
     U16 responseLen = sizeof(response);
 
-    printf("\na71chInitModule(%s)\n", getInitModeAsString(initMode));
+    PRINTF("\na71chInitModule(%s)\n", getInitModeAsString(initMode));
 
     resetMode = initMode & INIT_MODE_RESET_MASK;
 
     switch(resetMode)
     {
     case INIT_MODE_PATTERN_RESET:
-        printf("Reset A71CH.\n");
+        PRINTF("Reset A71CH.\n");
         err = A71_DbgReset();
         result &= AX_CHECK_SW(err, SW_OK, "Failed to reset module");
         break;
     case INIT_MODE_PATTERN_RESET_SELECT:
-        printf("Reset A71CH.\n");
+        PRINTF("Reset A71CH.\n");
         err = A71_DbgReset();
         result &= AX_CHECK_SW(err, SW_OK, "Failed to reset module");
-        printf("Select applet.\n");
+        PRINTF("Select applet.\n");
         err = GP_Select(appletName, appletNameLen, response, &responseLen);
         result &= AX_CHECK_SW(err, SW_OK, "Failed to select applet");
         break;
@@ -177,7 +164,7 @@ const char* getInitModeAsString(U8 initMode)
     }
     else
     {
-        printf("initMode not defined\n");
+        PRINTF("initMode not defined\n");
         assert(0);
         return "not defined";
     }
@@ -207,7 +194,7 @@ U8 a71chSetupScp03()
     U8 sCounter[3];
     U16 sCounterLen = sizeof(sCounter);
 
-    printf( "\n-----------\nStart a71chSetupScp03()\n------------\n");
+    PRINTF( "\n-----------\nStart a71chSetupScp03()\n------------\n");
 
     DEV_ClearChannelState();
 
@@ -235,7 +222,7 @@ U8 a71chSetupScp03()
     result &= AX_CHECK_U16(sCounterLen, 0, "Only expected when SCP03 is configured for pseudo-random challenge");
 
 SCP03_EXIT:
-    printf( "\n-----------\nEnd a71chSetupScp03(), result = %s\n------------\n",
+    PRINTF( "\n-----------\nEnd a71chSetupScp03(), result = %s\n------------\n",
         ((result == 1)? "OK": "FAILED"));
 #endif
     return result;
@@ -266,24 +253,24 @@ U8 a71chShowModuleInfo(U8 *scpState)
 
     if (err == SW_OK)
     {
-        printf("A71CH in %s\n", (debugOn == 0) ? "Production Version" : "Debug Mode Version");
-        printf("selectResponse:  0x%04X\n", selectResponse);
+        PRINTF("A71CH in %s\n", (debugOn == 0) ? "Production Version" : "Debug Mode Version");
+        PRINTF("selectResponse:  0x%04X\n", selectResponse);
         if (restrictedKpIdx != A71CH_NO_RESTRICTED_KP)
         {
-            printf("restricted keypair index: 0x%02X\n", restrictedKpIdx);
+            PRINTF("restricted keypair index: 0x%02X\n", restrictedKpIdx);
         }
-        printf("transportLockState: 0x%02X (%s)\n", transportLockState,
+        PRINTF("transportLockState: 0x%02X (%s)\n", transportLockState,
             (transportLockState == A71CH_TRANSPORT_LOCK_STATE_LOCKED) ? "Transport Lock is set" :
             (transportLockState == A71CH_TRANSPORT_LOCK_STATE_UNLOCKED) ? "Open device, Transport Lock can no longer be set" :
             (transportLockState == A71CH_TRANSPORT_LOCK_STATE_ALLOW_LOCK) ? "Transport Lock NOT YET set" : "Undefined Transport Lock state");
-        printf("scpState: 0x%02X (%s)\n", *scpState,
+        PRINTF("scpState: 0x%02X (%s)\n", *scpState,
             (*scpState == A71CH_SCP_MANDATORY) ? "SCP is mandatory" :
             (*scpState == A71CH_SCP_NOT_SET_UP) ? "SCP is not set up" :
             (*scpState == A71CH_SCP_KEYS_SET) ? "SCP keys set" : "Undefined SCP state");
-        printf("injectLockState: 0x%02X (%s)\n", injectLockState,
+        PRINTF("injectLockState: 0x%02X (%s)\n", injectLockState,
             (injectLockState == A71CH_INJECT_LOCK_STATE_LOCKED) ? "Locked" :
             (injectLockState == A71CH_INJECT_LOCK_STATE_UNLOCKED) ? "Unlocked" : "Undefined Inject Lock State");
-        printf("gpStorageSize:   %d\n", gpStorageSize);
+        PRINTF("gpStorageSize:   %d\n", gpStorageSize);
     }
     return result;
 }

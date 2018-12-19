@@ -1,37 +1,11 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
-
+
 /* clang-format off */
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
@@ -53,25 +27,25 @@ processor_version: 0.0.8
 
 /* clang-format off */
 /*
- * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
-BOARD_InitPins:
-- options: {callFromInitBoot: 'true', coreID: core0, enableClock: 'true'}
-- pin_list:
-  - {pin_num: F13, peripheral: GPIOB, signal: 'GPIO, 5', pin_signal: PTB5/FTM2_FLT0, slew_rate: fast, open_drain: disable, pull_select: up, pull_enable: enable}
-  - {pin_num: K11, peripheral: SDHC, signal: 'D, 1', pin_signal: PTA24/LPUART2_TX/SDHC0_D1/FB_A15/SDRAM_D15/FB_A29/I2S1_TX_BCLK, slew_rate: fast, open_drain: disable,
-    pull_select: up, pull_enable: enable}
-  - {pin_num: J11, peripheral: SDHC, signal: 'D, 0', pin_signal: PTA25/LPUART2_RX/SDHC0_D0/FB_A14/SDRAM_D14/FB_A28/I2S1_TX_FS, slew_rate: fast, open_drain: disable,
-    pull_select: up, pull_enable: enable}
-  - {pin_num: J10, peripheral: SDHC, signal: DCLK, pin_signal: PTA26/LPUART2_CTS_b/SDHC0_DCLK/FB_A13/SDRAM_D13/FB_A27/I2S1_TXD0, slew_rate: fast, open_drain: disable,
-    pull_select: up, pull_enable: enable}
-  - {pin_num: H13, peripheral: SDHC, signal: CMD, pin_signal: PTA27/LPUART2_RTS_b/SDHC0_CMD/FB_A12/SDRAM_D12/FB_A26/I2S1_TXD1, slew_rate: fast, open_drain: disable,
-    pull_select: up, pull_enable: enable}
-  - {pin_num: H12, peripheral: SDHC, signal: 'D, 3', pin_signal: PTA28/LPUART3_TX/SDHC0_D3/FB_A25/I2S1_RXD1, slew_rate: fast, open_drain: disable, pull_select: up,
-    pull_enable: enable}
-  - {pin_num: H11, peripheral: SDHC, signal: 'D, 2', pin_signal: PTA29/LPUART3_RX/SDHC0_D2/FB_A24/I2S1_RXD0, slew_rate: fast, open_drain: disable, pull_select: up,
-    pull_enable: enable}
-  - {pin_num: B7, peripheral: LPUART0, signal: TX, pin_signal: PTC24/LPUART0_TX/FB_A5/SDRAM_D5/QSPI0A_DATA3}
-  - {pin_num: A7, peripheral: LPUART0, signal: RX, pin_signal: PTC25/LPUART0_RX/FB_A4/SDRAM_D4/QSPI0A_SCLK}
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+BOARD_InitPins:
+- options: {callFromInitBoot: 'true', coreID: core0, enableClock: 'true'}
+- pin_list:
+  - {pin_num: F13, peripheral: GPIOB, signal: 'GPIO, 5', pin_signal: PTB5/FTM2_FLT0, slew_rate: fast, open_drain: disable, pull_select: up, pull_enable: enable}
+  - {pin_num: K11, peripheral: SDHC, signal: 'D, 1', pin_signal: PTA24/LPUART2_TX/SDHC0_D1/FB_A15/SDRAM_D15/FB_A29/I2S1_TX_BCLK, slew_rate: fast, open_drain: disable,
+    pull_select: up, pull_enable: enable}
+  - {pin_num: J11, peripheral: SDHC, signal: 'D, 0', pin_signal: PTA25/LPUART2_RX/SDHC0_D0/FB_A14/SDRAM_D14/FB_A28/I2S1_TX_FS, slew_rate: fast, open_drain: disable,
+    pull_select: up, pull_enable: enable}
+  - {pin_num: J10, peripheral: SDHC, signal: DCLK, pin_signal: PTA26/LPUART2_CTS_b/SDHC0_DCLK/FB_A13/SDRAM_D13/FB_A27/I2S1_TXD0, slew_rate: fast, open_drain: disable,
+    pull_select: up, pull_enable: enable}
+  - {pin_num: H13, peripheral: SDHC, signal: CMD, pin_signal: PTA27/LPUART2_RTS_b/SDHC0_CMD/FB_A12/SDRAM_D12/FB_A26/I2S1_TXD1, slew_rate: fast, open_drain: disable,
+    pull_select: up, pull_enable: enable}
+  - {pin_num: H12, peripheral: SDHC, signal: 'D, 3', pin_signal: PTA28/LPUART3_TX/SDHC0_D3/FB_A25/I2S1_RXD1, slew_rate: fast, open_drain: disable, pull_select: up,
+    pull_enable: enable}
+  - {pin_num: H11, peripheral: SDHC, signal: 'D, 2', pin_signal: PTA29/LPUART3_RX/SDHC0_D2/FB_A24/I2S1_RXD0, slew_rate: fast, open_drain: disable, pull_select: up,
+    pull_enable: enable}
+  - {pin_num: B7, peripheral: LPUART0, signal: TX, pin_signal: PTC24/LPUART0_TX/FB_A5/SDRAM_D5/QSPI0A_DATA3}
+  - {pin_num: A7, peripheral: LPUART0, signal: RX, pin_signal: PTC25/LPUART0_RX/FB_A4/SDRAM_D4/QSPI0A_SCLK}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */

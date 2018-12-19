@@ -502,6 +502,13 @@ static void bootloader_flash_init(void)
 #if !BL_DEVICE_IS_LPC_SERIES
     FTFx_CACHE_Init(g_bootloaderContext.allFlashCacheState);
 #endif
+#if BL_FEATURE_SUPPORT_DFLASH
+    check_available_dFlash();
+    if (g_bootloaderContext.dflashDriverInterface != NULL)
+    {
+        g_bootloaderContext.dflashDriverInterface->flash_init(g_bootloaderContext.dFlashState);
+    }
+#endif // BL_FEATURE_SUPPORT_DFLASH    
 }
 #endif // #if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
 

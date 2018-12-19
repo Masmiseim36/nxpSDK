@@ -5,14 +5,6 @@ The FTM / PDB demo application demonstrates how to use the FTM external trigger 
 PDB. FTM0 is configured as a complementary combined mode, and each channel output frequency is 16 KHz. The complementary
 channel dead time is 1 µs. The PDB pre-trigger works in back-to-back mode. The ADC0 and ADC1 work in single-end mode.
 The ADC0 uses channel 1 and channel 5, and ADC1 uses channel 1 and channel 7.
-
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
-
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -41,10 +33,16 @@ The ADC PDB demo application will print the following message to the terminal:
 
 ~~~~~~~~~~~~~~~~~
 Run pdb trig adc with flextimer demo.
+ADC Full Range: XXXX
 Input any character to start demo.
 ~~~~~~~~~~~~~~~~~~
 Input a character to the serial console to start the ADC PDB demo.
 The demo will then display 256 lines of information for the ADC conversion result.
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

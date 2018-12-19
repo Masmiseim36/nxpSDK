@@ -84,15 +84,15 @@ SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DDEBUG")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DCPU_MK64FN1M0VLL12")
 
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DFRDM_K64F")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DFREEDOM")
-
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DPRINTF_ADVANCED_ENABLE=1")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DFREESCALE_KSDK_BM")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DWOLFSSL_USER_SETTINGS")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DFRDM_K64F")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DFREEDOM")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -Og")
 
@@ -130,15 +130,15 @@ SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DNDEBUG")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DCPU_MK64FN1M0VLL12")
 
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DFRDM_K64F")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DFREEDOM")
-
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DPRINTF_ADVANCED_ENABLE=1")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DFREESCALE_KSDK_BM")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DWOLFSSL_USER_SETTINGS")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DFRDM_K64F")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DFREEDOM")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Os")
 
@@ -282,11 +282,23 @@ SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")
 
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} muldefs")
 
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Map=output.map")
+
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -mcpu=cortex-m4")
 
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -mfloat-abi=hard")
 
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -mfpu=fpv4-sp-d16")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} --defsym=__stack_size__=25000")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} --defsym=__heap_size__=40000")
 
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} --specs=nano.specs")
 
@@ -324,19 +336,31 @@ SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
 
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} muldefs")
 
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Map=output.map")
+
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mcpu=cortex-m4")
 
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mfloat-abi=hard")
 
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mfpu=fpv4-sp-d16")
 
-include_directories(${ProjDirPath}/../../../../../CMSIS/Include)
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
 
-include_directories(${ProjDirPath}/../../../../../devices)
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} --defsym=__stack_size__=25000")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} --defsym=__heap_size__=40000")
+
+include_directories(${ProjDirPath}/..)
 
 include_directories(${ProjDirPath}/../../..)
 
-include_directories(${ProjDirPath}/..)
+include_directories(${ProjDirPath}/../../../../../CMSIS/Include)
+
+include_directories(${ProjDirPath}/../../../../../devices)
 
 include_directories(${ProjDirPath}/../../../../../middleware/mmcau)
 
@@ -346,15 +370,17 @@ include_directories(${ProjDirPath}/../../../../../middleware/wolfssl/wolfssl/wol
 
 include_directories(${ProjDirPath}/../../../../../devices/MK64F12/drivers)
 
-include_directories(${ProjDirPath}/../../../../../devices/MK64F12/utilities/io)
-
 include_directories(${ProjDirPath}/../../../../../devices/MK64F12/utilities/str)
 
-include_directories(${ProjDirPath}/../../../../../devices/MK64F12/utilities/log)
-
-include_directories(${ProjDirPath}/../../../../../devices/MK64F12/utilities)
+include_directories(${ProjDirPath}/../../../../../devices/MK64F12/utilities/debug_console)
 
 include_directories(${ProjDirPath}/../../../../../devices/MK64F12)
+
+include_directories(${ProjDirPath}/../../../../../components/uart)
+
+include_directories(${ProjDirPath}/../../../../../components/serial_manager)
+
+include_directories(${ProjDirPath}/../../../../../components/lists)
 
 add_executable(wolfssl_selftest.elf 
 "${ProjDirPath}/../wolfssl_selftest.c"
@@ -367,45 +393,12 @@ add_executable(wolfssl_selftest.elf
 "${ProjDirPath}/../clock_config.h"
 "${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_rnga.c"
 "${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_rnga.h"
-"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_common.h"
-"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_common.c"
-"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_clock.h"
-"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_clock.c"
 "${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_uart.h"
 "${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_uart.c"
 "${ProjDirPath}/../../../../../middleware/mmcau/cau_api.h"
 "${ProjDirPath}/../../../../../middleware/mmcau/fsl_mmcau.h"
 "${ProjDirPath}/../../../../../middleware/mmcau/fsl_mmcau.c"
-"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_adapter.h"
-"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_utilities.h"
-"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_features.h"
-"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_controller.c"
-"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_controller.h"
-"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_flash.c"
-"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_flash.h"
-"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_cache.c"
-"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_cache.h"
-"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_flexnvm.c"
-"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_flexnvm.h"
-"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_flash.h"
-"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_gpio.h"
-"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_gpio.c"
-"${ProjDirPath}/../../../../../devices/MK64F12/utilities/io/fsl_io.c"
-"${ProjDirPath}/../../../../../devices/MK64F12/utilities/io/fsl_io.h"
-"${ProjDirPath}/../../../../../devices/MK64F12/utilities/log/fsl_log.c"
-"${ProjDirPath}/../../../../../devices/MK64F12/utilities/log/fsl_log.h"
-"${ProjDirPath}/../../../../../devices/MK64F12/utilities/str/fsl_str.c"
-"${ProjDirPath}/../../../../../devices/MK64F12/utilities/str/fsl_str.h"
-"${ProjDirPath}/../../../../../devices/MK64F12/utilities/fsl_debug_console.c"
-"${ProjDirPath}/../../../../../devices/MK64F12/utilities/fsl_debug_console.h"
-"${ProjDirPath}/../../../../../devices/MK64F12/utilities/fsl_debug_console_conf.h"
 "${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_port.h"
-"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_smc.h"
-"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_smc.c"
-"${ProjDirPath}/../../../../../devices/MK64F12/system_MK64F12.c"
-"${ProjDirPath}/../../../../../devices/MK64F12/system_MK64F12.h"
-"${ProjDirPath}/../../../../../devices/MK64F12/gcc/startup_MK64F12.S"
-"${ProjDirPath}/../../../../../devices/MK64F12/utilities/fsl_assert.c"
 "${ProjDirPath}/../../../../../middleware/wolfssl/wolfssl/callbacks.h"
 "${ProjDirPath}/../../../../../middleware/wolfssl/wolfssl/certs_test.h"
 "${ProjDirPath}/../../../../../middleware/wolfssl/wolfssl/crl.h"
@@ -536,6 +529,60 @@ add_executable(wolfssl_selftest.elf
 "${ProjDirPath}/../../../../../middleware/wolfssl/src/tls.c"
 "${ProjDirPath}/../../../../../middleware/wolfssl/wolfcrypt/src/port/nxp/ksdk_port.c"
 "${ProjDirPath}/../../../../../middleware/wolfssl/wolfssl/wolfcrypt/port/nxp/ksdk_port.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_adapter.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_utilities.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_features.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_controller.c"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_controller.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_flash.c"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_flash.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_cache.c"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_cache.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_flexnvm.c"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_flexnvm.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_flash.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_gpio.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_gpio.c"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_clock.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_clock.c"
+"${ProjDirPath}/../../../../../devices/MK64F12/utilities/str/fsl_str.c"
+"${ProjDirPath}/../../../../../devices/MK64F12/utilities/str/fsl_str.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/utilities/debug_console/fsl_debug_console.c"
+"${ProjDirPath}/../../../../../devices/MK64F12/utilities/debug_console/fsl_debug_console.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/utilities/debug_console/fsl_debug_console_conf.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_smc.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_smc.c"
+"${ProjDirPath}/../../../../../devices/MK64F12/fsl_device_registers.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/MK64F12.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/MK64F12_features.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/system_MK64F12.c"
+"${ProjDirPath}/../../../../../devices/MK64F12/system_MK64F12.h"
+"${ProjDirPath}/../../../../../components/uart/uart.h"
+"${ProjDirPath}/../../../../../components/uart/uart_adapter.c"
+"${ProjDirPath}/../../../../../components/serial_manager/serial_manager.h"
+"${ProjDirPath}/../../../../../components/serial_manager/serial_manager.c"
+"${ProjDirPath}/../../../../../components/serial_manager/serial_port_uart.h"
+"${ProjDirPath}/../../../../../components/serial_manager/serial_port_uart.c"
+"${ProjDirPath}/../../../../../components/lists/generic_list.h"
+"${ProjDirPath}/../../../../../components/lists/generic_list.c"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_common.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_common.c"
+"${ProjDirPath}/../../../../../devices/MK64F12/gcc/startup_MK64F12.S"
+"${ProjDirPath}/../../../../../devices/MK64F12/utilities/fsl_assert.c"
+"${ProjDirPath}/../../../../../CMSIS/Include/core_cm4.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armcc.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armclang.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_gcc.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_compiler.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_version.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv7.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/core_armv8mbl.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/core_armv8mml.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/arm_common_tables.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/arm_const_structs.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/arm_math.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_iccarm.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv8.h"
 )
 
 

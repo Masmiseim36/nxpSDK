@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
  * Copyright 2016 - 2017 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "usb_host_config.h"
@@ -301,16 +275,20 @@ static void _USB_HostKhciAttach(usb_khci_host_state_struct_t *usbHostPointer)
     {
     }
 
-    usbHostPointer->usbRegBase->CTL |= USB_CTL_USBENSOFEN_MASK;
 
     usbHostPointer->usbRegBase->ISTAT = 0xffU;
     usbHostPointer->usbRegBase->INTEN &= (~(USB_INTEN_TOKDNEEN_MASK | USB_INTEN_USBRSTEN_MASK));
 
     /* Do USB bus reset here */
     usbHostPointer->usbRegBase->CTL |= USB_CTL_RESET_MASK;
-    _USB_HostKhciDelay(usbHostPointer, 30U);
+    /* here wait for about at least 30ms to reset device  */
+    for (volatile uint32_t i = 0U; i < 500000U; i++)
+    {
+        __ASM("nop");
+    }
     usbHostPointer->usbRegBase->CTL &= (~USB_CTL_RESET_MASK);
-
+    
+    usbHostPointer->usbRegBase->CTL |= USB_CTL_USBENSOFEN_MASK;
 #ifdef USBCFG_OTG
     _USB_HostKhciDelay(usbHostPointer, 30U);
 #else
@@ -400,6 +378,8 @@ static void _USB_HostKhciDetach(usb_khci_host_state_struct_t *usbHostPointer)
     usbHostPointer->usbRegBase->CTL |= USB_CTL_ODDRST_MASK;
 
     usbHostPointer->usbRegBase->CTL = USB_CTL_HOSTMODEEN_MASK;
+    /*disable sof*/
+    usbHostPointer->usbRegBase->CTL &= ~USB_CTL_USBENSOFEN_MASK;
 
     usbHostPointer->txBd = 0U;
     usbHostPointer->rxBd = 0U;
@@ -642,7 +622,7 @@ static usb_status_t _USB_HostKhciLinkTrRequestToList(usb_host_controller_handle 
 }
 
 /*!
- * @brief khci process tranfer callback function.
+ * @brief khci process transfer callback function.
  *
  * @param controllerHandle           Pointer of the host khci controller handle.
  * @param transfer                      Pointer of transfer , which will be process callback.
@@ -893,7 +873,7 @@ static int32_t _USB_HostKhciTransactionDone(usb_khci_host_state_struct_t *usbHos
  * @param bufPointer            The memory address is needed to be transferred.
  * @param len                      Transferred data length.
  *
- * @return 0 mean sucess or other opertor failure error code.
+ * @return 0 mean success or other operator  failure error code.
  *
  */
 static int32_t _USB_HostKhciAtomNonblockingTransaction(usb_khci_host_state_struct_t *usbHostPointer,
@@ -941,7 +921,7 @@ static int32_t _USB_HostKhciAtomNonblockingTransaction(usb_khci_host_state_struc
 
     transferResult = 0U;
     counter = 0U;
-    /* wait for USB conttoller is ready, and with timeout */
+    /* wait for USB controller is ready, and with timeout */
     while ((usbHostPointer->usbRegBase->CTL) & USB_CTL_TXSUSPENDTOKENBUSY_MASK)
     {
         _USB_HostKhciDelay(usbHostPointer, 1U);
@@ -1031,7 +1011,7 @@ static int32_t _USB_HostKhciAtomNonblockingTransaction(usb_khci_host_state_struc
 }
 
 /*!
- * @brief khci host start tramsfer.
+ * @brief khci host start transfer.
  *
  * @param handle           Pointer of the host khci controller handle.
  * @param transfer      Pointer of transfer node struct, which will transfer.
@@ -1120,7 +1100,7 @@ static khci_tr_state_t _USB_HostKhciStartTranfer(usb_host_controller_handle hand
 }
 
 /*!
- * @brief khci host finish tramsfer.
+ * @brief khci host finish transfer.
  *
  * @param handle           Pointer of the host khci controller handle.
  * @param transfer      Pointer of transfer node struct, which will be transfer.
@@ -2064,7 +2044,7 @@ static usb_status_t _USB_HostKhciBusControl(usb_host_controller_handle handle, u
  * @param ioctlEvent          please reference to enumeration host_busControl_t.
  * @param ioctlParam         the control parameter.
  *
- * @retval kStatus_USB_Success                io ctrol successfully.
+ * @retval kStatus_USB_Success                io control successfully.
  * @retval kStatus_USB_InvalidHandle        The controllerHandle is a NULL pointer.
  */
 usb_status_t USB_HostKciIoctl(usb_host_controller_handle controllerHandle, uint32_t ioctlEvent, void *ioctlParam)

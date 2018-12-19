@@ -19,6 +19,8 @@ typedef struct {
 #define MFLASH_FILE_BASEADDR     (0x00580000)
 #define MFLASH_FILE_SIZE         MFLASH_SECTOR_SIZE
 
+bool mflash_is_initialized(void);
+
 BaseType_t mflash_init(
     mflash_file_t *user_file_table,
     bool init_drv

@@ -3,41 +3,20 @@
   * @file    lwipopts.h
   * This file is based on \src\include\lwip\opt.h
   ******************************************************************************
-.. * The Clear BSD License
    * Copyright (c) 2013-2016, Freescale Semiconductor, Inc.
-   * Copyright 2016-2017 NXP
+   * Copyright 2016-2018 NXP
    * All rights reserved.
    *
-   * Redistribution and use in source and binary forms, with or without modification,
-   * are permitted (subject to the limitations in the disclaimer below) provided
-   * that the following conditions are met:
-   *
-   * o Redistributions of source code must retain the above copyright notice, this list
-   *   of conditions and the following disclaimer.
-   *
-   * o Redistributions in binary form must reproduce the above copyright notice, this
-   *   list of conditions and the following disclaimer in the documentation and/or
-   *   other materials provided with the distribution.
-   *
-   * o Neither the name of the copyright holder nor the names of its
-   *   contributors may be used to endorse or promote products derived from this
-   *   software without specific prior written permission.
-   *
-   * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
-   * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-   * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-   * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-   * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
-   * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-   * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-   * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
-   * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-   * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-   * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+   * SPDX-License-Identifier: BSD-3-Clause
    */
 
 #ifndef __LWIPOPTS_H__
 #define __LWIPOPTS_H__
+
+/* Enable IGMP and MDNS */
+#define LWIP_IGMP 1
+#define LWIP_MDNS_RESPONDER 1
+#define LWIP_NUM_NETIF_CLIENT_DATA (LWIP_MDNS_RESPONDER)
 
 #if USE_RTOS
 
@@ -109,7 +88,7 @@
 /* MEMP_NUM_UDP_PCB: the number of UDP protocol control blocks. One
    per active UDP "connection". */
 #ifndef MEMP_NUM_UDP_PCB
-#define MEMP_NUM_UDP_PCB 6
+#define MEMP_NUM_UDP_PCB 7
 #endif
 /* MEMP_NUM_TCP_PCB: the number of simulatenously active TCP
    connections. */
@@ -181,6 +160,12 @@
 /* Enable backlog*/
 #ifndef TCP_LISTEN_BACKLOG
 #define TCP_LISTEN_BACKLOG 1
+#endif
+
+/* ---------- Network Interfaces options ---------- */
+/* Support netif api (in netifapi.c). */
+#ifndef LWIP_NETIF_API
+#define LWIP_NETIF_API 1
 #endif
 
 /* ---------- ICMP options ---------- */

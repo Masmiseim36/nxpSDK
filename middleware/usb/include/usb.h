@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #ifndef __USB_H__
@@ -42,6 +16,8 @@
 #include "usb_misc.h"
 #include "usb_spec.h"
 
+
+
 /*!
  * @addtogroup usb_drv
  * @{
@@ -53,12 +29,17 @@
 /*! @brief Defines USB stack major version */
 #define USB_STACK_VERSION_MAJOR (2U)
 /*! @brief Defines USB stack minor version */
-#define USB_STACK_VERSION_MINOR (0U)
+#define USB_STACK_VERSION_MINOR (1U)
 /*! @brief Defines USB stack bugfix version */
-#define USB_STACK_VERSION_BUGFIX (1U)
+#define USB_STACK_VERSION_BUGFIX (0U)
 
 /*! @brief USB stack version definition */
 #define USB_MAKE_VERSION(major, minor, bugfix) (((major) << 16) | ((minor) << 8) | (bugfix))
+
+#define MAKE_VERSION(major, minor, bugfix) (((major) << 16) | ((minor) << 8) | (bugfix))
+
+/*! @brief USB stack component version definition, changed with component in yaml together */
+#define USB_STACK_COMPONENT_VERSION MAKE_VERSION(2,1,0)
 
 /*! @brief USB error code */
 typedef enum _usb_status
@@ -124,6 +105,10 @@ typedef enum _usb_controller_index
     kUSB_ControllerIp3516Hs1 =
         11U, /*!< IP3516HS 1U, Currently, there are no platforms which have two IP3516HS IPs, this is reserved
            to be used in the future. */
+    kUSB_ControllerDwc30 = 12U, /*!< DWC3 0U */
+    kUSB_ControllerDwc31 =
+        13U, /*!< DWC3 1U Currently, there are no platforms which have two Dwc IPs, this is reserved
+           to be used in the future.*/
 } usb_controller_index_t;
 
 /**

@@ -45,6 +45,9 @@ typedef struct CommandProcessorData
         uint32_t dataBytesAvailable; //!< Number of bytes available at data pointer
         uint8_t commandTag;          //!< Tag of command running data phase
         uint8_t option;              //!< option for special command
+        uint32_t argument0;          //!< argument0 for special command
+        uint32_t argument1;          //!< arugment1 for special command
+        uint32_t argument2;          //!< arugment2 for special command
 
 #if defined(__cplusplus)
         DataPhase()
@@ -54,6 +57,8 @@ typedef struct CommandProcessorData
             , dataBytesAvailable(0)
             , commandTag(0)
             , option(0)
+            , argument0(0)
+            , argument1(1)
         {
         }
 #endif

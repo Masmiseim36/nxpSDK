@@ -2,12 +2,21 @@
 <ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
   <externalDefinitions>
     <definition extID="com.nxp.mcuxpresso"/>
+    <definition extID="RTE_Device.MK22F51212"/>
+    <definition extID="component.lists.MK22F51212"/>
+    <definition extID="component.serial_manager.MK22F51212"/>
+    <definition extID="component.serial_manager_uart.MK22F51212"/>
+    <definition extID="component.uart_adapter.MK22F51212"/>
+    <definition extID="device.MK22F51212_CMSIS.MK22F51212"/>
+    <definition extID="device.MK22F51212_startup.MK22F51212"/>
+    <definition extID="driver.ft6x06.MK22F51212"/>
+    <definition extID="driver.ili9341.MK22F51212"/>
     <definition extID="middleware.emwin.MK22F51212"/>
     <definition extID="platform.CMSIS_Driver_Include.Common_CMSISInclude.MK22F51212"/>
     <definition extID="platform.CMSIS_Driver_Include.I2C_CMSISInclude.MK22F51212"/>
     <definition extID="platform.CMSIS_Driver_Include.SPI_CMSISInclude.MK22F51212"/>
-    <definition extID="platform.devices.MK22F51212_CMSIS.MK22F51212"/>
-    <definition extID="platform.devices.MK22F51212_startup.MK22F51212"/>
+    <definition extID="platform.Include_common.MK22F51212"/>
+    <definition extID="platform.Include_core_cm4.MK22F51212"/>
     <definition extID="platform.drivers.clock.MK22F51212"/>
     <definition extID="platform.drivers.common.MK22F51212"/>
     <definition extID="platform.drivers.dmamux.MK22F51212"/>
@@ -15,23 +24,22 @@
     <definition extID="platform.drivers.dspi_cmsis.MK22F51212"/>
     <definition extID="platform.drivers.dspi_edma.MK22F51212"/>
     <definition extID="platform.drivers.edma.MK22F51212"/>
-    <definition extID="platform.drivers.flash.MK22F51212"/>
     <definition extID="platform.drivers.gpio.MK22F51212"/>
     <definition extID="platform.drivers.i2c.MK22F51212"/>
-    <definition extID="platform.drivers.i2c_cmsis.MK22F51212"/>
+    <definition extID="platform.drivers.i2c_cmsis_edma.MK22F51212"/>
     <definition extID="platform.drivers.i2c_edma.MK22F51212"/>
     <definition extID="platform.drivers.lpuart.MK22F51212"/>
     <definition extID="platform.drivers.port.MK22F51212"/>
     <definition extID="platform.drivers.smc.MK22F51212"/>
     <definition extID="platform.drivers.uart.MK22F51212"/>
     <definition extID="platform.utilities.assert.MK22F51212"/>
-    <definition extID="platform.utilities.debug_console.MK22F51212"/>
+    <definition extID="utility.debug_console.MK22F51212"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
-    <definition extID="mcuxpresso"/>
     <definition extID="armgcc"/>
+    <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmk22f_emwin_gui_demo" name="emwin_gui_demo" category="emwin_examples" dependency="platform.drivers.port.MK22F51212 platform.drivers.common.MK22F51212 platform.drivers.clock.MK22F51212 platform.drivers.gpio.MK22F51212 platform.drivers.lpuart.MK22F51212 platform.drivers.edma.MK22F51212 platform.drivers.dmamux.MK22F51212 platform.drivers.dspi.MK22F51212 platform.drivers.dspi_edma.MK22F51212 platform.drivers.dspi_cmsis.MK22F51212 platform.CMSIS_Driver_Include.SPI_CMSISInclude.MK22F51212 platform.CMSIS_Driver_Include.Common_CMSISInclude.MK22F51212 platform.drivers.i2c.MK22F51212 platform.drivers.i2c_edma.MK22F51212 platform.drivers.i2c_cmsis.MK22F51212 platform.CMSIS_Driver_Include.I2C_CMSISInclude.MK22F51212 platform.drivers.flash.MK22F51212 platform.devices.MK22F51212_CMSIS.MK22F51212 platform.devices.MK22F51212_startup.MK22F51212 platform.drivers.uart.MK22F51212 platform.drivers.smc.MK22F51212 platform.utilities.debug_console.MK22F51212 platform.utilities.assert.MK22F51212 middleware.emwin.MK22F51212" toolchain="mdk iar armgcc mcuxpresso">
+  <example id="frdmk22f_emwin_gui_demo" name="emwin_gui_demo" category="emwin_examples" dependency="driver.ili9341.MK22F51212 driver.ft6x06.MK22F51212 platform.drivers.port.MK22F51212 platform.drivers.clock.MK22F51212 platform.drivers.gpio.MK22F51212 platform.drivers.lpuart.MK22F51212 platform.drivers.edma.MK22F51212 platform.drivers.dmamux.MK22F51212 platform.drivers.dspi.MK22F51212 platform.drivers.dspi_edma.MK22F51212 platform.drivers.dspi_cmsis.MK22F51212 platform.drivers.i2c.MK22F51212 platform.drivers.i2c_edma.MK22F51212 platform.drivers.i2c_cmsis_edma.MK22F51212 middleware.emwin.MK22F51212 platform.drivers.common.MK22F51212 device.MK22F51212_CMSIS.MK22F51212 utility.debug_console.MK22F51212 component.uart_adapter.MK22F51212 component.serial_manager.MK22F51212 component.serial_manager_uart.MK22F51212 platform.drivers.uart.MK22F51212 component.lists.MK22F51212 device.MK22F51212_startup.MK22F51212 platform.drivers.smc.MK22F51212 platform.utilities.assert.MK22F51212 platform.CMSIS_Driver_Include.I2C_CMSISInclude.MK22F51212 platform.CMSIS_Driver_Include.Common_CMSISInclude.MK22F51212 platform.Include_core_cm4.MK22F51212 platform.Include_common.MK22F51212 platform.CMSIS_Driver_Include.SPI_CMSISInclude.MK22F51212 RTE_Device.MK22F51212" toolchain="iar mdk armgcc mcuxpresso">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -45,12 +53,6 @@
         </option>
         <option id="com.crt.advproject.c.misc.dialect" type="enum">
           <value>com.crt.advproject.misc.dialect.gnu99</value>
-        </option>
-        <option id="com.crt.advproject.gcc.exe.debug.option.debugging.level" type="enum">
-          <value>gnu.c.debugging.level.default</value>
-        </option>
-        <option id="com.crt.advproject.gcc.exe.release.option.debugging.level" type="enum">
-          <value>gnu.c.debugging.level.default</value>
         </option>
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
           <value>CPU_MK22FN512VLH12</value>
@@ -71,40 +73,33 @@
         </option>
       </toolchainSetting>
     </toolchainSettings>
-    <source path="boards/frdmk22f/emwin_examples/emwin_gui_demo" target_path="board/src" type="c_include">
-      <files mask="board.h"/>
-      <files mask="clock_config.h"/>
+    <source path="boards/frdmk22f/emwin_examples/emwin_gui_demo/armgcc" target_path="src" type="linker" toolchain="armgcc">
+      <files mask="MK22FN512xxx12_flash.ld"/>
     </source>
-    <source path="boards/frdmk22f/emwin_examples/emwin_gui_demo" target_path="board/src" type="src">
-      <files mask="board.c"/>
-      <files mask="clock_config.c"/>
+    <source path="boards/frdmk22f/emwin_examples/emwin_gui_demo/iar" target_path="src" type="linker" toolchain="iar">
+      <files mask="MK22FN512xxx12_flash.icf"/>
+    </source>
+    <source path="boards/frdmk22f/emwin_examples/emwin_gui_demo/mdk" target_path="src" type="linker" toolchain="mdk">
+      <files mask="MK22FN512xxx12_flash.scf"/>
     </source>
     <source path="boards/frdmk22f/emwin_examples/emwin_gui_demo" target_path="board" type="c_include">
       <files mask="RTE_Device.h"/>
+      <files mask="board.h"/>
+      <files mask="clock_config.h"/>
       <files mask="emwin_support.h"/>
       <files mask="pin_mux.h"/>
     </source>
     <source path="boards/frdmk22f/emwin_examples/emwin_gui_demo" target_path="board" type="src">
+      <files mask="board.c"/>
+      <files mask="clock_config.c"/>
       <files mask="emwin_support.c"/>
       <files mask="pin_mux.c"/>
     </source>
-    <source path="boards/frdmk22f/emwin_examples/emwin_gui_demo" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso">
+    <source path="boards/frdmk22f/emwin_examples/emwin_gui_demo" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso armgcc">
       <files mask="readme.txt"/>
-    </source>
-    <source path="boards/frdmk22f/emwin_examples/emwin_gui_demo" target_path="lcd" type="c_include">
-      <files mask="fsl_ili9341.h"/>
-    </source>
-    <source path="boards/frdmk22f/emwin_examples/emwin_gui_demo" target_path="lcd" type="src">
-      <files mask="fsl_ili9341.c"/>
     </source>
     <source path="boards/frdmk22f/emwin_examples/emwin_gui_demo" target_path="source" type="src">
       <files mask="emwin_gui_demo.c"/>
-    </source>
-    <source path="boards/frdmk22f/emwin_examples/emwin_gui_demo" target_path="touchpanel" type="c_include">
-      <files mask="fsl_ft6x06.h"/>
-    </source>
-    <source path="boards/frdmk22f/emwin_examples/emwin_gui_demo" target_path="touchpanel" type="src">
-      <files mask="fsl_ft6x06.c"/>
     </source>
   </example>
 </ksdk:examples>

@@ -20,7 +20,7 @@
 #endif
 
 /*!
- * @addtogroup CARD
+ * @addtogroup SDMMCHOST
  * @{
  */
 
@@ -101,11 +101,11 @@
 #define SDMMCHOST_CAPABILITY sdhc_capability_t
 #define SDMMCHOST_BOOT_CONFIG sdhc_boot_config_t
 
-#define CARD_DATA0_STATUS_MASK kSDHC_Data0LineLevelFlag
-#define CARD_DATA0_NOT_BUSY kSDHC_Data0LineLevelFlag
-#define CARD_DATA1_STATUS_MASK kSDHC_Data1LineLevelFlag
-#define CARD_DATA2_STATUS_MASK kSDHC_Data2LineLevelFlag
-#define CARD_DATA3_STATUS_MASK kSDHC_Data3LineLevelFlag
+#define CARD_DATA0_STATUS_MASK (kSDHC_Data0LineLevelFlag)
+#define CARD_DATA0_NOT_BUSY (kSDHC_Data0LineLevelFlag)
+#define CARD_DATA1_STATUS_MASK (kSDHC_Data1LineLevelFlag)
+#define CARD_DATA2_STATUS_MASK (kSDHC_Data2LineLevelFlag)
+#define CARD_DATA3_STATUS_MASK (kSDHC_Data3LineLevelFlag)
 
 #define kSDMMCHOST_DATABUSWIDTH1BIT kSDHC_DataBusWidth1Bit /*!< 1-bit mode */
 #define kSDMMCHOST_DATABUSWIDTH4BIT kSDHC_DataBusWidth4Bit /*!< 4-bit mode */
@@ -395,11 +395,11 @@ enum _host_capability
 #define SDMMCHOST_COMMAND usdhc_command_t
 #define SDMMCHOST_DATA usdhc_data_t
 #define SDMMCHOST_BOOT_CONFIG usdhc_boot_config_t
-#define CARD_DATA0_STATUS_MASK kUSDHC_Data0LineLevelFlag
-#define CARD_DATA1_STATUS_MASK kUSDHC_Data1LineLevelFlag
-#define CARD_DATA2_STATUS_MASK kUSDHC_Data2LineLevelFlag
-#define CARD_DATA3_STATUS_MASK kUSDHC_Data3LineLevelFlag
-#define CARD_DATA0_NOT_BUSY kUSDHC_Data0LineLevelFlag
+#define CARD_DATA0_STATUS_MASK (kUSDHC_Data0LineLevelFlag)
+#define CARD_DATA1_STATUS_MASK (kUSDHC_Data1LineLevelFlag)
+#define CARD_DATA2_STATUS_MASK (kUSDHC_Data2LineLevelFlag)
+#define CARD_DATA3_STATUS_MASK (kUSDHC_Data3LineLevelFlag)
+#define CARD_DATA0_NOT_BUSY (kUSDHC_Data0LineLevelFlag)
 
 #define SDMMCHOST_BUS_WIDTH_TYPE usdhc_data_bus_width_t
 #define SDMMCHOST_CAPABILITY usdhc_capability_t
@@ -732,5 +732,5 @@ void SDMMCHOST_Delay(uint32_t milliseconds);
 #if defined(__cplusplus)
 }
 #endif
-
+/* @} */
 #endif /* _FSL_SDMMC_HOST_H */

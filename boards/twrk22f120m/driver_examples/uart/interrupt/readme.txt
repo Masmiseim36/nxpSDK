@@ -5,15 +5,6 @@ API to receive data with interrupt method:
 
 In this example, one uart instance connect to PC through uart, the board will
 send back all characters that PC send to the board.
-
-Toolchain supported
-===================
-- IAR embedded Workbench 7.80.4
-- Keil MDK 5.21a
-- GCC ARM Embedded 2016-5.4-q3
-- Kinetis Development Studio IDE 3.2.0
-- MCUXpresso0.8
-
 Hardware requirements
 =====================
 - Micro USB cable
@@ -45,6 +36,11 @@ Uart functional interrupt example
 Board receives characters then sends them out
 Now please input:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

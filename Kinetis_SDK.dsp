@@ -6813,6 +6813,78 @@ SOURCE=.\devices\MIMXRT1052\cmsis_drivers\fsl_lpuart_cmsis.c
 SOURCE=.\devices\MIMXRT1052\cmsis_drivers\fsl_lpuart_cmsis.h
 # End Source File
 # End Group
+# Begin Group "1052 project_template"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1052\project_template\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1052\project_template\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1052\project_template\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1052\project_template\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1052\project_template\peripherals.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1052\project_template\peripherals.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1052\project_template\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1052\project_template\pin_mux.h
+# End Source File
+# End Group
+# Begin Group "1052 XiP"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1052\xip\evkbimxrt1050_flexspi_nor_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1052\xip\evkbimxrt1050_flexspi_nor_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1052\xip\evkbimxrt1050_sdram_ini_dcd.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1052\xip\evkbimxrt1050_sdram_ini_dcd.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1052\xip\fsl_flexspi_nor_boot.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1052\xip\fsl_flexspi_nor_boot.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1052\xip\fsl_flexspi_nor_flash.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MIMXRT1052\xip\fsl_flexspi_nor_flash.h
+# End Source File
+# End Group
 # Begin Source File
 
 SOURCE=.\devices\MIMXRT1052\fsl_device_registers.h
@@ -8658,7 +8730,7 @@ SOURCE=.\devices\MIMXRT1064\system_MIMXRT1064.h
 # Begin Group "boards"
 
 # PROP Default_Filter ""
-# Begin Group "FRDM-K22f"
+# Begin Group "FRDM-K22F"
 
 # PROP Default_Filter ""
 # Begin Group "K22 Demo Apps"
@@ -8846,7 +8918,79 @@ SOURCE=.\boards\frdmk22f\wifi_qca_examples\qca_throughput\wlan_qcom.h
 # End Group
 # End Group
 # End Group
-# Begin Group "FRDM-K64f"
+# Begin Group "FRDM-K28F"
+
+# PROP Default_Filter ""
+# Begin Group "K28_driver_examples"
+
+# PROP Default_Filter ""
+# Begin Group "QSPI_EDMA"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\frdmk28f\driver_examples\qspi\edma_transfer\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk28f\driver_examples\qspi\edma_transfer\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk28f\driver_examples\qspi\edma_transfer\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk28f\driver_examples\qspi\edma_transfer\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk28f\driver_examples\qspi\edma_transfer\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk28f\driver_examples\qspi\edma_transfer\pin_mux.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk28f\driver_examples\qspi\edma_transfer\qspi_edma_transfer.c
+# End Source File
+# End Group
+# Begin Group "QSPI_Polling"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\frdmk28f\driver_examples\qspi\polling_transfer\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk28f\driver_examples\qspi\polling_transfer\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk28f\driver_examples\qspi\polling_transfer\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk28f\driver_examples\qspi\polling_transfer\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk28f\driver_examples\qspi\polling_transfer\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk28f\driver_examples\qspi\polling_transfer\pin_mux.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\frdmk28f\driver_examples\qspi\polling_transfer\qspi_polling_transfer.c
+# End Source File
+# End Group
+# End Group
+# End Group
+# Begin Group "FRDM-K64F"
 
 # PROP Default_Filter ""
 # Begin Group "K64 demo Apps"
@@ -9552,7 +9696,6 @@ SOURCE=.\boards\frdmk64f\driver_examples\i2c\interrupt\pin_mux.h
 # End Source File
 # End Group
 # End Group
-# End Group
 # Begin Group "flexcan Nr. 1"
 
 # PROP Default_Filter ""
@@ -9587,6 +9730,7 @@ SOURCE=.\boards\frdmk64f\driver_examples\flexcan\loopback\pin_mux.c
 
 SOURCE=.\boards\frdmk64f\driver_examples\flexcan\loopback\pin_mux.h
 # End Source File
+# End Group
 # End Group
 # End Group
 # Begin Group "K64_cmsis_driver_examples"
@@ -9702,7 +9846,7 @@ SOURCE=.\boards\frdmk64f\cmsis_driver_examples\i2c\edma_transfer\RTE_Device.h
 # End Group
 # End Group
 # End Group
-# Begin Group "EVK-mimxrt1050"
+# Begin Group "EVK-iMXRT1050"
 
 # PROP Default_Filter ""
 # Begin Group "demo_apps"
@@ -10728,78 +10872,6 @@ SOURCE=.\boards\evkmimxrt1020\driver_examples\flexcan\loopback_transfer\pin_mux.
 
 SOURCE=.\boards\evkmimxrt1020\driver_examples\flexcan\loopback_transfer\pin_mux.h
 # End Source File
-# End Group
-# End Group
-# Begin Group "FRDM-K28F"
-
-# PROP Default_Filter ""
-# Begin Group "K28_driver_examples"
-
-# PROP Default_Filter ""
-# Begin Group "QSPI_EDMA"
-
-# PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=.\boards\frdmk28f\driver_examples\qspi\edma_transfer\board.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\boards\frdmk28f\driver_examples\qspi\edma_transfer\board.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\boards\frdmk28f\driver_examples\qspi\edma_transfer\clock_config.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\boards\frdmk28f\driver_examples\qspi\edma_transfer\clock_config.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\boards\frdmk28f\driver_examples\qspi\edma_transfer\pin_mux.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\boards\frdmk28f\driver_examples\qspi\edma_transfer\pin_mux.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\boards\frdmk28f\driver_examples\qspi\edma_transfer\qspi_edma_transfer.c
-# End Source File
-# End Group
-# Begin Group "QSPI_Polling"
-
-# PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=.\boards\frdmk28f\driver_examples\qspi\polling_transfer\board.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\boards\frdmk28f\driver_examples\qspi\polling_transfer\board.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\boards\frdmk28f\driver_examples\qspi\polling_transfer\clock_config.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\boards\frdmk28f\driver_examples\qspi\polling_transfer\clock_config.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\boards\frdmk28f\driver_examples\qspi\polling_transfer\pin_mux.c
-# End Source File
-# Begin Source File
-
-SOURCE=.\boards\frdmk28f\driver_examples\qspi\polling_transfer\pin_mux.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\boards\frdmk28f\driver_examples\qspi\polling_transfer\qspi_polling_transfer.c
-# End Source File
-# End Group
 # End Group
 # End Group
 # Begin Group "EVK-iMXRT1064"

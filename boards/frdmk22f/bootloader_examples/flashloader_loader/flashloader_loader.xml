@@ -2,18 +2,20 @@
 <ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
   <externalDefinitions>
     <definition extID="com.nxp.mcuxpresso"/>
-    <definition extID="middleware.mcu-boot.MK22F51212_flashloader_loader_linker.MK22F51212"/>
+    <definition extID="device.MK22F51212_CMSIS.MK22F51212"/>
     <definition extID="middleware.mcu-boot.MK22F51212_startup.MK22F51212"/>
     <definition extID="middleware.mcu-boot.loadersources.MK22F51212"/>
-    <definition extID="platform.devices.MK22F51212_CMSIS.MK22F51212"/>
+    <definition extID="middleware.mcu-boot.src_startup.MK22F51212"/>
+    <definition extID="platform.Include_common.MK22F51212"/>
+    <definition extID="platform.Include_core_cm4.MK22F51212"/>
     <definition extID="platform.drivers.clock.MK22F51212"/>
     <definition extID="platform.drivers.common.MK22F51212"/>
     <definition extID="platform.drivers.uart.MK22F51212"/>
-    <definition extID="mdk"/>
     <definition extID="iar"/>
+    <definition extID="mdk"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmk22f_flashloader_loader" name="flashloader_loader" category="bootloader_examples" dependency="middleware.mcu-boot.MK22F51212_flashloader_loader_linker.MK22F51212 platform.drivers.clock.MK22F51212 platform.devices.MK22F51212_CMSIS.MK22F51212 middleware.mcu-boot.MK22F51212_startup.MK22F51212 middleware.mcu-boot.loadersources.MK22F51212 platform.drivers.uart.MK22F51212 platform.drivers.common.MK22F51212" toolchain="mdk iar mcuxpresso">
+  <example id="frdmk22f_flashloader_loader" name="flashloader_loader" category="bootloader_examples" dependency="platform.drivers.clock.MK22F51212 device.MK22F51212_CMSIS.MK22F51212 middleware.mcu-boot.MK22F51212_startup.MK22F51212 middleware.mcu-boot.loadersources.MK22F51212 platform.drivers.uart.MK22F51212 middleware.mcu-boot.src_startup.MK22F51212 platform.drivers.common.MK22F51212 platform.Include_core_cm4.MK22F51212 platform.Include_common.MK22F51212" toolchain="iar mdk mcuxpresso">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -66,9 +68,6 @@
           <value>--gc-sections</value>
           <value>-Map=${BuildArtifactFileBaseName}.map</value>
         </option>
-        <option id="com.crt.advproject.link.memory.heapAndStack" type="string">
-          <value>&amp;Heap:Default;Default;0x200&amp;Stack:Default;Default;0x200</value>
-        </option>
         <option id="com.crt.advproject.gas.hdrlib" type="enum">
           <value>com.crt.advproject.gas.hdrlib.newlibnano</value>
         </option>
@@ -86,6 +85,15 @@
         </option>
       </toolchainSetting>
     </toolchainSettings>
+    <source path="boards/frdmk22f/bootloader_examples/flashloader_loader/iar" target_path="middleware/mcu-boot" type="linker" toolchain="iar">
+      <files mask="MK22FN512xxx12_flashloader_loader.icf"/>
+    </source>
+    <source path="boards/frdmk22f/bootloader_examples/flashloader_loader/mcux" target_path="middleware/mcu-boot" type="linker" toolchain="mcuxpresso">
+      <files mask="MK22FN512xxx12_flashloader_loader.ld"/>
+    </source>
+    <source path="boards/frdmk22f/bootloader_examples/flashloader_loader/mdk" target_path="middleware/mcu-boot" type="linker" toolchain="mdk">
+      <files mask="MK22FN512xxx12_flashloader_loader.scf"/>
+    </source>
     <source path="middleware/mcu-boot/targets/MK22F51212/src" target_path="MK22F51212" type="c_include">
       <files mask="bootloader_config.h"/>
       <files mask="target_config.h"/>

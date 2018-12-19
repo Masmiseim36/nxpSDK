@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- *  that the following conditions are met:
  *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_flexio_mculcd_edma.h"
@@ -42,7 +16,6 @@
 #ifndef FSL_COMPONENT_ID
 #define FSL_COMPONENT_ID "platform.drivers.flexio_mculcd_edma"
 #endif
-
 
 #define EDMA_MAX_MAJOR_COUNT (DMA_CITER_ELINKNO_CITER_MASK >> DMA_CITER_ELINKNO_CITER_SHIFT)
 
@@ -229,8 +202,8 @@ static void FLEXIO_MCULCD_RxEDMACallback(edma_handle_t *edmaHandle, void *param,
 
 static void FLEXIO_MCULCD_EDMAConfig(FLEXIO_MCULCD_Type *base, flexio_mculcd_edma_handle_t *handle)
 {
-    edma_transfer_config_t xferConfig;
-    edma_transfer_size_t transferSize;
+    edma_transfer_config_t xferConfig = {0};
+    edma_transfer_size_t transferSize = kEDMA_TransferSize1Bytes;
     int16_t offset;
     uint32_t majorLoopCounts;
     uint32_t transferCount;
@@ -326,6 +299,24 @@ static bool FLEXIO_MCULCD_GetEDMAModulo(uint8_t shifterNum, edma_modulo_t *modul
     return ret;
 }
 
+/*!
+ * brief Initializes the FLEXO MCULCD master eDMA handle.
+ *
+ * This function initializes the FLEXO MCULCD master eDMA handle which can be
+ * used for other FLEXO MCULCD transactional APIs. For a specified FLEXO MCULCD
+ * instance, call this API once to get the initialized handle.
+ *
+ * param base Pointer to FLEXIO_MCULCD_Type structure.
+ * param handle Pointer to flexio_mculcd_edma_handle_t structure to store the
+ * transfer state.
+ * param callback MCULCD transfer complete callback, NULL means no callback.
+ * param userData callback function parameter.
+ * param txEdmaHandle User requested eDMA handle for FlexIO MCULCD eDMA TX,
+ * the DMA request source of this handle should be the first of TX shifters.
+ * param rxEdmaHandle User requested eDMA handle for FlexIO MCULCD eDMA RX,
+ * the DMA request source of this handle should be the last of RX shifters.
+ * retval kStatus_Success Successfully create the handle.
+ */
 status_t FLEXIO_MCULCD_TransferCreateHandleEDMA(FLEXIO_MCULCD_Type *base,
                                                 flexio_mculcd_edma_handle_t *handle,
                                                 flexio_mculcd_edma_transfer_callback_t callback,
@@ -374,6 +365,23 @@ status_t FLEXIO_MCULCD_TransferCreateHandleEDMA(FLEXIO_MCULCD_Type *base,
     return kStatus_Success;
 }
 
+/*!
+ * brief Performs a non-blocking FlexIO MCULCD transfer using eDMA.
+ *
+ * This function returns immediately after transfer initiates. To check whether
+ * the tranfer is completed, user could:
+ * 1. Use the transfer completed callback;
+ * 2. Polling function ref FLEXIO_MCULCD_GetTransferCountEDMA
+ *
+ * param base pointer to FLEXIO_MCULCD_Type structure.
+ * param handle pointer to flexio_mculcd_edma_handle_t structure to store the
+ * transfer state.
+ * param xfer Pointer to FlexIO MCULCD transfer structure.
+ * retval kStatus_Success Successfully start a transfer.
+ * retval kStatus_InvalidArgument Input argument is invalid.
+ * retval kStatus_FLEXIO_MCULCD_Busy FlexIO MCULCD is not idle, it is running another
+ * transfer.
+ */
 status_t FLEXIO_MCULCD_TransferEDMA(FLEXIO_MCULCD_Type *base,
                                     flexio_mculcd_edma_handle_t *handle,
                                     flexio_mculcd_transfer_t *xfer)
@@ -485,6 +493,12 @@ status_t FLEXIO_MCULCD_TransferEDMA(FLEXIO_MCULCD_Type *base,
     return kStatus_Success;
 }
 
+/*!
+ * brief Aborts a FlexIO MCULCD transfer using eDMA.
+ *
+ * param base pointer to FLEXIO_MCULCD_Type structure.
+ * param handle FlexIO MCULCD eDMA handle pointer.
+ */
 void FLEXIO_MCULCD_TransferAbortEDMA(FLEXIO_MCULCD_Type *base, flexio_mculcd_edma_handle_t *handle)
 {
     assert(handle);
@@ -508,6 +522,15 @@ void FLEXIO_MCULCD_TransferAbortEDMA(FLEXIO_MCULCD_Type *base, flexio_mculcd_edm
     handle->dataCount = 0;
 }
 
+/*!
+ * brief Gets the remaining bytes for FlexIO MCULCD eDMA transfer.
+ *
+ * param base pointer to FLEXIO_MCULCD_Type structure.
+ * param handle FlexIO MCULCD eDMA handle pointer.
+ * param count Number of count transferred so far by the eDMA transaction.
+ * retval kStatus_Success Get the transferred count Successfully.
+ * retval kStatus_NoTransferInProgress No tranfer in process.
+ */
 status_t FLEXIO_MCULCD_TransferGetCountEDMA(FLEXIO_MCULCD_Type *base,
                                             flexio_mculcd_edma_handle_t *handle,
                                             size_t *count)

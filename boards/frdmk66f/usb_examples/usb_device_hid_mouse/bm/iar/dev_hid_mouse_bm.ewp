@@ -180,8 +180,8 @@
         <debug>1</debug>
         <option>
           <name>CCDefines</name>
-          <state>DEBUG</state>
           <state>_DEBUG=1</state>
+          <state>DEBUG</state>
           <state>CPU_MK66FN2M0VMD18</state>
           <state>USB_STACK_BM</state>
         </option>
@@ -223,7 +223,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050,Pe167</state>
+          <state>Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -319,13 +319,28 @@
           <state>$PROJ_DIR$/../../../../../../middleware/usb/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/osa</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MK66F18/utilities/io</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MK66F18/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MK66F18/utilities/log</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MK66F18/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MK66F18</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MK66F18/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MK66F18/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -396,11 +411,11 @@
         </option>
         <option>
           <name>IccExceptions</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccRTTI</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccStaticDestr</name>
@@ -708,6 +723,8 @@
         </option>
         <option>
           <name>IlinkConfigDefines</name>
+          <state>__stack_size__=0x2000</state>
+          <state>__heap_size__=0x2000</state>
         </option>
         <option>
           <name>IlinkMapFile</name>
@@ -775,7 +792,6 @@
         </option>
         <option>
           <name>IlinkExtraOptions</name>
-          <state/>
         </option>
         <option>
           <name>IlinkLowLevelInterfaceSlave</name>
@@ -1153,8 +1169,8 @@
         <debug>0</debug>
         <option>
           <name>CCDefines</name>
-          <state>NDEBUG</state>
           <state>_DEBUG=0</state>
+          <state>NDEBUG</state>
           <state>CPU_MK66FN2M0VMD18</state>
           <state>USB_STACK_BM</state>
         </option>
@@ -1196,7 +1212,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050,Pe167</state>
+          <state>Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -1233,7 +1249,7 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
@@ -1292,13 +1308,28 @@
           <state>$PROJ_DIR$/../../../../../../middleware/usb/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/osa</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MK66F18/utilities/io</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MK66F18/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MK66F18/utilities/log</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MK66F18/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MK66F18</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MK66F18/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MK66F18/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1369,11 +1400,11 @@
         </option>
         <option>
           <name>IccExceptions</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccRTTI</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccStaticDestr</name>
@@ -1681,6 +1712,8 @@
         </option>
         <option>
           <name>IlinkConfigDefines</name>
+          <state>__stack_size__=0x2000</state>
+          <state>__heap_size__=0x2000</state>
         </option>
         <option>
           <name>IlinkMapFile</name>
@@ -1748,7 +1781,6 @@
         </option>
         <option>
           <name>IlinkExtraOptions</name>
-          <state/>
         </option>
         <option>
           <name>IlinkLowLevelInterfaceSlave</name>
@@ -1949,15 +1981,12 @@
   </configuration>
   <group>
     <name>doc</name>
-    <group>
-      <name>src</name>
-      <file>
-        <name>$PROJ_DIR$/../readme.txt</name>
-      </file>
-    </group>
+    <file>
+      <name>$PROJ_DIR$/../readme.txt</name>
+    </file>
   </group>
   <group>
-    <name>sources</name>
+    <name>source</name>
     <file>
       <name>$PROJ_DIR$/../mouse.c</name>
     </file>
@@ -1976,27 +2005,24 @@
   </group>
   <group>
     <name>board</name>
-    <group>
-      <name>src</name>
-      <file>
-        <name>$PROJ_DIR$/../board.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../board.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../clock_config.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../clock_config.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../pin_mux.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../pin_mux.h</name>
-      </file>
-    </group>
+    <file>
+      <name>$PROJ_DIR$/../board.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../board.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../clock_config.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../clock_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../pin_mux.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../pin_mux.h</name>
+    </file>
   </group>
   <group>
     <name>usb</name>
@@ -2012,9 +2038,6 @@
           <file>
             <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device_khci.h</name>
           </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/usb/include/usb_khci.h</name>
-          </file>
         </group>
         <group>
           <name>ehci</name>
@@ -2023,9 +2046,6 @@
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device_ehci.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/usb/include/usb_ehci.h</name>
           </file>
         </group>
         <file>
@@ -2121,13 +2141,10 @@
   <group>
     <name>drivers</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers/fsl_port.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers/fsl_smc.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers/fsl_common.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers/fsl_common.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers/fsl_smc.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers/fsl_clock.h</name>
@@ -2136,52 +2153,10 @@
       <name>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers/fsl_clock.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers/fsl_sim.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers/fsl_common.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers/fsl_sim.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers/fsl_smc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers/fsl_smc.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers/fsl_ftfx_adapter.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers/fsl_ftfx_utilities.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers/fsl_ftfx_features.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers/fsl_ftfx_controller.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers/fsl_ftfx_controller.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers/fsl_ftfx_flash.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers/fsl_ftfx_flash.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers/fsl_ftfx_cache.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers/fsl_ftfx_cache.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers/fsl_ftfx_flexnvm.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers/fsl_ftfx_flexnvm.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers/fsl_flash.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers/fsl_common.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers/fsl_lpuart.h</name>
@@ -2207,20 +2182,38 @@
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers/fsl_sysmpu.c</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/drivers/fsl_port.h</name>
+    </file>
+  </group>
+  <group>
+    <name>device</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/fsl_device_registers.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/MK66F18.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/MK66F18_features.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/system_MK66F18.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/system_MK66F18.h</name>
+    </file>
+  </group>
+  <group>
+    <name>startup</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/iar/startup_MK66F18.s</name>
+    </file>
   </group>
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/utilities/io/fsl_io.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/utilities/io/fsl_io.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/utilities/log/fsl_log.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/utilities/log/fsl_log.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/utilities/fsl_assert.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MK66F18/utilities/str/fsl_str.c</name>
@@ -2229,28 +2222,94 @@
       <name>$PROJ_DIR$/../../../../../../devices/MK66F18/utilities/str/fsl_str.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/utilities/fsl_debug_console.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/utilities/debug_console/fsl_debug_console.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/utilities/fsl_debug_console.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/utilities/debug_console/fsl_debug_console.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/utilities/fsl_debug_console_conf.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/utilities/fsl_assert.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/utilities/debug_console/fsl_debug_console_conf.h</name>
     </file>
   </group>
   <group>
-    <name>startup</name>
+    <name>component</name>
+    <group>
+      <name>uart</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/uart/uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/uart/uart_adapter.c</name>
+      </file>
+    </group>
+    <group>
+      <name>serial_manager</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_manager.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_manager.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_port_uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_port_uart.c</name>
+      </file>
+    </group>
+    <group>
+      <name>lists</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/lists/generic_list.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/lists/generic_list.c</name>
+      </file>
+    </group>
+  </group>
+  <group>
+    <name>CMSIS</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/system_MK66F18.c</name>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_cm4.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/system_MK66F18.h</name>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_armcc.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK66F18/iar/startup_MK66F18.s</name>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_armclang.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_gcc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_compiler.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_version.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv7.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_armv8mbl.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_armv8mml.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_common_tables.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_const_structs.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_math.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_iccarm.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv8.h</name>
     </file>
   </group>
 </project>

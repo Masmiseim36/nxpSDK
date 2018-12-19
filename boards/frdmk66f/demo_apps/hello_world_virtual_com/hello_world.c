@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2013 - 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- *  that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_device_registers.h"
@@ -39,9 +13,7 @@
 #include "usb_device_config.h"
 #include "usb.h"
 #include "usb_device.h"
-#include "usb_device_ch9.h"
-#include "usb_device_descriptor.h"
-#include "virtual_com.h"
+#include "serial_port_usb.h"
 #include "usb_phy.h"
 #include "clock_config.h"
 /*******************************************************************************
@@ -52,31 +24,12 @@
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
+void USB_DeviceClockInit(void);
 
 /*******************************************************************************
  * Code
  ******************************************************************************/
 
-extern usb_cdc_vcom_struct_t s_cdcVcom;
-
-#if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U))
-void USBHS_IRQHandler(void)
-{
-    USB_DeviceEhciIsrFunction(s_cdcVcom.deviceHandle);
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-    exception return operation might vector to incorrect interrupt */
-    __DSB();
-}
-#endif
-#if (defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U))
-void USB0_IRQHandler(void)
-{
-    USB_DeviceKhciIsrFunction(s_cdcVcom.deviceHandle);
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-    exception return operation might vector to incorrect interrupt */
-    __DSB();
-}
-#endif
 void USB_DeviceClockInit(void)
 {
 #if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)
@@ -87,7 +40,7 @@ void USB_DeviceClockInit(void)
 #if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)
     CLOCK_EnableUsbhs0PhyPllClock(kCLOCK_UsbPhySrcExt, BOARD_XTAL0_CLK_HZ);
     CLOCK_EnableUsbhs0Clock(kCLOCK_UsbSrcUnused, 0U);
-    USB_EhciPhyInit(CONTROLLER_ID, BOARD_XTAL0_CLK_HZ, &phyConfig);
+    USB_EhciPhyInit(kSerialManager_UsbControllerEhci0, BOARD_XTAL0_CLK_HZ, &phyConfig);
 #endif
 #if defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U)
     SystemCoreClockUpdate();
@@ -107,21 +60,6 @@ void USB_DeviceClockInit(void)
 #endif /* FSL_FEATURE_USB_KHCI_USB_RAM */
 #endif
 }
-void USB_DeviceIsrEnable(void)
-{
-    uint8_t irqNumber;
-#if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)
-    uint8_t usbDeviceEhciIrq[] = USBHS_IRQS;
-    irqNumber = usbDeviceEhciIrq[CONTROLLER_ID - kUSB_ControllerEhci0];
-#endif
-#if defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U)
-    uint8_t usbDeviceKhciIrq[] = USB_IRQS;
-    irqNumber = usbDeviceKhciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
-#endif
-/* Install isr, set priority, and enable IRQ. */
-    NVIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
-    EnableIRQ((IRQn_Type)irqNumber);
-}
 
 /*!
  * @brief Main function
@@ -132,7 +70,8 @@ int main(void)
 
     /* Init board hardware. */
     BOARD_BootClockRUN();
-    DbgConsole_Init((uint32_t)NULL, (uint32_t)NULL, DEBUG_CONSOLE_DEVICE_TYPE_USBCDC, (uint32_t)NULL);
+    USB_DeviceClockInit();
+    DbgConsole_Init((uint8_t)kSerialManager_UsbControllerEhci0, (uint32_t)NULL, kSerialPort_UsbCdc, (uint32_t)NULL);
 
     PRINTF("hello world.\r\n");
 

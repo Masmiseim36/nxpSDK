@@ -1,0 +1,39 @@
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+app:layout_behavior="@string/appbar_scrolling_view_behavior"
+tools:context="com.nxp.awsdeviceconfiguration.activities.device.DevicesListFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/cardview_light_background">
+
+        <TextView
+            android:id="@+id/noDevicesFound"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/no_device_has_been_found"
+            android:textSize="16sp"
+            android:padding="8sp"
+            android:textStyle="normal"
+            android:gravity="center"
+            android:visibility="invisible"/>
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/devicesListSwipeRefresh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ListView
+                android:id="@+id/devicesListView"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent" />
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+    </RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>

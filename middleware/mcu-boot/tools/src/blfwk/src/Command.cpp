@@ -367,6 +367,14 @@ Command *Command::create(const string_vector_t *argv)
     {
         cmd = new WriteMemory(argv);
     }
+	else if (argv->at(0) == kCommand_ProgramAESKey.name)
+	{
+		// Don't need customer to input address, fix it.
+		(const_cast<string_vector_t *>(argv))->insert(argv->begin() + 1, "0x0");
+		// Add MemoryID to command, it's always 0x200
+		(const_cast<string_vector_t *>(argv))->insert(argv->begin() + 3, "0x200");
+		cmd = new WriteMemory(argv);
+	}
     else if (argv->at(0) == kCommand_FillMemory.name)
     {
         cmd = new FillMemory(argv);

@@ -1,15 +1,15 @@
 /*********************************************************************
-*                SEGGER Microcontroller GmbH & Co. KG                *
+*                SEGGER Microcontroller GmbH                         *
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2016  SEGGER Microcontroller GmbH & Co. KG       *
+*        (c) 1996 - 2018  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
 **********************************************************************
 
-** emWin V5.38 - Graphical user interface for embedded applications **
+** emWin V5.48 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -26,15 +26,16 @@ Full source code is available at: www.segger.com
 We appreciate your understanding and fairness.
 ----------------------------------------------------------------------
 Licensing information
-
 Licensor:                 SEGGER Microcontroller Systems LLC
 Licensed to:              NXP Semiconductors, 1109 McKay Dr, M/S 76, San Jose, CA 95131, USA
 Licensed SEGGER software: emWin
 License number:           GUI-00186
-License model:            emWin License Agreement, dated August 20th 2011
-Licensed product:         -
-Licensed platform:        NXP's ARM 7/9, Cortex-M0,M3,M4
-Licensed number of seats: -
+License model:            emWin License Agreement, dated August 20th 2011 and Amendment, dated October 19th 2017
+Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7
+----------------------------------------------------------------------
+Support and Update Agreement (SUA)
+SUA period:               2011-08-19 - 2018-09-02
+Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : CHECKBOX.h
 Purpose     : CHECKBOX include
@@ -150,22 +151,28 @@ void             CHECKBOX_SetDefaultTextColor (GUI_COLOR Color);
 *
 **********************************************************************
 */
-
-int       CHECKBOX_GetState     (CHECKBOX_Handle hObj);
-int       CHECKBOX_GetText      (CHECKBOX_Handle hObj, char * pBuffer, int MaxLen);
-int       CHECKBOX_IsChecked    (CHECKBOX_Handle hObj);
-void      CHECKBOX_SetBkColor   (CHECKBOX_Handle hObj, GUI_COLOR Color);
-GUI_COLOR CHECKBOX_SetBoxBkColor(CHECKBOX_Handle hObj, GUI_COLOR Color, int Index);
-GUI_COLOR CHECKBOX_SetFocusColor(CHECKBOX_Handle hObj, GUI_COLOR Color);
-void      CHECKBOX_SetFont      (CHECKBOX_Handle hObj, const GUI_FONT * pFont);
-void      CHECKBOX_SetImage     (CHECKBOX_Handle hObj, const GUI_BITMAP * pBitmap, unsigned int Index);
-void      CHECKBOX_SetNumStates (CHECKBOX_Handle hObj, unsigned NumStates);
-void      CHECKBOX_SetSpacing   (CHECKBOX_Handle hObj, unsigned Spacing);
-void      CHECKBOX_SetState     (CHECKBOX_Handle hObj, unsigned State);
-void      CHECKBOX_SetText      (CHECKBOX_Handle hObj, const char * pText);
-void      CHECKBOX_SetTextAlign (CHECKBOX_Handle hObj, int Align);
-void      CHECKBOX_SetTextColor (CHECKBOX_Handle hObj, GUI_COLOR Color);
-int       CHECKBOX_SetUserData  (CHECKBOX_Handle hObj, const void * pSrc, int NumBytes);
+GUI_COLOR          CHECKBOX_GetBkColor   (CHECKBOX_Handle hObj);
+GUI_COLOR          CHECKBOX_GetBoxBkColor(CHECKBOX_Handle hObj, int Index);
+GUI_COLOR          CHECKBOX_GetFocusColor(CHECKBOX_Handle hObj);
+const GUI_FONT   * CHECKBOX_GetFont      (CHECKBOX_Handle hObj);
+const GUI_BITMAP * CHECKBOX_GetImage     (CHECKBOX_Handle hObj, unsigned int Index);
+int                CHECKBOX_GetState     (CHECKBOX_Handle hObj);
+int                CHECKBOX_GetText      (CHECKBOX_Handle hObj, char * pBuffer, int MaxLen);
+int                CHECKBOX_GetTextAlign (CHECKBOX_Handle hObj);
+GUI_COLOR          CHECKBOX_GetTextColor (CHECKBOX_Handle hObj);
+int                CHECKBOX_IsChecked    (CHECKBOX_Handle hObj);
+void               CHECKBOX_SetBkColor   (CHECKBOX_Handle hObj, GUI_COLOR Color);
+GUI_COLOR          CHECKBOX_SetBoxBkColor(CHECKBOX_Handle hObj, GUI_COLOR Color, int Index);
+GUI_COLOR          CHECKBOX_SetFocusColor(CHECKBOX_Handle hObj, GUI_COLOR Color);
+void               CHECKBOX_SetFont      (CHECKBOX_Handle hObj, const GUI_FONT * pFont);
+void               CHECKBOX_SetImage     (CHECKBOX_Handle hObj, const GUI_BITMAP * pBitmap, unsigned int Index);
+void               CHECKBOX_SetNumStates (CHECKBOX_Handle hObj, unsigned NumStates);
+void               CHECKBOX_SetSpacing   (CHECKBOX_Handle hObj, unsigned Spacing);
+void               CHECKBOX_SetState     (CHECKBOX_Handle hObj, unsigned State);
+void               CHECKBOX_SetText      (CHECKBOX_Handle hObj, const char * pText);
+void               CHECKBOX_SetTextAlign (CHECKBOX_Handle hObj, int Align);
+void               CHECKBOX_SetTextColor (CHECKBOX_Handle hObj, GUI_COLOR Color);
+int                CHECKBOX_SetUserData  (CHECKBOX_Handle hObj, const void * pSrc, int NumBytes);
 
 /*********************************************************************
 *

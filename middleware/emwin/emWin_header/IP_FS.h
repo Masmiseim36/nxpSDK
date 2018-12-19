@@ -1,15 +1,15 @@
 /*********************************************************************
-*                SEGGER Microcontroller GmbH & Co. KG                *
+*                SEGGER Microcontroller GmbH                         *
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2016  SEGGER Microcontroller GmbH & Co. KG       *
+*        (c) 1996 - 2018  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
 **********************************************************************
 
-** emWin V5.38 - Graphical user interface for embedded applications **
+** emWin V5.48 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -26,35 +26,34 @@ Full source code is available at: www.segger.com
 We appreciate your understanding and fairness.
 ----------------------------------------------------------------------
 Licensing information
-
 Licensor:                 SEGGER Microcontroller Systems LLC
 Licensed to:              NXP Semiconductors, 1109 McKay Dr, M/S 76, San Jose, CA 95131, USA
 Licensed SEGGER software: emWin
 License number:           GUI-00186
-License model:            emWin License Agreement, dated August 20th 2011
-Licensed product:         -
-Licensed platform:        NXP's ARM 7/9, Cortex-M0,M3,M4
-Licensed number of seats: -
+License model:            emWin License Agreement, dated August 20th 2011 and Amendment, dated October 19th 2017
+Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7
 ----------------------------------------------------------------------
-File        : IP_FS.h
-Purpose     : File system abstraction layer
----------------------------END-OF-HEADER------------------------------
+Support and Update Agreement (SUA)
+SUA period:               2011-08-19 - 2018-09-02
+Contact to extend SUA:    sales@segger.com
+-------------------------- END-OF-HEADER -----------------------------
 
-Attention : Do not modify this file !
+File    : IP_FS.h
+Purpose : Header file for file system abstraction layer.
 */
 
-#ifndef  IP_FS_H
-#define  IP_FS_H
+#ifndef IP_FS_H               // Avoid multiple inclusion.
+#define IP_FS_H
 
 #include "SEGGER.h"
 
 #if defined(__cplusplus)
-extern "C" {     /* Make sure we have C-declarations in C++ programs */
+  extern "C" {                // Make sure we have C-declarations in C++ programs.
 #endif
 
 /*********************************************************************
 *
-*       Functions
+*       Types
 *
 **********************************************************************
 */
@@ -70,7 +69,7 @@ typedef struct {
   //
   // Directory query operations.
   //
-  void  (*pfForEachDirEntry)      (void* pContext, const char* sDir, void (*pf)(void* pContext, void* pFileEntry));
+  void  (*pfForEachDirEntry)      (void* pContext, const char* sDir, void (*pf)(void*, void*));
   void  (*pfGetDirEntryFileName)  (void* pFileEntry, char* sFileName, U32 SizeOfBuffer);
   U32   (*pfGetDirEntryFileSize)  (void* pFileEntry, U32* pFileSizeHigh);
   U32   (*pfGetDirEntryFileTime)  (void* pFileEntry);
@@ -94,21 +93,52 @@ typedef struct {
   int   (*pfMove)                 (const char* sOldFilename, const char* sNewFilename);
 } IP_FS_API;
 
-extern const IP_FS_API IP_FS_ReadOnly;              // Read-only file system, typically located in flash memory.
-extern const IP_FS_API IP_FS_Win32;                 // File system interface for Win32.
-extern const IP_FS_API IP_FS_Linux;                 // File system interface for Linux
-extern const IP_FS_API IP_FS_FS;                    // Target file system (emFile), shows and allows access to hidden files.
-extern const IP_FS_API IP_FS_FS_AllowHiddenAccess;  // Target file system (emFile), does not show hidden files but allows access to them.
-extern const IP_FS_API IP_FS_FS_DenyHiddenAccess;   // Target file system (emFile), does not show hidden files and does not allow access to them.
+typedef struct {
+  const          char* sPath;
+  const unsigned char* pData;
+        unsigned int   FileSize;
+} IP_FS_READ_ONLY_FILE_ENTRY;
 
+typedef struct IP_FS_READ_ONLY_FILE_HOOK_STRUCT IP_FS_READ_ONLY_FILE_HOOK;
+struct IP_FS_READ_ONLY_FILE_HOOK_STRUCT {
+  IP_FS_READ_ONLY_FILE_HOOK* pNext;
+  IP_FS_READ_ONLY_FILE_ENTRY FileEntry;
+};
+
+/*********************************************************************
+*
+*       API functions
+*
+**********************************************************************
+*/
+
+#define IP_FS_FS                    IP_FS_emFile
+#define IP_FS_FS_AllowHiddenAccess  IP_FS_emFile_AllowHiddenAccess
+#define IP_FS_FS_DenyHiddenAccess   IP_FS_emFile_DenyHiddenAccess
+
+extern const IP_FS_API IP_FS_ReadOnly;                  // Read-only file system, typically located in flash memory.
+extern const IP_FS_API IP_FS_Win32;                     // File system interface for Win32.
+extern const IP_FS_API IP_FS_Linux;                     // File system interface for Linux
+extern const IP_FS_API IP_FS_emFile;                    // Target file system (emFile), shows and allows access to hidden files.
+extern const IP_FS_API IP_FS_emFile_AllowHiddenAccess;  // Target file system (emFile), does not show hidden files but allows access to them.
+extern const IP_FS_API IP_FS_emFile_DenyHiddenAccess;   // Target file system (emFile), does not show hidden files and does not allow access to them.
+
+//
+// Helper functions for Read Only file system layer.
+//
+void IP_FS_READ_ONLY_ClrFileHooks(void);
+void IP_FS_READ_ONLY_AddFileHook (IP_FS_READ_ONLY_FILE_HOOK* pHook, const char* sPath, const unsigned char* pData, unsigned int FileSize);
+
+//
+// Helper functions for Win32 file system layer.
+//
 void IP_FS_WIN32_ConfigBaseDir(const char* sDir);
 
 
 #if defined(__cplusplus)
-  }
+}                             // Make sure we have C-declarations in C++ programs.
 #endif
 
-
-#endif   /* Avoid multiple inclusion */
+#endif                        // Avoid multiple inclusion.
 
 /*************************** End of file ****************************/

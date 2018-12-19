@@ -86,13 +86,9 @@ SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -mfpu=fpv4-sp-d16")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DDEBUG")
 
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -D_DEBUG=1")
-
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DCPU_MK66FN2M0VMD18")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DUSB_STACK_FREERTOS")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DPRINTF_FLOAT_ENABLE")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DUSB_STACK_FREERTOS_HEAP_SIZE=32768")
 
@@ -132,13 +128,9 @@ SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -MP")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DNDEBUG")
 
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -D_DEBUG=0")
-
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DCPU_MK66FN2M0VMD18")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DUSB_STACK_FREERTOS")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DPRINTF_FLOAT_ENABLE")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DUSB_STACK_FREERTOS_HEAP_SIZE=32768")
 
@@ -286,11 +278,23 @@ SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")
 
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} muldefs")
 
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Map=output.map")
+
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -mcpu=cortex-m4")
 
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -mfloat-abi=hard")
 
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -mfpu=fpv4-sp-d16")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} --defsym=__stack_size__=0x2000")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} --defsym=__heap_size__=0x100")
 
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} --specs=nano.specs")
 
@@ -328,11 +332,27 @@ SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
 
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} muldefs")
 
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Map=output.map")
+
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mcpu=cortex-m4")
 
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mfloat-abi=hard")
 
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mfpu=fpv4-sp-d16")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} --defsym=__stack_size__=0x2000")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} --defsym=__heap_size__=0x100")
+
+include_directories(${ProjDirPath}/..)
+
+include_directories(${ProjDirPath}/../../../..)
 
 include_directories(${ProjDirPath}/..)
 
@@ -340,19 +360,21 @@ include_directories(${ProjDirPath}/../../../..)
 
 include_directories(${ProjDirPath}/../../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/GCC/ARM_CM4F)
 
+include_directories(${ProjDirPath}/..)
+
+include_directories(${ProjDirPath}/../../../..)
+
 include_directories(${ProjDirPath}/../../../../../../CMSIS/Include)
 
 include_directories(${ProjDirPath}/../../../../../../rtos/amazon-freertos/lib/include)
 
 include_directories(${ProjDirPath}/../../../../../../rtos/amazon-freertos/lib/include/private)
 
-include_directories(${ProjDirPath}/../../../../../../middleware/usb)
-
-include_directories(${ProjDirPath}/../../../../../../middleware/usb/osa)
+include_directories(${ProjDirPath}/../../../../../../middleware/usb/host)
 
 include_directories(${ProjDirPath}/../../../../../../middleware/usb/include)
 
-include_directories(${ProjDirPath}/../../../../../../middleware/usb/host)
+include_directories(${ProjDirPath}/../../../../../../middleware/usb/osa)
 
 include_directories(${ProjDirPath}/../../../../../../middleware/usb/device)
 
@@ -360,19 +382,21 @@ include_directories(${ProjDirPath}/../../../../../../middleware/usb/phy)
 
 include_directories(${ProjDirPath}/../../../../../../middleware/usb/host/class)
 
-include_directories(${ProjDirPath}/../../../../../../devices/MK66F18/drivers)
-
 include_directories(${ProjDirPath}/../../../../../../middleware/fatfs/source)
 
-include_directories(${ProjDirPath}/../../../../../../devices/MK66F18/utilities/io)
+include_directories(${ProjDirPath}/../../../../../../devices/MK66F18/drivers)
+
+include_directories(${ProjDirPath}/../../../../../../devices/MK66F18)
 
 include_directories(${ProjDirPath}/../../../../../../devices/MK66F18/utilities/str)
 
-include_directories(${ProjDirPath}/../../../../../../devices/MK66F18/utilities/log)
+include_directories(${ProjDirPath}/../../../../../../devices/MK66F18/utilities/debug_console)
 
-include_directories(${ProjDirPath}/../../../../../../devices/MK66F18/utilities)
+include_directories(${ProjDirPath}/../../../../../../components/uart)
 
-include_directories(${ProjDirPath}/../../../../../../devices/MK66F18)
+include_directories(${ProjDirPath}/../../../../../../components/serial_manager)
+
+include_directories(${ProjDirPath}/../../../../../../components/lists)
 
 add_executable(pin_detect_hid_msd_freertos.elf 
 "${ProjDirPath}/../app.c"
@@ -415,7 +439,6 @@ add_executable(pin_detect_hid_msd_freertos.elf
 "${ProjDirPath}/../../../../../../middleware/usb/osa/usb_osa_freertos.c"
 "${ProjDirPath}/../../../../../../middleware/usb/device/usb_device_khci.c"
 "${ProjDirPath}/../../../../../../middleware/usb/device/usb_device_khci.h"
-"${ProjDirPath}/../../../../../../middleware/usb/include/usb_khci.h"
 "${ProjDirPath}/../../../../../../middleware/usb/include/usb.h"
 "${ProjDirPath}/../../../../../../middleware/usb/include/usb_misc.h"
 "${ProjDirPath}/../../../../../../middleware/usb/include/usb_spec.h"
@@ -424,7 +447,6 @@ add_executable(pin_detect_hid_msd_freertos.elf
 "${ProjDirPath}/../../../../../../middleware/usb/osa/usb_osa_freertos.c"
 "${ProjDirPath}/../../../../../../middleware/usb/device/usb_device_ehci.c"
 "${ProjDirPath}/../../../../../../middleware/usb/device/usb_device_ehci.h"
-"${ProjDirPath}/../../../../../../middleware/usb/include/usb_ehci.h"
 "${ProjDirPath}/../../../../../../middleware/usb/include/usb.h"
 "${ProjDirPath}/../../../../../../middleware/usb/include/usb_misc.h"
 "${ProjDirPath}/../../../../../../middleware/usb/include/usb_spec.h"
@@ -458,7 +480,6 @@ add_executable(pin_detect_hid_msd_freertos.elf
 "${ProjDirPath}/../../../../../../rtos/amazon-freertos/lib/FreeRTOS/stream_buffer.c"
 "${ProjDirPath}/../../../../../../rtos/amazon-freertos/lib/FreeRTOS/tasks.c"
 "${ProjDirPath}/../../../../../../rtos/amazon-freertos/lib/FreeRTOS/timers.c"
-"${ProjDirPath}/../../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/readme.txt"
 "${ProjDirPath}/../../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/GCC/ARM_CM4F/fsl_tickless_generic.h"
 "${ProjDirPath}/../../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/GCC/ARM_CM4F/fsl_tickless_systick.c"
 "${ProjDirPath}/../../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/GCC/ARM_CM4F/port.c"
@@ -477,13 +498,6 @@ add_executable(pin_detect_hid_msd_freertos.elf
 "${ProjDirPath}/../../../../../../middleware/usb/host/usb_host_devices.h"
 "${ProjDirPath}/../../../../../../middleware/usb/host/usb_host_framework.h"
 "${ProjDirPath}/../../../../../../middleware/usb/host/usb_host_framework.c"
-"${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_port.h"
-"${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_common.h"
-"${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_common.c"
-"${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_clock.h"
-"${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_clock.c"
-"${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_sim.h"
-"${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_sim.c"
 "${ProjDirPath}/../usb_device_class.c"
 "${ProjDirPath}/../usb_device_class.h"
 "${ProjDirPath}/../usb_device_hid.c"
@@ -498,29 +512,15 @@ add_executable(pin_detect_hid_msd_freertos.elf
 "${ProjDirPath}/../../../../../../middleware/fatfs/source/diskio.h"
 "${ProjDirPath}/../../../../../../middleware/fatfs/source/ff.h"
 "${ProjDirPath}/../../../../../../middleware/fatfs/source/integer.h"
-"${ProjDirPath}/../../../../../../devices/MK66F18/utilities/io/fsl_io.c"
-"${ProjDirPath}/../../../../../../devices/MK66F18/utilities/io/fsl_io.h"
-"${ProjDirPath}/../../../../../../devices/MK66F18/utilities/log/fsl_log.c"
-"${ProjDirPath}/../../../../../../devices/MK66F18/utilities/log/fsl_log.h"
-"${ProjDirPath}/../../../../../../devices/MK66F18/utilities/str/fsl_str.c"
-"${ProjDirPath}/../../../../../../devices/MK66F18/utilities/str/fsl_str.h"
-"${ProjDirPath}/../../../../../../devices/MK66F18/utilities/fsl_debug_console.c"
-"${ProjDirPath}/../../../../../../devices/MK66F18/utilities/fsl_debug_console.h"
-"${ProjDirPath}/../../../../../../devices/MK66F18/utilities/fsl_debug_console_conf.h"
 "${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_smc.h"
 "${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_smc.c"
-"${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_ftfx_adapter.h"
-"${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_ftfx_utilities.h"
-"${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_ftfx_features.h"
-"${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_ftfx_controller.c"
-"${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_ftfx_controller.h"
-"${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_ftfx_flash.c"
-"${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_ftfx_flash.h"
-"${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_ftfx_cache.c"
-"${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_ftfx_cache.h"
-"${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_ftfx_flexnvm.c"
-"${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_ftfx_flexnvm.h"
-"${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_flash.h"
+"${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_clock.h"
+"${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_clock.c"
+"${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_common.h"
+"${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_common.c"
+"${ProjDirPath}/../../../../../../devices/MK66F18/fsl_device_registers.h"
+"${ProjDirPath}/../../../../../../devices/MK66F18/MK66F18.h"
+"${ProjDirPath}/../../../../../../devices/MK66F18/MK66F18_features.h"
 "${ProjDirPath}/../../../../../../devices/MK66F18/system_MK66F18.c"
 "${ProjDirPath}/../../../../../../devices/MK66F18/system_MK66F18.h"
 "${ProjDirPath}/../../../../../../devices/MK66F18/gcc/startup_MK66F18.S"
@@ -533,6 +533,34 @@ add_executable(pin_detect_hid_msd_freertos.elf
 "${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_sysmpu.h"
 "${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_sysmpu.c"
 "${ProjDirPath}/../../../../../../devices/MK66F18/utilities/fsl_assert.c"
+"${ProjDirPath}/../../../../../../devices/MK66F18/utilities/str/fsl_str.c"
+"${ProjDirPath}/../../../../../../devices/MK66F18/utilities/str/fsl_str.h"
+"${ProjDirPath}/../../../../../../devices/MK66F18/utilities/debug_console/fsl_debug_console.c"
+"${ProjDirPath}/../../../../../../devices/MK66F18/utilities/debug_console/fsl_debug_console.h"
+"${ProjDirPath}/../../../../../../devices/MK66F18/utilities/debug_console/fsl_debug_console_conf.h"
+"${ProjDirPath}/../../../../../../components/uart/uart.h"
+"${ProjDirPath}/../../../../../../components/uart/uart_adapter.c"
+"${ProjDirPath}/../../../../../../components/serial_manager/serial_manager.h"
+"${ProjDirPath}/../../../../../../components/serial_manager/serial_manager.c"
+"${ProjDirPath}/../../../../../../components/serial_manager/serial_port_uart.h"
+"${ProjDirPath}/../../../../../../components/serial_manager/serial_port_uart.c"
+"${ProjDirPath}/../../../../../../components/lists/generic_list.h"
+"${ProjDirPath}/../../../../../../components/lists/generic_list.c"
+"${ProjDirPath}/../../../../../../devices/MK66F18/drivers/fsl_port.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/core_cm4.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armcc.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armclang.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_gcc.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_compiler.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_version.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv7.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv8mbl.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv8mml.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/arm_common_tables.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/arm_const_structs.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/arm_math.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_iccarm.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv8.h"
 )
 
 

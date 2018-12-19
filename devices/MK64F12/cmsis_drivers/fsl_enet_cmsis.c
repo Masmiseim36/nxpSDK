@@ -18,14 +18,12 @@
  * limitations under the License.
  */
 
-
 #include "fsl_enet_cmsis.h"
 
 /* Component ID definition, used by tools. */
 #ifndef FSL_COMPONENT_ID
 #define FSL_COMPONENT_ID "platform.drivers.enet_cmsis"
 #endif
-
 
 #define ARM_ETH_MAC_DRV_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2, 0)
 
@@ -299,12 +297,14 @@ static int32_t ENET_CommonPowerControl(ARM_POWER_STATE state, cmsis_enet_mac_dri
             /* Enable the tx/rx interrupt mode. */
             config.interrupt =
                 kENET_TxFrameInterrupt | kENET_TxBufferInterrupt | kENET_RxFrameInterrupt | kENET_TxBufferInterrupt;
+            /* Enable tx accelerate function. */
+            config.txAccelerConfig = kENET_TxAccelIpCheckEnabled | kENET_TxAccelProtoCheckEnabled;
             /* Initialize Ethernet Mac. */
             freq = enet->resource->GetFreq();
             ENET_Init(enet->resource->base, enet->handle, &config, enet->buffers, &macAddr[0], freq);
 
             /* Callback setup */
-            ENET_SetCallback(enet->handle, ENET_SetInterruptCallback, enet->cb_event);
+            ENET_SetCallback(enet->handle, ENET_SetInterruptCallback, (void *)enet->cb_event);
 
             enet->flags |= ENET_FLAG_POWER;
             break;
@@ -400,14 +400,28 @@ static int32_t ENET_CommonSendFrame(cmsis_enet_mac_driver_state_t *enet,
     }
 
     status = ENET_SendFrame(enet->resource->base, enet->handle, frame, len);
-
-    return status;
+    if (status == kStatus_ENET_TxFrameOverLen)
+    {
+        return ARM_DRIVER_ERROR_PARAMETER;
+    }
+    else if (status == kStatus_ENET_TxFrameBusy)
+    {
+        return ARM_DRIVER_ERROR_BUSY;
+    }
+    else if (status == kStatus_ENET_TxFrameFail)
+    {
+        return ARM_DRIVER_ERROR;
+    }
+    else
+    {
+        return status;
+    }
 }
 
 static uint32_t ENET_CommonGetFrameSize(cmsis_enet_mac_driver_state_t *enet)
 {
     uint32_t status;
-    uint32_t length;
+    uint32_t length = 0;
 
     status = ENET_GetRxFrameSize(enet->handle, &length);
     if (status == kStatus_ENET_RxFrameError)
@@ -529,6 +543,26 @@ int32_t ENET0_PhyRead(uint8_t phy_addr, uint8_t reg_addr, uint16_t *data)
     return ENET_Phy_Read(&ENET0_Resource, phy_addr, reg_addr, data);
 }
 
+static int32_t ENET0_SetAddressFilter(const ARM_ETH_MAC_ADDR *ptr_addr, uint32_t num_addr)
+{
+    return ARM_DRIVER_ERROR_UNSUPPORTED;
+}
+
+static int32_t ENET0_GetRxFrameTime(ARM_ETH_MAC_TIME *time)
+{
+    return ARM_DRIVER_ERROR_UNSUPPORTED;
+}
+
+static int32_t ENET0_GetTxFrameTime(ARM_ETH_MAC_TIME *time)
+{
+    return ARM_DRIVER_ERROR_UNSUPPORTED;
+}
+
+static int32_t ENET0_ControlTimer(uint32_t control, ARM_ETH_MAC_TIME *time)
+{
+    return ARM_DRIVER_ERROR_UNSUPPORTED;
+}
+
 ARM_DRIVER_ETH_MAC Driver_ETH_MAC0 = {ENETx_GetVersion,
                                       ENETx_GetCapabilities,
                                       ENET0_Initialize,
@@ -536,13 +570,13 @@ ARM_DRIVER_ETH_MAC Driver_ETH_MAC0 = {ENETx_GetVersion,
                                       ENET0_PowerControl,
                                       ENET0_GetMacAddress,
                                       ENET0_SetMacAddress,
-                                      NULL,
+                                      ENET0_SetAddressFilter,
                                       ENET0_TransmitFrame,
                                       ENET0_ReceiveFrame,
                                       ENET0_GetReceiveFrameSize,
-                                      NULL,
-                                      NULL,
-                                      NULL,
+                                      ENET0_GetRxFrameTime,
+                                      ENET0_GetTxFrameTime,
+                                      ENET0_ControlTimer,
                                       ENET0_Control,
                                       ENET0_PhyRead,
                                       ENET0_PhyWrite};

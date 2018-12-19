@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
  * Copyright 2016 - 2018 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "usb_device_config.h"
@@ -41,7 +15,6 @@
 
 #if ((defined(USB_DEVICE_CONFIG_KHCI)) && (USB_DEVICE_CONFIG_KHCI > 0U))
 
-#include "usb_khci.h"
 #include "usb_device_dci.h"
 
 #include "usb_device_khci.h"
@@ -110,7 +83,7 @@ USB_GLOBAL USB_RAM_ADDRESS_ALIGNMENT(USB_DATA_ALIGN_SIZE) static usb_device_dcd_
     s_UsbDeviceDcdState[USB_DEVICE_CONFIG_KHCI];
 #endif
 
-/* Apply for KHCI DMA aligned buffer when marco USB_DEVICE_CONFIG_KHCI_DMA_ALIGN enabled */
+/* Apply for KHCI DMA aligned buffer when macro USB_DEVICE_CONFIG_KHCI_DMA_ALIGN enabled */
 USB_GLOBAL USB_RAM_ADDRESS_ALIGNMENT(USB_DATA_ALIGN_SIZE) static uint32_t s_UsbDeviceKhciDmaAlignBuffer
     [USB_DEVICE_CONFIG_KHCI][((USB_DEVICE_CONFIG_KHCI_DMA_ALIGN_BUFFER_LENGTH - 1U) >> 2U) + 1U];
 
@@ -322,7 +295,7 @@ static usb_status_t USB_DeviceKhciEndpointInit(usb_device_khci_state_struct_t *k
     khciState->registerBase->ENDPOINT[endpoint].ENDPT |=
         (USB_IN == direction) ? USB_ENDPT_EPTXEN_MASK : USB_ENDPT_EPRXEN_MASK;
 #if defined(FSL_FEATURE_USB_KHCI_HAS_STALL_LOW) && (FSL_FEATURE_USB_KHCI_HAS_STALL_LOW > 0U)
-    /*control endpoint bidirection stall default state shoule be enable, iso doesn't support stall*/
+    /*control endpoint bidirection stall default state should be enable, iso doesn't support stall*/
     if ((USB_ENDPOINT_BULK == epInit->transferType) || (USB_ENDPOINT_INTERRUPT == epInit->transferType))
     {
         if(USB_IN == direction)
@@ -454,7 +427,7 @@ static usb_status_t USB_DeviceKhciEndpointStall(usb_device_khci_state_struct_t *
         }
     }
 #endif
-    /* Set endpoint stall in BDT. And then if the host send a IN/OUT tanscation, the device will response a STALL state.
+    /* Set endpoint stall in BDT. And then if the host send a IN/OUT tansaction, the device will response a STALL state.
      */
     USB_KHCI_BDT_SET_CONTROL(
         (uint32_t)khciState->bdt, endpoint, direction, khciState->endpointState[index].stateUnion.stateBitField.bdtOdd,
@@ -628,7 +601,7 @@ static void USB_DeviceKhciInterruptTokenDone(usb_device_khci_state_struct_t *khc
         /*
          * The transfer is completed when one of the following conditions meet:
          * 1. The remaining length is zero.
-         * 2. The length of current transcation is less than the max packet size of the current pipe.
+         * 2. The length of current tansaction is less than the max packet size of the current pipe.
          */
         if ((0U == remainingLength) ||
             (khciState->endpointState[index].stateUnion.stateBitField.maxPacketSize > length))
@@ -649,7 +622,7 @@ static void USB_DeviceKhciInterruptTokenDone(usb_device_khci_state_struct_t *khc
                         (usb_setup_struct_t
                              *)(&khciState->setupPacketBuffer[(USB_SETUP_PACKET_SIZE * khciState->setupBufferIndex)]);
                     /*
-                     * Send the ZLT and terminate the token done interrupt service when the tranferred length in data
+                     * Send the ZLT and terminate the token done interrupt service when the transferred length in data
                      * phase
                      * is less than the host request.
                      */
@@ -973,7 +946,7 @@ static void USB_DeviceKhciInterruptError(usb_device_khci_state_struct_t *khciSta
 /*!
  * @brief Initialize the USB device KHCI instance.
  *
- * This function initizlizes the USB device KHCI module specified by the controllerId.
+ * This function initializes the USB device KHCI module specified by the controllerId.
  *
  * @param controllerId The controller id of the USB IP. Please refer to enumeration type usb_controller_index_t.
  * @param handle        Pointer of the device handle, used to identify the device object is belonged to.
@@ -1068,7 +1041,7 @@ usb_status_t USB_DeviceKhciInit(uint8_t controllerId,
 /*!
  * @brief De-initialize the USB device KHCI instance.
  *
- * This function de-initizlizes the USB device KHCI module.
+ * This function de-initializes the USB device KHCI module.
  *
  * @param khciHandle   Pointer of the device KHCI handle.
  *
@@ -1125,7 +1098,7 @@ usb_status_t USB_DeviceKhciSend(usb_device_controller_handle khciHandle,
     uint32_t index = ((endpointAddress & USB_ENDPOINT_NUMBER_MASK) << 1U) | USB_IN;
     usb_status_t error = kStatus_USB_Error;
 
-    /* Save the tansfer information */
+    /* Save the transfer information */
     if (0U == khciState->endpointState[index].stateUnion.stateBitField.transferring)
     {
         khciState->endpointState[index].transferDone = 0U;
@@ -1194,7 +1167,7 @@ usb_status_t USB_DeviceKhciRecv(usb_device_controller_handle khciHandle,
     }
     else
     {
-        /* Save the tansfer information */
+        /* Save the transfer information */
         if (0U == khciState->endpointState[index].stateUnion.stateBitField.transferring)
         {
             khciState->endpointState[index].transferDone = 0U;
@@ -1570,7 +1543,7 @@ void USB_DeviceKhciIsrFunction(void *deviceHandle)
     status = khciState->registerBase->CLK_RECOVER_INT_STATUS;
     if (status)
     {
-        /* USB RECOVER interrupt is happenned */
+        /* USB RECOVER interrupt is happened */
         if (USB_CLK_RECOVER_INT_STATUS_OVF_ERROR_MASK & status)
         {
             /* Indicates that the USB clock recovery algorithm has detected that the frequency trim adjustment needed

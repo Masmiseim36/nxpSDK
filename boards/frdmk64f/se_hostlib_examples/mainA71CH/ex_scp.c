@@ -3,28 +3,15 @@
  * @author NXP Semiconductors
  * @version 1.0
  * @par License
- * Copyright(C) NXP Semiconductors, 2016
- * All rights reserved.
+ * Copyright 2016 NXP
  *
- * Software that is described herein is for illustrative purposes only
- * which provides customers with programming information regarding the
- * A7-series security ICs.  This software is supplied "AS IS" without any
- * warranties of any kind, and NXP Semiconductors and its licensor disclaim any and
- * all warranties, express or implied, including all implied warranties of
- * merchantability, fitness for a particular purpose and non-infringement of
- * intellectual property rights.  NXP Semiconductors assumes no responsibility
- * or liability for the use of the software, conveys no license or rights under any
- * patent, copyright, mask work right, or any other intellectual property rights in
- * or to any products. NXP Semiconductors reserves the right to make changes
- * in the software without notification. NXP Semiconductors also makes no
- * representation or warranty that such application will be suitable for the
- * specified use without further testing or modification.
- *
- * Permission to use, copy and modify this software is hereby granted,
- * under NXP Semiconductors' and its licensor's relevant copyrights in
- * the software, without fee, provided that it is used in conjunction with
- * NXP Semiconductors products. This copyright, permission, and disclaimer notice
- * must appear in all copies of this code.
+ * This software is owned or controlled by NXP and may only be used
+ * strictly in accordance with the applicable license terms.  By expressly
+ * accepting such terms or by downloading, installing, activating and/or
+ * otherwise using the software, you are agreeing that you have read, and
+ * that you agree to comply with and are bound by, such license terms.  If
+ * you do not agree to be bound by the applicable license terms, then you
+ * may not retain, install, activate or otherwise use the software.
  *
  * @par Description
  * Set up an SCP03 channel between Host and A71CH,
@@ -81,23 +68,23 @@ static U8 aesRef[A71CH_SYM_KEY_MAX][16];
 static void signalFunctionCallback(ScpEvent_t event, void *context)
 {
     AX_UNUSED_ARG(context);
-    printf("scpCallback: ");
+    PRINTF("scpCallback: ");
     switch (event)
     {
         case SCP_WRONG_PADDING:
-            printf("Wrong padding\r\n");
+            PRINTF("Wrong padding\r\n");
         break;
 
         case SCP_WRONG_RESPMAC:
-            printf("Wrong response mac\r\n");
+            PRINTF("Wrong response mac\r\n");
         break;
 
         case SCP_GENERIC_FAILURE:
-            printf("Non specified failure\r\n");
+            PRINTF("Non specified failure\r\n");
         break;
 
         default:
-            printf("Unknown event type\r\n");
+            PRINTF("Unknown event type\r\n");
         break;
     }
     return;
@@ -121,7 +108,7 @@ U8 exScp(U16 appletVersion)
     U8 scpKeyMacBase[SCP_KEY_SIZE];
     U8 scpKeyDekBase[SCP_KEY_SIZE];
 
-    printf("\r\n-----------\r\nStart exScp(%s)\r\n------------\r\n", getInitModeAsString(initMode));
+    PRINTF("\r\n-----------\r\nStart exScp(%s)\r\n------------\r\n", getInitModeAsString(initMode));
 
     // Installing Callback (this step is optional)
     SCP_Subscribe(signalFunctionCallback, NULL);
@@ -153,7 +140,7 @@ U8 exScp(U16 appletVersion)
     HOSTCRYPTO_FreeEccKey(&eccKeyRootCA_1);
 
     // overall result
-    printf("\r\n-----------\r\nEnd exScp(%s), result = %s\r\n------------\r\n",
+    PRINTF("\r\n-----------\r\nEnd exScp(%s), result = %s\r\n------------\r\n",
         getInitModeAsString(initMode), ((result == 1)? "OK": "FAILED"));
 
     return result;
@@ -176,7 +163,7 @@ static U8 exAuthenticate(U8 *keyEnc, U8 *keyMac, U8 *keyDek)
     U8 result = 1;
     U16 err = 0;
 
-    printf( "\r\n-----------\r\nStart exAuthenticate()\r\n------------\r\n");
+    PRINTF( "\r\n-----------\r\nStart exAuthenticate()\r\n------------\r\n");
 
     // Authenticate Channel
     sm_printf(CONSOLE, "\r\nSCP_Authenticate()\r\n");
@@ -184,7 +171,7 @@ static U8 exAuthenticate(U8 *keyEnc, U8 *keyMac, U8 *keyDek)
     result &= AX_CHECK_SW(err, SW_OK, "err");
     result &= AX_CHECK_U16(sCounterLen, 0, "Only expected when SCP03 is configured for pseudo-random challenge");
 
-    printf( "\r\n-----------\r\nEnd exAuthenticate(), result = %s\r\n------------\r\n",
+    PRINTF( "\r\n-----------\r\nEnd exAuthenticate(), result = %s\r\n------------\r\n",
         ((result == 1)? "OK": "FAILED"));
 
     return result;
@@ -232,36 +219,36 @@ static U8 exUseCrypto(U16 appletVersion)
     U16 sharedSecretOnHostLen = 0;
     U16 expectedSharedSecretLen = sizeof(sharedSecretOnHost);
 
-    printf( "\r\n-----------\r\nStart exUseCrypto()\r\n------------\r\n");
+    PRINTF( "\r\n-----------\r\nStart exUseCrypto()\r\n------------\r\n");
 
     // Sign a precooked hash on the A71CH with the first key pair, do the subsequent verification on the Host
     index = A71CH_KEY_PAIR_0;
     signatureLen = sizeof(signature);
     if (appletVersion >= 0x0130)
     {
-        printf("\r\nA71_EccSign(0x%02x) on A71CH.\r\n", index);
+        PRINTF("\r\nA71_EccSign(0x%02x) on A71CH.\r\n", index);
         err = A71_EccSign(index, preCookedSha256, sizeof(preCookedSha256), signature, &signatureLen);
     }
     else
     {
-        printf("\r\nA71_EccSign(0x%02x) on A71CH.\r\n", index);
+        PRINTF("\r\nA71_EccSign(0x%02x) on A71CH.\r\n", index);
         err = A71_EccSign(index, preCookedSha256, sizeof(preCookedSha256), signature, &signatureLen);
     }
     result &= AX_CHECK_SW(err, SW_OK, "err");
     axPrintByteArray("signature", signature, signatureLen, AX_COLON_32);
 
     // .. Verify on host
-    printf("\r\n(Host)ECDSA_verify API with eccKeyTls_0 (verify signature created on A71CH).\r\n");
+    PRINTF("\r\n(Host)ECDSA_verify API with eccKeyTls_0 (verify signature created on A71CH).\r\n");
     memset(&mechInfo, 0, sizeof(mechInfo));
     mechInfo.mechanism = HLSE_ECDSA_VERIFY;
     retcode = HLCRYPT_Verify(&mechInfo,(U8 *)eccKeyTls_0,0,(U8 *)preCookedSha256,sizeof(preCookedSha256),signature,signatureLen);
     if (retcode == HLSE_SW_OK)
     {
-        printf("Verification OK for eccKeyTls_0.\r\n");
+        PRINTF("Verification OK for eccKeyTls_0.\r\n");
     }
     else
     {
-        printf("Return value: %d, Verification Not OK for eccKeyTls_0. Test Failed!\r\n", retcode);
+        PRINTF("Return value: %d, Verification Not OK for eccKeyTls_0. Test Failed!\r\n", retcode);
         result &= 0;
     }
 
@@ -271,18 +258,18 @@ static U8 exUseCrypto(U16 appletVersion)
     assert(nRet == HOST_CRYPTO_OK);
     if (nRet != HOST_CRYPTO_OK)
     {
-        printf("HOST_SHA256_Get operation failed.\r\n");
+        PRINTF("HOST_SHA256_Get operation failed.\r\n");
         result &= 0;
     }
 
-    printf("\r\n(Host)ECDSA_sign API with eccKeyRootCA_0.\r\n");
+    PRINTF("\r\n(Host)ECDSA_sign API with eccKeyRootCA_0.\r\n");
     memset(&mechInfo, 0, sizeof(mechInfo));
     mechInfo.mechanism = HLSE_ECDSA_SIGN;
     retcode = HLCRYPT_Sign(&mechInfo, (U8 *)eccKeyRootCA_0, 0,hashSha256, hashSha256Len, signatureOnHost, &nSigLen);
-    printf("ECDSA_sign returned: 0x%02X, Siglen is %ld\r\n", retcode, nSigLen);
+    PRINTF("ECDSA_sign returned: 0x%02X, Siglen is %ld\r\n", retcode, nSigLen);
     if (retcode != HLSE_SW_OK)
     {
-        printf("ECDSA_sign operation failed.\r\n");
+        PRINTF("ECDSA_sign operation failed.\r\n");
         result &= 0;
     }
     else
@@ -292,7 +279,7 @@ static U8 exUseCrypto(U16 appletVersion)
 
     // ... do the subsequent verification on the A71CH with the matching public key object.
     index = A71CH_PUBLIC_KEY_0;
-    printf("\r\nA71_EccVerify(0x%02x) on A71CH.\r\n", index);
+    PRINTF("\r\nA71_EccVerify(0x%02x) on A71CH.\r\n", index);
     signatureOnHostLen = (U16)nSigLen;
     isOk = 0x00;
     err = A71_EccVerify(index, hashSha256, sizeof(hashSha256), signatureOnHost, signatureOnHostLen, &isOk);
@@ -300,12 +287,12 @@ static U8 exUseCrypto(U16 appletVersion)
     result &= AX_CHECK_U8(isOk, 1, "Signature verification failed");
     if (isOk == 1)
     {
-        printf("Verification on A71CH is OK, Test Passed\r\n");
+        PRINTF("Verification on A71CH is OK, Test Passed\r\n");
     }
 
     // NEGATIVE TEST: verifying the signature with the wrong public key must fail
     index = A71CH_PUBLIC_KEY_1;
-    printf("\r\nA71_EccVerify(0x%02x) on A71CH.\r\n", index);
+    PRINTF("\r\nA71_EccVerify(0x%02x) on A71CH.\r\n", index);
     signatureOnHostLen = (U16)nSigLen;
     isOk = 0x00;
     err = A71_EccVerify(index, hashSha256, sizeof(hashSha256), signatureOnHost, signatureOnHostLen, &isOk);
@@ -313,20 +300,20 @@ static U8 exUseCrypto(U16 appletVersion)
     result &= AX_CHECK_U8(isOk, 0, "Negative test: Signature verification must fail");
     if (isOk == 0)
     {
-        printf("Negative Test Passed\r\n");
+        PRINTF("Negative Test Passed\r\n");
     }
 
     // Create and compare a shared secret on A71CH and Host
     //   The Second ECC key pair was already set, now use it in combination with
     // eccKeyTls_0 to create a shared secret
     index = A71CH_KEY_PAIR_1;
-    printf("\r\nA71_EcdhGetSharedSecret(0x%02x) on A71CH\r\n", index);
+    PRINTF("\r\nA71_EcdhGetSharedSecret(0x%02x) on A71CH\r\n", index);
     sharedSecretOnA71CHLen = sizeof(sharedSecretOnA71CH);
     err = A71_EcdhGetSharedSecret(index, eccKcTls_0.pub, eccKcTls_0.pubLen, sharedSecretOnA71CH, &sharedSecretOnA71CHLen);
     result &= AX_CHECK_SW(err, SW_OK, "err");
     axPrintByteArray("sharedSecretOnA71CH", sharedSecretOnA71CH, sharedSecretOnA71CHLen, AX_COLON_32);
 
-    printf("\r\nA71_EcdhGetSharedSecret() on Host\r\n");
+    PRINTF("\r\nA71_EcdhGetSharedSecret() on Host\r\n");
     sharedSecretOnHostLen = sizeof(sharedSecretOnHost);
     err = HOSTCRYPTO_ECC_ComputeSharedSecret(eccKeyTls_0, eccKcTls_1.pub, eccKcTls_1.pubLen, sharedSecretOnHost, &sharedSecretOnHostLen);
     result &= AX_CHECK_SW(err, SW_OK, "err");
@@ -334,13 +321,13 @@ static U8 exUseCrypto(U16 appletVersion)
 
     if (memcmp(sharedSecretOnA71CH, sharedSecretOnHost, expectedSharedSecretLen) != 0)
     {
-        printf("Shared secret calculated on A71CH does not match with shared secret calculated on Host.\r\n");
+        PRINTF("Shared secret calculated on A71CH does not match with shared secret calculated on Host.\r\n");
         result &= 0;
     }
 
 
 
-    printf( "\r\n-----------\r\nEnd exUseCrypto(), result = %s\r\n------------\r\n",
+    PRINTF( "\r\n-----------\r\nEnd exUseCrypto(), result = %s\r\n------------\r\n",
         ((result == 1)? "OK": "FAILED"));
 
     return result;
@@ -366,7 +353,7 @@ static U8 exProvision()
 
     SST_Index_t index;
 
-    printf( "\r\n-----------\r\nStart exProvision()\r\n------------\r\n");
+    PRINTF( "\r\n-----------\r\nStart exProvision()\r\n------------\r\n");
 
     err = HOSTCRYPTO_GenerateEccKey(eccCurve, &eccKeyTls_0);
     result &= AX_CHECK_SW(err, SW_OK, "err");
@@ -408,19 +395,19 @@ static U8 exProvision()
 
     // Set first ECC keyPair with eccKcTls_0 (Key pair created on Host)
     index = A71CH_KEY_PAIR_0;
-    printf("\r\nA71_SetEccKeyPair(0x%02x)\r\n", index);
+    PRINTF("\r\nA71_SetEccKeyPair(0x%02x)\r\n", index);
     err = A71_SetEccKeyPair(index, eccKcTls_0.pub, eccKcTls_0.pubLen, eccKcTls_0.priv, eccKcTls_0.privLen);
     result &= AX_CHECK_SW(err, SW_OK, "err");
 
     // Set second ECC keyPair with eccKcTls_1 (Key pair created on Host)
     index = A71CH_KEY_PAIR_1;
-    printf("\r\nA71_SetEccKeyPair(0x%02x)\r\n", index);
+    PRINTF("\r\nA71_SetEccKeyPair(0x%02x)\r\n", index);
     err = A71_SetEccKeyPair(index, eccKcTls_1.pub, eccKcTls_1.pubLen, eccKcTls_1.priv, eccKcTls_1.privLen);
     result &= AX_CHECK_SW(err, SW_OK, "err");
 
     // Both ECC Key pairs have been set, compare the public key of the first key pair with reference value
     index = A71CH_KEY_PAIR_0;
-    printf( "\r\nSST_GetPublicKeyECCKeyPair(0x%02x)\r\n", index);
+    PRINTF( "\r\nSST_GetPublicKeyECCKeyPair(0x%02x)\r\n", index);
     pubTlsKeyLen = sizeof(pubTlsKey);
     err = A71_GetPublicKeyEccKeyPair(index, pubTlsKey, &pubTlsKeyLen);
     result &= AX_CHECK_SW(err, SW_OK, "err");
@@ -428,19 +415,19 @@ static U8 exProvision()
     // Compare retrieved value with reference value
     if (memcmp(pubTlsKey, eccKcTls_0.pub, expectedPubKeyLen) != 0)
     {
-        printf("Retrieved Public key does not match reference value.\r\n");
+        PRINTF("Retrieved Public key does not match reference value.\r\n");
         result &= 0;
     }
 
     // First set the matching public key on the A71CH (index=0)
     index = A71CH_PUBLIC_KEY_0;
-    printf("\r\nA71_SetEccPublicKey(0x%02x)\r\n", index);
+    PRINTF("\r\nA71_SetEccPublicKey(0x%02x)\r\n", index);
     err = A71_SetEccPublicKey(index, eccKcRootCA_0.pub, eccKcRootCA_0.pubLen);
     result &= AX_CHECK_SW(err, SW_OK, "err");
 
     // Set the public key part of eccKcRootCA_1 on the A71CH (index=1)
     index = A71CH_PUBLIC_KEY_1;
-    printf("\r\nA71_SetEccPublicKey(0x%02x)\r\n", index);
+    PRINTF("\r\nA71_SetEccPublicKey(0x%02x)\r\n", index);
     err = A71_SetEccPublicKey(index, eccKcRootCA_1.pub, eccKcRootCA_1.pubLen);
     result &= AX_CHECK_SW(err, SW_OK, "err");
 
@@ -457,7 +444,7 @@ static U8 exProvision()
         // Put the 0x00 marker
         aesRef[indexAesKey][indexAesKey] = (U8)0x00;
         // Write the key (unwrapped)
-        printf( "\r\nA71_SetSymKey(0x%02x)\r\n", indexAesKey);
+        PRINTF( "\r\nA71_SetSymKey(0x%02x)\r\n", indexAesKey);
         err = A71_SetSymKey((SST_Index_t)indexAesKey, aesRef[indexAesKey], sizeof(aesRef[indexAesKey]));
         result &= AX_CHECK_SW(err, SW_OK, "err");
         axPrintByteArray("aesRef[indexAesKey]", aesRef[indexAesKey], sizeof(aesRef[indexAesKey]), AX_COLON_32);
@@ -465,7 +452,7 @@ static U8 exProvision()
 
     // NOTE: Reading out symmetric keys is not supported
 
-    printf( "\r\n-----------\r\nEnd exProvision(), result = %s\r\n------------\r\n",
+    PRINTF( "\r\n-----------\r\nEnd exProvision(), result = %s\r\n------------\r\n",
         ((result == 1)? "OK": "FAILED"));
 
     return result;

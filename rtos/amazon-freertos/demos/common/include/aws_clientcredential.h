@@ -1,5 +1,5 @@
 /*
- * Amazon FreeRTOS V1.2.3
+ * Amazon FreeRTOS V1.4.0
  * Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -65,7 +65,8 @@ static const char clientcredentialMQTT_BROKER_ENDPOINT[] = "Paste AWS IoT Broker
 /**
  * @brief Security type
  * WPA2 Security, @see WIFISecurity_t
- * other values are - eWiFiSecurityOpen, eWiFiSecurityWEP, eWiFiSecurityWPA
+ * Possible values are - eWiFiSecurityOpen, eWiFiSecurityWEP, eWiFiSecurityWPA,
+ * eWiFiSecurityWPA2
  */
 #define clientcredentialWIFI_SECURITY   eWiFiSecurityWPA2
 

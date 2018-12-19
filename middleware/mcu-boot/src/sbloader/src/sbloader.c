@@ -823,6 +823,12 @@ status_t ldr_DoEraseCmd(ldr_Context_t *context)
     {
 #if BL_FEATURE_ERASEALL_UNSECURE
         status = flash_mem_erase_all_unsecure();
+#if BL_FEATURE_SUPPORT_DFLASH 
+        if (g_bootloaderContext.dflashDriverInterface != NULL)
+        {
+            status += flexNVM_mem_erase_all_unsecure();   
+        }
+#endif // BL_FEATURE_SUPPORT_DFLASH         
 #else
         status = kStatus_InvalidArgument;
 #endif // BL_FEATURE_ERASEALL_UNSECURE
@@ -837,8 +843,20 @@ status_t ldr_DoEraseCmd(ldr_Context_t *context)
             case kMemoryInternal:
 #if BL_FEATURE_FAC_ERASE
                 status = flash_mem_erase_all(kFlashEraseAllOption_Blocks);
+#if BL_FEATURE_SUPPORT_DFLASH 
+                if (g_bootloaderContext.dflashDriverInterface != NULL)
+                {
+                    status += flexNVM_mem_erase_all();  
+                }
+#endif // BL_FEATURE_SUPPORT_DFLASH                 
 #else
-                status = flash_mem_erase_all();
+                status = flash_mem_erase_all();  
+#if BL_FEATURE_SUPPORT_DFLASH 
+                if (g_bootloaderContext.dflashDriverInterface != NULL)
+                {
+                    status += flexNVM_mem_erase_all(); 
+                }
+#endif // BL_FEATURE_SUPPORT_DFLASH                 
 #endif // BL_FEATURE_FAC_ERASE
                 break;
 #endif // #if !BL_FEATURE_HAS_NO_INTERNAL_FLASH

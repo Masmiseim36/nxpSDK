@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
+  <externalDefinitions>
+    <definition extID="com.nxp.mcuxpresso"/>
+    <definition extID="component.lists.MK64F12"/>
+    <definition extID="component.serial_manager.MK64F12"/>
+    <definition extID="component.serial_manager_uart.MK64F12"/>
+    <definition extID="component.uart_adapter.MK64F12"/>
+    <definition extID="device.MK64F12_CMSIS.MK64F12"/>
+    <definition extID="device.MK64F12_startup.MK64F12"/>
+    <definition extID="middleware.amazon_freertos.aws_iot.MK64F12"/>
+    <definition extID="middleware.amazon_freertos.aws_iot.jsmn.MK64F12"/>
+    <definition extID="middleware.amazon_freertos.aws_iot.secure_sockets_lwip.MK64F12"/>
+    <definition extID="middleware.amazon_freertos.aws_iot_demos.MK64F12"/>
+    <definition extID="middleware.freertos.MK64F12"/>
+    <definition extID="middleware.freertos.heap.heap_4.MK64F12"/>
+    <definition extID="middleware.mbedtls.MK64F12"/>
+    <definition extID="middleware.mmcau_cm4_cm7.MK64F12"/>
+    <definition extID="middleware.se_hostlib.MK64F12"/>
+    <definition extID="middleware.se_hostlib.a71ch.MK64F12"/>
+    <definition extID="middleware.se_hostlib.mbedtls.MK64F12"/>
+    <definition extID="middleware.se_hostlib.tstutils.MK64F12"/>
+    <definition extID="middleware.tcpip.lwip.MK64F12"/>
+    <definition extID="middleware.tcpip.lwip.ethernetif.MK64F12"/>
+    <definition extID="platform.Include_common.MK64F12"/>
+    <definition extID="platform.Include_core_cm4.MK64F12"/>
+    <definition extID="platform.drivers.clock.MK64F12"/>
+    <definition extID="platform.drivers.common.MK64F12"/>
+    <definition extID="platform.drivers.enet.MK64F12"/>
+    <definition extID="platform.drivers.flash.MK64F12"/>
+    <definition extID="platform.drivers.gpio.MK64F12"/>
+    <definition extID="platform.drivers.i2c.MK64F12"/>
+    <definition extID="platform.drivers.i2c_freertos.MK64F12"/>
+    <definition extID="platform.drivers.port.MK64F12"/>
+    <definition extID="platform.drivers.rnga.MK64F12"/>
+    <definition extID="platform.drivers.sim.MK64F12"/>
+    <definition extID="platform.drivers.smc.MK64F12"/>
+    <definition extID="platform.drivers.uart.MK64F12"/>
+    <definition extID="platform.utilities.assert.MK64F12"/>
+    <definition extID="utility.debug_console.MK64F12"/>
+    <definition extID="iar"/>
+    <definition extID="mdk"/>
+    <definition extID="armgcc"/>
+    <definition extID="mcuxpresso"/>
+  </externalDefinitions>
+  <example id="frdmk64f_se_hostlib_ibm_watson_demo" name="se_hostlib_ibm_watson_demo" category="se_hostlib_examples" dependency="middleware.mmcau_cm4_cm7.MK64F12 platform.drivers.rnga.MK64F12 platform.drivers.i2c.MK64F12 middleware.amazon_freertos.aws_iot.MK64F12 middleware.amazon_freertos.aws_iot.jsmn.MK64F12 middleware.amazon_freertos.aws_iot.secure_sockets_lwip.MK64F12 middleware.tcpip.lwip.ethernetif.MK64F12 middleware.se_hostlib.a71ch.MK64F12 middleware.se_hostlib.MK64F12 middleware.amazon_freertos.aws_iot_demos.MK64F12 middleware.se_hostlib.tstutils.MK64F12 platform.drivers.i2c_freertos.MK64F12 platform.drivers.enet.MK64F12 middleware.freertos.heap.heap_4.MK64F12 middleware.freertos.MK64F12 platform.drivers.sim.MK64F12 middleware.se_hostlib.mbedtls.MK64F12 middleware.mbedtls.MK64F12 platform.drivers.common.MK64F12 platform.drivers.clock.MK64F12 platform.drivers.flash.MK64F12 platform.drivers.gpio.MK64F12 utility.debug_console.MK64F12 platform.drivers.port.MK64F12 platform.drivers.uart.MK64F12 platform.drivers.smc.MK64F12 device.MK64F12_CMSIS.MK64F12 component.uart_adapter.MK64F12 component.serial_manager.MK64F12 component.serial_manager_uart.MK64F12 component.lists.MK64F12 device.MK64F12_startup.MK64F12 platform.utilities.assert.MK64F12 platform.Include_core_cm4.MK64F12 platform.Include_common.MK64F12 middleware.tcpip.lwip.MK64F12" toolchain="iar mdk armgcc mcuxpresso">
+    <projects>
+      <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
+    </projects>
+    <toolchainSettings>
+      <toolchainSetting id_refs="com.nxp.mcuxpresso">
+        <option id="com.crt.advproject.gas.fpu" type="enum">
+          <value>com.crt.advproject.gas.fpu.fpv4.hard</value>
+        </option>
+        <option id="com.crt.advproject.gcc.fpu" type="enum">
+          <value>com.crt.advproject.gcc.fpu.fpv4.hard</value>
+        </option>
+        <option id="com.crt.advproject.c.misc.dialect" type="enum">
+          <value>com.crt.advproject.misc.dialect.gnu99</value>
+        </option>
+        <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
+          <value>CPU_MK64FN1M0VLL12</value>
+          <value>USE_RTOS=1</value>
+          <value>LPC_ENET</value>
+          <value>WATSONP</value>
+          <value>PRINTF_ADVANCED_ENABLE=1</value>
+          <value>_POSIX_SOURCE</value>
+          <value>FRDM_K64F</value>
+          <value>FREEDOM</value>
+          <value>TGT_A71CH</value>
+          <value>I2C</value>
+          <value>FSL_RTOS_FREE_RTOS</value>
+          <value>MBEDTLS_CONFIG_FILE='"a71ch_mbedtls_frdm_config.h"'</value>
+          <value>MBEDTLS</value>
+          <value>SCP_MODE=C_MAC_C_ENC_R_MAC_R_ENC</value>
+        </option>
+        <option id="gnu.c.compiler.option.optimization.flags" type="string">
+          <value>-fno-common</value>
+        </option>
+        <option id="gnu.c.compiler.option.misc.other" type="string">
+          <value>-c  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin  -fomit-frame-pointer</value>
+        </option>
+        <option id="com.crt.advproject.link.fpu" type="enum">
+          <value>com.crt.advproject.link.fpu.fpv4.hard</value>
+        </option>
+        <option id="gnu.c.link.option.nostdlibs" type="boolean">
+          <value>true</value>
+        </option>
+        <option id="com.crt.advproject.link.memory.heapAndStack" type="string">
+          <value>&amp;Heap:Default;Default;0x6000&amp;Stack:Default;Default;0x2000</value>
+        </option>
+        <option id="com.crt.advproject.gas.hdrlib" type="enum">
+          <value>com.crt.advproject.gas.hdrlib.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.gas.specs" type="enum">
+          <value>com.crt.advproject.gas.specs.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.gcc.hdrlib" type="enum">
+          <value>com.crt.advproject.gcc.hdrlib.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.gcc.specs" type="enum">
+          <value>com.crt.advproject.gcc.specs.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.link.gcc.hdrlib" type="enum">
+          <value>com.crt.advproject.gcc.link.hdrlib.newlibnano.nohost</value>
+        </option>
+      </toolchainSetting>
+    </toolchainSettings>
+    <include_paths>
+      <include_path path="amazon-freertos/third_party"/>
+      <include_path path="lwip/port"/>
+      <include_path path="lwip/src"/>
+      <include_path path="lwip/src/include"/>
+      <include_path path="mbedtls/include"/>
+    </include_paths>
+    <source path="boards/frdmk64f/se_hostlib_examples/gcp_jwt_demo" target_path="source" type="src">
+      <files mask="aws_pkcs11_mbedtls.c"/>
+      <files mask="aws_pkcs11_pal.c"/>
+    </source>
+    <source path="boards/frdmk64f/se_hostlib_examples/ibm_watson_demo/armgcc" target_path="src" type="linker" toolchain="armgcc">
+      <files mask="MK64FN1M0xxx12_flash_heap.ld"/>
+    </source>
+    <source path="boards/frdmk64f/se_hostlib_examples/ibm_watson_demo/iar" target_path="src" type="linker" toolchain="iar">
+      <files mask="MK64FN1M0xxx12_flash.icf"/>
+    </source>
+    <source path="boards/frdmk64f/se_hostlib_examples/ibm_watson_demo/mdk" target_path="src" type="linker" toolchain="mdk">
+      <files mask="MK64FN1M0xxx12_flash.scf"/>
+    </source>
+    <source path="boards/frdmk64f/se_hostlib_examples/ibm_watson_demo" target_path="amazon-freertos/pkcs11" type="c_include">
+      <files mask="mflash_drv.h"/>
+      <files mask="mflash_file.h"/>
+      <files mask="pkcs11_se.h"/>
+    </source>
+    <source path="boards/frdmk64f/se_hostlib_examples/ibm_watson_demo" target_path="amazon-freertos/pkcs11" type="src">
+      <files mask="pkcs11_se.c"/>
+    </source>
+    <source path="boards/frdmk64f/se_hostlib_examples/ibm_watson_demo" target_path="board" type="c_include">
+      <files mask="board.h"/>
+      <files mask="clock_config.h"/>
+      <files mask="fsl_phy.h"/>
+      <files mask="lwipopts.h"/>
+      <files mask="pin_mux.h"/>
+    </source>
+    <source path="boards/frdmk64f/se_hostlib_examples/ibm_watson_demo" target_path="board" type="src">
+      <files mask="board.c"/>
+      <files mask="clock_config.c"/>
+      <files mask="fsl_phy.c"/>
+      <files mask="pin_mux.c"/>
+    </source>
+    <source path="boards/frdmk64f/se_hostlib_examples/ibm_watson_demo" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso armgcc">
+      <files mask="readme.txt"/>
+    </source>
+    <source path="boards/frdmk64f/se_hostlib_examples/ibm_watson_demo" target_path="source" type="c_include">
+      <files mask="FreeRTOSConfig.h"/>
+      <files mask="FreeRTOSIPConfig.h"/>
+      <files mask="aws_bufferpool_config.h"/>
+      <files mask="aws_clientcredential.h"/>
+      <files mask="aws_iot_config.h"/>
+      <files mask="aws_mqtt_agent_config.h"/>
+      <files mask="aws_mqtt_config.h"/>
+      <files mask="aws_pkcs11_config.h"/>
+      <files mask="aws_secure_sockets_config.h"/>
+      <files mask="ibm_watson_default_root_certificate.h"/>
+      <files mask="watson_iot_config.h"/>
+      <files mask="wifi_config.h"/>
+    </source>
+    <source path="boards/frdmk64f/se_hostlib_examples/ibm_watson_demo" target_path="source" type="src">
+      <files mask="FreeRTOSConfig.c"/>
+      <files mask="ibm_watson_demo.c"/>
+    </source>
+  </example>
+</ksdk:examples>

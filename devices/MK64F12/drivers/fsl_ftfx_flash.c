@@ -1,37 +1,9 @@
 /*
-* The Clear BSD License
 * Copyright 2013-2016 Freescale Semiconductor, Inc.
 * Copyright 2016-2018 NXP
 * All rights reserved.
 *
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted (subject to the limitations in the
-* disclaimer below) provided that the following conditions are met:
-*
-* * Redistributions of source code must retain the above copyright
-*   notice, this list of conditions and the following disclaimer.
-*
-* * Redistributions in binary form must reproduce the above copyright
-*   notice, this list of conditions and the following disclaimer in the
-*   documentation and/or other materials provided with the distribution.
-*
-* * Neither the name of the copyright holder nor the names of its
-*   contributors may be used to endorse or promote products derived from
-*   this software without specific prior written permission.
-*
-* NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE
-* GRANTED BY THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT
-* HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
-* WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
-* MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
-* LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-* CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-* SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
-* BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
-* WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-* OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
-* IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+* SPDX-License-Identifier: BSD-3-Clause
 *
 */
 
@@ -500,7 +472,7 @@ status_t FLASH_Swap(flash_config_t *config, uint32_t address, bool isSetEnable)
         }
         else
         {
-            /* When first swap: the initial swap state is Uninitialized, flash swap inidicator address is unset,
+            /* When first swap: the initial swap state is Uninitialized, flash swap indicator address is unset,
              *    the swap procedure should be Uninitialized -> Update-Erased -> Complete.
              * After the first swap has been completed, the flash swap inidicator address cannot be modified
              *    unless EraseAllBlocks command is issued, the swap procedure is changed to Update -> Update-Erased ->
@@ -526,8 +498,8 @@ status_t FLASH_Swap(flash_config_t *config, uint32_t address, bool isSetEnable)
                 case kFTFx_SwapStateUpdate:
                     /* If current swap mode is Update, Erase indicator sector in non active block
                      * to proceed swap system to update-erased state */
-                    returnCode = FTFx_CMD_Erase(ftfxConfig, address + (ftfxConfig->flashDesc.totalSize >> 1),
-                                                 ftfxConfig->opsConfig.addrAligment.sectorCmd, kFTFx_ApiEraseKey);
+                    returnCode = FLASH_Erase(config, address + (ftfxConfig->flashDesc.totalSize >> 1),
+                                              ftfxConfig->opsConfig.addrAligment.sectorCmd, kFTFx_ApiEraseKey);
                     break;
                 case kFTFx_SwapStateUpdateErased:
                     /* If current swap mode is Update or Update-Erased, progress Swap to COMPLETE State */

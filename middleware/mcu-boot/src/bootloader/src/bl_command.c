@@ -44,6 +44,13 @@
 #include "bootloader/bl_keyblob.h"
 #endif
 
+#if BL_FEATURE_KEY_PROVISIONING
+#include "authentication/key_store.h"
+#include "authentication/key_store_hal.h"
+/* the RAM address of key store comes from hal (key_store_hal_lpc54s018.c) */
+extern skboot_key_store_t *const s_keyStore;
+#endif
+
 //! @addtogroup command
 //! @{
 
@@ -73,6 +80,7 @@ void handle_flash_read_once(uint8_t *packet, uint32_t length);
 void handle_flash_read_resource(uint8_t *packet, uint32_t length);
 void handle_configure_memory(uint8_t *packet, uint32_t packetLength);
 void handle_reliable_update(uint8_t *packet, uint32_t packetLength);
+void handle_key_provisioning(uint8_t *packet, uint32_t packetLength);
 #if BL_FEATURE_GEN_KEYBLOB
 void handle_generate_key_blob(uint8_t *packet, uint32_t packetLength);
 status_t handle_key_blob_data(bool *hasMoreData);
@@ -89,6 +97,7 @@ void send_generic_response(uint32_t commandStatus, uint32_t commandTag);
 void send_get_property_response(uint32_t commandStatus, uint32_t *value, uint32_t numValues);
 void send_flash_read_once_response(uint32_t commandStatus, uint32_t *value, uint32_t byteCount);
 void send_flash_read_resource_response(uint32_t commandStatus, uint32_t length);
+void send_key_provisioning_response(uint32_t commandStatus, uint32_t length);
 //@}
 
 //! @name Data phase
@@ -97,6 +106,7 @@ static void reset_data_phase(void);
 void finalize_data_phase(status_t status);
 status_t handle_data_producer(bool *hasMoreData);
 status_t handle_data_consumer(bool *hasMoreData);
+status_t handle_data_bidirection(bool *hasMoreData);
 //@}
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -114,7 +124,11 @@ enum _secure_commands
     //! the bit number for a given command is the command's tag value minus one.
     kCommandsAllowedWhenSecure = (HAS_CMD(kCommandTag_FlashSecurityDisable) | HAS_CMD(kCommandTag_GetProperty) |
                                   HAS_CMD(kCommandTag_Reset) | HAS_CMD(kCommandTag_SetProperty) |
-                                  HAS_CMD(kCommandTag_FlashEraseAllUnsecure) | HAS_CMD(kCommandTag_ReceiveSbFile))
+                                  HAS_CMD(kCommandTag_FlashEraseAllUnsecure) | HAS_CMD(kCommandTag_ReceiveSbFile)
+#if BL_FEATURE_KEY_PROVISIONING
+                                  | HAS_CMD(kCommandTag_KeyProvisioning) 
+#endif // BL_FEATURE_KEY_PROVISIONING
+                                  )
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -176,6 +190,11 @@ const command_handler_entry_t g_commandHandlerTable[] = {
 #if BL_FEATURE_GEN_KEYBLOB
     { handle_generate_key_blob, handle_key_blob_data }, // kCommandTag_GenerateKeyBlob = 0x13
 #endif
+    { 0 },
+    { 0 },
+#if BL_FEATURE_KEY_PROVISIONING
+    { handle_key_provisioning, handle_data_bidirection }, // kCommandTag_KeyProvisioning = 0x15
+#endif // BL_FEATURE_KEY_PROVISIONING
 #else // BL_FEATURE_MIN_PROFILE
     { handle_flash_erase_all, NULL },    // kCommandTag_FlashEraseAll = 0x01
     { handle_flash_erase_region, NULL }, // kCommandTag_FlashEraseRegion = 0x02
@@ -214,6 +233,11 @@ const command_handler_entry_t g_commandHandlerTable[] = {
 #if BL_FEATURE_GEN_KEYBLOB
     { handle_generate_key_blob, handle_key_blob_data }, // kCommandTag_GenerateKeyBlob = 0x13
 #endif
+    { 0 },
+    { 0 },
+#if BL_FEATURE_KEY_PROVISIONING
+    { handle_key_provisioning, handle_data_bidirection }, // kCommandTag_KeyProvisioning = 0x15
+#endif // BL_FEATURE_KEY_PROVISIONING
 #endif // BL_FEATURE_MIN_PROFILE
 };
 
@@ -228,6 +252,9 @@ command_interface_t g_commandInterface = { bootloader_command_init, bootloader_c
 static uint8_t s_dataProducerPacket[kMaxBootloaderPacketSize];
 #endif // BL_FEATURE_EXPAND_PACKET_SIZE
 
+#if BL_FEATURE_KEY_PROVISIONING
+uint8_t s_userKeyBuffer[kPUF_KeySizeMax];
+#endif
 ////////////////////////////////////////////////////////////////////////////////
 // Code
 ////////////////////////////////////////////////////////////////////////////////
@@ -458,6 +485,12 @@ void handle_flash_erase_all(uint8_t *packet, uint32_t packetLength)
 #if ((!BL_FEATURE_QSPI_MODULE) && (!BL_FEATURE_FAC_ERASE) && (!BL_FEATURE_EXPAND_MEMORY) && \
      (!BL_FEATURE_HAS_NO_INTERNAL_FLASH))
     status = flash_mem_erase_all();
+#if BL_FEATURE_SUPPORT_DFLASH 
+    if (g_bootloaderContext.dflashDriverInterface != NULL)
+    {
+        status += flexNVM_mem_erase_all();   
+    }
+#endif // BL_FEATURE_SUPPORT_DFLASH    
 #else
     switch (commandPacket->memoryId)
     {
@@ -465,6 +498,12 @@ void handle_flash_erase_all(uint8_t *packet, uint32_t packetLength)
 #if BL_FEATURE_FAC_ERASE
         case kMemoryInternal:
             status = flash_mem_erase_all(kFlashEraseAllOption_Blocks);
+#if BL_FEATURE_SUPPORT_DFLASH 
+            if (g_bootloaderContext.dflashDriverInterface != NULL)
+            {
+                status += flexNVM_mem_erase_all();  
+            }
+#endif // BL_FEATURE_SUPPORT_DFLASH             
             break;
         case kMemoryFlashExecuteOnly:
             status = flash_mem_erase_all(kFlashEraseAllOption_ExecuteOnlySegments);
@@ -472,6 +511,12 @@ void handle_flash_erase_all(uint8_t *packet, uint32_t packetLength)
 #else
         case kMemoryInternal:
             status = flash_mem_erase_all();
+#if BL_FEATURE_SUPPORT_DFLASH 
+            if (g_bootloaderContext.dflashDriverInterface != NULL)
+            {
+                status += flexNVM_mem_erase_all();   
+            }
+#endif // BL_FEATURE_SUPPORT_DFLASH             
             break;
 #endif // BL_FEATURE_FAC_ERASE
 #endif // #if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
@@ -539,7 +584,13 @@ void handle_flash_erase_all_unsecure(uint8_t *packet, uint32_t packetLength)
 // Call flash erase all unsecure implementation.
 #if BL_FEATURE_ERASEALL_UNSECURE
     status = flash_mem_erase_all_unsecure();
-#endif
+#if BL_FEATURE_SUPPORT_DFLASH 
+    if (g_bootloaderContext.dflashDriverInterface != NULL)
+    {
+        status += flexNVM_mem_erase_all_unsecure();   
+    }
+#endif // BL_FEATURE_SUPPORT_DFLASH     
+#endif //BL_FEATURE_ERASEALL_UNSECURE
 
     send_generic_response(status, commandPacket->commandTag);
 }
@@ -769,6 +820,35 @@ void finalize_data_phase(status_t status)
             status = flushStatus;
         }
     }
+#if BL_FEATURE_KEY_PROVISIONING
+    if ((status == kStatus_Success) &&
+        (g_bootloaderContext.commandInterface->stateData->dataPhase.commandTag == kCommandTag_KeyProvisioning))
+    {
+        if (g_bootloaderContext.commandInterface->stateData->dataPhase.argument0 ==
+            kKeyProvisioning_Operation_SetUserKey)
+        {
+            skboot_key_metadata_t keyMetaData = {.keyType = kPUF_KeyType_Invalid };
+            keyMetaData.keyType =
+                (skboot_key_type_t)g_bootloaderContext.commandInterface->stateData->dataPhase.argument1;
+            status = skboot_key_secretbox(
+                s_userKeyBuffer, g_bootloaderContext.commandInterface->stateData->dataPhase.argument2, &keyMetaData);
+            switch (status)
+            {
+                case kStatus_SKBOOT_Success:
+                    status = kStatus_Success;
+                    break;
+                case kStatus_SKBOOT_Fail:
+                    status = kStatus_Fail;
+                    break;
+                case kStatus_SKBOOT_InvalidArgument:
+                    status = kStatus_InvalidArgument;
+                    break;
+                default:
+                    break; // No change.
+            }
+        }
+    }
+#endif // #if BL_FEATURE_KEY_PROVISIONING
 #if BL_FEATURE_EXPAND_MEMORY
     // Reset the state machine of memory interface.
     assert(g_bootloaderContext.memoryInterface->finalize);
@@ -805,6 +885,24 @@ status_t handle_key_blob_data(bool *hasMoreData)
     else
     {
         return handle_data_producer(hasMoreData);
+    }
+}
+
+//! @brief Handle data phase, direction is defined in dataPhase.option.
+status_t handle_data_bidirection(bool *hasMoreData)
+{
+    if (g_bootloaderContext.commandInterface->stateData->dataPhase.option == kCmd_DataPhase_Option_Consumer)
+    {
+        return handle_data_consumer(hasMoreData);
+    }
+    else if (g_bootloaderContext.commandInterface->stateData->dataPhase.option == kCmd_DataPhase_Option_Producer)
+    {
+        return handle_data_producer(hasMoreData);
+    }
+    else // Skip the data phase.
+    {
+        *hasMoreData = false;
+        return kStatus_Success;
     }
 }
 
@@ -874,6 +972,14 @@ status_t handle_data_consumer(bool *hasMoreData)
     else if (g_bootloaderContext.commandInterface->stateData->dataPhase.commandTag == kCommandTag_GenerateKeyBlob)
     {
         memcpy((void *)dataAddress, packet, packetLength);
+        dataAddress += packetLength;
+    }
+    else
+#endif // !BL_FEATURE_MIN_PROFILE
+#if BL_FEATURE_KEY_PROVISIONING
+        if (g_bootloaderContext.commandInterface->stateData->dataPhase.commandTag == kCommandTag_KeyProvisioning)
+    {
+        memcpy((uint8_t *)dataAddress, packet, packetLength);
         dataAddress += packetLength;
     }
     else
@@ -958,6 +1064,12 @@ status_t handle_data_producer(bool *hasMoreData)
             // Copy data using memory interface.
             status = g_bootloaderContext.memoryInterface->read(dataAddress, packetSize, packet, memoryId);
         }
+#if BL_FEATURE_KEY_PROVISIONING
+        else if (g_bootloaderContext.commandInterface->stateData->dataPhase.commandTag == kCommandTag_KeyProvisioning)
+        {
+            memcpy(packet, (uint8_t *)dataAddress, packetSize);
+        }
+#endif
 #if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
 #if !BL_DEVICE_IS_LPC_SERIES
         else if (commandTag == kCommandTag_FlashReadResource)
@@ -1129,6 +1241,7 @@ void handle_call(uint8_t *packet, uint32_t packetLength)
     send_generic_response(responseStatus, command->commandPacket.commandTag);
 }
 
+#if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
 //! @brief Flash Security Disable command handler.
 void handle_flash_security_disable(uint8_t *packet, uint32_t packetLength)
 {
@@ -1147,6 +1260,7 @@ void handle_flash_security_disable(uint8_t *packet, uint32_t packetLength)
 
     send_generic_response(status, command->commandPacket.commandTag);
 }
+#endif // !BL_FEATURE_HAS_NO_INTERNAL_FLASH
 
 //! @brief  Flash Program Once command handler
 void handle_flash_program_once(uint8_t *packet, uint32_t length)
@@ -1353,6 +1467,121 @@ void send_flash_read_resource_response(uint32_t commandStatus, uint32_t length)
         debug_printf("Error: writePacket returned status 0x%x\r\n", status);
     }
 }
+
+#if BL_FEATURE_KEY_PROVISIONING
+//! @brief Key Provisioning command handler.
+void handle_key_provisioning(uint8_t *packet, uint32_t packetLength)
+{
+    status_t status = kStatus_Success;
+
+    key_provisioning_packet_t *command = (key_provisioning_packet_t *)packet;
+    uint32_t operation = command->operation;
+    bool isDataPhaseRequired = false;
+    skboot_key_metadata_t keyMetaData = {.keyType = kPUF_KeyType_Invalid };
+    uint32_t memoryId = kMemoryInternal;
+
+    g_bootloaderContext.commandInterface->stateData->dataPhase.option = kCmd_DataPhase_Option_Skip;
+    switch (operation)
+    {
+        case kKeyProvisioning_Operation_Enroll:
+            status = skboot_key_secretbox_enroll();
+            break;
+        case kKeyProvisioning_Operation_SetUserKey:
+            isDataPhaseRequired = true;
+            if (command->size > kPUF_KeySizeMax)
+            {
+                status = kStatus_InvalidArgument;
+                break;
+            }
+            // Start the data phase.
+            reset_data_phase();
+            g_bootloaderContext.commandInterface->stateData->dataPhase.commandTag = kCommandTag_KeyProvisioning;
+            g_bootloaderContext.commandInterface->stateData->dataPhase.count = command->size;
+            g_bootloaderContext.commandInterface->stateData->dataPhase.address = (uint32_t)&s_userKeyBuffer;
+            g_bootloaderContext.commandInterface->stateData->dataPhase.option = kCmd_DataPhase_Option_Consumer;
+            g_bootloaderContext.commandInterface->stateData->dataPhase.argument0 = command->operation;
+            g_bootloaderContext.commandInterface->stateData->dataPhase.argument1 = command->type;
+            g_bootloaderContext.commandInterface->stateData->dataPhase.argument2 = command->size;
+            break;
+        case kKeyProvisioning_Operation_SetIntrinsicKey:
+            keyMetaData.keyType = (skboot_key_type_t)command->type;
+            status = skboot_key_secretbox(NULL, command->size, &keyMetaData);
+            break;
+        case kKeyProvisioning_Operation_WriteNonVolatile:
+            memoryId = command->type;
+            status = skboot_hal_key_secretbox_write_to_nonvolatile(memoryId);
+            break;
+        case kKeyProvisioning_Operation_ReadNonVolatile:
+            // uint32_t memoryId = command->type;
+            // status = skboot_hal_key_secretbox_read_to_nonvolatile();
+            break;
+        case kKeyProvisioning_Operation_WriteKeyStore:
+            isDataPhaseRequired = true;
+            // Start the data phase.
+            reset_data_phase();
+            g_bootloaderContext.commandInterface->stateData->dataPhase.commandTag = kCommandTag_KeyProvisioning;
+            g_bootloaderContext.commandInterface->stateData->dataPhase.count = sizeof(*s_keyStore);
+            g_bootloaderContext.commandInterface->stateData->dataPhase.address = (uint32_t)s_keyStore;
+            g_bootloaderContext.commandInterface->stateData->dataPhase.option = kCmd_DataPhase_Option_Consumer;
+            break;
+        case kKeyProvisioning_Operation_ReadKeyStore:
+            isDataPhaseRequired = true;
+            // Start the data phase.
+            reset_data_phase();
+            g_bootloaderContext.commandInterface->stateData->dataPhase.commandTag = kCommandTag_KeyProvisioning;
+            g_bootloaderContext.commandInterface->stateData->dataPhase.count = sizeof(*s_keyStore);
+            g_bootloaderContext.commandInterface->stateData->dataPhase.address = (uint32_t)s_keyStore;
+            g_bootloaderContext.commandInterface->stateData->dataPhase.option = kCmd_DataPhase_Option_Producer;
+            break;
+        default:
+            status = kStatus_InvalidArgument;
+    }
+
+    switch (status)
+    {
+        case kStatus_SKBOOT_Success:
+            status = kStatus_Success;
+            break;
+        case kStatus_SKBOOT_Fail:
+            status = kStatus_Fail;
+            break;
+        case kStatus_SKBOOT_InvalidArgument:
+            status = kStatus_InvalidArgument;
+            break;
+        default:
+            break; // No change.
+    }
+
+    if (isDataPhaseRequired)
+    {
+        send_key_provisioning_response(status, g_bootloaderContext.commandInterface->stateData->dataPhase.count);
+    }
+    else
+    {
+        send_generic_response(status, command->commandPacket.commandTag);
+    }
+}
+
+//! @brief Send a key provisioning response packet.
+void send_key_provisioning_response(uint32_t commandStatus, uint32_t length)
+{
+    read_memory_response_packet_t responsePacket;
+    responsePacket.commandPacket.commandTag = kCommandTag_KeyProvisioningResponse;
+    responsePacket.commandPacket.flags = kCommandFlag_HasDataPhase;
+    responsePacket.commandPacket.reserved = 0;
+    responsePacket.commandPacket.parameterCount = 2;
+    responsePacket.status = commandStatus;
+    responsePacket.dataByteCount = length;
+
+    status_t status = g_bootloaderContext.activePeripheral->packetInterface->writePacket(
+        g_bootloaderContext.activePeripheral, (const uint8_t *)&responsePacket, sizeof(responsePacket),
+        kPacketType_Command);
+    if (status != kStatus_Success)
+    {
+        debug_printf("Error: writePacket returned status 0x%x\r\n", status);
+    }
+}
+#endif // BL_FEATURE_KEY_PROVISIONING
 
 //! @}
 

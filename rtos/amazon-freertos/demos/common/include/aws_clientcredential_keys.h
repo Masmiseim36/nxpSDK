@@ -24,7 +24,7 @@ static const char clientcredentialCLIENT_CERTIFICATE_PEM[] = "Paste client certi
  * "...base64 data..."
  * "-----END CERTIFICATE-----";
  */
-static const char *clientcredentialJITR_DEVICE_CERTIFICATE_AUTHORITY_PEM = NULL;
+static const char clientcredentialJITR_DEVICE_CERTIFICATE_AUTHORITY_PEM[] = {0};
 
 /*
  * PEM-encoded client private key.

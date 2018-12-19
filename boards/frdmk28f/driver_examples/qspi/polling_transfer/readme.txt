@@ -10,14 +10,6 @@ Notice: While do program, it is not suggested to make the flash write frequency 
 In some tool chain's Debug version, this may cause core do not have enough speed to send data to flash.
 The flash write frequency equals to QSPI working frequency plus data line number. For example, if QSPI working in 48MHz,
 program command uses quad mode, the write frequency is 48MHz * 4 = 192MHz.
-
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
-
 Hardware requirements
 =====================
 - Mini/Micro USB cable
@@ -54,6 +46,11 @@ Program data finished!
 
 Program through QSPI polling succeed!
 ~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

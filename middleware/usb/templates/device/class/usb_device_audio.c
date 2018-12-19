@@ -115,13 +115,13 @@ static usb_status_t USB_DeviceAudioAllocateHandle(usb_device_audio_struct_t **ha
 }
 
 /*!
- * @brief Free a device audio class hanlde.
+ * @brief Free a device audio class handle.
  *
- * This function frees a device audio class hanlde.
+ * This function frees a device audio class handle.
  *
  * @param handle          The device audio class handle.
  *
- * @retval kStatus_USB_Success              Free device audio class hanlde successfully.
+ * @retval kStatus_USB_Success              Free device audio class handle successfully.
  */
 static usb_status_t USB_DeviceAudioFreeHandle(usb_device_audio_struct_t *handle)
 {
@@ -140,12 +140,12 @@ static usb_status_t USB_DeviceAudioFreeHandle(usb_device_audio_struct_t *handle)
 /*!
  * @brief Interrupt IN endpoint callback function.
  *
- * This callback function is used to notify uplayer the tranfser result of a transfer.
+ * This callback function is used to notify uplayer the transfser result of a transfer.
  * This callback pointer is passed when the interrupt IN pipe initialized.
  *
  * @param handle          The device handle. It equals the value returned from USB_DeviceInit.
  * @param message         The result of the interrupt IN pipe transfer.
- * @param callbackParam  The paramter for this callback. It is same with
+ * @param callbackParam  The parameter for this callback. It is same with
  * usb_device_endpoint_callback_struct_t::callbackParam. In the class, the value is the audio class handle.
  *
  * @return A USB error code or kStatus_USB_Success.
@@ -180,12 +180,12 @@ usb_status_t USB_DeviceAudioInterruptIn(usb_device_handle handle,
 /*!
  * @brief ISO IN endpoint callback function.
  *
- * This callback function is used to notify uplayer the tranfser result of a transfer.
+ * This callback function is used to notify uplayer the transfser result of a transfer.
  * This callback pointer is passed when the ISO IN pipe initialized.
  *
  * @param handle          The device handle. It equals the value returned from USB_DeviceInit.
  * @param message         The result of the ISO IN pipe transfer.
- * @param callbackParam  The paramter for this callback. It is same with
+ * @param callbackParam  The parameter for this callback. It is same with
  * usb_device_endpoint_callback_struct_t::callbackParam. In the class, the value is the audio class handle.
  *
  * @return A USB error code or kStatus_USB_Success.
@@ -219,12 +219,12 @@ usb_status_t USB_DeviceAudioIsochronousIn(usb_device_handle handle,
 /*!
  * @brief ISO OUT endpoint callback function.
  *
- * This callback function is used to notify uplayer the tranfser result of a transfer.
+ * This callback function is used to notify uplayer the transfser result of a transfer.
  * This callback pointer is passed when the ISO OUT pipe initialized.
  *
  * @param handle          The device handle. It equals the value returned from USB_DeviceInit.
  * @param message         The result of the ISO OUT pipe transfer.
- * @param callbackParam  The paramter for this callback. It is same with
+ * @param callbackParam  The parameter for this callback. It is same with
  * usb_device_endpoint_callback_struct_t::callbackParam. In the class, the value is the audio class handle.
  *
  * @return A USB error code or kStatus_USB_Success.
@@ -321,6 +321,7 @@ usb_status_t USB_DeviceAudioStreamEndpointsInit(usb_device_audio_struct_t *audio
         usb_device_endpoint_init_struct_t epInitStruct;
         usb_device_endpoint_callback_struct_t epCallback;
         epInitStruct.zlt = 0U;
+        epInitStruct.interval = interface->endpointList.endpoint[count].interval;
         epInitStruct.endpointAddress = interface->endpointList.endpoint[count].endpointAddress;
         epInitStruct.maxPacketSize = interface->endpointList.endpoint[count].maxPacketSize;
         epInitStruct.transferType = interface->endpointList.endpoint[count].transferType;
@@ -462,6 +463,7 @@ usb_status_t USB_DeviceAudioControlEndpointsInit(usb_device_audio_struct_t *audi
         usb_device_endpoint_init_struct_t epInitStruct;
         usb_device_endpoint_callback_struct_t epCallback;
         epInitStruct.zlt = 0U;
+        epInitStruct.interval = interface->endpointList.endpoint[count].interval;
         epInitStruct.endpointAddress = interface->endpointList.endpoint[count].endpointAddress;
         epInitStruct.maxPacketSize = interface->endpointList.endpoint[count].maxPacketSize;
         epInitStruct.transferType = interface->endpointList.endpoint[count].transferType;
@@ -1756,11 +1758,12 @@ usb_status_t USB_DeviceAudioSend(class_handle_t handle, uint8_t ep, uint8_t *buf
     {
         return kStatus_USB_Busy;
     }
+    audioHandle->streamInPipeBusy = 1U;
 
     error = USB_DeviceSendRequest(audioHandle->handle, ep, buffer, length);
-    if (kStatus_USB_Success == error)
+    if (kStatus_USB_Success != error)
     {
-        audioHandle->streamInPipeBusy = 1U;
+        audioHandle->streamInPipeBusy = 0U;
     }
     return error;
 }
@@ -1801,11 +1804,12 @@ usb_status_t USB_DeviceAudioRecv(class_handle_t handle, uint8_t ep, uint8_t *buf
     {
         return kStatus_USB_Busy;
     }
-
+    audioHandle->streamOutPipeBusy = 1U;
+    
     error = USB_DeviceRecvRequest(audioHandle->handle, ep, buffer, length);
-    if (kStatus_USB_Success == error)
+    if (kStatus_USB_Success != error)
     {
-        audioHandle->streamOutPipeBusy = 1U;
+        audioHandle->streamOutPipeBusy = 0U;
     }
     return error;
 }

@@ -18,6 +18,9 @@
 #if !BL_DEVICE_IS_LPC_SERIES
 #include "fsl_flash.h"
 #include "memory/src/flash_memory.h"
+#if BL_FEATURE_SUPPORT_DFLASH
+#include "memory/src/flexNVM_memory.h"
+#endif // BL_FEATURE_SUPPORT_DFLASH
 #else
 #include "flashiap_wrapper/fsl_flashiap_wrapper.h"
 #include "memory/src/flashiap_memory.h"
@@ -118,6 +121,54 @@ typedef struct PowerDriverInterface
 } power_driver_interface_t;
 #endif
 
+#if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
+#if BL_FEATURE_SUPPORT_DFLASH
+//! @brief Interface for the Dflash driver.
+typedef struct DFlashDriverInterface
+{
+    standard_version_t version; //!< flash driver API version number.
+    status_t (*flash_init)(flexnvm_config_t *config);
+    status_t (*flash_erase_all)(flexnvm_config_t *config, uint32_t key);
+    status_t (*flash_erase_all_unsecure)(flexnvm_config_t *config, uint32_t key);
+    status_t (*flash_erase)(flexnvm_config_t *config, uint32_t start, uint32_t lengthInBytes, uint32_t key);
+    status_t (*flash_program)(flexnvm_config_t *config, uint32_t start, uint8_t *src, uint32_t lengthInBytes);
+    status_t (*flash_get_security_state)(flexnvm_config_t *config, ftfx_security_state_t *state);
+    status_t (*flash_security_bypass)(flexnvm_config_t *config, const uint8_t *backdoorKey);
+    status_t (*flash_verify_erase_all)(flexnvm_config_t *config, ftfx_margin_value_t margin);
+    status_t (*flash_verify_erase)(flexnvm_config_t *config,
+                                   uint32_t start,
+                                   uint32_t lengthInBytes,
+                                   ftfx_margin_value_t margin);
+    status_t (*flash_verify_program)(flexnvm_config_t *config,
+                                     uint32_t start,
+                                     uint32_t lengthInBytes,
+                                     const uint8_t *expectedData,
+                                     ftfx_margin_value_t margin,
+                                     uint32_t *failedAddress,
+                                     uint32_t *failedData);
+    status_t (*flash_get_property)(flexnvm_config_t *config, flexnvm_property_tag_t whichProperty, uint32_t *value);
+    status_t (*flash_program_once)(flexnvm_config_t *config, uint32_t index, uint8_t *src, uint32_t lengthInBytes);
+    status_t (*flash_read_once)(flexnvm_config_t *config, uint32_t index, uint8_t *dst, uint32_t lengthInBytes);
+    status_t (*flash_read_resource)(flexnvm_config_t *config,
+                                    uint32_t start,
+                                    uint8_t *dst,
+                                    uint32_t lengthInBytes,
+                                    ftfx_read_resource_opt_t option);
+    status_t (*flash_is_execute_only)(flexnvm_config_t *config,
+                                      uint32_t start,
+                                      uint32_t lengthInBytes,
+                                      flash_xacc_state_t *access_state);
+    status_t (*flash_erase_all_execute_only_segments)(flexnvm_config_t *config, uint32_t key);
+    status_t (*flash_verify_erase_all_execute_only_segments)(flexnvm_config_t *config, ftfx_margin_value_t margin);
+    status_t (*flash_set_flexram_function)(flexnvm_config_t *config, ftfx_flexram_func_opt_t option);
+    status_t (*flash_program_section)(flexnvm_config_t *config, uint32_t start, uint8_t *src, uint32_t lengthInBytes);
+} dflash_driver_interface_t;
+#endif // #if BL_FEATURE_SUPPORT_DFLASH
+#endif //#if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
+
+
+
+
 //! @brief Interface for AES 128 functions
 typedef struct AesDriverInterface
 {
@@ -141,10 +192,13 @@ typedef struct _bootloaderContext
 #if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
 #if !BL_DEVICE_IS_LPC_SERIES
     const flash_driver_interface_t *flashDriverInterface;    //!< Kinetis Flash driver interface.
+#if BL_FEATURE_SUPPORT_DFLASH
+    const dflash_driver_interface_t *dflashDriverInterface;    //!< Kinetis DFlash driver interface.
+#endif // BL_FEATURE_SUPPORT_DFLASH
 #else
     const flashiap_driver_interface_t *flashDriverInterface; //!< LPC Flash driver interface.
-#endif
-#endif
+#endif // !BL_DEVICE_IS_LPC_SERIES
+#endif // !BL_FEATURE_HAS_NO_INTERNAL_FLASH
     const peripheral_descriptor_t *allPeripherals;        //!< Array of all peripherals.
     const aes_driver_interface_t *aesInterface;           //!< Interface to the AES driver
     //@}
@@ -156,6 +210,9 @@ typedef struct _bootloaderContext
 #if !BL_DEVICE_IS_LPC_SERIES
     flash_config_t *allFlashState;                   //!< Kinetis Flash driver instance.
     ftfx_cache_config_t *allFlashCacheState;                   //!< FTFx cache driver state information
+#if BL_FEATURE_SUPPORT_DFLASH
+    flexnvm_config_t *dFlashState;             //!< Kinetis DFlash driver instance.
+#endif     
 #else
     flashiap_config_t *allFlashState;                //!< LPC Flash driver instance.
 #endif
@@ -171,6 +228,9 @@ extern bootloader_context_t g_bootloaderContext;
 #if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
 #if !BL_DEVICE_IS_LPC_SERIES
 extern const flash_driver_interface_t g_flashDriverInterface;
+#if BL_FEATURE_SUPPORT_DFLASH
+extern const dflash_driver_interface_t g_dflashDriverInterface;
+#endif // BL_FEATURE_SUPPORT_DFLASH
 #else
 extern const flashiap_driver_interface_t g_flashDriverInterface;
 #endif

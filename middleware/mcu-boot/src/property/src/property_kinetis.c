@@ -45,13 +45,13 @@
 #define __ROM_END ((uint32_t)__section_end("ApplicationFlash"))
 #elif(defined(__CC_ARM)) // MDK
 extern uint32_t Image$$VECTOR_ROM$$Base[];
-extern uint32_t Image$$ER_m_text$$Limit[];
+extern uint32_t Load$$RW_m_data$$Limit[];
 extern char Image$$VECTOR_RAM$$Base[];
 extern uint32_t Image$$ARM_LIB_STACK$$ZI$$Limit[];
 #define __RAM_START ((uint32_t)Image$$VECTOR_RAM$$Base)
 #define __RAM_END ((uint32_t)Image$$ARM_LIB_STACK$$ZI$$Limit - 1)
 #define __ROM_START ((uint32_t)Image$$VECTOR_ROM$$Base)
-#define __ROM_END ((uint32_t)Image$$ER_m_text$$Limit)
+#define __ROM_END ((uint32_t)Load$$RW_m_data$$Limit)
 #elif(defined(__GNUC__)) // GCC
 extern uint32_t __VECTOR_RAM[];
 extern uint32_t __VECTOR_TABLE[];
@@ -85,7 +85,7 @@ static uint32_t s_propertyReturnValue;
 ////////////////////////////////////////////////////////////////////////////////
 // Prototypes
 ////////////////////////////////////////////////////////////////////////////////
-// !@brief Get external memoery proporties
+// !@brief Get external memory properties
 status_t bootloader_get_external_memory_properties(uint32_t memoryId, external_memory_property_store_t *store);
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -200,6 +200,36 @@ status_t bootloader_property_init(void)
                                                                      kFLASH_PropertyPflash1AccessSegmentCount,
                                                                      &propertyStore->flashAccessSegmentCount[kFlashIndex_Secondary]);
 #endif
+#if BL_FEATURE_SUPPORT_DFLASH
+        if (g_bootloaderContext.dflashDriverInterface != NULL)
+        {
+            g_bootloaderContext.dflashDriverInterface->flash_get_property(g_bootloaderContext.dFlashState,
+                                                                          kFLEXNVM_PropertyDflashBlockBaseAddr,
+                                                                         &propertyStore->flashStartAddress[kFalshIndex_DFlash]);     
+            g_bootloaderContext.dflashDriverInterface->flash_get_property(g_bootloaderContext.dFlashState,
+                                                                          kFLEXNVM_PropertyDflashTotalSize,
+                                                                         &propertyStore->flashSizeInBytes[kFalshIndex_DFlash]);          
+            g_bootloaderContext.dflashDriverInterface->flash_get_property(g_bootloaderContext.dFlashState,
+                                                                          kFLEXNVM_PropertyDflashSectorSize,
+                                                                         &propertyStore->flashSectorSize[kFalshIndex_DFlash]);      
+            g_bootloaderContext.dflashDriverInterface->flash_get_property(g_bootloaderContext.dFlashState,
+                                                                          kFLEXNVM_PropertyDflashBlockSize,
+                                                                         &propertyStore->flashBlockSize[kFalshIndex_DFlash]);                                                                       
+            g_bootloaderContext.dflashDriverInterface->flash_get_property(g_bootloaderContext.dFlashState,
+                                                                          kFLEXNVM_PropertyDflashBlockCount,
+                                                                         &propertyStore->flashBlockCount[kFalshIndex_DFlash]);  
+
+//        g_bootloaderContext.dflashDriverInterface->flash_get_property(g_bootloaderContext.dFlashState,
+//                                                                      kFLEXNVM_PropertyFlexRamBlockBaseAddr,
+//                                                                     &propertyStore->flashSectorSize[kFalshIndex_DFlash]); 
+//        g_bootloaderContext.dflashDriverInterface->flash_get_property(g_bootloaderContext.dFlashState,
+//                                                                      kFLEXNVM_PropertyFlexRamTotalSize,
+//                                                                     &propertyStore->flashSectorSize[kFalshIndex_DFlash]); 
+//        g_bootloaderContext.dflashDriverInterface->flash_get_property(g_bootloaderContext.dFlashState,
+//                                                                      kFLEXNVM_PropertyEepromTotalSize,
+//                                                                     &propertyStore->flashSectorSize[kFalshIndex_DFlash]);                 
+        }
+#endif //  BL_FEATURE_SUPPORT_DFLASH     
     }
 #endif // #if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
 
@@ -320,6 +350,12 @@ status_t bootloader_property_get(uint8_t tag, uint32_t id, const void **value, u
         flashIndex = id;
     }
 #endif // BL_HAS_SECONDARY_INTERNAL_FLASH
+#if BL_FEATURE_SUPPORT_DFLASH
+    if (g_bootloaderContext.dflashDriverInterface != NULL)
+    {
+        flashIndex = id;
+    }
+#endif // BL_FEATURE_SUPPORT_DFLASH    
 #endif // !BL_FEATURE_HAS_NO_INTERNAL_FLASH
 
     // Set default value size, may be modified below.

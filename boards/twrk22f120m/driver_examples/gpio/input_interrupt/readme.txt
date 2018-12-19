@@ -4,15 +4,6 @@ The GPIO Example project is a demonstration program that uses the KSDK software 
 outputs.
 The example is supported by the set, clear, and toggle write-only registers for each port output data register. The 
 example uses the software button to control/toggle the LED.
-
-Toolchain supported
-===================
-- IAR embedded Workbench 7.80.4
-- Keil MDK 5.21a
-- GCC ARM Embedded 2016-5.4-q3
-- Kinetis Development Studio IDE 3.2.0
-- MCUXpresso0.8
-
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -45,6 +36,11 @@ GPIO Driver example
 Press SW3 to turn on/off a LED
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 If you press the SW3, the LED ORANGE will be toggled, and "SW3 is pressed" is shown on the terminal window.
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

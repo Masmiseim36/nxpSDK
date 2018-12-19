@@ -1,15 +1,15 @@
 /*********************************************************************
-*                SEGGER Microcontroller GmbH & Co. KG                *
+*                SEGGER Microcontroller GmbH                         *
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2016  SEGGER Microcontroller GmbH & Co. KG       *
+*        (c) 1996 - 2018  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
 **********************************************************************
 
-** emWin V5.38 - Graphical user interface for embedded applications **
+** emWin V5.48 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -26,15 +26,16 @@ Full source code is available at: www.segger.com
 We appreciate your understanding and fairness.
 ----------------------------------------------------------------------
 Licensing information
-
 Licensor:                 SEGGER Microcontroller Systems LLC
 Licensed to:              NXP Semiconductors, 1109 McKay Dr, M/S 76, San Jose, CA 95131, USA
 Licensed SEGGER software: emWin
 License number:           GUI-00186
-License model:            emWin License Agreement, dated August 20th 2011
-Licensed product:         -
-Licensed platform:        NXP's ARM 7/9, Cortex-M0,M3,M4
-Licensed number of seats: -
+License model:            emWin License Agreement, dated August 20th 2011 and Amendment, dated October 19th 2017
+Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7
+----------------------------------------------------------------------
+Support and Update Agreement (SUA)
+SUA period:               2011-08-19 - 2018-09-02
+Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : WM.h
 Purpose     : Windows manager include
@@ -157,13 +158,17 @@ typedef struct {
 } WM_PID_STATE_CHANGED_INFO;
 
 typedef struct {
-  int Cmd;
+  U8  Cmd;
+  U8  FinalMove;
+  U8  StopMotion;
+  U8  IsDragging;
   int dx, dy, da;
   int xPos, yPos;
   int Period;
   int SnapX;
   int SnapY;
-  int FinalMove;
+  U8  IsOutside;
+  unsigned Overlap;
   U32 Flags;
   GUI_PID_STATE * pState;
   GUI_HMEM hContext;
@@ -272,8 +277,11 @@ typedef struct {
 
 #define WM_GET_WINDOW_ID            49      /* Return widget type specific Id (DebugId) */
 
-#define WM_PRE_BANDING              50
-#define WM_POST_BANDING             51
+#define WM_PRE_BANDING              50      /* Send before starting banding process */
+#define WM_POST_BANDING             51      /* Send after finishing banding process */
+
+#define WM_USER_DATA                52      /* Send immediately after setting user data */
+#define WM_SET_CALLBACK             53      /* Send immediately after setting user data */
 
 #define WM_GESTURE                  0x0119  /* Gesture message */
 
@@ -395,9 +403,11 @@ struct WM_MESSAGE {
   WM_HWIN hWin;         /* Destination window */
   WM_HWIN hWinSrc;      /* Source window  */
   union {
-    const void * p;            /* Some messages need more info ... Pointer is declared "const" because some systems (M16C) have 4 byte const, byte 2 byte default ptrs */
+    const void * p;     /* Message specific data pointer */
     int v;
+    PTR_ADDR u;
     GUI_COLOR Color;
+    void (* pFunc)(void);
   } Data;
 };
 
@@ -457,7 +467,7 @@ void    WM_DeleteWindow              (WM_HWIN hWin);
 void    WM_DetachWindow              (WM_HWIN hWin);
 void    WM_EnableGestures            (WM_HWIN hWin, int OnOff);
 int     WM_GetHasTrans               (WM_HWIN hWin);
-WM_HWIN WM_GetFocussedWindow         (void);
+WM_HWIN WM_GetFocusedWindow          (void);
 int     WM_GetInvalidRect            (WM_HWIN hWin, GUI_RECT * pRect);
 int     WM_GetStayOnTop              (WM_HWIN hWin);
 void    WM_HideWindow                (WM_HWIN hWin);
@@ -469,9 +479,11 @@ void    WM_InvalidateWindowAndDescs  (WM_HWIN hWin);    /* not to be documented 
 int     WM_IsEnabled                 (WM_HWIN hObj);
 char    WM_IsCompletelyCovered       (WM_HWIN hWin);    /* Checks if the window is completely covered by other windows */
 char    WM_IsCompletelyVisible       (WM_HWIN hWin);    /* Is the window completely visible ? */
-int     WM_IsFocussable              (WM_HWIN hWin);
+int     WM_IsFocusable               (WM_HWIN hWin);
 int     WM_IsVisible                 (WM_HWIN hWin);
 int     WM_IsWindow                  (WM_HWIN hWin);    /* Check validity */
+void    WM_Rect2Screen               (WM_HWIN hWin, GUI_RECT * pRect);
+void    WM_Rect2Client               (WM_HWIN hWin, GUI_RECT * pRect);
 void    WM_SetAnchor                 (WM_HWIN hWin, U16 AnchorFlags);
 void    WM_SetHasTrans               (WM_HWIN hWin);
 void    WM_SetId                     (WM_HWIN hObj, int Id);
@@ -480,6 +492,11 @@ void    WM_SetTransState             (WM_HWIN hWin, unsigned State);
 void    WM_ShowWindow                (WM_HWIN hWin);
 void    WM_ValidateRect              (WM_HWIN hWin, const GUI_RECT * pRect);
 void    WM_ValidateWindow            (WM_HWIN hWin);
+void    WM_XY2Screen                 (WM_HWIN hWin, int * px, int * py);
+void    WM_XY2Client                 (WM_HWIN hWin, int * px, int * py);
+
+#define WM_GetFocussedWindow WM_GetFocusedWindow
+#define WM_IsFocussable      WM_IsFocusable
 
 /* Gesture support */
 void WM_GESTURE_Enable  (int OnOff);
@@ -496,6 +513,8 @@ void     WM_MOTION_SetMoveable     (WM_HWIN hWin, U32 Flags, int OnOff);
 void     WM_MOTION_SetDeceleration (WM_HWIN hWin, int Axis, I32 Deceleration);
 unsigned WM_MOTION_SetDefaultPeriod(unsigned Period);
 void     WM_MOTION_SetSpeed        (WM_HWIN hWin, int Axis, I32 Velocity);
+void     WM_MOTION_SetMinMotion    (unsigned MinMotion);
+void     WM_MOTION_SetThreshold    (unsigned Threshold);
 
 /* Motion support, private interface */
 WM_HMEM WM_MOTION__CreateContext(void);

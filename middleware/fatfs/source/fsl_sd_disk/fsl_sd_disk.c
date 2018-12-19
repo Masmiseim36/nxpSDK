@@ -3,9 +3,14 @@
  * Copyright 2016 NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
+
+#include "ffconf.h"
+/* This fatfs subcomponent is disabled by default
+ * To enable it, define following macro in ffconf.h */
+#ifdef SD_DISK_ENABLE
 
 #include <assert.h>
 #include <stdio.h>
@@ -148,3 +153,4 @@ DSTATUS sd_disk_initialize(uint8_t physicalDrive)
 
     return 0;
 }
+#endif /* SD_DISK_ENABLE */

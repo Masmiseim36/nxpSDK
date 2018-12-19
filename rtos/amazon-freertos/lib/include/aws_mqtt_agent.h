@@ -1,6 +1,7 @@
 /*
  * Amazon FreeRTOS
  * Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * Copyright 2018 NXP
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -146,6 +147,10 @@ typedef struct MQTTAgentConnectParams
                                      *   messages received on the topics for which the user has not registered any subscription callback. Can be NULL. */
     char * pcCertificate;           /**< Certificate used for secure connection. Can be NULL. If it is NULL, the one specified in the aws_credential_keys.h is used. */
     uint32_t ulCertificateSize;     /**< Size of certificate used for secure connection. */
+    char * cUserName;               /**< UserName, From Application Layer, if used if during MQTT Connect */
+    uint32_t uUsernamelength;       /**< Length of UserName */
+    const char *p_password;         /**< Password, if used during MQTT Connect */
+    uint32_t passwordlength;        /**< Length of Password */
 } MQTTAgentConnectParams_t;
 
 /**

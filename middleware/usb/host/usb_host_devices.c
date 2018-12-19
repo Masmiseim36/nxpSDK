@@ -447,7 +447,7 @@ static usb_status_t USB_HostProcessCallback(usb_host_device_instance_t *deviceIn
             }
             break;
 
-        case kStatus_DEV_GetCfg: /* process get cofiguration result */
+        case kStatus_DEV_GetCfg: /* process get configuration result */
             if (((usb_descriptor_configuration_t *)deviceInstance->configurationDesc)->bMaxPower >
                 USB_HOST_CONFIG_MAX_POWER)
             {
@@ -560,7 +560,7 @@ static uint8_t USB_HostAllocateDeviceAddress(usb_host_instance_t *hostInstance)
     uint8_t address = 0;
     uint8_t addressIndex;
     uint8_t addressBitIndex;
-    for (addressIndex = 0; addressIndex < 8; ++addressIndex) /* find the idle address postion byte */
+    for (addressIndex = 0; addressIndex < 8; ++addressIndex) /* find the idle address position byte */
     {
         if (hostInstance->addressBitMap[addressIndex] != 0xFF)
         {
@@ -1133,7 +1133,7 @@ usb_status_t USB_HostDetachDeviceInternal(usb_host_handle hostHandle, usb_device
             USB_HostRemoveDeviceInstance(hostInstance, deviceInstance);
             USB_HostReleaseDeviceResource(hostInstance, deviceInstance);
         }
-        else /* enumeration has be done and notifed application */
+        else /* enumeration has be done and notified application */
         {
             USB_HostNotifyDevice(deviceInstance, kUSB_HostEventDetach); /* notify application device detach */
         }
@@ -1349,7 +1349,7 @@ usb_status_t USB_HostRemoveDevice(usb_host_handle hostHandle, usb_device_handle 
         deviceInstance->deviceAttachState = kStatus_device_Detached;
         if (deviceInstance->state >= kStatus_DEV_Initial) /* device is valid */
         {
-            if (deviceInstance->state < kStatus_DEV_AppUsed) /* enumeraion is not done or application don't use */
+            if (deviceInstance->state < kStatus_DEV_AppUsed) /* enumeration is not done or application don't use */
             {
                 /* detach internally */
                 USB_HostDetachDeviceInternal(hostHandle, deviceHandle);

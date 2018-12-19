@@ -3,28 +3,16 @@
 * @author NXP Semiconductors
 * @version 1.0
 * @par License
-* Copyright(C) NXP Semiconductors, 2016
-* All rights reserved.
+* Copyright 2016 NXP
 *
-* Software that is described herein is for illustrative purposes only
-* which provides customers with programming information regarding the
-* A7-series security ICs.  This software is supplied "AS IS" without any
-* warranties of any kind, and NXP Semiconductors and its licensor disclaim any and
-* all warranties, express or implied, including all implied warranties of
-* merchantability, fitness for a particular purpose and non-infringement of
-* intellectual property rights.  NXP Semiconductors assumes no responsibility
-* or liability for the use of the software, conveys no license or rights under any
-* patent, copyright, mask work right, or any other intellectual property rights in
-* or to any products. NXP Semiconductors reserves the right to make changes
-* in the software without notification. NXP Semiconductors also makes no
-* representation or warranty that such application will be suitable for the
-* specified use without further testing or modification.
+* This software is owned or controlled by NXP and may only be used
+* strictly in accordance with the applicable license terms.  By expressly
+* accepting such terms or by downloading, installing, activating and/or
+* otherwise using the software, you are agreeing that you have read, and
+* that you agree to comply with and are bound by, such license terms.  If
+* you do not agree to be bound by the applicable license terms, then you
+* may not retain, install, activate or otherwise use the software.
 *
-* Permission to use, copy and modify this software is hereby granted,
-* under NXP Semiconductors' and its licensor's relevant copyrights in
-* the software, without fee, provided that it is used in conjunction with
-* NXP Semiconductors products. This copyright, permission, and disclaimer notice
-* must appear in all copies of this code.
 * @par Description
 * Implementation of basic communication functionality between Host and A71CH.
 * @par History
@@ -35,7 +23,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <assert.h>
-
+#include <a71ch_const.h>
 #include "ax_api.h"
 #include "ax_util.h"
 #include "sm_apdu.h"
@@ -72,7 +60,7 @@
 /// @endcond
 
 
-#if defined(RJCT_SOCKET)
+#if defined(RJCT_SOCKET) || defined (RJCT_JRCP)
 static U16 getSocketParams(const char *arg, U8 *szServer, U16 szServerLen, unsigned int *port)
 {
     // the IP address is in format a.b.c.d:port, e.g. 10.0.0.1:8080
@@ -96,7 +84,7 @@ static U16 getSocketParams(const char *arg, U8 *szServer, U16 szServerLen, unsig
             if (arg[i] == ':') {
                 szServer[i] = 0;
                 fColonFound = 1;
-                // printf("servername: %s\r\n", szServer);
+                // PRINTF("servername: %s\r\n", szServer);
                 break;
             }
             else {
@@ -258,14 +246,14 @@ U16 SM_Connect(SmCommState_t *commState, U8 *atr, U16 *atrLen)
         else
         {
 #ifdef FLOW_VERBOSE
-            printf("selectResponseDataLen: %d\r\n", selectResponseDataLen);
+            PRINTF("selectResponseDataLen: %d\r\n", selectResponseDataLen);
             {
                 int i = 0;
                 for (i=0; i<selectResponseDataLen; i++)
                 {
-                    printf("0x%02X:", selectResponseData[i]);
+                    PRINTF("0x%02X:", selectResponseData[i]);
                 }
-                printf("\r\n");
+                PRINTF("\r\n");
             }
 #endif
             if (selectResponseDataLen >= 2)

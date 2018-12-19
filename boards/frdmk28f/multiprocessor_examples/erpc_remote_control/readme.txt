@@ -9,18 +9,10 @@ and sends result data back to client (or lights LED).
 B. Server on the PC displays which SW button was pressed on the board.
 
 eRPC documentation
-eRPC specific files are stored in: middleware\multicore_<version>\erpc
-eRPC documentation is stored in: middleware\multicore_<version>\erpc\doc
+eRPC specific files are stored in: middleware\multicore\erpc
+eRPC documentation is stored in: middleware\multicore\erpc\doc
 eRPC is open-source project stored on github: https://github.com/EmbeddedRPC/erpc
 eRPC documentation can be also found in: http://embeddedrpc.github.io
-
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
-
 Hardware requirements
 =====================
 - Mini USB cable
@@ -96,6 +88,11 @@ A. Server on the PC, client on the board:
 
 [Message from board] Button SW2 was pressed
 [Message from board] Button SW3 was pressed
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- MCUXpresso 10.3.0
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
 

@@ -1,31 +1,9 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
- *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * All rights reserved.
+ * 
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include <stdio.h>
@@ -44,7 +22,7 @@
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-void BOARD_SetRtcClockSource(void);
+
 /*!
  * @brief Set the alarm which will be trigerred x secs later. The alarm trigger
  *        will print a notification on the console.
@@ -106,6 +84,9 @@ void RTC_IRQHandler(void)
         /* Clear alarm flag */
         RTC_ClearStatusFlags(RTC, kRTC_AlarmInterruptEnable);
     }
+    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
+    exception return operation might vector to incorrect interrupt */
+    __DSB();
 }
 
 /*!
@@ -114,13 +95,11 @@ void RTC_IRQHandler(void)
 void RTC_Seconds_IRQHandler(void)
 {
     g_SecsFlag = true;
+    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
+    exception return operation might vector to incorrect interrupt */
+    __DSB();
 }
 
-void BOARD_SetRtcClockSource(void)
-{
-    /* Enable the RTC 32KHz oscillator */
-    RTC->CR |= RTC_CR_OSCE_MASK;
-}
 
 static void CommandAlarm(uint8_t offsetSec)
 {
@@ -259,8 +238,11 @@ int main(void)
      */
     RTC_GetDefaultConfig(&rtcConfig);
     RTC_Init(RTC, &rtcConfig);
+#if !(defined(FSL_FEATURE_RTC_HAS_NO_CR_OSCE) && FSL_FEATURE_RTC_HAS_NO_CR_OSCE)
+
     /* Select RTC clock source */
-    BOARD_SetRtcClockSource();
+    RTC_SetClockSource(RTC);
+#endif /* FSL_FEATURE_RTC_HAS_NO_CR_OSCE */
 
     /* Set a start date time and start RTC */
     date.year = 2015U;
@@ -273,11 +255,11 @@ int main(void)
     /* RTC time counter has to be stopped before setting the date & time in the TSR register */
     RTC_StopTimer(RTC);
 
-    RTC_SetDatetime(RTC, &date);
-
     /* Enable at the NVIC */
     EnableIRQ(RTC_IRQn);
+#ifdef RTC_SECONDS_IRQS
     EnableIRQ(RTC_Seconds_IRQn);
+#endif /* RTC_SECONDS_IRQS */
 
     /* Start the RTC time counter */
     RTC_StartTimer(RTC);
@@ -301,7 +283,7 @@ int main(void)
                 CommandGetDatetime();
                 break;
             case '2':
-                PRINTF("Input date time like: \"2010-10-10 10:10:10\"\r\n");
+                PRINTF("Input date time like: \"2010-01-31 17:00:11\"\r\n");
                 ReceiveFromConsole(recvBuf, 19U);
                 result = sscanf(recvBuf, "%04hd-%02hd-%02hd %02hd:%02hd:%02hd", &year, &month, &day, &hour, &minute,
                                 &second);

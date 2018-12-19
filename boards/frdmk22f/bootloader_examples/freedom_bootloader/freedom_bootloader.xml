@@ -2,16 +2,18 @@
 <ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
   <externalDefinitions>
     <definition extID="com.nxp.mcuxpresso"/>
+    <definition extID="device.MK22F51212_CMSIS.MK22F51212"/>
     <definition extID="middleware.baremetal.MK22F51212"/>
-    <definition extID="middleware.mcu-boot.MK22F51212_application_0x0000_linker.MK22F51212"/>
-    <definition extID="middleware.mcu-boot.MK22F51212_loader_startup.MK22F51212"/>
     <definition extID="middleware.mcu-boot.MK22F51212_sources.MK22F51212"/>
+    <definition extID="middleware.mcu-boot.MK22F51212_startup.MK22F51212"/>
     <definition extID="middleware.mcu-boot.bootsources.MK22F51212"/>
     <definition extID="middleware.mcu-boot.bootsources_kinetis.MK22F51212"/>
+    <definition extID="middleware.mcu-boot.drv_microseconds.MK22F51212"/>
     <definition extID="middleware.mcu-boot.src_bm_usb.MK22F51212"/>
-    <definition extID="middleware.mcu-boot.src_bootloader.MK22F51212"/>
+    <definition extID="middleware.mcu-boot.src_startup.MK22F51212"/>
     <definition extID="middleware.usb.device_controller_khci.MK22F51212"/>
-    <definition extID="platform.devices.MK22F51212_CMSIS.MK22F51212"/>
+    <definition extID="platform.Include_common.MK22F51212"/>
+    <definition extID="platform.Include_core_cm4.MK22F51212"/>
     <definition extID="platform.drivers.clock.MK22F51212"/>
     <definition extID="platform.drivers.common.MK22F51212"/>
     <definition extID="platform.drivers.crc.MK22F51212"/>
@@ -21,11 +23,11 @@
     <definition extID="platform.drivers.i2c.MK22F51212"/>
     <definition extID="platform.drivers.port.MK22F51212"/>
     <definition extID="platform.drivers.uart.MK22F51212"/>
-    <definition extID="mdk"/>
     <definition extID="iar"/>
+    <definition extID="mdk"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmk22f_freedom_bootloader" name="freedom_bootloader" category="bootloader_examples" dependency="middleware.mcu-boot.MK22F51212_application_0x0000_linker.MK22F51212 platform.drivers.clock.MK22F51212 platform.drivers.flash.MK22F51212 platform.devices.MK22F51212_CMSIS.MK22F51212 platform.drivers.uart.MK22F51212 platform.drivers.common.MK22F51212 platform.drivers.gpio.MK22F51212 platform.drivers.i2c.MK22F51212 platform.drivers.port.MK22F51212 platform.drivers.dspi.MK22F51212 platform.drivers.crc.MK22F51212 middleware.baremetal.MK22F51212 middleware.usb.device_controller_khci.MK22F51212 middleware.mcu-boot.MK22F51212_loader_startup.MK22F51212 middleware.mcu-boot.bootsources.MK22F51212 middleware.mcu-boot.bootsources_kinetis.MK22F51212 middleware.mcu-boot.MK22F51212_sources.MK22F51212 middleware.mcu-boot.src_bootloader.MK22F51212 middleware.mcu-boot.src_bm_usb.MK22F51212" toolchain="mdk iar mcuxpresso">
+  <example id="frdmk22f_freedom_bootloader" name="freedom_bootloader" category="bootloader_examples" dependency="platform.drivers.clock.MK22F51212 platform.drivers.flash.MK22F51212 device.MK22F51212_CMSIS.MK22F51212 platform.drivers.uart.MK22F51212 platform.drivers.gpio.MK22F51212 platform.drivers.i2c.MK22F51212 platform.drivers.port.MK22F51212 platform.drivers.dspi.MK22F51212 platform.drivers.crc.MK22F51212 middleware.usb.device_controller_khci.MK22F51212 middleware.mcu-boot.MK22F51212_startup.MK22F51212 middleware.mcu-boot.bootsources.MK22F51212 middleware.mcu-boot.bootsources_kinetis.MK22F51212 middleware.mcu-boot.MK22F51212_sources.MK22F51212 middleware.mcu-boot.src_bm_usb.MK22F51212 middleware.mcu-boot.src_startup.MK22F51212 middleware.mcu-boot.drv_microseconds.MK22F51212 platform.drivers.common.MK22F51212 platform.Include_core_cm4.MK22F51212 platform.Include_common.MK22F51212 middleware.baremetal.MK22F51212" toolchain="iar mdk mcuxpresso">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -98,6 +100,15 @@
         </option>
       </toolchainSetting>
     </toolchainSettings>
+    <source path="boards/frdmk22f/bootloader_examples/freedom_bootloader/iar" target_path="middleware/mcu-boot" type="linker" toolchain="iar">
+      <files mask="MK22FN512xxx12_application_0x0000.icf"/>
+    </source>
+    <source path="boards/frdmk22f/bootloader_examples/freedom_bootloader/mcux" target_path="middleware/mcu-boot" type="linker" toolchain="mcuxpresso">
+      <files mask="MK22FN512xxx12_application_0x0000.ld"/>
+    </source>
+    <source path="boards/frdmk22f/bootloader_examples/freedom_bootloader/mdk" target_path="middleware/mcu-boot" type="linker" toolchain="mdk">
+      <files mask="MK22FN512xxx12_application_0x0000.scf"/>
+    </source>
     <source path="boards/frdmk22f/bootloader_examples/freedom_bootloader" target_path="usb/device/class/hid" type="c_include">
       <files mask="usb_device_hid.h"/>
     </source>
@@ -123,15 +134,6 @@
     </source>
     <source path="boards/frdmk22f/bootloader_examples/freedom_bootloader" target_path="usb/device/source" type="src">
       <files mask="usb_device_ch9.c"/>
-    </source>
-    <source path="middleware/usb/device" target_path="usb/device/include" type="c_include">
-      <files mask="usb_device.h"/>
-    </source>
-    <source path="middleware/usb/device" target_path="usb/device/source" type="c_include">
-      <files mask="usb_device_dci.h"/>
-    </source>
-    <source path="middleware/usb/device" target_path="usb/device/source" type="src">
-      <files mask="usb_device_dci.c"/>
     </source>
   </example>
 </ksdk:examples>

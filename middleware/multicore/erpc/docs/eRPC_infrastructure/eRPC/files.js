@@ -54,8 +54,5 @@ var files =
     ] ],
     [ "erpc_transport_setup.h", "erpc__transport__setup_8h.html", "erpc__transport__setup_8h" ],
     [ "erpc_uart_cmsis_transport.h", "erpc__uart__cmsis__transport_8h.html", null ],
-    [ "erpc_version.h", "erpc__version_8h_source.html", null ],
-    [ "rpmsg_linux_transport.h.BASE.h", "rpmsg__linux__transport_8h_8_b_a_s_e_8h_source.html", null ],
-    [ "rpmsg_linux_transport.h.LOCAL.h", "rpmsg__linux__transport_8h_8_l_o_c_a_l_8h_source.html", null ],
-    [ "rpmsg_linux_transport.h.REMOTE.h", "rpmsg__linux__transport_8h_8_r_e_m_o_t_e_8h_source.html", null ]
+    [ "erpc_version.h", "erpc__version_8h_source.html", null ]
 ];

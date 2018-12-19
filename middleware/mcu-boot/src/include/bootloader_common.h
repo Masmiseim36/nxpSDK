@@ -12,7 +12,6 @@
 #include <stdarg.h>
 #include <stdint.h>
 #include <stdbool.h>
-#include "bootloader_common.h"
 #include "fsl_common.h"
 #include "bootloader_config.h"
 #include "target_config.h"
@@ -213,6 +212,9 @@ void deinit_hardware(void);
 
 //! @brief Update available peripherals based on specific chips
 void update_available_peripherals(void);
+
+//! @brief Update DFlash based on specific chips
+void check_available_dFlash(void);
 
 //! @brief Returns the logic level of the board specific GPIO pin used for autobaud.
 // uint32_t read_autobaud_pin(uint32_t instance);

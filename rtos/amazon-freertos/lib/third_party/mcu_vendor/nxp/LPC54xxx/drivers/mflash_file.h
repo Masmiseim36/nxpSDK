@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 NXP
+ * Copyright 2017-2018 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -15,9 +15,10 @@ typedef struct {
     char path[64];
 } mflash_file_t;
 
-
 #define MFLASH_FILE_BASEADDR     (0x10800000)
-#define MFLASH_FILE_SIZE         ((10) * (MFLASH_SECTOR_SIZE))
+#define MFLASH_FILE_SIZE         (MFLASH_SECTOR_SIZE)
+
+bool mflash_is_initialized(void);
 
 BaseType_t mflash_init(
     mflash_file_t *user_file_table,

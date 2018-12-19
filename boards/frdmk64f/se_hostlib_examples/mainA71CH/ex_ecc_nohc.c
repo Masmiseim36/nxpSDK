@@ -3,28 +3,16 @@
  * @author NXP Semiconductors
  * @version 1.0
  * @par License
- * Copyright(C) NXP Semiconductors, 2016
- * All rights reserved.
+ * Copyright 2016 NXP
  *
- * Software that is described herein is for illustrative purposes only
- * which provides customers with programming information regarding the
- * A7-series security ICs.  This software is supplied "AS IS" without any
- * warranties of any kind, and NXP Semiconductors and its licensor disclaim any and
- * all warranties, express or implied, including all implied warranties of
- * merchantability, fitness for a particular purpose and non-infringement of
- * intellectual property rights.  NXP Semiconductors assumes no responsibility
- * or liability for the use of the software, conveys no license or rights under any
- * patent, copyright, mask work right, or any other intellectual property rights in
- * or to any products. NXP Semiconductors reserves the right to make changes
- * in the software without notification. NXP Semiconductors also makes no
- * representation or warranty that such application will be suitable for the
- * specified use without further testing or modification.
+ * This software is owned or controlled by NXP and may only be used
+ * strictly in accordance with the applicable license terms.  By expressly
+ * accepting such terms or by downloading, installing, activating and/or
+ * otherwise using the software, you are agreeing that you have read, and
+ * that you agree to comply with and are bound by, such license terms.  If
+ * you do not agree to be bound by the applicable license terms, then you
+ * may not retain, install, activate or otherwise use the software.
  *
- * Permission to use, copy and modify this software is hereby granted,
- * under NXP Semiconductors' and its licensor's relevant copyrights in
- * the software, without fee, provided that it is used in conjunction with
- * NXP Semiconductors products. This copyright, permission, and disclaimer notice
- * must appear in all copies of this code.
  * @par Description
  * Demonstrate basic ECC crypto functionality without relying on ECC Host Crypto functionality
  */
@@ -52,7 +40,7 @@ static U8 exEccNoHostCrypto(U8 initMode);
 U8 exEccNohc()
 {
     U8 result = 1;
-    printf( "\r\n-----------\r\nStart exEccNohc()\r\n------------\r\n");
+    PRINTF( "\r\n-----------\r\nStart exEccNohc()\r\n------------\r\n");
 
     DEV_ClearChannelState();
 
@@ -63,7 +51,7 @@ U8 exEccNohc()
     result &= exEccNoHostCrypto(INIT_MODE_RESET_DO_SCP03);
 
     // overall result
-    printf( "\r\n-----------\r\nEnd exEccNohc(), result = %s\r\n------------\r\n", ((result == 1)? "OK": "FAILED"));
+    PRINTF( "\r\n-----------\r\nEnd exEccNohc(), result = %s\r\n------------\r\n", ((result == 1)? "OK": "FAILED"));
 
     return result;
 }
@@ -173,26 +161,26 @@ static U8 exEccNoHostCrypto(U8 initMode) {
 
     SST_Index_t keyIdx = 0x00;
 
-    printf( "\r\n-----------\r\nStart exEccNoHostCrypto(%s)\r\n------------\r\n", getInitModeAsString(initMode));
+    PRINTF( "\r\n-----------\r\nStart exEccNoHostCrypto(%s)\r\n------------\r\n", getInitModeAsString(initMode));
 
     // Initialize the A71CH (Debug mode restrictions may apply)
     result &= a71chInitModule(initMode);
     assert(result);
 
     keyIdx = A71CH_KEY_PAIR_0;
-    printf( "\r\nA71_GenerateEccKeyPair(0x%02x)\r\n", keyIdx);
+    PRINTF( "\r\nA71_GenerateEccKeyPair(0x%02x)\r\n", keyIdx);
     err = A71_GenerateEccKeyPair(keyIdx);
     result &= AX_CHECK_SW(err, SW_OK, "err");
 
     keyIdx = A71CH_KEY_PAIR_1;
-    printf( "\r\nA71_GenerateEccKeyPair(0x%02x)\r\n", keyIdx);
+    PRINTF( "\r\nA71_GenerateEccKeyPair(0x%02x)\r\n", keyIdx);
     err = A71_GenerateEccKeyPair(keyIdx);
     result &= AX_CHECK_SW(err, SW_OK, "err");
 
     pubEccKey0Len = sizeof(pubEccKey0);
     expectedPubKeyLen = 65;
     keyIdx = A71CH_KEY_PAIR_0;
-    printf( "\r\nA71_GetPublicKeyEccKeyPair(0x%02x)\r\n", keyIdx);
+    PRINTF( "\r\nA71_GetPublicKeyEccKeyPair(0x%02x)\r\n", keyIdx);
     err = A71_GetPublicKeyEccKeyPair(keyIdx, pubEccKey0, &pubEccKey0Len);
     result &= AX_CHECK_SW(err, SW_OK, "err");
     result &= AX_CHECK_U16(pubEccKey0Len, expectedPubKeyLen, "pubEccKey0Len");
@@ -201,7 +189,7 @@ static U8 exEccNoHostCrypto(U8 initMode) {
     pubEccKey1Len = sizeof(pubEccKey1);
     expectedPubKeyLen = 65;
     keyIdx = A71CH_KEY_PAIR_1;
-    printf( "\r\nA71_GetPublicKeyEccKeyPair(0x%02x)\r\n", keyIdx);
+    PRINTF( "\r\nA71_GetPublicKeyEccKeyPair(0x%02x)\r\n", keyIdx);
     err = A71_GetPublicKeyEccKeyPair(keyIdx, pubEccKey1, &pubEccKey1Len);
     result &= AX_CHECK_SW(err, SW_OK, "err");
     result &= AX_CHECK_U16(pubEccKey1Len, expectedPubKeyLen, "pubEccKey1Len");
@@ -209,13 +197,13 @@ static U8 exEccNoHostCrypto(U8 initMode) {
 
     // Overwrite the ECC keyPair at index 0 & 1
     keyIdx = A71CH_KEY_PAIR_0;
-    printf("\r\nA71_SetEccKeyPair(0x%02x)\r\n", keyIdx);
+    PRINTF("\r\nA71_SetEccKeyPair(0x%02x)\r\n", keyIdx);
     err = A71_SetEccKeyPair(keyIdx, eccPubKeyTlsNist256_0, (U16)sizeof(eccPubKeyTlsNist256_0),
         eccPrivKeyTlsNist256_0, (U16)sizeof(eccPrivKeyTlsNist256_0));
     result &= AX_CHECK_SW(err, SW_OK, "err");
 
     keyIdx = A71CH_KEY_PAIR_1;
-    printf("\r\nA71_SetEccKeyPair(0x%02x)\r\n", keyIdx);
+    PRINTF("\r\nA71_SetEccKeyPair(0x%02x)\r\n", keyIdx);
     err = A71_SetEccKeyPair(keyIdx, eccPubKeyTlsNist256_1, (U16)sizeof(eccPubKeyTlsNist256_1),
         eccPrivKeyTlsNist256_1, (U16)sizeof(eccPrivKeyTlsNist256_1));
     result &= AX_CHECK_SW(err, SW_OK, "err");
@@ -224,7 +212,7 @@ static U8 exEccNoHostCrypto(U8 initMode) {
     pubEccKeyScratchLen = sizeof(pubEccKeyScratch);
     expectedPubKeyLen = 65;
     keyIdx = A71CH_KEY_PAIR_0;
-    printf( "\r\nSST_GetPublicKeyECCKeyPair(0x%02x)\r\n", keyIdx);
+    PRINTF( "\r\nSST_GetPublicKeyECCKeyPair(0x%02x)\r\n", keyIdx);
     err = A71_GetPublicKeyEccKeyPair(keyIdx, pubEccKeyScratch, &pubEccKeyScratchLen);
     result &= AX_CHECK_SW(err, SW_OK, "err");
     result &= AX_CHECK_U16(pubEccKeyScratchLen, expectedPubKeyLen, "pubEccKeyScratchLen");
@@ -234,7 +222,7 @@ static U8 exEccNoHostCrypto(U8 initMode) {
     pubEccKeyScratchLen = sizeof(pubEccKeyScratch);
     expectedPubKeyLen = 65;
     keyIdx = A71CH_KEY_PAIR_1;
-    printf( "\r\nSST_GetPublicKeyECCKeyPair(0x%02x)\r\n", keyIdx);
+    PRINTF( "\r\nSST_GetPublicKeyECCKeyPair(0x%02x)\r\n", keyIdx);
     err = A71_GetPublicKeyEccKeyPair(keyIdx, pubEccKeyScratch, &pubEccKeyScratchLen);
     result &= AX_CHECK_SW(err, SW_OK, "err");
     result &= AX_CHECK_U16(pubEccKeyScratchLen, expectedPubKeyLen, "pubEccKeyScratchLen");
@@ -243,12 +231,12 @@ static U8 exEccNoHostCrypto(U8 initMode) {
 
     // Overwrite the ECC Public Key at index 0 & 1
     keyIdx = A71CH_PUBLIC_KEY_0;
-    printf("\r\nA71_SetEccPublicKey(0x%02x)\r\n", keyIdx);
+    PRINTF("\r\nA71_SetEccPublicKey(0x%02x)\r\n", keyIdx);
     err = A71_SetEccPublicKey(keyIdx, eccPubKeyCANist256_0, (U16)sizeof(eccPubKeyCANist256_0));
     result &= AX_CHECK_SW(err, SW_OK, "err");
 
     keyIdx = A71CH_PUBLIC_KEY_1;
-    printf("\r\nA71_SetEccPublicKey(0x%02x)\r\n", keyIdx);
+    PRINTF("\r\nA71_SetEccPublicKey(0x%02x)\r\n", keyIdx);
     err = A71_SetEccPublicKey(keyIdx, eccPubKeyCANist256_1, (U16)sizeof(eccPubKeyCANist256_1));
     result &= AX_CHECK_SW(err, SW_OK, "err");
 
@@ -256,7 +244,7 @@ static U8 exEccNoHostCrypto(U8 initMode) {
     pubEccKeyScratchLen = sizeof(pubEccKeyScratch);
     expectedPubKeyLen = 65;
     keyIdx = A71CH_PUBLIC_KEY_1;
-    printf( "\r\nA71_GetEccPublicKey(0x%02x)\r\n", keyIdx);
+    PRINTF( "\r\nA71_GetEccPublicKey(0x%02x)\r\n", keyIdx);
     err = A71_GetEccPublicKey(keyIdx, pubEccKeyScratch, &pubEccKeyScratchLen);
     result &= AX_CHECK_SW(err, SW_OK, "err");
     result &= AX_CHECK_U16(pubEccKeyScratchLen, expectedPubKeyLen, "pubEccKeyScratchLen");
@@ -267,7 +255,7 @@ static U8 exEccNoHostCrypto(U8 initMode) {
     pubEccKeyScratchLen = sizeof(pubEccKeyScratch);
     expectedPubKeyLen = 65;
     keyIdx = A71CH_PUBLIC_KEY_0;
-    printf("\r\nA71_GetEccPublicKey(0x%02x)\r\n", keyIdx);
+    PRINTF("\r\nA71_GetEccPublicKey(0x%02x)\r\n", keyIdx);
     err = A71_GetEccPublicKey(keyIdx, pubEccKeyScratch, &pubEccKeyScratchLen);
     result &= AX_CHECK_SW(err, SW_OK, "err");
     result &= AX_CHECK_U16(pubEccKeyScratchLen, expectedPubKeyLen, "pubEccKeyScratchLen");
@@ -276,7 +264,7 @@ static U8 exEccNoHostCrypto(U8 initMode) {
 
     // Generate a shared secret with keypair on index 0 and a spare public key
     keyIdx = A71CH_KEY_PAIR_0;
-    printf("\r\nA71_EcdhGetSharedSecret(0x%02x, SpareKey)\r\n", keyIdx);
+    PRINTF("\r\nA71_EcdhGetSharedSecret(0x%02x, SpareKey)\r\n", keyIdx);
     sharedSecretLen = sizeof(sharedSecret);
     err = A71_EcdhGetSharedSecret(keyIdx, eccPubKeySpareNist256_1, (U16)sizeof(eccPubKeySpareNist256_1), sharedSecret, &sharedSecretLen);
     result &= AX_CHECK_SW(err, SW_OK, "err");
@@ -285,14 +273,14 @@ static U8 exEccNoHostCrypto(U8 initMode) {
     // Generate a shared secret using the two provisioned key pairs in the two possible modes
     // Check: SharedSecret(Priv_0, Pub_1) == SharedSecret(Priv_1, Pub_0)
     keyIdx = A71CH_KEY_PAIR_0;
-    printf("\r\nA71_EcdhGetSharedSecret(0x%02x, Pub_1)\r\n", keyIdx);
+    PRINTF("\r\nA71_EcdhGetSharedSecret(0x%02x, Pub_1)\r\n", keyIdx);
     sharedSecret_0_1_Len = sizeof(sharedSecret_0_1);
     err = A71_EcdhGetSharedSecret(keyIdx, eccPubKeyTlsNist256_1, (U16)sizeof(eccPubKeyTlsNist256_1), sharedSecret_0_1, &sharedSecret_0_1_Len);
     result &= AX_CHECK_SW(err, SW_OK, "err");
     axPrintByteArray("sharedSecret_0_1", sharedSecret_0_1, sharedSecret_0_1_Len, AX_COLON_32);
 
     keyIdx = A71CH_KEY_PAIR_1;
-    printf("\r\nA71_EcdhGetSharedSecret(0x%02x, Pub_0)\r\n", keyIdx);
+    PRINTF("\r\nA71_EcdhGetSharedSecret(0x%02x, Pub_0)\r\n", keyIdx);
     sharedSecret_1_0_Len = sizeof(sharedSecret_1_0);
     err = A71_EcdhGetSharedSecret(keyIdx, eccPubKeyTlsNist256_0, (U16)sizeof(eccPubKeyTlsNist256_0), sharedSecret_1_0, &sharedSecret_1_0_Len);
     result &= AX_CHECK_SW(err, SW_OK, "err");
@@ -304,18 +292,18 @@ static U8 exEccNoHostCrypto(U8 initMode) {
     // Sign a Hash (retrieving the native A71CH signature format)
     keyIdx = A71CH_KEY_PAIR_0;
     signatureLen = sizeof(signature);
-    printf("\r\nA71_EccSign(0x%02x)\r\n", keyIdx);
+    PRINTF("\r\nA71_EccSign(0x%02x)\r\n", keyIdx);
     err = A71_EccSign(keyIdx, hash, hashLen, signature, &signatureLen);
     result &= AX_CHECK_SW(err, SW_OK, "err");
     axPrintByteArray("signature", signature, signatureLen, AX_COLON_32);
 
     // Now verify the signature on the A71CH
-    printf("\r\nA71_EccVerifyWithKey(Pub_0)\r\n");
+    PRINTF("\r\nA71_EccVerifyWithKey(Pub_0)\r\n");
     err = A71_EccVerifyWithKey(eccPubKeyTlsNist256_0, (U16)sizeof(eccPubKeyTlsNist256_0), hash, hashLen,
         signature, signatureLen, &isOk);
     result &= AX_CHECK_SW(err, SW_OK, "err");
     result &= AX_CHECK_U8(isOk, 0x01, "Signature did not verify correctly");
 
-    printf( "\r\n-----------\r\nEnd exEccNoHostCrypto(%s), result = %s\r\n------------\r\n", getInitModeAsString(initMode), ((result == 1)? "OK": "FAILED"));
+    PRINTF( "\r\n-----------\r\nEnd exEccNoHostCrypto(%s), result = %s\r\n------------\r\n", getInitModeAsString(initMode), ((result == 1)? "OK": "FAILED"));
     return result;
 }

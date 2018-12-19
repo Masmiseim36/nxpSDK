@@ -80,6 +80,7 @@ typedef struct
     void *xBuffer;
 } jsonDelta_t;
 
+#if defined(BOARD_ACCEL_FXOS) || defined(BOARD_ACCEL_MMA)
 /* Type definition of structure for data from the accelerometer */
 typedef struct
 {
@@ -87,6 +88,7 @@ typedef struct
     int16_t A_y;
     int16_t A_z;
 } vector_t;
+#endif
 
 /* Accelerometer driver specific defines */
 #if defined(BOARD_ACCEL_FXOS)
@@ -110,9 +112,12 @@ QueueHandle_t jsonDeltaQueue = NULL;
 /* Actual state of LED */
 uint16_t ledState = 0;
 uint16_t parsedLedState = 0;
+
+#if defined(BOARD_ACCEL_FXOS) || defined(BOARD_ACCEL_MMA)
 /* Actual state of accelerometer */
 uint16_t accState = 0;
 uint16_t parsedAccState = 0;
+#endif
 
 /* Has the board RGB LED */
 #if defined HAS_RGB_LED
@@ -128,8 +133,10 @@ extern fxos_handle_t accelHandle;
 extern mma_handle_t accelHandle;
 #endif
 
+#if defined(BOARD_ACCEL_FXOS) || defined(BOARD_ACCEL_MMA)
 extern uint8_t g_accelDataScale;
 extern uint8_t g_accelResolution;
+#endif
 
 extern void turnOnLed(uint8_t id);
 extern void turnOffLed(uint8_t id);
@@ -142,6 +149,7 @@ extern char ledColors[];
  * Code
  ******************************************************************************/
 
+#if defined(BOARD_ACCEL_FXOS) || defined(BOARD_ACCEL_MMA)
 /*!
  * @brief Read accelerometer sensor value
  */
@@ -213,6 +221,7 @@ int buildJsonAccel()
         return ret;
     }
 }
+#endif
 
 /* Called when there's a difference between "reported" and "desired" in Shadow document. */
 static BaseType_t prvDeltaCallback(void *pvUserData,
@@ -258,7 +267,9 @@ static uint32_t prvGenerateShadowJSON()
                     "},"
                     "\"reported\":{"
                     "\"LEDstate\":%d,"
+#if defined(BOARD_ACCEL_FXOS) || defined(BOARD_ACCEL_MMA)
                     "\"accel\":{\"x\":0,\"y\":0,\"z\":0},"
+#endif
                     "\"LEDinfo\":{"
                     "\"isRgbLed\":%s,"
                     "\"colors\":%s"
@@ -385,11 +396,13 @@ void processShadowDeltaJSON(char *json, uint32_t jsonLength)
                 /* found "LEDstate" keyword, parse value of next token */
                 err = parseUInt16Value(&parsedLedState, json, &tokens[i]);
             }
+#if defined(BOARD_ACCEL_FXOS) || defined(BOARD_ACCEL_MMA)
             else if (strstr(key, "accelUpdate"))
             {
                 /* found "updateAccel" keyword, parse value of next token */
                 err = parseUInt16Value(&parsedAccState, json, &tokens[i]);
             }
+#endif
             i++;
         }
     }
@@ -546,6 +559,7 @@ void prvShadowMainTask(void *pvParameters)
                     configPRINTF(("Update failed, returned %d.\r\n", xReturn));
                 }
             }
+#if defined(BOARD_ACCEL_FXOS) || defined(BOARD_ACCEL_MMA)
             if (parsedAccState == 1)
             {
                 configPRINTF(("Update accelerometer.\r\n"));
@@ -561,7 +575,7 @@ void prvShadowMainTask(void *pvParameters)
                 }
                 parsedAccState = 0;
             }
-
+#endif
             /* return mqtt buffer */
             xReturn = SHADOW_ReturnMQTTBuffer(xClientHandle, jsonDelta.xBuffer);
             if (xReturn != eShadowSuccess)

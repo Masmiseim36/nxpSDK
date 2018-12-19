@@ -83,9 +83,8 @@ enum _command_tags
     kCommandTag_ReliableUpdate = 0x12,
     kCommandTag_GenerateKeyBlob = 0x13,
     kCommandTag_GenerateKeyBlobResponse = 0xb3,
-    /*0x14, not used*/
-    kCommandTag_KeyProvisoning = 0x15,
-    kCommandTag_KeyProvisonResponse = 0xb5,
+    kCommandTag_KeyProvisioning = 0x15,
+    kCommandTag_KeyProvisioningResponse = 0xb5,
 
     kCommandTag_ConfigureI2c = 0xc1, //! Reserved command tag for Bus Pal
     kCommandTag_ConfigureSpi = 0xc2, //! Reserved command tag for Bus Pal
@@ -94,7 +93,7 @@ enum _command_tags
     kFirstCommandTag = kCommandTag_FlashEraseAll,
 
     //! Maximum linearly incrementing command tag value, excluding the response commands and bus pal commands.
-    kLastCommandTag = kCommandTag_KeyProvisoning,
+    kLastCommandTag = kCommandTag_KeyProvisioning,
 
     kResponseCommandHighNibbleMask =
         0xa0 //!< Mask for the high nibble of a command tag that identifies it as a response command.
@@ -116,6 +115,13 @@ enum _command_key_provisioning_operation
     kKeyProvisioning_Operation_ReadNonVolatile = 4,
     kKeyProvisioning_Operation_WriteKeyStore = 5,
     kKeyProvisioning_Operation_ReadKeyStore = 6,
+};
+
+enum _command_dataPhase_option_direction
+{
+    kCmd_DataPhase_Option_Consumer = 0,
+    kCmd_DataPhase_Option_Producer = 1,
+    kCmd_DataPhase_Option_Skip = 2,
 };
 
 //! @brief Command packet format.
@@ -271,11 +277,9 @@ typedef struct ReliableUpdatePacket
 typedef struct KeyProvisioningPacket
 {
     command_packet_t commandPacket; //!< header
-    uint32_t operation;             //!< Operation defined at _command_key_provisioning_operation
+    uint32_t operation;             //!< Key operation, refer to the definition of _command_key_provisioning_operation.
     uint32_t type;                  //!< Key type.
-    uint32_t index;                 //!< Key index register.
     uint32_t size;                  //!< Key size.
-    uint32_t address;               //!< Key address.
 } key_provisioning_packet_t;
 
 //@}

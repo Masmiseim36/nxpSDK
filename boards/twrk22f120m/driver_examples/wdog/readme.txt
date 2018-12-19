@@ -4,15 +4,6 @@ The WDOG Example project is to demonstrate usage of the KSDK wdog driver.
 In this example,quick test is first implemented to test the wdog.
 And then after 10 times of refreshing the watchdog in None-window mode, a timeout reset is generated.
 We also try to refresh out of window to trigger reset after 10 times of refreshing in Window mode.
-
-Toolchain supported
-===================
-- IAR embedded Workbench 7.80.4
-- Keil MDK 5.21a
-- GCC ARM Embedded 2016-5.4-q3
-- Kinetis Development Studio IDE 3.2.0
-- MCUXpresso0.8
-
 Hardware requirements
 =====================
 - J-Link ARM
@@ -73,6 +64,11 @@ When the example runs successfully, you can see the similar information from the
 
 End of Wdog example!
 ~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

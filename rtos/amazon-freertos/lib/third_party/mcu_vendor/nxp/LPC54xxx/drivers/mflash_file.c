@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 NXP
+ * Copyright 2017-2018 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -13,6 +13,7 @@
 #include "mflash_drv.h"
 
 static mflash_file_t *g_file_table = NULL;
+static bool g_mflash_initialized = false;
 
 #if 0
 /* Example of NULL terminated file table */
@@ -32,6 +33,10 @@ typedef struct {
     uint32_t magic_no;
 } mfile_meta_t;
 
+bool mflash_is_initialized()
+{
+    return g_mflash_initialized;
+}
 
 BaseType_t mflash_init(mflash_file_t *user_file_table, bool init_drv)
 {
@@ -62,6 +67,8 @@ BaseType_t mflash_init(mflash_file_t *user_file_table, bool init_drv)
     /* Init flash driver */
     if (init_drv)
         mflash_drv_init();
+
+    g_mflash_initialized = true;
     return pdTRUE;
 }
 

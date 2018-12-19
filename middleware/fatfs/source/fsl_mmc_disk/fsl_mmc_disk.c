@@ -3,9 +3,14 @@
  * Copyright 2016 NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
+
+#include "ffconf.h"
+/* This fatfs subcomponent is disabled by default
+ * To enable it, define following macro in ffconf.h */
+#ifdef MMC_DISK_ENABLE
 
 #include <assert.h>
 #include <stdio.h>
@@ -16,7 +21,9 @@
 
 /* New project wizard guide note. */
 #ifndef BOARD_MMC_VCC_SUPPLY
-#error Undefined macro. Define BOARD_MMC_VCC_SUPPLY in board.h
+#warning Undefined macro. Define BOARD_MMC_VCC_SUPPLY in board.h
+/* Set default value for current build. */
+#define BOARD_MMC_VCC_SUPPLY kMMC_VoltageWindows270to360
 #endif
 
 /*******************************************************************************
@@ -156,3 +163,4 @@ DSTATUS mmc_disk_initialize(uint8_t physicalDrive)
 
     return RES_OK;
 }
+#endif /* MMC_DISK_ENABLE */

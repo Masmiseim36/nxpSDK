@@ -270,11 +270,23 @@ SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")
 
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} muldefs")
 
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Map=output.map")
+
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -mcpu=cortex-m4")
 
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -mfloat-abi=hard")
 
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -mfpu=fpv4-sp-d16")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} --defsym=__stack_size__=0x400")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} --defsym=__heap_size__=0x2000")
 
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} --specs=nano.specs")
 
@@ -312,15 +324,23 @@ SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
 
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} muldefs")
 
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Map=output.map")
+
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mcpu=cortex-m4")
 
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mfloat-abi=hard")
 
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mfpu=fpv4-sp-d16")
 
-include_directories(${ProjDirPath}/../../../../../CMSIS/Include)
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
 
-include_directories(${ProjDirPath}/../../../../../devices)
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} --defsym=__stack_size__=0x400")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} --defsym=__heap_size__=0x2000")
 
 include_directories(${ProjDirPath}/..)
 
@@ -332,19 +352,27 @@ include_directories(${ProjDirPath}/../../../../../CMSIS/Driver/Include)
 
 include_directories(${ProjDirPath}/../../..)
 
+include_directories(${ProjDirPath}/../../../../../CMSIS/Include)
+
+include_directories(${ProjDirPath}/../../../../../devices)
+
 include_directories(${ProjDirPath}/../../../../../devices/MK22F51212/drivers)
 
 include_directories(${ProjDirPath}/../../../../../devices/MK22F51212/cmsis_drivers)
 
 include_directories(${ProjDirPath}/../../../../../devices/MK22F51212)
 
-include_directories(${ProjDirPath}/../../../../../devices/MK22F51212/utilities/io)
-
 include_directories(${ProjDirPath}/../../../../../devices/MK22F51212/utilities/str)
 
-include_directories(${ProjDirPath}/../../../../../devices/MK22F51212/utilities/log)
+include_directories(${ProjDirPath}/../../../../../devices/MK22F51212/utilities/debug_console)
 
-include_directories(${ProjDirPath}/../../../../../devices/MK22F51212/utilities)
+include_directories(${ProjDirPath}/../../../../../components/uart)
+
+include_directories(${ProjDirPath}/../../../../../components/serial_manager)
+
+include_directories(${ProjDirPath}/../../../../../components/lists)
+
+include_directories(${ProjDirPath}/../../../../../devices/MK22F51212/template)
 
 include_directories(${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra)
 
@@ -375,56 +403,75 @@ add_executable(erpc_client_matrix_multiply_uart.elf
 "${ProjDirPath}/../clock_config.h"
 "${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_uart.h"
 "${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_uart.c"
-"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_common.h"
-"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_common.c"
-"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_clock.h"
-"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_clock.c"
 "${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_uart_edma.h"
 "${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_uart_edma.c"
-"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_edma.h"
-"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_edma.c"
 "${ProjDirPath}/../../../../../devices/MK22F51212/cmsis_drivers/fsl_uart_cmsis.h"
 "${ProjDirPath}/../../../../../devices/MK22F51212/cmsis_drivers/fsl_uart_cmsis.c"
-"${ProjDirPath}/../../../../../CMSIS/Driver/Include/Driver_USART.h"
-"${ProjDirPath}/../../../../../CMSIS/Driver/Include/Driver_Common.h"
-"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_ftfx_adapter.h"
-"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_ftfx_utilities.h"
-"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_ftfx_features.h"
-"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_ftfx_controller.c"
-"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_ftfx_controller.h"
-"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_ftfx_flash.c"
-"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_ftfx_flash.h"
-"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_ftfx_cache.c"
-"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_ftfx_cache.h"
-"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_ftfx_flexnvm.c"
-"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_ftfx_flexnvm.h"
-"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_flash.h"
-"${ProjDirPath}/../../../../../devices/MK22F51212/system_MK22F51212.c"
-"${ProjDirPath}/../../../../../devices/MK22F51212/system_MK22F51212.h"
-"${ProjDirPath}/../../../../../devices/MK22F51212/gcc/startup_MK22F51212.S"
-"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_lpuart.h"
-"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_lpuart.c"
-"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_port.h"
-"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_smc.h"
-"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_smc.c"
-"${ProjDirPath}/../../../../../devices/MK22F51212/utilities/io/fsl_io.c"
-"${ProjDirPath}/../../../../../devices/MK22F51212/utilities/io/fsl_io.h"
-"${ProjDirPath}/../../../../../devices/MK22F51212/utilities/log/fsl_log.c"
-"${ProjDirPath}/../../../../../devices/MK22F51212/utilities/log/fsl_log.h"
-"${ProjDirPath}/../../../../../devices/MK22F51212/utilities/str/fsl_str.c"
-"${ProjDirPath}/../../../../../devices/MK22F51212/utilities/str/fsl_str.h"
-"${ProjDirPath}/../../../../../devices/MK22F51212/utilities/fsl_debug_console.c"
-"${ProjDirPath}/../../../../../devices/MK22F51212/utilities/fsl_debug_console.h"
-"${ProjDirPath}/../../../../../devices/MK22F51212/utilities/fsl_debug_console_conf.h"
 "${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_gpio.h"
 "${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_gpio.c"
-"${ProjDirPath}/../../../../../devices/MK22F51212/utilities/fsl_assert.c"
+"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_port.h"
+"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_edma.h"
+"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_edma.c"
 "${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_dmamux.h"
 "${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_dmamux.c"
 "${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_client_manager.h"
 "${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_client_manager.cpp"
 "${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_client_setup.h"
 "${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_client_setup.cpp"
+"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_uart_cmsis_transport.h"
+"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_uart_cmsis_transport.cpp"
+"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_framed_transport.h"
+"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_framed_transport.cpp"
+"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_setup_uart_cmsis.cpp"
+"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_setup_mbf_dynamic.cpp"
+"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/port/erpc_port.h"
+"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/port/erpc_port_stdlib.cpp"
+"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/port/erpc_config_internal.h"
+"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_clock.h"
+"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_clock.c"
+"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_common.h"
+"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_common.c"
+"${ProjDirPath}/../../../../../devices/MK22F51212/fsl_device_registers.h"
+"${ProjDirPath}/../../../../../devices/MK22F51212/MK22F51212.h"
+"${ProjDirPath}/../../../../../devices/MK22F51212/MK22F51212_features.h"
+"${ProjDirPath}/../../../../../devices/MK22F51212/system_MK22F51212.c"
+"${ProjDirPath}/../../../../../devices/MK22F51212/system_MK22F51212.h"
+"${ProjDirPath}/../../../../../devices/MK22F51212/utilities/str/fsl_str.c"
+"${ProjDirPath}/../../../../../devices/MK22F51212/utilities/str/fsl_str.h"
+"${ProjDirPath}/../../../../../devices/MK22F51212/utilities/debug_console/fsl_debug_console.c"
+"${ProjDirPath}/../../../../../devices/MK22F51212/utilities/debug_console/fsl_debug_console.h"
+"${ProjDirPath}/../../../../../devices/MK22F51212/utilities/debug_console/fsl_debug_console_conf.h"
+"${ProjDirPath}/../../../../../components/uart/uart.h"
+"${ProjDirPath}/../../../../../components/uart/uart_adapter.c"
+"${ProjDirPath}/../../../../../components/serial_manager/serial_manager.h"
+"${ProjDirPath}/../../../../../components/serial_manager/serial_manager.c"
+"${ProjDirPath}/../../../../../components/serial_manager/serial_port_uart.h"
+"${ProjDirPath}/../../../../../components/serial_manager/serial_port_uart.c"
+"${ProjDirPath}/../../../../../components/lists/generic_list.h"
+"${ProjDirPath}/../../../../../components/lists/generic_list.c"
+"${ProjDirPath}/../../../../../devices/MK22F51212/gcc/startup_MK22F51212.S"
+"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_lpuart.h"
+"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_lpuart.c"
+"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_smc.h"
+"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_smc.c"
+"${ProjDirPath}/../../../../../devices/MK22F51212/utilities/fsl_assert.c"
+"${ProjDirPath}/../../../../../CMSIS/Include/core_cm4.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armcc.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armclang.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_gcc.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_compiler.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_version.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv7.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/core_armv8mbl.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/core_armv8mml.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/arm_common_tables.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/arm_const_structs.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/arm_math.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_iccarm.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv8.h"
+"${ProjDirPath}/../../../../../CMSIS/Driver/Include/Driver_USART.h"
+"${ProjDirPath}/../../../../../CMSIS/Driver/Include/Driver_Common.h"
+"${ProjDirPath}/../../../../../devices/MK22F51212/template/RTE_Device.h"
 "${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_version.h"
 "${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_codec.h"
 "${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_basic_codec.h"
@@ -440,15 +487,6 @@ add_executable(erpc_client_matrix_multiply_uart.elf
 "${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_buffer.cpp"
 "${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_loggers.cpp"
 "${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_crc16.cpp"
-"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_uart_cmsis_transport.h"
-"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_uart_cmsis_transport.cpp"
-"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_framed_transport.h"
-"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_framed_transport.cpp"
-"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_setup_uart_cmsis.cpp"
-"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_setup_mbf_dynamic.cpp"
-"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/port/erpc_port.h"
-"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/port/erpc_port_stdlib.cpp"
-"${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc_c/port/erpc_config_internal.h"
 )
 
 

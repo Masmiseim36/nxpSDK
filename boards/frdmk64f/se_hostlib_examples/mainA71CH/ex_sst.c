@@ -3,28 +3,15 @@
  * @author NXP Semiconductors
  * @version 1.0
  * @par License
- * Copyright(C) NXP Semiconductors, 2016
- * All rights reserved.
+ * Copyright 2016 NXP
  *
- * Software that is described herein is for illustrative purposes only
- * which provides customers with programming information regarding the
- * A7-series security ICs.  This software is supplied "AS IS" without any
- * warranties of any kind, and NXP Semiconductors and its licensor disclaim any and
- * all warranties, express or implied, including all implied warranties of
- * merchantability, fitness for a particular purpose and non-infringement of
- * intellectual property rights.  NXP Semiconductors assumes no responsibility
- * or liability for the use of the software, conveys no license or rights under any
- * patent, copyright, mask work right, or any other intellectual property rights in
- * or to any products. NXP Semiconductors reserves the right to make changes
- * in the software without notification. NXP Semiconductors also makes no
- * representation or warranty that such application will be suitable for the
- * specified use without further testing or modification.
- *
- * Permission to use, copy and modify this software is hereby granted,
- * under NXP Semiconductors' and its licensor's relevant copyrights in
- * the software, without fee, provided that it is used in conjunction with
- * NXP Semiconductors products. This copyright, permission, and disclaimer notice
- * must appear in all copies of this code.
+ * This software is owned or controlled by NXP and may only be used
+ * strictly in accordance with the applicable license terms.  By expressly
+ * accepting such terms or by downloading, installing, activating and/or
+ * otherwise using the software, you are agreeing that you have read, and
+ * that you agree to comply with and are bound by, such license terms.  If
+ * you do not agree to be bound by the applicable license terms, then you
+ * may not retain, install, activate or otherwise use the software.
  *
  * @par Description
  * Example invocation of secure storage specific functionality of the A71CH
@@ -59,7 +46,7 @@ static U8 exSstPub(U8 initMode, U16 appletVersion);
 U8 exSst(U16 appletVersion)
 {
     U8 result = 1;
-    printf( "\r\n-----------\r\nStart exSst()\r\n------------\r\n");
+    PRINTF( "\r\n-----------\r\nStart exSst()\r\n------------\r\n");
 
     DEV_ClearChannelState();
 
@@ -80,7 +67,7 @@ U8 exSst(U16 appletVersion)
     result &= exSstPub(INIT_MODE_RESET_DO_SCP03, appletVersion);
 
     // overall result
-    printf( "\r\n-----------\r\nEnd exSst(), result = %s\r\n------------\r\n", ((result == 1)? "OK": "FAILED"));
+    PRINTF( "\r\n-----------\r\nEnd exSst(), result = %s\r\n------------\r\n", ((result == 1)? "OK": "FAILED"));
 
     return result;
 }
@@ -200,7 +187,7 @@ static U8 exSstSym(U8 initMode, U16 appletVersion)
     U8 indexAesKey = 0;
     U8 nBlock = 0x01;
 
-    printf("\r\n-----------\r\nStart exSstSym(%s)\r\n------------\r\n", getInitModeAsString(initMode));
+    PRINTF("\r\n-----------\r\nStart exSstSym(%s)\r\n------------\r\n", getInitModeAsString(initMode));
 
     // Initialize the A71CH (Debug mode restrictions may apply)
     result &= a71chInitModule(initMode);
@@ -208,7 +195,7 @@ static U8 exSstSym(U8 initMode, U16 appletVersion)
     // Fill up the symmetric key store with reference values (straight, no wrapping)
     for (indexAesKey=0; indexAesKey<A71CH_SYM_KEY_MAX; indexAesKey++)
     {
-        printf( "\r\nA71_SetSymKey(0x%02x)\r\n", indexAesKey);
+        PRINTF( "\r\nA71_SetSymKey(0x%02x)\r\n", indexAesKey);
         err = A71_SetSymKey((SST_Index_t)indexAesKey, aesRef[indexAesKey], sizeof(aesRef[indexAesKey]));
         result &= AX_CHECK_SW(err, SW_OK, "err");
         axPrintByteArray("aesRef[indexAesKey]", aesRef[indexAesKey], sizeof(aesRef[indexAesKey]), AX_COLON_32);
@@ -217,7 +204,7 @@ static U8 exSstSym(U8 initMode, U16 appletVersion)
     // To demonstrate the slots are filled up with keys, do a KDF
     for (indexAesKey=0; indexAesKey<A71CH_SYM_KEY_MAX; indexAesKey++)
     {
-        printf( "\r\nA71_HkdfExpandSymKey(0x%02x)\r\n", indexAesKey);
+        PRINTF( "\r\nA71_HkdfExpandSymKey(0x%02x)\r\n", indexAesKey);
         derivedDataLen = sizeof(derivedData);
         err = A71_HkdfExpandSymKey((SST_Index_t)indexAesKey, nBlock, info, infoLen, derivedData, derivedDataLen);
         result &= AX_CHECK_SW(err, SW_OK, "err");
@@ -229,18 +216,18 @@ static U8 exSstSym(U8 initMode, U16 appletVersion)
     // Erase the symmetric key at index 1 & verify the value is no longer useable
     // ** Erase **
     indexAesKey = A71CH_SYM_KEY_1;
-    printf("\r\nA71_EraseSymKey(index=0x%02X)\r\n", indexAesKey);
+    PRINTF("\r\nA71_EraseSymKey(index=0x%02X)\r\n", indexAesKey);
     err = A71_EraseSymKey(indexAesKey);
     result &= AX_CHECK_SW(err, SW_OK, "err");
     // ** Verify value is no longer useable **
-    printf( "\r\nA71_HkdfExpandSymKey(0x%02x)\r\n", indexAesKey);
+    PRINTF( "\r\nA71_HkdfExpandSymKey(0x%02x)\r\n", indexAesKey);
     derivedDataLen = sizeof(derivedData);
     err = A71_HkdfExpandSymKey((SST_Index_t)indexAesKey, nBlock, info, infoLen, derivedData, derivedDataLen);
     result &= AX_CHECK_SW(err, SW_CONDITIONS_NOT_SATISFIED, "Expected to fail as the key was erased");
 
     // Fill in the original value again
     indexAesKey = A71CH_SYM_KEY_1;
-    printf( "\r\nA71_SetSymKey(0x%02x)\r\n", indexAesKey);
+    PRINTF( "\r\nA71_SetSymKey(0x%02x)\r\n", indexAesKey);
     err = A71_SetSymKey((SST_Index_t)indexAesKey, aesRef[indexAesKey], sizeof(aesRef[indexAesKey]));
     result &= AX_CHECK_SW(err, SW_OK, "err");
 
@@ -250,7 +237,7 @@ static U8 exSstSym(U8 initMode, U16 appletVersion)
         // Now Lock the first half of the slots for update
         for (indexAesKey=0; indexAesKey<A71CH_SYM_KEY_MAX>>1; indexAesKey++)
         {
-            printf( "\r\nA71_FreezeSymKey(0x%02x)\r\n", indexAesKey);
+            PRINTF( "\r\nA71_FreezeSymKey(0x%02x)\r\n", indexAesKey);
             err = A71_FreezeSymKey((SST_Index_t)indexAesKey);
             result &= AX_CHECK_SW(err, SW_OK, "err");
         }
@@ -259,7 +246,7 @@ static U8 exSstSym(U8 initMode, U16 appletVersion)
     // Slots are filled up with known keys, do a KDF as proof
     for (indexAesKey=0; indexAesKey<A71CH_SYM_KEY_MAX; indexAesKey++)
     {
-        printf( "\r\nA71_HkdfExpandSymKey(0x%02x)\r\n", indexAesKey);
+        PRINTF( "\r\nA71_HkdfExpandSymKey(0x%02x)\r\n", indexAesKey);
         derivedDataLen = sizeof(derivedData);
         err = A71_HkdfExpandSymKey((SST_Index_t)indexAesKey, nBlock, info, infoLen, derivedData, derivedDataLen);
         result &= AX_CHECK_SW(err, SW_OK, "err");
@@ -273,7 +260,7 @@ static U8 exSstSym(U8 initMode, U16 appletVersion)
         // Check whether the locked half (i.e. first half) is truly 'frozen' ....
         for (indexAesKey=0; indexAesKey<A71CH_SYM_KEY_MAX>>1; indexAesKey++)
         {
-            printf( "\r\nA71_SetSymKey(0x%02x)\r\n", indexAesKey);
+            PRINTF( "\r\nA71_SetSymKey(0x%02x)\r\n", indexAesKey);
             err = A71_SetSymKey((SST_Index_t)indexAesKey, aesRef[indexAesKey], sizeof(aesRef[indexAesKey]));
             result &= AX_CHECK_SW(err, SW_COMMAND_NOT_ALLOWED, "Expected to fail, frozen credential cannot be overwritten");
         }
@@ -286,7 +273,7 @@ static U8 exSstSym(U8 initMode, U16 appletVersion)
         int j;
 
         for (j=0; j<16; j++) {tmpKey[j] = (U8)indexAesKey;}
-        printf( "\r\nA71_SetSymKey(0x%02x)\r\n", indexAesKey);
+        PRINTF( "\r\nA71_SetSymKey(0x%02x)\r\n", indexAesKey);
         err = A71_SetSymKey((SST_Index_t)indexAesKey, tmpKey, sizeof(tmpKey));
         result &= AX_CHECK_SW(err, SW_OK, "err");
 
@@ -298,7 +285,7 @@ static U8 exSstSym(U8 initMode, U16 appletVersion)
     // Check that the second half was overwritten (compare with another set of reference data)
     for (indexAesKey=A71CH_SYM_KEY_MAX>>1; indexAesKey<A71CH_SYM_KEY_MAX; indexAesKey++)
     {
-        printf( "\r\nA71_HkdfExpandSymKey(0x%02x)\r\n", indexAesKey);
+        PRINTF( "\r\nA71_HkdfExpandSymKey(0x%02x)\r\n", indexAesKey);
         derivedDataLen = sizeof(derivedData);
         err = A71_HkdfExpandSymKey((SST_Index_t)indexAesKey, nBlock, info, infoLen, derivedData, derivedDataLen);
         result &= AX_CHECK_SW(err, SW_OK, "err");
@@ -311,7 +298,7 @@ static U8 exSstSym(U8 initMode, U16 appletVersion)
     // Fill up the symmetric key store with reference values (straight, no wrapping)
     for (indexAesKey=A71CH_SYM_KEY_MAX>>1; indexAesKey<A71CH_SYM_KEY_MAX; indexAesKey++)
     {
-        printf( "\r\nA71_SetSymKey(0x%02x)\r\n", indexAesKey);
+        PRINTF( "\r\nA71_SetSymKey(0x%02x)\r\n", indexAesKey);
         err = A71_SetSymKey((SST_Index_t)indexAesKey, aesRef[indexAesKey], sizeof(aesRef[indexAesKey]));
         result &= AX_CHECK_SW(err, SW_OK, "err");
         axPrintByteArray("aesRef[indexAesKey]", aesRef[indexAesKey], sizeof(aesRef[indexAesKey]), AX_COLON_32);
@@ -319,7 +306,7 @@ static U8 exSstSym(U8 initMode, U16 appletVersion)
     // Slots are filled up with known keys, do a KDF as proof
     for (indexAesKey=0; indexAesKey<A71CH_SYM_KEY_MAX; indexAesKey++)
     {
-        printf( "\r\nA71_HkdfExpandSymKey(0x%02x)\r\n", indexAesKey);
+        PRINTF( "\r\nA71_HkdfExpandSymKey(0x%02x)\r\n", indexAesKey);
         derivedDataLen = sizeof(derivedData);
         err = A71_HkdfExpandSymKey((SST_Index_t)indexAesKey, nBlock, info, infoLen, derivedData, derivedDataLen);
         result &= AX_CHECK_SW(err, SW_OK, "err");
@@ -329,7 +316,7 @@ static U8 exSstSym(U8 initMode, U16 appletVersion)
     }
 
     // Now disable the plain insertion of Symmetric keys
-    printf("\r\nA71_InjectLock()\r\n");
+    PRINTF("\r\nA71_InjectLock()\r\n");
     err = A71_InjectLock();
     result &= AX_CHECK_SW(err, SW_OK, "err");
     assert(result);
@@ -341,7 +328,7 @@ static U8 exSstSym(U8 initMode, U16 appletVersion)
         int j;
 
         for (j=0; j<16; j++) {tmpKey[j] = (U8)indexAesKey;}
-        printf( "\r\nA71_SetSymKey(0x%02x)\r\n", indexAesKey);
+        PRINTF( "\r\nA71_SetSymKey(0x%02x)\r\n", indexAesKey);
         err = A71_SetSymKey((SST_Index_t)indexAesKey, tmpKey, sizeof(tmpKey));
         result &= AX_CHECK_SW(err, SW_COMMAND_NOT_ALLOWED, "Expected to fail. Inject lock state does not allow insertion plain symmetric keys");
     }
@@ -349,7 +336,7 @@ static U8 exSstSym(U8 initMode, U16 appletVersion)
     // Inserting a wrapped key must succeed (just inserting the same key)
     for (indexAesKey=A71CH_SYM_KEY_MAX>>1; indexAesKey<A71CH_SYM_KEY_MAX; indexAesKey++)
     {
-        printf("\r\nA71_SetRfc3394WrappedAesKey(0x%02X)\r\n", indexAesKey);
+        PRINTF("\r\nA71_SetRfc3394WrappedAesKey(0x%02X)\r\n", indexAesKey);
         err = A71_SetRfc3394WrappedAesKey(indexAesKey, aesRefWrapped[indexAesKey], 24);
         result &= AX_CHECK_SW(err, SW_OK, "err");
         assert(result);
@@ -358,7 +345,7 @@ static U8 exSstSym(U8 initMode, U16 appletVersion)
     // Slots are filled up with known keys, do a KDF as proof
     for (indexAesKey=0; indexAesKey<A71CH_SYM_KEY_MAX; indexAesKey++)
     {
-        printf( "\r\nA71_HkdfExpandSymKey(0x%02x)\r\n", indexAesKey);
+        PRINTF( "\r\nA71_HkdfExpandSymKey(0x%02x)\r\n", indexAesKey);
         derivedDataLen = sizeof(derivedData);
         err = A71_HkdfExpandSymKey((SST_Index_t)indexAesKey, nBlock, info, infoLen, derivedData, derivedDataLen);
         result &= AX_CHECK_SW(err, SW_OK, "err");
@@ -367,7 +354,7 @@ static U8 exSstSym(U8 initMode, U16 appletVersion)
             "derivedData", derivedData, derivedDataLen, AX_COLON_32);
     }
 
-    printf( "\r\n-----------\r\nEnd exSstSym(%s), result = %s\r\n------------\r\n", getInitModeAsString(initMode), ((result == 1)? "OK": "FAILED"));
+    PRINTF( "\r\n-----------\r\nEnd exSstSym(%s), result = %s\r\n------------\r\n", getInitModeAsString(initMode), ((result == 1)? "OK": "FAILED"));
 
     return result;
 }
@@ -421,7 +408,7 @@ static U8 exSstPub(U8 initMode, U16 appletVersion)
     U8 wrappedKey[64+8];
     U16 wrappedKeyLen = sizeof(wrappedKey);
 
-    printf("\r\n-----------\r\nStart exSstPub(%s)\r\n------------\r\n", getInitModeAsString(initMode));
+    PRINTF("\r\n-----------\r\nStart exSstPub(%s)\r\n------------\r\n", getInitModeAsString(initMode));
 
     // Initialize the A71CH (Debug mode restrictions may apply)
     result &= a71chInitModule(initMode);
@@ -441,7 +428,7 @@ static U8 exSstPub(U8 initMode, U16 appletVersion)
         eccKcCA[i].bits = expectedPrivKeyLen << 3;
         eccKcCA[i].curve = eccCurve;
 
-        printf( "\r\nA71_SetEccPublicKey(0x%02X)\r\n", (SST_Index_t)i);
+        PRINTF( "\r\nA71_SetEccPublicKey(0x%02X)\r\n", (SST_Index_t)i);
         err = A71_SetEccPublicKey ((SST_Index_t) i, eccKcCA[i].pub, eccKcCA[i].pubLen);
         result &= AX_CHECK_SW(err, SW_OK, "err");
     }
@@ -449,7 +436,7 @@ static U8 exSstPub(U8 initMode, U16 appletVersion)
     // Read out and verify public key
     for (i=0; i<A71CH_PUBLIC_KEY_MAX; i++)
     {
-        printf( "\r\nA71_GetEccPublicKey(0x%02X)\r\n", (SST_Index_t)i);
+        PRINTF( "\r\nA71_GetEccPublicKey(0x%02X)\r\n", (SST_Index_t)i);
         fetchedPubKeyLen = sizeof(fetchedPubKey);
         err = A71_GetEccPublicKey ((SST_Index_t) i, fetchedPubKey, &fetchedPubKeyLen);
         result &= AX_CHECK_SW(err, SW_OK, "err");
@@ -478,7 +465,7 @@ static U8 exSstPub(U8 initMode, U16 appletVersion)
     // Sign a hash of correct length on the host and do the verification on the A71CH
     for (i=0; i<A71CH_PUBLIC_KEY_MAX; i++)
     {
-        printf("\r\n(Host)ECDSA_sign API with eccKeyCA[i].\r\n");
+        PRINTF("\r\n(Host)ECDSA_sign API with eccKeyCA[i].\r\n");
         signatureOnHostLen = sizeof(signatureOnHost);
         memset(&mechInfo, 0, sizeof(mechInfo));
         mechInfo.mechanism = HLSE_ECDSA_SIGN;
@@ -486,7 +473,7 @@ static U8 exSstPub(U8 initMode, U16 appletVersion)
 
         if (retcode != HLSE_SW_OK)
         {
-            printf("(Host)ECDSA_sign operation failed.\r\n");
+            PRINTF("(Host)ECDSA_sign operation failed.\r\n");
             result &= 0;
         }
         else
@@ -495,7 +482,7 @@ static U8 exSstPub(U8 initMode, U16 appletVersion)
         }
         // Verify on A71CH
         isOk = 0x00;
-        printf("\r\nA71_EccVerify(0x%02X)\r\n", (SST_Index_t)i);
+        PRINTF("\r\nA71_EccVerify(0x%02X)\r\n", (SST_Index_t)i);
         err = A71_EccVerify((SST_Index_t) i, hashSha256, hashSha256Len, signatureOnHost, (U16)signatureOnHostLen, &isOk);
         result &= AX_CHECK_SW(err, SW_OK, "err");
         result &= AX_CHECK_U8(isOk, 1, "Signature verification failed");
@@ -504,7 +491,7 @@ static U8 exSstPub(U8 initMode, U16 appletVersion)
         // In case the key has been provisioned inside the A71CH, referring to the key by index is preferred
         // as it does not imply an EEPROM write operation
         isOk = 0x00;
-        printf("\r\nA71_EccVerifyWithKey(PubkeyByValue)\r\n");
+        PRINTF("\r\nA71_EccVerifyWithKey(PubkeyByValue)\r\n");
         err = A71_EccVerifyWithKey(eccKcCA[i].pub, eccKcCA[i].pubLen, hashSha256, hashSha256Len,
             signatureOnHost, (U16)signatureOnHostLen, &isOk);
         result &= AX_CHECK_SW(err, SW_OK, "err");
@@ -514,25 +501,25 @@ static U8 exSstPub(U8 initMode, U16 appletVersion)
     // Erase the public key at index 0 & verify the value is no longer readable
     // ** Erase **
     pubKeyIndex = A71CH_PUBLIC_KEY_0;
-    printf("\r\nA71_EraseEccPublicKey(index=0x%02X)\r\n", pubKeyIndex);
+    PRINTF("\r\nA71_EraseEccPublicKey(index=0x%02X)\r\n", pubKeyIndex);
     err = A71_EraseEccPublicKey(pubKeyIndex);
     result &= AX_CHECK_SW(err, SW_OK, "err");
     // ** Check whether erase was effective **
-    printf("\r\nA71_GetEccPublicKey(index=0x%02X)\r\n", pubKeyIndex);
+    PRINTF("\r\nA71_GetEccPublicKey(index=0x%02X)\r\n", pubKeyIndex);
     fetchedPubKeyLen = sizeof(fetchedPubKey);
     err = A71_GetEccPublicKey((SST_Index_t)pubKeyIndex, fetchedPubKey, &fetchedPubKeyLen);
     result &= AX_CHECK_SW(err, SW_CONDITIONS_NOT_SATISFIED, "Get Public Ecc Key was supposed to fail");
 
     // Fill in the original value again
     pubKeyIndex = A71CH_PUBLIC_KEY_0;
-    printf( "\r\nA71_SetEccPublicKey(0x%02x)\r\n", pubKeyIndex);
+    PRINTF( "\r\nA71_SetEccPublicKey(0x%02x)\r\n", pubKeyIndex);
     err = A71_SetEccPublicKey((SST_Index_t)pubKeyIndex, eccKcCA[pubKeyIndex].pub, eccKcCA[pubKeyIndex].pubLen);
     result &= AX_CHECK_SW(err, SW_OK, "err");
 
     // Now Lock the first half of the slots for update
     for (pubKeyIndex=0; pubKeyIndex<A71CH_PUBLIC_KEY_MAX>>1; pubKeyIndex++)
     {
-        printf( "\r\nA71_FreezeEccPublicKey(0x%02x)\r\n", pubKeyIndex);
+        PRINTF( "\r\nA71_FreezeEccPublicKey(0x%02x)\r\n", pubKeyIndex);
         err = A71_FreezeEccPublicKey((SST_Index_t)pubKeyIndex);
         result &= AX_CHECK_SW(err, SW_OK, "err");
     }
@@ -540,7 +527,7 @@ static U8 exSstPub(U8 initMode, U16 appletVersion)
     // Now fetch and compare the values with the reference values
     for (pubKeyIndex=0; pubKeyIndex<A71CH_PUBLIC_KEY_MAX; pubKeyIndex++)
     {
-        printf( "\r\nA71_GetEccPublicKey(0x%02x)\r\n", pubKeyIndex);
+        PRINTF( "\r\nA71_GetEccPublicKey(0x%02x)\r\n", pubKeyIndex);
         fetchedPubKeyLen = sizeof(fetchedPubKey);
         err = A71_GetEccPublicKey((SST_Index_t)pubKeyIndex, fetchedPubKey, &fetchedPubKeyLen);
         result &= AX_CHECK_SW(err, SW_OK, "err");
@@ -551,7 +538,7 @@ static U8 exSstPub(U8 initMode, U16 appletVersion)
     // Check whether the locked half (i.e. first half) is truly 'frozen' ....
     for (pubKeyIndex=0; pubKeyIndex<A71CH_PUBLIC_KEY_MAX>>1; pubKeyIndex++)
     {
-        printf( "\r\nA71_SetEccPublicKey(0x%02x)\r\n", pubKeyIndex);
+        PRINTF( "\r\nA71_SetEccPublicKey(0x%02x)\r\n", pubKeyIndex);
         err = A71_SetEccPublicKey((SST_Index_t)pubKeyIndex, eccKcAlternative.pub, eccKcAlternative.pubLen);
         result &= AX_CHECK_SW(err, SW_COMMAND_NOT_ALLOWED, "Expected to fail, frozen credential cannot be overwritten");
     }
@@ -559,7 +546,7 @@ static U8 exSstPub(U8 initMode, U16 appletVersion)
     // Overwrite the second half
     for (pubKeyIndex=A71CH_PUBLIC_KEY_MAX>>1; pubKeyIndex<A71CH_PUBLIC_KEY_MAX; pubKeyIndex++)
     {
-        printf( "\r\nA71_SetEccPublicKey(0x%02x)\r\n", pubKeyIndex);
+        PRINTF( "\r\nA71_SetEccPublicKey(0x%02x)\r\n", pubKeyIndex);
         err = A71_SetEccPublicKey((SST_Index_t)pubKeyIndex, eccKcAlternative.pub, eccKcAlternative.pubLen);
         result &= AX_CHECK_SW(err, SW_OK, "err");
     }
@@ -567,7 +554,7 @@ static U8 exSstPub(U8 initMode, U16 appletVersion)
     // Check that the second half was overwritten, by signing a hash of correct length on the host and do the verification on the A71CH
     for (pubKeyIndex=A71CH_PUBLIC_KEY_MAX>>1; pubKeyIndex<A71CH_PUBLIC_KEY_MAX; pubKeyIndex++)
     {
-        printf("\r\n(Host)ECDSA_sign API with eccKeyCA[i].\r\n");
+        PRINTF("\r\n(Host)ECDSA_sign API with eccKeyCA[i].\r\n");
         signatureOnHostLen = sizeof(signatureOnHost);
         memset(&mechInfo, 0, sizeof(mechInfo));
         mechInfo.mechanism = HLSE_ECDSA_SIGN;
@@ -575,7 +562,7 @@ static U8 exSstPub(U8 initMode, U16 appletVersion)
 
         if (retcode != HLSE_SW_OK)
         {
-            printf("(Host)ECDSA_sign operation failed.\r\n");
+            PRINTF("(Host)ECDSA_sign operation failed.\r\n");
             result &= 0;
         }
         else
@@ -584,7 +571,7 @@ static U8 exSstPub(U8 initMode, U16 appletVersion)
         }
         // Verify on A71CH
         isOk = 0x00;
-        printf( "\r\nA71_EccVerify(0x%02X)\r\n", (SST_Index_t)pubKeyIndex);
+        PRINTF( "\r\nA71_EccVerify(0x%02X)\r\n", (SST_Index_t)pubKeyIndex);
         err = A71_EccVerify((SST_Index_t) pubKeyIndex, hashSha256, hashSha256Len, signatureOnHost, (U16)signatureOnHostLen, &isOk);
         result &= AX_CHECK_SW(err, SW_OK, "err");
         result &= AX_CHECK_U8(isOk, 1, "Signature verification failed");
@@ -593,7 +580,7 @@ static U8 exSstPub(U8 initMode, U16 appletVersion)
     // Put back the original (reference) values in the second half
     for (pubKeyIndex=A71CH_PUBLIC_KEY_MAX>>1; pubKeyIndex<A71CH_PUBLIC_KEY_MAX; pubKeyIndex++)
     {
-        printf( "\r\nA71_SetEccPublicKey(0x%02x)\r\n", pubKeyIndex);
+        PRINTF( "\r\nA71_SetEccPublicKey(0x%02x)\r\n", pubKeyIndex);
         err = A71_SetEccPublicKey ((SST_Index_t) pubKeyIndex, eccKcCA[pubKeyIndex].pub, eccKcCA[pubKeyIndex].pubLen);
         result &= AX_CHECK_SW(err, SW_OK, "err");
     }
@@ -601,14 +588,14 @@ static U8 exSstPub(U8 initMode, U16 appletVersion)
     // Check all keys are still fine by doing a verify operation
     for (i=0; i<A71CH_PUBLIC_KEY_MAX; i++)
     {
-        printf("\r\n(Host)ECDSA_sign API with eccKeyCA[i].\r\n");
+        PRINTF("\r\n(Host)ECDSA_sign API with eccKeyCA[i].\r\n");
         signatureOnHostLen = sizeof(signatureOnHost);
         memset(&mechInfo, 0, sizeof(mechInfo));
         mechInfo.mechanism = HLSE_ECDSA_SIGN;
         retcode = HLCRYPT_Sign(&mechInfo, (U8 *)eccKeyCA[i], 0,hashSha256, hashSha256Len, signatureOnHost, &signatureOnHostLen);
         if (retcode != HLSE_SW_OK)
         {
-            printf("(Host)ECDSA_sign operation failed.\r\n");
+            PRINTF("(Host)ECDSA_sign operation failed.\r\n");
             result &= 0;
         }
         else
@@ -617,7 +604,7 @@ static U8 exSstPub(U8 initMode, U16 appletVersion)
         }
         // Verify on A71CH
         isOk = 0x00;
-        printf( "\r\nA71_EccVerify(0x%02X)\r\n", (SST_Index_t)i);
+        PRINTF( "\r\nA71_EccVerify(0x%02X)\r\n", (SST_Index_t)i);
         err = A71_EccVerify((SST_Index_t) i, hashSha256, hashSha256Len, signatureOnHost, (U16)signatureOnHostLen, &isOk);
         result &= AX_CHECK_SW(err, SW_OK, "err");
         result &= AX_CHECK_U8(isOk, 1, "Signature verification failed");
@@ -628,10 +615,10 @@ static U8 exSstPub(U8 initMode, U16 appletVersion)
     // has been wrapped.
     // ** First set wrapping key (in secure element)
     indexCfgKey = A71CH_CFG_KEY_IDX_PUBLIC_KEYS;
-    printf("\r\nA71_SetConfigKey(0x%02x)\r\n", indexCfgKey);
+    PRINTF("\r\nA71_SetConfigKey(0x%02x)\r\n", indexCfgKey);
     err = A71_SetConfigKey((SST_Index_t)indexCfgKey, configKeyPublicKey, sizeof(configKeyPublicKey));
     result &= AX_CHECK_SW(err, SW_OK, "err");
-    printf("\r\nA71_InjectLock()\r\n");
+    PRINTF("\r\nA71_InjectLock()\r\n");
     err = A71_InjectLock();
     result &= AX_CHECK_SW(err, SW_OK, "err");
     assert(result);
@@ -641,7 +628,7 @@ static U8 exSstPub(U8 initMode, U16 appletVersion)
         // Setting unwrapped public keys (in second half) MUST fail
         for (pubKeyIndex = A71CH_PUBLIC_KEY_MAX >> 1; pubKeyIndex < A71CH_PUBLIC_KEY_MAX; pubKeyIndex++)
         {
-            printf("\r\nA71_SetEccPublicKey(0x%02X) - unwrapped (negative test)\r\n", (SST_Index_t)pubKeyIndex);
+            PRINTF("\r\nA71_SetEccPublicKey(0x%02X) - unwrapped (negative test)\r\n", (SST_Index_t)pubKeyIndex);
             err = A71_SetEccPublicKey((SST_Index_t)pubKeyIndex, eccKcAlternative.pub, eccKcAlternative.pubLen);
             result &= AX_CHECK_SW(err, SW_COMMAND_NOT_ALLOWED, "err");
         }
@@ -650,7 +637,7 @@ static U8 exSstPub(U8 initMode, U16 appletVersion)
     // Setting wrapped public keys (in second half) MUST succeed
     // ** Wrapping key must have been set before Inject Lock was requested
     // ** Wrap the public key (strip first character before wrapping) on host
-    printf("\r\nHOSTCRYPTO_AesWrapKeyRFC3394(eccKcAlternative)\r\n");
+    PRINTF("\r\nHOSTCRYPTO_AesWrapKeyRFC3394(eccKcAlternative)\r\n");
     err = HOSTCRYPTO_AesWrapKeyRFC3394(configKeyPublicKey, sizeof(configKeyPublicKey),
         wrappedKey, &wrappedKeyLen, &(eccKcAlternative.pub[1]), eccKcAlternative.pubLen - 1);
     result &= AX_CHECK_SW(err, SW_OK, "err");
@@ -659,7 +646,7 @@ static U8 exSstPub(U8 initMode, U16 appletVersion)
     // ** Setting the wrapped public key (in second half)
     for (pubKeyIndex=A71CH_PUBLIC_KEY_MAX>>1; pubKeyIndex<A71CH_PUBLIC_KEY_MAX; pubKeyIndex++)
     {
-        printf( "\r\nA71_SetEccPublicKey(0x%02X) - wrapped\r\n", (SST_Index_t)pubKeyIndex);
+        PRINTF( "\r\nA71_SetEccPublicKey(0x%02X) - wrapped\r\n", (SST_Index_t)pubKeyIndex);
         err = A71_SetEccPublicKey ((SST_Index_t)pubKeyIndex, wrappedKey, wrappedKeyLen);
         result &= AX_CHECK_SW(err, SW_OK, "err");
     }
@@ -667,7 +654,7 @@ static U8 exSstPub(U8 initMode, U16 appletVersion)
     // Retrieving and comparing second half public keys
     for (pubKeyIndex=A71CH_PUBLIC_KEY_MAX>>1; pubKeyIndex<A71CH_PUBLIC_KEY_MAX; pubKeyIndex++)
     {
-        printf( "\r\nA71_GetEccPublicKey(0x%02x)\r\n", pubKeyIndex);
+        PRINTF( "\r\nA71_GetEccPublicKey(0x%02x)\r\n", pubKeyIndex);
         fetchedPubKeyLen = sizeof(fetchedPubKey);
         err = A71_GetEccPublicKey((SST_Index_t)pubKeyIndex, fetchedPubKey, &fetchedPubKeyLen);
         result &= AX_CHECK_SW(err, SW_OK, "err");
@@ -681,7 +668,7 @@ static U8 exSstPub(U8 initMode, U16 appletVersion)
         HOSTCRYPTO_FreeEccKey(&eccKeyCA[i]);
     }
 
-    printf( "\r\n-----------\r\nEnd exSstPub(%s), result = %s\r\n------------\r\n", getInitModeAsString(initMode),
+    PRINTF( "\r\n-----------\r\nEnd exSstPub(%s), result = %s\r\n------------\r\n", getInitModeAsString(initMode),
         ((result == 1)? "OK": "FAILED"));
 
     return result;

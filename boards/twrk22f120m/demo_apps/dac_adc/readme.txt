@@ -4,15 +4,6 @@ Overview
 The DAC / ADC demo application demonstrates the use of the DAC and ADC peripherals. This application demonstrates how to
 configure the DAC and set the output on the DAC. This demo also demonstrates how to configure the ADC in 'Blocking Mode'
 and how to read ADC values.
-
-Toolchain supported
-===================
-- IAR embedded Workbench 7.80.4
-- Keil MDK 5.21a
-- GCC ARM Embedded 2016-5.4-q3
-- Kinetis Development Studio IDE 3.2.0
-- MCUXpresso0.8
-
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -42,6 +33,8 @@ This following section shows how to run the demo:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 DAC ADC Demo!
+
+ADC Full Range: XXXX
 
 Press any key to start demo.
 
@@ -77,6 +70,11 @@ What next?:
 At this point, the user can test another DAC output value or terminate the demo.
 
 This configuration exhibits up to 2% error when reading back voltage.
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

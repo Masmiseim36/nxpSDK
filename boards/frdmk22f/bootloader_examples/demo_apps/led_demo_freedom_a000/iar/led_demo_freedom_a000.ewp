@@ -224,7 +224,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa039,Pe068,Pe069,Pa082,Pe177,Pe186,Pe550,Pa050,Pe1105,Pe1305</state>
+          <state>Pa039,Pe068,Pe069,Pa082,Pe177,Pe186,Pe550,Pa050,Pe1105,Pe1305,Pa182</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -319,7 +319,8 @@
           <state>$PROJ_DIR$/../../../../../../middleware/mcu-boot/src/startup</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mcu-boot/src/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mcu-boot/apps/led_demo/src</state>
-          <state>$PROJ_DIR$/../../../../../../project-root-path</state>
+          <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MK22F51212</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -390,11 +391,11 @@
         </option>
         <option>
           <name>IccExceptions</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccRTTI</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccStaticDestr</name>
@@ -768,9 +769,6 @@
         </option>
         <option>
           <name>IlinkExtraOptions</name>
-          <state/>
-          <state> --redirect __aeabi_idiv=__iar_small___aeabi_idiv </state>
-          <state> --redirect __aeabi_idivmod=__iar_small___aeabi_idivmod </state>
         </option>
         <option>
           <name>IlinkLowLevelInterfaceSlave</name>
@@ -978,13 +976,25 @@
     </file>
   </group>
   <group>
-    <name>startup</name>
+    <name>device</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK22F51212/fsl_device_registers.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK22F51212/MK22F51212.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK22F51212/MK22F51212_features.h</name>
+    </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MK22F51212/system_MK22F51212.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MK22F51212/system_MK22F51212.h</name>
     </file>
+  </group>
+  <group>
+    <name>startup</name>
     <file>
       <name>$PROJ_DIR$/../../../../../../middleware/mcu-boot/src/startup/crt0.s</name>
     </file>
@@ -1003,5 +1013,50 @@
         <name>$PROJ_DIR$/../../../../../../middleware/mcu-boot/src/include/bootloader_core.h</name>
       </file>
     </group>
+  </group>
+  <group>
+    <name>CMSIS</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_cm4.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_armcc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_armclang.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_gcc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_compiler.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_version.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv7.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_armv8mbl.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_armv8mml.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_common_tables.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_const_structs.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_math.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_iccarm.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv8.h</name>
+    </file>
   </group>
 </project>

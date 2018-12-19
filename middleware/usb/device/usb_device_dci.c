@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
  * Copyright 2016 - 2017 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "usb_device_config.h"
@@ -55,6 +29,10 @@
 #include "usb_device_lpcip3511.h"
 #endif
 
+#if ((defined(USB_DEVICE_CONFIG_DWC3)) && (USB_DEVICE_CONFIG_DWC3 > 0U))
+#include "usb_device_dwc3.h"
+#endif
+
 #include "usb_device_ch9.h"
 #if (defined(USB_DEVICE_CONFIG_BUFFER_PROPERTY_CACHEABLE) && (USB_DEVICE_CONFIG_BUFFER_PROPERTY_CACHEABLE > 0U))
 #include "fsl_cache.h"
@@ -62,6 +40,11 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+
+/* Component ID definition, used by tools. */ 
+#ifndef FSL_COMPONENT_ID 
+#define FSL_COMPONENT_ID "middleware.usb.device_stack" 
+#endif
 
 /*******************************************************************************
  * Prototypes
@@ -190,6 +173,13 @@ static const usb_device_controller_interface_struct_t s_UsbDeviceLpc3511IpInterf
     USB_DeviceLpc3511IpRecv, USB_DeviceLpc3511IpCancel, USB_DeviceLpc3511IpControl};
 #endif
 
+#if ((defined(USB_DEVICE_CONFIG_DWC3)) && (USB_DEVICE_CONFIG_DWC3 > 0U))
+/* EHCI device driver interface */
+static const usb_device_controller_interface_struct_t s_UsbDeviceDwc3Interface = {
+    USB_DeviceDwc3Init, USB_DeviceDwc3Deinit, USB_DeviceDwc3Send,
+    USB_DeviceDwc3Recv, USB_DeviceDwc3Cancel, USB_DeviceDwc3Control};
+#endif
+
 /*!
  * @brief Get the controller interface handle.
  *
@@ -200,7 +190,7 @@ static const usb_device_controller_interface_struct_t s_UsbDeviceLpc3511IpInterf
  * caller.
  *
  * @retval kStatus_USB_Success              Get a device handle successfully.
- * @retval kStatus_USB_ControllerNotFound   The controller id is invalided.
+ * @retval kStatus_USB_ControllerNotFound   The controller id is invalid.
  */
 static usb_status_t USB_DeviceGetControllerInterface(
     uint8_t controllerId, const usb_device_controller_interface_struct_t **controllerInterface)
@@ -235,6 +225,14 @@ static usb_status_t USB_DeviceGetControllerInterface(
             *controllerInterface = (const usb_device_controller_interface_struct_t *)&s_UsbDeviceLpc3511IpInterface;
             break;
 #endif
+#if ((defined(USB_DEVICE_CONFIG_DWC3)) && (USB_DEVICE_CONFIG_DWC3 > 0U))
+        /* Get the EHCI controller driver interface */
+        case kUSB_ControllerDwc30:
+        case kUSB_ControllerDwc31:
+            error = kStatus_USB_Success;
+            *controllerInterface = (const usb_device_controller_interface_struct_t *)&s_UsbDeviceDwc3Interface;
+            break;
+#endif
         default:
             break;
     }
@@ -253,7 +251,7 @@ static usb_status_t USB_DeviceGetControllerInterface(
  * @param length                 The length of the data.
  *
  * @retval kStatus_USB_Success              Get a device handle successfully.
- * @retval kStatus_USB_InvalidHandle        The device handle is invalided.
+ * @retval kStatus_USB_InvalidHandle        The device handle is invalid.
  * @retval kStatus_USB_ControllerNotFound   The controller interface is not found.
  * @retval kStatus_USB_Error                The device is doing reset.
  */
@@ -333,9 +331,9 @@ static usb_status_t USB_DeviceTransfer(usb_device_handle handle,
  * @param param                  The param type is determined by the selected item.
  *
  * @retval kStatus_USB_Success              Get a device handle successfully.
- * @retval kStatus_USB_InvalidHandle        The device handle is invalided.
+ * @retval kStatus_USB_InvalidHandle        The device handle is invalid.
  * @retval kStatus_USB_ControllerNotFound   The controller interface is not found.
- * @retval kStatus_USB_Error                Unsupport type.
+ * @retval kStatus_USB_Error                Unsupported type.
  *                                          Or, the param is NULL pointer.
  */
 static usb_status_t USB_DeviceControl(usb_device_handle handle, usb_device_control_type_t type, void *param)
@@ -845,7 +843,7 @@ usb_status_t USB_DeviceInit(uint8_t controllerId, usb_device_callback_t deviceCa
     /* Clear the device reset state */
     deviceHandle->isResetting = 0U;
 
-    /* Initialize the enpoints */
+    /* Initialize the endpoints */
     for (count = 0U; count < (USB_DEVICE_CONFIG_ENDPOINTS * 2U); count++)
     {
         deviceHandle->epCallback[count].callbackFn = (usb_device_endpoint_callback_t)NULL;
@@ -988,7 +986,7 @@ usb_status_t USB_DeviceDeinit(usb_device_handle handle)
  *
  * @retval kStatus_USB_Success              The send request is sent successfully.
  * @retval kStatus_USB_InvalidHandle        The handle is a NULL pointer. Or the controller handle is invalid.
- * @retval kStatus_USB_Busy                 Cannot allocate dtds for current tansfer in EHCI driver.
+ * @retval kStatus_USB_Busy                 Cannot allocate dtds for current transfer in EHCI driver.
  * @retval kStatus_USB_ControllerNotFound   Cannot find the controller.
  * @retval kStatus_USB_Error                The device is doing reset.
  *
@@ -1019,7 +1017,7 @@ usb_status_t USB_DeviceSendRequest(usb_device_handle handle, uint8_t endpointAdd
  *
  * @retval kStatus_USB_Success              The receive request is sent successfully.
  * @retval kStatus_USB_InvalidHandle        The handle is a NULL pointer. Or the controller handle is invalid.
- * @retval kStatus_USB_Busy                 Cannot allocate dtds for current tansfer in EHCI driver.
+ * @retval kStatus_USB_Busy                 Cannot allocate dtds for current transfer in EHCI driver.
  * @retval kStatus_USB_ControllerNotFound   Cannot find the controller.
  * @retval kStatus_USB_Error                The device is doing reset.
  *
@@ -1078,7 +1076,7 @@ usb_status_t USB_DeviceCancel(usb_device_handle handle, uint8_t endpointAddress)
  * The function is used to initialize a specified endpoint and the corresponding endpoint callback is also initialized.
  *
  * @param handle The device handle got from USB_DeviceInit.
- * @param epInit Endpoint initizlization structure. Please refer to the structure usb_device_endpoint_init_struct_t.
+ * @param epInit Endpoint initialization structure. Please refer to the structure usb_device_endpoint_init_struct_t.
  * @param epCallback Endpoint callback structure. Please refer to the structure
  * usb_device_endpoint_callback_struct_t.
  *
@@ -1338,6 +1336,8 @@ usb_status_t USB_DeviceSetStatus(usb_device_handle handle, usb_device_status_t t
                     error = kStatus_USB_Success;
                     ((usb_device_struct_t *)handle)->deviceAddress = (uint8_t)(*(uint8_t *)param);
                     ((usb_device_struct_t *)handle)->state = kUSB_DeviceStateAddressing;
+                    USB_DeviceControl(handle, kUSB_DeviceControlPreSetDeviceAddress,
+                                      &((usb_device_struct_t *)handle)->deviceAddress);
                 }
             }
             else
@@ -1415,7 +1415,7 @@ usb_status_t USB_DeviceDcdDeinitModule(usb_device_handle handle)
  * @brief Device task function.
  *
  * The function is used to handle controller message.
- * This function should not be called in applicartion directly.
+ * This function should not be called in application directly.
  *
  * @param handle The device handle got from USB_DeviceInit.
  */
@@ -1437,9 +1437,9 @@ void USB_DeviceTaskFunction(void *deviceHandle)
 #endif
 
 /*!
- * @brief Get dvice stack version function.
+ * @brief Get device stack version function.
  *
- * The function is used to get dvice stack version.
+ * The function is used to get device stack version.
  *
  * @param[out] version The version structure pointer to keep the device stack version.
  *

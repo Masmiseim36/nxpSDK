@@ -7,25 +7,6 @@ set up on lwIP TCP/IP and the mbedTLS stack with bare metal. The user
 uses an Internet browser to send an https request for connection.
 The board acts as an HTTPS server and sends a Web page back to the PC.
 
-
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- Network cable RJ45 standard
-- FRDM-K64F board
-- Personal Computer
-
-Board settings
-==============
-No special board setting.
-Note, The RMII mode is used for default setting to initialize the ENET interface between MAC and the external PHY.
 Prepare the Demo
 ================
 1.  Connect a mini USB cable between the PC host and the OpenSDA(or USB to Serial) USB port on the board.
@@ -69,6 +50,22 @@ Running the demo
 
 		More information about lwIP can be found at the lwIP homepage at http://savannah.nongnu.org/projects/lwip/ or at
 		the lwIP wiki at http://lwip.wikia.com/.
-Customization options
+Hardware requirements
 =====================
+- Mini/micro USB cable
+- Network cable RJ45 standard
+- FRDM-K64F board
+- Personal Computer
+
+Board settings
+==============
+No special board setting.
+Note, The RMII mode is used for default setting to initialize the ENET interface between MAC and the external PHY.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

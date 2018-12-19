@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
  * Copyright 2016 - 2017 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "usb_host_config.h"
@@ -48,7 +22,7 @@
 
 #include "usb_io.h"
 #include "usb_timer.h"
-
+#include "fsl_debug_console.h"
 #if ((!USB_HOST_CONFIG_KHCI) && (!USB_HOST_CONFIG_EHCI) && (!USB_HOST_CONFIG_OHCI) && (!USB_HOST_CONFIG_IP3516HS))
 #error Please enable USB_HOST_CONFIG_KHCI, USB_HOST_CONFIG_EHCI, USB_HOST_CONFIG_OHCI, or USB_HOST_CONFIG_IP3516HS in file usb_host_config.
 #endif
@@ -302,7 +276,6 @@ void USB_WaitClockLocked(void)
 #endif
 }
 
-#if defined(USB_HOST_CONFIG_KHCI) && (USB_HOST_CONFIG_KHCI > 0U)
 void USB0_IRQHandler(void)
 {
     USB_HostKhciIsrFunction(g_HostHandle);
@@ -310,23 +283,19 @@ void USB0_IRQHandler(void)
     exception return operation might vector to incorrect interrupt */
     __DSB();
 }
-#endif /* USB_HOST_CONFIG_KHCI */
 
 void USB_HostClockInit(void)
 {
-#if defined(USB_HOST_CONFIG_KHCI) && (USB_HOST_CONFIG_KHCI > 0U)
     SystemCoreClockUpdate();
     CLOCK_EnableUsbfs0Clock(kCLOCK_UsbSrcPll0, CLOCK_GetFreq(kCLOCK_PllFllSelClk));
-#endif
 }
 
 void USB_HostIsrEnable(void)
 {
     uint8_t irqNumber;
-#if defined(USB_HOST_CONFIG_KHCI) && (USB_HOST_CONFIG_KHCI > 0U)
+
     uint8_t usbHOSTKhciIrq[] = USB_IRQS;
     irqNumber = usbHOSTKhciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
-#endif /* USB_HOST_CONFIG_KHCI */
 
 /* Install isr, set priority, and enable IRQ. */
 #if defined(__GIC_PRIO_BITS)
@@ -339,9 +308,7 @@ void USB_HostIsrEnable(void)
 
 void USB_HostTaskFn(void *param)
 {
-#if defined(USB_HOST_CONFIG_KHCI) && (USB_HOST_CONFIG_KHCI > 0U)
     USB_HostKhciTaskFunction(param);
-#endif
 }
 
 /*!
@@ -381,6 +348,7 @@ static void USB_HostRemoteWarkupCallback(void *param, usb_host_transfer_t *trans
             "\tSend clear remote wakeup feature request failed. \r\nWhether need to continue? "
             "Please ENTER y(es) or n(o): ");
     }
+    DbgConsole_Flush();
 }
 
 usb_status_t USB_HostControlRemoteWakeup(usb_host_handle hostHandle,
@@ -497,6 +465,7 @@ static usb_status_t USB_HostEvent(usb_device_handle deviceHandle,
                 {
                     usb_echo("Device has been resumed.\r\n");
                 }
+                DbgConsole_Flush();
             }
             g_HostHidMouse.suspendResumeState = kStatus_Idle;
             break;
@@ -527,80 +496,6 @@ static void USB_HostApplicationInit(void)
     usb_echo("host init done\r\n");
 }
 
-#ifdef BOARD_DEBUG_UART_TYPE
-
-usb_status_t getCharFormDebugConsle(uint8_t *c)
-{
-    if (NULL == c)
-    {
-        return kStatus_USB_Error;
-    }
-#if (BOARD_DEBUG_UART_TYPE == DEBUG_CONSOLE_DEVICE_TYPE_UART)
-
-#if defined(FSL_FEATURE_UART_HAS_FIFO) && FSL_FEATURE_UART_HAS_FIFO
-    if (((UART_Type *)BOARD_DEBUG_UART_BASEADDR)->RCFIFO)
-#else
-    if (((UART_Type *)BOARD_DEBUG_UART_BASEADDR)->S1 & UART_S1_RDRF_MASK)
-#endif
-    {
-        *(c) = ((UART_Type *)BOARD_DEBUG_UART_BASEADDR)->D;
-        return kStatus_USB_Success;
-    }
-
-#elif(BOARD_DEBUG_UART_TYPE == DEBUG_CONSOLE_DEVICE_TYPE_IUART)
-    if (((UART_Type *)BOARD_DEBUG_UART_BASEADDR)->USR2 & UART_USR2_RDR_MASK)
-    {
-        *(c) = (((UART_Type *)BOARD_DEBUG_UART_BASEADDR)->URXD & UART_URXD_RX_DATA_MASK) >> UART_URXD_RX_DATA_SHIFT;
-        return kStatus_USB_Success;
-    }
-
-#elif(BOARD_DEBUG_UART_TYPE == DEBUG_CONSOLE_DEVICE_TYPE_LPUART)
-
-#if defined(FSL_FEATURE_LPUART_HAS_FIFO) && FSL_FEATURE_LPUART_HAS_FIFO
-    if ((((LPUART_Type *)BOARD_DEBUG_UART_BASEADDR)->WATER & LPUART_WATER_RXCOUNT_MASK) >> LPUART_WATER_RXCOUNT_SHIFT)
-#else
-    if (((LPUART_Type *)BOARD_DEBUG_UART_BASEADDR)->STAT & LPUART_STAT_RDRF_MASK)
-#endif
-    {
-        *(c) = ((LPUART_Type *)BOARD_DEBUG_UART_BASEADDR)->DATA;
-        return kStatus_USB_Success;
-    }
-
-#elif(BOARD_DEBUG_UART_TYPE == DEBUG_CONSOLE_DEVICE_TYPE_LPSCI)
-
-#if defined(FSL_FEATURE_LPUART_HAS_FIFO) && FSL_FEATURE_LPUART_HAS_FIFO
-    if ((((LPUART_Type *)BOARD_DEBUG_UART_BASEADDR)->WATER & LPUART_WATER_RXCOUNT_MASK) >> LPUART_WATER_RXCOUNT_SHIFT)
-#else
-    if (((LPUART_Type *)BOARD_DEBUG_UART_BASEADDR)->STAT & LPUART_STAT_RDRF_MASK)
-#endif
-    {
-        *(c) = ((LPUART_Type *)BOARD_DEBUG_UART_BASEADDR)->DATA;
-        return kStatus_USB_Success;
-    }
-
-#elif(BOARD_DEBUG_UART_TYPE == DEBUG_CONSOLE_DEVICE_TYPE_USBCDC)
-#error This example can not support debug consle type : USBCDC.
-#elif(BOARD_DEBUG_UART_TYPE == DEBUG_CONSOLE_DEVICE_TYPE_FLEXCOMM)
-
-    /* loop until rxFIFO have some data to read */
-    if (USART0->FIFOSTAT & USART_FIFOSTAT_RXNOTEMPTY_MASK)
-    {
-        /* check rxFIFO status */
-        if (USART0->FIFOSTAT & USART_FIFOSTAT_RXERR_MASK)
-        {
-            return kStatus_USB_Error;
-        }
-        *(c) = USART0->FIFORD;
-        return kStatus_USB_Success;
-    }
-
-#else
-#error Unsupported serail port!
-#endif
-    return kStatus_USB_Error;
-}
-
-#endif
 
 void USB_PowerPreSwitchHook(void)
 {
@@ -611,6 +506,8 @@ void USB_PowerPreSwitchHook(void)
     BOARD_DeinitPins();
 
     USB_PreLowpowerMode();
+
+    vTaskSuspendAll();
 }
 
 void USB_PowerPostSwitchHook(void)
@@ -620,6 +517,7 @@ void USB_PowerPostSwitchHook(void)
     BOARD_InitPins();
     BOARD_InitDebugConsole();
     HW_TimerControl(1U);
+    xTaskResumeAll();
 }
 
 void USB_HostSuspendResumeTask(void)
@@ -627,7 +525,7 @@ void USB_HostSuspendResumeTask(void)
     usb_status_t usb_error;
     uint8_t command;
 
-    if (kStatus_USB_Success != getCharFormDebugConsle(&command))
+    if (kStatus_USB_Success != DbgConsole_TryGetchar((char *)&command))
     {
         command = 0;
     }
@@ -638,6 +536,7 @@ void USB_HostSuspendResumeTask(void)
             {
                 g_HostHidMouse.suspendResumeState = kStatus_SartSuspend;
                 usb_echo("Start suspend USB BUS...\r\n");
+
             }
             else
             {
@@ -699,6 +598,7 @@ void USB_HostSuspendResumeTask(void)
             else
             {
             }
+            DbgConsole_Flush();
             break;
         case kStatus_SuspendWaitSetRemoteWakeup:
         case kStatus_SuspendWaitClearRemoteWakeup:
@@ -734,6 +634,7 @@ void USB_HostSuspendResumeTask(void)
         case kStatus_SuspendRequest:
             break;
         case kStatus_Suspended:
+            DbgConsole_Flush();
             if (g_HostHidMouse.suspendBus)
             {
                 usb_echo("BUS has been suspended.\r\n");
@@ -742,11 +643,14 @@ void USB_HostSuspendResumeTask(void)
             {
                 usb_echo("Device has been suspended.\r\n");
             }
+            DbgConsole_Flush();
             usb_echo("Please Press wakeup switch(%s) to start resume test.\r\n", SW_GetName());
             if (g_HostHidMouse.isSetRemoteWakeup)
             {
                 usb_echo("Or, wait for device sends resume signal.\r\n");
             }
+            /*flush the output befor enter lowpower*/
+            DbgConsole_Flush();
             USB_PowerPreSwitchHook();
             SW_IntControl(1);
 

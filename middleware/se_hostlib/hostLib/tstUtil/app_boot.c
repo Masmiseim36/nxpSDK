@@ -3,28 +3,15 @@
  * @author NXP Semiconductors
  * @version 1.0
  * @par License
- * Copyright(C) NXP Semiconductors, 2017
- * All rights reserved.
+ * Copyright 2017 NXP
  *
- * Software that is described herein is for illustrative purposes only
- * which provides customers with programming information regarding the
- * A7-series security ICs.  This software is supplied "AS IS" without any
- * warranties of any kind, and NXP Semiconductors and its licensor disclaim any and
- * all warranties, express or implied, including all implied warranties of
- * merchantability, fitness for a particular purpose and non-infringement of
- * intellectual property rights.  NXP Semiconductors assumes no responsibility
- * or liability for the use of the software, conveys no license or rights under any
- * patent, copyright, mask work right, or any other intellectual property rights in
- * or to any products. NXP Semiconductors reserves the right to make changes
- * in the software without notification. NXP Semiconductors also makes no
- * representation or warranty that such application will be suitable for the
- * specified use without further testing or modification.
- *
- * Permission to use, copy and modify this software is hereby granted,
- * under NXP Semiconductors' and its licensor's relevant copyrights in
- * the software, without fee, provided that it is used in conjunction with
- * NXP Semiconductors products. This copyright, permission, and disclaimer notice
- * must appear in all copies of this code.
+ * This software is owned or controlled by NXP and may only be used
+ * strictly in accordance with the applicable license terms.  By expressly
+ * accepting such terms or by downloading, installing, activating and/or
+ * otherwise using the software, you are agreeing that you have read, and
+ * that you agree to comply with and are bound by, such license terms.  If
+ * you do not agree to be bound by the applicable license terms, then you
+ * may not retain, install, activate or otherwise use the software.
  *
  * @par Description
  * Implementation of the App booting time initilization functions
@@ -46,17 +33,17 @@
 #include "sm_printf.h"
 #include "sm_timer.h"
 
-#if defined(CPU_MIMXRT1052DVL6B)
-#include "fsl_trng.h"
-#include "fsl_dcp.h"
-#endif
-
-#if defined(FREEDOM) || defined(IMX_RT)
+#if AX_EMBEDDED
 #   include "board.h"
 #   include "pin_mux.h"
 #endif /* FREEDOM */
 
-#if defined(FREEDOM) && defined(MBEDTLS)
+#if defined(CPU_LPC54018JET180)
+#   include "fsl_clock.h"
+#   include "fsl_reset.h"
+#endif
+
+#if AX_EMBEDDED && defined(MBEDTLS)
 #   include "ksdk_mbedtls.h"
 #endif /* FREEDOM && MBEDTLS */
 
@@ -74,6 +61,10 @@
 #define TRNG0 TRNG
 #endif
 
+#if defined(CPU_LPC54018JET180)
+volatile uint32_t gDummy = 1; /* Put this is .data. Probably at 0x000 address */
+#endif
+
 static U16 establishConnnection(
     SmCommState_t* pCommState, const char* pConnectionParam);
 static int translateCommunicationStatus(
@@ -86,10 +77,10 @@ int app_boot_Init()
     _CrtSetReportMode ( _CRT_ERROR, _CRTDBG_MODE_DEBUG);
 #endif
 
-#if defined (FRDM_KW41Z)|| defined (FRDM_K64F)
+#if defined(FRDM_KW41Z) || defined (FRDM_K64F)
     BOARD_BootClockRUN();
 #endif
-#if defined( FRDM_K82F)
+#if defined(FRDM_K82F)
     BOARD_BootClockHSRUN();
 #endif
 
@@ -111,10 +102,10 @@ int app_boot_Init()
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
 
-    /*TODO: Check if it can be enabled later on*/
+#if defined (IMX_RT)
     /* Data cache must be temporarily disabled to be able to use sdram */
- //   SCB_DisableDCache();
-
+    SCB_DisableDCache();
+#endif
 
 
     /* Initialize DCP */
@@ -126,20 +117,59 @@ int app_boot_Init()
     /* Set sample mode of the TRNG ring oscillator to Von Neumann, for better random data.
     * It is optional.*/
     trngConfig.sampleMode = kTRNG_SampleModeVonNeumann;
-    
+
     /* Initialize TRNG */
     TRNG_Init(TRNG0, &trngConfig);
 #endif
 
+#if defined(CPU_LPC54018JET180)
 
-#if defined(FREEDOM) && defined(MBEDTLS)
-    CRYPTO_InitHardware();
-#endif  /* FREEDOM && MBEDTLS */
+    while (gDummy--) {
+        /* Forcefully use gDummy so that linker does not kick it out */
+    }
+
+    /* attach 12 MHz clock to FLEXCOMM0 (debug console) */
+    CLOCK_AttachClk(BOARD_DEBUG_UART_CLK_ATTACH);
+
+    /* Enable Clock for RIT */
+    CLOCK_EnableClock(kCLOCK_Gpio3);
+
+    /* attach 12 MHz clock to FLEXCOMM2 (I2C master) */
+    CLOCK_AttachClk(kFRO12M_to_FLEXCOMM2);
+
+    /* reset FLEXCOMM for I2C */
+    RESET_PeripheralReset(kFC2_RST_SHIFT_RSTn);
+
+    BOARD_InitBootPins();
+    BOARD_BootClockFROHF96M();
+    BOARD_InitDebugConsole();
+
+#endif   /* CPU_LPC54018JET180 */
 
 
 #ifdef FREEDOM
     LED_BLUE_ON();
 #endif
+
+#if !defined(USE_RTOS) || USE_RTOS == 0
+    app_boot_Init_RTOS();
+#endif
+    return 0;
+}
+
+
+int app_boot_Init_RTOS()
+{
+
+#if defined(MBEDTLS)
+#if (AX_EMBEDDED)
+    CRYPTO_InitHardware();
+#if defined(FSL_FEATURE_SOC_SHA_COUNT) && (FSL_FEATURE_SOC_SHA_COUNT > 0)
+    CLOCK_EnableClock(kCLOCK_Sha0);
+    RESET_PeripheralReset(kSHA_RST_SHIFT_RSTn);
+#endif /* SHA */
+#endif  /* FREEDOM || LPC */
+#endif   /* FREEDOM && MBEDTLS */
 
     sm_initSleep();
 
@@ -157,36 +187,36 @@ int app_boot_Connect(
 
     if (retVal == 0) {
 #if defined(I2C)
-        sm_printf(CONSOLE, "SCI2C_"); // To highlight the ATR format for SCI2C deviates from ISO7816-3
+        PRINTF("SCI2C_"); // To highlight the ATR format for SCI2C deviates from ISO7816-3
 #elif defined(SPI)
-        sm_printf(CONSOLE, "SCSPI_");
+        PRINTF("SCSPI_");
 #endif
 
 #if defined(TDA8029_UART)
-        sm_printf(CONSOLE, "UART Baudrate Idx: 0x%02X\r\n", pCommState->param2);
-        sm_printf(CONSOLE, "T=1           TA1: 0x%02X\r\n", pCommState->param1);
+        PRINTF("UART Baudrate Idx: 0x%02X\r\n", pCommState->param2);
+        PRINTF("T=1           TA1: 0x%02X\r\n", pCommState->param1);
 #endif
-        sm_printf(CONSOLE, "HostLib Version  : 0x%04X\r\n", pCommState->hostLibVersion);
+        PRINTF("HostLib Version  : 0x%04X\r\n", pCommState->hostLibVersion);
 
-        sm_printf(CONSOLE, "Applet Version   : 0x%04X\r\n", pCommState->appletVersion);
-        sm_printf(CONSOLE, "SecureBox Version: 0x%04X\r\n", pCommState->sbVersion);
+        PRINTF("Applet Version   : 0x%04X\r\n", pCommState->appletVersion);
+        PRINTF("SecureBox Version: 0x%04X\r\n", pCommState->sbVersion);
 
-        sm_printf(DBGOUT, "\r\n");
-        sm_printf(DBGOUT, "==========SELECT-DONE=========\r\n");
+        PRINTF("\r\n");
+        PRINTF("==========SELECT-DONE=========\r\n");
     }
     else
     {
-        sm_printf(DBGOUT, "\r\n");
-        sm_printf(DBGOUT, "==========SELECT-FAILED=========\r\n");
+        PRINTF("\r\n");
+        PRINTF("==========SELECT-FAILED=========\r\n");
     }
 
 #ifdef TARGET_PLATFORM
-    sm_printf(CONSOLE, "Platform: %s\r\n",TARGET_PLATFORM);
+    PRINTF("Platform: %s\r\n",TARGET_PLATFORM);
 #endif
 
 #ifdef FREEDOM
     if ( retVal != 0 ) {
-    	LED_RED_ON();
+        LED_RED_ON();
     }
 #endif
     return retVal;
@@ -203,24 +233,24 @@ static int translateCommunicationStatus(
 {
     if ((connectStatus == ERR_CONNECT_LINK_FAILED) || (connectStatus == ERR_CONNECT_SELECT_FAILED))
     {
-        sm_printf(CONSOLE, "SM_Connect failed with status 0x%04X\n", connectStatus);
+        PRINTF("SM_Connect failed with status 0x%04X\n", connectStatus);
         return 2;
     }
     else if (connectStatus == SMCOM_COM_FAILED)
     {
-        sm_printf(CONSOLE, "SM_Connect failed with status 0x%04X (Could not open communication channel)\n",
+        PRINTF("SM_Connect failed with status 0x%04X (Could not open communication channel)\n",
             connectStatus);
         return 4;
     }
     else if (connectStatus == SMCOM_PROTOCOL_FAILED)
     {
-        sm_printf(CONSOLE, "SM_Connect failed with status 0x%04X (Could not establish communication protocol)\n",
+        PRINTF("SM_Connect failed with status 0x%04X (Could not establish communication protocol)\n",
             connectStatus);
         return 5;
     }
     else if (connectStatus == ERR_NO_VALID_IP_PORT_PATTERN)
     {
-        sm_printf(DBGOUT, "Pass the IP address and port number as arguments, e.g. \"127.0.0.1:8050\"!\n");
+        PRINTF("Pass the IP address and port number as arguments, e.g. \"127.0.0.1:8050\"!\n");
         return 3;
     }
     else if (connectStatus != SW_OK)
@@ -250,10 +280,10 @@ static U16 establishConnnection(
 
 #if defined(TDA8029_UART) || defined(I2C) || defined(PCSC) || defined(SPI) || defined(IPC)
     connectStatus = SM_Connect(pCommState, Atr, &AtrLen);
-#elif defined(RJCT_SOCKET)
+#elif defined(RJCT_SOCKET) || defined(RJCT_JRCP)
     if (pConnectionParam == NULL)
     {
-        sm_printf(DBGOUT, "Pass the IP address and port number as arguments, e.g. \"127.0.0.1:8050\"!\n");
+        PRINTF("Pass the IP address and port number as arguments, e.g. \"127.0.0.1:8050\"!\n");
         return 4;
     }
     else
@@ -263,7 +293,7 @@ static U16 establishConnnection(
 #elif defined(RJCT_VCOM)
     if ( pConnectionParam == NULL )
     {
-        sm_printf(DBGOUT, "Pass the COM Port as arguments, e.g. \"COM3\" or \"\\\\.\\COM18\" !\n");
+        PRINTF("Pass the COM Port as arguments, e.g. \"COM3\" or \"\\\\.\\COM18\" !\n");
         return 4;
     }
     else
@@ -277,17 +307,17 @@ static U16 establishConnnection(
     if (AtrLen > 0)
     {
         int i = 0;
-        sm_printf(CONSOLE, "ATR=0x");
+        PRINTF("ATR=0x");
         for (i = 0; i < AtrLen; i++)
         {
-            sm_printf(CONSOLE, "%02X.", Atr[i]);
+            PRINTF("%02X.", Atr[i]);
         }
-        sm_printf(CONSOLE, "\n");
+        PRINTF("\n");
     }
 
 #if defined(TDA8029_UART)
-    sm_printf(CONSOLE, "UART Baudrate Idx: 0x%02X\n", pCommState->param2);
-    sm_printf(CONSOLE, "T=1           TA1: 0x%02X\n", pCommState->param1);
+    PRINTF("UART Baudrate Idx: 0x%02X\n", pCommState->param2);
+    PRINTF("T=1           TA1: 0x%02X\n", pCommState->param1);
 #endif
 
     return connectStatus;
@@ -295,17 +325,18 @@ static U16 establishConnnection(
 
 void app_test_status(U8 result) {
 #if FREEDOM
-	LED_BLUE_OFF();
+    LED_BLUE_OFF();
 
-	if (result == 0) {
-		LED_RED_ON();
-	}
-	else
-	{
-		LED_GREEN_ON();
-	}
+    if (result == 0) {
+        LED_RED_ON();
+    }
+    else
+    {
+        LED_GREEN_ON();
+    }
 #endif
-	sm_printf(CONSOLE, "END. Status %s (Compiled on %s %s)\r\n",
-			((result == 1) ? "OK" : "FAILED"),
-			__DATE__, __TIME__);
+	PRINTF("END. Status %s (Compiled on %s %s)\r\n",
+            ((result == 1) ? "OK" : "FAILED"),
+            __DATE__, __TIME__);
+
 }

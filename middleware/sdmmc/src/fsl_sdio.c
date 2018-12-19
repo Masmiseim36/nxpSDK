@@ -153,19 +153,19 @@ static status_t SDIO_SendOperationCondition(sdio_card_t *card, uint32_t argument
         if (argument == 0U)
         {
             /* check if memory present */
-            if ((command.response[0U] & kSDIO_OcrMemPresent) == kSDIO_OcrMemPresent)
+            if ((command.response[0U] & SDMMC_MASK(kSDIO_OcrMemPresent)) == SDMMC_MASK(kSDIO_OcrMemPresent))
             {
                 card->memPresentFlag = true;
             }
             /* save the io number */
-            card->ioTotalNumber = (command.response[0U] & kSDIO_OcrIONumber) >> 28U;
+            card->ioTotalNumber = (command.response[0U] & SDMMC_MASK(kSDIO_OcrIONumber)) >> 28U;
             /* save the operation condition */
             card->ocr = command.response[0U] & 0xFFFFFFU;
 
             break;
         }
         /* wait the card is ready for after initialization */
-        else if (command.response[0U] & kSDIO_OcrPowerUpBusyFlag)
+        else if (command.response[0U] & SDMMC_MASK(kSDIO_OcrPowerUpBusyFlag))
         {
             break;
         }
@@ -934,7 +934,8 @@ status_t SDIO_CardInit(sdio_card_t *card)
     /* verify the voltage and set the new voltage */
     if (card->host.capability.flags & kSDMMCHOST_SupportV330)
     {
-        if (kStatus_Success != SDIO_SendOperationCondition(card, kSDIO_OcrVdd32_33Flag | kSDIO_OcrVdd33_34Flag))
+        if (kStatus_Success !=
+            SDIO_SendOperationCondition(card, SDMMC_MASK(kSDIO_OcrVdd32_33Flag) | SDMMC_MASK(kSDIO_OcrVdd33_34Flag)))
         {
             return kStatus_SDMMC_InvalidVoltage;
         }

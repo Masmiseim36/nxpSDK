@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
  * Copyright 2016 - 2017 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "usb_device_config.h"
@@ -194,9 +168,12 @@ usb_audio_speaker_struct_t g_UsbDeviceAudioSpeaker = {
     .maxSamplingFrequency = {0x00U, 0x00U, 0x01U},
     .resSamplingFrequency = {0x00U, 0x00U, 0x01U},
 #if USBCFG_AUDIO_CLASS_2_0
-    .curSampleFrequency = 48000U, /* This should be changed to 48000 if sampling rate is 48k */
+    .curMute20 = 0U,
     .curClockValid = 1U,
-    .controlRange = {1U, 48000U, 48000U, 0U},
+    .curVolume20 = {0x00U, 0x1FU},
+    .curSampleFrequency = 48000U, /* This should be changed to 48000 if sampling rate is 48k */
+    .freqControlRange = {1U, 48000U, 48000U, 0U},
+    .volumeControlRange = {1U, 0x8001U, 0x7FFFU, 1U},
 #endif
     .speed = USB_SPEED_FULL,
     .tdReadNumberPlay = 0,
@@ -219,7 +196,7 @@ static usb_device_class_config_struct_t s_audioConfig[1] = {{
     USB_DeviceAudioCallback, (class_handle_t)NULL, &g_UsbDeviceAudioClass,
 }};
 
-/* USB device class configuraion information */
+/* USB device class configuration information */
 static usb_device_class_config_list_struct_t s_audioConfigList = {
     s_audioConfig, USB_DeviceCallback, 1U,
 };
@@ -567,12 +544,24 @@ usb_status_t USB_DeviceAudioRequest(class_handle_t handle, uint32_t event, void 
             request->length = sizeof(g_UsbDeviceAudioSpeaker.curSampleFrequency);
             break;
         case USB_DEVICE_AUDIO_GET_RANGE_SAM_FREQ_CONTROL:
-            request->buffer = (uint8_t *)&g_UsbDeviceAudioSpeaker.controlRange;
-            request->length = sizeof(g_UsbDeviceAudioSpeaker.controlRange);
+            request->buffer = (uint8_t *)&g_UsbDeviceAudioSpeaker.freqControlRange;
+            request->length = sizeof(g_UsbDeviceAudioSpeaker.freqControlRange);
             break;
         case USB_DEVICE_AUDIO_GET_CUR_CLOCK_VALID_CONTROL:
             request->buffer = &g_UsbDeviceAudioSpeaker.curClockValid;
             request->length = sizeof(g_UsbDeviceAudioSpeaker.curClockValid);
+            break;
+        case USB_DEVICE_AUDIO_GET_CUR_MUTE_CONTROL_AUDIO20:
+            request->buffer = (uint8_t *)&g_UsbDeviceAudioSpeaker.curMute20;
+            request->length = sizeof(g_UsbDeviceAudioSpeaker.curMute20);
+            break;
+        case USB_DEVICE_AUDIO_GET_CUR_VOLUME_CONTROL_AUDIO20:
+            request->buffer = (uint8_t *)&g_UsbDeviceAudioSpeaker.curVolume20;
+            request->length = sizeof(g_UsbDeviceAudioSpeaker.curVolume20);
+            break;
+        case USB_DEVICE_AUDIO_GET_RANGE_VOLUME_CONTROL_AUDIO20:
+            request->buffer = (uint8_t *)&g_UsbDeviceAudioSpeaker.volumeControlRange;
+            request->length = sizeof(g_UsbDeviceAudioSpeaker.volumeControlRange);
             break;
 #endif
 
@@ -757,11 +746,38 @@ usb_status_t USB_DeviceAudioRequest(class_handle_t handle, uint32_t event, void 
             }
             break;
         case USB_DEVICE_AUDIO_SET_CUR_CLOCK_VALID_CONTROL:
-        {
-            request->buffer = &g_UsbDeviceAudioSpeaker.curClockValid;
-        }
-        break;
-
+            if (request->isSetup == 1U)
+            {
+                request->buffer = &g_UsbDeviceAudioSpeaker.curClockValid;
+            }
+            break;
+        case USB_DEVICE_AUDIO_SET_CUR_MUTE_CONTROL_AUDIO20:
+            if (request->isSetup == 1U)
+            {
+                request->buffer = &g_UsbDeviceAudioSpeaker.curMute20;
+            }
+            else
+            {
+                if (g_UsbDeviceAudioSpeaker.curMute20)
+                {
+                    g_UsbDeviceAudioSpeaker.codecTask |= MUTE_CODEC_TASK;
+                }
+                else
+                {
+                    g_UsbDeviceAudioSpeaker.codecTask |= UNMUTE_CODEC_TASK;
+                }
+            }
+            break;
+        case USB_DEVICE_AUDIO_SET_CUR_VOLUME_CONTROL_AUDIO20:
+            if (request->isSetup == 1U)
+            {
+                request->buffer = g_UsbDeviceAudioSpeaker.curVolume20;
+            }
+            else
+            {
+                g_UsbDeviceAudioSpeaker.codecTask |= VOLUME_CHANGE_TASK;
+            }
+            break;
 #endif
         default:
             error = kStatus_USB_InvalidRequest;
@@ -787,20 +803,18 @@ uint32_t USB_AudioSpeakerBufferSpaceUsed(void)
     }
     return g_UsbDeviceAudioSpeaker.speakerReservedSpace;
 }
-
 /* The USB_AudioFeedbackDataUpdate() function calculates the feedback data */
 void USB_AudioFeedbackDataUpdate()
 {
-    static uint32_t feedbackValue = 0x0, originFeedbackValue = 0x0;
-    uint32_t usedSpace = 0;
-
+    static int32_t audioSpeakerUsedDiff = 0x0, audioSpeakerDiffThres = 0x0;
+    static uint32_t feedbackValue = 0x0, originFeedbackValue = 0x0, audioSpeakerUsedSpace  = 0x0, audioSpeakerLastUsedSpace = 0x0;
+    
     if (g_UsbDeviceAudioSpeaker.speakerIntervalCount != AUDIO_CALCULATE_Ff_INTERVAL)
     {
         g_UsbDeviceAudioSpeaker.speakerIntervalCount++;
         return;
     }
     g_UsbDeviceAudioSpeaker.speakerIntervalCount = 1;
-
     g_UsbDeviceAudioSpeaker.timesFeedbackCalculate++;
     if (g_UsbDeviceAudioSpeaker.timesFeedbackCalculate == 2)
     {
@@ -809,22 +823,28 @@ void USB_AudioFeedbackDataUpdate()
             (AUDIO_FORMAT_CHANNELS * AUDIO_FORMAT_SIZE);
         feedbackValue = originFeedbackValue;
         AUDIO_UPDATE_FEEDBACK_DATA(audioFeedBackBuffer, originFeedbackValue);
+        audioSpeakerUsedSpace = USB_AudioSpeakerBufferSpaceUsed();
+        audioSpeakerLastUsedSpace = audioSpeakerUsedSpace;
     }
     else if (g_UsbDeviceAudioSpeaker.timesFeedbackCalculate > 2)
     {
-        usedSpace = USB_AudioSpeakerBufferSpaceUsed();
-        if (usedSpace >=
-            AUDIO_BUFFER_UPPER_LIMIT(AUDIO_SPEAKER_DATA_WHOLE_BUFFER_LENGTH * FS_ISO_OUT_ENDP_PACKET_SIZE))
+        audioSpeakerUsedSpace = USB_AudioSpeakerBufferSpaceUsed();
+        audioSpeakerUsedDiff += (audioSpeakerUsedSpace - audioSpeakerLastUsedSpace);
+        audioSpeakerLastUsedSpace = audioSpeakerUsedSpace;
+        
+        if ((audioSpeakerUsedDiff > -AUDIO_SAMPLING_RATE_KHZ) && (audioSpeakerUsedDiff < AUDIO_SAMPLING_RATE_KHZ))
         {
-            feedbackValue -= (AUDIO_SAMPLING_RATE_KHZ / AUDIO_SAMPLING_RATE_16KHZ) * (AUDIO_ADJUST_MIN_STEP);
+            audioSpeakerDiffThres = 4 * AUDIO_SAMPLING_RATE_KHZ;
         }
-        else if (usedSpace <
-                 AUDIO_BUFFER_LOWER_LIMIT(AUDIO_SPEAKER_DATA_WHOLE_BUFFER_LENGTH * FS_ISO_OUT_ENDP_PACKET_SIZE))
+        if (audioSpeakerUsedDiff <= -audioSpeakerDiffThres)
         {
+            audioSpeakerDiffThres += 4 * AUDIO_SAMPLING_RATE_KHZ;
             feedbackValue += (AUDIO_SAMPLING_RATE_KHZ / AUDIO_SAMPLING_RATE_16KHZ) * (AUDIO_ADJUST_MIN_STEP);
         }
-        else
+        if (audioSpeakerUsedDiff >= audioSpeakerDiffThres)
         {
+            audioSpeakerDiffThres += 4 * AUDIO_SAMPLING_RATE_KHZ;
+            feedbackValue -= (AUDIO_SAMPLING_RATE_KHZ / AUDIO_SAMPLING_RATE_16KHZ) * (AUDIO_ADJUST_MIN_STEP);
         }
         AUDIO_UPDATE_FEEDBACK_DATA(audioFeedBackBuffer, feedbackValue);
     }
@@ -955,6 +975,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
         case kUSB_DeviceEventBusReset:
         {
             g_UsbDeviceAudioSpeaker.attach = 0U;
+            g_UsbDeviceAudioSpeaker.currentConfiguration = 0U;
             error = kStatus_USB_Success;
 #if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)) || \
     (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
@@ -969,15 +990,23 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
                     (HS_ISO_OUT_ENDP_PACKET_SIZE + AUDIO_FORMAT_CHANNELS * AUDIO_FORMAT_SIZE);
                 g_UsbDeviceAudioSpeaker.currentFeedbackMaxPacketSize = HS_ISO_FEEDBACK_ENDP_PACKET_SIZE;
             }
-
 #endif
         }
         break;
         case kUSB_DeviceEventSetConfiguration:
-            if (USB_AUDIO_SPEAKER_CONFIGURE_INDEX == (*temp8))
+            if (0U ==(*temp8))
+            {
+                g_UsbDeviceAudioSpeaker.attach = 0U;
+                g_UsbDeviceAudioSpeaker.currentConfiguration = 0U;
+            }
+            else if (USB_AUDIO_SPEAKER_CONFIGURE_INDEX == (*temp8))
             {
                 g_UsbDeviceAudioSpeaker.attach = 1U;
                 g_UsbDeviceAudioSpeaker.currentConfiguration = *temp8;
+            }
+            else
+            {
+                error = kStatus_USB_InvalidRequest;
             }
             break;
         case kUSB_DeviceEventSetInterface:
@@ -1093,18 +1122,31 @@ void USB_AudioCodecTask(void)
 {
     if (g_UsbDeviceAudioSpeaker.codecTask & MUTE_CODEC_TASK)
     {
+#if USBCFG_AUDIO_CLASS_2_0
+        usb_echo("Set Cur Mute : %x\r\n", g_UsbDeviceAudioSpeaker.curMute20);
+#else
         usb_echo("Set Cur Mute : %x\r\n", g_UsbDeviceAudioSpeaker.curMute);
+#endif
         g_UsbDeviceAudioSpeaker.codecTask &= ~MUTE_CODEC_TASK;
     }
     if (g_UsbDeviceAudioSpeaker.codecTask & UNMUTE_CODEC_TASK)
     {
+#if USBCFG_AUDIO_CLASS_2_0
+        usb_echo("Set Cur Mute : %x\r\n", g_UsbDeviceAudioSpeaker.curMute20);
+#else
         usb_echo("Set Cur Mute : %x\r\n", g_UsbDeviceAudioSpeaker.curMute);
+#endif
         g_UsbDeviceAudioSpeaker.codecTask &= ~UNMUTE_CODEC_TASK;
     }
     if (g_UsbDeviceAudioSpeaker.codecTask & VOLUME_CHANGE_TASK)
     {
+#if USBCFG_AUDIO_CLASS_2_0
+        usb_echo("Set Cur Volume : %x\r\n",
+                 (uint16_t)(g_UsbDeviceAudioSpeaker.curVolume20[1] << 8U) | g_UsbDeviceAudioSpeaker.curVolume20[0]);
+#else
         usb_echo("Set Cur Volume : %x\r\n",
                  (uint16_t)(g_UsbDeviceAudioSpeaker.curVolume[1] << 8U) | g_UsbDeviceAudioSpeaker.curVolume[0]);
+#endif
         g_UsbDeviceAudioSpeaker.codecTask &= ~VOLUME_CHANGE_TASK;
     }
 }
@@ -1123,7 +1165,7 @@ void USB_AudioSpeakerResetTask(void)
  *
  * @return None.
  */
-#if defined(__CC_ARM) || defined(__GNUC__)
+#if defined(__CC_ARM) || (defined(__ARMCC_VERSION)) || defined(__GNUC__)
 int main(void)
 #else
 void main(void)

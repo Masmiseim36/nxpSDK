@@ -97,7 +97,7 @@
  * messages on topics that weren't properly cleaned up!
  */
 #ifndef shadowconfigCLEANUP_TIME_MS
-    #define shadowconfigCLEANUP_TIME_MS    ( 50000UL )
+    #define shadowconfigCLEANUP_TIME_MS    ( 5000UL )
 #endif
 
 #endif /* _AWS_SHADOW_CONFIG_DEFAULTS_H_ */

@@ -2,14 +2,16 @@
 <ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
   <externalDefinitions>
     <definition extID="com.nxp.mcuxpresso"/>
-    <definition extID="middleware.mcu-boot.MK22F51212_application_0x0000_linker.MK22F51212"/>
+    <definition extID="device.MK22F51212_CMSIS.MK22F51212"/>
     <definition extID="middleware.mcu-boot.MK22F51212_startup.MK22F51212"/>
-    <definition extID="platform.devices.MK22F51212_CMSIS.MK22F51212"/>
-    <definition extID="mdk"/>
+    <definition extID="middleware.mcu-boot.src_startup.MK22F51212"/>
+    <definition extID="platform.Include_common.MK22F51212"/>
+    <definition extID="platform.Include_core_cm4.MK22F51212"/>
     <definition extID="iar"/>
+    <definition extID="mdk"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmk22f_led_demo_freedom_0000" name="led_demo_freedom_0000" category="bootloader_examples/demo_apps" dependency="middleware.mcu-boot.MK22F51212_application_0x0000_linker.MK22F51212 platform.devices.MK22F51212_CMSIS.MK22F51212 middleware.mcu-boot.MK22F51212_startup.MK22F51212" toolchain="mdk iar mcuxpresso">
+  <example id="frdmk22f_led_demo_freedom_0000" name="led_demo_freedom_0000" category="bootloader_examples/demo_apps" dependency="device.MK22F51212_CMSIS.MK22F51212 middleware.mcu-boot.MK22F51212_startup.MK22F51212 middleware.mcu-boot.src_startup.MK22F51212 platform.Include_core_cm4.MK22F51212 platform.Include_common.MK22F51212" toolchain="iar mdk mcuxpresso">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -80,6 +82,15 @@
         </option>
       </toolchainSetting>
     </toolchainSettings>
+    <source path="boards/frdmk22f/bootloader_examples/demo_apps/led_demo_freedom_0000/iar" target_path="middleware/mcu-boot" type="linker" toolchain="iar">
+      <files mask="MK22FN512xxx12_application_0x0000.icf"/>
+    </source>
+    <source path="boards/frdmk22f/bootloader_examples/demo_apps/led_demo_freedom_0000/mcux" target_path="middleware/mcu-boot" type="linker" toolchain="mcuxpresso">
+      <files mask="MK22FN512xxx12_application_0x0000.ld"/>
+    </source>
+    <source path="boards/frdmk22f/bootloader_examples/demo_apps/led_demo_freedom_0000/mdk" target_path="middleware/mcu-boot" type="linker" toolchain="mdk">
+      <files mask="MK22FN512xxx12_application_0x0000.scf"/>
+    </source>
     <source path="boards/frdmk22f/bootloader_examples/demo_apps/led_demo_freedom_0000" target_path="MK22F51212" type="src">
       <files mask="main.c"/>
     </source>

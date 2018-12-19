@@ -62,10 +62,6 @@
 #define pkcs11ELLIPTIC_CURVE_NISTP256                      "1.2.840.10045.3.1.7"
 
 /* Bring in the public header. */
-#ifdef __MCUXPRESSO
-    #include "amazon-freertos/pkcs11/pkcs11.h"
-#else
-    #include "pkcs11.h"
-#endif
+#include "pkcs11/pkcs11.h"
 
 #endif /* ifndef _AWS_PKCS11_H_ */

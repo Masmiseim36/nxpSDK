@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- *  that the following conditions are met:
  *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_notifier.h"
@@ -50,6 +24,19 @@
  * Code
  ******************************************************************************/
 
+/*!
+ * brief Creates a Notifier handle.
+ *
+ * param notifierHandle A pointer to the notifier handle.
+ * param configs A pointer to an array with references to all configurations which is handled by the Notifier.
+ * param configsNumber Number of configurations. Size of the configuration array.
+ * param callbacks A pointer to an array of callback configurations.
+ *  If there are no callbacks to register during Notifier initialization, use NULL value.
+ * param callbacksNumber Number of registered callbacks. Size of the callbacks array.
+ * param userFunction User function.
+ * param userData User data passed to user function.
+ * return An error Code or kStatus_Success.
+ */
 status_t NOTIFIER_CreateHandle(notifier_handle_t *notifierHandle,
                                notifier_user_config_t **configs,
                                uint8_t configsNumber,
@@ -82,6 +69,31 @@ status_t NOTIFIER_CreateHandle(notifier_handle_t *notifierHandle,
     return kStatus_Success;
 }
 
+/*!
+ * brief Switches the configuration according to a pre-defined structure.
+ *
+ * This function sets the system to the target configuration. Before transition,
+ * the Notifier sends notifications to all callbacks registered to the callback table.
+ * Callbacks are invoked in the following order: All registered callbacks are notified
+ * ordered by index in the callbacks array. The same order is used for before and after switch notifications.
+ * The notifications before the configuration switch can be used to obtain confirmation about
+ * the change from registered callbacks. If any registered callback denies the
+ * configuration change, further execution of this function depends on the notifier policy: the
+ * configuration change is either forced (kNOTIFIER_PolicyForcible) or exited (kNOTIFIER_PolicyAgreement).
+ * When configuration change is forced, the result of the before switch notifications are ignored. If an
+ * agreement is required, if any callback returns an error code, further notifications
+ * before switch notifications are cancelled and all already notified callbacks are re-invoked.
+ * The index of the callback which returned error code during pre-switch notifications is stored
+ * (any error codes during callbacks re-invocation are ignored) and NOTIFIER_GetErrorCallback() can be used to get it.
+ * Regardless of the policies, if any callback returns an error code, an error code indicating in which phase
+ * the error occurred is returned when NOTIFIER_SwitchConfig() exits.
+ * param notifierHandle pointer to notifier handle
+ * param configIndex Index of the target configuration.
+ * param policy            Transaction policy, kNOTIFIER_PolicyAgreement or kNOTIFIER_PolicyForcible.
+ *
+ * return An error code or kStatus_Success.
+ *
+ */
 status_t NOTIFIER_SwitchConfig(notifier_handle_t *notifierHandle, uint8_t configIndex, notifier_policy_t policy)
 {
     uint8_t currentStaticCallback = 0U;    /* Index to array of statically registered call-backs */
@@ -180,6 +192,17 @@ status_t NOTIFIER_SwitchConfig(notifier_handle_t *notifierHandle, uint8_t config
     return returnCode;
 }
 
+/*!
+ * brief This function returns the last failed notification callback.
+ *
+ * This function returns an index of the last callback that failed during the configuration switch while
+ * the last NOTIFIER_SwitchConfig() was called. If the last NOTIFIER_SwitchConfig() call ended successfully
+ * value equal to callbacks number is returned. The returned value represents an index in the array of
+ * static call-backs.
+ *
+ * param notifierHandle Pointer to the notifier handle
+ * return Callback Index of the last failed callback or value equal to callbacks count.
+ */
 uint8_t NOTIFIER_GetErrorCallbackIndex(notifier_handle_t *notifierHandle)
 {
     return notifierHandle->errorCallbackIndex;

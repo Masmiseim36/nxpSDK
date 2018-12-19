@@ -6,15 +6,6 @@ In this example , one i2c instance used as I2C master and another i2c instance u
 1. I2C master send data to I2C slave in interrupt . (I2C Slave using interrupt to receive the data)
 2. I2C master read data from I2C slave in interrupt . (I2C Slave using interrupt to send the data)
 3. The example assumes that the connection is OK between master and slave, so there's NO error handling code.
-
-Toolchain supported
-===================
-- IAR embedded Workbench 7.80.4
-- Keil MDK 5.21a
-- GCC ARM Embedded 2016-5.4-q3
-- Kinetis Development Studio IDE 3.2.0
-- MCUXpresso0.8
-
 Hardware requirements
 =====================
 - Mini/Micro USB cable
@@ -72,6 +63,11 @@ Master received data :
 
 
 End of I2C example .
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

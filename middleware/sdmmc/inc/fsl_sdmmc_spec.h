@@ -11,6 +11,11 @@
 
 #include <stdint.h>
 
+/*!
+ * @addtogroup CARD
+ * @{
+ */
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -35,39 +40,45 @@
 /*! @brief MMC card bus frequency  in high-speed HS400 mode */
 #define MMC_CLOCK_HS400 (400000000U)
 
+/*!@brief mask convert  */
+#define SDMMC_MASK(bit) (1U << (bit))
+
 /*! @brief Card status bit in R1 */
 enum _sdmmc_r1_card_status_flag
 {
-    kSDMMC_R1OutOfRangeFlag = (1U << 31U),                 /*!< Out of range status bit */
-    kSDMMC_R1AddressErrorFlag = (1U << 30U),               /*!< Address error status bit */
-    kSDMMC_R1BlockLengthErrorFlag = (1U << 29U),           /*!< Block length error status bit */
-    kSDMMC_R1EraseSequenceErrorFlag = (1U << 28U),         /*!< Erase sequence error status bit */
-    kSDMMC_R1EraseParameterErrorFlag = (1U << 27U),        /*!< Erase parameter error status bit */
-    kSDMMC_R1WriteProtectViolationFlag = (1U << 26U),      /*!< Write protection violation status bit */
-    kSDMMC_R1CardIsLockedFlag = (1U << 25U),               /*!< Card locked status bit */
-    kSDMMC_R1LockUnlockFailedFlag = (1U << 24U),           /*!< lock/unlock error status bit */
-    kSDMMC_R1CommandCrcErrorFlag = (1U << 23U),            /*!< CRC error status bit */
-    kSDMMC_R1IllegalCommandFlag = (1U << 22U),             /*!< Illegal command status bit */
-    kSDMMC_R1CardEccFailedFlag = (1U << 21U),              /*!< Card ecc error status bit */
-    kSDMMC_R1CardControllerErrorFlag = (1U << 20U),        /*!< Internal card controller error status bit */
-    kSDMMC_R1ErrorFlag = (1U << 19U),                      /*!< A general or an unknown error status bit */
-    kSDMMC_R1CidCsdOverwriteFlag = (1U << 16U),            /*!< Cid/csd overwrite status bit */
-    kSDMMC_R1WriteProtectEraseSkipFlag = (1U << 15U),      /*!< Write protection erase skip status bit */
-    kSDMMC_R1CardEccDisabledFlag = (1U << 14U),            /*!< Card ecc disabled status bit */
-    kSDMMC_R1EraseResetFlag = (1U << 13U),                 /*!< Erase reset status bit */
-    kSDMMC_R1ReadyForDataFlag = (1U << 8U),                /*!< Ready for data status bit */
-    kSDMMC_R1SwitchErrorFlag = (1U << 7U),                 /*!< Switch error status bit */
-    kSDMMC_R1ApplicationCommandFlag = (1U << 5U),          /*!< Application command enabled status bit */
-    kSDMMC_R1AuthenticationSequenceErrorFlag = (1U << 3U), /*!< error in the sequence of authentication process */
-
-    kSDMMC_R1ErrorAllFlag =
-        (kSDMMC_R1OutOfRangeFlag | kSDMMC_R1AddressErrorFlag | kSDMMC_R1BlockLengthErrorFlag |
-         kSDMMC_R1EraseSequenceErrorFlag | kSDMMC_R1EraseParameterErrorFlag | kSDMMC_R1WriteProtectViolationFlag |
-         kSDMMC_R1CardIsLockedFlag | kSDMMC_R1LockUnlockFailedFlag | kSDMMC_R1CommandCrcErrorFlag |
-         kSDMMC_R1IllegalCommandFlag | kSDMMC_R1CardEccFailedFlag | kSDMMC_R1CardControllerErrorFlag |
-         kSDMMC_R1ErrorFlag | kSDMMC_R1CidCsdOverwriteFlag |
-         kSDMMC_R1AuthenticationSequenceErrorFlag), /*!< Card error status */
+    kSDMMC_R1OutOfRangeFlag = 31,                 /*!< Out of range status bit */
+    kSDMMC_R1AddressErrorFlag = 30,               /*!< Address error status bit */
+    kSDMMC_R1BlockLengthErrorFlag = 29,           /*!< Block length error status bit */
+    kSDMMC_R1EraseSequenceErrorFlag = 28,         /*!< Erase sequence error status bit */
+    kSDMMC_R1EraseParameterErrorFlag = 27,        /*!< Erase parameter error status bit */
+    kSDMMC_R1WriteProtectViolationFlag = 26,      /*!< Write protection violation status bit */
+    kSDMMC_R1CardIsLockedFlag = 25,               /*!< Card locked status bit */
+    kSDMMC_R1LockUnlockFailedFlag = 24,           /*!< lock/unlock error status bit */
+    kSDMMC_R1CommandCrcErrorFlag = 23,            /*!< CRC error status bit */
+    kSDMMC_R1IllegalCommandFlag = 22,             /*!< Illegal command status bit */
+    kSDMMC_R1CardEccFailedFlag = 21,              /*!< Card ecc error status bit */
+    kSDMMC_R1CardControllerErrorFlag = 20,        /*!< Internal card controller error status bit */
+    kSDMMC_R1ErrorFlag = 19,                      /*!< A general or an unknown error status bit */
+    kSDMMC_R1CidCsdOverwriteFlag = 16,            /*!< Cid/csd overwrite status bit */
+    kSDMMC_R1WriteProtectEraseSkipFlag = 15,      /*!< Write protection erase skip status bit */
+    kSDMMC_R1CardEccDisabledFlag = 14,            /*!< Card ecc disabled status bit */
+    kSDMMC_R1EraseResetFlag = 13,                 /*!< Erase reset status bit */
+    kSDMMC_R1ReadyForDataFlag = 8,                /*!< Ready for data status bit */
+    kSDMMC_R1SwitchErrorFlag = 7,                 /*!< Switch error status bit */
+    kSDMMC_R1ApplicationCommandFlag = 5,          /*!< Application command enabled status bit */
+    kSDMMC_R1AuthenticationSequenceErrorFlag = 3, /*!< error in the sequence of authentication process */
 };
+
+/*! @brief R1 all the error flag */
+#define SDMMC_R1_ALL_ERROR_FLAG                                                                      \
+    (SDMMC_MASK(kSDMMC_R1OutOfRangeFlag) | SDMMC_MASK(kSDMMC_R1AddressErrorFlag) |                   \
+     SDMMC_MASK(kSDMMC_R1BlockLengthErrorFlag) | SDMMC_MASK(kSDMMC_R1EraseSequenceErrorFlag) |       \
+     SDMMC_MASK(kSDMMC_R1EraseParameterErrorFlag) | SDMMC_MASK(kSDMMC_R1WriteProtectViolationFlag) | \
+     SDMMC_MASK(kSDMMC_R1CardIsLockedFlag) | SDMMC_MASK(kSDMMC_R1LockUnlockFailedFlag) |             \
+     SDMMC_MASK(kSDMMC_R1CommandCrcErrorFlag) | SDMMC_MASK(kSDMMC_R1IllegalCommandFlag) |            \
+     SDMMC_MASK(kSDMMC_R1CardEccFailedFlag) | SDMMC_MASK(kSDMMC_R1CardControllerErrorFlag) |         \
+     SDMMC_MASK(kSDMMC_R1ErrorFlag) | SDMMC_MASK(kSDMMC_R1CidCsdOverwriteFlag) |                     \
+     SDMMC_MASK(kSDMMC_R1AuthenticationSequenceErrorFlag))
 
 /*! @brief R1: current state */
 #define SDMMC_R1_CURRENT_STATE(x) (((x)&0x00001E00U) >> 9U)
@@ -206,20 +217,20 @@ enum _sdmmc_command_class
 /*! @brief OCR register in SD card */
 enum _sd_ocr_flag
 {
-    kSD_OcrPowerUpBusyFlag = (1U << 31U),                            /*!< Power up busy status */
-    kSD_OcrHostCapacitySupportFlag = (1U << 30U),                    /*!< Card capacity status */
+    kSD_OcrPowerUpBusyFlag = 31,                                     /*!< Power up busy status */
+    kSD_OcrHostCapacitySupportFlag = 30,                             /*!< Card capacity status */
     kSD_OcrCardCapacitySupportFlag = kSD_OcrHostCapacitySupportFlag, /*!< Card capacity status */
-    kSD_OcrSwitch18RequestFlag = (1U << 24U),                        /*!< Switch to 1.8V request */
+    kSD_OcrSwitch18RequestFlag = 24,                                 /*!< Switch to 1.8V request */
     kSD_OcrSwitch18AcceptFlag = kSD_OcrSwitch18RequestFlag,          /*!< Switch to 1.8V accepted */
-    kSD_OcrVdd27_28Flag = (1U << 15U),                               /*!< VDD 2.7-2.8 */
-    kSD_OcrVdd28_29Flag = (1U << 16U),                               /*!< VDD 2.8-2.9 */
-    kSD_OcrVdd29_30Flag = (1U << 17U),                               /*!< VDD 2.9-3.0 */
-    kSD_OcrVdd30_31Flag = (1U << 18U),                               /*!< VDD 2.9-3.0 */
-    kSD_OcrVdd31_32Flag = (1U << 19U),                               /*!< VDD 3.0-3.1 */
-    kSD_OcrVdd32_33Flag = (1U << 20U),                               /*!< VDD 3.1-3.2 */
-    kSD_OcrVdd33_34Flag = (1U << 21U),                               /*!< VDD 3.2-3.3 */
-    kSD_OcrVdd34_35Flag = (1U << 22U),                               /*!< VDD 3.3-3.4 */
-    kSD_OcrVdd35_36Flag = (1U << 23U),                               /*!< VDD 3.4-3.5 */
+    kSD_OcrVdd27_28Flag = 15,                                        /*!< VDD 2.7-2.8 */
+    kSD_OcrVdd28_29Flag = 16,                                        /*!< VDD 2.8-2.9 */
+    kSD_OcrVdd29_30Flag = 17,                                        /*!< VDD 2.9-3.0 */
+    kSD_OcrVdd30_31Flag = 18,                                        /*!< VDD 2.9-3.0 */
+    kSD_OcrVdd31_32Flag = 19,                                        /*!< VDD 3.0-3.1 */
+    kSD_OcrVdd32_33Flag = 20,                                        /*!< VDD 3.1-3.2 */
+    kSD_OcrVdd33_34Flag = 21,                                        /*!< VDD 3.2-3.3 */
+    kSD_OcrVdd34_35Flag = 22,                                        /*!< VDD 3.3-3.4 */
+    kSD_OcrVdd35_36Flag = 23,                                        /*!< VDD 3.4-3.5 */
 };
 
 /*! @brief SD card specification version number */
@@ -423,27 +434,26 @@ enum _sdio_status_flag
 /*! @brief sdio operation condition flag */
 enum _sdio_ocr_flag
 {
-    kSDIO_OcrPowerUpBusyFlag = (1U << 31U), /*!< Power up busy status */
-    kSDIO_OcrIONumber = (7U << 28U),        /*!< number of IO function */
-    kSDIO_OcrMemPresent = (1U << 27U),      /*!< memory present flag */
+    kSDIO_OcrPowerUpBusyFlag = 31, /*!< Power up busy status */
+    kSDIO_OcrIONumber = 28,        /*!< number of IO function */
+    kSDIO_OcrMemPresent = 27,      /*!< memory present flag */
 
-    kSDIO_OcrVdd20_21Flag = (1U << 8U),  /*!< VDD 2.0-2.1 */
-    kSDIO_OcrVdd21_22Flag = (1U << 9U),  /*!< VDD 2.1-2.2 */
-    kSDIO_OcrVdd22_23Flag = (1U << 10U), /*!< VDD 2.2-2.3 */
-    kSDIO_OcrVdd23_24Flag = (1U << 11U), /*!< VDD 2.3-2.4 */
-    kSDIO_OcrVdd24_25Flag = (1U << 12U), /*!< VDD 2.4-2.5 */
-    kSDIO_OcrVdd25_26Flag = (1U << 13U), /*!< VDD 2.5-2.6 */
-    kSDIO_OcrVdd26_27Flag = (1U << 14U), /*!< VDD 2.6-2.7 */
-    kSDIO_OcrVdd27_28Flag = (1U << 15U), /*!< VDD 2.7-2.8 */
-    kSDIO_OcrVdd28_29Flag = (1U << 16U), /*!< VDD 2.8-2.9 */
-    kSDIO_OcrVdd29_30Flag = (1U << 17U), /*!< VDD 2.9-3.0 */
-    kSDIO_OcrVdd30_31Flag = (1U << 18U), /*!< VDD 2.9-3.0 */
-    kSDIO_OcrVdd31_32Flag = (1U << 19U), /*!< VDD 3.0-3.1 */
-    kSDIO_OcrVdd32_33Flag = (1U << 20U), /*!< VDD 3.1-3.2 */
-    kSDIO_OcrVdd33_34Flag = (1U << 21U), /*!< VDD 3.2-3.3 */
-    kSDIO_OcrVdd34_35Flag = (1U << 22U), /*!< VDD 3.3-3.4 */
-    kSDIO_OcrVdd35_36Flag = (1U << 23U), /*!< VDD 3.4-3.5 */
-
+    kSDIO_OcrVdd20_21Flag = 8,  /*!< VDD 2.0-2.1 */
+    kSDIO_OcrVdd21_22Flag = 9,  /*!< VDD 2.1-2.2 */
+    kSDIO_OcrVdd22_23Flag = 10, /*!< VDD 2.2-2.3 */
+    kSDIO_OcrVdd23_24Flag = 11, /*!< VDD 2.3-2.4 */
+    kSDIO_OcrVdd24_25Flag = 12, /*!< VDD 2.4-2.5 */
+    kSDIO_OcrVdd25_26Flag = 13, /*!< VDD 2.5-2.6 */
+    kSDIO_OcrVdd26_27Flag = 14, /*!< VDD 2.6-2.7 */
+    kSDIO_OcrVdd27_28Flag = 15, /*!< VDD 2.7-2.8 */
+    kSDIO_OcrVdd28_29Flag = 16, /*!< VDD 2.8-2.9 */
+    kSDIO_OcrVdd29_30Flag = 17, /*!< VDD 2.9-3.0 */
+    kSDIO_OcrVdd30_31Flag = 18, /*!< VDD 2.9-3.0 */
+    kSDIO_OcrVdd31_32Flag = 19, /*!< VDD 3.0-3.1 */
+    kSDIO_OcrVdd32_33Flag = 20, /*!< VDD 3.1-3.2 */
+    kSDIO_OcrVdd33_34Flag = 21, /*!< VDD 3.2-3.3 */
+    kSDIO_OcrVdd34_35Flag = 22, /*!< VDD 3.3-3.4 */
+    kSDIO_OcrVdd35_36Flag = 23, /*!< VDD 3.4-3.5 */
 };
 
 /*! @brief sdio capability flag */
@@ -1155,5 +1165,7 @@ typedef struct _mmc_boot_config
     mmc_boot_partition_wp_t bootPartitionWP; /*!< boot partition write protect configurations */
 
 } mmc_boot_config_t;
+
+/* @} */
 
 #endif /* _FSL_SDMMC_SPEC_H_ */

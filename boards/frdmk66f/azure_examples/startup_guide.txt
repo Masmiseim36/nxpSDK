@@ -1,0 +1,66 @@
+Introduction
+========
+This document describes the steps for connecting an embedded device to Azure IoT Hub. This multi-step process includes:
+- Configuring Azure IoT Hub
+- Registering your IoT device
+- Build and deploy Azure IoT demo on device
+
+# Configuring Azure IoT Hub
+-----------------------------
+Before you can communicate with IoT Hub from a device you must create an IoT hub instance
+in your Azure subscription and then provision your device in your IoT hub.
+
+To create Azure subscription follow this link:
+[https://azure.microsoft.com/en-us/free]
+To create an IoT hub instance follow this link:
+[https://github.com/Azure/azure-iot-device-ecosystem/blob/master/setup_iothub.md]
+
+# Registering your IoT device
+-----------------------------
+Before a device can communicate with IoT Hub, you must add details of that device to the IoT Hub device identity registry.
+When you add a device to your IoT Hub device identity registry, the hub generates the connection string
+that the device must use when it establishes its secure connection to your hub.
+You can also use the device identity registry to disable a device and prevent it from connecting to your hub.
+
+To add devices to your IoT hub and manage those devices, you can use either of:
+- The cross-platform, command-line iothub-explorer tool:
+  [https://github.com/Azure/azure-iot-device-ecosystem/blob/master/manage_iot_hub.md#iothub-explorer]
+- The Windows-only, graphical Device Explorer tool:
+  [https://github.com/Azure/azure-iot-device-ecosystem/blob/master/manage_iot_hub.md#device-explorer]
+- The Microsoft Azure Portal:
+  1) Select IoT Hub in left panel
+  2) From list of IoT Hubs choose one we deploy earlier
+  3) In IoT Hub select IoT devices
+  4) Click on "+Add" button
+  5) Type your device name and choose Authentication Type, then click Save
+
+# List and description of demos
+-------------------------------
+- azure_http:
+  Shows basic communication with iot-hub via http protocol. (more info in demo README)
+- azure_mqtt:
+  Shows basic communication with iot-hub via mqtt protocol. (more info in demo README)
+- azure_http_remote_control:
+  Demonstrates controlling embedded board and receiving messages from service app via IoT Hub using http protocol.
+  Service-client-sample application is needed. (more info in azure_http_remote_control and service-client-sample README)
+- azure_mqtt_remote_control:
+  Demonstrates controlling embedded board and receiving messages from service app via IoT Hub using mqtt protocol.
+  Service-client-sample application is needed. (more info in azure_mqtt_remote_control and service-client-sample README)
+- service-client-sample:
+  Console application written in Java using iot-service-client cooperates with azure_http_remote_control and azure_mqtt_remote_control.
+  (more info in service-client-sample README)
+
+# Network settings
+-------------------------------
+Following network ports need to be allowed:
+DNS: 53
+NTP: 123
+MQTT: 8883 (over SSL)
+HTTP: 443
+
+# Useful info
+-------------------------------
+This examples demonstrate communication with IoT Hub and using service client.
+For further managing and routing messages please consider using Event Hub or Azure Functions in addition to IoT Hub.
+[https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-programming-guide]
+[https://azure.microsoft.com/cs-cz/blog/how-to-use-azure-functions-with-iot-hub-message-routing]

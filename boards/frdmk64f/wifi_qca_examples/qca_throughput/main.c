@@ -68,6 +68,11 @@ extern void wmiconfig_Task1(void *param);
 extern void wmiconfig_Task2(void *param);
 extern int32_t get_version(void);
 
+extern serial_handle_t g_serialHandle;
+
+SDK_ALIGN(static uint8_t s_shellHandleBuffer[SHELL_HANDLE_SIZE], 4);
+static shell_handle_t context = &s_shellHandleBuffer[0];
+
 // ============================================================================
 // Task definitions
 // ============================================================================
@@ -81,7 +86,7 @@ extern int32_t get_version(void);
 // OS State Information Command
 // ============================================================================
 
-int cmd_osinfo(p_shell_context_t context, int argc, char **argv)
+int cmd_osinfo(shell_handle_t context, int argc, char **argv)
 {
     extern TaskHandle_t atheros_wifi_task_id;
     extern int numIrqs;
@@ -151,51 +156,59 @@ void SHELL_ReceiveDataCallback(uint8_t *buf, uint32_t len)
 
 QueueHandle_t shell_q;
 
-extern const shell_command_context_t shell_commands[];
+extern shell_command_t *shell_commands[];
+
 void wmi_shell(void *param)
 {
     int32_t result = 0;
     (void)result;
-    shell_context_struct context = {0};
 
-    do {
+    do
+    {
         /* Initialize WIFI shield */
         result = WIFISHIELD_Init();
         assert(!(A_OK != result));
-        if (A_OK != result) break;
+        if (A_OK != result)
+            break;
 
         /* Initialize the WIFI driver (thus starting the driver task) */
         result = wlan_driver_start();
         assert(!(A_OK != result));
-        if (A_OK != result) break;
+        if (A_OK != result)
+            break;
 
         get_version();
 
         shell_q = xQueueCreate(2, sizeof(worker_shell_msg_t));
         assert(!(shell_q == NULL));
-        if (shell_q == NULL) break;
+        if (shell_q == NULL)
+            break;
 
         // lower prio ???
         result = startWmiTasks();
         assert(!(A_OK != result));
-        if (A_OK != result) break;
+        if (A_OK != result)
+            break;
 
         // TODO: ?????
         cmd_osinfo(NULL, 0, 0);
 
         /* Init SHELL */
-        SHELL_Init(&context, SHELL_SendDataCallback, SHELL_ReceiveDataCallback, PRINTF, "SHELL>> ");
+        SHELL_Init(context, g_serialHandle, "SHELL>> ");
 
         /* Add new command to commands list */
-        for (shell_command_context_t const *command = shell_commands; command != NULL && command->pFuncCallBack != NULL;
-             command++)
+        for (int i = 0; (NULL != shell_commands[i]) && (NULL != shell_commands[i]->pFuncCallBack); i++)
         {
-            SHELL_RegisterCommand(command);
+            SHELL_RegisterCommand(context, shell_commands[i]);
         }
 
-        SHELL_Main(&context);
-    } while(0);
-    while (1);
+#if !(defined(SHELL_NON_BLOCKING_MODE) && (SHELL_NON_BLOCKING_MODE > 0U))
+        SHELL_Task(context);
+#endif
+
+    } while (0);
+    while (1)
+        ;
 }
 
 // ============================================================================

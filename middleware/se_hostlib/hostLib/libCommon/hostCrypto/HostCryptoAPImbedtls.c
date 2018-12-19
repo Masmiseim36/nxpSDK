@@ -3,28 +3,16 @@
  * @author NXP Semiconductors
  * @version 1.0
  * @par License
- * Copyright(C) NXP Semiconductors, 2017
- * All rights reserved.
+ * Copyright 2017 NXP
  *
- * Software that is described herein is for illustrative purposes only
- * which provides customers with programming information regarding the
- * A7-series security ICs.  This software is supplied "AS IS" without any
- * warranties of any kind, and NXP Semiconductors and its licensor disclaim any and
- * all warranties, express or implied, including all implied warranties of
- * merchantability, fitness for a particular purpose and non-infringement of
- * intellectual property rights.  NXP Semiconductors assumes no responsibility
- * or liability for the use of the software, conveys no license or rights under any
- * patent, copyright, mask work right, or any other intellectual property rights in
- * or to any products. NXP Semiconductors reserves the right to make changes
- * in the software without notification. NXP Semiconductors also makes no
- * representation or warranty that such application will be suitable for the
- * specified use without further testing or modification.
+ * This software is owned or controlled by NXP and may only be used
+ * strictly in accordance with the applicable license terms.  By expressly
+ * accepting such terms or by downloading, installing, activating and/or
+ * otherwise using the software, you are agreeing that you have read, and
+ * that you agree to comply with and are bound by, such license terms.  If
+ * you do not agree to be bound by the applicable license terms, then you
+ * may not retain, install, activate or otherwise use the software.
  *
- * Permission to use, copy and modify this software is hereby granted,
- * under NXP Semiconductors' and its licensor's relevant copyrights in
- * the software, without fee, provided that it is used in conjunction with
- * NXP Semiconductors products. This copyright, permission, and disclaimer notice
- * must appear in all copies of this code.
  * @par Description
  * Host Crypto mbed TLS wrapper implementation
  *
@@ -41,10 +29,13 @@
 #include <mbedtls/aes.h>
 #include <mbedtls/ctr_drbg.h>
 #include <mbedtls/entropy.h>
-#include <mbedtls/cmac.h>
+#ifdef MBEDTLS_CMAC_C
+#   include <mbedtls/cmac.h>
+#endif
 #include <mbedtls/cipher.h>
 #include <mbedtls/ecdsa.h>
 #include <mbedtls/pk.h>
+#include <mbedtls/entropy_poll.h>
 
 /*TODO check return paths and framework specified terminate paths are met */
 #define AES_BLOCK_SIZE 16 /*TODO check if this can come from mbedtls */
@@ -268,6 +259,7 @@ HLSE_RET_CODE   HLCRYPT_Sign(HLSE_MECHANISM_INFO* pMechanismType, U8* inKey, U32
             ret = mbedtls_cipher_setup( &cipher_ctx, cipher_info );
             if (ret == 0)
             {
+#ifdef MBEDTLS_CMAC_C
                 ret = mbedtls_cipher_cmac_starts(&cipher_ctx,inKey,(inKeyLen * 8));
                 if (ret == 0)
                 {
@@ -281,6 +273,9 @@ HLSE_RET_CODE   HLCRYPT_Sign(HLSE_MECHANISM_INFO* pMechanismType, U8* inKey, U32
                         }
                     }
                 }
+#else
+                ret = 1;
+#endif
             }
             mbedtls_cipher_free(&cipher_ctx);
         }
@@ -369,7 +364,11 @@ HLSE_RET_CODE   HLCRYPT_SignInit(HLSE_MECHANISM_INFO* pMechanismType, U8* inKey,
             ret = mbedtls_cipher_setup( *hContext, cipher_info );
             if (ret == 0)
             {
+#ifdef MBEDTLS_CMAC_C
                 ret = mbedtls_cipher_cmac_starts(*hContext,inKey,(inKeyLen * 8));
+#else
+                ret = 1;
+#endif
                 if (ret == 0)
                 {
                     ret = HOST_CRYPTO_OK;
@@ -398,7 +397,11 @@ HLSE_RET_CODE   HLCRYPT_SignUpdate(HLSE_CONTEXT_HANDLE hContext, U8* inDataPart,
     }
 #endif
 
+#ifdef MBEDTLS_CMAC_C
     ret = mbedtls_cipher_cmac_update(hContext, inDataPart, inDataPartLen);
+#else
+    ret = 1;
+#endif
     if (ret == 0)
     {
         ret = HOST_CRYPTO_OK;
@@ -417,7 +420,11 @@ HLSE_RET_CODE   HLCRYPT_SignFinal(HLSE_CONTEXT_HANDLE hContext, U8* outSignature
     }
 #endif
 
+#ifdef MBEDTLS_CMAC_C
     ret = mbedtls_cipher_cmac_finish(hContext,outSignature);
+#else
+    ret = 1;
+#endif
     if (ret == 0)
     {
         ret = HOST_CRYPTO_OK;
@@ -431,7 +438,10 @@ HLSE_RET_CODE   HLCRYPT_SignFinal(HLSE_CONTEXT_HANDLE hContext, U8* outSignature
 HLSE_RET_CODE    HLCRYPT_GetRandom(U32 inLen, U8 * pRandom)
 {
     int nRet;
-#ifdef MBEDTLS_CTR_DRBG_C
+#if AX_EMBEDDED
+    size_t olen = 0;
+
+#elif defined( MBEDTLS_CTR_DRBG_C)
     mbedtls_entropy_context entropy;
     mbedtls_ctr_drbg_context ctr_drbg;
 #endif
@@ -441,7 +451,10 @@ HLSE_RET_CODE    HLCRYPT_GetRandom(U32 inLen, U8 * pRandom)
         return HLSE_ERR_API_ERROR;
     }
 #endif
-#ifdef MBEDTLS_CTR_DRBG_C
+#if AX_EMBEDDED
+    mbedtls_hardware_poll(NULL, pRandom, inLen, &olen);
+    nRet = HOST_CRYPTO_OK;
+#elif defined( MBEDTLS_CTR_DRBG_C)
     mbedtls_entropy_init( &entropy );
     mbedtls_ctr_drbg_init( &ctr_drbg );
     nRet = mbedtls_ctr_drbg_seed( &ctr_drbg , mbedtls_entropy_func, &entropy,
@@ -455,10 +468,7 @@ HLSE_RET_CODE    HLCRYPT_GetRandom(U32 inLen, U8 * pRandom)
             nRet = HOST_CRYPTO_OK;
         }
     }
-#elif defined(FREEDOM)
-    size_t olen = 0;
-    mbedtls_hardware_poll(NULL, pRandom, inLen, &olen);
-    nRet = HOST_CRYPTO_OK;
+
 #else
     nRet = HOST_CRYPTO_ERROR;
 #endif

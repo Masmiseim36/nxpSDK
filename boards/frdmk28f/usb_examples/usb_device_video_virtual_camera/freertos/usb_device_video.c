@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
  * Copyright 2016 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "usb_device_config.h"
@@ -129,13 +103,13 @@ static usb_status_t USB_DeviceVideoAllocateHandle(usb_device_video_struct_t **ha
 }
 
 /*!
- * @brief Free a device video class hanlde.
+ * @brief Free a device video class handle.
  *
- * This function frees a device video class hanlde.
+ * This function frees a device video class handle.
  *
  * @param handle          The device video class handle.
  *
- * @retval kStatus_USB_Success              Free device video class hanlde successfully.
+ * @retval kStatus_USB_Success              Free device video class handle successfully.
  */
 static usb_status_t USB_DeviceVideoFreeHandle(usb_device_video_struct_t *handle)
 {
@@ -154,12 +128,12 @@ static usb_status_t USB_DeviceVideoFreeHandle(usb_device_video_struct_t *handle)
 /*!
  * @brief Interrupt IN endpoint callback function.
  *
- * This callback function is used to notify uplayer the tranfser result of a transfer.
+ * This callback function is used to notify uplayer the transfser result of a transfer.
  * This callback pointer is passed when the interrupt IN pipe initialized.
  *
  * @param handle          The device handle. It equals the value returned from USB_DeviceInit.
  * @param message         The result of the interrupt IN pipe transfer.
- * @param callbackParam  The paramter for this callback. It is same with
+ * @param callbackParam  The parameter for this callback. It is same with
  * usb_device_endpoint_callback_struct_t::callbackParam. In the class, the value is the video class handle.
  *
  * @return A USB error code or kStatus_USB_Success.
@@ -194,12 +168,12 @@ static usb_status_t USB_DeviceVideoControlIn(usb_device_handle handle,
 /*!
  * @brief ISO IN endpoint callback function.
  *
- * This callback function is used to notify uplayer the tranfser result of a transfer.
+ * This callback function is used to notify uplayer the transfser result of a transfer.
  * This callback pointer is passed when the ISO IN pipe initialized.
  *
  * @param handle          The device handle. It equals the value returned from USB_DeviceInit.
  * @param message         The result of the ISO IN pipe transfer.
- * @param callbackParam  The paramter for this callback. It is same with
+ * @param callbackParam  The parameter for this callback. It is same with
  * usb_device_endpoint_callback_struct_t::callbackParam. In the class, the value is the video class handle.
  *
  * @return A USB error code or kStatus_USB_Success.
@@ -234,12 +208,12 @@ static usb_status_t USB_DeviceVideoStreamIn(usb_device_handle handle,
 /*!
  * @brief ISO OUT endpoint callback function.
  *
- * This callback function is used to notify uplayer the tranfser result of a transfer.
+ * This callback function is used to notify uplayer the transfser result of a transfer.
  * This callback pointer is passed when the ISO OUT pipe initialized.
  *
  * @param handle          The device handle. It equals the value returned from USB_DeviceInit.
  * @param message         The result of the ISO OUT pipe transfer.
- * @param callbackParam  The paramter for this callback. It is same with
+ * @param callbackParam  The parameter for this callback. It is same with
  * usb_device_endpoint_callback_struct_t::callbackParam. In the class, the value is the video class handle.
  *
  * @return A USB error code or kStatus_USB_Success.
@@ -338,6 +312,7 @@ static usb_status_t USB_DeviceVideoStreamEndpointsInit(usb_device_video_struct_t
         usb_device_endpoint_init_struct_t epInitStruct;
         usb_device_endpoint_callback_struct_t epCallback;
         epInitStruct.zlt = 0U;
+        epInitStruct.interval = interface->endpointList.endpoint[count].interval;
         epInitStruct.endpointAddress = interface->endpointList.endpoint[count].endpointAddress;
         epInitStruct.maxPacketSize = interface->endpointList.endpoint[count].maxPacketSize;
         epInitStruct.transferType = interface->endpointList.endpoint[count].transferType;
@@ -1403,11 +1378,12 @@ usb_status_t USB_DeviceVideoSend(class_handle_t handle, uint8_t ep, uint8_t *buf
     {
         return kStatus_USB_Busy;
     }
+    videoHandle->streamInPipeBusy = 1U;
 
     error = USB_DeviceSendRequest(videoHandle->handle, ep, buffer, length);
-    if (kStatus_USB_Success == error)
+    if (kStatus_USB_Success != error)
     {
-        videoHandle->streamInPipeBusy = 1U;
+        videoHandle->streamInPipeBusy = 0U;
     }
     return error;
 }
@@ -1448,11 +1424,12 @@ usb_status_t USB_DeviceVideoRecv(class_handle_t handle, uint8_t ep, uint8_t *buf
     {
         return kStatus_USB_Busy;
     }
+    videoHandle->streamOutPipeBusy = 1U;
 
     error = USB_DeviceRecvRequest(videoHandle->handle, ep, buffer, length);
-    if (kStatus_USB_Success == error)
+    if (kStatus_USB_Success != error)
     {
-        videoHandle->streamOutPipeBusy = 1U;
+        videoHandle->streamOutPipeBusy = 0U;
     }
     return error;
 }

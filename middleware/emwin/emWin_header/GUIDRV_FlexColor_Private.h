@@ -1,15 +1,15 @@
 /*********************************************************************
-*                SEGGER Microcontroller GmbH & Co. KG                *
+*                SEGGER Microcontroller GmbH                         *
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2016  SEGGER Microcontroller GmbH & Co. KG       *
+*        (c) 1996 - 2018  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
 **********************************************************************
 
-** emWin V5.38 - Graphical user interface for embedded applications **
+** emWin V5.48 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -26,15 +26,16 @@ Full source code is available at: www.segger.com
 We appreciate your understanding and fairness.
 ----------------------------------------------------------------------
 Licensing information
-
 Licensor:                 SEGGER Microcontroller Systems LLC
 Licensed to:              NXP Semiconductors, 1109 McKay Dr, M/S 76, San Jose, CA 95131, USA
 Licensed SEGGER software: emWin
 License number:           GUI-00186
-License model:            emWin License Agreement, dated August 20th 2011
-Licensed product:         -
-Licensed platform:        NXP's ARM 7/9, Cortex-M0,M3,M4
-Licensed number of seats: -
+License model:            emWin License Agreement, dated August 20th 2011 and Amendment, dated October 19th 2017
+Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7
+----------------------------------------------------------------------
+Support and Update Agreement (SUA)
+SUA period:               2011-08-19 - 2018-09-02
+Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : GUIDRV_FlexColor_Private.h
 Purpose     : Private declarations for GUIDRV_FlexColor driver
@@ -56,7 +57,9 @@ extern "C" {     /* Make sure we have C-declarations in C++ programs */
 *
 **********************************************************************
 */
-#define LCD_WRITE_BUFFER_SIZE           500
+#ifndef LCD_WRITE_BUFFER_SIZE
+  #define LCD_WRITE_BUFFER_SIZE         500
+#endif
 
 #define FLEXCOLOR_CF_MANAGE_ORIENTATION (1 << 0)
 #define FLEXCOLOR_CF_RAM_ADDR_SET       (1 << 1)
@@ -242,6 +245,7 @@ void GUIDRV_FlexColor__SetFunc66712(GUI_DEVICE * pDevice, U16 AndMask_SetAddrRAM
   void SIM_FlexColor_SetFunc66721(GUI_DEVICE * pDevice);
   void SIM_FlexColor_SetFunc66722(GUI_DEVICE * pDevice);
   void SIM_FlexColor_SetFunc66723(GUI_DEVICE * pDevice);
+  void SIM_FlexColor_SetFunc66724(GUI_DEVICE * pDevice);
   void SIM_FlexColor_SetFunc66772(GUI_DEVICE * pDevice);
 
 #endif

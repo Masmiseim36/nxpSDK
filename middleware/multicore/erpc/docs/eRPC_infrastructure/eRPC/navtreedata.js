@@ -30,8 +30,8 @@ var NAVTREEINDEX =
 [
 ".html",
 "classerpc_1_1_message_buffer.html",
-"classerpc_1_1_transport_arbitrator.html#a1a3d154f02c850c9d45b1a0712726368",
-"group__message__buffer__factory__setup.html#ga62de0ff0c2a0a23dc2f3db8401def661"
+"classerpc_1_1_transport_arbitrator.html#afceb02fe214a1e64856b458e701c6390",
+"group__port__serial.html#ga04a4d90ee3bc5024c29b3ccda9dfc97d"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

@@ -29,6 +29,11 @@ bootloader_context_t g_bootloaderContext = {.memoryInterface = &g_memoryInterfac
 #if !BL_DEVICE_IS_LPC_SERIES
                                             .allFlashState = &g_flashState,
                                             .allFlashCacheState = &g_flashcacheState,
+#if BL_FEATURE_SUPPORT_DFLASH
+                                            .dflashDriverInterface = &g_dflashDriverInterface,
+                                            .dFlashState = &g_dflashState,
+#endif // BL_FEATURE_SUPPORT_DFLASH
+                                            
 #else
                                             .allFlashState = g_flashiapState,
 #endif // !BL_DEVICE_IS_LPC_SERIES

@@ -3,28 +3,15 @@
  * @author NXP Semiconductors
  * @version 1.0
  * @par License
- * Copyright(C) NXP Semiconductors, 2016
- * All rights reserved.
+ * Copyright 2016 NXP
  *
- * Software that is described herein is for illustrative purposes only
- * which provides customers with programming information regarding the
- * A7-series security ICs.  This software is supplied "AS IS" without any
- * warranties of any kind, and NXP Semiconductors and its licensor disclaim any and
- * all warranties, express or implied, including all implied warranties of
- * merchantability, fitness for a particular purpose and non-infringement of
- * intellectual property rights.  NXP Semiconductors assumes no responsibility
- * or liability for the use of the software, conveys no license or rights under any
- * patent, copyright, mask work right, or any other intellectual property rights in
- * or to any products. NXP Semiconductors reserves the right to make changes
- * in the software without notification. NXP Semiconductors also makes no
- * representation or warranty that such application will be suitable for the
- * specified use without further testing or modification.
- *
- * Permission to use, copy and modify this software is hereby granted,
- * under NXP Semiconductors' and its licensor's relevant copyrights in
- * the software, without fee, provided that it is used in conjunction with
- * NXP Semiconductors products. This copyright, permission, and disclaimer notice
- * must appear in all copies of this code.
+ * This software is owned or controlled by NXP and may only be used
+ * strictly in accordance with the applicable license terms.  By expressly
+ * accepting such terms or by downloading, installing, activating and/or
+ * otherwise using the software, you are agreeing that you have read, and
+ * that you agree to comply with and are bound by, such license terms.  If
+ * you do not agree to be bound by the applicable license terms, then you
+ * may not retain, install, activate or otherwise use the software.
  *
  * @par Description
  * Example invocation of ECC key pair secure storage specific functionality of the A71CH
@@ -54,7 +41,7 @@
 U8 exSstKp(U16 appletVersion)
 {
     U8 result = 1;
-    printf( "\r\n-----------\r\nStart exSstKp()\r\n------------\r\n");
+    PRINTF( "\r\n-----------\r\nStart exSstKp()\r\n------------\r\n");
 
     DEV_ClearChannelState();
 
@@ -65,7 +52,7 @@ U8 exSstKp(U16 appletVersion)
     result &= exSstKeyPair(INIT_MODE_RESET_DO_SCP03, appletVersion);
 
     // overall result
-    printf( "\r\n-----------\r\nEnd exSstKp(), result = %s\r\n------------\r\n", ((result == 1)? "OK": "FAILED"));
+    PRINTF( "\r\n-----------\r\nEnd exSstKp(), result = %s\r\n------------\r\n", ((result == 1)? "OK": "FAILED"));
 
     return result;
 }
@@ -112,7 +99,7 @@ U8 exSstKeyPair(U8 initMode, U16 appletVersion)
 
     SST_Index_t kpIndex;
 
-    printf("\r\n-----------\r\nStart exSstKeyPair(%s)\r\n------------\r\n", getInitModeAsString(initMode));
+    PRINTF("\r\n-----------\r\nStart exSstKeyPair(%s)\r\n------------\r\n", getInitModeAsString(initMode));
 
     // Initialize the A71CH (Debug mode restrictions may apply)
     result &= a71chInitModule(initMode);
@@ -132,7 +119,7 @@ U8 exSstKeyPair(U8 initMode, U16 appletVersion)
         eccKcTls[i].bits = expectedPrivKeyLen << 3;
         eccKcTls[i].curve = eccCurve;
 
-        printf( "\r\nA71_SetEccKeyPair(0x%02X)\r\n", (SST_Index_t)i);
+        PRINTF( "\r\nA71_SetEccKeyPair(0x%02X)\r\n", (SST_Index_t)i);
         err = A71_SetEccKeyPair((SST_Index_t) i, eccKcTls[i].pub, eccKcTls[i].pubLen,
             eccKcTls[i].priv, eccKcTls[i].privLen);
         result &= AX_CHECK_SW(err, SW_OK, "err");
@@ -141,7 +128,7 @@ U8 exSstKeyPair(U8 initMode, U16 appletVersion)
     // Read out and verify public key
     for (i=0; i<A71CH_KEY_PAIR_MAX; i++)
     {
-        printf( "\r\nA71_GetPublicKeyEccKeyPair (0x%02X)\r\n", (SST_Index_t)i);
+        PRINTF( "\r\nA71_GetPublicKeyEccKeyPair (0x%02X)\r\n", (SST_Index_t)i);
         fetchedPubKeyLen = sizeof(fetchedPubKey);
         err = A71_GetPublicKeyEccKeyPair  ((SST_Index_t) i, fetchedPubKey, &fetchedPubKeyLen);
         result &= AX_CHECK_SW(err, SW_OK, "err");
@@ -173,28 +160,28 @@ U8 exSstKeyPair(U8 initMode, U16 appletVersion)
         signatureLen = sizeof(signature);
         if (appletVersion >= 0x0130)
         {
-            printf("\r\nA71_EccSign(0x%02X)\r\n", (SST_Index_t)i);
+            PRINTF("\r\nA71_EccSign(0x%02X)\r\n", (SST_Index_t)i);
             err = A71_EccSign((SST_Index_t)i, hashSha256, hashSha256Len, signature, &signatureLen);
         }
         else
         {
-            printf("\r\nA71_EccSign(0x%02X)\r\n", (SST_Index_t)i);
+            PRINTF("\r\nA71_EccSign(0x%02X)\r\n", (SST_Index_t)i);
             err = A71_EccSign((SST_Index_t)i, hashSha256, hashSha256Len, signature, &signatureLen);
         }
         result &= AX_CHECK_SW(err, SW_OK, "err");
 
         // Verify ... on opposite platform
-        printf("\r\n(Host)ECDSA_verify API with eccKeyTls[i] (verify signature created on A71CH).\r\n");
+        PRINTF("\r\n(Host)ECDSA_verify API with eccKeyTls[i] (verify signature created on A71CH).\r\n");
         memset(&mechInfo, 0, sizeof(mechInfo));
         mechInfo.mechanism = HLSE_ECDSA_VERIFY;
         retcode = HLCRYPT_Verify(&mechInfo,(U8 *)eccKeyTls[i],0,hashSha256,hashSha256Len,signature,signatureLen);
         if (retcode == HLSE_SW_OK)
         {
-            printf("Verification OK for eccKeyTls[i].\r\n");
+            PRINTF("Verification OK for eccKeyTls[i].\r\n");
         }
         else
         {
-            printf("Return value: %d, Verification Not OK for eccKeyTls[i]. Test Failed!\r\n", retcode);
+            PRINTF("Return value: %d, Verification Not OK for eccKeyTls[i]. Test Failed!\r\n", retcode);
             result &= 0;
             break;
         }
@@ -203,18 +190,18 @@ U8 exSstKeyPair(U8 initMode, U16 appletVersion)
     // Erase the keypair at index 0 & verify the value is no longer readable
     // ** Erase **
     kpIndex = A71CH_KEY_PAIR_0;
-    printf("\r\nA71_EraseEccKeyPair(index=0x%02X)\r\n", kpIndex);
+    PRINTF("\r\nA71_EraseEccKeyPair(index=0x%02X)\r\n", kpIndex);
     err = A71_EraseEccKeyPair(kpIndex);
     result &= AX_CHECK_SW(err, SW_OK, "err");
     // ** Check whether erase was effective **
-    printf("\r\nA71_GetPublicKeyEccKeyPair (index=0x%02X)\r\n", kpIndex);
+    PRINTF("\r\nA71_GetPublicKeyEccKeyPair (index=0x%02X)\r\n", kpIndex);
     fetchedPubKeyLen = sizeof(fetchedPubKey);
     err = A71_GetPublicKeyEccKeyPair ((SST_Index_t)kpIndex, fetchedPubKey, &fetchedPubKeyLen);
     result &= AX_CHECK_SW(err, SW_CONDITIONS_NOT_SATISFIED, "Get Public Ecc Key was supposed to fail");
 
     // Fill in the original keypair again
     kpIndex = A71CH_KEY_PAIR_0;
-    printf( "\r\nA71_SetEccKeyPair(0x%02X)\r\n", kpIndex);
+    PRINTF( "\r\nA71_SetEccKeyPair(0x%02X)\r\n", kpIndex);
     err = A71_SetEccKeyPair((SST_Index_t)kpIndex, eccKcTls[kpIndex].pub, eccKcTls[kpIndex].pubLen,
         eccKcTls[kpIndex].priv, eccKcTls[kpIndex].privLen);
     result &= AX_CHECK_SW(err, SW_OK, "err");
@@ -223,7 +210,7 @@ U8 exSstKeyPair(U8 initMode, U16 appletVersion)
     // Now Lock the first half of the slots for update
     for (kpIndex=0; kpIndex<A71CH_KEY_PAIR_MAX>>1; kpIndex++)
     {
-        printf( "\r\nA71_FreezeEccKeyPair(0x%02x)\r\n", kpIndex);
+        PRINTF( "\r\nA71_FreezeEccKeyPair(0x%02x)\r\n", kpIndex);
         err = A71_FreezeEccKeyPair((SST_Index_t)kpIndex);
         result &= AX_CHECK_SW(err, SW_OK, "err");
     }
@@ -231,7 +218,7 @@ U8 exSstKeyPair(U8 initMode, U16 appletVersion)
     // Now fetch and compare the values with the reference values
     for (kpIndex=0; kpIndex<A71CH_KEY_PAIR_MAX; kpIndex++)
     {
-        printf( "\r\nA71_GetPublicKeyEccKeyPair (0x%02x)\r\n", kpIndex);
+        PRINTF( "\r\nA71_GetPublicKeyEccKeyPair (0x%02x)\r\n", kpIndex);
         fetchedPubKeyLen = sizeof(fetchedPubKey);
         err = A71_GetPublicKeyEccKeyPair ((SST_Index_t)kpIndex, fetchedPubKey, &fetchedPubKeyLen);
         result &= AX_CHECK_SW(err, SW_OK, "err");
@@ -242,7 +229,7 @@ U8 exSstKeyPair(U8 initMode, U16 appletVersion)
     // Check whether the locked half (i.e. first half) is truly 'frozen' ....
     for (kpIndex=0; kpIndex<A71CH_KEY_PAIR_MAX>>1; kpIndex++)
     {
-        printf( "\r\nA71_SetEccKeyPair(0x%02x)\r\n", kpIndex);
+        PRINTF( "\r\nA71_SetEccKeyPair(0x%02x)\r\n", kpIndex);
         err = A71_SetEccKeyPair((SST_Index_t)kpIndex, eccKcAlt.pub, eccKcAlt.pubLen, eccKcAlt.priv, eccKcAlt.privLen);
         result &= AX_CHECK_SW(err, SW_COMMAND_NOT_ALLOWED, "Expected to fail, frozen credential cannot be overwritten");
     }
@@ -250,7 +237,7 @@ U8 exSstKeyPair(U8 initMode, U16 appletVersion)
     // Overwrite the second half
     for (kpIndex=A71CH_KEY_PAIR_MAX>>1; kpIndex<A71CH_KEY_PAIR_MAX; kpIndex++)
     {
-        printf( "\r\nA71_SetEccKeyPair(0x%02x)\r\n", kpIndex);
+        PRINTF( "\r\nA71_SetEccKeyPair(0x%02x)\r\n", kpIndex);
         err = A71_SetEccKeyPair((SST_Index_t)kpIndex, eccKcAlt.pub, eccKcAlt.pubLen, eccKcAlt.priv, eccKcAlt.privLen);
         result &= AX_CHECK_SW(err, SW_OK, "err");
     }
@@ -261,28 +248,28 @@ U8 exSstKeyPair(U8 initMode, U16 appletVersion)
         signatureLen = sizeof(signature);
         if (appletVersion >= 0x0130)
         {
-            printf("\r\nA71_EccSign(0x%02X)\r\n", (SST_Index_t)kpIndex);
+            PRINTF("\r\nA71_EccSign(0x%02X)\r\n", (SST_Index_t)kpIndex);
             err = A71_EccSign((SST_Index_t)kpIndex, hashSha256, hashSha256Len, signature, &signatureLen);
         }
         else
         {
-            printf("\r\nA71_EccSign(0x%02X)\r\n", (SST_Index_t)kpIndex);
+            PRINTF("\r\nA71_EccSign(0x%02X)\r\n", (SST_Index_t)kpIndex);
             err = A71_EccSign((SST_Index_t)kpIndex, hashSha256, hashSha256Len, signature, &signatureLen);
         }
         result &= AX_CHECK_SW(err, SW_OK, "err");
 
         // Verify ... on opposite platform
-        printf("\r\n(Host)ECDSA_verify API with eccKeyAlt (verify signature created on A71CH).\r\n");
+        PRINTF("\r\n(Host)ECDSA_verify API with eccKeyAlt (verify signature created on A71CH).\r\n");
         memset(&mechInfo, 0, sizeof(mechInfo));
         mechInfo.mechanism = HLSE_ECDSA_VERIFY;
         retcode = HLCRYPT_Verify(&mechInfo,(U8 *)eccKeyAlt,0,hashSha256,hashSha256Len,signature,signatureLen);
         if (retcode == HLSE_SW_OK)
         {
-            printf("Verification OK for eccKeyAlt.\r\n");
+            PRINTF("Verification OK for eccKeyAlt.\r\n");
         }
         else
         {
-            printf("Return value: %d, Verification Not OK for eccKeyAlt. Test Failed!\r\n", retcode);
+            PRINTF("Return value: %d, Verification Not OK for eccKeyAlt. Test Failed!\r\n", retcode);
             result &= 0;
             break;
         }
@@ -291,7 +278,7 @@ U8 exSstKeyPair(U8 initMode, U16 appletVersion)
     // Put back the original (reference) values in the second half
     for (kpIndex=A71CH_KEY_PAIR_MAX>>1; kpIndex<A71CH_KEY_PAIR_MAX; kpIndex++)
     {
-        printf( "\r\nA71_SetEccKeyPair(0x%02X)\r\n", (SST_Index_t)kpIndex);
+        PRINTF( "\r\nA71_SetEccKeyPair(0x%02X)\r\n", (SST_Index_t)kpIndex);
         err = A71_SetEccKeyPair((SST_Index_t) kpIndex, eccKcTls[kpIndex].pub, eccKcTls[kpIndex].pubLen,
             eccKcTls[kpIndex].priv, eccKcTls[kpIndex].privLen);
         result &= AX_CHECK_SW(err, SW_OK, "err");
@@ -303,42 +290,42 @@ U8 exSstKeyPair(U8 initMode, U16 appletVersion)
         signatureLen = sizeof(signature);
         if (appletVersion >= 0x0130)
         {
-            printf("\r\nA71_EccSign(0x%02X)\r\n", (SST_Index_t)i);
+            PRINTF("\r\nA71_EccSign(0x%02X)\r\n", (SST_Index_t)i);
             err = A71_EccSign((SST_Index_t)i, hashSha256, hashSha256Len, signature, &signatureLen);
         }
         else
         {
-            printf("\r\nA71_EccSign(0x%02X)\r\n", (SST_Index_t)i);
+            PRINTF("\r\nA71_EccSign(0x%02X)\r\n", (SST_Index_t)i);
             err = A71_EccSign((SST_Index_t)i, hashSha256, hashSha256Len, signature, &signatureLen);
         }
         result &= AX_CHECK_SW(err, SW_OK, "err");
 
         // Verify ... on opposite platform
-        printf("\r\n(Host)ECDSA_verify API with eccKeyTls[i] (verify signature created on A71CH).\r\n");
+        PRINTF("\r\n(Host)ECDSA_verify API with eccKeyTls[i] (verify signature created on A71CH).\r\n");
         memset(&mechInfo, 0, sizeof(mechInfo));
         mechInfo.mechanism = HLSE_ECDSA_VERIFY;
         retcode = HLCRYPT_Verify(&mechInfo,(U8 *)eccKeyTls[i],0,hashSha256,hashSha256Len,signature,signatureLen);
         if (retcode == HLSE_SW_OK)
         {
-            printf("Verification OK for eccKeyTls[i].\r\n");
+            PRINTF("Verification OK for eccKeyTls[i].\r\n");
         }
         else
         {
-            printf("Return value: %d, Verification Not OK for eccKeyTls[i]. Test Failed!\r\n", retcode);
+            PRINTF("Return value: %d, Verification Not OK for eccKeyTls[i]. Test Failed!\r\n", retcode);
             result &= 0;
             break;
         }
     }
 
     // Now disable the plain insertion/reading out of Symmetric keys & Keypairs
-    printf("\r\nA71_InjectLock()\r\n");
+    PRINTF("\r\nA71_InjectLock()\r\n");
     err = A71_InjectLock();
     result &= AX_CHECK_SW(err, SW_OK, "err");
     assert(result);
 
     for (kpIndex=A71CH_KEY_PAIR_MAX>>1; kpIndex<A71CH_KEY_PAIR_MAX; kpIndex++)
     {
-        printf( "\r\nA71_SetEccKeyPair(0x%02X)\r\n", (SST_Index_t)kpIndex);
+        PRINTF( "\r\nA71_SetEccKeyPair(0x%02X)\r\n", (SST_Index_t)kpIndex);
         err = A71_SetEccKeyPair((SST_Index_t) kpIndex, eccKcTls[kpIndex].pub, eccKcTls[kpIndex].pubLen,
             eccKcTls[kpIndex].priv, eccKcTls[kpIndex].privLen);
         result &= AX_CHECK_SW(err, SW_COMMAND_NOT_ALLOWED, "err");
@@ -350,7 +337,7 @@ U8 exSstKeyPair(U8 initMode, U16 appletVersion)
         HOSTCRYPTO_FreeEccKey(&eccKeyTls[i]);
     }
 
-    printf( "\r\n-----------\r\nEnd exSstKeyPair(%s), result = %s\r\n------------\r\n", getInitModeAsString(initMode),
+    PRINTF( "\r\n-----------\r\nEnd exSstKeyPair(%s), result = %s\r\n------------\r\n", getInitModeAsString(initMode),
         ((result == 1)? "OK": "FAILED"));
 
     return result;

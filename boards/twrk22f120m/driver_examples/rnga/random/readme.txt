@@ -4,26 +4,6 @@ The RNGA is a digital integrated circuit capable of generating the 32-bit random
 Example project is a demonstration program that uses the KSDK software to generate random numbers
 and prints them to the terminal.
 
-
-Toolchain supported
-===================
-- IAR embedded Workbench 7.80.4
-- Keil MDK 5.21a
-- GCC ARM Embedded 2016-5.4-q3
-- Kinetis Development Studio IDE 3.2.0
-- MCUXpresso0.8
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- TWR-K22F120M board
-- Personal Computer
-
-Board settings
-==============
-This example project does not call for any special hardware configurations.
-Although not required, the recommendation is to leave the development board's jumper settings
-and configurations in default state when running this example.
 Prepare the Demo
 ================
 Connect a serial cable from the debug UART port of the board to the PC. Start Tera Term
@@ -60,6 +40,22 @@ Random[8] = 0x492414D1
 Random[9] = 0x84611992
 
  Press any key to continue...
-Customization options
+Hardware requirements
 =====================
+- Mini/micro USB cable
+- TWR-K22F120M board
+- Personal Computer
+
+Board settings
+==============
+This example project does not call for any special hardware configurations.
+Although not required, the recommendation is to leave the development board's jumper settings
+and configurations in default state when running this example.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

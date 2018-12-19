@@ -11,6 +11,9 @@
 #if !BL_DEVICE_IS_LPC_SERIES
 #include "fsl_flash.h"
 #include "memory/src/flash_memory.h"
+#if BL_FEATURE_SUPPORT_DFLASH
+#include "memory/src/flexNVM_memory.h"
+#endif // BL_FEATURE_SUPPORT_DFLASH
 #else
 #include "flashiap_wrapper/fsl_flashiap_wrapper.h"
 #include "memory/src/flashiap_memory.h"
@@ -103,6 +106,62 @@ const flashiap_driver_interface_t g_flashDriverInterface = {
 };
 #endif // !BL_DEVICE_IS_LPC_SERIES
 #endif // !BL_FEATURE_HAS_NO_INTERNAL_FLASH
+
+
+//! @brief Function table for flash driver.
+#if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
+#if (BL_FEATURE_SUPPORT_DFLASH)
+const dflash_driver_interface_t g_dflashDriverInterface = {
+    .version = {.name = kFLASH_DriverVersionName,
+                .major = kFLASH_DriverVersionMajor,
+                .minor = kFLASH_DriverVersionMinor,
+                .bugfix = kFLASH_DriverVersionBugfix },
+    .flash_init = FLEXNVM_Init,
+    .flash_erase_all = FLEXNVM_EraseAll,
+#if BL_FEATURE_ERASEALL_UNSECURE
+    .flash_erase_all_unsecure = FLEXNVM_EraseAllUnsecure,
+#else
+    .flash_erase_all_unsecure = NULL,
+#endif
+    .flash_erase = FLEXNVM_DflashErase,
+    .flash_program = FLEXNVM_DflashProgram,
+    .flash_get_security_state = FLEXNVM_GetSecurityState,
+    .flash_security_bypass = FLEXNVM_SecurityBypass,
+    .flash_verify_erase_all = FLEXNVM_VerifyEraseAll,
+    .flash_verify_erase = FLEXNVM_DflashVerifyErase,
+    .flash_verify_program = FLEXNVM_DflashVerifyProgram,
+    .flash_get_property = FLEXNVM_GetProperty,
+#if !BL_FEATURE_MIN_PROFILE
+    .flash_program_once = NULL,  //FTFx_CMD_ProgramOnce,
+    .flash_read_once = NULL, //FTFx_CMD_ReadOnce,
+#if defined(FSL_FEATURE_FLASH_HAS_READ_RESOURCE_CMD) && FSL_FEATURE_FLASH_HAS_READ_RESOURCE_CMD
+    .flash_read_resource = FLEXNVM_ReadResource,
+#else
+    .flash_read_resource = NULL,
+#endif
+#else
+    .flash_program_once = NULL,
+    .flash_read_once = NULL,
+    .flash_read_resource = NULL,
+#endif
+    .flash_is_execute_only = NULL,
+    .flash_erase_all_execute_only_segments = NULL,
+    .flash_verify_erase_all_execute_only_segments = NULL,
+#if BL_IS_FLASH_SECTION_PROGRAMMING_ENABLED
+#if FSL_FEATURE_FLASH_HAS_SET_FLEXRAM_FUNCTION_CMD
+    .flash_set_flexram_function = FLEXNVM_SetFlexramFunction,
+#else
+    .flash_set_flexram_function = NULL,
+#endif
+    .flash_program_section = FLEXNVM_DflashProgramSection,
+#else
+    .flash_set_flexram_function = NULL,
+    .flash_program_section = NULL,
+#endif
+};
+#endif
+#endif
+
 
 const aes_driver_interface_t g_aesInterface = {
 #if AES_SECURITY_SUPPORTED

@@ -7,14 +7,6 @@ The i2c_read_accel_value example shows how to use I2C driver to communicate with
 
 In this example, the values of three-axis accelerometer print to the serial terminal on PC through
 the virtual serial port on board.
-
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
-
 Hardware requirements
 =====================
 - Mini/Micro USB cable
@@ -58,6 +50,11 @@ status_reg = 0xff , x =    37 , y =   -92 , z =  2079
 End of I2C example .
 
 
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

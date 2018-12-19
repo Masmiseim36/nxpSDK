@@ -8,9 +8,6 @@
 **                          MK22FN512VMP12
 **
 **     Compiler:            IAR ANSI C/C++ Compiler for ARM
-**     Reference manual:    K22P121M120SF7RM, Rev. 1, March 24, 2014
-**     Version:             rev. 2.9, 2016-03-21
-**     Build:               b171205
 **
 **     Abstract:
 **         Linker file for the IAR ANSI C/C++ Compiler for ARM
@@ -42,12 +39,12 @@ define symbol __ICFEDIT_size_heap__   = (0*1024);
 if (isdefinedsymbol(__stack_size__)) {
   define symbol __size_cstack__        = __stack_size__;
 } else {
-  define symbol __size_cstack__        = 0x200;
+  define symbol __size_cstack__        = 0x0400;
 }
 if (isdefinedsymbol(__heap_size__)) {
   define symbol __size_heap__          = __heap_size__;
 } else {
-  define symbol __size_heap__          = 0x200;
+  define symbol __size_heap__          = 0x0;
 }
 
 define symbol __region_RAM2_start__        = 0x20000000;

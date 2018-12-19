@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- *  that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #ifndef _FSL_SAI_H_
@@ -48,7 +22,7 @@
 
 /*! @name Driver version */
 /*@{*/
-#define FSL_SAI_DRIVER_VERSION (MAKE_VERSION(2, 1, 4)) /*!< Version 2.1.4 */
+#define FSL_SAI_DRIVER_VERSION (MAKE_VERSION(2, 1, 7)) /*!< Version 2.1.7 */
 /*@}*/
 
 /*! @brief SAI return status*/
@@ -61,6 +35,19 @@ enum _sai_status_t
     kStatus_SAI_QueueFull = MAKE_STATUS(kStatusGroup_SAI, 4), /*!< SAI transfer queue is full. */
     kStatus_SAI_TxIdle = MAKE_STATUS(kStatusGroup_SAI, 5),    /*!< SAI Tx is idle */
     kStatus_SAI_RxIdle = MAKE_STATUS(kStatusGroup_SAI, 6)     /*!< SAI Rx is idle */
+};
+
+/*< sai channel mask value, actual channel numbers is depend soc specific */
+enum _sai_channel_mask
+{
+    kSAI_Channel0Mask = 1 << 0U, /*!< channel 0 mask value */
+    kSAI_Channel1Mask = 1 << 1U, /*!< channel 1 mask value */
+    kSAI_Channel2Mask = 1 << 2U, /*!< channel 2 mask value */
+    kSAI_Channel3Mask = 1 << 3U, /*!< channel 3 mask value */
+    kSAI_Channel4Mask = 1 << 4U, /*!< channel 4 mask value */
+    kSAI_Channel5Mask = 1 << 5U, /*!< channel 5 mask value */
+    kSAI_Channel6Mask = 1 << 6U, /*!< channel 6 mask value */
+    kSAI_Channel7Mask = 1 << 7U, /*!< channel 7 mask value */
 };
 
 /*! @brief Define the SAI bus type */
@@ -111,6 +98,7 @@ typedef enum _sai_sync_mode
     kSAI_ModeSyncWithOtherRx  /*!< Synchronous with another SAI receiver */
 } sai_sync_mode_t;
 
+#if !(defined(FSL_FEATURE_SAI_HAS_NO_MCR_MICS) && (FSL_FEATURE_SAI_HAS_NO_MCR_MICS))
 /*! @brief Mater clock source */
 typedef enum _sai_mclk_source
 {
@@ -119,14 +107,20 @@ typedef enum _sai_mclk_source
     kSAI_MclkSourceSelect2,       /*!< Master clock from source 2 */
     kSAI_MclkSourceSelect3        /*!< Master clock from source 3 */
 } sai_mclk_source_t;
+#endif
 
 /*! @brief Bit clock source */
 typedef enum _sai_bclk_source
 {
     kSAI_BclkSourceBusclk = 0x0U, /*!< Bit clock using bus clock */
-    kSAI_BclkSourceMclkDiv,       /*!< Bit clock using master clock divider */
-    kSAI_BclkSourceOtherSai0,     /*!< Bit clock from other SAI device  */
-    kSAI_BclkSourceOtherSai1      /*!< Bit clock from other SAI device */
+    /* General device bit source definition */
+    kSAI_BclkSourceMclkOption1 = 0x1U, /*!< Bit clock MCLK option 1 */
+    kSAI_BclkSourceMclkOption2 = 0x2U, /*!< Bit clock MCLK option2  */
+    kSAI_BclkSourceMclkOption3 = 0x3U, /*!< Bit clock MCLK option3 */
+    /* Kinetis device bit clock source definition */
+    kSAI_BclkSourceMclkDiv = 0x1U,   /*!< Bit clock using master clock divider */
+    kSAI_BclkSourceOtherSai0 = 0x2U, /*!< Bit clock from other SAI device  */
+    kSAI_BclkSourceOtherSai1 = 0x3U  /*!< Bit clock from other SAI device */
 } sai_bclk_source_t;
 
 /*! @brief The SAI interrupt enable flag */
@@ -190,9 +184,11 @@ typedef struct _sai_config
     sai_protocol_t protocol;  /*!< Audio bus protocol in SAI */
     sai_sync_mode_t syncMode; /*!< SAI sync mode, control Tx/Rx clock sync */
 #if defined(FSL_FEATURE_SAI_HAS_MCR) && (FSL_FEATURE_SAI_HAS_MCR)
-    bool mclkOutputEnable;          /*!< Master clock output enable, true means master clock divider enabled */
-#endif                              /* FSL_FEATURE_SAI_HAS_MCR */
-    sai_mclk_source_t mclkSource;   /*!< Master Clock source */
+    bool mclkOutputEnable; /*!< Master clock output enable, true means master clock divider enabled */
+#if !(defined(FSL_FEATURE_SAI_HAS_NO_MCR_MICS) && (FSL_FEATURE_SAI_HAS_NO_MCR_MICS))
+    sai_mclk_source_t mclkSource; /*!< Master Clock source */
+#endif                            /* FSL_FEATURE_SAI_HAS_MCR */
+#endif
     sai_bclk_source_t bclkSource;   /*!< Bit Clock source */
     sai_master_slave_t masterSlave; /*!< Master or slave */
 } sai_config_t;
@@ -212,7 +208,9 @@ typedef enum _sai_sample_rate
     kSAI_SampleRate32KHz = 32000U,   /*!< Sample rate 32000 Hz */
     kSAI_SampleRate44100Hz = 44100U, /*!< Sample rate 44100 Hz */
     kSAI_SampleRate48KHz = 48000U,   /*!< Sample rate 48000 Hz */
-    kSAI_SampleRate96KHz = 96000U    /*!< Sample rate 96000 Hz */
+    kSAI_SampleRate96KHz = 96000U,   /*!< Sample rate 96000 Hz */
+    kSAI_SampleRate192KHz = 192000U, /*!< Sample rate 192000 Hz */
+    kSAI_SampleRate384KHz = 384000U, /*!< Sample rate 384000 Hz */
 } sai_sample_rate_t;
 
 /*! @brief Audio word width */
@@ -232,9 +230,21 @@ typedef struct _sai_transfer_format
     sai_mono_stereo_t stereo; /*!< Mono or stereo */
     uint32_t masterClockHz;   /*!< Master clock frequency in Hz */
 #if defined(FSL_FEATURE_SAI_FIFO_COUNT) && (FSL_FEATURE_SAI_FIFO_COUNT > 1)
-    uint8_t watermark;       /*!< Watermark value */
-#endif                       /* FSL_FEATURE_SAI_FIFO_COUNT */
-    uint8_t channel;         /*!< Data channel used in transfer.*/
+    uint8_t watermark; /*!< Watermark value */
+#endif                 /* FSL_FEATURE_SAI_FIFO_COUNT */
+
+    /* for the multi channel usage, user can provide channelMask Oonly, then sai driver will handle
+    * other parameter carefully, such as
+    * channelMask = kSAI_Channel0Mask | kSAI_Channel1Mask | kSAI_Channel4Mask
+    * then in SAI_RxSetFormat/SAI_TxSetFormat function, channel/endChannel/channelNums will be calculated.
+    * for the single channel usage, user can provide channel or channel mask only, such as,
+    * channel = 0 or channelMask = kSAI_Channel0Mask.
+    */
+    uint8_t channel;     /*!< Transfer start channel */
+    uint8_t channelMask; /*!< enabled channel mask value, reference _sai_channel_mask */
+    uint8_t endChannel;  /*!< end channel number */
+    uint8_t channelNums; /*!< Total enabled channel numbers */
+
     sai_protocol_t protocol; /*!< Which audio protocol used */
     bool isFrameSyncCompact; /*!< True means Frame sync length is configurable according to bitWidth, false means frame
                                 sync length is 64 times of bit clock. */
@@ -255,11 +265,25 @@ typedef void (*sai_transfer_callback_t)(I2S_Type *base, sai_handle_t *handle, st
 /*! @brief SAI handle structure */
 struct _sai_handle
 {
-    uint32_t state;                               /*!< Transfer status */
-    sai_transfer_callback_t callback;             /*!< Callback function called at transfer event*/
-    void *userData;                               /*!< Callback parameter passed to callback function*/
-    uint8_t bitWidth;                             /*!< Bit width for transfer, 8/16/24/32 bits */
-    uint8_t channel;                              /*!< Transfer channel */
+    I2S_Type *base; /*!< base address */
+
+    uint32_t state;                   /*!< Transfer status */
+    sai_transfer_callback_t callback; /*!< Callback function called at transfer event*/
+    void *userData;                   /*!< Callback parameter passed to callback function*/
+    uint8_t bitWidth;                 /*!< Bit width for transfer, 8/16/24/32 bits */
+
+    /* for the multi channel usage, user can provide channelMask Oonly, then sai driver will handle
+    * other parameter carefully, such as
+    * channelMask = kSAI_Channel0Mask | kSAI_Channel1Mask | kSAI_Channel4Mask
+    * then in SAI_RxSetFormat/SAI_TxSetFormat function, channel/endChannel/channelNums will be calculated.
+    * for the single channel usage, user can provide channel or channel mask only, such as,
+    * channel = 0 or channelMask = kSAI_Channel0Mask.
+    */
+    uint8_t channel;     /*!< Transfer start channel */
+    uint8_t channelMask; /*!< enabled channel mask value, refernece _sai_channel_mask */
+    uint8_t endChannel;  /*!< end channel number */
+    uint8_t channelNums; /*!< Total enabled channel numbers */
+
     sai_transfer_t saiQueue[SAI_XFER_QUEUE_SIZE]; /*!< Transfer queue storing queued transfer */
     size_t transferSize[SAI_XFER_QUEUE_SIZE];     /*!< Data bytes need to transfer */
     volatile uint8_t queueUser;                   /*!< Index for user to queue transfer */
@@ -807,6 +831,21 @@ void SAI_RxSetFormat(I2S_Type *base,
 void SAI_WriteBlocking(I2S_Type *base, uint32_t channel, uint32_t bitWidth, uint8_t *buffer, uint32_t size);
 
 /*!
+ * @brief Sends data to multi channel using a blocking method.
+ *
+ * @note This function blocks by polling until data is ready to be sent.
+ *
+ * @param base SAI base pointer.
+ * @param channel Data channel used.
+ * @param channelMask channel mask.
+ * @param bitWidth How many bits in an audio word; usually 8/16/24/32 bits.
+ * @param buffer Pointer to the data to be written.
+ * @param size Bytes to be written.
+ */
+void SAI_WriteMultiChannelBlocking(
+    I2S_Type *base, uint32_t channel, uint32_t channelMask, uint32_t bitWidth, uint8_t *buffer, uint32_t size);
+
+/*!
  * @brief Writes data into SAI FIFO.
  *
  * @param base SAI base pointer.
@@ -830,6 +869,21 @@ static inline void SAI_WriteData(I2S_Type *base, uint32_t channel, uint32_t data
  * @param size Bytes to be read.
  */
 void SAI_ReadBlocking(I2S_Type *base, uint32_t channel, uint32_t bitWidth, uint8_t *buffer, uint32_t size);
+
+/*!
+ * @brief Receives multi channel data using a blocking method.
+ *
+ * @note This function blocks by polling until data is ready to be sent.
+ *
+ * @param base SAI base pointer.
+ * @param channel Data channel used.
+ * @param channelMask channel mask.
+ * @param bitWidth How many bits in an audio word; usually 8/16/24/32 bits.
+ * @param buffer Pointer to the data to be read.
+ * @param size Bytes to be read.
+ */
+void SAI_ReadMultiChannelBlocking(
+    I2S_Type *base, uint32_t channel, uint32_t channelMask, uint32_t bitWidth, uint8_t *buffer, uint32_t size);
 
 /*!
  * @brief Reads data from the SAI FIFO.

@@ -3,14 +3,6 @@ Overview
 The flexio_spi_slave_interrupt_dspi_master example shows how to use flexio spi slave driver in interrupt way:
 
 In this example, a flexio simulated slave connect to a dspi master.
-
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
-
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -65,6 +57,11 @@ This is FLEXIO SPI slave call back.
 
 DSPI master <-> FLEXIO SPI slave transfer all data matched!
 ~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

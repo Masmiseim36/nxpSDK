@@ -3,28 +3,15 @@
  * @author NXP Semiconductors
  * @version 1.0
  * @par License
- * Copyright(C) NXP Semiconductors, 2017
- * All rights reserved.
+ * Copyright 2017 NXP
  *
- * Software that is described herein is for illustrative purposes only
- * which provides customers with programming information regarding the
- * A7-series security ICs.  This software is supplied "AS IS" without any
- * warranties of any kind, and NXP Semiconductors and its licensor disclaim any and
- * all warranties, express or implied, including all implied warranties of
- * merchantability, fitness for a particular purpose and non-infringement of
- * intellectual property rights.  NXP Semiconductors assumes no responsibility
- * or liability for the use of the software, conveys no license or rights under any
- * patent, copyright, mask work right, or any other intellectual property rights in
- * or to any products. NXP Semiconductors reserves the right to make changes
- * in the software without notification. NXP Semiconductors also makes no
- * representation or warranty that such application will be suitable for the
- * specified use without further testing or modification.
- *
- * Permission to use, copy and modify this software is hereby granted,
- * under NXP Semiconductors' and its licensor's relevant copyrights in
- * the software, without fee, provided that it is used in conjunction with
- * NXP Semiconductors products. This copyright, permission, and disclaimer notice
- * must appear in all copies of this code.
+ * This software is owned or controlled by NXP and may only be used
+ * strictly in accordance with the applicable license terms.  By expressly
+ * accepting such terms or by downloading, installing, activating and/or
+ * otherwise using the software, you are agreeing that you have read, and
+ * that you agree to comply with and are bound by, such license terms.  If
+ * you do not agree to be bound by the applicable license terms, then you
+ * may not retain, install, activate or otherwise use the software.
  *
  * @par Description
  * Example invocation of configure key specific functionality of the A71CH
@@ -74,7 +61,7 @@ U8 exHlseConfig()
 {
     U8 result = 1;
     int i = 0;
-    printf( "\r\n-----------\r\nStart exConfig()\r\n------------\r\n");
+    PRINTF( "\r\n-----------\r\nStart exConfig()\r\n------------\r\n");
 
     DEV_ClearChannelState();
 
@@ -114,7 +101,7 @@ U8 exHlseConfig()
 #endif
 
     // overall result
-    printf( "\r\n-----------\r\nEnd exConfig(), result = %s\r\n------------\r\n", ((result == 1)? "OK": "FAILED"));
+    PRINTF( "\r\n-----------\r\nEnd exConfig(), result = %s\r\n------------\r\n", ((result == 1)? "OK": "FAILED"));
 
     return result;
 }
@@ -144,13 +131,13 @@ static U8 exSetConfigKey(U8 initMode)
     HLSE_OBJECT_HANDLE moduleHandle;
     U16 moduleHandleNum = 1;
 
-    printf("\r\n-----------\r\nStart exSetConfigKey(%s)\r\n------------\r\n", getInitModeAsString(initMode));
+    PRINTF("\r\n-----------\r\nStart exSetConfigKey(%s)\r\n------------\r\n", getInitModeAsString(initMode));
     // Initialize the A71CH (Debug mode restrictions may apply)
     result &= hlse_a71chInitModule(initMode);
 
     // Store all configure keys (value is stored in variables with module scope)
     indexCfgKey = A71CH_CFG_KEY_IDX_MODULE_LOCK;
-    printf("\r\nA71_SetConfigKey(0x%02x)\r\n", indexCfgKey);
+    PRINTF("\r\nA71_SetConfigKey(0x%02x)\r\n", indexCfgKey);
 #if 0
     err = A71_SetConfigKey((SST_Index_t)indexCfgKey, configKeyModuleLock, sizeof(configKeyModuleLock));
 #else
@@ -179,7 +166,7 @@ static U8 exSetConfigKey(U8 initMode)
     axPrintByteArray("configKeyModuleLock", configKeyModuleLock, sizeof(configKeyModuleLock), AX_COLON_32);
 
     indexCfgKey = A71CH_CFG_KEY_IDX_PRIVATE_KEYS;
-    printf("\r\nA71_SetConfigKey(0x%02x)\r\n", indexCfgKey);
+    PRINTF("\r\nA71_SetConfigKey(0x%02x)\r\n", indexCfgKey);
 #if 0
     err = A71_SetConfigKey((SST_Index_t)indexCfgKey, configKeyPrivateKey, sizeof(configKeyPrivateKey));
 #else
@@ -207,7 +194,7 @@ static U8 exSetConfigKey(U8 initMode)
     axPrintByteArray("configKeyPrivateKey", configKeyPrivateKey, sizeof(configKeyPrivateKey), AX_COLON_32);
 
     indexCfgKey = A71CH_CFG_KEY_IDX_PUBLIC_KEYS;
-    printf("\r\nA71_SetConfigKey(0x%02x)\r\n", indexCfgKey);
+    PRINTF("\r\nA71_SetConfigKey(0x%02x)\r\n", indexCfgKey);
 #if 0
     err = A71_SetConfigKey((SST_Index_t)indexCfgKey, configKeyPublicKey, sizeof(configKeyPublicKey));
 #else
@@ -242,7 +229,7 @@ static U8 exSetConfigKey(U8 initMode)
 
 #ifdef EX_CONFIG_DEMO_LOCK_UNLOCK
     // Lock device for transport
-    printf("\r\nA71_LockModule()\r\n");
+    PRINTF("\r\nA71_LockModule()\r\n");
 #if 0
     err = A71_LockModule();
 #else
@@ -259,7 +246,7 @@ static U8 exSetConfigKey(U8 initMode)
 #endif
     result &= AX_CHECK_SW(err, SW_OK, "err");
 
-    printf("\r\nA71_GetUniqueID().\r\n");
+    PRINTF("\r\nA71_GetUniqueID().\r\n");
 #if 0
     err = A71_GetUniqueID(uid, &uidLen);
 #else
@@ -275,7 +262,7 @@ static U8 exSetConfigKey(U8 initMode)
     result &= AX_CHECK_SW(err, SW_OK, "err");
     axPrintByteArray("uid", uid, uidLen, AX_COLON_32);
 
-    printf("\r\nA71_GetUnlockChallenge().\r\n");
+    PRINTF("\r\nA71_GetUnlockChallenge().\r\n");
 #if 0
     err = A71_GetUnlockChallenge(challenge, &challengeLen);
 #else
@@ -295,11 +282,11 @@ static U8 exSetConfigKey(U8 initMode)
     hcRet = HOST_AES_ECB_DECRYPT(unlockCode, challenge, configKeyModuleLock, sizeof(configKeyModuleLock));
     if (hcRet != HOST_CRYPTO_OK)
     {
-        printf("HOST_AES_ECB_DECRYPT: failed.\r\n");
+        PRINTF("HOST_AES_ECB_DECRYPT: failed.\r\n");
         result = 0;
     }
 
-    printf("\r\nA71_UnlockModule()\r\n");
+    PRINTF("\r\nA71_UnlockModule()\r\n");
 #if 0
     err = A71_UnlockModule(unlockCode, 16);
 #else
@@ -321,7 +308,7 @@ static U8 exSetConfigKey(U8 initMode)
     result &= AX_CHECK_SW(err, SW_OK, "err");
 #endif
 
-    printf( "\r\n-----------\r\nEnd exSetConfigKey(%s), result = %s\r\n------------\r\n", getInitModeAsString(initMode), ((result == 1)? "OK": "FAILED"));
+    PRINTF( "\r\n-----------\r\nEnd exSetConfigKey(%s), result = %s\r\n------------\r\n", getInitModeAsString(initMode), ((result == 1)? "OK": "FAILED"));
 
     return result;
 }
@@ -353,7 +340,7 @@ static U8 exSstPubEnc(U8 initMode)
     // to hold handles for created keys
     HLSE_OBJECT_HANDLE handles[A71CH_PUBLIC_KEY_MAX];
 
-    printf("\r\n-----------\r\nStart exSstPubEnc(%s)\r\n------------\r\n", getInitModeAsString(initMode));
+    PRINTF("\r\n-----------\r\nStart exSstPubEnc(%s)\r\n------------\r\n", getInitModeAsString(initMode));
 
     // Initialize the A71CH (Debug mode restrictions may apply)
     result &= hlse_a71chInitModule(initMode);
@@ -376,13 +363,13 @@ static U8 exSstPubEnc(U8 initMode)
         eccKcCA[i].curve = eccCurve;
 
         // Wrap public key (strip first character before wrapping) on host
-        printf("\r\nHOSTCRYPTO_AesWrapKeyRFC3394(0x%02X)\r\n", (SST_Index_t)i);
+        PRINTF("\r\nHOSTCRYPTO_AesWrapKeyRFC3394(0x%02X)\r\n", (SST_Index_t)i);
         err = HOSTCRYPTO_AesWrapKeyRFC3394(configKeyPublicKey, sizeof(configKeyPublicKey),
             wrappedKey, &wrappedKeyLen, &(eccKcCA[i].pub[1]), eccKcCA[i].pubLen - 1);
         result &= AX_CHECK_SW(err, SW_OK, "err");
         axPrintByteArray("wrappedKey", wrappedKey, wrappedKeyLen, AX_COLON_32);
 
-        printf( "\r\nA71_SetEccPublicKey(0x%02X)\r\n", (SST_Index_t)i);
+        PRINTF( "\r\nA71_SetEccPublicKey(0x%02X)\r\n", (SST_Index_t)i);
 #if 0
         err = A71_SetEccPublicKey ((SST_Index_t) i, wrappedKey, wrappedKeyLen);
 #else
@@ -413,7 +400,7 @@ static U8 exSstPubEnc(U8 initMode)
     for (i=0; i<A71CH_PUBLIC_KEY_MAX; i++)
     {
         HLSE_ATTRIBUTE attr;
-        printf( "\r\nA71_GetEccPublicKey(0x%02X)\r\n", (SST_Index_t)i);
+        PRINTF( "\r\nA71_GetEccPublicKey(0x%02X)\r\n", (SST_Index_t)i);
         fetchedPubKeyLen = sizeof(fetchedPubKey);
 #if 0
         err = A71_GetEccPublicKey ((SST_Index_t) i, fetchedPubKey, &fetchedPubKeyLen);
@@ -436,7 +423,7 @@ static U8 exSstPubEnc(U8 initMode)
         HOSTCRYPTO_FreeEccKey(&eccKeyCA[i]);
     }
 
-    printf( "\r\n-----------\r\nEnd exSstPubEnc(%s), result = %s\r\n------------\r\n", getInitModeAsString(initMode),
+    PRINTF( "\r\n-----------\r\nEnd exSstPubEnc(%s), result = %s\r\n------------\r\n", getInitModeAsString(initMode),
         ((result == 1)? "OK": "FAILED"));
 
     return result;
@@ -475,12 +462,12 @@ static U8 exSstPubEraseAfterInjectLock()
         return 0;
     }
 
-    printf("\r\n-----------\r\nStart exSstPubEraseAfterInjectLock()\r\n------------\r\n");
+    PRINTF("\r\n-----------\r\nStart exSstPubEraseAfterInjectLock()\r\n------------\r\n");
 
     // Check whether ErasePublicKey - without challenge/response - fails
     for (i=0; i<A71CH_PUBLIC_KEY_MAX; i++)
     {
-        printf( "\r\nA71_EraseEccPublicKey(0x%02X)\r\n", (SST_Index_t)i);
+        PRINTF( "\r\nA71_EraseEccPublicKey(0x%02X)\r\n", (SST_Index_t)i);
 #if 0
         err = A71_EraseEccPublicKey((SST_Index_t) i);
         result &= AX_CHECK_SW(err, SW_WRONG_DATA, "err");
@@ -495,7 +482,7 @@ static U8 exSstPubEraseAfterInjectLock()
     // Confirm reading out public key is still possible
     for (i=0; i<A71CH_PUBLIC_KEY_MAX; i++)
     {
-        printf("\r\nA71_GetEccPublicKey (index=0x%02X)\r\n", i);
+        PRINTF("\r\nA71_GetEccPublicKey (index=0x%02X)\r\n", i);
         fetchedPubKeyLen = sizeof(fetchedPubKey);
 #if 0
         err = A71_GetEccPublicKey ((SST_Index_t)i, fetchedPubKey, &fetchedPubKeyLen);
@@ -511,7 +498,7 @@ static U8 exSstPubEraseAfterInjectLock()
     // Do a ErasePublicKey with challenge response
     for (i=0; i<A71CH_PUBLIC_KEY_MAX; i++)
     {
-        printf( "\r\nA71_EraseEccPublicKeyWithChallenge(0x%02X)\r\n", (SST_Index_t)i);
+        PRINTF( "\r\nA71_EraseEccPublicKeyWithChallenge(0x%02X)\r\n", (SST_Index_t)i);
         err = A71_EraseEccPublicKeyWithChallenge((SST_Index_t) i, configKeyPublicKey, sizeof(configKeyPublicKey));
         result &= AX_CHECK_SW(err, SW_OK, "err");
     }
@@ -519,7 +506,7 @@ static U8 exSstPubEraseAfterInjectLock()
     // Check whether reading out (erased) public key now fails.
     for (i=0; i<A71CH_PUBLIC_KEY_MAX; i++)
     {
-        printf("\r\nA71_GetEccPublicKey (index=0x%02X)\r\n", i);
+        PRINTF("\r\nA71_GetEccPublicKey (index=0x%02X)\r\n", i);
         fetchedPubKeyLen = sizeof(fetchedPubKey);
 #if 0
         err = A71_GetEccPublicKey ((SST_Index_t)i, fetchedPubKey, &fetchedPubKeyLen);
@@ -532,7 +519,7 @@ static U8 exSstPubEraseAfterInjectLock()
 #endif
     }
 
-    printf( "\r\n-----------\r\nEnd exSstPubEraseAfterInjectLock(), result = %s\r\n------------\r\n",
+    PRINTF( "\r\n-----------\r\nEnd exSstPubEraseAfterInjectLock(), result = %s\r\n------------\r\n",
         ((result == 1)? "OK": "FAILED"));
 
     return result;
@@ -587,7 +574,7 @@ static U8 exSstKeyPairEnc(U8 initMode)
     U16 moduleHandleNum = 1;
     HLSE_MECHANISM_INFO mechInfo;
 
-    printf("\r\n-----------\r\nStart exSstKeyPairEnc(%s)\r\n------------\r\n", getInitModeAsString(initMode));
+    PRINTF("\r\n-----------\r\nStart exSstKeyPairEnc(%s)\r\n------------\r\n", getInitModeAsString(initMode));
 
     // Initialize the A71CH (Debug mode restrictions may apply)
     result &= hlse_a71chInitModule(initMode);
@@ -609,13 +596,13 @@ static U8 exSstKeyPairEnc(U8 initMode)
 
         // Wrap private key on host
         wrappedPrivKeyLen = sizeof(wrappedPrivKey);
-        printf("\r\nHOSTCRYPTO_AesWrapKeyRFC3394(0x%02X)\r\n", (SST_Index_t)i);
+        PRINTF("\r\nHOSTCRYPTO_AesWrapKeyRFC3394(0x%02X)\r\n", (SST_Index_t)i);
         err = HOSTCRYPTO_AesWrapKeyRFC3394(configKeyPrivateKey, sizeof(configKeyPrivateKey),
             wrappedPrivKey, &wrappedPrivKeyLen, eccKcTls[i].priv, eccKcTls[i].privLen);
         result &= AX_CHECK_SW(err, SW_OK, "err");
         axPrintByteArray("wrappedPrivKey", wrappedPrivKey, wrappedPrivKeyLen, AX_COLON_32);
 
-        printf( "\r\nA71_SetEccKeyPair(0x%02X)\r\n", (SST_Index_t)i);
+        PRINTF( "\r\nA71_SetEccKeyPair(0x%02X)\r\n", (SST_Index_t)i);
 #if 0
         err = A71_SetEccKeyPair((SST_Index_t) i, eccKcTls[i].pub, eccKcTls[i].pubLen,
             wrappedPrivKey, wrappedPrivKeyLen);
@@ -651,7 +638,7 @@ static U8 exSstKeyPairEnc(U8 initMode)
     for (i=0; i<A71CH_KEY_PAIR_MAX; i++)
     {
         HLSE_ATTRIBUTE attr;
-        printf( "\r\nA71_GetPublicKeyEccKeyPair (0x%02X)\r\n", (SST_Index_t)i);
+        PRINTF( "\r\nA71_GetPublicKeyEccKeyPair (0x%02X)\r\n", (SST_Index_t)i);
         fetchedPubKeyLen = sizeof(fetchedPubKey);
 #if 0
         err = A71_GetPublicKeyEccKeyPair  ((SST_Index_t) i, fetchedPubKey, &fetchedPubKeyLen);
@@ -690,7 +677,7 @@ static U8 exSstKeyPairEnc(U8 initMode)
     for (i=0; i<A71CH_KEY_PAIR_MAX; i++)
     {
         signatureLen = sizeof(signature);
-        printf("\r\nA71_EccSign(0x%02X)\r\n", (SST_Index_t)i);
+        PRINTF("\r\nA71_EccSign(0x%02X)\r\n", (SST_Index_t)i);
 #if 0
         err = A71_EccSign((SST_Index_t)i, hashSha256, hashSha256Len, signature, &signatureLen);
 #else
@@ -699,18 +686,18 @@ static U8 exSstKeyPairEnc(U8 initMode)
         result &= AX_CHECK_SW(err, SW_OK, "err");
 
         // Verify ... on opposite platform
-        printf("\r\n(Host)ECDSA_verify API with eccKeyTls[i] (verify signature created on A71CH).\r\n");
+        PRINTF("\r\n(Host)ECDSA_verify API with eccKeyTls[i] (verify signature created on A71CH).\r\n");
         memset(&mechInfo, 0, sizeof(mechInfo));
         mechInfo.mechanism = HLSE_ECDSA_VERIFY;
         retcode = HLCRYPT_Verify(&mechInfo,(U8 *)eccKeyTls[i],0,hashSha256,hashSha256Len,signature,signatureLen);
 
         if (retcode == HLSE_SW_OK)
         {
-            printf("Verification OK for eccKeyTls[i].\r\n");
+            PRINTF("Verification OK for eccKeyTls[i].\r\n");
         }
         else
         {
-            printf("Return value: %d, Verification Not OK for eccKeyTls[i]. Test Failed!\r\n", retcode);
+            PRINTF("Return value: %d, Verification Not OK for eccKeyTls[i]. Test Failed!\r\n", retcode);
             result &= 0;
             break;
         }
@@ -719,7 +706,7 @@ static U8 exSstKeyPairEnc(U8 initMode)
     // Erase the keypair at index 0 & verify the value is no longer readable
     // ** Erase **
     kpIndex = A71CH_KEY_PAIR_0;
-    printf("\r\nA71_EraseEccKeyPair(index=0x%02X)\r\n", kpIndex);
+    PRINTF("\r\nA71_EraseEccKeyPair(index=0x%02X)\r\n", kpIndex);
 #if 0
     err = A71_EraseEccKeyPair(kpIndex);
 #else
@@ -727,7 +714,7 @@ static U8 exSstKeyPairEnc(U8 initMode)
 #endif
     result &= AX_CHECK_SW(err, SW_OK, "err");
     // ** Check whether erase was effective **
-    printf("\r\nA71_GetPublicKeyEccKeyPair (index=0x%02X)\r\n", kpIndex);
+    PRINTF("\r\nA71_GetPublicKeyEccKeyPair (index=0x%02X)\r\n", kpIndex);
     fetchedPubKeyLen = sizeof(fetchedPubKey);
 #if 0
     err = A71_GetPublicKeyEccKeyPair ((SST_Index_t)kpIndex, fetchedPubKey, &fetchedPubKeyLen);
@@ -744,7 +731,7 @@ static U8 exSstKeyPairEnc(U8 initMode)
     result &= AX_CHECK_SW(err, SW_CONDITIONS_NOT_SATISFIED, "Get Public Ecc Key was supposed to fail");
 
     // Now disable the plain insertion/reading out of Symmetric keys & Keypairs
-    printf("\r\nA71_InjectLock()\r\n");
+    PRINTF("\r\nA71_InjectLock()\r\n");
 #if 0
     err = A71_InjectLock();
 #else
@@ -767,7 +754,7 @@ static U8 exSstKeyPairEnc(U8 initMode)
     assert(result);
 
     // Check whether the plain inject has been disabled (check only first key pair)
-    printf( "\r\nA71_SetEccKeyPair(0x%02x)\r\n", kpIndex);
+    PRINTF( "\r\nA71_SetEccKeyPair(0x%02x)\r\n", kpIndex);
 #if 0
     err = A71_SetEccKeyPair((SST_Index_t)kpIndex, eccKcAlt.pub, eccKcAlt.pubLen, eccKcAlt.priv, eccKcAlt.privLen);
 #else
@@ -800,13 +787,13 @@ static U8 exSstKeyPairEnc(U8 initMode)
 
     // Put back the original (reference) value in the first slot, now first wrap private key on host
     wrappedPrivKeyLen = sizeof(wrappedPrivKey);
-    printf("\r\nHOSTCRYPTO_AesWrapKeyRFC3394(0x%02X)\r\n", (SST_Index_t)kpIndex);
+    PRINTF("\r\nHOSTCRYPTO_AesWrapKeyRFC3394(0x%02X)\r\n", (SST_Index_t)kpIndex);
     err = HOSTCRYPTO_AesWrapKeyRFC3394(configKeyPrivateKey, sizeof(configKeyPrivateKey),
         wrappedPrivKey, &wrappedPrivKeyLen, eccKcTls[kpIndex].priv, eccKcTls[kpIndex].privLen);
     result &= AX_CHECK_SW(err, SW_OK, "err");
     axPrintByteArray("wrappedPrivKey", wrappedPrivKey, wrappedPrivKeyLen, AX_COLON_32);
 
-    printf( "\r\nA71_SetEccKeyPair(0x%02X)\r\n", (SST_Index_t)kpIndex);
+    PRINTF( "\r\nA71_SetEccKeyPair(0x%02X)\r\n", (SST_Index_t)kpIndex);
 #if 0
     err = A71_SetEccKeyPair((SST_Index_t) kpIndex, eccKcTls[kpIndex].pub, eccKcTls[kpIndex].pubLen,
         wrappedPrivKey, wrappedPrivKeyLen);
@@ -842,7 +829,7 @@ static U8 exSstKeyPairEnc(U8 initMode)
     for (i=0; i<A71CH_KEY_PAIR_MAX; i++)
     {
         signatureLen = sizeof(signature);
-        printf("\r\nA71_EccSign(0x%02X)\r\n", (SST_Index_t)i);
+        PRINTF("\r\nA71_EccSign(0x%02X)\r\n", (SST_Index_t)i);
 #if 0
         err = A71_EccSign((SST_Index_t)i, hashSha256, hashSha256Len, signature, &signatureLen);
 #else
@@ -851,18 +838,18 @@ static U8 exSstKeyPairEnc(U8 initMode)
         result &= AX_CHECK_SW(err, SW_OK, "err");
 
         // Verify ... on opposite platform
-        printf("\r\n(Host)ECDSA_verify API with eccKeyTls[i] (verify signature created on A71CH).\r\n");
+        PRINTF("\r\n(Host)ECDSA_verify API with eccKeyTls[i] (verify signature created on A71CH).\r\n");
         memset(&mechInfo, 0, sizeof(mechInfo));
         mechInfo.mechanism = HLSE_ECDSA_VERIFY;
         retcode = HLCRYPT_Verify(&mechInfo,(U8 *)eccKeyTls[i],0,hashSha256,hashSha256Len,signature,signatureLen);
 
         if (retcode == HLSE_SW_OK)
         {
-            printf("Verification OK for eccKeyTls[i].\r\n");
+            PRINTF("Verification OK for eccKeyTls[i].\r\n");
         }
         else
         {
-            printf("Return value: %d, Verification Not OK for eccKeyTls[i]. Test Failed!\r\n", retcode);
+            PRINTF("Return value: %d, Verification Not OK for eccKeyTls[i]. Test Failed!\r\n", retcode);
             result &= 0;
             break;
         }
@@ -871,7 +858,7 @@ static U8 exSstKeyPairEnc(U8 initMode)
     // Check whether the plain inject has been disabled (for all key pair)
     for (kpIndex=0; kpIndex<A71CH_KEY_PAIR_MAX; kpIndex++)
     {
-        printf( "\r\nA71_SetEccKeyPair(0x%02X)\r\n", (SST_Index_t)kpIndex);
+        PRINTF( "\r\nA71_SetEccKeyPair(0x%02X)\r\n", (SST_Index_t)kpIndex);
 #if 0
         err = A71_SetEccKeyPair((SST_Index_t) kpIndex, eccKcTls[kpIndex].pub, eccKcTls[kpIndex].pubLen,
             eccKcTls[kpIndex].priv, eccKcTls[kpIndex].privLen);
@@ -908,7 +895,7 @@ static U8 exSstKeyPairEnc(U8 initMode)
     // Check whether GenerateKeyPair - without challenge/response - fails
     for (kpIndex=0; kpIndex<A71CH_KEY_PAIR_MAX; kpIndex++)
     {
-        printf( "\r\nA71_GenerateEccKeyPair(0x%02X)\r\n", (SST_Index_t)kpIndex);
+        PRINTF( "\r\nA71_GenerateEccKeyPair(0x%02X)\r\n", (SST_Index_t)kpIndex);
 #if 0
         err = A71_GenerateEccKeyPair((SST_Index_t) kpIndex);
 #else
@@ -920,7 +907,7 @@ static U8 exSstKeyPairEnc(U8 initMode)
     // Do a GenerateKeyPair with challenge response
     for (kpIndex=0; kpIndex<A71CH_KEY_PAIR_MAX; kpIndex++)
     {
-        printf( "\r\nA71_GenerateEccKeyPairWithChallenge(0x%02X)\r\n", (SST_Index_t)kpIndex);
+        PRINTF( "\r\nA71_GenerateEccKeyPairWithChallenge(0x%02X)\r\n", (SST_Index_t)kpIndex);
         err = A71_GenerateEccKeyPairWithChallenge((SST_Index_t) kpIndex, configKeyPrivateKey, sizeof(configKeyPrivateKey));
         result &= AX_CHECK_SW(err, SW_OK, "err");
     }
@@ -930,7 +917,7 @@ static U8 exSstKeyPairEnc(U8 initMode)
     // Check whether EraseKeyPair - without challenge/response - fails
     for (kpIndex=0; kpIndex<A71CH_KEY_PAIR_MAX; kpIndex++)
     {
-        printf( "\r\nA71_EraseEccKeyPair(0x%02X)\r\n", (SST_Index_t)kpIndex);
+        PRINTF( "\r\nA71_EraseEccKeyPair(0x%02X)\r\n", (SST_Index_t)kpIndex);
 #if 0
         err = A71_EraseEccKeyPair((SST_Index_t) kpIndex);
 #else
@@ -942,7 +929,7 @@ static U8 exSstKeyPairEnc(U8 initMode)
     // Do a EraseKeyPair with challenge response
     for (kpIndex=0; kpIndex<A71CH_KEY_PAIR_MAX; kpIndex++)
     {
-        printf( "\r\nA71_EraseEccKeyPairWithChallenge(0x%02X)\r\n", (SST_Index_t)kpIndex);
+        PRINTF( "\r\nA71_EraseEccKeyPairWithChallenge(0x%02X)\r\n", (SST_Index_t)kpIndex);
         err = A71_EraseEccKeyPairWithChallenge((SST_Index_t) kpIndex, configKeyPrivateKey, sizeof(configKeyPrivateKey));
         result &= AX_CHECK_SW(err, SW_OK, "err");
     }
@@ -950,7 +937,7 @@ static U8 exSstKeyPairEnc(U8 initMode)
     // Check whether reading out public key from erased keypairs now fails.
     for (kpIndex=0; kpIndex<A71CH_KEY_PAIR_MAX; kpIndex++)
     {
-        printf("\r\nA71_GetPublicKeyEccKeyPair (index=0x%02X)\r\n", kpIndex);
+        PRINTF("\r\nA71_GetPublicKeyEccKeyPair (index=0x%02X)\r\n", kpIndex);
         fetchedPubKeyLen = sizeof(fetchedPubKey);
 #if 0
         err = A71_GetPublicKeyEccKeyPair ((SST_Index_t)kpIndex, fetchedPubKey, &fetchedPubKeyLen);
@@ -965,7 +952,7 @@ static U8 exSstKeyPairEnc(U8 initMode)
         HOSTCRYPTO_FreeEccKey(&eccKeyTls[i]);
     }
 
-    printf( "\r\n-----------\r\nEnd exSstKeyPairEnc(%s), result = %s\r\n------------\r\n", getInitModeAsString(initMode),
+    PRINTF( "\r\n-----------\r\nEnd exSstKeyPairEnc(%s), result = %s\r\n------------\r\n", getInitModeAsString(initMode),
         ((result == 1)? "OK": "FAILED"));
 
     return result;

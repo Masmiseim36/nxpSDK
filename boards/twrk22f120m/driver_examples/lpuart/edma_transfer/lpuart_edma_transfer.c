@@ -1,37 +1,16 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
- *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * All rights reserved.
+ * 
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "board.h"
 #include "fsl_lpuart_edma.h"
+#if defined(FSL_FEATURE_SOC_DMAMUX_COUNT) && FSL_FEATURE_SOC_DMAMUX_COUNT
 #include "fsl_dmamux.h"
-
+#endif
 #include "pin_mux.h"
 #include "clock_config.h"
 /*******************************************************************************
@@ -62,9 +41,10 @@ void LPUART_UserCallback(LPUART_Type *base, lpuart_edma_handle_t *handle, status
 lpuart_edma_handle_t g_lpuartEdmaHandle;
 edma_handle_t g_lpuartTxEdmaHandle;
 edma_handle_t g_lpuartRxEdmaHandle;
-uint8_t g_tipString[] = "LPUART EDMA example\r\nSend back received data\r\nEcho every 8 characters\r\n";
-uint8_t g_txBuffer[ECHO_BUFFER_LENGTH] = {0};
-uint8_t g_rxBuffer[ECHO_BUFFER_LENGTH] = {0};
+AT_NONCACHEABLE_SECTION_INIT(uint8_t g_tipString[]) =
+    "LPUART EDMA example\r\nSend back received data\r\nEcho every 8 characters\r\n";
+AT_NONCACHEABLE_SECTION_INIT(uint8_t g_txBuffer[ECHO_BUFFER_LENGTH]) = {0};
+AT_NONCACHEABLE_SECTION_INIT(uint8_t g_rxBuffer[ECHO_BUFFER_LENGTH]) = {0};
 volatile bool rxBufferEmpty = true;
 volatile bool txBufferFull = false;
 volatile bool txOnGoing = false;
@@ -123,6 +103,7 @@ int main(void)
 
     LPUART_Init(DEMO_LPUART, &lpuartConfig, DEMO_LPUART_CLK_FREQ);
 
+#if defined(FSL_FEATURE_SOC_DMAMUX_COUNT) && FSL_FEATURE_SOC_DMAMUX_COUNT
     /* Init DMAMUX */
     DMAMUX_Init(EXAMPLE_LPUART_DMAMUX_BASEADDR);
     /* Set channel for LPUART */
@@ -130,7 +111,7 @@ int main(void)
     DMAMUX_SetSource(EXAMPLE_LPUART_DMAMUX_BASEADDR, LPUART_RX_DMA_CHANNEL, LPUART_RX_DMA_REQUEST);
     DMAMUX_EnableChannel(EXAMPLE_LPUART_DMAMUX_BASEADDR, LPUART_TX_DMA_CHANNEL);
     DMAMUX_EnableChannel(EXAMPLE_LPUART_DMAMUX_BASEADDR, LPUART_RX_DMA_CHANNEL);
-
+#endif
     /* Init the EDMA module */
     EDMA_GetDefaultConfig(&config);
     EDMA_Init(EXAMPLE_LPUART_DMA_BASEADDR, &config);
@@ -139,7 +120,7 @@ int main(void)
 
     /* Create LPUART DMA handle. */
     LPUART_TransferCreateHandleEDMA(DEMO_LPUART, &g_lpuartEdmaHandle, LPUART_UserCallback, NULL, &g_lpuartTxEdmaHandle,
-                            &g_lpuartRxEdmaHandle);
+                                    &g_lpuartRxEdmaHandle);
 
     /* Send g_tipString out. */
     xfer.data = g_tipString;

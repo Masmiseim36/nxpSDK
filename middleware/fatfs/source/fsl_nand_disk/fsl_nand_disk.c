@@ -5,12 +5,19 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
+
+#include "ffconf.h"
+/* This fatfs subcomponent is disabled by default
+ * To enable it, define following macro in ffconf.h */
+#ifdef NAND_DISK_ENABLE
+
 #include <assert.h>
 #include <stdio.h>
 #include <string.h>
 #include "fsl_nand_disk.h"
 #include "fsl_nand_flash.h"
 #include "map.h"
+
 /*******************************************************************************
  * Definitons
  ******************************************************************************/
@@ -164,7 +171,7 @@ DSTATUS nand_disk_initialize(uint8_t physicalDrive)
     {
         return STA_NOINIT;
     }
-   
+
     status = Nand_Flash_Init(&nandConfig, &(dhara_handle.nandHandle));
     if (status != kStatus_Success)
     {
@@ -180,3 +187,4 @@ DSTATUS nand_disk_initialize(uint8_t physicalDrive)
 
     return 0;
 }
+#endif /* NAND_DISK_ENABLE */

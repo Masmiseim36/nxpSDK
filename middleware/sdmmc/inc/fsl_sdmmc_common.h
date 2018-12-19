@@ -14,6 +14,11 @@
 #include "fsl_sdmmc_spec.h"
 #include "stdlib.h"
 
+/*!
+ * @addtogroup CARD
+ * @{
+ */
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -232,5 +237,5 @@ status_t SDMMC_ExecuteTuning(SDMMCHOST_TYPE *base,
 #if defined(__cplusplus)
 }
 #endif
-
+/* @} */
 #endif /* _FSL_SDMMC_COMMON_H_ */

@@ -71,7 +71,7 @@
 </g>
 <!-- Node16 -->
 <g id="node16" class="node"><title>Node16</title>
-<g id="a_node16"><a xlink:href="classerpc_1_1_r_p_msg_linux_transport.html" target="_top" xlink:title="RPMSG Linux transport to send/receive messages through RPMSG endpoints based on https://github.com/codeauroraforum/rpmsg&#45;sysfs/tree/0aa1817545a765c200b1b2f9b6680a420dcf9171 implementation. ">
+<g id="a_node16"><a xlink:href="classerpc_1_1_r_p_msg_linux_transport.html" target="_top" xlink:title="RPMSG Linux transport to send/receive messages through RPMSG endpoints based on https://github.com/NXPmicro/rpmsg&#45;sysfs/tree/0aa1817545a765c200b1b2f9b6680a420dcf9171 implementation. ">
 <polygon fill="white" stroke="black" points="127,-38.5 127,-57.5 264,-57.5 264,-38.5 127,-38.5"/>
 <text text-anchor="middle" x="195.5" y="-45.5" font-family="Helvetica,sans-Serif" font-size="10.00">erpc::RPMsgLinuxTransport</text>
 </a>

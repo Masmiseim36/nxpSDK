@@ -18,14 +18,12 @@
  * limitations under the License.
  */
 
-
 #include "fsl_dspi_cmsis.h"
 
 /* Component ID definition, used by tools. */
 #ifndef FSL_COMPONENT_ID
 #define FSL_COMPONENT_ID "platform.drivers.dspi_cmsis"
 #endif
-
 
 #if ((RTE_SPI0 && defined(DSPI0)) || (RTE_SPI1 && defined(DSPI1)) || (RTE_SPI2 && defined(DSPI2)))
 
@@ -35,7 +33,7 @@
  * ARMCC does not support split the data section automatically, so the driver
  * needs to split the data to separate sections explicitly, to reduce codesize.
  */
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 #define ARMCC_SECTION(section_name) __attribute__((section(section_name)))
 #endif
 
@@ -1237,7 +1235,7 @@ edma_handle_t DSPI0_EedmaTxDataToIntermediaryHandle;
 edma_handle_t DSPI0_EedmaIntermediaryToTxRegHandle;
 edma_handle_t DSPI0_EedmaTxDataToTxRegHandle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("dspi0_edma_driver_state")
 cmsis_dspi_edma_driver_state_t DSPI0_EdmaDriverState = {
 #else
@@ -1304,7 +1302,7 @@ static ARM_SPI_STATUS DSPI0_EdmaGetStatus(void)
 #else
 cmsis_dspi_handle_t DSPI0_Handle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("dspi0_interrupt_driver_state")
 cmsis_dspi_interrupt_driver_state_t DSPI0_InterruptDriverState = {
 #else
@@ -1403,7 +1401,7 @@ edma_handle_t DSPI1_EedmaTxDataToIntermediaryHandle;
 edma_handle_t DSPI1_EedmaIntermediaryToTxRegHandle;
 edma_handle_t DSPI1_EedmaTxDataToTxRegHandle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("dspi1_edma_driver_state")
 cmsis_dspi_edma_driver_state_t DSPI1_EdmaDriverState = {
 #else
@@ -1471,7 +1469,7 @@ static ARM_SPI_STATUS DSPI1_EdmaGetStatus(void)
 
 cmsis_dspi_handle_t DSPI1_Handle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("dspi1_interrupt_driver_state")
 cmsis_dspi_interrupt_driver_state_t DSPI1_InterruptDriverState = {
 #else
@@ -1570,7 +1568,7 @@ edma_handle_t DSPI2_EedmaTxDataToIntermediaryHandle;
 edma_handle_t DSPI2_EedmaIntermediaryToTxRegHandle;
 edma_handle_t DSPI2_EedmaTxDataToTxRegHandle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("dspi2_edma_driver_state")
 cmsis_dspi_edma_driver_state_t DSPI2_EdmaDriverState = {
 #else
@@ -1638,7 +1636,7 @@ static ARM_SPI_STATUS DSPI2_EdmaGetStatus(void)
 
 cmsis_dspi_handle_t DSPI2_Handle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("dspi2_interrupt_driver_state")
 cmsis_dspi_interrupt_driver_state_t DSPI2_InterruptDriverState = {
 #else

@@ -1,34 +1,8 @@
 /*
- * The Clear BSD License
  * Copyright 2018 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_debug_console.h"
@@ -41,6 +15,14 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+/* The Flextimer instance/channel used for board */
+#define BOARD_TIMER_BASEADDR FTM0
+#define BOARD_FIRST_TIMER_CHANNEL 7U
+#define BOARD_SECOND_TIMER_CHANNEL 6U
+#define BOARD_FTM_PRESCALE_DIVIDER kFTM_Prescale_Divide_128
+/* Get source clock for TPM driver */
+#define BOARD_TIMER_SOURCE_CLOCK CLOCK_GetFreq(kCLOCK_BusClk)
+
 #define I2C_RELEASE_BUS_COUNT 100U
 /* Upper bound and lower bound angle values */
 #define ANGLE_UPPER_BOUND 85U
@@ -50,11 +32,12 @@
  * Prototypes
  ******************************************************************************/
 void BOARD_I2C_ReleaseBus(void);
-static void Board_UpdatePwm(uint16_t x, uint16_t y);
 
 /*******************************************************************************
  * Variables
  ******************************************************************************/
+volatile int16_t xAngle = 0;
+volatile int16_t yAngle = 0;
 /* FXOS device address */
 const uint8_t g_accel_address[] = {0x1CU, 0x1DU, 0x1EU, 0x1FU};
 
@@ -108,12 +91,52 @@ void BOARD_I2C_ReleaseBus(void)
     GPIO_PinWrite(BOARD_ACCEL_I2C_SDA_GPIO, BOARD_ACCEL_I2C_SDA_PIN, 1U);
     i2c_release_bus_delay();
 }
+/* Initialize timer module */
+static void Timer_Init(void)
+{
+    ftm_config_t ftmInfo;
+    ftm_chnl_pwm_signal_param_t ftmParam[2];
+
+    /* Configure ftm params with frequency 24kHZ */
+    ftmParam[0].chnlNumber = (ftm_chnl_t)BOARD_FIRST_TIMER_CHANNEL;
+    ftmParam[0].level = kFTM_LowTrue;
+    ftmParam[0].dutyCyclePercent = 0U;
+    ftmParam[0].firstEdgeDelayPercent = 0U;
+
+    ftmParam[1].chnlNumber = (ftm_chnl_t)BOARD_SECOND_TIMER_CHANNEL;
+    ftmParam[1].level = kFTM_LowTrue;
+    ftmParam[1].dutyCyclePercent = 0U;
+    ftmParam[1].firstEdgeDelayPercent = 0U;
+
+    /*
+     * ftmInfo.prescale = kFTM_Prescale_Divide_1;
+     * ftmInfo.bdmMode = kFTM_BdmMode_0;
+     * ftmInfo.pwmSyncMode = kFTM_SoftwareTrigger;
+     * ftmInfo.reloadPoints = 0;
+     * ftmInfo.faultMode = kFTM_Fault_Disable;
+     * ftmInfo.faultFilterValue = 0;
+     * ftmInfo.deadTimePrescale = kFTM_Deadtime_Prescale_1;
+     * ftmInfo.deadTimeValue = 0;
+     * ftmInfo.extTriggers = 0;
+     * ftmInfo.chnlInitState = 0;
+     * ftmInfo.chnlPolarity = 0;
+     * ftmInfo.useGlobalTimeBase = false;
+     */
+    FTM_GetDefaultConfig(&ftmInfo);
+
+    /* Initialize FTM module */
+    FTM_Init(BOARD_TIMER_BASEADDR, &ftmInfo);
+
+    FTM_SetupPwm(BOARD_TIMER_BASEADDR, ftmParam, 2U, kFTM_EdgeAlignedPwm, 24000U, BOARD_TIMER_SOURCE_CLOCK);
+    FTM_StartTimer(BOARD_TIMER_BASEADDR, kFTM_SystemClock);
+}
+
 /* Update the duty cycle of an active pwm signal */
 static void Board_UpdatePwm(uint16_t x, uint16_t y)
 {
     /* Start PWM mode with updated duty cycle */
-    FTM_UpdatePwmDutycycle(BOARD_TIMER_PERIPHERAL, kFTM_Chnl_7, kFTM_EdgeAlignedPwm, x);
-    FTM_UpdatePwmDutycycle(BOARD_TIMER_PERIPHERAL, kFTM_Chnl_6, kFTM_EdgeAlignedPwm, y);
+    FTM_UpdatePwmDutycycle(BOARD_TIMER_PERIPHERAL, kFTM_Chnl_5, kFTM_EdgeAlignedPwm, x);
+    FTM_UpdatePwmDutycycle(BOARD_TIMER_PERIPHERAL, kFTM_Chnl_7, kFTM_EdgeAlignedPwm, y);
     /* Software trigger to update registers */
     FTM_SetSoftwareTrigger(BOARD_TIMER_PERIPHERAL, true);
 }
@@ -123,17 +146,13 @@ int main(void)
     fxos_handle_t fxosHandle = {0};
     fxos_data_t sensorData = {0};
     fxos_config_t config = {0}; 
-    status_t result; 
     uint8_t sensorRange = 0;
     uint8_t dataScale = 0;
     int16_t xData = 0;
     int16_t yData = 0;
-    int16_t xAngle = 0;
-    int16_t yAngle = 0;
-    int16_t xDuty = 0;
-    int16_t yDuty = 0;
     uint8_t i = 0;
     uint8_t array_addr_size = 0;
+    status_t result = kStatus_Fail;
 
     /* Board pin, clock, debug console init */
     BOARD_InitPins();
@@ -186,13 +205,15 @@ int main(void)
     else
     {
     }
+    /* Init timer */
+    Timer_Init();
 
     /* Start timer */
     FTM_StartTimer(BOARD_TIMER_PERIPHERAL, kFTM_SystemClock);
 
     /* Print a note to terminal */
     PRINTF("\r\nWelcome to the BUBBLE example\r\n");
-    PRINTF("\r\nYou will see angle data change in the console when change the angles of board\r\n");
+    PRINTF("\r\nYou will see the change of angle data and LED brightness when change the angles of board\r\n");
 
     /* Main loop. Get sensor data and update duty cycle */
     while (1)
@@ -218,26 +239,8 @@ int main(void)
         {
             yAngle *= -1;
         }
-        /* Update duty cycle to turn on LEDs when angles ~ 90 */
-        if (xAngle > ANGLE_UPPER_BOUND)
-        {
-            xDuty = 100;
-        }
-        if (yAngle > ANGLE_UPPER_BOUND)
-        {
-            yDuty = 100;
-        }
-        /* Update duty cycle to turn off LEDs when angles ~ 0 */
-        if (xAngle < ANGLE_LOWER_BOUND)
-        {
-            xDuty = 0;
-        }
-        if (yAngle < ANGLE_LOWER_BOUND)
-        {
-            yDuty = 0;
-        }
-
-        Board_UpdatePwm(xDuty, yDuty);
+        
+        Board_UpdatePwm(xAngle, yAngle);
 
         /* Print out the angle data. */
         PRINTF("x= %2d y = %2d\r\n", xAngle, yAngle);

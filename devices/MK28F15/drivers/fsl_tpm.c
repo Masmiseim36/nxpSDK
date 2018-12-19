@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_tpm.h"
@@ -90,6 +64,14 @@ static uint32_t TPM_GetInstance(TPM_Type *base)
     return instance;
 }
 
+/*!
+ * brief Ungates the TPM clock and configures the peripheral for basic operation.
+ *
+ * note This API should be called at the beginning of the application using the TPM driver.
+ *
+ * param base   TPM peripheral base address
+ * param config Pointer to user's TPM config structure.
+ */
 void TPM_Init(TPM_Type *base, const tpm_config_t *config)
 {
     assert(config);
@@ -129,6 +111,11 @@ void TPM_Init(TPM_Type *base, const tpm_config_t *config)
 #endif
 }
 
+/*!
+ * brief Stops the counter and gates the TPM clock
+ *
+ * param base TPM peripheral base address
+ */
 void TPM_Deinit(TPM_Type *base)
 {
 #if defined(FSL_FEATURE_TPM_HAS_SC_CLKS) && FSL_FEATURE_TPM_HAS_SC_CLKS
@@ -137,16 +124,41 @@ void TPM_Deinit(TPM_Type *base)
 #else
     /* Stop the counter */
     base->SC &= ~TPM_SC_CMOD_MASK;
-#endif 
+#endif
 #if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
     /* Gate the TPM clock */
     CLOCK_DisableClock(s_tpmClocks[TPM_GetInstance(base)]);
 #endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
 }
 
+/*!
+ * brief  Fill in the TPM config struct with the default settings
+ *
+ * The default values are:
+ * code
+ *     config->prescale = kTPM_Prescale_Divide_1;
+ *     config->useGlobalTimeBase = false;
+ *     config->dozeEnable = false;
+ *     config->dbgMode = false;
+ *     config->enableReloadOnTrigger = false;
+ *     config->enableStopOnOverflow = false;
+ *     config->enableStartOnTrigger = false;
+ *#if FSL_FEATURE_TPM_HAS_PAUSE_COUNTER_ON_TRIGGER
+ *     config->enablePauseOnTrigger = false;
+ *#endif
+ *     config->triggerSelect = kTPM_Trigger_Select_0;
+ *#if FSL_FEATURE_TPM_HAS_EXTERNAL_TRIGGER_SELECTION
+ *     config->triggerSource = kTPM_TriggerSource_External;
+ *#endif
+ * endcode
+ * param config Pointer to user's TPM config structure.
+ */
 void TPM_GetDefaultConfig(tpm_config_t *config)
 {
     assert(config);
+
+    /* Initializes the configure structure to zero. */
+    memset(config, 0, sizeof(*config));
 
     /* TPM clock divide by 1 */
     config->prescale = kTPM_Prescale_Divide_1;
@@ -175,6 +187,22 @@ void TPM_GetDefaultConfig(tpm_config_t *config)
 #endif
 }
 
+/*!
+ * brief Configures the PWM signal parameters
+ *
+ * User calls this function to configure the PWM signals period, mode, dutycycle and edge. Use this
+ * function to configure all the TPM channels that will be used to output a PWM signal
+ *
+ * param base        TPM peripheral base address
+ * param chnlParams  Array of PWM channel parameters to configure the channel(s)
+ * param numOfChnls  Number of channels to configure, this should be the size of the array passed in
+ * param mode        PWM operation mode, options available in enumeration ::tpm_pwm_mode_t
+ * param pwmFreq_Hz  PWM signal frequency in Hz
+ * param srcClock_Hz TPM counter clock in Hz
+ *
+ * return kStatus_Success if the PWM setup was successful,
+ *         kStatus_Error on failure
+ */
 status_t TPM_SetupPwm(TPM_Type *base,
                       const tpm_chnl_pwm_signal_param_t *chnlParams,
                       uint8_t numOfChnls,
@@ -187,7 +215,7 @@ status_t TPM_SetupPwm(TPM_Type *base,
     assert(numOfChnls);
     assert(srcClock_Hz);
 #if defined(FSL_FEATURE_TPM_HAS_COMBINE) && FSL_FEATURE_TPM_HAS_COMBINE
-    if(mode == kTPM_CombinedPwm)
+    if (mode == kTPM_CombinedPwm)
     {
         assert(FSL_FEATURE_TPM_COMBINE_HAS_EFFECTn(base));
     }
@@ -200,7 +228,7 @@ status_t TPM_SetupPwm(TPM_Type *base,
 
 #if defined(FSL_FEATURE_TPM_HAS_QDCTRL) && FSL_FEATURE_TPM_HAS_QDCTRL
     /* The TPM's QDCTRL register required to be effective */
-    if( FSL_FEATURE_TPM_QDCTRL_HAS_EFFECTn(base) )
+    if (FSL_FEATURE_TPM_QDCTRL_HAS_EFFECTn(base))
     {
         /* Clear quadrature Decoder mode because in quadrature Decoder mode PWM doesn't operate*/
         base->QDCTRL &= ~TPM_QDCTRL_QUADEN_MASK;
@@ -379,6 +407,17 @@ status_t TPM_SetupPwm(TPM_Type *base,
     return kStatus_Success;
 }
 
+/*!
+ * brief Update the duty cycle of an active PWM signal
+ *
+ * param base              TPM peripheral base address
+ * param chnlNumber        The channel number. In combined mode, this represents
+ *                          the channel pair number
+ * param currentPwmMode    The current PWM mode set during PWM setup
+ * param dutyCyclePercent  New PWM pulse width, value should be between 0 to 100
+ *                          0=inactive signal(0% duty cycle)...
+ *                          100=active signal (100% duty cycle)
+ */
 void TPM_UpdatePwmDutycycle(TPM_Type *base,
                             tpm_chnl_t chnlNumber,
                             tpm_pwm_mode_t currentPwmMode,
@@ -386,7 +425,7 @@ void TPM_UpdatePwmDutycycle(TPM_Type *base,
 {
     assert(chnlNumber < FSL_FEATURE_TPM_CHANNEL_COUNTn(base));
 #if defined(FSL_FEATURE_TPM_HAS_COMBINE) && FSL_FEATURE_TPM_HAS_COMBINE
-    if(currentPwmMode == kTPM_CombinedPwm)
+    if (currentPwmMode == kTPM_CombinedPwm)
     {
         assert(FSL_FEATURE_TPM_COMBINE_HAS_EFFECTn(base));
     }
@@ -425,25 +464,33 @@ void TPM_UpdatePwmDutycycle(TPM_Type *base,
         }
         base->CONTROLS[chnlNumber].CnV = cnv;
 #if defined(FSL_FEATURE_TPM_WAIT_CnV_REGISTER_UPDATE) && FSL_FEATURE_TPM_WAIT_CnV_REGISTER_UPDATE
-        while(!(cnv == base->CONTROLS[chnlNumber].CnV))
+        while (!(cnv == base->CONTROLS[chnlNumber].CnV))
         {
         }
-#endif 
-        
+#endif
+
 #if defined(FSL_FEATURE_TPM_HAS_COMBINE) && FSL_FEATURE_TPM_HAS_COMBINE
     }
 #endif
 }
 
+/*!
+ * brief Update the edge level selection for a channel
+ *
+ * param base       TPM peripheral base address
+ * param chnlNumber The channel number
+ * param level      The level to be set to the ELSnB:ELSnA field; valid values are 00, 01, 10, 11.
+ *                   See the appropriate SoC reference manual for details about this field.
+ */
 void TPM_UpdateChnlEdgeLevelSelect(TPM_Type *base, tpm_chnl_t chnlNumber, uint8_t level)
 {
     assert(chnlNumber < FSL_FEATURE_TPM_CHANNEL_COUNTn(base));
 
     uint32_t reg = base->CONTROLS[chnlNumber].CnSC
-#if !(defined(FSL_FEATURE_TPM_CnSC_CHF_WRITE_0_CLEAR) && FSL_FEATURE_TPM_CnSC_CHF_WRITE_0_CLEAR)   
-    & ~(TPM_CnSC_CHF_MASK)
+#if !(defined(FSL_FEATURE_TPM_CnSC_CHF_WRITE_0_CLEAR) && FSL_FEATURE_TPM_CnSC_CHF_WRITE_0_CLEAR)
+                   & ~(TPM_CnSC_CHF_MASK)
 #endif
-    ;
+        ;
 
     /* When switching mode, disable channel first  */
     base->CONTROLS[chnlNumber].CnSC &=
@@ -458,7 +505,7 @@ void TPM_UpdateChnlEdgeLevelSelect(TPM_Type *base, tpm_chnl_t chnlNumber, uint8_
     /* Clear the field and write the new level value */
     reg &= ~(TPM_CnSC_ELSA_MASK | TPM_CnSC_ELSB_MASK);
     reg |= ((uint32_t)level << TPM_CnSC_ELSA_SHIFT) & (TPM_CnSC_ELSA_MASK | TPM_CnSC_ELSB_MASK);
-    
+
     base->CONTROLS[chnlNumber].CnSC = reg;
 
     /* Wait till mode change is acknowledged */
@@ -469,13 +516,23 @@ void TPM_UpdateChnlEdgeLevelSelect(TPM_Type *base, tpm_chnl_t chnlNumber, uint8_
     }
 }
 
+/*!
+ * brief Enables capturing an input signal on the channel using the function parameters.
+ *
+ * When the edge specified in the captureMode argument occurs on the channel, the TPM counter is captured into
+ * the CnV register. The user has to read the CnV register separately to get this value.
+ *
+ * param base        TPM peripheral base address
+ * param chnlNumber  The channel number
+ * param captureMode Specifies which edge to capture
+ */
 void TPM_SetupInputCapture(TPM_Type *base, tpm_chnl_t chnlNumber, tpm_input_capture_edge_t captureMode)
 {
     assert(chnlNumber < FSL_FEATURE_TPM_CHANNEL_COUNTn(base));
 
 #if defined(FSL_FEATURE_TPM_HAS_QDCTRL) && FSL_FEATURE_TPM_HAS_QDCTRL
     /* The TPM's QDCTRL register required to be effective */
-    if( FSL_FEATURE_TPM_QDCTRL_HAS_EFFECTn(base) )
+    if (FSL_FEATURE_TPM_QDCTRL_HAS_EFFECTn(base))
     {
         /* Clear quadrature Decoder mode for channel 0 or 1*/
         if ((chnlNumber == 0) || (chnlNumber == 1))
@@ -486,8 +543,8 @@ void TPM_SetupInputCapture(TPM_Type *base, tpm_chnl_t chnlNumber, tpm_input_capt
 #endif
 
 #if defined(FSL_FEATURE_TPM_HAS_COMBINE) && FSL_FEATURE_TPM_HAS_COMBINE
-        /* The TPM's COMBINE register required to be effective */
-    if( FSL_FEATURE_TPM_COMBINE_HAS_EFFECTn(base) )
+    /* The TPM's COMBINE register required to be effective */
+    if (FSL_FEATURE_TPM_COMBINE_HAS_EFFECTn(base))
     {
         /* Clear the combine bit for chnlNumber */
         base->COMBINE &= ~(1U << TPM_COMBINE_SHIFT * (chnlNumber / 2));
@@ -514,6 +571,17 @@ void TPM_SetupInputCapture(TPM_Type *base, tpm_chnl_t chnlNumber, tpm_input_capt
     }
 }
 
+/*!
+ * brief Configures the TPM to generate timed pulses.
+ *
+ * When the TPM counter matches the value of compareVal argument (this is written into CnV reg), the channel
+ * output is changed based on what is specified in the compareMode argument.
+ *
+ * param base         TPM peripheral base address
+ * param chnlNumber   The channel number
+ * param compareMode  Action to take on the channel output when the compare condition is met
+ * param compareValue Value to be programmed in the CnV register.
+ */
 void TPM_SetupOutputCompare(TPM_Type *base,
                             tpm_chnl_t chnlNumber,
                             tpm_output_compare_mode_t compareMode,
@@ -523,7 +591,7 @@ void TPM_SetupOutputCompare(TPM_Type *base,
 
 #if defined(FSL_FEATURE_TPM_HAS_QDCTRL) && FSL_FEATURE_TPM_HAS_QDCTRL
     /* The TPM's QDCTRL register required to be effective */
-    if( FSL_FEATURE_TPM_QDCTRL_HAS_EFFECTn(base) )
+    if (FSL_FEATURE_TPM_QDCTRL_HAS_EFFECTn(base))
     {
         /* Clear quadrature Decoder mode for channel 0 or 1 */
         if ((chnlNumber == 0) || (chnlNumber == 1))
@@ -557,6 +625,17 @@ void TPM_SetupOutputCompare(TPM_Type *base,
 }
 
 #if defined(FSL_FEATURE_TPM_HAS_COMBINE) && FSL_FEATURE_TPM_HAS_COMBINE
+/*!
+ * brief Configures the dual edge capture mode of the TPM.
+ *
+ * This function allows to measure a pulse width of the signal on the input of channel of a
+ * channel pair. The filter function is disabled if the filterVal argument passed is zero.
+ *
+ * param base           TPM peripheral base address
+ * param chnlPairNumber The TPM channel pair number; options are 0, 1, 2, 3
+ * param edgeParam      Sets up the dual edge capture function
+ * param filterValue    Filter value, specify 0 to disable filter.
+ */
 void TPM_SetupDualEdgeCapture(TPM_Type *base,
                               tpm_chnl_t chnlPairNumber,
                               const tpm_dual_edge_capture_param_t *edgeParam,
@@ -570,7 +649,7 @@ void TPM_SetupDualEdgeCapture(TPM_Type *base,
 
 #if defined(FSL_FEATURE_TPM_HAS_QDCTRL) && FSL_FEATURE_TPM_HAS_QDCTRL
     /* The TPM's QDCTRL register required to be effective */
-    if( FSL_FEATURE_TPM_QDCTRL_HAS_EFFECTn(base) )
+    if (FSL_FEATURE_TPM_QDCTRL_HAS_EFFECTn(base))
     {
         /* Clear quadrature Decoder mode for channel 0 or 1*/
         if (chnlPairNumber == 0)
@@ -650,6 +729,14 @@ void TPM_SetupDualEdgeCapture(TPM_Type *base,
 #endif
 
 #if defined(FSL_FEATURE_TPM_HAS_QDCTRL) && FSL_FEATURE_TPM_HAS_QDCTRL
+/*!
+ * brief Configures the parameters and activates the quadrature decode mode.
+ *
+ * param base         TPM peripheral base address
+ * param phaseAParams Phase A configuration parameters
+ * param phaseBParams Phase B configuration parameters
+ * param quadMode     Selects encoding mode used in quadrature decoder mode
+ */
 void TPM_SetupQuadDecode(TPM_Type *base,
                          const tpm_phase_params_t *phaseAParams,
                          const tpm_phase_params_t *phaseBParams,
@@ -720,6 +807,13 @@ void TPM_SetupQuadDecode(TPM_Type *base,
 
 #endif
 
+/*!
+ * brief Enables the selected TPM interrupts.
+ *
+ * param base TPM peripheral base address
+ * param mask The interrupts to enable. This is a logical OR of members of the
+ *             enumeration ::tpm_interrupt_enable_t
+ */
 void TPM_EnableInterrupts(TPM_Type *base, uint32_t mask)
 {
     uint32_t chnlInterrupts = (mask & 0xFF);
@@ -743,6 +837,13 @@ void TPM_EnableInterrupts(TPM_Type *base, uint32_t mask)
     }
 }
 
+/*!
+ * brief Disables the selected TPM interrupts.
+ *
+ * param base TPM peripheral base address
+ * param mask The interrupts to disable. This is a logical OR of members of the
+ *             enumeration ::tpm_interrupt_enable_t
+ */
 void TPM_DisableInterrupts(TPM_Type *base, uint32_t mask)
 {
     uint32_t chnlInterrupts = (mask & 0xFF);
@@ -766,6 +867,14 @@ void TPM_DisableInterrupts(TPM_Type *base, uint32_t mask)
     }
 }
 
+/*!
+ * brief Gets the enabled TPM interrupts.
+ *
+ * param base TPM peripheral base address
+ *
+ * return The enabled interrupts. This is the logical OR of members of the
+ *         enumeration ::tpm_interrupt_enable_t
+ */
 uint32_t TPM_GetEnabledInterrupts(TPM_Type *base)
 {
     uint32_t enabledInterrupts = 0;

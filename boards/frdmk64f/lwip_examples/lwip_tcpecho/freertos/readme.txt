@@ -5,25 +5,6 @@ The lwip_tcpecho demo application demonstrates a TCP echo demo on the lwIP TCP/I
 FreeRTOS. The demo uses the TCP protocol and acts as an echo server. The application sends back the received TCP
 packets from the PC, which can be used to test whether a TCP connection is available.
 
-
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- RJ45 Network cable
-- FRDM-K64F board
-- Personal Computer
-
-Board settings
-==============
-No special settings are required.
-
 Prepare the Demo
 ================
 1.  Connect a USB cable between the PC host and the OpenSDA(or USB to Serial) USB port on the target board.
@@ -60,6 +41,22 @@ Running the demo
 		Reply from 192.168.0.102:7, time 0 ms OK
 
 		Statistics: Received=5, Corrupted=0
-Customization options
+Hardware requirements
 =====================
+- Mini/micro USB cable
+- RJ45 Network cable
+- FRDM-K64F board
+- Personal Computer
+
+Board settings
+==============
+No special settings are required.
+
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

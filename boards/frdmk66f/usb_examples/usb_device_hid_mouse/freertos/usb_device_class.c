@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
  * Copyright 2016 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "usb_device_config.h"
@@ -199,7 +173,7 @@ static usb_status_t USB_DeviceClassAllocateHandle(uint8_t controllerId, usb_devi
  *
  * @param controllerId   The controller id of the USB IP. Please refer to the enumeration usb_controller_index_t.
  *
- * @retval kStatus_USB_Success              Free device hanlde successfully.
+ * @retval kStatus_USB_Success              Free device handle successfully.
  * @retval kStatus_USB_InvalidParameter     The common class can not be found.
  */
 static usb_status_t USB_DeviceClassFreeHandle(uint8_t controllerId)
@@ -234,7 +208,7 @@ static usb_status_t USB_DeviceClassFreeHandle(uint8_t controllerId)
  * @param handle          It is out parameter, is used to return pointer of the device common class handle to the
  * caller.
  *
- * @retval kStatus_USB_Success              Free device hanlde successfully.
+ * @retval kStatus_USB_Success              Free device handle successfully.
  * @retval kStatus_USB_InvalidParameter     The common class can not be found.
  */
 static usb_status_t USB_DeviceClassGetHandleByControllerId(uint8_t controllerId,
@@ -267,7 +241,7 @@ static usb_status_t USB_DeviceClassGetHandleByControllerId(uint8_t controllerId,
  * @param handle                 It is out parameter, is used to return pointer of the device common class handle to the
  * caller.
  *
- * @retval kStatus_USB_Success              Free device hanlde successfully.
+ * @retval kStatus_USB_Success              Free device handle successfully.
  * @retval kStatus_USB_InvalidParameter     The common class can not be found.
  */
 static usb_status_t USB_DeviceClassGetHandleByDeviceHandle(usb_device_handle deviceHandle,
@@ -298,7 +272,7 @@ static usb_status_t USB_DeviceClassGetHandleByDeviceHandle(usb_device_handle dev
  * @param controllerId   The controller id of the USB IP. Please refer to the enumeration usb_controller_index_t.
  * @param handle          It is out parameter, is used to return pointer of the device handle to the caller.
  *
- * @retval kStatus_USB_Success              Free device hanlde successfully.
+ * @retval kStatus_USB_Success              Free device handle successfully.
  * @retval kStatus_USB_InvalidParameter     The device handle not be found.
  */
 usb_status_t USB_DeviceClassGetDeviceHandle(uint8_t controllerId, usb_device_handle *handle)
@@ -429,10 +403,10 @@ usb_status_t USB_DeviceClassCallback(usb_device_handle handle, uint32_t event, v
  * This function is used to initialize the common class and the supported classes.
  *
  * @param[in] controllerId   The controller id of the USB IP. Please refer to the enumeration #usb_controller_index_t.
- * @param[in] configList     The class configurations. The pointer must point to the goblal variable.
+ * @param[in] configList     The class configurations. The pointer must point to the global variable.
  *                           Please refer to the structure #usb_device_class_config_list_struct_t.
  * @param[out] handle        It is out parameter, is used to return pointer of the device handle to the caller.
- *                           The value of parameter is a pointer points the device handle, and this design is uesd to
+ *                           The value of parameter is a pointer points the device handle, and this design is used to
  *                           make simple device align with composite device. For composite device, there are many
  *                           kinds of class handle, but there is only one device handle. So the handle points to
  *                           a device instead of a class. And the class handle can be got from the

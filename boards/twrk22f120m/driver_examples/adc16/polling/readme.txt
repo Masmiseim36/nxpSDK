@@ -13,15 +13,6 @@ the configuration structure's setting in application to fit the special requirem
 
 The auto-calibration is not essential but strongly recommended. It can help to adjust the converter itself and improve
 the ADC16's performance.
-
-Toolchain supported
-===================
-- IAR embedded Workbench 7.80.4
-- Keil MDK 5.21a
-- GCC ARM Embedded 2016-5.4-q3
-- Kinetis Development Studio IDE 3.2.0
-- MCUXpresso0.8
-
 Hardware requirements
 =====================
 - Mini/Micro USB cable
@@ -51,6 +42,7 @@ When the demo runs successfully, the log would be seen on the OpenSDA terminal l
 
 ADC16 polling Example.
 ADC16_DoAutoCalibration() Done.
+ADC Full Range: XXXX
 Press any key to get user channel's ADC value ...
 ADC Value: 1985
 ADC Value: 1689
@@ -58,6 +50,11 @@ ADC Value: 1355
 ADC Value: 1625
 ADC Value: 1575
 ADC Value: 1471
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

@@ -14,7 +14,6 @@
 
 #if ((defined(USB_DEVICE_CONFIG_PRINTER)) && (USB_DEVICE_CONFIG_PRINTER > 0U))
 #include "usb_device_printer.h"
-#endif
 
 /*******************************************************************************
  * Definitions
@@ -202,6 +201,7 @@ static usb_status_t USB_DevicePrinterEndpointsInit(usb_device_printer_struct_t *
         usb_device_endpoint_init_struct_t epInitStruct;
         usb_device_endpoint_callback_struct_t epCallback;
         epInitStruct.zlt = 0U;
+        epInitStruct.interval = interface->endpointList.endpoint[index].interval;
         epInitStruct.endpointAddress = interface->endpointList.endpoint[index].endpointAddress;
         epInitStruct.maxPacketSize = interface->endpointList.endpoint[index].maxPacketSize;
         epInitStruct.transferType = interface->endpointList.endpoint[index].transferType;
@@ -572,8 +572,8 @@ usb_status_t USB_DevicePrinterEvent(void *handle, uint32_t event, void *param)
 
 usb_status_t USB_DevicePrinterSend(class_handle_t handle, uint8_t ep, uint8_t *buffer, uint32_t length)
 {
-    usb_status_t status = kStatus_USB_Error;
     usb_device_printer_struct_t *printerHandle = (usb_device_printer_struct_t *)handle;
+    usb_status_t status = kStatus_USB_Error;
 
     if (!handle)
     {
@@ -584,27 +584,27 @@ usb_status_t USB_DevicePrinterSend(class_handle_t handle, uint8_t ep, uint8_t *b
     {
         return kStatus_USB_Busy;
     }
+    printerHandle->bulkInBusy = 1U;
+
     if (printerHandle->bulkInPipeStall)
     {
-        printerHandle->bulkInBusy = 1U;
         printerHandle->bulkInPipeDataBuffer = buffer;
         printerHandle->bulkInPipeDataLen = length;
         return kStatus_USB_Success;
     }
 
     status = USB_DeviceSendRequest(printerHandle->deviceHandle, ep, buffer, length);
-    if (status == kStatus_USB_Success)
+    if (kStatus_USB_Success != status)
     {
-        printerHandle->bulkInBusy = 1U;
+        printerHandle->bulkInBusy = 0U;
     }
-
     return status;
 }
 
 usb_status_t USB_DevicePrinterRecv(class_handle_t handle, uint8_t ep, uint8_t *buffer, uint32_t length)
 {
-    usb_status_t status = kStatus_USB_Error;
     usb_device_printer_struct_t *printerHandle = (usb_device_printer_struct_t *)handle;
+    usb_status_t status = kStatus_USB_Error;
 
     if (!handle)
     {
@@ -615,18 +615,20 @@ usb_status_t USB_DevicePrinterRecv(class_handle_t handle, uint8_t ep, uint8_t *b
     {
         return kStatus_USB_Busy;
     }
+    printerHandle->bulkOutBusy = 1U;
+
     if (printerHandle->bulkOutPipeStall)
     {
-        printerHandle->bulkOutBusy = 1U;
         printerHandle->bulkOutPipeDataBuffer = buffer;
         printerHandle->bulkOutPipeDataLen = length;
         return kStatus_USB_Success;
     }
     status = USB_DeviceRecvRequest(printerHandle->deviceHandle, ep, buffer, length);
-    if (status == kStatus_USB_Success)
+    if (kStatus_USB_Success != status)
     {
-        printerHandle->bulkOutBusy = 1U;
+        printerHandle->bulkOutBusy = 0U;
     }
 
     return status;
 }
+#endif

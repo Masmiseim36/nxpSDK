@@ -1331,6 +1331,11 @@ int32_t Api_accept(void *pCxt, uint32_t handle, void *name, socklen_t length)
                     ((SOCKADDR_T *)name)->sin_port = A_CPU2LE16(((SOCKADDR_T *)name)->sin_port);
                     ((SOCKADDR_T *)name)->sin_family = A_CPU2LE16(((SOCKADDR_T *)name)->sin_family);
                     ((SOCKADDR_T *)name)->sin_addr = A_CPU2LE32(((SOCKADDR_T *)name)->sin_addr);
+
+                    if (SOCK_STREAM_TYPE == ath_sock_context[accept_index]->type)
+                    {
+                        ath_sock_context[accept_index]->TCPCtrFlag = TCP_CONNECTED;
+                    }
                 }
                 else
                 {
@@ -1338,6 +1343,11 @@ int32_t Api_accept(void *pCxt, uint32_t handle, void *name, socklen_t length)
                              sizeof(SOCKADDR_6_T));
                     ((SOCKADDR_6_T *)name)->sin6_port = A_CPU2LE16(((SOCKADDR_6_T *)name)->sin6_port);
                     ((SOCKADDR_6_T *)name)->sin6_family = A_CPU2LE16(((SOCKADDR_6_T *)name)->sin6_family);
+
+                    if (SOCK_STREAM_TYPE == ath_sock_context[accept_index]->type)
+                    {
+                        ath_sock_context[accept_index]->TCPCtrFlag = TCP_CONNECTED;
+                    }
                 }
                 // A_FREE(ath_sock_context[index]->data, MALLOC_ID_CONTEXT);
                 // ath_sock_context[index]->data = NULL;

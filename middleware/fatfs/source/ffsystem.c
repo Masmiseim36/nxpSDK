@@ -52,7 +52,7 @@ void ff_memfree (
 
 int ff_cre_syncobj (	/* 1:Function succeeded, 0:Could not create the sync object */
 	BYTE vol,			/* Corresponding volume (logical drive number) */
-	FF_SYNC_t *sobj		/* Pointer to return the created sync object */
+	FF_SYNC_t* sobj		/* Pointer to return the created sync object */
 )
 {
 	/* Win32 */
@@ -103,7 +103,7 @@ int ff_del_syncobj (	/* 1:Function succeeded, 0:Could not delete due to an error
 //	return (int)(err == OS_NO_ERR);
 
 	/* FreeRTOS */
-  vSemaphoreDelete(sobj);
+    vSemaphoreDelete(sobj);
 	return 1;
 
 	/* CMSIS-RTOS */

@@ -1,37 +1,11 @@
 /*
-* The Clear BSD License
-* Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
-* All rights reserved.
-*
-* 
-* Redistribution and use in source and binary forms, with or without modification,
-* are permitted (subject to the limitations in the disclaimer below) provided
-*  that the following conditions are met:
-*
-* o Redistributions of source code must retain the above copyright notice, this list
-*   of conditions and the following disclaimer.
-*
-* o Redistributions in binary form must reproduce the above copyright notice, this
-*   list of conditions and the following disclaimer in the documentation and/or
-*   other materials provided with the distribution.
-*
-* o Neither the name of the copyright holder nor the names of its
-*   contributors may be used to endorse or promote products derived from this
-*   software without specific prior written permission.
-*
-* NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
-* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-* ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
-* ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-* (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
-* ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-* SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ * Copyright (c) 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016-2018 NXP
+ * All rights reserved.
+ *
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
 
 /*******************************************************************************
  * Includes
@@ -53,14 +27,7 @@
 #include "wolfssl/ssl.h"
 #include "certs_buff.h"
 
-#if FSL_FEATURE_SOC_LTC_COUNT
-#include "fsl_ltc.h"
-#endif
-#if FSL_FEATURE_SOC_TRNG_COUNT
-#include "fsl_trng.h"
-#elif FSL_FEATURE_SOC_RNG_COUNT
-#include "fsl_rnga.h"
-#endif
+#include "nxp/ksdk_port.h"
 
 #include "fsl_device_registers.h"
 #include "pin_mux.h"
@@ -139,9 +106,7 @@ int main(void)
     ip4_addr_t fsl_netif0_ipaddr, fsl_netif0_netmask, fsl_netif0_gw;
 
     ethernetif_config_t fsl_enet_config0 = {
-        .phyAddress = EXAMPLE_PHY_ADDRESS,
-        .clockName = EXAMPLE_CLOCK_NAME,
-        .macAddress = configMAC_ADDR,
+        .phyAddress = EXAMPLE_PHY_ADDRESS, .clockName = EXAMPLE_CLOCK_NAME, .macAddress = configMAC_ADDR,
     };
 
     SYSMPU_Type *base = SYSMPU;
@@ -153,25 +118,7 @@ int main(void)
 
     time_init();
 
-#if FSL_FEATURE_SOC_LTC_COUNT
-    /* Initialize LTC driver.
-     * This enables clocking and resets the module to a known state. */
-    LTC_Init(LTC0);
-#endif
-    { /* Init RNG module.*/
-#if defined(FSL_FEATURE_SOC_TRNG_COUNT) && (FSL_FEATURE_SOC_TRNG_COUNT > 0)
-        trng_config_t trngConfig;
-
-        TRNG_GetDefaultConfig(&trngConfig);
-        /* Set sample mode of the TRNG ring oscillator to Von Neumann, for better random data.*/
-        trngConfig.sampleMode = kTRNG_SampleModeVonNeumann;
-        /* Initialize TRNG */
-        TRNG_Init(TRNG0, &trngConfig);
-#elif defined(FSL_FEATURE_SOC_RNG_COUNT) && (FSL_FEATURE_SOC_RNG_COUNT > 0)
-        RNGA_Init(RNG);
-        RNGA_Seed(RNG, SIM->UIDL);
-#endif
-    }
+    CRYPTO_InitHardware();
 
     IP4_ADDR(&fsl_netif0_ipaddr, configIP_ADDR0, configIP_ADDR1, configIP_ADDR2, configIP_ADDR3);
     IP4_ADDR(&fsl_netif0_netmask, configNET_MASK0, configNET_MASK1, configNET_MASK2, configNET_MASK3);
@@ -179,14 +126,14 @@ int main(void)
 
     lwip_init();
 
-    netif_add(&fsl_netif0, &fsl_netif0_ipaddr, &fsl_netif0_netmask, &fsl_netif0_gw,
-              &fsl_enet_config0, ethernetif0_init, ethernet_input);
+    netif_add(&fsl_netif0, &fsl_netif0_ipaddr, &fsl_netif0_netmask, &fsl_netif0_gw, &fsl_enet_config0, ethernetif0_init,
+              ethernet_input);
     netif_set_default(&fsl_netif0);
     netif_set_up(&fsl_netif0);
 
     /*
- * wolfSSL - setup
- */
+     * wolfSSL - setup
+     */
 
     /* Initialize wolfSSL library */
     wolfSSL_Init();

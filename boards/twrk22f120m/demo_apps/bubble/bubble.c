@@ -1,38 +1,15 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
+ * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_debug_console.h"
 #include "board.h"
 #include "math.h"
 #include "fsl_fxos.h"
-#include "fsl_i2c.h"
 #include "fsl_ftm.h"
 
 #include "fsl_common.h"
@@ -44,12 +21,16 @@
  ******************************************************************************/
 /* The Flextimer instance/channel used for board */
 #define BOARD_TIMER_BASEADDR FTM0
-#define BOARD_FIRST_TIMER_CHANNEL 4U
+#define BOARD_FIRST_TIMER_CHANNEL 6U
 #define BOARD_SECOND_TIMER_CHANNEL 7U
+#define BOARD_FIRST_CHANNEL_INT kFTM_Chnl4InterruptEnable
+#define BOARD_SECOND_CHANNEL_INT kFTM_Chnl7InterruptEnable
+#define BOARD_FTM_IRQ_HANDLER_FUNC FTM0_IRQHandler
+#define BOARD_FTM_IRQ_ID FTM0_IRQn
+#define BOARD_FTM_PRESCALE_DIVIDER kFTM_Prescale_Divide_128
 /* Get source clock for TPM driver */
 #define BOARD_TIMER_SOURCE_CLOCK CLOCK_GetFreq(kCLOCK_BusClk)
 /* I2C source clock */
-#define ACCEL_I2C_CLK_SRC I2C1_CLK_SRC
 #define I2C_BAUDRATE 100000U
 
 #define I2C_RELEASE_SDA_PORT PORTC
@@ -59,20 +40,18 @@
 #define I2C_RELEASE_SCL_GPIO GPIOC
 #define I2C_RELEASE_SCL_PIN 10U
 #define I2C_RELEASE_BUS_COUNT 100U
-/* Upper bound and lower bound angle values */
-#define ANGLE_UPPER_BOUND 85U
-#define ANGLE_LOWER_BOUND 5U
 
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
 void BOARD_I2C_ReleaseBus(void);
 
-
+static void Board_UpdatePwm(uint16_t x, uint16_t y);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-i2c_master_handle_t g_MasterHandle;
+volatile int16_t g_xAngle = 0;
+volatile int16_t g_yAngle = 0;
 /* FXOS device address */
 const uint8_t g_accel_address[] = {0x1CU, 0x1DU, 0x1EU, 0x1FU};
 
@@ -109,34 +88,34 @@ void BOARD_I2C_ReleaseBus(void)
     GPIO_PinInit(I2C_RELEASE_SDA_GPIO, I2C_RELEASE_SDA_PIN, &pin_config);
 
     /* Drive SDA low first to simulate a start */
-    GPIO_WritePinOutput(I2C_RELEASE_SDA_GPIO, I2C_RELEASE_SDA_PIN, 0U);
+    GPIO_PinWrite(I2C_RELEASE_SDA_GPIO, I2C_RELEASE_SDA_PIN, 0U);
     i2c_release_bus_delay();
 
     /* Send 9 pulses on SCL and keep SDA high */
     for (i = 0; i < 9; i++)
     {
-        GPIO_WritePinOutput(I2C_RELEASE_SCL_GPIO, I2C_RELEASE_SCL_PIN, 0U);
+        GPIO_PinWrite(I2C_RELEASE_SCL_GPIO, I2C_RELEASE_SCL_PIN, 0U);
         i2c_release_bus_delay();
 
-        GPIO_WritePinOutput(I2C_RELEASE_SDA_GPIO, I2C_RELEASE_SDA_PIN, 1U);
+        GPIO_PinWrite(I2C_RELEASE_SDA_GPIO, I2C_RELEASE_SDA_PIN, 1U);
         i2c_release_bus_delay();
 
-        GPIO_WritePinOutput(I2C_RELEASE_SCL_GPIO, I2C_RELEASE_SCL_PIN, 1U);
+        GPIO_PinWrite(I2C_RELEASE_SCL_GPIO, I2C_RELEASE_SCL_PIN, 1U);
         i2c_release_bus_delay();
         i2c_release_bus_delay();
     }
 
     /* Send stop */
-    GPIO_WritePinOutput(I2C_RELEASE_SCL_GPIO, I2C_RELEASE_SCL_PIN, 0U);
+    GPIO_PinWrite(I2C_RELEASE_SCL_GPIO, I2C_RELEASE_SCL_PIN, 0U);
     i2c_release_bus_delay();
 
-    GPIO_WritePinOutput(I2C_RELEASE_SDA_GPIO, I2C_RELEASE_SDA_PIN, 0U);
+    GPIO_PinWrite(I2C_RELEASE_SDA_GPIO, I2C_RELEASE_SDA_PIN, 0U);
     i2c_release_bus_delay();
 
-    GPIO_WritePinOutput(I2C_RELEASE_SCL_GPIO, I2C_RELEASE_SCL_PIN, 1U);
+    GPIO_PinWrite(I2C_RELEASE_SCL_GPIO, I2C_RELEASE_SCL_PIN, 1U);
     i2c_release_bus_delay();
 
-    GPIO_WritePinOutput(I2C_RELEASE_SDA_GPIO, I2C_RELEASE_SDA_PIN, 1U);
+    GPIO_PinWrite(I2C_RELEASE_SDA_GPIO, I2C_RELEASE_SDA_PIN, 1U);
     i2c_release_bus_delay();
 }
 /* Initialize timer module */
@@ -170,7 +149,7 @@ static void Timer_Init(void)
      * ftmInfo.chnlPolarity = 0;
      * ftmInfo.useGlobalTimeBase = false;
      */
-    FTM_GetDefaultConfig(&ftmInfo);
+    FTM_GetDefaultConfig(&ftmInfo);   
     /* Initialize FTM module */
     FTM_Init(BOARD_TIMER_BASEADDR, &ftmInfo);
 
@@ -192,18 +171,14 @@ int main(void)
 {
     fxos_handle_t fxosHandle = {0};
     fxos_data_t sensorData = {0};
-    i2c_master_config_t i2cConfig = {0};
+    fxos_config_t config = {0}; 
     uint8_t sensorRange = 0;
     uint8_t dataScale = 0;
-    uint32_t i2cSourceClock = 0;
     int16_t xData = 0;
     int16_t yData = 0;
-    int16_t xAngle = 0;
-    int16_t yAngle = 0;
     uint8_t i = 0;
-    uint8_t regResult = 0;
     uint8_t array_addr_size = 0;
-    bool foundDevice = false;
+    status_t result = kStatus_Fail;    
 
     /* Board pin, clock, debug console init */
     BOARD_InitPins();
@@ -212,42 +187,28 @@ int main(void)
     BOARD_I2C_ConfigurePins();
     BOARD_InitDebugConsole();
 
-    i2cSourceClock = CLOCK_GetFreq(ACCEL_I2C_CLK_SRC);
-    fxosHandle.base = BOARD_ACCEL_I2C_BASEADDR;
-    fxosHandle.i2cHandle = &g_MasterHandle;
+    /* I2C initialize */
+    BOARD_Accel_I2C_Init();
+    /* Configure the I2C function */
+    config.I2C_SendFunc = BOARD_Accel_I2C_Send;
+    config.I2C_ReceiveFunc = BOARD_Accel_I2C_Receive;
 
-    /*
-     * i2cConfig.baudRate_Bps = 100000U;
-     * i2cConfig.enableStopHold = false;
-     * i2cConfig.glitchFilterWidth = 0U;
-     * i2cConfig.enableMaster = true;
-     */
-    I2C_MasterGetDefaultConfig(&i2cConfig);
-    I2C_MasterInit(BOARD_ACCEL_I2C_BASEADDR, &i2cConfig, i2cSourceClock);
-    I2C_MasterTransferCreateHandle(BOARD_ACCEL_I2C_BASEADDR, &g_MasterHandle, NULL, NULL);
-
-    /* Find sensor devices */
+    /* Initialize sensor devices */
     array_addr_size = sizeof(g_accel_address) / sizeof(g_accel_address[0]);
     for (i = 0; i < array_addr_size; i++)
     {
-        fxosHandle.xfer.slaveAddress = g_accel_address[i];
-        if (FXOS_ReadReg(&fxosHandle, WHO_AM_I_REG, &regResult, 1) == kStatus_Success)
+        config.slaveAddress = g_accel_address[i];
+        /* Initialize accelerometer sensor */
+        result = FXOS_Init(&fxosHandle, &config);
+        if (result == kStatus_Success)
         {
-            foundDevice = true;
             break;
-        }
-        if ((i == (array_addr_size - 1)) && (!foundDevice))
-        {
-            PRINTF("\r\nDo not found sensor device\r\n");
-            while (1)
-            {
-            };
         }
     }
 
-    /* Init accelerometer sensor */
-    if (FXOS_Init(&fxosHandle) != kStatus_Success)
+    if (result != kStatus_Success)
     {
+        PRINTF("\r\nSensor device initialize failed!\r\n");
         return -1;
     }
     /* Get sensor range */
@@ -270,13 +231,14 @@ int main(void)
     else
     {
     }
+   
     /* Init timer */
     Timer_Init();
 
     /* Print a note to terminal */
-    PRINTF("\r\nWelcome to BUBBLE example\r\n");
-    PRINTF("\r\nYou will see the change of LED brightness when change angles of board\r\n");
-
+    PRINTF("\r\nWelcome to the BUBBLE example\r\n");
+    PRINTF("\r\nYou will see the change of angle data and LED brightness when change the angles of board\r\n");
+    
     /* Main loop. Get sensor data and update duty cycle */
     while (1)
     {
@@ -291,38 +253,21 @@ int main(void)
         yData = (int16_t)((uint16_t)((uint16_t)sensorData.accelYMSB << 8) | (uint16_t)sensorData.accelYLSB) / 4U;
 
         /* Convert raw data to angle (normalize to 0-90 degrees). No negative angles. */
-        xAngle = (int16_t)floor((double)xData * (double)dataScale * 90 / 8192);
-        if (xAngle < 0)
+        g_xAngle = (int16_t)floor((double)xData * (double)dataScale * 90 / 8192);
+        if (g_xAngle < 0)
         {
-            xAngle *= -1;
+            g_xAngle *= -1;
         }
-        yAngle = (int16_t)floor((double)yData * (double)dataScale * 90 / 8192);
-        if (yAngle < 0)
+        g_yAngle = (int16_t)floor((double)yData * (double)dataScale * 90 / 8192);
+        if (g_yAngle < 0)
         {
-            yAngle *= -1;
-        }
-        /* Update angles to turn on LEDs when angles ~ 90 */
-        if (xAngle > ANGLE_UPPER_BOUND)
-        {
-            xAngle = 100;
-        }
-        if (yAngle > ANGLE_UPPER_BOUND)
-        {
-            yAngle = 100;
-        }
-        /* Update angles to turn off LEDs when angles ~ 0 */
-        if (xAngle < ANGLE_LOWER_BOUND)
-        {
-            xAngle = 0;
-        }
-        if (yAngle < ANGLE_LOWER_BOUND)
-        {
-            yAngle = 0;
+            g_yAngle *= -1;
         }
 
-        Board_UpdatePwm(xAngle, yAngle);
+        /* Update the duty cycle of PWM */
+        Board_UpdatePwm(g_xAngle, g_yAngle);
 
-        /* Print out the raw accelerometer data. */
-        PRINTF("x= %6d y = %6d\r\n", xData, yData);
+        /* Print out the angle data. */
+        PRINTF("x= %2d y = %2d\r\n", g_xAngle, g_yAngle);
     }
 }

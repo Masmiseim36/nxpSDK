@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- *  that the following conditions are met:
  *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_qspi.h"
@@ -38,7 +12,6 @@
 #ifndef FSL_COMPONENT_ID
 #define FSL_COMPONENT_ID "platform.drivers.qspi"
 #endif
-
 
 /*******************************************************************************
  * Definitations
@@ -69,6 +42,11 @@ static const clock_ip_name_t s_qspiClock[] = QSPI_CLOCKS;
 /*******************************************************************************
  * Code
  ******************************************************************************/
+/*!
+* brief Get the instance number for QSPI.
+*
+* param base QSPI base pointer.
+*/
 uint32_t QSPI_GetInstance(QuadSPI_Type *base)
 {
     uint32_t instance;
@@ -87,6 +65,16 @@ uint32_t QSPI_GetInstance(QuadSPI_Type *base)
     return instance;
 }
 
+/*!
+ * brief Initializes the QSPI module and internal state.
+ *
+ * This function enables the clock for QSPI and also configures the QSPI with the
+ * input configure parameters. Users should call this function before any QSPI operations.
+ *
+ * param base Pointer to QuadSPI Type.
+ * param config QSPI configure structure.
+ * param srcClock_Hz QSPI source clock frequency in Hz.
+ */
 void QSPI_Init(QuadSPI_Type *base, qspi_config_t *config, uint32_t srcClock_Hz)
 {
     uint32_t i = 0;
@@ -106,7 +94,7 @@ void QSPI_Init(QuadSPI_Type *base, qspi_config_t *config, uint32_t srcClock_Hz)
     /* Configure QSPI */
     QSPI_Enable(base, false);
 
-#if !defined (FSL_FEATURE_QSPI_CLOCK_CONTROL_EXTERNAL) || (!FSL_FEATURE_QSPI_CLOCK_CONTROL_EXTERNAL)
+#if !defined(FSL_FEATURE_QSPI_CLOCK_CONTROL_EXTERNAL) || (!FSL_FEATURE_QSPI_CLOCK_CONTROL_EXTERNAL)
     /* Set qspi clock source */
     base->SOCCR = config->clockSource;
 
@@ -134,7 +122,7 @@ void QSPI_Init(QuadSPI_Type *base, qspi_config_t *config, uint32_t srcClock_Hz)
     base->RBCT &= ~QuadSPI_RBCT_WMRK_MASK;
     base->RBCT |= QuadSPI_RBCT_WMRK(config->rxWatermark - 1);
 
-#if !defined (FSL_FEATURE_QSPI_HAS_NO_TXDMA) || (!FSL_FEATURE_QSPI_HAS_NO_TXDMA)
+#if !defined(FSL_FEATURE_QSPI_HAS_NO_TXDMA) || (!FSL_FEATURE_QSPI_HAS_NO_TXDMA)
     base->TBCT &= ~QuadSPI_TBCT_WMRK_MASK;
     base->TBCT |= QuadSPI_TBCT_WMRK(config->txWatermark - 1);
 #endif /* FSL_FEATURE_QSPI_HAS_NO_TXDMA */
@@ -146,8 +134,16 @@ void QSPI_Init(QuadSPI_Type *base, qspi_config_t *config, uint32_t srcClock_Hz)
     }
 }
 
+/*!
+ * brief Gets default settings for QSPI.
+ *
+ * param config QSPI configuration structure.
+ */
 void QSPI_GetDefaultQspiConfig(qspi_config_t *config)
 {
+    /* Initializes the configure structure to zero. */
+    memset(config, 0, sizeof(*config));
+
     config->clockSource = 2U;
     config->baudRate = 24000000U;
     config->AHBbufferMaster[0] = 0xE;
@@ -159,6 +155,12 @@ void QSPI_GetDefaultQspiConfig(qspi_config_t *config)
     config->enableQspi = true;
 }
 
+/*!
+ * brief Deinitializes the QSPI module.
+ *
+ * Clears the QSPI state and  QSPI module registers.
+ * param base Pointer to QuadSPI Type.
+ */
 void QSPI_Deinit(QuadSPI_Type *base)
 {
     QSPI_Enable(base, false);
@@ -167,6 +169,16 @@ void QSPI_Deinit(QuadSPI_Type *base)
 #endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
 }
 
+/*!
+ * brief Configures the serial flash parameter.
+ *
+ * This function configures the serial flash relevant parameters, such as the size, command, and so on.
+ * The flash configuration value cannot have a default value. The user needs to configure it according to the
+ * QSPI features.
+ *
+ * param base Pointer to QuadSPI Type.
+ * param config Flash configuration parameters.
+ */
 void QSPI_SetFlashConfig(QuadSPI_Type *base, qspi_flash_config_t *config)
 {
     uint32_t address = FSL_FEATURE_QSPI_AMBA_BASE + config->flashA1Size;
@@ -187,7 +199,7 @@ void QSPI_SetFlashConfig(QuadSPI_Type *base, qspi_flash_config_t *config)
     base->SFB2AD = address;
 #endif /* FSL_FEATURE_QSPI_SUPPORT_PARALLEL_MODE */
 
-#if !defined (FSL_FEATURE_QSPI_HAS_NO_SFACR) || (!FSL_FEATURE_QSPI_HAS_NO_SFACR)
+#if !defined(FSL_FEATURE_QSPI_HAS_NO_SFACR) || (!FSL_FEATURE_QSPI_HAS_NO_SFACR)
     /* Set Word Addressable feature */
     val = QuadSPI_SFACR_WA(config->enableWordAddress) | QuadSPI_SFACR_CAS(config->cloumnspace);
     base->SFACR = val;
@@ -203,7 +215,7 @@ void QSPI_SetFlashConfig(QuadSPI_Type *base, qspi_flash_config_t *config)
     base->LUTKEY = 0x5AF05AF0U;
     base->LCKCR = 0x1U;
 
-#if !defined (FSL_FEATURE_QSPI_HAS_NO_TDH) || (!FSL_FEATURE_QSPI_HAS_NO_TDH)
+#if !defined(FSL_FEATURE_QSPI_HAS_NO_TDH) || (!FSL_FEATURE_QSPI_HAS_NO_TDH)
     /* Config flash timing */
     val = QuadSPI_FLSHCR_TCSS(config->CSHoldTime) | QuadSPI_FLSHCR_TDH(config->dataHoldTime) |
           QuadSPI_FLSHCR_TCSH(config->CSSetupTime);
@@ -220,6 +232,14 @@ void QSPI_SetFlashConfig(QuadSPI_Type *base, qspi_flash_config_t *config)
     QSPI_Enable(base, true);
 }
 
+/*!
+ * brief Software reset for the QSPI logic.
+ *
+ * This function sets the software reset flags for both AHB and buffer domain and
+ * resets both AHB buffer and also IP FIFOs.
+ *
+ * param base Pointer to QuadSPI Type.
+ */
 void QSPI_SoftwareReset(QuadSPI_Type *base)
 {
     uint32_t i = 0;
@@ -243,6 +263,15 @@ void QSPI_SoftwareReset(QuadSPI_Type *base)
     QSPI_Enable(base, true);
 }
 
+/*!
+ * brief Gets the Rx data register address used for DMA operation.
+ *
+ * This function returns the Rx data register address or Rx buffer address
+ * according to the Rx read area settings.
+ *
+ * param base Pointer to QuadSPI Type.
+ * return QSPI Rx data register address.
+ */
 uint32_t QSPI_GetRxDataRegisterAddress(QuadSPI_Type *base)
 {
     /* From RDBR */
@@ -257,6 +286,11 @@ uint32_t QSPI_GetRxDataRegisterAddress(QuadSPI_Type *base)
     }
 }
 
+/*! brief Executes IP commands located in LUT table.
+ *
+ * param base Pointer to QuadSPI Type.
+ * param index IP command located in which LUT table index.
+ */
 void QSPI_ExecuteIPCommand(QuadSPI_Type *base, uint32_t index)
 {
     while (QSPI_GetStatusFlags(base) & (kQSPI_Busy | kQSPI_IPAccess))
@@ -268,6 +302,11 @@ void QSPI_ExecuteIPCommand(QuadSPI_Type *base, uint32_t index)
     base->IPCR = ((base->IPCR & (~QuadSPI_IPCR_SEQID_MASK)) | QuadSPI_IPCR_SEQID(index / 4U));
 }
 
+/*! brief Executes AHB commands located in LUT table.
+ *
+ * param base Pointer to QuadSPI Type.
+ * param index AHB command located in which LUT table index.
+ */
 void QSPI_ExecuteAHBCommand(QuadSPI_Type *base, uint32_t index)
 {
     while (QSPI_GetStatusFlags(base) & (kQSPI_Busy | kQSPI_AHBAccess))
@@ -277,6 +316,12 @@ void QSPI_ExecuteAHBCommand(QuadSPI_Type *base, uint32_t index)
     base->BFGENCR = ((base->BFGENCR & (~QuadSPI_BFGENCR_SEQID_MASK)) | QuadSPI_BFGENCR_SEQID(index / 4U));
 }
 
+/*! brief Updates the LUT table.
+*
+* param base Pointer to QuadSPI Type.
+* param index Which LUT index needs to be located. It should be an integer divided by 4.
+* param cmd Command sequence array.
+*/
 void QSPI_UpdateLUT(QuadSPI_Type *base, uint32_t index, uint32_t *cmd)
 {
     uint8_t i = 0;
@@ -297,12 +342,24 @@ void QSPI_UpdateLUT(QuadSPI_Type *base, uint32_t index, uint32_t *cmd)
     base->LCKCR = 0x1U;
 }
 
+/*! brief Set the RX buffer readout area.
+ *
+ * This function can set the RX buffer readout, from AHB bus or IP Bus.
+ * param base QSPI base address.
+ * param area QSPI Rx buffer readout area. AHB bus buffer or IP bus buffer.
+ */
 void QSPI_SetReadDataArea(QuadSPI_Type *base, qspi_read_area_t area)
 {
     base->RBCT &= ~QuadSPI_RBCT_RXBRD_MASK;
     base->RBCT |= QuadSPI_RBCT_RXBRD(area);
 }
 
+/*!
+ * brief Receives data from data FIFO.
+ *
+ * param base QSPI base pointer
+ * return The data in the FIFO.
+ */
 uint32_t QSPI_ReadData(QuadSPI_Type *base)
 {
     if (base->RBCT & QuadSPI_RBCT_RXBRD_MASK)
@@ -316,6 +373,13 @@ uint32_t QSPI_ReadData(QuadSPI_Type *base)
     }
 }
 
+/*!
+ * brief Sends a buffer of data bytes using a  blocking method.
+ * note This function blocks via polling until all bytes have been sent.
+ * param base QSPI base pointer
+ * param buffer The data bytes to send
+ * param size The number of data bytes to send
+ */
 void QSPI_WriteBlocking(QuadSPI_Type *base, uint32_t *buffer, size_t size)
 {
     assert(size >= 16U);
@@ -333,6 +397,16 @@ void QSPI_WriteBlocking(QuadSPI_Type *base, uint32_t *buffer, size_t size)
     }
 }
 
+/*!
+ * brief Receives a buffer of data bytes using a blocking method.
+ * note This function blocks via polling until all bytes have been sent. Users shall notice that
+ * this receive size shall not bigger than 64 bytes. As this interface is used to read flash status registers.
+ * For flash contents read, please use AHB bus read, this is much more efficiency.
+ *
+ * param base QSPI base pointer
+ * param buffer The data bytes to send
+ * param size The number of data bytes to receive
+ */
 void QSPI_ReadBlocking(QuadSPI_Type *base, uint32_t *buffer, size_t size)
 {
     uint32_t i = 0;

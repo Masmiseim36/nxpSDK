@@ -51,6 +51,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -96,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
     ProgressBar progressBarAccel;
     ProgressBar progressBarRgbLed;
     CardView cardViewLed;
+    CardView cardViewAccel;
 
     /** variables */
     int rgbLedBinState;
@@ -145,6 +147,8 @@ public class MainActivity extends AppCompatActivity {
         progressBarAccel = (ProgressBar) findViewById(R.id.progressBarAccel);
         progressBarRgbLed = (ProgressBar) findViewById(R.id.progressBarRgbLed);
         cardViewLed = (CardView) findViewById(R.id.cardViewLed);
+        cardViewAccel = (CardView) findViewById(R.id.card_view_accel);
+
 
         // default variable values
         rgbLedBinState = 0b0;
@@ -226,9 +230,9 @@ public class MainActivity extends AppCompatActivity {
         enableClickableGUIItems(false);
 
         // Update LED value in device shadow by setting which led was turned on as shadow's desired state.
-        View.OnClickListener rgbLedSwitchListener = new View.OnClickListener() {
+        CompoundButton.OnCheckedChangeListener rgbLedSwitchListener = new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 AwsShadow shadow = new AwsShadow();
 
                 // update RGB LED binary state
@@ -269,9 +273,9 @@ public class MainActivity extends AppCompatActivity {
                 timeoutHandler.postDelayed(displayTimeoutToast, AwsConstants.TIMEOUT);
             }
         };
-        swLedRed.setOnClickListener(rgbLedSwitchListener);
-        swLedGreen.setOnClickListener(rgbLedSwitchListener);
-        swLedBlue.setOnClickListener(rgbLedSwitchListener);
+        swLedRed.setOnCheckedChangeListener(rgbLedSwitchListener);
+        swLedGreen.setOnCheckedChangeListener(rgbLedSwitchListener);
+        swLedBlue.setOnCheckedChangeListener(rgbLedSwitchListener);
 
         bAccelRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -485,6 +489,9 @@ public class MainActivity extends AppCompatActivity {
                                                         swLedRed.setChecked((state & RgbLed.RED.getValue()) > 0);
                                                         swLedGreen.setChecked((state & RgbLed.GREEN.getValue()) > 0);
                                                         swLedBlue.setChecked((state & RgbLed.BLUE.getValue()) > 0);
+
+                                                        // hide accelerometer, if no data has been received
+                                                        cardViewAccel.setVisibility(shadow.state.reported.accel == null ? View.GONE : View.VISIBLE);
                                                     }
                                                 });
                                             }
@@ -703,22 +710,26 @@ public class MainActivity extends AppCompatActivity {
      * @param shadow AWS shadow
      */
     private void updateAccelValuesAfterShadowUpdate(final AwsShadow shadow) {
-        if (shadow.state.reported != null && shadow.state.reported.accel != null) {
-            final AwsShadow.State.Reported.Accel accel = shadow.state.reported.accel;
+        if (shadow.state.reported != null){
+            if (shadow.state.reported.accel != null) {
+                final AwsShadow.State.Reported.Accel accel = shadow.state.reported.accel;
 
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    // update accelerometer values
-                    tvAccelValues.setText(String.format("x: %d  y: %d  z: %d", accel.x, accel.y, accel.z));
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        cardViewAccel.setVisibility(View.VISIBLE);
 
-                    // update timestamp
-                    tvAccelTimestamp.setText(formatUnixTimeStamp(shadow.metadata.reported.accel.x.timestamp));
+                        // update accelerometer values
+                        tvAccelValues.setText(String.format("x: %d  y: %d  z: %d", accel.x, accel.y, accel.z));
 
-                    // hide progress bar
-                    progressBarAccel.setVisibility(View.INVISIBLE);
-                }
-            });
+                        // update timestamp
+                        tvAccelTimestamp.setText(formatUnixTimeStamp(shadow.metadata.reported.accel.x.timestamp));
+
+                        // hide progress bar
+                        progressBarAccel.setVisibility(View.INVISIBLE);
+                    }
+                });
+            }
         }
     }
 

@@ -3,14 +3,6 @@ Overview
 The flexio_i2c_interrupt example shows how to use flexio i2c master driver in interrupt way:
 
 In this example, a flexio simulated i2c master connect to an I2C slave.
-
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
-
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -51,6 +43,11 @@ Slave received data :
 0x08  0x09  0x0A  0x0B  0x0C
 
 ~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

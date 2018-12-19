@@ -2,7 +2,7 @@
 <project>
   <fileVersion>2</fileVersion>
   <configuration>
-    <name>Debug</name>
+    <name>debug</name>
     <toolchain>
       <name>ARM</name>
     </toolchain>
@@ -184,6 +184,8 @@
           <state>CPU_MK22FN512VDC12</state>
           <state>TWR_K22F120M</state>
           <state>TOWER</state>
+          <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
+          <state>BOARD_USE_CODEC=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -223,7 +225,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050,Pe167</state>
+          <state>Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -244,7 +246,7 @@
         <option>
           <name>CCAllowList</name>
           <version>1</version>
-          <state>00000000</state>
+          <state>00100000</state>
         </option>
         <option>
           <name>CCDebugInfo</name>
@@ -260,7 +262,7 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IExtraOptions</name>
@@ -313,14 +315,29 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/../../../../../../platform/components/sgtl5000</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../../devices</state>
           <state>$PROJ_DIR$/../..</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../..</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
+          <state>$PROJ_DIR$/../../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../../devices/MK22F51212/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MK22F51212/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/sgtl5000</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MK22F51212/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MK22F51212/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MK22F51212/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MK22F51212/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MK22F51212/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MK22F51212</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MK22F51212/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MK22F51212/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MK22F51212/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MK22F51212/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MK22F51212/drivers</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -387,15 +404,15 @@
         </option>
         <option>
           <name>IccCppDialect</name>
-          <state>2</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccExceptions</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccRTTI</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccStaticDestr</name>
@@ -403,7 +420,7 @@
         </option>
         <option>
           <name>IccCppInlineSemantics</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccCmsis</name>
@@ -769,7 +786,6 @@
         </option>
         <option>
           <name>IlinkExtraOptions</name>
-          <state/>
         </option>
         <option>
           <name>IlinkLowLevelInterfaceSlave</name>
@@ -969,7 +985,7 @@
     </settings>
   </configuration>
   <configuration>
-    <name>Release</name>
+    <name>release</name>
     <toolchain>
       <name>ARM</name>
     </toolchain>
@@ -1151,6 +1167,8 @@
           <state>CPU_MK22FN512VDC12</state>
           <state>TWR_K22F120M</state>
           <state>TOWER</state>
+          <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
+          <state>BOARD_USE_CODEC=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1190,7 +1208,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050,Pe167</state>
+          <state>Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -1280,14 +1298,29 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/../../../../../../platform/components/sgtl5000</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../../devices</state>
           <state>$PROJ_DIR$/../..</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../..</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
+          <state>$PROJ_DIR$/../../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../../devices/MK22F51212/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MK22F51212/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/sgtl5000</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MK22F51212/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MK22F51212/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MK22F51212/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MK22F51212/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MK22F51212/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MK22F51212</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MK22F51212/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MK22F51212/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MK22F51212/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MK22F51212/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MK22F51212/drivers</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1354,15 +1387,15 @@
         </option>
         <option>
           <name>IccCppDialect</name>
-          <state>2</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccExceptions</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccRTTI</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccStaticDestr</name>
@@ -1370,7 +1403,7 @@
         </option>
         <option>
           <name>IccCppInlineSemantics</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccCmsis</name>
@@ -1453,6 +1486,7 @@
         </option>
         <option>
           <name>ADefines</name>
+          <state>NDEBUG</state>
         </option>
         <option>
           <name>AList</name>
@@ -1735,7 +1769,6 @@
         </option>
         <option>
           <name>IlinkExtraOptions</name>
-          <state/>
         </option>
         <option>
           <name>IlinkLowLevelInterfaceSlave</name>
@@ -1935,93 +1968,6 @@
     </settings>
   </configuration>
   <group>
-    <name>startup</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK22F51212/iar/startup_MK22F51212.s</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK22F51212/system_MK22F51212.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK22F51212/system_MK22F51212.h</name>
-    </file>
-  </group>
-  <group>
-    <name>doc</name>
-    <file>
-      <name>$PROJ_DIR$/../readme.txt</name>
-    </file>
-  </group>
-  <group>
-    <name>drivers</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK22F51212/drivers/fsl_i2c.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK22F51212/drivers/fsl_i2c.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK22F51212/drivers/fsl_uart.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK22F51212/drivers/fsl_uart.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK22F51212/drivers/fsl_lpuart.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK22F51212/drivers/fsl_lpuart.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK22F51212/drivers/fsl_port.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK22F51212/drivers/fsl_gpio.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK22F51212/drivers/fsl_gpio.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK22F51212/drivers/fsl_clock.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK22F51212/drivers/fsl_clock.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK22F51212/drivers/fsl_sai.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK22F51212/drivers/fsl_sai.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK22F51212/drivers/fsl_common.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK22F51212/drivers/fsl_common.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK22F51212/drivers/fsl_smc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK22F51212/drivers/fsl_smc.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK22F51212/drivers/fsl_flash.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK22F51212/drivers/fsl_flash.h</name>
-    </file>
-  </group>
-  <group>
-    <name>codec</name>
-    <file>
-      <name>$PROJ_DIR$/../fsl_sgtl5000.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../fsl_sgtl5000.c</name>
-    </file>
-  </group>
-  <group>
     <name>source_transfer</name>
     <file>
       <name>$PROJ_DIR$/../sai_interrupt_transfer.c</name>
@@ -2051,16 +1997,208 @@
   <group>
     <name>source</name>
     <file>
-      <name>$PROJ_DIR$/../../music.h</name>
+      <name>$PROJ_DIR$/../music.h</name>
+    </file>
+  </group>
+  <group>
+    <name>doc</name>
+    <file>
+      <name>$PROJ_DIR$/../readme.txt</name>
+    </file>
+  </group>
+  <group>
+    <name>drivers</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK22F51212/drivers/fsl_i2c.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK22F51212/drivers/fsl_i2c.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK22F51212/drivers/fsl_port.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK22F51212/drivers/fsl_gpio.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK22F51212/drivers/fsl_gpio.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK22F51212/drivers/fsl_clock.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK22F51212/drivers/fsl_clock.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK22F51212/drivers/fsl_sai.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK22F51212/drivers/fsl_sai.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK22F51212/drivers/fsl_common.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK22F51212/drivers/fsl_common.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK22F51212/drivers/fsl_uart.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK22F51212/drivers/fsl_uart.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK22F51212/drivers/fsl_lpuart.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK22F51212/drivers/fsl_lpuart.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK22F51212/drivers/fsl_smc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK22F51212/drivers/fsl_smc.c</name>
+    </file>
+  </group>
+  <group>
+    <name>codec</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/codec/sgtl5000/fsl_sgtl5000.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/codec/sgtl5000/fsl_sgtl5000.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/codec/fsl_codec_common.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/codec/fsl_codec_common.c</name>
+    </file>
+  </group>
+  <group>
+    <name>device</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK22F51212/fsl_device_registers.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK22F51212/MK22F51212.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK22F51212/MK22F51212_features.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK22F51212/system_MK22F51212.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK22F51212/system_MK22F51212.h</name>
     </file>
   </group>
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK22F51212/utilities/fsl_debug_console.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MK22F51212/utilities/str/fsl_str.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK22F51212/utilities/fsl_debug_console.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MK22F51212/utilities/str/fsl_str.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK22F51212/utilities/debug_console/fsl_debug_console.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK22F51212/utilities/debug_console/fsl_debug_console.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK22F51212/utilities/debug_console/fsl_debug_console_conf.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK22F51212/utilities/fsl_assert.c</name>
+    </file>
+  </group>
+  <group>
+    <name>component</name>
+    <group>
+      <name>uart</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/uart/uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/uart/uart_adapter.c</name>
+      </file>
+    </group>
+    <group>
+      <name>serial_manager</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_manager.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_manager.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_port_uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_port_uart.c</name>
+      </file>
+    </group>
+    <group>
+      <name>lists</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/lists/generic_list.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/lists/generic_list.c</name>
+      </file>
+    </group>
+  </group>
+  <group>
+    <name>startup</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK22F51212/iar/startup_MK22F51212.s</name>
+    </file>
+  </group>
+  <group>
+    <name>CMSIS</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_cm4.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_armcc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_armclang.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_gcc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_compiler.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_version.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv7.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_armv8mbl.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_armv8mml.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_common_tables.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_const_structs.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_math.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_iccarm.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv8.h</name>
     </file>
   </group>
 </project>

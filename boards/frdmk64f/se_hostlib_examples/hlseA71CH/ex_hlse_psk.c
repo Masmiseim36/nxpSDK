@@ -3,28 +3,16 @@
  * @author NXP Semiconductors
  * @version 1.0
  * @par License
- * Copyright(C) NXP Semiconductors, 2016
- * All rights reserved.
+ * Copyright 2016 NXP
  *
- * Software that is described herein is for illustrative purposes only
- * which provides customers with programming information regarding the
- * A7-series security ICs.  This software is supplied "AS IS" without any
- * warranties of any kind, and NXP Semiconductors and its licensor disclaim any and
- * all warranties, express or implied, including all implied warranties of
- * merchantability, fitness for a particular purpose and non-infringement of
- * intellectual property rights.  NXP Semiconductors assumes no responsibility
- * or liability for the use of the software, conveys no license or rights under any
- * patent, copyright, mask work right, or any other intellectual property rights in
- * or to any products. NXP Semiconductors reserves the right to make changes
- * in the software without notification. NXP Semiconductors also makes no
- * representation or warranty that such application will be suitable for the
- * specified use without further testing or modification.
+ * This software is owned or controlled by NXP and may only be used
+ * strictly in accordance with the applicable license terms.  By expressly
+ * accepting such terms or by downloading, installing, activating and/or
+ * otherwise using the software, you are agreeing that you have read, and
+ * that you agree to comply with and are bound by, such license terms.  If
+ * you do not agree to be bound by the applicable license terms, then you
+ * may not retain, install, activate or otherwise use the software.
  *
- * Permission to use, copy and modify this software is hereby granted,
- * under NXP Semiconductors' and its licensor's relevant copyrights in
- * the software, without fee, provided that it is used in conjunction with
- * NXP Semiconductors products. This copyright, permission, and disclaimer notice
- * must appear in all copies of this code.
  * @par Description
  * Demonstrate the pre-shared-key
  */
@@ -66,7 +54,7 @@ static U8 exPskTls1_2(U8 initMode, U8 pskMode);
 U8 exHlsePsk()
 {
     U8 result = 1;
-    printf( "\r\n-----------\r\nStart exPsk()\r\n------------\r\n");
+    PRINTF( "\r\n-----------\r\nStart exPsk()\r\n------------\r\n");
 
     // Without channel encryption
     result &= exPskTls1_2(INIT_MODE_RESET, PLAIN_PSK);
@@ -79,7 +67,7 @@ U8 exHlsePsk()
     result &= exPskTls1_2(INIT_MODE_RESET_DO_SCP03, ECDH_PSK);
 
     // overall result
-    printf( "\r\n-----------\r\nEnd exPsk(), result = %s\r\n------------\r\n", ((result == 1)? "OK": "FAILED"));
+    PRINTF( "\r\n-----------\r\nEnd exPsk(), result = %s\r\n------------\r\n", ((result == 1)? "OK": "FAILED"));
 
     return result;
 }
@@ -160,18 +148,18 @@ static U8 exPskTls1_2(U8 initMode, U8 pskMode)
     HLSE_OBJECT_HANDLE handleEccKeyPair;
     HLSE_OBJECT_HANDLE aesKeyHandles[A71CH_SYM_KEY_MAX];
 
-    printf( "\r\n-----------\r\nStart exPskTls1_2(%s, %s)\r\n------------\r\n", getInitModeAsString(initMode),
+    PRINTF( "\r\n-----------\r\nStart exPskTls1_2(%s, %s)\r\n------------\r\n", getInitModeAsString(initMode),
         (pskMode == 0x00) ? "PLAIN_PSK" : "ECDH_PSK");
 
     if ( (pskMode != PLAIN_PSK) && (pskMode != ECDH_PSK) )
     {
-        printf("pskMode (0x%02X) does not have a legal value.\r\n", pskMode);
+        PRINTF("pskMode (0x%02X) does not have a legal value.\r\n", pskMode);
         result = 0;
         return result;
     }
 
     DEV_ClearChannelState();
-    // printf("\r\nDBG_Reset()\r\n");
+    // PRINTF("\r\nDBG_Reset()\r\n");
     // err = DBG_Reset();
     // result &= AX_CHECK_SW(err, SW_OK, "err");
 
@@ -210,7 +198,7 @@ static U8 exPskTls1_2(U8 initMode, U8 pskMode)
 
         // Set first ECC keyPair with eccKcTls_0 (Key pair created on Host)
         indexKp = A71CH_KEY_PAIR_0;
-        printf("\r\nA71_SetEccKeyPair(0x%02x)\r\n", indexKp);
+        PRINTF("\r\nA71_SetEccKeyPair(0x%02x)\r\n", indexKp);
 #if 0
         err = A71_SetEccKeyPair(indexKp, eccKcTls_0.pub, eccKcTls_0.pubLen, eccKcTls_0.priv, eccKcTls_0.privLen);
 #else
@@ -223,13 +211,13 @@ static U8 exPskTls1_2(U8 initMode, U8 pskMode)
         //   The Second ECC key pair was already set, now use it in combination with
         // eccKeyTls_0 to create a shared secret
         // index = A71CH_KEY_PAIR_1;
-        // printf("\r\nA71_EcdhGetSharedSecret(0x%02x) on A71CH\r\n", index);
+        // PRINTF("\r\nA71_EcdhGetSharedSecret(0x%02x) on A71CH\r\n", index);
         // sharedSecretOnA71CHLen = sizeof(sharedSecretOnA71CH);
         // err = A71_EcdhGetSharedSecret(index, eccKcTls_0.pub, eccKcTls_0.pubLen, sharedSecretOnA71CH, &sharedSecretOnA71CHLen);
         // result &= AX_CHECK_SW(err, SW_OK, "err");
         // axPrintByteArray("sharedSecretOnA71CH", sharedSecretOnA71CH, sharedSecretOnA71CHLen, AX_COLON_32);
 
-        printf("\r\nA71_EcdhGetSharedSecret() on Host\r\n");
+        PRINTF("\r\nA71_EcdhGetSharedSecret() on Host\r\n");
         ecdhSSLen = sizeof(ecdhSS);
         err = HOSTCRYPTO_ECC_ComputeSharedSecret(eccKeyTls_Host, eccKcTls_0.pub, eccKcTls_0.pubLen, ecdhSS, &ecdhSSLen);
         result &= AX_CHECK_SW(err, SW_OK, "err");
@@ -243,7 +231,7 @@ static U8 exPskTls1_2(U8 initMode, U8 pskMode)
     for (indexAesKey=0; indexAesKey<A71CH_SYM_KEY_MAX; indexAesKey++)
     {
         // Write the key (unwrapped)
-        printf( "\r\nA71_SetSymKey(0x%02x)\r\n", indexAesKey);
+        PRINTF( "\r\nA71_SetSymKey(0x%02x)\r\n", indexAesKey);
 #if 0
         err = A71_SetSymKey((SST_Index_t)indexAesKey, aesRef[indexAesKey], sizeof(aesRef[indexAesKey]));
 #else
@@ -258,12 +246,12 @@ static U8 exPskTls1_2(U8 initMode, U8 pskMode)
     {
         if (i >= AX_TLS_LABEL_LEN)
         {
-            printf("Insufficient storage for label (i=%d) totalsize=%d\r\n", i, sizeof(labelString));
+            PRINTF("Insufficient storage for label (i=%d) totalsize=%d\r\n", i, sizeof(labelString));
             result = 0;
             break;
         }
         label[i] = (U8) labelString[i];
-        printf("0x%02X - %c\r\n", label[i], labelString[i]);
+        PRINTF("0x%02X - %c\r\n", label[i], labelString[i]);
     }
 
     for (i=0; i<AX_TLS_SECRET_LEN; i++)
@@ -299,7 +287,7 @@ static U8 exPskTls1_2(U8 initMode, U8 pskMode)
             indexAesKey = A71CH_SYM_KEY_0 + indexOffset;
             if (pskMode == PLAIN_PSK)
             {
-                printf("\r\nA71_PskDeriveMasterSecret(0x%02x, nBlock=%d, serverSeedLen=%d)\r\n", indexAesKey, nBlock, serverSeedLen);
+                PRINTF("\r\nA71_PskDeriveMasterSecret(0x%02x, nBlock=%d, serverSeedLen=%d)\r\n", indexAesKey, nBlock, serverSeedLen);
 #if 0
                 err = A71_PskDeriveMasterSecret(indexAesKey, nBlock, serverSeed, serverSeedLen, masterSecret);
 #else
@@ -326,7 +314,7 @@ static U8 exPskTls1_2(U8 initMode, U8 pskMode)
             }
             else if (pskMode == ECDH_PSK)
             {
-                printf("\r\nA71_EcdhPskDeriveMasterSecret(0x%02x, 0x%02x, nBlock=%d, serverSeedLen=%d)\r\n", indexKp, indexAesKey, nBlock, serverSeedLen);
+                PRINTF("\r\nA71_EcdhPskDeriveMasterSecret(0x%02x, 0x%02x, nBlock=%d, serverSeedLen=%d)\r\n", indexKp, indexAesKey, nBlock, serverSeedLen);
 #if 0
                 err = A71_EcdhPskDeriveMasterSecret(indexKp, eccKcTls_Host.pub, eccKcTls_Host.pubLen, indexAesKey, nBlock, labelAndSeed, labelAndSeedLen, masterSecret);
 #else
@@ -381,7 +369,7 @@ static U8 exPskTls1_2(U8 initMode, U8 pskMode)
             }
             if (err == SW_OK) { axPrintByteArray("premasterSecret", premasterSecret, premasterSecretLen, AX_COLON_32); }
             // *** Now invoke P_SHA256
-            printf("\r\nHOSTCRYPTO_Tls1_2_P_Sha256(secret,secretLen=%d, ...)\r\n", premasterSecretLen);
+            PRINTF("\r\nHOSTCRYPTO_Tls1_2_P_Sha256(secret,secretLen=%d, ...)\r\n", premasterSecretLen);
             err = HOSTCRYPTO_Tls1_2_P_Sha256(premasterSecret, premasterSecretLen,
                 labelAndSeed, labelAndSeedLen, masterSecretHost, masterSecretHostLen);
             result &= AX_CHECK_SW(err, SW_OK, "HOSTCRYPTO_Tls1_2_P_Sha256 failed");
@@ -395,14 +383,14 @@ static U8 exPskTls1_2(U8 initMode, U8 pskMode)
             {
                 result = 0;
 
-                printf("\r\n***** ERROR Master secrets differ for PSKLen = %d:\r\n", nBlock*16);
+                PRINTF("\r\n***** ERROR Master secrets differ for PSKLen = %d:\r\n", nBlock*16);
                 axPrintByteArray("masterSecret", masterSecret, AX_TLS_PSK_MASTER_SECRET_LEN, AX_COLON_32);
                 axPrintByteArray("masterSecretHost", masterSecretHost, AX_TLS_PSK_MASTER_SECRET_LEN, AX_COLON_32);
             }
         }
     }
 
-    printf("\r\n-----------\r\nEnd exPskTls1_2(%s, %s), result = %s\r\n------------\r\n", getInitModeAsString(initMode),
+    PRINTF("\r\n-----------\r\nEnd exPskTls1_2(%s, %s), result = %s\r\n------------\r\n", getInitModeAsString(initMode),
         (pskMode == 0x00) ? "PLAIN_PSK" : "ECDH_PSK",
         ((result == 1)? "OK": "FAILED") );
 

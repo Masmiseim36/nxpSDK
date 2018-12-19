@@ -11,6 +11,8 @@ Before running the demo it is needed to configure AWS IoT Console, AWS Greengras
 
 2.  Create AWS Greengrass group, set up it's core and set up Hello World Lambda function (Module 1 to Module 3 Part 1): https://docs.aws.amazon.com/greengrass/latest/developerguide/gg-gs.html
 
+    Note: If you are using Amazon EC2 service for running Greengrass Core, make sure that its public IP address (you can see when selecting your instance in AWS EC2 service administration) is set in Greengrass Core/Connectivity.
+
 3.  Set up your device as part of your Greengrass group: https://docs.aws.amazon.com/greengrass/latest/developerguide/device-group.html
 
     In 2. step create one device named for example "HelloWorldDevice" (this will be your "Thing name") and save device certificates, you will need them later.
@@ -22,24 +24,6 @@ Before running the demo it is needed to configure AWS IoT Console, AWS Greengras
 5.  Go to AWS IoT, find your Greengrass group and deploy it again. You should do new deployment after every configuration change.
 
 
-
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- FRDM-K66F board
-- Personal Computer
-- Network cable RJ45 standard (Network with Internet access)
-
-Board settings
-==============
-No special settings are required.
 Prepare the Demo
 ================
 
@@ -88,116 +72,50 @@ Prepare the Demo
 Running the demo
 ================
 
-Demo is by default set to send message "Hello #1 from device to Greengrass Core." 5 times (can be changed with ggdDEMO_MAX_MQTT_MESSAGES).
+Demo is by default set to send message "Hello #0 from Amazon FreeRTOS to Greengrass Core." 3 times (can be changed with ggdDEMO_MAX_MQTT_MESSAGES).
 
 You can check connection log in Greengrass device on path: /greengrass/ggc/var/log/system/connection_manager.log
 
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 0 0 [Tmr Svc] Starting key provisioning...
-
 1 0 [Tmr Svc] Write root certificate...
-
-2 0 [Tmr Svc] Write device private key...
-
-3 9 [Tmr Svc] Write device certificate...
-
-4 18 [Tmr Svc] Key provisioning done...
-
-5 18 [Tmr Svc] Getting IP address from DHCP ...
-
-7 5274 [Tmr Svc] IPv4 Address: 10.42.0.198
-
-8 9278 [Tmr Svc] DHCP OK
-
-9 9278 [IoT_GGD] Attempting automated selection of Greengrass device
-
-10 9954 [IoT_GGD] Looked up a254jqzk0kcvf0.iot.us-west-2.amazonaws.com as 52.34.174.227
-
-11 22301 [IoT_GGD] About to close socket.
-
-12 22306 [IoT_GGD] Socket closed.
-
-13 22319 [IoT_GGD] Looked up 192.168.1.20 as 192.168.1.20
-
-14 26478 [IoT_GGD] About to close socket.
-
-15 26482 [IoT_GGD] Socket closed.
-
-16 26482 [IoT_GGD] Greengrass device discovered.
-
-17 26482 [IoT_GGD] Establishing MQTT communication to Greengrass...
-
-18 26484 [IoT_GGD] Sending command to MQTT task.
-
-19 26484 [MQTT] Received message 10000 from queue.
-
-20 26495 [MQTT] Looked up 192.168.1.20 as 192.168.1.20
-
-21 30786 [MQTT] MQTT Connect was accepted. Connection established.
-
-22 30786 [MQTT] Notifying task.
-
-23 30786 [IoT_GGD] Command sent to MQTT task passed.
-
-24 30786 [IoT_GGD] Sending command to MQTT task.
-
-25 30787 [MQTT] Received message 20000 from queue.
-
-26 30788 [MQTT] Notifying task.
-
-27 30788 [IoT_GGD] Command sent to MQTT task passed.
-
-28 32288 [IoT_GGD] Sending command to MQTT task.
-
-29 32288 [MQTT] Received message 30000 from queue.
-
-30 32289 [MQTT] Notifying task.
-
-31 32289 [IoT_GGD] Command sent to MQTT task passed.
-
-32 33789 [IoT_GGD] Sending command to MQTT task.
-
-33 33789 [MQTT] Received message 40000 from queue.
-
-34 33790 [MQTT] Notifying task.
-
-35 33790 [IoT_GGD] Command sent to MQTT task passed.
-
-36 35290 [IoT_GGD] Sending command to MQTT task.
-
-37 35290 [MQTT] Received message 50000 from queue.
-
-38 35291 [MQTT] Notifying task.
-
-39 35291 [IoT_GGD] Command sent to MQTT task passed.
-
-40 36791 [IoT_GGD] Sending command to MQTT task.
-
-41 36791 [MQTT] Received message 60000 from queue.
-
-42 36792 [MQTT] Notifying task.
-
-43 36792 [IoT_GGD] Command sent to MQTT task passed.
-
-44 38292 [IoT_GGD] Disconnecting from broker.
-
-45 38292 [IoT_GGD] Sending command to MQTT task.
-
-46 38292 [MQTT] Received message 70000 from queue.
-
-47 38293 [MQTT] About to close socket.
-
-48 38298 [MQTT] Socket closed.
-
-49 38298 [MQTT] Notifying task.
-
-50 38299 [IoT_GGD] Command sent to MQTT task passed.
-
-51 38299 [IoT_GGD] Disconnected from the broker.
-
-52 38299 [IoT_GGD] Deleted Client.
+2 6 [Tmr Svc] Write device private key...
+3 198 [Tmr Svc] Write device certificate...
+4 207 [Tmr Svc] Key provisioning done...
+5 1901 [Tmr Svc] Getting IP address from DHCP ...
+6 4901 [Tmr Svc] IPv4 address: 10.42.0.198
+7 4901 [Tmr Svc] DHCP OK
+8 4902 [IoT_GGD] Attempting automated selection of Greengrass device
+9 18069 [IoT_GGD] About to close socket.
+10 18071 [IoT_GGD] Socket closed.
+11 18071 [IoT_GGD] Stack high watermark for discovery helper task: 1556.
+12 23791 [IoT_GGD] About to close socket.
+13 23794 [IoT_GGD] Socket closed.
+14 23794 [IoT_GGD] Stack high watermark for discovery helper task: 906.
+15 23794 [IoT_GGD] Greengrass device discovered.
+16 23794 [IoT_GGD] Establishing MQTT communication to Greengrass...
+17 33978 [IoT_GGD] Disconnecting from broker.
+18 33981 [IoT_GGD] Disconnected from the broker.
+19 33981 [IoT_GGD] Deleted Client.
+20 33981 [IoT_GGD] Heap low watermark: 6456. Stack high watermark: 906.
+21 33981 [IoT_GGD] ----Demo finished----
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
+Hardware requirements
 =====================
+- Mini/micro USB cable
+- FRDM-K66F board
+- Personal Computer
+- Network cable RJ45 standard (Network with Internet access)
+
+Board settings
+==============
+No special settings are required.
+
+Toolchain supported
+===================
+- GCC ARM Embedded  7.3.1
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- MCUXpresso 10.3.0
 

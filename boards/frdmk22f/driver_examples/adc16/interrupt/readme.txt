@@ -13,14 +13,6 @@ The point is that the ADC16 interrupt configuration is set when configuring the 
 software trigger mode, the conversion would be launched by the operation of configuring channel, just like writing a
 conversion command. So if user wants to generate the interrupt every time the conversion is completed, the channel's 
 configuration with enabling interrupt setting would be used for each conversion.
-
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
-
 Hardware requirements
 =====================
 - Mini/Micro USB cable
@@ -50,6 +42,7 @@ When the demo runs successfully, the log would be seen on the OpenSDA terminal l
 
 ADC16 interrupt Example.
 ADC16_DoAutoCalibration() Done.
+ADC Full Range: XXXX
 Press any key to get user channel's ADC value ...
 ADC Value: 1918
 ADC Interrupt Count: 1
@@ -63,6 +56,11 @@ ADC Value: 1543
 ADC Interrupt Count: 5
 ADC Value: 1579
 ADC Interrupt Count: 6
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

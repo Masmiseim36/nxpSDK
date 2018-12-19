@@ -10,14 +10,6 @@ DAC trigger's counter would reset after the trigger is created and start countin
 
 In this example, the DAC is configured with hardware buffer enabled in normal work mode. Once it gets the trigger from 
 the PDB, the buffer read pointer increases.
-
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
-
 Hardware requirements
 =====================
 - Mini/Micro USB cable
@@ -67,6 +59,11 @@ DAC Buffer Index 12:
 DAC Buffer Index 13:
 DAC Buffer Index 14: WatermarkEvent
 DAC Buffer Index 15: ReadPointerBottomPositionEvent
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

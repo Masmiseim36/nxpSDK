@@ -7,9 +7,6 @@
 **                          MK64FN1M0VMD12
 **
 **     Compiler:            IAR ANSI C/C++ Compiler for ARM
-**     Reference manual:    K64P144M120SF5RM, Rev.2, January 2014
-**     Version:             rev. 2.9, 2016-03-21
-**     Build:               b171205
 **
 **     Abstract:
 **         Linker file for the IAR ANSI C/C++ Compiler for ARM

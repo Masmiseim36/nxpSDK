@@ -84,15 +84,15 @@ SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DDEBUG")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DCPU_MK64FN1M0VLL12")
 
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DFRDM_K64F")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DFREEDOM")
-
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DUSB_STACK_BM")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DNO_SECURE_CHANNEL_SUPPORT")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DSCP_MODE=C_MAC_C_ENC_R_MAC_R_ENC")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DFRDM_K64F")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DFREEDOM")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DTGT_A71CH")
 
@@ -134,15 +134,15 @@ SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DNDEBUG")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DCPU_MK64FN1M0VLL12")
 
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DFRDM_K64F")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DFREEDOM")
-
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DUSB_STACK_BM")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DNO_SECURE_CHANNEL_SUPPORT")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DSCP_MODE=C_MAC_C_ENC_R_MAC_R_ENC")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DFRDM_K64F")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DFREEDOM")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DTGT_A71CH")
 
@@ -298,6 +298,10 @@ SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")
 
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} muldefs")
 
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Map=output.map")
+
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -mcpu=cortex-m4")
 
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -mfloat-abi=hard")
@@ -340,29 +344,25 @@ SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
 
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} muldefs")
 
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Map=output.map")
+
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mcpu=cortex-m4")
 
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mfloat-abi=hard")
 
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mfpu=fpv4-sp-d16")
 
-include_directories(${ProjDirPath}/../../../../../CMSIS/Include)
+include_directories(${ProjDirPath}/..)
 
-include_directories(${ProjDirPath}/../../../../../devices)
+include_directories(${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/vcom/kinetis)
 
 include_directories(${ProjDirPath}/../../..)
 
-include_directories(${ProjDirPath}/..)
+include_directories(${ProjDirPath}/../../../../../CMSIS/Include)
 
-include_directories(${ProjDirPath}/../../../usb_examples/usb_device_cdc_vcom/bm)
-
-include_directories(${ProjDirPath}/../../../../../middleware/usb/example/usb_device_cdc_vcom/bm)
-
-include_directories(${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/tstUtil)
-
-include_directories(${ProjDirPath}/../../../../../middleware/se_hostlib/platform)
-
-include_directories(${ProjDirPath}/../../../../../middleware/se_hostlib/ax)
+include_directories(${ProjDirPath}/../../../../../devices)
 
 include_directories(${ProjDirPath}/../../../../../middleware/mmcau)
 
@@ -376,17 +376,9 @@ include_directories(${ProjDirPath}/../../../../../middleware/usb/osa)
 
 include_directories(${ProjDirPath}/../../../../../devices/MK64F12/drivers)
 
-include_directories(${ProjDirPath}/../../../../../devices/MK64F12/utilities/io)
+include_directories(${ProjDirPath}/../../../../../components/serial_manager)
 
-include_directories(${ProjDirPath}/../../../../../devices/MK64F12/utilities/str)
-
-include_directories(${ProjDirPath}/../../../../../devices/MK64F12/utilities/log)
-
-include_directories(${ProjDirPath}/../../../../../devices/MK64F12/utilities)
-
-include_directories(${ProjDirPath}/../../../../../devices/MK64F12)
-
-include_directories(${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/hostCrypto)
+include_directories(${ProjDirPath}/../../../../../components/serial_manager/usb_cdc_adapter)
 
 include_directories(${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/infra)
 
@@ -396,14 +388,26 @@ include_directories(${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/
 
 include_directories(${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/platform/inc)
 
-add_executable(vcomA71CH.elf 
+include_directories(${ProjDirPath}/../../../../../middleware/se_hostlib/platform)
+
+include_directories(${ProjDirPath}/../../../../../devices/MK64F12/utilities/str)
+
+include_directories(${ProjDirPath}/../../../../../devices/MK64F12/utilities/debug_console)
+
+include_directories(${ProjDirPath}/../../../../../devices/MK64F12)
+
+include_directories(${ProjDirPath}/../../../../../components/uart)
+
+include_directories(${ProjDirPath}/../../../../../components/lists)
+
+include_directories(${ProjDirPath}/../../../../../devices/MK64F12/utilities)
+
+add_executable(se_hostlib_vcomA71CH.elf 
 "${ProjDirPath}/../virtual_com.c"
 "${ProjDirPath}/../virtual_com.h"
 "${ProjDirPath}/../vcom2i2c.c"
 "${ProjDirPath}/../vcom2i2c.h"
-"${ProjDirPath}/../usb_device_descriptor.c"
-"${ProjDirPath}/../usb_device_config.h"
-"${ProjDirPath}/../usb_device_descriptor.h"
+"${ProjDirPath}/../usb_device_board_config.h"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../board.c"
@@ -412,7 +416,6 @@ add_executable(vcomA71CH.elf
 "${ProjDirPath}/../clock_config.h"
 "${ProjDirPath}/../../../../../middleware/usb/device/usb_device_khci.c"
 "${ProjDirPath}/../../../../../middleware/usb/device/usb_device_khci.h"
-"${ProjDirPath}/../../../../../middleware/usb/include/usb_khci.h"
 "${ProjDirPath}/../../../../../middleware/usb/include/usb.h"
 "${ProjDirPath}/../../../../../middleware/usb/include/usb_misc.h"
 "${ProjDirPath}/../../../../../middleware/usb/include/usb_spec.h"
@@ -421,10 +424,6 @@ add_executable(vcomA71CH.elf
 "${ProjDirPath}/../../../../../middleware/usb/osa/usb_osa_bm.c"
 "${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_sysmpu.h"
 "${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_sysmpu.c"
-"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_common.h"
-"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_common.c"
-"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_clock.h"
-"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_clock.c"
 "${ProjDirPath}/../../../../../middleware/mmcau/cau_api.h"
 "${ProjDirPath}/../../../../../middleware/mmcau/fsl_mmcau.h"
 "${ProjDirPath}/../../../../../middleware/mmcau/fsl_mmcau.c"
@@ -432,6 +431,56 @@ add_executable(vcomA71CH.elf
 "${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_rnga.h"
 "${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_i2c.h"
 "${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_i2c.c"
+"${ProjDirPath}/../../../../../components/serial_manager/serial_manager.h"
+"${ProjDirPath}/../../../../../components/serial_manager/serial_manager.c"
+"${ProjDirPath}/../../../../../components/serial_manager/serial_port_usb.h"
+"${ProjDirPath}/../../../../../components/serial_manager/serial_port_usb.c"
+"${ProjDirPath}/../../../../../components/serial_manager/usb_cdc_adapter/usb_device_descriptor.h"
+"${ProjDirPath}/../../../../../components/serial_manager/usb_cdc_adapter/usb_device_descriptor.c"
+"${ProjDirPath}/../../../../../components/serial_manager/usb_cdc_adapter/usb_device_cdc_acm.c"
+"${ProjDirPath}/../../../../../components/serial_manager/usb_cdc_adapter/usb_device_cdc_acm.h"
+"${ProjDirPath}/../../../../../components/serial_manager/usb_cdc_adapter/usb_device_class.c"
+"${ProjDirPath}/../../../../../components/serial_manager/usb_cdc_adapter/usb_device_class.h"
+"${ProjDirPath}/../../../../../components/serial_manager/usb_cdc_adapter/usb_device_ch9.c"
+"${ProjDirPath}/../../../../../components/serial_manager/usb_cdc_adapter/usb_device_ch9.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/infra/global_platf.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/infra/global_platf.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/infra/sm_apdu.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/infra/sm_apdu.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/infra/sm_errors.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/infra/sm_errors.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/infra/sm_types.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/infra/nxLog.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/infra/nxLog.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/infra/nxLog_App.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/infra/nxLog_DefaultConfig.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/scp/scp.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/scp/scp.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/smCom/apduComm.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/smCom/sci2c.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/smCom/sci2c.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/smCom/smCom.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/smCom/smComSCI2C.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/platform/generic/sm_printf.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/platform/inc/i2c_a7.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/platform/inc/sm_printf.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/platform/inc/sm_timer.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/platform/kinetis/i2c_frdm.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/platform/kinetis/i2c_imxrt10xx.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/platform/kinetis/i2c_lpc54xxx.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/platform/kinetis/timer_kinetis.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/platform/kinetis/timer_kinetis_bm.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/platform/kinetis/timer_kinetis_freertos.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/smCom/smCom.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/smCom/smComSCI2C.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/smCom/sci2c_cfg.h"
+"${ProjDirPath}/../../../../../middleware/usb/device/usb_device.h"
+"${ProjDirPath}/../../../../../middleware/usb/device/usb_device_dci.c"
+"${ProjDirPath}/../../../../../middleware/usb/device/usb_device_dci.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_common.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_common.c"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_clock.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_clock.c"
 "${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_adapter.h"
 "${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_utilities.h"
 "${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_features.h"
@@ -446,59 +495,44 @@ add_executable(vcomA71CH.elf
 "${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_flash.h"
 "${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_gpio.h"
 "${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_gpio.c"
-"${ProjDirPath}/../../../../../devices/MK64F12/utilities/io/fsl_io.c"
-"${ProjDirPath}/../../../../../devices/MK64F12/utilities/io/fsl_io.h"
-"${ProjDirPath}/../../../../../devices/MK64F12/utilities/log/fsl_log.c"
-"${ProjDirPath}/../../../../../devices/MK64F12/utilities/log/fsl_log.h"
 "${ProjDirPath}/../../../../../devices/MK64F12/utilities/str/fsl_str.c"
 "${ProjDirPath}/../../../../../devices/MK64F12/utilities/str/fsl_str.h"
-"${ProjDirPath}/../../../../../devices/MK64F12/utilities/fsl_debug_console.c"
-"${ProjDirPath}/../../../../../devices/MK64F12/utilities/fsl_debug_console.h"
-"${ProjDirPath}/../../../../../devices/MK64F12/utilities/fsl_debug_console_conf.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/utilities/debug_console/fsl_debug_console.c"
+"${ProjDirPath}/../../../../../devices/MK64F12/utilities/debug_console/fsl_debug_console.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/utilities/debug_console/fsl_debug_console_conf.h"
 "${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_port.h"
 "${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_uart.h"
 "${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_uart.c"
 "${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_smc.h"
 "${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_smc.c"
+"${ProjDirPath}/../../../../../devices/MK64F12/fsl_device_registers.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/MK64F12.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/MK64F12_features.h"
 "${ProjDirPath}/../../../../../devices/MK64F12/system_MK64F12.c"
 "${ProjDirPath}/../../../../../devices/MK64F12/system_MK64F12.h"
+"${ProjDirPath}/../../../../../components/uart/uart.h"
+"${ProjDirPath}/../../../../../components/uart/uart_adapter.c"
+"${ProjDirPath}/../../../../../components/serial_manager/serial_port_uart.h"
+"${ProjDirPath}/../../../../../components/serial_manager/serial_port_uart.c"
+"${ProjDirPath}/../../../../../components/lists/generic_list.h"
+"${ProjDirPath}/../../../../../components/lists/generic_list.c"
 "${ProjDirPath}/../../../../../devices/MK64F12/gcc/startup_MK64F12.S"
 "${ProjDirPath}/../../../../../devices/MK64F12/utilities/fsl_assert.c"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/infra/global_platf.c"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/infra/global_platf.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/infra/sm_apdu.c"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/infra/sm_apdu.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/infra/sm_errors.c"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/infra/sm_errors.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/infra/sm_types.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/scp/scp.c"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/scp/scp.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/smCom/apduComm.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/smCom/sci2c.c"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/smCom/sci2c.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/smCom/sci2c_cfg.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/smCom/smCom.c"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/smCom/smComSCI2C.c"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/platform/generic/sm_printf.c"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/platform/inc/i2c_a7.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/platform/inc/sm_printf.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/platform/inc/sm_timer.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/platform/kinetis/i2c_kinetis.c"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/platform/kinetis/timer_kinetis.c"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/platform/kinetis/timer_kinetis_bm.c"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/platform/kinetis/timer_kinetis_freertos.c"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/smCom/smCom.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/smCom/smComSCI2C.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostLib/libCommon/smCom/sci2c_cfg.h"
-"${ProjDirPath}/../../../../../middleware/usb/device/usb_device.h"
-"${ProjDirPath}/../../../../../middleware/usb/device/usb_device_dci.c"
-"${ProjDirPath}/../../../../../middleware/usb/device/usb_device_dci.h"
-"${ProjDirPath}/../usb_device_ch9.c"
-"${ProjDirPath}/../usb_device_ch9.h"
-"${ProjDirPath}/../usb_device_class.c"
-"${ProjDirPath}/../usb_device_class.h"
-"${ProjDirPath}/../usb_device_cdc_acm.c"
-"${ProjDirPath}/../usb_device_cdc_acm.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/core_cm4.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armcc.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armclang.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_gcc.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_compiler.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_version.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv7.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/core_armv8mbl.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/core_armv8mml.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/arm_common_tables.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/arm_const_structs.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/arm_math.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_iccarm.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv8.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/utilities/usb_device_config.h"
 )
 
 
@@ -506,30 +540,30 @@ set(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -T${ProjDirPat
 
 set(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -T${ProjDirPath}/MK64FN1M0xxx12_flash.ld -static")
 
-TARGET_LINK_LIBRARIES(vcomA71CH.elf -Wl,--start-group)
-target_link_libraries(vcomA71CH.elf debug m)
+TARGET_LINK_LIBRARIES(se_hostlib_vcomA71CH.elf -Wl,--start-group)
+target_link_libraries(se_hostlib_vcomA71CH.elf debug m)
 
-target_link_libraries(vcomA71CH.elf debug c)
+target_link_libraries(se_hostlib_vcomA71CH.elf debug c)
 
-target_link_libraries(vcomA71CH.elf debug gcc)
+target_link_libraries(se_hostlib_vcomA71CH.elf debug gcc)
 
-target_link_libraries(vcomA71CH.elf debug nosys)
+target_link_libraries(se_hostlib_vcomA71CH.elf debug nosys)
 
-target_link_libraries(vcomA71CH.elf optimized m)
+target_link_libraries(se_hostlib_vcomA71CH.elf optimized m)
 
-target_link_libraries(vcomA71CH.elf optimized c)
+target_link_libraries(se_hostlib_vcomA71CH.elf optimized c)
 
-target_link_libraries(vcomA71CH.elf optimized gcc)
+target_link_libraries(se_hostlib_vcomA71CH.elf optimized gcc)
 
-target_link_libraries(vcomA71CH.elf optimized nosys)
-
-link_directories(${ProjDirPath}/../../../../../middleware/mmcau/asm-cm4-cm7)
-
-target_link_libraries(vcomA71CH.elf debug ${ProjDirPath}/../../../../../middleware/mmcau/asm-cm4-cm7/lib_mmcau.a)
+target_link_libraries(se_hostlib_vcomA71CH.elf optimized nosys)
 
 link_directories(${ProjDirPath}/../../../../../middleware/mmcau/asm-cm4-cm7)
 
-target_link_libraries(vcomA71CH.elf optimized ${ProjDirPath}/../../../../../middleware/mmcau/asm-cm4-cm7/lib_mmcau.a)
+target_link_libraries(se_hostlib_vcomA71CH.elf debug ${ProjDirPath}/../../../../../middleware/mmcau/asm-cm4-cm7/lib_mmcau.a)
 
-TARGET_LINK_LIBRARIES(vcomA71CH.elf -Wl,--end-group)
+link_directories(${ProjDirPath}/../../../../../middleware/mmcau/asm-cm4-cm7)
+
+target_link_libraries(se_hostlib_vcomA71CH.elf optimized ${ProjDirPath}/../../../../../middleware/mmcau/asm-cm4-cm7/lib_mmcau.a)
+
+TARGET_LINK_LIBRARIES(se_hostlib_vcomA71CH.elf -Wl,--end-group)
 

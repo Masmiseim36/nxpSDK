@@ -1,15 +1,15 @@
 /*********************************************************************
-*                SEGGER Microcontroller GmbH & Co. KG                *
+*                SEGGER Microcontroller GmbH                         *
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2016  SEGGER Microcontroller GmbH & Co. KG       *
+*        (c) 1996 - 2018  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
 **********************************************************************
 
-** emWin V5.38 - Graphical user interface for embedded applications **
+** emWin V5.48 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -26,15 +26,16 @@ Full source code is available at: www.segger.com
 We appreciate your understanding and fairness.
 ----------------------------------------------------------------------
 Licensing information
-
 Licensor:                 SEGGER Microcontroller Systems LLC
 Licensed to:              NXP Semiconductors, 1109 McKay Dr, M/S 76, San Jose, CA 95131, USA
 Licensed SEGGER software: emWin
 License number:           GUI-00186
-License model:            emWin License Agreement, dated August 20th 2011
-Licensed product:         -
-Licensed platform:        NXP's ARM 7/9, Cortex-M0,M3,M4
-Licensed number of seats: -
+License model:            emWin License Agreement, dated August 20th 2011 and Amendment, dated October 19th 2017
+Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7
+----------------------------------------------------------------------
+Support and Update Agreement (SUA)
+SUA period:               2011-08-19 - 2018-09-02
+Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : GUI_JPEG_Private.h
 Purpose     : Private header
@@ -284,14 +285,6 @@ struct GUI_JPEG_DCONTEXT {
   int aCBB[256];
   I32 aCRG[256];
   I32 aCBG[256];
-  //
-  // Banding
-  //
-  U8 BandingRequired;   // Flag if banding is required
-  unsigned NumBands;    // Number of required bands for drawing the complete frame
-  int NumBlocksPerBand; // Number of vertical blocks per band
-  int FirstBlockOfBand;
-  int aFirstBlockOfBand[MAX_COMPONENTS];
 };
 
 /*********************************************************************
@@ -300,9 +293,7 @@ struct GUI_JPEG_DCONTEXT {
 *
 **********************************************************************
 */
-int       GUI_JPEG__AllocBandingCoeffBuffer (GUI_HMEM hContext);
 int       GUI_JPEG__DecodeLine              (GUI_JPEG_DCONTEXT * pContext);
-int       GUI_JPEG__DecodeProgressiveBanding(GUI_JPEG_DCONTEXT * pContext);
 void      GUI_JPEG__Free                    (GUI_JPEG_DCONTEXT * pContext);
 GUI_COLOR GUI_JPEG__GetColorGray            (const U8 ** ppData, unsigned SkipCnt);
 GUI_COLOR GUI_JPEG__GetColorRGB             (const U8 ** ppData, unsigned SkipCnt);

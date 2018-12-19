@@ -901,7 +901,7 @@ typedef struct _usb_device_ccid_transfer_struct
 /*! @brief Available common EVENT types in CCID class callback */
 typedef enum _usb_device_ccid_event
 {
-    kUSB_DeviceCcidEventCommandReceived = 0x01U, /*!< Command received in BULK OUT pipe */
+    kUSB_DeviceCcidEventCommandReceived = 0x01U, /*!< Command received or cancelled in BULK OUT pipe */
     kUSB_DeviceCcidEventResponseSent,            /*!< Response sent in BULK IN pipe */
     kUSB_DeviceCcidEventGetSlotCount,            /*!< Get the slot count */
     kUSB_DeviceCcidEventGetSlotStatus,           /*!< Get the slot status, including clock status, ICC present.*/

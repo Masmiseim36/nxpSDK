@@ -4,13 +4,13 @@
   <Header>### uVision Project, (C) Keil Software</Header>
   <Targets>
     <Target>
-      <TargetName>edma_scatter_gather Debug</TargetName>
+      <TargetName>edma_scatter_gather debug</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MK22FN512xxx12</Device>
-          <Vendor>Freescale</Vendor>
+          <Device>MK22FN512VDC12</Device>
+          <Vendor>NXP</Vendor>
           <PackID>Keil.Kinetis_K20_DFP.1.1.0</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>CPUTYPE("Cortex-M4") FPU2</Cpu>
@@ -342,6 +342,7 @@
               </OCR_RVCT10>
             </OnChipMemories>
             <RvctStartVector/>
+            <nSecure>0</nSecure>
           </ArmAdsMisc>
           <Cads>
             <interw>0</interw>
@@ -359,15 +360,16 @@
             <uSurpInc>0</uSurpInc>
             <uC99>1</uC99>
             <useXO>0</useXO>
+            <v6Lang>3</v6Lang>
+            <v6LangP>3</v6LangP>
             <VariousControls>
               <MiscControls>--library_interface=armcc 
---library_type=standardlib 
---diag_suppress=66,1296,186 
+--diag_suppress=1296,186 
  
 </MiscControls>
               <Define>DEBUG, CPU_MK22FN512VDC12, TWR_K22F120M, TOWER</Define>
               <Undefine/>
-              <IncludePath>../../../../../../CMSIS/Include;../../../../../../devices;..;../../../..;../../../../../../devices/MK22F51212/drivers;../../../../../../devices/MK22F51212/utilities;../../../../../../devices/MK22F51212</IncludePath>
+              <IncludePath>..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../devices/MK22F51212/drivers;../../../../../../devices/MK22F51212/drivers;../../../../../../devices/MK22F51212/drivers;../../../../../../devices/MK22F51212/drivers;../../../../../../devices/MK22F51212/drivers;../../../../../../devices/MK22F51212/drivers;../../../../../../devices/MK22F51212;../../../../../../devices/MK22F51212/utilities/str;../../../../../../devices/MK22F51212/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/serial_manager;../../../../../../devices/MK22F51212/drivers;../../../../../../components/lists;../../../../../../devices/MK22F51212/drivers;../../../../../../devices/MK22F51212/drivers;../../../../../../devices/MK22F51212/drivers</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -409,22 +411,47 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>startup</GroupName>
+          <GroupName>source</GroupName>
           <Files>
             <File>
-              <FileName>startup_MK22F51212.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/arm/startup_MK22F51212.s</FilePath>
-            </File>
-            <File>
-              <FileName>system_MK22F51212.c</FileName>
+              <FileName>edma_scatter_gather.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/system_MK22F51212.c</FilePath>
+              <FilePath>../edma_scatter_gather.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>board</GroupName>
+          <Files>
+            <File>
+              <FileName>pin_mux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../pin_mux.c</FilePath>
             </File>
             <File>
-              <FileName>system_MK22F51212.h</FileName>
+              <FileName>pin_mux.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/system_MK22F51212.h</FilePath>
+              <FilePath>../pin_mux.h</FilePath>
+            </File>
+            <File>
+              <FileName>board.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../board.c</FilePath>
+            </File>
+            <File>
+              <FileName>board.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../board.h</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../clock_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../clock_config.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -441,26 +468,6 @@
         <Group>
           <GroupName>drivers</GroupName>
           <Files>
-            <File>
-              <FileName>fsl_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_uart.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_lpuart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_lpuart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_lpuart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_lpuart.c</FilePath>
-            </File>
             <File>
               <FileName>fsl_port.h</FileName>
               <FileType>5</FileType>
@@ -517,14 +524,24 @@
               <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_common.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_gpio.h</FileName>
+              <FileName>fsl_uart.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_gpio.h</FilePath>
+              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_uart.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_gpio.c</FileName>
+              <FileName>fsl_uart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_gpio.c</FilePath>
+              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_uart.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_lpuart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_lpuart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_lpuart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_lpuart.c</FilePath>
             </File>
             <File>
               <FileName>fsl_smc.h</FileName>
@@ -537,59 +554,44 @@
               <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_smc.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_flash.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_flash.c</FilePath>
+              <FileName>fsl_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_gpio.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_flash.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_flash.h</FilePath>
+              <FileName>fsl_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_gpio.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>source</GroupName>
+          <GroupName>device</GroupName>
           <Files>
             <File>
-              <FileName>edma_scatter_gather.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../edma_scatter_gather.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>board</GroupName>
-          <Files>
-            <File>
-              <FileName>pin_mux.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../pin_mux.c</FilePath>
-            </File>
-            <File>
-              <FileName>pin_mux.h</FileName>
+              <FileName>fsl_device_registers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../pin_mux.h</FilePath>
+              <FilePath>../../../../../../devices/MK22F51212/fsl_device_registers.h</FilePath>
             </File>
             <File>
-              <FileName>board.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../board.c</FilePath>
-            </File>
-            <File>
-              <FileName>board.h</FileName>
+              <FileName>MK22F51212.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../board.h</FilePath>
+              <FilePath>../../../../../../devices/MK22F51212/MK22F51212.h</FilePath>
             </File>
             <File>
-              <FileName>clock_config.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../clock_config.c</FilePath>
-            </File>
-            <File>
-              <FileName>clock_config.h</FileName>
+              <FileName>MK22F51212_features.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../clock_config.h</FilePath>
+              <FilePath>../../../../../../devices/MK22F51212/MK22F51212_features.h</FilePath>
+            </File>
+            <File>
+              <FileName>system_MK22F51212.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/system_MK22F51212.c</FilePath>
+            </File>
+            <File>
+              <FileName>system_MK22F51212.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/system_MK22F51212.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -597,27 +599,187 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/utilities/fsl_debug_console.c</FilePath>
+              <FilePath>../../../../../../devices/MK22F51212/utilities/debug_console/fsl_debug_console.c</FilePath>
             </File>
             <File>
               <FileName>fsl_debug_console.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/utilities/fsl_debug_console.h</FilePath>
+              <FilePath>../../../../../../devices/MK22F51212/utilities/debug_console/fsl_debug_console.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console_conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/utilities/fsl_assert.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/uart</GroupName>
+          <Files>
+            <File>
+              <FileName>uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/uart/uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>uart_adapter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/uart/uart_adapter.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/serial_manager</GroupName>
+          <Files>
+            <File>
+              <FileName>serial_manager.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/serial_manager/serial_manager.h</FilePath>
+            </File>
+            <File>
+              <FileName>serial_manager.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/serial_manager/serial_manager.c</FilePath>
+            </File>
+            <File>
+              <FileName>serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/serial_manager/serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/serial_manager/serial_port_uart.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/lists</GroupName>
+          <Files>
+            <File>
+              <FileName>generic_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/lists/generic_list.h</FilePath>
+            </File>
+            <File>
+              <FileName>generic_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/lists/generic_list.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>startup</GroupName>
+          <Files>
+            <File>
+              <FileName>startup_MK22F51212.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/arm/startup_MK22F51212.s</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS</GroupName>
+          <Files>
+            <File>
+              <FileName>core_cm4.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/core_cm4.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_gcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_armv8mbl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_armv8mml.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_common_tables.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_const_structs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/arm_math.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_iccarm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv8.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
           </Files>
         </Group>
       </Groups>
     </Target>
     <Target>
-      <TargetName>edma_scatter_gather Release</TargetName>
+      <TargetName>edma_scatter_gather release</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MK22FN512xxx12</Device>
-          <Vendor>Freescale</Vendor>
+          <Device>MK22FN512VDC12</Device>
+          <Vendor>NXP</Vendor>
           <PackID>Keil.Kinetis_K20_DFP.1.1.0</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>CPUTYPE("Cortex-M4") FPU2</Cpu>
@@ -949,6 +1111,7 @@
               </OCR_RVCT10>
             </OnChipMemories>
             <RvctStartVector/>
+            <nSecure>0</nSecure>
           </ArmAdsMisc>
           <Cads>
             <interw>0</interw>
@@ -966,15 +1129,16 @@
             <uSurpInc>0</uSurpInc>
             <uC99>1</uC99>
             <useXO>0</useXO>
+            <v6Lang>3</v6Lang>
+            <v6LangP>3</v6LangP>
             <VariousControls>
               <MiscControls>--library_interface=armcc 
---library_type=standardlib 
---diag_suppress=66,1296,186 
+--diag_suppress=1296,186 
  
 </MiscControls>
               <Define>NDEBUG, CPU_MK22FN512VDC12, TWR_K22F120M, TOWER</Define>
               <Undefine/>
-              <IncludePath>../../../../../../CMSIS/Include;../../../../../../devices;..;../../../..;../../../../../../devices/MK22F51212/drivers;../../../../../../devices/MK22F51212/utilities;../../../../../../devices/MK22F51212</IncludePath>
+              <IncludePath>..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../devices/MK22F51212/drivers;../../../../../../devices/MK22F51212/drivers;../../../../../../devices/MK22F51212/drivers;../../../../../../devices/MK22F51212/drivers;../../../../../../devices/MK22F51212/drivers;../../../../../../devices/MK22F51212/drivers;../../../../../../devices/MK22F51212;../../../../../../devices/MK22F51212/utilities/str;../../../../../../devices/MK22F51212/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/serial_manager;../../../../../../devices/MK22F51212/drivers;../../../../../../components/lists;../../../../../../devices/MK22F51212/drivers;../../../../../../devices/MK22F51212/drivers;../../../../../../devices/MK22F51212/drivers</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -989,7 +1153,7 @@
             <useXO>0</useXO>
             <VariousControls>
               <MiscControls/>
-              <Define/>
+              <Define>NDEBUG</Define>
               <Undefine/>
               <IncludePath/>
             </VariousControls>
@@ -1016,22 +1180,47 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>startup</GroupName>
+          <GroupName>source</GroupName>
           <Files>
             <File>
-              <FileName>startup_MK22F51212.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/arm/startup_MK22F51212.s</FilePath>
-            </File>
-            <File>
-              <FileName>system_MK22F51212.c</FileName>
+              <FileName>edma_scatter_gather.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/system_MK22F51212.c</FilePath>
+              <FilePath>../edma_scatter_gather.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>board</GroupName>
+          <Files>
+            <File>
+              <FileName>pin_mux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../pin_mux.c</FilePath>
             </File>
             <File>
-              <FileName>system_MK22F51212.h</FileName>
+              <FileName>pin_mux.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/system_MK22F51212.h</FilePath>
+              <FilePath>../pin_mux.h</FilePath>
+            </File>
+            <File>
+              <FileName>board.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../board.c</FilePath>
+            </File>
+            <File>
+              <FileName>board.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../board.h</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../clock_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../clock_config.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1048,26 +1237,6 @@
         <Group>
           <GroupName>drivers</GroupName>
           <Files>
-            <File>
-              <FileName>fsl_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_uart.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_lpuart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_lpuart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_lpuart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_lpuart.c</FilePath>
-            </File>
             <File>
               <FileName>fsl_port.h</FileName>
               <FileType>5</FileType>
@@ -1124,14 +1293,24 @@
               <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_common.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_gpio.h</FileName>
+              <FileName>fsl_uart.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_gpio.h</FilePath>
+              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_uart.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_gpio.c</FileName>
+              <FileName>fsl_uart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_gpio.c</FilePath>
+              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_uart.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_lpuart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_lpuart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_lpuart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_lpuart.c</FilePath>
             </File>
             <File>
               <FileName>fsl_smc.h</FileName>
@@ -1144,59 +1323,44 @@
               <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_smc.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_flash.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_flash.c</FilePath>
+              <FileName>fsl_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_gpio.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_flash.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_flash.h</FilePath>
+              <FileName>fsl_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_gpio.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>source</GroupName>
+          <GroupName>device</GroupName>
           <Files>
             <File>
-              <FileName>edma_scatter_gather.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../edma_scatter_gather.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>board</GroupName>
-          <Files>
-            <File>
-              <FileName>pin_mux.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../pin_mux.c</FilePath>
-            </File>
-            <File>
-              <FileName>pin_mux.h</FileName>
+              <FileName>fsl_device_registers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../pin_mux.h</FilePath>
+              <FilePath>../../../../../../devices/MK22F51212/fsl_device_registers.h</FilePath>
             </File>
             <File>
-              <FileName>board.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../board.c</FilePath>
-            </File>
-            <File>
-              <FileName>board.h</FileName>
+              <FileName>MK22F51212.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../board.h</FilePath>
+              <FilePath>../../../../../../devices/MK22F51212/MK22F51212.h</FilePath>
             </File>
             <File>
-              <FileName>clock_config.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../clock_config.c</FilePath>
-            </File>
-            <File>
-              <FileName>clock_config.h</FileName>
+              <FileName>MK22F51212_features.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../clock_config.h</FilePath>
+              <FilePath>../../../../../../devices/MK22F51212/MK22F51212_features.h</FilePath>
+            </File>
+            <File>
+              <FileName>system_MK22F51212.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/system_MK22F51212.c</FilePath>
+            </File>
+            <File>
+              <FileName>system_MK22F51212.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/system_MK22F51212.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1204,14 +1368,174 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/utilities/fsl_debug_console.c</FilePath>
+              <FilePath>../../../../../../devices/MK22F51212/utilities/debug_console/fsl_debug_console.c</FilePath>
             </File>
             <File>
               <FileName>fsl_debug_console.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/utilities/fsl_debug_console.h</FilePath>
+              <FilePath>../../../../../../devices/MK22F51212/utilities/debug_console/fsl_debug_console.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console_conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/utilities/fsl_assert.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/uart</GroupName>
+          <Files>
+            <File>
+              <FileName>uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/uart/uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>uart_adapter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/uart/uart_adapter.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/serial_manager</GroupName>
+          <Files>
+            <File>
+              <FileName>serial_manager.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/serial_manager/serial_manager.h</FilePath>
+            </File>
+            <File>
+              <FileName>serial_manager.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/serial_manager/serial_manager.c</FilePath>
+            </File>
+            <File>
+              <FileName>serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/serial_manager/serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/serial_manager/serial_port_uart.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/lists</GroupName>
+          <Files>
+            <File>
+              <FileName>generic_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/lists/generic_list.h</FilePath>
+            </File>
+            <File>
+              <FileName>generic_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/lists/generic_list.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>startup</GroupName>
+          <Files>
+            <File>
+              <FileName>startup_MK22F51212.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/arm/startup_MK22F51212.s</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS</GroupName>
+          <Files>
+            <File>
+              <FileName>core_cm4.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/core_cm4.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_gcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_armv8mbl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_armv8mml.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_common_tables.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_const_structs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/arm_math.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_iccarm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv8.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
           </Files>
         </Group>

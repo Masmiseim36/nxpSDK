@@ -361,19 +361,18 @@
             <uSurpInc>0</uSurpInc>
             <uC99>1</uC99>
             <useXO>0</useXO>
-            <v6Lang>0</v6Lang>
-            <v6LangP>0</v6LangP>
+            <v6Lang>3</v6Lang>
+            <v6LangP>3</v6LangP>
             <vShortEn>0</vShortEn>
             <vShortWch>0</vShortWch>
             <VariousControls>
               <MiscControls>--library_interface=armcc 
---library_type=standardlib 
---diag_suppress=66,1296,186 
+--diag_suppress=1296,186 
  
 </MiscControls>
               <Define>DEBUG, CPU_MK28FN2M0VMI15, FRDM_K28F, FREEDOM</Define>
               <Undefine/>
-              <IncludePath>../../../../../../CMSIS/Include;../../../../../../devices;..;../../../..;../../../../../../devices/MK28F15/drivers;../../../../../../devices/MK28F15;../../../../../../devices/MK28F15/utilities/io;../../../../../../devices/MK28F15/utilities/str;../../../../../../devices/MK28F15/utilities/log;../../../../../../devices/MK28F15/utilities</IncludePath>
+              <IncludePath>..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../devices/MK28F15/drivers;../../../../../../devices/MK28F15/drivers;../../../../../../devices/MK28F15/drivers;../../../../../../devices/MK28F15/drivers;../../../../../../devices/MK28F15/drivers;../../../../../../devices/MK28F15;../../../../../../devices/MK28F15/utilities/str;../../../../../../devices/MK28F15/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/serial_manager;../../../../../../devices/MK28F15/drivers;../../../../../../components/lists;../../../../../../devices/MK28F15/drivers;../../../../../../devices/MK28F15/drivers</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -437,11 +436,6 @@
               <FileType>5</FileType>
               <FilePath>../pin_mux.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>board-src</GroupName>
-          <Files>
             <File>
               <FileName>board.c</FileName>
               <FileType>1</FileType>
@@ -478,6 +472,21 @@
           <GroupName>drivers</GroupName>
           <Files>
             <File>
+              <FileName>fsl_port.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_port.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_gpio.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MK28F15/drivers/fsl_clock.h</FilePath>
@@ -488,64 +497,14 @@
               <FilePath>../../../../../../devices/MK28F15/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_ftfx_adapter.h</FileName>
+              <FileName>fsl_qspi.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_adapter.h</FilePath>
+              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_qspi.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_ftfx_utilities.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_utilities.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_ftfx_features.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_features.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_ftfx_controller.c</FileName>
+              <FileName>fsl_qspi.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_controller.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_ftfx_controller.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_controller.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_ftfx_flash.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_flash.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_ftfx_flash.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_flash.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_ftfx_cache.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_cache.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_ftfx_cache.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_cache.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_ftfx_flexnvm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_flexnvm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_ftfx_flexnvm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_flexnvm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_flash.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_flash.h</FilePath>
+              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_qspi.c</FilePath>
             </File>
             <File>
               <FileName>fsl_common.h</FileName>
@@ -568,21 +527,6 @@
               <FilePath>../../../../../../devices/MK28F15/drivers/fsl_lpuart.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_gpio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_gpio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_gpio.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_port.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_port.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_smc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MK28F15/drivers/fsl_smc.h</FilePath>
@@ -602,21 +546,26 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MK28F15/drivers/fsl_sysmpu.c</FilePath>
             </File>
-            <File>
-              <FileName>fsl_qspi.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_qspi.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_qspi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_qspi.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>startup</GroupName>
+          <GroupName>device</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_device_registers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK28F15/fsl_device_registers.h</FilePath>
+            </File>
+            <File>
+              <FileName>MK28F15.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK28F15/MK28F15.h</FilePath>
+            </File>
+            <File>
+              <FileName>MK28F15_features.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK28F15/MK28F15_features.h</FilePath>
+            </File>
             <File>
               <FileName>system_MK28F15.c</FileName>
               <FileType>1</FileType>
@@ -627,36 +576,11 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MK28F15/system_MK28F15.h</FilePath>
             </File>
-            <File>
-              <FileName>startup_MK28F15.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../devices/MK28F15/arm/startup_MK28F15.s</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>utilities</GroupName>
           <Files>
-            <File>
-              <FileName>fsl_io.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK28F15/utilities/io/fsl_io.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_io.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK28F15/utilities/io/fsl_io.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_log.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK28F15/utilities/log/fsl_log.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_log.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK28F15/utilities/log/fsl_log.h</FilePath>
-            </File>
             <File>
               <FileName>fsl_str.c</FileName>
               <FileType>1</FileType>
@@ -670,22 +594,162 @@
             <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK28F15/utilities/fsl_debug_console.c</FilePath>
+              <FilePath>../../../../../../devices/MK28F15/utilities/debug_console/fsl_debug_console.c</FilePath>
             </File>
             <File>
               <FileName>fsl_debug_console.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK28F15/utilities/fsl_debug_console.h</FilePath>
+              <FilePath>../../../../../../devices/MK28F15/utilities/debug_console/fsl_debug_console.h</FilePath>
             </File>
             <File>
               <FileName>fsl_debug_console_conf.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK28F15/utilities/fsl_debug_console_conf.h</FilePath>
+              <FilePath>../../../../../../devices/MK28F15/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
             </File>
             <File>
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MK28F15/utilities/fsl_assert.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/uart</GroupName>
+          <Files>
+            <File>
+              <FileName>uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/uart/uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>lpuart_adapter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/uart/lpuart_adapter.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/serial_manager</GroupName>
+          <Files>
+            <File>
+              <FileName>serial_manager.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/serial_manager/serial_manager.h</FilePath>
+            </File>
+            <File>
+              <FileName>serial_manager.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/serial_manager/serial_manager.c</FilePath>
+            </File>
+            <File>
+              <FileName>serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/serial_manager/serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/serial_manager/serial_port_uart.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/lists</GroupName>
+          <Files>
+            <File>
+              <FileName>generic_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/lists/generic_list.h</FilePath>
+            </File>
+            <File>
+              <FileName>generic_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/lists/generic_list.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>startup</GroupName>
+          <Files>
+            <File>
+              <FileName>startup_MK28F15.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../../devices/MK28F15/arm/startup_MK28F15.s</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS</GroupName>
+          <Files>
+            <File>
+              <FileName>core_cm4.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/core_cm4.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_gcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_armv8mbl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_armv8mml.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_common_tables.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_const_structs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/arm_math.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_iccarm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv8.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1049,19 +1113,18 @@
             <uSurpInc>0</uSurpInc>
             <uC99>1</uC99>
             <useXO>0</useXO>
-            <v6Lang>0</v6Lang>
-            <v6LangP>0</v6LangP>
+            <v6Lang>3</v6Lang>
+            <v6LangP>3</v6LangP>
             <vShortEn>0</vShortEn>
             <vShortWch>0</vShortWch>
             <VariousControls>
               <MiscControls>--library_interface=armcc 
---library_type=standardlib 
---diag_suppress=66,1296,186 
+--diag_suppress=1296,186 
  
 </MiscControls>
               <Define>NDEBUG, CPU_MK28FN2M0VMI15, FRDM_K28F, FREEDOM</Define>
               <Undefine/>
-              <IncludePath>../../../../../../CMSIS/Include;../../../../../../devices;..;../../../..;../../../../../../devices/MK28F15/drivers;../../../../../../devices/MK28F15;../../../../../../devices/MK28F15/utilities/io;../../../../../../devices/MK28F15/utilities/str;../../../../../../devices/MK28F15/utilities/log;../../../../../../devices/MK28F15/utilities</IncludePath>
+              <IncludePath>..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../devices/MK28F15/drivers;../../../../../../devices/MK28F15/drivers;../../../../../../devices/MK28F15/drivers;../../../../../../devices/MK28F15/drivers;../../../../../../devices/MK28F15/drivers;../../../../../../devices/MK28F15;../../../../../../devices/MK28F15/utilities/str;../../../../../../devices/MK28F15/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/serial_manager;../../../../../../devices/MK28F15/drivers;../../../../../../components/lists;../../../../../../devices/MK28F15/drivers;../../../../../../devices/MK28F15/drivers</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1125,11 +1188,6 @@
               <FileType>5</FileType>
               <FilePath>../pin_mux.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>board-src</GroupName>
-          <Files>
             <File>
               <FileName>board.c</FileName>
               <FileType>1</FileType>
@@ -1166,6 +1224,21 @@
           <GroupName>drivers</GroupName>
           <Files>
             <File>
+              <FileName>fsl_port.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_port.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_gpio.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MK28F15/drivers/fsl_clock.h</FilePath>
@@ -1176,64 +1249,14 @@
               <FilePath>../../../../../../devices/MK28F15/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_ftfx_adapter.h</FileName>
+              <FileName>fsl_qspi.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_adapter.h</FilePath>
+              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_qspi.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_ftfx_utilities.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_utilities.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_ftfx_features.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_features.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_ftfx_controller.c</FileName>
+              <FileName>fsl_qspi.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_controller.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_ftfx_controller.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_controller.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_ftfx_flash.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_flash.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_ftfx_flash.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_flash.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_ftfx_cache.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_cache.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_ftfx_cache.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_cache.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_ftfx_flexnvm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_flexnvm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_ftfx_flexnvm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_ftfx_flexnvm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_flash.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_flash.h</FilePath>
+              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_qspi.c</FilePath>
             </File>
             <File>
               <FileName>fsl_common.h</FileName>
@@ -1256,21 +1279,6 @@
               <FilePath>../../../../../../devices/MK28F15/drivers/fsl_lpuart.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_gpio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_gpio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_gpio.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_port.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_port.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_smc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MK28F15/drivers/fsl_smc.h</FilePath>
@@ -1290,21 +1298,26 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MK28F15/drivers/fsl_sysmpu.c</FilePath>
             </File>
-            <File>
-              <FileName>fsl_qspi.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_qspi.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_qspi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK28F15/drivers/fsl_qspi.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>startup</GroupName>
+          <GroupName>device</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_device_registers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK28F15/fsl_device_registers.h</FilePath>
+            </File>
+            <File>
+              <FileName>MK28F15.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK28F15/MK28F15.h</FilePath>
+            </File>
+            <File>
+              <FileName>MK28F15_features.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK28F15/MK28F15_features.h</FilePath>
+            </File>
             <File>
               <FileName>system_MK28F15.c</FileName>
               <FileType>1</FileType>
@@ -1315,36 +1328,11 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MK28F15/system_MK28F15.h</FilePath>
             </File>
-            <File>
-              <FileName>startup_MK28F15.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../devices/MK28F15/arm/startup_MK28F15.s</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>utilities</GroupName>
           <Files>
-            <File>
-              <FileName>fsl_io.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK28F15/utilities/io/fsl_io.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_io.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK28F15/utilities/io/fsl_io.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_log.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK28F15/utilities/log/fsl_log.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_log.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK28F15/utilities/log/fsl_log.h</FilePath>
-            </File>
             <File>
               <FileName>fsl_str.c</FileName>
               <FileType>1</FileType>
@@ -1358,22 +1346,162 @@
             <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK28F15/utilities/fsl_debug_console.c</FilePath>
+              <FilePath>../../../../../../devices/MK28F15/utilities/debug_console/fsl_debug_console.c</FilePath>
             </File>
             <File>
               <FileName>fsl_debug_console.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK28F15/utilities/fsl_debug_console.h</FilePath>
+              <FilePath>../../../../../../devices/MK28F15/utilities/debug_console/fsl_debug_console.h</FilePath>
             </File>
             <File>
               <FileName>fsl_debug_console_conf.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK28F15/utilities/fsl_debug_console_conf.h</FilePath>
+              <FilePath>../../../../../../devices/MK28F15/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
             </File>
             <File>
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MK28F15/utilities/fsl_assert.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/uart</GroupName>
+          <Files>
+            <File>
+              <FileName>uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/uart/uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>lpuart_adapter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/uart/lpuart_adapter.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/serial_manager</GroupName>
+          <Files>
+            <File>
+              <FileName>serial_manager.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/serial_manager/serial_manager.h</FilePath>
+            </File>
+            <File>
+              <FileName>serial_manager.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/serial_manager/serial_manager.c</FilePath>
+            </File>
+            <File>
+              <FileName>serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/serial_manager/serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/serial_manager/serial_port_uart.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/lists</GroupName>
+          <Files>
+            <File>
+              <FileName>generic_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/lists/generic_list.h</FilePath>
+            </File>
+            <File>
+              <FileName>generic_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/lists/generic_list.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>startup</GroupName>
+          <Files>
+            <File>
+              <FileName>startup_MK28F15.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../../devices/MK28F15/arm/startup_MK28F15.s</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS</GroupName>
+          <Files>
+            <File>
+              <FileName>core_cm4.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/core_cm4.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_gcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_armv8mbl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_armv8mml.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_common_tables.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_const_structs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/arm_math.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_iccarm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv8.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
           </Files>
         </Group>

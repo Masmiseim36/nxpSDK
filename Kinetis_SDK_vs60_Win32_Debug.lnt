@@ -4,370 +4,6 @@
 //
 -DWIN32;_DEBUG;_CONSOLE;_MBCS   // PreprocessorDefinitions = "WIN32;_DEBUG;_CONSOLE;_MBCS"
 
-devices\MK80F25615\drivers\fsl_adc16.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_adc16.c"
-devices\MK80F25615\drivers\fsl_clock.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_clock.c"
-devices\MK80F25615\drivers\fsl_cmp.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_cmp.c"
-devices\MK80F25615\drivers\fsl_cmt.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_cmt.c"
-devices\MK80F25615\drivers\fsl_common.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_common.c"
-devices\MK80F25615\drivers\fsl_crc.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_crc.c"
-devices\MK80F25615\drivers\fsl_dac.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_dac.c"
-devices\MK80F25615\drivers\fsl_dmamux.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_dmamux.c"
-devices\MK80F25615\drivers\fsl_dspi.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_dspi.c"
-devices\MK80F25615\cmsis_drivers\fsl_dspi_cmsis.c
-                                // RelativePath = "devices\MK80F25615\cmsis_drivers\fsl_dspi_cmsis.c"
-devices\MK80F25615\drivers\fsl_dspi_edma.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_dspi_edma.c"
-devices\MK80F25615\drivers\fsl_dspi_freertos.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_dspi_freertos.c"
-devices\MK80F25615\drivers\fsl_dspi_ucosii.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_dspi_ucosii.c"
-devices\MK80F25615\drivers\fsl_dspi_ucosiii.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_dspi_ucosiii.c"
-devices\MK80F25615\drivers\fsl_edma.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_edma.c"
-devices\MK80F25615\drivers\fsl_ewm.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_ewm.c"
-devices\MK80F25615\drivers\fsl_flash.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_flash.c"
-devices\MK80F25615\drivers\fsl_flexbus.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_flexbus.c"
-devices\MK80F25615\drivers\fsl_flexio.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_flexio.c"
-devices\MK80F25615\drivers\fsl_flexio_camera.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_flexio_camera.c"
-devices\MK80F25615\drivers\fsl_flexio_camera_edma.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_flexio_camera_edma.c"
-devices\MK80F25615\drivers\fsl_flexio_i2c_master.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_flexio_i2c_master.c"
-devices\MK80F25615\drivers\fsl_flexio_i2s.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_flexio_i2s.c"
-devices\MK80F25615\drivers\fsl_flexio_i2s_edma.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_flexio_i2s_edma.c"
-devices\MK80F25615\drivers\fsl_flexio_spi.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_flexio_spi.c"
-devices\MK80F25615\drivers\fsl_flexio_spi_edma.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_flexio_spi_edma.c"
-devices\MK80F25615\drivers\fsl_flexio_uart.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_flexio_uart.c"
-devices\MK80F25615\drivers\fsl_flexio_uart_edma.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_flexio_uart_edma.c"
-devices\MK80F25615\drivers\fsl_ftm.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_ftm.c"
-devices\MK80F25615\drivers\fsl_gpio.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_gpio.c"
-devices\MK80F25615\drivers\fsl_i2c.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_i2c.c"
-devices\MK80F25615\cmsis_drivers\fsl_i2c_cmsis.c
-                                // RelativePath = "devices\MK80F25615\cmsis_drivers\fsl_i2c_cmsis.c"
-devices\MK80F25615\drivers\fsl_i2c_edma.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_i2c_edma.c"
-devices\MK80F25615\drivers\fsl_i2c_freertos.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_i2c_freertos.c"
-devices\MK80F25615\drivers\fsl_i2c_ucosii.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_i2c_ucosii.c"
-devices\MK80F25615\drivers\fsl_i2c_ucosiii.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_i2c_ucosiii.c"
-devices\MK80F25615\drivers\fsl_llwu.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_llwu.c"
-devices\MK80F25615\drivers\fsl_lmem_cache.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_lmem_cache.c"
-devices\MK80F25615\drivers\fsl_lptmr.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_lptmr.c"
-devices\MK80F25615\drivers\fsl_lpuart.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_lpuart.c"
-devices\MK80F25615\cmsis_drivers\fsl_lpuart_cmsis.c
-                                // RelativePath = "devices\MK80F25615\cmsis_drivers\fsl_lpuart_cmsis.c"
-devices\MK80F25615\drivers\fsl_lpuart_edma.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_lpuart_edma.c"
-devices\MK80F25615\drivers\fsl_lpuart_freertos.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_lpuart_freertos.c"
-devices\MK80F25615\drivers\fsl_lpuart_ucosii.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_lpuart_ucosii.c"
-devices\MK80F25615\drivers\fsl_lpuart_ucosiii.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_lpuart_ucosiii.c"
-devices\MK80F25615\drivers\fsl_mpu.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_mpu.c"
-devices\MK80F25615\drivers\fsl_pdb.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_pdb.c"
-devices\MK80F25615\drivers\fsl_pit.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_pit.c"
-devices\MK80F25615\drivers\fsl_pmc.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_pmc.c"
-devices\MK80F25615\drivers\fsl_qspi.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_qspi.c"
-devices\MK80F25615\drivers\fsl_qspi_edma.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_qspi_edma.c"
-devices\MK80F25615\drivers\fsl_rcm.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_rcm.c"
-devices\MK80F25615\drivers\fsl_rtc.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_rtc.c"
-devices\MK80F25615\drivers\fsl_sai.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_sai.c"
-devices\MK80F25615\drivers\fsl_sai_edma.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_sai_edma.c"
-devices\MK80F25615\drivers\fsl_sdhc.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_sdhc.c"
-devices\MK80F25615\drivers\fsl_sdramc.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_sdramc.c"
-devices\MK80F25615\drivers\fsl_sim.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_sim.c"
-devices\MK80F25615\drivers\fsl_smartcard_emvsim.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_smartcard_emvsim.c"
-devices\MK80F25615\drivers\fsl_smartcard_freertos.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_smartcard_freertos.c"
-devices\MK80F25615\drivers\fsl_smartcard_phy_emvsim.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_smartcard_phy_emvsim.c"
-devices\MK80F25615\drivers\fsl_smartcard_phy_tda8035.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_smartcard_phy_tda8035.c"
-devices\MK80F25615\drivers\fsl_smartcard_ucosii.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_smartcard_ucosii.c"
-devices\MK80F25615\drivers\fsl_smartcard_ucosiii.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_smartcard_ucosiii.c"
-devices\MK80F25615\drivers\fsl_smc.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_smc.c"
-devices\MK80F25615\drivers\fsl_tpm.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_tpm.c"
-devices\MK80F25615\drivers\fsl_trng.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_trng.c"
-devices\MK80F25615\drivers\fsl_tsi_v4.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_tsi_v4.c"
-devices\MK80F25615\drivers\fsl_vref.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_vref.c"
-devices\MK80F25615\drivers\fsl_wdog.c
-                                // RelativePath = "devices\MK80F25615\drivers\fsl_wdog.c"
-devices\MK80F25615\system_MK80F25615.c
-                                // RelativePath = "devices\MK80F25615\system_MK80F25615.c"
-devices\MK65F18\drivers\fsl_adc16.c
-                                // RelativePath = "devices\MK65F18\drivers\fsl_adc16.c"
-devices\MK65F18\drivers\fsl_clock.c
-                                // RelativePath = "devices\MK65F18\drivers\fsl_clock.c"
-devices\MK65F18\drivers\fsl_cmp.c
-                                // RelativePath = "devices\MK65F18\drivers\fsl_cmp.c"
-devices\MK65F18\drivers\fsl_cmt.c
-                                // RelativePath = "devices\MK65F18\drivers\fsl_cmt.c"
-devices\MK65F18\drivers\fsl_common.c
-                                // RelativePath = "devices\MK65F18\drivers\fsl_common.c"
-devices\MK65F18\drivers\fsl_crc.c
-                                // RelativePath = "devices\MK65F18\drivers\fsl_crc.c"
-devices\MK65F18\drivers\fsl_dac.c
-                                // RelativePath = "devices\MK65F18\drivers\fsl_dac.c"
-devices\MK65F18\drivers\fsl_dmamux.c
-                                // RelativePath = "devices\MK65F18\drivers\fsl_dmamux.c"
-devices\MK65F18\drivers\fsl_dspi.c
-                                // RelativePath = "devices\MK65F18\drivers\fsl_dspi.c"
-devices\MK65F18\cmsis_drivers\fsl_dspi_cmsis.c
-                                // RelativePath = "devices\MK65F18\cmsis_drivers\fsl_dspi_cmsis.c"
-devices\MK65F18\drivers\fsl_dspi_edma.c
-                                // RelativePath = "devices\MK65F18\drivers\fsl_dspi_edma.c"
-devices\MK65F18\drivers\fsl_dspi_freertos.c
-                                // RelativePath = "devices\MK65F18\drivers\fsl_dspi_freertos.c"
-devices\MK65F18\drivers\fsl_dspi_ucosii.c
-                                // RelativePath = "devices\MK65F18\drivers\fsl_dspi_ucosii.c"
-devices\MK65F18\drivers\fsl_dspi_ucosiii.c
-                                // RelativePath = "devices\MK65F18\drivers\fsl_dspi_ucosiii.c"
-devices\MK65F18\drivers\fsl_edma.c
-                                // RelativePath = "devices\MK65F18\drivers\fsl_edma.c"
-devices\MK65F18\drivers\fsl_enet.c
-                                // RelativePath = "devices\MK65F18\drivers\fsl_enet.c"
-devices\MK65F18\drivers\fsl_ewm.c
-                                // RelativePath = "devices\MK65F18\drivers\fsl_ewm.c"
-devices\MK65F18\drivers\fsl_flash.c
-                                // RelativePath = "devices\MK65F18\drivers\fsl_flash.c"
-devices\MK65F18\drivers\fsl_flexbus.c
-                                // RelativePath = "devices\MK65F18\drivers\fsl_flexbus.c"
-devices\MK65F18\drivers\fsl_flexcan.c
-                                // RelativePath = "devices\MK65F18\drivers\fsl_flexcan.c"
-devices\MK65F18\drivers\fsl_ftm.c
-                                // RelativePath = "devices\MK65F18\drivers\fsl_ftm.c"
-devices\MK65F18\drivers\fsl_gpio.c
-                                // RelativePath = "devices\MK65F18\drivers\fsl_gpio.c"
-devices\MK65F18\drivers\fsl_i2c.c
-                                // RelativePath = "devices\MK65F18\drivers\fsl_i2c.c"
-devices\MK65F18\cmsis_drivers\fsl_i2c_cmsis.c
-                                // RelativePath = "devices\MK65F18\cmsis_drivers\fsl_i2c_cmsis.c"
-devices\MK65F18\drivers\fsl_i2c_edma.c
-                                // RelativePath = "devices\MK65F18\drivers\fsl_i2c_edma.c"
-devices\MK65F18\drivers\fsl_i2c_freertos.c
-                                // RelativePath = "devices\MK65F18\drivers\fsl_i2c_freertos.c"
-devices\MK65F18\drivers\fsl_i2c_ucosii.c
-                                // RelativePath = "devices\MK65F18\drivers\fsl_i2c_ucosii.c"
-devices\MK65F18\drivers\fsl_i2c_ucosiii.c
-                                // RelativePath = "devices\MK65F18\drivers\fsl_i2c_ucosiii.c"
-devices\MK65F18\drivers\fsl_llwu.c
-                                // RelativePath = "devices\MK65F18\drivers\fsl_llwu.c"
-devices\MK65F18\drivers\fsl_lmem_cache.c
-                                // RelativePath = "devices\MK65F18\drivers\fsl_lmem_cache.c"
-devices\MK65F18\drivers\fsl_lptmr.c
-                                // RelativePath = "devices\MK65F18\drivers\fsl_lptmr.c"
-devices\MK65F18\drivers\fsl_lpuart.c
-                                // RelativePath = "devices\MK65F18\drivers\fsl_lpuart.c"
-devices\MK65F18\cmsis_drivers\fsl_lpuart_cmsis.c
-                                // RelativePath = "devices\MK65F18\cmsis_drivers\fsl_lpuart_cmsis.c"
-devices\MK65F18\drivers\fsl_lpuart_edma.c
-                                // RelativePath = "devices\MK65F18\drivers\fsl_lpuart_edma.c"
-devices\MK65F18\drivers\fsl_lpuart_freertos.c
-                                // RelativePath = "devices\MK65F18\drivers\fsl_lpuart_freertos.c"
-devices\MK65F18\drivers\fsl_lpuart_ucosii.c
-                                // RelativePath = "devices\MK65F18\drivers\fsl_lpuart_ucosii.c"
-devices\MK65F18\drivers\fsl_lpuart_ucosiii.c
-                                // RelativePath = "devices\MK65F18\drivers\fsl_lpuart_ucosiii.c"
-devices\MK65F18\drivers\fsl_mpu.c
-                                // RelativePath = "devices\MK65F18\drivers\fsl_mpu.c"
-devices\MK65F18\drivers\fsl_pdb.c
-                                // RelativePath = "devices\MK65F18\drivers\fsl_pdb.c"
-devices\MK65F18\drivers\fsl_pit.c
-                                // RelativePath = "devices\MK65F18\drivers\fsl_pit.c"
-devices\MK65F18\drivers\fsl_pmc.c
-                                // RelativePath = "devices\MK65F18\drivers\fsl_pmc.c"
-devices\MK65F18\drivers\fsl_rcm.c
-                                // RelativePath = "devices\MK65F18\drivers\fsl_rcm.c"
-devices\MK65F18\drivers\fsl_rnga.c
-                                // RelativePath = "devices\MK65F18\drivers\fsl_rnga.c"
-devices\MK65F18\drivers\fsl_rtc.c
-                                // RelativePath = "devices\MK65F18\drivers\fsl_rtc.c"
-devices\MK65F18\drivers\fsl_sai.c
-                                // RelativePath = "devices\MK65F18\drivers\fsl_sai.c"
-devices\MK65F18\drivers\fsl_sai_edma.c
-                                // RelativePath = "devices\MK65F18\drivers\fsl_sai_edma.c"
-devices\MK65F18\drivers\fsl_sdhc.c
-                                // RelativePath = "devices\MK65F18\drivers\fsl_sdhc.c"
-devices\MK65F18\drivers\fsl_sdramc.c
-                                // RelativePath = "devices\MK65F18\drivers\fsl_sdramc.c"
-devices\MK65F18\drivers\fsl_sim.c
-                                // RelativePath = "devices\MK65F18\drivers\fsl_sim.c"
-devices\MK65F18\drivers\fsl_smc.c
-                                // RelativePath = "devices\MK65F18\drivers\fsl_smc.c"
-devices\MK65F18\drivers\fsl_tpm.c
-                                // RelativePath = "devices\MK65F18\drivers\fsl_tpm.c"
-devices\MK65F18\drivers\fsl_tsi_v4.c
-                                // RelativePath = "devices\MK65F18\drivers\fsl_tsi_v4.c"
-devices\MK65F18\drivers\fsl_uart.c
-                                // RelativePath = "devices\MK65F18\drivers\fsl_uart.c"
-devices\MK65F18\cmsis_drivers\fsl_uart_cmsis.c
-                                // RelativePath = "devices\MK65F18\cmsis_drivers\fsl_uart_cmsis.c"
-devices\MK65F18\drivers\fsl_uart_edma.c
-                                // RelativePath = "devices\MK65F18\drivers\fsl_uart_edma.c"
-devices\MK65F18\drivers\fsl_uart_freertos.c
-                                // RelativePath = "devices\MK65F18\drivers\fsl_uart_freertos.c"
-devices\MK65F18\drivers\fsl_uart_ucosii.c
-                                // RelativePath = "devices\MK65F18\drivers\fsl_uart_ucosii.c"
-devices\MK65F18\drivers\fsl_uart_ucosiii.c
-                                // RelativePath = "devices\MK65F18\drivers\fsl_uart_ucosiii.c"
-devices\MK65F18\drivers\fsl_vref.c
-                                // RelativePath = "devices\MK65F18\drivers\fsl_vref.c"
-devices\MK65F18\drivers\fsl_wdog.c
-                                // RelativePath = "devices\MK65F18\drivers\fsl_wdog.c"
-devices\MK65F18\system_MK65F18.c
-                                // RelativePath = "devices\MK65F18\system_MK65F18.c"
-devices\MK66F18\drivers\fsl_adc16.c
-                                // RelativePath = "devices\MK66F18\drivers\fsl_adc16.c"
-devices\MK66F18\drivers\fsl_clock.c
-                                // RelativePath = "devices\MK66F18\drivers\fsl_clock.c"
-devices\MK66F18\drivers\fsl_cmp.c
-                                // RelativePath = "devices\MK66F18\drivers\fsl_cmp.c"
-devices\MK66F18\drivers\fsl_cmt.c
-                                // RelativePath = "devices\MK66F18\drivers\fsl_cmt.c"
-devices\MK66F18\drivers\fsl_common.c
-                                // RelativePath = "devices\MK66F18\drivers\fsl_common.c"
-devices\MK66F18\drivers\fsl_crc.c
-                                // RelativePath = "devices\MK66F18\drivers\fsl_crc.c"
-devices\MK66F18\drivers\fsl_dac.c
-                                // RelativePath = "devices\MK66F18\drivers\fsl_dac.c"
-devices\MK66F18\drivers\fsl_dmamux.c
-                                // RelativePath = "devices\MK66F18\drivers\fsl_dmamux.c"
-devices\MK66F18\drivers\fsl_dspi.c
-                                // RelativePath = "devices\MK66F18\drivers\fsl_dspi.c"
-devices\MK66F18\drivers\fsl_dspi_edma.c
-                                // RelativePath = "devices\MK66F18\drivers\fsl_dspi_edma.c"
-devices\MK66F18\drivers\fsl_dspi_freertos.c
-                                // RelativePath = "devices\MK66F18\drivers\fsl_dspi_freertos.c"
-devices\MK66F18\drivers\fsl_edma.c
-                                // RelativePath = "devices\MK66F18\drivers\fsl_edma.c"
-devices\MK66F18\drivers\fsl_enet.c
-                                // RelativePath = "devices\MK66F18\drivers\fsl_enet.c"
-devices\MK66F18\drivers\fsl_ewm.c
-                                // RelativePath = "devices\MK66F18\drivers\fsl_ewm.c"
-devices\MK66F18\drivers\fsl_flash.c
-                                // RelativePath = "devices\MK66F18\drivers\fsl_flash.c"
-devices\MK66F18\drivers\fsl_flexbus.c
-                                // RelativePath = "devices\MK66F18\drivers\fsl_flexbus.c"
-devices\MK66F18\drivers\fsl_flexcan.c
-                                // RelativePath = "devices\MK66F18\drivers\fsl_flexcan.c"
-devices\MK66F18\drivers\fsl_ftm.c
-                                // RelativePath = "devices\MK66F18\drivers\fsl_ftm.c"
-devices\MK66F18\drivers\fsl_gpio.c
-                                // RelativePath = "devices\MK66F18\drivers\fsl_gpio.c"
-devices\MK66F18\drivers\fsl_i2c.c
-                                // RelativePath = "devices\MK66F18\drivers\fsl_i2c.c"
-devices\MK66F18\drivers\fsl_i2c_edma.c
-                                // RelativePath = "devices\MK66F18\drivers\fsl_i2c_edma.c"
-devices\MK66F18\drivers\fsl_i2c_freertos.c
-                                // RelativePath = "devices\MK66F18\drivers\fsl_i2c_freertos.c"
-devices\MK66F18\drivers\fsl_llwu.c
-                                // RelativePath = "devices\MK66F18\drivers\fsl_llwu.c"
-devices\MK66F18\drivers\fsl_lmem_cache.c
-                                // RelativePath = "devices\MK66F18\drivers\fsl_lmem_cache.c"
-devices\MK66F18\drivers\fsl_lptmr.c
-                                // RelativePath = "devices\MK66F18\drivers\fsl_lptmr.c"
-devices\MK66F18\drivers\fsl_lpuart.c
-                                // RelativePath = "devices\MK66F18\drivers\fsl_lpuart.c"
-devices\MK66F18\drivers\fsl_lpuart_edma.c
-                                // RelativePath = "devices\MK66F18\drivers\fsl_lpuart_edma.c"
-devices\MK66F18\drivers\fsl_lpuart_freertos.c
-                                // RelativePath = "devices\MK66F18\drivers\fsl_lpuart_freertos.c"
-devices\MK66F18\drivers\fsl_mpu.c
-                                // RelativePath = "devices\MK66F18\drivers\fsl_mpu.c"
-devices\MK66F18\drivers\fsl_pdb.c
-                                // RelativePath = "devices\MK66F18\drivers\fsl_pdb.c"
-devices\MK66F18\drivers\fsl_pit.c
-                                // RelativePath = "devices\MK66F18\drivers\fsl_pit.c"
-devices\MK66F18\drivers\fsl_pmc.c
-                                // RelativePath = "devices\MK66F18\drivers\fsl_pmc.c"
-devices\MK66F18\drivers\fsl_rcm.c
-                                // RelativePath = "devices\MK66F18\drivers\fsl_rcm.c"
-devices\MK66F18\drivers\fsl_rnga.c
-                                // RelativePath = "devices\MK66F18\drivers\fsl_rnga.c"
-devices\MK66F18\drivers\fsl_rtc.c
-                                // RelativePath = "devices\MK66F18\drivers\fsl_rtc.c"
-devices\MK66F18\drivers\fsl_sai.c
-                                // RelativePath = "devices\MK66F18\drivers\fsl_sai.c"
-devices\MK66F18\drivers\fsl_sai_edma.c
-                                // RelativePath = "devices\MK66F18\drivers\fsl_sai_edma.c"
-devices\MK66F18\drivers\fsl_sdhc.c
-                                // RelativePath = "devices\MK66F18\drivers\fsl_sdhc.c"
-devices\MK66F18\drivers\fsl_sdramc.c
-                                // RelativePath = "devices\MK66F18\drivers\fsl_sdramc.c"
-devices\MK66F18\drivers\fsl_sim.c
-                                // RelativePath = "devices\MK66F18\drivers\fsl_sim.c"
-devices\MK66F18\drivers\fsl_smc.c
-                                // RelativePath = "devices\MK66F18\drivers\fsl_smc.c"
-devices\MK66F18\drivers\fsl_sysmpu.c
-                                // RelativePath = "devices\MK66F18\drivers\fsl_sysmpu.c"
-devices\MK66F18\drivers\fsl_tpm.c
-                                // RelativePath = "devices\MK66F18\drivers\fsl_tpm.c"
-devices\MK66F18\drivers\fsl_tsi_v4.c
-                                // RelativePath = "devices\MK66F18\drivers\fsl_tsi_v4.c"
-devices\MK66F18\drivers\fsl_uart.c
-                                // RelativePath = "devices\MK66F18\drivers\fsl_uart.c"
-devices\MK66F18\drivers\fsl_uart_edma.c
-                                // RelativePath = "devices\MK66F18\drivers\fsl_uart_edma.c"
-devices\MK66F18\drivers\fsl_uart_freertos.c
-                                // RelativePath = "devices\MK66F18\drivers\fsl_uart_freertos.c"
-devices\MK66F18\drivers\fsl_vref.c
-                                // RelativePath = "devices\MK66F18\drivers\fsl_vref.c"
-devices\MK66F18\drivers\fsl_wdog.c
-                                // RelativePath = "devices\MK66F18\drivers\fsl_wdog.c"
-devices\MK66F18\system_MK66F18.c
-                                // RelativePath = "devices\MK66F18\system_MK66F18.c"
 devices\MK02F12810\drivers\fsl_adc16.c
                                 // RelativePath = "devices\MK02F12810\drivers\fsl_adc16.c"
 devices\MK02F12810\drivers\fsl_clock.c
@@ -432,232 +68,6 @@ devices\MK02F12810\drivers\fsl_wdog.c
                                 // RelativePath = "devices\MK02F12810\drivers\fsl_wdog.c"
 devices\MK02F12810\system_MK02F12810.c
                                 // RelativePath = "devices\MK02F12810\system_MK02F12810.c"
-devices\MK64F12\drivers\fsl_adc16.c
-                                // RelativePath = "devices\MK64F12\drivers\fsl_adc16.c"
-devices\MK64F12\drivers\fsl_clock.c
-                                // RelativePath = "devices\MK64F12\drivers\fsl_clock.c"
-devices\MK64F12\drivers\fsl_cmp.c
-                                // RelativePath = "devices\MK64F12\drivers\fsl_cmp.c"
-devices\MK64F12\drivers\fsl_cmt.c
-                                // RelativePath = "devices\MK64F12\drivers\fsl_cmt.c"
-devices\MK64F12\drivers\fsl_common.c
-                                // RelativePath = "devices\MK64F12\drivers\fsl_common.c"
-devices\MK64F12\drivers\fsl_crc.c
-                                // RelativePath = "devices\MK64F12\drivers\fsl_crc.c"
-devices\MK64F12\drivers\fsl_dac.c
-                                // RelativePath = "devices\MK64F12\drivers\fsl_dac.c"
-devices\MK64F12\drivers\fsl_dmamux.c
-                                // RelativePath = "devices\MK64F12\drivers\fsl_dmamux.c"
-devices\MK64F12\drivers\fsl_dspi.c
-                                // RelativePath = "devices\MK64F12\drivers\fsl_dspi.c"
-devices\MK64F12\drivers\fsl_dspi_edma.c
-                                // RelativePath = "devices\MK64F12\drivers\fsl_dspi_edma.c"
-devices\MK64F12\drivers\fsl_dspi_freertos.c
-                                // RelativePath = "devices\MK64F12\drivers\fsl_dspi_freertos.c"
-devices\MK64F12\drivers\fsl_edma.c
-                                // RelativePath = "devices\MK64F12\drivers\fsl_edma.c"
-devices\MK64F12\drivers\fsl_enet.c
-                                // RelativePath = "devices\MK64F12\drivers\fsl_enet.c"
-devices\MK64F12\drivers\fsl_ewm.c
-                                // RelativePath = "devices\MK64F12\drivers\fsl_ewm.c"
-devices\MK64F12\drivers\fsl_flash.c
-                                // RelativePath = "devices\MK64F12\drivers\fsl_flash.c"
-devices\MK64F12\drivers\fsl_flexbus.c
-                                // RelativePath = "devices\MK64F12\drivers\fsl_flexbus.c"
-devices\MK64F12\drivers\fsl_flexcan.c
-                                // RelativePath = "devices\MK64F12\drivers\fsl_flexcan.c"
-devices\MK64F12\drivers\fsl_ftm.c
-                                // RelativePath = "devices\MK64F12\drivers\fsl_ftm.c"
-devices\MK64F12\drivers\fsl_gpio.c
-                                // RelativePath = "devices\MK64F12\drivers\fsl_gpio.c"
-devices\MK64F12\drivers\fsl_i2c.c
-                                // RelativePath = "devices\MK64F12\drivers\fsl_i2c.c"
-devices\MK64F12\drivers\fsl_i2c_edma.c
-                                // RelativePath = "devices\MK64F12\drivers\fsl_i2c_edma.c"
-devices\MK64F12\drivers\fsl_i2c_freertos.c
-                                // RelativePath = "devices\MK64F12\drivers\fsl_i2c_freertos.c"
-devices\MK64F12\drivers\fsl_llwu.c
-                                // RelativePath = "devices\MK64F12\drivers\fsl_llwu.c"
-devices\MK64F12\drivers\fsl_lptmr.c
-                                // RelativePath = "devices\MK64F12\drivers\fsl_lptmr.c"
-devices\MK64F12\drivers\fsl_pdb.c
-                                // RelativePath = "devices\MK64F12\drivers\fsl_pdb.c"
-devices\MK64F12\drivers\fsl_pit.c
-                                // RelativePath = "devices\MK64F12\drivers\fsl_pit.c"
-devices\MK64F12\drivers\fsl_pmc.c
-                                // RelativePath = "devices\MK64F12\drivers\fsl_pmc.c"
-devices\MK64F12\drivers\fsl_rcm.c
-                                // RelativePath = "devices\MK64F12\drivers\fsl_rcm.c"
-devices\MK64F12\drivers\fsl_rnga.c
-                                // RelativePath = "devices\MK64F12\drivers\fsl_rnga.c"
-devices\MK64F12\drivers\fsl_rtc.c
-                                // RelativePath = "devices\MK64F12\drivers\fsl_rtc.c"
-devices\MK64F12\drivers\fsl_sai.c
-                                // RelativePath = "devices\MK64F12\drivers\fsl_sai.c"
-devices\MK64F12\drivers\fsl_sai_edma.c
-                                // RelativePath = "devices\MK64F12\drivers\fsl_sai_edma.c"
-devices\MK64F12\drivers\fsl_sdhc.c
-                                // RelativePath = "devices\MK64F12\drivers\fsl_sdhc.c"
-devices\MK64F12\drivers\fsl_sim.c
-                                // RelativePath = "devices\MK64F12\drivers\fsl_sim.c"
-devices\MK64F12\drivers\fsl_smc.c
-                                // RelativePath = "devices\MK64F12\drivers\fsl_smc.c"
-devices\MK64F12\drivers\fsl_sysmpu.c
-                                // RelativePath = "devices\MK64F12\drivers\fsl_sysmpu.c"
-devices\MK64F12\drivers\fsl_uart.c
-                                // RelativePath = "devices\MK64F12\drivers\fsl_uart.c"
-devices\MK64F12\drivers\fsl_uart_edma.c
-                                // RelativePath = "devices\MK64F12\drivers\fsl_uart_edma.c"
-devices\MK64F12\drivers\fsl_uart_freertos.c
-                                // RelativePath = "devices\MK64F12\drivers\fsl_uart_freertos.c"
-devices\MK64F12\drivers\fsl_vref.c
-                                // RelativePath = "devices\MK64F12\drivers\fsl_vref.c"
-devices\MK64F12\drivers\fsl_wdog.c
-                                // RelativePath = "devices\MK64F12\drivers\fsl_wdog.c"
-devices\MK64F12\cmsis_drivers\fsl_dspi_cmsis.c
-                                // RelativePath = "devices\MK64F12\cmsis_drivers\fsl_dspi_cmsis.c"
-devices\MK64F12\cmsis_drivers\fsl_enet_cmsis.c
-                                // RelativePath = "devices\MK64F12\cmsis_drivers\fsl_enet_cmsis.c"
-devices\MK64F12\cmsis_drivers\fsl_enet_phy_cmsis.c
-                                // RelativePath = "devices\MK64F12\cmsis_drivers\fsl_enet_phy_cmsis.c"
-devices\MK64F12\cmsis_drivers\fsl_i2c_cmsis.c
-                                // RelativePath = "devices\MK64F12\cmsis_drivers\fsl_i2c_cmsis.c"
-devices\MK64F12\cmsis_drivers\fsl_uart_cmsis.c
-                                // RelativePath = "devices\MK64F12\cmsis_drivers\fsl_uart_cmsis.c"
-devices\MK64F12\system_MK64F12.c
-                                // RelativePath = "devices\MK64F12\system_MK64F12.c"
-devices\MIMXRT1052\drivers\fsl_adc.c
-                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_adc.c"
-devices\MIMXRT1052\drivers\fsl_adc_etc.c
-                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_adc_etc.c"
-devices\MIMXRT1052\drivers\fsl_aipstz.c
-                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_aipstz.c"
-devices\MIMXRT1052\drivers\fsl_aoi.c
-                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_aoi.c"
-devices\MIMXRT1052\drivers\fsl_bee.c
-                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_bee.c"
-devices\MIMXRT1052\drivers\fsl_cache.c
-                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_cache.c"
-devices\MIMXRT1052\drivers\fsl_clock.c
-                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_clock.c"
-devices\MIMXRT1052\drivers\fsl_cmp.c
-                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_cmp.c"
-devices\MIMXRT1052\drivers\fsl_common.c
-                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_common.c"
-devices\MIMXRT1052\drivers\fsl_csi.c
-                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_csi.c"
-devices\MIMXRT1052\drivers\fsl_dcdc.c
-                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_dcdc.c"
-devices\MIMXRT1052\drivers\fsl_dcp.c
-                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_dcp.c"
-devices\MIMXRT1052\drivers\fsl_dmamux.c
-                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_dmamux.c"
-devices\MIMXRT1052\drivers\fsl_edma.c
-                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_edma.c"
-devices\MIMXRT1052\drivers\fsl_elcdif.c
-                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_elcdif.c"
-devices\MIMXRT1052\drivers\fsl_enc.c
-                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_enc.c"
-devices\MIMXRT1052\drivers\fsl_enet.c
-                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_enet.c"
-devices\MIMXRT1052\drivers\fsl_ewm.c
-                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_ewm.c"
-devices\MIMXRT1052\drivers\fsl_flexcan.c
-                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_flexcan.c"
-devices\MIMXRT1052\drivers\fsl_flexio.c
-                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_flexio.c"
-devices\MIMXRT1052\drivers\fsl_flexio_i2c_master.c
-                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_flexio_i2c_master.c"
-devices\MIMXRT1052\drivers\fsl_flexio_i2s.c
-                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_flexio_i2s.c"
-devices\MIMXRT1052\drivers\fsl_flexio_i2s_edma.c
-                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_flexio_i2s_edma.c"
-devices\MIMXRT1052\drivers\fsl_flexio_spi.c
-                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_flexio_spi.c"
-devices\MIMXRT1052\drivers\fsl_flexio_spi_edma.c
-                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_flexio_spi_edma.c"
-devices\MIMXRT1052\drivers\fsl_flexio_uart.c
-                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_flexio_uart.c"
-devices\MIMXRT1052\drivers\fsl_flexio_uart_edma.c
-                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_flexio_uart_edma.c"
-devices\MIMXRT1052\drivers\fsl_flexram.c
-                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_flexram.c"
-devices\MIMXRT1052\drivers\fsl_flexspi.c
-                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_flexspi.c"
-devices\MIMXRT1052\drivers\fsl_gpc.c
-                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_gpc.c"
-devices\MIMXRT1052\drivers\fsl_gpio.c
-                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_gpio.c"
-devices\MIMXRT1052\drivers\fsl_gpt.c
-                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_gpt.c"
-devices\MIMXRT1052\drivers\fsl_kpp.c
-                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_kpp.c"
-devices\MIMXRT1052\drivers\fsl_lpi2c.c
-                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_lpi2c.c"
-devices\MIMXRT1052\drivers\fsl_lpi2c_edma.c
-                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_lpi2c_edma.c"
-devices\MIMXRT1052\drivers\fsl_lpi2c_freertos.c
-                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_lpi2c_freertos.c"
-devices\MIMXRT1052\drivers\fsl_lpspi.c
-                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_lpspi.c"
-devices\MIMXRT1052\drivers\fsl_lpspi_edma.c
-                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_lpspi_edma.c"
-devices\MIMXRT1052\drivers\fsl_lpspi_freertos.c
-                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_lpspi_freertos.c"
-devices\MIMXRT1052\drivers\fsl_lpuart.c
-                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_lpuart.c"
-devices\MIMXRT1052\drivers\fsl_lpuart_edma.c
-                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_lpuart_edma.c"
-devices\MIMXRT1052\drivers\fsl_lpuart_freertos.c
-                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_lpuart_freertos.c"
-devices\MIMXRT1052\drivers\fsl_pit.c
-                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_pit.c"
-devices\MIMXRT1052\drivers\fsl_pmu.c
-                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_pmu.c"
-devices\MIMXRT1052\drivers\fsl_pwm.c
-                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_pwm.c"
-devices\MIMXRT1052\drivers\fsl_pxp.c
-                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_pxp.c"
-devices\MIMXRT1052\drivers\fsl_qtmr.c
-                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_qtmr.c"
-devices\MIMXRT1052\drivers\fsl_rtwdog.c
-                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_rtwdog.c"
-devices\MIMXRT1052\drivers\fsl_sai.c
-                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_sai.c"
-devices\MIMXRT1052\drivers\fsl_sai_edma.c
-                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_sai_edma.c"
-devices\MIMXRT1052\drivers\fsl_semc.c
-                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_semc.c"
-devices\MIMXRT1052\drivers\fsl_snvs_hp.c
-                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_snvs_hp.c"
-devices\MIMXRT1052\drivers\fsl_snvs_lp.c
-                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_snvs_lp.c"
-devices\MIMXRT1052\drivers\fsl_spdif.c
-                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_spdif.c"
-devices\MIMXRT1052\drivers\fsl_spdif_edma.c
-                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_spdif_edma.c"
-devices\MIMXRT1052\drivers\fsl_src.c
-                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_src.c"
-devices\MIMXRT1052\drivers\fsl_trng.c
-                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_trng.c"
-devices\MIMXRT1052\drivers\fsl_tsc.c
-                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_tsc.c"
-devices\MIMXRT1052\drivers\fsl_usdhc.c
-                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_usdhc.c"
-devices\MIMXRT1052\drivers\fsl_wdog.c
-                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_wdog.c"
-devices\MIMXRT1052\drivers\fsl_xbara.c
-                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_xbara.c"
-devices\MIMXRT1052\drivers\fsl_xbarb.c
-                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_xbarb.c"
-devices\MIMXRT1052\cmsis_drivers\fsl_lpi2c_cmsis.c
-                                // RelativePath = "devices\MIMXRT1052\cmsis_drivers\fsl_lpi2c_cmsis.c"
-devices\MIMXRT1052\cmsis_drivers\fsl_lpspi_cmsis.c
-                                // RelativePath = "devices\MIMXRT1052\cmsis_drivers\fsl_lpspi_cmsis.c"
-devices\MIMXRT1052\cmsis_drivers\fsl_lpuart_cmsis.c
-                                // RelativePath = "devices\MIMXRT1052\cmsis_drivers\fsl_lpuart_cmsis.c"
-devices\MIMXRT1052\system_MIMXRT1052.c
-                                // RelativePath = "devices\MIMXRT1052\system_MIMXRT1052.c"
 devices\MK28F15\drivers\fsl_adc16.c
                                 // RelativePath = "devices\MK28F15\drivers\fsl_adc16.c"
 devices\MK28F15\drivers\fsl_clock.c
@@ -900,6 +310,464 @@ devices\MK22F51212\utilities\virtual_com.c
                                 // RelativePath = "devices\MK22F51212\utilities\virtual_com.c"
 devices\MK22F51212\system_MK22F51212.c
                                 // RelativePath = "devices\MK22F51212\system_MK22F51212.c"
+devices\MK64F12\drivers\fsl_adc16.c
+                                // RelativePath = "devices\MK64F12\drivers\fsl_adc16.c"
+devices\MK64F12\drivers\fsl_clock.c
+                                // RelativePath = "devices\MK64F12\drivers\fsl_clock.c"
+devices\MK64F12\drivers\fsl_cmp.c
+                                // RelativePath = "devices\MK64F12\drivers\fsl_cmp.c"
+devices\MK64F12\drivers\fsl_cmt.c
+                                // RelativePath = "devices\MK64F12\drivers\fsl_cmt.c"
+devices\MK64F12\drivers\fsl_common.c
+                                // RelativePath = "devices\MK64F12\drivers\fsl_common.c"
+devices\MK64F12\drivers\fsl_crc.c
+                                // RelativePath = "devices\MK64F12\drivers\fsl_crc.c"
+devices\MK64F12\drivers\fsl_dac.c
+                                // RelativePath = "devices\MK64F12\drivers\fsl_dac.c"
+devices\MK64F12\drivers\fsl_dmamux.c
+                                // RelativePath = "devices\MK64F12\drivers\fsl_dmamux.c"
+devices\MK64F12\drivers\fsl_dspi.c
+                                // RelativePath = "devices\MK64F12\drivers\fsl_dspi.c"
+devices\MK64F12\drivers\fsl_dspi_edma.c
+                                // RelativePath = "devices\MK64F12\drivers\fsl_dspi_edma.c"
+devices\MK64F12\drivers\fsl_dspi_freertos.c
+                                // RelativePath = "devices\MK64F12\drivers\fsl_dspi_freertos.c"
+devices\MK64F12\drivers\fsl_edma.c
+                                // RelativePath = "devices\MK64F12\drivers\fsl_edma.c"
+devices\MK64F12\drivers\fsl_enet.c
+                                // RelativePath = "devices\MK64F12\drivers\fsl_enet.c"
+devices\MK64F12\drivers\fsl_ewm.c
+                                // RelativePath = "devices\MK64F12\drivers\fsl_ewm.c"
+devices\MK64F12\drivers\fsl_flash.c
+                                // RelativePath = "devices\MK64F12\drivers\fsl_flash.c"
+devices\MK64F12\drivers\fsl_flexbus.c
+                                // RelativePath = "devices\MK64F12\drivers\fsl_flexbus.c"
+devices\MK64F12\drivers\fsl_flexcan.c
+                                // RelativePath = "devices\MK64F12\drivers\fsl_flexcan.c"
+devices\MK64F12\drivers\fsl_ftm.c
+                                // RelativePath = "devices\MK64F12\drivers\fsl_ftm.c"
+devices\MK64F12\drivers\fsl_gpio.c
+                                // RelativePath = "devices\MK64F12\drivers\fsl_gpio.c"
+devices\MK64F12\drivers\fsl_i2c.c
+                                // RelativePath = "devices\MK64F12\drivers\fsl_i2c.c"
+devices\MK64F12\drivers\fsl_i2c_edma.c
+                                // RelativePath = "devices\MK64F12\drivers\fsl_i2c_edma.c"
+devices\MK64F12\drivers\fsl_i2c_freertos.c
+                                // RelativePath = "devices\MK64F12\drivers\fsl_i2c_freertos.c"
+devices\MK64F12\drivers\fsl_llwu.c
+                                // RelativePath = "devices\MK64F12\drivers\fsl_llwu.c"
+devices\MK64F12\drivers\fsl_lptmr.c
+                                // RelativePath = "devices\MK64F12\drivers\fsl_lptmr.c"
+devices\MK64F12\drivers\fsl_pdb.c
+                                // RelativePath = "devices\MK64F12\drivers\fsl_pdb.c"
+devices\MK64F12\drivers\fsl_pit.c
+                                // RelativePath = "devices\MK64F12\drivers\fsl_pit.c"
+devices\MK64F12\drivers\fsl_pmc.c
+                                // RelativePath = "devices\MK64F12\drivers\fsl_pmc.c"
+devices\MK64F12\drivers\fsl_rcm.c
+                                // RelativePath = "devices\MK64F12\drivers\fsl_rcm.c"
+devices\MK64F12\drivers\fsl_rnga.c
+                                // RelativePath = "devices\MK64F12\drivers\fsl_rnga.c"
+devices\MK64F12\drivers\fsl_rtc.c
+                                // RelativePath = "devices\MK64F12\drivers\fsl_rtc.c"
+devices\MK64F12\drivers\fsl_sai.c
+                                // RelativePath = "devices\MK64F12\drivers\fsl_sai.c"
+devices\MK64F12\drivers\fsl_sai_edma.c
+                                // RelativePath = "devices\MK64F12\drivers\fsl_sai_edma.c"
+devices\MK64F12\drivers\fsl_sdhc.c
+                                // RelativePath = "devices\MK64F12\drivers\fsl_sdhc.c"
+devices\MK64F12\drivers\fsl_sim.c
+                                // RelativePath = "devices\MK64F12\drivers\fsl_sim.c"
+devices\MK64F12\drivers\fsl_smc.c
+                                // RelativePath = "devices\MK64F12\drivers\fsl_smc.c"
+devices\MK64F12\drivers\fsl_sysmpu.c
+                                // RelativePath = "devices\MK64F12\drivers\fsl_sysmpu.c"
+devices\MK64F12\drivers\fsl_uart.c
+                                // RelativePath = "devices\MK64F12\drivers\fsl_uart.c"
+devices\MK64F12\drivers\fsl_uart_edma.c
+                                // RelativePath = "devices\MK64F12\drivers\fsl_uart_edma.c"
+devices\MK64F12\drivers\fsl_uart_freertos.c
+                                // RelativePath = "devices\MK64F12\drivers\fsl_uart_freertos.c"
+devices\MK64F12\drivers\fsl_vref.c
+                                // RelativePath = "devices\MK64F12\drivers\fsl_vref.c"
+devices\MK64F12\drivers\fsl_wdog.c
+                                // RelativePath = "devices\MK64F12\drivers\fsl_wdog.c"
+devices\MK64F12\cmsis_drivers\fsl_dspi_cmsis.c
+                                // RelativePath = "devices\MK64F12\cmsis_drivers\fsl_dspi_cmsis.c"
+devices\MK64F12\cmsis_drivers\fsl_enet_cmsis.c
+                                // RelativePath = "devices\MK64F12\cmsis_drivers\fsl_enet_cmsis.c"
+devices\MK64F12\cmsis_drivers\fsl_enet_phy_cmsis.c
+                                // RelativePath = "devices\MK64F12\cmsis_drivers\fsl_enet_phy_cmsis.c"
+devices\MK64F12\cmsis_drivers\fsl_i2c_cmsis.c
+                                // RelativePath = "devices\MK64F12\cmsis_drivers\fsl_i2c_cmsis.c"
+devices\MK64F12\cmsis_drivers\fsl_uart_cmsis.c
+                                // RelativePath = "devices\MK64F12\cmsis_drivers\fsl_uart_cmsis.c"
+devices\MK64F12\system_MK64F12.c
+                                // RelativePath = "devices\MK64F12\system_MK64F12.c"
+devices\MK65F18\drivers\fsl_adc16.c
+                                // RelativePath = "devices\MK65F18\drivers\fsl_adc16.c"
+devices\MK65F18\drivers\fsl_clock.c
+                                // RelativePath = "devices\MK65F18\drivers\fsl_clock.c"
+devices\MK65F18\drivers\fsl_cmp.c
+                                // RelativePath = "devices\MK65F18\drivers\fsl_cmp.c"
+devices\MK65F18\drivers\fsl_cmt.c
+                                // RelativePath = "devices\MK65F18\drivers\fsl_cmt.c"
+devices\MK65F18\drivers\fsl_common.c
+                                // RelativePath = "devices\MK65F18\drivers\fsl_common.c"
+devices\MK65F18\drivers\fsl_crc.c
+                                // RelativePath = "devices\MK65F18\drivers\fsl_crc.c"
+devices\MK65F18\drivers\fsl_dac.c
+                                // RelativePath = "devices\MK65F18\drivers\fsl_dac.c"
+devices\MK65F18\drivers\fsl_dmamux.c
+                                // RelativePath = "devices\MK65F18\drivers\fsl_dmamux.c"
+devices\MK65F18\drivers\fsl_dspi.c
+                                // RelativePath = "devices\MK65F18\drivers\fsl_dspi.c"
+devices\MK65F18\cmsis_drivers\fsl_dspi_cmsis.c
+                                // RelativePath = "devices\MK65F18\cmsis_drivers\fsl_dspi_cmsis.c"
+devices\MK65F18\drivers\fsl_dspi_edma.c
+                                // RelativePath = "devices\MK65F18\drivers\fsl_dspi_edma.c"
+devices\MK65F18\drivers\fsl_dspi_freertos.c
+                                // RelativePath = "devices\MK65F18\drivers\fsl_dspi_freertos.c"
+devices\MK65F18\drivers\fsl_dspi_ucosii.c
+                                // RelativePath = "devices\MK65F18\drivers\fsl_dspi_ucosii.c"
+devices\MK65F18\drivers\fsl_dspi_ucosiii.c
+                                // RelativePath = "devices\MK65F18\drivers\fsl_dspi_ucosiii.c"
+devices\MK65F18\drivers\fsl_edma.c
+                                // RelativePath = "devices\MK65F18\drivers\fsl_edma.c"
+devices\MK65F18\drivers\fsl_enet.c
+                                // RelativePath = "devices\MK65F18\drivers\fsl_enet.c"
+devices\MK65F18\drivers\fsl_ewm.c
+                                // RelativePath = "devices\MK65F18\drivers\fsl_ewm.c"
+devices\MK65F18\drivers\fsl_flash.c
+                                // RelativePath = "devices\MK65F18\drivers\fsl_flash.c"
+devices\MK65F18\drivers\fsl_flexbus.c
+                                // RelativePath = "devices\MK65F18\drivers\fsl_flexbus.c"
+devices\MK65F18\drivers\fsl_flexcan.c
+                                // RelativePath = "devices\MK65F18\drivers\fsl_flexcan.c"
+devices\MK65F18\drivers\fsl_ftm.c
+                                // RelativePath = "devices\MK65F18\drivers\fsl_ftm.c"
+devices\MK65F18\drivers\fsl_gpio.c
+                                // RelativePath = "devices\MK65F18\drivers\fsl_gpio.c"
+devices\MK65F18\drivers\fsl_i2c.c
+                                // RelativePath = "devices\MK65F18\drivers\fsl_i2c.c"
+devices\MK65F18\cmsis_drivers\fsl_i2c_cmsis.c
+                                // RelativePath = "devices\MK65F18\cmsis_drivers\fsl_i2c_cmsis.c"
+devices\MK65F18\drivers\fsl_i2c_edma.c
+                                // RelativePath = "devices\MK65F18\drivers\fsl_i2c_edma.c"
+devices\MK65F18\drivers\fsl_i2c_freertos.c
+                                // RelativePath = "devices\MK65F18\drivers\fsl_i2c_freertos.c"
+devices\MK65F18\drivers\fsl_i2c_ucosii.c
+                                // RelativePath = "devices\MK65F18\drivers\fsl_i2c_ucosii.c"
+devices\MK65F18\drivers\fsl_i2c_ucosiii.c
+                                // RelativePath = "devices\MK65F18\drivers\fsl_i2c_ucosiii.c"
+devices\MK65F18\drivers\fsl_llwu.c
+                                // RelativePath = "devices\MK65F18\drivers\fsl_llwu.c"
+devices\MK65F18\drivers\fsl_lmem_cache.c
+                                // RelativePath = "devices\MK65F18\drivers\fsl_lmem_cache.c"
+devices\MK65F18\drivers\fsl_lptmr.c
+                                // RelativePath = "devices\MK65F18\drivers\fsl_lptmr.c"
+devices\MK65F18\drivers\fsl_lpuart.c
+                                // RelativePath = "devices\MK65F18\drivers\fsl_lpuart.c"
+devices\MK65F18\cmsis_drivers\fsl_lpuart_cmsis.c
+                                // RelativePath = "devices\MK65F18\cmsis_drivers\fsl_lpuart_cmsis.c"
+devices\MK65F18\drivers\fsl_lpuart_edma.c
+                                // RelativePath = "devices\MK65F18\drivers\fsl_lpuart_edma.c"
+devices\MK65F18\drivers\fsl_lpuart_freertos.c
+                                // RelativePath = "devices\MK65F18\drivers\fsl_lpuart_freertos.c"
+devices\MK65F18\drivers\fsl_lpuart_ucosii.c
+                                // RelativePath = "devices\MK65F18\drivers\fsl_lpuart_ucosii.c"
+devices\MK65F18\drivers\fsl_lpuart_ucosiii.c
+                                // RelativePath = "devices\MK65F18\drivers\fsl_lpuart_ucosiii.c"
+devices\MK65F18\drivers\fsl_mpu.c
+                                // RelativePath = "devices\MK65F18\drivers\fsl_mpu.c"
+devices\MK65F18\drivers\fsl_pdb.c
+                                // RelativePath = "devices\MK65F18\drivers\fsl_pdb.c"
+devices\MK65F18\drivers\fsl_pit.c
+                                // RelativePath = "devices\MK65F18\drivers\fsl_pit.c"
+devices\MK65F18\drivers\fsl_pmc.c
+                                // RelativePath = "devices\MK65F18\drivers\fsl_pmc.c"
+devices\MK65F18\drivers\fsl_rcm.c
+                                // RelativePath = "devices\MK65F18\drivers\fsl_rcm.c"
+devices\MK65F18\drivers\fsl_rnga.c
+                                // RelativePath = "devices\MK65F18\drivers\fsl_rnga.c"
+devices\MK65F18\drivers\fsl_rtc.c
+                                // RelativePath = "devices\MK65F18\drivers\fsl_rtc.c"
+devices\MK65F18\drivers\fsl_sai.c
+                                // RelativePath = "devices\MK65F18\drivers\fsl_sai.c"
+devices\MK65F18\drivers\fsl_sai_edma.c
+                                // RelativePath = "devices\MK65F18\drivers\fsl_sai_edma.c"
+devices\MK65F18\drivers\fsl_sdhc.c
+                                // RelativePath = "devices\MK65F18\drivers\fsl_sdhc.c"
+devices\MK65F18\drivers\fsl_sdramc.c
+                                // RelativePath = "devices\MK65F18\drivers\fsl_sdramc.c"
+devices\MK65F18\drivers\fsl_sim.c
+                                // RelativePath = "devices\MK65F18\drivers\fsl_sim.c"
+devices\MK65F18\drivers\fsl_smc.c
+                                // RelativePath = "devices\MK65F18\drivers\fsl_smc.c"
+devices\MK65F18\drivers\fsl_tpm.c
+                                // RelativePath = "devices\MK65F18\drivers\fsl_tpm.c"
+devices\MK65F18\drivers\fsl_tsi_v4.c
+                                // RelativePath = "devices\MK65F18\drivers\fsl_tsi_v4.c"
+devices\MK65F18\drivers\fsl_uart.c
+                                // RelativePath = "devices\MK65F18\drivers\fsl_uart.c"
+devices\MK65F18\cmsis_drivers\fsl_uart_cmsis.c
+                                // RelativePath = "devices\MK65F18\cmsis_drivers\fsl_uart_cmsis.c"
+devices\MK65F18\drivers\fsl_uart_edma.c
+                                // RelativePath = "devices\MK65F18\drivers\fsl_uart_edma.c"
+devices\MK65F18\drivers\fsl_uart_freertos.c
+                                // RelativePath = "devices\MK65F18\drivers\fsl_uart_freertos.c"
+devices\MK65F18\drivers\fsl_uart_ucosii.c
+                                // RelativePath = "devices\MK65F18\drivers\fsl_uart_ucosii.c"
+devices\MK65F18\drivers\fsl_uart_ucosiii.c
+                                // RelativePath = "devices\MK65F18\drivers\fsl_uart_ucosiii.c"
+devices\MK65F18\drivers\fsl_vref.c
+                                // RelativePath = "devices\MK65F18\drivers\fsl_vref.c"
+devices\MK65F18\drivers\fsl_wdog.c
+                                // RelativePath = "devices\MK65F18\drivers\fsl_wdog.c"
+devices\MK65F18\system_MK65F18.c
+                                // RelativePath = "devices\MK65F18\system_MK65F18.c"
+devices\MK66F18\drivers\fsl_adc16.c
+                                // RelativePath = "devices\MK66F18\drivers\fsl_adc16.c"
+devices\MK66F18\drivers\fsl_clock.c
+                                // RelativePath = "devices\MK66F18\drivers\fsl_clock.c"
+devices\MK66F18\drivers\fsl_cmp.c
+                                // RelativePath = "devices\MK66F18\drivers\fsl_cmp.c"
+devices\MK66F18\drivers\fsl_cmt.c
+                                // RelativePath = "devices\MK66F18\drivers\fsl_cmt.c"
+devices\MK66F18\drivers\fsl_common.c
+                                // RelativePath = "devices\MK66F18\drivers\fsl_common.c"
+devices\MK66F18\drivers\fsl_crc.c
+                                // RelativePath = "devices\MK66F18\drivers\fsl_crc.c"
+devices\MK66F18\drivers\fsl_dac.c
+                                // RelativePath = "devices\MK66F18\drivers\fsl_dac.c"
+devices\MK66F18\drivers\fsl_dmamux.c
+                                // RelativePath = "devices\MK66F18\drivers\fsl_dmamux.c"
+devices\MK66F18\drivers\fsl_dspi.c
+                                // RelativePath = "devices\MK66F18\drivers\fsl_dspi.c"
+devices\MK66F18\drivers\fsl_dspi_edma.c
+                                // RelativePath = "devices\MK66F18\drivers\fsl_dspi_edma.c"
+devices\MK66F18\drivers\fsl_dspi_freertos.c
+                                // RelativePath = "devices\MK66F18\drivers\fsl_dspi_freertos.c"
+devices\MK66F18\drivers\fsl_edma.c
+                                // RelativePath = "devices\MK66F18\drivers\fsl_edma.c"
+devices\MK66F18\drivers\fsl_enet.c
+                                // RelativePath = "devices\MK66F18\drivers\fsl_enet.c"
+devices\MK66F18\drivers\fsl_ewm.c
+                                // RelativePath = "devices\MK66F18\drivers\fsl_ewm.c"
+devices\MK66F18\drivers\fsl_flash.c
+                                // RelativePath = "devices\MK66F18\drivers\fsl_flash.c"
+devices\MK66F18\drivers\fsl_flexbus.c
+                                // RelativePath = "devices\MK66F18\drivers\fsl_flexbus.c"
+devices\MK66F18\drivers\fsl_flexcan.c
+                                // RelativePath = "devices\MK66F18\drivers\fsl_flexcan.c"
+devices\MK66F18\drivers\fsl_ftm.c
+                                // RelativePath = "devices\MK66F18\drivers\fsl_ftm.c"
+devices\MK66F18\drivers\fsl_gpio.c
+                                // RelativePath = "devices\MK66F18\drivers\fsl_gpio.c"
+devices\MK66F18\drivers\fsl_i2c.c
+                                // RelativePath = "devices\MK66F18\drivers\fsl_i2c.c"
+devices\MK66F18\drivers\fsl_i2c_edma.c
+                                // RelativePath = "devices\MK66F18\drivers\fsl_i2c_edma.c"
+devices\MK66F18\drivers\fsl_i2c_freertos.c
+                                // RelativePath = "devices\MK66F18\drivers\fsl_i2c_freertos.c"
+devices\MK66F18\drivers\fsl_llwu.c
+                                // RelativePath = "devices\MK66F18\drivers\fsl_llwu.c"
+devices\MK66F18\drivers\fsl_lmem_cache.c
+                                // RelativePath = "devices\MK66F18\drivers\fsl_lmem_cache.c"
+devices\MK66F18\drivers\fsl_lptmr.c
+                                // RelativePath = "devices\MK66F18\drivers\fsl_lptmr.c"
+devices\MK66F18\drivers\fsl_lpuart.c
+                                // RelativePath = "devices\MK66F18\drivers\fsl_lpuart.c"
+devices\MK66F18\drivers\fsl_lpuart_edma.c
+                                // RelativePath = "devices\MK66F18\drivers\fsl_lpuart_edma.c"
+devices\MK66F18\drivers\fsl_lpuart_freertos.c
+                                // RelativePath = "devices\MK66F18\drivers\fsl_lpuart_freertos.c"
+devices\MK66F18\drivers\fsl_mpu.c
+                                // RelativePath = "devices\MK66F18\drivers\fsl_mpu.c"
+devices\MK66F18\drivers\fsl_pdb.c
+                                // RelativePath = "devices\MK66F18\drivers\fsl_pdb.c"
+devices\MK66F18\drivers\fsl_pit.c
+                                // RelativePath = "devices\MK66F18\drivers\fsl_pit.c"
+devices\MK66F18\drivers\fsl_pmc.c
+                                // RelativePath = "devices\MK66F18\drivers\fsl_pmc.c"
+devices\MK66F18\drivers\fsl_rcm.c
+                                // RelativePath = "devices\MK66F18\drivers\fsl_rcm.c"
+devices\MK66F18\drivers\fsl_rnga.c
+                                // RelativePath = "devices\MK66F18\drivers\fsl_rnga.c"
+devices\MK66F18\drivers\fsl_rtc.c
+                                // RelativePath = "devices\MK66F18\drivers\fsl_rtc.c"
+devices\MK66F18\drivers\fsl_sai.c
+                                // RelativePath = "devices\MK66F18\drivers\fsl_sai.c"
+devices\MK66F18\drivers\fsl_sai_edma.c
+                                // RelativePath = "devices\MK66F18\drivers\fsl_sai_edma.c"
+devices\MK66F18\drivers\fsl_sdhc.c
+                                // RelativePath = "devices\MK66F18\drivers\fsl_sdhc.c"
+devices\MK66F18\drivers\fsl_sdramc.c
+                                // RelativePath = "devices\MK66F18\drivers\fsl_sdramc.c"
+devices\MK66F18\drivers\fsl_sim.c
+                                // RelativePath = "devices\MK66F18\drivers\fsl_sim.c"
+devices\MK66F18\drivers\fsl_smc.c
+                                // RelativePath = "devices\MK66F18\drivers\fsl_smc.c"
+devices\MK66F18\drivers\fsl_sysmpu.c
+                                // RelativePath = "devices\MK66F18\drivers\fsl_sysmpu.c"
+devices\MK66F18\drivers\fsl_tpm.c
+                                // RelativePath = "devices\MK66F18\drivers\fsl_tpm.c"
+devices\MK66F18\drivers\fsl_tsi_v4.c
+                                // RelativePath = "devices\MK66F18\drivers\fsl_tsi_v4.c"
+devices\MK66F18\drivers\fsl_uart.c
+                                // RelativePath = "devices\MK66F18\drivers\fsl_uart.c"
+devices\MK66F18\drivers\fsl_uart_edma.c
+                                // RelativePath = "devices\MK66F18\drivers\fsl_uart_edma.c"
+devices\MK66F18\drivers\fsl_uart_freertos.c
+                                // RelativePath = "devices\MK66F18\drivers\fsl_uart_freertos.c"
+devices\MK66F18\drivers\fsl_vref.c
+                                // RelativePath = "devices\MK66F18\drivers\fsl_vref.c"
+devices\MK66F18\drivers\fsl_wdog.c
+                                // RelativePath = "devices\MK66F18\drivers\fsl_wdog.c"
+devices\MK66F18\system_MK66F18.c
+                                // RelativePath = "devices\MK66F18\system_MK66F18.c"
+devices\MK80F25615\drivers\fsl_adc16.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_adc16.c"
+devices\MK80F25615\drivers\fsl_clock.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_clock.c"
+devices\MK80F25615\drivers\fsl_cmp.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_cmp.c"
+devices\MK80F25615\drivers\fsl_cmt.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_cmt.c"
+devices\MK80F25615\drivers\fsl_common.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_common.c"
+devices\MK80F25615\drivers\fsl_crc.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_crc.c"
+devices\MK80F25615\drivers\fsl_dac.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_dac.c"
+devices\MK80F25615\drivers\fsl_dmamux.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_dmamux.c"
+devices\MK80F25615\drivers\fsl_dspi.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_dspi.c"
+devices\MK80F25615\cmsis_drivers\fsl_dspi_cmsis.c
+                                // RelativePath = "devices\MK80F25615\cmsis_drivers\fsl_dspi_cmsis.c"
+devices\MK80F25615\drivers\fsl_dspi_edma.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_dspi_edma.c"
+devices\MK80F25615\drivers\fsl_dspi_freertos.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_dspi_freertos.c"
+devices\MK80F25615\drivers\fsl_dspi_ucosii.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_dspi_ucosii.c"
+devices\MK80F25615\drivers\fsl_dspi_ucosiii.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_dspi_ucosiii.c"
+devices\MK80F25615\drivers\fsl_edma.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_edma.c"
+devices\MK80F25615\drivers\fsl_ewm.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_ewm.c"
+devices\MK80F25615\drivers\fsl_flash.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_flash.c"
+devices\MK80F25615\drivers\fsl_flexbus.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_flexbus.c"
+devices\MK80F25615\drivers\fsl_flexio.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_flexio.c"
+devices\MK80F25615\drivers\fsl_flexio_camera.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_flexio_camera.c"
+devices\MK80F25615\drivers\fsl_flexio_camera_edma.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_flexio_camera_edma.c"
+devices\MK80F25615\drivers\fsl_flexio_i2c_master.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_flexio_i2c_master.c"
+devices\MK80F25615\drivers\fsl_flexio_i2s.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_flexio_i2s.c"
+devices\MK80F25615\drivers\fsl_flexio_i2s_edma.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_flexio_i2s_edma.c"
+devices\MK80F25615\drivers\fsl_flexio_spi.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_flexio_spi.c"
+devices\MK80F25615\drivers\fsl_flexio_spi_edma.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_flexio_spi_edma.c"
+devices\MK80F25615\drivers\fsl_flexio_uart.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_flexio_uart.c"
+devices\MK80F25615\drivers\fsl_flexio_uart_edma.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_flexio_uart_edma.c"
+devices\MK80F25615\drivers\fsl_ftm.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_ftm.c"
+devices\MK80F25615\drivers\fsl_gpio.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_gpio.c"
+devices\MK80F25615\drivers\fsl_i2c.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_i2c.c"
+devices\MK80F25615\cmsis_drivers\fsl_i2c_cmsis.c
+                                // RelativePath = "devices\MK80F25615\cmsis_drivers\fsl_i2c_cmsis.c"
+devices\MK80F25615\drivers\fsl_i2c_edma.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_i2c_edma.c"
+devices\MK80F25615\drivers\fsl_i2c_freertos.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_i2c_freertos.c"
+devices\MK80F25615\drivers\fsl_i2c_ucosii.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_i2c_ucosii.c"
+devices\MK80F25615\drivers\fsl_i2c_ucosiii.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_i2c_ucosiii.c"
+devices\MK80F25615\drivers\fsl_llwu.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_llwu.c"
+devices\MK80F25615\drivers\fsl_lmem_cache.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_lmem_cache.c"
+devices\MK80F25615\drivers\fsl_lptmr.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_lptmr.c"
+devices\MK80F25615\drivers\fsl_lpuart.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_lpuart.c"
+devices\MK80F25615\cmsis_drivers\fsl_lpuart_cmsis.c
+                                // RelativePath = "devices\MK80F25615\cmsis_drivers\fsl_lpuart_cmsis.c"
+devices\MK80F25615\drivers\fsl_lpuart_edma.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_lpuart_edma.c"
+devices\MK80F25615\drivers\fsl_lpuart_freertos.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_lpuart_freertos.c"
+devices\MK80F25615\drivers\fsl_lpuart_ucosii.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_lpuart_ucosii.c"
+devices\MK80F25615\drivers\fsl_lpuart_ucosiii.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_lpuart_ucosiii.c"
+devices\MK80F25615\drivers\fsl_mpu.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_mpu.c"
+devices\MK80F25615\drivers\fsl_pdb.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_pdb.c"
+devices\MK80F25615\drivers\fsl_pit.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_pit.c"
+devices\MK80F25615\drivers\fsl_pmc.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_pmc.c"
+devices\MK80F25615\drivers\fsl_qspi.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_qspi.c"
+devices\MK80F25615\drivers\fsl_qspi_edma.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_qspi_edma.c"
+devices\MK80F25615\drivers\fsl_rcm.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_rcm.c"
+devices\MK80F25615\drivers\fsl_rtc.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_rtc.c"
+devices\MK80F25615\drivers\fsl_sai.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_sai.c"
+devices\MK80F25615\drivers\fsl_sai_edma.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_sai_edma.c"
+devices\MK80F25615\drivers\fsl_sdhc.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_sdhc.c"
+devices\MK80F25615\drivers\fsl_sdramc.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_sdramc.c"
+devices\MK80F25615\drivers\fsl_sim.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_sim.c"
+devices\MK80F25615\drivers\fsl_smartcard_emvsim.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_smartcard_emvsim.c"
+devices\MK80F25615\drivers\fsl_smartcard_freertos.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_smartcard_freertos.c"
+devices\MK80F25615\drivers\fsl_smartcard_phy_emvsim.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_smartcard_phy_emvsim.c"
+devices\MK80F25615\drivers\fsl_smartcard_phy_tda8035.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_smartcard_phy_tda8035.c"
+devices\MK80F25615\drivers\fsl_smartcard_ucosii.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_smartcard_ucosii.c"
+devices\MK80F25615\drivers\fsl_smartcard_ucosiii.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_smartcard_ucosiii.c"
+devices\MK80F25615\drivers\fsl_smc.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_smc.c"
+devices\MK80F25615\drivers\fsl_tpm.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_tpm.c"
+devices\MK80F25615\drivers\fsl_trng.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_trng.c"
+devices\MK80F25615\drivers\fsl_tsi_v4.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_tsi_v4.c"
+devices\MK80F25615\drivers\fsl_vref.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_vref.c"
+devices\MK80F25615\drivers\fsl_wdog.c
+                                // RelativePath = "devices\MK80F25615\drivers\fsl_wdog.c"
+devices\MK80F25615\system_MK80F25615.c
+                                // RelativePath = "devices\MK80F25615\system_MK80F25615.c"
 devices\MKV11Z7\cmsis_drivers\fsl_dspi_cmsis.c
                                 // RelativePath = "devices\MKV11Z7\cmsis_drivers\fsl_dspi_cmsis.c"
 devices\MKV11Z7\cmsis_drivers\fsl_i2c_cmsis.c
@@ -966,6 +834,94 @@ devices\MKV11Z7\drivers\fsl_wdog.c
                                 // RelativePath = "devices\MKV11Z7\drivers\fsl_wdog.c"
 devices\MKV11Z7\system_MKV11Z7.c
                                 // RelativePath = "devices\MKV11Z7\system_MKV11Z7.c"
+devices\MKV31F51212\cmsis_drivers\fsl_dspi_cmsis.c
+                                // RelativePath = "devices\MKV31F51212\cmsis_drivers\fsl_dspi_cmsis.c"
+devices\MKV31F51212\cmsis_drivers\fsl_i2c_cmsis.c
+                                // RelativePath = "devices\MKV31F51212\cmsis_drivers\fsl_i2c_cmsis.c"
+devices\MKV31F51212\cmsis_drivers\fsl_lpuart_cmsis.c
+                                // RelativePath = "devices\MKV31F51212\cmsis_drivers\fsl_lpuart_cmsis.c"
+devices\MKV31F51212\cmsis_drivers\fsl_uart_cmsis.c
+                                // RelativePath = "devices\MKV31F51212\cmsis_drivers\fsl_uart_cmsis.c"
+devices\MKV31F51212\drivers\fsl_adc16.c
+                                // RelativePath = "devices\MKV31F51212\drivers\fsl_adc16.c"
+devices\MKV31F51212\drivers\fsl_clock.c
+                                // RelativePath = "devices\MKV31F51212\drivers\fsl_clock.c"
+devices\MKV31F51212\drivers\fsl_cmp.c
+                                // RelativePath = "devices\MKV31F51212\drivers\fsl_cmp.c"
+devices\MKV31F51212\drivers\fsl_common.c
+                                // RelativePath = "devices\MKV31F51212\drivers\fsl_common.c"
+devices\MKV31F51212\drivers\fsl_crc.c
+                                // RelativePath = "devices\MKV31F51212\drivers\fsl_crc.c"
+devices\MKV31F51212\drivers\fsl_dac.c
+                                // RelativePath = "devices\MKV31F51212\drivers\fsl_dac.c"
+devices\MKV31F51212\drivers\fsl_dmamux.c
+                                // RelativePath = "devices\MKV31F51212\drivers\fsl_dmamux.c"
+devices\MKV31F51212\drivers\fsl_dspi.c
+                                // RelativePath = "devices\MKV31F51212\drivers\fsl_dspi.c"
+devices\MKV31F51212\drivers\fsl_dspi_edma.c
+                                // RelativePath = "devices\MKV31F51212\drivers\fsl_dspi_edma.c"
+devices\MKV31F51212\drivers\fsl_edma.c
+                                // RelativePath = "devices\MKV31F51212\drivers\fsl_edma.c"
+devices\MKV31F51212\drivers\fsl_ewm.c
+                                // RelativePath = "devices\MKV31F51212\drivers\fsl_ewm.c"
+devices\MKV31F51212\drivers\fsl_flash.c
+                                // RelativePath = "devices\MKV31F51212\drivers\fsl_flash.c"
+devices\MKV31F51212\drivers\fsl_flexbus.c
+                                // RelativePath = "devices\MKV31F51212\drivers\fsl_flexbus.c"
+devices\MKV31F51212\drivers\fsl_ftfx_cache.c
+                                // RelativePath = "devices\MKV31F51212\drivers\fsl_ftfx_cache.c"
+devices\MKV31F51212\drivers\fsl_ftfx_controller.c
+                                // RelativePath = "devices\MKV31F51212\drivers\fsl_ftfx_controller.c"
+devices\MKV31F51212\drivers\fsl_ftfx_flash.c
+                                // RelativePath = "devices\MKV31F51212\drivers\fsl_ftfx_flash.c"
+devices\MKV31F51212\drivers\fsl_ftfx_flexnvm.c
+                                // RelativePath = "devices\MKV31F51212\drivers\fsl_ftfx_flexnvm.c"
+devices\MKV31F51212\drivers\fsl_ftm.c
+                                // RelativePath = "devices\MKV31F51212\drivers\fsl_ftm.c"
+devices\MKV31F51212\drivers\fsl_gpio.c
+                                // RelativePath = "devices\MKV31F51212\drivers\fsl_gpio.c"
+devices\MKV31F51212\drivers\fsl_i2c.c
+                                // RelativePath = "devices\MKV31F51212\drivers\fsl_i2c.c"
+devices\MKV31F51212\drivers\fsl_i2c_edma.c
+                                // RelativePath = "devices\MKV31F51212\drivers\fsl_i2c_edma.c"
+devices\MKV31F51212\drivers\fsl_i2c_freertos.c
+                                // RelativePath = "devices\MKV31F51212\drivers\fsl_i2c_freertos.c"
+devices\MKV31F51212\drivers\fsl_llwu.c
+                                // RelativePath = "devices\MKV31F51212\drivers\fsl_llwu.c"
+devices\MKV31F51212\drivers\fsl_lptmr.c
+                                // RelativePath = "devices\MKV31F51212\drivers\fsl_lptmr.c"
+devices\MKV31F51212\drivers\fsl_lpuart.c
+                                // RelativePath = "devices\MKV31F51212\drivers\fsl_lpuart.c"
+devices\MKV31F51212\drivers\fsl_lpuart_edma.c
+                                // RelativePath = "devices\MKV31F51212\drivers\fsl_lpuart_edma.c"
+devices\MKV31F51212\drivers\fsl_lpuart_freertos.c
+                                // RelativePath = "devices\MKV31F51212\drivers\fsl_lpuart_freertos.c"
+devices\MKV31F51212\drivers\fsl_pdb.c
+                                // RelativePath = "devices\MKV31F51212\drivers\fsl_pdb.c"
+devices\MKV31F51212\drivers\fsl_pit.c
+                                // RelativePath = "devices\MKV31F51212\drivers\fsl_pit.c"
+devices\MKV31F51212\drivers\fsl_pmc.c
+                                // RelativePath = "devices\MKV31F51212\drivers\fsl_pmc.c"
+devices\MKV31F51212\drivers\fsl_rcm.c
+                                // RelativePath = "devices\MKV31F51212\drivers\fsl_rcm.c"
+devices\MKV31F51212\drivers\fsl_rnga.c
+                                // RelativePath = "devices\MKV31F51212\drivers\fsl_rnga.c"
+devices\MKV31F51212\drivers\fsl_sim.c
+                                // RelativePath = "devices\MKV31F51212\drivers\fsl_sim.c"
+devices\MKV31F51212\drivers\fsl_smc.c
+                                // RelativePath = "devices\MKV31F51212\drivers\fsl_smc.c"
+devices\MKV31F51212\drivers\fsl_uart.c
+                                // RelativePath = "devices\MKV31F51212\drivers\fsl_uart.c"
+devices\MKV31F51212\drivers\fsl_uart_edma.c
+                                // RelativePath = "devices\MKV31F51212\drivers\fsl_uart_edma.c"
+devices\MKV31F51212\drivers\fsl_uart_freertos.c
+                                // RelativePath = "devices\MKV31F51212\drivers\fsl_uart_freertos.c"
+devices\MKV31F51212\drivers\fsl_vref.c
+                                // RelativePath = "devices\MKV31F51212\drivers\fsl_vref.c"
+devices\MKV31F51212\drivers\fsl_wdog.c
+                                // RelativePath = "devices\MKV31F51212\drivers\fsl_wdog.c"
+devices\MKV31F51212\system_MKV31F51212.c
+                                // RelativePath = "devices\MKV31F51212\system_MKV31F51212.c"
 devices\MKV58F24\cmsis_drivers\fsl_dspi_cmsis.c
                                 // RelativePath = "devices\MKV58F24\cmsis_drivers\fsl_dspi_cmsis.c"
 devices\MKV58F24\cmsis_drivers\fsl_i2c_cmsis.c
@@ -1332,8 +1288,778 @@ devices\MIMXRT1021\cmsis_drivers\fsl_lpspi_cmsis.c
                                 // RelativePath = "devices\MIMXRT1021\cmsis_drivers\fsl_lpspi_cmsis.c"
 devices\MIMXRT1021\cmsis_drivers\fsl_lpuart_cmsis.c
                                 // RelativePath = "devices\MIMXRT1021\cmsis_drivers\fsl_lpuart_cmsis.c"
+devices\MIMXRT1021\project_template\board.c
+                                // RelativePath = "devices\MIMXRT1021\project_template\board.c"
+devices\MIMXRT1021\project_template\clock_config.c
+                                // RelativePath = "devices\MIMXRT1021\project_template\clock_config.c"
+devices\MIMXRT1021\project_template\peripherals.c
+                                // RelativePath = "devices\MIMXRT1021\project_template\peripherals.c"
+devices\MIMXRT1021\project_template\pin_mux.c
+                                // RelativePath = "devices\MIMXRT1021\project_template\pin_mux.c"
+devices\MIMXRT1021\xip\evkmimxrt1020_flexspi_nor_config.c
+                                // RelativePath = "devices\MIMXRT1021\xip\evkmimxrt1020_flexspi_nor_config.c"
+devices\MIMXRT1021\xip\evkmimxrt1020_sdram_ini_dcd.c
+                                // RelativePath = "devices\MIMXRT1021\xip\evkmimxrt1020_sdram_ini_dcd.c"
+devices\MIMXRT1021\xip\fsl_flexspi_nor_boot.c
+                                // RelativePath = "devices\MIMXRT1021\xip\fsl_flexspi_nor_boot.c"
 devices\MIMXRT1021\system_MIMXRT1021.c
                                 // RelativePath = "devices\MIMXRT1021\system_MIMXRT1021.c"
+devices\MIMXRT1051\cmsis_drivers\fsl_lpi2c_cmsis.c
+                                // RelativePath = "devices\MIMXRT1051\cmsis_drivers\fsl_lpi2c_cmsis.c"
+devices\MIMXRT1051\cmsis_drivers\fsl_lpspi_cmsis.c
+                                // RelativePath = "devices\MIMXRT1051\cmsis_drivers\fsl_lpspi_cmsis.c"
+devices\MIMXRT1051\cmsis_drivers\fsl_lpuart_cmsis.c
+                                // RelativePath = "devices\MIMXRT1051\cmsis_drivers\fsl_lpuart_cmsis.c"
+devices\MIMXRT1051\drivers\fsl_adc.c
+                                // RelativePath = "devices\MIMXRT1051\drivers\fsl_adc.c"
+devices\MIMXRT1051\drivers\fsl_adc_etc.c
+                                // RelativePath = "devices\MIMXRT1051\drivers\fsl_adc_etc.c"
+devices\MIMXRT1051\drivers\fsl_aipstz.c
+                                // RelativePath = "devices\MIMXRT1051\drivers\fsl_aipstz.c"
+devices\MIMXRT1051\drivers\fsl_aoi.c
+                                // RelativePath = "devices\MIMXRT1051\drivers\fsl_aoi.c"
+devices\MIMXRT1051\drivers\fsl_bee.c
+                                // RelativePath = "devices\MIMXRT1051\drivers\fsl_bee.c"
+devices\MIMXRT1051\drivers\fsl_cache.c
+                                // RelativePath = "devices\MIMXRT1051\drivers\fsl_cache.c"
+devices\MIMXRT1051\drivers\fsl_clock.c
+                                // RelativePath = "devices\MIMXRT1051\drivers\fsl_clock.c"
+devices\MIMXRT1051\drivers\fsl_cmp.c
+                                // RelativePath = "devices\MIMXRT1051\drivers\fsl_cmp.c"
+devices\MIMXRT1051\drivers\fsl_common.c
+                                // RelativePath = "devices\MIMXRT1051\drivers\fsl_common.c"
+devices\MIMXRT1051\drivers\fsl_dcdc.c
+                                // RelativePath = "devices\MIMXRT1051\drivers\fsl_dcdc.c"
+devices\MIMXRT1051\drivers\fsl_dcp.c
+                                // RelativePath = "devices\MIMXRT1051\drivers\fsl_dcp.c"
+devices\MIMXRT1051\drivers\fsl_dmamux.c
+                                // RelativePath = "devices\MIMXRT1051\drivers\fsl_dmamux.c"
+devices\MIMXRT1051\drivers\fsl_edma.c
+                                // RelativePath = "devices\MIMXRT1051\drivers\fsl_edma.c"
+devices\MIMXRT1051\drivers\fsl_enc.c
+                                // RelativePath = "devices\MIMXRT1051\drivers\fsl_enc.c"
+devices\MIMXRT1051\drivers\fsl_enet.c
+                                // RelativePath = "devices\MIMXRT1051\drivers\fsl_enet.c"
+devices\MIMXRT1051\drivers\fsl_ewm.c
+                                // RelativePath = "devices\MIMXRT1051\drivers\fsl_ewm.c"
+devices\MIMXRT1051\drivers\fsl_flexcan.c
+                                // RelativePath = "devices\MIMXRT1051\drivers\fsl_flexcan.c"
+devices\MIMXRT1051\drivers\fsl_flexio.c
+                                // RelativePath = "devices\MIMXRT1051\drivers\fsl_flexio.c"
+devices\MIMXRT1051\drivers\fsl_flexio_i2c_master.c
+                                // RelativePath = "devices\MIMXRT1051\drivers\fsl_flexio_i2c_master.c"
+devices\MIMXRT1051\drivers\fsl_flexio_i2s.c
+                                // RelativePath = "devices\MIMXRT1051\drivers\fsl_flexio_i2s.c"
+devices\MIMXRT1051\drivers\fsl_flexio_i2s_edma.c
+                                // RelativePath = "devices\MIMXRT1051\drivers\fsl_flexio_i2s_edma.c"
+devices\MIMXRT1051\drivers\fsl_flexio_spi.c
+                                // RelativePath = "devices\MIMXRT1051\drivers\fsl_flexio_spi.c"
+devices\MIMXRT1051\drivers\fsl_flexio_spi_edma.c
+                                // RelativePath = "devices\MIMXRT1051\drivers\fsl_flexio_spi_edma.c"
+devices\MIMXRT1051\drivers\fsl_flexio_uart.c
+                                // RelativePath = "devices\MIMXRT1051\drivers\fsl_flexio_uart.c"
+devices\MIMXRT1051\drivers\fsl_flexio_uart_edma.c
+                                // RelativePath = "devices\MIMXRT1051\drivers\fsl_flexio_uart_edma.c"
+devices\MIMXRT1051\drivers\fsl_flexram.c
+                                // RelativePath = "devices\MIMXRT1051\drivers\fsl_flexram.c"
+devices\MIMXRT1051\drivers\fsl_flexspi.c
+                                // RelativePath = "devices\MIMXRT1051\drivers\fsl_flexspi.c"
+devices\MIMXRT1051\drivers\fsl_gpc.c
+                                // RelativePath = "devices\MIMXRT1051\drivers\fsl_gpc.c"
+devices\MIMXRT1051\drivers\fsl_gpio.c
+                                // RelativePath = "devices\MIMXRT1051\drivers\fsl_gpio.c"
+devices\MIMXRT1051\drivers\fsl_gpt.c
+                                // RelativePath = "devices\MIMXRT1051\drivers\fsl_gpt.c"
+devices\MIMXRT1051\drivers\fsl_kpp.c
+                                // RelativePath = "devices\MIMXRT1051\drivers\fsl_kpp.c"
+devices\MIMXRT1051\drivers\fsl_lpi2c.c
+                                // RelativePath = "devices\MIMXRT1051\drivers\fsl_lpi2c.c"
+devices\MIMXRT1051\drivers\fsl_lpi2c_edma.c
+                                // RelativePath = "devices\MIMXRT1051\drivers\fsl_lpi2c_edma.c"
+devices\MIMXRT1051\drivers\fsl_lpi2c_freertos.c
+                                // RelativePath = "devices\MIMXRT1051\drivers\fsl_lpi2c_freertos.c"
+devices\MIMXRT1051\drivers\fsl_lpspi.c
+                                // RelativePath = "devices\MIMXRT1051\drivers\fsl_lpspi.c"
+devices\MIMXRT1051\drivers\fsl_lpspi_edma.c
+                                // RelativePath = "devices\MIMXRT1051\drivers\fsl_lpspi_edma.c"
+devices\MIMXRT1051\drivers\fsl_lpspi_freertos.c
+                                // RelativePath = "devices\MIMXRT1051\drivers\fsl_lpspi_freertos.c"
+devices\MIMXRT1051\drivers\fsl_lpuart.c
+                                // RelativePath = "devices\MIMXRT1051\drivers\fsl_lpuart.c"
+devices\MIMXRT1051\drivers\fsl_lpuart_edma.c
+                                // RelativePath = "devices\MIMXRT1051\drivers\fsl_lpuart_edma.c"
+devices\MIMXRT1051\drivers\fsl_lpuart_freertos.c
+                                // RelativePath = "devices\MIMXRT1051\drivers\fsl_lpuart_freertos.c"
+devices\MIMXRT1051\drivers\fsl_pit.c
+                                // RelativePath = "devices\MIMXRT1051\drivers\fsl_pit.c"
+devices\MIMXRT1051\drivers\fsl_pmu.c
+                                // RelativePath = "devices\MIMXRT1051\drivers\fsl_pmu.c"
+devices\MIMXRT1051\drivers\fsl_pwm.c
+                                // RelativePath = "devices\MIMXRT1051\drivers\fsl_pwm.c"
+devices\MIMXRT1051\drivers\fsl_qtmr.c
+                                // RelativePath = "devices\MIMXRT1051\drivers\fsl_qtmr.c"
+devices\MIMXRT1051\drivers\fsl_rtwdog.c
+                                // RelativePath = "devices\MIMXRT1051\drivers\fsl_rtwdog.c"
+devices\MIMXRT1051\drivers\fsl_sai.c
+                                // RelativePath = "devices\MIMXRT1051\drivers\fsl_sai.c"
+devices\MIMXRT1051\drivers\fsl_sai_edma.c
+                                // RelativePath = "devices\MIMXRT1051\drivers\fsl_sai_edma.c"
+devices\MIMXRT1051\drivers\fsl_semc.c
+                                // RelativePath = "devices\MIMXRT1051\drivers\fsl_semc.c"
+devices\MIMXRT1051\drivers\fsl_snvs_hp.c
+                                // RelativePath = "devices\MIMXRT1051\drivers\fsl_snvs_hp.c"
+devices\MIMXRT1051\drivers\fsl_snvs_lp.c
+                                // RelativePath = "devices\MIMXRT1051\drivers\fsl_snvs_lp.c"
+devices\MIMXRT1051\drivers\fsl_spdif.c
+                                // RelativePath = "devices\MIMXRT1051\drivers\fsl_spdif.c"
+devices\MIMXRT1051\drivers\fsl_spdif_edma.c
+                                // RelativePath = "devices\MIMXRT1051\drivers\fsl_spdif_edma.c"
+devices\MIMXRT1051\drivers\fsl_src.c
+                                // RelativePath = "devices\MIMXRT1051\drivers\fsl_src.c"
+devices\MIMXRT1051\drivers\fsl_trng.c
+                                // RelativePath = "devices\MIMXRT1051\drivers\fsl_trng.c"
+devices\MIMXRT1051\drivers\fsl_tsc.c
+                                // RelativePath = "devices\MIMXRT1051\drivers\fsl_tsc.c"
+devices\MIMXRT1051\drivers\fsl_usdhc.c
+                                // RelativePath = "devices\MIMXRT1051\drivers\fsl_usdhc.c"
+devices\MIMXRT1051\drivers\fsl_wdog.c
+                                // RelativePath = "devices\MIMXRT1051\drivers\fsl_wdog.c"
+devices\MIMXRT1051\drivers\fsl_xbara.c
+                                // RelativePath = "devices\MIMXRT1051\drivers\fsl_xbara.c"
+devices\MIMXRT1051\drivers\fsl_xbarb.c
+                                // RelativePath = "devices\MIMXRT1051\drivers\fsl_xbarb.c"
+devices\MIMXRT1051\project_template\board.c
+                                // RelativePath = "devices\MIMXRT1051\project_template\board.c"
+devices\MIMXRT1051\project_template\clock_config.c
+                                // RelativePath = "devices\MIMXRT1051\project_template\clock_config.c"
+devices\MIMXRT1051\project_template\peripherals.c
+                                // RelativePath = "devices\MIMXRT1051\project_template\peripherals.c"
+devices\MIMXRT1051\project_template\pin_mux.c
+                                // RelativePath = "devices\MIMXRT1051\project_template\pin_mux.c"
+devices\MIMXRT1051\xip\fsl_flexspi_nor_boot.c
+                                // RelativePath = "devices\MIMXRT1051\xip\fsl_flexspi_nor_boot.c"
+devices\MIMXRT1051\xip\fsl_flexspi_nor_flash.c
+                                // RelativePath = "devices\MIMXRT1051\xip\fsl_flexspi_nor_flash.c"
+devices\MIMXRT1051\system_MIMXRT1051.c
+                                // RelativePath = "devices\MIMXRT1051\system_MIMXRT1051.c"
+devices\MIMXRT1052\drivers\fsl_adc.c
+                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_adc.c"
+devices\MIMXRT1052\drivers\fsl_adc_etc.c
+                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_adc_etc.c"
+devices\MIMXRT1052\drivers\fsl_aipstz.c
+                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_aipstz.c"
+devices\MIMXRT1052\drivers\fsl_aoi.c
+                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_aoi.c"
+devices\MIMXRT1052\drivers\fsl_bee.c
+                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_bee.c"
+devices\MIMXRT1052\drivers\fsl_cache.c
+                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_cache.c"
+devices\MIMXRT1052\drivers\fsl_clock.c
+                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_clock.c"
+devices\MIMXRT1052\drivers\fsl_cmp.c
+                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_cmp.c"
+devices\MIMXRT1052\drivers\fsl_common.c
+                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_common.c"
+devices\MIMXRT1052\drivers\fsl_csi.c
+                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_csi.c"
+devices\MIMXRT1052\drivers\fsl_dcdc.c
+                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_dcdc.c"
+devices\MIMXRT1052\drivers\fsl_dcp.c
+                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_dcp.c"
+devices\MIMXRT1052\drivers\fsl_dmamux.c
+                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_dmamux.c"
+devices\MIMXRT1052\drivers\fsl_edma.c
+                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_edma.c"
+devices\MIMXRT1052\drivers\fsl_elcdif.c
+                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_elcdif.c"
+devices\MIMXRT1052\drivers\fsl_enc.c
+                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_enc.c"
+devices\MIMXRT1052\drivers\fsl_enet.c
+                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_enet.c"
+devices\MIMXRT1052\drivers\fsl_ewm.c
+                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_ewm.c"
+devices\MIMXRT1052\drivers\fsl_flexcan.c
+                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_flexcan.c"
+devices\MIMXRT1052\drivers\fsl_flexio.c
+                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_flexio.c"
+devices\MIMXRT1052\drivers\fsl_flexio_i2c_master.c
+                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_flexio_i2c_master.c"
+devices\MIMXRT1052\drivers\fsl_flexio_i2s.c
+                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_flexio_i2s.c"
+devices\MIMXRT1052\drivers\fsl_flexio_i2s_edma.c
+                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_flexio_i2s_edma.c"
+devices\MIMXRT1052\drivers\fsl_flexio_spi.c
+                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_flexio_spi.c"
+devices\MIMXRT1052\drivers\fsl_flexio_spi_edma.c
+                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_flexio_spi_edma.c"
+devices\MIMXRT1052\drivers\fsl_flexio_uart.c
+                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_flexio_uart.c"
+devices\MIMXRT1052\drivers\fsl_flexio_uart_edma.c
+                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_flexio_uart_edma.c"
+devices\MIMXRT1052\drivers\fsl_flexram.c
+                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_flexram.c"
+devices\MIMXRT1052\drivers\fsl_flexspi.c
+                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_flexspi.c"
+devices\MIMXRT1052\drivers\fsl_gpc.c
+                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_gpc.c"
+devices\MIMXRT1052\drivers\fsl_gpio.c
+                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_gpio.c"
+devices\MIMXRT1052\drivers\fsl_gpt.c
+                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_gpt.c"
+devices\MIMXRT1052\drivers\fsl_kpp.c
+                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_kpp.c"
+devices\MIMXRT1052\drivers\fsl_lpi2c.c
+                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_lpi2c.c"
+devices\MIMXRT1052\drivers\fsl_lpi2c_edma.c
+                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_lpi2c_edma.c"
+devices\MIMXRT1052\drivers\fsl_lpi2c_freertos.c
+                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_lpi2c_freertos.c"
+devices\MIMXRT1052\drivers\fsl_lpspi.c
+                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_lpspi.c"
+devices\MIMXRT1052\drivers\fsl_lpspi_edma.c
+                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_lpspi_edma.c"
+devices\MIMXRT1052\drivers\fsl_lpspi_freertos.c
+                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_lpspi_freertos.c"
+devices\MIMXRT1052\drivers\fsl_lpuart.c
+                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_lpuart.c"
+devices\MIMXRT1052\drivers\fsl_lpuart_edma.c
+                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_lpuart_edma.c"
+devices\MIMXRT1052\drivers\fsl_lpuart_freertos.c
+                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_lpuart_freertos.c"
+devices\MIMXRT1052\drivers\fsl_pit.c
+                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_pit.c"
+devices\MIMXRT1052\drivers\fsl_pmu.c
+                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_pmu.c"
+devices\MIMXRT1052\drivers\fsl_pwm.c
+                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_pwm.c"
+devices\MIMXRT1052\drivers\fsl_pxp.c
+                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_pxp.c"
+devices\MIMXRT1052\drivers\fsl_qtmr.c
+                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_qtmr.c"
+devices\MIMXRT1052\drivers\fsl_rtwdog.c
+                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_rtwdog.c"
+devices\MIMXRT1052\drivers\fsl_sai.c
+                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_sai.c"
+devices\MIMXRT1052\drivers\fsl_sai_edma.c
+                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_sai_edma.c"
+devices\MIMXRT1052\drivers\fsl_semc.c
+                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_semc.c"
+devices\MIMXRT1052\drivers\fsl_snvs_hp.c
+                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_snvs_hp.c"
+devices\MIMXRT1052\drivers\fsl_snvs_lp.c
+                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_snvs_lp.c"
+devices\MIMXRT1052\drivers\fsl_spdif.c
+                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_spdif.c"
+devices\MIMXRT1052\drivers\fsl_spdif_edma.c
+                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_spdif_edma.c"
+devices\MIMXRT1052\drivers\fsl_src.c
+                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_src.c"
+devices\MIMXRT1052\drivers\fsl_trng.c
+                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_trng.c"
+devices\MIMXRT1052\drivers\fsl_tsc.c
+                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_tsc.c"
+devices\MIMXRT1052\drivers\fsl_usdhc.c
+                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_usdhc.c"
+devices\MIMXRT1052\drivers\fsl_wdog.c
+                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_wdog.c"
+devices\MIMXRT1052\drivers\fsl_xbara.c
+                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_xbara.c"
+devices\MIMXRT1052\drivers\fsl_xbarb.c
+                                // RelativePath = "devices\MIMXRT1052\drivers\fsl_xbarb.c"
+devices\MIMXRT1052\cmsis_drivers\fsl_lpi2c_cmsis.c
+                                // RelativePath = "devices\MIMXRT1052\cmsis_drivers\fsl_lpi2c_cmsis.c"
+devices\MIMXRT1052\cmsis_drivers\fsl_lpspi_cmsis.c
+                                // RelativePath = "devices\MIMXRT1052\cmsis_drivers\fsl_lpspi_cmsis.c"
+devices\MIMXRT1052\cmsis_drivers\fsl_lpuart_cmsis.c
+                                // RelativePath = "devices\MIMXRT1052\cmsis_drivers\fsl_lpuart_cmsis.c"
+devices\MIMXRT1052\system_MIMXRT1052.c
+                                // RelativePath = "devices\MIMXRT1052\system_MIMXRT1052.c"
+devices\MIMXRT1061\cmsis_drivers\fsl_lpi2c_cmsis.c
+                                // RelativePath = "devices\MIMXRT1061\cmsis_drivers\fsl_lpi2c_cmsis.c"
+devices\MIMXRT1061\cmsis_drivers\fsl_lpspi_cmsis.c
+                                // RelativePath = "devices\MIMXRT1061\cmsis_drivers\fsl_lpspi_cmsis.c"
+devices\MIMXRT1061\cmsis_drivers\fsl_lpuart_cmsis.c
+                                // RelativePath = "devices\MIMXRT1061\cmsis_drivers\fsl_lpuart_cmsis.c"
+devices\MIMXRT1061\drivers\fsl_adc.c
+                                // RelativePath = "devices\MIMXRT1061\drivers\fsl_adc.c"
+devices\MIMXRT1061\drivers\fsl_adc_etc.c
+                                // RelativePath = "devices\MIMXRT1061\drivers\fsl_adc_etc.c"
+devices\MIMXRT1061\drivers\fsl_aipstz.c
+                                // RelativePath = "devices\MIMXRT1061\drivers\fsl_aipstz.c"
+devices\MIMXRT1061\drivers\fsl_aoi.c
+                                // RelativePath = "devices\MIMXRT1061\drivers\fsl_aoi.c"
+devices\MIMXRT1061\drivers\fsl_bee.c
+                                // RelativePath = "devices\MIMXRT1061\drivers\fsl_bee.c"
+devices\MIMXRT1061\drivers\fsl_cache.c
+                                // RelativePath = "devices\MIMXRT1061\drivers\fsl_cache.c"
+devices\MIMXRT1061\drivers\fsl_clock.c
+                                // RelativePath = "devices\MIMXRT1061\drivers\fsl_clock.c"
+devices\MIMXRT1061\drivers\fsl_cmp.c
+                                // RelativePath = "devices\MIMXRT1061\drivers\fsl_cmp.c"
+devices\MIMXRT1061\drivers\fsl_common.c
+                                // RelativePath = "devices\MIMXRT1061\drivers\fsl_common.c"
+devices\MIMXRT1061\drivers\fsl_dcdc.c
+                                // RelativePath = "devices\MIMXRT1061\drivers\fsl_dcdc.c"
+devices\MIMXRT1061\drivers\fsl_dcp.c
+                                // RelativePath = "devices\MIMXRT1061\drivers\fsl_dcp.c"
+devices\MIMXRT1061\drivers\fsl_dmamux.c
+                                // RelativePath = "devices\MIMXRT1061\drivers\fsl_dmamux.c"
+devices\MIMXRT1061\drivers\fsl_edma.c
+                                // RelativePath = "devices\MIMXRT1061\drivers\fsl_edma.c"
+devices\MIMXRT1061\drivers\fsl_enc.c
+                                // RelativePath = "devices\MIMXRT1061\drivers\fsl_enc.c"
+devices\MIMXRT1061\drivers\fsl_enet.c
+                                // RelativePath = "devices\MIMXRT1061\drivers\fsl_enet.c"
+devices\MIMXRT1061\drivers\fsl_ewm.c
+                                // RelativePath = "devices\MIMXRT1061\drivers\fsl_ewm.c"
+devices\MIMXRT1061\drivers\fsl_flexcan.c
+                                // RelativePath = "devices\MIMXRT1061\drivers\fsl_flexcan.c"
+devices\MIMXRT1061\drivers\fsl_flexio.c
+                                // RelativePath = "devices\MIMXRT1061\drivers\fsl_flexio.c"
+devices\MIMXRT1061\drivers\fsl_flexio_i2c_master.c
+                                // RelativePath = "devices\MIMXRT1061\drivers\fsl_flexio_i2c_master.c"
+devices\MIMXRT1061\drivers\fsl_flexio_i2s.c
+                                // RelativePath = "devices\MIMXRT1061\drivers\fsl_flexio_i2s.c"
+devices\MIMXRT1061\drivers\fsl_flexio_i2s_edma.c
+                                // RelativePath = "devices\MIMXRT1061\drivers\fsl_flexio_i2s_edma.c"
+devices\MIMXRT1061\drivers\fsl_flexio_spi.c
+                                // RelativePath = "devices\MIMXRT1061\drivers\fsl_flexio_spi.c"
+devices\MIMXRT1061\drivers\fsl_flexio_spi_edma.c
+                                // RelativePath = "devices\MIMXRT1061\drivers\fsl_flexio_spi_edma.c"
+devices\MIMXRT1061\drivers\fsl_flexio_uart.c
+                                // RelativePath = "devices\MIMXRT1061\drivers\fsl_flexio_uart.c"
+devices\MIMXRT1061\drivers\fsl_flexio_uart_edma.c
+                                // RelativePath = "devices\MIMXRT1061\drivers\fsl_flexio_uart_edma.c"
+devices\MIMXRT1061\drivers\fsl_flexram.c
+                                // RelativePath = "devices\MIMXRT1061\drivers\fsl_flexram.c"
+devices\MIMXRT1061\drivers\fsl_flexspi.c
+                                // RelativePath = "devices\MIMXRT1061\drivers\fsl_flexspi.c"
+devices\MIMXRT1061\drivers\fsl_gpc.c
+                                // RelativePath = "devices\MIMXRT1061\drivers\fsl_gpc.c"
+devices\MIMXRT1061\drivers\fsl_gpio.c
+                                // RelativePath = "devices\MIMXRT1061\drivers\fsl_gpio.c"
+devices\MIMXRT1061\drivers\fsl_gpt.c
+                                // RelativePath = "devices\MIMXRT1061\drivers\fsl_gpt.c"
+devices\MIMXRT1061\drivers\fsl_kpp.c
+                                // RelativePath = "devices\MIMXRT1061\drivers\fsl_kpp.c"
+devices\MIMXRT1061\drivers\fsl_lpi2c.c
+                                // RelativePath = "devices\MIMXRT1061\drivers\fsl_lpi2c.c"
+devices\MIMXRT1061\drivers\fsl_lpi2c_edma.c
+                                // RelativePath = "devices\MIMXRT1061\drivers\fsl_lpi2c_edma.c"
+devices\MIMXRT1061\drivers\fsl_lpspi.c
+                                // RelativePath = "devices\MIMXRT1061\drivers\fsl_lpspi.c"
+devices\MIMXRT1061\drivers\fsl_lpspi_edma.c
+                                // RelativePath = "devices\MIMXRT1061\drivers\fsl_lpspi_edma.c"
+devices\MIMXRT1061\drivers\fsl_lpuart.c
+                                // RelativePath = "devices\MIMXRT1061\drivers\fsl_lpuart.c"
+devices\MIMXRT1061\drivers\fsl_lpuart_edma.c
+                                // RelativePath = "devices\MIMXRT1061\drivers\fsl_lpuart_edma.c"
+devices\MIMXRT1061\drivers\fsl_pit.c
+                                // RelativePath = "devices\MIMXRT1061\drivers\fsl_pit.c"
+devices\MIMXRT1061\drivers\fsl_pmu.c
+                                // RelativePath = "devices\MIMXRT1061\drivers\fsl_pmu.c"
+devices\MIMXRT1061\drivers\fsl_pwm.c
+                                // RelativePath = "devices\MIMXRT1061\drivers\fsl_pwm.c"
+devices\MIMXRT1061\drivers\fsl_qtmr.c
+                                // RelativePath = "devices\MIMXRT1061\drivers\fsl_qtmr.c"
+devices\MIMXRT1061\drivers\fsl_rtwdog.c
+                                // RelativePath = "devices\MIMXRT1061\drivers\fsl_rtwdog.c"
+devices\MIMXRT1061\drivers\fsl_sai.c
+                                // RelativePath = "devices\MIMXRT1061\drivers\fsl_sai.c"
+devices\MIMXRT1061\drivers\fsl_sai_edma.c
+                                // RelativePath = "devices\MIMXRT1061\drivers\fsl_sai_edma.c"
+devices\MIMXRT1061\drivers\fsl_semc.c
+                                // RelativePath = "devices\MIMXRT1061\drivers\fsl_semc.c"
+devices\MIMXRT1061\drivers\fsl_snvs_hp.c
+                                // RelativePath = "devices\MIMXRT1061\drivers\fsl_snvs_hp.c"
+devices\MIMXRT1061\drivers\fsl_snvs_lp.c
+                                // RelativePath = "devices\MIMXRT1061\drivers\fsl_snvs_lp.c"
+devices\MIMXRT1061\drivers\fsl_spdif.c
+                                // RelativePath = "devices\MIMXRT1061\drivers\fsl_spdif.c"
+devices\MIMXRT1061\drivers\fsl_spdif_edma.c
+                                // RelativePath = "devices\MIMXRT1061\drivers\fsl_spdif_edma.c"
+devices\MIMXRT1061\drivers\fsl_src.c
+                                // RelativePath = "devices\MIMXRT1061\drivers\fsl_src.c"
+devices\MIMXRT1061\drivers\fsl_tempmon.c
+                                // RelativePath = "devices\MIMXRT1061\drivers\fsl_tempmon.c"
+devices\MIMXRT1061\drivers\fsl_trng.c
+                                // RelativePath = "devices\MIMXRT1061\drivers\fsl_trng.c"
+devices\MIMXRT1061\drivers\fsl_tsc.c
+                                // RelativePath = "devices\MIMXRT1061\drivers\fsl_tsc.c"
+devices\MIMXRT1061\drivers\fsl_usdhc.c
+                                // RelativePath = "devices\MIMXRT1061\drivers\fsl_usdhc.c"
+devices\MIMXRT1061\drivers\fsl_wdog.c
+                                // RelativePath = "devices\MIMXRT1061\drivers\fsl_wdog.c"
+devices\MIMXRT1061\drivers\fsl_xbara.c
+                                // RelativePath = "devices\MIMXRT1061\drivers\fsl_xbara.c"
+devices\MIMXRT1061\drivers\fsl_xbarb.c
+                                // RelativePath = "devices\MIMXRT1061\drivers\fsl_xbarb.c"
+devices\MIMXRT1061\project_template\board.c
+                                // RelativePath = "devices\MIMXRT1061\project_template\board.c"
+devices\MIMXRT1061\project_template\clock_config.c
+                                // RelativePath = "devices\MIMXRT1061\project_template\clock_config.c"
+devices\MIMXRT1061\project_template\peripherals.c
+                                // RelativePath = "devices\MIMXRT1061\project_template\peripherals.c"
+devices\MIMXRT1061\project_template\pin_mux.c
+                                // RelativePath = "devices\MIMXRT1061\project_template\pin_mux.c"
+devices\MIMXRT1061\xip\fsl_flexspi_nor_boot.c
+                                // RelativePath = "devices\MIMXRT1061\xip\fsl_flexspi_nor_boot.c"
+devices\MIMXRT1061\system_MIMXRT1061.c
+                                // RelativePath = "devices\MIMXRT1061\system_MIMXRT1061.c"
+devices\MIMXRT1062\cmsis_drivers\fsl_lpi2c_cmsis.c
+                                // RelativePath = "devices\MIMXRT1062\cmsis_drivers\fsl_lpi2c_cmsis.c"
+devices\MIMXRT1062\cmsis_drivers\fsl_lpspi_cmsis.c
+                                // RelativePath = "devices\MIMXRT1062\cmsis_drivers\fsl_lpspi_cmsis.c"
+devices\MIMXRT1062\cmsis_drivers\fsl_lpuart_cmsis.c
+                                // RelativePath = "devices\MIMXRT1062\cmsis_drivers\fsl_lpuart_cmsis.c"
+devices\MIMXRT1062\drivers\fsl_adc.c
+                                // RelativePath = "devices\MIMXRT1062\drivers\fsl_adc.c"
+devices\MIMXRT1062\drivers\fsl_adc_etc.c
+                                // RelativePath = "devices\MIMXRT1062\drivers\fsl_adc_etc.c"
+devices\MIMXRT1062\drivers\fsl_aipstz.c
+                                // RelativePath = "devices\MIMXRT1062\drivers\fsl_aipstz.c"
+devices\MIMXRT1062\drivers\fsl_aoi.c
+                                // RelativePath = "devices\MIMXRT1062\drivers\fsl_aoi.c"
+devices\MIMXRT1062\drivers\fsl_bee.c
+                                // RelativePath = "devices\MIMXRT1062\drivers\fsl_bee.c"
+devices\MIMXRT1062\drivers\fsl_cache.c
+                                // RelativePath = "devices\MIMXRT1062\drivers\fsl_cache.c"
+devices\MIMXRT1062\drivers\fsl_clock.c
+                                // RelativePath = "devices\MIMXRT1062\drivers\fsl_clock.c"
+devices\MIMXRT1062\drivers\fsl_cmp.c
+                                // RelativePath = "devices\MIMXRT1062\drivers\fsl_cmp.c"
+devices\MIMXRT1062\drivers\fsl_common.c
+                                // RelativePath = "devices\MIMXRT1062\drivers\fsl_common.c"
+devices\MIMXRT1062\drivers\fsl_csi.c
+                                // RelativePath = "devices\MIMXRT1062\drivers\fsl_csi.c"
+devices\MIMXRT1062\drivers\fsl_dcdc.c
+                                // RelativePath = "devices\MIMXRT1062\drivers\fsl_dcdc.c"
+devices\MIMXRT1062\drivers\fsl_dcp.c
+                                // RelativePath = "devices\MIMXRT1062\drivers\fsl_dcp.c"
+devices\MIMXRT1062\drivers\fsl_dmamux.c
+                                // RelativePath = "devices\MIMXRT1062\drivers\fsl_dmamux.c"
+devices\MIMXRT1062\drivers\fsl_edma.c
+                                // RelativePath = "devices\MIMXRT1062\drivers\fsl_edma.c"
+devices\MIMXRT1062\drivers\fsl_elcdif.c
+                                // RelativePath = "devices\MIMXRT1062\drivers\fsl_elcdif.c"
+devices\MIMXRT1062\drivers\fsl_enc.c
+                                // RelativePath = "devices\MIMXRT1062\drivers\fsl_enc.c"
+devices\MIMXRT1062\drivers\fsl_enet.c
+                                // RelativePath = "devices\MIMXRT1062\drivers\fsl_enet.c"
+devices\MIMXRT1062\drivers\fsl_ewm.c
+                                // RelativePath = "devices\MIMXRT1062\drivers\fsl_ewm.c"
+devices\MIMXRT1062\drivers\fsl_flexcan.c
+                                // RelativePath = "devices\MIMXRT1062\drivers\fsl_flexcan.c"
+devices\MIMXRT1062\drivers\fsl_flexio.c
+                                // RelativePath = "devices\MIMXRT1062\drivers\fsl_flexio.c"
+devices\MIMXRT1062\drivers\fsl_flexio_i2c_master.c
+                                // RelativePath = "devices\MIMXRT1062\drivers\fsl_flexio_i2c_master.c"
+devices\MIMXRT1062\drivers\fsl_flexio_i2s.c
+                                // RelativePath = "devices\MIMXRT1062\drivers\fsl_flexio_i2s.c"
+devices\MIMXRT1062\drivers\fsl_flexio_i2s_edma.c
+                                // RelativePath = "devices\MIMXRT1062\drivers\fsl_flexio_i2s_edma.c"
+devices\MIMXRT1062\drivers\fsl_flexio_spi.c
+                                // RelativePath = "devices\MIMXRT1062\drivers\fsl_flexio_spi.c"
+devices\MIMXRT1062\drivers\fsl_flexio_spi_edma.c
+                                // RelativePath = "devices\MIMXRT1062\drivers\fsl_flexio_spi_edma.c"
+devices\MIMXRT1062\drivers\fsl_flexio_uart.c
+                                // RelativePath = "devices\MIMXRT1062\drivers\fsl_flexio_uart.c"
+devices\MIMXRT1062\drivers\fsl_flexio_uart_edma.c
+                                // RelativePath = "devices\MIMXRT1062\drivers\fsl_flexio_uart_edma.c"
+devices\MIMXRT1062\drivers\fsl_flexram.c
+                                // RelativePath = "devices\MIMXRT1062\drivers\fsl_flexram.c"
+devices\MIMXRT1062\drivers\fsl_flexspi.c
+                                // RelativePath = "devices\MIMXRT1062\drivers\fsl_flexspi.c"
+devices\MIMXRT1062\drivers\fsl_gpc.c
+                                // RelativePath = "devices\MIMXRT1062\drivers\fsl_gpc.c"
+devices\MIMXRT1062\drivers\fsl_gpio.c
+                                // RelativePath = "devices\MIMXRT1062\drivers\fsl_gpio.c"
+devices\MIMXRT1062\drivers\fsl_gpt.c
+                                // RelativePath = "devices\MIMXRT1062\drivers\fsl_gpt.c"
+devices\MIMXRT1062\drivers\fsl_kpp.c
+                                // RelativePath = "devices\MIMXRT1062\drivers\fsl_kpp.c"
+devices\MIMXRT1062\drivers\fsl_lpi2c.c
+                                // RelativePath = "devices\MIMXRT1062\drivers\fsl_lpi2c.c"
+devices\MIMXRT1062\drivers\fsl_lpi2c_edma.c
+                                // RelativePath = "devices\MIMXRT1062\drivers\fsl_lpi2c_edma.c"
+devices\MIMXRT1062\drivers\fsl_lpi2c_freertos.c
+                                // RelativePath = "devices\MIMXRT1062\drivers\fsl_lpi2c_freertos.c"
+devices\MIMXRT1062\drivers\fsl_lpspi.c
+                                // RelativePath = "devices\MIMXRT1062\drivers\fsl_lpspi.c"
+devices\MIMXRT1062\drivers\fsl_lpspi_edma.c
+                                // RelativePath = "devices\MIMXRT1062\drivers\fsl_lpspi_edma.c"
+devices\MIMXRT1062\drivers\fsl_lpspi_freertos.c
+                                // RelativePath = "devices\MIMXRT1062\drivers\fsl_lpspi_freertos.c"
+devices\MIMXRT1062\drivers\fsl_lpuart.c
+                                // RelativePath = "devices\MIMXRT1062\drivers\fsl_lpuart.c"
+devices\MIMXRT1062\drivers\fsl_lpuart_edma.c
+                                // RelativePath = "devices\MIMXRT1062\drivers\fsl_lpuart_edma.c"
+devices\MIMXRT1062\drivers\fsl_lpuart_freertos.c
+                                // RelativePath = "devices\MIMXRT1062\drivers\fsl_lpuart_freertos.c"
+devices\MIMXRT1062\drivers\fsl_pit.c
+                                // RelativePath = "devices\MIMXRT1062\drivers\fsl_pit.c"
+devices\MIMXRT1062\drivers\fsl_pmu.c
+                                // RelativePath = "devices\MIMXRT1062\drivers\fsl_pmu.c"
+devices\MIMXRT1062\drivers\fsl_pwm.c
+                                // RelativePath = "devices\MIMXRT1062\drivers\fsl_pwm.c"
+devices\MIMXRT1062\drivers\fsl_pxp.c
+                                // RelativePath = "devices\MIMXRT1062\drivers\fsl_pxp.c"
+devices\MIMXRT1062\drivers\fsl_qtmr.c
+                                // RelativePath = "devices\MIMXRT1062\drivers\fsl_qtmr.c"
+devices\MIMXRT1062\drivers\fsl_rtwdog.c
+                                // RelativePath = "devices\MIMXRT1062\drivers\fsl_rtwdog.c"
+devices\MIMXRT1062\drivers\fsl_sai.c
+                                // RelativePath = "devices\MIMXRT1062\drivers\fsl_sai.c"
+devices\MIMXRT1062\drivers\fsl_sai_edma.c
+                                // RelativePath = "devices\MIMXRT1062\drivers\fsl_sai_edma.c"
+devices\MIMXRT1062\drivers\fsl_semc.c
+                                // RelativePath = "devices\MIMXRT1062\drivers\fsl_semc.c"
+devices\MIMXRT1062\drivers\fsl_snvs_hp.c
+                                // RelativePath = "devices\MIMXRT1062\drivers\fsl_snvs_hp.c"
+devices\MIMXRT1062\drivers\fsl_snvs_lp.c
+                                // RelativePath = "devices\MIMXRT1062\drivers\fsl_snvs_lp.c"
+devices\MIMXRT1062\drivers\fsl_spdif.c
+                                // RelativePath = "devices\MIMXRT1062\drivers\fsl_spdif.c"
+devices\MIMXRT1062\drivers\fsl_spdif_edma.c
+                                // RelativePath = "devices\MIMXRT1062\drivers\fsl_spdif_edma.c"
+devices\MIMXRT1062\drivers\fsl_src.c
+                                // RelativePath = "devices\MIMXRT1062\drivers\fsl_src.c"
+devices\MIMXRT1062\drivers\fsl_tempmon.c
+                                // RelativePath = "devices\MIMXRT1062\drivers\fsl_tempmon.c"
+devices\MIMXRT1062\drivers\fsl_trng.c
+                                // RelativePath = "devices\MIMXRT1062\drivers\fsl_trng.c"
+devices\MIMXRT1062\drivers\fsl_tsc.c
+                                // RelativePath = "devices\MIMXRT1062\drivers\fsl_tsc.c"
+devices\MIMXRT1062\drivers\fsl_usdhc.c
+                                // RelativePath = "devices\MIMXRT1062\drivers\fsl_usdhc.c"
+devices\MIMXRT1062\drivers\fsl_wdog.c
+                                // RelativePath = "devices\MIMXRT1062\drivers\fsl_wdog.c"
+devices\MIMXRT1062\drivers\fsl_xbara.c
+                                // RelativePath = "devices\MIMXRT1062\drivers\fsl_xbara.c"
+devices\MIMXRT1062\drivers\fsl_xbarb.c
+                                // RelativePath = "devices\MIMXRT1062\drivers\fsl_xbarb.c"
+devices\MIMXRT1062\project_template\board.c
+                                // RelativePath = "devices\MIMXRT1062\project_template\board.c"
+devices\MIMXRT1062\project_template\clock_config.c
+                                // RelativePath = "devices\MIMXRT1062\project_template\clock_config.c"
+devices\MIMXRT1062\project_template\peripherals.c
+                                // RelativePath = "devices\MIMXRT1062\project_template\peripherals.c"
+devices\MIMXRT1062\project_template\pin_mux.c
+                                // RelativePath = "devices\MIMXRT1062\project_template\pin_mux.c"
+devices\MIMXRT1062\xip\evkmimxrt1060_flexspi_nor_config.c
+                                // RelativePath = "devices\MIMXRT1062\xip\evkmimxrt1060_flexspi_nor_config.c"
+devices\MIMXRT1062\xip\evkmimxrt1060_sdram_ini_dcd.c
+                                // RelativePath = "devices\MIMXRT1062\xip\evkmimxrt1060_sdram_ini_dcd.c"
+devices\MIMXRT1062\xip\fsl_flexspi_nor_boot.c
+                                // RelativePath = "devices\MIMXRT1062\xip\fsl_flexspi_nor_boot.c"
+devices\MIMXRT1062\system_MIMXRT1062.c
+                                // RelativePath = "devices\MIMXRT1062\system_MIMXRT1062.c"
+devices\MIMXRT1064\cmsis_drivers\fsl_lpi2c_cmsis.c
+                                // RelativePath = "devices\MIMXRT1064\cmsis_drivers\fsl_lpi2c_cmsis.c"
+devices\MIMXRT1064\cmsis_drivers\fsl_lpspi_cmsis.c
+                                // RelativePath = "devices\MIMXRT1064\cmsis_drivers\fsl_lpspi_cmsis.c"
+devices\MIMXRT1064\cmsis_drivers\fsl_lpuart_cmsis.c
+                                // RelativePath = "devices\MIMXRT1064\cmsis_drivers\fsl_lpuart_cmsis.c"
+devices\MIMXRT1064\drivers\fsl_adc.c
+                                // RelativePath = "devices\MIMXRT1064\drivers\fsl_adc.c"
+devices\MIMXRT1064\drivers\fsl_adc_etc.c
+                                // RelativePath = "devices\MIMXRT1064\drivers\fsl_adc_etc.c"
+devices\MIMXRT1064\drivers\fsl_aipstz.c
+                                // RelativePath = "devices\MIMXRT1064\drivers\fsl_aipstz.c"
+devices\MIMXRT1064\drivers\fsl_aoi.c
+                                // RelativePath = "devices\MIMXRT1064\drivers\fsl_aoi.c"
+devices\MIMXRT1064\drivers\fsl_bee.c
+                                // RelativePath = "devices\MIMXRT1064\drivers\fsl_bee.c"
+devices\MIMXRT1064\drivers\fsl_cache.c
+                                // RelativePath = "devices\MIMXRT1064\drivers\fsl_cache.c"
+devices\MIMXRT1064\drivers\fsl_clock.c
+                                // RelativePath = "devices\MIMXRT1064\drivers\fsl_clock.c"
+devices\MIMXRT1064\drivers\fsl_cmp.c
+                                // RelativePath = "devices\MIMXRT1064\drivers\fsl_cmp.c"
+devices\MIMXRT1064\drivers\fsl_common.c
+                                // RelativePath = "devices\MIMXRT1064\drivers\fsl_common.c"
+devices\MIMXRT1064\drivers\fsl_csi.c
+                                // RelativePath = "devices\MIMXRT1064\drivers\fsl_csi.c"
+devices\MIMXRT1064\drivers\fsl_dcdc.c
+                                // RelativePath = "devices\MIMXRT1064\drivers\fsl_dcdc.c"
+devices\MIMXRT1064\drivers\fsl_dcp.c
+                                // RelativePath = "devices\MIMXRT1064\drivers\fsl_dcp.c"
+devices\MIMXRT1064\drivers\fsl_dmamux.c
+                                // RelativePath = "devices\MIMXRT1064\drivers\fsl_dmamux.c"
+devices\MIMXRT1064\drivers\fsl_edma.c
+                                // RelativePath = "devices\MIMXRT1064\drivers\fsl_edma.c"
+devices\MIMXRT1064\drivers\fsl_elcdif.c
+                                // RelativePath = "devices\MIMXRT1064\drivers\fsl_elcdif.c"
+devices\MIMXRT1064\drivers\fsl_enc.c
+                                // RelativePath = "devices\MIMXRT1064\drivers\fsl_enc.c"
+devices\MIMXRT1064\drivers\fsl_enet.c
+                                // RelativePath = "devices\MIMXRT1064\drivers\fsl_enet.c"
+devices\MIMXRT1064\drivers\fsl_ewm.c
+                                // RelativePath = "devices\MIMXRT1064\drivers\fsl_ewm.c"
+devices\MIMXRT1064\drivers\fsl_flexcan.c
+                                // RelativePath = "devices\MIMXRT1064\drivers\fsl_flexcan.c"
+devices\MIMXRT1064\drivers\fsl_flexio.c
+                                // RelativePath = "devices\MIMXRT1064\drivers\fsl_flexio.c"
+devices\MIMXRT1064\drivers\fsl_flexio_i2c_master.c
+                                // RelativePath = "devices\MIMXRT1064\drivers\fsl_flexio_i2c_master.c"
+devices\MIMXRT1064\drivers\fsl_flexio_i2s.c
+                                // RelativePath = "devices\MIMXRT1064\drivers\fsl_flexio_i2s.c"
+devices\MIMXRT1064\drivers\fsl_flexio_i2s_edma.c
+                                // RelativePath = "devices\MIMXRT1064\drivers\fsl_flexio_i2s_edma.c"
+devices\MIMXRT1064\drivers\fsl_flexio_spi.c
+                                // RelativePath = "devices\MIMXRT1064\drivers\fsl_flexio_spi.c"
+devices\MIMXRT1064\drivers\fsl_flexio_spi_edma.c
+                                // RelativePath = "devices\MIMXRT1064\drivers\fsl_flexio_spi_edma.c"
+devices\MIMXRT1064\drivers\fsl_flexio_uart.c
+                                // RelativePath = "devices\MIMXRT1064\drivers\fsl_flexio_uart.c"
+devices\MIMXRT1064\drivers\fsl_flexio_uart_edma.c
+                                // RelativePath = "devices\MIMXRT1064\drivers\fsl_flexio_uart_edma.c"
+devices\MIMXRT1064\drivers\fsl_flexram.c
+                                // RelativePath = "devices\MIMXRT1064\drivers\fsl_flexram.c"
+devices\MIMXRT1064\drivers\fsl_flexspi.c
+                                // RelativePath = "devices\MIMXRT1064\drivers\fsl_flexspi.c"
+devices\MIMXRT1064\drivers\fsl_gpc.c
+                                // RelativePath = "devices\MIMXRT1064\drivers\fsl_gpc.c"
+devices\MIMXRT1064\drivers\fsl_gpio.c
+                                // RelativePath = "devices\MIMXRT1064\drivers\fsl_gpio.c"
+devices\MIMXRT1064\drivers\fsl_gpt.c
+                                // RelativePath = "devices\MIMXRT1064\drivers\fsl_gpt.c"
+devices\MIMXRT1064\drivers\fsl_kpp.c
+                                // RelativePath = "devices\MIMXRT1064\drivers\fsl_kpp.c"
+devices\MIMXRT1064\drivers\fsl_lpi2c.c
+                                // RelativePath = "devices\MIMXRT1064\drivers\fsl_lpi2c.c"
+devices\MIMXRT1064\drivers\fsl_lpi2c_edma.c
+                                // RelativePath = "devices\MIMXRT1064\drivers\fsl_lpi2c_edma.c"
+devices\MIMXRT1064\drivers\fsl_lpi2c_freertos.c
+                                // RelativePath = "devices\MIMXRT1064\drivers\fsl_lpi2c_freertos.c"
+devices\MIMXRT1064\drivers\fsl_lpspi.c
+                                // RelativePath = "devices\MIMXRT1064\drivers\fsl_lpspi.c"
+devices\MIMXRT1064\drivers\fsl_lpspi_edma.c
+                                // RelativePath = "devices\MIMXRT1064\drivers\fsl_lpspi_edma.c"
+devices\MIMXRT1064\drivers\fsl_lpspi_freertos.c
+                                // RelativePath = "devices\MIMXRT1064\drivers\fsl_lpspi_freertos.c"
+devices\MIMXRT1064\drivers\fsl_lpuart.c
+                                // RelativePath = "devices\MIMXRT1064\drivers\fsl_lpuart.c"
+devices\MIMXRT1064\drivers\fsl_lpuart_edma.c
+                                // RelativePath = "devices\MIMXRT1064\drivers\fsl_lpuart_edma.c"
+devices\MIMXRT1064\drivers\fsl_lpuart_freertos.c
+                                // RelativePath = "devices\MIMXRT1064\drivers\fsl_lpuart_freertos.c"
+devices\MIMXRT1064\drivers\fsl_pit.c
+                                // RelativePath = "devices\MIMXRT1064\drivers\fsl_pit.c"
+devices\MIMXRT1064\drivers\fsl_pmu.c
+                                // RelativePath = "devices\MIMXRT1064\drivers\fsl_pmu.c"
+devices\MIMXRT1064\drivers\fsl_pwm.c
+                                // RelativePath = "devices\MIMXRT1064\drivers\fsl_pwm.c"
+devices\MIMXRT1064\drivers\fsl_pxp.c
+                                // RelativePath = "devices\MIMXRT1064\drivers\fsl_pxp.c"
+devices\MIMXRT1064\drivers\fsl_qtmr.c
+                                // RelativePath = "devices\MIMXRT1064\drivers\fsl_qtmr.c"
+devices\MIMXRT1064\drivers\fsl_rtwdog.c
+                                // RelativePath = "devices\MIMXRT1064\drivers\fsl_rtwdog.c"
+devices\MIMXRT1064\drivers\fsl_sai.c
+                                // RelativePath = "devices\MIMXRT1064\drivers\fsl_sai.c"
+devices\MIMXRT1064\drivers\fsl_sai_edma.c
+                                // RelativePath = "devices\MIMXRT1064\drivers\fsl_sai_edma.c"
+devices\MIMXRT1064\drivers\fsl_semc.c
+                                // RelativePath = "devices\MIMXRT1064\drivers\fsl_semc.c"
+devices\MIMXRT1064\drivers\fsl_snvs_hp.c
+                                // RelativePath = "devices\MIMXRT1064\drivers\fsl_snvs_hp.c"
+devices\MIMXRT1064\drivers\fsl_snvs_lp.c
+                                // RelativePath = "devices\MIMXRT1064\drivers\fsl_snvs_lp.c"
+devices\MIMXRT1064\drivers\fsl_spdif.c
+                                // RelativePath = "devices\MIMXRT1064\drivers\fsl_spdif.c"
+devices\MIMXRT1064\drivers\fsl_spdif_edma.c
+                                // RelativePath = "devices\MIMXRT1064\drivers\fsl_spdif_edma.c"
+devices\MIMXRT1064\drivers\fsl_src.c
+                                // RelativePath = "devices\MIMXRT1064\drivers\fsl_src.c"
+devices\MIMXRT1064\drivers\fsl_tempmon.c
+                                // RelativePath = "devices\MIMXRT1064\drivers\fsl_tempmon.c"
+devices\MIMXRT1064\drivers\fsl_trng.c
+                                // RelativePath = "devices\MIMXRT1064\drivers\fsl_trng.c"
+devices\MIMXRT1064\drivers\fsl_tsc.c
+                                // RelativePath = "devices\MIMXRT1064\drivers\fsl_tsc.c"
+devices\MIMXRT1064\drivers\fsl_usdhc.c
+                                // RelativePath = "devices\MIMXRT1064\drivers\fsl_usdhc.c"
+devices\MIMXRT1064\drivers\fsl_wdog.c
+                                // RelativePath = "devices\MIMXRT1064\drivers\fsl_wdog.c"
+devices\MIMXRT1064\drivers\fsl_xbara.c
+                                // RelativePath = "devices\MIMXRT1064\drivers\fsl_xbara.c"
+devices\MIMXRT1064\drivers\fsl_xbarb.c
+                                // RelativePath = "devices\MIMXRT1064\drivers\fsl_xbarb.c"
+devices\MIMXRT1064\project_template\board.c
+                                // RelativePath = "devices\MIMXRT1064\project_template\board.c"
+devices\MIMXRT1064\project_template\clock_config.c
+                                // RelativePath = "devices\MIMXRT1064\project_template\clock_config.c"
+devices\MIMXRT1064\project_template\peripherals.c
+                                // RelativePath = "devices\MIMXRT1064\project_template\peripherals.c"
+devices\MIMXRT1064\project_template\pin_mux.c
+                                // RelativePath = "devices\MIMXRT1064\project_template\pin_mux.c"
+devices\MIMXRT1064\xip\evkmimxrt1064_flexspi_nor_config.c
+                                // RelativePath = "devices\MIMXRT1064\xip\evkmimxrt1064_flexspi_nor_config.c"
+devices\MIMXRT1064\xip\evkmimxrt1064_sdram_ini_dcd.c
+                                // RelativePath = "devices\MIMXRT1064\xip\evkmimxrt1064_sdram_ini_dcd.c"
+devices\MIMXRT1064\xip\fsl_flexspi_nor_boot.c
+                                // RelativePath = "devices\MIMXRT1064\xip\fsl_flexspi_nor_boot.c"
+devices\MIMXRT1064\system_MIMXRT1064.c
+                                // RelativePath = "devices\MIMXRT1064\system_MIMXRT1064.c"
+boards\frdmk22f\demo_apps\ecompass\board.c
+                                // RelativePath = "boards\frdmk22f\demo_apps\ecompass\board.c"
+boards\frdmk22f\demo_apps\ecompass\clock_config.c
+                                // RelativePath = "boards\frdmk22f\demo_apps\ecompass\clock_config.c"
+boards\frdmk22f\demo_apps\ecompass\ecompass.c
+                                // RelativePath = "boards\frdmk22f\demo_apps\ecompass\ecompass.c"
+boards\frdmk22f\demo_apps\ecompass\fsl_fxos.c
+                                // RelativePath = "boards\frdmk22f\demo_apps\ecompass\fsl_fxos.c"
+boards\frdmk22f\demo_apps\ecompass\pin_mux.c
+                                // RelativePath = "boards\frdmk22f\demo_apps\ecompass\pin_mux.c"
+boards\frdmk22f\wifi_qca_examples\qca_demo\board.c
+                                // RelativePath = "boards\frdmk22f\wifi_qca_examples\qca_demo\board.c"
+boards\frdmk22f\wifi_qca_examples\qca_demo\clock_config.c
+                                // RelativePath = "boards\frdmk22f\wifi_qca_examples\qca_demo\clock_config.c"
+boards\frdmk22f\wifi_qca_examples\qca_demo\main.c
+                                // RelativePath = "boards\frdmk22f\wifi_qca_examples\qca_demo\main.c"
+boards\frdmk22f\wifi_qca_examples\qca_demo\pin_mux.c
+                                // RelativePath = "boards\frdmk22f\wifi_qca_examples\qca_demo\pin_mux.c"
+boards\frdmk22f\wifi_qca_examples\qca_demo\wlan_qca400x.c
+                                // RelativePath = "boards\frdmk22f\wifi_qca_examples\qca_demo\wlan_qca400x.c"
+boards\frdmk22f\wifi_qca_examples\qca_demo\wlan_qcom.c
+                                // RelativePath = "boards\frdmk22f\wifi_qca_examples\qca_demo\wlan_qcom.c"
+boards\frdmk22f\wifi_qca_examples\qca_fwupdate\board.c
+                                // RelativePath = "boards\frdmk22f\wifi_qca_examples\qca_fwupdate\board.c"
+boards\frdmk22f\wifi_qca_examples\qca_fwupdate\clock_config.c
+                                // RelativePath = "boards\frdmk22f\wifi_qca_examples\qca_fwupdate\clock_config.c"
+boards\frdmk22f\wifi_qca_examples\qca_fwupdate\main.c
+                                // RelativePath = "boards\frdmk22f\wifi_qca_examples\qca_fwupdate\main.c"
+boards\frdmk22f\wifi_qca_examples\qca_fwupdate\pin_mux.c
+                                // RelativePath = "boards\frdmk22f\wifi_qca_examples\qca_fwupdate\pin_mux.c"
+boards\frdmk22f\wifi_qca_examples\qca_fwupdate\wlan_qca400x.c
+                                // RelativePath = "boards\frdmk22f\wifi_qca_examples\qca_fwupdate\wlan_qca400x.c"
+boards\frdmk22f\wifi_qca_examples\qca_throughput\board.c
+                                // RelativePath = "boards\frdmk22f\wifi_qca_examples\qca_throughput\board.c"
+boards\frdmk22f\wifi_qca_examples\qca_throughput\clock_config.c
+                                // RelativePath = "boards\frdmk22f\wifi_qca_examples\qca_throughput\clock_config.c"
+boards\frdmk22f\wifi_qca_examples\qca_throughput\main.c
+                                // RelativePath = "boards\frdmk22f\wifi_qca_examples\qca_throughput\main.c"
+boards\frdmk22f\wifi_qca_examples\qca_throughput\pin_mux.c
+                                // RelativePath = "boards\frdmk22f\wifi_qca_examples\qca_throughput\pin_mux.c"
+boards\frdmk22f\wifi_qca_examples\qca_throughput\wlan_qca400x.c
+                                // RelativePath = "boards\frdmk22f\wifi_qca_examples\qca_throughput\wlan_qca400x.c"
+boards\frdmk28f\driver_examples\qspi\edma_transfer\board.c
+                                // RelativePath = "boards\frdmk28f\driver_examples\qspi\edma_transfer\board.c"
+boards\frdmk28f\driver_examples\qspi\edma_transfer\clock_config.c
+                                // RelativePath = "boards\frdmk28f\driver_examples\qspi\edma_transfer\clock_config.c"
+boards\frdmk28f\driver_examples\qspi\edma_transfer\pin_mux.c
+                                // RelativePath = "boards\frdmk28f\driver_examples\qspi\edma_transfer\pin_mux.c"
+boards\frdmk28f\driver_examples\qspi\edma_transfer\qspi_edma_transfer.c
+                                // RelativePath = "boards\frdmk28f\driver_examples\qspi\edma_transfer\qspi_edma_transfer.c"
+boards\frdmk28f\driver_examples\qspi\polling_transfer\board.c
+                                // RelativePath = "boards\frdmk28f\driver_examples\qspi\polling_transfer\board.c"
+boards\frdmk28f\driver_examples\qspi\polling_transfer\clock_config.c
+                                // RelativePath = "boards\frdmk28f\driver_examples\qspi\polling_transfer\clock_config.c"
+boards\frdmk28f\driver_examples\qspi\polling_transfer\pin_mux.c
+                                // RelativePath = "boards\frdmk28f\driver_examples\qspi\polling_transfer\pin_mux.c"
+boards\frdmk28f\driver_examples\qspi\polling_transfer\qspi_polling_transfer.c
+                                // RelativePath = "boards\frdmk28f\driver_examples\qspi\polling_transfer\qspi_polling_transfer.c"
 boards\frdmk64f\demo_apps\adc16_low_power\adc16_low_power.c
                                 // RelativePath = "boards\frdmk64f\demo_apps\adc16_low_power\adc16_low_power.c"
 boards\frdmk64f\demo_apps\adc16_low_power\board.c
@@ -1692,48 +2418,6 @@ boards\evkbimxrt1050\rtos_examples\freertos_generic\freertos_generic.c
                                 // RelativePath = "boards\evkbimxrt1050\rtos_examples\freertos_generic\freertos_generic.c"
 boards\evkbimxrt1050\rtos_examples\freertos_generic\pin_mux.c
                                 // RelativePath = "boards\evkbimxrt1050\rtos_examples\freertos_generic\pin_mux.c"
-boards\frdmk22f\demo_apps\ecompass\board.c
-                                // RelativePath = "boards\frdmk22f\demo_apps\ecompass\board.c"
-boards\frdmk22f\demo_apps\ecompass\clock_config.c
-                                // RelativePath = "boards\frdmk22f\demo_apps\ecompass\clock_config.c"
-boards\frdmk22f\demo_apps\ecompass\ecompass.c
-                                // RelativePath = "boards\frdmk22f\demo_apps\ecompass\ecompass.c"
-boards\frdmk22f\demo_apps\ecompass\fsl_fxos.c
-                                // RelativePath = "boards\frdmk22f\demo_apps\ecompass\fsl_fxos.c"
-boards\frdmk22f\demo_apps\ecompass\pin_mux.c
-                                // RelativePath = "boards\frdmk22f\demo_apps\ecompass\pin_mux.c"
-boards\frdmk22f\wifi_qca_examples\qca_demo\board.c
-                                // RelativePath = "boards\frdmk22f\wifi_qca_examples\qca_demo\board.c"
-boards\frdmk22f\wifi_qca_examples\qca_demo\clock_config.c
-                                // RelativePath = "boards\frdmk22f\wifi_qca_examples\qca_demo\clock_config.c"
-boards\frdmk22f\wifi_qca_examples\qca_demo\main.c
-                                // RelativePath = "boards\frdmk22f\wifi_qca_examples\qca_demo\main.c"
-boards\frdmk22f\wifi_qca_examples\qca_demo\pin_mux.c
-                                // RelativePath = "boards\frdmk22f\wifi_qca_examples\qca_demo\pin_mux.c"
-boards\frdmk22f\wifi_qca_examples\qca_demo\wlan_qca400x.c
-                                // RelativePath = "boards\frdmk22f\wifi_qca_examples\qca_demo\wlan_qca400x.c"
-boards\frdmk22f\wifi_qca_examples\qca_demo\wlan_qcom.c
-                                // RelativePath = "boards\frdmk22f\wifi_qca_examples\qca_demo\wlan_qcom.c"
-boards\frdmk22f\wifi_qca_examples\qca_fwupdate\board.c
-                                // RelativePath = "boards\frdmk22f\wifi_qca_examples\qca_fwupdate\board.c"
-boards\frdmk22f\wifi_qca_examples\qca_fwupdate\clock_config.c
-                                // RelativePath = "boards\frdmk22f\wifi_qca_examples\qca_fwupdate\clock_config.c"
-boards\frdmk22f\wifi_qca_examples\qca_fwupdate\main.c
-                                // RelativePath = "boards\frdmk22f\wifi_qca_examples\qca_fwupdate\main.c"
-boards\frdmk22f\wifi_qca_examples\qca_fwupdate\pin_mux.c
-                                // RelativePath = "boards\frdmk22f\wifi_qca_examples\qca_fwupdate\pin_mux.c"
-boards\frdmk22f\wifi_qca_examples\qca_fwupdate\wlan_qca400x.c
-                                // RelativePath = "boards\frdmk22f\wifi_qca_examples\qca_fwupdate\wlan_qca400x.c"
-boards\frdmk22f\wifi_qca_examples\qca_throughput\board.c
-                                // RelativePath = "boards\frdmk22f\wifi_qca_examples\qca_throughput\board.c"
-boards\frdmk22f\wifi_qca_examples\qca_throughput\clock_config.c
-                                // RelativePath = "boards\frdmk22f\wifi_qca_examples\qca_throughput\clock_config.c"
-boards\frdmk22f\wifi_qca_examples\qca_throughput\main.c
-                                // RelativePath = "boards\frdmk22f\wifi_qca_examples\qca_throughput\main.c"
-boards\frdmk22f\wifi_qca_examples\qca_throughput\pin_mux.c
-                                // RelativePath = "boards\frdmk22f\wifi_qca_examples\qca_throughput\pin_mux.c"
-boards\frdmk22f\wifi_qca_examples\qca_throughput\wlan_qca400x.c
-                                // RelativePath = "boards\frdmk22f\wifi_qca_examples\qca_throughput\wlan_qca400x.c"
 boards\evkbimxrt1050\driver_examples\flexspi\hyper_flash\polling_transfer\board.c
                                 // RelativePath = "boards\evkbimxrt1050\driver_examples\flexspi\hyper_flash\polling_transfer\board.c"
 boards\evkbimxrt1050\driver_examples\flexspi\hyper_flash\polling_transfer\clock_config.c
@@ -1766,6 +2450,14 @@ boards\evkbimxrt1050\driver_examples\flexram\ram_allocate\flexram.c
                                 // RelativePath = "boards\evkbimxrt1050\driver_examples\flexram\ram_allocate\flexram.c"
 boards\evkbimxrt1050\driver_examples\flexram\ram_allocate\pin_mux.c
                                 // RelativePath = "boards\evkbimxrt1050\driver_examples\flexram\ram_allocate\pin_mux.c"
+boards\evkbimxrt1050\driver_examples\lpspi\interrupt\board.c
+                                // RelativePath = "boards\evkbimxrt1050\driver_examples\lpspi\interrupt\board.c"
+boards\evkbimxrt1050\driver_examples\lpspi\interrupt\clock_config.c
+                                // RelativePath = "boards\evkbimxrt1050\driver_examples\lpspi\interrupt\clock_config.c"
+boards\evkbimxrt1050\driver_examples\lpspi\interrupt\lpspi_interrupt.c
+                                // RelativePath = "boards\evkbimxrt1050\driver_examples\lpspi\interrupt\lpspi_interrupt.c"
+boards\evkbimxrt1050\driver_examples\lpspi\interrupt\pin_mux.c
+                                // RelativePath = "boards\evkbimxrt1050\driver_examples\lpspi\interrupt\pin_mux.c"
 boards\evkbimxrt1050\lwip_examples\lwip_dhcp\bm\board.c
                                 // RelativePath = "boards\evkbimxrt1050\lwip_examples\lwip_dhcp\bm\board.c"
 boards\evkbimxrt1050\lwip_examples\lwip_dhcp\bm\clock_config.c
@@ -1808,22 +2500,70 @@ boards\evkmimxrt1020\driver_examples\flexcan\loopback_transfer\flexcan_loopback_
                                 // RelativePath = "boards\evkmimxrt1020\driver_examples\flexcan\loopback_transfer\flexcan_loopback_transfer.c"
 boards\evkmimxrt1020\driver_examples\flexcan\loopback_transfer\pin_mux.c
                                 // RelativePath = "boards\evkmimxrt1020\driver_examples\flexcan\loopback_transfer\pin_mux.c"
-boards\frdmk28f\driver_examples\qspi\edma_transfer\board.c
-                                // RelativePath = "boards\frdmk28f\driver_examples\qspi\edma_transfer\board.c"
-boards\frdmk28f\driver_examples\qspi\edma_transfer\clock_config.c
-                                // RelativePath = "boards\frdmk28f\driver_examples\qspi\edma_transfer\clock_config.c"
-boards\frdmk28f\driver_examples\qspi\edma_transfer\pin_mux.c
-                                // RelativePath = "boards\frdmk28f\driver_examples\qspi\edma_transfer\pin_mux.c"
-boards\frdmk28f\driver_examples\qspi\edma_transfer\qspi_edma_transfer.c
-                                // RelativePath = "boards\frdmk28f\driver_examples\qspi\edma_transfer\qspi_edma_transfer.c"
-boards\frdmk28f\driver_examples\qspi\polling_transfer\board.c
-                                // RelativePath = "boards\frdmk28f\driver_examples\qspi\polling_transfer\board.c"
-boards\frdmk28f\driver_examples\qspi\polling_transfer\clock_config.c
-                                // RelativePath = "boards\frdmk28f\driver_examples\qspi\polling_transfer\clock_config.c"
-boards\frdmk28f\driver_examples\qspi\polling_transfer\pin_mux.c
-                                // RelativePath = "boards\frdmk28f\driver_examples\qspi\polling_transfer\pin_mux.c"
-boards\frdmk28f\driver_examples\qspi\polling_transfer\qspi_polling_transfer.c
-                                // RelativePath = "boards\frdmk28f\driver_examples\qspi\polling_transfer\qspi_polling_transfer.c"
+boards\evkmimxrt1064\cmsis_driver_examples\lpi2c\edma_b2b_transfer\master\board.c
+                                // RelativePath = "boards\evkmimxrt1064\cmsis_driver_examples\lpi2c\edma_b2b_transfer\master\board.c"
+boards\evkmimxrt1064\cmsis_driver_examples\lpi2c\edma_b2b_transfer\master\clock_config.c
+                                // RelativePath = "boards\evkmimxrt1064\cmsis_driver_examples\lpi2c\edma_b2b_transfer\master\clock_config.c"
+boards\evkmimxrt1064\cmsis_driver_examples\lpi2c\edma_b2b_transfer\master\cmsis_lpi2c_edma_b2b_transfer_master.c
+                                // RelativePath = "boards\evkmimxrt1064\cmsis_driver_examples\lpi2c\edma_b2b_transfer\master\cmsis_lpi2c_edma_b2b_transfer_master.c"
+boards\evkmimxrt1064\cmsis_driver_examples\lpi2c\edma_b2b_transfer\master\pin_mux.c
+                                // RelativePath = "boards\evkmimxrt1064\cmsis_driver_examples\lpi2c\edma_b2b_transfer\master\pin_mux.c"
+boards\evkmimxrt1064\cmsis_driver_examples\lpi2c\edma_b2b_transfer\slave\board.c
+                                // RelativePath = "boards\evkmimxrt1064\cmsis_driver_examples\lpi2c\edma_b2b_transfer\slave\board.c"
+boards\evkmimxrt1064\cmsis_driver_examples\lpi2c\edma_b2b_transfer\slave\clock_config.c
+                                // RelativePath = "boards\evkmimxrt1064\cmsis_driver_examples\lpi2c\edma_b2b_transfer\slave\clock_config.c"
+boards\evkmimxrt1064\cmsis_driver_examples\lpi2c\edma_b2b_transfer\slave\cmsis_lpi2c_edma_b2b_transfer_slave.c
+                                // RelativePath = "boards\evkmimxrt1064\cmsis_driver_examples\lpi2c\edma_b2b_transfer\slave\cmsis_lpi2c_edma_b2b_transfer_slave.c"
+boards\evkmimxrt1064\cmsis_driver_examples\lpi2c\edma_b2b_transfer\slave\pin_mux.c
+                                // RelativePath = "boards\evkmimxrt1064\cmsis_driver_examples\lpi2c\edma_b2b_transfer\slave\pin_mux.c"
+boards\evkmimxrt1064\cmsis_driver_examples\lpi2c\int_b2b_transfer\master\board.c
+                                // RelativePath = "boards\evkmimxrt1064\cmsis_driver_examples\lpi2c\int_b2b_transfer\master\board.c"
+boards\evkmimxrt1064\cmsis_driver_examples\lpi2c\int_b2b_transfer\master\clock_config.c
+                                // RelativePath = "boards\evkmimxrt1064\cmsis_driver_examples\lpi2c\int_b2b_transfer\master\clock_config.c"
+boards\evkmimxrt1064\cmsis_driver_examples\lpi2c\int_b2b_transfer\master\cmsis_lpi2c_int_b2b_transfer_master.c
+                                // RelativePath = "boards\evkmimxrt1064\cmsis_driver_examples\lpi2c\int_b2b_transfer\master\cmsis_lpi2c_int_b2b_transfer_master.c"
+boards\evkmimxrt1064\cmsis_driver_examples\lpi2c\int_b2b_transfer\master\pin_mux.c
+                                // RelativePath = "boards\evkmimxrt1064\cmsis_driver_examples\lpi2c\int_b2b_transfer\master\pin_mux.c"
+boards\evkmimxrt1064\cmsis_driver_examples\lpi2c\int_b2b_transfer\slave\board.c
+                                // RelativePath = "boards\evkmimxrt1064\cmsis_driver_examples\lpi2c\int_b2b_transfer\slave\board.c"
+boards\evkmimxrt1064\cmsis_driver_examples\lpi2c\int_b2b_transfer\slave\clock_config.c
+                                // RelativePath = "boards\evkmimxrt1064\cmsis_driver_examples\lpi2c\int_b2b_transfer\slave\clock_config.c"
+boards\evkmimxrt1064\cmsis_driver_examples\lpi2c\int_b2b_transfer\slave\cmsis_lpi2c_int_b2b_transfer_slave.c
+                                // RelativePath = "boards\evkmimxrt1064\cmsis_driver_examples\lpi2c\int_b2b_transfer\slave\cmsis_lpi2c_int_b2b_transfer_slave.c"
+boards\evkmimxrt1064\cmsis_driver_examples\lpi2c\int_b2b_transfer\slave\pin_mux.c
+                                // RelativePath = "boards\evkmimxrt1064\cmsis_driver_examples\lpi2c\int_b2b_transfer\slave\pin_mux.c"
+boards\evkmimxrt1064\cmsis_driver_examples\lpspi\edma_b2b_transfer\master\board.c
+                                // RelativePath = "boards\evkmimxrt1064\cmsis_driver_examples\lpspi\edma_b2b_transfer\master\board.c"
+boards\evkmimxrt1064\cmsis_driver_examples\lpspi\edma_b2b_transfer\master\clock_config.c
+                                // RelativePath = "boards\evkmimxrt1064\cmsis_driver_examples\lpspi\edma_b2b_transfer\master\clock_config.c"
+boards\evkmimxrt1064\cmsis_driver_examples\lpspi\edma_b2b_transfer\master\cmsis_lpspi_edma_b2b_transfer_master.c
+                                // RelativePath = "boards\evkmimxrt1064\cmsis_driver_examples\lpspi\edma_b2b_transfer\master\cmsis_lpspi_edma_b2b_transfer_master.c"
+boards\evkmimxrt1064\cmsis_driver_examples\lpspi\edma_b2b_transfer\master\pin_mux.c
+                                // RelativePath = "boards\evkmimxrt1064\cmsis_driver_examples\lpspi\edma_b2b_transfer\master\pin_mux.c"
+boards\evkmimxrt1064\cmsis_driver_examples\lpspi\edma_b2b_transfer\slave\board.c
+                                // RelativePath = "boards\evkmimxrt1064\cmsis_driver_examples\lpspi\edma_b2b_transfer\slave\board.c"
+boards\evkmimxrt1064\cmsis_driver_examples\lpspi\edma_b2b_transfer\slave\clock_config.c
+                                // RelativePath = "boards\evkmimxrt1064\cmsis_driver_examples\lpspi\edma_b2b_transfer\slave\clock_config.c"
+boards\evkmimxrt1064\cmsis_driver_examples\lpspi\edma_b2b_transfer\slave\cmsis_lpspi_edma_b2b_transfer_slave.c
+                                // RelativePath = "boards\evkmimxrt1064\cmsis_driver_examples\lpspi\edma_b2b_transfer\slave\cmsis_lpspi_edma_b2b_transfer_slave.c"
+boards\evkmimxrt1064\cmsis_driver_examples\lpspi\edma_b2b_transfer\slave\pin_mux.c
+                                // RelativePath = "boards\evkmimxrt1064\cmsis_driver_examples\lpspi\edma_b2b_transfer\slave\pin_mux.c"
+boards\evkmimxrt1064\cmsis_driver_examples\lpspi\int_b2b_transfer\master\board.c
+                                // RelativePath = "boards\evkmimxrt1064\cmsis_driver_examples\lpspi\int_b2b_transfer\master\board.c"
+boards\evkmimxrt1064\cmsis_driver_examples\lpspi\int_b2b_transfer\master\clock_config.c
+                                // RelativePath = "boards\evkmimxrt1064\cmsis_driver_examples\lpspi\int_b2b_transfer\master\clock_config.c"
+boards\evkmimxrt1064\cmsis_driver_examples\lpspi\int_b2b_transfer\master\cmsis_lpspi_int_b2b_transfer_master.c
+                                // RelativePath = "boards\evkmimxrt1064\cmsis_driver_examples\lpspi\int_b2b_transfer\master\cmsis_lpspi_int_b2b_transfer_master.c"
+boards\evkmimxrt1064\cmsis_driver_examples\lpspi\int_b2b_transfer\master\pin_mux.c
+                                // RelativePath = "boards\evkmimxrt1064\cmsis_driver_examples\lpspi\int_b2b_transfer\master\pin_mux.c"
+boards\evkmimxrt1064\cmsis_driver_examples\lpspi\int_b2b_transfer\slave\board.c
+                                // RelativePath = "boards\evkmimxrt1064\cmsis_driver_examples\lpspi\int_b2b_transfer\slave\board.c"
+boards\evkmimxrt1064\cmsis_driver_examples\lpspi\int_b2b_transfer\slave\clock_config.c
+                                // RelativePath = "boards\evkmimxrt1064\cmsis_driver_examples\lpspi\int_b2b_transfer\slave\clock_config.c"
+boards\evkmimxrt1064\cmsis_driver_examples\lpspi\int_b2b_transfer\slave\cmsis_lpspi_int_b2b_transfer_slave.c
+                                // RelativePath = "boards\evkmimxrt1064\cmsis_driver_examples\lpspi\int_b2b_transfer\slave\cmsis_lpspi_int_b2b_transfer_slave.c"
+boards\evkmimxrt1064\cmsis_driver_examples\lpspi\int_b2b_transfer\slave\pin_mux.c
+                                // RelativePath = "boards\evkmimxrt1064\cmsis_driver_examples\lpspi\int_b2b_transfer\slave\pin_mux.c"
 middleware\sdmmc_2.1.2\port\sdhc\freertos\event.c
                                 // RelativePath = "middleware\sdmmc_2.1.2\port\sdhc\freertos\event.c"
 middleware\sdmmc_2.1.2\port\sdhc\freertos\fsl_host.c

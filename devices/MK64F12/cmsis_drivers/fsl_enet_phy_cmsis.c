@@ -149,7 +149,7 @@ int32_t PHY0_PowerControl(ARM_POWER_STATE state)
         {
             status = PHY_Init(ENETPHY0_State.resource->base, ENETPHY0_State.resource->phyAddr,
                               ENETPHY0_State.resource->GetFreq());
-            if (status & (kStatus_Success | kStatus_PHY_AutoNegotiateFail))
+            if ((status == kStatus_Success) || (status == kStatus_PHY_AutoNegotiateFail))
             {
                 status = ARM_DRIVER_OK;
             }
@@ -236,7 +236,7 @@ ARM_ETH_LINK_STATE PHY0_GetLinkState(void)
 
 ARM_ETH_LINK_INFO PHY0_GetLinkInfo(void)
 {
-    ARM_ETH_LINK_INFO linkInfo;
+    ARM_ETH_LINK_INFO linkInfo = {0};
     phy_speed_t speed;
     phy_duplex_t duplex;
     int32_t status;

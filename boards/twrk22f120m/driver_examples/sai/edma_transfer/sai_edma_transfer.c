@@ -1,36 +1,16 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
+ * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "board.h"
 #include "music.h"
+#if defined(FSL_FEATURE_SOC_DMAMUX_COUNT) && FSL_FEATURE_SOC_DMAMUX_COUNT
 #include "fsl_dmamux.h"
+#endif
 #include "fsl_sai_edma.h"
 #include "fsl_debug_console.h"
 
@@ -61,6 +41,8 @@
 #define I2C_RELEASE_SCL_PIN 24U
 #define I2C_RELEASE_BUS_COUNT 100U
 #define OVER_SAMPLE_RATE (384U)
+#define BUFFER_SIZE (1600U)
+#define BUFFER_NUM (2U)
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -70,23 +52,14 @@ static void callback(I2S_Type *base, sai_edma_handle_t *handle, status_t status,
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-sai_edma_handle_t txHandle = {0};
+AT_NONCACHEABLE_SECTION_INIT(sai_edma_handle_t txHandle) = {0};
 edma_handle_t dmaHandle = {0};
-#if defined(DEMO_CODEC_WM8960)
-wm8960_handle_t codecHandle = {0};
-#elif defined (DEMO_CODEC_DA7212)
-da7212_handle_t codecHandle = {0};
-#else
-sgtl_handle_t codecHandle = {0};
-#endif
-
-#if defined(FSL_FEATURE_SOC_LPI2C_COUNT) && (FSL_FEATURE_SOC_LPI2C_COUNT)
-lpi2c_master_handle_t i2cHandle = {0};
-#else
-i2c_master_handle_t i2cHandle = {{0, 0, kI2C_Write, 0, 0, NULL, 0}, 0, 0, NULL, NULL};
-#endif
+codec_handle_t codecHandle = {0};
+extern codec_config_t boardCodecConfig;
+AT_NONCACHEABLE_SECTION_ALIGN(static uint8_t buffer[BUFFER_NUM * BUFFER_SIZE], 4);
 volatile bool isFinished = false;
-
+volatile uint32_t finishIndex = 0U;
+volatile uint32_t emptyBlock = BUFFER_NUM;
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -120,39 +93,51 @@ void BOARD_I2C_ReleaseBus(void)
     GPIO_PinInit(I2C_RELEASE_SDA_GPIO, I2C_RELEASE_SDA_PIN, &pin_config);
 
     /* Drive SDA low first to simulate a start */
-    GPIO_WritePinOutput(I2C_RELEASE_SDA_GPIO, I2C_RELEASE_SDA_PIN, 0U);
+    GPIO_PinWrite(I2C_RELEASE_SDA_GPIO, I2C_RELEASE_SDA_PIN, 0U);
     i2c_release_bus_delay();
 
-    /* Send 9 pulses on SCL and keep SDA low */
+    /* Send 9 pulses on SCL and keep SDA high */
     for (i = 0; i < 9; i++)
     {
-        GPIO_WritePinOutput(I2C_RELEASE_SCL_GPIO, I2C_RELEASE_SCL_PIN, 0U);
+        GPIO_PinWrite(I2C_RELEASE_SCL_GPIO, I2C_RELEASE_SCL_PIN, 0U);
         i2c_release_bus_delay();
 
-        GPIO_WritePinOutput(I2C_RELEASE_SDA_GPIO, I2C_RELEASE_SDA_PIN, 1U);
+        GPIO_PinWrite(I2C_RELEASE_SDA_GPIO, I2C_RELEASE_SDA_PIN, 1U);
         i2c_release_bus_delay();
 
-        GPIO_WritePinOutput(I2C_RELEASE_SCL_GPIO, I2C_RELEASE_SCL_PIN, 1U);
+        GPIO_PinWrite(I2C_RELEASE_SCL_GPIO, I2C_RELEASE_SCL_PIN, 1U);
         i2c_release_bus_delay();
         i2c_release_bus_delay();
     }
 
     /* Send stop */
-    GPIO_WritePinOutput(I2C_RELEASE_SCL_GPIO, I2C_RELEASE_SCL_PIN, 0U);
+    GPIO_PinWrite(I2C_RELEASE_SCL_GPIO, I2C_RELEASE_SCL_PIN, 0U);
     i2c_release_bus_delay();
 
-    GPIO_WritePinOutput(I2C_RELEASE_SDA_GPIO, I2C_RELEASE_SDA_PIN, 0U);
+    GPIO_PinWrite(I2C_RELEASE_SDA_GPIO, I2C_RELEASE_SDA_PIN, 0U);
     i2c_release_bus_delay();
 
-    GPIO_WritePinOutput(I2C_RELEASE_SCL_GPIO, I2C_RELEASE_SCL_PIN, 1U);
+    GPIO_PinWrite(I2C_RELEASE_SCL_GPIO, I2C_RELEASE_SCL_PIN, 1U);
     i2c_release_bus_delay();
 
-    GPIO_WritePinOutput(I2C_RELEASE_SDA_GPIO, I2C_RELEASE_SDA_PIN, 1U);
+    GPIO_PinWrite(I2C_RELEASE_SDA_GPIO, I2C_RELEASE_SDA_PIN, 1U);
     i2c_release_bus_delay();
 }
 static void callback(I2S_Type *base, sai_edma_handle_t *handle, status_t status, void *userData)
 {
-    isFinished = true;
+    if (kStatus_SAI_RxError == status)
+    {
+    }
+    else
+    {
+        finishIndex++;
+        emptyBlock++;
+        /* Judge whether the music array is completely transfered. */
+        if (MUSIC_LEN / BUFFER_SIZE == finishIndex)
+        {
+            isFinished = true;
+        }
+    }
 }
 
 /*!
@@ -165,19 +150,17 @@ int main(void)
     sai_transfer_format_t format;
     sai_transfer_t xfer;
     edma_config_t dmaConfig = {0};
-#if defined(FSL_FEATURE_SOC_LPI2C_COUNT) && (FSL_FEATURE_SOC_LPI2C_COUNT)
-    lpi2c_master_config_t i2cConfig = {0};
-#else
-    i2c_master_config_t i2cConfig = {0};
-#endif
-    uint32_t i2cSourceClock;
-    uint32_t temp = 0;
+    uint32_t cpy_index = 0U, tx_index = 0U;
+    uint32_t delayCycle = 500000U;
 
     BOARD_InitPins();
     BOARD_BootClockRUN();
     BOARD_I2C_ReleaseBus();
     BOARD_I2C_ConfigurePins();
     BOARD_InitDebugConsole();
+    BOARD_Codec_I2C_Init();
+
+    memset(&format, 0U, sizeof(sai_transfer_format_t));
 
     PRINTF("SAI example started!\n\r");
 
@@ -192,9 +175,11 @@ int main(void)
     EDMA_Init(EXAMPLE_DMA, &dmaConfig);
     EDMA_CreateHandle(&dmaHandle, EXAMPLE_DMA, EXAMPLE_CHANNEL);
 
+#if defined(FSL_FEATURE_SOC_DMAMUX_COUNT) && FSL_FEATURE_SOC_DMAMUX_COUNT
     DMAMUX_Init(DMAMUX0);
     DMAMUX_SetSource(DMAMUX0, EXAMPLE_CHANNEL, EXAMPLE_SAI_TX_SOURCE);
     DMAMUX_EnableChannel(DMAMUX0, EXAMPLE_CHANNEL);
+#endif
 
     /* Init SAI module */
     /*
@@ -205,6 +190,9 @@ int main(void)
      * config.mclkOutputEnable = true;
      */
     SAI_TxGetDefaultConfig(&config);
+#if defined DEMO_CODEC_WM8524
+    config.protocol = kSAI_BusI2S;
+#endif
     SAI_TxInit(DEMO_SAI, &config);
 
     /* Configure the audio format */
@@ -219,84 +207,90 @@ int main(void)
 #endif
     format.protocol = config.protocol;
     format.stereo = kSAI_Stereo;
+    format.isFrameSyncCompact = true;
 #if defined(FSL_FEATURE_SAI_FIFO_COUNT) && (FSL_FEATURE_SAI_FIFO_COUNT > 1)
     format.watermark = FSL_FEATURE_SAI_FIFO_COUNT / 2U;
 #endif
 
-    /* Configure Sgtl5000 I2C */
-    codecHandle.base = DEMO_I2C;
-    codecHandle.i2cHandle = &i2cHandle;
-    i2cSourceClock = DEMO_I2C_CLK_FREQ;
+    /* Use default setting to init codec */
+    CODEC_Init(&codecHandle, &boardCodecConfig);
+    CODEC_SetFormat(&codecHandle, format.masterClockHz, format.sampleRate_Hz, format.bitWidth);
 
-#if defined(FSL_FEATURE_SOC_LPI2C_COUNT) && (FSL_FEATURE_SOC_LPI2C_COUNT)
-    /*
-     * i2cConfig.debugEnable = false;
-     * i2cConfig.ignoreAck = false;
-     * i2cConfig.pinConfig = kLPI2C_2PinOpenDrain;
-     * i2cConfig.baudRate_Hz = 100000U;
-     * i2cConfig.busIdleTimeout_ns = 0;
-     * i2cConfig.pinLowTimeout_ns = 0;
-     * i2cConfig.sdaGlitchFilterWidth_ns = 0;
-     * i2cConfig.sclGlitchFilterWidth_ns = 0;
-     */
-    LPI2C_MasterGetDefaultConfig(&i2cConfig);
-    LPI2C_MasterInit(DEMO_I2C, &i2cConfig, i2cSourceClock);
-    LPI2C_MasterTransferCreateHandle(DEMO_I2C, &i2cHandle, NULL, NULL);
-#else
-    /*
-     * i2cConfig.baudRate_Bps = 100000U;
-     * i2cConfig.enableStopHold = false;
-     * i2cConfig.glitchFilterWidth = 0U;
-     * i2cConfig.enableMaster = true;
-     */
-    I2C_MasterGetDefaultConfig(&i2cConfig);
-    I2C_MasterInit(DEMO_I2C, &i2cConfig, i2cSourceClock);
-    I2C_MasterTransferCreateHandle(DEMO_I2C, &i2cHandle, NULL, NULL);
+#if defined(DEMO_CODEC_WM8524)
+    wm8524_config_t codecConfig = {0};
+    codecConfig.busPinNum = CODEC_BUS_PIN_NUM;
+    codecConfig.busPin = CODEC_BUS_PIN;
+    codecConfig.mutePin = CODEC_MUTE_PIN;
+    codecConfig.mutePinNum = CODEC_MUTE_PIN_NUM;
+    codecConfig.protocol = kWM8524_ProtocolI2S;
+    WM8524_Init(&codecHandle, &codecConfig);
 #endif
 
-#if defined(DEMO_CODEC_WM8960)
-    WM8960_Init(&codecHandle, NULL);
-    WM8960_ConfigDataFormat(&codecHandle, format.masterClockHz, format.sampleRate_Hz, format.bitWidth);
-#elif defined (DEMO_CODEC_DA7212)
-    DA7212_Init(&codecHandle, NULL);
-    DA7212_ConfigAudioFormat(&codecHandle, format.sampleRate_Hz, format.masterClockHz, format.bitWidth);
-    DA7212_ChangeOutput(&codecHandle, kDA7212_Output_HP);
-#else
-    /* Use default settings for sgtl5000 */
-    SGTL_Init(&codecHandle, NULL);
-    /* Configure codec format */
-    SGTL_ConfigDataFormat(&codecHandle, format.masterClockHz, format.sampleRate_Hz, format.bitWidth);
+/* If need to handle audio error, enable sai interrupt */
+#if defined(DEMO_SAI_IRQ)
+    EnableIRQ(DEMO_SAI_IRQ);
+    SAI_TxEnableInterrupts(DEMO_SAI, kSAI_FIFOErrorInterruptEnable);
 #endif
+
+#if defined(CODEC_CYCLE)
+    delayCycle = CODEC_CYCLE;
+#endif
+    while (delayCycle)
+    {
+        __ASM("nop");
+        delayCycle--;
+    }
 
     SAI_TransferTxCreateHandleEDMA(DEMO_SAI, &txHandle, callback, NULL, &dmaHandle);
 
     mclkSourceClockHz = DEMO_SAI_CLK_FREQ;
     SAI_TransferTxSetFormatEDMA(DEMO_SAI, &txHandle, &format, mclkSourceClockHz, format.masterClockHz);
 
-    /*  xfer structure */
-    temp = (uint32_t)music;
-    xfer.data = (uint8_t *)temp;
-    xfer.dataSize = MUSIC_LEN;
-    SAI_TransferSendEDMA(DEMO_SAI, &txHandle, &xfer);
-    /* Wait until finished */
-    while (isFinished != true)
+    /* Waiting until finished. */
+    while (!isFinished)
     {
+        if ((emptyBlock > 0U) && (cpy_index < MUSIC_LEN / BUFFER_SIZE))
+        {
+            /* Fill in the buffers. */
+            memcpy((uint8_t *)&buffer[BUFFER_SIZE * (cpy_index % BUFFER_NUM)],
+                   (uint8_t *)&music[cpy_index * BUFFER_SIZE], sizeof(uint8_t) * BUFFER_SIZE);
+            emptyBlock--;
+            cpy_index++;
+        }
+        if (emptyBlock < BUFFER_NUM)
+        {
+            /*  xfer structure */
+            xfer.data = (uint8_t *)&buffer[BUFFER_SIZE * (tx_index % BUFFER_NUM)];
+            xfer.dataSize = BUFFER_SIZE;
+            /* Wait for available queue. */
+            if (kStatus_Success == SAI_TransferSendEDMA(DEMO_SAI, &txHandle, &xfer))
+            {
+                tx_index++;
+            }
+        }
     }
 
-#if defined(DEMO_CODEC_WM8960)
-    WM8960_Deinit(&codecHandle);
-#elif defined (DEMO_CODEC_DA7212)
-#else
-    SGTL_Deinit(&codecHandle);
-#endif
-
-#if defined(FSL_FEATURE_SOC_LPI2C_COUNT) && (FSL_FEATURE_SOC_LPI2C_COUNT)
-    LPI2C_MasterDeinit(DEMO_I2C);
-#else
-    I2C_MasterDeinit(DEMO_I2C);
-#endif
-    PRINTF("\n\r SAI example finished!\n\r ");
+    /* Once transfer finish, disable SAI instance. */
+    SAI_TransferAbortSendEDMA(DEMO_SAI, &txHandle);
+    SAI_Deinit(DEMO_SAI);
+    PRINTF("\n\r SAI EDMA example finished!\n\r ");
     while (1)
     {
     }
 }
+
+#if defined(SAI_ErrorIRQHandler)
+void SAI_ErrorIRQHandler(void)
+{
+    /* Clear the FIFO error flag */
+    SAI_TxClearStatusFlags(DEMO_SAI, kSAI_FIFOErrorFlag);
+
+    /* Reset FIFO */
+    SAI_TxSoftwareReset(DEMO_SAI, kSAI_ResetTypeFIFO);
+/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
+  exception return operation might vector to incorrect interrupt */
+#if defined __CORTEX_M && (__CORTEX_M == 4U)
+    __DSB();
+#endif
+}
+#endif

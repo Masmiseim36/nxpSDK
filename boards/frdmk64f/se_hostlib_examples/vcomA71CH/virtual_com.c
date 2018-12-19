@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
  * Copyright 2016 - 2017 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_device_registers.h"
@@ -50,6 +24,10 @@
 
 #include "usb_device_descriptor.h"
 #include "virtual_com.h"
+
+#if defined(CPU_LPC54018JET180)
+#include "fsl_power.h"
+#endif
 #if (defined(FSL_FEATURE_SOC_SYSMPU_COUNT) && (FSL_FEATURE_SOC_SYSMPU_COUNT > 0U))
 #include "fsl_sysmpu.h"
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
@@ -67,6 +45,10 @@ extern uint8_t USB_EnterLowpowerMode(void);
 #include "sm_timer.h" //+A71CH
 #include "vcom2i2c.h" //+A71CH
 
+#if defined(IMX_RT)
+#include "fsl_common.h"
+#include "fsl_iomuxc.h"
+#endif
 /*******************************************************************************
 * Definitions
 ******************************************************************************/
@@ -116,9 +98,14 @@ USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_countryCode[COMM_F
 /* CDC ACM information */
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static usb_cdc_acm_info_t s_usbCdcAcmInfo;
 /* Data buffer for receiving and sending*/
+#if defined(IMX_RT)
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_currRecvBuf[DATA_BUFF_SIZE];
+//USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_currSendBuf[DATA_BUFF_SIZE];
+#else
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_currRecvBuf[512]; //+ A71CH I2C
 // USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_currSendBuf[DATA_BUFF_SIZE]; //- A71CH I2C
 
+#endif
 volatile static uint32_t s_recvSize = 0;
 volatile static uint32_t s_sendSize = 0;
 
@@ -141,6 +128,76 @@ volatile static uint8_t s_comOpen = 0;
 /*******************************************************************************
 * Code
 ******************************************************************************/
+#if defined(IMX_RT)
+/* The function sets the cacheable memory to shareable, this suggestion is referred from chapter 2.2.1 Memory regions, types and attributes in Cortex-M7 Devices, Generic User Guide */
+void BOARD_ConfigUSBMPU()
+{
+    /* Disable I cache and D cache */
+    SCB_DisableICache();
+    SCB_DisableDCache();
+
+    /* Disable MPU */
+    ARM_MPU_Disable();
+    /* MPU configure:
+     * Use ARM_MPU_RASR(DisableExec, AccessPermission, TypeExtField, IsShareable, IsCacheable, IsBufferable, SubRegionDisable, Size)
+     * API in core_cm7.h.
+     * param DisableExec       Instruction access (XN) disable bit,0=instruction fetches enabled, 1=instruction fetches disabled.
+     * param AccessPermission  Data access permissions, allows you to configure read/write access for User and Privileged mode.
+     *      Use MACROS defined in core_cm7.h: ARM_MPU_AP_NONE/ARM_MPU_AP_PRIV/ARM_MPU_AP_URO/ARM_MPU_AP_FULL/ARM_MPU_AP_PRO/ARM_MPU_AP_RO
+     * Combine TypeExtField/IsShareable/IsCacheable/IsBufferable to configure MPU memory access attributes.
+     *  TypeExtField  IsShareable  IsCacheable  IsBufferable   Memory Attribtue    Shareability        Cache
+     *     0             x           0           0             Strongly Ordered    shareable
+     *     0             x           0           1              Device             shareable
+     *     0             0           1           0              Normal             not shareable   Outer and inner write through no write allocate
+     *     0             0           1           1              Normal             not shareable   Outer and inner write back no write allocate
+     *     0             1           1           0              Normal             shareable       Outer and inner write through no write allocate
+     *     0             1           1           1              Normal             shareable       Outer and inner write back no write allocate
+     *     1             0           0           0              Normal             not shareable   outer and inner noncache
+     *     1             1           0           0              Normal             shareable       outer and inner noncache
+     *     1             0           1           1              Normal             not shareable   outer and inner write back write/read acllocate
+     *     1             1           1           1              Normal             shareable       outer and inner write back write/read acllocate
+     *     2             x           0           0              Device              not shareable
+     *  Above are normal use settings, if your want to see more details or want to config different inner/outter cache policy.
+     *  please refer to Table 4-55 /4-56 in arm cortex-M7 generic user guide <dui0646b_cortex_m7_dgug.pdf>
+     * param SubRegionDisable  Sub-region disable field. 0=sub-region is enabled, 1=sub-region is disabled.
+     * param Size              Region size of the region to be configured. use ARM_MPU_REGION_SIZE_xxx MACRO in core_cm7.h.
+     */
+    MPU->RBAR = ARM_MPU_RBAR(7, 0x80000000U);
+    MPU->RASR = ARM_MPU_RASR(0, ARM_MPU_AP_FULL, 0, 1, 1, 1, 0, ARM_MPU_REGION_SIZE_32MB);
+    /* Enable MPU */
+    ARM_MPU_Enable(MPU_CTRL_PRIVDEFENA_Msk);
+
+    /* Enable I cache and D cache */
+    SCB_EnableDCache();
+    SCB_EnableICache();
+}
+#endif
+#if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U))
+void USB_OTG1_IRQHandler(void)
+{
+    USB_DeviceEhciIsrFunction(s_cdcVcom.deviceHandle);
+}
+#endif
+#if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U))
+void USB_OTG2_IRQHandler(void)
+{
+    USB_DeviceEhciIsrFunction(s_cdcVcom.deviceHandle);
+}
+#endif
+
+
+
+
+
+
+
+#if (defined(USB_DEVICE_CONFIG_LPCIP3511FS) && (USB_DEVICE_CONFIG_LPCIP3511FS > 0U))
+void USB0_IRQHandler(void)
+{
+    USB_DeviceLpcIp3511IsrFunction(s_cdcVcom.deviceHandle);
+}
+#endif
+
 #if (defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U))
 void USB0_IRQHandler(void)
 {
@@ -151,8 +208,56 @@ void USB0_IRQHandler(void)
 }
 #endif
 
+#if (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
+void USB1_IRQHandler(void)
+{
+    USB_DeviceLpcIp3511IsrFunction(s_cdcVcom.deviceHandle);
+}
+#endif
+
 void USB_DeviceClockInit(void)
 {
+#if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)
+    usb_phy_config_struct_t phyConfig = {
+        BOARD_USB_PHY_D_CAL, BOARD_USB_PHY_TXCAL45DP, BOARD_USB_PHY_TXCAL45DM,
+    };
+#endif
+#if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)
+    if (CONTROLLER_ID == kUSB_ControllerEhci0)
+    {
+        CLOCK_EnableUsbhs0PhyPllClock(kCLOCK_Usbphy480M, 480000000U);
+        CLOCK_EnableUsbhs0Clock(kCLOCK_Usb480M, 480000000U);
+    }
+    else
+    {
+        CLOCK_EnableUsbhs1PhyPllClock(kCLOCK_Usbphy480M, 480000000U);
+        CLOCK_EnableUsbhs1Clock(kCLOCK_Usb480M, 480000000U);
+    }
+    USB_EhciPhyInit(CONTROLLER_ID, BOARD_XTAL0_CLK_HZ, &phyConfig);
+#endif
+
+#if defined(USB_DEVICE_CONFIG_LPCIP3511FS) && (USB_DEVICE_CONFIG_LPCIP3511FS > 0U)
+    /* enable USB IP clock */
+    CLOCK_EnableUsbfs0DeviceClock(kCLOCK_UsbSrcFro, CLOCK_GetFroHfFreq());
+#if defined(FSL_FEATURE_USB_USB_RAM) && (FSL_FEATURE_USB_USB_RAM)
+    for (int i = 0; i < FSL_FEATURE_USB_USB_RAM; i++)
+    {
+        ((uint8_t *)FSL_FEATURE_USB_USB_RAM_BASE_ADDRESS)[i] = 0x00U;
+    }
+#endif
+
+#endif
+#if defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U)
+    /* enable USB IP clock */
+    CLOCK_EnableUsbhs0DeviceClock(kCLOCK_UsbSrcUsbPll, 0U);
+#if defined(FSL_FEATURE_USBHSD_USB_RAM) && (FSL_FEATURE_USBHSD_USB_RAM)
+    for (int i = 0; i < FSL_FEATURE_USBHSD_USB_RAM; i++)
+    {
+        ((uint8_t *)FSL_FEATURE_USBHSD_USB_RAM_BASE_ADDRESS)[i] = 0x00U;
+    }
+#endif
+#endif
+
 #if defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U)
     SystemCoreClockUpdate();
     CLOCK_EnableUsbfs0Clock(kCLOCK_UsbSrcIrc48M, 48000000U);
@@ -174,6 +279,18 @@ void USB_DeviceClockInit(void)
 void USB_DeviceIsrEnable(void)
 {
     uint8_t irqNumber;
+#if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)
+    uint8_t usbDeviceEhciIrq[] = USBHS_IRQS;
+    irqNumber = usbDeviceEhciIrq[CONTROLLER_ID - kUSB_ControllerEhci0];
+#endif
+#if defined(USB_DEVICE_CONFIG_LPCIP3511FS) && (USB_DEVICE_CONFIG_LPCIP3511FS > 0U)
+    uint8_t usbDeviceIP3511Irq[] = USB_IRQS;
+    irqNumber = usbDeviceIP3511Irq[CONTROLLER_ID - kUSB_ControllerLpcIp3511Fs0];
+#endif
+#if defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U)
+    uint8_t usbDeviceIP3511Irq[] = USBHSD_IRQS;
+    irqNumber = usbDeviceIP3511Irq[CONTROLLER_ID - kUSB_ControllerLpcIp3511Hs0];
+#endif
 #if defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U)
     uint8_t usbDeviceKhciIrq[] = USB_IRQS;
     irqNumber = usbDeviceKhciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
@@ -189,6 +306,15 @@ void USB_DeviceIsrEnable(void)
 #if USB_DEVICE_CONFIG_USE_TASK
 void USB_DeviceTaskFn(void *deviceHandle)
 {
+#if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)
+    USB_DeviceEhciTaskFunction(deviceHandle);
+#endif
+#if defined(USB_DEVICE_CONFIG_LPCIP3511FS) && (USB_DEVICE_CONFIG_LPCIP3511FS > 0U)
+    USB_DeviceLpcIp3511TaskFunction(deviceHandle);
+#endif
+#if defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U)
+    USB_DeviceLpcIp3511TaskFunction(deviceHandle);
+#endif
 #if defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U)
     USB_DeviceKhciTaskFunction(deviceHandle);
 #endif
@@ -612,7 +738,7 @@ void state_vcom_usbLowPower()
 #endif
 }
 
-#if defined(__CC_ARM) || defined(__GNUC__)
+#if defined(__CC_ARM) || defined(__GNUC__) || defined(__ARMCC_VERSION)
 int main(void)
 #else
 void main(void)
@@ -634,6 +760,60 @@ void main(void)
     LED_RED_INIT(1);
 #endif
 
+#if defined(IMX_RT)
+
+    BOARD_ConfigMPU();
+    BOARD_InitBootPins();
+    BOARD_BootClockRUN();
+    BOARD_InitDebugConsole();
+#endif
+#ifdef CPU_LPC54018JET180
+/* Init board hardware. */
+   /* attach 12 MHz clock to FLEXCOMM0 (debug console) */
+   CLOCK_AttachClk(BOARD_DEBUG_UART_CLK_ATTACH);
+
+   /* attach 12 MHz clock to FLEXCOMM2 (I2C master) */
+   CLOCK_AttachClk(kFRO12M_to_FLEXCOMM2);
+
+   /* reset FLEXCOMM for I2C */
+   RESET_PeripheralReset(kFC2_RST_SHIFT_RSTn);
+
+   /* reset USB0 and USB1 device */
+   RESET_PeripheralReset(kUSB0D_RST_SHIFT_RSTn);
+   RESET_PeripheralReset(kUSB1D_RST_SHIFT_RSTn);
+   RESET_PeripheralReset(kUSB0HMR_RST_SHIFT_RSTn);
+   RESET_PeripheralReset(kUSB0HSL_RST_SHIFT_RSTn);
+   RESET_PeripheralReset(kUSB1H_RST_SHIFT_RSTn);
+
+   NVIC_ClearPendingIRQ(USB0_IRQn);
+   NVIC_ClearPendingIRQ(USB0_NEEDCLK_IRQn);
+   NVIC_ClearPendingIRQ(USB1_IRQn);
+   NVIC_ClearPendingIRQ(USB1_NEEDCLK_IRQn);
+
+   BOARD_InitBootPins();
+   BOARD_BootClockFROHF96M();
+   BOARD_InitDebugConsole();        /* Initialize the debug console as CDC virtual com. */
+#if (defined USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS)
+   POWER_DisablePD(kPDRUNCFG_PD_USB1_PHY);
+   /* enable usb1 host clock */
+   CLOCK_EnableClock(kCLOCK_Usbh1);
+   /*According to reference mannual, device mode setting has to be set by access usb host register */
+   *((uint32_t *)(USBHSH_BASE + 0x50)) |= USBHSH_PORTMODE_DEV_ENABLE_MASK;
+   /* enable usb1 host clock */
+   CLOCK_DisableClock(kCLOCK_Usbh1);
+#endif
+#if (defined USB_DEVICE_CONFIG_LPCIP3511FS) && (USB_DEVICE_CONFIG_LPCIP3511FS)
+   POWER_DisablePD(kPDRUNCFG_PD_USB0_PHY); /*< Turn on USB Phy */
+   CLOCK_SetClkDiv(kCLOCK_DivUsb0Clk, 1, false);
+   CLOCK_AttachClk(kFRO_HF_to_USB0_CLK);
+   /* enable usb0 host clock */
+   CLOCK_EnableClock(kCLOCK_Usbhsl0);
+   /*According to reference mannual, device mode setting has to be set by access usb host register */
+   *((uint32_t *)(USBFSH_BASE + 0x5C)) |= USBFSH_PORTMODE_DEV_ENABLE_MASK;
+   /* disable usb0 host clock */
+   CLOCK_DisableClock(kCLOCK_Usbhsl0);
+#endif
+#endif //CPU_LPC54018JET180
     sm_initSleep();
 
     APPInit();

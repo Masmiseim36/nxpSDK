@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
  * Copyright 2016 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "usb_host_config.h"
@@ -45,6 +19,11 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+
+/* Component ID definition, used by tools. */ 
+#ifndef FSL_COMPONENT_ID 
+#define FSL_COMPONENT_ID "middleware.usb.host_stack" 
+#endif
 
 /*******************************************************************************
  * Prototypes
@@ -353,13 +332,13 @@ usb_status_t USB_HostDeinit(usb_host_handle hostHandle)
         USB_HostDetachDeviceInternal(hostHandle, deviceInstance);
     }
 
-    /* controller instance destory, the callbackFn is initialized in USB_HostGetControllerInterface */
+    /* controller instance destroy, the callbackFn is initialized in USB_HostGetControllerInterface */
     status = hostInstance->controllerTable->controllerDestory(hostInstance->controllerHandle);
     hostInstance->controllerHandle = NULL;
     if (status != kStatus_USB_Success)
     {
 #ifdef HOST_ECHO
-        usb_echo("host controller destory fail\r\n");
+        usb_echo("host controller destroy fail\r\n");
 #endif
     }
 
@@ -725,7 +704,7 @@ usb_status_t USB_HostHelperParseAlternateSetting(usb_host_interface_handle inter
         ((usb_host_interface_t *)interfaceHandle)->interfaceExtensionLength; /* interface extend descriptor end */
     unionDes = (usb_descriptor_union_t *)((uint32_t)unionDes + unionDes->common.bLength);
 
-    /* search for the alternate setting interface descritpor */
+    /* search for the alternate setting interface descriptor */
     while ((uint32_t)unionDes < endPosition)
     {
         if (unionDes->interface.bDescriptorType == USB_DESCRIPTOR_TYPE_INTERFACE)
@@ -836,7 +815,7 @@ void USB_HostGetVersion(uint32_t *version)
 }
 
 #if ((defined(USB_HOST_CONFIG_LOW_POWER_MODE)) && (USB_HOST_CONFIG_LOW_POWER_MODE > 0U))
-/* Send BUS or specific device suepend request */
+/* Send BUS or specific device suspend request */
 usb_status_t USB_HostSuspendDeviceResquest(usb_host_handle hostHandle, usb_device_handle deviceHandle)
 {
     usb_host_instance_t *hostInstance;
@@ -947,7 +926,7 @@ usb_status_t USB_HostResumeDeviceResquest(usb_host_handle hostHandle, usb_device
     return status;
 }
 #if ((defined(USB_HOST_CONFIG_LPM_L1)) && (USB_HOST_CONFIG_LPM_L1 > 0U))
-/* Send BUS or specific device suepend request */
+/* Send BUS or specific device suspend request */
 usb_status_t USB_HostL1SleepDeviceResquest(usb_host_handle hostHandle,
                                            usb_device_handle deviceHandle,
                                            uint8_t sleepType)
@@ -967,7 +946,7 @@ usb_status_t USB_HostL1SleepDeviceResquest(usb_host_handle hostHandle,
     if (1U == sleepType)
     {
         /*#if ((defined USB_HOST_CONFIG_HUB) && (USB_HOST_CONFIG_HUB))*/
-        /*To do, implete hub L1 suspend device*/
+        /*To do, incomplete  hub L1 suspend device*/
         /*#else*/
         /* the callbackFn is initialized in USB_HostGetControllerInterface */
         status =
@@ -992,7 +971,7 @@ usb_status_t USB_HostL1SleepDeviceResquest(usb_host_handle hostHandle,
     }
     return status;
 }
-/* Send BUS or specific device suepend request */
+/* Send BUS or specific device suspend request */
 usb_status_t USB_HostL1SleepDeviceResquestConfig(usb_host_handle hostHandle, uint8_t *lpmParam)
 {
     usb_host_instance_t *hostInstance;

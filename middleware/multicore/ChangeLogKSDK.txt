@@ -2,7 +2,18 @@
 @page middleware_log Middleware Change Log
 
 @section multicore Multicore SDK
-  The current version of Multicore SDK is 2.4.0.
+  The current version of Multicore SDK is 2.5.0.
+  - 2.5.0
+    - Multicore SDK component versions:
+      - embedded Remote Procedure Call (eRPC) v1.7.1
+      - eRPC generator (erpcgen) v.1.7.1
+      - Multicore Manager (MCMgr) v4.0.2
+      - RPMsg-Lite v2.0.2
+    - New features:
+      - RPMsg-Lite, MCMgr: Align porting layers to the updated MCUXpressoSDK feature files.
+      - eRPC: Fixed semaphore in static message buffer factory. 
+      - erpcgen: Fixed MU received error flag.
+      - erpcgen: Fixed tcp transport.
   - 2.4.0
     - Multicore SDK component versions:
       - embedded Remote Procedure Call (eRPC) v1.7.0

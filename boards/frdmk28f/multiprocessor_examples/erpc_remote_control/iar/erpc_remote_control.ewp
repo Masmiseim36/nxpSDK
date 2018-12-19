@@ -169,9 +169,9 @@
           <name>CCDefines</name>
           <state>DEBUG</state>
           <state>CPU_MK28FN2M0VMI15</state>
+          <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>FRDM_K28F</state>
           <state>FREEDOM</state>
-          <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>FSL_RTOS_FREE_RTOS</state>
         </option>
         <option>
@@ -212,7 +212,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050,Pe167</state>
+          <state>Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -302,22 +302,40 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM4F</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../devices</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../service</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Driver/Include</state>
           <state>$PROJ_DIR$/../../..</state>
           <state>$PROJ_DIR$/../../erpc_common</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
+          <state>$PROJ_DIR$/../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include</state>
           <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private</state>
           <state>$PROJ_DIR$/../../../../../devices/MK28F15/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK28F15/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK28F15/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK28F15/drivers</state>
+          <state>$PROJ_DIR$/../../../../../components/fxos8700cq</state>
           <state>$PROJ_DIR$/../../../../../devices/MK28F15/cmsis_drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK28F15/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK28F15/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK28F15/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK28F15/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK28F15/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK28F15/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK28F15/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MK28F15</state>
-          <state>$PROJ_DIR$/../../../../../devices/MK28F15/utilities/io</state>
           <state>$PROJ_DIR$/../../../../../devices/MK28F15/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MK28F15/utilities/log</state>
-          <state>$PROJ_DIR$/../../../../../devices/MK28F15/utilities</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK28F15/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK28F15/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK28F15/drivers</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Driver/Include</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Driver/Include</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK28F15/template</state>
           <state>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra</state>
           <state>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/port</state>
           <state>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/setup</state>
@@ -771,9 +789,6 @@
         </option>
         <option>
           <name>IlinkExtraOptions</name>
-          <state> --redirect __iar_dlmalloc=malloc </state>
-          <state> --redirect __iar_dlcalloc=calloc </state>
-          <state> --redirect __iar_dlfree=free </state>
         </option>
         <option>
           <name>IlinkLowLevelInterfaceSlave</name>
@@ -1140,9 +1155,9 @@
           <name>CCDefines</name>
           <state>NDEBUG</state>
           <state>CPU_MK28FN2M0VMI15</state>
+          <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>FRDM_K28F</state>
           <state>FREEDOM</state>
-          <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>FSL_RTOS_FREE_RTOS</state>
         </option>
         <option>
@@ -1183,7 +1198,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050,Pe167</state>
+          <state>Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -1273,22 +1288,40 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM4F</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../devices</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../service</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Driver/Include</state>
           <state>$PROJ_DIR$/../../..</state>
           <state>$PROJ_DIR$/../../erpc_common</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
+          <state>$PROJ_DIR$/../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include</state>
           <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private</state>
           <state>$PROJ_DIR$/../../../../../devices/MK28F15/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK28F15/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK28F15/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK28F15/drivers</state>
+          <state>$PROJ_DIR$/../../../../../components/fxos8700cq</state>
           <state>$PROJ_DIR$/../../../../../devices/MK28F15/cmsis_drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK28F15/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK28F15/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK28F15/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK28F15/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK28F15/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK28F15/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK28F15/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MK28F15</state>
-          <state>$PROJ_DIR$/../../../../../devices/MK28F15/utilities/io</state>
           <state>$PROJ_DIR$/../../../../../devices/MK28F15/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MK28F15/utilities/log</state>
-          <state>$PROJ_DIR$/../../../../../devices/MK28F15/utilities</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK28F15/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK28F15/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK28F15/drivers</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Driver/Include</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Driver/Include</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK28F15/template</state>
           <state>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra</state>
           <state>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/port</state>
           <state>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/setup</state>
@@ -1742,9 +1775,6 @@
         </option>
         <option>
           <name>IlinkExtraOptions</name>
-          <state> --redirect __iar_dlmalloc=malloc </state>
-          <state> --redirect __iar_dlcalloc=calloc </state>
-          <state> --redirect __iar_dlfree=free </state>
         </option>
         <option>
           <name>IlinkLowLevelInterfaceSlave</name>
@@ -1941,32 +1971,17 @@
   </configuration>
   <group>
     <name>drivers</name>
-    <group>
-      <name>src</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../CMSIS/Driver/Include/Driver_Common.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../CMSIS/Driver/Include/Driver_USART.h</name>
-      </file>
-    </group>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Driver/Include/Driver_Common.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Driver/Include/Driver_USART.h</name>
+    </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_edma.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_edma.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_common.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_common.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_clock.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_clock.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_lpuart.h</name>
@@ -1993,42 +2008,6 @@
       <name>$PROJ_DIR$/../../../../../devices/MK28F15/cmsis_drivers/fsl_lpuart_cmsis.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_ftfx_adapter.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_ftfx_utilities.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_ftfx_features.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_ftfx_controller.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_ftfx_controller.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_ftfx_flash.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_ftfx_flash.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_ftfx_cache.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_ftfx_cache.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_ftfx_flexnvm.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_ftfx_flexnvm.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_flash.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_gpio.h</name>
     </file>
     <file>
@@ -2036,18 +2015,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_port.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_smc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_smc.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_sysmpu.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_sysmpu.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_i2c.h</name>
@@ -2066,6 +2033,30 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_dmamux.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_clock.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_clock.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_common.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_common.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_smc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_smc.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_sysmpu.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_sysmpu.c</name>
     </file>
   </group>
   <group>
@@ -2145,6 +2136,12 @@
         <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_transport_arbitrator.cpp</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_framed_transport.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_framed_transport.cpp</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_version.h</name>
       </file>
       <file>
@@ -2183,12 +2180,6 @@
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_crc16.cpp</name>
       </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_framed_transport.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_framed_transport.cpp</name>
-      </file>
     </group>
     <group>
       <name>setup</name>
@@ -2205,16 +2196,16 @@
         <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_server_setup.cpp</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_transport_setup.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_mbf_setup.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_setup_uart_cmsis.cpp</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_setup_mbf_dynamic.cpp</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_transport_setup.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_mbf_setup.h</name>
       </file>
     </group>
     <group>
@@ -2256,21 +2247,21 @@
     <file>
       <name>$PROJ_DIR$/../RTE_Device.h</name>
     </file>
-    <group>
-      <name>src</name>
-      <file>
-        <name>$PROJ_DIR$/../board.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../board.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../clock_config.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../clock_config.h</name>
-      </file>
-    </group>
+    <file>
+      <name>$PROJ_DIR$/../board.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../board.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../clock_config.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../clock_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK28F15/template/RTE_Device.h</name>
+    </file>
   </group>
   <group>
     <name>doc</name>
@@ -2281,64 +2272,10 @@
   <group>
     <name>accel</name>
     <file>
-      <name>$PROJ_DIR$/../fsl_fxos.h</name>
+      <name>$PROJ_DIR$/../../../../../components/fxos8700cq/fsl_fxos.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../fsl_fxos.c</name>
-    </file>
-  </group>
-  <group>
-    <name>CMSIS_driver</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Driver/Include/Driver_USART.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Driver/Include/Driver_Common.h</name>
-    </file>
-  </group>
-  <group>
-    <name>startup</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/system_MK28F15.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/system_MK28F15.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/iar/startup_MK28F15.s</name>
-    </file>
-  </group>
-  <group>
-    <name>utilities</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/utilities/io/fsl_io.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/utilities/io/fsl_io.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/utilities/log/fsl_log.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/utilities/log/fsl_log.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/utilities/fsl_debug_console.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/utilities/fsl_debug_console.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/utilities/fsl_debug_console_conf.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/utilities/fsl_assert.c</name>
+      <name>$PROJ_DIR$/../../../../../components/fxos8700cq/fsl_fxos.c</name>
     </file>
   </group>
   <group>
@@ -2352,6 +2289,12 @@
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/readme.txt</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM4F/fsl_tickless_systick.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM4F/fsl_tickless_generic.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM4F/port.c</name>
@@ -2436,14 +2379,140 @@
         <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private/stack_macros.h</name>
       </file>
     </group>
+  </group>
+  <group>
+    <name>device</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK28F15/fsl_device_registers.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK28F15/MK28F15.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK28F15/MK28F15_features.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK28F15/system_MK28F15.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK28F15/system_MK28F15.h</name>
+    </file>
+  </group>
+  <group>
+    <name>utilities</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK28F15/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK28F15/utilities/str/fsl_str.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK28F15/utilities/debug_console/fsl_debug_console.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK28F15/utilities/debug_console/fsl_debug_console.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK28F15/utilities/debug_console/fsl_debug_console_conf.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK28F15/utilities/fsl_assert.c</name>
+    </file>
+  </group>
+  <group>
+    <name>component</name>
     <group>
-      <name>portable</name>
+      <name>uart</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM4F/fsl_tickless_systick.c</name>
+        <name>$PROJ_DIR$/../../../../../components/uart/uart.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM4F/fsl_tickless_generic.h</name>
+        <name>$PROJ_DIR$/../../../../../components/uart/lpuart_adapter.c</name>
       </file>
     </group>
+    <group>
+      <name>serial_manager</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_manager.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_manager.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_uart.c</name>
+      </file>
+    </group>
+    <group>
+      <name>lists</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.c</name>
+      </file>
+    </group>
+  </group>
+  <group>
+    <name>startup</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK28F15/iar/startup_MK28F15.s</name>
+    </file>
+  </group>
+  <group>
+    <name>CMSIS</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_cm4.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armcc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armclang.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_gcc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_compiler.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_version.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv7.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mbl.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mml.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_common_tables.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_const_structs.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_math.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_iccarm.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv8.h</name>
+    </file>
+  </group>
+  <group>
+    <name>CMSIS_driver</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Driver/Include/Driver_USART.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Driver/Include/Driver_Common.h</name>
+    </file>
   </group>
 </project>

@@ -3,23 +3,6 @@ Overview
 The mbdedTLS SelfTest program performs cryptographic algorithm testing and prints results to the
 terminal.
 
-
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- FRDM-K64F board
-- Personal Computer
-
-Board settings
-==============
-No special settings are required.
 Prepare the Demo
 ================
 Connect a serial cable from the debug UART port of the target board to the PC. Start TeraTerm
@@ -208,33 +191,8 @@ When the demo runs successfully, the terminal will display similar information l
   PKCS#1 data sign       : passed
   PKCS#1 sig. verify     : passed
 
-  XTEA test #1: passed
-  XTEA test #2: passed
-  XTEA test #3: passed
-  XTEA test #4: passed
-  XTEA test #5: passed
-  XTEA test #6: passed
-
-  CAMELLIA-ECB-128 (dec): passed
-  CAMELLIA-ECB-128 (enc): passed
-  CAMELLIA-ECB-192 (dec): passed
-  CAMELLIA-ECB-192 (enc): passed
-  CAMELLIA-ECB-256 (dec): passed
-  CAMELLIA-ECB-256 (enc): passed
-
-  CAMELLIA-CBC-128 (dec): passed
-  CAMELLIA-CBC-128 (enc): passed
-  CAMELLIA-CBC-192 (dec): passed
-  CAMELLIA-CBC-192 (enc): passed
-  CAMELLIA-CBC-256 (dec): passed
-  CAMELLIA-CBC-256 (enc): passed
-
-  CAMELLIA-CTR-128 (dec): passed
-  CAMELLIA-CTR-128 (enc): passed
-  CAMELLIA-CTR-128 (dec): passed
-  CAMELLIA-CTR-128 (enc): passed
-  CAMELLIA-CTR-128 (dec): passed
-  CAMELLIA-CTR-128 (enc): passed
+  X.509 certificate load: passed
+  X.509 signature verify: passed
 
   CTR_DRBG (PR = TRUE) : passed
   CTR_DRBG (PR = FALSE): passed
@@ -256,10 +214,23 @@ When the demo runs successfully, the terminal will display similar information l
   PBKDF2 (SHA1) #4: passed
   PBKDF2 (SHA1) #5: passed
 
-  Executed 19 test suites
+  Executed 18 test suites
 
                            [ All tests PASS ]
-
-Customization options
+Hardware requirements
 =====================
+- Mini/micro USB cable
+- FRDM-K64F board
+- Personal Computer
+
+Board settings
+==============
+No special settings are required.
+
+Toolchain supported
+===================
+- MCUXpresso 10.3.0
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
 

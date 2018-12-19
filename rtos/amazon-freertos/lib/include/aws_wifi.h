@@ -34,9 +34,6 @@
 
 #include <stdint.h>
 
-#include "FreeRTOSConfig.h"
-#include "projdefs.h"
-
 /* FreeRTOS include for BaseType_t. */
 #include "portmacro.h"
 
@@ -45,6 +42,8 @@
 
 /**
  * @brief Return code denoting API status.
+ * 
+ * @note Codes other than eWiFiSuccess are failure codes.
  */
 typedef enum
 {
@@ -98,9 +97,9 @@ typedef enum
 typedef struct
 {
     const char * pcSSID;      /**< SSID of the Wi-Fi network to join. */
-    uint8_t ucSSIDLength;     /**< SSID length. */
+    uint8_t ucSSIDLength;     /**< SSID length not including NULL termination. */
     const char * pcPassword;  /**< Password needed to join the AP. */
-    uint8_t ucPasswordLength; /**< Password length. */
+    uint8_t ucPasswordLength; /**< Password length not including NULL termination. */
     WIFISecurity_t xSecurity; /**< Wi-Fi Security. @see WIFISecurity_t. */
     int8_t cChannel;          /**< Channel number. */
 } WIFINetworkParams_t;
@@ -116,7 +115,7 @@ typedef struct
  */
 typedef struct
 {
-    char cSSID[ wificonfigMAX_SSID_LEN + 1 ];       /**< SSID of the Wi-Fi network. */
+    char cSSID[ wificonfigMAX_SSID_LEN + 1 ];   /**< SSID of the Wi-Fi network with a NULL termination. */
     uint8_t ucBSSID[ wificonfigMAX_BSSID_LEN ]; /**< BSSID of the Wi-Fi network. */
     WIFISecurity_t xSecurity;                   /**< Wi-Fi Security. @see WIFISecurity_t. */
     int8_t cRSSI;                               /**< Signal Strength. */
@@ -133,12 +132,12 @@ typedef struct
  */
 typedef struct
 {
-    char cSSID[ wificonfigMAX_SSID_LEN + 1 ];           /**< SSID of the Wi-Fi network to join. */
-    uint8_t ucSSIDLength;                           /**< SSID length. */
-    uint8_t ucBSSID[ wificonfigMAX_BSSID_LEN ];     /**< BSSID of the Wi-Fi network. */
-    char cPassword[ wificonfigMAX_PASSPHRASE_LEN + 1 ]; /**< Password needed to join the AP. */
-    uint8_t ucPasswordLength;                       /**< Password length. */
-    WIFISecurity_t xSecurity;                       /**< Wi-Fi Security. @see WIFISecurity_t. */
+    char cSSID[ wificonfigMAX_SSID_LEN + 1 ];           /**< SSID of the Wi-Fi network to join with a NULL termination. */
+    uint8_t ucSSIDLength;                               /**< SSID length not including NULL termination. */
+    uint8_t ucBSSID[ wificonfigMAX_BSSID_LEN ];         /**< BSSID of the Wi-Fi network. */
+    char cPassword[ wificonfigMAX_PASSPHRASE_LEN + 1 ]; /**< Password needed to join the AP with a NULL termination. */
+    uint8_t ucPasswordLength;                           /**< Password length not including null termination. */
+    WIFISecurity_t xSecurity;                           /**< Wi-Fi Security. @see WIFISecurity_t. */
 } WIFINetworkProfile_t;
 
 /**
@@ -166,7 +165,7 @@ WIFIReturnCode_t WIFI_Off( void );
  *
  * The Wi-Fi should stay connected when the same Access Point it is currently connected to
  * is specified. Otherwise, the Wi-Fi should disconnect and connect to the new Access Point 
- * specified. If the new Access Point has invalid parameters, then the Wi-Fi should be 
+ * specified. If the new Access Point specifed has invalid parameters, then the Wi-Fi should be 
  * disconnected.
  * 
  * @param[in] pxNetworkParams Configuration to join AP.
@@ -262,7 +261,7 @@ WIFIReturnCode_t WIFI_GetMode( WIFIDeviceMode_t * pxDeviceMode );
  * WIFINetworkProfile_t xNetworkProfile = {0};
  * WIFIReturnCode_t xWiFiStatus;
  * uint16_t usIndex;
- * strncpy( xNetworkProfile.cSSID, "SSID_Name", SSIDLen));
+ * strncpy( xNetworkProfile.cSSID, "SSID_Name", SSIDLen)); 
  * xNetworkProfile.ucSSIDLength = SSIDLen;
  * strncpy( xNetworkProfile.cPassword, "PASSWORD",PASSLen );
  * xNetworkProfile.ucPasswordLength = PASSLen;
@@ -279,6 +278,9 @@ WIFIReturnCode_t WIFI_NetworkAdd( const WIFINetworkProfile_t * const pxNetworkPr
  *
  * Gets the Wi-Fi network parameters at the given index from network list in non-volatile 
  * memory.
+ * 
+ * @note The WIFINetworkProfile_t data returned must have the the SSID and Password lengths 
+ * specified as the length without a null terminator. 
  *
  * @param[out] pxNetworkProfile - pointer to return network profile parameters
  * @param[in] usIndex - Index of the network profile,
@@ -352,15 +354,15 @@ WIFIReturnCode_t WIFI_GetIP( uint8_t * pucIPAddr );
 /**
  * @brief Retrieves the Wi-Fi interface's MAC address.
  *
- * @param[out] MAC Address buffer.
+ * @param[out] MAC Address buffer sized 6 bytes.
  *
  * @code
  * uint8_t ucMacAddressVal[ wificonfigMAX_BSSID_LEN ];
  * WIFI_GetMAC( &ucMacAddressVal[0] );
  * @endcode
  *
- * @return eWiFiSuccess if the MAC address was successfully retrieved, eWiFiFailure 
- * otherwise.
+ * @return eWiFiSuccess if the MAC address was successfully retrieved, failure code 
+ * otherwise. The returned MAC address must be 6 consecutive bytes with no delimitters.  
  */
 WIFIReturnCode_t WIFI_GetMAC( uint8_t * pucMac );
 
@@ -370,7 +372,7 @@ WIFIReturnCode_t WIFI_GetMAC( uint8_t * pucMac );
  * @param[in] pxHost - Host (node) name.
  * @param[in] pxIPAddr - IP Address buffer.
  *
- * @return eWiFiSuccess if the host IP address was successfully retrieved, eWiFiFailure 
+ * @return eWiFiSuccess if the host IP address was successfully retrieved, failure code 
  * otherwise.
  *
  * @code
@@ -387,8 +389,9 @@ WIFIReturnCode_t WIFI_GetHostIP( char * pcHost,
  * @param[in] pxBuffer - Buffer for scan results.
  * @param[in] uxNumNetworks - Number of networks to retrieve in scan result.
  *
- * @return eWiFiSuccess if the Wi-Fi network scan was successful, eWiFiFailure otherwise. 
- * The input buffer will have the results of the scan.
+ * @return eWiFiSuccess if the Wi-Fi network scan was successful, failure code otherwise.
+ *  
+ * @note The input buffer will have the results of the scan.
  *
  * @code
  * const uint8_t ucNumNetworks = 10; //Get 10 scan results

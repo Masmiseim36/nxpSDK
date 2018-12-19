@@ -1,6 +1,22 @@
+/*
+ * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016 - 2017 NXP
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+
 #include "vcom2i2c.h"
 
-#include "fsl_i2c.h" // A71CH I2C
+#include <board.h>
+
+#if defined(FSL_FEATURE_SOC_LPI2C_COUNT) && FSL_FEATURE_SOC_LPI2C_COUNT > 0
+#   include "fsl_lpi2c.h" // A71CH I2C
+#endif
+
+#if defined(FSL_FEATURE_SOC_I2C_COUNT) && (FSL_FEATURE_SOC_I2C_COUNT > 0)
+#   include "fsl_i2c.h" // A71CH I2C
+#endif
 
 //+ A71CH I2C
 #include <stdbool.h>
@@ -89,7 +105,7 @@ void state_vcom_read_write(
                     break;
 
                 default:
-                    #if DEBUG
+#if DEBUG
                     printf("Error\r\n");
 #endif
                     break;

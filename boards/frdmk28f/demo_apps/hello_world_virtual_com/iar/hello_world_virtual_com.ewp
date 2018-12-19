@@ -182,14 +182,16 @@
           <name>CCDefines</name>
           <state>DEBUG</state>
           <state>CPU_MK28FN2M0VMI15</state>
-          <state>FRDM_K28F</state>
-          <state>FREEDOM</state>
+          <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
+          <state>SERIAL_PORT_TYPE_USBCDC=1</state>
           <state>PRINTF_FLOAT_ENABLE=0</state>
           <state>SCANF_FLOAT_ENABLE=0</state>
           <state>PRINTF_ADVANCED_ENABLE=0</state>
           <state>SCANF_ADVANCED_ENABLE=0</state>
           <state>USB_STACK_BM</state>
           <state>BOARD_USE_VIRTUALCOM=1</state>
+          <state>FRDM_K28F</state>
+          <state>FREEDOM</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -229,7 +231,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050,Pe167</state>
+          <state>Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -318,19 +320,32 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../devices</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../..</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
+          <state>$PROJ_DIR$/../../../../../devices</state>
+          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../components/serial_manager/usb_cdc_adapter</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/osa</state>
+          <state>$PROJ_DIR$/../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../middleware/usb/include</state>
+          <state>$PROJ_DIR$/../../../../../middleware/usb/osa</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK28F15/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK28F15/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MK28F15/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MK28F15</state>
-          <state>$PROJ_DIR$/../../../../../devices/MK28F15/utilities/io</state>
           <state>$PROJ_DIR$/../../../../../devices/MK28F15/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MK28F15/utilities/log</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK28F15/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK28F15/drivers</state>
+          <state>$PROJ_DIR$/../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK28F15/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK28F15/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK28F15/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MK28F15/utilities</state>
         </option>
         <option>
@@ -402,11 +417,11 @@
         </option>
         <option>
           <name>IccExceptions</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccRTTI</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccStaticDestr</name>
@@ -781,7 +796,6 @@
         </option>
         <option>
           <name>IlinkExtraOptions</name>
-          <state/>
         </option>
         <option>
           <name>IlinkLowLevelInterfaceSlave</name>
@@ -1165,14 +1179,16 @@
           <name>CCDefines</name>
           <state>NDEBUG</state>
           <state>CPU_MK28FN2M0VMI15</state>
-          <state>FRDM_K28F</state>
-          <state>FREEDOM</state>
+          <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
+          <state>SERIAL_PORT_TYPE_USBCDC=1</state>
           <state>PRINTF_FLOAT_ENABLE=0</state>
           <state>SCANF_FLOAT_ENABLE=0</state>
           <state>PRINTF_ADVANCED_ENABLE=0</state>
           <state>SCANF_ADVANCED_ENABLE=0</state>
           <state>USB_STACK_BM</state>
           <state>BOARD_USE_VIRTUALCOM=1</state>
+          <state>FRDM_K28F</state>
+          <state>FREEDOM</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1212,7 +1228,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050,Pe167</state>
+          <state>Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -1249,7 +1265,7 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
@@ -1301,19 +1317,32 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../devices</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../..</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
+          <state>$PROJ_DIR$/../../../../../devices</state>
+          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../components/serial_manager/usb_cdc_adapter</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/osa</state>
+          <state>$PROJ_DIR$/../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../middleware/usb/include</state>
+          <state>$PROJ_DIR$/../../../../../middleware/usb/osa</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK28F15/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK28F15/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MK28F15/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MK28F15</state>
-          <state>$PROJ_DIR$/../../../../../devices/MK28F15/utilities/io</state>
           <state>$PROJ_DIR$/../../../../../devices/MK28F15/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MK28F15/utilities/log</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK28F15/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK28F15/drivers</state>
+          <state>$PROJ_DIR$/../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK28F15/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK28F15/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK28F15/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MK28F15/utilities</state>
         </option>
         <option>
@@ -1385,11 +1414,11 @@
         </option>
         <option>
           <name>IccExceptions</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccRTTI</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccStaticDestr</name>
@@ -1764,7 +1793,6 @@
         </option>
         <option>
           <name>IlinkExtraOptions</name>
-          <state/>
         </option>
         <option>
           <name>IlinkLowLevelInterfaceSlave</name>
@@ -1975,27 +2003,96 @@
   </group>
   <group>
     <name>board</name>
-    <group>
-      <name>src</name>
-      <file>
-        <name>$PROJ_DIR$/../board.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../board.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../clock_config.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../clock_config.h</name>
-      </file>
-    </group>
+    <file>
+      <name>$PROJ_DIR$/../board.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../board.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../clock_config.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../clock_config.h</name>
+    </file>
   </group>
   <group>
     <name>doc</name>
     <file>
       <name>$PROJ_DIR$/../readme.txt</name>
     </file>
+  </group>
+  <group>
+    <name>component</name>
+    <group>
+      <name>serial_manager</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_manager.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_manager.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_usb.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_usb.c</name>
+      </file>
+      <group>
+        <name>usb_cdc_adapter</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../components/serial_manager/usb_cdc_adapter/usb_device_descriptor.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../components/serial_manager/usb_cdc_adapter/usb_device_descriptor.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../components/serial_manager/usb_cdc_adapter/usb_device_cdc_acm.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../components/serial_manager/usb_cdc_adapter/usb_device_cdc_acm.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../components/serial_manager/usb_cdc_adapter/usb_device_class.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../components/serial_manager/usb_cdc_adapter/usb_device_class.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../components/serial_manager/usb_cdc_adapter/usb_device_ch9.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../components/serial_manager/usb_cdc_adapter/usb_device_ch9.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../devices/MK28F15/utilities/usb_device_config.h</name>
+        </file>
+      </group>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_uart.c</name>
+      </file>
+    </group>
+    <group>
+      <name>uart</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/uart/uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/uart/lpuart_adapter.c</name>
+      </file>
+    </group>
+    <group>
+      <name>lists</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.c</name>
+      </file>
+    </group>
   </group>
   <group>
     <name>usb</name>
@@ -2020,9 +2117,6 @@
           <file>
             <name>$PROJ_DIR$/../../../../../middleware/usb/device/usb_device_ehci.h</name>
           </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/usb/include/usb_ehci.h</name>
-          </file>
         </group>
         <group>
           <name>khci</name>
@@ -2031,9 +2125,6 @@
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../middleware/usb/device/usb_device_khci.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/usb/include/usb_khci.h</name>
           </file>
         </group>
         <file>
@@ -2096,46 +2187,16 @@
   <group>
     <name>drivers</name>
     <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_sysmpu.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_sysmpu.c</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_clock.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_clock.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_ftfx_adapter.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_ftfx_utilities.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_ftfx_features.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_ftfx_controller.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_ftfx_controller.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_ftfx_flash.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_ftfx_flash.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_ftfx_cache.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_ftfx_cache.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_ftfx_flexnvm.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_ftfx_flexnvm.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_flash.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_common.h</name>
@@ -2164,39 +2225,27 @@
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_smc.c</name>
     </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_sysmpu.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/drivers/fsl_sysmpu.c</name>
-    </file>
   </group>
   <group>
-    <name>startup</name>
+    <name>device</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK28F15/fsl_device_registers.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK28F15/MK28F15.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK28F15/MK28F15_features.h</name>
+    </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK28F15/system_MK28F15.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK28F15/system_MK28F15.h</name>
     </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/iar/startup_MK28F15.s</name>
-    </file>
   </group>
   <group>
     <name>utilities</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/utilities/io/fsl_io.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/utilities/io/fsl_io.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/utilities/log/fsl_log.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/utilities/log/fsl_log.h</name>
-    </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK28F15/utilities/str/fsl_str.c</name>
     </file>
@@ -2204,43 +2253,67 @@
       <name>$PROJ_DIR$/../../../../../devices/MK28F15/utilities/str/fsl_str.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/utilities/fsl_debug_console.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MK28F15/utilities/debug_console/fsl_debug_console.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/utilities/fsl_debug_console.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MK28F15/utilities/debug_console/fsl_debug_console.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/utilities/fsl_debug_console_conf.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MK28F15/utilities/debug_console/fsl_debug_console_conf.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK28F15/utilities/fsl_assert.c</name>
     </file>
+  </group>
+  <group>
+    <name>startup</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/utilities/virtual_com.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MK28F15/iar/startup_MK28F15.s</name>
+    </file>
+  </group>
+  <group>
+    <name>CMSIS</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_cm4.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/utilities/virtual_com.h</name>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armcc.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/utilities/usb_device_descriptor.c</name>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armclang.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/utilities/usb_device_descriptor.h</name>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_gcc.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/utilities/usb_device_cdc_acm.c</name>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_compiler.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/utilities/usb_device_cdc_acm.h</name>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_version.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/utilities/usb_device_ch9.c</name>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv7.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/utilities/usb_device_ch9.h</name>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mbl.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK28F15/utilities/usb_device_config.h</name>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mml.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_common_tables.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_const_structs.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_math.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_iccarm.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv8.h</name>
     </file>
   </group>
 </project>

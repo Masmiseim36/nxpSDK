@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
  * Copyright 2016 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "usb_host_config.h"
@@ -284,7 +258,7 @@ static usb_status_t _USB_HostAudioControl(usb_host_class_handle classHandle,
     if (USB_HostSendSetup(audioPtr->hostHandle, audioPtr->controlPipe, transfer) != kStatus_USB_Success)
     {
 #ifdef HOST_ECHO
-        usb_echo("failt for USB_HostSendSetup\r\n");
+        usb_echo("failed for USB_HostSendSetup\r\n");
 #endif
         USB_HostFreeTransfer(audioPtr->hostHandle, transfer);
         return kStatus_USB_Error;
@@ -527,13 +501,23 @@ usb_status_t USB_HostAudioStreamSetInterface(usb_host_class_handle classHandle,
         }
         if (ptr1.common->bDescriptorType == 0x05U)
         {
+            uint32_t descLength = 0;
             interface_ptr->epList[ep].epDesc = (usb_descriptor_endpoint_t *)ptr1.bufr;
             audioPtr->isoEndpDesc = (usb_audio_stream_specific_iso_endp_desc_t *)ptr1.bufr;
-            ep++;
+
+            descLength = ptr1.common->bLength;
             ptr1.bufr += ptr1.common->bLength;
-            interface_ptr->epList[ep].epExtension = ptr1.bufr;
-            interface_ptr->epList[ep].epExtensionLength = ptr1.common->bLength;
-            break;
+
+            if ((0x25 == ptr1.common->bDescriptorType))
+            {
+                interface_ptr->epList[ep].epExtension = ptr1.bufr;
+                interface_ptr->epList[ep].epExtensionLength = ptr1.common->bLength;
+            }
+            else
+            {
+                ptr1.bufr -= descLength;
+            }
+            ep++;
         }
         ptr1.bufr += ptr1.common->bLength;
     }
@@ -802,7 +786,7 @@ usb_status_t USB_HostAudioStreamRecv(usb_host_class_handle classHandle,
     if (USB_HostRecv(audioPtr->hostHandle, audioPtr->isoInPipe, transfer) != kStatus_USB_Success)
     {
 #ifdef HOST_ECHO
-        usb_echo("failt to USB_HostRecv\r\n");
+        usb_echo("failed to USB_HostRecv\r\n");
 #endif
         USB_HostFreeTransfer(audioPtr->hostHandle, transfer);
         return kStatus_USB_Error;
@@ -864,7 +848,7 @@ usb_status_t USB_HostAudioStreamSend(usb_host_class_handle classHandle,
     if (USB_HostSend(audioPtr->hostHandle, audioPtr->isoOutPipe, transfer) != kStatus_USB_Success)
     {
 #ifdef HOST_ECHO
-        usb_echo("failt to USB_HostSend\r\n");
+        usb_echo("failed to USB_HostSend\r\n");
 #endif
         USB_HostFreeTransfer(audioPtr->hostHandle, transfer);
         return kStatus_USB_Error;
@@ -970,18 +954,10 @@ usb_status_t USB_HostAudioFeatureUnitRequest(usb_host_class_handle classHandle,
         return kStatus_USB_Error;
     }
 
-    bmacontrols++;
-    if (bmacontrols[atribute_index] & p_feature_request->controlMask)
-    {
-        status = kStatus_USB_Success;
-    }
-
-    if (kStatus_USB_Success == status)
-    {
-        status = _USB_HostAudioControl(classHandle, (p_feature_request->typeRequest | (cmdCode & 0x80U)),
-                                       (p_feature_request->codeRequest | (cmdCode & 0x80U)), request_value, windex,
-                                       p_feature_request->length, (uint8_t *)buf, callbackFn, callbackParam);
-    }
+    status = _USB_HostAudioControl(classHandle, (p_feature_request->typeRequest | (cmdCode & 0x80U)),
+                                   (p_feature_request->codeRequest | (cmdCode & 0x80U)), request_value, windex,
+                                    p_feature_request->length, (uint8_t *)buf, callbackFn, callbackParam);
+    
     return status;
 }
 

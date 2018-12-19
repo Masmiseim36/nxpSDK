@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- *  that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 #ifndef _FSL_DSPI_H_
 #define _FSL_DSPI_H_
@@ -71,28 +45,28 @@ enum _dspi_status
 /*! @brief DSPI status flags in SPIx_SR register.*/
 enum _dspi_flags
 {
-    kDSPI_TxCompleteFlag = SPI_SR_TCF_MASK,          /*!< Transfer Complete Flag. */
+    kDSPI_TxCompleteFlag = (int)SPI_SR_TCF_MASK,     /*!< Transfer Complete Flag. */
     kDSPI_EndOfQueueFlag = SPI_SR_EOQF_MASK,         /*!< End of Queue Flag.*/
     kDSPI_TxFifoUnderflowFlag = SPI_SR_TFUF_MASK,    /*!< Transmit FIFO Underflow Flag.*/
     kDSPI_TxFifoFillRequestFlag = SPI_SR_TFFF_MASK,  /*!< Transmit FIFO Fill Flag.*/
     kDSPI_RxFifoOverflowFlag = SPI_SR_RFOF_MASK,     /*!< Receive FIFO Overflow Flag.*/
     kDSPI_RxFifoDrainRequestFlag = SPI_SR_RFDF_MASK, /*!< Receive FIFO Drain Flag.*/
     kDSPI_TxAndRxStatusFlag = SPI_SR_TXRXS_MASK,     /*!< The module is in Stopped/Running state.*/
-    kDSPI_AllStatusFlag = SPI_SR_TCF_MASK | SPI_SR_EOQF_MASK | SPI_SR_TFUF_MASK | SPI_SR_TFFF_MASK | SPI_SR_RFOF_MASK |
-                          SPI_SR_RFDF_MASK | SPI_SR_TXRXS_MASK /*!< All statuses above.*/
+    kDSPI_AllStatusFlag = (int)(SPI_SR_TCF_MASK | SPI_SR_EOQF_MASK | SPI_SR_TFUF_MASK | SPI_SR_TFFF_MASK |
+                                SPI_SR_RFOF_MASK | SPI_SR_RFDF_MASK | SPI_SR_TXRXS_MASK) /*!< All statuses above.*/
 };
 
 /*! @brief DSPI interrupt source.*/
 enum _dspi_interrupt_enable
 {
-    kDSPI_TxCompleteInterruptEnable = SPI_RSER_TCF_RE_MASK,          /*!< TCF  interrupt enable.*/
+    kDSPI_TxCompleteInterruptEnable = (int)SPI_RSER_TCF_RE_MASK,     /*!< TCF  interrupt enable.*/
     kDSPI_EndOfQueueInterruptEnable = SPI_RSER_EOQF_RE_MASK,         /*!< EOQF interrupt enable.*/
     kDSPI_TxFifoUnderflowInterruptEnable = SPI_RSER_TFUF_RE_MASK,    /*!< TFUF interrupt enable.*/
     kDSPI_TxFifoFillRequestInterruptEnable = SPI_RSER_TFFF_RE_MASK,  /*!< TFFF interrupt enable, DMA disable.*/
     kDSPI_RxFifoOverflowInterruptEnable = SPI_RSER_RFOF_RE_MASK,     /*!< RFOF interrupt enable.*/
     kDSPI_RxFifoDrainRequestInterruptEnable = SPI_RSER_RFDF_RE_MASK, /*!< RFDF interrupt enable, DMA disable.*/
-    kDSPI_AllInterruptEnable = SPI_RSER_TCF_RE_MASK | SPI_RSER_EOQF_RE_MASK | SPI_RSER_TFUF_RE_MASK |
-                               SPI_RSER_TFFF_RE_MASK | SPI_RSER_RFOF_RE_MASK | SPI_RSER_RFDF_RE_MASK
+    kDSPI_AllInterruptEnable = (int)(SPI_RSER_TCF_RE_MASK | SPI_RSER_EOQF_RE_MASK | SPI_RSER_TFUF_RE_MASK |
+                                     SPI_RSER_TFFF_RE_MASK | SPI_RSER_RFOF_RE_MASK | SPI_RSER_RFDF_RE_MASK)
     /*!< All above interrupts enable.*/
 };
 

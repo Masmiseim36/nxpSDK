@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_device_registers.h"
@@ -265,6 +239,7 @@ usb_status_t USB_DeviceCdcAcmEndpointsInit(usb_device_cdc_acm_struct_t *cdcAcmHa
         usb_device_endpoint_init_struct_t epInitStruct;
         usb_device_endpoint_callback_struct_t epCallback;
         epInitStruct.zlt = 0;
+        epInitStruct.interval = interface->endpointList.endpoint[count].interval;
         epInitStruct.endpointAddress = interface->endpointList.endpoint[count].endpointAddress;
         epInitStruct.maxPacketSize = interface->endpointList.endpoint[count].maxPacketSize;
         epInitStruct.transferType = interface->endpointList.endpoint[count].transferType;
@@ -309,6 +284,7 @@ usb_status_t USB_DeviceCdcAcmEndpointsInit(usb_device_cdc_acm_struct_t *cdcAcmHa
         usb_device_endpoint_init_struct_t epInitStruct;
         usb_device_endpoint_callback_struct_t epCallback;
         epInitStruct.zlt = 0;
+        epInitStruct.interval = interface->endpointList.endpoint[count].interval;
         epInitStruct.endpointAddress = interface->endpointList.endpoint[count].endpointAddress;
         epInitStruct.maxPacketSize = interface->endpointList.endpoint[count].maxPacketSize;
         epInitStruct.transferType = interface->endpointList.endpoint[count].transferType;
@@ -380,7 +356,7 @@ usb_status_t USB_DeviceCdcAcmEndpointsDeinit(usb_device_cdc_acm_struct_t *cdcAcm
 /*!
 * @brief Handles the CDC ACM class event.
 *
-* This function responses to various events includiing the common device events and the class specific events.
+* This function responses to various events including the common device events and the class specific events.
 * For class specific events, it calls the class callback defined in the application to deal with the class specific
 * event.
 *
@@ -670,7 +646,7 @@ usb_status_t USB_DeviceCdcAcmEvent(void *handle, uint32_t event, void *param)
  * @brief Initializes the USB CDC ACM class.
  *
  * This function obtains a usb device handle according to the controller id, initializes the CDC ACM class
- * with the class configure parameters and creats the mutex for each pipe.
+ * with the class configure parameters and creates the mutex for each pipe.
  *
  * @param controllerId The id of the controller. The value can be choosen from kUSB_ControllerKhci0,
  *  kUSB_ControllerKhci1, kUSB_ControllerEhci0 or kUSB_ControllerEhci1.
@@ -767,12 +743,12 @@ usb_status_t USB_DeviceCdcAcmDeinit(class_handle_t handle)
  *
  * This function checks whether the endpoint is sending packet, then it primes the endpoint
  * with the buffer address and the buffer length if the pipe is not busy. Otherwise, it ignores this transfer by
- * returnning an error code.
+ * returning an error code.
  *
  * @param handle The class handle of the CDC ACM class.
  * @param ep The endpoint number of the transfer.
- * @param buffer The pointer to the buffer to be transferrd.
- * @param length The length of the buffer to be transferrd.
+ * @param buffer The pointer to the buffer to be transferred.
+ * @param length The length of the buffer to be transferred.
  * @return A USB error code or kStatus_USB_Success.
  */
 usb_status_t USB_DeviceCdcAcmSend(class_handle_t handle, uint8_t ep, uint8_t *buffer, uint32_t length)
@@ -801,28 +777,24 @@ usb_status_t USB_DeviceCdcAcmSend(class_handle_t handle, uint8_t ep, uint8_t *bu
 
     if (NULL != cdcAcmPipe)
     {
-        USB_CDC_ACM_ENTER_CRITICAL();
-        if (1 == cdcAcmPipe->isBusy)
+        if (1U == cdcAcmPipe->isBusy)
         {
-            USB_CDC_ACM_EXIT_CRITICAL();
             return kStatus_USB_Busy;
         }
+        cdcAcmPipe->isBusy = 1U;
+        
         if (cdcAcmPipe->pipeStall)
         {
-            cdcAcmPipe->isBusy = 1U;
             cdcAcmPipe->pipeDataBuffer = buffer;
             cdcAcmPipe->pipeDataLen = length;
-            error = kStatus_USB_Success;
+            return kStatus_USB_Success;
         }
-        else
+
+        error = USB_DeviceSendRequest(cdcAcmHandle->handle, ep, buffer, length);
+        if (kStatus_USB_Success != error)
         {
-            error = USB_DeviceSendRequest(cdcAcmHandle->handle, ep, buffer, length);
-            if (kStatus_USB_Success == error)
-            {
-                cdcAcmPipe->isBusy = 1;
-            }
+            cdcAcmPipe->isBusy = 0U;
         }
-        USB_CDC_ACM_EXIT_CRITICAL();
     }
     return error;
 }
@@ -832,12 +804,12 @@ usb_status_t USB_DeviceCdcAcmSend(class_handle_t handle, uint8_t ep, uint8_t *bu
  *
  * This function checks whether the endpoint is receiving packet, then it primes the endpoint
  * with the buffer address and the buffer length if the pipe is not busy. Otherwise, it ignores this transfer by
- * returnning an error code.
+ * returning an error code.
  *
  * @param handle The class handle of the CDC ACM class.
  * @param ep The endpoint number of the transfer.
- * @param buffer The pointer to the buffer to be transferrd.
- * @param length The length of the buffer to be transferrd.
+ * @param buffer The pointer to the buffer to be transferred.
+ * @param length The length of the buffer to be transferred.
  * @return A USB error code or kStatus_USB_Success.
  */
 usb_status_t USB_DeviceCdcAcmRecv(class_handle_t handle, uint8_t ep, uint8_t *buffer, uint32_t length)
@@ -850,24 +822,24 @@ usb_status_t USB_DeviceCdcAcmRecv(class_handle_t handle, uint8_t ep, uint8_t *bu
     }
     cdcAcmHandle = (usb_device_cdc_acm_struct_t *)handle;
 
-    if (1 == cdcAcmHandle->bulkOut.isBusy)
+    if (1U == cdcAcmHandle->bulkOut.isBusy)
     {
         return kStatus_USB_Busy;
     }
+    cdcAcmHandle->bulkOut.isBusy = 1U;
+    
     if (cdcAcmHandle->bulkOut.pipeStall)
     {
-        cdcAcmHandle->bulkOut.isBusy = 1U;
         cdcAcmHandle->bulkOut.pipeDataBuffer = buffer;
         cdcAcmHandle->bulkOut.pipeDataLen = length;
         return kStatus_USB_Success;
     }
-    USB_CDC_ACM_ENTER_CRITICAL();
+    
     error = USB_DeviceRecvRequest(cdcAcmHandle->handle, ep, buffer, length);
-    if (kStatus_USB_Success == error)
+    if (kStatus_USB_Success != error)
     {
-        cdcAcmHandle->bulkOut.isBusy = 1;
+        cdcAcmHandle->bulkOut.isBusy = 0U;
     }
-    USB_CDC_ACM_EXIT_CRITICAL();
     return error;
 }
 

@@ -184,8 +184,8 @@
           <state>CPU_MK64FN1M0VLL12</state>
           <state>FRDM_K64F</state>
           <state>FREEDOM</state>
-          <state>FSL_RTOS_FREE_RTOS</state>
           <state>A_LITTLE_ENDIAN</state>
+          <state>FSL_RTOS_FREE_RTOS</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -225,7 +225,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050,Pe167</state>
+          <state>Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -315,16 +315,16 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM4F</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../devices</state>
           <state>$PROJ_DIR$/../../..</state>
           <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
+          <state>$PROJ_DIR$/../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include</state>
           <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private</state>
           <state>$PROJ_DIR$/../uart</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_qca/port/boards/frdmk64f/freertos/gt202</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wifi_qca/port/boards/frdmk64f/freertos</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wifi_qca/port/env/freertos</state>
+          <state>$PROJ_DIR$/../../../../../middleware/wifi_qca/port/boards/frdmk64f/freertos/silex2401</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK64F12/drivers</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_qca</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_qca/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_qca/include/AR6002</state>
@@ -337,14 +337,27 @@
           <state>$PROJ_DIR$/../../../../../middleware/wifi_qca/common_src/hcd</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_qca/common_src/wmi</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_qca/port</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK64F12/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK64F12/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK64F12/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK64F12/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK64F12/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK64F12/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK64F12/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK64F12/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK64F12</state>
+          <state>$PROJ_DIR$/../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK64F12/drivers</state>
+          <state>$PROJ_DIR$/../../../../../middleware/wifi_qca/port/boards/frdmk64f/freertos</state>
+          <state>$PROJ_DIR$/../../../../../middleware/wifi_qca/port/env/freertos</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_qca/port/drivers/dspi_edma_freertos</state>
           <state>$PROJ_DIR$/../../../../../devices/MK64F12/drivers</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wifi_qca/port/boards/frdmk64f/freertos/silex2401</state>
-          <state>$PROJ_DIR$/../../../../../devices/MK64F12/utilities/io</state>
-          <state>$PROJ_DIR$/../../../../../devices/MK64F12/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MK64F12/utilities/log</state>
-          <state>$PROJ_DIR$/../../../../../devices/MK64F12/utilities</state>
-          <state>$PROJ_DIR$/../../../../../devices/MK64F12</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK64F12/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK64F12/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK64F12/drivers</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -415,11 +428,11 @@
         </option>
         <option>
           <name>IccExceptions</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccRTTI</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccStaticDestr</name>
@@ -795,7 +808,6 @@
         </option>
         <option>
           <name>IlinkExtraOptions</name>
-          <state/>
         </option>
         <option>
           <name>IlinkLowLevelInterfaceSlave</name>
@@ -1181,8 +1193,8 @@
           <state>CPU_MK64FN1M0VLL12</state>
           <state>FRDM_K64F</state>
           <state>FREEDOM</state>
-          <state>FSL_RTOS_FREE_RTOS</state>
           <state>A_LITTLE_ENDIAN</state>
+          <state>FSL_RTOS_FREE_RTOS</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1222,7 +1234,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050,Pe167</state>
+          <state>Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -1259,7 +1271,7 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
@@ -1312,16 +1324,16 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM4F</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../devices</state>
           <state>$PROJ_DIR$/../../..</state>
           <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
+          <state>$PROJ_DIR$/../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include</state>
           <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private</state>
           <state>$PROJ_DIR$/../uart</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_qca/port/boards/frdmk64f/freertos/gt202</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wifi_qca/port/boards/frdmk64f/freertos</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wifi_qca/port/env/freertos</state>
+          <state>$PROJ_DIR$/../../../../../middleware/wifi_qca/port/boards/frdmk64f/freertos/silex2401</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK64F12/drivers</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_qca</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_qca/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_qca/include/AR6002</state>
@@ -1334,14 +1346,27 @@
           <state>$PROJ_DIR$/../../../../../middleware/wifi_qca/common_src/hcd</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_qca/common_src/wmi</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_qca/port</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK64F12/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK64F12/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK64F12/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK64F12/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK64F12/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK64F12/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK64F12/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK64F12/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK64F12</state>
+          <state>$PROJ_DIR$/../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK64F12/drivers</state>
+          <state>$PROJ_DIR$/../../../../../middleware/wifi_qca/port/boards/frdmk64f/freertos</state>
+          <state>$PROJ_DIR$/../../../../../middleware/wifi_qca/port/env/freertos</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_qca/port/drivers/dspi_edma_freertos</state>
           <state>$PROJ_DIR$/../../../../../devices/MK64F12/drivers</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wifi_qca/port/boards/frdmk64f/freertos/silex2401</state>
-          <state>$PROJ_DIR$/../../../../../devices/MK64F12/utilities/io</state>
-          <state>$PROJ_DIR$/../../../../../devices/MK64F12/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MK64F12/utilities/log</state>
-          <state>$PROJ_DIR$/../../../../../devices/MK64F12/utilities</state>
-          <state>$PROJ_DIR$/../../../../../devices/MK64F12</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK64F12/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK64F12/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK64F12/drivers</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1412,11 +1437,11 @@
         </option>
         <option>
           <name>IccExceptions</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccRTTI</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccStaticDestr</name>
@@ -1792,7 +1817,6 @@
         </option>
         <option>
           <name>IlinkExtraOptions</name>
-          <state/>
         </option>
         <option>
           <name>IlinkLowLevelInterfaceSlave</name>
@@ -2024,21 +2048,18 @@
     <file>
       <name>$PROJ_DIR$/../pin_mux.h</name>
     </file>
-    <group>
-      <name>src</name>
-      <file>
-        <name>$PROJ_DIR$/../board.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../board.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../clock_config.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../clock_config.h</name>
-      </file>
-    </group>
+    <file>
+      <name>$PROJ_DIR$/../board.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../board.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../clock_config.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../clock_config.h</name>
+    </file>
   </group>
   <group>
     <name>doc</name>
@@ -2058,19 +2079,22 @@
             <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/port/boards/frdmk64f/freertos/gt202/wifi_shield_gt202.h</name>
           </file>
         </group>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/port/boards/frdmk64f/freertos/wifi_shield.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/port/boards/frdmk64f/freertos/wifi_shield.c</name>
-        </file>
         <group>
           <name>silex2401</name>
           <file>
             <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/port/boards/frdmk64f/freertos/silex2401/wifi_shield_silex2401.h</name>
           </file>
         </group>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/port/boards/frdmk64f/freertos/wifi_shield.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/port/boards/frdmk64f/freertos/wifi_shield.c</name>
+        </file>
       </group>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/port/wifi_common.h</name>
+      </file>
       <group>
         <name>env</name>
         <group>
@@ -2089,9 +2113,6 @@
           </file>
         </group>
       </group>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/port/wifi_common.h</name>
-      </file>
       <group>
         <name>drivers</name>
         <group>
@@ -2455,7 +2476,157 @@
     </group>
   </group>
   <group>
+    <name>drivers</name>
+    <group>
+      <name>freertos</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_uart_freertos.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_uart_freertos.c</name>
+      </file>
+    </group>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_ftfx_adapter.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_ftfx_utilities.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_ftfx_features.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_ftfx_controller.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_ftfx_controller.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_ftfx_flash.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_ftfx_flash.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_ftfx_cache.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_ftfx_cache.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_ftfx_flexnvm.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_ftfx_flexnvm.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_flash.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_gpio.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_gpio.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_clock.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_clock.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_port.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_uart.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_uart.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_smc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_smc.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_common.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_common.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_dspi.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_dspi.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_dspi_edma.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_dspi_edma.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_edma.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_edma.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_dmamux.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_dmamux.c</name>
+    </file>
+  </group>
+  <group>
     <name>amazon-freertos</name>
+    <group>
+      <name>FreeRTOS</name>
+      <group>
+        <name>portable</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/MemMang/heap_4.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/readme.txt</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM4F/fsl_tickless_systick.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM4F/fsl_tickless_generic.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM4F/port.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM4F/portasm.s</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM4F/portmacro.h</name>
+        </file>
+      </group>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/event_groups.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/list.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/queue.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/stream_buffer.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/tasks.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/timers.c</name>
+      </file>
+    </group>
     <group>
       <name>license</name>
       <file>
@@ -2510,174 +2681,9 @@
         <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private/stack_macros.h</name>
       </file>
     </group>
-    <group>
-      <name>FreeRTOS</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/event_groups.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/list.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/queue.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/stream_buffer.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/tasks.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/timers.c</name>
-      </file>
-      <group>
-        <name>portable</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/readme.txt</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM4F/port.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM4F/portasm.s</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM4F/portmacro.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/MemMang/heap_4.c</name>
-        </file>
-      </group>
-    </group>
-    <group>
-      <name>portable</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM4F/fsl_tickless_systick.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM4F/fsl_tickless_generic.h</name>
-      </file>
-    </group>
-  </group>
-  <group>
-    <name>drivers</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_dspi.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_dspi.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_common.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_common.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_clock.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_clock.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_dspi_edma.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_dspi_edma.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_edma.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_edma.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_dmamux.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_dmamux.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_gpio.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_gpio.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_port.h</name>
-    </file>
-    <group>
-      <name>freertos</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_uart_freertos.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_uart_freertos.c</name>
-      </file>
-    </group>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_uart.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_uart.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_ftfx_adapter.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_ftfx_utilities.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_ftfx_features.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_ftfx_controller.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_ftfx_controller.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_ftfx_flash.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_ftfx_flash.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_ftfx_cache.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_ftfx_cache.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_ftfx_flexnvm.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_ftfx_flexnvm.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_flash.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_smc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_smc.c</name>
-    </file>
   </group>
   <group>
     <name>utilities</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK64F12/utilities/io/fsl_io.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK64F12/utilities/io/fsl_io.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK64F12/utilities/log/fsl_log.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK64F12/utilities/log/fsl_log.h</name>
-    </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK64F12/utilities/str/fsl_str.c</name>
     </file>
@@ -2685,28 +2691,121 @@
       <name>$PROJ_DIR$/../../../../../devices/MK64F12/utilities/str/fsl_str.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK64F12/utilities/fsl_debug_console.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MK64F12/utilities/debug_console/fsl_debug_console.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK64F12/utilities/fsl_debug_console.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MK64F12/utilities/debug_console/fsl_debug_console.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK64F12/utilities/fsl_debug_console_conf.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MK64F12/utilities/debug_console/fsl_debug_console_conf.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK64F12/utilities/fsl_assert.c</name>
     </file>
   </group>
   <group>
-    <name>startup</name>
+    <name>device</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK64F12/fsl_device_registers.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK64F12/MK64F12.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK64F12/MK64F12_features.h</name>
+    </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK64F12/system_MK64F12.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK64F12/system_MK64F12.h</name>
     </file>
+  </group>
+  <group>
+    <name>component</name>
+    <group>
+      <name>uart</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/uart/uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/uart/uart_adapter.c</name>
+      </file>
+    </group>
+    <group>
+      <name>serial_manager</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_manager.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_manager.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_uart.c</name>
+      </file>
+    </group>
+    <group>
+      <name>lists</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.c</name>
+      </file>
+    </group>
+  </group>
+  <group>
+    <name>startup</name>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK64F12/iar/startup_MK64F12.s</name>
+    </file>
+  </group>
+  <group>
+    <name>CMSIS</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_cm4.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armcc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armclang.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_gcc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_compiler.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_version.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv7.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mbl.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mml.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_common_tables.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_const_structs.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_math.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_iccarm.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv8.h</name>
     </file>
   </group>
 </project>

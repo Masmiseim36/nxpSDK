@@ -3,28 +3,16 @@
 * @author NXP Semiconductors
 * @version 1.0
 * @par License
-* Copyright(C) NXP Semiconductors, 2016
-* All rights reserved.
+* Copyright 2016 NXP
 *
-* Software that is described herein is for illustrative purposes only
-* which provides customers with programming information regarding the
-* A7-series security ICs.  This software is supplied "AS IS" without any
-* warranties of any kind, and NXP Semiconductors and its licensor disclaim any and
-* all warranties, express or implied, including all implied warranties of
-* merchantability, fitness for a particular purpose and non-infringement of
-* intellectual property rights.  NXP Semiconductors assumes no responsibility
-* or liability for the use of the software, conveys no license or rights under any
-* patent, copyright, mask work right, or any other intellectual property rights in
-* or to any products. NXP Semiconductors reserves the right to make changes
-* in the software without notification. NXP Semiconductors also makes no
-* representation or warranty that such application will be suitable for the
-* specified use without further testing or modification.
+* This software is owned or controlled by NXP and may only be used
+* strictly in accordance with the applicable license terms.  By expressly
+* accepting such terms or by downloading, installing, activating and/or
+* otherwise using the software, you are agreeing that you have read, and
+* that you agree to comply with and are bound by, such license terms.  If
+* you do not agree to be bound by the applicable license terms, then you
+* may not retain, install, activate or otherwise use the software.
 *
-* Permission to use, copy and modify this software is hereby granted,
-* under NXP Semiconductors' and its licensor's relevant copyrights in
-* the software, without fee, provided that it is used in conjunction with
-* NXP Semiconductors products. This copyright, permission, and disclaimer notice
-* must appear in all copies of this code.
 * @par Description
 * This file wraps the module centric APDU functionality of the A71CH module.
 * @par History
@@ -274,6 +262,51 @@ U16 A71_GetUniqueID(U8 *uid, U16 *uidLen)
 
     FreeAPDUBuffer(pApdu);
     return rv;
+}
+
+/**
+ * Get cert uid from the Secure Module. The cert uid is a subset of the Secure Module Unique Identifier
+ * @param[in,out] certUid IN: buffer to contain cert uid; OUT: cert uid retrieved from Secure Module
+ * @param[in,out] certUidLen IN: Size of buffer provided (at least ::A71CH_MODULE_CERT_UID_LEN byte);
+ * OUT: length of retrieved unique identifier (expected to be ::A71CH_MODULE_CERT_UID_LEN byte)
+ *
+ * @retval ::SW_OK Upon successful execution
+ * @retval ::ERR_WRONG_RESPONSE In case the Secure Module Unique Identifier (i.e. the base uid) did not have the expected length
+ */
+U16 A71_GetCertUid(U8 *certUid, U16 *certUidLen)
+{
+	U16 rv = 0;
+	U8 uid[A71CH_MODULE_UNIQUE_ID_LEN];
+	U16 uidLen = A71CH_MODULE_UNIQUE_ID_LEN;
+	int idx = 0;
+
+	if (*certUidLen < A71CH_MODULE_CERT_UID_LEN)
+	{
+		return ERR_BUF_TOO_SMALL;
+	}
+
+	rv = A71_GetUniqueID(uid, &uidLen);
+	if (rv == SMCOM_OK)
+	{
+		idx = 0;
+		certUid[idx++] = uid[A71CH_UID_IC_TYPE_OFFSET];
+		certUid[idx++] = uid[A71CH_UID_IC_TYPE_OFFSET + 1];
+		certUid[idx++] = uid[A71CH_UID_IC_FABRICATION_DATA_OFFSET];
+		certUid[idx++] = uid[A71CH_UID_IC_FABRICATION_DATA_OFFSET + 1];
+		certUid[idx++] = uid[A71CH_UID_IC_SERIAL_NR_OFFSET];
+		certUid[idx++] = uid[A71CH_UID_IC_SERIAL_NR_OFFSET + 1];
+		certUid[idx++] = uid[A71CH_UID_IC_SERIAL_NR_OFFSET + 2];
+		certUid[idx++] = uid[A71CH_UID_IC_BATCH_ID_OFFSET];
+		certUid[idx++] = uid[A71CH_UID_IC_BATCH_ID_OFFSET + 1];
+		certUid[idx++] = uid[A71CH_UID_IC_BATCH_ID_OFFSET + 2];
+		*certUidLen = A71CH_MODULE_CERT_UID_LEN;
+	}
+	else
+	{
+		*certUidLen = 0;
+	}
+
+	return rv;
 }
 
 /**

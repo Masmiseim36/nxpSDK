@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
  * Copyright 2016 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #ifndef __USB_DEVICE_H__
@@ -209,6 +183,7 @@ typedef struct _usb_device_endpoint_init_struct
     uint8_t endpointAddress; /*!< Endpoint address*/
     uint8_t transferType;    /*!< Endpoint transfer type*/
     uint8_t zlt;             /*!< ZLT flag*/
+    uint8_t interval;        /*!< Endpoint interval*/
 } usb_device_endpoint_init_struct_t;
 
 /*! @brief Endpoint status structure */
@@ -435,14 +410,14 @@ extern usb_status_t USB_DeviceDeinitEndpoint(usb_device_handle handle, uint8_t e
 extern usb_status_t USB_DeviceStallEndpoint(usb_device_handle handle, uint8_t endpointAddress);
 
 /*!
- * @brief Unstalls a specified endpoint.
+ * @brief Un-stall a specified endpoint.
  *
  * The function is used to unstall a specified endpoint.
  *
  * @param[in] handle The device handle received from #USB_DeviceInit.
  * @param[in] endpointAddress Endpoint address, bit7 is the direction of endpoint, 1U - IN, and 0U - OUT.
  *
- * @retval kStatus_USB_Success              The endpoint is unstalled successfully.
+ * @retval kStatus_USB_Success              The endpoint is un-stalled successfully.
  * @retval kStatus_USB_InvalidHandle        The handle is a NULL pointer. Or the controller handle is invalid.
  * @retval kStatus_USB_InvalidParameter     The endpoint number is more than USB_DEVICE_CONFIG_ENDPOINTS.
  * @retval kStatus_USB_ControllerNotFound   Cannot find the controller.
@@ -612,6 +587,18 @@ extern void USB_DeviceEhciIsrFunction(void *deviceHandle);
  * @param[in] deviceHandle The device handle got from #USB_DeviceInit.
  */
 extern void USB_DeviceLpcIp3511IsrFunction(void *deviceHandle);
+#endif
+
+#if (((defined(USB_DEVICE_CONFIG_DWC3)) && (USB_DEVICE_CONFIG_DWC3 > 0U)) || \
+     ((defined(USB_DEVICE_CONFIG_DWC3)) && (USB_DEVICE_CONFIG_DWC3 > 0U)))
+/*!
+ * @brief Device USB DWC3 ISR function.
+ *
+ * The function is the USB interrupt service routine.
+ *
+ * @param[in] deviceHandle The device handle got from #USB_DeviceInit.
+ */
+extern void USB_DeviceDwc3IsrFunction(void *deviceHandle);
 #endif
 
 /*!

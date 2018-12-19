@@ -1,54 +1,19 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "board.h"
 #include "erpc_client_setup.h"
 #include "erpc_error_handler.h"
 #include "erpc_matrix_multiply.h"
-#include "fsl_debug_console.h"
-#include <stdlib.h>
-
-#if BOARD_DEBUG_UART_TYPE == DEBUG_CONSOLE_DEVICE_TYPE_UART
-#include "fsl_uart_cmsis.h"
-#elif BOARD_DEBUG_UART_TYPE == DEBUG_CONSOLE_DEVICE_TYPE_LPUART
-#include "fsl_lpuart_cmsis.h"
-#elif BOARD_DEBUG_UART_TYPE == DEBUG_CONSOLE_DEVICE_TYPE_LPSCI
-#include "fsl_lpsci_cmsis.h"
-#endif
 
 #include "pin_mux.h"
 #include "clock_config.h"
+#include "fsl_lpuart_cmsis.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -115,23 +80,6 @@ static void fill_matrices(Matrix matrix1_ptr, Matrix matrix2_ptr)
 }
 
 /*!
- * @brief Printing a matrix to the console
- */
-static void print_matrix(Matrix matrix_ptr)
-{
-    int32_t a, b;
-
-    for (a = 0; a < matrix_size; ++a)
-    {
-        for (b = 0; b < matrix_size; ++b)
-        {
-            PRINTF("%4i ", (int)(matrix_ptr[a][b]));
-        }
-        PRINTF("\r\n");
-    }
-}
-
-/*!
  * @brief Main function
  */
 int main()
@@ -169,19 +117,9 @@ int main()
     /* Fill both matrices by random values */
     fill_matrices(matrix1, matrix2);
 
-    /* Print both matrices on the console */
-    PRINTF("\r\nMatrix #1");
-    PRINTF("\r\n=========\r\n");
-    print_matrix(matrix1);
-
-    PRINTF("\r\nMatrix #2");
-    PRINTF("\r\n=========\r\n");
-    print_matrix(matrix2);
-
     while (1)
     {
-        PRINTF("\r\neRPC request is sent to the server\r\n");
-
+        /* Send rRPC request to the server */
         erpcMatrixMultiply(matrix1, matrix2, result_matrix);
 
         /* Check if some error occured in eRPC */
@@ -191,12 +129,8 @@ int main()
             break;
         }
 
-        PRINTF("\r\nResult matrix");
-        PRINTF("\r\n=============\r\n");
-        print_matrix(result_matrix);
-
 #if defined(BOARD_SW1_GPIO) || defined(BOARD_SW2_GPIO) || defined(BOARD_SW3_GPIO)
-        PRINTF("\r\nPress the button to initiate the next matrix multiplication\r\n");
+        /* Press the button to initiate the next matrix multiplication */
         /* Check for button push. Pin is grounded when button is pushed. */
         while (1 != IS_BUTTON_PRESSED())
         {
@@ -212,16 +146,7 @@ int main()
         /* Fill both matrices by random values */
         fill_matrices(matrix1, matrix2);
 
-        /* Print both matrices on the console */
-        PRINTF("\r\nMatrix #1");
-        PRINTF("\r\n=========\r\n");
-        print_matrix(matrix1);
-
-        PRINTF("\r\nMatrix #2");
-        PRINTF("\r\n=========\r\n");
-        print_matrix(matrix2);
 #else
-        PRINTF("\r\nEnd of example.\r\n");
         while (1)
         {
         }

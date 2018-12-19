@@ -7,14 +7,6 @@ microcontroller is first set to very low power stop (VLPS) mode. Every 500 ms, a
 reads the current temperature of the microcontroller. Increment or decrement the temperature to see the changes, red lights
 for higher and blue one for lower than average counted temperatures.
 
-
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
-
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -58,6 +50,11 @@ When the demo runs successfully, the following message is displayed in the termi
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

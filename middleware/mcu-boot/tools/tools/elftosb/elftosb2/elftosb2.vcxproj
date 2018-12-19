@@ -1,0 +1,228 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{ACBF9A30-8865-4DAA-B686-D8DC823CBF5C}</ProjectGuid>
+    <RootNamespace>elftosb2</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v140_xp</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v140_xp</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>12.0.21005.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>Debug\</OutDir>
+    <IntDir>Debug\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+    <TargetName>elftosb</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>Release\</OutDir>
+    <IntDir>Release\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+    <TargetName>elftosb</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>.;..\winsupport;..\common;..\mbedtls\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeader />
+      <BrowseInformation>true</BrowseInformation>
+      <WarningLevel>Level2</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <DisableSpecificWarnings>4355;%(DisableSpecificWarnings);4068;4800;4005</DisableSpecificWarnings>
+      <AdditionalUsingDirectories>
+      </AdditionalUsingDirectories>
+    </ClCompile>
+    <Link>
+      <OutputFile>$(OutDir)elftosb.exe</OutputFile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>$(OutDir)elftosb.pdb</ProgramDatabaseFile>
+      <SubSystem>Console</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention />
+      <TargetMachine>MachineX86</TargetMachine>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <AdditionalLibraryDirectories>Debug\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>..\Debug\mbedTLS.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4800;4068;4005;4018;4244</DisableSpecificWarnings>
+      <AdditionalIncludeDirectories>.;..\winsupport;..\common;..\mbedtls\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <OutputFile>$(OutDir)elftosb.exe</OutputFile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention />
+      <TargetMachine>MachineX86</TargetMachine>
+      <AdditionalLibraryDirectories>..\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>..\Release\mbedTLS.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\common\aes128_key_wrap_unwrap.c" />
+    <ClCompile Include="..\common\AESKey.cpp" />
+    <ClCompile Include="..\common\Blob.cpp" />
+    <ClCompile Include="..\common\bytes_aes.c" />
+    <ClCompile Include="..\common\crc.cpp" />
+    <ClCompile Include="..\common\DataSource.cpp" />
+    <ClCompile Include="..\common\DataSourceImager.cpp" />
+    <ClCompile Include="..\common\DataTarget.cpp" />
+    <ClCompile Include="..\common\ELFSourceFile.cpp" />
+    <ClCompile Include="..\common\EncoreBootImage.cpp" />
+    <ClCompile Include="..\common\EncoreBootImageReader.cpp" />
+    <ClCompile Include="..\common\EvalContext.cpp" />
+    <ClCompile Include="..\common\ExcludesListMatcher.cpp" />
+    <ClCompile Include="..\common\format_string.cpp" />
+    <ClCompile Include="..\common\GHSSecInfo.cpp" />
+    <ClCompile Include="..\common\GlobMatcher.cpp" />
+    <ClCompile Include="..\common\HexValues.cpp" />
+    <ClCompile Include="..\common\iMXImage.cpp" />
+    <ClCompile Include="..\common\IVTDataSource.cpp" />
+    <ClCompile Include="..\common\Keyblob.cpp" />
+    <ClCompile Include="..\common\Logging.cpp" />
+    <ClCompile Include="..\common\Operation.cpp" />
+    <ClCompile Include="..\common\OptionDictionary.cpp" />
+    <ClCompile Include="..\common\options.cpp" />
+    <ClCompile Include="..\common\OutputSection.cpp" />
+    <ClCompile Include="..\common\Random.cpp" />
+    <ClCompile Include="..\common\rijndael.cpp" />
+    <ClCompile Include="..\common\RijndaelCBCMAC.cpp" />
+    <ClCompile Include="..\common\RijndaelCTR.cpp" />
+    <ClCompile Include="..\common\SB2Image.cpp" />
+    <ClCompile Include="..\common\SearchPath.cpp" />
+    <ClCompile Include="..\common\SHA1.cpp" />
+    <ClCompile Include="..\common\SourceFile.cpp" />
+    <ClCompile Include="..\common\SRecordSourceFile.cpp" />
+    <ClCompile Include="..\common\stdafx.cpp" />
+    <ClCompile Include="..\common\StELFFile.cpp" />
+    <ClCompile Include="..\common\StExecutableImage.cpp" />
+    <ClCompile Include="..\common\StSRecordFile.cpp" />
+    <ClCompile Include="..\common\Value.cpp" />
+    <ClCompile Include="..\common\Version.cpp" />
+    <ClCompile Include="BootImageGenerator.cpp" />
+    <ClCompile Include="ConversionController.cpp" />
+    <ClCompile Include="elftosb.cpp" />
+    <ClCompile Include="elftosb_lexer.cpp" />
+    <ClCompile Include="elftosb_parser.tab.cpp" />
+    <ClCompile Include="ElftosbAST.cpp" />
+    <ClCompile Include="ElftosbLexer.cpp" />
+    <ClCompile Include="EncoreBootImageGenerator.cpp" />
+    <ClCompile Include="iMXImageGenerator.cpp" />
+    <ClCompile Include="SB2ImageGenerator.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\common\aes128_key_wrap_unwrap.h" />
+    <ClInclude Include="..\common\AESCounter.h" />
+    <ClInclude Include="..\common\AESKey.h" />
+    <ClInclude Include="..\common\Blob.h" />
+    <ClInclude Include="..\common\BootImage.h" />
+    <ClInclude Include="..\common\crc.h" />
+    <ClInclude Include="..\common\DataSource.h" />
+    <ClInclude Include="..\common\DataSourceImager.h" />
+    <ClInclude Include="..\common\DataTarget.h" />
+    <ClInclude Include="..\common\ELF.h" />
+    <ClInclude Include="..\common\ELFSourceFile.h" />
+    <ClInclude Include="..\common\EncoreBootImage.h" />
+    <ClInclude Include="..\common\EncoreBootImageReader.h" />
+    <ClInclude Include="..\common\EndianUtilities.h" />
+    <ClInclude Include="..\common\EvalContext.h" />
+    <ClInclude Include="..\common\ExcludesListMatcher.h" />
+    <ClInclude Include="..\common\format_string.h" />
+    <ClInclude Include="..\common\GHSSecInfo.h" />
+    <ClInclude Include="..\common\GlobMatcher.h" />
+    <ClInclude Include="..\common\HexValues.h" />
+    <ClInclude Include="..\common\iMXImage.h" />
+    <ClInclude Include="..\common\int_size.h" />
+    <ClInclude Include="..\common\IVTDataSource.h" />
+    <ClInclude Include="..\common\Keyblob.h" />
+    <ClInclude Include="..\common\KeyblobEntry.h" />
+    <ClInclude Include="..\common\Logging.h" />
+    <ClInclude Include="..\common\Operation.h" />
+    <ClInclude Include="..\common\OptionContext.h" />
+    <ClInclude Include="..\common\OptionDictionary.h" />
+    <ClInclude Include="..\common\options.h" />
+    <ClInclude Include="..\common\OutputSection.h" />
+    <ClInclude Include="..\common\Random.h" />
+    <ClInclude Include="..\common\rijndael.h" />
+    <ClInclude Include="..\common\RijndaelCBCMAC.h" />
+    <ClInclude Include="..\common\RijndaelCTR.h" />
+    <ClInclude Include="..\common\SB2Image.h" />
+    <ClInclude Include="..\common\SearchPath.h" />
+    <ClInclude Include="..\common\SHA1.h" />
+    <ClInclude Include="..\common\smart_ptr.h" />
+    <ClInclude Include="..\common\SourceFile.h" />
+    <ClInclude Include="..\common\SRecordSourceFile.h" />
+    <ClInclude Include="..\common\stdafx.h" />
+    <ClInclude Include="..\common\StELFFile.h" />
+    <ClInclude Include="..\common\StExecutableImage.h" />
+    <ClInclude Include="..\common\StringMatcher.h" />
+    <ClInclude Include="..\common\StSRecordFile.h" />
+    <ClInclude Include="..\common\Value.h" />
+    <ClInclude Include="..\common\Version.h" />
+    <ClInclude Include="BootImageGenerator.h" />
+    <ClInclude Include="ConversionController.h" />
+    <ClInclude Include="crypto.h" />
+    <ClInclude Include="default_rom_key.h" />
+    <ClInclude Include="elftosb.h" />
+    <ClInclude Include="elftosb_parser.tab.hpp" />
+    <ClInclude Include="ElftosbAST.h" />
+    <ClInclude Include="ElftosbErrors.h" />
+    <ClInclude Include="ElftosbLexer.h" />
+    <ClInclude Include="EncoreBootImageGenerator.h" />
+    <ClInclude Include="FlexLexer.h" />
+    <ClInclude Include="iMXImageGenerator.h" />
+    <ClInclude Include="SB2ImageGenerator.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

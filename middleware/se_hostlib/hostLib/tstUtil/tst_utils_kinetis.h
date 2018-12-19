@@ -3,29 +3,17 @@
  * @author NXP Semiconductors
  * @version 1.0
  * @par LICENSE
- * Copyright(C) NXP Semiconductors, 2016
- * All rights reserved.
+ * Copyright 2016 NXP
  *
- * Software that is described herein is for illustrative purposes only
- * which provides customers with programming information regarding the
- * A7-series security ICs.  This software is supplied "AS IS" without any
- * warranties of any kind, and NXP Semiconductors and its licensor disclaim any and
- * all warranties, express or implied, including all implied warranties of
- * merchantability, fitness for a particular purpose and non-infringement of
- * intellectual property rights.  NXP Semiconductors assumes no responsibility
- * or liability for the use of the software, conveys no license or rights under any
- * patent, copyright, mask work right, or any other intellectual property rights in
- * or to any products. NXP Semiconductors reserves the right to make changes
- * in the software without notification. NXP Semiconductors also makes no
- * representation or warranty that such application will be suitable for the
- * specified use without further testing or modification.
+ * This software is owned or controlled by NXP and may only be used
+ * strictly in accordance with the applicable license terms.  By expressly
+ * accepting such terms or by downloading, installing, activating and/or
+ * otherwise using the software, you are agreeing that you have read, and
+ * that you agree to comply with and are bound by, such license terms.  If
+ * you do not agree to be bound by the applicable license terms, then you
+ * may not retain, install, activate or otherwise use the software.
  *
- * Permission to use, copy and modify this software is hereby granted,
- * under NXP Semiconductors' and its licensor's relevant copyrights in
- * the software, without fee, provided that it is used in conjunction with
- * NXP Semiconductors products. This copyright, permission, and disclaimer notice
- * must appear in all copies of this code.
- * @par DESCRIPTION
+ * @par Description
  * This file provides the interface to utility functions used by the example programs, not
  * the actual Host Library.
  * @par HISTORY
@@ -45,8 +33,32 @@ extern "C" {
  * includes
  ******************************************************************************/
 #include "jsmn.h"
+#include "board.h"
+#include "sm_types.h"
+#include <HLSETypes.h>
+
 /*******************************************************************************
- * types
+ * DEFINITONS
+ ******************************************************************************/
+
+#if defined(CPU_LPC54018JET180) || defined(IMX_RT)
+#define LED_RED_INIT(output)    //LED1_INIT(output)
+#define LED_RED_ON()            //LED1_ON()
+#define LED_RED_OFF()           //LED1_OFF()
+#define LED_RED_TOGGLE()        //LED1_TOGGLE()
+
+#define LED_GREEN_INIT(output)  //LED2_INIT(output)
+#define LED_GREEN_ON()          //LED2_ON()
+#define LED_GREEN_OFF()         //LED2_OFF()
+#define LED_GREEN_TOGGLE()      //LED2_TOGGLE()
+
+#define LED_BLUE_INIT(output)   //LED3_INIT(output)
+#define LED_BLUE_ON()           //LED3_ON()
+#define LED_BLUE_OFF()          //LED3_OFF()
+#define LED_BLUE_TOGGLE()       //LED3_TOGGLE()
+#endif
+/*******************************************************************************
+ * TYPES
  ******************************************************************************/
 
 typedef enum GpStorageMode

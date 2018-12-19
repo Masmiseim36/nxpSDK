@@ -6,15 +6,15 @@ matrixes and sends them to server. Server then performs matrix multiplication an
 result data back to client. Result matrix is then printed on the PC side.
 
 eRPC documentation
-eRPC specific files are stored in: middleware\multicore_<version>\erpc
-eRPC documentation is stored in: middleware\multicore_<version>\erpc\doc
+eRPC specific files are stored in: middleware\multicore\erpc
+eRPC documentation is stored in: middleware\multicore\erpc\doc
 eRPC is open-source project stored on github: https://github.com/EmbeddedRPC/erpc
 eRPC documentation can be also found in: http://embeddedrpc.github.io
 
 PC Side Setup (Python)
 1. Make sure you have Python installed on your PC
-2. Install eRPC module to Python by executing setup.py located in: middleware\multicore\erpc\erpc_python
-3. Install serial module by executing following command in command line: "python -m pip install pyserial"
+2. Install serial module by executing following command in command line: "python -m pip install pyserial"
+3. Install eRPC module to Python by executing setup.py located in: middleware\multicore\erpc\erpc_python - "python setup.py install"
 
 Usage of run_uart.py
 usage: run_uart.py [-h] [-c] [-s] [-p PORT] [-b BD]
@@ -33,14 +33,6 @@ Either server or client has to be selected to run
 Example:
 To run PC side as a server with a board connected as a client to COM3 execute:
 "run_uart.py --server --port COM3"
-
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
-
 Hardware requirements
 =====================
 - Mini USB cable
@@ -62,33 +54,13 @@ For detailed instructions, see the appropriate board User's Guide.
 
 Running the demo
 ================
-When the demo runs successfully, the log below shows the output of the Client eRPC Matrix Multiply demo:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+When the demo runs successfully, the log can be captured on the PC side (python console).
+The matrix multiplication can be issued repeatedly when pressing a SW board button.
 
-Matrix #1
-  21   33   37   37    9
-  23   45   43    0   32
-  38   44    8   15   36
-  18   18   38   44   16
-  22   23    0   38    7
-
-Matrix #2
-  11   23   27   45   11
-   7   19   23   24    6
-  32   26   49   43   16
-  22   48   36   34   41
-  27   20   32   31   11
-
-eRPC request is sent to the server
-
-Result matrix
-2703 4028 4759 4865 2637
-2808 3142 4787 4956 1563
-2284 3358 4122 4736 1821
-2940 4176 4858 4868 2894
-1428 2907 2715 3051 2015
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- MCUXpresso 10.3.0
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
 

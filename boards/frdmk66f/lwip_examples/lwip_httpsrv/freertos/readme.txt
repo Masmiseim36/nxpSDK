@@ -5,25 +5,6 @@ The lwip_httpsrv demo application demonstrates an HTTPServer on the lwIP TCP/IP 
 The user uses an Internet browser to send a request for connection. The board acts as an HTTP server and sends a Web
 page back to the PC.
 
-
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- RJ45 Network cable
-- FRDM-K66F board
-- Personal Computer
-
-Board settings
-==============
-No special settings are required.
-
 Prepare the Demo
 ================
 1.  Connect a USB cable between the PC host and the OpenSDA(or USB to Serial) USB port on the target board.
@@ -50,7 +31,9 @@ Running the demo
          IPv4 Gateway     : 192.168.0.100
         ************************************************
 2.  On the browser address bar, type 192.168.0.102(IP address of the board).
-	The browser should show a web page.
+	The browser should show a web page. The board also advertises itself using mDNS so that it can be accessed using URL http://lwip-http.local.
+	Please note that your system may not support mDNS out-of-the-box as it is necessary to have an mDNS resolver installed.
+    For instance Bonjour Print Services for Windows contain such resolver. In case of Linux nss-mdns serves this purpose.
 
 Modifying content of static web pages
 To modify content available through the web server you must complete following steps:
@@ -72,6 +55,22 @@ To modify content available through the web server you must complete following s
 		Done.
   3. Overwrite the middleware\lwip_2.0.3\src\apps\httpsrv\httpsrv_fs_data.c file by the new generated middleware\lwip_2.0.3\src\apps\httpsrv\mkfs\httpsrv_fs_data.c file.
   4. Re-compile the HTTP server application example and download it to your board. 
-Customization options
+Hardware requirements
 =====================
+- Mini/micro USB cable
+- RJ45 Network cable
+- FRDM-K66F board
+- Personal Computer
+
+Board settings
+==============
+No special settings are required.
+
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

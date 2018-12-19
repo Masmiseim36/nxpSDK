@@ -3,33 +3,19 @@
  * @author NXP Semiconductors
  * @version 1.0
  * @par License
- * Copyright(C) NXP Semiconductors, 2017-2018
- * All rights reserved.
+ * Copyright 2017,2018 NXP
  *
- * Software that is described herein is for illustrative purposes only
- * which provides customers with programming information regarding the
- * A7-series security ICs.  This software is supplied "AS IS" without any
- * warranties of any kind, and NXP Semiconductors and its licensor disclaim any and
- * all warranties, express or implied, including all implied warranties of
- * merchantability, fitness for a particular purpose and non-infringement of
- * intellectual property rights.  NXP Semiconductors assumes no responsibility
- * or liability for the use of the software, conveys no license or rights under any
- * patent, copyright, mask work right, or any other intellectual property rights in
- * or to any products. NXP Semiconductors reserves the right to make changes
- * in the software without notification. NXP Semiconductors also makes no
- * representation or warranty that such application will be suitable for the
- * specified use without further testing or modification.
- *
- * Permission to use, copy and modify this software is hereby granted,
- * under NXP Semiconductors' and its licensor's relevant copyrights in
- * the software, without fee, provided that it is used in conjunction with
- * NXP Semiconductors products. This copyright, permission, and disclaimer notice
- * must appear in all copies of this code.
+ * This software is owned or controlled by NXP and may only be used
+ * strictly in accordance with the applicable license terms.  By expressly
+ * accepting such terms or by downloading, installing, activating and/or
+ * otherwise using the software, you are agreeing that you have read, and
+ * that you agree to comply with and are bound by, such license terms.  If
+ * you do not agree to be bound by the applicable license terms, then you
+ * may not retain, install, activate or otherwise use the software.
  *
  * @par Description
  * Initialize LWIP / Ethernet / DHCP Connection on board
  * Set and Get Flag in GP Storage
- * vApplicationGetIdleTaskMemory and vApplicationGetTimerTaskMemory
  * json utility function
  */
 
@@ -42,6 +28,8 @@
 #include <limits.h>
 #include <string.h>
 
+#include <board.h>
+
 #ifdef USE_RTOS
 
 #include "FreeRTOS.h"
@@ -53,18 +41,28 @@
 #include "fsl_device_registers.h"
 #include "pin_mux.h"
 #include "clock_config.h"
-#include "lwip/opt.h"
-#include "lwip/tcpip.h"
-#include "lwip/dhcp.h"
-#include "lwip/prot/dhcp.h"
-#include "netif/ethernet.h"
-#include "ethernetif.h"
+
+#include "aws_clientcredential.h"
+
+#if defined(LPC_WIFI)
+#   include "aws_wifi.h"
+
+#elif defined(LPC_ENET)
+#   include "lwip/opt.h"
+#   include "lwip/tcpip.h"
+#   include "lwip/dhcp.h"
+#   include "lwip/prot/dhcp.h"
+#   include "netif/ethernet.h"
+#   include "ethernetif.h"
+#endif
+
 #include "HLSEAPI.h"
 #include "tst_utils_kinetis.h"
-
+#include "fsl_debug_console.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+#if defined(LPC_ENET)
 /* MAC address configuration. */
 #define configMAC_ADDR                     \
     {                                      \
@@ -86,6 +84,9 @@
  ******************************************************************************/
 static struct netif fsl_netif0;
 
+#else
+    uint8_t Wifi_IP[4] = {0};
+#endif
 /*******************************************************************************
  * Global variables
  ******************************************************************************/
@@ -98,7 +99,31 @@ HLSE_OBJECT_HANDLE Gpstorage_handle;
 /*Init the board network */
 void BOARD_InitNetwork(const unsigned char buffer[18])
 {
-#if FSL_FEATURE_SOC_ENET_COUNT > 0
+#if defined(LPC_WIFI)
+
+    const WIFINetworkParams_t pxNetworkParams = {
+        .pcSSID = clientcredentialWIFI_SSID,
+        .pcPassword = clientcredentialWIFI_PASSWORD,
+        .xSecurity = clientcredentialWIFI_SECURITY,
+    };
+    WIFIReturnCode_t result;
+    PRINTF("Turining WIFI ON\r\n");
+    result = WIFI_On();
+    assert(eWiFiSuccess == result);
+
+    PRINTF("Connecting to network:%s\r\n",clientcredentialWIFI_SSID);
+    result = WIFI_ConnectAP(&pxNetworkParams);
+    assert(eWiFiSuccess == result);
+
+    PRINTF("Getting the IP address of Connected Network\r\n");
+    result = WIFI_GetIP(Wifi_IP);
+    assert(eWiFiSuccess == result);
+    PRINTF("\r\n IPv4 Address     : %u.%u.%u.%u\r\n", Wifi_IP[0],Wifi_IP[1],Wifi_IP[2],Wifi_IP[3]);
+    (void)result; /*Prevent compiler warning - variable not used - in release target*/
+
+#elif defined(LPC_ENET)
+#if FSL_FEATURE_SOC_ENET_COUNT > 0  || FSL_FEATURE_SOC_LPC_ENET_COUNT > 0
+
     ip4_addr_t fsl_netif0_ipaddr, fsl_netif0_netmask, fsl_netif0_gw;
     ethernetif_config_t fsl_enet_config0 = {
         .phyAddress = EXAMPLE_PHY_ADDRESS, .clockName = EXAMPLE_CLOCK_NAME, .macAddress = configMAC_ADDR,
@@ -112,12 +137,14 @@ void BOARD_InitNetwork(const unsigned char buffer[18])
         MAC_HASH(5);
     }
 
-    PRINTF("Connecting to network\r\n");
-    tcpip_init(NULL, NULL);
 
     IP4_ADDR(&fsl_netif0_ipaddr, 0U, 0U, 0U, 0U);
     IP4_ADDR(&fsl_netif0_netmask, 0U, 0U, 0U, 0U);
     IP4_ADDR(&fsl_netif0_gw, 0U, 0U, 0U, 0U);
+
+    PRINTF("Connecting to network\r\n");
+    tcpip_init(NULL, NULL);
+
 
     netif_add(&fsl_netif0, &fsl_netif0_ipaddr, &fsl_netif0_netmask, &fsl_netif0_gw, &fsl_enet_config0, ethernetif0_init,
               tcpip_input);
@@ -143,6 +170,7 @@ void BOARD_InitNetwork(const unsigned char buffer[18])
     }
     PRINTF("DHCP OK\r\n");
 #endif /* FSL_FEATURE_SOC_ENET_COUNT > 0 */
+#endif
 }
 
 /*Set and Get the flag value from GP Storage */
@@ -241,57 +269,6 @@ int GetHandle_GPstorage(HLSE_OBJECT_INDEX index)
     return ret;
 }
 
-/* configUSE_STATIC_ALLOCATION is set to 1, so the application must provide an
- * implementation of vApplicationGetIdleTaskMemory() to provide the memory that is
- * used by the Idle task. */
-void vApplicationGetIdleTaskMemory(StaticTask_t **ppxIdleTaskTCBBuffer,
-                                   StackType_t **ppxIdleTaskStackBuffer,
-                                   uint32_t *pulIdleTaskStackSize)
-{
-    /* If the buffers to be provided to the Idle task are declared inside this
-     * function then they must be declared static - otherwise they will be allocated on
-     * the stack and so not exists after this function exits. */
-    static StaticTask_t xIdleTaskTCB;
-    static StackType_t uxIdleTaskStack[configMINIMAL_STACK_SIZE];
-
-    /* Pass out a pointer to the StaticTask_t structure in which the Idle
-     * task's state will be stored. */
-    *ppxIdleTaskTCBBuffer = &xIdleTaskTCB;
-
-    /* Pass out the array that will be used as the Idle task's stack. */
-    *ppxIdleTaskStackBuffer = uxIdleTaskStack;
-
-    /* Pass out the size of the array pointed to by *ppxIdleTaskStackBuffer.
-     * Note that, as the array is necessarily of type StackType_t,
-     * configMINIMAL_STACK_SIZE is specified in words, not bytes. */
-    *pulIdleTaskStackSize = configMINIMAL_STACK_SIZE;
-}
-
-/* configUSE_STATIC_ALLOCATION and configUSE_TIMERS are both set to 1, so the
- * application must provide an implementation of vApplicationGetTimerTaskMemory()
- * to provide the memory that is used by the Timer service task. */
-void vApplicationGetTimerTaskMemory(StaticTask_t **ppxTimerTaskTCBBuffer,
-                                    StackType_t **ppxTimerTaskStackBuffer,
-                                    uint32_t *pulTimerTaskStackSize)
-{
-    /* If the buffers to be provided to the Timer task are declared inside this
-     * function then they must be declared static - otherwise they will be allocated on
-     * the stack and so not exists after this function exits. */
-    static StaticTask_t xTimerTaskTCB;
-    static StackType_t uxTimerTaskStack[configTIMER_TASK_STACK_DEPTH];
-
-    /* Pass out a pointer to the StaticTask_t structure in which the Timer
-     * task's state will be stored. */
-    *ppxTimerTaskTCBBuffer = &xTimerTaskTCB;
-
-    /* Pass out the array that will be used as the Timer task's stack. */
-    *ppxTimerTaskStackBuffer = uxTimerTaskStack;
-
-    /* Pass out the size of the array pointed to by *ppxTimerTaskStackBuffer.
-     * Note that, as the array is necessarily of type StackType_t,
-     * configTIMER_TASK_STACK_DEPTH is specified in words, not bytes. */
-    *pulTimerTaskStackSize = configTIMER_TASK_STACK_DEPTH;
-}
 
 /*JSON utility function to check equality */
 int8_t jsoneq(const char *json, jsmntok_t *tok, const char *s) {

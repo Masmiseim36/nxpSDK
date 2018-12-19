@@ -1,15 +1,15 @@
 /*********************************************************************
-*                SEGGER Microcontroller GmbH & Co. KG                *
+*                SEGGER Microcontroller GmbH                         *
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2016  SEGGER Microcontroller GmbH & Co. KG       *
+*        (c) 1996 - 2018  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
 **********************************************************************
 
-** emWin V5.38 - Graphical user interface for embedded applications **
+** emWin V5.48 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -26,15 +26,16 @@ Full source code is available at: www.segger.com
 We appreciate your understanding and fairness.
 ----------------------------------------------------------------------
 Licensing information
-
 Licensor:                 SEGGER Microcontroller Systems LLC
 Licensed to:              NXP Semiconductors, 1109 McKay Dr, M/S 76, San Jose, CA 95131, USA
 Licensed SEGGER software: emWin
 License number:           GUI-00186
-License model:            emWin License Agreement, dated August 20th 2011
-Licensed product:         -
-Licensed platform:        NXP's ARM 7/9, Cortex-M0,M3,M4
-Licensed number of seats: -
+License model:            emWin License Agreement, dated August 20th 2011 and Amendment, dated October 19th 2017
+Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7
+----------------------------------------------------------------------
+Support and Update Agreement (SUA)
+SUA period:               2011-08-19 - 2018-09-02
+Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : MENU.h
 Purpose     : MENU include
@@ -206,26 +207,29 @@ void MENU_Callback(WM_MESSAGE * pMsg);
 *
 **********************************************************************
 */
-void      MENU_AddItem      (MENU_Handle hObj, const MENU_ITEM_DATA * pItemData);
-void      MENU_Attach       (MENU_Handle hObj, WM_HWIN hDestWin, int x, int y, int xSize, int ySize, int Flags);
-void      MENU_DeleteItem   (MENU_Handle hObj, U16 ItemId);
-void      MENU_DisableItem  (MENU_Handle hObj, U16 ItemId);
-void      MENU_EnableItem   (MENU_Handle hObj, U16 ItemId);
-void      MENU_GetItem      (MENU_Handle hObj, U16 ItemId, MENU_ITEM_DATA * pItemData);
-void      MENU_GetItemText  (MENU_Handle hObj, U16 ItemId, char * pBuffer, unsigned BufferSize);
-unsigned  MENU_GetNumItems  (MENU_Handle hObj);
-WM_HWIN   MENU_GetOwner     (MENU_Handle hObj);
-int       MENU_GetUserData  (MENU_Handle hObj, void * pDest, int NumBytes);
-void      MENU_InsertItem   (MENU_Handle hObj, U16 ItemId, const MENU_ITEM_DATA * pItemData);
-void      MENU_Popup        (MENU_Handle hObj, WM_HWIN hDestWin, int x, int y, int xSize, int ySize, int Flags);
-void      MENU_SetBkColor   (MENU_Handle hObj, unsigned ColorIndex, GUI_COLOR Color);
-void      MENU_SetBorderSize(MENU_Handle hObj, unsigned BorderIndex, U8 BorderSize);
-void      MENU_SetFont      (MENU_Handle hObj, const GUI_FONT * pFont);
-void      MENU_SetItem      (MENU_Handle hObj, U16 ItemId, const MENU_ITEM_DATA * pItemData);
-void      MENU_SetOwner     (MENU_Handle hObj, WM_HWIN hOwner);
-int       MENU_SetSel       (MENU_Handle hObj, int Sel);
-void      MENU_SetTextColor (MENU_Handle hObj, unsigned ColorIndex, GUI_COLOR Color);
-int       MENU_SetUserData  (MENU_Handle hObj, const void * pSrc, int NumBytes);
+void             MENU_AddItem       (MENU_Handle hObj, const MENU_ITEM_DATA * pItemData);
+void             MENU_Attach        (MENU_Handle hObj, WM_HWIN hDestWin, int x, int y, int xSize, int ySize, int Flags);
+void             MENU_DeleteItem    (MENU_Handle hObj, U16 ItemId);
+void             MENU_DisableItem   (MENU_Handle hObj, U16 ItemId);
+void             MENU_EnableItem    (MENU_Handle hObj, U16 ItemId);
+GUI_COLOR        MENU_GetBkColor    (MENU_Handle hObj, unsigned ColorIndex);
+const GUI_FONT * MENU_GetFont       (MENU_Handle hObj);
+void             MENU_GetItem       (MENU_Handle hObj, U16 ItemId, MENU_ITEM_DATA * pItemData);
+void             MENU_GetItemText   (MENU_Handle hObj, U16 ItemId, char * pBuffer, unsigned BufferSize);
+unsigned         MENU_GetNumItems   (MENU_Handle hObj);
+WM_HWIN          MENU_GetOwner      (MENU_Handle hObj);
+GUI_COLOR        MENU_GetTextColor  (MENU_Handle hObj, unsigned ColorIndex);
+int              MENU_GetUserData   (MENU_Handle hObj, void * pDest, int NumBytes);
+void             MENU_InsertItem    (MENU_Handle hObj, U16 ItemId, const MENU_ITEM_DATA * pItemData);
+void             MENU_Popup         (MENU_Handle hObj, WM_HWIN hDestWin, int x, int y, int xSize, int ySize, int Flags);
+void             MENU_SetBkColor    (MENU_Handle hObj, unsigned ColorIndex, GUI_COLOR Color);
+void             MENU_SetBorderSize (MENU_Handle hObj, unsigned BorderIndex, U8 BorderSize);
+void             MENU_SetFont       (MENU_Handle hObj, const GUI_FONT * pFont);
+void             MENU_SetItem       (MENU_Handle hObj, U16 ItemId, const MENU_ITEM_DATA * pItemData);
+void             MENU_SetOwner      (MENU_Handle hObj, WM_HWIN hOwner);
+int              MENU_SetSel        (MENU_Handle hObj, int Sel);
+void             MENU_SetTextColor  (MENU_Handle hObj, unsigned ColorIndex, GUI_COLOR Color);
+int              MENU_SetUserData   (MENU_Handle hObj, const void * pSrc, int NumBytes);
 
 /*********************************************************************
 *

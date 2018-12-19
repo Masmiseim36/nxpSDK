@@ -84,9 +84,9 @@ SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DDEBUG")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DCPU_MK22FN512VLH12")
 
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DFRDM_K22F")
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING")
 
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DFREEDOM")
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DSERIAL_PORT_TYPE_USBCDC=1")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DPRINTF_FLOAT_ENABLE=0")
 
@@ -99,6 +99,10 @@ SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DSCANF_ADVANCED_ENABLE=0")
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DUSB_STACK_BM")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DBOARD_USE_VIRTUALCOM=1")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DFRDM_K22F")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DFREEDOM")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -g")
 
@@ -136,9 +140,9 @@ SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DNDEBUG")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DCPU_MK22FN512VLH12")
 
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DFRDM_K22F")
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING")
 
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DFREEDOM")
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DSERIAL_PORT_TYPE_USBCDC=1")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DPRINTF_FLOAT_ENABLE=0")
 
@@ -151,6 +155,10 @@ SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DSCANF_ADVANCED_ENABLE=0")
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DUSB_STACK_BM")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DBOARD_USE_VIRTUALCOM=1")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DFRDM_K22F")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DFREEDOM")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Os")
 
@@ -294,6 +302,10 @@ SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")
 
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} muldefs")
 
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Map=output.map")
+
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -mcpu=cortex-m4")
 
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -mfloat-abi=hard")
@@ -336,19 +348,27 @@ SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
 
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} muldefs")
 
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Map=output.map")
+
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mcpu=cortex-m4")
 
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mfloat-abi=hard")
 
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mfpu=fpv4-sp-d16")
 
+include_directories(${ProjDirPath}/..)
+
+include_directories(${ProjDirPath}/../../..)
+
 include_directories(${ProjDirPath}/../../../../../CMSIS/Include)
 
 include_directories(${ProjDirPath}/../../../../../devices)
 
-include_directories(${ProjDirPath}/..)
+include_directories(${ProjDirPath}/../../../../../components/serial_manager)
 
-include_directories(${ProjDirPath}/../../..)
+include_directories(${ProjDirPath}/../../../../../components/serial_manager/usb_cdc_adapter)
 
 include_directories(${ProjDirPath}/../../../../../middleware/usb/device)
 
@@ -360,11 +380,13 @@ include_directories(${ProjDirPath}/../../../../../devices/MK22F51212/drivers)
 
 include_directories(${ProjDirPath}/../../../../../devices/MK22F51212)
 
-include_directories(${ProjDirPath}/../../../../../devices/MK22F51212/utilities/io)
-
 include_directories(${ProjDirPath}/../../../../../devices/MK22F51212/utilities/str)
 
-include_directories(${ProjDirPath}/../../../../../devices/MK22F51212/utilities/log)
+include_directories(${ProjDirPath}/../../../../../devices/MK22F51212/utilities/debug_console)
+
+include_directories(${ProjDirPath}/../../../../../components/uart)
+
+include_directories(${ProjDirPath}/../../../../../components/lists)
 
 include_directories(${ProjDirPath}/../../../../../devices/MK22F51212/utilities)
 
@@ -374,65 +396,75 @@ add_executable(hello_world_virtual_com.elf
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../clock_config.h"
+"${ProjDirPath}/../../../../../components/serial_manager/serial_manager.h"
+"${ProjDirPath}/../../../../../components/serial_manager/serial_manager.c"
+"${ProjDirPath}/../../../../../components/serial_manager/serial_port_usb.h"
+"${ProjDirPath}/../../../../../components/serial_manager/serial_port_usb.c"
+"${ProjDirPath}/../../../../../components/serial_manager/usb_cdc_adapter/usb_device_descriptor.h"
+"${ProjDirPath}/../../../../../components/serial_manager/usb_cdc_adapter/usb_device_descriptor.c"
+"${ProjDirPath}/../../../../../components/serial_manager/usb_cdc_adapter/usb_device_cdc_acm.c"
+"${ProjDirPath}/../../../../../components/serial_manager/usb_cdc_adapter/usb_device_cdc_acm.h"
+"${ProjDirPath}/../../../../../components/serial_manager/usb_cdc_adapter/usb_device_class.c"
+"${ProjDirPath}/../../../../../components/serial_manager/usb_cdc_adapter/usb_device_class.h"
+"${ProjDirPath}/../../../../../components/serial_manager/usb_cdc_adapter/usb_device_ch9.c"
+"${ProjDirPath}/../../../../../components/serial_manager/usb_cdc_adapter/usb_device_ch9.h"
 "${ProjDirPath}/../../../../../middleware/usb/device/usb_device_khci.c"
 "${ProjDirPath}/../../../../../middleware/usb/device/usb_device_khci.h"
-"${ProjDirPath}/../../../../../middleware/usb/include/usb_khci.h"
 "${ProjDirPath}/../../../../../middleware/usb/include/usb.h"
 "${ProjDirPath}/../../../../../middleware/usb/include/usb_misc.h"
 "${ProjDirPath}/../../../../../middleware/usb/include/usb_spec.h"
 "${ProjDirPath}/../../../../../middleware/usb/osa/usb_osa.h"
 "${ProjDirPath}/../../../../../middleware/usb/osa/usb_osa_bm.h"
 "${ProjDirPath}/../../../../../middleware/usb/osa/usb_osa_bm.c"
+"${ProjDirPath}/../../../../../middleware/usb/device/usb_device.h"
+"${ProjDirPath}/../../../../../middleware/usb/device/usb_device_dci.c"
+"${ProjDirPath}/../../../../../middleware/usb/device/usb_device_dci.h"
 "${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_clock.h"
 "${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_clock.c"
-"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_ftfx_adapter.h"
-"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_ftfx_utilities.h"
-"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_ftfx_features.h"
-"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_ftfx_controller.c"
-"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_ftfx_controller.h"
-"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_ftfx_flash.c"
-"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_ftfx_flash.h"
-"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_ftfx_cache.c"
-"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_ftfx_cache.h"
-"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_ftfx_flexnvm.c"
-"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_ftfx_flexnvm.h"
-"${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_flash.h"
 "${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_common.h"
 "${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_common.c"
+"${ProjDirPath}/../../../../../devices/MK22F51212/fsl_device_registers.h"
+"${ProjDirPath}/../../../../../devices/MK22F51212/MK22F51212.h"
+"${ProjDirPath}/../../../../../devices/MK22F51212/MK22F51212_features.h"
 "${ProjDirPath}/../../../../../devices/MK22F51212/system_MK22F51212.c"
 "${ProjDirPath}/../../../../../devices/MK22F51212/system_MK22F51212.h"
-"${ProjDirPath}/../../../../../devices/MK22F51212/gcc/startup_MK22F51212.S"
+"${ProjDirPath}/../../../../../devices/MK22F51212/utilities/str/fsl_str.c"
+"${ProjDirPath}/../../../../../devices/MK22F51212/utilities/str/fsl_str.h"
+"${ProjDirPath}/../../../../../devices/MK22F51212/utilities/debug_console/fsl_debug_console.c"
+"${ProjDirPath}/../../../../../devices/MK22F51212/utilities/debug_console/fsl_debug_console.h"
+"${ProjDirPath}/../../../../../devices/MK22F51212/utilities/debug_console/fsl_debug_console_conf.h"
+"${ProjDirPath}/../../../../../components/uart/uart.h"
+"${ProjDirPath}/../../../../../components/uart/uart_adapter.c"
+"${ProjDirPath}/../../../../../components/serial_manager/serial_port_uart.h"
+"${ProjDirPath}/../../../../../components/serial_manager/serial_port_uart.c"
 "${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_uart.h"
 "${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_uart.c"
+"${ProjDirPath}/../../../../../components/lists/generic_list.h"
+"${ProjDirPath}/../../../../../components/lists/generic_list.c"
+"${ProjDirPath}/../../../../../devices/MK22F51212/gcc/startup_MK22F51212.S"
 "${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_lpuart.h"
 "${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_lpuart.c"
 "${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_port.h"
 "${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_smc.h"
 "${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_smc.c"
-"${ProjDirPath}/../../../../../devices/MK22F51212/utilities/io/fsl_io.c"
-"${ProjDirPath}/../../../../../devices/MK22F51212/utilities/io/fsl_io.h"
-"${ProjDirPath}/../../../../../devices/MK22F51212/utilities/log/fsl_log.c"
-"${ProjDirPath}/../../../../../devices/MK22F51212/utilities/log/fsl_log.h"
-"${ProjDirPath}/../../../../../devices/MK22F51212/utilities/str/fsl_str.c"
-"${ProjDirPath}/../../../../../devices/MK22F51212/utilities/str/fsl_str.h"
-"${ProjDirPath}/../../../../../devices/MK22F51212/utilities/fsl_debug_console.c"
-"${ProjDirPath}/../../../../../devices/MK22F51212/utilities/fsl_debug_console.h"
-"${ProjDirPath}/../../../../../devices/MK22F51212/utilities/fsl_debug_console_conf.h"
 "${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_gpio.h"
 "${ProjDirPath}/../../../../../devices/MK22F51212/drivers/fsl_gpio.c"
 "${ProjDirPath}/../../../../../devices/MK22F51212/utilities/fsl_assert.c"
-"${ProjDirPath}/../../../../../middleware/usb/device/usb_device.h"
-"${ProjDirPath}/../../../../../middleware/usb/device/usb_device_dci.c"
-"${ProjDirPath}/../../../../../middleware/usb/device/usb_device_dci.h"
-"${ProjDirPath}/../../../../../devices/MK22F51212/utilities/virtual_com.c"
-"${ProjDirPath}/../../../../../devices/MK22F51212/utilities/virtual_com.h"
-"${ProjDirPath}/../../../../../devices/MK22F51212/utilities/usb_device_descriptor.c"
-"${ProjDirPath}/../../../../../devices/MK22F51212/utilities/usb_device_descriptor.h"
-"${ProjDirPath}/../../../../../devices/MK22F51212/utilities/usb_device_cdc_acm.c"
-"${ProjDirPath}/../../../../../devices/MK22F51212/utilities/usb_device_cdc_acm.h"
-"${ProjDirPath}/../../../../../devices/MK22F51212/utilities/usb_device_ch9.c"
-"${ProjDirPath}/../../../../../devices/MK22F51212/utilities/usb_device_ch9.h"
 "${ProjDirPath}/../../../../../devices/MK22F51212/utilities/usb_device_config.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/core_cm4.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armcc.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armclang.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_gcc.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_compiler.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_version.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv7.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/core_armv8mbl.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/core_armv8mml.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/arm_common_tables.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/arm_const_structs.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/arm_math.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_iccarm.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv8.h"
 )
 
 

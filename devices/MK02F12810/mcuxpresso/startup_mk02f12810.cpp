@@ -1,36 +1,12 @@
 //*****************************************************************************
 // MK02F12810 startup code for use with MCUXpresso IDE
 //
-// Version : 050117
+// Version : 010818
 //*****************************************************************************
 //
-// Copyright(C) NXP Semiconductors, 2017
-// All rights reserved.
+// Copyright 2016-2018 NXP
 //
-// Redistribution and use in source and binary forms, with or without modification,
-// are permitted provided that the following conditions are met:
-//
-// o Redistributions of source code must retain the above copyright notice, this list
-//   of conditions and the following disclaimer.
-//
-// o Redistributions in binary form must reproduce the above copyright notice, this
-//   list of conditions and the following disclaimer in the documentation and/or
-//   other materials provided with the distribution.
-//
-// o Neither the name of copyright holder nor the names of its
-//   contributors may be used to endorse or promote products derived from this
-//   software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-// ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-// DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
-// ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-// (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-// LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
-// ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-// SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// SPDX-License-Identifier: BSD-3-Clause
 //*****************************************************************************
 
 #if defined (DEBUG)
@@ -68,14 +44,12 @@ extern "C" {
 // allows the MCU to restrict access to the Flash Memory module.
 // Placed at address 0x400 by the linker script.
 //*****************************************************************************
-
 __attribute__ ((used,section(".FlashConfig"))) const struct {
     unsigned int word1;
     unsigned int word2;
     unsigned int word3;
     unsigned int word4;
 } Flash_Config = {0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFE};
-
 //*****************************************************************************
 // Declaration of external SystemInit function
 //*****************************************************************************
@@ -86,7 +60,11 @@ extern void SystemInit(void);
 //*****************************************************************************
 // Forward declaration of the core exception handlers.
 // When the application defines a handler (with the same name), this will
-// automatically take precedence over these weak definitions
+// automatically take precedence over these weak definitions.
+// If your application is a C++ one, then any interrupt handlers defined
+// in C++ files within in your main application will need to have C linkage
+// rather than C++ linkage. To do this, make sure that you are using extern "C"
+// { .... } around the interrupt handler within your main application code.
 //*****************************************************************************
      void ResetISR(void);
 WEAK void NMI_Handler(void);
@@ -257,12 +235,10 @@ extern int main(void);
 // External declaration for the pointer to the stack top from the Linker Script
 //*****************************************************************************
 extern void _vStackTop(void);
-
 //*****************************************************************************
 #if defined (__cplusplus)
 } // extern "C"
 #endif
-
 //*****************************************************************************
 // The vector table.
 // This relies on the linker script to place at correct location in memory.
@@ -356,6 +332,7 @@ void (* const g_pfnVectors[])(void) = {
     PORTD_IRQHandler,           // 78: Port D interrupt
     PORTE_IRQHandler,           // 79: Port E interrupt
     SWI_IRQHandler,             // 80: Software interrupt
+
 }; /* End of g_pfnVectors */
 
 //*****************************************************************************
@@ -366,19 +343,19 @@ void (* const g_pfnVectors[])(void) = {
 //*****************************************************************************
 __attribute__ ((section(".after_vectors.init_data")))
 void data_init(unsigned int romstart, unsigned int start, unsigned int len) {
-	unsigned int *pulDest = (unsigned int*) start;
-	unsigned int *pulSrc = (unsigned int*) romstart;
-	unsigned int loop;
-	for (loop = 0; loop < len; loop = loop + 4)
-		*pulDest++ = *pulSrc++;
+    unsigned int *pulDest = (unsigned int*) start;
+    unsigned int *pulSrc = (unsigned int*) romstart;
+    unsigned int loop;
+    for (loop = 0; loop < len; loop = loop + 4)
+        *pulDest++ = *pulSrc++;
 }
 
 __attribute__ ((section(".after_vectors.init_bss")))
 void bss_init(unsigned int start, unsigned int len) {
-	unsigned int *pulDest = (unsigned int*) start;
-	unsigned int loop;
-	for (loop = 0; loop < len; loop = loop + 4)
-		*pulDest++ = 0;
+    unsigned int *pulDest = (unsigned int*) start;
+    unsigned int loop;
+    for (loop = 0; loop < len; loop = loop + 4)
+        *pulDest++ = 0;
 }
 
 //*****************************************************************************
@@ -407,6 +384,7 @@ void ResetISR(void) {
 #if defined (__USE_CMSIS)
 // If __USE_CMSIS defined, then call CMSIS SystemInit code
     SystemInit();
+
 #else
     // Disable Watchdog
     //  Write 0xC520 to watchdog unlock register
@@ -420,27 +398,27 @@ void ResetISR(void) {
     //
     // Copy the data sections from flash to SRAM.
     //
-	unsigned int LoadAddr, ExeAddr, SectionLen;
-	unsigned int *SectionTableAddr;
+    unsigned int LoadAddr, ExeAddr, SectionLen;
+    unsigned int *SectionTableAddr;
 
-	// Load base address of Global Section Table
-	SectionTableAddr = &__data_section_table;
+    // Load base address of Global Section Table
+    SectionTableAddr = &__data_section_table;
 
     // Copy the data sections from flash to SRAM.
-	while (SectionTableAddr < &__data_section_table_end) {
-		LoadAddr = *SectionTableAddr++;
-		ExeAddr = *SectionTableAddr++;
-		SectionLen = *SectionTableAddr++;
-		data_init(LoadAddr, ExeAddr, SectionLen);
-	}
+    while (SectionTableAddr < &__data_section_table_end) {
+        LoadAddr = *SectionTableAddr++;
+        ExeAddr = *SectionTableAddr++;
+        SectionLen = *SectionTableAddr++;
+        data_init(LoadAddr, ExeAddr, SectionLen);
+    }
 
-	// At this point, SectionTableAddr = &__bss_section_table;
-	// Zero fill the bss segment
-	while (SectionTableAddr < &__bss_section_table_end) {
-		ExeAddr = *SectionTableAddr++;
-		SectionLen = *SectionTableAddr++;
-		bss_init(ExeAddr, SectionLen);
-	}
+    // At this point, SectionTableAddr = &__bss_section_table;
+    // Zero fill the bss segment
+    while (SectionTableAddr < &__bss_section_table_end) {
+        ExeAddr = *SectionTableAddr++;
+        SectionLen = *SectionTableAddr++;
+        bss_init(ExeAddr, SectionLen);
+    }
 
 #if !defined (__USE_CMSIS)
 // Assume that if __USE_CMSIS defined, then CMSIS SystemInit code
@@ -454,7 +432,7 @@ void ResetISR(void) {
     // Read CPACR (located at address 0xE000ED88)
     // Set bits 20-23 to enable CP10 and CP11 coprocessors
     // Write back the modified value to the CPACR
-	asm volatile ("LDR.W R0, =0xE000ED88\n\t"
+    asm volatile ("LDR.W R0, =0xE000ED88\n\t"
                   "LDR R1, [R0]\n\t"
                   "ORR R1, R1, #(0xF << 20)\n\t"
                   "STR R1, [R0]");
@@ -486,18 +464,18 @@ void ResetISR(void) {
     __asm volatile ("cpsie i");
 
 #if defined (__REDLIB__)
-	// Call the Redlib library, which in turn calls main()
-	__main();
+    // Call the Redlib library, which in turn calls main()
+    __main();
 #else
-	main();
+    main();
 #endif
 
-	//
-	// main() shouldn't return, but if it does, we'll just enter an infinite loop
-	//
-	while (1) {
-		;
-	}
+    //
+    // main() shouldn't return, but if it does, we'll just enter an infinite loop
+    //
+    while (1) {
+        ;
+    }
 }
 
 //*****************************************************************************

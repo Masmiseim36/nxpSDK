@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
- * Copyright (c) 2016, NXP Semiconductor
+ * Copyright (c) 2016-2018, NXP Semiconductor
  * All rights reserved.
  *
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- *  that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of NXP Semiconductor nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  *
  */
 
@@ -47,7 +21,6 @@
 #include "ntag_bridge.h"
 #include "nfc_device.h"
 #include "ndef_message.h"
-#include "crc32.h"
 
 #include "fsl_device_registers.h"
 #include "pin_mux.h"
@@ -123,6 +96,8 @@ bool reset_AAR(void);
 void factory_reset_Tag(void);
 short int speedTest(void);
 void Get_Volt(uint8_t *volt);
+static void createCRCTableList(void);
+static uint32_t calculateCRC(uint32_t crc, uint8_t *data, uint32_t length);
 
 /*******************************************************************************
  * Variable
@@ -133,6 +108,9 @@ bool init_led_demo = false;
 static NFC_HANDLE_T ntag_handle;
 static uint8_t sram_buf[NTAG_MEM_SRAM_SIZE];
 adc16_channel_config_t adc16ChannelConfigStruct;
+
+/* CRC table list */
+static uint32_t s_CRCTableList[256];
 
 /*******************************************************************************
  * Code
@@ -165,6 +143,8 @@ int main(void)
 
     /* Initialize Board hardware and peripherals */
     Setup();
+
+    createCRCTableList();
 
     /* Print a note to terminal. */
     PRINTF("\r\n\r\n NTAG I2C demo example\r\n\r\n");
@@ -484,9 +464,10 @@ void send_VersionInfo(void)
 
     /* waiting till RF has read */
     NFC_WaitForEvent(ntag_handle, NTAG_EVENT_RF_READ_SRAM, SRAM_TIMEOUT, FALSE);
-    uint8_t print_buf[31];
-    memcpy(&print_buf, &sram_buf, sizeof(print_buf));
+    uint8_t print_buf[32];
+    memcpy(&print_buf, &sram_buf, 31);
     print_buf[15] = ' ';
+    print_buf[31] = '\0';
     PRINTF("\n\r%s", print_buf);
 }
 
@@ -544,12 +525,12 @@ short int speedTest(void)
         /* Update content for the CRC32 calculation */
         if (lastBlock != 0)
         {
-            crcRx = crc32(seed, sram_buf, NFC_MEM_SRAM_SIZE);
+            crcRx = calculateCRC(seed, sram_buf, NFC_MEM_SRAM_SIZE);
             seed = crcRx;
         }
         else
         {
-            crcRx = crc32(seed, sram_buf, NFC_MEM_SRAM_SIZE - 4);
+            crcRx = calculateCRC(seed, sram_buf, NFC_MEM_SRAM_SIZE - 4);
         }
     } while (lastBlock != 0);
 
@@ -590,7 +571,7 @@ short int speedTest(void)
             memcpy(sram_buf, "finish_S", 8);
 
             /* Update content for the CRC32 calculation (last 4 bytes are the CRC32) */
-            crcTx = crc32(seed, sram_buf, NFC_MEM_SRAM_SIZE - 4);
+            crcTx = calculateCRC(seed, sram_buf, NFC_MEM_SRAM_SIZE - 4);
 
             /* Write the result of the prev CRC check */
             if (crcRx != crcReceived)
@@ -607,7 +588,7 @@ short int speedTest(void)
         else
         {
             /* Update content for the CRC32 calculation */
-            crcTx = crc32(seed, sram_buf, NFC_MEM_SRAM_SIZE);
+            crcTx = calculateCRC(seed, sram_buf, NFC_MEM_SRAM_SIZE);
             seed = crcTx;
         }
 
@@ -936,4 +917,53 @@ bool reset_AAR(void)
         NFC_WriteBytes(ntag_handle, NFC_MEM_ADDR_START_USER_MEMORY, Default_NDEF_Message, Default_NDEF_Message_length);
 
     return err;
+}
+
+/*!
+ * @brief CRC table creation function.
+ *
+ * This function creates the CRC table for CRC calculation.
+ *
+ * @return None.
+ */
+static void createCRCTableList(void)
+{
+    /* CRC32 - polynomial reserved */
+    uint32_t polynomial = 0xEDB88320U;
+    for (uint16_t index = 0U; index < 256U; index++)
+    {
+        uint32_t crcElement = index;
+        uint32_t topBit = 0x00000001U;
+        for (uint8_t i = 0U; i < 8U; i++)
+        {
+            if (crcElement & topBit)
+            {
+                crcElement = (crcElement >> 1U) ^ polynomial;
+            }
+            else
+            {
+                crcElement = (crcElement >> 1U);
+            }
+        }
+        s_CRCTableList[index] = crcElement;
+    }
+}
+
+/*!
+ * @brief CRC calculation function.
+ *
+ * This function calculates the CRC over a buffer.
+ *
+ * @return CRC value.
+ */
+static uint32_t calculateCRC(uint32_t crc, uint8_t *data, uint32_t length)
+{
+    uint8_t crcIndex = 0U;
+    uint32_t crcReturn = crc;
+    for (uint32_t i = 0U; i < length; i++)
+    {
+        crcIndex = (uint8_t)((crcReturn & 0x000000FFU) ^ data[i]);
+        crcReturn = s_CRCTableList[crcIndex] ^ (crcReturn >> 8U);
+    }
+    return (crcReturn);
 }

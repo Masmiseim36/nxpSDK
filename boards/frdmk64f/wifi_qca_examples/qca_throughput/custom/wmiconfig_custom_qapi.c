@@ -1125,7 +1125,7 @@ int32_t ext_scan(void)
 * Comments        : Sample function to depict IPv4 ping functionality
 *                   Only used with On-Chip IP stack
 *END*-----------------------------------------------------------------*/
-int wmi_ping(p_shell_context_t context, int argc, char **argv)
+int wmi_ping(shell_handle_t context, int argc, char **argv)
 {
     unsigned long hostaddr = 0;
     int32_t error;
@@ -1235,7 +1235,7 @@ int wmi_ping(p_shell_context_t context, int argc, char **argv)
 * Comments        : Sample function to depict IPv6 ping functionality
 *                   Only used with On-Chip IP stack
 *END*-----------------------------------------------------------------*/
-int wmi_ping6(p_shell_context_t context, int argc, char **argv)
+int wmi_ping6(shell_handle_t context, int argc, char **argv)
 {
     int32_t error = -1;
     IP6_ADDR_T ip6addr = {0};

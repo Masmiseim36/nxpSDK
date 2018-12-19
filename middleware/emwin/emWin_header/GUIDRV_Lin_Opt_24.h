@@ -1,15 +1,15 @@
 /*********************************************************************
-*                SEGGER Microcontroller GmbH & Co. KG                *
+*                SEGGER Microcontroller GmbH                         *
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2016  SEGGER Microcontroller GmbH & Co. KG       *
+*        (c) 1996 - 2018  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
 **********************************************************************
 
-** emWin V5.38 - Graphical user interface for embedded applications **
+** emWin V5.48 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -26,15 +26,16 @@ Full source code is available at: www.segger.com
 We appreciate your understanding and fairness.
 ----------------------------------------------------------------------
 Licensing information
-
 Licensor:                 SEGGER Microcontroller Systems LLC
 Licensed to:              NXP Semiconductors, 1109 McKay Dr, M/S 76, San Jose, CA 95131, USA
 Licensed SEGGER software: emWin
 License number:           GUI-00186
-License model:            emWin License Agreement, dated August 20th 2011
-Licensed product:         -
-Licensed platform:        NXP's ARM 7/9, Cortex-M0,M3,M4
-Licensed number of seats: -
+License model:            emWin License Agreement, dated August 20th 2011 and Amendment, dated October 19th 2017
+Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7
+----------------------------------------------------------------------
+Support and Update Agreement (SUA)
+SUA period:               2011-08-19 - 2018-09-02
+Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : GUIDRV_Lin_Opt_24.h
 Purpose     : Optimized routines, included by GUIDRV_Lin_..._24.c
@@ -94,6 +95,7 @@ static void _FillRectOpt24(GUI_DEVICE * pDevice, int x0, int y0, int x1, int y1)
           //
           // no break at this position required...
           //
+          //lint -fallthrough // No break here.
         case 2:
           Data ^= 0xFFFF0000;
           WRITE_MEM32(pContext->VRAMAddr, Off, Data);
@@ -108,6 +110,7 @@ static void _FillRectOpt24(GUI_DEVICE * pDevice, int x0, int y0, int x1, int y1)
           //
           // no break at this position required...
           //
+          //lint -fallthrough // No break here.
         case 3:
           Data ^= 0xFFFFFF00;
           RemItems--;
@@ -200,6 +203,7 @@ static void _FillRectOpt24(GUI_DEVICE * pDevice, int x0, int y0, int x1, int y1)
           //
           // no break at this position required...
           //
+          //lint -fallthrough // No break here.
         case 2:
           Data &= 0x0000FFFF;
           Data |= ColorIndex << 16;
@@ -216,6 +220,7 @@ static void _FillRectOpt24(GUI_DEVICE * pDevice, int x0, int y0, int x1, int y1)
           //
           // no break at this position required...
           //
+          //lint -fallthrough // No break here.
         case 3:
           Data &= 0x000000FF;
           Data |= ColorIndex << 8;
@@ -310,6 +315,7 @@ static void _FillRectOpt24(GUI_DEVICE * pDevice, int x0, int y0, int x1, int y1)
           //
           // no break at this position required...
           //
+          //lint -fallthrough // No break here.
         case 2:
           Data ^= 0x0000FFFF;
           WRITE_MEM32(pContext->VRAMAddr, Off, Data);
@@ -324,6 +330,7 @@ static void _FillRectOpt24(GUI_DEVICE * pDevice, int x0, int y0, int x1, int y1)
           //
           // no break at this position required...
           //
+          //lint -fallthrough // No break here.
         case 3:
           Data ^= 0x00FFFFFF;
           RemItems--;
@@ -417,6 +424,7 @@ static void _FillRectOpt24(GUI_DEVICE * pDevice, int x0, int y0, int x1, int y1)
           //
           // no break at this position required...
           //
+          //lint -fallthrough // No break here.
         case 2:
           Data &= 0xFFFF0000;
           Data |= ColorIndex >> 8;
@@ -433,6 +441,7 @@ static void _FillRectOpt24(GUI_DEVICE * pDevice, int x0, int y0, int x1, int y1)
           //
           // no break at this position required...
           //
+          //lint -fallthrough // No break here.
         case 3:
           Data &= 0xFF000000;
           Data |= ColorIndex;

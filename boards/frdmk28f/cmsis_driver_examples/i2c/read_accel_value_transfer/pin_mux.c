@@ -1,37 +1,11 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
-
+
 /* clang-format off */
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
@@ -53,12 +27,12 @@ processor_version: 0.0.8
 
 /* clang-format off */
 /*
- * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
-BOARD_InitPins:
-- options: {callFromInitBoot: 'true', coreID: core0, enableClock: 'true'}
-- pin_list:
-  - {pin_num: B7, peripheral: LPUART0, signal: TX, pin_signal: PTC24/LPUART0_TX/FB_A5/SDRAM_D5/QSPI0A_DATA3}
-  - {pin_num: A7, peripheral: LPUART0, signal: RX, pin_signal: PTC25/LPUART0_RX/FB_A4/SDRAM_D4/QSPI0A_SCLK}
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+BOARD_InitPins:
+- options: {callFromInitBoot: 'true', coreID: core0, enableClock: 'true'}
+- pin_list:
+  - {pin_num: B7, peripheral: LPUART0, signal: TX, pin_signal: PTC24/LPUART0_TX/FB_A5/SDRAM_D5/QSPI0A_DATA3}
+  - {pin_num: A7, peripheral: LPUART0, signal: RX, pin_signal: PTC25/LPUART0_RX/FB_A4/SDRAM_D4/QSPI0A_SCLK}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -93,14 +67,14 @@ void BOARD_InitPins(void)
 
 /* clang-format off */
 /*
- * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
-I2C0_InitPins:
-- options: {coreID: core0, enableClock: 'true'}
-- pin_list:
-  - {pin_num: G11, peripheral: I2C0, signal: SCL, pin_signal: ADC0_SE12/TSI0_CH7/PTB2/I2C0_SCL/LPUART0_RTS_b/SDRAM_WE_b/FTM0_FLT3/FXIO0_D2, slew_rate: fast, open_drain: enable,
-    pull_select: up, pull_enable: enable}
-  - {pin_num: G10, peripheral: I2C0, signal: SDA, pin_signal: ADC0_SE13/TSI0_CH8/PTB3/I2C0_SDA/LPUART0_CTS_b/SDRAM_CS0_b/FTM0_FLT0/FXIO0_D3, slew_rate: fast, open_drain: enable,
-    pull_select: up, pull_enable: enable}
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+I2C0_InitPins:
+- options: {coreID: core0, enableClock: 'true'}
+- pin_list:
+  - {pin_num: G11, peripheral: I2C0, signal: SCL, pin_signal: ADC0_SE12/TSI0_CH7/PTB2/I2C0_SCL/LPUART0_RTS_b/SDRAM_WE_b/FTM0_FLT3/FXIO0_D2, slew_rate: fast, open_drain: enable,
+    pull_select: up, pull_enable: enable}
+  - {pin_num: G10, peripheral: I2C0, signal: SDA, pin_signal: ADC0_SE13/TSI0_CH8/PTB3/I2C0_SDA/LPUART0_CTS_b/SDRAM_CS0_b/FTM0_FLT0/FXIO0_D3, slew_rate: fast, open_drain: enable,
+    pull_select: up, pull_enable: enable}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -153,12 +127,12 @@ void I2C0_InitPins(void)
 
 /* clang-format off */
 /*
- * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
-I2C0_DeinitPins:
-- options: {coreID: core0, enableClock: 'true'}
-- pin_list:
-  - {pin_num: G11, peripheral: ADC0, signal: 'SE, 12', pin_signal: ADC0_SE12/TSI0_CH7/PTB2/I2C0_SCL/LPUART0_RTS_b/SDRAM_WE_b/FTM0_FLT3/FXIO0_D2}
-  - {pin_num: G10, peripheral: ADC0, signal: 'SE, 13', pin_signal: ADC0_SE13/TSI0_CH8/PTB3/I2C0_SDA/LPUART0_CTS_b/SDRAM_CS0_b/FTM0_FLT0/FXIO0_D3}
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+I2C0_DeinitPins:
+- options: {coreID: core0, enableClock: 'true'}
+- pin_list:
+  - {pin_num: G11, peripheral: ADC0, signal: 'SE, 12', pin_signal: ADC0_SE12/TSI0_CH7/PTB2/I2C0_SCL/LPUART0_RTS_b/SDRAM_WE_b/FTM0_FLT3/FXIO0_D2}
+  - {pin_num: G10, peripheral: ADC0, signal: 'SE, 13', pin_signal: ADC0_SE13/TSI0_CH8/PTB3/I2C0_SDA/LPUART0_CTS_b/SDRAM_CS0_b/FTM0_FLT0/FXIO0_D3}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -183,14 +157,14 @@ void I2C0_DeinitPins(void)
 
 /* clang-format off */
 /*
- * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
-I2C1_InitPins:
-- options: {coreID: core0, enableClock: 'true'}
-- pin_list:
-  - {pin_num: K9, peripheral: I2C1, signal: SCL, pin_signal: ADC0_SE11/PTA8/I2C1_SCL/FTM1_CH0/FTM1_QD_PHA/TPM1_CH0/TRACE_D2, slew_rate: fast, open_drain: enable,
-    pull_select: up, pull_enable: enable}
-  - {pin_num: K10, peripheral: I2C1, signal: SDA, pin_signal: PTA9/I2C1_SDA/FTM1_CH1/FTM1_QD_PHB/TPM1_CH1/TRACE_D1, slew_rate: fast, open_drain: enable, pull_select: up,
-    pull_enable: enable}
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+I2C1_InitPins:
+- options: {coreID: core0, enableClock: 'true'}
+- pin_list:
+  - {pin_num: K9, peripheral: I2C1, signal: SCL, pin_signal: ADC0_SE11/PTA8/I2C1_SCL/FTM1_CH0/FTM1_QD_PHA/TPM1_CH0/TRACE_D2, slew_rate: fast, open_drain: enable,
+    pull_select: up, pull_enable: enable}
+  - {pin_num: K10, peripheral: I2C1, signal: SDA, pin_signal: PTA9/I2C1_SDA/FTM1_CH1/FTM1_QD_PHB/TPM1_CH1/TRACE_D1, slew_rate: fast, open_drain: enable, pull_select: up,
+    pull_enable: enable}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -243,12 +217,12 @@ void I2C1_InitPins(void)
 
 /* clang-format off */
 /*
- * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
-I2C1_DeinitPins:
-- options: {coreID: core0, enableClock: 'true'}
-- pin_list:
-  - {pin_num: K9, peripheral: ADC0, signal: 'SE, 11', pin_signal: ADC0_SE11/PTA8/I2C1_SCL/FTM1_CH0/FTM1_QD_PHA/TPM1_CH0/TRACE_D2}
-  - {pin_num: K10, peripheral: n/a, signal: disabled, pin_signal: PTA9/I2C1_SDA/FTM1_CH1/FTM1_QD_PHB/TPM1_CH1/TRACE_D1}
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+I2C1_DeinitPins:
+- options: {coreID: core0, enableClock: 'true'}
+- pin_list:
+  - {pin_num: K9, peripheral: ADC0, signal: 'SE, 11', pin_signal: ADC0_SE11/PTA8/I2C1_SCL/FTM1_CH0/FTM1_QD_PHA/TPM1_CH0/TRACE_D2}
+  - {pin_num: K10, peripheral: n/a, signal: disabled, pin_signal: PTA9/I2C1_SDA/FTM1_CH1/FTM1_QD_PHB/TPM1_CH1/TRACE_D1}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -273,14 +247,14 @@ void I2C1_DeinitPins(void)
 
 /* clang-format off */
 /*
- * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
-I2C2_InitPins:
-- options: {coreID: core0, enableClock: 'true'}
-- pin_list:
-  - {pin_num: M11, peripheral: I2C2, signal: SCL, pin_signal: PTA11/LLWU_P23/I2C2_SCL/FTM2_CH1/FXIO0_D17/FTM2_QD_PHB/TPM2_CH1/USB1_ID, slew_rate: fast, open_drain: enable,
-    pull_select: up, pull_enable: enable}
-  - {pin_num: N11, peripheral: I2C2, signal: SDA, pin_signal: PTA10/LLWU_P22/I2C2_SDA/FTM2_CH0/FXIO0_D16/FTM2_QD_PHA/TPM2_CH0/TRACE_D0, slew_rate: fast, open_drain: enable,
-    pull_select: up, pull_enable: enable}
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+I2C2_InitPins:
+- options: {coreID: core0, enableClock: 'true'}
+- pin_list:
+  - {pin_num: M11, peripheral: I2C2, signal: SCL, pin_signal: PTA11/LLWU_P23/I2C2_SCL/FTM2_CH1/FXIO0_D17/FTM2_QD_PHB/TPM2_CH1/USB1_ID, slew_rate: fast, open_drain: enable,
+    pull_select: up, pull_enable: enable}
+  - {pin_num: N11, peripheral: I2C2, signal: SDA, pin_signal: PTA10/LLWU_P22/I2C2_SDA/FTM2_CH0/FXIO0_D16/FTM2_QD_PHA/TPM2_CH0/TRACE_D0, slew_rate: fast, open_drain: enable,
+    pull_select: up, pull_enable: enable}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -333,12 +307,12 @@ void I2C2_InitPins(void)
 
 /* clang-format off */
 /*
- * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
-I2C2_DeinitPins:
-- options: {coreID: core0, enableClock: 'true'}
-- pin_list:
-  - {pin_num: N11, peripheral: n/a, signal: disabled, pin_signal: PTA10/LLWU_P22/I2C2_SDA/FTM2_CH0/FXIO0_D16/FTM2_QD_PHA/TPM2_CH0/TRACE_D0}
-  - {pin_num: M11, peripheral: n/a, signal: disabled, pin_signal: PTA11/LLWU_P23/I2C2_SCL/FTM2_CH1/FXIO0_D17/FTM2_QD_PHB/TPM2_CH1/USB1_ID}
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+I2C2_DeinitPins:
+- options: {coreID: core0, enableClock: 'true'}
+- pin_list:
+  - {pin_num: N11, peripheral: n/a, signal: disabled, pin_signal: PTA10/LLWU_P22/I2C2_SDA/FTM2_CH0/FXIO0_D16/FTM2_QD_PHA/TPM2_CH0/TRACE_D0}
+  - {pin_num: M11, peripheral: n/a, signal: disabled, pin_signal: PTA11/LLWU_P23/I2C2_SCL/FTM2_CH1/FXIO0_D17/FTM2_QD_PHB/TPM2_CH1/USB1_ID}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -363,12 +337,12 @@ void I2C2_DeinitPins(void)
 
 /* clang-format off */
 /*
- * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
-I2C3_InitPins:
-- options: {coreID: core0, enableClock: 'true'}
-- pin_list:
-  - {pin_num: C6, peripheral: I2C3, signal: SDA, pin_signal: PTC28/I2C3_SDA/FB_A1/SDRAM_D1/QSPI0A_DATA1, slew_rate: fast, open_drain: enable, pull_select: up, pull_enable: enable}
-  - {pin_num: B6, peripheral: I2C3, signal: SCL, pin_signal: PTC29/I2C3_SCL/FB_A0/SDRAM_D0/QSPI0A_SS0_B, slew_rate: fast, open_drain: enable, pull_select: up, pull_enable: enable}
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+I2C3_InitPins:
+- options: {coreID: core0, enableClock: 'true'}
+- pin_list:
+  - {pin_num: C6, peripheral: I2C3, signal: SDA, pin_signal: PTC28/I2C3_SDA/FB_A1/SDRAM_D1/QSPI0A_DATA1, slew_rate: fast, open_drain: enable, pull_select: up, pull_enable: enable}
+  - {pin_num: B6, peripheral: I2C3, signal: SCL, pin_signal: PTC29/I2C3_SCL/FB_A0/SDRAM_D0/QSPI0A_SS0_B, slew_rate: fast, open_drain: enable, pull_select: up, pull_enable: enable}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -421,12 +395,12 @@ void I2C3_InitPins(void)
 
 /* clang-format off */
 /*
- * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
-I2C3_DeinitPins:
-- options: {coreID: core0, enableClock: 'true'}
-- pin_list:
-  - {pin_num: B6, peripheral: n/a, signal: disabled, pin_signal: PTC29/I2C3_SCL/FB_A0/SDRAM_D0/QSPI0A_SS0_B}
-  - {pin_num: C6, peripheral: n/a, signal: disabled, pin_signal: PTC28/I2C3_SDA/FB_A1/SDRAM_D1/QSPI0A_DATA1}
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+I2C3_DeinitPins:
+- options: {coreID: core0, enableClock: 'true'}
+- pin_list:
+  - {pin_num: B6, peripheral: n/a, signal: disabled, pin_signal: PTC29/I2C3_SCL/FB_A0/SDRAM_D0/QSPI0A_SS0_B}
+  - {pin_num: C6, peripheral: n/a, signal: disabled, pin_signal: PTC28/I2C3_SDA/FB_A1/SDRAM_D1/QSPI0A_DATA1}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */

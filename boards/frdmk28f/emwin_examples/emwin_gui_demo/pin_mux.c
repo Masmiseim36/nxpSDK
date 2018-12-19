@@ -1,37 +1,11 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
-
+
 /* clang-format off */
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
@@ -53,48 +27,48 @@ processor_version: 0.0.8
 
 /* clang-format off */
 /*
- * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
-BOARD_InitPins:
-- options: {callFromInitBoot: 'true', coreID: core0, enableClock: 'true'}
-- pin_list:
-  - {pin_num: A7, peripheral: LPUART0, signal: RX, pin_signal: PTC25/LPUART0_RX/FB_A4/SDRAM_D4/QSPI0A_SCLK}
-  - {pin_num: B7, peripheral: LPUART0, signal: TX, pin_signal: PTC24/LPUART0_TX/FB_A5/SDRAM_D5/QSPI0A_DATA3}
-  - {pin_num: K9, peripheral: I2C1, signal: SCL, pin_signal: ADC0_SE11/PTA8/I2C1_SCL/FTM1_CH0/FTM1_QD_PHA/TPM1_CH0/TRACE_D2, slew_rate: fast, open_drain: enable,
-    pull_select: down, pull_enable: disable}
-  - {pin_num: K10, peripheral: I2C1, signal: SDA, pin_signal: PTA9/I2C1_SDA/FTM1_CH1/FTM1_QD_PHB/TPM1_CH1/TRACE_D1, slew_rate: fast, open_drain: enable, pull_select: down,
-    pull_enable: disable}
-  - {pin_num: L8, peripheral: FLEXIO0, signal: 'D, 7', pin_signal: PTA23/LPUART4_RTS_b/FXIO0_D7, slew_rate: slow, open_drain: disable, pull_select: up, pull_enable: enable}
-  - {pin_num: L7, peripheral: FLEXIO0, signal: 'D, 8', pin_signal: PTA20/I2C0_SCL/LPUART4_TX/FTM_CLKIN1/FXIO0_D8/EWM_OUT_b/TPM_CLKIN1, slew_rate: slow, open_drain: disable,
-    pull_select: up, pull_enable: enable}
-  - {pin_num: N11, peripheral: FLEXIO0, signal: 'D, 16', pin_signal: PTA10/LLWU_P22/I2C2_SDA/FTM2_CH0/FXIO0_D16/FTM2_QD_PHA/TPM2_CH0/TRACE_D0}
-  - {pin_num: M11, peripheral: FLEXIO0, signal: 'D, 17', pin_signal: PTA11/LLWU_P23/I2C2_SCL/FTM2_CH1/FXIO0_D17/FTM2_QD_PHB/TPM2_CH1/USB1_ID}
-  - {pin_num: L12, peripheral: FLEXIO0, signal: 'D, 18', pin_signal: PTA12/FTM1_CH0/TRACE_CLKOUT/FXIO0_D18/I2S0_TXD0/FTM1_QD_PHA/TPM1_CH0}
-  - {pin_num: L11, peripheral: FLEXIO0, signal: 'D, 19', pin_signal: PTA13/LLWU_P4/FTM1_CH1/TRACE_D3/FXIO0_D19/I2S0_TX_FS/FTM1_QD_PHB/TPM1_CH1}
-  - {pin_num: K13, peripheral: FLEXIO0, signal: 'D, 20', pin_signal: PTA14/SPI0_PCS0/LPUART0_TX/TRACE_D2/FXIO0_D20/I2S0_RX_BCLK/I2S0_TXD1}
-  - {pin_num: K12, peripheral: FLEXIO0, signal: 'D, 21', pin_signal: PTA15/SPI0_SCK/LPUART0_RX/TRACE_D1/FXIO0_D21/I2S0_RXD0}
-  - {pin_num: J13, peripheral: FLEXIO0, signal: 'D, 22', pin_signal: PTA16/SPI0_SOUT/LPUART0_CTS_b/TRACE_D0/FXIO0_D22/I2S0_RX_FS/I2S0_RXD1}
-  - {pin_num: J12, peripheral: FLEXIO0, signal: 'D, 23', pin_signal: PTA17/SPI0_SIN/LPUART0_RTS_b/FXIO0_D23/I2S0_MCLK/I2S1_MCLK}
-  - {pin_num: D5, peripheral: FLEXIO0, signal: 'D, 24', pin_signal: PTD8/LLWU_P24/I2C0_SCL/LPUART1_RX/FB_A16/FXIO0_D24}
-  - {pin_num: D4, peripheral: FLEXIO0, signal: 'D, 25', pin_signal: PTD9/I2C0_SDA/LPUART1_TX/FB_A17/FXIO0_D25}
-  - {pin_num: D3, peripheral: FLEXIO0, signal: 'D, 26', pin_signal: PTD10/LPUART1_RTS_b/FB_A18/FXIO0_D26}
-  - {pin_num: C2, peripheral: FLEXIO0, signal: 'D, 27', pin_signal: PTD11/LLWU_P25/SPI2_PCS0/LPUART1_CTS_b/FB_A19/FXIO0_D27}
-  - {pin_num: B2, peripheral: FLEXIO0, signal: 'D, 28', pin_signal: PTD12/SPI2_SCK/FTM3_FLT0/FB_A20/FXIO0_D28}
-  - {pin_num: B3, peripheral: FLEXIO0, signal: 'D, 29', pin_signal: PTD13/SPI2_SOUT/FB_A21/FXIO0_D29}
-  - {pin_num: A2, peripheral: FLEXIO0, signal: 'D, 30', pin_signal: PTD14/SPI2_SIN/FB_A22/FXIO0_D30}
-  - {pin_num: A3, peripheral: FLEXIO0, signal: 'D, 31', pin_signal: PTD15/SPI2_PCS1/FB_A23/FXIO0_D31}
-  - {pin_num: K8, peripheral: GPIOA, signal: 'GPIO, 22', pin_signal: PTA22/LPUART4_CTS_b/FXIO0_D6/RTC_CLKOUT/USB0_CLKIN, direction: OUTPUT, slew_rate: fast, open_drain: disable,
-    pull_select: up, pull_enable: enable}
-  - {pin_num: M10, peripheral: GPIOA, signal: 'GPIO, 6', pin_signal: PTA6/I2C2_SCL/FTM0_CH3/CLKOUT/TRACE_CLKOUT, direction: OUTPUT, slew_rate: fast, open_drain: disable,
-    pull_select: up, pull_enable: enable}
-  - {pin_num: K7, peripheral: GPIOA, signal: 'GPIO, 21', pin_signal: PTA21/LLWU_P21/I2C0_SDA/LPUART4_RX/FXIO0_D9/EWM_IN, direction: INPUT}
-  - {pin_num: N10, peripheral: GPIOA, signal: 'GPIO, 5', pin_signal: PTA5/USB0_CLKIN/FTM0_CH2/FXIO0_D15/I2S0_TX_BCLK/JTAG_TRST_b, direction: OUTPUT}
-  - {pin_num: M9, peripheral: GPIOA, signal: 'GPIO, 2', pin_signal: TSI0_CH3/PTA2/LPUART0_TX/FTM0_CH7/I2C3_SCL/FXIO0_D12/JTAG_TDO/TRACE_SWO, direction: INPUT}
-  - {pin_num: C1, peripheral: QuadSPI0, signal: 'DATA0, A', pin_signal: PTE2/LLWU_P1/SPI1_SOUT/LPUART1_CTS_b/SDHC0_DCLK/QSPI0A_DATA0/FXIO0_D0/SPI1_SCK}
-  - {pin_num: E1, peripheral: QuadSPI0, signal: 'DATA1, A', pin_signal: PTE4/LLWU_P2/SPI1_SIN/LPUART3_TX/SDHC0_D3/QSPI0A_DATA1}
-  - {pin_num: D1, peripheral: QuadSPI0, signal: 'DATA2, A', pin_signal: PTE3/SPI1_PCS2/LPUART1_RTS_b/SDHC0_CMD/QSPI0A_DATA2/FXIO0_D1/SPI1_SOUT}
-  - {pin_num: A1, peripheral: QuadSPI0, signal: 'DATA3, A', pin_signal: PTE0/SPI1_PCS1/LPUART1_TX/SDHC0_D1/QSPI0A_DATA3/I2C1_SDA/RTC_CLKOUT}
-  - {pin_num: B1, peripheral: QuadSPI0, signal: 'SCLK, A', pin_signal: PTE1/LLWU_P0/SPI1_SCK/LPUART1_RX/SDHC0_D0/QSPI0A_SCLK/I2C1_SCL/SPI1_SIN}
-  - {pin_num: D2, peripheral: QuadSPI0, signal: 'SS0, A', pin_signal: PTE5/SPI1_PCS0/LPUART3_RX/SDHC0_D2/QSPI0A_SS0_B/FTM3_CH0/USB0_SOF_OUT}
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+BOARD_InitPins:
+- options: {callFromInitBoot: 'true', coreID: core0, enableClock: 'true'}
+- pin_list:
+  - {pin_num: A7, peripheral: LPUART0, signal: RX, pin_signal: PTC25/LPUART0_RX/FB_A4/SDRAM_D4/QSPI0A_SCLK}
+  - {pin_num: B7, peripheral: LPUART0, signal: TX, pin_signal: PTC24/LPUART0_TX/FB_A5/SDRAM_D5/QSPI0A_DATA3}
+  - {pin_num: K9, peripheral: I2C1, signal: SCL, pin_signal: ADC0_SE11/PTA8/I2C1_SCL/FTM1_CH0/FTM1_QD_PHA/TPM1_CH0/TRACE_D2, slew_rate: fast, open_drain: enable,
+    pull_select: down, pull_enable: disable}
+  - {pin_num: K10, peripheral: I2C1, signal: SDA, pin_signal: PTA9/I2C1_SDA/FTM1_CH1/FTM1_QD_PHB/TPM1_CH1/TRACE_D1, slew_rate: fast, open_drain: enable, pull_select: down,
+    pull_enable: disable}
+  - {pin_num: L8, peripheral: FLEXIO0, signal: 'D, 7', pin_signal: PTA23/LPUART4_RTS_b/FXIO0_D7, slew_rate: slow, open_drain: disable, pull_select: up, pull_enable: enable}
+  - {pin_num: L7, peripheral: FLEXIO0, signal: 'D, 8', pin_signal: PTA20/I2C0_SCL/LPUART4_TX/FTM_CLKIN1/FXIO0_D8/EWM_OUT_b/TPM_CLKIN1, slew_rate: slow, open_drain: disable,
+    pull_select: up, pull_enable: enable}
+  - {pin_num: N11, peripheral: FLEXIO0, signal: 'D, 16', pin_signal: PTA10/LLWU_P22/I2C2_SDA/FTM2_CH0/FXIO0_D16/FTM2_QD_PHA/TPM2_CH0/TRACE_D0}
+  - {pin_num: M11, peripheral: FLEXIO0, signal: 'D, 17', pin_signal: PTA11/LLWU_P23/I2C2_SCL/FTM2_CH1/FXIO0_D17/FTM2_QD_PHB/TPM2_CH1/USB1_ID}
+  - {pin_num: L12, peripheral: FLEXIO0, signal: 'D, 18', pin_signal: PTA12/FTM1_CH0/TRACE_CLKOUT/FXIO0_D18/I2S0_TXD0/FTM1_QD_PHA/TPM1_CH0}
+  - {pin_num: L11, peripheral: FLEXIO0, signal: 'D, 19', pin_signal: PTA13/LLWU_P4/FTM1_CH1/TRACE_D3/FXIO0_D19/I2S0_TX_FS/FTM1_QD_PHB/TPM1_CH1}
+  - {pin_num: K13, peripheral: FLEXIO0, signal: 'D, 20', pin_signal: PTA14/SPI0_PCS0/LPUART0_TX/TRACE_D2/FXIO0_D20/I2S0_RX_BCLK/I2S0_TXD1}
+  - {pin_num: K12, peripheral: FLEXIO0, signal: 'D, 21', pin_signal: PTA15/SPI0_SCK/LPUART0_RX/TRACE_D1/FXIO0_D21/I2S0_RXD0}
+  - {pin_num: J13, peripheral: FLEXIO0, signal: 'D, 22', pin_signal: PTA16/SPI0_SOUT/LPUART0_CTS_b/TRACE_D0/FXIO0_D22/I2S0_RX_FS/I2S0_RXD1}
+  - {pin_num: J12, peripheral: FLEXIO0, signal: 'D, 23', pin_signal: PTA17/SPI0_SIN/LPUART0_RTS_b/FXIO0_D23/I2S0_MCLK/I2S1_MCLK}
+  - {pin_num: D5, peripheral: FLEXIO0, signal: 'D, 24', pin_signal: PTD8/LLWU_P24/I2C0_SCL/LPUART1_RX/FB_A16/FXIO0_D24}
+  - {pin_num: D4, peripheral: FLEXIO0, signal: 'D, 25', pin_signal: PTD9/I2C0_SDA/LPUART1_TX/FB_A17/FXIO0_D25}
+  - {pin_num: D3, peripheral: FLEXIO0, signal: 'D, 26', pin_signal: PTD10/LPUART1_RTS_b/FB_A18/FXIO0_D26}
+  - {pin_num: C2, peripheral: FLEXIO0, signal: 'D, 27', pin_signal: PTD11/LLWU_P25/SPI2_PCS0/LPUART1_CTS_b/FB_A19/FXIO0_D27}
+  - {pin_num: B2, peripheral: FLEXIO0, signal: 'D, 28', pin_signal: PTD12/SPI2_SCK/FTM3_FLT0/FB_A20/FXIO0_D28}
+  - {pin_num: B3, peripheral: FLEXIO0, signal: 'D, 29', pin_signal: PTD13/SPI2_SOUT/FB_A21/FXIO0_D29}
+  - {pin_num: A2, peripheral: FLEXIO0, signal: 'D, 30', pin_signal: PTD14/SPI2_SIN/FB_A22/FXIO0_D30}
+  - {pin_num: A3, peripheral: FLEXIO0, signal: 'D, 31', pin_signal: PTD15/SPI2_PCS1/FB_A23/FXIO0_D31}
+  - {pin_num: K8, peripheral: GPIOA, signal: 'GPIO, 22', pin_signal: PTA22/LPUART4_CTS_b/FXIO0_D6/RTC_CLKOUT/USB0_CLKIN, direction: OUTPUT, slew_rate: fast, open_drain: disable,
+    pull_select: up, pull_enable: enable}
+  - {pin_num: M10, peripheral: GPIOA, signal: 'GPIO, 6', pin_signal: PTA6/I2C2_SCL/FTM0_CH3/CLKOUT/TRACE_CLKOUT, direction: OUTPUT, slew_rate: fast, open_drain: disable,
+    pull_select: up, pull_enable: enable}
+  - {pin_num: K7, peripheral: GPIOA, signal: 'GPIO, 21', pin_signal: PTA21/LLWU_P21/I2C0_SDA/LPUART4_RX/FXIO0_D9/EWM_IN, direction: INPUT}
+  - {pin_num: N10, peripheral: GPIOA, signal: 'GPIO, 5', pin_signal: PTA5/USB0_CLKIN/FTM0_CH2/FXIO0_D15/I2S0_TX_BCLK/JTAG_TRST_b, direction: OUTPUT}
+  - {pin_num: M9, peripheral: GPIOA, signal: 'GPIO, 2', pin_signal: TSI0_CH3/PTA2/LPUART0_TX/FTM0_CH7/I2C3_SCL/FXIO0_D12/JTAG_TDO/TRACE_SWO, direction: INPUT}
+  - {pin_num: C1, peripheral: QuadSPI0, signal: 'DATA0, A', pin_signal: PTE2/LLWU_P1/SPI1_SOUT/LPUART1_CTS_b/SDHC0_DCLK/QSPI0A_DATA0/FXIO0_D0/SPI1_SCK}
+  - {pin_num: E1, peripheral: QuadSPI0, signal: 'DATA1, A', pin_signal: PTE4/LLWU_P2/SPI1_SIN/LPUART3_TX/SDHC0_D3/QSPI0A_DATA1}
+  - {pin_num: D1, peripheral: QuadSPI0, signal: 'DATA2, A', pin_signal: PTE3/SPI1_PCS2/LPUART1_RTS_b/SDHC0_CMD/QSPI0A_DATA2/FXIO0_D1/SPI1_SOUT}
+  - {pin_num: A1, peripheral: QuadSPI0, signal: 'DATA3, A', pin_signal: PTE0/SPI1_PCS1/LPUART1_TX/SDHC0_D1/QSPI0A_DATA3/I2C1_SDA/RTC_CLKOUT}
+  - {pin_num: B1, peripheral: QuadSPI0, signal: 'SCLK, A', pin_signal: PTE1/LLWU_P0/SPI1_SCK/LPUART1_RX/SDHC0_D0/QSPI0A_SCLK/I2C1_SCL/SPI1_SIN}
+  - {pin_num: D2, peripheral: QuadSPI0, signal: 'SS0, A', pin_signal: PTE5/SPI1_PCS0/LPUART3_RX/SDHC0_D2/QSPI0A_SS0_B/FTM3_CH0/USB0_SOF_OUT}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */

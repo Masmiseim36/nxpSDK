@@ -99,27 +99,27 @@
 #elif defined(A_LITTLE_ENDIAN) && defined(A_BIG_ENDIAN)
 #   error "A_BIG_ENDIAN and A_LITTLE_ENDIAN cannot be #defined at the same time"
 #elif defined(A_LITTLE_ENDIAN)
-#   define A_BE2CPU16(x) ((uint16_t)(((x) << 8) & 0xff00) | (uint16_t)(((x) >> 8) & 0x00ff))
+#   define A_BE2CPU16(x) ((uint16_t)(((x) & 0x00ff) << 8) | (uint16_t)(((x) >> 8) & 0x00ff))
 #   define A_BE2CPU32(x) \
-    ((((x) << 24) & 0xff000000) | (((x)&0x0000ff00) << 8) | (((x)&0x00ff0000) >> 8) | (((x) >> 24) & 0x000000ff))
+    ( (((x)& 0x000000ff) << 24) | (((x) & 0x0000ff00) << 8) | (((x) & 0x00ff0000) >> 8) | (((x) >> 24) & 0x000000ff) )
 #   define A_LE2CPU16(x) (x)
 #   define A_LE2CPU32(x) (x)
-#   define A_CPU2BE16(x) ((uint16_t)(((x) << 8) & 0xff00) | (uint16_t)(((x) >> 8) & 0x00ff))
+#   define A_CPU2BE16(x) ((uint16_t)(((x) & 0x00ff) << 8) | (uint16_t)(((x) >> 8) & 0x00ff))
 #   define A_CPU2BE32(x) \
-    ((((x) << 24) & 0xff000000) | (((x)&0x0000ff00) << 8) | (((x)&0x00ff0000) >> 8) | (((x) >> 24) & 0x000000ff))
+    ( (((x) & 0x000000ff) << 24) | (((x) & 0x0000ff00) << 8) | (((x) & 0x00ff0000) >> 8) | (((x) >> 24) & 0x000000ff) )
 #   define A_CPU2LE32(x) (x)
 #   define A_CPU2LE16(x) (x)
 #elif defined(A_BIG_ENDIAN)
 #   define A_BE2CPU16(x) (x)
 #   define A_BE2CPU32(x) (x)
-#   define A_LE2CPU16(x) ((uint16_t)(((x) << 8) & 0xff00) | (uint16_t)(((x) >> 8) & 0x00ff))
+#   define A_LE2CPU16(x) ((uint16_t)(((x) & 0x00ff) << 8) | (uint16_t)(((x) >> 8) & 0x00ff))
 #   define A_LE2CPU32(x) \
-    ((((x) << 24) & 0xff000000) | (((x)&0x0000ff00) << 8) | (((x)&0x00ff0000) >> 8) | (((x) >> 24) & 0x000000ff))
+    ((((x) & 0x000000ff) << 24) | (((x)&0x0000ff00) << 8) | (((x)&0x00ff0000) >> 8) | (((x) >> 24) & 0x000000ff))
 #   define A_CPU2BE16(x) (x)
 #   define A_CPU2BE32(x) (x)
 #   define A_CPU2LE32(x) \
-    ((((x) << 24) & 0xff000000) | (((x)&0x0000ff00) << 8) | (((x)&0x00ff0000) >> 8) | (((x) >> 24) & 0x000000ff))
-#   define A_CPU2LE16(x) ((uint16_t)(((x) << 8) & 0xff00) | (uint16_t)(((x) >> 8) & 0x00ff))
+    ((((x) & 0x000000ff) << 24) | (((x)&0x0000ff00) << 8) | (((x)&0x00ff0000) >> 8) | (((x) >> 24) & 0x000000ff))
+#   define A_CPU2LE16(x) ((uint16_t)(((x) & 0x00ff) << 8) | (uint16_t)(((x) >> 8) & 0x00ff))
 #endif
 
 /* A_MEM -- macros that should be mapped to OS/STDLIB equivalent functions */

@@ -262,6 +262,7 @@ static usb_status_t USB_DevicePhdcEndpointsInit(usb_device_phdc_struct_t *phdcHa
         usb_device_endpoint_init_struct_t epInitStruct;
         usb_device_endpoint_callback_struct_t epCallback;
         epInitStruct.zlt = 0U;
+        epInitStruct.interval = interface->endpointList.endpoint[count].interval;
         epInitStruct.endpointAddress = interface->endpointList.endpoint[count].endpointAddress;
         epInitStruct.maxPacketSize = interface->endpointList.endpoint[count].maxPacketSize;
         epInitStruct.transferType = interface->endpointList.endpoint[count].transferType;
@@ -656,6 +657,8 @@ usb_status_t USB_DevicePhdcSend(class_handle_t handle, uint8_t ep, uint8_t *buff
 {
     usb_device_phdc_struct_t *phdcHandle;
     usb_device_phdc_pipe_t *pipe;
+    usb_status_t error;
+    
     if (!handle)
     {
         return kStatus_USB_InvalidHandle;
@@ -678,15 +681,20 @@ usb_status_t USB_DevicePhdcSend(class_handle_t handle, uint8_t ep, uint8_t *buff
     {
         return kStatus_USB_Busy;
     }
+    pipe->isBusy = 1U;
+    
     if (pipe->pipeStall)
     {
-        pipe->isBusy = 1U;
         pipe->pipeDataBuffer = buffer;
         pipe->pipeDataLen = length;
         return kStatus_USB_Success;
     }
-    pipe->isBusy = 1U;
-    return USB_DeviceSendRequest(phdcHandle->handle, ep, buffer, length);
+    error = USB_DeviceSendRequest(phdcHandle->handle, ep, buffer, length);
+    if (kStatus_USB_Success != error)
+    {
+        pipe->isBusy = 0U;
+    }
+    return error;
 }
 
 /*!
@@ -707,6 +715,7 @@ usb_status_t USB_DevicePhdcSend(class_handle_t handle, uint8_t ep, uint8_t *buff
 usb_status_t USB_DevicePhdcRecv(class_handle_t handle, uint8_t ep, uint8_t *buffer, uint32_t length)
 {
     usb_device_phdc_struct_t *phdcHandle;
+    usb_status_t error;
 
     if (!handle)
     {
@@ -717,15 +726,20 @@ usb_status_t USB_DevicePhdcRecv(class_handle_t handle, uint8_t ep, uint8_t *buff
     {
         return kStatus_USB_Busy;
     }
+    phdcHandle->bulkOut.isBusy = 1U;
+    
     if (phdcHandle->bulkOut.pipeStall)
     {
-        phdcHandle->bulkOut.isBusy = 1U;
         phdcHandle->bulkOut.pipeDataBuffer = buffer;
         phdcHandle->bulkOut.pipeDataLen = length;
         return kStatus_USB_Success;
     }
-    phdcHandle->bulkOut.isBusy = 1U;
-    return USB_DeviceRecvRequest(phdcHandle->handle, ep, buffer, length);
+    error = USB_DeviceRecvRequest(phdcHandle->handle, ep, buffer, length);
+    if (kStatus_USB_Success != error)
+    {
+        phdcHandle->bulkOut.isBusy = 0U;
+    }
+    return error;
 }
 
 #endif

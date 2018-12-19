@@ -33,29 +33,32 @@
 #include MBEDTLS_CONFIG_FILE
 #endif
 
-#if defined(MBEDTLS_ECDH_C) && defined(MBEDTLS_ECDH_ALT)
-
+#if defined(MBEDTLS_ECDH_C)
+#if defined(MBEDTLS_ECDH_ALT)
 #include "mbedtls/ecdh.h"
 
 #include <string.h>
 
+#if defined(MBEDTLS_ECDH_GEN_PUBLIC_ALT)
 /*
  * Generate public key: simple wrapper around mbedtls_ecp_gen_keypair
  */
 int mbedtls_ecdh_gen_public_o( mbedtls_ecp_group *grp, mbedtls_mpi *d, mbedtls_ecp_point *Q,
-                             int (*f_rng)(void *, unsigned char *, size_t),
-                             void *p_rng )
+                     int (*f_rng)(void *, unsigned char *, size_t),
+                     void *p_rng )
 {
     return mbedtls_ecp_gen_keypair( grp, d, Q, f_rng, p_rng );
 }
+#endif /* MBEDTLS_ECDH_GEN_PUBLIC_ALT */
 
+#if defined(MBEDTLS_ECDH_COMPUTE_SHARED_ALT)
 /*
  * Compute shared secret (SEC1 3.3.1)
  */
 int mbedtls_ecdh_compute_shared_o( mbedtls_ecp_group *grp, mbedtls_mpi *z,
-                                 const mbedtls_ecp_point *Q, const mbedtls_mpi *d,
-                                 int (*f_rng)(void *, unsigned char *, size_t),
-                                 void *p_rng )
+                         const mbedtls_ecp_point *Q, const mbedtls_mpi *d,
+                         int (*f_rng)(void *, unsigned char *, size_t),
+                         void *p_rng )
 {
     int ret;
     mbedtls_ecp_point P;
@@ -82,6 +85,7 @@ cleanup:
 
     return( ret );
 }
+#endif /* MBEDTLS_ECDH_COMPUTE_SHARED_ALT */
 
 /*
  * Initialize context
@@ -117,9 +121,9 @@ void mbedtls_ecdh_free( mbedtls_ecdh_context *ctx )
  *      } ServerECDHParams;
  */
 int mbedtls_ecdh_make_params( mbedtls_ecdh_context *ctx, size_t *olen,
-                              unsigned char *buf, size_t blen,
-                              int (*f_rng)(void *, unsigned char *, size_t),
-                              void *p_rng )
+                      unsigned char *buf, size_t blen,
+                      int (*f_rng)(void *, unsigned char *, size_t),
+                      void *p_rng )
 {
     int ret;
     size_t grp_len, pt_len;
@@ -128,18 +132,18 @@ int mbedtls_ecdh_make_params( mbedtls_ecdh_context *ctx, size_t *olen,
         return( MBEDTLS_ERR_ECP_BAD_INPUT_DATA );
 
     if( ( ret = mbedtls_ecdh_gen_public( &ctx->grp, &ctx->d, &ctx->Q, f_rng, p_rng ) )
-        != 0 )
+                != 0 )
         return( ret );
 
     if( ( ret = mbedtls_ecp_tls_write_group( &ctx->grp, &grp_len, buf, blen ) )
-        != 0 )
+                != 0 )
         return( ret );
 
     buf += grp_len;
     blen -= grp_len;
 
     if( ( ret = mbedtls_ecp_tls_write_point( &ctx->grp, &ctx->Q, ctx->point_format,
-                                             &pt_len, buf, blen ) ) != 0 )
+                                     &pt_len, buf, blen ) ) != 0 )
         return( ret );
 
     *olen = grp_len + pt_len;
@@ -154,7 +158,7 @@ int mbedtls_ecdh_make_params( mbedtls_ecdh_context *ctx, size_t *olen,
  *      } ServerECDHParams;
  */
 int mbedtls_ecdh_read_params( mbedtls_ecdh_context *ctx,
-                              const unsigned char **buf, const unsigned char *end )
+                      const unsigned char **buf, const unsigned char *end )
 {
     int ret;
 
@@ -162,7 +166,7 @@ int mbedtls_ecdh_read_params( mbedtls_ecdh_context *ctx,
         return( ret );
 
     if( ( ret = mbedtls_ecp_tls_read_point( &ctx->grp, &ctx->Qp, buf, end - *buf ) )
-        != 0 )
+                != 0 )
         return( ret );
 
     return( 0 );
@@ -172,9 +176,10 @@ int mbedtls_ecdh_read_params( mbedtls_ecdh_context *ctx,
  * Get parameters from a keypair
  */
 int mbedtls_ecdh_get_params_o( mbedtls_ecdh_context *ctx, const mbedtls_ecp_keypair *key,
-                             mbedtls_ecdh_side side )
+                     mbedtls_ecdh_side side )
 {
     int ret;
+
     if( ( ret = mbedtls_ecp_group_copy( &ctx->grp, &key->grp ) ) != 0 )
         return( ret );
 
@@ -197,9 +202,9 @@ int mbedtls_ecdh_get_params_o( mbedtls_ecdh_context *ctx, const mbedtls_ecp_keyp
  * Setup and export the client public value
  */
 int mbedtls_ecdh_make_public( mbedtls_ecdh_context *ctx, size_t *olen,
-                              unsigned char *buf, size_t blen,
-                              int (*f_rng)(void *, unsigned char *, size_t),
-                              void *p_rng )
+                      unsigned char *buf, size_t blen,
+                      int (*f_rng)(void *, unsigned char *, size_t),
+                      void *p_rng )
 {
     int ret;
 
@@ -207,18 +212,18 @@ int mbedtls_ecdh_make_public( mbedtls_ecdh_context *ctx, size_t *olen,
         return( MBEDTLS_ERR_ECP_BAD_INPUT_DATA );
 
     if( ( ret = mbedtls_ecdh_gen_public( &ctx->grp, &ctx->d, &ctx->Q, f_rng, p_rng ) )
-        != 0 )
+                != 0 )
         return( ret );
 
     return mbedtls_ecp_tls_write_point( &ctx->grp, &ctx->Q, ctx->point_format,
-                                        olen, buf, blen );
+                                olen, buf, blen );
 }
 
 /*
  * Parse and import the client's public value
  */
 int mbedtls_ecdh_read_public( mbedtls_ecdh_context *ctx,
-                              const unsigned char *buf, size_t blen )
+                      const unsigned char *buf, size_t blen )
 {
     int ret;
     const unsigned char *p = buf;
@@ -239,9 +244,9 @@ int mbedtls_ecdh_read_public( mbedtls_ecdh_context *ctx,
  * Derive and export the shared secret
  */
 int mbedtls_ecdh_calc_secret( mbedtls_ecdh_context *ctx, size_t *olen,
-                              unsigned char *buf, size_t blen,
-                              int (*f_rng)(void *, unsigned char *, size_t),
-                              void *p_rng )
+                      unsigned char *buf, size_t blen,
+                      int (*f_rng)(void *, unsigned char *, size_t),
+                      void *p_rng )
 {
     int ret;
 
@@ -249,7 +254,7 @@ int mbedtls_ecdh_calc_secret( mbedtls_ecdh_context *ctx, size_t *olen,
         return( MBEDTLS_ERR_ECP_BAD_INPUT_DATA );
 
     if( ( ret = mbedtls_ecdh_compute_shared( &ctx->grp, &ctx->z, &ctx->Qp, &ctx->d,
-                                             f_rng, p_rng ) ) != 0 )
+                                     f_rng, p_rng ) ) != 0 )
     {
         return( ret );
     }
@@ -261,4 +266,6 @@ int mbedtls_ecdh_calc_secret( mbedtls_ecdh_context *ctx, size_t *olen,
     return mbedtls_mpi_write_binary( &ctx->z, buf, *olen );
 }
 
-#endif /* defined(MBEDTLS_ECDH_C) && defined(MBEDTLS_ECDH_ALT) */
+
+#endif /*#if defined(MBEDTLS_ECDH_ALT) */
+#endif /* MBEDTLS_ECDH_C */

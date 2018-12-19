@@ -39,52 +39,54 @@
 #endif
 
 // Internal shell functions
-extern int cmd_exit(p_shell_context_t context, int argc, char **argv);
-extern int cmd_help(p_shell_context_t context, int argc, char **argv);
+extern int cmd_exit(shell_handle_t context, int argc, char **argv);
+extern int cmd_help(shell_handle_t context, int argc, char **argv);
 
 // QCA shell functions
-extern int worker_cmd_handler(p_shell_context_t context, int argc, char **argv);
-extern int worker_cmd_quit(p_shell_context_t context, int argc, char **argv);
-extern int wmi_ping(p_shell_context_t context, int argc, char **argv);
-extern int wmi_ping6(p_shell_context_t context, int argc, char **argv);
-extern int print_perf(p_shell_context_t context, int argc, char **argv);
-extern int ipconfig_query(p_shell_context_t context, int argc, char **argv);
-extern int sensor_handle(p_shell_context_t context, int argc, char **argv);
+extern int worker_cmd_handler(shell_handle_t context, int argc, char **argv);
+extern int worker_cmd_quit(shell_handle_t context, int argc, char **argv);
+extern int wmi_ping(shell_handle_t context, int argc, char **argv);
+extern int wmi_ping6(shell_handle_t context, int argc, char **argv);
+extern int print_perf(shell_handle_t context, int argc, char **argv);
+extern int ipconfig_query(shell_handle_t context, int argc, char **argv);
+extern int sensor_handle(shell_handle_t context, int argc, char **argv);
 
 // Additional shell functions
-extern int cmd_osinfo(p_shell_context_t context, int argc, char **argv);
+extern int cmd_osinfo(shell_handle_t context, int argc, char **argv);
 
-const shell_command_context_t shell_commands[] = {
-    //    { "osinfo",               "\r\n\"osinfo\"\n\r print information of OS\r\n", cmd_osinfo, 0 },
-    {"benchtx",
-     "\r\n\"benchtx\": Run the transmit traffic test\r\n"
-     "Format: benchtx <remoteIP> <remotePort> <protocol> <packetSize> <testMode> <time|packets> <delay>\r\n"
-     "Params:\r\n"
-     "   <remoteIP> fbench IP address\r\n"
-     "   <remotePort> fbench listening port\r\n"
-     "   <protocol> tcp|udp\r\n"
-     "   <packetSize> packet size in Bytes\r\n"
-     "   <testMode> '0' means time test, '1' means number of packets\r\n"
-     "   <time|packets> time in seconds or number of packets\r\n"
-     "   <delay> delay in ms between packets\r\n",
-     (cmd_function_t)worker_cmd_handler, SHELL_OPTIONAL_PARAMS},
-    {"benchrx",
-     "\r\n\"benchrx\": Run the receive traffic test\r\n"
-     "Format: benchrx <protocol> <localPort> <multicastIP> <localIP>\r\n"
-     "Params:\r\n"
-     "   <protocol> tcp|udp\r\n"
-     "   <localPort> listening port\r\n"
-     "   <multicastIP> optional, IP address of multicast group\r\n"
-     "   <localIP> local IP address of interface\r\n",
-     (cmd_function_t)worker_cmd_handler, SHELL_OPTIONAL_PARAMS},
+//    { "osinfo",               "\r\n\"osinfo\"\n\r print information of OS\r\n", cmd_osinfo, 0 },
+SHELL_COMMAND_DEFINE(
+    benchtx,
+    "\r\n\"benchtx\": Run the transmit traffic test\r\n"
+    "Format: benchtx <remoteIP> <remotePort> <protocol> <packetSize> <testMode> <time|packets> <delay>\r\n"
+    "Params:\r\n"
+    "   <remoteIP> fbench IP address\r\n"
+    "   <remotePort> fbench listening port\r\n"
+    "   <protocol> tcp|udp\r\n"
+    "   <packetSize> packet size in Bytes\r\n"
+    "   <testMode> '0' means time test, '1' means number of packets\r\n"
+    "   <time|packets> time in seconds or number of packets\r\n"
+    "   <delay> delay in ms between packets\r\n",
+    (cmd_function_t)worker_cmd_handler,
+    SHELL_IGNORE_PARAMETER_COUNT);
+SHELL_COMMAND_DEFINE(benchrx,
+                     "\r\n\"benchrx\": Run the receive traffic test\r\n"
+                     "Format: benchrx <protocol> <localPort> <multicastIP> <localIP>\r\n"
+                     "Params:\r\n"
+                     "   <protocol> tcp|udp\r\n"
+                     "   <localPort> listening port\r\n"
+                     "   <multicastIP> optional, IP address of multicast group\r\n"
+                     "   <localIP> local IP address of interface\r\n",
+                     (cmd_function_t)worker_cmd_handler,
+                     SHELL_IGNORE_PARAMETER_COUNT);
 #if READ_HOST_MEMORY
-//    {"hostmemmap", "\r\n\"hostmemmap\"\r\n", worker_cmd_handler, SHELL_OPTIONAL_PARAMS},
+//    {"hostmemmap", "\r\n\"hostmemmap\"\r\n", worker_cmd_handler, SHELL_IGNORE_PARAMETER_COUNT},
 #endif
 #if (ENABLE_STACK_OFFLOAD && MULTI_SOCKET_SUPPORT)
-//    {"benchrx_multi_socket", "\r\n\"benchrx_multi_socket\"\r\n", worker_cmd_handler, SHELL_OPTIONAL_PARAMS},
+//    {"benchrx_multi_socket", "\r\n\"benchrx_multi_socket\"\r\n", worker_cmd_handler, SHELL_IGNORE_PARAMETER_COUNT},
 #endif
 //    { "benchquit",            "\r\n\"benchquit\"\r\n", worker_cmd_quit, 0 },
-//    {"benchmode", "\r\n\"benchmode\"\r\n", worker_cmd_handler, SHELL_OPTIONAL_PARAMS},
+//    {"benchmode", "\r\n\"benchmode\"\r\n", worker_cmd_handler, SHELL_IGNORE_PARAMETER_COUNT},
 //    { "perf",                 "\r\n\"perf\"\r\n", print_perf, 0 },
 #if (ENABLE_STACK_OFFLOAD)
 //    { "ipconfig",             "\r\n\"ipconfig\"\r\n", ipconfig_query, 0 },
@@ -92,11 +94,15 @@ const shell_command_context_t shell_commands[] = {
 //    { "ipconfig",             "\r\n\"ipconfig\"\r\n", Shell_ipconfig, 0 },
 #endif
 #if DEMOCFG_USE_WIFI
-    {"iwconfig", "\r\n\"iwconfig\"\r\n", (cmd_function_t)worker_cmd_handler, SHELL_OPTIONAL_PARAMS}, // wmi_iwconfig },
-    {"wmiconfig",
-     "\r\n\"wmiconfig\": Run the configuration tool\r\n"
-     "Full command description is available by \"wmiconfig --help\"\r\n",
-     (cmd_function_t)worker_cmd_handler, SHELL_OPTIONAL_PARAMS},
+SHELL_COMMAND_DEFINE(iwconfig,
+                     "\r\n\"iwconfig\"\r\n",
+                     (cmd_function_t)worker_cmd_handler,
+                     SHELL_IGNORE_PARAMETER_COUNT); // wmi_iwconfig },
+SHELL_COMMAND_DEFINE(wmiconfig,
+                     "\r\n\"wmiconfig\": Run the configuration tool\r\n"
+                     "Full command description is available by \"wmiconfig --help\"\r\n",
+                     (cmd_function_t)worker_cmd_handler,
+                     SHELL_IGNORE_PARAMETER_COUNT);
 #endif
 #if DEMOCFG_USE_SENSOR
 //   { "sensor",                "\r\n\"sensor\"\r\n", sensor_handle, 0 },
@@ -114,6 +120,8 @@ const shell_command_context_t shell_commands[] = {
 #endif
 #endif
 #endif
-    {NULL, NULL, NULL, 0}};
+shell_command_t *shell_commands[] = {
+    SHELL_COMMAND(benchtx), SHELL_COMMAND(benchrx), SHELL_COMMAND(iwconfig), SHELL_COMMAND(wmiconfig), NULL,
+};
 
 /* EOF */

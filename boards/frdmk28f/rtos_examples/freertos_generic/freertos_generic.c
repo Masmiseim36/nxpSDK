@@ -167,6 +167,12 @@ int main(void)
                           /* The size of each item the queue holds. */
                           sizeof(uint32_t));
 
+    /* Enable queue view in MCUX IDE FreeRTOS TAD plugin. */
+    if (xQueue != NULL)
+    {
+        vQueueAddToRegistry(xQueue, "xQueue");
+    }
+
     /* Create the semaphore used by the FreeRTOS tick hook function and the
     event semaphore task. */
     vSemaphoreCreateBinary(xEventSemaphore);

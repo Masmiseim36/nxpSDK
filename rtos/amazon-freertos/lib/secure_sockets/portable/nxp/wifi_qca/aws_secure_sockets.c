@@ -93,6 +93,8 @@ typedef struct SSOCKETContext
     char * pcServerCertificate;
     uint32_t ulServerCertificateLength;
     uint32_t ulState;
+    char ** ppcAlpnProtocols;
+    uint32_t ulAlpnProtocolsCount;
 } SSOCKETContext_t, * SSOCKETContextPtr_t;
 
 /*
@@ -240,6 +242,17 @@ int32_t SOCKETS_Close( Socket_t xSocket )
             TLS_Cleanup( pxContext->pvTLSContext );
         }
 
+        if( NULL != pxContext->ppcAlpnProtocols )
+        {
+            int i;
+            for( i = 0; i < pxContext->ulAlpnProtocolsCount; i++ )
+            {
+                vPortFree( pxContext->ppcAlpnProtocols[i] );
+            }
+            vPortFree( pxContext->ppcAlpnProtocols );
+            pxContext->ulAlpnProtocolsCount = 0;
+        }
+
         qcom_socket_close( ( int ) pxContext->xSocket );
         vPortFree( pxContext );
     }
@@ -290,6 +303,8 @@ int32_t SOCKETS_Connect( Socket_t xSocket,
             xTLSParams.pvCallerContext = pxContext;
             xTLSParams.pxNetworkRecv = prvNetworkRecv;
             xTLSParams.pxNetworkSend = prvNetworkSend;
+            xTLSParams.ppcAlpnProtocols = ( const char ** ) pxContext->ppcAlpnProtocols;
+            xTLSParams.ulAlpnProtocolsCount = pxContext->ulAlpnProtocolsCount;
             xStatus = TLS_Init( &pxContext->pvTLSContext, &xTLSParams );
 
             if( SOCKETS_ERROR_NONE == xStatus )
@@ -588,7 +603,45 @@ int32_t SOCKETS_SetSockOpt( Socket_t xSocket,
                     lStatus = SOCKETS_SOCKET_ERROR;
                     break;
                 }
-                /* NOT implemented ? */
+
+                /* Prepare list of supported protocols, must be NULL-terminated */
+                pxContext->ppcAlpnProtocols = (char **)pvPortMalloc((xOptionLength + 1 )*sizeof(char*));
+                if( pxContext->ppcAlpnProtocols == NULL )
+                {
+                    lStatus = SOCKETS_SOCKET_ERROR;
+                    break;
+                }
+
+                int i;
+                for( i = 0; i < xOptionLength; i++ )
+                {
+                    int len = strlen( ((char **)pvOptionValue)[i] );
+                    pxContext->ppcAlpnProtocols[i] = (char *)pvPortMalloc(len + 1);
+                    if( pxContext->ppcAlpnProtocols[i] == NULL )
+                    {
+                        /* Malloc failed - remove created list and set error return value */
+                        while(i)
+                        {
+                            vPortFree( pxContext->ppcAlpnProtocols[i - 1] );
+                            i--;
+                        }
+                        vPortFree( pxContext->ppcAlpnProtocols );
+                        pxContext->ppcAlpnProtocols = NULL;
+                        pxContext->ulAlpnProtocolsCount = 0;
+
+                        lStatus = SOCKETS_SOCKET_ERROR;
+                        break;
+                    }
+                    memcpy( pxContext->ppcAlpnProtocols[i], ((char **)pvOptionValue)[i], len );
+                    pxContext->ppcAlpnProtocols[i][len] = '\0';
+                }
+
+                if( lStatus != SOCKETS_SOCKET_ERROR )
+                {
+                    pxContext->ppcAlpnProtocols[xOptionLength] = NULL;
+                    pxContext->ulAlpnProtocolsCount = xOptionLength;
+                }
+
                 break;
 
             default:

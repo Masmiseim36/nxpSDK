@@ -3,20 +3,24 @@
  * Copyright 2016 NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include "ffconf.h"
+/* This fatfs subcomponent is disabled by default
+ * To enable it, define following macro in ffconf.h */
+#ifdef RAM_DISK_ENABLE
+
 #include "fsl_common.h"
 #include "fsl_ram_disk.h"
-#include "ffconf.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 /* clang-format off */
-#define SECTOR_SIZE _MIN_SS /* usualy 512 B */
-#define DISK_SIZE 65536     /* minmal disk size calculated as 128 * _MIN_SS (ff.c ln 4112) , 128*512=65536 */
+#define SECTOR_SIZE FF_MIN_SS /* usualy 512 B */
+#define DISK_SIZE 65536     /* minmal disk size calculated as 128 * FF_MIN_SS (ff.c ln 4112) , 128*512=65536 */
 /* clang-format on */
 
 /*******************************************************************************
@@ -104,3 +108,4 @@ DRESULT ram_disk_ioctl(BYTE pdrv, BYTE cmd, void *buff)
     }
     return RES_PARERR;
 }
+#endif /* RAM_DISK_ENABLE */

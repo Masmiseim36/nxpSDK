@@ -63,6 +63,13 @@ extern "C" {
  */
 #define mbedtls_sha1_context dcp_hash_ctx_t
 
+#elif defined(MBEDTLS_FREESCALE_HASHCRYPT_SHA1)
+
+/**
+ * \brief          SHA-1 context structure
+ */
+#define mbedtls_sha1_context hashcrypt_hash_ctx_t
+
 #endif /* MBEDTLS_FREESCALE_LTC_SHA1 */
 
 #ifdef __cplusplus

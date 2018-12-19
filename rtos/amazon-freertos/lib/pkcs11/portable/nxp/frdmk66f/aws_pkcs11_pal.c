@@ -1,6 +1,7 @@
 /*
  * Amazon FreeRTOS PKCS#11 for LPC54018 IoT Module V1.0.1
  * Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * Copyright 2018 NXP
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -147,10 +148,17 @@ CK_DEFINE_FUNCTION( CK_RV, C_Initialize )( CK_VOID_PTR pvInitArgs )
     /* Ensure that the FreeRTOS heap is used. */
     CRYPTO_ConfigureHeap();
 
-    /* Initialize flash storage. */
-    if( pdTRUE == mflash_init( g_cert_files, 1 ) )
+    if( mflash_is_initialized() )
     {
         status = CKR_OK;
+    }
+    else
+    {
+        /* Initialize flash storage. */
+        if( pdTRUE == mflash_init( g_cert_files, 1 ) )
+        {
+            status = CKR_OK;
+        }
     }
 
     return status;

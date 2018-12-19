@@ -1,0 +1,51 @@
+<resources>
+    <string name="app_name">AWS Device Configuration</string>
+
+    <!-- auxiliary -->
+    <string name="refresh">Refresh</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
+    <!-- dashboard -->
+    <string name="connection_status">MQTT connection status</string>
+    <string name="timestamp">Data from:</string>
+    <string name="aws_shadow">AWS Shadow</string>
+    <string name="load_preferences">Load preferences</string>
+
+    <!-- device setup -->
+    <string name="wifi">WiFi settings</string>
+    <string name="wifi_ssid">SSID</string>
+    <string name="wifi_password">password</string>
+    <string name="aws_iot">AWS IoT</string>
+    <string name="aws_iot_current_thing_name">Current Thing Name</string>
+    <string name="aws_iot_thing_name">Thing Name</string>
+    <string name="aws_iot_new_thing_name">New Thing Name</string>
+    <string name="aws_iot_endpoint">Endpoint</string>
+    <string name="aws_credentials_set">AWS credentials set</string>
+    <string name="create_and_assign_aws_certificates">Create and assign AWS certificates</string>
+    <string name="mdns">mDNS</string>
+    <string name="mdns_hostname">mDNS hostname</string>
+    <string name="device_login">Device login</string>
+    <string name="device_login_change">Change device login password</string>
+    <string name="no_device_has_been_found">No device has been found</string>
+    <string name="create_new_thing">Create new thing</string>
+    <string name="device_settings">Device settings</string>
+
+    <!-- about -->
+    <string name="title_activity_about">About</string>
+    <string name="copyright">Copyright ©2017&#8211;2018 NXP</string>
+
+    <!-- demo -->
+    <string name="network_not_available">"Network not available"</string>
+    <string name="connecting">Connecting…</string>
+    <string name="reconnecting">Reconnecting</string>
+    <string name="disconnected">Disconnected</string>
+    <string name="mqtt_error">MQTTConnection error</string>
+    <string name="load_thing_names">Load thing names</string>
+    <string name="device_information">Device information</string>
+    <string name="device_login_password">Device login password</string>
+    <string name="new_aws_iot_thing_name">New AWS IoT thing name</string>
+    <string name="empty_shadow">Empty shadow</string>
+
+
+</resources>

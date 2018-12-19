@@ -361,7 +361,7 @@ static status_t SD_StopTransmission(sd_card_t *card)
     command.argument = 0U;
     command.type = kCARD_CommandTypeAbort;
     command.responseType = kCARD_ResponseTypeR1b;
-    command.responseErrorFlags = kSDMMC_R1ErrorAllFlag;
+    command.responseErrorFlags = SDMMC_R1_ALL_ERROR_FLAG;
 
     content.command = &command;
     content.data = 0U;
@@ -453,7 +453,7 @@ static status_t SD_WaitWriteComplete(sd_card_t *card)
             break;
         }
 
-        if ((command.response[0U] & kSDMMC_R1ReadyForDataFlag) &&
+        if ((command.response[0U] & SDMMC_MASK(kSDMMC_R1ReadyForDataFlag)) &&
             (SDMMC_R1_CURRENT_STATE(command.response[0U]) != kSDMMC_R1StateProgram))
         {
             break;
@@ -495,7 +495,7 @@ static status_t SD_SendWriteSuccessBlocks(sd_card_t *card, uint32_t *blocks)
     content.command = &command;
     content.data = &data;
     error = card->host.transfer(card->host.base, &content);
-    if ((kStatus_Success != error) || ((command.response[0U]) & kSDMMC_R1ErrorAllFlag))
+    if ((kStatus_Success != error) || ((command.response[0U]) & SDMMC_R1_ALL_ERROR_FLAG))
     {
         SDMMC_LOG("\r\nError: send ACMD13 failed with host error %d, response %x", error, command.response[0U]);
     }
@@ -558,7 +558,7 @@ static status_t SD_SwitchFunction(sd_card_t *card, uint32_t mode, uint32_t group
     content.command = &command;
     content.data = &data;
     error = card->host.transfer(card->host.base, &content);
-    if ((kStatus_Success != error) || ((command.response[0U]) & kSDMMC_R1ErrorAllFlag))
+    if ((kStatus_Success != error) || ((command.response[0U]) & SDMMC_R1_ALL_ERROR_FLAG))
     {
         SDMMC_LOG("\r\n\r\nError: send CMD6 failed with host error %d, response %x", error, command.response[0U]);
     }
@@ -653,7 +653,7 @@ static status_t SD_SendScr(sd_card_t *card)
     content.data = &data;
     content.command = &command;
     error = card->host.transfer(card->host.base, &content);
-    if ((kStatus_Success != error) || ((command.response[0U]) & kSDMMC_R1ErrorAllFlag))
+    if ((kStatus_Success != error) || ((command.response[0U]) & SDMMC_R1_ALL_ERROR_FLAG))
     {
         SDMMC_LOG("\r\nError: send ACMD51 failed with host error %d, response %x", error, command.response[0U]);
     }
@@ -829,7 +829,7 @@ static status_t SD_SetDataBusWidth(sd_card_t *card, sd_data_bus_width_t width)
     content.command = &command;
     content.data = NULL;
     error = card->host.transfer(card->host.base, &content);
-    if ((kStatus_Success != error) || ((command.response[0U]) & kSDMMC_R1ErrorAllFlag))
+    if ((kStatus_Success != error) || ((command.response[0U]) & SDMMC_R1_ALL_ERROR_FLAG))
     {
         SDMMC_LOG("\r\nError: send ACMD6 failed with host error %d, response %x", error, command.response[0U]);
     }
@@ -1047,15 +1047,15 @@ static status_t SD_ApplicationSendOperationCondition(sd_card_t *card, uint32_t a
         }
 
         /* Wait until card exit busy state. */
-        if (command.response[0U] & kSD_OcrPowerUpBusyFlag)
+        if (command.response[0U] & SDMMC_MASK(kSD_OcrPowerUpBusyFlag))
         {
             /* high capacity check */
-            if (command.response[0U] & kSD_OcrCardCapacitySupportFlag)
+            if (command.response[0U] & SDMMC_MASK(kSD_OcrCardCapacitySupportFlag))
             {
                 card->flags |= kSD_SupportHighCapacityFlag;
             }
             /* 1.8V support */
-            if (command.response[0U] & kSD_OcrSwitch18AcceptFlag)
+            if (command.response[0U] & SDMMC_MASK(kSD_OcrSwitch18AcceptFlag))
             {
                 card->flags |= kSD_SupportVoltage180v;
             }
@@ -1287,7 +1287,7 @@ status_t SD_ReadStatus(sd_card_t *card)
     content.command = &command;
     content.data = &data;
     error = card->host.transfer(card->host.base, &content);
-    if ((kStatus_Success != error) || ((command.response[0U]) & kSDMMC_R1ErrorAllFlag))
+    if ((kStatus_Success != error) || ((command.response[0U]) & SDMMC_R1_ALL_ERROR_FLAG))
     {
         SDMMC_LOG("\r\nError: send ACMD13 failed with host error %d, response %x", error, command.response[0U]);
 
@@ -1389,7 +1389,7 @@ static status_t SD_Read(sd_card_t *card, uint8_t *buffer, uint32_t startBlock, u
         command.argument *= data.blockSize;
     }
     command.responseType = kCARD_ResponseTypeR1;
-    command.responseErrorFlags = kSDMMC_R1ErrorAllFlag;
+    command.responseErrorFlags = SDMMC_R1_ALL_ERROR_FLAG;
 
     content.command = &command;
     content.data = &data;
@@ -1435,7 +1435,7 @@ static status_t SD_Write(sd_card_t *card,
     data.enableAutoCommand12 = true;
     data.blockSize = blockSize;
     command.responseType = kCARD_ResponseTypeR1;
-    command.responseErrorFlags = kSDMMC_R1ErrorAllFlag;
+    command.responseErrorFlags = SDMMC_R1_ALL_ERROR_FLAG;
 
     command.index = (blockCount == 1U) ? kSDMMC_WriteSingleBlock : kSDMMC_WriteMultipleBlock;
     command.argument = startBlock;
@@ -1502,7 +1502,7 @@ static status_t SD_Erase(sd_card_t *card, uint32_t startBlock, uint32_t blockCou
     command.index = kSD_EraseWriteBlockStart;
     command.argument = eraseBlockStart;
     command.responseType = kCARD_ResponseTypeR1;
-    command.responseErrorFlags = kSDMMC_R1ErrorAllFlag;
+    command.responseErrorFlags = SDMMC_R1_ALL_ERROR_FLAG;
 
     content.command = &command;
     content.data = NULL;
@@ -1532,7 +1532,7 @@ static status_t SD_Erase(sd_card_t *card, uint32_t startBlock, uint32_t blockCou
     command.index = kSDMMC_Erase;
     command.argument = 0U;
     command.responseType = kCARD_ResponseTypeR1b;
-    command.responseErrorFlags = kSDMMC_R1ErrorAllFlag;
+    command.responseErrorFlags = SDMMC_R1_ALL_ERROR_FLAG;
 
     content.command = &command;
     content.data = NULL;
@@ -1731,13 +1731,14 @@ status_t SD_ProbeBusVoltage(sd_card_t *card)
     status_t error = kStatus_Success;
 
     /* 3.3V voltage should be supported as default */
-    applicationCommand41Argument |= kSD_OcrVdd29_30Flag | kSD_OcrVdd32_33Flag | kSD_OcrVdd33_34Flag;
+    applicationCommand41Argument |=
+        SDMMC_MASK(kSD_OcrVdd29_30Flag) | SDMMC_MASK(kSD_OcrVdd32_33Flag) | SDMMC_MASK(kSD_OcrVdd33_34Flag);
     card->operationVoltage = kCARD_OperationVoltage330V;
 
     /* allow user select the work voltage, if not select, sdmmc will handle it automatically */
     if (kSDMMCHOST_SupportV180 != SDMMCHOST_NOT_SUPPORT)
     {
-        applicationCommand41Argument |= kSD_OcrSwitch18RequestFlag;
+        applicationCommand41Argument |= SDMMC_MASK(kSD_OcrSwitch18RequestFlag);
     }
 
     do
@@ -1753,7 +1754,7 @@ status_t SD_ProbeBusVoltage(sd_card_t *card)
         if (kStatus_Success == SD_SendInterfaceCondition(card))
         {
             /* SDHC or SDXC card */
-            applicationCommand41Argument |= kSD_OcrHostCapacitySupportFlag;
+            applicationCommand41Argument |= SDMMC_MASK(kSD_OcrHostCapacitySupportFlag);
             card->flags |= kSD_SupportSdhcFlag;
         }
         else
@@ -1783,7 +1784,7 @@ status_t SD_ProbeBusVoltage(sd_card_t *card)
 
             if (error == kStatus_SDMMC_SwitchVoltage18VFail33VSuccess)
             {
-                applicationCommand41Argument &= ~kSD_OcrSwitch18RequestFlag;
+                applicationCommand41Argument &= ~SDMMC_MASK(kSD_OcrSwitch18RequestFlag);
                 card->flags &= ~kSD_SupportVoltage180v;
                 continue;
             }

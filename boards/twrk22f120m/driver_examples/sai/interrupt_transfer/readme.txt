@@ -3,15 +3,6 @@ Overview
 The sai_interrupt_transfer example shows how to use sai driver with interrupt:
 
 In this example, one sai instance playbacks the audio data stored in flash/SRAM using interrupt.
-
-Toolchain supported
-===================
-- IAR embedded Workbench 7.80.4
-- Keil MDK 5.21a
-- GCC ARM Embedded 2016-5.4-q3
-- Kinetis Development Studio IDE 3.2.0
-- MCUXpresso0.8
-
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -46,6 +37,11 @@ When the demo runs successfully, you can hear the tone and the log would be seen
 SAI example started!
 SAI example finished!
  ~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

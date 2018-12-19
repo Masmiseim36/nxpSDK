@@ -9,7 +9,7 @@
       <ToolsetName>ARM-ADS</ToolsetName>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MK64FN1M0xxx12</Device>
+          <Device>MK64FN1M0VLL12</Device>
           <Vendor>NXP</Vendor>
           <PackID>Keil.Kinetis_K60_DFP.1.4.0</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
@@ -367,13 +367,12 @@
             <vShortWch>0</vShortWch>
             <VariousControls>
               <MiscControls>--library_interface=armcc 
---library_type=standardlib 
 --diag_suppress=66,1296,186,170,2748,1461,1295,177,550 
- 
+--library_type=standardlib 
 </MiscControls>
               <Define>DEBUG, CPU_MK64FN1M0VLL12, CPU_IS_ARM_CORTEX_M4=1, FREEDOM, BL_TARGET_FLASH, FRDM_K64F, USB_STACK_BM</Define>
               <Undefine/>
-              <IncludePath>../../../../../devices;../../../../../CMSIS/Include;../../../../../middleware/usb/include;../../../../../middleware/usb/device;../../../../../middleware/usb/device/class;../../../../../middleware/usb/osa;../../../../../middleware/usb;../../../../../middleware/mcu-boot/src;../../../../../middleware/mcu-boot/src/bootloader;../../../../../middleware/mcu-boot/src/include;../../../../../middleware/mcu-boot/src/startup;../../../../../middleware/mcu-boot/src/utilities;../../../../../middleware/mcu-boot/src/drivers;../../../../../middleware/mcu-boot/src/drivers/crc;../../../../../middleware/mcu-boot/src/drivers/microseconds;../../../../../middleware/mcu-boot/src/drivers/smc;../../../../../middleware/mcu-boot/targets/MK64F12/src;../../../../../middleware/mcu-boot/src/autobaud;../../../../../middleware/mcu-boot/src/bm_usb;../../../../../middleware/mcu-boot/src/security;../../../../../middleware/mcu-boot/src/drivers/ltc;../../../../../middleware/mcu-boot/src/drivers/mmcau;../../../../../devices/MK64F12;../../../../../devices/MK64F12/drivers;../../../../../project-root-path;..</IncludePath>
+              <IncludePath>../../../../../CMSIS/Include;../../../../../middleware/mcu-boot/src;../../../../../middleware/mcu-boot/src/bootloader;../../../../../middleware/mcu-boot/src/include;../../../../../middleware/mcu-boot/src/startup;../../../../../middleware/mcu-boot/src/utilities;../../../../../middleware/mcu-boot/src/drivers;../../../../../middleware/mcu-boot/src/drivers/crc;../../../../../middleware/mcu-boot/src/drivers/microseconds;../../../../../middleware/mcu-boot/src/drivers/smc;../../../../../middleware/mcu-boot/targets/MK64F12/src;../../../../../middleware/mcu-boot/src/autobaud;../../../../../middleware/mcu-boot/src/bm_usb;../../../../../middleware/mcu-boot/src/security;../../../../../middleware/mcu-boot/src/drivers/ltc;../../../../../middleware/mcu-boot/src/drivers/mmcau;../../../../../devices/MK64F12;../../../../../devices/MK64F12/drivers;..;../../../../../devices/MK64F12/drivers;../../../../../devices/MK64F12/drivers;../../../../../devices/MK64F12;../../../../../devices/MK64F12/drivers;../../../../../devices/MK64F12/drivers;../../../../../devices/MK64F12/drivers;../../../../../devices/MK64F12/drivers;../../../../../devices/MK64F12/drivers;../../../../../devices/MK64F12/drivers;../../../../../middleware/usb/device;../../../../../middleware/usb/include;../../../../../middleware/usb/osa;../../../../../devices/MK64F12/drivers</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -504,16 +503,6 @@ off
               <FilePath>../../../../../devices/MK64F12/drivers/fsl_uart.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK64F12/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK64F12/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_gpio.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MK64F12/drivers/fsl_gpio.h</FilePath>
@@ -558,6 +547,46 @@ off
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MK64F12/drivers/fsl_crc.h</FilePath>
             </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_common.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>device</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_device_registers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK64F12/fsl_device_registers.h</FilePath>
+            </File>
+            <File>
+              <FileName>MK64F12.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK64F12/MK64F12.h</FilePath>
+            </File>
+            <File>
+              <FileName>MK64F12_features.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK64F12/MK64F12_features.h</FilePath>
+            </File>
+            <File>
+              <FileName>system_MK64F12.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK64F12/system_MK64F12.c</FilePath>
+            </File>
+            <File>
+              <FileName>system_MK64F12.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK64F12/system_MK64F12.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -572,11 +601,6 @@ off
               <FileName>usb_device_khci.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/usb/device/usb_device_khci.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_khci.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/usb/include/usb_khci.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -714,89 +738,19 @@ off
           <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>system_MK64F12.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK64F12/system_MK64F12.c</FilePath>
-            </File>
-            <File>
-              <FileName>system_MK64F12.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK64F12/system_MK64F12.h</FilePath>
-            </File>
-            <File>
               <FileName>startup_MK64F12.s</FileName>
               <FileType>2</FileType>
               <FilePath>../../../../../middleware/mcu-boot/targets/MK64F12/src/startup/arm/startup_MK64F12.s</FilePath>
-            </File>
-            <File>
-              <FileName>startup.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/startup/startup.c</FilePath>
             </File>
             <File>
               <FileName>ar_asm_macros.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mcu-boot/src/startup/ar_asm_macros.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>source-memory-src</GroupName>
-          <Files>
             <File>
-              <FileName>pattern_fill.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/pattern_fill.s</FilePath>
-            </File>
-            <File>
-              <FileName>sram_init.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/sram_init.h</FilePath>
-            </File>
-            <File>
-              <FileName>memory.c</FileName>
+              <FileName>startup.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/memory.c</FilePath>
-            </File>
-            <File>
-              <FileName>device_memory.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/device_memory.h</FilePath>
-            </File>
-            <File>
-              <FileName>device_memory.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/device_memory.c</FilePath>
-            </File>
-            <File>
-              <FileName>normal_memory.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/normal_memory.h</FilePath>
-            </File>
-            <File>
-              <FileName>normal_memory.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/normal_memory.c</FilePath>
-            </File>
-            <File>
-              <FileName>pattern_fill.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/pattern_fill.h</FilePath>
-            </File>
-            <File>
-              <FileName>flash_memory.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/flash_memory.h</FilePath>
-            </File>
-            <File>
-              <FileName>flash_memory.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/flash_memory.c</FilePath>
-            </File>
-            <File>
-              <FileName>sram_init_cm4.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/sram_init_cm4.c</FilePath>
+              <FilePath>../../../../../middleware/mcu-boot/src/startup/startup.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -859,11 +813,6 @@ off
               <FilePath>../../../../../middleware/mcu-boot/src/bootloader/bl_shutdown_cleanup.h</FilePath>
             </File>
             <File>
-              <FileName>bl_reliable_update.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/bootloader/bl_reliable_update.h</FilePath>
-            </File>
-            <File>
               <FileName>bl_irq_common.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mcu-boot/src/bootloader/bl_irq_common.h</FilePath>
@@ -872,6 +821,11 @@ off
               <FileName>bl_app_crc_check.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mcu-boot/src/bootloader/bl_app_crc_check.h</FilePath>
+            </File>
+            <File>
+              <FileName>bl_reliable_update.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/bootloader/bl_reliable_update.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -914,6 +868,21 @@ off
               <FilePath>../../../../../middleware/mcu-boot/src/bootloader/src/bl_shutdown_cleanup.c</FilePath>
             </File>
             <File>
+              <FileName>bl_app_crc_check.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/bootloader/src/bl_app_crc_check.c</FilePath>
+            </File>
+            <File>
+              <FileName>bl_misc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/bootloader/src/bl_misc.c</FilePath>
+            </File>
+            <File>
+              <FileName>bl_reliable_update.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/bootloader/src/bl_reliable_update.c</FilePath>
+            </File>
+            <File>
               <FileName>scuart_peripheral_interface.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mcu-boot/src/bootloader/src/scuart_peripheral_interface.c</FilePath>
@@ -932,21 +901,6 @@ off
               <FileName>usb_hid_msc_peripheral_interface.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mcu-boot/src/bootloader/src/usb_hid_msc_peripheral_interface.c</FilePath>
-            </File>
-            <File>
-              <FileName>bl_app_crc_check.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/bootloader/src/bl_app_crc_check.c</FilePath>
-            </File>
-            <File>
-              <FileName>bl_misc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/bootloader/src/bl_misc.c</FilePath>
-            </File>
-            <File>
-              <FileName>bl_reliable_update.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/bootloader/src/bl_reliable_update.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -976,21 +930,6 @@ off
           </Files>
         </Group>
         <Group>
-          <GroupName>source-drivers-microseconds</GroupName>
-          <Files>
-            <File>
-              <FileName>microseconds.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/drivers/microseconds/microseconds.h</FilePath>
-            </File>
-            <File>
-              <FileName>microseconds_sysclk.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/drivers/microseconds/src/microseconds_sysclk.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>source-include</GroupName>
           <Files>
             <File>
@@ -1012,6 +951,66 @@ off
               <FileName>memory.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mcu-boot/src/memory/memory.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>source-memory-src</GroupName>
+          <Files>
+            <File>
+              <FileName>sram_init.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/sram_init.h</FilePath>
+            </File>
+            <File>
+              <FileName>memory.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/memory.c</FilePath>
+            </File>
+            <File>
+              <FileName>device_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/device_memory.h</FilePath>
+            </File>
+            <File>
+              <FileName>device_memory.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/device_memory.c</FilePath>
+            </File>
+            <File>
+              <FileName>normal_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/normal_memory.h</FilePath>
+            </File>
+            <File>
+              <FileName>normal_memory.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/normal_memory.c</FilePath>
+            </File>
+            <File>
+              <FileName>pattern_fill.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/pattern_fill.s</FilePath>
+            </File>
+            <File>
+              <FileName>pattern_fill.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/pattern_fill.h</FilePath>
+            </File>
+            <File>
+              <FileName>flash_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/flash_memory.h</FilePath>
+            </File>
+            <File>
+              <FileName>flash_memory.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/flash_memory.c</FilePath>
+            </File>
+            <File>
+              <FileName>sram_init_cm4.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/sram_init_cm4.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1325,6 +1324,96 @@ off
             </File>
           </Files>
         </Group>
+        <Group>
+          <GroupName>source-drivers-microseconds</GroupName>
+          <Files>
+            <File>
+              <FileName>microseconds.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/drivers/microseconds/microseconds.h</FilePath>
+            </File>
+            <File>
+              <FileName>microseconds_sysclk.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/drivers/microseconds/src/microseconds_sysclk.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS</GroupName>
+          <Files>
+            <File>
+              <FileName>core_cm4.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/core_cm4.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_gcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_armv8mbl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_armv8mml.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_common_tables.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_const_structs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/arm_math.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_iccarm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv8.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
+            </File>
+          </Files>
+        </Group>
       </Groups>
     </Target>
     <Target>
@@ -1333,7 +1422,7 @@ off
       <ToolsetName>ARM-ADS</ToolsetName>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MK64FN1M0xxx12</Device>
+          <Device>MK64FN1M0VLL12</Device>
           <Vendor>NXP</Vendor>
           <PackID>Keil.Kinetis_K60_DFP.1.4.0</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
@@ -1691,13 +1780,12 @@ off
             <vShortWch>0</vShortWch>
             <VariousControls>
               <MiscControls>--library_interface=armcc 
---library_type=standardlib 
 --diag_suppress=66,1296,186,170,2748,1461,1295,177,550 
- 
+--library_type=standardlib 
 </MiscControls>
               <Define>NDEBUG, CPU_MK64FN1M0VLL12, CPU_IS_ARM_CORTEX_M4=1, FREEDOM, BL_TARGET_FLASH, FRDM_K64F, USB_STACK_BM</Define>
               <Undefine/>
-              <IncludePath>../../../../../devices;../../../../../CMSIS/Include;../../../../../middleware/usb/include;../../../../../middleware/usb/device;../../../../../middleware/usb/device/class;../../../../../middleware/usb/osa;../../../../../middleware/usb;../../../../../middleware/mcu-boot/src;../../../../../middleware/mcu-boot/src/bootloader;../../../../../middleware/mcu-boot/src/include;../../../../../middleware/mcu-boot/src/startup;../../../../../middleware/mcu-boot/src/utilities;../../../../../middleware/mcu-boot/src/drivers;../../../../../middleware/mcu-boot/src/drivers/crc;../../../../../middleware/mcu-boot/src/drivers/microseconds;../../../../../middleware/mcu-boot/src/drivers/smc;../../../../../middleware/mcu-boot/targets/MK64F12/src;../../../../../middleware/mcu-boot/src/autobaud;../../../../../middleware/mcu-boot/src/bm_usb;../../../../../middleware/mcu-boot/src/security;../../../../../middleware/mcu-boot/src/drivers/ltc;../../../../../middleware/mcu-boot/src/drivers/mmcau;../../../../../devices/MK64F12;../../../../../devices/MK64F12/drivers;../../../../../project-root-path;..</IncludePath>
+              <IncludePath>../../../../../CMSIS/Include;../../../../../middleware/mcu-boot/src;../../../../../middleware/mcu-boot/src/bootloader;../../../../../middleware/mcu-boot/src/include;../../../../../middleware/mcu-boot/src/startup;../../../../../middleware/mcu-boot/src/utilities;../../../../../middleware/mcu-boot/src/drivers;../../../../../middleware/mcu-boot/src/drivers/crc;../../../../../middleware/mcu-boot/src/drivers/microseconds;../../../../../middleware/mcu-boot/src/drivers/smc;../../../../../middleware/mcu-boot/targets/MK64F12/src;../../../../../middleware/mcu-boot/src/autobaud;../../../../../middleware/mcu-boot/src/bm_usb;../../../../../middleware/mcu-boot/src/security;../../../../../middleware/mcu-boot/src/drivers/ltc;../../../../../middleware/mcu-boot/src/drivers/mmcau;../../../../../devices/MK64F12;../../../../../devices/MK64F12/drivers;..;../../../../../devices/MK64F12/drivers;../../../../../devices/MK64F12/drivers;../../../../../devices/MK64F12;../../../../../devices/MK64F12/drivers;../../../../../devices/MK64F12/drivers;../../../../../devices/MK64F12/drivers;../../../../../devices/MK64F12/drivers;../../../../../devices/MK64F12/drivers;../../../../../devices/MK64F12/drivers;../../../../../middleware/usb/device;../../../../../middleware/usb/include;../../../../../middleware/usb/osa;../../../../../devices/MK64F12/drivers</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1828,16 +1916,6 @@ off
               <FilePath>../../../../../devices/MK64F12/drivers/fsl_uart.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK64F12/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK64F12/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_gpio.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MK64F12/drivers/fsl_gpio.h</FilePath>
@@ -1882,6 +1960,46 @@ off
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MK64F12/drivers/fsl_crc.h</FilePath>
             </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK64F12/drivers/fsl_common.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>device</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_device_registers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK64F12/fsl_device_registers.h</FilePath>
+            </File>
+            <File>
+              <FileName>MK64F12.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK64F12/MK64F12.h</FilePath>
+            </File>
+            <File>
+              <FileName>MK64F12_features.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK64F12/MK64F12_features.h</FilePath>
+            </File>
+            <File>
+              <FileName>system_MK64F12.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK64F12/system_MK64F12.c</FilePath>
+            </File>
+            <File>
+              <FileName>system_MK64F12.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK64F12/system_MK64F12.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1896,11 +2014,6 @@ off
               <FileName>usb_device_khci.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/usb/device/usb_device_khci.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_khci.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/usb/include/usb_khci.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2038,89 +2151,19 @@ off
           <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>system_MK64F12.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK64F12/system_MK64F12.c</FilePath>
-            </File>
-            <File>
-              <FileName>system_MK64F12.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK64F12/system_MK64F12.h</FilePath>
-            </File>
-            <File>
               <FileName>startup_MK64F12.s</FileName>
               <FileType>2</FileType>
               <FilePath>../../../../../middleware/mcu-boot/targets/MK64F12/src/startup/arm/startup_MK64F12.s</FilePath>
-            </File>
-            <File>
-              <FileName>startup.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/startup/startup.c</FilePath>
             </File>
             <File>
               <FileName>ar_asm_macros.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mcu-boot/src/startup/ar_asm_macros.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>source-memory-src</GroupName>
-          <Files>
             <File>
-              <FileName>pattern_fill.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/pattern_fill.s</FilePath>
-            </File>
-            <File>
-              <FileName>sram_init.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/sram_init.h</FilePath>
-            </File>
-            <File>
-              <FileName>memory.c</FileName>
+              <FileName>startup.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/memory.c</FilePath>
-            </File>
-            <File>
-              <FileName>device_memory.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/device_memory.h</FilePath>
-            </File>
-            <File>
-              <FileName>device_memory.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/device_memory.c</FilePath>
-            </File>
-            <File>
-              <FileName>normal_memory.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/normal_memory.h</FilePath>
-            </File>
-            <File>
-              <FileName>normal_memory.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/normal_memory.c</FilePath>
-            </File>
-            <File>
-              <FileName>pattern_fill.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/pattern_fill.h</FilePath>
-            </File>
-            <File>
-              <FileName>flash_memory.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/flash_memory.h</FilePath>
-            </File>
-            <File>
-              <FileName>flash_memory.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/flash_memory.c</FilePath>
-            </File>
-            <File>
-              <FileName>sram_init_cm4.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/sram_init_cm4.c</FilePath>
+              <FilePath>../../../../../middleware/mcu-boot/src/startup/startup.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2183,11 +2226,6 @@ off
               <FilePath>../../../../../middleware/mcu-boot/src/bootloader/bl_shutdown_cleanup.h</FilePath>
             </File>
             <File>
-              <FileName>bl_reliable_update.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/bootloader/bl_reliable_update.h</FilePath>
-            </File>
-            <File>
               <FileName>bl_irq_common.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mcu-boot/src/bootloader/bl_irq_common.h</FilePath>
@@ -2196,6 +2234,11 @@ off
               <FileName>bl_app_crc_check.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mcu-boot/src/bootloader/bl_app_crc_check.h</FilePath>
+            </File>
+            <File>
+              <FileName>bl_reliable_update.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/bootloader/bl_reliable_update.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2238,6 +2281,21 @@ off
               <FilePath>../../../../../middleware/mcu-boot/src/bootloader/src/bl_shutdown_cleanup.c</FilePath>
             </File>
             <File>
+              <FileName>bl_app_crc_check.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/bootloader/src/bl_app_crc_check.c</FilePath>
+            </File>
+            <File>
+              <FileName>bl_misc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/bootloader/src/bl_misc.c</FilePath>
+            </File>
+            <File>
+              <FileName>bl_reliable_update.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/bootloader/src/bl_reliable_update.c</FilePath>
+            </File>
+            <File>
               <FileName>scuart_peripheral_interface.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mcu-boot/src/bootloader/src/scuart_peripheral_interface.c</FilePath>
@@ -2256,21 +2314,6 @@ off
               <FileName>usb_hid_msc_peripheral_interface.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mcu-boot/src/bootloader/src/usb_hid_msc_peripheral_interface.c</FilePath>
-            </File>
-            <File>
-              <FileName>bl_app_crc_check.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/bootloader/src/bl_app_crc_check.c</FilePath>
-            </File>
-            <File>
-              <FileName>bl_misc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/bootloader/src/bl_misc.c</FilePath>
-            </File>
-            <File>
-              <FileName>bl_reliable_update.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/bootloader/src/bl_reliable_update.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2300,21 +2343,6 @@ off
           </Files>
         </Group>
         <Group>
-          <GroupName>source-drivers-microseconds</GroupName>
-          <Files>
-            <File>
-              <FileName>microseconds.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/drivers/microseconds/microseconds.h</FilePath>
-            </File>
-            <File>
-              <FileName>microseconds_sysclk.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/drivers/microseconds/src/microseconds_sysclk.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>source-include</GroupName>
           <Files>
             <File>
@@ -2336,6 +2364,66 @@ off
               <FileName>memory.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mcu-boot/src/memory/memory.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>source-memory-src</GroupName>
+          <Files>
+            <File>
+              <FileName>sram_init.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/sram_init.h</FilePath>
+            </File>
+            <File>
+              <FileName>memory.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/memory.c</FilePath>
+            </File>
+            <File>
+              <FileName>device_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/device_memory.h</FilePath>
+            </File>
+            <File>
+              <FileName>device_memory.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/device_memory.c</FilePath>
+            </File>
+            <File>
+              <FileName>normal_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/normal_memory.h</FilePath>
+            </File>
+            <File>
+              <FileName>normal_memory.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/normal_memory.c</FilePath>
+            </File>
+            <File>
+              <FileName>pattern_fill.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/pattern_fill.s</FilePath>
+            </File>
+            <File>
+              <FileName>pattern_fill.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/pattern_fill.h</FilePath>
+            </File>
+            <File>
+              <FileName>flash_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/flash_memory.h</FilePath>
+            </File>
+            <File>
+              <FileName>flash_memory.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/flash_memory.c</FilePath>
+            </File>
+            <File>
+              <FileName>sram_init_cm4.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/sram_init_cm4.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2646,6 +2734,96 @@ off
               <FileName>mmcau_aes_functions.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mcu-boot/src/drivers/mmcau/src/mmcau_aes_functions.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>source-drivers-microseconds</GroupName>
+          <Files>
+            <File>
+              <FileName>microseconds.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/drivers/microseconds/microseconds.h</FilePath>
+            </File>
+            <File>
+              <FileName>microseconds_sysclk.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/drivers/microseconds/src/microseconds_sysclk.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS</GroupName>
+          <Files>
+            <File>
+              <FileName>core_cm4.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/core_cm4.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_gcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_armv8mbl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_armv8mml.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_common_tables.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_const_structs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/arm_math.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_iccarm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv8.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
           </Files>
         </Group>

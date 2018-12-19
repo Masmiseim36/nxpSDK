@@ -74,7 +74,10 @@ enum _available_commands
         |
         HAS_CMD(kCommandTag_GenerateKeyBlob)
 #endif // BL_FEATURE_GEN_KEYBLOB
-
+#if BL_FEATURE_KEY_PROVISIONING
+        |
+        HAS_CMD(kCommandTag_KeyProvisioning)
+#endif
 #else // BL_FEATURE_MIN_PROFILE
         HAS_CMD(kCommandTag_FlashEraseAll) | HAS_CMD(kCommandTag_FlashEraseRegion) | HAS_CMD(kCommandTag_WriteMemory)
 #if BL_FEATURE_FLASH_SECURITY
@@ -177,8 +180,19 @@ enum _flash_constants
     //! be the User Application vector table for the flash-resident bootloader
     //! collaboration.
     kBootloaderConfigAreaAddress = (uint32_t)(APP_VECTOR_TABLE) + 0x3c0,
-
+#if defined(FSL_FEATURE_FLASH_HAS_MULTIPLE_FLASH) || defined(FSL_FEATURE_FLASH_PFLASH_1_START_ADDRESS)
+#if BL_FEATURE_SUPPORT_DFLASH
+    kFLASHCount = 3,
+#else 
+    kFLASHCount = 2,
+#endif // BL_FEATURE_SUPPORT_DFLASH 
+#else   
+#if BL_FEATURE_SUPPORT_DFLASH
+    kFLASHCount = 2,
+#else    
     kFLASHCount = 1,
+#endif // BL_FEATURE_SUPPORT_DFLASH   
+#endif    
 };
 
 //!@brief Unique ID constants

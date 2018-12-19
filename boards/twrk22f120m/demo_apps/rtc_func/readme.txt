@@ -14,15 +14,6 @@ The RTC demo supports the following features:
 
 - Seconds interrupt
   + Use second interrupt function to display a digital time blink every second.
-
-Toolchain supported
-===================
-- IAR embedded Workbench 7.80.4
-- Keil MDK 5.21a
-- GCC ARM Embedded 2016-5.4-q3
-- Kinetis Development Studio IDE 3.2.0
-- MCUXpresso0.8
-
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -98,6 +89,11 @@ Shows the digital time animation by seconds-interrupt function.
 10:11:11
 ~~~~~~~~~~~~~~~~~~~~~
 
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

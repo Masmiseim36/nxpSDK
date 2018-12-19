@@ -84,13 +84,13 @@ SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DDEBUG")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DCPU_MK64FN1M0VLL12")
 
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DFRDM_K64F")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DFREEDOM")
-
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DFREESCALE_KSDK_BM")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DMBEDTLS_CONFIG_FILE='\"ksdk_mbedtls_config.h\"'")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DFRDM_K64F")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DFREEDOM")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -g")
 
@@ -130,13 +130,13 @@ SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DNDEBUG")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DCPU_MK64FN1M0VLL12")
 
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DFRDM_K64F")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DFREEDOM")
-
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DFREESCALE_KSDK_BM")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DMBEDTLS_CONFIG_FILE='\"ksdk_mbedtls_config.h\"'")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DFRDM_K64F")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DFREEDOM")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Os")
 
@@ -282,11 +282,23 @@ SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")
 
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} muldefs")
 
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Map=output.map")
+
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -mcpu=cortex-m4")
 
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -mfloat-abi=hard")
 
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -mfpu=fpv4-sp-d16")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} --defsym=__stack_size__=0x2000")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} --defsym=__heap_size__=0x8000")
 
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} --specs=nano.specs")
 
@@ -324,19 +336,31 @@ SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
 
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} muldefs")
 
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Map=output.map")
+
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mcpu=cortex-m4")
 
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mfloat-abi=hard")
 
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mfpu=fpv4-sp-d16")
 
-include_directories(${ProjDirPath}/../../../../../CMSIS/Include)
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
 
-include_directories(${ProjDirPath}/../../../../../devices)
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} --defsym=__stack_size__=0x2000")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} --defsym=__heap_size__=0x8000")
+
+include_directories(${ProjDirPath}/..)
 
 include_directories(${ProjDirPath}/../../..)
 
-include_directories(${ProjDirPath}/..)
+include_directories(${ProjDirPath}/../../../../../CMSIS/Include)
+
+include_directories(${ProjDirPath}/../../../../../devices)
 
 include_directories(${ProjDirPath}/../../../../../middleware/mmcau)
 
@@ -346,15 +370,17 @@ include_directories(${ProjDirPath}/../../../../../middleware/mbedtls/port/ksdk)
 
 include_directories(${ProjDirPath}/../../../../../devices/MK64F12/drivers)
 
-include_directories(${ProjDirPath}/../../../../../devices/MK64F12/utilities/io)
-
 include_directories(${ProjDirPath}/../../../../../devices/MK64F12/utilities/str)
 
-include_directories(${ProjDirPath}/../../../../../devices/MK64F12/utilities/log)
-
-include_directories(${ProjDirPath}/../../../../../devices/MK64F12/utilities)
+include_directories(${ProjDirPath}/../../../../../devices/MK64F12/utilities/debug_console)
 
 include_directories(${ProjDirPath}/../../../../../devices/MK64F12)
+
+include_directories(${ProjDirPath}/../../../../../components/uart)
+
+include_directories(${ProjDirPath}/../../../../../components/serial_manager)
+
+include_directories(${ProjDirPath}/../../../../../components/lists)
 
 add_executable(mbedtls_selftest.elf 
 "${ProjDirPath}/../selftest.c"
@@ -366,48 +392,14 @@ add_executable(mbedtls_selftest.elf
 "${ProjDirPath}/../clock_config.h"
 "${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_rnga.c"
 "${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_rnga.h"
-"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_common.h"
-"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_common.c"
-"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_clock.h"
-"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_clock.c"
 "${ProjDirPath}/../../../../../middleware/mmcau/cau_api.h"
 "${ProjDirPath}/../../../../../middleware/mmcau/fsl_mmcau.h"
 "${ProjDirPath}/../../../../../middleware/mmcau/fsl_mmcau.c"
-"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_adapter.h"
-"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_utilities.h"
-"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_features.h"
-"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_controller.c"
-"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_controller.h"
-"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_flash.c"
-"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_flash.h"
-"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_cache.c"
-"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_cache.h"
-"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_flexnvm.c"
-"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_flexnvm.h"
-"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_flash.h"
-"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_gpio.h"
-"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_gpio.c"
-"${ProjDirPath}/../../../../../devices/MK64F12/utilities/io/fsl_io.c"
-"${ProjDirPath}/../../../../../devices/MK64F12/utilities/io/fsl_io.h"
-"${ProjDirPath}/../../../../../devices/MK64F12/utilities/log/fsl_log.c"
-"${ProjDirPath}/../../../../../devices/MK64F12/utilities/log/fsl_log.h"
-"${ProjDirPath}/../../../../../devices/MK64F12/utilities/str/fsl_str.c"
-"${ProjDirPath}/../../../../../devices/MK64F12/utilities/str/fsl_str.h"
-"${ProjDirPath}/../../../../../devices/MK64F12/utilities/fsl_debug_console.c"
-"${ProjDirPath}/../../../../../devices/MK64F12/utilities/fsl_debug_console.h"
-"${ProjDirPath}/../../../../../devices/MK64F12/utilities/fsl_debug_console_conf.h"
 "${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_port.h"
-"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_uart.h"
-"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_uart.c"
-"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_smc.h"
-"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_smc.c"
-"${ProjDirPath}/../../../../../devices/MK64F12/system_MK64F12.c"
-"${ProjDirPath}/../../../../../devices/MK64F12/system_MK64F12.h"
-"${ProjDirPath}/../../../../../devices/MK64F12/gcc/startup_MK64F12.S"
-"${ProjDirPath}/../../../../../devices/MK64F12/utilities/fsl_assert.c"
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/aes.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/aesni.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/arc4.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/aria.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/asn1.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/asn1write.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/base64.h"
@@ -417,6 +409,8 @@ add_executable(mbedtls_selftest.elf
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/camellia.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/ccm.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/certs.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/chacha20.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/chachapoly.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/check_config.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/cipher.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/cipher_internal.h"
@@ -437,6 +431,7 @@ add_executable(mbedtls_selftest.elf
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/error.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/gcm.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/havege.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/hkdf.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/hmac_drbg.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/md.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/md_internal.h"
@@ -446,6 +441,7 @@ add_executable(mbedtls_selftest.elf
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/memory_buffer_alloc.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/net.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/net_sockets.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/nist_kw.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/oid.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/padlock.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/pem.h"
@@ -456,6 +452,8 @@ add_executable(mbedtls_selftest.elf
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/pkcs12.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/platform.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/platform_time.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/platform_util.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/poly1305.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/ripemd160.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/rsa.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/rsa_internal.h"
@@ -479,6 +477,7 @@ add_executable(mbedtls_selftest.elf
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/aes.c"
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/aesni.c"
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/arc4.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/aria.c"
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/asn1parse.c"
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/asn1write.c"
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/base64.c"
@@ -489,6 +488,8 @@ add_executable(mbedtls_selftest.elf
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/certs.c"
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/cipher.c"
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/cipher_wrap.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/chacha20.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/chachapoly.c"
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/cmac.c"
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/ctr_drbg.c"
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/debug.c"
@@ -504,6 +505,7 @@ add_executable(mbedtls_selftest.elf
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/error.c"
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/gcm.c"
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/havege.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/hkdf.c"
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/hmac_drbg.c"
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/md.c"
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/md_wrap.c"
@@ -512,6 +514,7 @@ add_executable(mbedtls_selftest.elf
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/md5.c"
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/memory_buffer_alloc.c"
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/net_sockets.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/nist_kw.c"
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/oid.c"
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/padlock.c"
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/pem.c"
@@ -522,6 +525,8 @@ add_executable(mbedtls_selftest.elf
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/pkparse.c"
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/pkwrite.c"
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/platform.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/platform_util.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/library/poly1305.c"
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/ripemd160.c"
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/rsa.c"
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/rsa_internal.c"
@@ -554,7 +559,65 @@ add_executable(mbedtls_selftest.elf
 "${ProjDirPath}/../../../../../middleware/mbedtls/port/ksdk/sha256_alt.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/port/ksdk/des_alt.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/port/ksdk/des_alt.c"
+"${ProjDirPath}/../../../../../middleware/mbedtls/port/ksdk/aes_alt.h"
+"${ProjDirPath}/../../../../../middleware/mbedtls/port/ksdk/aes_alt.c"
 "${ProjDirPath}/../../../../../middleware/mbedtls/library/pkcs11.c"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_adapter.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_utilities.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_features.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_controller.c"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_controller.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_flash.c"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_flash.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_cache.c"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_cache.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_flexnvm.c"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_ftfx_flexnvm.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_flash.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_gpio.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_gpio.c"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_clock.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_clock.c"
+"${ProjDirPath}/../../../../../devices/MK64F12/utilities/str/fsl_str.c"
+"${ProjDirPath}/../../../../../devices/MK64F12/utilities/str/fsl_str.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/utilities/debug_console/fsl_debug_console.c"
+"${ProjDirPath}/../../../../../devices/MK64F12/utilities/debug_console/fsl_debug_console.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/utilities/debug_console/fsl_debug_console_conf.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_uart.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_uart.c"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_smc.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_smc.c"
+"${ProjDirPath}/../../../../../devices/MK64F12/fsl_device_registers.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/MK64F12.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/MK64F12_features.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/system_MK64F12.c"
+"${ProjDirPath}/../../../../../devices/MK64F12/system_MK64F12.h"
+"${ProjDirPath}/../../../../../components/uart/uart.h"
+"${ProjDirPath}/../../../../../components/uart/uart_adapter.c"
+"${ProjDirPath}/../../../../../components/serial_manager/serial_manager.h"
+"${ProjDirPath}/../../../../../components/serial_manager/serial_manager.c"
+"${ProjDirPath}/../../../../../components/serial_manager/serial_port_uart.h"
+"${ProjDirPath}/../../../../../components/serial_manager/serial_port_uart.c"
+"${ProjDirPath}/../../../../../components/lists/generic_list.h"
+"${ProjDirPath}/../../../../../components/lists/generic_list.c"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_common.h"
+"${ProjDirPath}/../../../../../devices/MK64F12/drivers/fsl_common.c"
+"${ProjDirPath}/../../../../../devices/MK64F12/gcc/startup_MK64F12.S"
+"${ProjDirPath}/../../../../../devices/MK64F12/utilities/fsl_assert.c"
+"${ProjDirPath}/../../../../../CMSIS/Include/core_cm4.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armcc.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armclang.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_gcc.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_compiler.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_version.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv7.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/core_armv8mbl.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/core_armv8mml.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/arm_common_tables.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/arm_const_structs.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/arm_math.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_iccarm.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv8.h"
 )
 
 

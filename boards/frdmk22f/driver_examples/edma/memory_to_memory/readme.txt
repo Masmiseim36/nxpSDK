@@ -4,14 +4,6 @@ The EDMA memory to memory example is a simple demonstration program that uses th
 It excuates one shot transfer from source buffer to destination buffer using the SDK EDMA drivers.
 The purpose of this example is to show how to use the EDMA and to provide a simple example for
 debugging and further development.
-
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
-
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -50,6 +42,11 @@ Destination Buffer:
 1       2       3       4
 ~~~~~~~~~~~~~~~~~~~~~
 
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

@@ -3,28 +3,16 @@
  * @author NXP Semiconductors
  * @version 1.0
  * @par License
- * Copyright(C) NXP Semiconductors, 2016
- * All rights reserved.
+ * Copyright 2016 NXP
  *
- * Software that is described herein is for illustrative purposes only
- * which provides customers with programming information regarding the
- * A7-series security ICs.  This software is supplied "AS IS" without any
- * warranties of any kind, and NXP Semiconductors and its licensor disclaim any and
- * all warranties, express or implied, including all implied warranties of
- * merchantability, fitness for a particular purpose and non-infringement of
- * intellectual property rights.  NXP Semiconductors assumes no responsibility
- * or liability for the use of the software, conveys no license or rights under any
- * patent, copyright, mask work right, or any other intellectual property rights in
- * or to any products. NXP Semiconductors reserves the right to make changes
- * in the software without notification. NXP Semiconductors also makes no
- * representation or warranty that such application will be suitable for the
- * specified use without further testing or modification.
+ * This software is owned or controlled by NXP and may only be used
+ * strictly in accordance with the applicable license terms.  By expressly
+ * accepting such terms or by downloading, installing, activating and/or
+ * otherwise using the software, you are agreeing that you have read, and
+ * that you agree to comply with and are bound by, such license terms.  If
+ * you do not agree to be bound by the applicable license terms, then you
+ * may not retain, install, activate or otherwise use the software.
  *
- * Permission to use, copy and modify this software is hereby granted,
- * under NXP Semiconductors' and its licensor's relevant copyrights in
- * the software, without fee, provided that it is used in conjunction with
- * NXP Semiconductors products. This copyright, permission, and disclaimer notice
- * must appear in all copies of this code.
  * @par Description
  * Host Crypto stub implementation for the A7-series
  *
@@ -43,10 +31,13 @@
 #include <mbedtls/aes.h>
 #include <mbedtls/ctr_drbg.h>
 #include <mbedtls/entropy.h>
-#include <mbedtls/cmac.h>
+#ifdef MBEDTLS_CMAC_C
+#   include <mbedtls/cmac.h>
+#endif
 #include <mbedtls/sha256.h>
 #include <mbedtls/sha1.h>
 #include "mbedtls/entropy_poll.h"
+#include <mbedtls/version.h>
 
 static mbedtls_cipher_context_t cipher_ctx;
 // Provide here your own implementation (In case crypto is required and OpenSSL is not available)
@@ -55,9 +46,15 @@ S32 HOST_SHA1_Get(const U8 *msg, U32 msgLen, U8 *pHash)
     mbedtls_sha1_context sha1_ctx;
 
     mbedtls_sha1_init(&sha1_ctx);
+#if (MBEDTLS_VERSION_NUMBER <= 0x02060000)
     mbedtls_sha1_starts(&sha1_ctx);
     mbedtls_sha1_update(&sha1_ctx,msg,msgLen);
     mbedtls_sha1_finish(&sha1_ctx,pHash);
+#else
+    mbedtls_sha1_starts_ret(&sha1_ctx);
+    mbedtls_sha1_update_ret(&sha1_ctx,msg,msgLen);
+    mbedtls_sha1_finish_ret(&sha1_ctx,pHash);
+#endif
     mbedtls_sha1_free(&sha1_ctx);
 
     return HOST_CRYPTO_OK;
@@ -66,12 +63,19 @@ S32 HOST_SHA1_Get(const U8 *msg, U32 msgLen, U8 *pHash)
 S32 HOST_SHA256_Get(const U8 *msg, U32 msgLen, U8 *pHash)
 {
     mbedtls_sha256_context sha256_ctx;
-
+#if (MBEDTLS_VERSION_NUMBER <= 0x02060000)
     mbedtls_sha256_init(&sha256_ctx);
     mbedtls_sha256_starts(&sha256_ctx,0);
     mbedtls_sha256_update(&sha256_ctx,msg,msgLen);
     mbedtls_sha256_finish(&sha256_ctx,pHash);
     mbedtls_sha256_free(&sha256_ctx);
+#else
+    mbedtls_sha256_init(&sha256_ctx);
+    mbedtls_sha256_starts_ret(&sha256_ctx,0);
+    mbedtls_sha256_update_ret(&sha256_ctx,msg,msgLen);
+    mbedtls_sha256_finish_ret(&sha256_ctx,pHash);
+    mbedtls_sha256_free(&sha256_ctx);
+#endif
 
     return HOST_CRYPTO_OK;
 }
@@ -154,7 +158,11 @@ S32 HOST_CMAC_Init(axHcCmacCtx_t **ctx, const U8 *pKey,  U8 keySizeInBytes)
         ret = mbedtls_cipher_setup( *ctx, cipher_info );
         if (ret == 0)
         {
+#ifdef MBEDTLS_CMAC_C
             ret = mbedtls_cipher_cmac_starts(*ctx,pKey,(keySizeInBytes * 8));
+#else
+            ret = 1;
+#endif
             if (ret == 0)
             {
                 ret = HOST_CRYPTO_OK;
@@ -252,7 +260,7 @@ S32 HOST_GetRandom(U32 inLen, U8 *pRandom)
         }
     }
 
-#elif defined(FREEDOM)
+#elif AX_EMBEDDED
     size_t olen = 0;
     mbedtls_hardware_poll(NULL, pRandom, inLen, &olen);
     nRet = HOST_CRYPTO_OK;

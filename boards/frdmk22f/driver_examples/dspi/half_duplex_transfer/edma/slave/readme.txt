@@ -9,14 +9,6 @@ data back to master, so the begain address of the receive buffer is &rxDataPolli
 In this example, one spi instance as slave and another spi instance on the other board as master. Master sends a 
 piece of data to slave, and receive a piece of data from slave. This example checks if the data received from 
 master is correct. And slave will print what it received.
-
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
-
 Hardware requirements
 =====================
 - Mini USB cable
@@ -68,6 +60,11 @@ The received data are:
 
 Slave transfer completed.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

@@ -137,8 +137,8 @@ typedef enum
 /*! @brief Available common EVENT types in MSC class callback */
 typedef enum
 {
-    kUSB_DeviceMscEventReadResponse = 0x01U, /*!< host has already read the whole data from device */
-    kUSB_DeviceMscEventWriteResponse,        /*!< devcie has already received the data from host. */
+    kUSB_DeviceMscEventReadResponse = 0x01U, /*!< host has already read the whole data from device or device send is cancelled etc*/
+    kUSB_DeviceMscEventWriteResponse,        /*!< devcie has already received the data from host or device receive is cancelled etc. */
     kUSB_DeviceMscEventWriteRequest, /*!< Host want to write data to device through write command, devcie need prepare
                                         one buffer to store the data from host*/
     kUSB_DeviceMscEventReadRequest,  /*!< Host want to read data from device through read command, device need prepare

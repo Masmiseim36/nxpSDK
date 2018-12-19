@@ -1,5 +1,5 @@
 /*
- * Amazon FreeRTOS V1.2.0
+ * Amazon FreeRTOS V1.4.0
  * Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -42,11 +42,11 @@
 #include "task.h"
 #include "semphr.h"
 
-/* Logging includes. */
-#include "aws_logging_task.h"
-
 /* PKCS#11 includes. */
 #include "aws_pkcs11.h"
+
+/* Logging includes. */
+#include "aws_logging_task.h"
 
 /* Client credential includes. */
 #include "aws_clientcredential.h"

@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
  * Copyright 2016 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #ifndef __USB_DEVICE_DCI_H__
@@ -85,15 +59,15 @@ typedef enum _usb_device_control_type
     kUSB_DeviceControlEndpointInit,      /*!< Initialize a specified endpoint */
     kUSB_DeviceControlEndpointDeinit,    /*!< De-initialize a specified endpoint */
     kUSB_DeviceControlEndpointStall,     /*!< Stall a specified endpoint */
-    kUSB_DeviceControlEndpointUnstall,   /*!< Unstall a specified endpoint */
+    kUSB_DeviceControlEndpointUnstall,   /*!< Un-stall a specified endpoint */
     kUSB_DeviceControlGetDeviceStatus,   /*!< Get device status */
     kUSB_DeviceControlGetEndpointStatus, /*!< Get endpoint status */
     kUSB_DeviceControlSetDeviceAddress,  /*!< Set device address */
     kUSB_DeviceControlGetSynchFrame,     /*!< Get current frame */
     kUSB_DeviceControlResume,            /*!< Drive controller to generate a resume signal in USB bus */
     kUSB_DeviceControlSleepResume,       /*!< Drive controller to generate a LPM resume signal in USB bus */
-    kUSB_DeviceControlSuspend,           /*!< Drive controller to enetr into suspend mode */
-    kUSB_DeviceControlSleep,             /*!< Drive controller to enetr into sleep mode */
+    kUSB_DeviceControlSuspend,           /*!< Drive controller to enter into suspend mode */
+    kUSB_DeviceControlSleep,             /*!< Drive controller to enter into sleep mode */
     kUSB_DeviceControlSetDefaultStatus,  /*!< Set controller to default status */
     kUSB_DeviceControlGetSpeed,          /*!< Get current speed */
     kUSB_DeviceControlGetOtgStatus,      /*!< Get OTG status */
@@ -104,6 +78,7 @@ typedef enum _usb_device_control_type
     kUSB_DeviceControlDcdInitModule,
     kUSB_DeviceControlDcdDeinitModule,
 #endif
+    kUSB_DeviceControlPreSetDeviceAddress, /*!< Pre set device address */
 } usb_device_control_type_t;
 
 /*! @brief USB device controller initialization function typedef */

@@ -7,13 +7,26 @@ In this example , one dspi instance used as DSPI master with blocking and anothe
 1. DSPI master sends/receives data using task blocking calls to/from DSPI slave. (DSPI Slave uses interrupt to receive/
 send the data)
 
+Running the demo
+================
+When the demo runs successfully, the log would be seen on the OpenSDA terminal like:
 
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+FreeRTOS DSPI example start.
+This example use one dspi instance as master and another as slave on one board.
+Master and slave are both use interrupt way.
+Please make sure you make the correct line connection. Basically, the connection is:
+DSPI_master -- DSPI_slave
+   CLK      --    CLK
+   PCS0     --    PCS0
+   SOUT     --    SIN
+   SIN      --    SOUT
+DSPI master transfer completed successfully.
+
+DSPI slave transfer completed successfully.
+
+DSPI transfer all data matched!!
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Hardware requirements
 =====================
@@ -48,27 +61,11 @@ Prepare the Demo
 4. Either press the reset button on your board or launch the debugger in your IDE to begin running
    the demo.
 
-Running the demo
-================
-When the demo runs successfully, the log would be seen on the OpenSDA terminal like:
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-FreeRTOS DSPI example start.
-This example use one dspi instance as master and another as slave on one board.
-Master and slave are both use interrupt way.
-Please make sure you make the correct line connection. Basically, the connection is:
-DSPI_master -- DSPI_slave
-   CLK      --    CLK
-   PCS0     --    PCS0
-   SOUT     --    SIN
-   SIN      --    SOUT
-DSPI master transfer completed successfully.
-
-DSPI slave transfer completed successfully.
-
-DSPI transfer all data matched!!
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Customization options
-=====================
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

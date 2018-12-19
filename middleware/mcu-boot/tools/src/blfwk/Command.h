@@ -73,6 +73,8 @@ const cmd_t kCommand_ListMemory(0x00, 0x00000000, "list-memory");
 // to avoid the confusion that efuse is not a part of internal flash.
 const cmd_t kCommand_EfuseProgramOnce(0x00, 0x00000000, "efuse-program-once");
 const cmd_t kCommand_EfuseReadOnce(0x00, 0x00000000, "efuse-read-once");
+const cmd_t kCommand_ProgramAESKey(0x00, 0x00000000, "program-aeskey");
+
 
 const array<const cmd_t, 25> kCommands = { kCommand_FlashEraseAll,
                                            kCommand_FlashEraseRegion,

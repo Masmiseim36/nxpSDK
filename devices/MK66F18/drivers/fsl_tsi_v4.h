@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- *  that the following conditions are met:
  *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 #ifndef _FSL_TSI_V4_H_
 #define _FSL_TSI_V4_H_
@@ -40,7 +14,6 @@
  * @addtogroup tsi_v4_driver
  * @{
  */
-
 
 /*******************************************************************************
  * Definitions
@@ -53,7 +26,7 @@
 /*@}*/
 
 /*! @brief TSI status flags macro collection */
-#define ALL_FLAGS_MASK  (TSI_GENCS_EOSF_MASK | TSI_GENCS_OUTRGF_MASK)
+#define ALL_FLAGS_MASK (TSI_GENCS_EOSF_MASK | TSI_GENCS_OUTRGF_MASK)
 
 /*! @brief resistor bit shift in EXTCHRG bit-field */
 #define TSI_V4_EXTCHRG_RESISTOR_BIT_SHIFT TSI_GENCS_EXTCHRG_SHIFT
@@ -217,8 +190,8 @@ typedef enum _tsi_filter_bits
 /*! @brief TSI status flags. */
 typedef enum _tsi_status_flags
 {
-    kTSI_EndOfScanFlag = TSI_GENCS_EOSF_MASK,   /*!< End-Of-Scan flag */
-    kTSI_OutOfRangeFlag = TSI_GENCS_OUTRGF_MASK /*!< Out-Of-Range flag */
+    kTSI_EndOfScanFlag = TSI_GENCS_EOSF_MASK,        /*!< End-Of-Scan flag */
+    kTSI_OutOfRangeFlag = (int)TSI_GENCS_OUTRGF_MASK /*!< Out-Of-Range flag */
 } tsi_status_flags_t;
 
 /*! @brief TSI feature interrupt source.*/
@@ -447,7 +420,7 @@ static inline void TSI_EnableModule(TSI_Type *base, bool enable)
 {
     if (enable)
     {
-        base->GENCS = (base->GENCS & ~ALL_FLAGS_MASK) | TSI_GENCS_TSIEN_MASK;    /* Enable module */
+        base->GENCS = (base->GENCS & ~ALL_FLAGS_MASK) | TSI_GENCS_TSIEN_MASK; /* Enable module */
     }
     else
     {
@@ -469,11 +442,13 @@ static inline void TSI_EnableLowPower(TSI_Type *base, bool enable)
 {
     if (enable)
     {
-        base->GENCS = (base->GENCS & ~ALL_FLAGS_MASK) | TSI_GENCS_STPE_MASK;    /* Module enabled in low power stop modes */
+        base->GENCS =
+            (base->GENCS & ~ALL_FLAGS_MASK) | TSI_GENCS_STPE_MASK; /* Module enabled in low power stop modes */
     }
     else
     {
-        base->GENCS = (base->GENCS & ~ALL_FLAGS_MASK) & (~TSI_GENCS_STPE_MASK); /* Module disabled in low power stop modes */
+        base->GENCS =
+            (base->GENCS & ~ALL_FLAGS_MASK) & (~TSI_GENCS_STPE_MASK); /* Module disabled in low power stop modes */
     }
 }
 
@@ -490,7 +465,7 @@ static inline void TSI_EnableHardwareTriggerScan(TSI_Type *base, bool enable)
 {
     if (enable)
     {
-        base->GENCS = (base->GENCS & ~ALL_FLAGS_MASK) | TSI_GENCS_STM_MASK;    /* Enable hardware trigger scan */
+        base->GENCS = (base->GENCS & ~ALL_FLAGS_MASK) | TSI_GENCS_STM_MASK; /* Enable hardware trigger scan */
     }
     else
     {
@@ -569,12 +544,14 @@ static inline void TSI_EnableEndOfScanDmaTransferOnly(TSI_Type *base, bool enabl
 {
     if (enable)
     {
-        base->GENCS = (base->GENCS & ~ALL_FLAGS_MASK) | TSI_GENCS_EOSDMEO_MASK; /* Enable End of Scan DMA transfer request only; */
+        base->GENCS = (base->GENCS & ~ALL_FLAGS_MASK) |
+                      TSI_GENCS_EOSDMEO_MASK; /* Enable End of Scan DMA transfer request only; */
     }
     else
     {
         base->GENCS =
-            (base->GENCS & ~ALL_FLAGS_MASK) & (~TSI_GENCS_EOSDMEO_MASK); /* Both End-of-Scan and Out-of-Range can generate DMA transfer request. */
+            (base->GENCS & ~ALL_FLAGS_MASK) &
+            (~TSI_GENCS_EOSDMEO_MASK); /* Both End-of-Scan and Out-of-Range can generate DMA transfer request. */
     }
 }
 #endif /* End of (FSL_FEATURE_TSI_HAS_END_OF_SCAN_DMA_ENABLE == 1)*/

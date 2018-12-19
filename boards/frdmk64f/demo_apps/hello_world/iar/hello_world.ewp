@@ -182,12 +182,12 @@
           <name>CCDefines</name>
           <state>DEBUG</state>
           <state>CPU_MK64FN1M0VLL12</state>
-          <state>FRDM_K64F</state>
-          <state>FREEDOM</state>
           <state>PRINTF_FLOAT_ENABLE=0</state>
           <state>SCANF_FLOAT_ENABLE=0</state>
           <state>PRINTF_ADVANCED_ENABLE=0</state>
           <state>SCANF_ADVANCED_ENABLE=0</state>
+          <state>FRDM_K64F</state>
+          <state>FREEDOM</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -227,7 +227,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050,Pe167</state>
+          <state>Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -316,16 +316,24 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
+          <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../..</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../devices</state>
-          <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../devices/MK64F12/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MK64F12/utilities/io</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK64F12/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK64F12/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MK64F12/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MK64F12/utilities/log</state>
-          <state>$PROJ_DIR$/../../../../../devices/MK64F12/utilities</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK64F12/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK64F12/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK64F12/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK64F12/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MK64F12</state>
+          <state>$PROJ_DIR$/../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK64F12/drivers</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -396,11 +404,11 @@
         </option>
         <option>
           <name>IccExceptions</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccRTTI</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccStaticDestr</name>
@@ -774,7 +782,6 @@
         </option>
         <option>
           <name>IlinkExtraOptions</name>
-          <state/>
         </option>
         <option>
           <name>IlinkLowLevelInterfaceSlave</name>
@@ -1158,12 +1165,12 @@
           <name>CCDefines</name>
           <state>NDEBUG</state>
           <state>CPU_MK64FN1M0VLL12</state>
-          <state>FRDM_K64F</state>
-          <state>FREEDOM</state>
           <state>PRINTF_FLOAT_ENABLE=0</state>
           <state>SCANF_FLOAT_ENABLE=0</state>
           <state>PRINTF_ADVANCED_ENABLE=0</state>
           <state>SCANF_ADVANCED_ENABLE=0</state>
+          <state>FRDM_K64F</state>
+          <state>FREEDOM</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1203,7 +1210,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050,Pe167</state>
+          <state>Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -1240,7 +1247,7 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
@@ -1292,16 +1299,24 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
+          <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../..</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../devices</state>
-          <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../devices/MK64F12/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MK64F12/utilities/io</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK64F12/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK64F12/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MK64F12/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MK64F12/utilities/log</state>
-          <state>$PROJ_DIR$/../../../../../devices/MK64F12/utilities</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK64F12/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK64F12/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK64F12/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK64F12/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MK64F12</state>
+          <state>$PROJ_DIR$/../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK64F12/drivers</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1372,11 +1387,11 @@
         </option>
         <option>
           <name>IccExceptions</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccRTTI</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccStaticDestr</name>
@@ -1750,7 +1765,6 @@
         </option>
         <option>
           <name>IlinkExtraOptions</name>
-          <state/>
         </option>
         <option>
           <name>IlinkLowLevelInterfaceSlave</name>
@@ -1967,21 +1981,18 @@
     <file>
       <name>$PROJ_DIR$/../pin_mux.h</name>
     </file>
-    <group>
-      <name>src</name>
-      <file>
-        <name>$PROJ_DIR$/../board.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../board.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../clock_config.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../clock_config.h</name>
-      </file>
-    </group>
+    <file>
+      <name>$PROJ_DIR$/../board.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../board.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../clock_config.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../clock_config.h</name>
+    </file>
   </group>
   <group>
     <name>doc</name>
@@ -1991,6 +2002,12 @@
   </group>
   <group>
     <name>drivers</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_gpio.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_gpio.c</name>
+    </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_ftfx_adapter.h</name>
     </file>
@@ -2028,18 +2045,6 @@
       <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_flash.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_gpio.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_gpio.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_common.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_common.c</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_clock.h</name>
     </file>
     <file>
@@ -2060,21 +2065,15 @@
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_smc.c</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_common.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK64F12/drivers/fsl_common.c</name>
+    </file>
   </group>
   <group>
     <name>utilities</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK64F12/utilities/io/fsl_io.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK64F12/utilities/io/fsl_io.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK64F12/utilities/log/fsl_log.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK64F12/utilities/log/fsl_log.h</name>
-    </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK64F12/utilities/str/fsl_str.c</name>
     </file>
@@ -2082,28 +2081,121 @@
       <name>$PROJ_DIR$/../../../../../devices/MK64F12/utilities/str/fsl_str.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK64F12/utilities/fsl_debug_console.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MK64F12/utilities/debug_console/fsl_debug_console.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK64F12/utilities/fsl_debug_console.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MK64F12/utilities/debug_console/fsl_debug_console.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK64F12/utilities/fsl_debug_console_conf.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MK64F12/utilities/debug_console/fsl_debug_console_conf.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK64F12/utilities/fsl_assert.c</name>
     </file>
   </group>
   <group>
-    <name>startup</name>
+    <name>device</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK64F12/fsl_device_registers.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK64F12/MK64F12.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK64F12/MK64F12_features.h</name>
+    </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK64F12/system_MK64F12.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK64F12/system_MK64F12.h</name>
     </file>
+  </group>
+  <group>
+    <name>component</name>
+    <group>
+      <name>uart</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/uart/uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/uart/uart_adapter.c</name>
+      </file>
+    </group>
+    <group>
+      <name>serial_manager</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_manager.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_manager.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_uart.c</name>
+      </file>
+    </group>
+    <group>
+      <name>lists</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.c</name>
+      </file>
+    </group>
+  </group>
+  <group>
+    <name>startup</name>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK64F12/iar/startup_MK64F12.s</name>
+    </file>
+  </group>
+  <group>
+    <name>CMSIS</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_cm4.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armcc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armclang.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_gcc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_compiler.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_version.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv7.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mbl.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mml.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_common_tables.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_const_structs.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_math.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_iccarm.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv8.h</name>
     </file>
   </group>
 </project>

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<metadata>
+  <components>
+    <component name="project_template.frdmk64f_om13588" provides="project_template" requires="platform.devices.device platform.devices.MK64F12 platform.devices.MK64F12_startup platform.drivers platform.drivers.uart platform.drivers.port platform.drivers.common platform.utilities platform.utilities.debug_console platform.drivers.gpio platform.drivers.smc platform.drivers.clock kits.FRDM-K64F-OM13588" type="project_template" component_bundle="bundles.board_project_templates" variant="frdmk64f_om13588">
+      <source path="./">
+        <files mask="board.c"/>
+        <files mask="board.h"/>
+        <files mask="clock_config.c"/>
+        <files mask="clock_config.h"/>
+        <files mask="pin_mux.c"/>
+        <files mask="pin_mux.h"/>
+        <files mask="peripherals.c"/>
+        <files mask="peripherals.h"/>
+        <files mask="project_template.meta"/>
+      </source>
+    </component>
+  </components>
+</metadata>

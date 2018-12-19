@@ -10,6 +10,9 @@
 #include "bootloader/bl_context.h"
 #include "memory/memory.h"
 #include "utilities/fsl_assert.h"
+#if BL_FEATURE_AES_OTP
+#include "aes_otp/aes_otp.h"
+#endif
 
 //! @addtogroup memif
 //! @{
@@ -103,12 +106,12 @@ status_t mem_write(uint32_t address, uint32_t length, const uint8_t *buffer, uin
         return kStatus_Success;
     }
 
-#if BL_FEATURE_EXPAND_MEMORY
+#if BL_FEATURE_EXPAND_MEMORY || BL_FEATURE_AES_OTP
     switch (GROUPID(memoryId))
     {
         case kGroup_Internal:
         {
-#endif // BL_FEATURE_EXPAND_MEMORY
+#endif // BL_FEATURE_EXPAND_MEMORY || BL_FEATURE_AES_OTP
             if (mem_is_block_reserved(address, length))
             {
                 return kStatusMemoryRangeInvalid;
@@ -150,6 +153,19 @@ status_t mem_write(uint32_t address, uint32_t length, const uint8_t *buffer, uin
                     s_flush = NULL;
                 }
             }
+            return status;
+        }
+        // "break;" is not needed for always executing return.
+        default:
+            return kStatusMemoryRangeInvalid;
+    }
+#endif // BL_FEATURE_EXPAND_MEMORY
+#if BL_FEATURE_AES_OTP
+        }
+        // "break;" is not needed for always executing return.
+        case kGroup_AES_OTP:
+        {
+            uint32_t status = scramble_and_program_aes_key(buffer, length);
             return status;
         }
         // "break;" is not needed for always executing return.

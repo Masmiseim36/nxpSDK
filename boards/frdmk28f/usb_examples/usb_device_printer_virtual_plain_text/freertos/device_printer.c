@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016 - 2017 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "usb_device_config.h"
@@ -280,6 +254,7 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
             g_DevicePrinterApp.printerState = kPrinter_Idle;
             g_DevicePrinterApp.sendBuffer = NULL;
             g_DevicePrinterApp.sendLength = 0;
+            g_DevicePrinterApp.currentConfiguration = 0U;
 #if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)) || \
     (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
             /* Get USB speed to configure the device, including max packet size and interval of the endpoints. */
@@ -306,25 +281,35 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
 #endif
 
         case kUSB_DeviceEventSetConfiguration:
-            if (param)
+            if (0 == *param8p)
+            {
+                g_DevicePrinterApp.attach = 0U;
+                g_DevicePrinterApp.currentConfiguration = 0U;
+                g_DevicePrinterApp.printerState = kPrinter_Idle;
+                g_DevicePrinterApp.sendBuffer = NULL;
+                g_DevicePrinterApp.sendLength = 0;
+            }
+            else if (USB_PRINTER_CONFIGURE_INDEX == *param8p)
             {
                 /* Set device configuration request */
                 g_DevicePrinterApp.attach = 1U;
                 g_DevicePrinterApp.printerState = kPrinter_Idle;
                 g_DevicePrinterApp.currentConfiguration = *param8p;
-                if (USB_PRINTER_CONFIGURE_INDEX == *param8p)
-                {
-                    /* demo run */
-                    status = USB_DevicePrinterRecv(g_DevicePrinterApp.classHandle, USB_PRINTER_BULK_ENDPOINT_OUT,
-                                                   g_DevicePrinterApp.printerBuffer, USB_PRINTER_BUFFER_SIZE);
-                    if (status == kStatus_USB_Success)
-                    {
-                        g_DevicePrinterApp.printerState = kPrinter_Receiving;
-                    }
 
-                    USB_DevicePrinterSend(g_DevicePrinterApp.classHandle, USB_PRINTER_BULK_ENDPOINT_IN,
-                                          g_DevicePrinterApp.sendBuffer, g_DevicePrinterApp.sendLength);
+                /* demo run */
+                status = USB_DevicePrinterRecv(g_DevicePrinterApp.classHandle, USB_PRINTER_BULK_ENDPOINT_OUT,
+                                               g_DevicePrinterApp.printerBuffer, USB_PRINTER_BUFFER_SIZE);
+                if (status == kStatus_USB_Success)
+                {
+                    g_DevicePrinterApp.printerState = kPrinter_Receiving;
                 }
+
+                USB_DevicePrinterSend(g_DevicePrinterApp.classHandle, USB_PRINTER_BULK_ENDPOINT_IN,
+                                      g_DevicePrinterApp.sendBuffer, g_DevicePrinterApp.sendLength);
+            }
+            else
+            {
+                status = kStatus_USB_InvalidRequest;
             }
             break;
 
@@ -515,7 +500,7 @@ void APP_task(void *handle)
     }
 }
 
-#if defined(__CC_ARM) || defined(__GNUC__)
+#if defined(__CC_ARM) || (defined(__ARMCC_VERSION)) || defined(__GNUC__)
 int main(void)
 #else
 void main(void)
@@ -534,7 +519,7 @@ void main(void)
                     ) != pdPASS)
     {
         usb_echo("app task create failed!\r\n");
-#if (defined(__CC_ARM) || defined(__GNUC__))
+#if (defined(__CC_ARM) || (defined(__ARMCC_VERSION)) || defined(__GNUC__))
         return 1U;
 #else
         return;
@@ -543,7 +528,7 @@ void main(void)
 
     vTaskStartScheduler();
 
-#if (defined(__CC_ARM) || defined(__GNUC__))
+#if (defined(__CC_ARM) || (defined(__ARMCC_VERSION)) || defined(__GNUC__))
     return 1U;
 #endif
 }

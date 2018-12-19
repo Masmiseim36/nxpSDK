@@ -78,13 +78,13 @@ static usb_status_t USB_DeviceCcidAllocateHandle(usb_device_ccid_struct_t **hand
 }
 
 /*!
- * @brief Free a device ccid class hanlde.
+ * @brief Free a device ccid class handle.
  *
- * This function frees a device ccid class hanlde.
+ * This function frees a device ccid class handle.
  *
- * @param handle          The device ccid class hanlde.
+ * @param handle          The device ccid class handle.
  *
- * @retval kStatus_USB_Success              Free device ccid class hanlde successfully.
+ * @retval kStatus_USB_Success              Free device ccid class handle successfully.
  */
 static usb_status_t USB_DeviceCcidFreeHandle(usb_device_ccid_struct_t *handle)
 {
@@ -103,7 +103,7 @@ static usb_status_t USB_DeviceCcidFreeHandle(usb_device_ccid_struct_t *handle)
  * @param transfer_queue          A pointer points to a queue pointer.
  * @param transfer                It is an OUT parameter, return the transfer node pointer.
  *
- * @retval kStatus_USB_Success              Free device ccid class hanlde successfully.
+ * @retval kStatus_USB_Success              Free device ccid class handle successfully.
  * @retval kStatus_USB_Busy                 Can not get transfer node due to the queue is empty.
  */
 static usb_status_t USB_DeviceCcidRemoveTransfer(usb_device_ccid_transfer_struct_t **transfer_queue,
@@ -136,7 +136,7 @@ static usb_status_t USB_DeviceCcidRemoveTransfer(usb_device_ccid_transfer_struct
  * @param transfer_queue          A pointer points to a queue pointer.
  * @param transfer                The transfer node pointer.
  *
- * @retval kStatus_USB_Success              Free device ccid class hanlde successfully.
+ * @retval kStatus_USB_Success              Free device ccid class handle successfully.
  * @retval kStatus_USB_Error                The transfer node has been added.
  */
 static usb_status_t USB_DeviceCcidAddTransfer(usb_device_ccid_transfer_struct_t **transfer_queue,
@@ -180,12 +180,12 @@ static usb_status_t USB_DeviceCcidAddTransfer(usb_device_ccid_transfer_struct_t 
 /*!
  * @brief Interrupt IN endpoint callback function.
  *
- * This callback function is used to notify uplayer the tranfser result of a transfer.
+ * This callback function is used to notify uplayer the transfser result of a transfer.
  * This callback pointer is passed when the interrupt IN pipe initialized.
  *
  * @param deviceHandle          The device handle. It equals the value returned from USB_DeviceInit.
  * @param event                  The result of the interrupt IN pipe transfer.
- * @param callbackParam         The paramter for this callback. It is same with
+ * @param callbackParam         The parameter for this callback. It is same with
  * usb_device_endpoint_callback_struct_t::callbackParam. In the class, the value is the ccid class handle.
  *
  * @return A USB error code or kStatus_USB_Success.
@@ -272,12 +272,12 @@ static usb_status_t USB_DeviceCcidInterruptIn(usb_device_handle deviceHandle,
 /*!
  * @brief Bulk IN endpoint callback function.
  *
- * This callback function is used to notify uplayer the tranfser result of a transfer.
+ * This callback function is used to notify uplayer the transfser result of a transfer.
  * This callback pointer is passed when the Bulk IN pipe initialized.
  *
  * @param deviceHandle   The device handle. It equals the value returned from USB_DeviceInit.
  * @param event           The result of the Bulk IN pipe transfer.
- * @param callbackParam  The paramter for this callback. It is same with
+ * @param callbackParam  The parameter for this callback. It is same with
  * usb_device_endpoint_callback_struct_t::callbackParam. In the class, the value is the ccid class handle.
  *
  * @return A USB error code or kStatus_USB_Success.
@@ -328,12 +328,12 @@ static usb_status_t USB_DeviceCcidBulkIn(usb_device_handle deviceHandle,
 /*!
  * @brief Bulk OUT endpoint callback function.
  *
- * This callback function is used to notify uplayer the tranfser result of a transfer.
+ * This callback function is used to notify uplayer the transfser result of a transfer.
  * This callback pointer is passed when the Bulk OUT pipe initialized.
  *
  * @param deviceHandle   The device handle. It equals the value returned from USB_DeviceInit.
  * @param event           The result of the Bulk OUT pipe transfer.
- * @param callbackParam  The paramter for this callback. It is same with
+ * @param callbackParam  The parameter for this callback. It is same with
  * usb_device_endpoint_callback_struct_t::callbackParam. In the class, the value is the ccid class handle.
  *
  * @return A USB error code or kStatus_USB_Success.
@@ -541,6 +541,7 @@ static usb_status_t USB_DeviceCcidEndpointsInit(usb_device_ccid_struct_t *ccidHa
         usb_device_endpoint_init_struct_t epInitStruct;
         usb_device_endpoint_callback_struct_t epCallback;
         epInitStruct.zlt = 0U;
+        epInitStruct.interval = interface->endpointList.endpoint[count].interval;
         epInitStruct.endpointAddress = interface->endpointList.endpoint[count].endpointAddress;
         epInitStruct.maxPacketSize = interface->endpointList.endpoint[count].maxPacketSize;
         epInitStruct.transferType = interface->endpointList.endpoint[count].transferType;

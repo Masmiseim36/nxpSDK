@@ -1,46 +1,20 @@
 /*
- * The Clear BSD License
- * Copyright (c) 2016, Freescale Semiconductor, Inc.
+ * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 /* clang-format off */
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v3.0
+product: Pins v4.1
 processor: MK28FN2M0xxx15
 package_id: MK28FN2M0VMI15
 mcu_data: ksdk2_0
-processor_version: 0.0.8
+processor_version: 4.0.0
 board: FRDM-K28F
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
@@ -50,7 +24,16 @@ board: FRDM-K28F
 #include "fsl_port.h"
 #include "pin_mux.h"
 
-
+/* FUNCTION ************************************************************************************************************
+ *
+ * Function Name : BOARD_InitBootPins
+ * Description   : Calls initialization functions.
+ *
+ * END ****************************************************************************************************************/
+void BOARD_InitBootPins(void)
+{
+    BOARD_InitPins();
+}
 
 /* clang-format off */
 /*
@@ -60,10 +43,8 @@ BOARD_InitPins:
 - pin_list:
   - {pin_num: A7, peripheral: LPUART0, signal: RX, pin_signal: PTC25/LPUART0_RX/FB_A4/SDRAM_D4/QSPI0A_SCLK}
   - {pin_num: B7, peripheral: LPUART0, signal: TX, pin_signal: PTC24/LPUART0_TX/FB_A5/SDRAM_D5/QSPI0A_DATA3}
-  - {pin_num: E3, peripheral: FTM3, signal: 'CH, 2', pin_signal: PTE7/FXIO0_D13/LPUART3_RTS_b/I2S0_RXD0/QSPI0B_SCLK/FTM3_CH2/QSPI0A_SS1_B, slew_rate: slow, open_drain: disable,
-    drive_strength: low, pull_select: down, pull_enable: disable}
-  - {pin_num: E2, peripheral: FTM3, signal: 'CH, 1', pin_signal: PTE6/LLWU_P16/FXIO0_D12/LPUART3_CTS_b/I2S0_MCLK/QSPI0B_DATA3/FTM3_CH1/SDHC0_D4, slew_rate: slow,
-    open_drain: disable, drive_strength: low, pull_select: down, pull_enable: disable}
+  - {pin_num: E3, peripheral: FTM3, signal: 'CH, 2', pin_signal: PTE7/FXIO0_D13/LPUART3_RTS_b/I2S0_RXD0/QSPI0B_SCLK/FTM3_CH2/QSPI0A_SS1_B, direction: OUTPUT}
+  - {pin_num: E2, peripheral: FTM3, signal: 'CH, 1', pin_signal: PTE6/LLWU_P16/FXIO0_D12/LPUART3_CTS_b/I2S0_MCLK/QSPI0B_DATA3/FTM3_CH1/SDHC0_D4, direction: OUTPUT}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -87,39 +68,11 @@ void BOARD_InitPins(void)
     /* PORTC25 (pin A7) is configured as LPUART0_RX */
     PORT_SetPinMux(BOARD_DEBUG_UART_RX_PORT, BOARD_DEBUG_UART_RX_PIN, kPORT_MuxAlt3);
 
-    const port_pin_config_t LED_RED = {/* Internal pull-up/down resistor is disabled */
-                                       kPORT_PullDisable,
-                                       /* Slow slew rate is configured */
-                                       kPORT_SlowSlewRate,
-                                       /* Passive filter is disabled */
-                                       kPORT_PassiveFilterDisable,
-                                       /* Open drain is disabled */
-                                       kPORT_OpenDrainDisable,
-                                       /* Low drive strength is configured */
-                                       kPORT_LowDriveStrength,
-                                       /* Pin is configured as FTM3_CH1 */
-                                       kPORT_MuxAlt6,
-                                       /* Pin Control Register fields [15:0] are not locked */
-                                       kPORT_UnlockRegister};
     /* PORTE6 (pin E2) is configured as FTM3_CH1 */
-    PORT_SetPinConfig(BOARD_LED_RED_PORT, BOARD_LED_RED_PIN, &LED_RED);
+    PORT_SetPinMux(BOARD_LED_RED_PORT, BOARD_LED_RED_PIN, kPORT_MuxAlt6);
 
-    const port_pin_config_t LED_GREEN = {/* Internal pull-up/down resistor is disabled */
-                                         kPORT_PullDisable,
-                                         /* Slow slew rate is configured */
-                                         kPORT_SlowSlewRate,
-                                         /* Passive filter is disabled */
-                                         kPORT_PassiveFilterDisable,
-                                         /* Open drain is disabled */
-                                         kPORT_OpenDrainDisable,
-                                         /* Low drive strength is configured */
-                                         kPORT_LowDriveStrength,
-                                         /* Pin is configured as FTM3_CH2 */
-                                         kPORT_MuxAlt6,
-                                         /* Pin Control Register fields [15:0] are not locked */
-                                         kPORT_UnlockRegister};
     /* PORTE7 (pin E3) is configured as FTM3_CH2 */
-    PORT_SetPinConfig(BOARD_LED_GREEN_PORT, BOARD_LED_GREEN_PIN, &LED_GREEN);
+    PORT_SetPinMux(BOARD_LED_GREEN_PORT, BOARD_LED_GREEN_PIN, kPORT_MuxAlt6);
 
     SIM->SOPT5 = ((SIM->SOPT5 &
                    /* Mask bits to zero which are setting */
@@ -148,8 +101,8 @@ void BOARD_InitPins(void)
 BOARD_I2C_ConfigurePins:
 - options: {coreID: core0, enableClock: 'true'}
 - pin_list:
-  - {pin_num: B6, peripheral: I2C3, signal: SCL, pin_signal: PTC29/I2C3_SCL/FB_A0/SDRAM_D0/QSPI0A_SS0_B, slew_rate: fast, open_drain: enable, pull_select: up, pull_enable: enable}
-  - {pin_num: C6, peripheral: I2C3, signal: SDA, pin_signal: PTC28/I2C3_SDA/FB_A1/SDRAM_D1/QSPI0A_DATA1, slew_rate: fast, open_drain: enable, pull_select: up, pull_enable: enable}
+  - {pin_num: B6, peripheral: I2C3, signal: SCL, pin_signal: PTC29/I2C3_SCL/FB_A0/SDRAM_D0/QSPI0A_SS0_B, open_drain: enable, pull_select: up, pull_enable: enable}
+  - {pin_num: C6, peripheral: I2C3, signal: SDA, pin_signal: PTC28/I2C3_SDA/FB_A1/SDRAM_D1/QSPI0A_DATA1, open_drain: enable, pull_select: up, pull_enable: enable}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -165,39 +118,35 @@ void BOARD_I2C_ConfigurePins(void)
     /* Port C Clock Gate Control: Clock enabled */
     CLOCK_EnableClock(kCLOCK_PortC);
 
-    const port_pin_config_t I2C_SDA = {/* Internal pull-up resistor is enabled */
-                                       kPORT_PullUp,
-                                       /* Fast slew rate is configured */
-                                       kPORT_FastSlewRate,
-                                       /* Passive filter is disabled */
-                                       kPORT_PassiveFilterDisable,
-                                       /* Open drain is enabled */
-                                       kPORT_OpenDrainEnable,
-                                       /* Low drive strength is configured */
-                                       kPORT_LowDriveStrength,
-                                       /* Pin is configured as I2C3_SDA */
-                                       kPORT_MuxAlt2,
-                                       /* Pin Control Register fields [15:0] are not locked */
-                                       kPORT_UnlockRegister};
     /* PORTC28 (pin C6) is configured as I2C3_SDA */
-    PORT_SetPinConfig(BOARD_I2C_CONFIGUREPINS_I2C_SDA_PORT, BOARD_I2C_CONFIGUREPINS_I2C_SDA_PIN, &I2C_SDA);
+    PORT_SetPinMux(BOARD_I2C_CONFIGUREPINS_I2C_SDA_PORT, BOARD_I2C_CONFIGUREPINS_I2C_SDA_PIN, kPORT_MuxAlt2);
 
-    const port_pin_config_t I2C_SCL = {/* Internal pull-up resistor is enabled */
-                                       kPORT_PullUp,
-                                       /* Fast slew rate is configured */
-                                       kPORT_FastSlewRate,
-                                       /* Passive filter is disabled */
-                                       kPORT_PassiveFilterDisable,
-                                       /* Open drain is enabled */
-                                       kPORT_OpenDrainEnable,
-                                       /* Low drive strength is configured */
-                                       kPORT_LowDriveStrength,
-                                       /* Pin is configured as I2C3_SCL */
-                                       kPORT_MuxAlt2,
-                                       /* Pin Control Register fields [15:0] are not locked */
-                                       kPORT_UnlockRegister};
+    PORTC->PCR[28] = ((PORTC->PCR[28] &
+                       /* Mask bits to zero which are setting */
+                       (~(PORT_PCR_PS_MASK | PORT_PCR_PE_MASK | PORT_PCR_ODE_MASK | PORT_PCR_ISF_MASK)))
+
+                      /* Pull Select: Internal pullup resistor is enabled on the corresponding pin, if the
+                       * corresponding PE field is set. */
+                      | (uint32_t)(kPORT_PullUp)
+
+                      /* Open Drain Enable: Open drain output is enabled on the corresponding pin, if the pin is
+                       * configured as a digital output. */
+                      | PORT_PCR_ODE(kPORT_OpenDrainEnable));
+
     /* PORTC29 (pin B6) is configured as I2C3_SCL */
-    PORT_SetPinConfig(BOARD_I2C_CONFIGUREPINS_I2C_SCL_PORT, BOARD_I2C_CONFIGUREPINS_I2C_SCL_PIN, &I2C_SCL);
+    PORT_SetPinMux(BOARD_I2C_CONFIGUREPINS_I2C_SCL_PORT, BOARD_I2C_CONFIGUREPINS_I2C_SCL_PIN, kPORT_MuxAlt2);
+
+    PORTC->PCR[29] = ((PORTC->PCR[29] &
+                       /* Mask bits to zero which are setting */
+                       (~(PORT_PCR_PS_MASK | PORT_PCR_PE_MASK | PORT_PCR_ODE_MASK | PORT_PCR_ISF_MASK)))
+
+                      /* Pull Select: Internal pullup resistor is enabled on the corresponding pin, if the
+                       * corresponding PE field is set. */
+                      | (uint32_t)(kPORT_PullUp)
+
+                      /* Open Drain Enable: Open drain output is enabled on the corresponding pin, if the pin is
+                       * configured as a digital output. */
+                      | PORT_PCR_ODE(kPORT_OpenDrainEnable));
 }
 /***********************************************************************************************************************
  * EOF

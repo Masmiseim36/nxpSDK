@@ -10,14 +10,6 @@ generated and sent to the ADC module.
 
 In this example, the ADC16 is configured with hardware trigger and conversion complete interrupt enabled.
 Once it gets the trigger from the PDB, the conversion goes, then the ISR would be executed.
-
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
-
 Hardware requirements
 =====================
 - Mini/Micro USB cable
@@ -46,7 +38,7 @@ When the demo runs successfully, the log would be seen on the OpenSDA terminal l
 
 PDB ADC16 Pre-Trigger Example.
 ADC16_DoAutoCalibration() Done.
-
+ADC Full Range: XXXX
 Type any key into terminal to trigger the PDB and then trigger the ADC's conversion ...
 
 PDB Interrupt Counter: 1
@@ -61,6 +53,11 @@ ADC Conversion Value: 1152
 
 Type any key into terminal to trigger the PDB and then trigger the ADC's conversion ...
 
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

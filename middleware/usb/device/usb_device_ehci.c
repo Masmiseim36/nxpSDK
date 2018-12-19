@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
  * Copyright 2016 - 2017 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "usb_device_config.h"
@@ -89,7 +63,7 @@ extern usb_status_t USB_DeviceNotificationTrigger(void *handle, void *msg);
 /* Apply for QH buffer, 2048-byte alignment */
 USB_RAM_ADDRESS_ALIGNMENT(2048)
 USB_CONTROLLER_DATA static uint8_t qh_buffer[(USB_DEVICE_CONFIG_EHCI - 1) * 2048 +
-                                             USB_DEVICE_CONFIG_ENDPOINTS * 2 * sizeof(usb_device_ehci_qh_struct_t)];
+                                             2 * USB_DEVICE_CONFIG_ENDPOINTS * 2 * sizeof(usb_device_ehci_qh_struct_t)];
 
 /* Apply for DTD buffer, 32-byte alignment */
 USB_RAM_ADDRESS_ALIGNMENT(32)
@@ -97,7 +71,10 @@ USB_CONTROLLER_DATA static usb_device_ehci_dtd_struct_t
     s_UsbDeviceEhciDtd[USB_DEVICE_CONFIG_EHCI][USB_DEVICE_CONFIG_EHCI_MAX_DTD];
 
 /* Apply for ehci device state structure */
-static usb_device_ehci_state_struct_t g_UsbDeviceEhciSate[USB_DEVICE_CONFIG_EHCI];
+static usb_device_ehci_state_struct_t g_UsbDeviceEhciState[USB_DEVICE_CONFIG_EHCI];
+
+/* Apply for whether the corresponding g_UsbDeviceEhciState is used or not, if used, it is set to 1, if not used, it is set to 0 */
+static uint8_t g_UsbDeviceEhciStateStatus[USB_DEVICE_CONFIG_EHCI]= {0}; 
 
 #if (defined(USB_DEVICE_CHARGER_DETECT_ENABLE) && (USB_DEVICE_CHARGER_DETECT_ENABLE > 0U)) && \
     (defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U))
@@ -275,9 +252,18 @@ static usb_status_t USB_DeviceEhciEndpointInit(usb_device_ehci_state_struct_t *e
     /* Save the max packet size of the endpoint */
     ehciState->qh[index].capabilttiesCharacteristicsUnion.capabilttiesCharacteristicsBitmap.maxPacketSize =
         maxPacketSize;
-    /* Set ZLT bit. */
-    ehciState->qh[index].capabilttiesCharacteristicsUnion.capabilttiesCharacteristicsBitmap.zlt = !epInit->zlt;
-
+    ehciState->qh[index].endpointStatusUnion.endpointStatusBitmap.zlt = epInit->zlt;
+    if ((USB_CONTROL_ENDPOINT == endpoint))
+    {
+        /* Set ZLT bit. disable control endpoint automatic zlt by default,only send zlt when it is needed*/
+        ehciState->qh[index].capabilttiesCharacteristicsUnion.capabilttiesCharacteristicsBitmap.zlt = 1U;
+    }
+    else
+    {
+        /* Set ZLT bit. */
+        ehciState->qh[index].capabilttiesCharacteristicsUnion.capabilttiesCharacteristicsBitmap.zlt = !epInit->zlt;
+    }
+    
     /* Enable the endpoint. */
     if (USB_ENDPOINT_CONTROL == transferType)
     {
@@ -462,11 +448,6 @@ static void USB_DeviceEhciFillSetupBuffer(usb_device_ehci_state_struct_t *ehciSt
     }
     /* Clear the setup tripwire bit */
     ehciState->registerBase->USBCMD &= ~USBHS_USBCMD_SUTW_MASK;
-
-    /* Poll until the EPSETUPSR bit clearred */
-    while (ehciState->registerBase->EPSETUPSR & (1U << ep))
-    {
-    }
 }
 
 /*!
@@ -630,7 +611,17 @@ static void USB_DeviceEhciInterruptTokenDone(usb_device_ehci_state_struct_t *ehc
                 index = (endpoint << 1U) + direction;
                 message.buffer = NULL;
                 message.length = 0U;
-
+                if ((USB_CONTROL_ENDPOINT == endpoint) && (USB_IN == direction))
+                {
+                    if (1U == ehciState->qh[index].endpointStatusUnion.endpointStatusBitmap.zlt)
+                    {
+                        if(!ehciState->qh[index].capabilttiesCharacteristicsUnion.capabilttiesCharacteristicsBitmap.zlt)
+                        {
+                            /*disable zlt after send zlt*/
+                            ehciState->qh[index].capabilttiesCharacteristicsUnion.capabilttiesCharacteristicsBitmap.zlt = 1U; 
+                        }
+                    }
+                }
                 /* Get the in-used dtd of the specified endpoint. */
                 currentDtd = (usb_device_ehci_dtd_struct_t *)((uint32_t)ehciState->dtdHard[index] &
                                                               USB_DEVICE_ECHI_DTD_POINTER_MASK);
@@ -911,12 +902,13 @@ static usb_status_t USB_DeviceEhciTransfer(usb_device_ehci_state_struct_t *ehciS
                       USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT);
     uint32_t primeBit = 1U << ((endpointAddress & USB_ENDPOINT_NUMBER_MASK) +
                                ((endpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) >> 0x03U));
-    uint8_t epStatus = primeBit;
+    uint32_t epStatus = primeBit;
     uint32_t sendLength;
     uint32_t currentIndex = 0U;
     uint32_t dtdRequestCount = (length + USB_DEVICE_ECHI_DTD_TOTAL_BYTES - 1U) / USB_DEVICE_ECHI_DTD_TOTAL_BYTES;
     uint8_t qhIdle = 0U;
     uint8_t waitingSafelyAccess = 1U;
+    uint32_t primeTimesCount = 0U;
     USB_OSA_SR_ALLOC();
 
     if (!ehciState)
@@ -1016,7 +1008,22 @@ static usb_status_t USB_DeviceEhciTransfer(usb_device_ehci_state_struct_t *ehciS
             qhIdle = 1U;
         }
     } while (length);
-
+    if ((USB_CONTROL_ENDPOINT == (endpointAddress & USB_ENDPOINT_NUMBER_MASK)) && (USB_IN == ((endpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) >>
+                      USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT)))
+    {
+        uint8_t setupindex = ((endpointAddress & USB_ENDPOINT_NUMBER_MASK)* 2U);
+        /* Get last setup packet */
+        usb_setup_struct_t *deviceSetup =
+                    (usb_setup_struct_t *)&ehciState->qh[setupindex].setupBufferBack[0];
+        if (1U == ehciState->qh[index].endpointStatusUnion.endpointStatusBitmap.zlt)
+        {
+            if ((sendLength) && (sendLength < deviceSetup->wLength) && (!(sendLength % ehciState->qh[index].capabilttiesCharacteristicsUnion.capabilttiesCharacteristicsBitmap.maxPacketSize)))
+            {
+                /* enable ZLT. */
+                ehciState->qh[index].capabilttiesCharacteristicsUnion.capabilttiesCharacteristicsBitmap.zlt = 0U;
+            }
+        }
+    }
     /* If the QH is not empty */
     if (!qhIdle)
     {
@@ -1053,6 +1060,12 @@ static usb_status_t USB_DeviceEhciTransfer(usb_device_ehci_state_struct_t *ehciS
         ehciState->registerBase->EPPRIME = primeBit;
         while (!(ehciState->registerBase->EPSR & primeBit))
         {
+            primeTimesCount++;
+            if (primeTimesCount == USB_DEVICE_MAX_TRANSFER_PRIME_TIMES)
+            {
+                USB_OSA_EXIT_CRITICAL();
+                return kStatus_USB_Error;
+            }
             if (ehciState->registerBase->EPCOMPLETE & primeBit)
             {
                 break;
@@ -1066,6 +1079,29 @@ static usb_status_t USB_DeviceEhciTransfer(usb_device_ehci_state_struct_t *ehciS
 
     USB_OSA_EXIT_CRITICAL();
     return kStatus_USB_Success;
+}
+
+/*!
+ * @brief Get a valid device EHCI state for the device EHCI instance.
+ *
+ * This function gets a valid device EHCI state for the USB device EHCI module specified by the controllerId.
+ *
+ * @param instanceIndex The instanceIndex is used for other EHCI device structure to identify their instance index.
+ *
+ * @return A valid EHCI state or NULL.
+ */
+void *USB_EhciGetValidEhciState(uint8_t *instanceIndex)
+{
+    for (uint8_t instance = 0; instance < USB_DEVICE_CONFIG_EHCI; instance++)
+    {
+        if (!g_UsbDeviceEhciStateStatus[instance])
+        {
+            g_UsbDeviceEhciStateStatus[instance] = 1;
+            *instanceIndex = instance;
+            return &g_UsbDeviceEhciState[instance];
+        }
+    }
+    return NULL;
 }
 
 /*!
@@ -1085,6 +1121,7 @@ usb_status_t USB_DeviceEhciInit(uint8_t controllerId,
 {
     usb_device_ehci_state_struct_t *ehciState;
     uint32_t ehci_base[] = USBHS_BASE_ADDRS;
+    uint8_t intanceIndex;
 
 #if (defined(USB_DEVICE_CHARGER_DETECT_ENABLE) && (USB_DEVICE_CHARGER_DETECT_ENABLE > 0U)) && \
     (defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U))
@@ -1094,16 +1131,15 @@ usb_status_t USB_DeviceEhciInit(uint8_t controllerId,
 #endif
 
     if ((controllerId < kUSB_ControllerEhci0) ||
-        ((uint32_t)(controllerId - kUSB_ControllerEhci0) >= USB_DEVICE_CONFIG_EHCI) ||
         ((uint32_t)(controllerId - kUSB_ControllerEhci0) >= (sizeof(ehci_base) / sizeof(uint32_t))))
     {
         return kStatus_USB_ControllerNotFound;
     }
 
-    ehciState = &g_UsbDeviceEhciSate[controllerId - kUSB_ControllerEhci0];
+    ehciState = USB_EhciGetValidEhciState(&intanceIndex);
 
-    ehciState->dtd = s_UsbDeviceEhciDtd[controllerId - kUSB_ControllerEhci0];
-    ehciState->qh = (usb_device_ehci_qh_struct_t *)&qh_buffer[(controllerId - kUSB_ControllerEhci0) * 2048];
+    ehciState->dtd = s_UsbDeviceEhciDtd[intanceIndex];
+    ehciState->qh = (usb_device_ehci_qh_struct_t *)&qh_buffer[intanceIndex * 2048];
 
     ehciState->controllerId = controllerId;
 
@@ -1175,7 +1211,14 @@ usb_status_t USB_DeviceEhciDeinit(usb_device_controller_handle ehciHandle)
     {
         return kStatus_USB_InvalidHandle;
     }
-
+    for (uint8_t instance = 0; instance < USB_DEVICE_CONFIG_EHCI; instance++)
+    {
+        if (ehciState == &g_UsbDeviceEhciState[instance])
+        {
+            g_UsbDeviceEhciStateStatus[instance] = 0;
+        }
+    }
+    
     /* Disable all interrupt. */
     ehciState->registerBase->USBINTR = 0U;
     /* Stop the device functionality. */

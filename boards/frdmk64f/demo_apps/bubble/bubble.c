@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_debug_console.h"
@@ -54,6 +28,7 @@
 #define BOARD_SECOND_CHANNEL_INT kFTM_Chnl1InterruptEnable
 #define BOARD_FTM_IRQ_HANDLER_FUNC FTM0_IRQHandler
 #define BOARD_FTM_IRQ_ID FTM0_IRQn
+#define BOARD_FTM_PRESCALE_DIVIDER kFTM_Prescale_Divide_128
 /* Get source clock for TPM driver */
 #define BOARD_TIMER_SOURCE_CLOCK CLOCK_GetFreq(kCLOCK_BusClk)
 /* I2C source clock */
@@ -66,9 +41,6 @@
 #define I2C_RELEASE_SCL_GPIO GPIOE
 #define I2C_RELEASE_SCL_PIN 24U
 #define I2C_RELEASE_BUS_COUNT 100U
-/* Upper bound and lower bound angle values */
-#define ANGLE_UPPER_BOUND 85U
-#define ANGLE_LOWER_BOUND 5U
 
 /*******************************************************************************
  * Prototypes
@@ -81,8 +53,6 @@ static void Board_UpdatePwm(uint16_t x, uint16_t y);
 i2c_master_handle_t g_MasterHandle;
 volatile int16_t g_xAngle = 0;
 volatile int16_t g_yAngle = 0;
-volatile int16_t g_xDuty = 0;
-volatile int16_t g_yDuty = 0;
 /* FXOS device address */
 const uint8_t g_accel_address[] = {0x1CU, 0x1DU, 0x1EU, 0x1FU};
 
@@ -181,6 +151,7 @@ static void Timer_Init(void)
      * ftmInfo.useGlobalTimeBase = false;
      */
     FTM_GetDefaultConfig(&ftmInfo);
+
     /* Initialize FTM module */
     FTM_Init(BOARD_FTM_BASEADDR, &ftmInfo);
 
@@ -197,8 +168,8 @@ void BOARD_FTM_IRQ_HANDLER_FUNC(void)
 
     if (status & kFTM_TimeOverflowFlag)
     {
-        Board_UpdatePwm(g_xDuty, g_yDuty);
-        if (g_xDuty)
+        Board_UpdatePwm(g_xAngle, g_yAngle);
+        if (g_xAngle)
         {
             LED_GREEN_ON();
         }
@@ -206,7 +177,7 @@ void BOARD_FTM_IRQ_HANDLER_FUNC(void)
         {
             LED_GREEN_OFF();
         }
-        if (g_yDuty)
+        if (g_yAngle)
         {
             LED_RED_ON();
         }
@@ -315,7 +286,7 @@ int main(void)
 
     /* Print a note to terminal */
     PRINTF("\r\nWelcome to the BUBBLE example\r\n");
-    PRINTF("\r\nYou will see the LED brightness change when the angle of the board changes\r\n");
+    PRINTF("\r\nYou will see the change of angle data and LED brightness when change the angles of board\r\n");
 
     /* Main loop. Get sensor data and update duty cycle */
     while (1)
@@ -342,24 +313,6 @@ int main(void)
             g_yAngle *= -1;
         }
 
-        /* Update duty cycle to turn on LEDs when angles ~ 90 */
-        if (g_xAngle > ANGLE_UPPER_BOUND)
-        {
-            g_xDuty = 100;
-        }
-        if (g_yAngle > ANGLE_UPPER_BOUND)
-        {
-            g_yDuty = 100;
-        }
-        /* Update duty cycle to turn off LEDs when angles ~ 0 */
-        if (g_xAngle < ANGLE_LOWER_BOUND)
-        {
-            g_xDuty = 0;
-        }
-        if (g_yAngle < ANGLE_LOWER_BOUND)
-        {
-            g_yDuty = 0;
-        }
         /* Print out the angle. */
         PRINTF("x= %2d y = %2d\r\n", g_xAngle, g_yAngle);
     }

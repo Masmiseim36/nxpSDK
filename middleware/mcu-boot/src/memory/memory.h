@@ -41,6 +41,7 @@ enum _bl_memory_groups
 {
     kGroup_Internal = 0, //!<  Kinetis internal 4G memory region.
     kGroup_External = 1, //!<  Kinetis external memory region.
+    kGroup_AES_OTP = 2,
 };
 
 /*! @brief Memory device ID definition. */
@@ -205,6 +206,9 @@ enum _memorymap_constants
 #if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
     kIndexFlashArray = 0,
     kIndexSRAM = 1,
+#if BL_FEATURE_SUPPORT_DFLASH
+    kIndexDFlashArray = 2,
+#endif    
 #if CPU_IS_ARM_CORTEX_M7
     kIndexDTCM = 2,
     kIndexOCRAM = 3,
@@ -258,7 +262,16 @@ typedef enum _flash_erase_all_option
 enum _flash_index_constants
 {
     kFlashIndex_Main = 0,
-    kFlashIndex_Secondary = 1
+#if defined(FSL_FEATURE_FLASH_HAS_MULTIPLE_FLASH) || defined(FSL_FEATURE_FLASH_PFLASH_1_START_ADDRESS)    
+    kFlashIndex_Secondary = 1,
+#if BL_FEATURE_SUPPORT_DFLASH    
+    kFalshIndex_DFlash = 2
+#endif // BL_FEATURE_SUPPORT_DFLASH
+#else
+#if BL_FEATURE_SUPPORT_DFLASH   
+    kFalshIndex_DFlash = 1 
+#endif // BL_FEATURE_SUPPORT_DFLASH      
+#endif //  defined(FSL_FEATURE_FLASH_HAS_MULTIPLE_FLASH) || defined(FSL_FEATURE_FLASH_PFLASH_1_START_ADDRESS)    
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -288,6 +301,10 @@ extern const memory_region_interface_t g_flashMemoryInterface;
 #else
 //! @brief LPC Main Flash memory interface.
 extern const memory_region_interface_t g_flashiapMemoryInterface;
+#endif
+
+#if BL_FEATURE_SUPPORT_DFLASH
+extern const memory_region_interface_t g_dFlashMemoryInterface;
 #endif
 
 #if BL_HAS_SECONDARY_INTERNAL_FLASH
@@ -442,6 +459,14 @@ status_t flash_mem_erase_all(void);
 
 //! @brief Erase all Flash memory (unsecure).
 status_t flash_mem_erase_all_unsecure(void);
+
+#if BL_FEATURE_SUPPORT_DFLASH 
+//! @brief Erase all FlexNVM Flash memory.
+status_t flexNVM_mem_erase_all(void);
+
+//! @brief Erase all Flash memory (unsecure).
+status_t flexNVM_mem_erase_all_unsecure(void);
+#endif // #if BL_FEATURE_SUPPORT_DFLASH 
 
 //@}
 

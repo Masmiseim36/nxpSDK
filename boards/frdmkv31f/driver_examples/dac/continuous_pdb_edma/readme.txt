@@ -8,14 +8,6 @@ when DAC read pointer is zero. When run the example, the DAC is triggered by PDB
 every time the trigger occurs. When the read pointer reaches the upper limit, it goes to zero directly in the next trigger event.
 while read pointer goes to zero, DMA request will be triggered and transfer data into DAC buffer. The user should probe
 the DAC output with a oscilloscope to see the Half-sine signal.
-
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
-
 Hardware requirements
 =====================
 - Mini/Micro USB cable
@@ -48,6 +40,11 @@ Please probe the DAC output with a oscilloscope.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Then user can probe the DAC output with a oscilloscope to see the Half-sine signal.
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

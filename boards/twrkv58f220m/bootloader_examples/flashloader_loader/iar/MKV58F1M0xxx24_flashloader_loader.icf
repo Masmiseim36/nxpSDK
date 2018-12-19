@@ -5,9 +5,6 @@
 **                          MKV58F1M0VMD24
 **
 **     Compiler:            IAR ANSI C/C++ Compiler for ARM
-**     Reference manual:    KV5XP144M240RM Rev. 3, 02/2016
-**     Version:             rev. 0.3, 2016-02-29
-**     Build:               b171205
 **
 **     Abstract:
 **         Linker file for the IAR ANSI C/C++ Compiler for ARM
@@ -44,12 +41,12 @@ define exported symbol __VECTOR_TABLE      = __ICFEDIT_region_FLASH_start__;
 if (isdefinedsymbol(__stack_size__)) {
   define symbol __size_cstack__        = __stack_size__;
 } else {
-  define symbol __size_cstack__        = 0x200;
+  define symbol __size_cstack__        = 0x0200;
 }
 if (isdefinedsymbol(__heap_size__)) {
   define symbol __size_heap__          = __heap_size__;
 } else {
-  define symbol __size_heap__          = 0x200;
+  define symbol __size_heap__          = 0x0;
 }
 
 define exported symbol __VECTOR_RAM        = __ICFEDIT_region_ITCM_start__;

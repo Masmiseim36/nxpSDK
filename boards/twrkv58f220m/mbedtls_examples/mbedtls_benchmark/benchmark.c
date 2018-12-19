@@ -353,6 +353,8 @@ static int bench_print_features(void)
     text = "CAU3 HW accelerated";
 #elif defined(MBEDTLS_FREESCALE_DCP_SHA256)
     text = "DCP HW accelerated";
+#elif defined(MBEDTLS_FREESCALE_HASHCRYPT_SHA256)
+    text = "HASHCRYPT HW accelerated";
 #else
     text = "Software implementation";
 #endif
@@ -367,6 +369,8 @@ static int bench_print_features(void)
     text = "CAU3 HW accelerated";
 #elif defined(MBEDTLS_FREESCALE_DCP_AES)
     text = "DCP HW accelerated";
+#elif defined(MBEDTLS_FREESCALE_HASHCRYPT_AES)
+    text = "HASHCRYPT HW accelerated";
 #else
     text = "Software implementation";
 #endif
@@ -397,6 +401,8 @@ static int bench_print_features(void)
     text = "LTC HW accelerated";
 #elif defined(MBEDTLS_FREESCALE_CAU3_PKHA)
     text = "CAU3 HW accelerated";
+#elif defined(MBEDTLS_FREESCALE_CASPER_PKHA)
+    text = "CASPER HW accelerated";
 #else
     text = "Software implementation";
 #endif
@@ -1043,7 +1049,11 @@ int main(int argc, char *argv[])
     getchar();
 #endif
 
-    return (0);
+    while (1)
+    {
+        char ch = GETCHAR();
+        PUTCHAR(ch);
+    }
 }
 
 #endif /* MBEDTLS_TIMING_C */

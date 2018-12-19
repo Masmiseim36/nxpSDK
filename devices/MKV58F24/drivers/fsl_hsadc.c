@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- *  that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 #include "fsl_hsadc.h"
 
@@ -111,6 +85,17 @@ static uint32_t HSADC_GetInstance(HSADC_Type *base)
     return instance;
 }
 
+/*!
+ * brief Initializes the HSADC module.
+ *
+ * This function initializes the HSADC module.
+ * The operations are:
+ *  - Enable the clock for HSADC.
+ *  - Set the global settings for HSADC converter.
+ *
+ * param base   HSADC peripheral base address.
+ * param config Pointer to configuration structure. See the "hsadc_config_t".
+ */
 void HSADC_Init(HSADC_Type *base, const hsadc_config_t *config)
 {
     assert(NULL != config);
@@ -160,9 +145,27 @@ void HSADC_Init(HSADC_Type *base, const hsadc_config_t *config)
     base->PWR = tmp16;
 }
 
+/*!
+ * brief Gets an available pre-defined settings for module's configuration.
+ *
+ * This function initializes the module's configuration structure with an available settings.
+ * The default value are:
+ * code
+ *   config->dualConverterScanMode = kHSADC_DualConverterWorkAsTriggeredParallel;
+ *   config->enableSimultaneousMode = true;
+ *   config->resolution = kHSADC_Resolution12Bit;
+ *   config->DMATriggerSoruce = kHSADC_DMATriggerSourceAsEndOfScan;
+ *   config->idleWorkMode = kHSADC_IdleKeepNormal;
+ *   config->powerUpDelay = 18U;
+ * endcode
+ * param config Pointer to configuration structure. See the "hsadc_config_t"
+ */
 void HSADC_GetDefaultConfig(hsadc_config_t *config)
 {
     assert(NULL != config);
+
+    /* Initializes the configure structure to zero. */
+    memset(config, 0, sizeof(*config));
 
     config->dualConverterScanMode = kHSADC_DualConverterWorkAsTriggeredParallel;
     config->enableSimultaneousMode = true;
@@ -172,6 +175,16 @@ void HSADC_GetDefaultConfig(hsadc_config_t *config)
     config->powerUpDelayCount = 18U;
 }
 
+/*!
+ * brief De-initializes the HSADC module.
+ *
+ * This function de-initializes the HSADC module.
+ * The operations are:
+ *  - Power down both converters.
+ *  - Disable the clock for HSADC.
+ *
+ * param base HSADC peripheral base address.
+ */
 void HSADC_Deinit(HSADC_Type *base)
 {
     /* Power down both converter. */
@@ -183,6 +196,13 @@ void HSADC_Deinit(HSADC_Type *base)
 #endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
 }
 
+/*!
+ * brief Configures the converter.
+ *
+ * param base          HSADC peripheral base address.
+ * param converterMask Mask for converters to be configured. See the "_hsadc_converter_id".
+ * param config        Pointer to configuration structure. See the "hsadc_converter_config_t".
+ */
 void HSADC_SetConverterConfig(HSADC_Type *base, uint16_t converterMask, const hsadc_converter_config_t *config)
 {
     assert(NULL != config);
@@ -247,6 +267,19 @@ void HSADC_SetConverterConfig(HSADC_Type *base, uint16_t converterMask, const hs
     }
 }
 
+/*!
+ * brief Gets an available pre-defined settings for each converter's configuration.
+ *
+ * This function initializes each converter's configuration structure with available settings.
+ * The default value are:
+ * code
+ *   config->clockDivisor = 4U;
+ *   config->samplingTimeCount = 0U;
+ *   config->enablePowerUpCalibration = false;
+ *   config->powerUpCalibrationModeMask = kHSADC_CalibrationModeSingleEnded;
+ * endcode
+ * param config Pointer to configuration structure. See the "hsadc_converter_config_t"
+ */
 void HSADC_GetDefaultConverterConfig(hsadc_converter_config_t *config)
 {
     assert(NULL != config);
@@ -256,6 +289,17 @@ void HSADC_GetDefaultConverterConfig(hsadc_converter_config_t *config)
     config->powerUpCalibrationModeMask = 0U;
 }
 
+/*!
+ * brief Enables the converter's conversion.
+ *
+ * This function enables the converter's conversion by making the converter exit stop mode. The conversion should
+ * only be launched after the converter is enabled. When this feature is asserted to be "false", the current scan is
+ * stopped and no further scans can start. All the software and hardware triggers are ignored.
+ *
+ * param base          HSADC peripheral base address.
+ * param converterMask Mask for converters to be operated. See the "_hsadc_converter_id".
+ * param enable         Enable or disable the feature.
+ */
 void HSADC_EnableConverter(HSADC_Type *base, uint16_t converterMask, bool enable)
 {
     /* CTRL1 */
@@ -284,6 +328,18 @@ void HSADC_EnableConverter(HSADC_Type *base, uint16_t converterMask, bool enable
     }
 }
 
+/*!
+ * brief Enables the input of an external sync signal.
+ *
+ * This function enables the input of the external sync signal. The external sync signal could be used to trigger the
+ * conversion if the hardware trigger-related setting is used.
+ * Note: When in "Once" scan mode, this gate is off automatically after an available sync is received.
+ * Enable the input again manually if another sync signal is needed.
+ *
+ * param base          HSADC peripheral base address.
+ * param converterMask Mask for converters to be operated. See the "_hsadc_converter_id".
+ * param enable        Enable or disable the feature.
+ */
 void HSADC_EnableConverterSyncInput(HSADC_Type *base, uint16_t converterMask, bool enable)
 {
     /* CTRL1 */
@@ -312,6 +368,17 @@ void HSADC_EnableConverterSyncInput(HSADC_Type *base, uint16_t converterMask, bo
     }
 }
 
+/*!
+ * brief Enables power for the converter.
+ *
+ * This function enables the power for the converter. The converter should be powered on before conversion. Once
+ * this API is called, the converter is powered on after a few moments (so-called power up delay) to make the
+ * power stable.
+ *
+ * param base          HSADC peripheral base address.
+ * param converterMask Mask for converters to be operated. See the "_hsadc_converter_id".
+ * param enable        Enable or disable the feature.
+ */
 void HSADC_EnableConverterPower(HSADC_Type *base, uint16_t converterMask, bool enable)
 {
     /* PWR */
@@ -339,6 +406,16 @@ void HSADC_EnableConverterPower(HSADC_Type *base, uint16_t converterMask, bool e
     }
 }
 
+/*!
+ * brief Triggers the converter by using the software trigger.
+ *
+ * This function triggers  the converter using a software trigger. The software trigger can be used to start a
+ * conversion
+ * sequence.
+ *
+ * param base          HSADC peripheral base address.
+ * param converterMask Mask for converters to be operated. See the "_hsadc_converter_id".
+ */
 void HSADC_DoSoftwareTriggerConverter(HSADC_Type *base, uint16_t converterMask)
 {
     /* CTRL1 */
@@ -353,6 +430,13 @@ void HSADC_DoSoftwareTriggerConverter(HSADC_Type *base, uint16_t converterMask)
     }
 }
 
+/*!
+ * brief Enables the DMA feature.
+ *
+ * param base          HSADC peripheral base address.
+ * param converterMask Mask for converters to be operated. See the "_hsadc_converter_id".
+ * param enable        Enable or disable the feature.
+ */
 void HSADC_EnableConverterDMA(HSADC_Type *base, uint16_t converterMask, bool enable)
 {
     /* CTRL1 */
@@ -381,6 +465,12 @@ void HSADC_EnableConverterDMA(HSADC_Type *base, uint16_t converterMask, bool ena
     }
 }
 
+/*!
+ * brief Enables the interrupts.
+ *
+ * param base HSADC peripheral base address.
+ * param mask Mask value for interrupt events. See the "_hsadc_interrupt_enable".
+ */
 void HSADC_EnableInterrupts(HSADC_Type *base, uint16_t mask)
 {
     uint16_t tmp16;
@@ -424,6 +514,12 @@ void HSADC_EnableInterrupts(HSADC_Type *base, uint16_t mask)
     base->CALIB = tmp16;
 }
 
+/*!
+ * brief Disables the interrupts.
+ *
+ * param base HSADC peripheral base address.
+ * param mask Mask value for interrupt events. See the "_hsadc_interrupt_enable".
+ */
 void HSADC_DisableInterrupts(HSADC_Type *base, uint16_t mask)
 {
     uint16_t tmp16;
@@ -467,6 +563,13 @@ void HSADC_DisableInterrupts(HSADC_Type *base, uint16_t mask)
     base->CALIB = tmp16;
 }
 
+/*!
+ * brief  Gets the status flags.
+ *
+ * param  base HSADC peripheral base address.
+ *
+ * return      Mask value for the event flags. See the "_hsadc_status_flags".
+ */
 uint16_t HSADC_GetStatusFlags(HSADC_Type *base)
 {
     uint16_t tmp16;
@@ -541,6 +644,12 @@ uint16_t HSADC_GetStatusFlags(HSADC_Type *base)
     return status;
 }
 
+/*!
+ * brief Clears the status flags.
+ *
+ * param base  HSADC peripheral base address.
+ * param flags Mask value for the event flags to be cleared. See the "_hsadc_status_flags".
+ */
 void HSADC_ClearStatusFlags(HSADC_Type *base, uint16_t mask)
 {
     uint16_t tmp16;
@@ -649,6 +758,17 @@ static const uint16_t g_HSADCChannelConfigDifferentialMask[] = {
     0x0200U, /* CHN12-13, ANB4-ANB5. CTRL2[CHNCFG_H]. */
     0x0400U  /* CHN14-15, ANB6-ANB7. CTRL2[CHNCFG_H]. */
 };
+/*!
+ * brief Configures the sample slot.
+ *
+ * A sample list in this module works like a conversion sequence. Each sample slot can be used to designate to sample
+ * which channel is in converter A and converter B. The detail mapping relationship between sample slot and converter's
+ * channel can be found in the SoC reference manual.
+ *
+ * param base        HSADC peripheral base address.
+ * param sampleIndex Index of sample slot in conversion sequence. Available range is 0-15.
+ * param config      Pointer to configuration structure. See the "hsadc_sample_config_t".
+ */
 void HSADC_SetSampleConfig(HSADC_Type *base, uint16_t sampleIndex, const hsadc_sample_config_t *config)
 {
     assert(sampleIndex < HSADC_RSLT_COUNT);
@@ -761,6 +881,24 @@ void HSADC_SetSampleConfig(HSADC_Type *base, uint16_t sampleIndex, const hsadc_s
     HSADC_SetChannel67Mux(base, config->channelNumber, config->channel67MuxNumber, config->enableDifferentialPair);
 }
 
+/*!
+ * brief Gets the default sample configuration.
+ *
+ * This function initializes each sample's configuration structure with an available settings.
+ * The default values are:
+ * code
+ *   config->channelNumber = 0U;
+ *   config->channel6MuxNumber = 0U;
+ *   config->channel7MuxNumber = 0U;
+ *   config->enableDifferentialPair = false;
+ *   config->zeroCrossingMode = kHSADC_ZeroCorssingDisabled;
+ *   config->highLimitValue = 0x7FF8U;
+ *   config->lowLimitValue = 0U;
+ *   config->offsetValue = 0U;
+ *   config->enableWaitSync = false;
+ * endcode
+ * param config Pointer to configuration structure. See the "hsadc_sample_config_t".
+ */
 void HSADC_GetDefaultSampleConfig(hsadc_sample_config_t *config)
 {
     assert(NULL != config);
@@ -775,6 +913,21 @@ void HSADC_GetDefaultSampleConfig(hsadc_sample_config_t *config)
     config->enableWaitSync = false;
 }
 
+/*!
+ * brief Starts the hardware calibration.
+ *
+ * This function starts the single ended calibration and differential calibration for converter A and converter B
+ * at the same time.
+ * Note that this is a non blocking function. End of Scan flag and End of Calibration flag are both be set after the
+ * calibration process. As a result, the user should check these two flags by using the function HSADC_GetStatusFlags()
+ * to wait for the
+ * calibration process to complete.
+ *
+ * param base                HSADC peripheral base address.
+ * param converterMask       Mask for converters to be operated. See the "_hsadc_converter_id".
+ * param calibrationModeMask Mask for calibration mode to be operated. See the "_hsadc_calibration_mode". Shouldn't be
+ * zero.
+ */
 void HSADC_DoAutoCalibration(HSADC_Type *base, uint16_t converterMask, uint16_t calibrationModeMask)
 {
     assert(calibrationModeMask);
@@ -813,11 +966,32 @@ void HSADC_DoAutoCalibration(HSADC_Type *base, uint16_t converterMask, uint16_t 
     HSADC_DoSoftwareTriggerConverter(base, converterMask);
 }
 
+/*!
+ * brief Gets the calibration result value.
+ *
+ * This function returns the single ended calibration value and differential calibration value for converter A and
+ * converter B. The calibration value of each calibration mode for each converter can be received from this function's
+ * return value by using the mask and shift definition from HSADC_CALIBRATION_VALUE_A_SINGLE_ENDED_MASK to
+ * HSADC_CALIBRATION_VALUE_B_DIFFERENTIAL_SHIFT.
+ *
+ * param base                HSADC peripheral base address.
+ * return                    Calibration value for converter A and converter B.
+ */
 uint32_t HSADC_GetCalibrationResultValue(HSADC_Type *base)
 {
     return (((uint32_t)(base->CALVAL_A) << 16U) + base->CALVAL_B);
 }
 
+/*!
+ * brief Enables or disables the calibration result value.
+ *
+ * This function enables or disables converter A and converter B to use the calibration values to obtain the final
+ * conversion result by calibration sum operation.
+ *
+ * param base          HSADC peripheral base address.
+ * param converterMask Mask for converters to be operated. See the "_hsadc_converter_id".
+ * param enable        Enable or disable the feature.
+ */
 void HSADC_EnableCalibrationResultValue(HSADC_Type *base, uint16_t converterMask, bool enable)
 {
     /* CALIB */

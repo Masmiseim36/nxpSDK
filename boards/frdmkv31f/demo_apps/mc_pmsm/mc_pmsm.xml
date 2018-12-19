@@ -2,14 +2,19 @@
 <ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
   <externalDefinitions>
     <definition extID="com.nxp.mcuxpresso"/>
+    <definition extID="component.lists.MKV31F51212"/>
+    <definition extID="component.serial_manager.MKV31F51212"/>
+    <definition extID="component.serial_manager_uart.MKV31F51212"/>
+    <definition extID="component.uart_adapter.MKV31F51212"/>
+    <definition extID="device.MKV31F51212_CMSIS.MKV31F51212"/>
+    <definition extID="device.MKV31F51212_startup.MKV31F51212"/>
     <definition extID="middleware.motor_control.pmsm.MKV31F51212"/>
     <definition extID="middleware.rtcesl.cm4f.MKV31F51212"/>
-    <definition extID="platform.devices.MKV31F51212_CMSIS.MKV31F51212"/>
-    <definition extID="platform.devices.MKV31F51212_startup.MKV31F51212"/>
+    <definition extID="platform.Include_common.MKV31F51212"/>
+    <definition extID="platform.Include_core_cm4.MKV31F51212"/>
     <definition extID="platform.drivers.clock.MKV31F51212"/>
     <definition extID="platform.drivers.common.MKV31F51212"/>
     <definition extID="platform.drivers.dmamux.MKV31F51212"/>
-    <definition extID="platform.drivers.flash.MKV31F51212"/>
     <definition extID="platform.drivers.gpio.MKV31F51212"/>
     <definition extID="platform.drivers.lpuart.MKV31F51212"/>
     <definition extID="platform.drivers.port.MKV31F51212"/>
@@ -17,12 +22,13 @@
     <definition extID="platform.drivers.smc.MKV31F51212"/>
     <definition extID="platform.drivers.uart.MKV31F51212"/>
     <definition extID="platform.utilities.assert.MKV31F51212"/>
-    <definition extID="platform.utilities.debug_console.MKV31F51212"/>
-    <definition extID="mdk"/>
+    <definition extID="utility.debug_console.MKV31F51212"/>
     <definition extID="iar"/>
+    <definition extID="mdk"/>
     <definition extID="mcuxpresso"/>
+    <definition extID="armgcc"/>
   </externalDefinitions>
-  <example id="frdmkv31f_mc_pmsm" name="mc_pmsm" category="demo_apps" dependency="platform.drivers.sim.MKV31F51212 platform.drivers.common.MKV31F51212 platform.drivers.clock.MKV31F51212 platform.drivers.port.MKV31F51212 platform.drivers.dmamux.MKV31F51212 middleware.rtcesl.cm4f.MKV31F51212 platform.drivers.flash.MKV31F51212 platform.devices.MKV31F51212_CMSIS.MKV31F51212 platform.devices.MKV31F51212_startup.MKV31F51212 platform.drivers.lpuart.MKV31F51212 platform.drivers.uart.MKV31F51212 platform.drivers.smc.MKV31F51212 platform.utilities.debug_console.MKV31F51212 platform.drivers.gpio.MKV31F51212 platform.utilities.assert.MKV31F51212 middleware.motor_control.pmsm.MKV31F51212" toolchain="mdk iar mcuxpresso">
+  <example id="frdmkv31f_mc_pmsm" name="mc_pmsm" category="demo_apps" dependency="platform.drivers.sim.MKV31F51212 platform.drivers.port.MKV31F51212 platform.drivers.dmamux.MKV31F51212 platform.drivers.clock.MKV31F51212 middleware.rtcesl.cm4f.MKV31F51212 middleware.motor_control.pmsm.MKV31F51212 platform.drivers.common.MKV31F51212 device.MKV31F51212_CMSIS.MKV31F51212 utility.debug_console.MKV31F51212 component.uart_adapter.MKV31F51212 component.serial_manager.MKV31F51212 component.serial_manager_uart.MKV31F51212 platform.drivers.uart.MKV31F51212 component.lists.MKV31F51212 device.MKV31F51212_startup.MKV31F51212 platform.drivers.lpuart.MKV31F51212 platform.drivers.smc.MKV31F51212 platform.drivers.gpio.MKV31F51212 platform.utilities.assert.MKV31F51212 platform.Include_core_cm4.MKV31F51212 platform.Include_common.MKV31F51212" toolchain="iar mdk mcuxpresso">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -37,15 +43,8 @@
         <option id="com.crt.advproject.c.misc.dialect" type="enum">
           <value>com.crt.advproject.misc.dialect.gnu99</value>
         </option>
-        <option id="com.crt.advproject.gcc.exe.debug.option.debugging.level" type="enum">
-          <value>gnu.c.debugging.level.default</value>
-        </option>
-        <option id="com.crt.advproject.gcc.exe.release.option.debugging.level" type="enum">
-          <value>gnu.c.debugging.level.default</value>
-        </option>
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
           <value>CPU_MKV31F512VLL12</value>
-          <value>ARM_MATH_CM4</value>
           <value>FRDM_KV31F</value>
           <value>FREEDOM</value>
         </option>
@@ -63,6 +62,12 @@
         </option>
       </toolchainSetting>
     </toolchainSettings>
+    <source path="boards/frdmkv31f/demo_apps/mc_pmsm/iar" target_path="src" type="linker" toolchain="iar">
+      <files mask="MKV31F512xxx12_flash.icf"/>
+    </source>
+    <source path="boards/frdmkv31f/demo_apps/mc_pmsm/mdk" target_path="src" type="linker" toolchain="mdk">
+      <files mask="MKV31F512xxx12_flash.scf"/>
+    </source>
     <source path="boards/frdmkv31f/demo_apps/mc_pmsm" target_path="board" type="c_include">
       <files mask="board.h"/>
       <files mask="clock_config.h"/>
@@ -93,35 +98,8 @@
     <source path="boards/frdmkv31f/demo_apps/mc_pmsm" target_path="source" type="src">
       <files mask="main.c"/>
     </source>
-    <source path="middleware/rtcesl/CM4F_RTCESL_4.5_IAR/AMCLIB" type="lib" method="copy" toolchain="iar">
-      <files mask="AMCLIB.a"/>
-    </source>
-    <source path="middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GDFLIB" type="lib" method="copy" toolchain="iar">
-      <files mask="GDFLIB.a"/>
-    </source>
-    <source path="middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GFLIB" type="lib" method="copy" toolchain="iar">
-      <files mask="GFLIB.a"/>
-    </source>
-    <source path="middleware/rtcesl/CM4F_RTCESL_4.5_IAR/GMCLIB" type="lib" method="copy" toolchain="iar">
-      <files mask="GMCLIB.a"/>
-    </source>
-    <source path="middleware/rtcesl/CM4F_RTCESL_4.5_IAR/MLIB" type="lib" method="copy" toolchain="iar">
-      <files mask="MLIB.a"/>
-    </source>
-    <source path="middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/AMCLIB" type="lib" method="copy" toolchain="mdk">
-      <files mask="AMCLIB.lib"/>
-    </source>
-    <source path="middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/GDFLIB" type="lib" method="copy" toolchain="mdk">
-      <files mask="GDFLIB.lib"/>
-    </source>
-    <source path="middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/GFLIB" type="lib" method="copy" toolchain="mdk">
-      <files mask="GFLIB.lib"/>
-    </source>
-    <source path="middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/GMCLIB" type="lib" method="copy" toolchain="mdk">
-      <files mask="GMCLIB.lib"/>
-    </source>
-    <source path="middleware/rtcesl/CM4F_RTCESL_4.5_KEIL/MLIB" type="lib" method="copy" toolchain="mdk">
-      <files mask="MLIB.lib"/>
+    <source path="devices/MKV31F51212/gcc" target_path="src" type="linker" toolchain="armgcc">
+      <files mask="MKV31F512xxx12_flash.ld"/>
     </source>
   </example>
 </ksdk:examples>

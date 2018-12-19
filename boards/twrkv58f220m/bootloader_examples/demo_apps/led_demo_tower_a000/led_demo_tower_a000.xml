@@ -2,14 +2,16 @@
 <ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
   <externalDefinitions>
     <definition extID="com.nxp.mcuxpresso"/>
-    <definition extID="middleware.mcu-boot.MKV58F24_application_0x1000a000_linker.MKV58F24"/>
+    <definition extID="device.MKV58F24_CMSIS.MKV58F24"/>
     <definition extID="middleware.mcu-boot.MKV58F24_startup.MKV58F24"/>
-    <definition extID="platform.devices.MKV58F24_CMSIS.MKV58F24"/>
-    <definition extID="mdk"/>
+    <definition extID="middleware.mcu-boot.src_startup.MKV58F24"/>
+    <definition extID="platform.Include_common.MKV58F24"/>
+    <definition extID="platform.Include_core_cm7.MKV58F24"/>
     <definition extID="iar"/>
+    <definition extID="mdk"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="twrkv58f220m_led_demo_tower_a000" name="led_demo_tower_a000" category="bootloader_examples/demo_apps" dependency="middleware.mcu-boot.MKV58F24_application_0x1000a000_linker.MKV58F24 platform.devices.MKV58F24_CMSIS.MKV58F24 middleware.mcu-boot.MKV58F24_startup.MKV58F24" toolchain="mdk iar mcuxpresso">
+  <example id="twrkv58f220m_led_demo_tower_a000" name="led_demo_tower_a000" category="bootloader_examples/demo_apps" dependency="device.MKV58F24_CMSIS.MKV58F24 middleware.mcu-boot.MKV58F24_startup.MKV58F24 middleware.mcu-boot.src_startup.MKV58F24 platform.Include_core_cm7.MKV58F24 platform.Include_common.MKV58F24" toolchain="iar mdk mcuxpresso">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -81,6 +83,15 @@
         </option>
       </toolchainSetting>
     </toolchainSettings>
+    <source path="boards/twrkv58f220m/bootloader_examples/demo_apps/led_demo_tower_a000/iar" target_path="middleware/mcu-boot" type="linker" toolchain="iar">
+      <files mask="MKV58F1M0xxx24_application_0x1000A000.icf"/>
+    </source>
+    <source path="boards/twrkv58f220m/bootloader_examples/demo_apps/led_demo_tower_a000/mcux" target_path="middleware/mcu-boot" type="linker" toolchain="mcuxpresso">
+      <files mask="MKV58F1M0xxx24_application_0x1000a000.ld"/>
+    </source>
+    <source path="boards/twrkv58f220m/bootloader_examples/demo_apps/led_demo_tower_a000/mdk" target_path="middleware/mcu-boot" type="linker" toolchain="mdk">
+      <files mask="MKV58F1M0xxx24_application_0x1000a000.scf"/>
+    </source>
     <source path="boards/twrkv58f220m/bootloader_examples/demo_apps/led_demo_tower_a000" target_path="MKV58F24" type="src">
       <files mask="main.c"/>
     </source>

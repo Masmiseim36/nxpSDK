@@ -1,3 +1,16 @@
+Overview
+========
+The 3-phase brushless DC (BLDC) motor control demo application is based 
+on Kinetis® MCUs and intended to provide the example for 3-phase sensorless 
+BLDC motor control solutions. The demo design uses a six-step communication process,
+including closed-loop speed control and dynamic motor current limitation. 
+
+Toolchain supported
+===================
+- IAR embedded Workbench 8.30.1
+- Keil MDK 5.25
+- MCUXpresso IDE 10.2.1
+
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -24,4 +37,4 @@ Press button SW2 on FRDM-KV11Z board to switch on or off demonstration mode - th
 
 More information
 ================
-For more information open the user guide in KSDK install folder\docs\MOTOR_CONTROL\BLDCDEMOUG.pdf or visit the page: http://www.nxp.com/motorcontrol_bldc and find the doccument BLDCAPPACUG - 3-Phase Brushless DC (BLDC) Motor control User Guides.
+For more information open the user guide in KSDK install folder\docs\MC\BLDCDEMOUG.pdf or visit the page: http://www.nxp.com/motorcontrol_bldc and find the doccument BLDCAPPACUG - 3-Phase Brushless DC (BLDC) Motor control User Guides.

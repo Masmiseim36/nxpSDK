@@ -14,28 +14,6 @@ Second part is application of this simple logging mechanism. Each of two tasks w
 write_task_2 print 5 messages into log.
 
 
-
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
-
-Hardware requirements
-=====================
-- Mini USB cable
-- FRDM-KV11Z board
-- Personal Computer
-
-Board settings
-==============
-This example project does not call for any special hardware configurations.
-Although not required, the recommendation is to leave the development board's jumper settings
-and configurations in default state when running this example.
-Prepare the Demo
-================
-
 Running the demo
 ================
 After the board is flashed the Tera Term will show debug console output.
@@ -51,6 +29,22 @@ Log 6: Task1 Message 3
 Log 7: Task2 Message 3
 Log 8: Task1 Message 4
 Log 9: Task2 Message 4
-Customization options
+Hardware requirements
 =====================
+- Mini USB cable
+- FRDM-KV11Z board
+- Personal Computer
+
+Board settings
+==============
+This example project does not call for any special hardware configurations.
+Although not required, the recommendation is to leave the development board's jumper settings
+and configurations in default state when running this example.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

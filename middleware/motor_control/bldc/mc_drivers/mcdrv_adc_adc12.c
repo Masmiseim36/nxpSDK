@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2018 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "mcdrv_adc_adc12.h"
@@ -137,7 +111,7 @@ bool_t MCDRV_Adc12Init(mcdrv_adc12_t *this, mcdrv_adc12_init_t *init)
         {
             this->bldcAdc1SectorCfg[0] = init->ui16AdcArray[MCDRV_ADC1_BEMFC] + 8;
             this->bldcAdc1SectorCfg[3] = init->ui16AdcArray[MCDRV_ADC1_BEMFC] + 8;
-            this->pui32AdcBaseAdd->CLIST3 = ((this->pui32AdcBaseAdd->CLIST3 & ~(ADC_CLIST3_SAMPLE8_MASK)) |
+            this->pui32AdcBaseAdd->CLIST3 = ((this->pui32AdcBaseAdd->CLIST3 & ~(uint16_t)(ADC_CLIST3_SAMPLE8_MASK)) |
                                              ADC_CLIST3_SAMPLE8(init->ui16AdcArray[MCDRV_ADC1_BEMFC] + 8));
             this->ui16RsltNumBemf = 8;
         }
@@ -145,7 +119,7 @@ bool_t MCDRV_Adc12Init(mcdrv_adc12_t *this, mcdrv_adc12_init_t *init)
         {
             this->bldcAdc0SectorCfg[0] = init->ui16AdcArray[MCDRV_ADC0_BEMFC];
             this->bldcAdc0SectorCfg[3] = init->ui16AdcArray[MCDRV_ADC0_BEMFC];
-            this->pui32AdcBaseAdd->CLIST1 = ((this->pui32AdcBaseAdd->CLIST1 & ~(ADC_CLIST1_SAMPLE0_MASK)) |
+            this->pui32AdcBaseAdd->CLIST1 = ((this->pui32AdcBaseAdd->CLIST1 & ~(uint16_t)(ADC_CLIST1_SAMPLE0_MASK)) |
                                              ADC_CLIST1_SAMPLE0(init->ui16AdcArray[MCDRV_ADC0_BEMFC]));
             this->ui16RsltNumBemf = 0;
         }
@@ -153,13 +127,13 @@ bool_t MCDRV_Adc12Init(mcdrv_adc12_t *this, mcdrv_adc12_init_t *init)
         /* DC-bus current measurement */
         if (init->ui16AdcArray[MCDRV_ADC0_IDCB] == MCDRV_CHAN_OFF)
         {
-            this->pui32AdcBaseAdd->CLIST3 = ((this->pui32AdcBaseAdd->CLIST3 & ~(ADC_CLIST3_SAMPLE8_MASK)) |
+            this->pui32AdcBaseAdd->CLIST3 = ((this->pui32AdcBaseAdd->CLIST3 & ~(uint16_t)(ADC_CLIST3_SAMPLE8_MASK)) |
                                              ADC_CLIST3_SAMPLE8(init->ui16AdcArray[MCDRV_ADC1_IDCB] + 8));
             this->ui16RsltNumIdcb = 8;
         }
         else
         {
-            this->pui32AdcBaseAdd->CLIST1 = ((this->pui32AdcBaseAdd->CLIST1 & ~(ADC_CLIST1_SAMPLE2_MASK)) |
+            this->pui32AdcBaseAdd->CLIST1 = ((this->pui32AdcBaseAdd->CLIST1 & ~(uint16_t)(ADC_CLIST1_SAMPLE2_MASK)) |
                                              ADC_CLIST1_SAMPLE2(init->ui16AdcArray[MCDRV_ADC0_IDCB]));
             this->ui16RsltNumIdcb = 2;
         }
@@ -167,13 +141,13 @@ bool_t MCDRV_Adc12Init(mcdrv_adc12_t *this, mcdrv_adc12_init_t *init)
         /* auxiliary measurement */
         if (init->ui16AdcArray[MCDRV_ADC0_AUX] == MCDRV_CHAN_OFF)
         {
-            this->pui32AdcBaseAdd->CLIST3 = ((this->pui32AdcBaseAdd->CLIST3 & ~(ADC_CLIST3_SAMPLE9_MASK)) |
+            this->pui32AdcBaseAdd->CLIST3 = ((this->pui32AdcBaseAdd->CLIST3 & ~(uint16_t)(ADC_CLIST3_SAMPLE9_MASK)) |
                                              ADC_CLIST3_SAMPLE9(init->ui16AdcArray[MCDRV_ADC1_AUX] + 8));
             this->ui16RsltNumAux = 9;
         }
         else
         {
-            this->pui32AdcBaseAdd->CLIST1 = ((this->pui32AdcBaseAdd->CLIST1 & ~(ADC_CLIST1_SAMPLE1_MASK)) |
+            this->pui32AdcBaseAdd->CLIST1 = ((this->pui32AdcBaseAdd->CLIST1 & ~(uint16_t)(ADC_CLIST1_SAMPLE1_MASK)) |
                                              ADC_CLIST1_SAMPLE1(init->ui16AdcArray[MCDRV_ADC0_AUX]));
             this->ui16RsltNumAux = 1;
         }
@@ -181,13 +155,13 @@ bool_t MCDRV_Adc12Init(mcdrv_adc12_t *this, mcdrv_adc12_init_t *init)
         /* DC-bus voltage measurement */
         if (init->ui16AdcArray[MCDRV_ADC0_UDCB] == MCDRV_CHAN_OFF)
         {
-            this->pui32AdcBaseAdd->CLIST3 = ((this->pui32AdcBaseAdd->CLIST3 & ~(ADC_CLIST3_SAMPLE9_MASK)) |
+            this->pui32AdcBaseAdd->CLIST3 = ((this->pui32AdcBaseAdd->CLIST3 & ~(uint16_t)(ADC_CLIST3_SAMPLE9_MASK)) |
                                              ADC_CLIST3_SAMPLE9(init->ui16AdcArray[MCDRV_ADC1_UDCB] + 8));
             this->ui16RsltNumUdcb = 9;
         }
         else
         {
-            this->pui32AdcBaseAdd->CLIST1 = ((this->pui32AdcBaseAdd->CLIST1 & ~(ADC_CLIST1_SAMPLE1_MASK)) |
+            this->pui32AdcBaseAdd->CLIST1 = ((this->pui32AdcBaseAdd->CLIST1 & ~(uint16_t)(ADC_CLIST1_SAMPLE1_MASK)) |
                                              ADC_CLIST1_SAMPLE1(init->ui16AdcArray[MCDRV_ADC0_UDCB]));
             this->ui16RsltNumUdcb = 1;
         }
@@ -214,13 +188,13 @@ bool_t MCDRV_AssignBemfChannel(mcdrv_adc12_t *this)
         case 3:
             if ((this->pui16AdcArray[MCDRV_ADC1_BEMFC]) == MCDRV_CHAN_OFF)
             {
-                this->pui32AdcBaseAdd->CLIST1 = ((this->pui32AdcBaseAdd->CLIST1 & ~(ADC_CLIST1_SAMPLE0_MASK)) |
+                this->pui32AdcBaseAdd->CLIST1 = ((this->pui32AdcBaseAdd->CLIST1 & ~(uint16_t)(ADC_CLIST1_SAMPLE0_MASK)) |
                                                  ADC_CLIST1_SAMPLE0(this->pui16AdcArray[MCDRV_ADC0_BEMFC]));
                 this->ui16RsltNumBemf = 0;
             }
             else
             {
-                this->pui32AdcBaseAdd->CLIST3 = ((this->pui32AdcBaseAdd->CLIST3 & ~(ADC_CLIST3_SAMPLE8_MASK)) |
+                this->pui32AdcBaseAdd->CLIST3 = ((this->pui32AdcBaseAdd->CLIST3 & ~(uint16_t)(ADC_CLIST3_SAMPLE8_MASK)) |
                                                  ADC_CLIST3_SAMPLE8(this->pui16AdcArray[MCDRV_ADC1_BEMFC] + 8));
                 this->ui16RsltNumBemf = 8;
             }
@@ -231,13 +205,13 @@ bool_t MCDRV_AssignBemfChannel(mcdrv_adc12_t *this)
         case 4:
             if ((this->pui16AdcArray[MCDRV_ADC1_BEMFB]) == MCDRV_CHAN_OFF)
             {
-                this->pui32AdcBaseAdd->CLIST1 = ((this->pui32AdcBaseAdd->CLIST1 & ~(ADC_CLIST1_SAMPLE0_MASK)) |
+                this->pui32AdcBaseAdd->CLIST1 = ((this->pui32AdcBaseAdd->CLIST1 & ~(uint16_t)(ADC_CLIST1_SAMPLE0_MASK)) |
                                                  ADC_CLIST1_SAMPLE0(this->pui16AdcArray[MCDRV_ADC0_BEMFB]));
                 this->ui16RsltNumBemf = 0;
             }
             else
             {
-                this->pui32AdcBaseAdd->CLIST3 = ((this->pui32AdcBaseAdd->CLIST3 & ~(ADC_CLIST3_SAMPLE8_MASK)) |
+                this->pui32AdcBaseAdd->CLIST3 = ((this->pui32AdcBaseAdd->CLIST3 & ~(uint16_t)(ADC_CLIST3_SAMPLE8_MASK)) |
                                                  ADC_CLIST3_SAMPLE8(this->pui16AdcArray[MCDRV_ADC1_BEMFB] + 8));
                 this->ui16RsltNumBemf = 8;
             }
@@ -248,13 +222,13 @@ bool_t MCDRV_AssignBemfChannel(mcdrv_adc12_t *this)
         case 5:
             if ((this->pui16AdcArray[MCDRV_ADC1_BEMFA]) == MCDRV_CHAN_OFF)
             {
-                this->pui32AdcBaseAdd->CLIST1 = ((this->pui32AdcBaseAdd->CLIST1 & ~(ADC_CLIST1_SAMPLE0_MASK)) |
+                this->pui32AdcBaseAdd->CLIST1 = ((this->pui32AdcBaseAdd->CLIST1 & ~(uint16_t)(ADC_CLIST1_SAMPLE0_MASK)) |
                                                  ADC_CLIST1_SAMPLE0(this->pui16AdcArray[MCDRV_ADC0_BEMFA]));
                 this->ui16RsltNumBemf = 0;
             }
             else
             {
-                this->pui32AdcBaseAdd->CLIST3 = ((this->pui32AdcBaseAdd->CLIST3 & ~(ADC_CLIST3_SAMPLE8_MASK)) |
+                this->pui32AdcBaseAdd->CLIST3 = ((this->pui32AdcBaseAdd->CLIST3 & ~(uint16_t)(ADC_CLIST3_SAMPLE8_MASK)) |
                                                  ADC_CLIST3_SAMPLE8(this->pui16AdcArray[MCDRV_ADC1_BEMFA] + 8));
                 this->ui16RsltNumBemf = 8;
             }

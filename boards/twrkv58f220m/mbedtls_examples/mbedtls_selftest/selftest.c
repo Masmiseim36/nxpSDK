@@ -109,28 +109,34 @@
  * Code
  ******************************************************************************/
 #if RUN_TEST_SNPRINTF
-static int test_snprintf(size_t n, const char ref_buf[10], int ref_ret)
+static int test_snprintf( size_t n, const char ref_buf[10], int ref_ret )
 {
     int ret;
     char buf[10] = "xxxxxxxxx";
     const char ref[10] = "xxxxxxxxx";
 
-    ret = mbedtls_snprintf(buf, n, "%s", "123");
-    if (ret < 0 || (size_t)ret >= n)
+    ret = mbedtls_snprintf( buf, n, "%s", "123" );
+    if( ret < 0 || (size_t) ret >= n )
         ret = -1;
 
-    if (strncmp(ref_buf, buf, sizeof(buf)) != 0 || ref_ret != ret || memcmp(buf + n, ref + n, sizeof(buf) - n) != 0)
+    if( strncmp( ref_buf, buf, sizeof( buf ) ) != 0 ||
+        ref_ret != ret ||
+        memcmp( buf + n, ref + n, sizeof( buf ) - n ) != 0 )
     {
-        return (1);
+        return( 1 );
     }
 
-    return (0);
+    return( 0 );
 }
 
-static int run_test_snprintf(void)
+static int run_test_snprintf( void )
 {
-    return (test_snprintf(0, "xxxxxxxxx", -1) != 0 || test_snprintf(1, "", -1) != 0 || test_snprintf(2, "1", -1) != 0 ||
-            test_snprintf(3, "12", -1) != 0 || test_snprintf(4, "123", 3) != 0 || test_snprintf(5, "123", 3) != 0);
+    return( test_snprintf( 0, "xxxxxxxxx",  -1 ) != 0 ||
+            test_snprintf( 1, "",           -1 ) != 0 ||
+            test_snprintf( 2, "1",          -1 ) != 0 ||
+            test_snprintf( 3, "12",         -1 ) != 0 ||
+            test_snprintf( 4, "123",         3 ) != 0 ||
+            test_snprintf( 5, "123",         3 ) != 0 );
 }
 #endif
 
@@ -139,9 +145,9 @@ static int run_test_snprintf(void)
  * self-test. If this fails, we attempt the test anyway, so no error is passed
  * back.
  */
-#if defined(MBEDTLS_SELF_TEST) && defined(MBEDTLS_ENTROPY_C) && defined(MBEDTLS_ENTROPY_NV_SEED) && \
-    !defined(MBEDTLS_NO_PLATFORM_ENTROPY)
-static void create_entropy_seed_file(void)
+#if defined(MBEDTLS_SELF_TEST) && defined(MBEDTLS_ENTROPY_C)
+#if defined(MBEDTLS_ENTROPY_NV_SEED) && !defined(MBEDTLS_NO_PLATFORM_ENTROPY)
+static void create_entropy_seed_file( void )
 {
     int result;
     size_t output_len = 0;
@@ -149,20 +155,146 @@ static void create_entropy_seed_file(void)
 
     /* Attempt to read the entropy seed file. If this fails - attempt to write
      * to the file to ensure one is present. */
-    result = mbedtls_platform_std_nv_seed_read(seed_value, MBEDTLS_ENTROPY_BLOCK_SIZE);
-    if (0 == result)
+    result = mbedtls_platform_std_nv_seed_read( seed_value,
+                                                    MBEDTLS_ENTROPY_BLOCK_SIZE );
+    if( 0 == result )
         return;
 
-    result = mbedtls_platform_entropy_poll(NULL, seed_value, MBEDTLS_ENTROPY_BLOCK_SIZE, &output_len);
-    if (0 != result)
+    result = mbedtls_platform_entropy_poll( NULL,
+                                            seed_value,
+                                            MBEDTLS_ENTROPY_BLOCK_SIZE,
+                                            &output_len );
+    if( 0 != result )
         return;
 
-    if (MBEDTLS_ENTROPY_BLOCK_SIZE != output_len)
+    if( MBEDTLS_ENTROPY_BLOCK_SIZE != output_len )
         return;
 
-    mbedtls_platform_std_nv_seed_write(seed_value, MBEDTLS_ENTROPY_BLOCK_SIZE);
+    mbedtls_platform_std_nv_seed_write( seed_value, MBEDTLS_ENTROPY_BLOCK_SIZE );
 }
 #endif
+
+int mbedtls_entropy_self_test_wrapper( int verbose )
+{
+#if defined(MBEDTLS_ENTROPY_NV_SEED) && !defined(MBEDTLS_NO_PLATFORM_ENTROPY)
+    create_entropy_seed_file( );
+#endif
+    return( mbedtls_entropy_self_test( verbose ) );
+}
+#endif
+
+#if defined(MBEDTLS_SELF_TEST)
+#if defined(MBEDTLS_MEMORY_BUFFER_ALLOC_C)
+int mbedtls_memory_buffer_alloc_free_and_self_test( int verbose )
+{
+    if( verbose != 0 )
+    {
+#if defined(MBEDTLS_MEMORY_DEBUG)
+        mbedtls_memory_buffer_alloc_status( );
+#endif
+    }
+    mbedtls_memory_buffer_alloc_free( );
+    return( mbedtls_memory_buffer_alloc_self_test( verbose ) );
+}
+#endif
+
+typedef struct
+{
+    const char *name;
+    int ( *function )( int );
+} selftest_t;
+
+const selftest_t selftests[] =
+{
+#if defined(MBEDTLS_MD2_C)
+    {"md2", mbedtls_md2_self_test},
+#endif
+#if defined(MBEDTLS_MD4_C)
+    {"md4", mbedtls_md4_self_test},
+#endif
+#if defined(MBEDTLS_MD5_C)
+    {"md5", mbedtls_md5_self_test},
+#endif
+#if defined(MBEDTLS_RIPEMD160_C)
+    {"ripemd160", mbedtls_ripemd160_self_test},
+#endif
+#if defined(MBEDTLS_SHA1_C)
+    {"sha1", mbedtls_sha1_self_test},
+#endif
+#if defined(MBEDTLS_SHA256_C)
+    {"sha256", mbedtls_sha256_self_test},
+#endif
+#if defined(MBEDTLS_SHA512_C)
+    {"sha512", mbedtls_sha512_self_test},
+#endif
+#if defined(MBEDTLS_ARC4_C)
+    {"arc4", mbedtls_arc4_self_test},
+#endif
+#if defined(MBEDTLS_DES_C)
+    {"des", mbedtls_des_self_test},
+#endif
+#if defined(MBEDTLS_AES_C)
+    {"aes", mbedtls_aes_self_test},
+#endif
+#if defined(MBEDTLS_GCM_C) && defined(MBEDTLS_AES_C)
+    {"gcm", mbedtls_gcm_self_test},
+#endif
+#if defined(MBEDTLS_CCM_C) && defined(MBEDTLS_AES_C)
+    {"ccm", mbedtls_ccm_self_test},
+#endif
+#if defined(MBEDTLS_CMAC_C)
+    {"cmac", mbedtls_cmac_self_test},
+#endif
+#if defined(MBEDTLS_BASE64_C)
+    {"base64", mbedtls_base64_self_test},
+#endif
+#if defined(MBEDTLS_BIGNUM_C)
+    {"mpi", mbedtls_mpi_self_test},
+#endif
+#if defined(MBEDTLS_RSA_C)
+    {"rsa", mbedtls_rsa_self_test},
+#endif
+#if defined(MBEDTLS_X509_USE_C)
+    {"x509", mbedtls_x509_self_test},
+#endif
+#if defined(MBEDTLS_XTEA_C)
+    {"xtea", mbedtls_xtea_self_test},
+#endif
+#if defined(MBEDTLS_CAMELLIA_C)
+    {"camellia", mbedtls_camellia_self_test},
+#endif
+#if defined(MBEDTLS_CTR_DRBG_C)
+    {"ctr_drbg", mbedtls_ctr_drbg_self_test},
+#endif
+#if defined(MBEDTLS_HMAC_DRBG_C)
+    {"hmac_drbg", mbedtls_hmac_drbg_self_test},
+#endif
+#if defined(MBEDTLS_ECP_C)
+    {"ecp", mbedtls_ecp_self_test},
+#endif
+#if defined(MBEDTLS_ECJPAKE_C)
+    {"ecjpake", mbedtls_ecjpake_self_test},
+#endif
+#if defined(MBEDTLS_DHM_C)
+    {"dhm", mbedtls_dhm_self_test},
+#endif
+#if defined(MBEDTLS_ENTROPY_C)
+    {"entropy", mbedtls_entropy_self_test_wrapper},
+#endif
+#if defined(MBEDTLS_PKCS5_C)
+    {"pkcs5", mbedtls_pkcs5_self_test},
+#endif
+/* Slower test after the faster ones */
+#if defined(MBEDTLS_TIMING_C)
+    {"timing", mbedtls_timing_self_test},
+#endif
+/* Heap test comes last */
+#if defined(MBEDTLS_MEMORY_BUFFER_ALLOC_C)
+    {"memory_buffer_alloc", mbedtls_memory_buffer_alloc_free_and_self_test},
+#endif
+    {NULL, NULL}
+};
+#endif /* MBEDTLS_SELF_TEST */
 
 static int bench_print_features(void)
 {
@@ -180,6 +312,8 @@ static int bench_print_features(void)
     text = "CAU3 HW accelerated";
 #elif defined(MBEDTLS_FREESCALE_DCP_SHA256)
     text = "DCP HW accelerated";
+#elif defined(MBEDTLS_FREESCALE_HASHCRYPT_SHA256)
+    text = "HASHCRYPT HW accelerated";
 #else
     text = "Software implementation";
 #endif
@@ -194,6 +328,8 @@ static int bench_print_features(void)
     text = "CAU3 HW accelerated";
 #elif defined(MBEDTLS_FREESCALE_DCP_AES)
     text = "DCP HW accelerated";
+#elif defined(MBEDTLS_FREESCALE_HASHCRYPT_AES)
+    text = "HASHCRYPT HW accelerated";
 #else
     text = "Software implementation";
 #endif
@@ -224,6 +360,8 @@ static int bench_print_features(void)
     text = "LTC HW accelerated";
 #elif defined(MBEDTLS_FREESCALE_CAU3_PKHA)
     text = "CAU3 HW accelerated";
+#elif defined(MBEDTLS_FREESCALE_CASPER_PKHA)
+    text = "CASPER HW accelerated";
 #else
     text = "Software implementation";
 #endif
@@ -231,9 +369,17 @@ static int bench_print_features(void)
     return 0;
 }
 
-int main(int argc, char *argv[])
+int main( int argc, char *argv[] )
 {
-    int v, suites_tested = 0, suites_failed = 0;
+#if defined(MBEDTLS_SELF_TEST)
+    const selftest_t *test;
+#endif /* MBEDTLS_SELF_TEST */
+#if !defined(FREESCALE_KSDK_BM)
+    char **argp;
+    int exclude_mode = 0;
+#endif
+    int v = 1; /* v=1 for verbose mode */
+    int suites_tested = 0, suites_failed = 0;
 #if defined(MBEDTLS_MEMORY_BUFFER_ALLOC_C) && defined(MBEDTLS_SELF_TEST)
     unsigned char buf[1000000];
 #endif
@@ -253,306 +399,140 @@ int main(int argc, char *argv[])
      * of a NULL pointer. We do however use that in our code for initializing
      * structures, which should work on every modern platform. Let's be sure.
      */
-    memset(&pointer, 0, sizeof(void *));
-    if (pointer != NULL)
+    memset( &pointer, 0, sizeof( void * ) );
+    if( pointer != NULL )
     {
-        mbedtls_printf("all-bits-zero is not a NULL pointer\r\n");
-        mbedtls_exit(MBEDTLS_EXIT_FAILURE);
+        mbedtls_printf( "all-bits-zero is not a NULL pointer\n" );
+        mbedtls_exit( MBEDTLS_EXIT_FAILURE );
     }
 
-/*
- * Make sure we have a snprintf that correctly zero-terminates
- */
+    /*
+     * Make sure we have a snprintf that correctly zero-terminates
+     */
 #if RUN_TEST_SNPRINTF /* Test is failed for UV */
-    if (run_test_snprintf() != 0)
+    if( run_test_snprintf() != 0 )
     {
-        mbedtls_printf("the snprintf implementation is broken\r\n");
-        mbedtls_exit(MBEDTLS_EXIT_FAILURE);
+        mbedtls_printf( "the snprintf implementation is broken\n" );
+        mbedtls_exit( MBEDTLS_EXIT_FAILURE );
     }
 #endif
-    if (argc == 2 && (strcmp(argv[1], "--quiet") == 0 || strcmp(argv[1], "-q") == 0))
+#if !defined(FREESCALE_KSDK_BM)
+    for( argp = argv + ( argc >= 1 ? 1 : argc ); *argp != NULL; ++argp )
     {
-        v = 0;
+        if( strcmp( *argp, "--quiet" ) == 0 ||
+            strcmp( *argp, "-q" ) == 0 )
+        {
+            v = 0;
+        }
+        else if( strcmp( *argp, "--exclude" ) == 0 ||
+                 strcmp( *argp, "-x" ) == 0 )
+        {
+            exclude_mode = 1;
+        }
+        else
+            break;
     }
-    else
-    {
-        v = 1;
-        mbedtls_printf("\r\n");
-    }
+
+    if( v != 0 )
+        mbedtls_printf( "\n" );
+#endif
 
 #if defined(MBEDTLS_SELF_TEST)
 
 #if defined(MBEDTLS_MEMORY_BUFFER_ALLOC_C)
-    mbedtls_memory_buffer_alloc_init(buf, sizeof(buf));
+    mbedtls_memory_buffer_alloc_init( buf, sizeof(buf) );
 #endif
 
-#if defined(MBEDTLS_MD2_C)
-    if (mbedtls_md2_self_test(v) != 0)
+#if defined(FREESCALE_KSDK_BM)
+    /* Run all the tests */
+    for( test = selftests; test->name != NULL; test++ )
     {
-        suites_failed++;
+        if( test->function( v )  != 0 )
+        {
+            suites_failed++;
+        }
+        suites_tested++;
     }
-    suites_tested++;
-#endif
-
-#if defined(MBEDTLS_MD4_C)
-    if (mbedtls_md4_self_test(v) != 0)
+#else
+    if( *argp != NULL && exclude_mode == 0 )
     {
-        suites_failed++;
+        /* Run the specified tests */
+        for( ; *argp != NULL; argp++ )
+        {
+            for( test = selftests; test->name != NULL; test++ )
+            {
+                if( !strcmp( *argp, test->name ) )
+                {
+                    if( test->function( v )  != 0 )
+                    {
+                        suites_failed++;
+                    }
+                    suites_tested++;
+                    break;
+                }
+            }
+            if( test->name == NULL )
+            {
+                mbedtls_printf( "  Test suite %s not available -> failed\n\n", *argp );
+                suites_failed++;
+            }
+        }
     }
-    suites_tested++;
-#endif
-
-#if defined(MBEDTLS_MD5_C)
-    if (mbedtls_md5_self_test(v) != 0)
+    else
     {
-        suites_failed++;
+        /* Run all the tests except excluded ones */
+        for( test = selftests; test->name != NULL; test++ )
+        {
+            if( exclude_mode )
+            {
+                char **excluded;
+                for( excluded = argp; *excluded != NULL; ++excluded )
+                {
+                    if( !strcmp( *excluded, test->name ) )
+                        break;
+                }
+                if( *excluded )
+                {
+                    if( v )
+                        mbedtls_printf( "  Skip: %s\n", test->name );
+                    continue;
+                }
+            }
+            if( test->function( v )  != 0 )
+            {
+                suites_failed++;
+            }
+            suites_tested++;
+        }
     }
-    suites_tested++;
-#endif
-
-#if defined(MBEDTLS_RIPEMD160_C)
-    if (mbedtls_ripemd160_self_test(v) != 0)
-    {
-        suites_failed++;
-    }
-    suites_tested++;
-#endif
-
-#if defined(MBEDTLS_SHA1_C)
-    if (mbedtls_sha1_self_test(v) != 0)
-    {
-        suites_failed++;
-    }
-    suites_tested++;
-#endif
-
-#if defined(MBEDTLS_SHA256_C)
-    if (mbedtls_sha256_self_test(v) != 0)
-    {
-        suites_failed++;
-    }
-    suites_tested++;
-#endif
-
-#if defined(MBEDTLS_SHA512_C)
-    if (mbedtls_sha512_self_test(v) != 0)
-    {
-        suites_failed++;
-    }
-    suites_tested++;
-#endif
-
-#if defined(MBEDTLS_ARC4_C)
-    if (mbedtls_arc4_self_test(v) != 0)
-    {
-        suites_failed++;
-    }
-    suites_tested++;
-#endif
-
-#if defined(MBEDTLS_DES_C)
-    if (mbedtls_des_self_test(v) != 0)
-    {
-        suites_failed++;
-    }
-    suites_tested++;
-#endif
-
-#if defined(MBEDTLS_AES_C)
-    if (mbedtls_aes_self_test(v) != 0)
-    {
-        suites_failed++;
-    }
-    suites_tested++;
-#endif
-
-#if defined(MBEDTLS_GCM_C) && defined(MBEDTLS_AES_C)
-    if (mbedtls_gcm_self_test(v) != 0)
-    {
-        suites_failed++;
-    }
-    suites_tested++;
-#endif
-
-#if defined(MBEDTLS_CCM_C) && defined(MBEDTLS_AES_C)
-    if (mbedtls_ccm_self_test(v) != 0)
-    {
-        suites_failed++;
-    }
-    suites_tested++;
-#endif
-
-#if defined(MBEDTLS_CMAC_C)
-    if ((mbedtls_cmac_self_test(v)) != 0)
-    {
-        suites_failed++;
-    }
-    suites_tested++;
-#endif
-
-#if defined(MBEDTLS_BASE64_C)
-    if (mbedtls_base64_self_test(v) != 0)
-    {
-        suites_failed++;
-    }
-    suites_tested++;
-#endif
-
-#if defined(MBEDTLS_BIGNUM_C)
-    if (mbedtls_mpi_self_test(v) != 0)
-    {
-        suites_failed++;
-    }
-    suites_tested++;
-#endif
-
-#if defined(MBEDTLS_RSA_C)
-    if (mbedtls_rsa_self_test(v) != 0)
-    {
-        suites_failed++;
-    }
-    suites_tested++;
-#endif
-
-#if 0 /* Disabled cause of memory limit for some platforms. */
-#if defined(MBEDTLS_X509_USE_C)
-    if( mbedtls_x509_self_test( v ) != 0 )
-    {
-        suites_failed++;
-    }
-    suites_tested++;
-#endif
-#endif
-
-#if defined(MBEDTLS_XTEA_C)
-    if (mbedtls_xtea_self_test(v) != 0)
-    {
-        suites_failed++;
-    }
-    suites_tested++;
-#endif
-
-#if defined(MBEDTLS_CAMELLIA_C)
-    if (mbedtls_camellia_self_test(v) != 0)
-    {
-        suites_failed++;
-    }
-    suites_tested++;
-#endif
-
-#if defined(MBEDTLS_CTR_DRBG_C)
-    if (mbedtls_ctr_drbg_self_test(v) != 0)
-    {
-        suites_failed++;
-    }
-    suites_tested++;
-#endif
-
-#if defined(MBEDTLS_HMAC_DRBG_C)
-    if (mbedtls_hmac_drbg_self_test(v) != 0)
-    {
-        suites_failed++;
-    }
-    suites_tested++;
-#endif
-
-#if defined(MBEDTLS_ECP_C)
-    if (mbedtls_ecp_self_test(v) != 0)
-    {
-        suites_failed++;
-    }
-    suites_tested++;
-#endif
-
-#if defined(MBEDTLS_ECJPAKE_C)
-    if (mbedtls_ecjpake_self_test(v) != 0)
-    {
-        suites_failed++;
-    }
-    suites_tested++;
-#endif
-
-#if defined(MBEDTLS_DHM_C)
-    if (mbedtls_dhm_self_test(v) != 0)
-    {
-        suites_failed++;
-    }
-    suites_tested++;
-#endif
-
-#if defined(MBEDTLS_ENTROPY_C)
-
-#if defined(MBEDTLS_ENTROPY_NV_SEED) && !defined(MBEDTLS_NO_PLATFORM_ENTROPY)
-    create_entropy_seed_file();
-#endif
-
-    if (mbedtls_entropy_self_test(v) != 0)
-    {
-        suites_failed++;
-    }
-    suites_tested++;
-#endif
-
-#if defined(MBEDTLS_PKCS5_C)
-    if (mbedtls_pkcs5_self_test(v) != 0)
-    {
-        suites_failed++;
-    }
-    suites_tested++;
-#endif
-
-/* Slow tests last */
-
-#if defined(MBEDTLS_TIMING_C)
-    if (mbedtls_timing_self_test(v) != 0)
-    {
-        suites_failed++;
-    }
-    suites_tested++;
-#endif
-
-    if (v != 0)
-    {
-#if defined(MBEDTLS_MEMORY_BUFFER_ALLOC_C) && defined(MBEDTLS_MEMORY_DEBUG)
-        mbedtls_memory_buffer_alloc_status();
-#endif
-    }
-
-#if defined(MBEDTLS_MEMORY_BUFFER_ALLOC_C)
-    mbedtls_memory_buffer_alloc_free();
-    if (mbedtls_memory_buffer_alloc_self_test(v) != 0)
-    {
-        suites_failed++;
-    }
-    suites_tested++;
-#endif
+#endif /* FREESCALE_KSDK_BM */
 
 #else
-    mbedtls_printf(" MBEDTLS_SELF_TEST not defined.\n");
+    (void) exclude_mode;
+    mbedtls_printf( " MBEDTLS_SELF_TEST not defined.\n" );
 #endif
 
-    if (v != 0)
+    if( v != 0 )
     {
-        mbedtls_printf("  Executed %d test suites\n\n", suites_tested);
+        mbedtls_printf( "  Executed %d test suites\n\n", suites_tested );
 
-        if (suites_failed > 0)
+        if( suites_failed > 0)
         {
-            mbedtls_printf("  [ %d tests FAIL ]\n\n", suites_failed);
+            mbedtls_printf( "  [ %d tests FAIL ]\n\n", suites_failed );
         }
         else
         {
-            mbedtls_printf("  [ All tests PASS ]\n\n");
+            mbedtls_printf( "  [ All tests PASS ]\n\n" );
         }
 #if defined(_WIN32)
-        mbedtls_printf("  Press Enter to exit this program.\n");
-        fflush(stdout);
-        getchar();
+        mbedtls_printf( "  Press Enter to exit this program.\n" );
+        fflush( stdout ); getchar();
 #endif
     }
 
-    if (suites_failed > 0)
-        mbedtls_exit(MBEDTLS_EXIT_FAILURE);
+    if( suites_failed > 0)
+        mbedtls_exit( MBEDTLS_EXIT_FAILURE );
 
     /* return() is here to prevent compiler warnings */
-    return (MBEDTLS_EXIT_SUCCESS);
+    return( MBEDTLS_EXIT_SUCCESS );
 }

@@ -7,13 +7,24 @@ Endpoint B(board B) when user press space key in terminal. Endpoint B receive th
 the message content to terminal and echo back the message. Endpoint A will increase the received
 message and waiting for the next transmission of the user initiated.
 
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
-
+For self wake up from STOP mode, since steps which MCU enters STOP mode differs on different MCUs,
+take flexcan_interrupt_transfer of twrke18f for example, user should do like this:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#include "fsl_smc.h"
+...
+...
+flexcanConfig.enableSelfWakeup = true;
+FLEXCAN_Init();
+...
+...
+SMC_SetPowerModeStop(SMC, kSMC_PartialStop1);
+if (wakenUp)
+{
+    PRINTF("B has been waken up!\r\n\r\n");
+}
+...
+...
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Hardware requirements
 =====================
 - Two Mini/micro USB cables
@@ -75,8 +86,6 @@ This message displays on the node A terminal:
 
 *********************************************
 
-
-
 Please select local node as A or B:
 
 Note: Node B should start first.
@@ -85,15 +94,11 @@ Node:a
 
 Press any key to trigger one-shot transmission
 
-
-
-Rx MB ID: 0x123, Rx MB data: 0x0
+Rx MB ID: 0x123, Rx MB data: 0x0, Time stamp: 8877
 
 Press any key to trigger the next transmission!
 
-
-
-Rx MB ID: 0x123, Rx MB data: 0x1
+Rx MB ID: 0x123, Rx MB data: 0x1, Time stamp: 32459
 
 Press any key to trigger the next transmission!
 ~~~~~~~~~~~~~~~~~~~~~
@@ -114,8 +119,6 @@ This message displays on the node B terminal:
 
 *********************************************
 
-
-
 Please select local node as A or B:
 
 Note: Node B should start first.
@@ -124,19 +127,20 @@ Node:b
 
 Start to Wait data from Node A
 
-
-
-Rx MB ID: 0x321, Rx MB data: 0x0
+Rx MB ID: 0x321, Rx MB data: 0x0, Time stamp: 5759
 
 Wait Node A to trigger the next transmission!
 
-
-
-Rx MB ID: 0x321, Rx MB data: 0x1
+Rx MB ID: 0x321, Rx MB data: 0x1, Time stamp: 57276
 
 Wait Node A to trigger the next transmission!
 ~~~~~~~~~~~~~~~~~~~~~
 
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

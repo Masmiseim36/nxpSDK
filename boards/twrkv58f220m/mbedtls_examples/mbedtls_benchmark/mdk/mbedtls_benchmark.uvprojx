@@ -342,6 +342,7 @@
               </OCR_RVCT10>
             </OnChipMemories>
             <RvctStartVector/>
+            <nSecure>0</nSecure>
           </ArmAdsMisc>
           <Cads>
             <interw>0</interw>
@@ -361,14 +362,13 @@
             <useXO>0</useXO>
             <VariousControls>
               <MiscControls>--library_interface=armcc 
---library_type=standardlib 
---diag_suppress=66,1296,186 
+--diag_suppress=1296,186 
 --diag_suppress=177 
  
 </MiscControls>
-              <Define>DEBUG, CPU_MKV58F1M0VLQ24, TWR_KV58F220M, TOWER, PRINTF_ADVANCED_ENABLE=1, PRINTF_FLOAT_ENABLE=1, FREESCALE_KSDK_BM, MBEDTLS_CONFIG_FILE='\"ksdk_mbedtls_config.h\"'</Define>
+              <Define>DEBUG, CPU_MKV58F1M0VLQ24, PRINTF_ADVANCED_ENABLE=1, PRINTF_FLOAT_ENABLE=1, FREESCALE_KSDK_BM, MBEDTLS_CONFIG_FILE='\"ksdk_mbedtls_config.h\"', TWR_KV58F220M, TOWER</Define>
               <Undefine/>
-              <IncludePath>../../../../../CMSIS/Include;../../../../../devices;..;../../..;../../../../../middleware/mmcau;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/port/ksdk;../../../../../devices/MKV58F24/drivers;../../../../../devices/MKV58F24;../../../../../devices/MKV58F24/utilities/io;../../../../../devices/MKV58F24/utilities/str;../../../../../devices/MKV58F24/utilities/log;../../../../../devices/MKV58F24/utilities</IncludePath>
+              <IncludePath>..;../../..;../../../../../CMSIS/Include;../../../../../devices;../../../../../middleware/mmcau;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/port/ksdk;../../../../../devices/MKV58F24/drivers;../../../../../devices/MKV58F24/drivers;../../../../../devices/MKV58F24/drivers;../../../../../devices/MKV58F24/drivers;../../../../../devices/MKV58F24/drivers;../../../../../devices/MKV58F24;../../../../../devices/MKV58F24/utilities/str;../../../../../devices/MKV58F24/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MKV58F24/drivers;../../../../../devices/MKV58F24/drivers</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -403,6 +403,9 @@
             <IncludeLibsPath/>
             <Misc>../../../../../middleware/mmcau/asm-cm4-cm7/lib_mmcau.lib 
 --remove 
+--legacyalign 
+--predefine="-D__stack_size__=0x2000" 
+--predefine="-D__heap_size__=0x8000" 
 </Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,L6918W,6238</DisabledWarnings>
@@ -433,11 +436,6 @@
               <FileType>5</FileType>
               <FilePath>../pin_mux.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>board-src</GroupName>
-          <Files>
             <File>
               <FileName>board.c</FileName>
               <FileType>1</FileType>
@@ -484,14 +482,19 @@
               <FilePath>../../../../../devices/MKV58F24/drivers/fsl_uart.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MKV58F24/drivers/fsl_common.h</FilePath>
+              <FileName>fsl_trng.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MKV58F24/drivers/fsl_trng.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MKV58F24/drivers/fsl_common.c</FilePath>
+              <FileName>fsl_trng.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MKV58F24/drivers/fsl_trng.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_port.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MKV58F24/drivers/fsl_port.h</FilePath>
             </File>
             <File>
               <FileName>fsl_clock.h</FileName>
@@ -504,79 +507,14 @@
               <FilePath>../../../../../devices/MKV58F24/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_trng.c</FileName>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MKV58F24/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MKV58F24/drivers/fsl_trng.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_trng.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MKV58F24/drivers/fsl_trng.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_ftfx_adapter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MKV58F24/drivers/fsl_ftfx_adapter.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_ftfx_utilities.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MKV58F24/drivers/fsl_ftfx_utilities.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_ftfx_features.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MKV58F24/drivers/fsl_ftfx_features.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_ftfx_controller.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MKV58F24/drivers/fsl_ftfx_controller.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_ftfx_controller.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MKV58F24/drivers/fsl_ftfx_controller.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_ftfx_flash.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MKV58F24/drivers/fsl_ftfx_flash.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_ftfx_flash.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MKV58F24/drivers/fsl_ftfx_flash.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_ftfx_cache.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MKV58F24/drivers/fsl_ftfx_cache.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_ftfx_cache.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MKV58F24/drivers/fsl_ftfx_cache.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_ftfx_flexnvm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MKV58F24/drivers/fsl_ftfx_flexnvm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_ftfx_flexnvm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MKV58F24/drivers/fsl_ftfx_flexnvm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_flash.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MKV58F24/drivers/fsl_flash.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_port.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MKV58F24/drivers/fsl_port.h</FilePath>
+              <FilePath>../../../../../devices/MKV58F24/drivers/fsl_common.c</FilePath>
             </File>
             <File>
               <FileName>fsl_smc.h</FileName>
@@ -626,82 +564,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>startup</GroupName>
-          <Files>
-            <File>
-              <FileName>system_MKV58F24.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MKV58F24/system_MKV58F24.c</FilePath>
-            </File>
-            <File>
-              <FileName>system_MKV58F24.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MKV58F24/system_MKV58F24.h</FilePath>
-            </File>
-            <File>
-              <FileName>startup_MKV58F24.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../devices/MKV58F24/arm/startup_MKV58F24.s</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>utilities</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_io.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MKV58F24/utilities/io/fsl_io.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_io.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MKV58F24/utilities/io/fsl_io.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_log.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MKV58F24/utilities/log/fsl_log.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_log.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MKV58F24/utilities/log/fsl_log.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MKV58F24/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MKV58F24/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MKV58F24/utilities/fsl_debug_console.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MKV58F24/utilities/fsl_debug_console.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MKV58F24/utilities/fsl_debug_console_conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_assert.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MKV58F24/utilities/fsl_assert.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>mbedTLS-mbedTLS_include</GroupName>
+          <GroupName>mbedtls-mbedtls_include</GroupName>
           <Files>
             <File>
               <FileName>aes.h</FileName>
@@ -717,6 +580,11 @@
               <FileName>arc4.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls/include/mbedtls/arc4.h</FilePath>
+            </File>
+            <File>
+              <FileName>aria.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/include/mbedtls/aria.h</FilePath>
             </File>
             <File>
               <FileName>asn1.h</FileName>
@@ -762,6 +630,16 @@
               <FileName>certs.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls/include/mbedtls/certs.h</FilePath>
+            </File>
+            <File>
+              <FileName>chacha20.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/include/mbedtls/chacha20.h</FilePath>
+            </File>
+            <File>
+              <FileName>chachapoly.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/include/mbedtls/chachapoly.h</FilePath>
             </File>
             <File>
               <FileName>check_config.h</FileName>
@@ -864,6 +742,11 @@
               <FilePath>../../../../../middleware/mbedtls/include/mbedtls/havege.h</FilePath>
             </File>
             <File>
+              <FileName>hkdf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/include/mbedtls/hkdf.h</FilePath>
+            </File>
+            <File>
               <FileName>hmac_drbg.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls/include/mbedtls/hmac_drbg.h</FilePath>
@@ -907,6 +790,11 @@
               <FileName>net_sockets.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls/include/mbedtls/net_sockets.h</FilePath>
+            </File>
+            <File>
+              <FileName>nist_kw.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/include/mbedtls/nist_kw.h</FilePath>
             </File>
             <File>
               <FileName>oid.h</FileName>
@@ -959,6 +847,16 @@
               <FilePath>../../../../../middleware/mbedtls/include/mbedtls/platform_time.h</FilePath>
             </File>
             <File>
+              <FileName>platform_util.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/include/mbedtls/platform_util.h</FilePath>
+            </File>
+            <File>
+              <FileName>poly1305.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/include/mbedtls/poly1305.h</FilePath>
+            </File>
+            <File>
               <FileName>ripemd160.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls/include/mbedtls/ripemd160.h</FilePath>
@@ -967,6 +865,11 @@
               <FileName>rsa.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls/include/mbedtls/rsa.h</FilePath>
+            </File>
+            <File>
+              <FileName>rsa_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/include/mbedtls/rsa_internal.h</FilePath>
             </File>
             <File>
               <FileName>sha1.h</FileName>
@@ -1056,7 +959,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mbedTLS-mbedTLS_source</GroupName>
+          <GroupName>mbedtls-mbedtls_source</GroupName>
           <Files>
             <File>
               <FileName>aes.c</FileName>
@@ -1072,6 +975,11 @@
               <FileName>arc4.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/library/arc4.c</FilePath>
+            </File>
+            <File>
+              <FileName>aria.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/aria.c</FilePath>
             </File>
             <File>
               <FileName>asn1parse.c</FileName>
@@ -1122,6 +1030,16 @@
               <FileName>cipher_wrap.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/library/cipher_wrap.c</FilePath>
+            </File>
+            <File>
+              <FileName>chacha20.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/chacha20.c</FilePath>
+            </File>
+            <File>
+              <FileName>chachapoly.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/chachapoly.c</FilePath>
             </File>
             <File>
               <FileName>cmac.c</FileName>
@@ -1199,6 +1117,11 @@
               <FilePath>../../../../../middleware/mbedtls/library/havege.c</FilePath>
             </File>
             <File>
+              <FileName>hkdf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/hkdf.c</FilePath>
+            </File>
+            <File>
               <FileName>hmac_drbg.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/library/hmac_drbg.c</FilePath>
@@ -1237,6 +1160,11 @@
               <FileName>net_sockets.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/library/net_sockets.c</FilePath>
+            </File>
+            <File>
+              <FileName>nist_kw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/nist_kw.c</FilePath>
             </File>
             <File>
               <FileName>oid.c</FileName>
@@ -1289,6 +1217,16 @@
               <FilePath>../../../../../middleware/mbedtls/library/platform.c</FilePath>
             </File>
             <File>
+              <FileName>platform_util.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/platform_util.c</FilePath>
+            </File>
+            <File>
+              <FileName>poly1305.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/poly1305.c</FilePath>
+            </File>
+            <File>
               <FileName>ripemd160.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/library/ripemd160.c</FilePath>
@@ -1297,6 +1235,11 @@
               <FileName>rsa.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/library/rsa.c</FilePath>
+            </File>
+            <File>
+              <FileName>rsa_internal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/rsa_internal.c</FilePath>
             </File>
             <File>
               <FileName>sha1.c</FileName>
@@ -1416,7 +1359,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mbedTLS-mbedTLS_port</GroupName>
+          <GroupName>mbedtls-mbedtls_port</GroupName>
           <Files>
             <File>
               <FileName>ksdk_mbedtls.c</FileName>
@@ -1452,6 +1395,221 @@
               <FileName>des_alt.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/port/ksdk/des_alt.c</FilePath>
+            </File>
+            <File>
+              <FileName>aes_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/aes_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>aes_alt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/aes_alt.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>device</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_device_registers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MKV58F24/fsl_device_registers.h</FilePath>
+            </File>
+            <File>
+              <FileName>MKV58F24.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MKV58F24/MKV58F24.h</FilePath>
+            </File>
+            <File>
+              <FileName>MKV58F24_features.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MKV58F24/MKV58F24_features.h</FilePath>
+            </File>
+            <File>
+              <FileName>system_MKV58F24.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MKV58F24/system_MKV58F24.c</FilePath>
+            </File>
+            <File>
+              <FileName>system_MKV58F24.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MKV58F24/system_MKV58F24.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>utilities</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MKV58F24/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MKV58F24/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MKV58F24/utilities/debug_console/fsl_debug_console.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MKV58F24/utilities/debug_console/fsl_debug_console.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console_conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MKV58F24/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MKV58F24/utilities/fsl_assert.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/uart</GroupName>
+          <Files>
+            <File>
+              <FileName>uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/uart/uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>uart_adapter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/uart/uart_adapter.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/serial_manager</GroupName>
+          <Files>
+            <File>
+              <FileName>serial_manager.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/serial_manager/serial_manager.h</FilePath>
+            </File>
+            <File>
+              <FileName>serial_manager.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/serial_manager/serial_manager.c</FilePath>
+            </File>
+            <File>
+              <FileName>serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/serial_manager/serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/serial_manager/serial_port_uart.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/lists</GroupName>
+          <Files>
+            <File>
+              <FileName>generic_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/lists/generic_list.h</FilePath>
+            </File>
+            <File>
+              <FileName>generic_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/lists/generic_list.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>startup</GroupName>
+          <Files>
+            <File>
+              <FileName>startup_MKV58F24.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../devices/MKV58F24/arm/startup_MKV58F24.s</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS</GroupName>
+          <Files>
+            <File>
+              <FileName>core_cm7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_gcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_armv8mbl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_armv8mml.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_common_tables.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_const_structs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/arm_math.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_iccarm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv8.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1796,6 +1954,7 @@
               </OCR_RVCT10>
             </OnChipMemories>
             <RvctStartVector/>
+            <nSecure>0</nSecure>
           </ArmAdsMisc>
           <Cads>
             <interw>0</interw>
@@ -1815,14 +1974,13 @@
             <useXO>0</useXO>
             <VariousControls>
               <MiscControls>--library_interface=armcc 
---library_type=standardlib 
---diag_suppress=66,1296,186 
+--diag_suppress=1296,186 
 --diag_suppress=177 
  
 </MiscControls>
-              <Define>NDEBUG, CPU_MKV58F1M0VLQ24, TWR_KV58F220M, TOWER, PRINTF_ADVANCED_ENABLE=1, PRINTF_FLOAT_ENABLE=1, FREESCALE_KSDK_BM, MBEDTLS_CONFIG_FILE='\"ksdk_mbedtls_config.h\"'</Define>
+              <Define>NDEBUG, CPU_MKV58F1M0VLQ24, PRINTF_ADVANCED_ENABLE=1, PRINTF_FLOAT_ENABLE=1, FREESCALE_KSDK_BM, MBEDTLS_CONFIG_FILE='\"ksdk_mbedtls_config.h\"', TWR_KV58F220M, TOWER</Define>
               <Undefine/>
-              <IncludePath>../../../../../CMSIS/Include;../../../../../devices;..;../../..;../../../../../middleware/mmcau;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/port/ksdk;../../../../../devices/MKV58F24/drivers;../../../../../devices/MKV58F24;../../../../../devices/MKV58F24/utilities/io;../../../../../devices/MKV58F24/utilities/str;../../../../../devices/MKV58F24/utilities/log;../../../../../devices/MKV58F24/utilities</IncludePath>
+              <IncludePath>..;../../..;../../../../../CMSIS/Include;../../../../../devices;../../../../../middleware/mmcau;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/port/ksdk;../../../../../devices/MKV58F24/drivers;../../../../../devices/MKV58F24/drivers;../../../../../devices/MKV58F24/drivers;../../../../../devices/MKV58F24/drivers;../../../../../devices/MKV58F24/drivers;../../../../../devices/MKV58F24;../../../../../devices/MKV58F24/utilities/str;../../../../../devices/MKV58F24/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MKV58F24/drivers;../../../../../devices/MKV58F24/drivers</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1857,6 +2015,9 @@
             <IncludeLibsPath/>
             <Misc>../../../../../middleware/mmcau/asm-cm4-cm7/lib_mmcau.lib 
 --remove 
+--legacyalign 
+--predefine="-D__stack_size__=0x2000" 
+--predefine="-D__heap_size__=0x8000" 
 </Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,L6918W,6238</DisabledWarnings>
@@ -1887,11 +2048,6 @@
               <FileType>5</FileType>
               <FilePath>../pin_mux.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>board-src</GroupName>
-          <Files>
             <File>
               <FileName>board.c</FileName>
               <FileType>1</FileType>
@@ -1938,14 +2094,19 @@
               <FilePath>../../../../../devices/MKV58F24/drivers/fsl_uart.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MKV58F24/drivers/fsl_common.h</FilePath>
+              <FileName>fsl_trng.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MKV58F24/drivers/fsl_trng.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MKV58F24/drivers/fsl_common.c</FilePath>
+              <FileName>fsl_trng.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MKV58F24/drivers/fsl_trng.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_port.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MKV58F24/drivers/fsl_port.h</FilePath>
             </File>
             <File>
               <FileName>fsl_clock.h</FileName>
@@ -1958,79 +2119,14 @@
               <FilePath>../../../../../devices/MKV58F24/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_trng.c</FileName>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MKV58F24/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MKV58F24/drivers/fsl_trng.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_trng.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MKV58F24/drivers/fsl_trng.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_ftfx_adapter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MKV58F24/drivers/fsl_ftfx_adapter.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_ftfx_utilities.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MKV58F24/drivers/fsl_ftfx_utilities.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_ftfx_features.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MKV58F24/drivers/fsl_ftfx_features.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_ftfx_controller.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MKV58F24/drivers/fsl_ftfx_controller.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_ftfx_controller.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MKV58F24/drivers/fsl_ftfx_controller.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_ftfx_flash.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MKV58F24/drivers/fsl_ftfx_flash.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_ftfx_flash.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MKV58F24/drivers/fsl_ftfx_flash.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_ftfx_cache.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MKV58F24/drivers/fsl_ftfx_cache.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_ftfx_cache.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MKV58F24/drivers/fsl_ftfx_cache.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_ftfx_flexnvm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MKV58F24/drivers/fsl_ftfx_flexnvm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_ftfx_flexnvm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MKV58F24/drivers/fsl_ftfx_flexnvm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_flash.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MKV58F24/drivers/fsl_flash.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_port.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MKV58F24/drivers/fsl_port.h</FilePath>
+              <FilePath>../../../../../devices/MKV58F24/drivers/fsl_common.c</FilePath>
             </File>
             <File>
               <FileName>fsl_smc.h</FileName>
@@ -2080,82 +2176,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>startup</GroupName>
-          <Files>
-            <File>
-              <FileName>system_MKV58F24.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MKV58F24/system_MKV58F24.c</FilePath>
-            </File>
-            <File>
-              <FileName>system_MKV58F24.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MKV58F24/system_MKV58F24.h</FilePath>
-            </File>
-            <File>
-              <FileName>startup_MKV58F24.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../devices/MKV58F24/arm/startup_MKV58F24.s</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>utilities</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_io.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MKV58F24/utilities/io/fsl_io.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_io.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MKV58F24/utilities/io/fsl_io.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_log.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MKV58F24/utilities/log/fsl_log.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_log.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MKV58F24/utilities/log/fsl_log.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MKV58F24/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MKV58F24/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MKV58F24/utilities/fsl_debug_console.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MKV58F24/utilities/fsl_debug_console.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MKV58F24/utilities/fsl_debug_console_conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_assert.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MKV58F24/utilities/fsl_assert.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>mbedTLS-mbedTLS_include</GroupName>
+          <GroupName>mbedtls-mbedtls_include</GroupName>
           <Files>
             <File>
               <FileName>aes.h</FileName>
@@ -2171,6 +2192,11 @@
               <FileName>arc4.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls/include/mbedtls/arc4.h</FilePath>
+            </File>
+            <File>
+              <FileName>aria.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/include/mbedtls/aria.h</FilePath>
             </File>
             <File>
               <FileName>asn1.h</FileName>
@@ -2216,6 +2242,16 @@
               <FileName>certs.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls/include/mbedtls/certs.h</FilePath>
+            </File>
+            <File>
+              <FileName>chacha20.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/include/mbedtls/chacha20.h</FilePath>
+            </File>
+            <File>
+              <FileName>chachapoly.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/include/mbedtls/chachapoly.h</FilePath>
             </File>
             <File>
               <FileName>check_config.h</FileName>
@@ -2318,6 +2354,11 @@
               <FilePath>../../../../../middleware/mbedtls/include/mbedtls/havege.h</FilePath>
             </File>
             <File>
+              <FileName>hkdf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/include/mbedtls/hkdf.h</FilePath>
+            </File>
+            <File>
               <FileName>hmac_drbg.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls/include/mbedtls/hmac_drbg.h</FilePath>
@@ -2361,6 +2402,11 @@
               <FileName>net_sockets.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls/include/mbedtls/net_sockets.h</FilePath>
+            </File>
+            <File>
+              <FileName>nist_kw.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/include/mbedtls/nist_kw.h</FilePath>
             </File>
             <File>
               <FileName>oid.h</FileName>
@@ -2413,6 +2459,16 @@
               <FilePath>../../../../../middleware/mbedtls/include/mbedtls/platform_time.h</FilePath>
             </File>
             <File>
+              <FileName>platform_util.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/include/mbedtls/platform_util.h</FilePath>
+            </File>
+            <File>
+              <FileName>poly1305.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/include/mbedtls/poly1305.h</FilePath>
+            </File>
+            <File>
               <FileName>ripemd160.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls/include/mbedtls/ripemd160.h</FilePath>
@@ -2421,6 +2477,11 @@
               <FileName>rsa.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls/include/mbedtls/rsa.h</FilePath>
+            </File>
+            <File>
+              <FileName>rsa_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/include/mbedtls/rsa_internal.h</FilePath>
             </File>
             <File>
               <FileName>sha1.h</FileName>
@@ -2510,7 +2571,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mbedTLS-mbedTLS_source</GroupName>
+          <GroupName>mbedtls-mbedtls_source</GroupName>
           <Files>
             <File>
               <FileName>aes.c</FileName>
@@ -2526,6 +2587,11 @@
               <FileName>arc4.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/library/arc4.c</FilePath>
+            </File>
+            <File>
+              <FileName>aria.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/aria.c</FilePath>
             </File>
             <File>
               <FileName>asn1parse.c</FileName>
@@ -2576,6 +2642,16 @@
               <FileName>cipher_wrap.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/library/cipher_wrap.c</FilePath>
+            </File>
+            <File>
+              <FileName>chacha20.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/chacha20.c</FilePath>
+            </File>
+            <File>
+              <FileName>chachapoly.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/chachapoly.c</FilePath>
             </File>
             <File>
               <FileName>cmac.c</FileName>
@@ -2653,6 +2729,11 @@
               <FilePath>../../../../../middleware/mbedtls/library/havege.c</FilePath>
             </File>
             <File>
+              <FileName>hkdf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/hkdf.c</FilePath>
+            </File>
+            <File>
               <FileName>hmac_drbg.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/library/hmac_drbg.c</FilePath>
@@ -2691,6 +2772,11 @@
               <FileName>net_sockets.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/library/net_sockets.c</FilePath>
+            </File>
+            <File>
+              <FileName>nist_kw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/nist_kw.c</FilePath>
             </File>
             <File>
               <FileName>oid.c</FileName>
@@ -2743,6 +2829,16 @@
               <FilePath>../../../../../middleware/mbedtls/library/platform.c</FilePath>
             </File>
             <File>
+              <FileName>platform_util.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/platform_util.c</FilePath>
+            </File>
+            <File>
+              <FileName>poly1305.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/poly1305.c</FilePath>
+            </File>
+            <File>
               <FileName>ripemd160.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/library/ripemd160.c</FilePath>
@@ -2751,6 +2847,11 @@
               <FileName>rsa.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/library/rsa.c</FilePath>
+            </File>
+            <File>
+              <FileName>rsa_internal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/rsa_internal.c</FilePath>
             </File>
             <File>
               <FileName>sha1.c</FileName>
@@ -2870,7 +2971,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mbedTLS-mbedTLS_port</GroupName>
+          <GroupName>mbedtls-mbedtls_port</GroupName>
           <Files>
             <File>
               <FileName>ksdk_mbedtls.c</FileName>
@@ -2906,6 +3007,221 @@
               <FileName>des_alt.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/port/ksdk/des_alt.c</FilePath>
+            </File>
+            <File>
+              <FileName>aes_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/aes_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>aes_alt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/aes_alt.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>device</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_device_registers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MKV58F24/fsl_device_registers.h</FilePath>
+            </File>
+            <File>
+              <FileName>MKV58F24.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MKV58F24/MKV58F24.h</FilePath>
+            </File>
+            <File>
+              <FileName>MKV58F24_features.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MKV58F24/MKV58F24_features.h</FilePath>
+            </File>
+            <File>
+              <FileName>system_MKV58F24.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MKV58F24/system_MKV58F24.c</FilePath>
+            </File>
+            <File>
+              <FileName>system_MKV58F24.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MKV58F24/system_MKV58F24.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>utilities</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MKV58F24/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MKV58F24/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MKV58F24/utilities/debug_console/fsl_debug_console.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MKV58F24/utilities/debug_console/fsl_debug_console.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console_conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MKV58F24/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MKV58F24/utilities/fsl_assert.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/uart</GroupName>
+          <Files>
+            <File>
+              <FileName>uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/uart/uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>uart_adapter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/uart/uart_adapter.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/serial_manager</GroupName>
+          <Files>
+            <File>
+              <FileName>serial_manager.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/serial_manager/serial_manager.h</FilePath>
+            </File>
+            <File>
+              <FileName>serial_manager.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/serial_manager/serial_manager.c</FilePath>
+            </File>
+            <File>
+              <FileName>serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/serial_manager/serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/serial_manager/serial_port_uart.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/lists</GroupName>
+          <Files>
+            <File>
+              <FileName>generic_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/lists/generic_list.h</FilePath>
+            </File>
+            <File>
+              <FileName>generic_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/lists/generic_list.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>startup</GroupName>
+          <Files>
+            <File>
+              <FileName>startup_MKV58F24.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../devices/MKV58F24/arm/startup_MKV58F24.s</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS</GroupName>
+          <Files>
+            <File>
+              <FileName>core_cm7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_gcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_armv8mbl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_armv8mml.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_common_tables.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_const_structs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/arm_math.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_iccarm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv8.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
           </Files>
         </Group>

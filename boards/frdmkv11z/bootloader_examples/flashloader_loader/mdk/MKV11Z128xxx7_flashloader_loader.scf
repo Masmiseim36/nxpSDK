@@ -7,9 +7,6 @@
 **                          MKV11Z128VLH7
 **
 **     Compiler:            Keil ARM C/C++ Compiler
-**     Reference manual:    KV11P64M75RM Rev.2, April 2015
-**     Version:             rev. 1.0, 2014-12-14
-**     Build:               b171205
 **
 **     Abstract:
 **         Linker file for the Keil ARM C/C++ Compiler
@@ -51,13 +48,13 @@
 #if (defined(__stack_size__))
   #define Stack_Size                   __stack_size__
 #else
-  #define Stack_Size                   0x200
+  #define Stack_Size                   0x0200
 #endif
 
 #if (defined(__heap_size__))
   #define Heap_Size                    __heap_size__
 #else
-  #define Heap_Size                    0x200
+  #define Heap_Size                    0x0
 #endif
 
 LR_m_text m_text_start m_text_size {   ; load region size_region

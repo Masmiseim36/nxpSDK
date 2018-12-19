@@ -18,14 +18,12 @@
  * limitations under the License.
  */
 
-
 #include "fsl_uart_cmsis.h"
 
 /* Component ID definition, used by tools. */
 #ifndef FSL_COMPONENT_ID
 #define FSL_COMPONENT_ID "platform.drivers.uart_cmsis"
 #endif
-
 
 #if ((RTE_USART0 && defined(UART0)) || (RTE_USART1 && defined(UART1)) || (RTE_USART2 && defined(UART2)) || \
      (RTE_USART3 && defined(UART3)) || (RTE_USART4 && defined(UART4)) || (RTE_USART5 && defined(UART5)))
@@ -36,7 +34,7 @@
  * ARMCC does not support split the data section automatically, so the driver
  * needs to split the data to separate sections explicitly, to reduce codesize.
  */
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 #define ARMCC_SECTION(section_name) __attribute__((section(section_name)))
 #endif
 
@@ -1047,7 +1045,7 @@ uart_dma_handle_t UART0_DmaHandle;
 dma_handle_t UART0_DmaRxHandle;
 dma_handle_t UART0_DmaTxHandle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("uart0_dma_driver_state")
 cmsis_uart_dma_driver_state_t uart0_DmaDriverState = {
 #else
@@ -1122,7 +1120,7 @@ uart_edma_handle_t UART0_EdmaHandle;
 edma_handle_t UART0_EdmaRxHandle;
 edma_handle_t UART0_EdmaTxHandle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("uart0_edma_driver_state")
 cmsis_uart_edma_driver_state_t uart0_EdmaDriverState = {
 #else
@@ -1193,7 +1191,7 @@ uart_handle_t UART0_Handle;
 static uint8_t uart0_rxRingBuffer[USART_RX_BUFFER_LEN];
 #endif
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("uart0_non_blocking_driver_state")
 cmsis_uart_interrupt_driver_state_t uart0_NonBlockingDriverState = {
 #else
@@ -1341,7 +1339,7 @@ uart_dma_handle_t UART1_DmaHandle;
 dma_handle_t UART1_DmaRxHandle;
 dma_handle_t UART1_DmaTxHandle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("uart1_dma_driver_state")
 cmsis_uart_dma_driver_state_t uart1_DmaDriverState = {
 #else
@@ -1416,7 +1414,7 @@ uart_edma_handle_t UART1_EdmaHandle;
 edma_handle_t UART1_EdmaRxHandle;
 edma_handle_t UART1_EdmaTxHandle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("uart1_edma_driver_state")
 cmsis_uart_edma_driver_state_t uart1_EdmaDriverState = {
 #else
@@ -1487,7 +1485,7 @@ uart_handle_t UART1_Handle;
 static uint8_t uart1_rxRingBuffer[USART_RX_BUFFER_LEN];
 #endif
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("uart1_non_blocking_driver_state")
 cmsis_uart_interrupt_driver_state_t uart1_NonBlockingDriverState = {
 #else
@@ -1633,7 +1631,7 @@ uart_dma_handle_t UART2_DmaHandle;
 dma_handle_t UART2_DmaRxHandle;
 dma_handle_t UART2_DmaTxHandle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("uart2_dma_driver_state")
 cmsis_uart_dma_driver_state_t uart2_DmaDriverState = {
 #else
@@ -1708,7 +1706,7 @@ uart_edma_handle_t UART2_EdmaHandle;
 edma_handle_t UART2_EdmaRxHandle;
 edma_handle_t UART2_EdmaTxHandle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("uart2_edma_driver_state")
 cmsis_uart_edma_driver_state_t uart2_EdmaDriverState = {
 #else
@@ -1779,7 +1777,7 @@ uart_handle_t UART2_Handle;
 static uint8_t uart2_rxRingBuffer[USART_RX_BUFFER_LEN];
 #endif
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("uart2_non_blocking_driver_state")
 cmsis_uart_interrupt_driver_state_t uart2_NonBlockingDriverState = {
 #else
@@ -1922,7 +1920,7 @@ uart_dma_handle_t UART3_DmaHandle;
 dma_handle_t UART3_DmaRxHandle;
 dma_handle_t UART3_DmaTxHandle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("uart3_dma_driver_state")
 cmsis_uart_dma_driver_state_t uart3_DmaDriverState = {
 #else
@@ -1995,7 +1993,7 @@ static int32_t UART3_DmaPowerControl(ARM_POWER_STATE state)
     edma_handle_t UART3_EdmaRxHandle;
     edma_handle_t UART3_EdmaTxHandle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
     ARMCC_SECTION("uart3_edma_driver_state")
     cmsis_uart_edma_driver_state_t uart3_EdmaDriverState =
     {
@@ -2071,7 +2069,7 @@ uart_handle_t UART3_Handle;
 static uint8_t uart3_rxRingBuffer[USART_RX_BUFFER_LEN];
 #endif
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("uart3_non_blocking_driver_state")
 cmsis_uart_interrupt_driver_state_t uart3_NonBlockingDriverState =
 {
@@ -2234,7 +2232,7 @@ static ARM_USART_STATUS UART3_NonBlockingGetStatus(void)
     dma_handle_t UART4_DmaRxHandle;
     dma_handle_t UART4_DmaTxHandle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
     ARMCC_SECTION("uart4_dma_driver_state")
     cmsis_uart_dma_driver_state_t uart4_DmaDriverState =
     {
@@ -2314,7 +2312,7 @@ static ARM_USART_STATUS UART3_NonBlockingGetStatus(void)
     edma_handle_t UART4_EdmaRxHandle;
     edma_handle_t UART4_EdmaTxHandle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
     ARMCC_SECTION("uart4_edma_driver_state")
     cmsis_uart_edma_driver_state_t uart4_EdmaDriverState =
     {
@@ -2390,7 +2388,7 @@ uart_handle_t UART4_Handle;
 static uint8_t uart4_rxRingBuffer[USART_RX_BUFFER_LEN];
 #endif
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("uart4_non_blocking_driver_state")
 cmsis_uart_interrupt_driver_state_t uart4_NonBlockingDriverState =
 {
@@ -2553,7 +2551,7 @@ static ARM_USART_STATUS UART4_NonBlockingGetStatus(void)
     dma_handle_t UART5_DmaRxHandle;
     dma_handle_t UART5_DmaTxHandle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
     ARMCC_SECTION("uart5_dma_driver_state")
     cmsis_uart_dma_driver_state_t uart5_DmaDriverState =
     {
@@ -2633,7 +2631,7 @@ static ARM_USART_STATUS UART4_NonBlockingGetStatus(void)
     edma_handle_t UART5_EdmaRxHandle;
     edma_handle_t UART5_EdmaTxHandle;
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
     ARMCC_SECTION("uart5_edma_driver_state")
     cmsis_uart_edma_driver_state_t uart5_EdmaDriverState =
     {
@@ -2709,7 +2707,7 @@ uart_handle_t UART5_Handle;
 static uint8_t uart5_rxRingBuffer[USART_RX_BUFFER_LEN];
 #endif
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("uart5_non_blocking_driver_state")
 cmsis_uart_interrupt_driver_state_t uart5_NonBlockingDriverState =
 {

@@ -50,6 +50,8 @@ SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -mcpu=cortex-m0plus")
 
 SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -mfloat-abi=soft")
 
+SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -DNDEBUG")
+
 SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -D__STARTUP_CLEAR_BSS")
 
 SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -Wall")
@@ -182,6 +184,8 @@ SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -MMD")
 
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -MP")
 
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DNDEBUG")
+
 SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Os")
 
 SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall")
@@ -250,6 +254,10 @@ SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")
 
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} muldefs")
 
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Map=output.map")
+
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -mcpu=cortex-m0plus")
 
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -mfloat-abi=soft")
@@ -290,29 +298,35 @@ SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
 
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} muldefs")
 
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Map=output.map")
+
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mcpu=cortex-m0plus")
 
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mfloat-abi=soft")
-
-include_directories(${ProjDirPath}/../../../../../../../CMSIS/Include)
-
-include_directories(${ProjDirPath}/../../../../../../../devices)
 
 include_directories(${ProjDirPath}/..)
 
 include_directories(${ProjDirPath}/../../../../..)
 
+include_directories(${ProjDirPath}/../../../../../../../CMSIS/Include)
+
+include_directories(${ProjDirPath}/../../../../../../../devices)
+
 include_directories(${ProjDirPath}/../../../../../../../devices/MKV11Z7/drivers)
 
 include_directories(${ProjDirPath}/../../../../../../../devices/MKV11Z7)
 
-include_directories(${ProjDirPath}/../../../../../../../devices/MKV11Z7/utilities/io)
-
 include_directories(${ProjDirPath}/../../../../../../../devices/MKV11Z7/utilities/str)
 
-include_directories(${ProjDirPath}/../../../../../../../devices/MKV11Z7/utilities/log)
+include_directories(${ProjDirPath}/../../../../../../../devices/MKV11Z7/utilities/debug_console)
 
-include_directories(${ProjDirPath}/../../../../../../../devices/MKV11Z7/utilities)
+include_directories(${ProjDirPath}/../../../../../../../components/uart)
+
+include_directories(${ProjDirPath}/../../../../../../../components/serial_manager)
+
+include_directories(${ProjDirPath}/../../../../../../../components/lists)
 
 add_executable(dspi_interrupt_b2b_transfer_slave.elf 
 "${ProjDirPath}/../dspi_interrupt_b2b_transfer_slave.c"
@@ -322,34 +336,53 @@ add_executable(dspi_interrupt_b2b_transfer_slave.elf
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../clock_config.h"
+"${ProjDirPath}/../../../../../../../devices/MKV11Z7/drivers/fsl_port.h"
+"${ProjDirPath}/../../../../../../../devices/MKV11Z7/drivers/fsl_dspi.h"
+"${ProjDirPath}/../../../../../../../devices/MKV11Z7/drivers/fsl_dspi.c"
 "${ProjDirPath}/../../../../../../../devices/MKV11Z7/drivers/fsl_clock.h"
 "${ProjDirPath}/../../../../../../../devices/MKV11Z7/drivers/fsl_clock.c"
-"${ProjDirPath}/../../../../../../../devices/MKV11Z7/drivers/fsl_flash.c"
-"${ProjDirPath}/../../../../../../../devices/MKV11Z7/drivers/fsl_flash.h"
 "${ProjDirPath}/../../../../../../../devices/MKV11Z7/drivers/fsl_common.h"
 "${ProjDirPath}/../../../../../../../devices/MKV11Z7/drivers/fsl_common.c"
+"${ProjDirPath}/../../../../../../../devices/MKV11Z7/fsl_device_registers.h"
+"${ProjDirPath}/../../../../../../../devices/MKV11Z7/MKV11Z7.h"
+"${ProjDirPath}/../../../../../../../devices/MKV11Z7/MKV11Z7_features.h"
 "${ProjDirPath}/../../../../../../../devices/MKV11Z7/system_MKV11Z7.c"
 "${ProjDirPath}/../../../../../../../devices/MKV11Z7/system_MKV11Z7.h"
-"${ProjDirPath}/../../../../../../../devices/MKV11Z7/gcc/startup_MKV11Z7.S"
-"${ProjDirPath}/../../../../../../../devices/MKV11Z7/drivers/fsl_uart.h"
-"${ProjDirPath}/../../../../../../../devices/MKV11Z7/drivers/fsl_uart.c"
-"${ProjDirPath}/../../../../../../../devices/MKV11Z7/drivers/fsl_port.h"
-"${ProjDirPath}/../../../../../../../devices/MKV11Z7/drivers/fsl_smc.h"
-"${ProjDirPath}/../../../../../../../devices/MKV11Z7/drivers/fsl_smc.c"
-"${ProjDirPath}/../../../../../../../devices/MKV11Z7/utilities/io/fsl_io.c"
-"${ProjDirPath}/../../../../../../../devices/MKV11Z7/utilities/io/fsl_io.h"
-"${ProjDirPath}/../../../../../../../devices/MKV11Z7/utilities/log/fsl_log.c"
-"${ProjDirPath}/../../../../../../../devices/MKV11Z7/utilities/log/fsl_log.h"
 "${ProjDirPath}/../../../../../../../devices/MKV11Z7/utilities/str/fsl_str.c"
 "${ProjDirPath}/../../../../../../../devices/MKV11Z7/utilities/str/fsl_str.h"
-"${ProjDirPath}/../../../../../../../devices/MKV11Z7/utilities/fsl_debug_console.c"
-"${ProjDirPath}/../../../../../../../devices/MKV11Z7/utilities/fsl_debug_console.h"
-"${ProjDirPath}/../../../../../../../devices/MKV11Z7/utilities/fsl_debug_console_conf.h"
+"${ProjDirPath}/../../../../../../../devices/MKV11Z7/utilities/debug_console/fsl_debug_console.c"
+"${ProjDirPath}/../../../../../../../devices/MKV11Z7/utilities/debug_console/fsl_debug_console.h"
+"${ProjDirPath}/../../../../../../../devices/MKV11Z7/utilities/debug_console/fsl_debug_console_conf.h"
+"${ProjDirPath}/../../../../../../../components/uart/uart.h"
+"${ProjDirPath}/../../../../../../../components/uart/uart_adapter.c"
+"${ProjDirPath}/../../../../../../../components/serial_manager/serial_manager.h"
+"${ProjDirPath}/../../../../../../../components/serial_manager/serial_manager.c"
+"${ProjDirPath}/../../../../../../../components/serial_manager/serial_port_uart.h"
+"${ProjDirPath}/../../../../../../../components/serial_manager/serial_port_uart.c"
+"${ProjDirPath}/../../../../../../../devices/MKV11Z7/drivers/fsl_uart.h"
+"${ProjDirPath}/../../../../../../../devices/MKV11Z7/drivers/fsl_uart.c"
+"${ProjDirPath}/../../../../../../../components/lists/generic_list.h"
+"${ProjDirPath}/../../../../../../../components/lists/generic_list.c"
+"${ProjDirPath}/../../../../../../../devices/MKV11Z7/gcc/startup_MKV11Z7.S"
+"${ProjDirPath}/../../../../../../../devices/MKV11Z7/drivers/fsl_smc.h"
+"${ProjDirPath}/../../../../../../../devices/MKV11Z7/drivers/fsl_smc.c"
 "${ProjDirPath}/../../../../../../../devices/MKV11Z7/drivers/fsl_gpio.h"
 "${ProjDirPath}/../../../../../../../devices/MKV11Z7/drivers/fsl_gpio.c"
 "${ProjDirPath}/../../../../../../../devices/MKV11Z7/utilities/fsl_assert.c"
-"${ProjDirPath}/../../../../../../../devices/MKV11Z7/drivers/fsl_dspi.h"
-"${ProjDirPath}/../../../../../../../devices/MKV11Z7/drivers/fsl_dspi.c"
+"${ProjDirPath}/../../../../../../../CMSIS/Include/core_cm0plus.h"
+"${ProjDirPath}/../../../../../../../CMSIS/Include/cmsis_armcc.h"
+"${ProjDirPath}/../../../../../../../CMSIS/Include/cmsis_armclang.h"
+"${ProjDirPath}/../../../../../../../CMSIS/Include/cmsis_gcc.h"
+"${ProjDirPath}/../../../../../../../CMSIS/Include/cmsis_compiler.h"
+"${ProjDirPath}/../../../../../../../CMSIS/Include/cmsis_version.h"
+"${ProjDirPath}/../../../../../../../CMSIS/Include/mpu_armv7.h"
+"${ProjDirPath}/../../../../../../../CMSIS/Include/core_armv8mbl.h"
+"${ProjDirPath}/../../../../../../../CMSIS/Include/core_armv8mml.h"
+"${ProjDirPath}/../../../../../../../CMSIS/Include/arm_common_tables.h"
+"${ProjDirPath}/../../../../../../../CMSIS/Include/arm_const_structs.h"
+"${ProjDirPath}/../../../../../../../CMSIS/Include/arm_math.h"
+"${ProjDirPath}/../../../../../../../CMSIS/Include/cmsis_iccarm.h"
+"${ProjDirPath}/../../../../../../../CMSIS/Include/mpu_armv8.h"
 )
 
 

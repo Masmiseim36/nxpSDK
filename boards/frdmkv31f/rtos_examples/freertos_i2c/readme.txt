@@ -22,62 +22,6 @@ With board to board connection, one I2C instance on one board is used as I2C mas
         #define I2C_MASTER_SLAVE isSLAVE
 
 
-
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
-
-Hardware requirements
-=====================
-- Mini/Micro USB cable
-- FRDM-KV31F board
-- Personal Computer
-
-Board settings
-==============
-The example supports 2 different connections:
-Using 1 FRDM-KV31F board:
-    The 2 I2C instances on one board are used, one as I2C master , another as I2C slave.
-    The connection should be set as following:
-        - J2-20, J4-12 connected
-        - J2-18, J4-10 connected
-Using 2 FRDM-KV31F boards:
-    The I2C0 module on one board is used as master. The I2C1 module on another board is used as slave.
-    The connection should be se as following:
-        - J2-20 (master board) connected to J4-12 (slave board).
-        - J2-18 (master board) connected to J4-10 (slave board).
-        - J2-14 (GND of master board) connected to J2-14 (GND of slave board).
-
-Prepare the Demo
-================
-1.  Connect a mini USB cable between the PC host and the OpenSDA USB port on the board.
-2.  Open a serial terminal on PC for OpenSDA serial device with these settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-3.
-    If using 1 FRDM-KV31F board:
-        Default settings in freertos_i2c.c is applied.
-        Build project.
-        Download the program to the target board.
-    If using 2 FRDM-KV31F boards:
-        In file freertos_i2c.c in folder: boards\twrk21f120m\rtos_examples\freertos_i2c, do following definition:
-            #define EXAMPLE_CONNECT_I2C BOARD_TO_BOARD
-            For master, use following definition
-                #define I2C_MASTER_SLAVE isMASTER
-                Build project.
-                Download the program to one target board (used as master board).
-            For slave, use following definition
-                #define I2C_MASTER_SLAVE isSLAVE
-                Build project.
-                Download the program to one target board (used as slave board).
-4.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
-
 Running the demo
 ================
 When the example runs successfully:
@@ -209,6 +153,59 @@ Slave received data :
 
 
 End of FreeRTOS I2C example.
-Customization options
+Hardware requirements
 =====================
+- Mini/Micro USB cable
+- FRDM-KV31F board
+- Personal Computer
+
+Board settings
+==============
+The example supports 2 different connections:
+Using 1 FRDM-KV31F board:
+    The 2 I2C instances on one board are used, one as I2C master , another as I2C slave.
+    The connection should be set as following:
+        - J2-20, J4-12 connected
+        - J2-18, J4-10 connected
+Using 2 FRDM-KV31F boards:
+    The I2C0 module on one board is used as master. The I2C1 module on another board is used as slave.
+    The connection should be se as following:
+        - J2-20 (master board) connected to J4-12 (slave board).
+        - J2-18 (master board) connected to J4-10 (slave board).
+        - J2-14 (GND of master board) connected to J2-14 (GND of slave board).
+
+Prepare the Demo
+================
+1.  Connect a mini USB cable between the PC host and the OpenSDA USB port on the board.
+2.  Open a serial terminal on PC for OpenSDA serial device with these settings:
+    - 115200 baud rate
+    - 8 data bits
+    - No parity
+    - One stop bit
+    - No flow control
+3.
+    If using 1 FRDM-KV31F board:
+        Default settings in freertos_i2c.c is applied.
+        Build project.
+        Download the program to the target board.
+    If using 2 FRDM-KV31F boards:
+        In file freertos_i2c.c in folder: boards\twrk21f120m\rtos_examples\freertos_i2c, do following definition:
+            #define EXAMPLE_CONNECT_I2C BOARD_TO_BOARD
+            For master, use following definition
+                #define I2C_MASTER_SLAVE isMASTER
+                Build project.
+                Download the program to one target board (used as master board).
+            For slave, use following definition
+                #define I2C_MASTER_SLAVE isSLAVE
+                Build project.
+                Download the program to one target board (used as slave board).
+4.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
+
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

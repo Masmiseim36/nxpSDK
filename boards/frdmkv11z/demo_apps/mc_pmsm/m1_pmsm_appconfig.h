@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2018 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 /**********************************************************************/
 // File Name: {FM_project_loc}/../../../src/projects/frdm-kv11z/pmsm_appconfig.h
@@ -82,7 +56,7 @@
 #define M1_FAULT_DURATION (6000)
 #define M1_FREEWHEEL_DURATION (1500)
 // Miscellaneous
-#define M1_U_BLOCK_TRH FRAC16(0.092715231788)
+#define M1_U_BLOCK_TRH FRAC16(0.0122715231788)
 
 // Current Loop Control
 //----------------------------------------------------------------------
@@ -147,10 +121,10 @@
 #define M1_TO_SPEED_IIR_B1 FRAC32(0.055817605853)
 #define M1_TO_SPEED_IIR_A1 FRAC32(0.388364788296)
 // Open loop start-up
-#define M1_OL_START_RAMP_INC FRAC32(0.000068181818)
-#define M1_OL_START_I FRAC16(0.072727272727)
-#define M1_MERG_SPEED_TRH FRAC16(0.113636363636)
-#define M1_MERG_COEFF FRAC16(0.013732910156)
+#define M1_OL_START_RAMP_INC FRAC32(0.0000513636364)  
+#define M1_OL_START_I FRAC16(0.076363636364)  
+#define M1_MERG_SPEED_TRH FRAC16(0.183636363636)  
+#define M1_MERG_COEFF FRAC16(0.008310546875) 
 
 // Control Structure Module - Scalar Control
 //----------------------------------------------------------------------

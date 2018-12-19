@@ -9,7 +9,7 @@
       <ToolsetName>ARM-ADS</ToolsetName>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MKV58F1M0xxx24</Device>
+          <Device>MKV58F1M0VLQ24</Device>
           <Vendor>NXP</Vendor>
           <PackID>Keil.Kinetis_KVxx_DFP.1.5.0</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
@@ -367,13 +367,12 @@
             <vShortWch>0</vShortWch>
             <VariousControls>
               <MiscControls>--library_interface=armcc 
---library_type=standardlib 
 --diag_suppress=66,1296,186,170,2748,1461,1295,177,550 
- 
+--library_type=standardlib 
 </MiscControls>
               <Define>DEBUG, CPU_MKV58F1M0VLQ24, CPU_IS_ARM_CORTEX_M7=1, BL_TARGET_FLASH, TWR_KV58F220M</Define>
               <Undefine/>
-              <IncludePath>../../flashloader/mdk;../../../../../devices;../../../../../CMSIS/Include;../../../../../middleware/mcu-boot/src;../../../../../middleware/mcu-boot/src/bootloader;../../../../../middleware/mcu-boot/src/include;../../../../../middleware/mcu-boot/src/startup;../../../../../middleware/mcu-boot/src/utilities;../../../../../middleware/mcu-boot/src/drivers;../../../../../middleware/mcu-boot/src/drivers/crc;../../../../../middleware/mcu-boot/src/drivers/microseconds;../../../../../middleware/mcu-boot/targets/MKV58F24/src;../../../../../devices/MKV58F24;../../../../../devices/MKV58F24/drivers</IncludePath>
+              <IncludePath>../../flashloader/mdk;../../../../../CMSIS/Include;../../../../../middleware/mcu-boot/src;../../../../../middleware/mcu-boot/src/bootloader;../../../../../middleware/mcu-boot/src/include;../../../../../middleware/mcu-boot/src/startup;../../../../../middleware/mcu-boot/src/utilities;../../../../../middleware/mcu-boot/src/drivers;../../../../../middleware/mcu-boot/src/drivers/crc;../../../../../middleware/mcu-boot/src/drivers/microseconds;../../../../../middleware/mcu-boot/targets/MKV58F24/src;../../../../../devices/MKV58F24;../../../../../devices/MKV58F24/drivers;../../../../../devices/MKV58F24/drivers;../../../../../devices/MKV58F24;../../../../../devices/MKV58F24/drivers;../../../../../devices/MKV58F24/drivers</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -470,8 +469,23 @@ off
           </Files>
         </Group>
         <Group>
-          <GroupName>startup</GroupName>
+          <GroupName>device</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_device_registers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MKV58F24/fsl_device_registers.h</FilePath>
+            </File>
+            <File>
+              <FileName>MKV58F24.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MKV58F24/MKV58F24.h</FilePath>
+            </File>
+            <File>
+              <FileName>MKV58F24_features.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MKV58F24/MKV58F24_features.h</FilePath>
+            </File>
             <File>
               <FileName>system_MKV58F24.c</FileName>
               <FileType>1</FileType>
@@ -482,6 +496,11 @@ off
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MKV58F24/system_MKV58F24.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>startup</GroupName>
+          <Files>
             <File>
               <FileName>startup_MKV58F24.s</FileName>
               <FileType>2</FileType>
@@ -491,21 +510,6 @@ off
               <FileName>startup.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mcu-boot/src/startup/startup.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>source-include</GroupName>
-          <Files>
-            <File>
-              <FileName>bootloader_core.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/include/bootloader_core.h</FilePath>
-            </File>
-            <File>
-              <FileName>bootloader_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/include/bootloader_common.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -530,12 +534,102 @@ off
           </Files>
         </Group>
         <Group>
+          <GroupName>source-include</GroupName>
+          <Files>
+            <File>
+              <FileName>bootloader_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/include/bootloader_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>bootloader_core.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/include/bootloader_core.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>source-utilities</GroupName>
           <Files>
             <File>
               <FileName>vector_table_info.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mcu-boot/src/utilities/vector_table_info.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS</GroupName>
+          <Files>
+            <File>
+              <FileName>core_cm7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_gcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_armv8mbl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_armv8mml.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_common_tables.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_const_structs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/arm_math.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_iccarm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv8.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -547,7 +641,7 @@ off
       <ToolsetName>ARM-ADS</ToolsetName>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MKV58F1M0xxx24</Device>
+          <Device>MKV58F1M0VLQ24</Device>
           <Vendor>NXP</Vendor>
           <PackID>Keil.Kinetis_KVxx_DFP.1.5.0</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
@@ -905,13 +999,12 @@ off
             <vShortWch>0</vShortWch>
             <VariousControls>
               <MiscControls>--library_interface=armcc 
---library_type=standardlib 
 --diag_suppress=66,1296,186,170,2748,1461,1295,177,550 
- 
+--library_type=standardlib 
 </MiscControls>
               <Define>NDEBUG, CPU_MKV58F1M0VLQ24, CPU_IS_ARM_CORTEX_M7=1, BL_TARGET_FLASH, TWR_KV58F220M</Define>
               <Undefine/>
-              <IncludePath>../../flashloader/mdk;../../../../../devices;../../../../../CMSIS/Include;../../../../../middleware/mcu-boot/src;../../../../../middleware/mcu-boot/src/bootloader;../../../../../middleware/mcu-boot/src/include;../../../../../middleware/mcu-boot/src/startup;../../../../../middleware/mcu-boot/src/utilities;../../../../../middleware/mcu-boot/src/drivers;../../../../../middleware/mcu-boot/src/drivers/crc;../../../../../middleware/mcu-boot/src/drivers/microseconds;../../../../../middleware/mcu-boot/targets/MKV58F24/src;../../../../../devices/MKV58F24;../../../../../devices/MKV58F24/drivers</IncludePath>
+              <IncludePath>../../flashloader/mdk;../../../../../CMSIS/Include;../../../../../middleware/mcu-boot/src;../../../../../middleware/mcu-boot/src/bootloader;../../../../../middleware/mcu-boot/src/include;../../../../../middleware/mcu-boot/src/startup;../../../../../middleware/mcu-boot/src/utilities;../../../../../middleware/mcu-boot/src/drivers;../../../../../middleware/mcu-boot/src/drivers/crc;../../../../../middleware/mcu-boot/src/drivers/microseconds;../../../../../middleware/mcu-boot/targets/MKV58F24/src;../../../../../devices/MKV58F24;../../../../../devices/MKV58F24/drivers;../../../../../devices/MKV58F24/drivers;../../../../../devices/MKV58F24;../../../../../devices/MKV58F24/drivers;../../../../../devices/MKV58F24/drivers</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1008,8 +1101,23 @@ off
           </Files>
         </Group>
         <Group>
-          <GroupName>startup</GroupName>
+          <GroupName>device</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_device_registers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MKV58F24/fsl_device_registers.h</FilePath>
+            </File>
+            <File>
+              <FileName>MKV58F24.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MKV58F24/MKV58F24.h</FilePath>
+            </File>
+            <File>
+              <FileName>MKV58F24_features.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MKV58F24/MKV58F24_features.h</FilePath>
+            </File>
             <File>
               <FileName>system_MKV58F24.c</FileName>
               <FileType>1</FileType>
@@ -1020,6 +1128,11 @@ off
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MKV58F24/system_MKV58F24.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>startup</GroupName>
+          <Files>
             <File>
               <FileName>startup_MKV58F24.s</FileName>
               <FileType>2</FileType>
@@ -1029,21 +1142,6 @@ off
               <FileName>startup.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mcu-boot/src/startup/startup.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>source-include</GroupName>
-          <Files>
-            <File>
-              <FileName>bootloader_core.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/include/bootloader_core.h</FilePath>
-            </File>
-            <File>
-              <FileName>bootloader_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/include/bootloader_common.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1068,12 +1166,102 @@ off
           </Files>
         </Group>
         <Group>
+          <GroupName>source-include</GroupName>
+          <Files>
+            <File>
+              <FileName>bootloader_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/include/bootloader_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>bootloader_core.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/include/bootloader_core.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>source-utilities</GroupName>
           <Files>
             <File>
               <FileName>vector_table_info.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mcu-boot/src/utilities/vector_table_info.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS</GroupName>
+          <Files>
+            <File>
+              <FileName>core_cm7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_gcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_armv8mbl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_armv8mml.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_common_tables.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_const_structs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/arm_math.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_iccarm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv8.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
           </Files>
         </Group>

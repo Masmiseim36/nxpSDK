@@ -5,30 +5,6 @@ The lwip_httpsrv demo application demonstrates an HTTPServer on the lwIP TCP/IP 
 The user uses an Internet browser to send a request for connection. The board acts as an HTTP server and sends a Web
 page back to the PC.
 
-
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- RJ45 Network cable
-- TWR-KV58F220M board
-- TWR-SER board
-- Personal Computer
-
-Board settings
-==============
-TWR-SER:
-    - RMII mode - J2 3-4 shunt on, J3 2-3 shunt on, J12 shunt on 9,10.
-Clock setting for TWR-KV58F220M board
-    - J29 1-2 shunt on
-    - Place R110 with 0 Ohm resister.
-	- J11 no shunt, to avoid wrong reset button behaviour.
 Prepare the Demo
 ================
 1.  Connect a USB cable between the PC host and the OpenSDA(or USB to Serial) USB port on the target board.
@@ -55,7 +31,9 @@ Running the demo
          IPv4 Gateway     : 192.168.0.100
         ************************************************
 2.  On the browser address bar, type 192.168.0.102(IP address of the board).
-	The browser should show a web page.
+	The browser should show a web page. The board also advertises itself using mDNS so that it can be accessed using URL http://lwip-http.local.
+	Please note that your system may not support mDNS out-of-the-box as it is necessary to have an mDNS resolver installed.
+    For instance Bonjour Print Services for Windows contain such resolver. In case of Linux nss-mdns serves this purpose.
 
 Modifying content of static web pages
 To modify content available through the web server you must complete following steps:
@@ -77,6 +55,27 @@ To modify content available through the web server you must complete following s
 		Done.
   3. Overwrite the middleware\lwip_2.0.3\src\apps\httpsrv\httpsrv_fs_data.c file by the new generated middleware\lwip_2.0.3\src\apps\httpsrv\mkfs\httpsrv_fs_data.c file.
   4. Re-compile the HTTP server application example and download it to your board. 
-Customization options
+Hardware requirements
 =====================
+- Mini/micro USB cable
+- RJ45 Network cable
+- TWR-KV58F220M board
+- TWR-SER board
+- Personal Computer
+
+Board settings
+==============
+TWR-SER:
+    - RMII mode - J2 3-4 shunt on, J3 2-3 shunt on, J12 shunt on 9,10.
+Clock setting for TWR-KV58F220M board
+    - J29 1-2 shunt on
+    - Place R110 with 0 Ohm resister.
+	- J11 no shunt, to avoid wrong reset button behaviour.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

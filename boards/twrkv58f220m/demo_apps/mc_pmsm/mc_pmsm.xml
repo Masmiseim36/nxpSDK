@@ -2,15 +2,20 @@
 <ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
   <externalDefinitions>
     <definition extID="com.nxp.mcuxpresso"/>
+    <definition extID="component.lists.MKV58F24"/>
+    <definition extID="component.serial_manager.MKV58F24"/>
+    <definition extID="component.serial_manager_uart.MKV58F24"/>
+    <definition extID="component.uart_adapter.MKV58F24"/>
+    <definition extID="device.MKV58F24_CMSIS.MKV58F24"/>
+    <definition extID="device.MKV58F24_startup.MKV58F24"/>
     <definition extID="middleware.motor_control.pmsm.MKV58F24"/>
     <definition extID="middleware.rtcesl.cm7f.MKV58F24"/>
-    <definition extID="platform.devices.MKV58F24_CMSIS.MKV58F24"/>
-    <definition extID="platform.devices.MKV58F24_startup.MKV58F24"/>
+    <definition extID="platform.Include_common.MKV58F24"/>
+    <definition extID="platform.Include_core_cm7.MKV58F24"/>
     <definition extID="platform.drivers.clock.MKV58F24"/>
     <definition extID="platform.drivers.common.MKV58F24"/>
     <definition extID="platform.drivers.dmamux.MKV58F24"/>
     <definition extID="platform.drivers.dspi.MKV58F24"/>
-    <definition extID="platform.drivers.flash.MKV58F24"/>
     <definition extID="platform.drivers.gpio.MKV58F24"/>
     <definition extID="platform.drivers.port.MKV58F24"/>
     <definition extID="platform.drivers.sim.MKV58F24"/>
@@ -18,12 +23,13 @@
     <definition extID="platform.drivers.uart.MKV58F24"/>
     <definition extID="platform.drivers.xbara.MKV58F24"/>
     <definition extID="platform.utilities.assert.MKV58F24"/>
-    <definition extID="platform.utilities.debug_console.MKV58F24"/>
-    <definition extID="mdk"/>
+    <definition extID="utility.debug_console.MKV58F24"/>
     <definition extID="iar"/>
+    <definition extID="mdk"/>
     <definition extID="mcuxpresso"/>
+    <definition extID="armgcc"/>
   </externalDefinitions>
-  <example id="twrkv58f220m_mc_pmsm" name="mc_pmsm" category="demo_apps" dependency="platform.drivers.sim.MKV58F24 platform.drivers.common.MKV58F24 platform.drivers.clock.MKV58F24 platform.drivers.port.MKV58F24 platform.drivers.dmamux.MKV58F24 platform.drivers.xbara.MKV58F24 platform.drivers.dspi.MKV58F24 middleware.rtcesl.cm7f.MKV58F24 platform.drivers.flash.MKV58F24 platform.devices.MKV58F24_CMSIS.MKV58F24 platform.devices.MKV58F24_startup.MKV58F24 platform.drivers.uart.MKV58F24 platform.drivers.smc.MKV58F24 platform.utilities.debug_console.MKV58F24 platform.drivers.gpio.MKV58F24 platform.utilities.assert.MKV58F24 middleware.motor_control.pmsm.MKV58F24" toolchain="mdk iar mcuxpresso">
+  <example id="twrkv58f220m_mc_pmsm" name="mc_pmsm" category="demo_apps" dependency="platform.drivers.sim.MKV58F24 platform.drivers.port.MKV58F24 platform.drivers.dmamux.MKV58F24 platform.drivers.xbara.MKV58F24 platform.drivers.clock.MKV58F24 platform.drivers.dspi.MKV58F24 middleware.rtcesl.cm7f.MKV58F24 middleware.motor_control.pmsm.MKV58F24 platform.drivers.common.MKV58F24 device.MKV58F24_CMSIS.MKV58F24 utility.debug_console.MKV58F24 component.uart_adapter.MKV58F24 component.serial_manager.MKV58F24 component.serial_manager_uart.MKV58F24 platform.drivers.uart.MKV58F24 component.lists.MKV58F24 device.MKV58F24_startup.MKV58F24 platform.drivers.smc.MKV58F24 platform.drivers.gpio.MKV58F24 platform.utilities.assert.MKV58F24 platform.Include_core_cm7.MKV58F24 platform.Include_common.MKV58F24" toolchain="iar mdk mcuxpresso">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -38,15 +44,8 @@
         <option id="com.crt.advproject.c.misc.dialect" type="enum">
           <value>com.crt.advproject.misc.dialect.gnu99</value>
         </option>
-        <option id="com.crt.advproject.gcc.exe.debug.option.debugging.level" type="enum">
-          <value>gnu.c.debugging.level.default</value>
-        </option>
-        <option id="com.crt.advproject.gcc.exe.release.option.debugging.level" type="enum">
-          <value>gnu.c.debugging.level.default</value>
-        </option>
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
           <value>CPU_MKV58F1M0VLQ24</value>
-          <value>ARM_MATH_CM4</value>
           <value>TWR_KV58F220M</value>
           <value>TOWER</value>
         </option>
@@ -62,8 +61,18 @@
         <option id="gnu.c.link.option.nostdlibs" type="boolean">
           <value>true</value>
         </option>
+        <option id="com.crt.advproject.link.memory.sections" type="stringList">
+          <value>isd=*(NonCacheable.init);region=RAM;type=.data</value>
+          <value>isd=*(NonCacheable);region=RAM;type=.bss</value>
+        </option>
       </toolchainSetting>
     </toolchainSettings>
+    <source path="boards/twrkv58f220m/demo_apps/mc_pmsm/iar" target_path="src" type="linker" toolchain="iar">
+      <files mask="MKV58F1M0xxx24_flash.icf"/>
+    </source>
+    <source path="boards/twrkv58f220m/demo_apps/mc_pmsm/mdk" target_path="src" type="linker" toolchain="mdk">
+      <files mask="MKV58F1M0xxx24_flash.scf"/>
+    </source>
     <source path="boards/twrkv58f220m/demo_apps/mc_pmsm" target_path="board" type="c_include">
       <files mask="board.h"/>
       <files mask="clock_config.h"/>
@@ -96,35 +105,8 @@
     <source path="boards/twrkv58f220m/demo_apps/mc_pmsm" target_path="source" type="src">
       <files mask="main.c"/>
     </source>
-    <source path="middleware/rtcesl/CM7F_RTCESL_4.5_IAR/AMCLIB" type="lib" method="copy" toolchain="iar">
-      <files mask="AMCLIB.a"/>
-    </source>
-    <source path="middleware/rtcesl/CM7F_RTCESL_4.5_IAR/GDFLIB" type="lib" method="copy" toolchain="iar">
-      <files mask="GDFLIB.a"/>
-    </source>
-    <source path="middleware/rtcesl/CM7F_RTCESL_4.5_IAR/GFLIB" type="lib" method="copy" toolchain="iar">
-      <files mask="GFLIB.a"/>
-    </source>
-    <source path="middleware/rtcesl/CM7F_RTCESL_4.5_IAR/GMCLIB" type="lib" method="copy" toolchain="iar">
-      <files mask="GMCLIB.a"/>
-    </source>
-    <source path="middleware/rtcesl/CM7F_RTCESL_4.5_IAR/MLIB" type="lib" method="copy" toolchain="iar">
-      <files mask="MLIB.a"/>
-    </source>
-    <source path="middleware/rtcesl/CM7F_RTCESL_4.5_KEIL/AMCLIB" type="lib" method="copy" toolchain="mdk">
-      <files mask="AMCLIB.lib"/>
-    </source>
-    <source path="middleware/rtcesl/CM7F_RTCESL_4.5_KEIL/GDFLIB" type="lib" method="copy" toolchain="mdk">
-      <files mask="GDFLIB.lib"/>
-    </source>
-    <source path="middleware/rtcesl/CM7F_RTCESL_4.5_KEIL/GFLIB" type="lib" method="copy" toolchain="mdk">
-      <files mask="GFLIB.lib"/>
-    </source>
-    <source path="middleware/rtcesl/CM7F_RTCESL_4.5_KEIL/GMCLIB" type="lib" method="copy" toolchain="mdk">
-      <files mask="GMCLIB.lib"/>
-    </source>
-    <source path="middleware/rtcesl/CM7F_RTCESL_4.5_KEIL/MLIB" type="lib" method="copy" toolchain="mdk">
-      <files mask="MLIB.lib"/>
+    <source path="devices/MKV58F24/gcc" target_path="src" type="linker" toolchain="armgcc">
+      <files mask="MKV58F1M0xxx24_flash.ld"/>
     </source>
   </example>
 </ksdk:examples>

@@ -4,14 +4,6 @@ The PWM project is a simple demonstration program of the SDK PWM driver.
 The pulse width modulator (PWM) module contains PWM submodules, each of which is set up to control a single half-bridge power stage.
 Fault channel support is provided. This PWM module can generate various switching patterns, including highly sophisticated waveforms.
 It can be used to control all known Switched Mode Power Supplies (SMPS) topologies.
-
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
-
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -46,6 +38,11 @@ When the example runs successfully, the following message is displayed in the te
 ~~~~~~~~~~~~~~~~~~~~~~~~
 FlexPWM driver example
 ~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

@@ -1,34 +1,8 @@
 /*
- * The Clear BSD License
  * Copyright 2018 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #ifndef _BOARD_H_
@@ -37,6 +11,7 @@
 #include "clock_config.h"
 #include "peripherals.h"
 #include "pin_mux.h"
+#include "fsl_gpio.h"
 
 /*******************************************************************************
  * Definitions
@@ -46,8 +21,9 @@
 
 /*! @brief The UART to use for debug messages. */
 #define BOARD_USE_UART
-#define BOARD_DEBUG_UART_TYPE DEBUG_CONSOLE_DEVICE_TYPE_UART
+#define BOARD_DEBUG_UART_TYPE kSerialPort_Uart
 #define BOARD_DEBUG_UART_PERIPHERAL (uint32_t) UART0
+#define BOARD_DEBUG_UART_INSTANCE 0U
 #define BOARD_DEBUG_UART_CLK_FREQ CLOCK_GetCoreSysClkFreq()
 #define BOARD_UART_IRQ UART0_RX_TX_IRQn
 #define BOARD_UART_IRQ_HANDLER UART0_RX_TX_IRQHandler
@@ -55,6 +31,39 @@
 #ifndef BOARD_DEBUG_UART_BAUDRATE
 #define BOARD_DEBUG_UART_BAUDRATE 115200
 #endif /* BOARD_DEBUG_UART_BAUDRATE */
+
+/*! @brief The Flextimer instance/channel used for board */
+#define BOARD_FTM_BASEADDR FTM0
+
+/*! @brief The i2c instance used for board. */
+#define BOARD_I2C_COMM_BASEADDR I2C0
+/*! @brief The i2c instance used for i2c connection by default */
+#define BOARD_I2C_BASEADDR I2C0
+
+/*! @brief The bubble level demo information */
+#define BOARD_FXOS8700_ADDR 0x1D
+#define BOARD_ACCEL_ADDR BOARD_FXOS8700_ADDR
+#define BOARD_ACCEL_BAUDRATE 100
+#define BOARD_ACCEL_I2C_BASEADDR I2C0
+#define BOARD_ACCEL_I2C_CLOCK_FREQ CLOCK_GetFreq(I2C0_CLK_SRC)
+
+/*! @brief The CMP instance/channel used for board. */
+#define BOARD_CMP_BASEADDR CMP0
+#define BOARD_CMP_CHANNEL 0U
+
+/*! @brief Define the port interrupt number for the board switches */
+#ifndef BOARD_SW2_GPIO
+#define BOARD_SW2_GPIO GPIOA
+#endif
+#ifndef BOARD_SW2_PORT
+#define BOARD_SW2_PORT PORTA
+#endif
+#ifndef BOARD_SW2_GPIO_PIN
+#define BOARD_SW2_GPIO_PIN 4U
+#endif
+#define BOARD_SW2_IRQ PORTA_IRQn
+#define BOARD_SW2_IRQ_HANDLER PORTA_IRQHandler
+#define BOARD_SW2_NAME "SW2"f
 
 #if defined(__cplusplus)
 extern "C" {
@@ -79,7 +88,8 @@ status_t BOARD_I2C_Receive(I2C_Type *base,
                            uint8_t *rxBuff,
                            uint8_t rxBuffSize);
 status_t BOARD_Accel_I2C_Send(uint8_t deviceAddress, uint32_t subAddress, uint8_t subaddressSize, uint32_t txBuff);
-status_t BOARD_Accel_I2C_Receive(uint8_t deviceAddress, uint32_t subAddress, uint8_t subaddressSize, uint8_t *rxBuff, uint8_t rxBuffSize);
+status_t BOARD_Accel_I2C_Receive(
+    uint8_t deviceAddress, uint32_t subAddress, uint8_t subaddressSize, uint8_t *rxBuff, uint8_t rxBuffSize);
 #endif /* SDK_I2C_BASED_COMPONENT_USED */
 
 #if defined(__cplusplus)

@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2018 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "mcdrv_adc_hsadc.h"
@@ -136,16 +110,16 @@ bool_t MCDRV_Curr3Ph2ShChanAssignInit(mcdrv_hsadc_t *this)
     /* Vdcb sampling - select CLIST1 (sample number 1) */
     this->ui16AdcSmplVDcb = HSADC_CLIST1_SAMPLE1(this->ui16ChanNumVDcb);
     this->pui32AdcBaseVDcb->CLIST1 = 
-        ((this->pui32AdcBaseVDcb->CLIST1 & ~HSADC_CLIST1_SAMPLE1_MASK) |
+        ((this->pui32AdcBaseVDcb->CLIST1 & ~(uint16_t)HSADC_CLIST1_SAMPLE1_MASK) |
           this->ui16AdcSmplVDcb);
 
     /* default channel assignment for default SVM sector = 2 */
     /* direct sensing of phases A and C */
     this->sCurrSec23.pui32AdcBasePhaA->CLIST1 =
-        ((this->sCurrSec23.pui32AdcBasePhaA->CLIST1 & ~HSADC_CLIST1_SAMPLE0_MASK) |
+        ((this->sCurrSec23.pui32AdcBasePhaA->CLIST1 & ~(uint16_t)HSADC_CLIST1_SAMPLE0_MASK) |
           this->sCurrSec23.ui16AdcSmplPhaA);
     this->sCurrSec23.pui32AdcBasePhaC->CLIST1 =
-        ((this->sCurrSec23.pui32AdcBasePhaC->CLIST1 & ~HSADC_CLIST1_SAMPLE0_MASK) |
+        ((this->sCurrSec23.pui32AdcBasePhaC->CLIST1 & ~(uint16_t)HSADC_CLIST1_SAMPLE0_MASK) |
           this->sCurrSec23.ui16AdcSmplPhaC);
     
     return (s_statusPass);
@@ -168,10 +142,10 @@ bool_t MCDRV_Curr3Ph2ShChanAssign(mcdrv_hsadc_t *this)
         case 3:
             /* direct sensing of phases A and C */
             this->sCurrSec23.pui32AdcBasePhaA->CLIST1 =
-                ((this->sCurrSec23.pui32AdcBasePhaA->CLIST1 & ~HSADC_CLIST1_SAMPLE0_MASK) |
+                ((this->sCurrSec23.pui32AdcBasePhaA->CLIST1 & ~(uint16_t)HSADC_CLIST1_SAMPLE0_MASK) |
                  this->sCurrSec23.ui16AdcSmplPhaA);
             this->sCurrSec23.pui32AdcBasePhaC->CLIST1 =
-                ((this->sCurrSec23.pui32AdcBasePhaC->CLIST1 & ~HSADC_CLIST1_SAMPLE0_MASK) |
+                ((this->sCurrSec23.pui32AdcBasePhaC->CLIST1 & ~(uint16_t)HSADC_CLIST1_SAMPLE0_MASK) |
                  this->sCurrSec23.ui16AdcSmplPhaC);
             break;
 
@@ -179,10 +153,10 @@ bool_t MCDRV_Curr3Ph2ShChanAssign(mcdrv_hsadc_t *this)
         case 5:
             /* direct sensing of phases A and B  */
             this->sCurrSec45.pui32AdcBasePhaA->CLIST1 =
-                ((this->sCurrSec45.pui32AdcBasePhaA->CLIST1 & ~HSADC_CLIST1_SAMPLE0_MASK) |
+                ((this->sCurrSec45.pui32AdcBasePhaA->CLIST1 & ~(uint16_t)HSADC_CLIST1_SAMPLE0_MASK) |
                  this->sCurrSec45.ui16AdcSmplPhaA);
             this->sCurrSec45.pui32AdcBasePhaB->CLIST1 =
-                ((this->sCurrSec45.pui32AdcBasePhaB->CLIST1 & ~HSADC_CLIST1_SAMPLE0_MASK) |
+                ((this->sCurrSec45.pui32AdcBasePhaB->CLIST1 & ~(uint16_t)HSADC_CLIST1_SAMPLE0_MASK) |
                  this->sCurrSec45.ui16AdcSmplPhaB);
             break;
 
@@ -191,10 +165,10 @@ bool_t MCDRV_Curr3Ph2ShChanAssign(mcdrv_hsadc_t *this)
         default:
             /* direct sensing of phases B and C */
             this->sCurrSec16.pui32AdcBasePhaB->CLIST1 =
-                ((this->sCurrSec16.pui32AdcBasePhaB->CLIST1 & ~HSADC_CLIST1_SAMPLE0_MASK) |
+                ((this->sCurrSec16.pui32AdcBasePhaB->CLIST1 & ~(uint16_t)HSADC_CLIST1_SAMPLE0_MASK) |
                  this->sCurrSec16.ui16AdcSmplPhaB);
             this->sCurrSec16.pui32AdcBasePhaC->CLIST1 =
-                ((this->sCurrSec16.pui32AdcBasePhaC->CLIST1 & ~HSADC_CLIST1_SAMPLE0_MASK) |
+                ((this->sCurrSec16.pui32AdcBasePhaC->CLIST1 & ~(uint16_t)HSADC_CLIST1_SAMPLE0_MASK) |
                  this->sCurrSec16.ui16AdcSmplPhaC);
             break;
     }

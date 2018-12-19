@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2018 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "mcdrv_adc_hsadc.h"
@@ -128,28 +102,28 @@ bool_t MCDRV_HSAdcInit(mcdrv_hsadc_t *this, mcdrv_hsadc_init_t *init)
         this->bldcAdc0SectorCfg[0] = init->ui16AdcArray[MCDRV_ADC1_BEMFC];
         this->bldcAdc0SectorCfg[3] = init->ui16AdcArray[MCDRV_ADC1_BEMFC];
         this->pui32BemfCAdcBase = init->pui32Adc1Base;
-        this->pui32BemfCAdcBase->CLIST3 = ((this->pui32BemfCAdcBase->CLIST3 & ~(HSADC_CLIST3_SAMPLE8_MASK)) |
+        this->pui32BemfCAdcBase->CLIST3 = ((this->pui32BemfCAdcBase->CLIST3 & ~(uint16_t)(HSADC_CLIST3_SAMPLE8_MASK)) |
                                            HSADC_CLIST3_SAMPLE8(init->ui16AdcArray[MCDRV_ADC1_BEMFC] + 8));
         this->ui16RsltNumBemfC = 8;
 
         /*IDCB */
 
         this->pui32IdcbAdcBase = init->pui32Adc0Base;
-        this->pui32IdcbAdcBase->CLIST1 = ((this->pui32IdcbAdcBase->CLIST1 & ~(HSADC_CLIST1_SAMPLE0_MASK)) |
+        this->pui32IdcbAdcBase->CLIST1 = ((this->pui32IdcbAdcBase->CLIST1 & ~(uint16_t)(HSADC_CLIST1_SAMPLE0_MASK)) |
                                           HSADC_CLIST1_SAMPLE0(init->ui16AdcArray[MCDRV_ADC0_IDCB]));
         this->ui16RsltNumIdcb = 0;
         this->pui32IdcbAdcBase->MUX67_SEL = HSADC_MUX67_SEL_CH7_SELA(0);
 
         /* auxiliary measurement */
         this->pui32AuxAdcBase = init->pui32Adc0Base;
-        this->pui32AuxAdcBase->CLIST1 = ((this->pui32AuxAdcBase->CLIST1 & ~(HSADC_CLIST1_SAMPLE3_MASK)) |
+        this->pui32AuxAdcBase->CLIST1 = ((this->pui32AuxAdcBase->CLIST1 & ~(uint16_t)(HSADC_CLIST1_SAMPLE3_MASK)) |
                                          HSADC_CLIST1_SAMPLE3(init->ui16AdcArray[MCDRV_ADC0_AUX]));
 
         this->ui16RsltNumAux = 3;
 
         /* DC-bus voltage measurement */
         this->pui32UdcbAdcBase = init->pui32Adc0Base;
-        this->pui32UdcbAdcBase->CLIST1 = ((this->pui32UdcbAdcBase->CLIST1 & ~(HSADC_CLIST1_SAMPLE1_MASK)) |
+        this->pui32UdcbAdcBase->CLIST1 = ((this->pui32UdcbAdcBase->CLIST1 & ~(uint16_t)(HSADC_CLIST1_SAMPLE1_MASK)) |
                                           HSADC_CLIST1_SAMPLE1(init->ui16AdcArray[MCDRV_ADC0_UDCB]));
 
         this->ui16RsltNumUdcb = 1;
@@ -175,7 +149,7 @@ bool_t MCDRV_AssignBemfChannel(mcdrv_hsadc_t *this)
         /* BEMF phase C sensing */
         case 0:
         case 3:
-            this->pui32BemfCAdcBase->CLIST3 = ((this->pui32BemfCAdcBase->CLIST3 & ~(HSADC_CLIST3_SAMPLE8_MASK)) |
+            this->pui32BemfCAdcBase->CLIST3 = ((this->pui32BemfCAdcBase->CLIST3 & ~(uint16_t)(HSADC_CLIST3_SAMPLE8_MASK)) |
                                                HSADC_CLIST3_SAMPLE8(this->pui16AdcArray[MCDRV_ADC1_BEMFC] + 8));
 
             break;
@@ -183,7 +157,7 @@ bool_t MCDRV_AssignBemfChannel(mcdrv_hsadc_t *this)
         /* BEMF phase B sensing */
         case 1:
         case 4:
-            this->pui32BemfBAdcBase->CLIST1 = ((this->pui32BemfBAdcBase->CLIST1 & ~(HSADC_CLIST1_SAMPLE2_MASK)) |
+            this->pui32BemfBAdcBase->CLIST1 = ((this->pui32BemfBAdcBase->CLIST1 & ~(uint16_t)(HSADC_CLIST1_SAMPLE2_MASK)) |
                                                HSADC_CLIST1_SAMPLE2(this->pui16AdcArray[MCDRV_ADC0_BEMFB]));
 
             break;
@@ -191,7 +165,7 @@ bool_t MCDRV_AssignBemfChannel(mcdrv_hsadc_t *this)
         /* BEMF phase A sensing */
         case 2:
         case 5:
-            this->pui32BemfAAdcBase->CLIST1 = ((this->pui32BemfAAdcBase->CLIST1 & ~(HSADC_CLIST1_SAMPLE2_MASK)) |
+            this->pui32BemfAAdcBase->CLIST1 = ((this->pui32BemfAAdcBase->CLIST1 & ~(uint16_t)(HSADC_CLIST1_SAMPLE2_MASK)) |
                                                HSADC_CLIST1_SAMPLE2(this->pui16AdcArray[MCDRV_ADC0_BEMFA]));
 
             break;

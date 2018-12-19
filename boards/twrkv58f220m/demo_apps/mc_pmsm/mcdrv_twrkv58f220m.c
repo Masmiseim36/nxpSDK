@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2018 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "mcdrv_twrkv58f220m.h"
@@ -131,7 +105,7 @@ void InitPWMA0(void)
     SIM->SCGC5 |= SIM_SCGC5_XBARA_MASK;
 
     /* SM3 clock divided by 2 */
-    PWM0->SM[3].CTRL = ((PWM0->SM[3].CTRL & ~PWM_CTRL_PRSC_MASK) | (PWM_CTRL_PRSC(0x1)));
+    PWM0->SM[3].CTRL = ((PWM0->SM[3].CTRL & ~(uint16_t)PWM_CTRL_PRSC_MASK) | (PWM_CTRL_PRSC(0x1)));
 
     /* Full cycle reload */
     PWM0->SM[0].CTRL |= PWM_CTRL_FULL_MASK;
@@ -192,16 +166,16 @@ void InitPWMA0(void)
     PWM0->SM[2].DTCNT1 = PWM_DTCNT1_DTCNT1(g_sClockSetup.ui16PwmDeadTime);
 
     /* Channels A and B disabled when fault 0 occurs */
-    PWM0->SM[0].DISMAP[0] = ((PWM0->SM[0].DISMAP[0] & ~PWM_DISMAP_DIS0A_MASK) | PWM_DISMAP_DIS0A(0x1));
-    PWM0->SM[1].DISMAP[0] = ((PWM0->SM[0].DISMAP[0] & ~PWM_DISMAP_DIS0A_MASK) | PWM_DISMAP_DIS0A(0x1));
-    PWM0->SM[2].DISMAP[0] = ((PWM0->SM[0].DISMAP[0] & ~PWM_DISMAP_DIS0A_MASK) | PWM_DISMAP_DIS0A(0x1));
-    PWM0->SM[0].DISMAP[0] = ((PWM0->SM[0].DISMAP[0] & ~PWM_DISMAP_DIS0B_MASK) | PWM_DISMAP_DIS0B(0x1));
-    PWM0->SM[1].DISMAP[0] = ((PWM0->SM[0].DISMAP[0] & ~PWM_DISMAP_DIS0B_MASK) | PWM_DISMAP_DIS0B(0x1));
-    PWM0->SM[2].DISMAP[0] = ((PWM0->SM[0].DISMAP[0] & ~PWM_DISMAP_DIS0B_MASK) | PWM_DISMAP_DIS0B(0x1));
+    PWM0->SM[0].DISMAP[0] = ((PWM0->SM[0].DISMAP[0] & ~(uint16_t)PWM_DISMAP_DIS0A_MASK) | PWM_DISMAP_DIS0A(0x1));
+    PWM0->SM[1].DISMAP[0] = ((PWM0->SM[0].DISMAP[0] & ~(uint16_t)PWM_DISMAP_DIS0A_MASK) | PWM_DISMAP_DIS0A(0x1));
+    PWM0->SM[2].DISMAP[0] = ((PWM0->SM[0].DISMAP[0] & ~(uint16_t)PWM_DISMAP_DIS0A_MASK) | PWM_DISMAP_DIS0A(0x1));
+    PWM0->SM[0].DISMAP[0] = ((PWM0->SM[0].DISMAP[0] & ~(uint16_t)PWM_DISMAP_DIS0B_MASK) | PWM_DISMAP_DIS0B(0x1));
+    PWM0->SM[1].DISMAP[0] = ((PWM0->SM[0].DISMAP[0] & ~(uint16_t)PWM_DISMAP_DIS0B_MASK) | PWM_DISMAP_DIS0B(0x1));
+    PWM0->SM[2].DISMAP[0] = ((PWM0->SM[0].DISMAP[0] & ~(uint16_t)PWM_DISMAP_DIS0B_MASK) | PWM_DISMAP_DIS0B(0x1));
 
     /* Modules one and two gets clock from module zero */
-    PWM0->SM[1].CTRL2 = (PWM0->SM[1].CTRL2 & ~PWM_CTRL2_CLK_SEL_MASK) | PWM_CTRL2_CLK_SEL(0x2);
-    PWM0->SM[2].CTRL2 = (PWM0->SM[2].CTRL2 & ~PWM_CTRL2_CLK_SEL_MASK) | PWM_CTRL2_CLK_SEL(0x2);
+    PWM0->SM[1].CTRL2 = (PWM0->SM[1].CTRL2 & ~(uint16_t)PWM_CTRL2_CLK_SEL_MASK) | PWM_CTRL2_CLK_SEL(0x2);
+    PWM0->SM[2].CTRL2 = (PWM0->SM[2].CTRL2 & ~(uint16_t)PWM_CTRL2_CLK_SEL_MASK) | PWM_CTRL2_CLK_SEL(0x2);
 
     /* Master reload active for modules one and two*/
     PWM0->SM[1].CTRL2 |= PWM_CTRL2_RELOAD_SEL_MASK;
@@ -209,33 +183,33 @@ void InitPWMA0(void)
     PWM0->SM[3].CTRL2 |= PWM_CTRL2_RELOAD_SEL_MASK;
 
     /* Master reload is generated every n-th opportunity */
-    PWM0->SM[0].CTRL = (PWM0->SM[0].CTRL & ~PWM_CTRL_LDFQ_MASK) | PWM_CTRL_LDFQ(M1_FOC_FREQ_VS_PWM_FREQ - 1);
+    PWM0->SM[0].CTRL = (PWM0->SM[0].CTRL & ~(uint16_t)PWM_CTRL_LDFQ_MASK) | PWM_CTRL_LDFQ(M1_FOC_FREQ_VS_PWM_FREQ - 1);
 
     /* Master sync active for modules one and two*/
-    PWM0->SM[1].CTRL2 = (PWM0->SM[1].CTRL2 & ~PWM_CTRL2_INIT_SEL_MASK) | PWM_CTRL2_INIT_SEL(0x2);
-    PWM0->SM[2].CTRL2 = (PWM0->SM[2].CTRL2 & ~PWM_CTRL2_INIT_SEL_MASK) | PWM_CTRL2_INIT_SEL(0x2);
+    PWM0->SM[1].CTRL2 = (PWM0->SM[1].CTRL2 & ~(uint16_t)PWM_CTRL2_INIT_SEL_MASK) | PWM_CTRL2_INIT_SEL(0x2);
+    PWM0->SM[2].CTRL2 = (PWM0->SM[2].CTRL2 & ~(uint16_t)PWM_CTRL2_INIT_SEL_MASK) | PWM_CTRL2_INIT_SEL(0x2);
 
     /* Master reload active for module three*/
-    PWM0->SM[3].CTRL2 = (PWM0->SM[3].CTRL2 & ~PWM_CTRL2_INIT_SEL_MASK) | PWM_CTRL2_INIT_SEL(0x1);
+    PWM0->SM[3].CTRL2 = (PWM0->SM[3].CTRL2 & ~(uint16_t)PWM_CTRL2_INIT_SEL_MASK) | PWM_CTRL2_INIT_SEL(0x1);
 
     /* Fault 0 active in logic level one, automatic clearing */
-    PWM0->FCTRL = (PWM0->FCTRL & ~PWM_FCTRL_FLVL_MASK) | PWM_FCTRL_FLVL(0x1);
-    PWM0->FCTRL = (PWM0->FCTRL & ~PWM_FCTRL_FAUTO_MASK) | PWM_FCTRL_FAUTO(0x1);
+    PWM0->FCTRL = (PWM0->FCTRL & ~(uint16_t)PWM_FCTRL_FLVL_MASK) | PWM_FCTRL_FLVL(0x1);
+    PWM0->FCTRL = (PWM0->FCTRL & ~(uint16_t)PWM_FCTRL_FAUTO_MASK) | PWM_FCTRL_FAUTO(0x1);
 
     /* Clear fault flags */
-    PWM0->FSTS = (PWM0->FSTS & ~PWM_FSTS_FFLAG_MASK) | PWM_FSTS_FFLAG(0xF);
+    PWM0->FSTS = (PWM0->FSTS & ~(uint16_t)PWM_FSTS_FFLAG_MASK) | PWM_FSTS_FFLAG(0xF);
 
     /* PWMs are re-enabled at PWM full cycle */
-    PWM0->FSTS = (PWM0->FSTS & ~PWM_FSTS_FFULL_MASK) | PWM_FSTS_FFULL(0x1);
+    PWM0->FSTS = (PWM0->FSTS & ~(uint16_t)PWM_FSTS_FFULL_MASK) | PWM_FSTS_FFULL(0x1);
 
     /* PWM fault filter - 5 Fast peripheral clocks sample rate, 5 agreeing
        samples to activate */
-    PWM0->FFILT = (PWM0->FFILT & ~PWM_FFILT_FILT_PER_MASK) | PWM_FFILT_FILT_PER(5);
-    PWM0->FFILT = (PWM0->FFILT & ~PWM_FFILT_FILT_CNT_MASK) | PWM_FFILT_FILT_CNT(5);
+    PWM0->FFILT = (PWM0->FFILT & ~(uint16_t)PWM_FFILT_FILT_PER_MASK) | PWM_FFILT_FILT_PER(5);
+    PWM0->FFILT = (PWM0->FFILT & ~(uint16_t)PWM_FFILT_FILT_CNT_MASK) | PWM_FFILT_FILT_CNT(5);
 
     /* Enable A&B PWM outputs for submodules one, two and three */
-    PWM0->OUTEN = (PWM0->OUTEN & ~PWM_OUTEN_PWMA_EN_MASK) | PWM_OUTEN_PWMA_EN(7);
-    PWM0->OUTEN = (PWM0->OUTEN & ~PWM_OUTEN_PWMB_EN_MASK) | PWM_OUTEN_PWMB_EN(7);
+    PWM0->OUTEN = (PWM0->OUTEN & ~(uint16_t)PWM_OUTEN_PWMA_EN_MASK) | PWM_OUTEN_PWMA_EN(7);
+    PWM0->OUTEN = (PWM0->OUTEN & ~(uint16_t)PWM_OUTEN_PWMB_EN_MASK) | PWM_OUTEN_PWMB_EN(7);
 
     /* PWMA3_TRG0 to ADC0 - XBARA_IN26 -> XBAR_OUT12*/
     /* PWMA3_TRG0 to ADC1 - XBARA_IN26 -> XBAR_OUT42*/
@@ -243,9 +217,9 @@ void InitPWMA0(void)
     XBARA->SEL21 = XBARA_SEL21_SEL42(26);
     
     /* Start PWMs (set load OK flags and run) */
-    PWM0->MCTRL = (PWM0->MCTRL & ~PWM_MCTRL_CLDOK_MASK) | PWM_MCTRL_CLDOK(0xF);
-    PWM0->MCTRL = (PWM0->MCTRL & ~PWM_MCTRL_LDOK_MASK) | PWM_MCTRL_LDOK(0xF);
-    PWM0->MCTRL = (PWM0->MCTRL & ~PWM_MCTRL_RUN_MASK) | PWM_MCTRL_RUN(0xF);
+    PWM0->MCTRL = (PWM0->MCTRL & ~(uint16_t)PWM_MCTRL_CLDOK_MASK) | PWM_MCTRL_CLDOK(0xF);
+    PWM0->MCTRL = (PWM0->MCTRL & ~(uint16_t)PWM_MCTRL_LDOK_MASK) | PWM_MCTRL_LDOK(0xF);
+    PWM0->MCTRL = (PWM0->MCTRL & ~(uint16_t)PWM_MCTRL_RUN_MASK) | PWM_MCTRL_RUN(0xF);
 
     /* Initialize MC driver */
     g_sM1Pwm3ph.pui32PwmBaseAddress = (PWM_Type *)PWM0;
@@ -382,8 +356,8 @@ void InitHSADC(void)
     SIM->SCGC2 |= SIM_SCGC2_HSADC1_MASK;
 
     /* Triggered sequential mode */
-    HSADC0->CTRL1 = (HSADC0->CTRL1 & ~HSADC_CTRL1_SMODE_MASK) | HSADC_CTRL1_SMODE(0x04);
-    HSADC1->CTRL1 = (HSADC1->CTRL1 & ~HSADC_CTRL1_SMODE_MASK) | HSADC_CTRL1_SMODE(0x04);
+    HSADC0->CTRL1 = (HSADC0->CTRL1 & ~(uint16_t)HSADC_CTRL1_SMODE_MASK) | HSADC_CTRL1_SMODE(0x04);
+    HSADC1->CTRL1 = (HSADC1->CTRL1 & ~(uint16_t)HSADC_CTRL1_SMODE_MASK) | HSADC_CTRL1_SMODE(0x04);
 
     /* Enable end-of-scan interrupt */
     HSADC0->CTRL1 |= HSADC_CTRL1_EOSIEA_MASK;
@@ -398,8 +372,8 @@ void InitHSADC(void)
 
     /* Input clock is 25MHz (100MHz Fast Peripheral clock divided by two),
        single ended */
-    HSADC0->CTRL2 = (HSADC0->CTRL2 & ~HSADC_CTRL2_DIVA_MASK) | HSADC_CTRL2_DIVA(0x03);
-    HSADC1->CTRL2 = (HSADC1->CTRL2 & ~HSADC_CTRL2_DIVA_MASK) | HSADC_CTRL2_DIVA(0x03);
+    HSADC0->CTRL2 = (HSADC0->CTRL2 & ~(uint16_t)HSADC_CTRL2_DIVA_MASK) | HSADC_CTRL2_DIVA(0x03);
+    HSADC1->CTRL2 = (HSADC1->CTRL2 & ~(uint16_t)HSADC_CTRL2_DIVA_MASK) | HSADC_CTRL2_DIVA(0x03);
 
     /* Disable HSADCB and HSADCD */
     HSADC0->CTRL2 |= HSADC_CTRL2_STOPB_MASK;
@@ -410,8 +384,8 @@ void InitHSADC(void)
     HSADC1->SDIS = HSADC_SDIS_DS(0xFFFC);
 
     /* Select PWMA0_trig source (routed using XBARA) as sync signal */
-    SIM->SOPT7 = (SIM->SOPT7 & ~SIM_SOPT7_HSADC0AALTTRGEN_MASK) | SIM_SOPT7_HSADC0AALTTRGEN(0x00);
-    SIM->SOPT7 = (SIM->SOPT7 & ~SIM_SOPT7_HSADC1AALTTRGEN_MASK) | SIM_SOPT7_HSADC1AALTTRGEN(0x00);
+    SIM->SOPT7 = (SIM->SOPT7 & ~(uint16_t)SIM_SOPT7_HSADC0AALTTRGEN_MASK) | SIM_SOPT7_HSADC0AALTTRGEN(0x00);
+    SIM->SOPT7 = (SIM->SOPT7 & ~(uint16_t)SIM_SOPT7_HSADC1AALTTRGEN_MASK) | SIM_SOPT7_HSADC1AALTTRGEN(0x00);
     
     /* Configure HSADC calibration process */
     /* Single-ended input calibration on HSADC0A and HSADC1C */

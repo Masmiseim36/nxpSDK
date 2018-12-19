@@ -13,14 +13,6 @@ source by following the debug console prompts. The purpose of this demo is to sh
  - Other low power consideration based on the actual application hardware.
  - Debug pins(e.g SWD_DIO) would consume addtional power, had better to disable related pins or disconnect them. 
 
-
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
-
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -69,6 +61,11 @@ Press  I for enter: VLLS3    - Very Low Leakage Stop 3 mode
 
 Waiting for power mode select..
 ~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

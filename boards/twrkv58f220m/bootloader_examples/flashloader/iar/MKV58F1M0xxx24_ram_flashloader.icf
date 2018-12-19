@@ -5,9 +5,6 @@
 **                          MKV58F1M0VMD24
 **
 **     Compiler:            IAR ANSI C/C++ Compiler for ARM
-**     Reference manual:    KV5XP144M240RM Rev. 3, 02/2016
-**     Version:             rev. 0.3, 2016-02-29
-**     Build:               b171205
 **
 **     Abstract:
 **         Linker file for the IAR ANSI C/C++ Compiler for ARM

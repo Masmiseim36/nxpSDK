@@ -5,30 +5,6 @@ The lwip_dhcp demo application demonstrates a DHCP demo on the lwIP TCP/IP stack
 The application acts as a DHCP client and prints the status as it is progressing.
 Once the interface is being bound to an IP address obtained from DHCP server, address information is printed.
 
-
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- RJ45 Network cable
-- TWR-KV58F220M board
-- TWR-SER board
-- Personal Computer
-
-Board settings
-==============
-TWR-SER:
-    - RMII mode - J2 3-4 shunt on, J3 2-3 shunt on, J12 shunt on 9,10.
-Clock setting for TWR-KV58F220M board
-    - J29 1-2 shunt on
-    - Place R110 with 0 Ohm resister.
-	- J11 no shunt, to avoid wrong reset button behaviour.
 Prepare the Demo
 ================
 1.  Connect a USB cable between the PC host and the OpenSDA(or USB to Serial) USB port on the target board.
@@ -58,6 +34,27 @@ When the demo runs, the log would be seen on the terminal like:
  IPv4 Subnet mask : 255.255.255.0
  IPv4 Gateway     : 192.168.0.1
 
-Customization options
+Hardware requirements
 =====================
+- Mini/micro USB cable
+- RJ45 Network cable
+- TWR-KV58F220M board
+- TWR-SER board
+- Personal Computer
+
+Board settings
+==============
+TWR-SER:
+    - RMII mode - J2 3-4 shunt on, J3 2-3 shunt on, J12 shunt on 9,10.
+Clock setting for TWR-KV58F220M board
+    - J29 1-2 shunt on
+    - Place R110 with 0 Ohm resister.
+	- J11 no shunt, to avoid wrong reset button behaviour.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

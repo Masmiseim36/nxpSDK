@@ -1,3 +1,16 @@
+Overview
+========
+The 3-phase permanent magnet synchronous (PMSM) motor control demo application 
+is based on Kinetis® MCUs and intended to provide the example for 3-phase sensorless 
+PMSM motor control solutions. The reference design uses a closed-loop field-oriented 
+vector speed (FOC) control mechanism.
+
+Toolchain supported
+===================
+- IAR embedded Workbench 8.30.1
+- Keil MDK 5.25
+- MCUXpresso IDE 10.2.1
+
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -32,7 +45,7 @@ J8      1-2      J19     open     J29     open
 J9      open     J20     open     J30     1-2, 3-4, 5-6, 7-8 
 J10      1-2     J21     1-2       —       —      
 
-- see board jumper setting pictures in \docs\MOTOR_CONTROL\PMSMDEMOUG.pdf
+- see board jumper setting pictures in \docs\MC\PMSMDEMOUG.pdf
 
 Prepare the Demo
 ===============

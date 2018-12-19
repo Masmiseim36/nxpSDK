@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2018 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 #include "mcdrv_adc_adc16.h"
 #include "mcdrv_adc_adc16_twr_kv11.h"
@@ -160,7 +134,7 @@ bool_t MCDRV_Adc16Init_twr_kv11(mcdrv_adc16_t *this, mcdrv_adc16_init_t *init)
             this->bldcAdcSelCfg[3] = init->pui32Adc1Base;
             /* Set ADC_SC1_ADCH bitfield */
             this->pui32BemfCAdcBase->SC1[this->ui16IndexBemf] =
-                (this->pui32BemfCAdcBase->SC1[this->ui16IndexBemf] & ~(ADC_SC1_ADCH(ADC_SC1_ADCH_MASK))) |
+                (this->pui32BemfCAdcBase->SC1[this->ui16IndexBemf] & ~(uint16_t)(ADC_SC1_ADCH(ADC_SC1_ADCH_MASK))) |
                 (ADC_SC1_ADCH(init->ui16AdcArray[MCDRV_ADC1_BEMFC]));
         }
         else
@@ -172,7 +146,7 @@ bool_t MCDRV_Adc16Init_twr_kv11(mcdrv_adc16_t *this, mcdrv_adc16_init_t *init)
             this->bldcAdcSelCfg[3] = init->pui32Adc0Base;
             /* Set ADC_SC1_ADCH bitfield */
             this->pui32BemfCAdcBase->SC1[this->ui16IndexBemf] =
-                (this->pui32BemfCAdcBase->SC1[this->ui16IndexBemf] & ~(ADC_SC1_ADCH(ADC_SC1_ADCH_MASK))) |
+                (this->pui32BemfCAdcBase->SC1[this->ui16IndexBemf] & ~(uint16_t)(ADC_SC1_ADCH(ADC_SC1_ADCH_MASK))) |
                 (ADC_SC1_ADCH(init->ui16AdcArray[MCDRV_ADC0_BEMFC]));
         }
 
@@ -182,7 +156,7 @@ bool_t MCDRV_Adc16Init_twr_kv11(mcdrv_adc16_t *this, mcdrv_adc16_init_t *init)
             this->pui32IdcbAdcBase = init->pui32Adc1Base;
             /* Set ADC_SC1_ADCH bitfield */
             this->pui32IdcbAdcBase->SC1[this->ui16IndexIdcb] =
-                (this->pui32IdcbAdcBase->SC1[this->ui16IndexIdcb] & ~(ADC_SC1_ADCH(ADC_SC1_ADCH_MASK))) |
+                (this->pui32IdcbAdcBase->SC1[this->ui16IndexIdcb] & ~(uint16_t)(ADC_SC1_ADCH(ADC_SC1_ADCH_MASK))) |
                 (ADC_SC1_ADCH(init->ui16AdcArray[MCDRV_ADC1_IDCB]));
         }
         else
@@ -190,7 +164,7 @@ bool_t MCDRV_Adc16Init_twr_kv11(mcdrv_adc16_t *this, mcdrv_adc16_init_t *init)
             this->pui32IdcbAdcBase = init->pui32Adc0Base;
             /* Set ADC_SC1_ADCH bitfield */
             this->pui32IdcbAdcBase->SC1[this->ui16IndexIdcb] =
-                (this->pui32IdcbAdcBase->SC1[this->ui16IndexIdcb] & ~(ADC_SC1_ADCH(ADC_SC1_ADCH_MASK))) |
+                (this->pui32IdcbAdcBase->SC1[this->ui16IndexIdcb] & ~(uint16_t)(ADC_SC1_ADCH(ADC_SC1_ADCH_MASK))) |
                 (ADC_SC1_ADCH(init->ui16AdcArray[MCDRV_ADC0_IDCB]));
         }
 
@@ -200,7 +174,7 @@ bool_t MCDRV_Adc16Init_twr_kv11(mcdrv_adc16_t *this, mcdrv_adc16_init_t *init)
             this->pui32AuxAdcBase = init->pui32Adc1Base;
             /* Set ADC_SC1_ADCH bitfield */
             this->pui32AuxAdcBase->SC1[this->ui16IndexAux] =
-                (this->pui32AuxAdcBase->SC1[this->ui16IndexAux] & ~(ADC_SC1_ADCH(ADC_SC1_ADCH_MASK))) |
+                (this->pui32AuxAdcBase->SC1[this->ui16IndexAux] & ~(uint16_t)(ADC_SC1_ADCH(ADC_SC1_ADCH_MASK))) |
                 (ADC_SC1_ADCH(init->ui16AdcArray[MCDRV_ADC1_AUX]));
         }
         else
@@ -208,7 +182,7 @@ bool_t MCDRV_Adc16Init_twr_kv11(mcdrv_adc16_t *this, mcdrv_adc16_init_t *init)
             this->pui32AuxAdcBase = init->pui32Adc0Base;
             /* Set ADC_SC1_ADCH bitfield */
             this->pui32AuxAdcBase->SC1[this->ui16IndexAux] =
-                (this->pui32AuxAdcBase->SC1[this->ui16IndexAux] & ~(ADC_SC1_ADCH(ADC_SC1_ADCH_MASK))) |
+                (this->pui32AuxAdcBase->SC1[this->ui16IndexAux] & ~(uint16_t)(ADC_SC1_ADCH(ADC_SC1_ADCH_MASK))) |
                 (ADC_SC1_ADCH(init->ui16AdcArray[MCDRV_ADC0_AUX]));
         }
 
@@ -218,7 +192,7 @@ bool_t MCDRV_Adc16Init_twr_kv11(mcdrv_adc16_t *this, mcdrv_adc16_init_t *init)
             this->pui32UdcbAdcBase = init->pui32Adc1Base;
             /* Set ADC_SC1_ADCH bitfield */
             this->pui32UdcbAdcBase->SC1[this->ui16IndexUdcb] =
-                (this->pui32UdcbAdcBase->SC1[this->ui16IndexUdcb] & ~(ADC_SC1_ADCH(ADC_SC1_ADCH_MASK))) |
+                (this->pui32UdcbAdcBase->SC1[this->ui16IndexUdcb] & ~(uint16_t)(ADC_SC1_ADCH(ADC_SC1_ADCH_MASK))) |
                 (ADC_SC1_ADCH(init->ui16AdcArray[MCDRV_ADC1_UDCB]));
         }
         else
@@ -226,7 +200,7 @@ bool_t MCDRV_Adc16Init_twr_kv11(mcdrv_adc16_t *this, mcdrv_adc16_init_t *init)
             this->pui32UdcbAdcBase = init->pui32Adc0Base;
             /* Set ADC_SC1_ADCH bitfield */
             this->pui32UdcbAdcBase->SC1[this->ui16IndexUdcb] =
-                (this->pui32UdcbAdcBase->SC1[this->ui16IndexUdcb] & ~(ADC_SC1_ADCH(ADC_SC1_ADCH_MASK))) |
+                (this->pui32UdcbAdcBase->SC1[this->ui16IndexUdcb] & ~(uint16_t)(ADC_SC1_ADCH(ADC_SC1_ADCH_MASK))) |
                 (ADC_SC1_ADCH(init->ui16AdcArray[MCDRV_ADC0_UDCB]));
         }
 
@@ -236,7 +210,7 @@ bool_t MCDRV_Adc16Init_twr_kv11(mcdrv_adc16_t *this, mcdrv_adc16_init_t *init)
         {
             /* Set ADC_SC1_ADCH bitfield */
             this->pui32AuxAdcBase->SC1[1] =
-                (this->pui32AuxAdcBase->SC1[1] & ~(ADC_SC1_ADCH(ADC_SC1_ADCH_MASK))) | (ADC_SC1_ADCH(MCDRV_TEMP));
+                (this->pui32AuxAdcBase->SC1[1] & ~(uint16_t)(ADC_SC1_ADCH(ADC_SC1_ADCH_MASK))) | (ADC_SC1_ADCH(MCDRV_TEMP));
         }
         else
             s_statusPass = FALSE;
@@ -341,13 +315,13 @@ bool_t MCDRV_AssignDCBusChannel(mcdrv_adc16_t *this)
         if (this->pui32IdcbAdcBase == ADC1)
         {
             this->pui32IdcbAdcBase->SC1[this->ui16IndexIdcb] =
-                (this->pui32IdcbAdcBase->SC1[this->ui16IndexIdcb] & ~(ADC_SC1_ADCH(ADC_SC1_ADCH_MASK))) |
+                (this->pui32IdcbAdcBase->SC1[this->ui16IndexIdcb] & ~(uint16_t)(ADC_SC1_ADCH(ADC_SC1_ADCH_MASK))) |
                 (ADC_SC1_ADCH(this->pui16AdcArray[MCDRV_ADC1_IDCB]));
         }
         else
         {
             this->pui32IdcbAdcBase->SC1[this->ui16IndexIdcb] =
-                (this->pui32IdcbAdcBase->SC1[this->ui16IndexIdcb] & ~(ADC_SC1_ADCH(ADC_SC1_ADCH_MASK))) |
+                (this->pui32IdcbAdcBase->SC1[this->ui16IndexIdcb] & ~(uint16_t)(ADC_SC1_ADCH(ADC_SC1_ADCH_MASK))) |
                 (ADC_SC1_ADCH(this->pui16AdcArray[MCDRV_ADC0_IDCB]));
         }
     }
@@ -357,13 +331,13 @@ bool_t MCDRV_AssignDCBusChannel(mcdrv_adc16_t *this)
         if (this->pui32UdcbAdcBase == ADC1)
         {
             this->pui32UdcbAdcBase->SC1[this->ui16IndexUdcb] =
-                (this->pui32UdcbAdcBase->SC1[this->ui16IndexUdcb] & ~(ADC_SC1_ADCH(ADC_SC1_ADCH_MASK))) |
+                (this->pui32UdcbAdcBase->SC1[this->ui16IndexUdcb] & ~(uint16_t)(ADC_SC1_ADCH(ADC_SC1_ADCH_MASK))) |
                 (ADC_SC1_ADCH(this->pui16AdcArray[MCDRV_ADC1_UDCB]));
         }
         else
         {
             this->pui32UdcbAdcBase->SC1[this->ui16IndexUdcb] =
-                (this->pui32UdcbAdcBase->SC1[this->ui16IndexUdcb] & ~(ADC_SC1_ADCH(ADC_SC1_ADCH_MASK))) |
+                (this->pui32UdcbAdcBase->SC1[this->ui16IndexUdcb] & ~(uint16_t)(ADC_SC1_ADCH(ADC_SC1_ADCH_MASK))) |
                 (ADC_SC1_ADCH(this->pui16AdcArray[MCDRV_ADC0_UDCB]));
         }
     }

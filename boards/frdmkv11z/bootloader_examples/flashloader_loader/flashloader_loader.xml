@@ -2,18 +2,20 @@
 <ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
   <externalDefinitions>
     <definition extID="com.nxp.mcuxpresso"/>
-    <definition extID="middleware.mcu-boot.MKV11Z7_flashloader_loader_linker.MKV11Z7"/>
+    <definition extID="device.MKV11Z7_CMSIS.MKV11Z7"/>
     <definition extID="middleware.mcu-boot.MKV11Z7_startup.MKV11Z7"/>
     <definition extID="middleware.mcu-boot.loadersources.MKV11Z7"/>
-    <definition extID="platform.devices.MKV11Z7_CMSIS.MKV11Z7"/>
+    <definition extID="middleware.mcu-boot.src_startup.MKV11Z7"/>
+    <definition extID="platform.Include_common.MKV11Z7"/>
+    <definition extID="platform.Include_core_cm0plus.MKV11Z7"/>
     <definition extID="platform.drivers.clock.MKV11Z7"/>
     <definition extID="platform.drivers.common.MKV11Z7"/>
     <definition extID="platform.drivers.uart.MKV11Z7"/>
-    <definition extID="mdk"/>
     <definition extID="iar"/>
+    <definition extID="mdk"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmkv11z_flashloader_loader" name="flashloader_loader" category="bootloader_examples" dependency="middleware.mcu-boot.MKV11Z7_flashloader_loader_linker.MKV11Z7 platform.drivers.clock.MKV11Z7 platform.devices.MKV11Z7_CMSIS.MKV11Z7 middleware.mcu-boot.MKV11Z7_startup.MKV11Z7 middleware.mcu-boot.loadersources.MKV11Z7 platform.drivers.uart.MKV11Z7 platform.drivers.common.MKV11Z7" toolchain="mdk iar mcuxpresso">
+  <example id="frdmkv11z_flashloader_loader" name="flashloader_loader" category="bootloader_examples" dependency="platform.drivers.clock.MKV11Z7 device.MKV11Z7_CMSIS.MKV11Z7 middleware.mcu-boot.MKV11Z7_startup.MKV11Z7 middleware.mcu-boot.loadersources.MKV11Z7 platform.drivers.uart.MKV11Z7 middleware.mcu-boot.src_startup.MKV11Z7 platform.drivers.common.MKV11Z7 platform.Include_core_cm0plus.MKV11Z7 platform.Include_common.MKV11Z7" toolchain="iar mdk mcuxpresso">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -66,9 +68,6 @@
           <value>--gc-sections</value>
           <value>-Map=${BuildArtifactFileBaseName}.map</value>
         </option>
-        <option id="com.crt.advproject.link.memory.heapAndStack" type="string">
-          <value>&amp;Heap:Default;Default;0x200&amp;Stack:Default;Default;0x200</value>
-        </option>
         <option id="com.crt.advproject.gas.hdrlib" type="enum">
           <value>com.crt.advproject.gas.hdrlib.newlibnano</value>
         </option>
@@ -86,6 +85,15 @@
         </option>
       </toolchainSetting>
     </toolchainSettings>
+    <source path="boards/frdmkv11z/bootloader_examples/flashloader_loader/iar" target_path="middleware/mcu-boot" type="linker" toolchain="iar">
+      <files mask="MKV11Z128xxx7_flashloader_loader.icf"/>
+    </source>
+    <source path="boards/frdmkv11z/bootloader_examples/flashloader_loader/mcux" target_path="middleware/mcu-boot" type="linker" toolchain="mcuxpresso">
+      <files mask="MKV11Z128xxx7_flashloader_loader.ld"/>
+    </source>
+    <source path="boards/frdmkv11z/bootloader_examples/flashloader_loader/mdk" target_path="middleware/mcu-boot" type="linker" toolchain="mdk">
+      <files mask="MKV11Z128xxx7_flashloader_loader.scf"/>
+    </source>
     <source path="middleware/mcu-boot/targets/MKV11Z7/src" target_path="MKV11Z7" type="c_include">
       <files mask="bootloader_config.h"/>
       <files mask="target_config.h"/>

@@ -6,9 +6,6 @@
 **                          MKV58F1M0VMD24
 **
 **     Compiler:            Keil ARM C/C++ Compiler
-**     Reference manual:    KV5XP144M240RM Rev. 3, 02/2016
-**     Version:             rev. 0.3, 2016-02-29
-**     Build:               b171205
 **
 **     Abstract:
 **         Linker file for the Keil ARM C/C++ Compiler
@@ -56,13 +53,13 @@
 #if (defined(__stack_size__))
   #define Stack_Size                   __stack_size__
 #else
-  #define Stack_Size                   0x200
+  #define Stack_Size                   0x0200
 #endif
 
 #if (defined(__heap_size__))
   #define Heap_Size                    __heap_size__
 #else
-  #define Heap_Size                    0x200
+  #define Heap_Size                    0x0
 #endif
 
 LR_m_text m_text_start m_text_size {   ; load region size_region

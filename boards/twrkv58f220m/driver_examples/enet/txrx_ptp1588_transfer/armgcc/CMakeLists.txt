@@ -90,13 +90,13 @@ SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DCPU_MKV58F1M0VLQ24")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DENET_ENHANCEDBUFFERDESCRIPTOR_MODE")
 
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DTWR_KV58F220M")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DTOWER")
-
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DENET_ENHANCEDBUFFERDESCRIPTOR_MODE=1")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DPRINTF_ADVANCED_ENABLE=1")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DTWR_KV58F220M")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DTOWER")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -g")
 
@@ -136,13 +136,13 @@ SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DCPU_MKV58F1M0VLQ24")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DENET_ENHANCEDBUFFERDESCRIPTOR_MODE")
 
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DTWR_KV58F220M")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DTOWER")
-
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DENET_ENHANCEDBUFFERDESCRIPTOR_MODE=1")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DPRINTF_ADVANCED_ENABLE=1")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DTWR_KV58F220M")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DTOWER")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Os")
 
@@ -282,6 +282,10 @@ SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")
 
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} muldefs")
 
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Map=output.map")
+
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -mcpu=cortex-m7")
 
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -mfloat-abi=hard")
@@ -324,6 +328,10 @@ SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
 
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} muldefs")
 
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Map=output.map")
+
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mcpu=cortex-m7")
 
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mfloat-abi=hard")
@@ -332,25 +340,29 @@ SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mfpu=fpv5
 
 include_directories(${ProjDirPath}/../../../../../../platform/components/phyksz8041)
 
+include_directories(${ProjDirPath}/..)
+
+include_directories(${ProjDirPath}/../../../..)
+
 include_directories(${ProjDirPath}/../../../../../../CMSIS/Include)
 
 include_directories(${ProjDirPath}/../../../../../../devices)
 
-include_directories(${ProjDirPath}/..)
-
-include_directories(${ProjDirPath}/../../../..)
+include_directories(${ProjDirPath}/../../../../../../components/phyksz8041)
 
 include_directories(${ProjDirPath}/../../../../../../devices/MKV58F24/drivers)
 
 include_directories(${ProjDirPath}/../../../../../../devices/MKV58F24)
 
-include_directories(${ProjDirPath}/../../../../../../devices/MKV58F24/utilities/io)
-
 include_directories(${ProjDirPath}/../../../../../../devices/MKV58F24/utilities/str)
 
-include_directories(${ProjDirPath}/../../../../../../devices/MKV58F24/utilities/log)
+include_directories(${ProjDirPath}/../../../../../../devices/MKV58F24/utilities/debug_console)
 
-include_directories(${ProjDirPath}/../../../../../../devices/MKV58F24/utilities)
+include_directories(${ProjDirPath}/../../../../../../components/uart)
+
+include_directories(${ProjDirPath}/../../../../../../components/serial_manager)
+
+include_directories(${ProjDirPath}/../../../../../../components/lists)
 
 add_executable(enet_txrx_ptp1588_transfer.elf 
 "${ProjDirPath}/../enet_txrx_ptp1588_transfer.c"
@@ -360,50 +372,59 @@ add_executable(enet_txrx_ptp1588_transfer.elf
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../clock_config.h"
-"${ProjDirPath}/../fsl_phy.h"
-"${ProjDirPath}/../fsl_phy.c"
-"${ProjDirPath}/../../../../../../devices/MKV58F24/drivers/fsl_clock.h"
-"${ProjDirPath}/../../../../../../devices/MKV58F24/drivers/fsl_clock.c"
-"${ProjDirPath}/../../../../../../devices/MKV58F24/drivers/fsl_ftfx_adapter.h"
-"${ProjDirPath}/../../../../../../devices/MKV58F24/drivers/fsl_ftfx_utilities.h"
-"${ProjDirPath}/../../../../../../devices/MKV58F24/drivers/fsl_ftfx_features.h"
-"${ProjDirPath}/../../../../../../devices/MKV58F24/drivers/fsl_ftfx_controller.c"
-"${ProjDirPath}/../../../../../../devices/MKV58F24/drivers/fsl_ftfx_controller.h"
-"${ProjDirPath}/../../../../../../devices/MKV58F24/drivers/fsl_ftfx_flash.c"
-"${ProjDirPath}/../../../../../../devices/MKV58F24/drivers/fsl_ftfx_flash.h"
-"${ProjDirPath}/../../../../../../devices/MKV58F24/drivers/fsl_ftfx_cache.c"
-"${ProjDirPath}/../../../../../../devices/MKV58F24/drivers/fsl_ftfx_cache.h"
-"${ProjDirPath}/../../../../../../devices/MKV58F24/drivers/fsl_ftfx_flexnvm.c"
-"${ProjDirPath}/../../../../../../devices/MKV58F24/drivers/fsl_ftfx_flexnvm.h"
-"${ProjDirPath}/../../../../../../devices/MKV58F24/drivers/fsl_flash.h"
-"${ProjDirPath}/../../../../../../devices/MKV58F24/drivers/fsl_common.h"
-"${ProjDirPath}/../../../../../../devices/MKV58F24/drivers/fsl_common.c"
-"${ProjDirPath}/../../../../../../devices/MKV58F24/system_MKV58F24.c"
-"${ProjDirPath}/../../../../../../devices/MKV58F24/system_MKV58F24.h"
-"${ProjDirPath}/../../../../../../devices/MKV58F24/gcc/startup_MKV58F24.S"
-"${ProjDirPath}/../../../../../../devices/MKV58F24/drivers/fsl_uart.h"
-"${ProjDirPath}/../../../../../../devices/MKV58F24/drivers/fsl_uart.c"
+"${ProjDirPath}/../../../../../../components/phyksz8041/fsl_phy.h"
+"${ProjDirPath}/../../../../../../components/phyksz8041/fsl_phy.c"
 "${ProjDirPath}/../../../../../../devices/MKV58F24/drivers/fsl_port.h"
-"${ProjDirPath}/../../../../../../devices/MKV58F24/drivers/fsl_smc.h"
-"${ProjDirPath}/../../../../../../devices/MKV58F24/drivers/fsl_smc.c"
-"${ProjDirPath}/../../../../../../devices/MKV58F24/utilities/io/fsl_io.c"
-"${ProjDirPath}/../../../../../../devices/MKV58F24/utilities/io/fsl_io.h"
-"${ProjDirPath}/../../../../../../devices/MKV58F24/utilities/log/fsl_log.c"
-"${ProjDirPath}/../../../../../../devices/MKV58F24/utilities/log/fsl_log.h"
-"${ProjDirPath}/../../../../../../devices/MKV58F24/utilities/str/fsl_str.c"
-"${ProjDirPath}/../../../../../../devices/MKV58F24/utilities/str/fsl_str.h"
-"${ProjDirPath}/../../../../../../devices/MKV58F24/utilities/fsl_debug_console.c"
-"${ProjDirPath}/../../../../../../devices/MKV58F24/utilities/fsl_debug_console.h"
-"${ProjDirPath}/../../../../../../devices/MKV58F24/utilities/fsl_debug_console_conf.h"
 "${ProjDirPath}/../../../../../../devices/MKV58F24/drivers/fsl_gpio.h"
 "${ProjDirPath}/../../../../../../devices/MKV58F24/drivers/fsl_gpio.c"
-"${ProjDirPath}/../../../../../../devices/MKV58F24/utilities/fsl_assert.c"
 "${ProjDirPath}/../../../../../../devices/MKV58F24/drivers/fsl_sysmpu.h"
 "${ProjDirPath}/../../../../../../devices/MKV58F24/drivers/fsl_sysmpu.c"
 "${ProjDirPath}/../../../../../../devices/MKV58F24/drivers/fsl_sim.h"
 "${ProjDirPath}/../../../../../../devices/MKV58F24/drivers/fsl_sim.c"
+"${ProjDirPath}/../../../../../../devices/MKV58F24/drivers/fsl_clock.h"
+"${ProjDirPath}/../../../../../../devices/MKV58F24/drivers/fsl_clock.c"
 "${ProjDirPath}/../../../../../../devices/MKV58F24/drivers/fsl_enet.h"
 "${ProjDirPath}/../../../../../../devices/MKV58F24/drivers/fsl_enet.c"
+"${ProjDirPath}/../../../../../../devices/MKV58F24/drivers/fsl_common.h"
+"${ProjDirPath}/../../../../../../devices/MKV58F24/drivers/fsl_common.c"
+"${ProjDirPath}/../../../../../../devices/MKV58F24/fsl_device_registers.h"
+"${ProjDirPath}/../../../../../../devices/MKV58F24/MKV58F24.h"
+"${ProjDirPath}/../../../../../../devices/MKV58F24/MKV58F24_features.h"
+"${ProjDirPath}/../../../../../../devices/MKV58F24/system_MKV58F24.c"
+"${ProjDirPath}/../../../../../../devices/MKV58F24/system_MKV58F24.h"
+"${ProjDirPath}/../../../../../../devices/MKV58F24/utilities/str/fsl_str.c"
+"${ProjDirPath}/../../../../../../devices/MKV58F24/utilities/str/fsl_str.h"
+"${ProjDirPath}/../../../../../../devices/MKV58F24/utilities/debug_console/fsl_debug_console.c"
+"${ProjDirPath}/../../../../../../devices/MKV58F24/utilities/debug_console/fsl_debug_console.h"
+"${ProjDirPath}/../../../../../../devices/MKV58F24/utilities/debug_console/fsl_debug_console_conf.h"
+"${ProjDirPath}/../../../../../../components/uart/uart.h"
+"${ProjDirPath}/../../../../../../components/uart/uart_adapter.c"
+"${ProjDirPath}/../../../../../../components/serial_manager/serial_manager.h"
+"${ProjDirPath}/../../../../../../components/serial_manager/serial_manager.c"
+"${ProjDirPath}/../../../../../../components/serial_manager/serial_port_uart.h"
+"${ProjDirPath}/../../../../../../components/serial_manager/serial_port_uart.c"
+"${ProjDirPath}/../../../../../../devices/MKV58F24/drivers/fsl_uart.h"
+"${ProjDirPath}/../../../../../../devices/MKV58F24/drivers/fsl_uart.c"
+"${ProjDirPath}/../../../../../../components/lists/generic_list.h"
+"${ProjDirPath}/../../../../../../components/lists/generic_list.c"
+"${ProjDirPath}/../../../../../../devices/MKV58F24/gcc/startup_MKV58F24.S"
+"${ProjDirPath}/../../../../../../devices/MKV58F24/drivers/fsl_smc.h"
+"${ProjDirPath}/../../../../../../devices/MKV58F24/drivers/fsl_smc.c"
+"${ProjDirPath}/../../../../../../devices/MKV58F24/utilities/fsl_assert.c"
+"${ProjDirPath}/../../../../../../CMSIS/Include/core_cm7.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armcc.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armclang.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_gcc.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_compiler.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_version.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv7.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv8mbl.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv8mml.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/arm_common_tables.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/arm_const_structs.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/arm_math.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_iccarm.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv8.h"
 )
 
 

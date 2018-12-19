@@ -16,28 +16,6 @@ Other hook types used for RTOS and resource statistics are also demonstrated in 
 * vApplicationMallocFailedHook
 
 
-
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
-
-Hardware requirements
-=====================
-- Mini/micro USB cable
-- TWR-KV58F220M board
-- Personal Computer
-
-Board settings
-==============
-This example project does not call for any special hardware configurations.
-Although not required, the recommendation is to leave the development board's jumper settings
-and configurations in default state when running this example.
-Prepare the Demo
-================
-
 Running the demo
 ================
 After the board is flashed the Tera Term will start periodically printing the state of generic example.
@@ -60,6 +38,22 @@ Event task is running.
 Receive message counter: 13.
 Receive message counter: 14.
 ...
-Customization options
+Hardware requirements
 =====================
+- Mini/micro USB cable
+- TWR-KV58F220M board
+- Personal Computer
+
+Board settings
+==============
+This example project does not call for any special hardware configurations.
+Although not required, the recommendation is to leave the development board's jumper settings
+and configurations in default state when running this example.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

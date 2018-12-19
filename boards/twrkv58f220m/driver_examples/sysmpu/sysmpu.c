@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- *  that the following conditions are met:
  *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_device_registers.h"
@@ -51,8 +25,8 @@
 /* Region actual end/start address is computed by the following equation. */
 #define ACTUAL_REGION_END_ADDR(x) ((uint32_t)(x) | (0x1FU))
 #define ACTUAL_REGION_START_ADDR(x) ((uint32_t)(x) & (~0x1FU))
-#define SYSMPU_EXAMPLE_TEST_SIZE      (20U)
-#define SYSMPU_FAULTHAND_TIMEOUT       (0x100U)
+#define SYSMPU_EXAMPLE_TEST_SIZE (20U)
+#define SYSMPU_FAULTHAND_TIMEOUT (0x100U)
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -111,12 +85,12 @@ void BusFault_Handler(void)
     PRINTF("\r\nCore access violation and generate busfault.\r\n");
     PRINTF("\r\nRegionArray[%d] = %d, not updated.\r\n", g_count, regionArray[g_count]);
 
-
     /* Reset master access rights to r/w/x. */
     SYSMPU_SetRegionRwxMasterAccessRights(SYSMPU, 0, 0, &accessRights);
 
     PRINTF("\r\nCore is granted write access permission.\r\n");
     g_busFaultFlag = true;
+    __DSB();
 }
 
 /*!
@@ -153,14 +127,14 @@ int main(void)
 #endif /* FSL_FEATURE_SYSMPU_HAS_PROCESS_IDENTIFIER */
     };
 
-    userConfig0.regionConfig.regionNum = 1;                /*!< SYSMPU region number 1. */
-    userConfig0.regionConfig.startAddress = 0;             /*!< Memory region start address. */
+    userConfig0.regionConfig.regionNum = 1;    /*!< SYSMPU region number 1. */
+    userConfig0.regionConfig.startAddress = 0; /*!< Memory region start address. */
     userConfig0.regionConfig.endAddress =
         ACTUAL_REGION_START_ADDR((uint32_t)&regionArray[0]) - 0x1; /*!< Memory region end address. */
     userConfig0.regionConfig.accessRights1[0] = right1;            /*!< Low masters access permission. master 0. */
     userConfig0.next = &userConfig1;
 
-    userConfig1.regionConfig.regionNum = 2;                  /*!< SYSMPU region number 2. */
+    userConfig1.regionConfig.regionNum = 2; /*!< SYSMPU region number 2. */
     userConfig1.regionConfig.startAddress =
         ACTUAL_REGION_START_ADDR((uint32_t)&regionArray[0]); /*!< Memory region start address. */
     userConfig1.regionConfig.endAddress =
@@ -168,10 +142,10 @@ int main(void)
     userConfig1.regionConfig.accessRights1[0] = right2; /*!< Low masters access permission. master 0. */
     userConfig1.next = &userConfig2;
 
-    userConfig2.regionConfig.regionNum = 3;             /*!< SYSMPU region number 3. */
+    userConfig2.regionConfig.regionNum = 3; /*!< SYSMPU region number 3. */
     userConfig2.regionConfig.startAddress =
         ACTUAL_REGION_START_ADDR(userConfig1.regionConfig.endAddress + 1); /*!< Memory region start address. */
-    userConfig2.regionConfig.endAddress = 0xFFFFFFFFU; /*!< Memory region end address. */
+    userConfig2.regionConfig.endAddress = 0xFFFFFFFFU;                     /*!< Memory region end address. */
     userConfig2.regionConfig.accessRights1[0] = right1; /*!< Low masters access permission. master 0. */
     userConfig2.next = NULL;
 
@@ -212,14 +186,14 @@ int main(void)
 
         /* Remove Core write permission in region 0. */
         SYSMPU_SetRegionRwxMasterAccessRights(SYSMPU, 0, 0, &right2);
-        
+
         PRINTF("\r\nWrite %d to regionArray at No.%d.\r\n", g_count, g_count);
         /* Cannot write here, bus fault occur. */
         regionArray[g_count] = g_count;
 
         /* ISB to make sure the instruction execute sequence. */
         __ISB();
- 
+
         /* Add delay to avoid the check instruction to be done during the bus fault handler response period. */
         for (volatile uint32_t i = 0; i < SYSMPU_FAULTHAND_TIMEOUT; i++)
         {
@@ -254,17 +228,16 @@ int main(void)
                     PRINTF("\r\nError access address: 0x%x.\r\n", inform.address);
                 }
             }
-            
+
             /* Update again. */
             regionArray[g_count] = g_count;
 
             /* Bus fault occurs, regionArray is updated. */
             PRINTF("\r\nRegionArray[%d] = %d, updated now.\r\n", g_count, regionArray[g_count]);
             PRINTF("\r\nProtected regionArray successfully.\r\n");
-            
+
             g_busFaultFlag = false;
         }
-
 
         /* Clear regionArray. */
         /*regionArray[g_count] = 0;*/

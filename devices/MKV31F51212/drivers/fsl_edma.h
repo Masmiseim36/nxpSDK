@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2018 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- *  that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #ifndef _FSL_EDMA_H_
@@ -49,7 +23,7 @@
 /*! @name Driver version */
 /*@{*/
 /*! @brief eDMA driver version */
-#define FSL_EDMA_DRIVER_VERSION (MAKE_VERSION(2, 1, 2)) /*!< Version 2.1.2. */
+#define FSL_EDMA_DRIVER_VERSION (MAKE_VERSION(2, 1, 4)) /*!< Version 2.1.4. */
 /*@}*/
 
 /*! @brief Compute the offset unit from DCHPRI3 */
@@ -147,7 +121,7 @@ enum _edma_error_status_flags
 #if defined(FSL_FEATURE_EDMA_CHANNEL_GROUP_COUNT) && FSL_FEATURE_EDMA_CHANNEL_GROUP_COUNT > 1
     kEDMA_GroupPriorityErrorFlag = DMA_ES_GPE_MASK, /*!< Group priority is not unique. */
 #endif
-    kEDMA_ValidFlag = DMA_ES_VLD_MASK, /*!< No error occurred, this bit is 0. Otherwise, it is 1. */
+    kEDMA_ValidFlag = (int)DMA_ES_VLD_MASK, /*!< No error occurred, this bit is 0. Otherwise, it is 1. */
 };
 
 /*! @brief eDMA interrupt source */
@@ -239,7 +213,7 @@ typedef struct _edma_tcd
     __IO uint32_t DADDR;     /*!< DADDR register, used for destination address */
     __IO uint16_t DOFF;      /*!< DOFF register, used for destination offset */
     __IO uint16_t CITER;     /*!< CITER register, current minor loop numbers, for unfinished minor loop.*/
-    __IO uint32_t DLAST_SGA; /*!< DLASTSGA register, next stcd address used in scatter-gather mode */
+    __IO uint32_t DLAST_SGA; /*!< DLASTSGA register, next tcd address used in scatter-gather mode */
     __IO uint16_t CSR;       /*!< CSR register, for TCD control status */
     __IO uint16_t BITER;     /*!< BITER register, begin minor loop count. */
 } edma_tcd_t;
@@ -255,10 +229,10 @@ struct _edma_handle;
  * all transfer finished, users can get the finished tcd numbers using interface EDMA_GetUnusedTCDNumber.
  *
  * @param handle EDMA handle pointer, users shall not touch the values inside.
- * @param userData The callback user paramter pointer. Users can use this paramter to involve things users need to
+ * @param userData The callback user parameter pointer. Users can use this parameter to involve things users need to
  *                 change in EDMA callback function.
  * @param transferDone If the current loaded transfer done. In normal mode it means if all transfer done. In scatter
- *                     gather mode, this paramter shows is the current transfer block in EDMA regsiter is done. As the
+ *                     gather mode, this parameter shows is the current transfer block in EDMA register is done. As the
  *                     load of core is different, it will be different if the new tcd loaded into EDMA registers while
  *                     this callback called. If true, it always means new tcd still not loaded into registers, while
  *                     false means new tcd already loaded into registers.
@@ -799,7 +773,7 @@ void EDMA_CreateHandle(edma_handle_t *handle, DMA_Type *base, uint32_t channel);
  * This function is called after the EDMA_CreateHandle to use scatter/gather feature. This function shall only be used
  * while users need to use scatter gather mode. Scatter gather mode enables EDMA to load a new transfer control block
  * (tcd) in hardware, and automatically reconfigure that DMA channel for a new transfer.
- * Users need to preapre tcd memory and also configure tcds using interface EDMA_SubmitTransfer.
+ * Users need to prepare tcd memory and also configure tcds using interface EDMA_SubmitTransfer.
  *
  * @param handle eDMA handle pointer.
  * @param tcdPool A memory pool to store TCDs. It must be 32 bytes aligned.

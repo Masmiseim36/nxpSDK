@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- *  that the following conditions are met:
  *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "board.h"
@@ -45,10 +19,13 @@
 #define DEMO_XBARA_USER_CHANNEL_INPUT kXBARA_InputPitTrigger0
 #define DEMO_XBARA_USER_CHANNEL_OUTPUT kXBARA_OutputDmamux18
 #define BUS_CLK_FREQ CLOCK_GetFreq(kCLOCK_BusClk)
-/* Channel of PIT module. */
+#define DEMO_XBARA_BASEADDR XBARA
+#define DEMO_PIT_BASEADDR PIT
+#define DEMO_XBARA_IRQn XBARA_IRQn
+#define DEMO_XBARA_IRQHandler XBARA_IRQHandler
 #define PIT_CHANNEL kPIT_Chnl_0
-/* Timer period for channel PIT module. */
 #define PIT_PERIOD 1000000U
+
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -62,16 +39,16 @@ volatile bool xbaraIsrFlag = false;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-void XBARA_IRQHandler(void)
+void DEMO_XBARA_IRQHandler(void)
 {
-    if (XBARA_GetStatusFlags(XBARA) & kXBARA_EdgeDetectionOut0)
+    if (XBARA_GetStatusFlags(DEMO_XBARA_BASEADDR) & kXBARA_EdgeDetectionOut0)
     {
         /* Clear interrupt flag. */
-        XBARA_ClearStatusFlags(XBARA, kXBARA_EdgeDetectionOut0);
+        XBARA_ClearStatusFlags(DEMO_XBARA_BASEADDR, kXBARA_EdgeDetectionOut0);
         xbaraIsrFlag = true;
     }
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
+/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
+  exception return operation might vector to incorrect interrupt */
 #if defined __CORTEX_M && (__CORTEX_M == 4U)
     __DSB();
 #endif
@@ -97,27 +74,27 @@ int main(void)
     PRINTF("\r\nXBARA Peripheral Driver Example.");
 
     /* Init pit module. */
-    PIT_Init(PIT, &pitConfig);
+    PIT_Init(DEMO_PIT_BASEADDR, &pitConfig);
 
     /* Set timer period for channels using. */
-    PIT_SetTimerPeriod(PIT, PIT_CHANNEL, USEC_TO_COUNT(PIT_PERIOD, BUS_CLK_FREQ));
+    PIT_SetTimerPeriod(DEMO_PIT_BASEADDR, PIT_CHANNEL, USEC_TO_COUNT(PIT_PERIOD, BUS_CLK_FREQ));
 
     /* Start channel using. */
-    PIT_StartTimer(PIT, PIT_CHANNEL);
+    PIT_StartTimer(DEMO_PIT_BASEADDR, PIT_CHANNEL);
 
     /* Init xbara module. */
-    XBARA_Init(XBARA);
+    XBARA_Init(DEMO_XBARA_BASEADDR);
 
     /* Configure the XBARA signal connections. */
-    XBARA_SetSignalsConnection(XBARA, DEMO_XBARA_USER_CHANNEL_INPUT, DEMO_XBARA_USER_CHANNEL_OUTPUT);
+    XBARA_SetSignalsConnection(DEMO_XBARA_BASEADDR, DEMO_XBARA_USER_CHANNEL_INPUT, DEMO_XBARA_USER_CHANNEL_OUTPUT);
 
     /* Configure the XBARA interrupt. */
     xbaraConfig.activeEdge = kXBARA_EdgeRising;
     xbaraConfig.requestType = kXBARA_RequestInterruptEnalbe;
-    XBARA_SetOutputSignalConfig(XBARA, DEMO_XBARA_USER_CHANNEL_OUTPUT, &xbaraConfig);
+    XBARA_SetOutputSignalConfig(DEMO_XBARA_BASEADDR, DEMO_XBARA_USER_CHANNEL_OUTPUT, &xbaraConfig);
 
     /* Enable at the NVIC. */
-    EnableIRQ(XBARA_IRQn);
+    EnableIRQ(DEMO_XBARA_IRQn);
 
     while (true)
     {

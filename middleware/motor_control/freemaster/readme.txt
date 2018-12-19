@@ -2,4 +2,4 @@
 	=========================================================================
 
 FreeMASTER project files are not backward compatible,
-use NXP FreeMASTER v2.0.2.4 or higher, --> www.nxp.com/freemaster
+use NXP FreeMASTER v2.0.7.0 or higher, --> www.nxp.com/freemaster

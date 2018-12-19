@@ -6,15 +6,6 @@ In this example , we need two boards, one board used as DSPI master and another 
 The file 'dspi_edma_b2b_transfer_slave.c' includes the DSPI slave code.
 
 1. DSPI master send/received data to/from DSPI slave in edma . 
-
-Toolchain supported
-===================
-- IAR embedded Workbench 8.11.3
-- Keil MDK 5.23
-- GCC ARM Embedded 6-2017-q2
-- Kinetis Development Studio IDE 3.2.0
-- MCUXpresso10.1.0
-
 Hardware requirements
 =====================
 - Two mini USB cables
@@ -107,6 +98,11 @@ Slave transmit data to master has completed!
 
  Slave example is running...
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

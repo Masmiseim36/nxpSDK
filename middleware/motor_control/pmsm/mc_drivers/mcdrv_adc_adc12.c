@@ -2,30 +2,7 @@
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2018 NXP
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "mcdrv_adc_adc12.h"
@@ -183,13 +160,13 @@ bool_t MCDRV_Curr3Ph2ShChanAssignInit(mcdrv_adc12_t *this)
     /* Vdcb sampling - select CLIST1 (sample number 1) or CLIST3 (sample number 9) */
     if(this->ui16AdcNumVDcb == ADC0)
     {    
-        this->pui32AdcBase->CLIST1 = ((this->pui32AdcBase->CLIST1 & ~ADC_CLIST1_SAMPLE1_MASK) | 
+        this->pui32AdcBase->CLIST1 = ((this->pui32AdcBase->CLIST1 & ~(uint16_t)ADC_CLIST1_SAMPLE1_MASK) | 
                                        ADC_CLIST1_SAMPLE1(this->ui16ChanNumVDcb));
         this->ui16AdcSmplVDcb = 1;
     }
     else
     {    
-        this->pui32AdcBase->CLIST3 = ((this->pui32AdcBase->CLIST3 & ~ADC_CLIST3_SAMPLE9_MASK) | 
+        this->pui32AdcBase->CLIST3 = ((this->pui32AdcBase->CLIST3 & ~(uint16_t)ADC_CLIST3_SAMPLE9_MASK) | 
                                       ADC_CLIST3_SAMPLE9(this->ui16ChanNumVDcb + 8));
         this->ui16AdcSmplVDcb = 9;
     }    
@@ -197,11 +174,11 @@ bool_t MCDRV_Curr3Ph2ShChanAssignInit(mcdrv_adc12_t *this)
     /* default channel assignment for default SVM sector = 2 */
     /* direct sensing of phases A and C */
     *this->sCurrSec23.pui16ClistPhaA = 
-            ((*this->sCurrSec23.pui16ClistPhaA & ~0xFU) |
+            ((*this->sCurrSec23.pui16ClistPhaA & ~(uint16_t)0xFU) |
                this->sCurrSec23.ui16AdcSmplPhaA);
         
         *this->sCurrSec23.pui16ClistPhaC =
-                ((*this->sCurrSec23.pui16ClistPhaC & ~0xFU) |
+                ((*this->sCurrSec23.pui16ClistPhaC & ~(uint16_t)0xFU) |
                    this->sCurrSec23.ui16AdcSmplPhaC);
     
     return (s_statusPass);
@@ -225,11 +202,11 @@ bool_t MCDRV_Curr3Ph2ShChanAssign(mcdrv_adc12_t *this)
         case 3:
             /* CLISTx update with ADC channel - phase current A */
             *this->sCurrSec23.pui16ClistPhaA =
-                ((*this->sCurrSec23.pui16ClistPhaA & ~0xFU) |
+                ((*this->sCurrSec23.pui16ClistPhaA & ~(uint16_t)0xFU) |
                    this->sCurrSec23.ui16AdcSmplPhaA);
             /* CLISTx update with ADC channel - phase current C */
             *this->sCurrSec23.pui16ClistPhaC =
-                ((*this->sCurrSec23.pui16ClistPhaC & ~0xFU) |
+                ((*this->sCurrSec23.pui16ClistPhaC & ~(uint16_t)0xFU) |
                    this->sCurrSec23.ui16AdcSmplPhaC);           
             break;
 
@@ -238,11 +215,11 @@ bool_t MCDRV_Curr3Ph2ShChanAssign(mcdrv_adc12_t *this)
         case 5:
             /* CLISTx update with ADC channel - phase current A */
             *this->sCurrSec45.pui16ClistPhaA =
-                ((*this->sCurrSec45.pui16ClistPhaA & ~0xFU) |
+                ((*this->sCurrSec45.pui16ClistPhaA & ~(uint16_t)0xFU) |
                    this->sCurrSec45.ui16AdcSmplPhaA);
             /* CLISTx update with ADC channel - phase current B */
             *this->sCurrSec45.pui16ClistPhaB =
-                ((*this->sCurrSec45.pui16ClistPhaB & ~0xFU) |
+                ((*this->sCurrSec45.pui16ClistPhaB & ~(uint16_t)0xFU) |
                    this->sCurrSec45.ui16AdcSmplPhaB);
             break;
         
@@ -252,11 +229,11 @@ bool_t MCDRV_Curr3Ph2ShChanAssign(mcdrv_adc12_t *this)
         default:
             /* CLISTx update with ADC channel - phase current B */
             *this->sCurrSec16.pui16ClistPhaB =
-                ((*this->sCurrSec16.pui16ClistPhaB & ~0xFU) |
+                ((*this->sCurrSec16.pui16ClistPhaB & ~(uint16_t)0xFU) |
                    this->sCurrSec16.ui16AdcSmplPhaB);
             /* CLISTx update with ADC channel - phase current C */
             *this->sCurrSec16.pui16ClistPhaC =
-                ((*this->sCurrSec16.pui16ClistPhaC & ~0xFU) |
+                ((*this->sCurrSec16.pui16ClistPhaC & ~(uint16_t)0xFU) |
                    this->sCurrSec16.ui16AdcSmplPhaC);
             break;
     }

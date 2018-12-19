@@ -13,14 +13,6 @@ The pee_bple example shows how to use MCG driver to change from PEE mode to BLPE
 In this example, because the debug console's clock frequency may change,
 so the example running information is not output from debug console. Here the
 LED blinks to show that the example finished successfully.
-
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
-
 Hardware requirements
 =====================
 - Mini/Micro USB cable
@@ -42,6 +34,11 @@ Prepare the Demo
 Running the demo
 ================
 When the demo runs successfully, the board's LED will blink.
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

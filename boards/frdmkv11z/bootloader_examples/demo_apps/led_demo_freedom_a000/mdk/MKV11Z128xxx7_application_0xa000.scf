@@ -7,9 +7,6 @@
 **                          MKV11Z128VLH7
 **
 **     Compiler:            Keil ARM C/C++ Compiler
-**     Reference manual:    KV11P64M75RM Rev.2, April 2015
-**     Version:             rev. 1.0, 2014-12-14
-**     Build:               b171205
 **
 **     Abstract:
 **         Linker file for the Keil ARM C/C++ Compiler

@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2018 NXP
  * All rights reserved.
- * 
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- *  that the following conditions are met:
  *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_flexcan_edma.h"
@@ -42,7 +16,6 @@
 #ifndef FSL_COMPONENT_ID
 #define FSL_COMPONENT_ID "platform.drivers.flexcan_edma"
 #endif
-
 
 /*<! Structure definition for flexcan_edma_private_handle_t. The structure is private. */
 typedef struct _flexcan_edma_private_handle
@@ -105,6 +78,15 @@ static void FLEXCAN_ReceiveFifoEDMACallback(edma_handle_t *handle, void *param, 
     }
 }
 
+/*!
+ * brief Initializes the FlexCAN handle, which is used in transactional functions.
+ *
+ * param base FlexCAN peripheral base address.
+ * param handle Pointer to flexcan_edma_handle_t structure.
+ * param callback The callback function.
+ * param userData The parameter of the callback function.
+ * param rxFifoEdmaHandle User-requested DMA handle for Rx FIFO DMA transfer.
+ */
 void FLEXCAN_TransferCreateHandleEDMA(CAN_Type *base,
                                       flexcan_edma_handle_t *handle,
                                       flexcan_edma_transfer_callback_t callback,
@@ -130,6 +112,18 @@ void FLEXCAN_TransferCreateHandleEDMA(CAN_Type *base,
     EDMA_SetCallback(handle->rxFifoEdmaHandle, FLEXCAN_ReceiveFifoEDMACallback, &s_edmaPrivateHandle[instance]);
 }
 
+/*!
+ * brief Receives the CAN Message from the Rx FIFO using eDMA.
+ *
+ * This function receives the CAN Message using eDMA. This is a non-blocking function, which returns
+ * right away. After the CAN Message is received, the receive callback function is called.
+ *
+ * param base FlexCAN peripheral base address.
+ * param handle Pointer to flexcan_edma_handle_t structure.
+ * param xfer FlexCAN Rx FIFO EDMA transfer structure, see #flexcan_fifo_transfer_t.
+ * retval kStatus_Success if succeed, others failed.
+ * retval kStatus_FLEXCAN_RxFifoBusy Previous transfer ongoing.
+ */
 status_t FLEXCAN_TransferReceiveFifoEDMA(CAN_Type *base, flexcan_edma_handle_t *handle, flexcan_fifo_transfer_t *xfer)
 {
     assert(handle->rxFifoEdmaHandle);
@@ -163,6 +157,14 @@ status_t FLEXCAN_TransferReceiveFifoEDMA(CAN_Type *base, flexcan_edma_handle_t *
     return status;
 }
 
+/*!
+ * brief Aborts the receive process which used eDMA.
+ *
+ * This function aborts the receive process which used eDMA.
+ *
+ * param base FlexCAN peripheral base address.
+ * param handle Pointer to flexcan_edma_handle_t structure.
+ */
 void FLEXCAN_TransferAbortReceiveFifoEDMA(CAN_Type *base, flexcan_edma_handle_t *handle)
 {
     assert(handle->rxFifoEdmaHandle);

@@ -295,9 +295,9 @@ function SpeedGaugeInit()
     /* actual speed gauge */
     $('#gaugeContainerSpeedActual').jqxGauge({
         ranges: [{ startValue: -speedScale, endValue: -speedNominal, style: { fill: '#e02629', stroke: '#e02629' }, endWidth: 6, startWidth: 6 },
-        { startValue: -speedNominal, endValue: -speedMinimum, style: { fill: '#4bb648', stroke: '#4bb648' }, endWidth: 6, startWidth: 6 },
+        { startValue: -speedNominal, endValue: -speedMinimum, style: { fill: '#0e29f4', stroke: '#0e29f4' }, endWidth: 6, startWidth: 6 },
         { startValue: -speedMinimum, endValue: speedMinimum, style: { fill: '#e02629', stroke: '#e02629' }, endWidth: 6, startWidth: 6 },
-        { startValue: speedMinimum, endValue: speedNominal, style: { fill: '#4bb648', stroke: '#4bb648' }, endWidth: 6, startWidth: 6 },
+        { startValue: speedMinimum, endValue: speedNominal, style: { fill: '#0e29f4', stroke: '#0e29f4' }, endWidth: 6, startWidth: 6 },
         { startValue: speedNominal, endValue: speedScale, style: { fill: '#e02629', stroke: '#e02629' }, endWidth: 6, startWidth: 6 }],
         ticksMinor: { interval: speedInterMaj/2, size: '5%' },
         ticksMajor: { interval: speedInterMaj, size: '9%' },

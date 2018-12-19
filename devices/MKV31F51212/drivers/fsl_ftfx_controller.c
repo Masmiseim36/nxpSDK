@@ -1,37 +1,9 @@
 /*
-* The Clear BSD License
 * Copyright 2013-2016 Freescale Semiconductor, Inc.
 * Copyright 2016-2018 NXP
 * All rights reserved.
 *
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted (subject to the limitations in the
-* disclaimer below) provided that the following conditions are met:
-*
-* * Redistributions of source code must retain the above copyright
-*   notice, this list of conditions and the following disclaimer.
-*
-* * Redistributions in binary form must reproduce the above copyright
-*   notice, this list of conditions and the following disclaimer in the
-*   documentation and/or other materials provided with the distribution.
-*
-* * Neither the name of the copyright holder nor the names of its
-*   contributors may be used to endorse or promote products derived from
-*   this software without specific prior written permission.
-*
-* NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE
-* GRANTED BY THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT
-* HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
-* WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
-* MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
-* LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-* CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-* SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
-* BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
-* WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-* OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
-* IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+* SPDX-License-Identifier: BSD-3-Clause
 *
 */
 
@@ -140,12 +112,12 @@ static status_t ftfx_check_resource_range(ftfx_config_t *config,
 #endif /* FSL_FEATURE_FLASH_HAS_READ_RESOURCE_CMD */
 
 #if defined(FSL_FEATURE_FLASH_HAS_SET_FLEXRAM_FUNCTION_CMD) && FSL_FEATURE_FLASH_HAS_SET_FLEXRAM_FUNCTION_CMD
-/*! @brief Validates the gived flexram function option.*/
+/*! @brief Validates the given flexram function option.*/
 static inline status_t ftfx_check_flexram_function_option(ftfx_flexram_func_opt_t option);
 #endif /* FSL_FEATURE_FLASH_HAS_SET_FLEXRAM_FUNCTION_CMD */
 
 #if defined(FSL_FEATURE_FLASH_HAS_SWAP_CONTROL_CMD) && FSL_FEATURE_FLASH_HAS_SWAP_CONTROL_CMD
-/*! @brief Validates the gived swap control option.*/
+/*! @brief Validates the given swap control option.*/
 static status_t ftfx_check_swap_control_option(ftfx_swap_control_opt_t option);
 #endif /* FSL_FEATURE_FLASH_HAS_SWAP_CONTROL_CMD */
 
@@ -539,12 +511,12 @@ status_t FTFx_CMD_ProgramOnce(ftfx_config_t *config, uint32_t index, uint8_t *sr
         return kStatus_FTFx_InvalidArgument;
     }
 
-    /* pass paramters to FTFx */
+    /* pass parameters to FTFx */
     kFCCOBx[0] = BYTE2WORD_1_1_2(FTFx_PROGRAM_ONCE, index, 0xFFFFU);
 
     kFCCOBx[1] = ftfx_read_word_from_byte_address((const uint8_t*)src);
 
-    /* Note: Have to seperate the first index from the rest if it equals 0
+    /* Note: Have to separate the first index from the rest if it equals 0
      * to avoid a pointless comparison of unsigned int to 0 compiler warning */
     if (config->ifrDesc.feature.has8ByteIdxSupport)
     {
@@ -735,7 +707,7 @@ status_t FTFx_CMD_ReadOnce(ftfx_config_t *config, uint32_t index, uint8_t *dst, 
         return kStatus_FTFx_InvalidArgument;
     }
 
-    /* pass paramters to FTFx */
+    /* pass parameters to FTFx */
     kFCCOBx[0] = BYTE2WORD_1_1_2(FTFx_READ_ONCE, index, 0xFFFFU);
 
     /* calling flash command sequence function to execute the command */
@@ -744,7 +716,7 @@ status_t FTFx_CMD_ReadOnce(ftfx_config_t *config, uint32_t index, uint8_t *dst, 
     if (kStatus_FTFx_Success == returnCode)
     {
         ftfx_write_word_to_byte_address(dst, kFCCOBx[1]);
-        /* Note: Have to seperate the first index from the rest if it equals 0
+        /* Note: Have to separate the first index from the rest if it equals 0
          *       to avoid a pointless comparison of unsigned int to 0 compiler warning */
         if (config->ifrDesc.feature.has8ByteIdxSupport)
         {
@@ -1375,7 +1347,7 @@ static status_t ftfx_check_resource_range(ftfx_config_t *config,
 #endif /* FSL_FEATURE_FLASH_HAS_READ_RESOURCE_CMD */
 
 #if defined(FSL_FEATURE_FLASH_HAS_SET_FLEXRAM_FUNCTION_CMD) && FSL_FEATURE_FLASH_HAS_SET_FLEXRAM_FUNCTION_CMD
-/*! @brief Validates the gived flexram function option.*/
+/*! @brief Validates the given flexram function option.*/
 static inline status_t ftfx_check_flexram_function_option(ftfx_flexram_func_opt_t option)
 {
     if ((option != kFTFx_FlexramFuncOptAvailableAsRam) &&
@@ -1389,7 +1361,7 @@ static inline status_t ftfx_check_flexram_function_option(ftfx_flexram_func_opt_
 #endif /* FSL_FEATURE_FLASH_HAS_SET_FLEXRAM_FUNCTION_CMD */
 
 #if defined(FSL_FEATURE_FLASH_HAS_SWAP_CONTROL_CMD) && FSL_FEATURE_FLASH_HAS_SWAP_CONTROL_CMD
-/*! @brief Validates the gived swap control option.*/
+/*! @brief Validates the given swap control option.*/
 static status_t ftfx_check_swap_control_option(ftfx_swap_control_opt_t option)
 {
     if ((option == kFTFx_SwapControlOptionIntializeSystem) || (option == kFTFx_SwapControlOptionSetInUpdateState) ||

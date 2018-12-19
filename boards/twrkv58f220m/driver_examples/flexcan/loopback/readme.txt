@@ -6,14 +6,6 @@ To demonstrates this example, only one board is needed. The example will config 
 Buffer to Rx Message Buffer and the other FlexCAN Message Buffer to Tx Message Buffer with same ID.
 After that, the example will send a CAN Message from the Tx Message Buffer to the Rx Message Buffer
 throuth internal loopback interconnect and print out the Message payload to terminal.
-
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
-
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -46,14 +38,14 @@ When the example runs successfully, following information can be seen on the Ope
 ==FlexCAN loopback functional example -- Start.==
 
 
-Send message from MB9 to MB8
+Send message from MB8 to MB9
 
 tx word0 = 0x11223344
 
 tx word1 = 0x55667788
 
 
-Receved message from MB8
+Receved message from MB9
 
 rx word0 = 0x11223344
 
@@ -62,6 +54,11 @@ rx word1 = 0x55667788
 
 ==FlexCAN loopback functional example -- Finish.==
 ~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

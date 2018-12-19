@@ -8,14 +8,14 @@ periodically executed and text “Tick.” is printed to terminal.
 
 
 
+Running the demo
+================
+After the board is flashed the Tera Term will show output message.
 
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
-
+Example output:
+Tick.
+Tick.
+Tick.
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -27,17 +27,11 @@ Board settings
 This example project does not call for any special hardware configurations.
 Although not required, the recommendation is to leave the development board's jumper settings
 and configurations in default state when running this example.
-Prepare the Demo
-================
 
-Running the demo
-================
-After the board is flashed the Tera Term will show output message.
-
-Example output:
-Tick.
-Tick.
-Tick.
-Customization options
-=====================
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

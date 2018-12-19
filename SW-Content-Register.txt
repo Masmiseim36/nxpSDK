@@ -294,6 +294,56 @@ cpp_option_parser          version: NA
                            http://www.bradapp.com/ftp/src/libs/C++/Options.ht
                            ml                                                
 
+rtcesl                     Author: NXP                                       
+                           version: 4.5                                      
+                           name: rtcesl                                      
+                           Format: object code & header files                
+                           License: Open Source - BSD-3-Clause               
+                           Location: middleware/rtcesl                       
+                           Description: NXP Real Time Control Embedded       
+                           Software Library.                                 
+
+motor_control              Author: NXP                                       
+                           version: 1.1.0                                    
+                           name: motor_control                               
+                           Format: source code                               
+                           License: Open Source - BSD-3-Clause               
+                           Location: middleware/motor_control                
+                           Description: Motor control examples for PMSM and  
+                           BLDC motors.                                      
+
+motor_control - jQuery     Author: jQWidgets                                 
+                           version: v3.7.1 (2015-Feb)                        
+                           name: motor_control                               
+                           Format: library                                   
+                           License: Commercial -                             
+                           http://www.jqwidgets.com/license/                 
+                           Location:                                         
+                           middleware/motor_control/freemaster/fm_control    
+                           Description: Advanced jQuery and HTML5 UI         
+                           framework.                                        
+
+motor_control - JavaScript Author: jQuery Foundation, Inc.                   
+                           version: v1.11.1                                  
+                           name: motor_control                               
+                           Format: source code                               
+                           License: Open Source - MIT (jquery.org/license)   
+                           Location:                                         
+                           middleware/motor_control/freemaster/fm_control/jqu
+                           ery-1.11.1.min.js                                 
+                           Description: Cross-platform JavaScript library.   
+
+motor_control - FreeMASTER Author: NXP                                       
+driver                     version: 2.0.3.1                                  
+                           name: motor_control - FreeMASTER driver           
+                           Format: source code & header files                
+                           License: Proprietary. See                         
+                           LA_OPT_NXP_Software_License.htm.                  
+                           Location:                                         
+                           middleware/motor_control/freemaster/freemaster_drv
+                           Description: NXP FreeMASTER. Real time non        
+                           intrusive debugger.                               
+
 gradle                     version: 4.1                                      
                            Location:                                         
                            boards/<board>/aws_examples/remote_control_android

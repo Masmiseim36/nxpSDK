@@ -7,14 +7,6 @@ In this example, the HSADC is configured as "kHSADC_DualConverterWorkAsTriggered
 
 When running the project, typing any key into debug console would trigger the conversion. And then, the conversion result data of the converter A's sample slots (Sample 0, 1) would be displayed in the terminal. Type the keyboard again to trigger the converter B, the conversion result data of the converter B's two sample slots (Sample 8, 9) would be displayed.
 
-
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
-
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -51,6 +43,11 @@ When the example runs successfully, following information can be seen on the Ope
 Press any key to trigger the conversion ...
 Sample 0    Sample 1    Sample 8    Sample 9
 Result 0    Result 1    Result 2    Result 3
-Customization options
-=====================
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

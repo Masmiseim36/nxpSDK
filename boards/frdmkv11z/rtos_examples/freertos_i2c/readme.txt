@@ -22,51 +22,6 @@ With board to board connection, one I2C instance on one board is used as I2C mas
         #define I2C_MASTER_SLAVE isSLAVE
 
 
-
-Toolchain supported
-===================
-- Keil MDK 5.24a
-- IAR embedded Workbench 8.22.2
-- GCC ARM Embedded 7-2017-q4-major
-- MCUXpresso10.2.0
-
-Hardware requirements
-=====================
-- Mini/Micro USB cable
-- FRDM-KV11Z board
-- Personal Computer
-
-Board settings
-==============
-
-Connection between two boards as follow:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-MASTER_BOARD        CONNECTS TO         SLAVE_BOARD
-Pin Name   Board Location     Pin Name   Board Location
-I2C0_SCL       J2-8           I2C0_SCL       J2-8
-I2C0_SDA       J1-16          I2C0_SDA       J1-16
-GND            J2-14          GND            J2-14
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Prepare the Demo
-================
-1.  Connect a USB cable between the host PC and the OpenSDA USB port on the target board.
-2.  Open a serial terminal with the following settings:
-    - 115200 baud rate
-    - 8 data bits
-    - No parity
-    - One stop bit
-    - No flow control
-3.  In file freertos_i2c.c in folder: boards\frdmkv11z\rtos_examples\freertos_i2c, do following definition:
-           For master, use default definition
-                Build project.
-                Download the program to one target board (used as master board).
-           For slave, use following definition
-                #define I2C_MASTER_SLAVE isSLAVE
-                Build project.
-                Download the program to one target board (used as slave board).
-4.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
-
 Running the demo
 ================
 When the demo runs successfully,
@@ -133,6 +88,48 @@ Slave received data :
 
 
 End of FreeRTOS I2C example.
-Customization options
+Hardware requirements
 =====================
+- Mini/Micro USB cable
+- FRDM-KV11Z board
+- Personal Computer
+
+Board settings
+==============
+
+Connection between two boards as follow:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+MASTER_BOARD        CONNECTS TO         SLAVE_BOARD
+Pin Name   Board Location     Pin Name   Board Location
+I2C0_SCL       J2-8           I2C0_SCL       J2-8
+I2C0_SDA       J1-16          I2C0_SDA       J1-16
+GND            J2-14          GND            J2-14
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Prepare the Demo
+================
+1.  Connect a USB cable between the host PC and the OpenSDA USB port on the target board.
+2.  Open a serial terminal with the following settings:
+    - 115200 baud rate
+    - 8 data bits
+    - No parity
+    - One stop bit
+    - No flow control
+3.  In file freertos_i2c.c in folder: boards\frdmkv11z\rtos_examples\freertos_i2c, do following definition:
+           For master, use default definition
+                Build project.
+                Download the program to one target board (used as master board).
+           For slave, use following definition
+                #define I2C_MASTER_SLAVE isSLAVE
+                Build project.
+                Download the program to one target board (used as slave board).
+4.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
+
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
 

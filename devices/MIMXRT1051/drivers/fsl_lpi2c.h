@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- *  that the following conditions are met:
  *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 #ifndef _FSL_LPI2C_H_
 #define _FSL_LPI2C_H_
@@ -49,8 +23,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief LPI2C driver version 2.1.3. */
-#define FSL_LPI2C_DRIVER_VERSION (MAKE_VERSION(2, 1, 3))
+/*! @brief LPI2C driver version 2.1.6. */
+#define FSL_LPI2C_DRIVER_VERSION (MAKE_VERSION(2, 1, 6))
 /*@}*/
 
 /*! @brief Timeout times for waiting flag. */
@@ -502,6 +476,12 @@ void LPI2C_MasterDeinit(LPI2C_Type *base);
  */
 void LPI2C_MasterConfigureDataMatch(LPI2C_Type *base, const lpi2c_data_match_config_t *config);
 
+/* Not static so it can be used from fsl_lpi2c_edma.c. */
+status_t LPI2C_MasterCheckAndClearError(LPI2C_Type *base, uint32_t status);
+
+/* Not static so it can be used from fsl_lpi2c_edma.c. */
+status_t LPI2C_CheckForBusyBus(LPI2C_Type *base);
+
 /*!
  * @brief Performs a software reset.
  *
@@ -712,6 +692,10 @@ static inline void LPI2C_MasterGetFifoCounts(LPI2C_Type *base, size_t *rxCount, 
  * The LPI2C master is automatically disabled and re-enabled as necessary to configure the baud
  * rate. Do not call this function during a transfer, or the transfer is aborted.
  *
+ * @note Please note that the second parameter is the clock frequency of LPI2C module, the third
+ * parameter means user configured bus baudrate, this implementation is different from other I2C drivers
+ * which use baudrate configuration as second parameter and source clock frequency as third parameter.
+ *
  * @param base The LPI2C peripheral base address.
  * @param sourceClock_Hz LPI2C functional clock frequency in Hertz.
  * @param baudRate_Hz Requested bus frequency in Hertz.
@@ -787,7 +771,7 @@ static inline status_t LPI2C_MasterRepeatedStart(LPI2C_Type *base, uint8_t addre
  * @retval #kStatus_LPI2C_ArbitrationLost Arbitration lost error.
  * @retval #kStatus_LPI2C_PinLowTimeout SCL or SDA were held low longer than the timeout.
  */
-status_t LPI2C_MasterSend(LPI2C_Type *base, const void *txBuff, size_t txSize);
+status_t LPI2C_MasterSend(LPI2C_Type *base, void *txBuff, size_t txSize);
 
 /*!
  * @brief Performs a polling receive transfer on the I2C bus.
@@ -847,6 +831,11 @@ status_t LPI2C_MasterTransferBlocking(LPI2C_Type *base, lpi2c_master_transfer_t 
  * The creation of a handle is for use with the non-blocking APIs. Once a handle
  * is created, there is not a corresponding destroy handle. If the user wants to
  * terminate a transfer, the LPI2C_MasterTransferAbort() API shall be called.
+ *
+ *
+ * @note The function also enables the NVIC IRQ for the input LPI2C. Need to notice
+ * that on some SoCs the LPI2C IRQ is connected to INTMUX, in this case user needs to
+ * enable the associated INTMUX IRQ in application.
  *
  * @param base The LPI2C peripheral base address.
  * @param[out] handle Pointer to the LPI2C master driver handle.
@@ -939,7 +928,7 @@ void LPI2C_MasterTransferHandleIRQ(LPI2C_Type *base, lpi2c_master_handle_t *hand
  *  slaveConfig->sclStall.enableAddress    = true;
  *  slaveConfig->ignoreAck                 = false;
  *  slaveConfig->enableReceivedAddressRead = false;
- *  slaveConfig->sdaGlitchFilterWidth_ns   = 0; // TODO determine default width values
+ *  slaveConfig->sdaGlitchFilterWidth_ns   = 0;
  *  slaveConfig->sclGlitchFilterWidth_ns   = 0;
  *  slaveConfig->dataValidDelay_ns         = 0;
  *  slaveConfig->clockHoldTime_ns          = 0;
@@ -1167,7 +1156,7 @@ static inline uint32_t LPI2C_SlaveGetReceivedAddress(LPI2C_Type *base)
  * @param[out] actualTxSize
  * @return Error or success status returned by API.
  */
-status_t LPI2C_SlaveSend(LPI2C_Type *base, const void *txBuff, size_t txSize, size_t *actualTxSize);
+status_t LPI2C_SlaveSend(LPI2C_Type *base, void *txBuff, size_t txSize, size_t *actualTxSize);
 
 /*!
  * @brief Performs a polling receive transfer on the I2C bus.
@@ -1192,6 +1181,10 @@ status_t LPI2C_SlaveReceive(LPI2C_Type *base, void *rxBuff, size_t rxSize, size_
  * is created, there is not a corresponding destroy handle. If the user wants to
  * terminate a transfer, the LPI2C_SlaveTransferAbort() API shall be called.
  *
+ * @note The function also enables the NVIC IRQ for the input LPI2C. Need to notice
+ * that on some SoCs the LPI2C IRQ is connected to INTMUX, in this case user needs to
+ * enable the associated INTMUX IRQ in application.
+
  * @param base The LPI2C peripheral base address.
  * @param[out] handle Pointer to the LPI2C slave driver handle.
  * @param callback User provided pointer to the asynchronous callback function.

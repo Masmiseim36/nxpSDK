@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- *  that the following conditions are met:
  *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 #include "fsl_trng.h"
 
@@ -38,6 +12,12 @@
 /*******************************************************************************
  * Definitions
  *******************************************************************************/
+
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.trng"
+#endif
+
 /* Default values for user configuration structure.*/
 #if (defined(KW40Z4_SERIES) || defined(KW41Z4_SERIES) || defined(KW31Z4_SERIES) || defined(KW21Z4_SERIES) || \
      defined(MCIMX7U5_M4_SERIES) || defined(KW36Z4_SERIES))
@@ -1242,11 +1222,49 @@ static uint32_t trng_GetInstance(TRNG_Type *base)
  * Description   :  Initializes user configuration structure to default settings.
  *
  *END*************************************************************************/
+/*!
+ * brief Initializes the user configuration structure to default values.
+ *
+ * This function initializes the configuration structure to default values. The default
+ * values are as follows.
+ * code
+ *     user_config->lock = 0;
+ *     user_config->clockMode = kTRNG_ClockModeRingOscillator;
+ *     user_config->ringOscDiv = kTRNG_RingOscDiv0;  Or  to other kTRNG_RingOscDiv[2|8] depending on the platform.
+ *     user_config->sampleMode = kTRNG_SampleModeRaw;
+ *     user_config->entropyDelay = 3200;
+ *     user_config->sampleSize = 2500;
+ *     user_config->sparseBitLimit = TRNG_USER_CONFIG_DEFAULT_SPARSE_BIT_LIMIT;
+ *     user_config->retryCount = 63;
+ *     user_config->longRunMaxLimit = 34;
+ *     user_config->monobitLimit.maximum = 1384;
+ *     user_config->monobitLimit.minimum = 1116;
+ *     user_config->runBit1Limit.maximum = 405;
+ *     user_config->runBit1Limit.minimum = 227;
+ *     user_config->runBit2Limit.maximum = 220;
+ *     user_config->runBit2Limit.minimum = 98;
+ *     user_config->runBit3Limit.maximum = 125;
+ *     user_config->runBit3Limit.minimum = 37;
+ *     user_config->runBit4Limit.maximum = 75;
+ *     user_config->runBit4Limit.minimum = 11;
+ *     user_config->runBit5Limit.maximum = 47;
+ *     user_config->runBit5Limit.minimum = 1;
+ *     user_config->runBit6PlusLimit.maximum = 47;
+ *     user_config->runBit6PlusLimit.minimum = 1;
+ *     user_config->pokerLimit.maximum = 26912;
+ *     user_config->pokerLimit.minimum = 24445;
+ *     user_config->frequencyCountLimit.maximum = 25600;
+ *     user_config->frequencyCountLimit.minimum = 1600;
+ * endcode
+ *
+ * param user_config   User configuration structure.
+ * return If successful, returns the kStatus_TRNG_Success. Otherwise, it returns an error.
+ */
 status_t TRNG_GetDefaultConfig(trng_config_t *userConfig)
 {
     status_t result;
 
-    if (userConfig != 0)
+    if (userConfig != NULL)
     {
         userConfig->lock = TRNG_USER_CONFIG_DEFAULT_LOCK;
         userConfig->clockMode = kTRNG_ClockModeRingOscillator;
@@ -1518,12 +1536,22 @@ static uint32_t trng_ReadEntropy(TRNG_Type *base, uint32_t index)
     return data;
 }
 
+/*!
+ * brief Initializes the TRNG.
+ *
+ * This function initializes the TRNG.
+ * When called, the TRNG entropy generation starts immediately.
+ *
+ * param base  TRNG base address
+ * param userConfig    Pointer to the initialization configuration structure.
+ * return If successful, returns the kStatus_TRNG_Success. Otherwise, it returns an error.
+ */
 status_t TRNG_Init(TRNG_Type *base, const trng_config_t *userConfig)
 {
     status_t result;
 
     /* Check input parameters.*/
-    if ((base != 0) && (userConfig != 0))
+    if ((base != NULL) && (userConfig != NULL))
     {
 #if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
         /* Enable the clock gate. */
@@ -1548,6 +1576,8 @@ status_t TRNG_Init(TRNG_Type *base, const trng_config_t *userConfig)
             TRNG_WR_MCTL_TRNG_ACC(base, 1);
 #endif /* !FSL_FEATURE_TRNG_HAS_NO_TRNG_ACC */
 
+            (void)trng_ReadEntropy(base, (TRNG_ENT_COUNT - 1));
+
             if (userConfig->lock == 1) /* Disable programmability of TRNG registers. */
             {
                 TRNG_WR_SEC_CFG_NO_PRGM(base, 1);
@@ -1564,6 +1594,13 @@ status_t TRNG_Init(TRNG_Type *base, const trng_config_t *userConfig)
     return result;
 }
 
+/*!
+ * brief Shuts down the TRNG.
+ *
+ * This function shuts down the TRNG.
+ *
+ * param base  TRNG base address.
+ */
 void TRNG_Deinit(TRNG_Type *base)
 {
     /* Check input parameters.*/
@@ -1589,6 +1626,16 @@ void TRNG_Deinit(TRNG_Type *base)
     }
 }
 
+/*!
+ * brief Gets random data.
+ *
+ * This function gets random data from the TRNG.
+ *
+ * param base  TRNG base address.
+ * param data  Pointer address used to store random data.
+ * param dataSize  Size of the buffer pointed by the data parameter.
+ * return random data
+ */
 status_t TRNG_GetRandomData(TRNG_Type *base, void *data, size_t dataSize)
 {
     status_t result = kStatus_Success;

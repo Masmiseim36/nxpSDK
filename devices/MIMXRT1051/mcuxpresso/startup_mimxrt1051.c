@@ -1,41 +1,13 @@
 //*****************************************************************************
 // MIMXRT1051 startup code for use with MCUXpresso IDE
 //
-// Version : 081217
+// Version : 210918
 //*****************************************************************************
 //
-// The Clear BSD License
-// Copyright 2016-2017 NXP
+// Copyright 2016-2018 NXP
 // All rights reserved.
 //
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted (subject to the limitations in the
-// disclaimer below) provided that the following conditions are met:
-//
-// * Redistributions of source code must retain the above copyright
-//   notice, this list of conditions and the following disclaimer.
-//
-// * Redistributions in binary form must reproduce the above copyright
-//   notice, this list of conditions and the following disclaimer in the
-//   documentation and/or other materials provided with the distribution.
-//
-// * Neither the name of the copyright holder nor the names of its
-//   contributors may be used to endorse or promote products derived from
-//   this software without specific prior written permission.
-//
-// NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE
-// GRANTED BY THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT
-// HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
-// WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
-// MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-// DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
-// LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-// CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-// SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
-// BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
-// WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
-// IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// SPDX-License-Identifier: BSD-3-Clause
 //*****************************************************************************
 
 #if defined (DEBUG)
@@ -82,7 +54,11 @@ extern void SystemInit(void);
 //*****************************************************************************
 // Forward declaration of the core exception handlers.
 // When the application defines a handler (with the same name), this will
-// automatically take precedence over these weak definitions
+// automatically take precedence over these weak definitions.
+// If your application is a C++ one, then any interrupt handlers defined
+// in C++ files within in your main application will need to have C linkage
+// rather than C++ linkage. To do this, make sure that you are using extern "C"
+// { .... } around the interrupt handler within your main application code.
 //*****************************************************************************
      void ResetISR(void);
 WEAK void NMI_Handler(void);
@@ -158,10 +134,10 @@ WEAK void SAI2_IRQHandler(void);
 WEAK void SAI3_RX_IRQHandler(void);
 WEAK void SAI3_TX_IRQHandler(void);
 WEAK void SPDIF_IRQHandler(void);
-WEAK void ANATOP_EVENT0_IRQHandler(void);
-WEAK void ANATOP_EVENT1_IRQHandler(void);
-WEAK void ANATOP_TAMP_LOW_HIGH_IRQHandler(void);
-WEAK void ANATOP_TEMP_PANIC_IRQHandler(void);
+WEAK void PMU_EVENT_IRQHandler(void);
+WEAK void Reserved78_IRQHandler(void);
+WEAK void TEMP_LOW_HIGH_IRQHandler(void);
+WEAK void TEMP_PANIC_IRQHandler(void);
 WEAK void USB_PHY1_IRQHandler(void);
 WEAK void USB_PHY2_IRQHandler(void);
 WEAK void ADC1_IRQHandler(void);
@@ -249,14 +225,6 @@ WEAK void PWM4_1_IRQHandler(void);
 WEAK void PWM4_2_IRQHandler(void);
 WEAK void PWM4_3_IRQHandler(void);
 WEAK void PWM4_FAULT_IRQHandler(void);
-WEAK void Reserved168_IRQHandler(void);
-WEAK void Reserved169_IRQHandler(void);
-WEAK void Reserved170_IRQHandler(void);
-WEAK void Reserved171_IRQHandler(void);
-WEAK void Reserved172_IRQHandler(void);
-WEAK void Reserved173_IRQHandler(void);
-WEAK void SJC_ARM_DEBUG_IRQHandler(void);
-WEAK void NMI_WAKEUP_IRQHandler(void);
 
 //*****************************************************************************
 // Forward declaration of the driver IRQ handlers. These are aliased
@@ -325,10 +293,10 @@ void SAI2_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
 void SAI3_RX_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
 void SAI3_TX_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
 void SPDIF_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
-void ANATOP_EVENT0_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
-void ANATOP_EVENT1_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
-void ANATOP_TAMP_LOW_HIGH_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
-void ANATOP_TEMP_PANIC_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
+void PMU_EVENT_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
+void Reserved78_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
+void TEMP_LOW_HIGH_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
+void TEMP_PANIC_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
 void USB_PHY1_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
 void USB_PHY2_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
 void ADC1_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
@@ -416,14 +384,6 @@ void PWM4_1_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
 void PWM4_2_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
 void PWM4_3_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
 void PWM4_FAULT_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
-void Reserved168_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
-void Reserved169_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
-void Reserved170_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
-void Reserved171_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
-void Reserved172_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
-void Reserved173_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
-void SJC_ARM_DEBUG_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
-void NMI_WAKEUP_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
 
 //*****************************************************************************
 // The entry point for the application.
@@ -532,10 +492,10 @@ void (* const g_pfnVectors[])(void) = {
     SAI3_RX_IRQHandler,               // 74 : SAI3 interrupt
     SAI3_TX_IRQHandler,               // 75 : SAI3 interrupt
     SPDIF_IRQHandler,                 // 76 : SPDIF interrupt
-    ANATOP_EVENT0_IRQHandler,         // 77 : ANATOP interrupt
-    ANATOP_EVENT1_IRQHandler,         // 78 : ANATOP interrupt
-    ANATOP_TAMP_LOW_HIGH_IRQHandler,  // 79 : ANATOP interrupt
-    ANATOP_TEMP_PANIC_IRQHandler,     // 80 : ANATOP interrupt
+    PMU_EVENT_IRQHandler,             // 77 : Brown-out event interrupt
+    Reserved78_IRQHandler,            // 78 : Reserved interrupt
+    TEMP_LOW_HIGH_IRQHandler,         // 79 : TempSensor low/high interrupt
+    TEMP_PANIC_IRQHandler,            // 80 : TempSensor panic interrupt
     USB_PHY1_IRQHandler,              // 81 : USBPHY (UTMI0), Interrupt
     USB_PHY2_IRQHandler,              // 82 : USBPHY (UTMI0), Interrupt
     ADC1_IRQHandler,                  // 83 : ADC1 interrupt
@@ -623,14 +583,7 @@ void (* const g_pfnVectors[])(void) = {
     PWM4_2_IRQHandler,                // 165: PWM4 capture 2, compare 2, or reload 0 interrupt
     PWM4_3_IRQHandler,                // 166: PWM4 capture 3, compare 3, or reload 0 interrupt
     PWM4_FAULT_IRQHandler,            // 167: PWM4 fault or reload error interrupt
-    Reserved168_IRQHandler,           // 168: Reserved interrupt
-    Reserved169_IRQHandler,           // 169: Reserved interrupt
-    Reserved170_IRQHandler,           // 170: Reserved interrupt
-    Reserved171_IRQHandler,           // 171: Reserved interrupt
-    Reserved172_IRQHandler,           // 172: Reserved interrupt
-    Reserved173_IRQHandler,           // 173: Reserved interrupt
-    SJC_ARM_DEBUG_IRQHandler,         // 174: SJC ARM debug interrupt
-    NMI_WAKEUP_IRQHandler,            // 175: NMI wake up
+
 }; /* End of g_pfnVectors */
 
 //*****************************************************************************
@@ -641,19 +594,19 @@ void (* const g_pfnVectors[])(void) = {
 //*****************************************************************************
 __attribute__ ((section(".after_vectors.init_data")))
 void data_init(unsigned int romstart, unsigned int start, unsigned int len) {
-	unsigned int *pulDest = (unsigned int*) start;
-	unsigned int *pulSrc = (unsigned int*) romstart;
-	unsigned int loop;
-	for (loop = 0; loop < len; loop = loop + 4)
-		*pulDest++ = *pulSrc++;
+    unsigned int *pulDest = (unsigned int*) start;
+    unsigned int *pulSrc = (unsigned int*) romstart;
+    unsigned int loop;
+    for (loop = 0; loop < len; loop = loop + 4)
+        *pulDest++ = *pulSrc++;
 }
 
 __attribute__ ((section(".after_vectors.init_bss")))
 void bss_init(unsigned int start, unsigned int len) {
-	unsigned int *pulDest = (unsigned int*) start;
-	unsigned int loop;
-	for (loop = 0; loop < len; loop = loop + 4)
-		*pulDest++ = 0;
+    unsigned int *pulDest = (unsigned int*) start;
+    unsigned int loop;
+    for (loop = 0; loop < len; loop = loop + 4)
+        *pulDest++ = 0;
 }
 
 //*****************************************************************************
@@ -701,27 +654,27 @@ void ResetISR(void) {
     //
     // Copy the data sections from flash to SRAM.
     //
-	unsigned int LoadAddr, ExeAddr, SectionLen;
-	unsigned int *SectionTableAddr;
+    unsigned int LoadAddr, ExeAddr, SectionLen;
+    unsigned int *SectionTableAddr;
 
-	// Load base address of Global Section Table
-	SectionTableAddr = &__data_section_table;
+    // Load base address of Global Section Table
+    SectionTableAddr = &__data_section_table;
 
     // Copy the data sections from flash to SRAM.
-	while (SectionTableAddr < &__data_section_table_end) {
-		LoadAddr = *SectionTableAddr++;
-		ExeAddr = *SectionTableAddr++;
-		SectionLen = *SectionTableAddr++;
-		data_init(LoadAddr, ExeAddr, SectionLen);
-	}
+    while (SectionTableAddr < &__data_section_table_end) {
+        LoadAddr = *SectionTableAddr++;
+        ExeAddr = *SectionTableAddr++;
+        SectionLen = *SectionTableAddr++;
+        data_init(LoadAddr, ExeAddr, SectionLen);
+    }
 
-	// At this point, SectionTableAddr = &__bss_section_table;
-	// Zero fill the bss segment
-	while (SectionTableAddr < &__bss_section_table_end) {
-		ExeAddr = *SectionTableAddr++;
-		SectionLen = *SectionTableAddr++;
-		bss_init(ExeAddr, SectionLen);
-	}
+    // At this point, SectionTableAddr = &__bss_section_table;
+    // Zero fill the bss segment
+    while (SectionTableAddr < &__bss_section_table_end) {
+        ExeAddr = *SectionTableAddr++;
+        SectionLen = *SectionTableAddr++;
+        bss_init(ExeAddr, SectionLen);
+    }
 
 #if !defined (__USE_CMSIS)
 // Assume that if __USE_CMSIS defined, then CMSIS SystemInit code
@@ -748,18 +701,18 @@ void ResetISR(void) {
     __asm volatile ("cpsie i");
 
 #if defined (__REDLIB__)
-	// Call the Redlib library, which in turn calls main()
-	__main();
+    // Call the Redlib library, which in turn calls main()
+    __main();
 #else
-	main();
+    main();
 #endif
 
-	//
-	// main() shouldn't return, but if it does, we'll just enter an infinite loop
-	//
-	while (1) {
-		;
-	}
+    //
+    // main() shouldn't return, but if it does, we'll just enter an infinite loop
+    //
+    while (1) {
+        ;
+    }
 }
 
 //*****************************************************************************
@@ -1044,20 +997,20 @@ WEAK void SPDIF_IRQHandler(void)
 {   SPDIF_DriverIRQHandler();
 }
 
-WEAK void ANATOP_EVENT0_IRQHandler(void)
-{   ANATOP_EVENT0_DriverIRQHandler();
+WEAK void PMU_EVENT_IRQHandler(void)
+{   PMU_EVENT_DriverIRQHandler();
 }
 
-WEAK void ANATOP_EVENT1_IRQHandler(void)
-{   ANATOP_EVENT1_DriverIRQHandler();
+WEAK void Reserved78_IRQHandler(void)
+{   Reserved78_DriverIRQHandler();
 }
 
-WEAK void ANATOP_TAMP_LOW_HIGH_IRQHandler(void)
-{   ANATOP_TAMP_LOW_HIGH_DriverIRQHandler();
+WEAK void TEMP_LOW_HIGH_IRQHandler(void)
+{   TEMP_LOW_HIGH_DriverIRQHandler();
 }
 
-WEAK void ANATOP_TEMP_PANIC_IRQHandler(void)
-{   ANATOP_TEMP_PANIC_DriverIRQHandler();
+WEAK void TEMP_PANIC_IRQHandler(void)
+{   TEMP_PANIC_DriverIRQHandler();
 }
 
 WEAK void USB_PHY1_IRQHandler(void)
@@ -1406,38 +1359,6 @@ WEAK void PWM4_3_IRQHandler(void)
 
 WEAK void PWM4_FAULT_IRQHandler(void)
 {   PWM4_FAULT_DriverIRQHandler();
-}
-
-WEAK void Reserved168_IRQHandler(void)
-{   Reserved168_DriverIRQHandler();
-}
-
-WEAK void Reserved169_IRQHandler(void)
-{   Reserved169_DriverIRQHandler();
-}
-
-WEAK void Reserved170_IRQHandler(void)
-{   Reserved170_DriverIRQHandler();
-}
-
-WEAK void Reserved171_IRQHandler(void)
-{   Reserved171_DriverIRQHandler();
-}
-
-WEAK void Reserved172_IRQHandler(void)
-{   Reserved172_DriverIRQHandler();
-}
-
-WEAK void Reserved173_IRQHandler(void)
-{   Reserved173_DriverIRQHandler();
-}
-
-WEAK void SJC_ARM_DEBUG_IRQHandler(void)
-{   SJC_ARM_DEBUG_DriverIRQHandler();
-}
-
-WEAK void NMI_WAKEUP_IRQHandler(void)
-{   NMI_WAKEUP_DriverIRQHandler();
 }
 
 //*****************************************************************************

@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- *  that the following conditions are met:
  *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_xbara.h"
@@ -37,6 +11,11 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.xbara"
+#endif
 
 /*******************************************************************************
  * Prototypes
@@ -84,6 +63,13 @@ static uint32_t XBARA_GetInstance(XBARA_Type *base)
     return instance;
 }
 
+/*!
+ * brief Initializes the XBARA module.
+ *
+ * This function un-gates the XBARA clock.
+ *
+ * param base XBARA peripheral address.
+ */
 void XBARA_Init(XBARA_Type *base)
 {
 #if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
@@ -92,6 +78,13 @@ void XBARA_Init(XBARA_Type *base)
 #endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
 }
 
+/*!
+ * brief Shuts down the XBARA module.
+ *
+ * This function disables XBARA clock.
+ *
+ * param base XBARA peripheral address.
+ */
 void XBARA_Deinit(XBARA_Type *base)
 {
 #if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
@@ -100,11 +93,39 @@ void XBARA_Deinit(XBARA_Type *base)
 #endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
 }
 
+/*!
+ * brief Sets a connection between the selected XBARA_IN[*] input and the XBARA_OUT[*] output signal.
+ *
+ * This function connects the XBARA input to the selected XBARA output.
+ * If more than one XBARA module is available, only the inputs and outputs from the same module
+ * can be connected.
+ *
+ * Example:
+   code
+   XBARA_SetSignalsConnection(XBARA, kXBARA_InputPIT_TRG0, kXBARA_OutputDMAMUX18);
+   endcode
+ *
+ * param base XBARA peripheral address.
+ * param input XBARA input signal.
+ * param output XBARA output signal.
+ */
 void XBARA_SetSignalsConnection(XBARA_Type *base, xbar_input_signal_t input, xbar_output_signal_t output)
 {
     XBARA_WR_SELx_SELx(base, (((uint16_t)input) & 0xFFU), (((uint16_t)output) & 0xFFU));
 }
 
+/*!
+ * brief Gets the active edge detection status.
+ *
+ * This function gets the active edge detect status of all XBARA_OUTs. If the
+ * active edge occurs, the return value is asserted. When the interrupt or the DMA
+ * functionality is enabled for the XBARA_OUTx, this field is 1 when the interrupt
+ * or DMA request is asserted and 0 when the interrupt or DMA request has been
+ * cleared.
+ *
+ * param base XBARA peripheral address.
+ * return the mask of these status flag bits.
+ */
 uint32_t XBARA_GetStatusFlags(XBARA_Type *base)
 {
     uint32_t status_flag;
@@ -115,6 +136,12 @@ uint32_t XBARA_GetStatusFlags(XBARA_Type *base)
     return status_flag;
 }
 
+/*!
+ * brief Clears the edge detection status flags of relative mask.
+ *
+ * param base XBARA peripheral address.
+ * param mask the status flags to clear.
+ */
 void XBARA_ClearStatusFlags(XBARA_Type *base, uint32_t mask)
 {
     uint16_t regVal;
@@ -138,6 +165,24 @@ void XBARA_ClearStatusFlags(XBARA_Type *base, uint32_t mask)
     base->CTRL1 = regVal;
 }
 
+/*!
+ * brief Configures the XBARA control register.
+ *
+ * This function configures an XBARA control register. The active edge detection
+ * and the DMA/IRQ function on the corresponding XBARA output can be set.
+ *
+ * Example:
+   code
+   xbara_control_config_t userConfig;
+   userConfig.activeEdge = kXBARA_EdgeRising;
+   userConfig.requestType = kXBARA_RequestInterruptEnalbe;
+   XBARA_SetOutputSignalConfig(XBARA, kXBARA_OutputDMAMUX18, &userConfig);
+   endcode
+ *
+ * param base XBARA peripheral address.
+ * param output XBARA output number.
+ * param controlConfig Pointer to structure that keeps configuration of control register.
+ */
 void XBARA_SetOutputSignalConfig(XBARA_Type *base,
                                  xbar_output_signal_t output,
                                  const xbara_control_config_t *controlConfig)
@@ -146,7 +191,7 @@ void XBARA_SetOutputSignalConfig(XBARA_Type *base,
     /* Set active edge for edge detection, set interrupt or DMA function. */
     switch ((uint16_t)output)
     {
-#if defined(FSL_FEATURE_XBARA_OUTPUT_DMA_CH_MUX_REQ_30) && FSL_FEATURE_XBARA_OUTPUT_DMA_CH_MUX_REQ_30 
+#if defined(FSL_FEATURE_XBARA_OUTPUT_DMA_CH_MUX_REQ_30) && FSL_FEATURE_XBARA_OUTPUT_DMA_CH_MUX_REQ_30
         case kXBARA1_OutputDmaChMuxReq30:
 #else
         case kXBARA_OutputDmamux18:
@@ -162,7 +207,7 @@ void XBARA_SetOutputSignalConfig(XBARA_Type *base,
             /* Write regVal value into CTRL0 register */
             base->CTRL0 = regVal;
             break;
-#if defined(FSL_FEATURE_XBARA_OUTPUT_DMA_CH_MUX_REQ_31) && FSL_FEATURE_XBARA_OUTPUT_DMA_CH_MUX_REQ_31 
+#if defined(FSL_FEATURE_XBARA_OUTPUT_DMA_CH_MUX_REQ_31) && FSL_FEATURE_XBARA_OUTPUT_DMA_CH_MUX_REQ_31
         case kXBARA1_OutputDmaChMuxReq31:
 #else
         case kXBARA_OutputDmamux19:
@@ -178,7 +223,7 @@ void XBARA_SetOutputSignalConfig(XBARA_Type *base,
             /* Write regVal value into CTRL0 register */
             base->CTRL0 = regVal;
             break;
-#if defined(FSL_FEATURE_XBARA_OUTPUT_DMA_CH_MUX_REQ_94) && FSL_FEATURE_XBARA_OUTPUT_DMA_CH_MUX_REQ_94 
+#if defined(FSL_FEATURE_XBARA_OUTPUT_DMA_CH_MUX_REQ_94) && FSL_FEATURE_XBARA_OUTPUT_DMA_CH_MUX_REQ_94
         case kXBARA1_OutputDmaChMuxReq94:
 #else
         case kXBARA_OutputDmamux20:
@@ -194,10 +239,10 @@ void XBARA_SetOutputSignalConfig(XBARA_Type *base,
             /* Write regVal value into CTRL1 register */
             base->CTRL1 = regVal;
             break;
-#if defined(FSL_FEATURE_XBARA_OUTPUT_DMA_CH_MUX_REQ_95) && FSL_FEATURE_XBARA_OUTPUT_DMA_CH_MUX_REQ_95 
+#if defined(FSL_FEATURE_XBARA_OUTPUT_DMA_CH_MUX_REQ_95) && FSL_FEATURE_XBARA_OUTPUT_DMA_CH_MUX_REQ_95
         case kXBARA1_OutputDmaChMuxReq95:
 #else
-             case kXBARA_OutputDmamux21:
+        case kXBARA_OutputDmamux21:
 #endif
             /* Assign regVal to CTRL1 register's value */
             regVal = (base->CTRL1);

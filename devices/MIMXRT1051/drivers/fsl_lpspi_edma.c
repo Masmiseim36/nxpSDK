@@ -1,42 +1,22 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- *  that the following conditions are met:
  *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_lpspi_edma.h"
 
 /***********************************************************************************************************************
-* Definitons
+* Definitions
 ***********************************************************************************************************************/
+
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.lpspi_edma"
+#endif
+
 /*!
 * @brief Structure definition for dspi_master_edma_private_handle_t. The structure is private.
 */
@@ -58,6 +38,15 @@ typedef struct _lpspi_slave_edma_private_handle
 /***********************************************************************************************************************
 * Prototypes
 ***********************************************************************************************************************/
+
+/*!
+* @brief Get instance number for LPSPI module.
+*
+* @param base LPSPI peripheral base address.
+* @return Return the value of LPSPI instance.
+*/
+static uint32_t LPSPI_GetInstance(LPSPI_Type *base);
+
 /*!
 * @brief EDMA_LpspiMasterCallback after the LPSPI master transfer completed by using EDMA.
 * This is not a public API.
@@ -75,34 +64,41 @@ static void EDMA_LpspiSlaveCallback(edma_handle_t *edmaHandle,
                                     void *g_lpspiEdmaPrivateHandle,
                                     bool transferDone,
                                     uint32_t tcds);
-/*!
-* @brief Get instance number for LPSPI module.
-* This is not a public API and it's extern from fsl_lpspi.c.
-* @param base LPSPI peripheral base address
-*/
-extern uint32_t LPSPI_GetInstance(LPSPI_Type *base);
-
-/*!
-* @brief Check the argument for transfer .
-* This is not a public API. It's extern from fsl_lpspi.c.
-*/
-extern bool LPSPI_CheckTransferArgument(lpspi_transfer_t *transfer, uint32_t bitsPerFrame, uint32_t bytesPerFrame);
 
 static void LPSPI_SeparateEdmaReadData(uint8_t *rxData, uint32_t readData, uint32_t bytesEachRead, bool isByteSwap);
 
 /***********************************************************************************************************************
 * Variables
 ***********************************************************************************************************************/
+/*! @brief Pointers to lpspi bases for each instance. */
+static LPSPI_Type *const s_lpspiBases[] = LPSPI_BASE_PTRS;
 
 /*! @brief Pointers to lpspi edma handles for each instance. */
-static lpspi_master_edma_private_handle_t s_lpspiMasterEdmaPrivateHandle[FSL_FEATURE_SOC_LPSPI_COUNT];
-static lpspi_slave_edma_private_handle_t s_lpspiSlaveEdmaPrivateHandle[FSL_FEATURE_SOC_LPSPI_COUNT];
+static lpspi_master_edma_private_handle_t s_lpspiMasterEdmaPrivateHandle[ARRAY_SIZE(s_lpspiBases)];
+static lpspi_slave_edma_private_handle_t s_lpspiSlaveEdmaPrivateHandle[ARRAY_SIZE(s_lpspiBases)];
 
-/*! @brief Global variable for dummy data value setting. */
-extern volatile uint8_t s_dummyData[];
 /***********************************************************************************************************************
 * Code
 ***********************************************************************************************************************/
+
+static uint32_t LPSPI_GetInstance(LPSPI_Type *base)
+{
+    uint8_t instance = 0;
+
+    /* Find the instance index from base address mappings. */
+    for (instance = 0; instance < ARRAY_SIZE(s_lpspiBases); instance++)
+    {
+        if (s_lpspiBases[instance] == base)
+        {
+            break;
+        }
+    }
+
+    assert(instance < ARRAY_SIZE(s_lpspiBases));
+
+    return instance;
+}
+
 static void LPSPI_SeparateEdmaReadData(uint8_t *rxData, uint32_t readData, uint32_t bytesEachRead, bool isByteSwap)
 {
     assert(rxData);
@@ -158,6 +154,25 @@ static void LPSPI_SeparateEdmaReadData(uint8_t *rxData, uint32_t readData, uint3
     }
 }
 
+/*!
+ * brief Initializes the LPSPI master eDMA handle.
+ *
+ * This function initializes the LPSPI eDMA handle which can be used for other LPSPI transactional APIs.  Usually, for a
+ * specified LPSPI instance, call this API once to get the initialized handle.
+ *
+ * Note that the LPSPI eDMA has a separated (Rx and Rx as two sources) or shared (Rx  and Tx are the same source) DMA
+ * request source.
+ * (1) For a separated DMA request source, enable and set the Rx DMAMUX source for edmaRxRegToRxDataHandle and
+ * Tx DMAMUX source for edmaIntermediaryToTxRegHandle.
+ * (2) For a shared DMA request source, enable and set the Rx/Rx DMAMUX source for edmaRxRegToRxDataHandle.
+ *
+ * param base LPSPI peripheral base address.
+ * param handle LPSPI handle pointer to lpspi_master_edma_handle_t.
+ * param callback LPSPI callback.
+ * param userData callback function parameter.
+ * param edmaRxRegToRxDataHandle edmaRxRegToRxDataHandle pointer to edma_handle_t.
+ * param edmaTxDataToTxRegHandle edmaTxDataToTxRegHandle pointer to edma_handle_t.
+ */
 void LPSPI_MasterTransferCreateHandleEDMA(LPSPI_Type *base,
                                           lpspi_master_edma_handle_t *handle,
                                           lpspi_master_edma_transfer_callback_t callback,
@@ -184,6 +199,23 @@ void LPSPI_MasterTransferCreateHandleEDMA(LPSPI_Type *base,
     handle->edmaTxDataToTxRegHandle = edmaTxDataToTxRegHandle;
 }
 
+/*!
+ * brief LPSPI master transfer data using eDMA.
+ *
+ * This function transfers data using eDMA. This is a non-blocking function, which returns right away. When all data
+ * is transferred, the callback function is called.
+ *
+ * Note:
+ * The transfer data size should be an integer multiple of bytesPerFrame if bytesPerFrame is less than or equal to 4.
+ * For bytesPerFrame greater than 4:
+ * The transfer data size should be equal to bytesPerFrame if the bytesPerFrame is not an integer multiple of 4.
+ * Otherwise, the transfer data size can be an integer multiple of bytesPerFrame.
+ *
+ * param base LPSPI peripheral base address.
+ * param handle pointer to lpspi_master_edma_handle_t structure which stores the transfer state.
+ * param transfer pointer to lpspi_transfer_t structure.
+ * return status of status_t.
+ */
 status_t LPSPI_MasterTransferEDMA(LPSPI_Type *base, lpspi_master_edma_handle_t *handle, lpspi_transfer_t *transfer)
 {
     assert(handle);
@@ -229,7 +261,7 @@ status_t LPSPI_MasterTransferEDMA(LPSPI_Type *base, lpspi_master_edma_handle_t *
 
     bool isThereExtraTxBytes = false;
 
-    uint8_t dummyData = s_dummyData[instance];
+    uint8_t dummyData = g_lpspiDummyData[instance];
 
     edma_transfer_config_t transferConfigRx;
     edma_transfer_config_t transferConfigTx;
@@ -587,6 +619,14 @@ static void EDMA_LpspiMasterCallback(edma_handle_t *edmaHandle,
     }
 }
 
+/*!
+ * brief LPSPI master aborts a transfer which is using eDMA.
+ *
+ * This function aborts a transfer which is using eDMA.
+ *
+ * param base LPSPI peripheral base address.
+ * param handle pointer to lpspi_master_edma_handle_t structure which stores the transfer state.
+ */
 void LPSPI_MasterTransferAbortEDMA(LPSPI_Type *base, lpspi_master_edma_handle_t *handle)
 {
     assert(handle);
@@ -599,6 +639,16 @@ void LPSPI_MasterTransferAbortEDMA(LPSPI_Type *base, lpspi_master_edma_handle_t 
     handle->state = kLPSPI_Idle;
 }
 
+/*!
+ * brief Gets the master eDMA transfer remaining bytes.
+ *
+ * This function gets the master eDMA transfer remaining bytes.
+ *
+ * param base LPSPI peripheral base address.
+ * param handle pointer to lpspi_master_edma_handle_t structure which stores the transfer state.
+ * param count Number of bytes transferred so far by the EDMA transaction.
+ * return status of status_t.
+ */
 status_t LPSPI_MasterTransferGetCountEDMA(LPSPI_Type *base, lpspi_master_edma_handle_t *handle, size_t *count)
 {
     assert(handle);
@@ -626,6 +676,26 @@ status_t LPSPI_MasterTransferGetCountEDMA(LPSPI_Type *base, lpspi_master_edma_ha
     return kStatus_Success;
 }
 
+/*!
+ * brief Initializes the LPSPI slave eDMA handle.
+ *
+ * This function initializes the LPSPI eDMA handle which can be used for other LPSPI transactional APIs.  Usually, for a
+ * specified LPSPI instance, call this API once to get the initialized handle.
+ *
+ * Note that LPSPI eDMA has a separated (Rx and Tx as two sources) or shared (Rx  and Tx as the same source) DMA request
+ * source.
+ *
+ * (1) For a separated DMA request source, enable and set the Rx DMAMUX source for edmaRxRegToRxDataHandle and
+ * Tx DMAMUX source for edmaTxDataToTxRegHandle.
+ * (2) For a shared DMA request source, enable and set the Rx/Rx DMAMUX source for edmaRxRegToRxDataHandle .
+ *
+ * param base LPSPI peripheral base address.
+ * param handle LPSPI handle pointer to lpspi_slave_edma_handle_t.
+ * param callback LPSPI callback.
+ * param userData callback function parameter.
+ * param edmaRxRegToRxDataHandle edmaRxRegToRxDataHandle pointer to edma_handle_t.
+ * param edmaTxDataToTxRegHandle edmaTxDataToTxRegHandle pointer to edma_handle_t.
+ */
 void LPSPI_SlaveTransferCreateHandleEDMA(LPSPI_Type *base,
                                          lpspi_slave_edma_handle_t *handle,
                                          lpspi_slave_edma_transfer_callback_t callback,
@@ -652,6 +722,23 @@ void LPSPI_SlaveTransferCreateHandleEDMA(LPSPI_Type *base,
     handle->edmaTxDataToTxRegHandle = edmaTxDataToTxRegHandle;
 }
 
+/*!
+ * brief LPSPI slave transfers data using eDMA.
+ *
+ * This function transfers data using eDMA. This is a non-blocking function, which return right away. When all data
+ * is transferred, the callback function is called.
+ *
+ * Note:
+ * The transfer data size should be an integer multiple of bytesPerFrame if bytesPerFrame is less than or equal to 4.
+ * For bytesPerFrame greater than 4:
+ * The transfer data size should be equal to bytesPerFrame if the bytesPerFrame is not an integer multiple of 4.
+ * Otherwise, the transfer data size can be an integer multiple of bytesPerFrame.
+ *
+ * param base LPSPI peripheral base address.
+ * param handle pointer to lpspi_slave_edma_handle_t structure which stores the transfer state.
+ * param transfer pointer to lpspi_transfer_t structure.
+ * return status of status_t.
+ */
 status_t LPSPI_SlaveTransferEDMA(LPSPI_Type *base, lpspi_slave_edma_handle_t *handle, lpspi_transfer_t *transfer)
 {
     assert(handle);
@@ -661,7 +748,7 @@ status_t LPSPI_SlaveTransferEDMA(LPSPI_Type *base, lpspi_slave_edma_handle_t *ha
     uint32_t bytesPerFrame = (bitsPerFrame + 7) / 8;
     uint32_t temp = 0U;
 
-    uint8_t dummyData = s_dummyData[LPSPI_GetInstance(base)];
+    uint8_t dummyData = g_lpspiDummyData[LPSPI_GetInstance(base)];
 
     if (!LPSPI_CheckTransferArgument(transfer, bitsPerFrame, bytesPerFrame))
     {
@@ -1024,6 +1111,14 @@ static void EDMA_LpspiSlaveCallback(edma_handle_t *edmaHandle,
     }
 }
 
+/*!
+ * brief LPSPI slave aborts a transfer which is using eDMA.
+ *
+ * This function aborts a transfer which is using eDMA.
+ *
+ * param base LPSPI peripheral base address.
+ * param handle pointer to lpspi_slave_edma_handle_t structure which stores the transfer state.
+ */
 void LPSPI_SlaveTransferAbortEDMA(LPSPI_Type *base, lpspi_slave_edma_handle_t *handle)
 {
     assert(handle);
@@ -1036,6 +1131,16 @@ void LPSPI_SlaveTransferAbortEDMA(LPSPI_Type *base, lpspi_slave_edma_handle_t *h
     handle->state = kLPSPI_Idle;
 }
 
+/*!
+ * brief Gets the slave eDMA transfer remaining bytes.
+ *
+ * This function gets the slave eDMA transfer remaining bytes.
+ *
+ * param base LPSPI peripheral base address.
+ * param handle pointer to lpspi_slave_edma_handle_t structure which stores the transfer state.
+ * param count Number of bytes transferred so far by the eDMA transaction.
+ * return status of status_t.
+ */
 status_t LPSPI_SlaveTransferGetCountEDMA(LPSPI_Type *base, lpspi_slave_edma_handle_t *handle, size_t *count)
 {
     assert(handle);

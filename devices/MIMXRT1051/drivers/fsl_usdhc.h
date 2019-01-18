@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- *  that the following conditions are met:
  *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 #ifndef _FSL_USDHC_H_
 #define _FSL_USDHC_H_
@@ -47,8 +21,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief Driver version 2.2.1. */
-#define FSL_USDHC_DRIVER_VERSION (MAKE_VERSION(2U, 2U, 1U))
+/*! @brief Driver version 2.2.5. */
+#define FSL_USDHC_DRIVER_VERSION (MAKE_VERSION(2U, 2U, 5U))
 /*@}*/
 
 /*! @brief Maximum block count can be set one time */
@@ -64,7 +38,7 @@ enum _usdhc_status
     kStatus_USDHC_DMADataAddrNotAlign = MAKE_STATUS(kStatusGroup_USDHC, 4U),         /*!< data address not align */
     kStatus_USDHC_ReTuningRequest = MAKE_STATUS(kStatusGroup_USDHC, 5U),             /*!< re-tuning request */
     kStatus_USDHC_TuningError = MAKE_STATUS(kStatusGroup_USDHC, 6U),                 /*!< tuning error */
-
+    kStatus_USDHC_NotSupport = MAKE_STATUS(kStatusGroup_USDHC, 7U),                  /*!< not support */
 };
 
 /*! @brief Host controller capabilities flag mask */
@@ -170,14 +144,14 @@ enum _usdhc_present_status_flag
     kUSDHC_CardInsertedFlag = USDHC_PRES_STATE_CINST_MASK,    /*!< Card inserted */
     kUSDHC_CommandLineLevelFlag = USDHC_PRES_STATE_CLSL_MASK, /*!< Command line signal level */
 
-    kUSDHC_Data0LineLevelFlag = (1U << USDHC_PRES_STATE_DLSL_SHIFT),        /*!< Data0 line signal level */
-    kUSDHC_Data1LineLevelFlag = (1U << (USDHC_PRES_STATE_DLSL_SHIFT + 1U)), /*!< Data1 line signal level */
-    kUSDHC_Data2LineLevelFlag = (1U << (USDHC_PRES_STATE_DLSL_SHIFT + 2U)), /*!< Data2 line signal level */
-    kUSDHC_Data3LineLevelFlag = (1U << (USDHC_PRES_STATE_DLSL_SHIFT + 3U)), /*!< Data3 line signal level */
-    kUSDHC_Data4LineLevelFlag = (1U << (USDHC_PRES_STATE_DLSL_SHIFT + 4U)), /*!< Data4 line signal level */
-    kUSDHC_Data5LineLevelFlag = (1U << (USDHC_PRES_STATE_DLSL_SHIFT + 5U)), /*!< Data5 line signal level */
-    kUSDHC_Data6LineLevelFlag = (1U << (USDHC_PRES_STATE_DLSL_SHIFT + 6U)), /*!< Data6 line signal level */
-    kUSDHC_Data7LineLevelFlag = (1U << (USDHC_PRES_STATE_DLSL_SHIFT + 7U)), /*!< Data7 line signal level */
+    kUSDHC_Data0LineLevelFlag = 1U << USDHC_PRES_STATE_DLSL_SHIFT,               /*!< Data0 line signal level */
+    kUSDHC_Data1LineLevelFlag = 1U << (USDHC_PRES_STATE_DLSL_SHIFT + 1U),        /*!< Data1 line signal level */
+    kUSDHC_Data2LineLevelFlag = 1U << (USDHC_PRES_STATE_DLSL_SHIFT + 2U),        /*!< Data2 line signal level */
+    kUSDHC_Data3LineLevelFlag = 1U << (USDHC_PRES_STATE_DLSL_SHIFT + 3U),        /*!< Data3 line signal level */
+    kUSDHC_Data4LineLevelFlag = 1U << (USDHC_PRES_STATE_DLSL_SHIFT + 4U),        /*!< Data4 line signal level */
+    kUSDHC_Data5LineLevelFlag = 1U << (USDHC_PRES_STATE_DLSL_SHIFT + 5U),        /*!< Data5 line signal level */
+    kUSDHC_Data6LineLevelFlag = 1U << (USDHC_PRES_STATE_DLSL_SHIFT + 6U),        /*!< Data6 line signal level */
+    kUSDHC_Data7LineLevelFlag = (int)(1U << (USDHC_PRES_STATE_DLSL_SHIFT + 7U)), /*!< Data7 line signal level */
 };
 
 /*! @brief Interrupt status flag mask */
@@ -265,15 +239,23 @@ enum _usdhc_adma_error_status_flag
  *
  * This state is the detail state when ADMA error has occurred.
  */
-typedef enum _usdhc_adma_error_state
+enum _usdhc_adma_error_state
 {
-    kUSDHC_AdmaErrorStateStopDma = 0x00U,         /*!< Stop DMA */
-    kUSDHC_AdmaErrorStateFetchDescriptor = 0x01U, /*!< Fetch descriptor */
-    kUSDHC_AdmaErrorStateChangeAddress = 0x02U,   /*!< Change address */
-    kUSDHC_AdmaErrorStateTransferData = 0x03U,    /*!< Transfer data */
-} usdhc_adma_error_state_t;
+    kUSDHC_AdmaErrorStateStopDma =
+        0x00U, /*!< Stop DMA, previous location set in the ADMA system address is error address */
+    kUSDHC_AdmaErrorStateFetchDescriptor =
+        0x01U, /*!< Fetch descriptor, current location set in the ADMA system address is error address */
+    kUSDHC_AdmaErrorStateChangeAddress = 0x02U, /*!< Change address, no DMA error is occured */
+    kUSDHC_AdmaErrorStateTransferData =
+        0x03U, /*!< Transfer data, previous location set in the ADMA system address is error address */
+    kUSDHC_AdmaErrorStateInvalidLength = 0x04U,     /*!< Invalid length in ADMA descriptor */
+    kUSDHC_AdmaErrorStateInvalidDescriptor = 0x08U, /*!< Invalid descriptor fetched by ADMA */
 
-/*! @brief Force event mask */
+    kUSDHC_AdmaErrorState = kUSDHC_AdmaErrorStateInvalidLength | kUSDHC_AdmaErrorStateInvalidDescriptor |
+                            kUSDHC_AdmaErrorStateFetchDescriptor, /*!< ADMA error state */
+};
+
+/*! @brief Force event bit position */
 enum _usdhc_force_event
 {
     kUSDHC_ForceEventAutoCommand12NotExecuted = USDHC_FORCE_EVENT_FEVTAC12NE_MASK, /*!< Auto CMD12 not executed error */
@@ -290,21 +272,22 @@ enum _usdhc_force_event
     kUSDHC_ForceEventDataCrcError = USDHC_FORCE_EVENT_FEVTDCE_MASK,                 /*!< Data CRC error */
     kUSDHC_ForceEventDataEndBitError = USDHC_FORCE_EVENT_FEVTDEBE_MASK,             /*!< Data end bit error */
     kUSDHC_ForceEventAutoCommand12Error = USDHC_FORCE_EVENT_FEVTAC12E_MASK,         /*!< Auto CMD12 error */
-    kUSDHC_ForceEventCardInt = USDHC_FORCE_EVENT_FEVTCINT_MASK,                     /*!< Card interrupt */
+    kUSDHC_ForceEventCardInt = (int)USDHC_FORCE_EVENT_FEVTCINT_MASK,                /*!< Card interrupt */
     kUSDHC_ForceEventDmaError = USDHC_FORCE_EVENT_FEVTDMAE_MASK,                    /*!< Dma error */
 #if defined(FSL_FEATURE_USDHC_HAS_SDR50_MODE) && (!FSL_FEATURE_USDHC_HAS_SDR50_MODE)
     kUSDHC_ForceEventTuningError = 0U, /*!< not support */
 #else
     kUSDHC_ForceEventTuningError = USDHC_FORCE_EVENT_FEVTTNE_MASK, /*!< Tuning error */
 #endif
+
     kUSDHC_ForceEventsAll =
-        (kUSDHC_ForceEventAutoCommand12NotExecuted | kUSDHC_ForceEventAutoCommand12Timeout |
-         kUSDHC_ForceEventAutoCommand12CrcError | kUSDHC_ForceEventEndBitError |
-         kUSDHC_ForceEventAutoCommand12IndexError | kUSDHC_ForceEventAutoCommand12NotIssued |
-         kUSDHC_ForceEventCommandTimeout | kUSDHC_ForceEventCommandCrcError | kUSDHC_ForceEventCommandEndBitError |
-         kUSDHC_ForceEventCommandIndexError | kUSDHC_ForceEventDataTimeout | kUSDHC_ForceEventDataCrcError |
-         kUSDHC_ForceEventDataEndBitError | kUSDHC_ForceEventAutoCommand12Error | kUSDHC_ForceEventCardInt |
-         kUSDHC_ForceEventDmaError | kUSDHC_ForceEventTuningError), /*!< All force event flags mask */
+        (int)(USDHC_FORCE_EVENT_FEVTAC12NE_MASK | USDHC_FORCE_EVENT_FEVTAC12TOE_MASK |
+              USDHC_FORCE_EVENT_FEVTAC12CE_MASK | USDHC_FORCE_EVENT_FEVTAC12EBE_MASK |
+              USDHC_FORCE_EVENT_FEVTAC12IE_MASK | USDHC_FORCE_EVENT_FEVTCNIBAC12E_MASK |
+              USDHC_FORCE_EVENT_FEVTCTOE_MASK | USDHC_FORCE_EVENT_FEVTCCE_MASK | USDHC_FORCE_EVENT_FEVTCEBE_MASK |
+              USDHC_FORCE_EVENT_FEVTCIE_MASK | USDHC_FORCE_EVENT_FEVTDTOE_MASK | USDHC_FORCE_EVENT_FEVTDCE_MASK |
+              USDHC_FORCE_EVENT_FEVTDEBE_MASK | USDHC_FORCE_EVENT_FEVTAC12E_MASK | USDHC_FORCE_EVENT_FEVTCINT_MASK |
+              USDHC_FORCE_EVENT_FEVTDMAE_MASK | kUSDHC_ForceEventTuningError), /*!< All force event flags mask */
 };
 
 /*! @brief Data transfer width */
@@ -804,6 +787,7 @@ static inline void USDHC_EnableInternalDMA(USDHC_Type *base, bool enable)
     else
     {
         base->MIX_CTRL &= ~USDHC_MIX_CTRL_DMAEN_MASK;
+        base->PROT_CTRL &= ~USDHC_PROT_CTRL_DMASEL_MASK;
     }
 }
 
@@ -906,7 +890,7 @@ static inline uint32_t USDHC_GetAutoCommand12ErrorStatusFlags(USDHC_Type *base)
  */
 static inline uint32_t USDHC_GetAdmaErrorStatusFlags(USDHC_Type *base)
 {
-    return base->ADMA_ERR_STATUS;
+    return base->ADMA_ERR_STATUS & 0xFU;
 }
 
 /*!
@@ -1009,7 +993,7 @@ static inline void USDHC_SetDataBusWidth(USDHC_Type *base, usdhc_data_bus_width_
 }
 
 /*!
- * @brief Fills the the data port.
+ * @brief Fills the data port.
  *
  * This function is used to implement the data transfer by Data Port instead of DMA.
  *
@@ -1178,7 +1162,7 @@ static inline void USDHC_EnableMmcBoot(USDHC_Type *base, bool enable)
  * @brief Forces generating events according to the given mask.
  *
  * @param base USDHC peripheral base address.
- * @param mask The force events mask(_usdhc_force_event).
+ * @param mask The force events bit posistion (_usdhc_force_event).
  */
 static inline void USDHC_SetForceEvent(USDHC_Type *base, uint32_t mask)
 {
@@ -1333,18 +1317,7 @@ static inline uint32_t USDHC_CheckTuningError(USDHC_Type *base)
  * @param enable/disable flag
  * @param nibble position
  */
-static inline void USDHC_EnableDDRMode(USDHC_Type *base, bool enable, uint32_t nibblePos)
-{
-    if (enable)
-    {
-        base->MIX_CTRL &= ~USDHC_MIX_CTRL_NIBBLE_POS_MASK;
-        base->MIX_CTRL |= (USDHC_MIX_CTRL_DDR_EN_MASK | USDHC_MIX_CTRL_NIBBLE_POS(nibblePos));
-    }
-    else
-    {
-        base->MIX_CTRL &= ~USDHC_MIX_CTRL_DDR_EN_MASK;
-    }
-}
+void USDHC_EnableDDRMode(USDHC_Type *base, bool enable, uint32_t nibblePos);
 
 /*!
  * @brief the enable/disable HS400 mode

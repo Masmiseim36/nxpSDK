@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2018 NXP
  * All rights reserved.
- * 
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- *  that the following conditions are met:
  *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 #ifndef _FSL_RTWDOG_H_
 #define _FSL_RTWDOG_H_
@@ -41,25 +15,24 @@
  * @{
  */
 
-
 /*******************************************************************************
  * Definitions
  *******************************************************************************/
 /*! @name Unlock sequence */
 /*@{*/
-#define WDOG_FIRST_WORD_OF_UNLOCK (RTWDOG_UPDATE_KEY & 0xFFFFU)  /*!< First word of unlock sequence */
-#define WDOG_SECOND_WORD_OF_UNLOCK ((RTWDOG_UPDATE_KEY >> 16U)& 0xFFFFU) /*!< Second word of unlock sequence */
+#define WDOG_FIRST_WORD_OF_UNLOCK (RTWDOG_UPDATE_KEY & 0xFFFFU)           /*!< First word of unlock sequence */
+#define WDOG_SECOND_WORD_OF_UNLOCK ((RTWDOG_UPDATE_KEY >> 16U) & 0xFFFFU) /*!< Second word of unlock sequence */
 /*@}*/
 
 /*! @name Refresh sequence */
 /*@{*/
-#define WDOG_FIRST_WORD_OF_REFRESH (RTWDOG_REFRESH_KEY & 0xFFFFU)  /*!< First word of refresh sequence */
-#define WDOG_SECOND_WORD_OF_REFRESH ((RTWDOG_REFRESH_KEY >> 16U)& 0xFFFFU) /*!< Second word of refresh sequence */
+#define WDOG_FIRST_WORD_OF_REFRESH (RTWDOG_REFRESH_KEY & 0xFFFFU)           /*!< First word of refresh sequence */
+#define WDOG_SECOND_WORD_OF_REFRESH ((RTWDOG_REFRESH_KEY >> 16U) & 0xFFFFU) /*!< Second word of refresh sequence */
 /*@}*/
 /*! @name Driver version */
 /*@{*/
-/*! @brief RTWDOG driver version 2.0.0. */
-#define FSL_RTWDOG_DRIVER_VERSION (MAKE_VERSION(2, 0, 0))
+/*! @brief RTWDOG driver version 2.0.1. */
+#define FSL_RTWDOG_DRIVER_VERSION (MAKE_VERSION(2, 0, 1))
 /*@}*/
 
 /*! @brief Describes RTWDOG clock source. */
@@ -357,6 +330,9 @@ static inline void RTWDOG_Unlock(RTWDOG_Type *base)
         base->CNT = WDOG_FIRST_WORD_OF_UNLOCK;
         base->CNT = WDOG_SECOND_WORD_OF_UNLOCK;
     }
+    while ((base->CS & RTWDOG_CS_ULK_MASK) == 0)
+    {
+    }
 }
 
 /*!
@@ -369,6 +345,8 @@ static inline void RTWDOG_Unlock(RTWDOG_Type *base)
  */
 static inline void RTWDOG_Refresh(RTWDOG_Type *base)
 {
+    uint32_t primaskValue = 0U;
+    primaskValue = DisableGlobalIRQ();
     if ((base->CS) & RTWDOG_CS_CMD32EN_MASK)
     {
         base->CNT = RTWDOG_REFRESH_KEY;
@@ -378,6 +356,7 @@ static inline void RTWDOG_Refresh(RTWDOG_Type *base)
         base->CNT = WDOG_FIRST_WORD_OF_REFRESH;
         base->CNT = WDOG_SECOND_WORD_OF_REFRESH;
     }
+    EnableGlobalIRQ(primaskValue);
 }
 
 /*!

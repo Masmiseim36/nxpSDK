@@ -1,152 +1,190 @@
 /*
- * The Clear BSD License
- * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2017-2018 NXP
  * All rights reserved.
- * 
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- *  that the following conditions are met:
  *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #ifndef _BOARD_H_
 #define _BOARD_H_
 
 #include "clock_config.h"
+#include "fsl_common.h"
 #include "fsl_gpio.h"
+#include "fsl_clock.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
-/* The board name */
+/*! @brief The board name */
+#define BOARD_NAME "IMXRT1050-EVKB"
 
 /* The UART to use for debug messages. */
-#define BOARD_DEBUG_UART_TYPE DEBUG_CONSOLE_DEVICE_TYPE_UART
-#define BOARD_DEBUG_UART_BASEADDR (uint32_t) UART0
-#define BOARD_DEBUG_UART_INSTANCE 0U
-#define BOARD_DEBUG_UART_CLKSRC SYS_CLK
-#define BOARD_DEBUG_UART_CLK_FREQ CLOCK_GetCoreSysClkFreq()
-#define BOARD_UART_IRQ UART0_RX_TX_IRQn
-#define BOARD_UART_IRQ_HANDLER UART0_RX_TX_IRQHandler
+#define BOARD_DEBUG_UART_TYPE kSerialPort_Uart
+#define BOARD_DEBUG_UART_BASEADDR (uint32_t) LPUART1
+#define BOARD_DEBUG_UART_INSTANCE 1U
+
+#define BOARD_DEBUG_UART_CLK_FREQ BOARD_DebugConsoleSrcFreq()
+
+#define BOARD_UART_IRQ LPUART1_IRQn
+#define BOARD_UART_IRQ_HANDLER LPUART1_IRQHandler
 
 #ifndef BOARD_DEBUG_UART_BAUDRATE
-#define BOARD_DEBUG_UART_BAUDRATE 115200
+#define BOARD_DEBUG_UART_BAUDRATE (115200U)
 #endif /* BOARD_DEBUG_UART_BAUDRATE */
 
-/* Board led color mapping */
-#define LOGIC_LED_ON 0U
-#define LOGIC_LED_OFF 1U
-#ifndef BOARD_LED_RED_GPIO
-#define BOARD_LED_RED_GPIO GPIOB
+/*! @brief The USER_LED used for board */
+#define LOGIC_LED_ON (0U)
+#define LOGIC_LED_OFF (1U)
+#ifndef BOARD_USER_LED_GPIO
+#define BOARD_USER_LED_GPIO GPIO1
 #endif
-#define BOARD_LED_RED_GPIO_PORT PORTB
-#ifndef BOARD_LED_RED_GPIO_PIN
-#define BOARD_LED_RED_GPIO_PIN 22U
-#endif
-#ifndef BOARD_LED_GREEN_GPIO
-#define BOARD_LED_GREEN_GPIO GPIOE
-#endif
-#define BOARD_LED_GREEN_GPIO_PORT PORTE
-#ifndef BOARD_LED_GREEN_GPIO_PIN
-#define BOARD_LED_GREEN_GPIO_PIN 26U
-#endif
-#ifndef BOARD_LED_BLUE_GPIO
-#define BOARD_LED_BLUE_GPIO GPIOB
-#endif
-#define BOARD_LED_BLUE_GPIO_PORT PORTB
-#ifndef BOARD_LED_BLUE_GPIO_PIN
-#define BOARD_LED_BLUE_GPIO_PIN 21U
+#ifndef BOARD_USER_LED_GPIO_PIN
+#define BOARD_USER_LED_GPIO_PIN (9U)
 #endif
 
-#define LED_RED_INIT(output)                                                 \
-    GPIO_PinWrite(BOARD_LED_RED_GPIO, BOARD_LED_RED_GPIO_PIN, output); \
-    BOARD_LED_RED_GPIO->PDDR |= (1U << BOARD_LED_RED_GPIO_PIN) /*!< Enable target LED_RED */
-#define LED_RED_ON() \
-    GPIO_PortClear(BOARD_LED_RED_GPIO, 1U << BOARD_LED_RED_GPIO_PIN) /*!< Turn on target LED_RED */
-#define LED_RED_OFF() \
-    GPIO_PortSet(BOARD_LED_RED_GPIO, 1U << BOARD_LED_RED_GPIO_PIN) /*!< Turn off target LED_RED */
-#define LED_RED_TOGGLE() \
-    GPIO_PortToggle(BOARD_LED_RED_GPIO, 1U << BOARD_LED_RED_GPIO_PIN) /*!< Toggle on target LED_RED */
+#define USER_LED_INIT(output)                                            \
+    GPIO_PinWrite(BOARD_USER_LED_GPIO, BOARD_USER_LED_GPIO_PIN, output); \
+    BOARD_USER_LED_GPIO->GDIR |= (1U << BOARD_USER_LED_GPIO_PIN) /*!< Enable target USER_LED */
+#define USER_LED_ON() \
+    GPIO_PortClear(BOARD_USER_LED_GPIO, 1U << BOARD_USER_LED_GPIO_PIN)                  /*!< Turn off target USER_LED */
+#define USER_LED_OFF() GPIO_PortSet(BOARD_USER_LED_GPIO, 1U << BOARD_USER_LED_GPIO_PIN) /*!<Turn on target USER_LED*/
+#define USER_LED_TOGGLE()                                       \
+    GPIO_PinWrite(BOARD_USER_LED_GPIO, BOARD_USER_LED_GPIO_PIN, \
+                  0x1 ^ GPIO_PinRead(BOARD_USER_LED_GPIO, BOARD_USER_LED_GPIO_PIN)) /*!< Toggle target USER_LED */
 
-#define LED_GREEN_INIT(output)                                                   \
-    GPIO_PinWrite(BOARD_LED_GREEN_GPIO, BOARD_LED_GREEN_GPIO_PIN, output); \
-    BOARD_LED_GREEN_GPIO->PDDR |= (1U << BOARD_LED_GREEN_GPIO_PIN) /*!< Enable target LED_GREEN */
-#define LED_GREEN_ON() \
-    GPIO_PortClear(BOARD_LED_GREEN_GPIO, 1U << BOARD_LED_GREEN_GPIO_PIN) /*!< Turn on target LED_GREEN */
-#define LED_GREEN_OFF() \
-    GPIO_PortSet(BOARD_LED_GREEN_GPIO, 1U << BOARD_LED_GREEN_GPIO_PIN) /*!< Turn off target LED_GREEN */
-#define LED_GREEN_TOGGLE() \
-    GPIO_PortToggle(BOARD_LED_GREEN_GPIO, 1U << BOARD_LED_GREEN_GPIO_PIN) /*!< Toggle on target LED_GREEN */
-
-#define LED_BLUE_INIT(output)                                                  \
-    GPIO_PinWrite(BOARD_LED_BLUE_GPIO, BOARD_LED_BLUE_GPIO_PIN, output); \
-    BOARD_LED_BLUE_GPIO->PDDR |= (1U << BOARD_LED_BLUE_GPIO_PIN) /*!< Enable target LED_BLUE */
-#define LED_BLUE_ON() \
-    GPIO_PortClear(BOARD_LED_BLUE_GPIO, 1U << BOARD_LED_BLUE_GPIO_PIN) /*!< Turn on target LED_BLUE */
-#define LED_BLUE_OFF() \
-    GPIO_PortSet(BOARD_LED_BLUE_GPIO, 1U << BOARD_LED_BLUE_GPIO_PIN) /*!< Turn off target LED_BLUE */
-#define LED_BLUE_TOGGLE() \
-    GPIO_PortToggle(BOARD_LED_BLUE_GPIO, 1U << BOARD_LED_BLUE_GPIO_PIN) /*!< Toggle on target LED_BLUE */
-
-/* The SDHC instance/channel used for board */
-#define BOARD_SDHC_CD_GPIO_IRQ_HANDLER PORTB_IRQHandler
-
-/* SDHC base address, clock and card detection pin */
-#define BOARD_SDHC_BASEADDR SDHC
-#define BOARD_SDHC_CLKSRC kCLOCK_CoreSysClk
-#define BOARD_SDHC_CLK_FREQ CLOCK_GetFreq(kCLOCK_CoreSysClk)
-#define BOARD_SDHC_IRQ SDHC_IRQn
-#define BOARD_SDHC_CD_GPIO_BASE GPIOE
-#ifndef BOARD_SDHC_CD_GPIO_PIN
-#define BOARD_SDHC_CD_GPIO_PIN 6U
+/*! @brief Define the port interrupt number for the board switches */
+#ifndef BOARD_USER_BUTTON_GPIO
+#define BOARD_USER_BUTTON_GPIO GPIO5
 #endif
-#define BOARD_SDHC_CD_PORT_BASE PORTE
-#define BOARD_SDHC_CD_PORT_IRQ PORTE_IRQn
-#define BOARD_SDHC_CD_PORT_IRQ_HANDLER PORTE_IRQHandler
-#define BOARD_SDHC_CD_LOGIC_RISING
+#ifndef BOARD_USER_BUTTON_GPIO_PIN
+#define BOARD_USER_BUTTON_GPIO_PIN (0U)
+#endif
+#define BOARD_USER_BUTTON_IRQ GPIO5_Combined_0_15_IRQn
+#define BOARD_USER_BUTTON_IRQ_HANDLER GPIO5_Combined_0_15_IRQHandler
+#define BOARD_USER_BUTTON_NAME "SW8"
 
-#define BOARD_ACCEL_I2C_BASEADDR I2C0
+/*! @brief The hyper flash size */
+#define BOARD_FLASH_SIZE (0x4000000U)
 
-/* ERPC DSPI configuration */
-#define ERPC_BOARD_DSPI_BASEADDR SPI0
-#define ERPC_BOARD_DSPI_BAUDRATE 500000U
-#define ERPC_BOARD_DSPI_CLKSRC DSPI0_CLK_SRC
-#define ERPC_BOARD_DSPI_CLK_FREQ CLOCK_GetFreq(DSPI0_CLK_SRC)
-#define ERPC_BOARD_DSPI_INT_GPIO GPIOB
-#define ERPC_BOARD_DSPI_INT_PORT PORTB
-#define ERPC_BOARD_DSPI_INT_PIN 2U
-#define ERPC_BOARD_DSPI_INT_PIN_IRQ PORTB_IRQn
-#define ERPC_BOARD_DSPI_INT_PIN_IRQ_HANDLER PORTB_IRQHandler
+/*! @brief The ENET PHY address. */
+#define BOARD_ENET0_PHY_ADDRESS (0x02U) /* Phy address of enet port 0. */
 
-/* DAC base address */
-#define BOARD_DAC_BASEADDR DAC0
+/* USB PHY condfiguration */
+#define BOARD_USB_PHY_D_CAL (0x0CU)
+#define BOARD_USB_PHY_TXCAL45DP (0x06U)
+#define BOARD_USB_PHY_TXCAL45DM (0x06U)
 
-/* Board accelerometer driver */
-#define BOARD_ACCEL_FXOS
+#define BOARD_ARDUINO_INT_IRQ (GPIO1_INT3_IRQn)
+#define BOARD_ARDUINO_I2C_IRQ (LPI2C1_IRQn)
+#define BOARD_ARDUINO_I2C_INDEX (1)
+#define BOARD_USDHC1_BASEADDR USDHC1
+#define BOARD_USDHC2_BASEADDR USDHC2
+#define BOARD_USDHC_CD_GPIO_BASE GPIO2
+#define BOARD_USDHC_CD_GPIO_PIN 28
+#define BOARD_USDHC_CD_PORT_IRQ GPIO2_Combined_16_31_IRQn
+#define BOARD_USDHC_CD_PORT_IRQ_HANDLER GPIO2_Combined_16_31_IRQHandler
+
+#define BOARD_USDHC_CD_STATUS() (GPIO_PinRead(BOARD_USDHC_CD_GPIO_BASE, BOARD_USDHC_CD_GPIO_PIN))
+
+#define BOARD_USDHC_CD_INTERRUPT_STATUS() (GPIO_PortGetInterruptFlags(BOARD_USDHC_CD_GPIO_BASE))
+#define BOARD_USDHC_CD_CLEAR_INTERRUPT(flag) (GPIO_PortClearInterruptFlags(BOARD_USDHC_CD_GPIO_BASE, flag))
+
+#define BOARD_USDHC_CD_GPIO_INIT()                                                          \
+    {                                                                                       \
+        gpio_pin_config_t sw_config = {                                                     \
+            kGPIO_DigitalInput, 0, kGPIO_IntRisingOrFallingEdge,                            \
+        };                                                                                  \
+        GPIO_PinInit(BOARD_USDHC_CD_GPIO_BASE, BOARD_USDHC_CD_GPIO_PIN, &sw_config);        \
+        GPIO_PortEnableInterrupts(BOARD_USDHC_CD_GPIO_BASE, 1U << BOARD_USDHC_CD_GPIO_PIN); \
+        GPIO_PortClearInterruptFlags(BOARD_USDHC_CD_GPIO_BASE, ~0);                         \
+    }
+#define BOARD_HAS_SDCARD (1U)
+#define BOARD_SD_POWER_RESET_GPIO (GPIO1)
+#define BOARD_SD_POWER_RESET_GPIO_PIN (5U)
+
+#define BOARD_USDHC_CARD_INSERT_CD_LEVEL (0U)
+
+#define BOARD_USDHC_MMCCARD_POWER_CONTROL(state)
+
+#define BOARD_USDHC_MMCCARD_POWER_CONTROL_INIT()                                            \
+    {                                                                                       \
+        gpio_pin_config_t sw_config = {                                                     \
+            kGPIO_DigitalOutput, 0, kGPIO_NoIntmode,                                        \
+        };                                                                                  \
+        GPIO_PinInit(BOARD_SD_POWER_RESET_GPIO, BOARD_SD_POWER_RESET_GPIO_PIN, &sw_config); \
+        GPIO_PinWrite(BOARD_SD_POWER_RESET_GPIO, BOARD_SD_POWER_RESET_GPIO_PIN, true);      \
+    }
+
+#define BOARD_USDHC_SDCARD_POWER_CONTROL_INIT()                                             \
+    {                                                                                       \
+        gpio_pin_config_t sw_config = {                                                     \
+            kGPIO_DigitalOutput, 0, kGPIO_NoIntmode,                                        \
+        };                                                                                  \
+        GPIO_PinInit(BOARD_SD_POWER_RESET_GPIO, BOARD_SD_POWER_RESET_GPIO_PIN, &sw_config); \
+    }
+
+#define BOARD_USDHC_SDCARD_POWER_CONTROL(state) \
+    (GPIO_PinWrite(BOARD_SD_POWER_RESET_GPIO, BOARD_SD_POWER_RESET_GPIO_PIN, state))
+
+#define BOARD_USDHC1_CLK_FREQ (CLOCK_GetSysPfdFreq(kCLOCK_Pfd2) / (CLOCK_GetDiv(kCLOCK_Usdhc1Div) + 1U))
+#define BOARD_USDHC2_CLK_FREQ (CLOCK_GetSysPfdFreq(kCLOCK_Pfd2) / (CLOCK_GetDiv(kCLOCK_Usdhc2Div) + 1U))
+
+#define BOARD_SD_HOST_BASEADDR BOARD_USDHC1_BASEADDR
+#define BOARD_SD_HOST_CLK_FREQ BOARD_USDHC1_CLK_FREQ
+#define BOARD_SD_HOST_IRQ USDHC1_IRQn
+
+#define BOARD_MMC_HOST_BASEADDR BOARD_USDHC2_BASEADDR
+#define BOARD_MMC_HOST_CLK_FREQ BOARD_USDHC2_CLK_FREQ
+#define BOARD_MMC_HOST_IRQ USDHC2_IRQn
+#define BOARD_MMC_VCCQ_SUPPLY kMMC_VoltageWindow170to195
+#define BOARD_MMC_VCC_SUPPLY kMMC_VoltageWindows270to360
+/* we are using the BB SD socket to DEMO the MMC example,but the
+* SD socket provide 4bit bus only, so we define this macro to avoid
+* 8bit data bus test
+*/
+#define BOARD_MMC_SUPPORT_8BIT_BUS (1U)
+
+#define BOARD_SD_HOST_SUPPORT_SDR104_FREQ (200000000U)
+#define BOARD_SD_HOST_SUPPORT_HS200_FREQ (180000000U)
+
+/*! @brief The WIFI-QCA shield pin. */
+#define BOARD_INITGT202SHIELD_PWRON_GPIO GPIO1                    /*!< GPIO device name: GPIO */
+#define BOARD_INITGT202SHIELD_PWRON_PORT 1U                       /*!< PORT device index: 1 */
+#define BOARD_INITGT202SHIELD_PWRON_GPIO_PIN 3U                   /*!< PIO4 pin index: 3 */
+#define BOARD_INITGT202SHIELD_PWRON_PIN_NAME GPIO1_3              /*!< Pin name */
+#define BOARD_INITGT202SHIELD_PWRON_LABEL "PWRON"                 /*!< Label */
+#define BOARD_INITGT202SHIELD_PWRON_NAME "PWRON"                  /*!< Identifier name */
+#define BOARD_INITGT202SHIELD_PWRON_DIRECTION kGPIO_DigitalOutput /*!< Direction */
+
+#define BOARD_INITGT202SHIELD_IRQ_GPIO GPIO1                   /*!< GPIO device name: GPIO */
+#define BOARD_INITGT202SHIELD_IRQ_PORT 1U                      /*!< PORT device index: 1 */
+#define BOARD_INITGT202SHIELD_IRQ_GPIO_PIN 19U                 /*!< PIO1 pin index: 19 */
+#define BOARD_INITGT202SHIELD_IRQ_PIN_NAME GPIO1_19            /*!< Pin name */
+#define BOARD_INITGT202SHIELD_IRQ_LABEL "IRQ"                  /*!< Label */
+#define BOARD_INITGT202SHIELD_IRQ_NAME "IRQ"                   /*!< Identifier name */
+#define BOARD_INITGT202SHIELD_IRQ_DIRECTION kGPIO_DigitalInput /*!< Direction */
+
+/* @Brief Board accelerator sensor configuration */
+#define BOARD_ACCEL_I2C_BASEADDR LPI2C1
+/* Select USB1 PLL (480 MHz) as LPI2C's clock source */
+#define BOARD_ACCEL_I2C_CLOCK_SOURCE_SELECT (0U)
+/* Clock divider for LPI2C clock source */
+#define BOARD_ACCEL_I2C_CLOCK_SOURCE_DIVIDER (5U)
+#define BOARD_ACCEL_I2C_CLOCK_FREQ (CLOCK_GetFreq(kCLOCK_Usb1PllClk) / 8 / (BOARD_ACCEL_I2C_CLOCK_SOURCE_DIVIDER + 1U))
+
+#define BOARD_CODEC_I2C_BASEADDR LPI2C1
+#define BOARD_CODEC_I2C_CLOCK_SOURCE_SELECT (0U)
+#define BOARD_CODEC_I2C_CLOCK_SOURCE_DIVIDER (5U)
+#define BOARD_CODEC_I2C_CLOCK_FREQ \
+    ((CLOCK_GetFreq(kCLOCK_Usb1PllClk) / 8) / (BOARD_CODEC_I2C_CLOCK_SOURCE_DIVIDER + 1U))
+
+/* @Brief Board CAMERA configuration */
+#define BOARD_CAMERA_I2C_BASEADDR LPI2C1
+#define BOARD_CAMERA_I2C_CLOCK_SOURCE_DIVIDER (5U)
+#define BOARD_CAMERA_I2C_CLOCK_SOURCE_SELECT (0U) /* Select USB1 PLL (480 MHz) as LPI2C's clock source */
+#define BOARD_CAMERA_I2C_CLOCK_FREQ \
+    (CLOCK_GetFreq(kCLOCK_Usb1PllClk) / 8 / (BOARD_CAMERA_I2C_CLOCK_SOURCE_DIVIDER + 1U))
 
 #if defined(__cplusplus)
 extern "C" {
@@ -155,7 +193,59 @@ extern "C" {
 /*******************************************************************************
  * API
  ******************************************************************************/
+uint32_t BOARD_DebugConsoleSrcFreq(void);
+
 void BOARD_InitDebugConsole(void);
+
+void BOARD_ConfigMPU(void);
+#if defined(SDK_I2C_BASED_COMPONENT_USED) && SDK_I2C_BASED_COMPONENT_USED
+void BOARD_LPI2C_Init(LPI2C_Type *base, uint32_t clkSrc_Hz);
+status_t BOARD_LPI2C_Send(LPI2C_Type *base,
+                          uint8_t deviceAddress,
+                          uint32_t subAddress,
+                          uint8_t subaddressSize,
+                          uint8_t *txBuff,
+                          uint8_t txBuffSize);
+status_t BOARD_LPI2C_Receive(LPI2C_Type *base,
+                             uint8_t deviceAddress,
+                             uint32_t subAddress,
+                             uint8_t subaddressSize,
+                             uint8_t *rxBuff,
+                             uint8_t rxBuffSize);
+status_t BOARD_LPI2C_SendSCCB(LPI2C_Type *base,
+                              uint8_t deviceAddress,
+                              uint32_t subAddress,
+                              uint8_t subaddressSize,
+                              uint8_t *txBuff,
+                              uint8_t txBuffSize);
+status_t BOARD_LPI2C_ReceiveSCCB(LPI2C_Type *base,
+                                 uint8_t deviceAddress,
+                                 uint32_t subAddress,
+                                 uint8_t subaddressSize,
+                                 uint8_t *rxBuff,
+                                 uint8_t rxBuffSize);
+void BOARD_Accel_I2C_Init(void);
+status_t BOARD_Accel_I2C_Send(uint8_t deviceAddress, uint32_t subAddress, uint8_t subaddressSize, uint32_t txBuff);
+status_t BOARD_Accel_I2C_Receive(
+    uint8_t deviceAddress, uint32_t subAddress, uint8_t subaddressSize, uint8_t *rxBuff, uint8_t rxBuffSize);
+void BOARD_Codec_I2C_Init(void);
+status_t BOARD_Codec_I2C_Send(
+    uint8_t deviceAddress, uint32_t subAddress, uint8_t subAddressSize, const uint8_t *txBuff, uint8_t txBuffSize);
+status_t BOARD_Codec_I2C_Receive(
+    uint8_t deviceAddress, uint32_t subAddress, uint8_t subAddressSize, uint8_t *rxBuff, uint8_t rxBuffSize);
+void BOARD_Camera_I2C_Init(void);
+status_t BOARD_Camera_I2C_Send(
+    uint8_t deviceAddress, uint32_t subAddress, uint8_t subAddressSize, const uint8_t *txBuff, uint8_t txBuffSize);
+status_t BOARD_Camera_I2C_Receive(
+    uint8_t deviceAddress, uint32_t subAddress, uint8_t subAddressSize, uint8_t *rxBuff, uint8_t rxBuffSize);
+
+status_t BOARD_Camera_I2C_SendSCCB(
+    uint8_t deviceAddress, uint32_t subAddress, uint8_t subAddressSize, const uint8_t *txBuff, uint8_t txBuffSize);
+status_t BOARD_Camera_I2C_ReceiveSCCB(
+    uint8_t deviceAddress, uint32_t subAddress, uint8_t subAddressSize, uint8_t *rxBuff, uint8_t rxBuffSize);
+#endif /* SDK_I2C_BASED_COMPONENT_USED */
+void BOARD_SD_Pin_Config(uint32_t speed, uint32_t strength);
+void BOARD_MMC_Pin_Config(uint32_t speed, uint32_t strength);
 
 #if defined(__cplusplus)
 }

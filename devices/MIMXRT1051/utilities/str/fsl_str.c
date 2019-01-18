@@ -1,35 +1,9 @@
 /*
- * The Clear BSD License
  * Copyright 2017 NXP
  * All rights reserved.
  *
- * 
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- *  that the following conditions are met:
  *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of Freescale Semiconductor, Inc. nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  *
  */
 #include <math.h>
@@ -46,10 +20,6 @@
 #ifndef HUGE_VAL
 #define HUGE_VAL (99.e99)
 #endif /* HUGE_VAL */
-
-#if SCANF_FLOAT_ENABLE
-static double fnum = 0.0;
-#endif /* SCANF_FLOAT_ENABLE */
 
 #if PRINTF_ADVANCED_ENABLE
 /*! @brief Specification modifier flags for printf. */
@@ -84,7 +54,7 @@ enum _debugconsole_scanf_flag
     kSCANF_LengthLongInt = 0x400U,     /*!< Length LongInt Flag. */
     kSCANF_LengthLongLongInt = 0x800U, /*!< Length LongLongInt Flag. */
 #endif                                 /* SCANF_ADVANCED_ENABLE */
-#if PRINTF_FLOAT_ENABLE
+#if SCANF_FLOAT_ENABLE
     kSCANF_LengthLongLongDouble = 0x1000U, /*!< Length LongLongDuoble Flag. */
 #endif                                     /*PRINTF_FLOAT_ENABLE */
     kSCANF_TypeSinged = 0x2000U,           /*!< TypeSinged Flag. */
@@ -361,6 +331,19 @@ static int32_t ConvertFloatRadixNumToString(char *numstr, void *nump, int32_t ra
 }
 #endif /* PRINTF_FLOAT_ENABLE */
 
+/*!
+ * brief This function outputs its parameters according to a formatted string.
+ *
+ * note I/O is performed by calling given function pointer using following
+ * (*func_ptr)(c);
+ *
+ * param[in] fmt_ptr   Format string for printf.
+ * param[in] args_ptr  Arguments to printf.
+ * param[in] buf  pointer to the buffer
+ * param cb print callback function pointer
+ *
+ * return Number of characters to be print
+ */
 int StrFormatPrintf(const char *fmt, va_list ap, char *buf, printfCb cb)
 {
     /* va_list ap; */
@@ -876,6 +859,17 @@ int StrFormatPrintf(const char *fmt, va_list ap, char *buf, printfCb cb)
     return count;
 }
 
+/*!
+ * brief Converts an input line of ASCII characters based upon a provided
+ * string format.
+ *
+ * param[in] line_ptr The input line of ASCII data.
+ * param[in] format   Format first points to the format string.
+ * param[in] args_ptr The list of parameters.
+ *
+ * return Number of input items converted and assigned.
+ * retval IO_EOF When line_ptr is empty string "".
+ */
 int StrFormatScanf(const char *line_ptr, char *format, va_list args_ptr)
 {
     uint8_t base;
@@ -899,6 +893,9 @@ int StrFormatScanf(const char *line_ptr, char *format, va_list args_ptr)
     /* Identifier for the input string. */
     const char *p = line_ptr;
 
+#if SCANF_FLOAT_ENABLE
+    double fnum = 0.0;
+#endif /* SCANF_FLOAT_ENABLE */
     /* Return EOF error before any conversion. */
     if (*p == '\0')
     {

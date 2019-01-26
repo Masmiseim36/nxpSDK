@@ -1,0 +1,335 @@
+<!DOCTYPE CrossStudio_Project_File>
+<solution Name="lwip_dhcp_bm" target="8" version="2">
+  <project Name="lwip_dhcp_bm">
+    <configuration
+      CMSIS_CORE="Yes"
+      Name="Common"
+      Placement="TCM"
+      Target="MIMXRT1021DAG5A"
+      arm_architecture="v7EM"
+      arm_core_type="Cortex-M7"
+      arm_fpu_abi="Hard"
+      arm_fpu_type="FPv5-D16"
+      arm_linker_heap_size="4096"
+      arm_linker_stack_size="4096"
+      arm_simulator_memory_simulation_parameter="RAM;0x00000000;0x00020000;RAM;0x20000000;0x00020000;RAM;0x20200000;0x00040000;ROM;0x60000000;0x00040000"
+      arm_target_loader_applicable_loaders=""
+      arm_target_loader_default_loader=""
+      c_user_include_directories=";./..;./../../../..;./../../../../../../CMSIS/Include;./../../../../../../devices;./../../../../../../components/phyksz8081;./../../../../../../devices/MIMXRT1021/drivers;./../../../../../../devices/MIMXRT1021/drivers;./../../../../../../devices/MIMXRT1021/drivers;./../../../../../../devices/MIMXRT1021/drivers;./../../../../../../devices/MIMXRT1021;./../../../../../../devices/MIMXRT1021/utilities/str;./../../../../../../devices/MIMXRT1021/utilities/debug_console;./../../../../../../components/uart;./../../../../../../components/serial_manager;./../../../../../../components/serial_manager;./../../../../../../devices/MIMXRT1021/drivers;./../../../../../../components/lists;./../../../../../../devices/MIMXRT1021/drivers;./../../../../../../devices/MIMXRT1021/drivers;./../../../../../../devices/MIMXRT1021/xip;./../../../../xip;./../../../../../../middleware/lwip/port;./../../../../../../middleware/lwip/src;./../../../../../../middleware/lwip/src/include"
+      debug_register_definition_file="$(TargetsDir)/iMXRT/XML/MIMXRT1021_registers.xml"
+      linker_memory_map_file="$(TargetsDir)/iMXRT/MemoryMap_MIMXRT1021.xml"
+      linker_section_placement_file="$(StudioDir)/targets/Cortex_M/tcm_placement.xml"
+      linker_section_placement_macros=""
+      macros="DeviceStartFile=$(TargetsDir)/iMXRT/startup_MIMXRT1021.s;DeviceSystemFile=$(TargetsDir)/iMXRT/devices/MIMXRT1021/system_MIMXRT1021.c;DeviceSystemHeaderFile=$(TargetsDir)/iMXRT/devices/MIMXRT1021/system_MIMXRT1021.h;DeviceHeaderFile=$(TargetsDir)/iMXRT/devices/MIMXRT1021/MIMXRT1021.h;QSPI=MIMXRT1021_QuadSPI_4KB_SEC"
+      project_directory=""
+      project_type="Executable"
+      property_groups_file_path="$(TargetsDir)/iMXRT/propertyGroups.xml"
+      target_reset_script="Reset()"
+      target_script_file="$(TargetsDir)/iMXRT/iMXRT_Target.js" />
+    <configuration Name="Flash" arm_target_loader_parameter="24000000" />
+    <folder Name="System Files">
+      <file file_name="$(StudioDir)/source/thumb_crt0.s" />
+      <file file_name="$(DeviceStartFile)" />
+      <file file_name="$(DeviceHeaderFile)" />
+      <file file_name="$(DeviceSystemHeaderFile)" />
+      <file file_name="$(DeviceSystemFile)" />
+      <file file_name="tcm_placement.xml" />
+    </folder>
+    <folder Name="source">
+      <file file_name="./../lwip_dhcp_bm.c" />
+      <file file_name="./../lwipopts.h" />
+    </folder>
+    <folder Name="board">
+      <file file_name="./../pin_mux.c" />
+      <file file_name="./../pin_mux.h" />
+      <file file_name="./../board.c" />
+      <file file_name="./../board.h" />
+      <file file_name="./../clock_config.c" />
+      <file file_name="./../clock_config.h" />
+      <file file_name="./../../../../../../components/phyksz8081/fsl_phy.h" />
+      <file file_name="./../../../../../../components/phyksz8081/fsl_phy.c" />
+    </folder>
+    <folder Name="drivers">
+      <file file_name="./../../../../../../devices/MIMXRT1021/drivers/fsl_cache.c" />
+      <file file_name="./../../../../../../devices/MIMXRT1021/drivers/fsl_cache.h" />
+      <file file_name="./../../../../../../devices/MIMXRT1021/drivers/fsl_clock.h" />
+      <file file_name="./../../../../../../devices/MIMXRT1021/drivers/fsl_clock.c" />
+      <file file_name="./../../../../../../devices/MIMXRT1021/drivers/fsl_enet.h" />
+      <file file_name="./../../../../../../devices/MIMXRT1021/drivers/fsl_enet.c" />
+      <file file_name="./../../../../../../devices/MIMXRT1021/drivers/fsl_common.h" />
+      <file file_name="./../../../../../../devices/MIMXRT1021/drivers/fsl_common.c" />
+      <file file_name="./../../../../../../devices/MIMXRT1021/drivers/fsl_lpuart.h" />
+      <file file_name="./../../../../../../devices/MIMXRT1021/drivers/fsl_lpuart.c" />
+      <file file_name="./../../../../../../devices/MIMXRT1021/drivers/fsl_iomuxc.h" />
+      <file file_name="./../../../../../../devices/MIMXRT1021/drivers/fsl_gpio.h" />
+      <file file_name="./../../../../../../devices/MIMXRT1021/drivers/fsl_gpio.c" />
+    </folder>
+    <folder Name="lwip">
+      <folder Name="port">
+        <file file_name="./../../../../../../middleware/lwip/port/ethernetif.c" />
+        <file file_name="./../../../../../../middleware/lwip/port/ethernetif.h" />
+        <file file_name="./../../../../../../middleware/lwip/port/sys_arch.c" />
+        <folder Name="arch">
+          <file file_name="./../../../../../../middleware/lwip/port/arch/cc.h" />
+          <file file_name="./../../../../../../middleware/lwip/port/arch/perf.h" />
+          <file file_name="./../../../../../../middleware/lwip/port/arch/sys_arch.h" />
+        </folder>
+      </folder>
+      <folder Name="src">
+        <folder Name="api">
+          <file file_name="./../../../../../../middleware/lwip/src/api/api_lib.c" />
+          <file file_name="./../../../../../../middleware/lwip/src/api/api_msg.c" />
+          <file file_name="./../../../../../../middleware/lwip/src/api/err.c" />
+          <file file_name="./../../../../../../middleware/lwip/src/api/netbuf.c" />
+          <file file_name="./../../../../../../middleware/lwip/src/api/netdb.c" />
+          <file file_name="./../../../../../../middleware/lwip/src/api/netifapi.c" />
+          <file file_name="./../../../../../../middleware/lwip/src/api/sockets.c" />
+          <file file_name="./../../../../../../middleware/lwip/src/api/tcpip.c" />
+        </folder>
+        <folder Name="core">
+          <file file_name="./../../../../../../middleware/lwip/src/core/def.c" />
+          <file file_name="./../../../../../../middleware/lwip/src/core/dns.c" />
+          <file file_name="./../../../../../../middleware/lwip/src/core/inet_chksum.c" />
+          <file file_name="./../../../../../../middleware/lwip/src/core/init.c" />
+          <file file_name="./../../../../../../middleware/lwip/src/core/ip.c" />
+          <file file_name="./../../../../../../middleware/lwip/src/core/mem.c" />
+          <file file_name="./../../../../../../middleware/lwip/src/core/memp.c" />
+          <file file_name="./../../../../../../middleware/lwip/src/core/netif.c" />
+          <file file_name="./../../../../../../middleware/lwip/src/core/pbuf.c" />
+          <file file_name="./../../../../../../middleware/lwip/src/core/raw.c" />
+          <file file_name="./../../../../../../middleware/lwip/src/core/stats.c" />
+          <file file_name="./../../../../../../middleware/lwip/src/core/sys.c" />
+          <file file_name="./../../../../../../middleware/lwip/src/core/tcp.c" />
+          <file file_name="./../../../../../../middleware/lwip/src/core/tcp_in.c" />
+          <file file_name="./../../../../../../middleware/lwip/src/core/tcp_out.c" />
+          <file file_name="./../../../../../../middleware/lwip/src/core/timeouts.c" />
+          <file file_name="./../../../../../../middleware/lwip/src/core/udp.c" />
+          <folder Name="ipv4">
+            <file file_name="./../../../../../../middleware/lwip/src/core/ipv4/autoip.c" />
+            <file file_name="./../../../../../../middleware/lwip/src/core/ipv4/dhcp.c" />
+            <file file_name="./../../../../../../middleware/lwip/src/core/ipv4/etharp.c" />
+            <file file_name="./../../../../../../middleware/lwip/src/core/ipv4/icmp.c" />
+            <file file_name="./../../../../../../middleware/lwip/src/core/ipv4/igmp.c" />
+            <file file_name="./../../../../../../middleware/lwip/src/core/ipv4/ip4.c" />
+            <file file_name="./../../../../../../middleware/lwip/src/core/ipv4/ip4_addr.c" />
+            <file file_name="./../../../../../../middleware/lwip/src/core/ipv4/ip4_frag.c" />
+          </folder>
+          <folder Name="ipv6">
+            <file file_name="./../../../../../../middleware/lwip/src/core/ipv6/dhcp6.c" />
+            <file file_name="./../../../../../../middleware/lwip/src/core/ipv6/ethip6.c" />
+            <file file_name="./../../../../../../middleware/lwip/src/core/ipv6/icmp6.c" />
+            <file file_name="./../../../../../../middleware/lwip/src/core/ipv6/inet6.c" />
+            <file file_name="./../../../../../../middleware/lwip/src/core/ipv6/ip6.c" />
+            <file file_name="./../../../../../../middleware/lwip/src/core/ipv6/ip6_addr.c" />
+            <file file_name="./../../../../../../middleware/lwip/src/core/ipv6/ip6_frag.c" />
+            <file file_name="./../../../../../../middleware/lwip/src/core/ipv6/mld6.c" />
+            <file file_name="./../../../../../../middleware/lwip/src/core/ipv6/nd6.c" />
+          </folder>
+        </folder>
+        <folder Name="include">
+          <folder Name="lwip">
+            <file file_name="./../../../../../../middleware/lwip/src/include/lwip/api.h" />
+            <file file_name="./../../../../../../middleware/lwip/src/include/lwip/arch.h" />
+            <file file_name="./../../../../../../middleware/lwip/src/include/lwip/debug.h" />
+            <file file_name="./../../../../../../middleware/lwip/src/include/lwip/dhcp.h" />
+            <file file_name="./../../../../../../middleware/lwip/src/include/lwip/dns.h" />
+            <file file_name="./../../../../../../middleware/lwip/src/include/lwip/errno.h" />
+            <file file_name="./../../../../../../middleware/lwip/src/include/lwip/ethip6.h" />
+            <file file_name="./../../../../../../middleware/lwip/src/include/lwip/icmp6.h" />
+            <file file_name="./../../../../../../middleware/lwip/src/include/lwip/inet.h" />
+            <file file_name="./../../../../../../middleware/lwip/src/include/lwip/init.h" />
+            <file file_name="./../../../../../../middleware/lwip/src/include/lwip/ip_addr.h" />
+            <file file_name="./../../../../../../middleware/lwip/src/include/lwip/ip4_addr.h" />
+            <file file_name="./../../../../../../middleware/lwip/src/include/lwip/ip6.h" />
+            <file file_name="./../../../../../../middleware/lwip/src/include/lwip/ip6_frag.h" />
+            <file file_name="./../../../../../../middleware/lwip/src/include/lwip/memp.h" />
+            <file file_name="./../../../../../../middleware/lwip/src/include/lwip/nd6.h" />
+            <file file_name="./../../../../../../middleware/lwip/src/include/lwip/netdb.h" />
+            <file file_name="./../../../../../../middleware/lwip/src/include/lwip/netifapi.h" />
+            <file file_name="./../../../../../../middleware/lwip/src/include/lwip/pbuf.h" />
+            <file file_name="./../../../../../../middleware/lwip/src/include/lwip/sio.h" />
+            <file file_name="./../../../../../../middleware/lwip/src/include/lwip/sockets.h" />
+            <file file_name="./../../../../../../middleware/lwip/src/include/lwip/sys.h" />
+            <file file_name="./../../../../../../middleware/lwip/src/include/lwip/tcpip.h" />
+            <file file_name="./../../../../../../middleware/lwip/src/include/lwip/udp.h" />
+            <file file_name="./../../../../../../middleware/lwip/src/include/lwip/autoip.h" />
+            <file file_name="./../../../../../../middleware/lwip/src/include/lwip/def.h" />
+            <file file_name="./../../../../../../middleware/lwip/src/include/lwip/dhcp6.h" />
+            <file file_name="./../../../../../../middleware/lwip/src/include/lwip/err.h" />
+            <file file_name="./../../../../../../middleware/lwip/src/include/lwip/etharp.h" />
+            <file file_name="./../../../../../../middleware/lwip/src/include/lwip/icmp.h" />
+            <file file_name="./../../../../../../middleware/lwip/src/include/lwip/igmp.h" />
+            <file file_name="./../../../../../../middleware/lwip/src/include/lwip/inet_chksum.h" />
+            <file file_name="./../../../../../../middleware/lwip/src/include/lwip/ip.h" />
+            <file file_name="./../../../../../../middleware/lwip/src/include/lwip/ip4.h" />
+            <file file_name="./../../../../../../middleware/lwip/src/include/lwip/ip4_frag.h" />
+            <file file_name="./../../../../../../middleware/lwip/src/include/lwip/ip6_addr.h" />
+            <file file_name="./../../../../../../middleware/lwip/src/include/lwip/mem.h" />
+            <file file_name="./../../../../../../middleware/lwip/src/include/lwip/mld6.h" />
+            <file file_name="./../../../../../../middleware/lwip/src/include/lwip/netbuf.h" />
+            <file file_name="./../../../../../../middleware/lwip/src/include/lwip/netif.h" />
+            <file file_name="./../../../../../../middleware/lwip/src/include/lwip/opt.h" />
+            <file file_name="./../../../../../../middleware/lwip/src/include/lwip/raw.h" />
+            <file file_name="./../../../../../../middleware/lwip/src/include/lwip/snmp.h" />
+            <file file_name="./../../../../../../middleware/lwip/src/include/lwip/stats.h" />
+            <file file_name="./../../../../../../middleware/lwip/src/include/lwip/tcp.h" />
+            <file file_name="./../../../../../../middleware/lwip/src/include/lwip/timeouts.h" />
+            <folder Name="priv">
+              <file file_name="./../../../../../../middleware/lwip/src/include/lwip/priv/api_msg.h" />
+              <file file_name="./../../../../../../middleware/lwip/src/include/lwip/priv/memp_priv.h" />
+              <file file_name="./../../../../../../middleware/lwip/src/include/lwip/priv/memp_std.h" />
+              <file file_name="./../../../../../../middleware/lwip/src/include/lwip/priv/nd6_priv.h" />
+              <file file_name="./../../../../../../middleware/lwip/src/include/lwip/priv/tcp_priv.h" />
+              <file file_name="./../../../../../../middleware/lwip/src/include/lwip/priv/tcpip_priv.h" />
+            </folder>
+            <folder Name="prot">
+              <file file_name="./../../../../../../middleware/lwip/src/include/lwip/prot/autoip.h" />
+              <file file_name="./../../../../../../middleware/lwip/src/include/lwip/prot/dhcp.h" />
+              <file file_name="./../../../../../../middleware/lwip/src/include/lwip/prot/dns.h" />
+              <file file_name="./../../../../../../middleware/lwip/src/include/lwip/prot/etharp.h" />
+              <file file_name="./../../../../../../middleware/lwip/src/include/lwip/prot/ethernet.h" />
+              <file file_name="./../../../../../../middleware/lwip/src/include/lwip/prot/icmp.h" />
+              <file file_name="./../../../../../../middleware/lwip/src/include/lwip/prot/icmp6.h" />
+              <file file_name="./../../../../../../middleware/lwip/src/include/lwip/prot/igmp.h" />
+              <file file_name="./../../../../../../middleware/lwip/src/include/lwip/prot/ip.h" />
+              <file file_name="./../../../../../../middleware/lwip/src/include/lwip/prot/ip4.h" />
+              <file file_name="./../../../../../../middleware/lwip/src/include/lwip/prot/ip6.h" />
+              <file file_name="./../../../../../../middleware/lwip/src/include/lwip/prot/mld6.h" />
+              <file file_name="./../../../../../../middleware/lwip/src/include/lwip/prot/nd6.h" />
+              <file file_name="./../../../../../../middleware/lwip/src/include/lwip/prot/tcp.h" />
+              <file file_name="./../../../../../../middleware/lwip/src/include/lwip/prot/udp.h" />
+            </folder>
+          </folder>
+          <folder Name="netif">
+            <file file_name="./../../../../../../middleware/lwip/src/include/netif/etharp.h" />
+            <file file_name="./../../../../../../middleware/lwip/src/include/netif/ethernet.h" />
+            <file file_name="./../../../../../../middleware/lwip/src/include/netif/lowpan6.h" />
+            <file file_name="./../../../../../../middleware/lwip/src/include/netif/lowpan6_opts.h" />
+            <file file_name="./../../../../../../middleware/lwip/src/include/netif/slipif.h" />
+            <folder Name="ppp">
+              <file file_name="./../../../../../../middleware/lwip/src/include/netif/ppp/ccp.h" />
+              <file file_name="./../../../../../../middleware/lwip/src/include/netif/ppp/chap_ms.h" />
+              <file file_name="./../../../../../../middleware/lwip/src/include/netif/ppp/chap-md5.h" />
+              <file file_name="./../../../../../../middleware/lwip/src/include/netif/ppp/chap-new.h" />
+              <file file_name="./../../../../../../middleware/lwip/src/include/netif/ppp/eap.h" />
+              <file file_name="./../../../../../../middleware/lwip/src/include/netif/ppp/ecp.h" />
+              <file file_name="./../../../../../../middleware/lwip/src/include/netif/ppp/eui64.h" />
+              <file file_name="./../../../../../../middleware/lwip/src/include/netif/ppp/fsm.h" />
+              <file file_name="./../../../../../../middleware/lwip/src/include/netif/ppp/ipcp.h" />
+              <file file_name="./../../../../../../middleware/lwip/src/include/netif/ppp/ipv6cp.h" />
+              <file file_name="./../../../../../../middleware/lwip/src/include/netif/ppp/lcp.h" />
+              <file file_name="./../../../../../../middleware/lwip/src/include/netif/ppp/magic.h" />
+              <file file_name="./../../../../../../middleware/lwip/src/include/netif/ppp/mppe.h" />
+              <file file_name="./../../../../../../middleware/lwip/src/include/netif/ppp/ppp.h" />
+              <file file_name="./../../../../../../middleware/lwip/src/include/netif/ppp/ppp_impl.h" />
+              <file file_name="./../../../../../../middleware/lwip/src/include/netif/ppp/ppp_opts.h" />
+              <file file_name="./../../../../../../middleware/lwip/src/include/netif/ppp/pppapi.h" />
+              <file file_name="./../../../../../../middleware/lwip/src/include/netif/ppp/pppcrypt.h" />
+              <file file_name="./../../../../../../middleware/lwip/src/include/netif/ppp/pppdebug.h" />
+              <file file_name="./../../../../../../middleware/lwip/src/include/netif/ppp/pppoe.h" />
+              <file file_name="./../../../../../../middleware/lwip/src/include/netif/ppp/pppol2tp.h" />
+              <file file_name="./../../../../../../middleware/lwip/src/include/netif/ppp/pppos.h" />
+              <file file_name="./../../../../../../middleware/lwip/src/include/netif/ppp/upap.h" />
+              <file file_name="./../../../../../../middleware/lwip/src/include/netif/ppp/vj.h" />
+              <folder Name="polarssl">
+                <file file_name="./../../../../../../middleware/lwip/src/include/netif/ppp/polarssl/arc4.h" />
+                <file file_name="./../../../../../../middleware/lwip/src/include/netif/ppp/polarssl/des.h" />
+                <file file_name="./../../../../../../middleware/lwip/src/include/netif/ppp/polarssl/md4.h" />
+                <file file_name="./../../../../../../middleware/lwip/src/include/netif/ppp/polarssl/md5.h" />
+                <file file_name="./../../../../../../middleware/lwip/src/include/netif/ppp/polarssl/sha1.h" />
+              </folder>
+            </folder>
+          </folder>
+          <folder Name="posix">
+            <file file_name="./../../../../../../middleware/lwip/src/include/posix/errno.h" />
+            <file file_name="./../../../../../../middleware/lwip/src/include/posix/netdb.h" />
+            <folder Name="sys">
+              <file file_name="./../../../../../../middleware/lwip/src/include/posix/sys/socket.h" />
+            </folder>
+          </folder>
+        </folder>
+        <folder Name="netif">
+          <file file_name="./../../../../../../middleware/lwip/src/netif/ethernet.c" />
+          <file file_name="./../../../../../../middleware/lwip/src/netif/lowpan6.c" />
+          <file file_name="./../../../../../../middleware/lwip/src/netif/slipif.c" />
+          <folder Name="ppp">
+            <file file_name="./../../../../../../middleware/lwip/src/netif/ppp/auth.c" />
+            <file file_name="./../../../../../../middleware/lwip/src/netif/ppp/ccp.c" />
+            <file file_name="./../../../../../../middleware/lwip/src/netif/ppp/chap_ms.c" />
+            <file file_name="./../../../../../../middleware/lwip/src/netif/ppp/chap-md5.c" />
+            <file file_name="./../../../../../../middleware/lwip/src/netif/ppp/chap-new.c" />
+            <file file_name="./../../../../../../middleware/lwip/src/netif/ppp/demand.c" />
+            <file file_name="./../../../../../../middleware/lwip/src/netif/ppp/eap.c" />
+            <file file_name="./../../../../../../middleware/lwip/src/netif/ppp/eui64.c" />
+            <file file_name="./../../../../../../middleware/lwip/src/netif/ppp/fsm.c" />
+            <file file_name="./../../../../../../middleware/lwip/src/netif/ppp/ipcp.c" />
+            <file file_name="./../../../../../../middleware/lwip/src/netif/ppp/ipv6cp.c" />
+            <file file_name="./../../../../../../middleware/lwip/src/netif/ppp/lcp.c" />
+            <file file_name="./../../../../../../middleware/lwip/src/netif/ppp/lwip_ecp.c" />
+            <file file_name="./../../../../../../middleware/lwip/src/netif/ppp/magic.c" />
+            <file file_name="./../../../../../../middleware/lwip/src/netif/ppp/mppe.c" />
+            <file file_name="./../../../../../../middleware/lwip/src/netif/ppp/multilink.c" />
+            <file file_name="./../../../../../../middleware/lwip/src/netif/ppp/ppp.c" />
+            <file file_name="./../../../../../../middleware/lwip/src/netif/ppp/pppapi.c" />
+            <file file_name="./../../../../../../middleware/lwip/src/netif/ppp/pppcrypt.c" />
+            <file file_name="./../../../../../../middleware/lwip/src/netif/ppp/pppoe.c" />
+            <file file_name="./../../../../../../middleware/lwip/src/netif/ppp/pppol2tp.c" />
+            <file file_name="./../../../../../../middleware/lwip/src/netif/ppp/pppos.c" />
+            <file file_name="./../../../../../../middleware/lwip/src/netif/ppp/upap.c" />
+            <file file_name="./../../../../../../middleware/lwip/src/netif/ppp/utils.c" />
+            <file file_name="./../../../../../../middleware/lwip/src/netif/ppp/vj.c" />
+          </folder>
+        </folder>
+      </folder>
+    </folder>
+    <folder Name="utilities">
+      <file file_name="./../../../../../../devices/MIMXRT1021/utilities/str/fsl_str.c" />
+      <file file_name="./../../../../../../devices/MIMXRT1021/utilities/str/fsl_str.h" />
+      <file file_name="./../../../../../../devices/MIMXRT1021/utilities/debug_console/fsl_debug_console.c" />
+      <file file_name="./../../../../../../devices/MIMXRT1021/utilities/debug_console/fsl_debug_console.h" />
+      <file file_name="./../../../../../../devices/MIMXRT1021/utilities/debug_console/fsl_debug_console_conf.h" />
+      <file file_name="./../../../../../../devices/MIMXRT1021/utilities/fsl_assert.c" />
+    </folder>
+    <folder Name="component">
+      <folder Name="uart">
+        <file file_name="./../../../../../../components/uart/uart.h" />
+        <file file_name="./../../../../../../components/uart/lpuart_adapter.c" />
+      </folder>
+      <folder Name="serial_manager">
+        <file file_name="./../../../../../../components/serial_manager/serial_manager.h" />
+        <file file_name="./../../../../../../components/serial_manager/serial_manager.c" />
+        <file file_name="./../../../../../../components/serial_manager/serial_port_uart.h" />
+        <file file_name="./../../../../../../components/serial_manager/serial_port_uart.c" />
+      </folder>
+      <folder Name="lists">
+        <file file_name="./../../../../../../components/lists/generic_list.h" />
+        <file file_name="./../../../../../../components/lists/generic_list.c" />
+      </folder>
+    </folder>
+  </project>
+  <configuration Name="THUMB Debug" inherited_configurations="THUMB;Debug" />
+  <configuration
+    Name="THUMB"
+    Platform="ARM"
+    arm_instruction_set="Thumb"
+    arm_library_instruction_set="Thumb"
+    c_preprocessor_definitions="__THUMB"
+    hidden="Yes" />
+  <configuration
+    Name="Debug"
+    c_preprocessor_definitions="DEBUG"
+    gcc_debugging_level="Level 3"
+    gcc_omit_frame_pointer="Yes"
+    gcc_optimization_level="None"
+    hidden="Yes" />
+  <configuration
+    Name="THUMB Release"
+    inherited_configurations="THUMB;Release" />
+  <configuration
+    Name="Release"
+    c_preprocessor_definitions="NDEBUG"
+    gcc_debugging_level="None"
+    gcc_omit_frame_pointer="Yes"
+    gcc_optimization_level="Level 1"
+    hidden="Yes" />
+</solution>

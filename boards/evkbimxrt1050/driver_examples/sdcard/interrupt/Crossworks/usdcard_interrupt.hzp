@@ -1,0 +1,134 @@
+<!DOCTYPE CrossStudio_Project_File>
+<solution Name="usdcard_interrupt" target="8" version="2">
+  <project Name="usdcard_interrupt">
+    <configuration
+      CMSIS_CORE="Yes"
+      Name="Common"
+      Placement="TCM"
+      Target="MIMXRT1052DVL6B"
+      arm_architecture="v7EM"
+      arm_core_type="Cortex-M7"
+      arm_fpu_abi="Hard"
+      arm_fpu_type="FPv5-D16"
+      arm_library_check_memory_segment_overflow="No"
+      arm_linker_heap_size="1024"
+      arm_linker_stack_size="1024"
+      arm_simulator_memory_simulation_parameter="RAM;0x00000000;0x00020000;RAM;0x20000000;0x00020000;RAM;0x20200000;0x00040000;ROM;0x60000000;0x00040000"
+      arm_target_loader_applicable_loaders=""
+      arm_target_loader_default_loader=""
+      c_user_include_directories=".;..;./..\;./../../../..\;./../../../../../../CMSIS/Include;./../../../../../../devices;./../../../../../../devices/MIMXRT1052;./../../../../../../devices/MIMXRT1052/xip;./../../../../../../devices/MIMXRT1052/drivers;./../../../../../../devices/MIMXRT1052/utilities/str;./../../../../../../devices/MIMXRT1052/utilities/debug_console;./../../../../../../components/uart;./../../../../../../components/serial_manager;./../../../../../../components/lists;./../../../../xip;./../../../../../../middleware/sdmmc/port;./../../../../../../middleware/sdmmc/inc;./../../../../../../middleware/sdmmc/src"
+      debug_register_definition_file="$(TargetsDir)/iMXRT/XML/MIMXRT1052_registers.xml"
+      gcc_enable_all_warnings="Yes"
+      linker_memory_map_file="$(TargetsDir)/iMXRT/iMXRT_MemoryMap.xml"
+      linker_section_placement_file="$(StudioDir)/targets/Cortex_M/tcm_placement.xml"
+      linker_section_placement_macros=""
+      macros="DeviceStartFile=$(TargetsDir)/iMXRT/startup_MIMXRT1052.s;DeviceSystemFile=$(TargetsDir)/iMXRT/devices/MIMXRT1052/system_MIMXRT1052.c;DeviceSystemHeaderFile=$(TargetsDir)/iMXRT/devices/MIMXRT1052/system_MIMXRT1052.h;DeviceHeaderFile=$(TargetsDir)/iMXRT/devices/MIMXRT1052/MIMXRT1052.h;HYPER=MIMXRT105x_HYPER_256KB_SEC;ECOXIP=MIMXRT106x_EcoXiP_4KB_SEC;QSPI=MIMXRT105x_QuadSPI_4KB_SEC"
+      project_directory=""
+      project_type="Executable"
+      property_groups_file_path="$(TargetsDir)/iMXRT/propertyGroups.xml"
+      target_reset_script="Reset()"
+      target_script_file="$(TargetsDir)/iMXRT/iMXRT_Target.js" />
+    <configuration
+      Name="Flash"
+      arm_target_flash_loader_file_path="$(TargetsDir)/iMXRT/Loader/$(HYPER)_Loader.elf"
+      arm_target_loader_parameter="24000000" />
+    <folder Name="Code">
+      <file file_name="../board.h" />
+      <file file_name="../clock_config.c" />
+      <file file_name="../clock_config.h" />
+      <file file_name="../pin_mux.c" />
+      <file file_name="../pin_mux.h" />
+      <file file_name="../sdcard_interrupt.c" />
+      <file file_name="../board.c" />
+    </folder>
+    <folder Name="driver">
+      <file file_name="../../../../../../devices/MIMXRT1052/drivers/fsl_common.c" />
+      <file file_name="../../../../../../devices/MIMXRT1052/drivers/fsl_common.h" />
+      <file file_name="../../../../../../devices/MIMXRT1052/drivers/fsl_usdhc.c" />
+      <file file_name="../../../../../../devices/MIMXRT1052/drivers/fsl_usdhc.h" />
+      <file file_name="../../../../../../devices/MIMXRT1052/drivers/fsl_gpio.c" />
+      <file file_name="../../../../../../devices/MIMXRT1052/drivers/fsl_gpio.h" />
+      <file file_name="../../../../../../devices/MIMXRT1052/drivers/fsl_iomuxc.h" />
+      <file file_name="../../../../../../devices/MIMXRT1052/drivers/fsl_lpuart.c" />
+      <file file_name="../../../../../../devices/MIMXRT1052/drivers/fsl_lpuart.h" />
+      <file file_name="../../../../../../devices/MIMXRT1052/drivers/fsl_cache.c" />
+      <file file_name="../../../../../../devices/MIMXRT1052/drivers/fsl_cache.h" />
+      <file file_name="../../../../../../devices/MIMXRT1052/drivers/fsl_clock.c" />
+      <file file_name="../../../../../../devices/MIMXRT1052/drivers/fsl_clock.h" />
+    </folder>
+    <folder Name="middleware">
+      <folder Name="sdmmc">
+        <file file_name="../../../../../../middleware/sdmmc/inc/fsl_mmc.h" />
+        <file file_name="../../../../../../middleware/sdmmc/inc/fsl_sd.h" />
+        <file file_name="../../../../../../middleware/sdmmc/inc/fsl_sdio.h" />
+        <file file_name="../../../../../../middleware/sdmmc/inc/fsl_sdmmc_common.h" />
+        <file file_name="../../../../../../middleware/sdmmc/inc/fsl_sdmmc_host.h" />
+        <file file_name="../../../../../../middleware/sdmmc/inc/fsl_sdmmc_spec.h" />
+        <file file_name="../../../../../../middleware/sdmmc/inc/fsl_sdspi.h" />
+        <file file_name="../../../../../../middleware/sdmmc/src/fsl_sd.c" />
+        <file file_name="../../../../../../middleware/sdmmc/src/fsl_sdmmc_common.c" />
+        <file file_name="../../../../../../middleware/sdmmc/port/fsl_sdmmc_event.h" />
+        <file file_name="../../../../../../middleware/sdmmc/port/usdhc/interrupt/fsl_sdmmc_event.c" />
+        <file file_name="../../../../../../middleware/sdmmc/port/usdhc/interrupt/fsl_sdmmc_host.c" />
+      </folder>
+    </folder>
+    <folder Name="Utils">
+      <file file_name="../../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console.c" />
+      <file file_name="../../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console.h" />
+      <file file_name="../../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console_conf.h" />
+      <file file_name="../../../../../../devices/MIMXRT1052/utilities/str/fsl_str.c" />
+      <file file_name="../../../../../../devices/MIMXRT1052/utilities/str/fsl_str.h" />
+      <file file_name="../../../../../../devices/MIMXRT1052/utilities/fsl_assert.c" />
+    </folder>
+    <folder Name="components">
+      <folder Name="Serieal Manager">
+        <file file_name="../../../../../../components/serial_manager/serial_manager.c" />
+        <file file_name="../../../../../../components/serial_manager/serial_manager.h" />
+        <file file_name="../../../../../../components/serial_manager/serial_port_uart.c" />
+        <file file_name="../../../../../../components/serial_manager/serial_port_uart.h" />
+      </folder>
+      <folder Name="lists">
+        <file file_name="../../../../../../components/lists/generic_list.c" />
+        <file file_name="../../../../../../components/lists/generic_list.h" />
+      </folder>
+      <folder Name="uart">
+        <file file_name="../../../../../../components/uart/lpuart_adapter.c" />
+        <file file_name="../../../../../../components/uart/uart.h" />
+      </folder>
+    </folder>
+    <folder Name="System Files">
+      <file file_name="$(StudioDir)/source/thumb_crt0.s" />
+      <file file_name="$(DeviceStartFile)" />
+      <file file_name="$(DeviceHeaderFile)" />
+      <file file_name="$(DeviceSystemHeaderFile)" />
+      <file file_name="$(DeviceSystemFile)" />
+      <file file_name="iMXRT_MemoryMap.xml" />
+      <file file_name="tcm_placement.xml" />
+    </folder>
+  </project>
+  <configuration Name="THUMB Debug" inherited_configurations="THUMB;Debug" />
+  <configuration
+    Name="THUMB"
+    Platform="ARM"
+    arm_instruction_set="Thumb"
+    arm_library_instruction_set="Thumb"
+    c_preprocessor_definitions="__THUMB"
+    hidden="Yes" />
+  <configuration
+    Name="Debug"
+    c_preprocessor_definitions="DEBUG"
+    gcc_debugging_level="Level 3"
+    gcc_omit_frame_pointer="Yes"
+    gcc_optimization_level="None"
+    hidden="Yes" />
+  <configuration
+    Name="THUMB Release"
+    inherited_configurations="THUMB;Release" />
+  <configuration
+    Name="Release"
+    c_preprocessor_definitions="NDEBUG"
+    gcc_debugging_level="None"
+    gcc_omit_frame_pointer="Yes"
+    gcc_optimization_level="Level 1"
+    hidden="Yes" />
+</solution>

@@ -1,0 +1,141 @@
+Overview
+========
+The flexcan_interrupt example shows how to use FlexCAN driver in none-blocking interrupt way:
+
+In this example, 2 boards are connected through CAN bus. Endpoint A(board A) send a CAN Message to
+Endpoint B(board B) when user press space key in terminal. Endpoint B receive the message, print
+the message content to terminal and echo back the message. Endpoint A will increase the received
+message and waiting for the next transmission of the user initiated.
+
+For self wake up from STOP mode, since steps which MCU enters STOP mode differs on different MCUs,
+take flexcan_interrupt_transfer of twrke18f for example, user should do like this:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#include "fsl_smc.h"
+...
+...
+flexcanConfig.enableSelfWakeup = true;
+FLEXCAN_Init();
+...
+...
+SMC_SetPowerModeStop(SMC, kSMC_PartialStop1);
+if (wakenUp)
+{
+    PRINTF("B has been waken up!\r\n\r\n");
+}
+...
+...
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Hardware requirements
+=====================
+- Two Mini/micro USB cables
+- Two TWR-KV46F150M boards
+- Personal Computer
+
+Board settings
+==============
+The example needs to connect as below:
+To use UART on board, make sure that J505-3 connects to J505-4, J506-3 connects to J506-4
+On TWR-KV46F150 board:
+- J16-1 and J16-2
+- J16-3 and J16-4
+- J15-1 and J15-2
+Between two boards:
+- J13-1 node A and J13-1 node B
+- J13-2 node A and J13-2 node B
+- J13-3 node A and J13-3 node B
+
+Prepare the Demo
+================
+1. Connect a USB cable between the PC host and the OpenSDA USB on the board.
+2. Open a serial terminal on PC for OpenSDA serial device with these settings:
+   - 115200 baud rate
+   - 8 data bits
+   - No parity
+   - One stop bit
+   - No flow control
+3. Download the program to the target board.
+4. Either press the reset button on your board or launch the debugger in your IDE to begin running
+   the example.
+
+Running the demo
+================
+After connecting the two boards, these instructions display on each terminal window.
+One board must be chosen as node A and the other board as node B. (Note: Node B should start first)
+Data is sent continuously between the node A and the node B.
+
+This message displays on the node A terminal:
+
+~~~~~~~~~~~~~~~~~~~~~
+
+********* FLEXCAN Interrupt EXAMPLE *********
+
+    Message format: Standard (11 bit id)
+
+    Message buffer 9 used for Rx.
+
+    Message buffer 8 used for Tx.
+
+    Interrupt Mode: Enabled
+
+    Operation Mode: TX and RX --> Normal
+
+*********************************************
+
+Please select local node as A or B:
+
+Note: Node B should start first.
+
+Node:a
+
+Press any key to trigger one-shot transmission
+
+Rx MB ID: 0x123, Rx MB data: 0x0, Time stamp: 8877
+
+Press any key to trigger the next transmission!
+
+Rx MB ID: 0x123, Rx MB data: 0x1, Time stamp: 32459
+
+Press any key to trigger the next transmission!
+~~~~~~~~~~~~~~~~~~~~~
+
+This message displays on the node B terminal:
+
+********* FLEXCAN Interrupt EXAMPLE *********
+
+    Message format: Standard (11 bit id)
+
+    Message buffer 9 used for Rx.
+
+    Message buffer 8 used for Tx.
+
+    Interrupt Mode: Enabled
+
+    Operation Mode: TX and RX --> Normal
+
+*********************************************
+
+Please select local node as A or B:
+
+Note: Node B should start first.
+
+Node:b
+
+Start to Wait data from Node A
+
+Rx MB ID: 0x321, Rx MB data: 0x0, Time stamp: 5759
+
+Wait Node A to trigger the next transmission!
+
+Rx MB ID: 0x321, Rx MB data: 0x1, Time stamp: 57276
+
+Wait Node A to trigger the next transmission!
+~~~~~~~~~~~~~~~~~~~~~
+
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.32.1
+- Keil MDK  5.26
+- GCC ARM Embedded  7.3.1
+- MCUXpresso 10.3.0
+

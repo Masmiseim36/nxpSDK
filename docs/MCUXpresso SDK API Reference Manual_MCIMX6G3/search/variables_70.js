@@ -1,0 +1,26 @@
+var searchData=
+[
+  ['panelheight',['panelHeight',['../group__elcdif.html#a1a4d5e151baba11eb7ce004ae1348b7b',1,'elcdif_rgb_mode_config_t']]],
+  ['panelwidth',['panelWidth',['../group__elcdif.html#a6019faab572a2ca590379f05c6e46c51',1,'elcdif_rgb_mode_config_t']]],
+  ['parity',['parity',['../group__uart__freertos__driver.html#a8d8809aff183104892d30cc0734679bd',1,'uart_rtos_config_t']]],
+  ['paritymode',['parityMode',['../group__uart__driver.html#ga1a3abcf4f0f5d0a3893df14f2991aa39',1,'uart_config_t']]],
+  ['pauseduration',['pauseDuration',['../group__enet.html#a4ad647d398242d29ca34f03903e119a7',1,'enet_config_t']]],
+  ['periodicinterruptfreq',['periodicInterruptFreq',['../group__snvs__hp.html#ga7ffad480a30cb609a32c67cdd4f9e34c',1,'snvs_hp_rtc_config_t']]],
+  ['phase',['phase',['../group__ecspi__driver.html#aad4e0d3e01790b01e7c0ca7c6c5920af',1,'ecspi_channel_config_t']]],
+  ['phaseseg1',['phaseSeg1',['../group__flexcan__driver.html#a70c5ba7b5325b4cc0d8579bd93701541',1,'flexcan_timing_config_t']]],
+  ['phaseseg2',['phaseSeg2',['../group__flexcan__driver.html#a6c11e2dde54a7fa384b956a79793aa30',1,'flexcan_timing_config_t']]],
+  ['pitchbytes',['pitchBytes',['../group__pxp__driver.html#a8c5329c6f606376421e4be402bedad22',1,'pxp_output_buffer_config_t::pitchBytes()'],['../group__pxp__driver.html#a8847ad0172f7d1253e17595d544067b5',1,'pxp_ps_buffer_config_t::pitchBytes()'],['../group__pxp__driver.html#ad1c09ffd95ce3577d4f69c1d2c22c1c4',1,'pxp_as_buffer_config_t::pitchBytes()']]],
+  ['pixelformat',['pixelFormat',['../group__elcdif.html#ae3a7b3acf215c33febaf5c52cec9ea2c',1,'elcdif_rgb_mode_config_t::pixelFormat()'],['../group__elcdif.html#a03873f7e13d6a3a2a549ba2a337bce8a',1,'elcdif_as_buffer_config_t::pixelFormat()'],['../group__pxp__driver.html#a0deca125e283881a007a05aee7ea6efb',1,'pxp_output_buffer_config_t::pixelFormat()'],['../group__pxp__driver.html#ac6f839fb877e8486f1ef072db0c4e979',1,'pxp_ps_buffer_config_t::pixelFormat()'],['../group__pxp__driver.html#a3699de23dbdd44e2c65bbfb64e8312e0',1,'pxp_as_buffer_config_t::pixelFormat()']]],
+  ['polarity',['polarity',['../group__ecspi__driver.html#aa6327b0a05d54c85c01ca246e86b50c4',1,'ecspi_channel_config_t']]],
+  ['polarityflags',['polarityFlags',['../group__csi__driver.html#a5715e589bee1f54aac85ab996a59f204',1,'csi_config_t::polarityFlags()'],['../group__elcdif.html#a1603b83b0af08e93ce6d57d692c03b97',1,'elcdif_rgb_mode_config_t::polarityFlags()']]],
+  ['portadelaytapnum',['portADelayTapNum',['../group__qspi.html#ab166711d9c9ea0accacffbd9463ba91a',1,'qspi_dqs_config_t']]],
+  ['portbdelaytapnum',['portBDelayTapNum',['../group__qspi.html#a29bc6e7eb4849cc0a1f813891e08a9cc',1,'qspi_dqs_config_t']]],
+  ['postdivider',['postDivider',['../group__clock.html#a61f7c596a57b37d806c8af66f6bb8bc9',1,'clock_audio_pll_config_t::postDivider()'],['../group__clock.html#abc4472a1557e843556442ad7b8392f7b',1,'clock_video_pll_config_t::postDivider()']]],
+  ['powerconfig',['powerConfig',['../group__mmdc.html#a19042dd22c702de0d7bc237b7e8a65b2',1,'mmdc_config_t']]],
+  ['prechargetime',['prechargeTime',['../group__tsc.html#ga6e0547b1eb74931522ffe3829462ba03',1,'tsc_config_t']]],
+  ['predivider',['preDivider',['../group__flexcan__driver.html#ab9be8b37a583ead557316b6e8a52087a',1,'flexcan_timing_config_t']]],
+  ['prescaler',['prescaler',['../group__wdog.html#acd273040b33c6246066b0aabd62ec944',1,'wdog_config_t']]],
+  ['priority',['priority',['../group__flexcan__driver.html#a2247025f9a26b65bc6fa4d59f507657c',1,'flexcan_rx_fifo_config_t::priority()'],['../group__sdma.html#a21a108eb72b4fc30074ea4027b7ad1ed',1,'sdma_handle_t::priority()']]],
+  ['propseg',['propSeg',['../group__flexcan__driver.html#a08a892d0d2f41c0065ef72d9ebb66d66',1,'flexcan_timing_config_t']]],
+  ['protocol',['protocol',['../group__sai.html#ae6b6e06a6051825c0797e1ab7fce5f92',1,'sai_config_t::protocol()'],['../group__sai.html#a2df4853c14ae76c214bddc23787e2327',1,'sai_transfer_format_t::protocol()']]]
+];

@@ -1,0 +1,111 @@
+/*********************************************************************
+*              SEGGER MICROCONTROLLER GmbH & Co. K.G.                *
+*        Solutions for real time microcontroller applications        *
+**********************************************************************
+*                                                                    *
+*        (c) 2011-2015 SEGGER Microcontroller GmbH & Co. KG          *
+*                                                                    *
+* Internet: www.segger.com Support: support@segger.com               *
+*                                                                    *
+**********************************************************************
+----------------------------------------------------------------------
+Purpose : 
+---------------------------END-OF-HEADER------------------------------
+*/
+
+
+void Clock_Init() {
+  // Enable all clocks
+  MEM_WriteU32(0x020c4068,0xffffffff);
+  MEM_WriteU32(0x020c406c,0xffffffff);
+  MEM_WriteU32(0x020c4070,0xffffffff);
+  MEM_WriteU32(0x020c4074,0xffffffff);
+  MEM_WriteU32(0x020c4078,0xffffffff);
+  MEM_WriteU32(0x020c407c,0xffffffff);
+  MEM_WriteU32(0x020c4080,0xffffffff);
+
+  Report("Clock Init Done");
+}
+
+void DDR_Init() {
+  // Config IOMUX for ddr
+  MEM_WriteU32(0x020E04B4,0x000C0000);
+  MEM_WriteU32(0x020E04AC,0x00000000);
+  MEM_WriteU32(0x020E027C,0x00000030);
+  MEM_WriteU32(0x020E0250,0x00000030);
+  MEM_WriteU32(0x020E024C,0x00000030);
+  MEM_WriteU32(0x020E0490,0x00000030);
+  MEM_WriteU32(0x020E0288,0x00000030);
+  MEM_WriteU32(0x020E0270,0x00000000);
+  MEM_WriteU32(0x020E0260,0x00000030);
+  MEM_WriteU32(0x020E0264,0x00000030);
+  MEM_WriteU32(0x020E04A0,0x00000030);
+  MEM_WriteU32(0x020E0494,0x00020000);
+  MEM_WriteU32(0x020E0280,0x00000030);
+  MEM_WriteU32(0x020E0284,0x00000030);
+  MEM_WriteU32(0x020E04B0,0x00020000);
+  MEM_WriteU32(0x020E0498,0x00000030);
+  MEM_WriteU32(0x020E04A4,0x00000030);
+  MEM_WriteU32(0x020E0244,0x00000030);
+  MEM_WriteU32(0x020E0248,0x00000030);
+  
+  // Config DDR Controller Registers
+  MEM_WriteU32(0x021B001C,0x00008000);
+  MEM_WriteU32(0x021B0800,0xA1390003);
+  MEM_WriteU32(0x021B080C,0x00000000);
+  MEM_WriteU32(0x021B083C,0x41570155);
+  MEM_WriteU32(0x021B0848,0x4040474A);
+  MEM_WriteU32(0x021B0850,0x40405550);
+  MEM_WriteU32(0x021B081C,0x33333333);
+  MEM_WriteU32(0x021B0820,0x33333333);
+  MEM_WriteU32(0x021B082C,0xf3333333);
+  MEM_WriteU32(0x021B0830,0xf3333333);
+  MEM_WriteU32(0x021B08C0,0x00921012);
+  MEM_WriteU32(0x021B08b8,0x00000800);
+
+  // Config MMDC init
+  MEM_WriteU32(0x021B0004,0x0002002D);
+  MEM_WriteU32(0x021B0008,0x1B333030);
+  MEM_WriteU32(0x021B000C,0x676B52F3);
+  MEM_WriteU32(0x021B0010,0xB66D0B63);
+  MEM_WriteU32(0x021B0014,0x01FF00DB);
+  MEM_WriteU32(0x021B0018,0x00201740);
+  MEM_WriteU32(0x021B001C,0x00008000);
+  MEM_WriteU32(0x021B002C,0x000026D2);
+  MEM_WriteU32(0x021B0030,0x006B1023);
+  MEM_WriteU32(0x021B0040,0x0000004F);
+  MEM_WriteU32(0x021B0000,0x84180000);
+  MEM_WriteU32(0x021B0890,0x23400A38);
+  MEM_WriteU32(0x021B001C,0x02008032);
+  MEM_WriteU32(0x021B001C,0x00008033);
+  MEM_WriteU32(0x021B001C,0x00048031);
+  MEM_WriteU32(0x021B001C,0x15208030);
+  MEM_WriteU32(0x021B001C,0x04008040);
+  MEM_WriteU32(0x021B0020,0x00000800);
+  MEM_WriteU32(0x021B0818,0x00000227);
+  MEM_WriteU32(0x021B0004,0x0002552D);
+  MEM_WriteU32(0x021B0404,0x00011006);
+  MEM_WriteU32(0x021B001C,0x00000000);
+
+  Report("DDR Init Done");
+}
+
+/* ConfigTarget */
+void ConfigTargetSettings(void)
+{
+  Report("Config JTAG Speed to 4000kHz");
+  JTAG_Speed = 4000;
+}
+
+/* SetupTarget */
+void SetupTarget(void) {
+  unsigned int reg;
+  reg = MEM_ReadU32(0x021B0000);
+  reg = reg & 0x80000000;
+
+  if(reg == 0){
+    Report("Enabling i.MX6UL DDR3L");
+    Clock_Init();
+    DDR_Init();
+  }
+}

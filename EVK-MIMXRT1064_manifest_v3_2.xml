@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.2.xsd" format_version="3.2" api_version="2.0.0" name="SDK version 2.4.0 package for EVK-MIMXRT1064 board" brief="This is SDK version 2.4.0 manifest file. It describes the content of the SDK version 2.4.0 package for EVK-MIMXRT1064 board and additional settings for tools that support SDK version 2.4.0" id="SDK_2.x_EVK-MIMXRT1064" configuration="f5c45b02d2046302f5625b45f8b3e264">
+<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.2.xsd" format_version="3.2" api_version="2.0.0" name="SDK version 2.4.1 package for EVK-MIMXRT1064 board" brief="This is SDK version 2.4.1 manifest file. It describes the content of the SDK version 2.4.1 package for EVK-MIMXRT1064 board and additional settings for tools that support SDK version 2.4.1" id="SDK_2.x_EVK-MIMXRT1064" configuration="6f0323f216473cdfd385fa21d3645652">
   <defines>
     <define name="CPU_$|package|_$|core|" value=""/>
     <define name="CPU_$|package|" value=""/>
   </defines>
-  <ksdk id="KSDK240" name="KSDK240" version="2.4.0"/>
+  <ksdk id="KSDK241" name="KSDK241" version="2.4.1"/>
   <compilers>
     <compiler id="compiler_arm" type="arm" name="arm"/>
     <compiler id="compiler_gcc" type="gcc" name="gcc"/>
@@ -88,32 +88,56 @@ ${run}
     <toolchain id="mdk" name="Keil_MDK" full_name="Keil MDK" type="mdk" compiler="compiler_arm" version="5.25" vendor="ARM" vendor_url="http://www.arm.com"/>
   </toolchains>
   <boards>
-    <board id="evkmimxrt1064_om13588" name="EVK-MIMXRT1064-OM13588" package="MIMXRT1064DVL6A" type="kit" version="1.0.0" href="http://www.nxp.com/products/interfaces/usb-interfaces/usb-type-c-shield-board-for-kinetis-freedom-board:OM13588">
+    <board id="evkmimxrt1064_agm01" name="EVK-MIMXRT1064-AGM01" package="MIMXRT1064DVL6A" type="kit" version="1.0.0" full_name="EVK-MIMXRT1064 with AGM01" href="http://www.nxp.com/FRDM-STBC-AGM01">
       <description>
-USB Type-C Shield Board for Kinetis Freedom Board
+Sensor Toolbox Development Platform for FXAS21002C and FXOS8700C 9-Axis Solution
         </description>
       <image type="image" path="docs/images">
-        <files mask="EVK-MIMXRT1064-OM13588.gif"/>
+        <files mask="EVK-MIMXRT1064-AGM01.gif"/>
       </image>
       <metadataSet>
         <metadata key="vendor" value="NXP"/>
         <metadata key="html">
           <specific>
             <content>
-The USB Type-C shield board combined with a Kinetis Power Delivery SDK allows a system designer to tether a USB Type-C connector to any Kinetis development platform.
+Demonstration Custom Kit (FRDM-STBC-AGM01 Sensor Shield Development Board with EVK-MIMXRT1064 Board):
+&lt;ul&gt;
+&lt;li&gt;Enables quick and easy visualization of 9-Axis (3 Axis Gyroscope + 6-Axis E-compass) sensor data and results.&lt;/li&gt;
+&lt;/ul&gt;
         </content>
           </specific>
         </metadata>
       </metadataSet>
       <memory ram_size_kb="32768" flash_size_kb="8192">
-        <memoryBlock id="BOARD_FLASH_evkmimxrt1064_om13588" name="BOARD_FLASH" addr="60000000" size="00800000" type="ExtFlash" access="RO"/>
-        <memoryBlock id="BOARD_SDRAM_evkmimxrt1064_om13588" name="BOARD_SDRAM" addr="80000000" size="02000000" type="RAM" access="RW"/>
+        <memoryBlock id="BOARD_FLASH_evkmimxrt1064_agm01" name="BOARD_FLASH" addr="60000000" size="00800000" type="ExtFlash" access="RO"/>
+        <memoryBlock id="BOARD_SDRAM_evkmimxrt1064_agm01" name="BOARD_SDRAM" addr="80000000" size="02000000" type="RAM" access="RW"/>
       </memory>
-      <examples/>
+      <examples>
+        <example id="evkmimxrt1064_agm01_fxas21002_fifo" name="fxas21002_fifo" category="issdk/sensors" path="boards/evkmimxrt1064_agm01/issdk_examples/sensors/fxas21002/fxas21002_fifo" toolchain="armgcc iar mcuxpresso mdk">
+          <external path="boards/evkmimxrt1064_agm01/issdk_examples/sensors/fxas21002/fxas21002_fifo" type="xml">
+            <files mask="fxas21002_fifo.xml"/>
+          </external>
+        </example>
+        <example id="evkmimxrt1064_agm01_fxas21002_poll" name="fxas21002_poll" category="issdk/sensors" path="boards/evkmimxrt1064_agm01/issdk_examples/sensors/fxas21002/fxas21002_poll" toolchain="armgcc iar mcuxpresso mdk">
+          <external path="boards/evkmimxrt1064_agm01/issdk_examples/sensors/fxas21002/fxas21002_poll" type="xml">
+            <files mask="fxas21002_poll.xml"/>
+          </external>
+        </example>
+        <example id="evkmimxrt1064_agm01_fxos8700_fifo" name="fxos8700_fifo" category="issdk/sensors" path="boards/evkmimxrt1064_agm01/issdk_examples/sensors/fxos8700/fxos8700_fifo" toolchain="armgcc iar mcuxpresso mdk">
+          <external path="boards/evkmimxrt1064_agm01/issdk_examples/sensors/fxos8700/fxos8700_fifo" type="xml">
+            <files mask="fxos8700_fifo.xml"/>
+          </external>
+        </example>
+        <example id="evkmimxrt1064_agm01_fxos8700_poll" name="fxos8700_poll" category="issdk/sensors" path="boards/evkmimxrt1064_agm01/issdk_examples/sensors/fxos8700/fxos8700_poll" toolchain="armgcc iar mcuxpresso mdk">
+          <external path="boards/evkmimxrt1064_agm01/issdk_examples/sensors/fxos8700/fxos8700_poll" type="xml">
+            <files mask="fxos8700_poll.xml"/>
+          </external>
+        </example>
+      </examples>
       <debug_configurations>
         <debug_configuration id_refs="com.crt.advproject.config.exe.debug com.crt.advproject.config.exe.release">
           <drivers>
-            <driver id_refs="BOARD_FLASH_evkmimxrt1064_om13588">
+            <driver id_refs="BOARD_FLASH_evkmimxrt1064_agm01">
               <driverBinary path="devices/MIMXRT1064/mcuxpresso" type="binary">
                 <files mask="MIMXRT1064.cfx"/>
               </driverBinary>
@@ -1287,56 +1311,32 @@ The NXP MIMXRT1064-EVK is a development board for the i.MX MIMXRT1064 600 MHz 32
         </example>
       </examples>
     </board>
-    <board id="evkmimxrt1064_agm01" name="EVK-MIMXRT1064-AGM01" package="MIMXRT1064DVL6A" type="kit" version="1.0.0" full_name="EVK-MIMXRT1064 with AGM01" href="http://www.nxp.com/FRDM-STBC-AGM01">
+    <board id="evkmimxrt1064_om13588" name="EVK-MIMXRT1064-OM13588" package="MIMXRT1064DVL6A" type="kit" version="1.0.0" href="http://www.nxp.com/products/interfaces/usb-interfaces/usb-type-c-shield-board-for-kinetis-freedom-board:OM13588">
       <description>
-Sensor Toolbox Development Platform for FXAS21002C and FXOS8700C 9-Axis Solution
+USB Type-C Shield Board for Kinetis Freedom Board
         </description>
       <image type="image" path="docs/images">
-        <files mask="EVK-MIMXRT1064-AGM01.gif"/>
+        <files mask="EVK-MIMXRT1064-OM13588.gif"/>
       </image>
       <metadataSet>
         <metadata key="vendor" value="NXP"/>
         <metadata key="html">
           <specific>
             <content>
-Demonstration Custom Kit (FRDM-STBC-AGM01 Sensor Shield Development Board with EVK-MIMXRT1064 Board):
-&lt;ul&gt;
-&lt;li&gt;Enables quick and easy visualization of 9-Axis (3 Axis Gyroscope + 6-Axis E-compass) sensor data and results.&lt;/li&gt;
-&lt;/ul&gt;
+The USB Type-C shield board combined with a Kinetis Power Delivery SDK allows a system designer to tether a USB Type-C connector to any Kinetis development platform.
         </content>
           </specific>
         </metadata>
       </metadataSet>
       <memory ram_size_kb="32768" flash_size_kb="8192">
-        <memoryBlock id="BOARD_FLASH_evkmimxrt1064_agm01" name="BOARD_FLASH" addr="60000000" size="00800000" type="ExtFlash" access="RO"/>
-        <memoryBlock id="BOARD_SDRAM_evkmimxrt1064_agm01" name="BOARD_SDRAM" addr="80000000" size="02000000" type="RAM" access="RW"/>
+        <memoryBlock id="BOARD_FLASH_evkmimxrt1064_om13588" name="BOARD_FLASH" addr="60000000" size="00800000" type="ExtFlash" access="RO"/>
+        <memoryBlock id="BOARD_SDRAM_evkmimxrt1064_om13588" name="BOARD_SDRAM" addr="80000000" size="02000000" type="RAM" access="RW"/>
       </memory>
-      <examples>
-        <example id="evkmimxrt1064_agm01_fxas21002_fifo" name="fxas21002_fifo" category="issdk/sensors" path="boards/evkmimxrt1064_agm01/issdk_examples/sensors/fxas21002/fxas21002_fifo" toolchain="armgcc iar mcuxpresso mdk">
-          <external path="boards/evkmimxrt1064_agm01/issdk_examples/sensors/fxas21002/fxas21002_fifo" type="xml">
-            <files mask="fxas21002_fifo.xml"/>
-          </external>
-        </example>
-        <example id="evkmimxrt1064_agm01_fxas21002_poll" name="fxas21002_poll" category="issdk/sensors" path="boards/evkmimxrt1064_agm01/issdk_examples/sensors/fxas21002/fxas21002_poll" toolchain="armgcc iar mcuxpresso mdk">
-          <external path="boards/evkmimxrt1064_agm01/issdk_examples/sensors/fxas21002/fxas21002_poll" type="xml">
-            <files mask="fxas21002_poll.xml"/>
-          </external>
-        </example>
-        <example id="evkmimxrt1064_agm01_fxos8700_fifo" name="fxos8700_fifo" category="issdk/sensors" path="boards/evkmimxrt1064_agm01/issdk_examples/sensors/fxos8700/fxos8700_fifo" toolchain="armgcc iar mcuxpresso mdk">
-          <external path="boards/evkmimxrt1064_agm01/issdk_examples/sensors/fxos8700/fxos8700_fifo" type="xml">
-            <files mask="fxos8700_fifo.xml"/>
-          </external>
-        </example>
-        <example id="evkmimxrt1064_agm01_fxos8700_poll" name="fxos8700_poll" category="issdk/sensors" path="boards/evkmimxrt1064_agm01/issdk_examples/sensors/fxos8700/fxos8700_poll" toolchain="armgcc iar mcuxpresso mdk">
-          <external path="boards/evkmimxrt1064_agm01/issdk_examples/sensors/fxos8700/fxos8700_poll" type="xml">
-            <files mask="fxos8700_poll.xml"/>
-          </external>
-        </example>
-      </examples>
+      <examples/>
       <debug_configurations>
         <debug_configuration id_refs="com.crt.advproject.config.exe.debug com.crt.advproject.config.exe.release">
           <drivers>
-            <driver id_refs="BOARD_FLASH_evkmimxrt1064_agm01">
+            <driver id_refs="BOARD_FLASH_evkmimxrt1064_om13588">
               <driverBinary path="devices/MIMXRT1064/mcuxpresso" type="binary">
                 <files mask="MIMXRT1064.cfx"/>
               </driverBinary>
@@ -1382,6 +1382,11 @@ The MIMXRT1064 are ARM Cortex-M7 based microcontrollers for embedded application
         <evaluation_board name="evkmimxrt1064_agm01"/>
       </evaluation_boards>
       <debug_configurations>
+        <debug_configuration id_refs="com.crt.advproject.config.exe.debug com.crt.advproject.config.exe.release">
+          <params>
+            <params id="misc.options.MIMXRT1064xxxxA" name="misc.options" value="--no-packed"/>
+          </params>
+        </debug_configuration>
         <debug_configuration id_refs="com.crt.advproject.config.exe.debug com.crt.advproject.config.exe.release">
           <params>
             <params id="internal.wiretype.release.MIMXRT1064xxxxA" name="internal.wiretype" value="SWD"/>
@@ -1924,9 +1929,9 @@ The MIMXRT1064 are ARM Cortex-M7 based microcontrollers for embedded application
     </component>
     <component id="platform.drivers.xip.MIMXRT1064" name="xip" full_name="XIP Driver" type="driver" brief="XIP Driver" devices="MIMXRT1064xxxxA" version="2.0.0" user_visible="true">
       <defines>
-        <define name="XIP_BOOT_HEADER_DCD_ENABLE" value="1"/>
         <define name="XIP_EXTERNAL_FLASH" value="1"/>
         <define name="XIP_BOOT_HEADER_ENABLE" value="1"/>
+        <define name="XIP_BOOT_HEADER_DCD_ENABLE" value="1"/>
       </defines>
       <source path="devices/MIMXRT1064/xip" target_path="xip" type="src">
         <files mask="evkmimxrt1064_flexspi_nor_config.c"/>

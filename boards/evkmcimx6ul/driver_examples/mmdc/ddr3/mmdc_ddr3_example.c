@@ -1,0 +1,305 @@
+/*
+ * Copyright (c) 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016-2017 NXP
+ *
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ *
+ * o Redistributions of source code must retain the above copyright notice, this list
+ *   of conditions and the following disclaimer.
+ *
+ * o Redistributions in binary form must reproduce the above copyright notice, this
+ *   list of conditions and the following disclaimer in the documentation and/or
+ *   other materials provided with the distribution.
+ *
+ * o Neither the name of the copyright holder nor the names of its
+ *   contributors may be used to endorse or promote products derived from this
+ *   software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+#include "fsl_device_registers.h"
+#include "board.h"
+#include "fsl_debug_console.h"
+#include "fsl_mmdc.h"
+#include "pin_mux.h"
+#include "clock_config.h"
+#include "fsl_clock.h"
+/*******************************************************************************
+ * Definitions
+ ******************************************************************************/
+#define EXAMPLE_MMDC MMDC
+#define DDR_EXAMPLE_DATALEN 512
+#define EXAMPLE_DDR_BANK kMMDC_Bank8
+#define EXAMPLE_DDR_SIZE 0x40000000U
+#define EXAMPLE_RW_SIZE (4 * 1024 * 1024)
+#define EXAMPLE_DDR_ROW_WIDTH kMMDC_Row15Bits
+#define EXAMPLE_DDR_COL_WIDTH kMMDC_Col10Bits
+#define EXAMPLE_DDR_BURST_LEN kMMDC_BurstLen8
+
+/*******************************************************************************
+ * Prototypes
+ ******************************************************************************/
+/*
+*  device read and write
+*/
+static bool Device_ReadWrite(void);
+
+/*******************************************************************************
+ * Variables
+ ******************************************************************************/
+
+uint32_t ddr_writeBuffer[DDR_EXAMPLE_DATALEN]; /* ddr write buffer */
+uint32_t ddr_readBuffer[DDR_EXAMPLE_DATALEN];  /* ddr read buffer */
+
+mmdc_device_timing_t timing = {
+    .tCKE_Clocks = 3U,
+    .tCKSRE_Clocks = 5U,
+    .tCKSRX_Clocks = 5U,
+    .tRFC_Clocks = 104U,
+    .tXSR_Clocks = 108U,
+    .tXP_Clocks = 3U,
+    .tFAW_Clocks = 16U,
+    .tCL_Clocks = 6U,
+    .tMRD_Clocks = 12U,
+    .tRAS_Clocks = 14U,
+    .tWR_Clocks = 6U,
+    .tRTP_Clocks = 4U,
+    .tWTR_Clocks = 4U,
+    .tRRD_Clocks = 4U,
+    .ralat_Clocks = 5U,
+    .walat_Clocks = 0U,
+    .tRC_Clocks = 20U,
+    .tRCD_Clocks = 6U,
+    .tRP_Clocks = 6U,
+    .tRPA_Clocks = 6U,
+    .tCWL_Clocks = 5U,
+    .tRSTtoCKE_Clocks = 33U,
+    .tSDEtoRST_Clocks = 14U,
+    .tXPDLL_Clocks = 10U,
+    .tDLLK_Clocks = 512U,
+    .tXPR_Clocks = 108U,
+    .tAOFPD_Clocks = 4U,
+    .tAONPD_Clocks = 4U,
+    .tODTIdleOff_Clocks = 3U,
+    .tRTWSAME_Clocks = 2U,
+    .tWTRDIFF_Clocks = 3U,
+    .tWTWDIFF_Clocks = 3U,
+    .tRTWDIFF_Clocks = 2U,
+    .tRTRDIFF_Clocks = 2U,
+};
+
+mmdc_zq_config_t zqCal = {
+    .mode = kMMDC_ZQCaltoIODeviceLongShort,
+    .earlyCompTimer = 21U,
+    .hwZQFreq = kMMDC_ZQCalFreq1ms,
+    .cmpOutSample = 15U,
+    .tZQCl_Clocks = 256U,
+    .tZQCs_Clocks = 128U,
+    .tZQInit_Clocks = 512U,
+    .cmpOutSample = 7,
+    .hwPullDownOffset = 0U,
+    .hwPullUpOffset = 0U,
+};
+
+mmdc_fine_tuning_config_t tuning = {
+    .rDQOffset0 = 0x33333333U,
+    .rDQOffset1 = 0x33333333U,
+    .wDQOffset0 = 0xf3333333U,
+    .wDQOffset1 = 0xf3333333U,
+    .rDQDuty0 = kMMDC_DutyHighPercent50,
+    .rDQDuty1 = kMMDC_DutyHighPercent50,
+    .ddrCKDutyCtl0 = kMMDC_DutyHighPercent51_5,
+    .ddrCKDutyCtl1 = kMMDC_DutyHighPercent51_5,
+    .wDQDuty0 = kMMDC_DutyHighPercent48_5,
+    .wDQDuty1 = kMMDC_DutyHighPercent48_5,
+};
+
+mmdc_writeLeveling_calibration_config_t writeLevelingCalibration = {
+    .mode = kMMDC_CalWithPreSetValue,
+    .wLevelingOneDelay0 = 0,
+    .wLevelingHalfDelay0 = 0,
+    .wLevelingAbsDelay0 = 0x19U,
+    .wLevelingOneDelay1 = 0,
+    .wLevelingHalfDelay1 = 0,
+    .wLevelingAbsDelay1 = 0x15U,
+};
+
+mmdc_read_calibration_config_t readCalibration = {
+    .mode = kMMDC_CalWithPreSetValue, .readDelay0 = 0x3EU, .readDelay1 = 0x3AU,
+};
+
+mmdc_write_calibration_config_t writeCalibration = {
+    .mode = kMMDC_CalWithPreSetValue, .writeDelay0 = 0x2AU, .writeDelay1 = 0x2FU,
+};
+
+mmdc_readDQS_calibration_config_t readDQSCalibration = {
+    .mode = kMMDC_CalWithPreSetValue,
+    .waitCycles = kMMDC_Wait32DDRCycles,
+    .dqsGatingHalfDelay0 = 1U,
+    .dqsGatingAbsDelay0 = 0x53U,
+    .dqsGatingHalfDelay1 = 1U,
+    .dqsGatingAbsDelay1 = 0x55U,
+};
+
+/*******************************************************************************
+ * Code
+ ******************************************************************************/
+
+/*!
+ * @brief Main function
+ */
+int main(void)
+{
+    mmdc_config_t userConfig;
+    mmdc_device_config_t config;
+    mmdc_auto_refresh_t autoRefresh;
+    mmdc_power_config_t power;
+
+    /* Hardware initialize. */
+    BOARD_InitPins();
+    BOARD_BootClockRUN();
+    BOARD_InitMemory();
+    BOARD_InitDebugConsole();
+
+    if (EXAMPLE_MMDC->MDCTL & MMDC_MDCTL_SDE_0_MASK)
+    {
+        PRINTF("\r\n MMDC already initialized. \r\n");
+    }
+    else
+    {
+        /* device mode register configuration */
+        config.MR0 = 0x1520U;
+        config.MR1 = 0x4U;
+        config.MR2 = 0x200U;
+        config.MR3 = 0x0U;
+        /* auto refresh scheme comfiguration */
+        autoRefresh.refreshCnt = 0;
+        autoRefresh.refreshRate = 2;
+        autoRefresh.refreshTrigSrc = kMMDC_RefreshTrigBy64K;
+        /* power configuration */
+        power.idleClockToPS = 0x10U;
+        power.idleClockToPD0 = 0x05U;
+        power.idleClockToPrecharge0 = 0X00U;
+        power.idleClockToPD1 = 0x00U;
+        power.idleClockToPrecharge1 = 0X00U;
+        /* mmdc configuration */
+        MMDC_GetDefaultConfig(&userConfig);
+        userConfig.devSize = EXAMPLE_DDR_SIZE;
+        userConfig.devBank = EXAMPLE_DDR_BANK;
+        userConfig.devType = kMMDC_DDR3;
+        userConfig.rowWidth = EXAMPLE_DDR_ROW_WIDTH;
+        userConfig.colWidth = EXAMPLE_DDR_COL_WIDTH;
+        userConfig.burstLen = EXAMPLE_DDR_BURST_LEN;
+        userConfig.zqCalibration = &zqCal;
+        userConfig.deviceConfig[0U] = &config;
+        userConfig.timing = &timing;
+        userConfig.tuning = &tuning;
+        userConfig.readDQSCalibration[0U] = &readDQSCalibration;
+        userConfig.wLevelingCalibration[0U] = &writeLevelingCalibration;
+        userConfig.readCalibration[0U] = &readCalibration;
+        userConfig.writeCalibration[0U] = &writeCalibration;
+        userConfig.autoRefresh = &autoRefresh;
+        userConfig.powerConfig = &power;
+        userConfig.enableOnlyCS0 = true;
+
+        /* MMDC Initialization. */
+        if (MMDC_Init(EXAMPLE_MMDC, &userConfig) != kStatus_Success)
+        {
+            PRINTF("\r\n MMDC Init Failed. \r\n");
+        }
+        PRINTF("\r\n MMDC Init Success. \r\n");
+    }
+
+    if (Device_ReadWrite())
+    {
+        PRINTF("\r\n DDR Write Data and Read Data Succeed.\r\n");
+    }
+    else
+    {
+        PRINTF("\r\n DDR Write Data and Read Data Failed.\r\n");
+    }
+
+    PRINTF("\r\n DDR Example End.\r\n");
+
+    while (1)
+    {
+    }
+}
+
+static bool Device_ReadWrite(void)
+{
+    uint32_t index, i;
+    uint32_t datalen = DDR_EXAMPLE_DATALEN;
+    uint32_t rwSize = EXAMPLE_RW_SIZE;                              /* Calculate DDR size in 4 bytes. */
+    uint32_t *ddrStartAddr = (uint32_t *)MMDC_DEVICE_START_ADDRESS; /* DDR start address. */
+    bool result = true;
+
+    PRINTF("\r\n DDR work freq %d HZ\r\n", BOARD_MMDC_FREQ);
+
+    /* Prepare data and write to DDR. */
+    for (i = 0; i < rwSize / datalen; i++)
+    {
+        for (index = 0; index < datalen; index++)
+        {
+            ddr_writeBuffer[index] = index;
+            *(uint32_t *)(ddrStartAddr + index) = ddr_writeBuffer[index];
+        }
+        ddrStartAddr += datalen;
+    }
+
+    PRINTF("\r\n DDR Write finished!\r\n");
+
+    ddrStartAddr = (uint32_t *)MMDC_DEVICE_START_ADDRESS;
+
+    PRINTF("\r\n DDR Read Start, Start Address 0x%x, Data Length %d !\r\n", ddrStartAddr, datalen);
+
+    /* Read data from the DDR. */
+    for (i = 0; i < rwSize / datalen; i++)
+    {
+        for (index = 0; index < datalen; index++)
+        {
+            ddr_readBuffer[index] = *(uint32_t *)(ddrStartAddr + index);
+        }
+        ddrStartAddr += datalen;
+    }
+    PRINTF("\r\n DDR Read finished!\r\n");
+
+    PRINTF("\r\n DDR Write Data and Read Data Compare Start!\r\n");
+
+    ddrStartAddr = (uint32_t *)MMDC_DEVICE_START_ADDRESS;
+    /* Compare the two buffers. */
+    for (i = 0; i < rwSize / datalen; i++)
+    {
+        /* Compare the two buffers. */
+        if (memcmp(ddrStartAddr, ddr_writeBuffer, datalen))
+        {
+            result = false;
+
+            for (i = 0; i < datalen; i++)
+            {
+                if (ddrStartAddr[i] != ddr_writeBuffer[i])
+                {
+                    PRINTF("\r\n DDR Read/write fail @ 0x%08X!\r\n", ddrStartAddr + i);
+                }
+            }
+            break;
+        }
+        else
+        {
+            result = true;
+        }
+        ddrStartAddr += datalen;
+    }
+
+    return result;
+}

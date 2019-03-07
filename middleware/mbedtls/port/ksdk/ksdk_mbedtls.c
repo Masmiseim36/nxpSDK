@@ -27,7 +27,7 @@
 #if defined(FSL_FEATURE_SOC_DCP_COUNT) && (FSL_FEATURE_SOC_DCP_COUNT > 0)
 #include "fsl_dcp.h"
 #endif
-#if defined(FSL_FEATURE_SOC_HASH_COUNT) && (FSL_FEATURE_SOC_HASH_COUNT > 0)
+#if defined(FSL_FEATURE_SOC_HASHCRYPT_COUNT) && (FSL_FEATURE_SOC_HASHCRYPT_COUNT > 0)
 #include "fsl_hashcrypt.h"
 #endif
 #if defined(FSL_FEATURE_SOC_TRNG_COUNT) && (FSL_FEATURE_SOC_TRNG_COUNT > 0)
@@ -151,9 +151,9 @@ void CRYPTO_InitHardware(void)
     /* Initialize CASPER */
     CASPER_Init(CASPER);
 #endif
-#if defined(FSL_FEATURE_SOC_HASH_COUNT) && (FSL_FEATURE_SOC_HASH_COUNT > 0)
+#if defined(FSL_FEATURE_SOC_HASHCRYPT_COUNT) && (FSL_FEATURE_SOC_HASHCRYPT_COUNT > 0)
     /* Initialize HASHCRYPT */
-    HASHCRYPT_Init(HASH);
+    HASHCRYPT_Init(HASHCRYPT);
 #endif
     { /* Init RNG module.*/
 #if defined(FSL_FEATURE_SOC_TRNG_COUNT) && (FSL_FEATURE_SOC_TRNG_COUNT > 0)
@@ -164,7 +164,6 @@ void CRYPTO_InitHardware(void)
 
         TRNG_GetDefaultConfig(&trngConfig);
         /* Set sample mode of the TRNG ring oscillator to Von Neumann, for better random data.*/
-        trngConfig.sampleMode = kTRNG_SampleModeVonNeumann;
         /* Initialize TRNG */
         TRNG_Init(TRNG0, &trngConfig);
 #elif defined(FSL_FEATURE_SOC_RNG_COUNT) && (FSL_FEATURE_SOC_RNG_COUNT > 0)
@@ -897,17 +896,8 @@ int mbedtls_aes_crypt_cbc(mbedtls_aes_context *ctx,
                           const unsigned char *input,
                           unsigned char *output)
 {
-    uint8_t *key;
-
     if (length % 16)
         return (MBEDTLS_ERR_AES_INVALID_INPUT_LENGTH);
-
-    key = (uint8_t *)ctx->rk;
-    if (!crypto_key_is_loaded(ctx))
-    {
-        DCP_AES_SetKey(DCP, &s_dcpHandle, key, ctx->nr);
-        crypto_attach_ctx_to_key_slot(ctx, s_dcpHandle.keySlot);
-    }
 
     if (mode == MBEDTLS_AES_DECRYPT)
     {
@@ -3779,7 +3769,7 @@ void mbedtls_sha1_clone(mbedtls_sha1_context *dst, const mbedtls_sha1_context *s
 int mbedtls_sha1_starts_ret(mbedtls_sha1_context *ctx)
 {
     status_t ret = kStatus_Fail;
-    ret = HASHCRYPT_SHA_Init(HASH, ctx, kHASHCRYPT_Sha1);
+    ret = HASHCRYPT_SHA_Init(HASHCRYPT, ctx, kHASHCRYPT_Sha1);
     if (ret != kStatus_Success)
     {
         return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
@@ -3790,7 +3780,7 @@ int mbedtls_sha1_starts_ret(mbedtls_sha1_context *ctx)
 int mbedtls_internal_sha1_process(mbedtls_sha1_context *ctx, const unsigned char data[64])
 {
     status_t ret = kStatus_Fail;
-    ret = HASHCRYPT_SHA_Update(HASH, ctx, data, 64);
+    ret = HASHCRYPT_SHA_Update(HASHCRYPT, ctx, data, 64);
     if (ret != kStatus_Success)
     {
         return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
@@ -3804,7 +3794,7 @@ int mbedtls_internal_sha1_process(mbedtls_sha1_context *ctx, const unsigned char
 int mbedtls_sha1_update_ret(mbedtls_sha1_context *ctx, const unsigned char *input, size_t ilen)
 {
     status_t ret = kStatus_Fail;
-    ret = HASHCRYPT_SHA_Update(HASH, ctx, input, ilen);
+    ret = HASHCRYPT_SHA_Update(HASHCRYPT, ctx, input, ilen);
     if (ret != kStatus_Success)
     {
         return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
@@ -3819,7 +3809,7 @@ int mbedtls_sha1_finish_ret(mbedtls_sha1_context *ctx, unsigned char output[20])
 {
     status_t ret = kStatus_Fail;
     size_t outputSize = 20;
-    ret = HASHCRYPT_SHA_Finish(HASH, ctx, output, &outputSize);
+    ret = HASHCRYPT_SHA_Finish(HASHCRYPT, ctx, output, &outputSize);
     if (ret != kStatus_Success)
     {
         return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
@@ -4298,7 +4288,7 @@ int mbedtls_sha256_starts_ret(mbedtls_sha256_context *ctx, int is224)
     status_t ret = kStatus_Fail;
     if (!is224) /* SHA-224 not supported */
     {
-        ret = HASHCRYPT_SHA_Init(HASH, ctx, kHASHCRYPT_Sha256);
+        ret = HASHCRYPT_SHA_Init(HASHCRYPT, ctx, kHASHCRYPT_Sha256);
     }
     if (ret != kStatus_Success)
     {
@@ -4310,7 +4300,7 @@ int mbedtls_sha256_starts_ret(mbedtls_sha256_context *ctx, int is224)
 int mbedtls_internal_sha256_process(mbedtls_sha256_context *ctx, const unsigned char data[64])
 {
     status_t ret = kStatus_Fail;
-    ret = HASHCRYPT_SHA_Update(HASH, ctx, data, 64);
+    ret = HASHCRYPT_SHA_Update(HASHCRYPT, ctx, data, 64);
     if (ret != kStatus_Success)
     {
         return MBEDTLS_ERR_SHA256_HW_ACCEL_FAILED;
@@ -4324,7 +4314,7 @@ int mbedtls_internal_sha256_process(mbedtls_sha256_context *ctx, const unsigned 
 int mbedtls_sha256_update_ret(mbedtls_sha256_context *ctx, const unsigned char *input, size_t ilen)
 {
     status_t ret = kStatus_Fail;
-    ret = HASHCRYPT_SHA_Update(HASH, ctx, input, ilen);
+    ret = HASHCRYPT_SHA_Update(HASHCRYPT, ctx, input, ilen);
     if (ret != kStatus_Success)
     {
         return MBEDTLS_ERR_SHA256_HW_ACCEL_FAILED;
@@ -4339,7 +4329,7 @@ int mbedtls_sha256_finish_ret(mbedtls_sha256_context *ctx, unsigned char output[
 {
     status_t ret = kStatus_Fail;
     size_t outputSize = 32;
-    ret = HASHCRYPT_SHA_Finish(HASH, ctx, output, &outputSize);
+    ret = HASHCRYPT_SHA_Finish(HASHCRYPT, ctx, output, &outputSize);
     if (ret != kStatus_Success)
     {
         return MBEDTLS_ERR_SHA256_HW_ACCEL_FAILED;

@@ -83,7 +83,7 @@ mbedtls                    Author: ARM
                            Location: middleware/mbedtls                      
                            name: MBED TLS stack                              
                            URL: https://tls.mbed.org/                        
-                           version: 2.12.0                                   
+                           version: 2.13.1                                   
 
 cmsisdsp                   name: CMSIS DSP Library                           
                            Format: source code                               
@@ -228,6 +228,17 @@ multicore                  version: 2.5.0
                            Author: NXP                                       
                            name: Multicore SDK                               
                            Format: source code                               
+
+rpmsg_lite                 version: 2.0.2                                    
+                           Location: middleware/multicore/rpmsg_lite         
+                           Description: Open Asymmetric Multi Processing     
+                           (OpenAMP) framework project                       
+                           License: Open Source - BSD-3-Clause               
+                           Author: Mentor Graphics Corporation & community   
+                           contributors                                      
+                           name: RPMsg-Lite                                  
+                           Format: source code                               
+                           URL: https://github.com/OpenAMP/open-amp          
 
 erpc                       version: 1.7.1                                    
                            Location: middleware/multicore/erpc               

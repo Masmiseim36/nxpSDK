@@ -1,7 +1,7 @@
 /*
  * Copyright 2018 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -25,7 +25,7 @@
 #endif
 
 #if defined(MBEDTLS_AES_ALT)
-
+/* clang-format off */
 /*
  * 32-bit integer manipulation macros (little endian)
  */
@@ -1361,9 +1361,11 @@ int mbedtls_aes_crypt_ctr( mbedtls_aes_context *ctx,
 }
 #endif /* !MBEDTLS_AES_CRYPT_CTR_ALT */
 #endif /* MBEDTLS_CIPHER_MODE_CTR */
+/* clang-format on */
 
 /*          HASHCRYPT AES          */
 #if defined(MBEDTLS_FREESCALE_HASHCRYPT_AES)
+
 /*
  * AES key schedule (encryption)
  */
@@ -1385,8 +1387,8 @@ int mbedtls_aes_setkey_enc(mbedtls_aes_context *ctx, const unsigned char *key, u
         default:
             return (MBEDTLS_ERR_AES_INVALID_KEY_LENGTH);
     }
-    /* secret bus is marked as key address == hashcrypt base */
-    if ((uint32_t)key == (uint32_t)HASH)
+    /* secret bus is marked as key address == HASHCRYPT base */
+    if ((uint32_t)key == (uint32_t)HASHCRYPT)
     {
         ctx->keyType = kHASHCRYPT_SecretKey;
     }
@@ -1394,7 +1396,7 @@ int mbedtls_aes_setkey_enc(mbedtls_aes_context *ctx, const unsigned char *key, u
     {
         ctx->keyType = kHASHCRYPT_UserKey;
     }
-    if (kStatus_Success != HASHCRYPT_AES_SetKey(HASH, ctx, key, key_size))
+    if (kStatus_Success != HASHCRYPT_AES_SetKey(HASHCRYPT, ctx, key, key_size))
     {
         return (MBEDTLS_ERR_AES_HW_ACCEL_FAILED);
     }
@@ -1423,8 +1425,8 @@ int mbedtls_aes_setkey_dec(mbedtls_aes_context *ctx, const unsigned char *key, u
         default:
             return (MBEDTLS_ERR_AES_INVALID_KEY_LENGTH);
     }
-    /* secret bus is marked as key address == hashcrypt base */
-    if ((uint32_t)key == (uint32_t)HASH)
+    /* secret bus is marked as key address == HASHCRYPT base */
+    if ((uint32_t)key == (uint32_t)HASHCRYPT)
     {
         ctx->keyType = kHASHCRYPT_SecretKey;
     }
@@ -1432,7 +1434,7 @@ int mbedtls_aes_setkey_dec(mbedtls_aes_context *ctx, const unsigned char *key, u
     {
         ctx->keyType = kHASHCRYPT_UserKey;
     }
-    if (kStatus_Success != HASHCRYPT_AES_SetKey(HASH, ctx, key, key_size))
+    if (kStatus_Success != HASHCRYPT_AES_SetKey(HASHCRYPT, ctx, key, key_size))
     {
         return (MBEDTLS_ERR_AES_HW_ACCEL_FAILED);
     }
@@ -1445,7 +1447,7 @@ int mbedtls_aes_setkey_dec(mbedtls_aes_context *ctx, const unsigned char *key, u
  */
 int mbedtls_internal_aes_encrypt(mbedtls_aes_context *ctx, const unsigned char input[16], unsigned char output[16])
 {
-    if (kStatus_Success != HASHCRYPT_AES_EncryptEcb(HASH, ctx, input, output, 16))
+    if (kStatus_Success != HASHCRYPT_AES_EncryptEcb(HASHCRYPT, ctx, input, output, 16))
     {
         return (MBEDTLS_ERR_AES_HW_ACCEL_FAILED);
     }
@@ -1458,7 +1460,7 @@ int mbedtls_internal_aes_encrypt(mbedtls_aes_context *ctx, const unsigned char i
  */
 int mbedtls_internal_aes_decrypt(mbedtls_aes_context *ctx, const unsigned char input[16], unsigned char output[16])
 {
-    if (kStatus_Success != HASHCRYPT_AES_DecryptEcb(HASH, ctx, input, output, 16))
+    if (kStatus_Success != HASHCRYPT_AES_DecryptEcb(HASHCRYPT, ctx, input, output, 16))
     {
         return (MBEDTLS_ERR_AES_HW_ACCEL_FAILED);
     }
@@ -1484,7 +1486,7 @@ int mbedtls_aes_crypt_cbc(mbedtls_aes_context *ctx,
     {
         uint8_t tmp[16];
         memcpy(tmp, input + length - 16, 16);
-        if (kStatus_Success != HASHCRYPT_AES_DecryptCbc(HASH, ctx, input, output, length, iv))
+        if (kStatus_Success != HASHCRYPT_AES_DecryptCbc(HASHCRYPT, ctx, input, output, length, iv))
         {
             return (MBEDTLS_ERR_AES_HW_ACCEL_FAILED);
         }
@@ -1492,7 +1494,7 @@ int mbedtls_aes_crypt_cbc(mbedtls_aes_context *ctx,
     }
     else
     {
-        if (kStatus_Success != HASHCRYPT_AES_EncryptCbc(HASH, ctx, input, output, length, iv))
+        if (kStatus_Success != HASHCRYPT_AES_EncryptCbc(HASHCRYPT, ctx, input, output, length, iv))
         {
             return (MBEDTLS_ERR_AES_HW_ACCEL_FAILED);
         }
@@ -1508,15 +1510,15 @@ int mbedtls_aes_crypt_cbc(mbedtls_aes_context *ctx,
  * AES-CTR buffer encryption/decryption
  */
 int mbedtls_aes_crypt_ctr(mbedtls_aes_context *ctx,
-                                      size_t length,
-                                      size_t *nc_off,
-                                      unsigned char nonce_counter[16],
-                                      unsigned char stream_block[16],
-                                      const unsigned char *input,
-                                      unsigned char *output)
+                          size_t length,
+                          size_t *nc_off,
+                          unsigned char nonce_counter[16],
+                          unsigned char stream_block[16],
+                          const unsigned char *input,
+                          unsigned char *output)
 {
-    if (kStatus_Success != HASHCRYPT_AES_CryptCtr(HASH, ctx, input, output, length, nonce_counter, 
-                                                  stream_block, nc_off)
+    if (kStatus_Success !=
+        HASHCRYPT_AES_CryptCtr(HASHCRYPT, ctx, input, output, length, nonce_counter, stream_block, nc_off))
     {
         return (MBEDTLS_ERR_AES_HW_ACCEL_FAILED);
     }

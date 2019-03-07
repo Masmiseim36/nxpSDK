@@ -1572,6 +1572,22 @@ devices\MIMXRT1052\cmsis_drivers\fsl_lpspi_cmsis.c
                                 // RelativePath = "devices\MIMXRT1052\cmsis_drivers\fsl_lpspi_cmsis.c"
 devices\MIMXRT1052\cmsis_drivers\fsl_lpuart_cmsis.c
                                 // RelativePath = "devices\MIMXRT1052\cmsis_drivers\fsl_lpuart_cmsis.c"
+devices\MIMXRT1052\project_template\board.c
+                                // RelativePath = "devices\MIMXRT1052\project_template\board.c"
+devices\MIMXRT1052\project_template\clock_config.c
+                                // RelativePath = "devices\MIMXRT1052\project_template\clock_config.c"
+devices\MIMXRT1052\project_template\peripherals.c
+                                // RelativePath = "devices\MIMXRT1052\project_template\peripherals.c"
+devices\MIMXRT1052\project_template\pin_mux.c
+                                // RelativePath = "devices\MIMXRT1052\project_template\pin_mux.c"
+devices\MIMXRT1052\xip\evkbimxrt1050_flexspi_nor_config.c
+                                // RelativePath = "devices\MIMXRT1052\xip\evkbimxrt1050_flexspi_nor_config.c"
+devices\MIMXRT1052\xip\evkbimxrt1050_sdram_ini_dcd.c
+                                // RelativePath = "devices\MIMXRT1052\xip\evkbimxrt1050_sdram_ini_dcd.c"
+devices\MIMXRT1052\xip\fsl_flexspi_nor_boot.c
+                                // RelativePath = "devices\MIMXRT1052\xip\fsl_flexspi_nor_boot.c"
+devices\MIMXRT1052\xip\fsl_flexspi_nor_flash.c
+                                // RelativePath = "devices\MIMXRT1052\xip\fsl_flexspi_nor_flash.c"
 devices\MIMXRT1052\system_MIMXRT1052.c
                                 // RelativePath = "devices\MIMXRT1052\system_MIMXRT1052.c"
 devices\MIMXRT1061\cmsis_drivers\fsl_lpi2c_cmsis.c
@@ -2262,162 +2278,6 @@ boards\frdmk64f\cmsis_driver_examples\i2c\edma_transfer\cmsis_i2c_edma_transfer.
                                 // RelativePath = "boards\frdmk64f\cmsis_driver_examples\i2c\edma_transfer\cmsis_i2c_edma_transfer.c"
 boards\frdmk64f\cmsis_driver_examples\i2c\edma_transfer\pin_mux.c
                                 // RelativePath = "boards\frdmk64f\cmsis_driver_examples\i2c\edma_transfer\pin_mux.c"
-boards\evkmimxrt1050\demo_apps\bubble\board.c
-                                // RelativePath = "boards\evkmimxrt1050\demo_apps\bubble\board.c"
-boards\evkmimxrt1050\demo_apps\bubble\bubble.c
-                                // RelativePath = "boards\evkmimxrt1050\demo_apps\bubble\bubble.c"
-boards\evkmimxrt1050\demo_apps\bubble\clock_config.c
-                                // RelativePath = "boards\evkmimxrt1050\demo_apps\bubble\clock_config.c"
-boards\evkmimxrt1050\demo_apps\bubble\fsl_fxos.c
-                                // RelativePath = "boards\evkmimxrt1050\demo_apps\bubble\fsl_fxos.c"
-boards\evkmimxrt1050\demo_apps\bubble\pin_mux.c
-                                // RelativePath = "boards\evkmimxrt1050\demo_apps\bubble\pin_mux.c"
-boards\evkmimxrt1050\demo_apps\ecompass\board.c
-                                // RelativePath = "boards\evkmimxrt1050\demo_apps\ecompass\board.c"
-boards\evkmimxrt1050\demo_apps\ecompass\clock_config.c
-                                // RelativePath = "boards\evkmimxrt1050\demo_apps\ecompass\clock_config.c"
-boards\evkmimxrt1050\demo_apps\ecompass\ecompass.c
-                                // RelativePath = "boards\evkmimxrt1050\demo_apps\ecompass\ecompass.c"
-boards\evkmimxrt1050\demo_apps\ecompass\fsl_fxos.c
-                                // RelativePath = "boards\evkmimxrt1050\demo_apps\ecompass\fsl_fxos.c"
-boards\evkmimxrt1050\demo_apps\ecompass\pin_mux.c
-                                // RelativePath = "boards\evkmimxrt1050\demo_apps\ecompass\pin_mux.c"
-boards\evkmimxrt1050\demo_apps\flexio_pwm\board.c
-                                // RelativePath = "boards\evkmimxrt1050\demo_apps\flexio_pwm\board.c"
-boards\evkmimxrt1050\demo_apps\flexio_pwm\clock_config.c
-                                // RelativePath = "boards\evkmimxrt1050\demo_apps\flexio_pwm\clock_config.c"
-boards\evkmimxrt1050\demo_apps\flexio_pwm\flexio_pwm.c
-                                // RelativePath = "boards\evkmimxrt1050\demo_apps\flexio_pwm\flexio_pwm.c"
-boards\evkmimxrt1050\demo_apps\flexio_pwm\pin_mux.c
-                                // RelativePath = "boards\evkmimxrt1050\demo_apps\flexio_pwm\pin_mux.c"
-boards\evkmimxrt1050\demo_apps\hello_world\board.c
-                                // RelativePath = "boards\evkmimxrt1050\demo_apps\hello_world\board.c"
-boards\evkmimxrt1050\demo_apps\hello_world\clock_config.c
-                                // RelativePath = "boards\evkmimxrt1050\demo_apps\hello_world\clock_config.c"
-boards\evkmimxrt1050\demo_apps\hello_world\hello_world.c
-                                // RelativePath = "boards\evkmimxrt1050\demo_apps\hello_world\hello_world.c"
-boards\evkmimxrt1050\demo_apps\hello_world\pin_mux.c
-                                // RelativePath = "boards\evkmimxrt1050\demo_apps\hello_world\pin_mux.c"
-boards\evkmimxrt1050\demo_apps\hello_world_xip\board.c
-                                // RelativePath = "boards\evkmimxrt1050\demo_apps\hello_world_xip\board.c"
-boards\evkmimxrt1050\demo_apps\hello_world_xip\clock_config.c
-                                // RelativePath = "boards\evkmimxrt1050\demo_apps\hello_world_xip\clock_config.c"
-boards\evkmimxrt1050\demo_apps\hello_world_xip\hello_world.c
-                                // RelativePath = "boards\evkmimxrt1050\demo_apps\hello_world_xip\hello_world.c"
-boards\evkmimxrt1050\demo_apps\hello_world_xip\pin_mux.c
-                                // RelativePath = "boards\evkmimxrt1050\demo_apps\hello_world_xip\pin_mux.c"
-boards\evkmimxrt1050\demo_apps\lwip\lwip_ping\bm\board.c
-                                // RelativePath = "boards\evkmimxrt1050\demo_apps\lwip\lwip_ping\bm\board.c"
-boards\evkmimxrt1050\demo_apps\lwip\lwip_ping\bm\clock_config.c
-                                // RelativePath = "boards\evkmimxrt1050\demo_apps\lwip\lwip_ping\bm\clock_config.c"
-boards\evkmimxrt1050\demo_apps\lwip\lwip_ping\bm\fsl_phy.c
-                                // RelativePath = "boards\evkmimxrt1050\demo_apps\lwip\lwip_ping\bm\fsl_phy.c"
-boards\evkmimxrt1050\demo_apps\lwip\lwip_ping\bm\lwip_ping_bm.c
-                                // RelativePath = "boards\evkmimxrt1050\demo_apps\lwip\lwip_ping\bm\lwip_ping_bm.c"
-boards\evkmimxrt1050\demo_apps\lwip\lwip_ping\bm\pin_mux.c
-                                // RelativePath = "boards\evkmimxrt1050\demo_apps\lwip\lwip_ping\bm\pin_mux.c"
-boards\evkmimxrt1050\cmsis_driver_examples\lpuart\interrupt_transfer\board.c
-                                // RelativePath = "boards\evkmimxrt1050\cmsis_driver_examples\lpuart\interrupt_transfer\board.c"
-boards\evkmimxrt1050\cmsis_driver_examples\lpuart\interrupt_transfer\clock_config.c
-                                // RelativePath = "boards\evkmimxrt1050\cmsis_driver_examples\lpuart\interrupt_transfer\clock_config.c"
-boards\evkmimxrt1050\cmsis_driver_examples\lpuart\interrupt_transfer\cmsis_usart_interrupt_transfer.c
-                                // RelativePath = "boards\evkmimxrt1050\cmsis_driver_examples\lpuart\interrupt_transfer\cmsis_usart_interrupt_transfer.c"
-boards\evkmimxrt1050\cmsis_driver_examples\lpuart\interrupt_transfer\pin_mux.c
-                                // RelativePath = "boards\evkmimxrt1050\cmsis_driver_examples\lpuart\interrupt_transfer\pin_mux.c"
-boards\evkmimxrt1050\cmsis_driver_examples\lpuart\edma_transfer\board.c
-                                // RelativePath = "boards\evkmimxrt1050\cmsis_driver_examples\lpuart\edma_transfer\board.c"
-boards\evkmimxrt1050\cmsis_driver_examples\lpuart\edma_transfer\clock_config.c
-                                // RelativePath = "boards\evkmimxrt1050\cmsis_driver_examples\lpuart\edma_transfer\clock_config.c"
-boards\evkmimxrt1050\cmsis_driver_examples\lpuart\edma_transfer\cmsis_usart_edma_transfer.c
-                                // RelativePath = "boards\evkmimxrt1050\cmsis_driver_examples\lpuart\edma_transfer\cmsis_usart_edma_transfer.c"
-boards\evkmimxrt1050\cmsis_driver_examples\lpuart\edma_transfer\pin_mux.c
-                                // RelativePath = "boards\evkmimxrt1050\cmsis_driver_examples\lpuart\edma_transfer\pin_mux.c"
-boards\evkmimxrt1050\driver_examples\gpio\led_output\board.c
-                                // RelativePath = "boards\evkmimxrt1050\driver_examples\gpio\led_output\board.c"
-boards\evkmimxrt1050\driver_examples\gpio\led_output\clock_config.c
-                                // RelativePath = "boards\evkmimxrt1050\driver_examples\gpio\led_output\clock_config.c"
-boards\evkmimxrt1050\driver_examples\gpio\led_output\gpio_led_output.c
-                                // RelativePath = "boards\evkmimxrt1050\driver_examples\gpio\led_output\gpio_led_output.c"
-boards\evkmimxrt1050\driver_examples\gpio\led_output\pin_mux.c
-                                // RelativePath = "boards\evkmimxrt1050\driver_examples\gpio\led_output\pin_mux.c"
-boards\evkmimxrt1050\driver_examples\gpio\input_interrupt\board.c
-                                // RelativePath = "boards\evkmimxrt1050\driver_examples\gpio\input_interrupt\board.c"
-boards\evkmimxrt1050\driver_examples\gpio\input_interrupt\clock_config.c
-                                // RelativePath = "boards\evkmimxrt1050\driver_examples\gpio\input_interrupt\clock_config.c"
-boards\evkmimxrt1050\driver_examples\gpio\input_interrupt\gpio_input_interrupt.c
-                                // RelativePath = "boards\evkmimxrt1050\driver_examples\gpio\input_interrupt\gpio_input_interrupt.c"
-boards\evkmimxrt1050\driver_examples\gpio\input_interrupt\pin_mux.c
-                                // RelativePath = "boards\evkmimxrt1050\driver_examples\gpio\input_interrupt\pin_mux.c"
-boards\evkmimxrt1050\driver_examples\lpuart\polling\board.c
-                                // RelativePath = "boards\evkmimxrt1050\driver_examples\lpuart\polling\board.c"
-boards\evkmimxrt1050\driver_examples\lpuart\polling\clock_config.c
-                                // RelativePath = "boards\evkmimxrt1050\driver_examples\lpuart\polling\clock_config.c"
-boards\evkmimxrt1050\driver_examples\lpuart\polling\lpuart_polling.c
-                                // RelativePath = "boards\evkmimxrt1050\driver_examples\lpuart\polling\lpuart_polling.c"
-boards\evkmimxrt1050\driver_examples\lpuart\polling\pin_mux.c
-                                // RelativePath = "boards\evkmimxrt1050\driver_examples\lpuart\polling\pin_mux.c"
-boards\evkmimxrt1050\driver_examples\sdcard\polling\board.c
-                                // RelativePath = "boards\evkmimxrt1050\driver_examples\sdcard\polling\board.c"
-boards\evkmimxrt1050\driver_examples\sdcard\polling\clock_config.c
-                                // RelativePath = "boards\evkmimxrt1050\driver_examples\sdcard\polling\clock_config.c"
-boards\evkmimxrt1050\driver_examples\sdcard\polling\fsl_sdmmc_host.c
-                                // RelativePath = "boards\evkmimxrt1050\driver_examples\sdcard\polling\fsl_sdmmc_host.c"
-boards\evkmimxrt1050\driver_examples\sdcard\polling\pin_mux.c
-                                // RelativePath = "boards\evkmimxrt1050\driver_examples\sdcard\polling\pin_mux.c"
-boards\evkmimxrt1050\driver_examples\sdcard\polling\sdcard_polling.c
-                                // RelativePath = "boards\evkmimxrt1050\driver_examples\sdcard\polling\sdcard_polling.c"
-boards\evkmimxrt1050\driver_examples\sdcard\interrupt\board.c
-                                // RelativePath = "boards\evkmimxrt1050\driver_examples\sdcard\interrupt\board.c"
-boards\evkmimxrt1050\driver_examples\sdcard\interrupt\clock_config.c
-                                // RelativePath = "boards\evkmimxrt1050\driver_examples\sdcard\interrupt\clock_config.c"
-boards\evkmimxrt1050\driver_examples\sdcard\interrupt\fsl_sdmmc_event.c
-                                // RelativePath = "boards\evkmimxrt1050\driver_examples\sdcard\interrupt\fsl_sdmmc_event.c"
-boards\evkmimxrt1050\driver_examples\sdcard\interrupt\fsl_sdmmc_host.c
-                                // RelativePath = "boards\evkmimxrt1050\driver_examples\sdcard\interrupt\fsl_sdmmc_host.c"
-boards\evkmimxrt1050\driver_examples\sdcard\interrupt\pin_mux.c
-                                // RelativePath = "boards\evkmimxrt1050\driver_examples\sdcard\interrupt\pin_mux.c"
-boards\evkmimxrt1050\driver_examples\sdcard\interrupt\sdcard_interrupt.c
-                                // RelativePath = "boards\evkmimxrt1050\driver_examples\sdcard\interrupt\sdcard_interrupt.c"
-boards\evkmimxrt1050\driver_examples\semc\sdram\board.c
-                                // RelativePath = "boards\evkmimxrt1050\driver_examples\semc\sdram\board.c"
-boards\evkmimxrt1050\driver_examples\semc\sdram\clock_config.c
-                                // RelativePath = "boards\evkmimxrt1050\driver_examples\semc\sdram\clock_config.c"
-boards\evkmimxrt1050\driver_examples\semc\sdram\pin_mux.c
-                                // RelativePath = "boards\evkmimxrt1050\driver_examples\semc\sdram\pin_mux.c"
-boards\evkmimxrt1050\driver_examples\semc\sdram\semc_sdram.c
-                                // RelativePath = "boards\evkmimxrt1050\driver_examples\semc\sdram\semc_sdram.c"
-boards\evkmimxrt1050\driver_examples\lpuart\interrupt_transfer\board.c
-                                // RelativePath = "boards\evkmimxrt1050\driver_examples\lpuart\interrupt_transfer\board.c"
-boards\evkmimxrt1050\driver_examples\lpuart\interrupt_transfer\clock_config.c
-                                // RelativePath = "boards\evkmimxrt1050\driver_examples\lpuart\interrupt_transfer\clock_config.c"
-boards\evkmimxrt1050\driver_examples\lpuart\interrupt_transfer\lpuart_interrupt_transfer.c
-                                // RelativePath = "boards\evkmimxrt1050\driver_examples\lpuart\interrupt_transfer\lpuart_interrupt_transfer.c"
-boards\evkmimxrt1050\driver_examples\lpuart\interrupt_transfer\pin_mux.c
-                                // RelativePath = "boards\evkmimxrt1050\driver_examples\lpuart\interrupt_transfer\pin_mux.c"
-boards\evkmimxrt1050\driver_examples\flexspi\hyper_flash\polling_transfer\board.c
-                                // RelativePath = "boards\evkmimxrt1050\driver_examples\flexspi\hyper_flash\polling_transfer\board.c"
-boards\evkmimxrt1050\driver_examples\flexspi\hyper_flash\polling_transfer\clock_config.c
-                                // RelativePath = "boards\evkmimxrt1050\driver_examples\flexspi\hyper_flash\polling_transfer\clock_config.c"
-boards\evkmimxrt1050\driver_examples\flexspi\hyper_flash\polling_transfer\flexspi_hyper_flash_polling_transfer.c
-                                // RelativePath = "boards\evkmimxrt1050\driver_examples\flexspi\hyper_flash\polling_transfer\flexspi_hyper_flash_polling_transfer.c"
-boards\evkmimxrt1050\driver_examples\flexspi\hyper_flash\polling_transfer\pin_mux.c
-                                // RelativePath = "boards\evkmimxrt1050\driver_examples\flexspi\hyper_flash\polling_transfer\pin_mux.c"
-boards\evkmimxrt1050\driver_examples\flexcan\interrupt_transfer\board.c
-                                // RelativePath = "boards\evkmimxrt1050\driver_examples\flexcan\interrupt_transfer\board.c"
-boards\evkmimxrt1050\driver_examples\flexcan\interrupt_transfer\clock_config.c
-                                // RelativePath = "boards\evkmimxrt1050\driver_examples\flexcan\interrupt_transfer\clock_config.c"
-boards\evkmimxrt1050\driver_examples\flexcan\interrupt_transfer\flexcan_interrupt_transfer.c
-                                // RelativePath = "boards\evkmimxrt1050\driver_examples\flexcan\interrupt_transfer\flexcan_interrupt_transfer.c"
-boards\evkmimxrt1050\driver_examples\flexcan\interrupt_transfer\pin_mux.c
-                                // RelativePath = "boards\evkmimxrt1050\driver_examples\flexcan\interrupt_transfer\pin_mux.c"
-boards\evkbimxrt1050\rtos_examples\freertos_generic\board.c
-                                // RelativePath = "boards\evkbimxrt1050\rtos_examples\freertos_generic\board.c"
-boards\evkbimxrt1050\rtos_examples\freertos_generic\clock_config.c
-                                // RelativePath = "boards\evkbimxrt1050\rtos_examples\freertos_generic\clock_config.c"
-boards\evkbimxrt1050\rtos_examples\freertos_generic\freertos_generic.c
-                                // RelativePath = "boards\evkbimxrt1050\rtos_examples\freertos_generic\freertos_generic.c"
-boards\evkbimxrt1050\rtos_examples\freertos_generic\pin_mux.c
-                                // RelativePath = "boards\evkbimxrt1050\rtos_examples\freertos_generic\pin_mux.c"
 boards\evkbimxrt1050\driver_examples\flexspi\hyper_flash\polling_transfer\board.c
                                 // RelativePath = "boards\evkbimxrt1050\driver_examples\flexspi\hyper_flash\polling_transfer\board.c"
 boards\evkbimxrt1050\driver_examples\flexspi\hyper_flash\polling_transfer\clock_config.c
@@ -2458,6 +2318,84 @@ boards\evkbimxrt1050\driver_examples\lpspi\interrupt\lpspi_interrupt.c
                                 // RelativePath = "boards\evkbimxrt1050\driver_examples\lpspi\interrupt\lpspi_interrupt.c"
 boards\evkbimxrt1050\driver_examples\lpspi\interrupt\pin_mux.c
                                 // RelativePath = "boards\evkbimxrt1050\driver_examples\lpspi\interrupt\pin_mux.c"
+boards\evkbimxrt1050\driver_examples\gpio\led_output\board.c
+                                // RelativePath = "boards\evkbimxrt1050\driver_examples\gpio\led_output\board.c"
+boards\evkbimxrt1050\driver_examples\gpio\led_output\clock_config.c
+                                // RelativePath = "boards\evkbimxrt1050\driver_examples\gpio\led_output\clock_config.c"
+boards\evkbimxrt1050\driver_examples\gpio\led_output\gpio_led_output.c
+                                // RelativePath = "boards\evkbimxrt1050\driver_examples\gpio\led_output\gpio_led_output.c"
+boards\evkbimxrt1050\driver_examples\gpio\led_output\pin_mux.c
+                                // RelativePath = "boards\evkbimxrt1050\driver_examples\gpio\led_output\pin_mux.c"
+boards\evkbimxrt1050\driver_examples\gpio\input_interrupt\board.c
+                                // RelativePath = "boards\evkbimxrt1050\driver_examples\gpio\input_interrupt\board.c"
+boards\evkbimxrt1050\driver_examples\gpio\input_interrupt\clock_config.c
+                                // RelativePath = "boards\evkbimxrt1050\driver_examples\gpio\input_interrupt\clock_config.c"
+boards\evkbimxrt1050\driver_examples\gpio\input_interrupt\gpio_input_interrupt.c
+                                // RelativePath = "boards\evkbimxrt1050\driver_examples\gpio\input_interrupt\gpio_input_interrupt.c"
+boards\evkbimxrt1050\driver_examples\gpio\input_interrupt\pin_mux.c
+                                // RelativePath = "boards\evkbimxrt1050\driver_examples\gpio\input_interrupt\pin_mux.c"
+boards\evkbimxrt1050\driver_examples\lpuart\polling\board.c
+                                // RelativePath = "boards\evkbimxrt1050\driver_examples\lpuart\polling\board.c"
+boards\evkbimxrt1050\driver_examples\lpuart\polling\clock_config.c
+                                // RelativePath = "boards\evkbimxrt1050\driver_examples\lpuart\polling\clock_config.c"
+boards\evkbimxrt1050\driver_examples\lpuart\polling\lpuart_polling.c
+                                // RelativePath = "boards\evkbimxrt1050\driver_examples\lpuart\polling\lpuart_polling.c"
+boards\evkbimxrt1050\driver_examples\lpuart\polling\pin_mux.c
+                                // RelativePath = "boards\evkbimxrt1050\driver_examples\lpuart\polling\pin_mux.c"
+boards\evkbimxrt1050\driver_examples\sdcard\polling\board.c
+                                // RelativePath = "boards\evkbimxrt1050\driver_examples\sdcard\polling\board.c"
+boards\evkbimxrt1050\driver_examples\sdcard\polling\clock_config.c
+                                // RelativePath = "boards\evkbimxrt1050\driver_examples\sdcard\polling\clock_config.c"
+boards\evkbimxrt1050\driver_examples\sdcard\polling\fsl_sdmmc_host.c
+                                // RelativePath = "boards\evkbimxrt1050\driver_examples\sdcard\polling\fsl_sdmmc_host.c"
+boards\evkbimxrt1050\driver_examples\sdcard\polling\pin_mux.c
+                                // RelativePath = "boards\evkbimxrt1050\driver_examples\sdcard\polling\pin_mux.c"
+boards\evkbimxrt1050\driver_examples\sdcard\polling\sdcard_polling.c
+                                // RelativePath = "boards\evkbimxrt1050\driver_examples\sdcard\polling\sdcard_polling.c"
+boards\evkbimxrt1050\driver_examples\sdcard\interrupt\board.c
+                                // RelativePath = "boards\evkbimxrt1050\driver_examples\sdcard\interrupt\board.c"
+boards\evkbimxrt1050\driver_examples\sdcard\interrupt\clock_config.c
+                                // RelativePath = "boards\evkbimxrt1050\driver_examples\sdcard\interrupt\clock_config.c"
+boards\evkbimxrt1050\driver_examples\sdcard\interrupt\fsl_sdmmc_event.c
+                                // RelativePath = "boards\evkbimxrt1050\driver_examples\sdcard\interrupt\fsl_sdmmc_event.c"
+boards\evkbimxrt1050\driver_examples\sdcard\interrupt\fsl_sdmmc_host.c
+                                // RelativePath = "boards\evkbimxrt1050\driver_examples\sdcard\interrupt\fsl_sdmmc_host.c"
+boards\evkbimxrt1050\driver_examples\sdcard\interrupt\pin_mux.c
+                                // RelativePath = "boards\evkbimxrt1050\driver_examples\sdcard\interrupt\pin_mux.c"
+boards\evkbimxrt1050\driver_examples\sdcard\interrupt\sdcard_interrupt.c
+                                // RelativePath = "boards\evkbimxrt1050\driver_examples\sdcard\interrupt\sdcard_interrupt.c"
+boards\evkbimxrt1050\driver_examples\semc\sdram\board.c
+                                // RelativePath = "boards\evkbimxrt1050\driver_examples\semc\sdram\board.c"
+boards\evkbimxrt1050\driver_examples\semc\sdram\clock_config.c
+                                // RelativePath = "boards\evkbimxrt1050\driver_examples\semc\sdram\clock_config.c"
+boards\evkbimxrt1050\driver_examples\semc\sdram\pin_mux.c
+                                // RelativePath = "boards\evkbimxrt1050\driver_examples\semc\sdram\pin_mux.c"
+boards\evkbimxrt1050\driver_examples\semc\sdram\semc_sdram.c
+                                // RelativePath = "boards\evkbimxrt1050\driver_examples\semc\sdram\semc_sdram.c"
+boards\evkbimxrt1050\driver_examples\lpuart\interrupt_transfer\board.c
+                                // RelativePath = "boards\evkbimxrt1050\driver_examples\lpuart\interrupt_transfer\board.c"
+boards\evkbimxrt1050\driver_examples\lpuart\interrupt_transfer\clock_config.c
+                                // RelativePath = "boards\evkbimxrt1050\driver_examples\lpuart\interrupt_transfer\clock_config.c"
+boards\evkbimxrt1050\driver_examples\lpuart\interrupt_transfer\lpuart_interrupt_transfer.c
+                                // RelativePath = "boards\evkbimxrt1050\driver_examples\lpuart\interrupt_transfer\lpuart_interrupt_transfer.c"
+boards\evkbimxrt1050\driver_examples\lpuart\interrupt_transfer\pin_mux.c
+                                // RelativePath = "boards\evkbimxrt1050\driver_examples\lpuart\interrupt_transfer\pin_mux.c"
+boards\evkbimxrt1050\driver_examples\flexcan\interrupt_transfer\board.c
+                                // RelativePath = "boards\evkbimxrt1050\driver_examples\flexcan\interrupt_transfer\board.c"
+boards\evkbimxrt1050\driver_examples\flexcan\interrupt_transfer\clock_config.c
+                                // RelativePath = "boards\evkbimxrt1050\driver_examples\flexcan\interrupt_transfer\clock_config.c"
+boards\evkbimxrt1050\driver_examples\flexcan\interrupt_transfer\flexcan_interrupt_transfer.c
+                                // RelativePath = "boards\evkbimxrt1050\driver_examples\flexcan\interrupt_transfer\flexcan_interrupt_transfer.c"
+boards\evkbimxrt1050\driver_examples\flexcan\interrupt_transfer\pin_mux.c
+                                // RelativePath = "boards\evkbimxrt1050\driver_examples\flexcan\interrupt_transfer\pin_mux.c"
+boards\evkbimxrt1050\driver_examples\qtmr\timer\board.c
+                                // RelativePath = "boards\evkbimxrt1050\driver_examples\qtmr\timer\board.c"
+boards\evkbimxrt1050\driver_examples\qtmr\timer\clock_config.c
+                                // RelativePath = "boards\evkbimxrt1050\driver_examples\qtmr\timer\clock_config.c"
+boards\evkbimxrt1050\driver_examples\qtmr\timer\pin_mux.c
+                                // RelativePath = "boards\evkbimxrt1050\driver_examples\qtmr\timer\pin_mux.c"
+boards\evkbimxrt1050\driver_examples\qtmr\timer\qtmr_timer.c
+                                // RelativePath = "boards\evkbimxrt1050\driver_examples\qtmr\timer\qtmr_timer.c"
 boards\evkbimxrt1050\lwip_examples\lwip_dhcp\bm\board.c
                                 // RelativePath = "boards\evkbimxrt1050\lwip_examples\lwip_dhcp\bm\board.c"
 boards\evkbimxrt1050\lwip_examples\lwip_dhcp\bm\clock_config.c
@@ -2468,6 +2406,76 @@ boards\evkbimxrt1050\lwip_examples\lwip_dhcp\bm\lwip_dhcp_bm.c
                                 // RelativePath = "boards\evkbimxrt1050\lwip_examples\lwip_dhcp\bm\lwip_dhcp_bm.c"
 boards\evkbimxrt1050\lwip_examples\lwip_dhcp\bm\pin_mux.c
                                 // RelativePath = "boards\evkbimxrt1050\lwip_examples\lwip_dhcp\bm\pin_mux.c"
+boards\evkbimxrt1050\demo_apps\bubble\board.c
+                                // RelativePath = "boards\evkbimxrt1050\demo_apps\bubble\board.c"
+boards\evkbimxrt1050\demo_apps\bubble\bubble.c
+                                // RelativePath = "boards\evkbimxrt1050\demo_apps\bubble\bubble.c"
+boards\evkbimxrt1050\demo_apps\bubble\clock_config.c
+                                // RelativePath = "boards\evkbimxrt1050\demo_apps\bubble\clock_config.c"
+boards\evkbimxrt1050\demo_apps\bubble\fsl_fxos.c
+                                // RelativePath = "boards\evkbimxrt1050\demo_apps\bubble\fsl_fxos.c"
+boards\evkbimxrt1050\demo_apps\bubble\pin_mux.c
+                                // RelativePath = "boards\evkbimxrt1050\demo_apps\bubble\pin_mux.c"
+boards\evkbimxrt1050\demo_apps\ecompass\board.c
+                                // RelativePath = "boards\evkbimxrt1050\demo_apps\ecompass\board.c"
+boards\evkbimxrt1050\demo_apps\ecompass\clock_config.c
+                                // RelativePath = "boards\evkbimxrt1050\demo_apps\ecompass\clock_config.c"
+boards\evkbimxrt1050\demo_apps\ecompass\ecompass.c
+                                // RelativePath = "boards\evkbimxrt1050\demo_apps\ecompass\ecompass.c"
+boards\evkbimxrt1050\demo_apps\ecompass\fsl_fxos.c
+                                // RelativePath = "boards\evkbimxrt1050\demo_apps\ecompass\fsl_fxos.c"
+boards\evkbimxrt1050\demo_apps\ecompass\pin_mux.c
+                                // RelativePath = "boards\evkbimxrt1050\demo_apps\ecompass\pin_mux.c"
+boards\evkbimxrt1050\demo_apps\flexio_pwm\board.c
+                                // RelativePath = "boards\evkbimxrt1050\demo_apps\flexio_pwm\board.c"
+boards\evkbimxrt1050\demo_apps\flexio_pwm\clock_config.c
+                                // RelativePath = "boards\evkbimxrt1050\demo_apps\flexio_pwm\clock_config.c"
+boards\evkbimxrt1050\demo_apps\flexio_pwm\flexio_pwm.c
+                                // RelativePath = "boards\evkbimxrt1050\demo_apps\flexio_pwm\flexio_pwm.c"
+boards\evkbimxrt1050\demo_apps\flexio_pwm\pin_mux.c
+                                // RelativePath = "boards\evkbimxrt1050\demo_apps\flexio_pwm\pin_mux.c"
+boards\evkbimxrt1050\demo_apps\hello_world\board.c
+                                // RelativePath = "boards\evkbimxrt1050\demo_apps\hello_world\board.c"
+boards\evkbimxrt1050\demo_apps\hello_world\clock_config.c
+                                // RelativePath = "boards\evkbimxrt1050\demo_apps\hello_world\clock_config.c"
+boards\evkbimxrt1050\demo_apps\hello_world\hello_world.c
+                                // RelativePath = "boards\evkbimxrt1050\demo_apps\hello_world\hello_world.c"
+boards\evkbimxrt1050\demo_apps\hello_world\pin_mux.c
+                                // RelativePath = "boards\evkbimxrt1050\demo_apps\hello_world\pin_mux.c"
+boards\evkbimxrt1050\demo_apps\hello_world_xip\board.c
+                                // RelativePath = "boards\evkbimxrt1050\demo_apps\hello_world_xip\board.c"
+boards\evkbimxrt1050\demo_apps\hello_world_xip\clock_config.c
+                                // RelativePath = "boards\evkbimxrt1050\demo_apps\hello_world_xip\clock_config.c"
+boards\evkbimxrt1050\demo_apps\hello_world_xip\hello_world.c
+                                // RelativePath = "boards\evkbimxrt1050\demo_apps\hello_world_xip\hello_world.c"
+boards\evkbimxrt1050\demo_apps\hello_world_xip\pin_mux.c
+                                // RelativePath = "boards\evkbimxrt1050\demo_apps\hello_world_xip\pin_mux.c"
+boards\evkbimxrt1050\demo_apps\lwip\lwip_ping\bm\board.c
+                                // RelativePath = "boards\evkbimxrt1050\demo_apps\lwip\lwip_ping\bm\board.c"
+boards\evkbimxrt1050\demo_apps\lwip\lwip_ping\bm\clock_config.c
+                                // RelativePath = "boards\evkbimxrt1050\demo_apps\lwip\lwip_ping\bm\clock_config.c"
+boards\evkbimxrt1050\demo_apps\lwip\lwip_ping\bm\fsl_phy.c
+                                // RelativePath = "boards\evkbimxrt1050\demo_apps\lwip\lwip_ping\bm\fsl_phy.c"
+boards\evkbimxrt1050\demo_apps\lwip\lwip_ping\bm\lwip_ping_bm.c
+                                // RelativePath = "boards\evkbimxrt1050\demo_apps\lwip\lwip_ping\bm\lwip_ping_bm.c"
+boards\evkbimxrt1050\demo_apps\lwip\lwip_ping\bm\pin_mux.c
+                                // RelativePath = "boards\evkbimxrt1050\demo_apps\lwip\lwip_ping\bm\pin_mux.c"
+boards\evkbimxrt1050\cmsis_driver_examples\lpuart\interrupt_transfer\board.c
+                                // RelativePath = "boards\evkbimxrt1050\cmsis_driver_examples\lpuart\interrupt_transfer\board.c"
+boards\evkbimxrt1050\cmsis_driver_examples\lpuart\interrupt_transfer\clock_config.c
+                                // RelativePath = "boards\evkbimxrt1050\cmsis_driver_examples\lpuart\interrupt_transfer\clock_config.c"
+boards\evkbimxrt1050\cmsis_driver_examples\lpuart\interrupt_transfer\cmsis_usart_interrupt_transfer.c
+                                // RelativePath = "boards\evkbimxrt1050\cmsis_driver_examples\lpuart\interrupt_transfer\cmsis_usart_interrupt_transfer.c"
+boards\evkbimxrt1050\cmsis_driver_examples\lpuart\interrupt_transfer\pin_mux.c
+                                // RelativePath = "boards\evkbimxrt1050\cmsis_driver_examples\lpuart\interrupt_transfer\pin_mux.c"
+boards\evkbimxrt1050\cmsis_driver_examples\lpuart\edma_transfer\board.c
+                                // RelativePath = "boards\evkbimxrt1050\cmsis_driver_examples\lpuart\edma_transfer\board.c"
+boards\evkbimxrt1050\cmsis_driver_examples\lpuart\edma_transfer\clock_config.c
+                                // RelativePath = "boards\evkbimxrt1050\cmsis_driver_examples\lpuart\edma_transfer\clock_config.c"
+boards\evkbimxrt1050\cmsis_driver_examples\lpuart\edma_transfer\cmsis_usart_edma_transfer.c
+                                // RelativePath = "boards\evkbimxrt1050\cmsis_driver_examples\lpuart\edma_transfer\cmsis_usart_edma_transfer.c"
+boards\evkbimxrt1050\cmsis_driver_examples\lpuart\edma_transfer\pin_mux.c
+                                // RelativePath = "boards\evkbimxrt1050\cmsis_driver_examples\lpuart\edma_transfer\pin_mux.c"
 boards\evkmimxrt1020\driver_examples\flexspi\nor\polling_transfer\board.c
                                 // RelativePath = "boards\evkmimxrt1020\driver_examples\flexspi\nor\polling_transfer\board.c"
 boards\evkmimxrt1020\driver_examples\flexspi\nor\polling_transfer\clock_config.c

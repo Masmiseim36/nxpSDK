@@ -9690,6 +9690,1897 @@ SOURCE=.\devices\MIMXRT1064\system_MIMXRT1064.c
 SOURCE=.\devices\MIMXRT1064\system_MIMXRT1064.h
 # End Source File
 # End Group
+# Begin Group "MIMX6"
+
+# PROP Default_Filter ""
+# Begin Group "G0"
+
+# PROP Default_Filter ""
+# Begin Group "G0_Drivers"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\drivers\fsl_adc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\drivers\fsl_adc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\drivers\fsl_cache.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\drivers\fsl_cache.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\drivers\fsl_clock.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\drivers\fsl_clock.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\drivers\fsl_common.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\drivers\fsl_common.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\drivers\fsl_ecspi.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\drivers\fsl_ecspi.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\drivers\fsl_ecspi_freertos.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\drivers\fsl_ecspi_freertos.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\drivers\fsl_enet.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\drivers\fsl_enet.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\drivers\fsl_epit.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\drivers\fsl_epit.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\drivers\fsl_gpc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\drivers\fsl_gpc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\drivers\fsl_gpio.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\drivers\fsl_gpio.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\drivers\fsl_gpt.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\drivers\fsl_gpt.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\drivers\fsl_i2c.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\drivers\fsl_i2c.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\drivers\fsl_i2c_freertos.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\drivers\fsl_i2c_freertos.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\drivers\fsl_iomuxc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\drivers\fsl_mmdc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\drivers\fsl_mmdc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\drivers\fsl_pmu.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\drivers\fsl_pmu.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\drivers\fsl_pwm.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\drivers\fsl_pwm.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\drivers\fsl_pxp.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\drivers\fsl_pxp.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\drivers\fsl_qspi.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\drivers\fsl_qspi.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\drivers\fsl_sai.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\drivers\fsl_sai.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\drivers\fsl_sai_sdma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\drivers\fsl_sai_sdma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\drivers\fsl_sdma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\drivers\fsl_sdma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\drivers\fsl_snvs_hp.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\drivers\fsl_snvs_hp.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\drivers\fsl_src.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\drivers\fsl_src.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\drivers\fsl_tsc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\drivers\fsl_tsc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\drivers\fsl_uart.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\drivers\fsl_uart.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\drivers\fsl_uart_freertos.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\drivers\fsl_uart_freertos.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\drivers\fsl_usdhc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\drivers\fsl_usdhc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\drivers\fsl_wdog.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\drivers\fsl_wdog.h
+# End Source File
+# End Group
+# Begin Group "G0_Utilities"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\utilities\fsl_debug_console.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\utilities\fsl_debug_console.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\utilities\fsl_debug_console_conf.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\utilities\fsl_io.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\utilities\fsl_io.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\utilities\fsl_log.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\utilities\fsl_log.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\utilities\fsl_str.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\utilities\fsl_str.h
+# End Source File
+# End Group
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\fsl_device_registers.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\MCIMX6G0.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\MCIMX6G0_features.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\gcc\MCIMX6G0xxx05_flash.ld
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\gcc\MCIMX6G0xxx05_ram.ld
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\gcc\startup_MCIMX6G0.S
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\system_MCIMX6G0.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G0\system_MCIMX6G0.h
+# End Source File
+# End Group
+# Begin Group "G1"
+
+# PROP Default_Filter ""
+# Begin Group "G1_Drivers"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\drivers\fsl_adc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\drivers\fsl_adc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\drivers\fsl_cache.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\drivers\fsl_cache.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\drivers\fsl_clock.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\drivers\fsl_clock.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\drivers\fsl_common.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\drivers\fsl_common.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\drivers\fsl_ecspi.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\drivers\fsl_ecspi.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\drivers\fsl_ecspi_freertos.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\drivers\fsl_ecspi_freertos.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\drivers\fsl_enet.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\drivers\fsl_enet.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\drivers\fsl_epit.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\drivers\fsl_epit.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\drivers\fsl_flexcan.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\drivers\fsl_flexcan.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\drivers\fsl_gpc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\drivers\fsl_gpc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\drivers\fsl_gpio.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\drivers\fsl_gpio.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\drivers\fsl_gpt.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\drivers\fsl_gpt.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\drivers\fsl_i2c.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\drivers\fsl_i2c.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\drivers\fsl_i2c_freertos.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\drivers\fsl_i2c_freertos.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\drivers\fsl_iomuxc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\drivers\fsl_mmdc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\drivers\fsl_mmdc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\drivers\fsl_pmu.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\drivers\fsl_pmu.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\drivers\fsl_pwm.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\drivers\fsl_pwm.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\drivers\fsl_pxp.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\drivers\fsl_pxp.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\drivers\fsl_qspi.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\drivers\fsl_qspi.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\drivers\fsl_sai.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\drivers\fsl_sai.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\drivers\fsl_sai_sdma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\drivers\fsl_sai_sdma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\drivers\fsl_sdma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\drivers\fsl_sdma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\drivers\fsl_snvs_hp.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\drivers\fsl_snvs_hp.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\drivers\fsl_src.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\drivers\fsl_src.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\drivers\fsl_tsc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\drivers\fsl_tsc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\drivers\fsl_uart.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\drivers\fsl_uart.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\drivers\fsl_uart_freertos.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\drivers\fsl_uart_freertos.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\drivers\fsl_usdhc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\drivers\fsl_usdhc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\drivers\fsl_wdog.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\drivers\fsl_wdog.h
+# End Source File
+# End Group
+# Begin Group "G1_Utilities"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\utilities\fsl_debug_console.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\utilities\fsl_debug_console.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\utilities\fsl_debug_console_conf.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\utilities\fsl_io.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\utilities\fsl_io.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\utilities\fsl_log.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\utilities\fsl_log.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\utilities\fsl_str.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\utilities\fsl_str.h
+# End Source File
+# End Group
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\fsl_device_registers.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\MCIMX6G1.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\MCIMX6G1_features.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\gcc\MCIMX6G1xxx05_flash.ld
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\gcc\MCIMX6G1xxx05_ram.ld
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\gcc\MCIMX6G1xxx07_flash.ld
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\gcc\MCIMX6G1xxx07_ram.ld
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\gcc\startup_MCIMX6G1.S
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\system_MCIMX6G1.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G1\system_MCIMX6G1.h
+# End Source File
+# End Group
+# Begin Group "G2"
+
+# PROP Default_Filter ""
+# Begin Group "G2_Drivers"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_adc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_adc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_adc_5hc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_adc_5hc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_cache.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_cache.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_clock.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_clock.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_common.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_common.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_csi.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_csi.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_ecspi.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_ecspi.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_ecspi_freertos.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_ecspi_freertos.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_elcdif.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_elcdif.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_enet.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_enet.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_epit.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_epit.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_flexcan.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_flexcan.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_gpc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_gpc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_gpio.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_gpio.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_gpt.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_gpt.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_i2c.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_i2c.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_i2c_freertos.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_i2c_freertos.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_iomuxc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_mmdc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_mmdc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_pmu.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_pmu.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_pwm.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_pwm.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_pxp.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_pxp.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_qspi.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_qspi.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_sai.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_sai.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_sai_sdma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_sai_sdma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_sdma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_sdma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_snvs_hp.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_snvs_hp.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_src.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_src.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_tsc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_tsc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_uart.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_uart.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_uart_freertos.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_uart_freertos.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_usdhc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_usdhc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_wdog.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\drivers\fsl_wdog.h
+# End Source File
+# End Group
+# Begin Group "G2_Utilities"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\utilities\fsl_debug_console.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\utilities\fsl_debug_console.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\utilities\fsl_debug_console_conf.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\utilities\fsl_io.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\utilities\fsl_io.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\utilities\fsl_log.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\utilities\fsl_log.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\utilities\fsl_str.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\utilities\fsl_str.h
+# End Source File
+# End Group
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\fsl_device_registers.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\MCIMX6G2.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\MCIMX6G2_features.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\gcc\MCIMX6G2xxx05_flash.ld
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\gcc\MCIMX6G2xxx05_ram.ld
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\gcc\MCIMX6G2xxx07_flash.ld
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\gcc\MCIMX6G2xxx07_ram.ld
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\gcc\startup_MCIMX6G2.S
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\system_MCIMX6G2.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G2\system_MCIMX6G2.h
+# End Source File
+# End Group
+# Begin Group "G3"
+
+# PROP Default_Filter ""
+# Begin Group "G3_Drivers"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_adc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_adc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_adc_5hc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_adc_5hc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_cache.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_cache.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_clock.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_clock.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_common.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_common.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_csi.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_csi.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_ecspi.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_ecspi.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_ecspi_freertos.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_ecspi_freertos.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_ecspi_sdma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_ecspi_sdma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_elcdif.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_elcdif.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_enet.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_enet.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_epit.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_epit.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_flexcan.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_flexcan.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_gpc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_gpc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_gpio.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_gpio.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_gpt.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_gpt.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_i2c.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_i2c.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_i2c_freertos.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_i2c_freertos.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_iomuxc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_mmdc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_mmdc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_pmu.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_pmu.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_pwm.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_pwm.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_pxp.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_pxp.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_qspi.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_qspi.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_sai.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_sai.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_sai_sdma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_sai_sdma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_sdma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_sdma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_snvs_hp.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_snvs_hp.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_src.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_src.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_tsc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_tsc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_uart.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_uart.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_uart_freertos.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_uart_freertos.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_uart_sdma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_uart_sdma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_usdhc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_usdhc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_wdog.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\drivers\fsl_wdog.h
+# End Source File
+# End Group
+# Begin Group "G3_Utilities"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\utilities\fsl_debug_console.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\utilities\fsl_debug_console.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\utilities\fsl_debug_console_conf.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\utilities\fsl_io.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\utilities\fsl_io.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\utilities\fsl_log.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\utilities\fsl_log.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\utilities\fsl_sbrk.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\utilities\fsl_str.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\utilities\fsl_str.h
+# End Source File
+# End Group
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\fsl_device_registers.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\MCIMX6G3.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\MCIMX6G3_features.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\gcc\MCIMX6G3xxx05_flash.ld
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\gcc\MCIMX6G3xxx05_ram.ld
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\gcc\startup_MCIMX6G3.S
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\system_MCIMX6G3.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX6G3\system_MCIMX6G3.h
+# End Source File
+# End Group
+# End Group
+# Begin Group "MIMX7"
+
+# PROP Default_Filter ""
+# Begin Group "X7_CMSIS_Drivers"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\cmsis_drivers\fsl_lpi2c_cmsis.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\cmsis_drivers\fsl_lpi2c_cmsis.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\cmsis_drivers\fsl_lpspi_cmsis.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\cmsis_drivers\fsl_lpspi_cmsis.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\cmsis_drivers\fsl_lpuart_cmsis.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\cmsis_drivers\fsl_lpuart_cmsis.h
+# End Source File
+# End Group
+# Begin Group "X7_Drivers"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_acmp.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_acmp.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_cache.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_cache.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_clock.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_clock.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_common.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_common.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_crc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_crc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_dac12.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_dac12.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_dmamux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_dmamux.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_ewm.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_ewm.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_flexio.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_flexio.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_flexio_i2c_master.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_flexio_i2c_master.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_flexio_i2s.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_flexio_i2s.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_flexio_i2s_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_flexio_i2s_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_flexio_spi.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_flexio_spi.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_flexio_spi_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_flexio_spi_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_flexio_uart.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_flexio_uart.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_flexio_uart_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_flexio_uart_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_gpio.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_gpio.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_llwu.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_llwu.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_lpadc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_lpadc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_lpi2c.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_lpi2c.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_lpi2c_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_lpi2c_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_lpi2c_freertos.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_lpi2c_freertos.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_lpit.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_lpit.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_lpspi.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_lpspi.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_lpspi_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_lpspi_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_lpspi_freertos.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_lpspi_freertos.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_lptmr.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_lptmr.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_lpuart.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_lpuart.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_lpuart_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_lpuart_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_lpuart_freertos.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_lpuart_freertos.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_ltc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_ltc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_ltc_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_ltc_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_msmc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_msmc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_mu.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_mu.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_pmc0.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_port.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_qspi.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_qspi.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_qspi_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_qspi_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_sai.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_sai.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_sai_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_sai_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_sema42.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_sema42.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_snvs_hp.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_snvs_hp.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_snvs_lp.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_snvs_lp.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_tpm.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_tpm.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_trgmux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_trgmux.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_trng.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_trng.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_tstmr.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_wdog32.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_wdog32.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_xrdc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\drivers\fsl_xrdc.h
+# End Source File
+# End Group
+# Begin Group "X7_Template"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\project_template\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\project_template\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\project_template\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\project_template\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\project_template\peripherals.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\project_template\peripherals.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\project_template\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\project_template\pin_mux.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\template\RTE_Device.h
+# PROP Exclude_From_Scan -1
+# PROP BASE Exclude_From_Build 1
+# PROP Exclude_From_Build 1
+# End Source File
+# End Group
+# Begin Group "X7_Utilities"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\utilities\fsl_assert.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\utilities\fsl_debug_console.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\utilities\fsl_debug_console.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\utilities\fsl_debug_console_conf.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\utilities\fsl_notifier.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\utilities\fsl_notifier.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\utilities\fsl_sbrk.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\utilities\fsl_shell.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\utilities\fsl_shell.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\utilities\str\fsl_str.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\utilities\str\fsl_str.h
+# End Source File
+# End Group
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\fsl_device_registers.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\MCIMX7U5_cm4.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\MCIMX7U5_cm4_features.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\gcc\MCIMX7U5xxxxx_cm4_flash.ld
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\gcc\MCIMX7U5xxxxx_cm4_ram.ld
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\gcc\startup_MCIMX7U5_cm4.S
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\system_MCIMX7U5_cm4.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MCIMX7U5\system_MCIMX7U5_cm4.h
+# End Source File
+# End Group
 # End Group
 # Begin Group "boards"
 
@@ -11264,10 +13155,6 @@ SOURCE=.\boards\evkbimxrt1050\driver_examples\gpio\led_output\pin_mux.c
 SOURCE=.\boards\evkbimxrt1050\driver_examples\gpio\led_output\pin_mux.h
 # End Source File
 # End Group
-# Begin Group "ADC"
-
-# PROP Default_Filter ""
-# End Group
 # Begin Group "BEE"
 
 # PROP Default_Filter ""
@@ -11550,6 +13437,70 @@ SOURCE=.\boards\evkbimxrt1050\driver_examples\qtmr\timer\pin_mux.h
 # Begin Source File
 
 SOURCE=.\boards\evkbimxrt1050\driver_examples\qtmr\timer\qtmr_timer.c
+# End Source File
+# End Group
+# Begin Group "ADC_Interrupt"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\driver_examples\adc\interrupt\adc_interrupt.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\driver_examples\adc\interrupt\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\driver_examples\adc\interrupt\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\driver_examples\adc\interrupt\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\driver_examples\adc\interrupt\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\driver_examples\adc\interrupt\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\driver_examples\adc\interrupt\pin_mux.h
+# End Source File
+# End Group
+# Begin Group "ADC_Polling Nr. 1"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\driver_examples\adc\polling\adc_polling.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\driver_examples\adc\polling\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\driver_examples\adc\polling\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\driver_examples\adc\polling\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\driver_examples\adc\polling\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\driver_examples\adc\polling\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkbimxrt1050\driver_examples\adc\polling\pin_mux.h
 # End Source File
 # End Group
 # End Group
@@ -12208,6 +14159,382 @@ SOURCE=.\boards\evkmimxrt1064\cmsis_driver_examples\lpspi\int_b2b_transfer\slave
 SOURCE=.\boards\evkmimxrt1064\cmsis_driver_examples\lpspi\int_b2b_transfer\slave\RTE_Device.h
 # End Source File
 # End Group
+# End Group
+# End Group
+# Begin Group "EVK-MCIMX6UL"
+
+# PROP Default_Filter ""
+# Begin Group "6UL_DemoApps"
+
+# PROP Default_Filter ""
+# End Group
+# Begin Group "6UL_DriverExamples"
+
+# PROP Default_Filter ""
+# End Group
+# Begin Group "6UL_ProjectTemplate"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx6ul\project_template\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx6ul\project_template\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx6ul\project_template\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx6ul\project_template\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx6ul\project_template\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx6ul\project_template\pin_mux.h
+# End Source File
+# End Group
+# End Group
+# Begin Group "EVK-MCIMX7ULP"
+
+# PROP Default_Filter ""
+# Begin Group "7UL_CMSIS_DriverExamples"
+
+# PROP Default_Filter ""
+# End Group
+# Begin Group "7UL_DemoApps"
+
+# PROP Default_Filter ""
+# End Group
+# Begin Group "7UL_DriverExamples"
+
+# PROP Default_Filter ""
+# Begin Group "7UL_Acmp"
+
+# PROP Default_Filter ""
+# End Group
+# Begin Group "7UL_Crc"
+
+# PROP Default_Filter ""
+# End Group
+# Begin Group "7UL_DAC12"
+
+# PROP Default_Filter ""
+# End Group
+# Begin Group "7UL_EDMA"
+
+# PROP Default_Filter ""
+# End Group
+# Begin Group "7UL_EWM"
+
+# PROP Default_Filter ""
+# End Group
+# Begin Group "7UL_FlexIO"
+
+# PROP Default_Filter ""
+# End Group
+# Begin Group "7UL_GPIO"
+
+# PROP Default_Filter ""
+# End Group
+# Begin Group "7UL_LpADC"
+
+# PROP Default_Filter ""
+# Begin Group "Interrupt Nr. 2"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\driver_examples\lpadc\single_interrupt\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\driver_examples\lpadc\single_interrupt\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\driver_examples\lpadc\single_interrupt\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\driver_examples\lpadc\single_interrupt\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\driver_examples\lpadc\single_interrupt\fsl_iomuxc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\driver_examples\lpadc\single_interrupt\lpadc_single_interrupt.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\driver_examples\lpadc\single_interrupt\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\driver_examples\lpadc\single_interrupt\pin_mux.h
+# End Source File
+# End Group
+# Begin Group "Polling Nr. 1"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\driver_examples\lpadc\single_polling\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\driver_examples\lpadc\single_polling\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\driver_examples\lpadc\single_polling\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\driver_examples\lpadc\single_polling\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\driver_examples\lpadc\single_polling\fsl_iomuxc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\driver_examples\lpadc\single_polling\lpadc_single_polling.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\driver_examples\lpadc\single_polling\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\driver_examples\lpadc\single_polling\pin_mux.h
+# End Source File
+# End Group
+# End Group
+# End Group
+# Begin Group "7UL_MbedTlsExamples"
+
+# PROP Default_Filter ""
+# End Group
+# Begin Group "7UL_MulticoreExamples"
+
+# PROP Default_Filter ""
+# Begin Group "erpc_common"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\multicore_examples\erpc_common\erpc_error_handler.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\multicore_examples\erpc_common\erpc_error_handler.h
+# End Source File
+# End Group
+# Begin Group "erpc_matrix_multiply_rpmsg_rto"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\multicore_examples\erpc_matrix_multiply_rpmsg_rtos\app_srtm.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\multicore_examples\erpc_matrix_multiply_rpmsg_rtos\app_srtm.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\multicore_examples\erpc_matrix_multiply_rpmsg_rtos\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\multicore_examples\erpc_matrix_multiply_rpmsg_rtos\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\multicore_examples\erpc_matrix_multiply_rpmsg_rtos\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\multicore_examples\erpc_matrix_multiply_rpmsg_rtos\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\multicore_examples\erpc_matrix_multiply_rpmsg_rtos\erpc_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\multicore_examples\erpc_matrix_multiply_rpmsg_rtos\FreeRTOSConfig.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\multicore_examples\erpc_matrix_multiply_rpmsg_rtos\fsl_iomuxc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\multicore_examples\erpc_matrix_multiply_rpmsg_rtos\main_core1.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\multicore_examples\erpc_matrix_multiply_rpmsg_rtos\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\multicore_examples\erpc_matrix_multiply_rpmsg_rtos\pin_mux.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\multicore_examples\erpc_matrix_multiply_rpmsg_rtos\rpmsg_config.h
+# End Source File
+# End Group
+# Begin Group "rpmsg_lite_pingpong_rtos"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\multicore_examples\rpmsg_lite_pingpong_rtos\app_srtm.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\multicore_examples\rpmsg_lite_pingpong_rtos\app_srtm.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\multicore_examples\rpmsg_lite_pingpong_rtos\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\multicore_examples\rpmsg_lite_pingpong_rtos\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\multicore_examples\rpmsg_lite_pingpong_rtos\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\multicore_examples\rpmsg_lite_pingpong_rtos\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\multicore_examples\rpmsg_lite_pingpong_rtos\FreeRTOSConfig.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\multicore_examples\rpmsg_lite_pingpong_rtos\fsl_iomuxc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\multicore_examples\rpmsg_lite_pingpong_rtos\main_remote.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\multicore_examples\rpmsg_lite_pingpong_rtos\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\multicore_examples\rpmsg_lite_pingpong_rtos\pin_mux.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\multicore_examples\rpmsg_lite_pingpong_rtos\rpmsg_config.h
+# End Source File
+# End Group
+# Begin Group "rpmsg_lite_str_echo_rtos"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\multicore_examples\rpmsg_lite_str_echo_rtos\app_srtm.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\multicore_examples\rpmsg_lite_str_echo_rtos\app_srtm.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\multicore_examples\rpmsg_lite_str_echo_rtos\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\multicore_examples\rpmsg_lite_str_echo_rtos\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\multicore_examples\rpmsg_lite_str_echo_rtos\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\multicore_examples\rpmsg_lite_str_echo_rtos\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\multicore_examples\rpmsg_lite_str_echo_rtos\FreeRTOSConfig.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\multicore_examples\rpmsg_lite_str_echo_rtos\fsl_iomuxc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\multicore_examples\rpmsg_lite_str_echo_rtos\main_remote.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\multicore_examples\rpmsg_lite_str_echo_rtos\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\multicore_examples\rpmsg_lite_str_echo_rtos\pin_mux.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\multicore_examples\rpmsg_lite_str_echo_rtos\rpmsg_config.h
+# End Source File
+# End Group
+# End Group
+# Begin Group "7UL_ProjectTemplates"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\project_template\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\project_template\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\project_template\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\project_template\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\project_template\peripherals.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\project_template\peripherals.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\project_template\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\project_template\pin_mux.h
+# End Source File
 # End Group
 # End Group
 # End Group

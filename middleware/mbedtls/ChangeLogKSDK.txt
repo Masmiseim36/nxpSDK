@@ -2,12 +2,20 @@
 @page middleware_log Middleware Change Log
  
 @section mbedtls mbedTLS for MCUXpresso SDK
-  The current version of mbedTLS is based on mbedTLS 2.12.0 released 2018-July-25.
+  The current version of mbedTLS is based on mbedTLS 2.13.1 released 2018-09-06
 
+ - 2.13.1_rev1
+    - Bug fixes:
+      - Fixed incorrect macro check when skipping AES-192 or AES-256
+  
+ - 2.13.1
+    - New features:
+      - Ported mbedTLS 2.13.1 to KSDK.
+  
  - 2.12.0_rev1
-   - Bug fixes:
-      - Fix setting of AES CBC key for DCP engine when multiple AES contexts are used.
-
+   - New features:
+     - Added support for NIST P-256 elliptic curve with CASPER driver.
+  
  - 2.12.0
     - New features:
       - Ported mbedTLS 2.12.0 to KSDK.

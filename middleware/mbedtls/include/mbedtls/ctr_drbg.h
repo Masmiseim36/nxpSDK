@@ -45,9 +45,7 @@
 #define MBEDTLS_ERR_CTR_DRBG_FILE_IO_ERROR                -0x003A  /**< Read or write error in file. */
 
 #define MBEDTLS_CTR_DRBG_BLOCKSIZE          16 /**< The block size used by the cipher. */
-#ifndef MBEDTLS_CTR_DRBG_KEYSIZE
 #define MBEDTLS_CTR_DRBG_KEYSIZE            32 /**< The key size used by the cipher. */
-#endif
 #define MBEDTLS_CTR_DRBG_KEYBITS            ( MBEDTLS_CTR_DRBG_KEYSIZE * 8 ) /**< The key size for the DRBG operation, in bits. */
 #define MBEDTLS_CTR_DRBG_SEEDLEN            ( MBEDTLS_CTR_DRBG_KEYSIZE + MBEDTLS_CTR_DRBG_BLOCKSIZE ) /**< The seed length, calculated as (counter + AES key). */
 
@@ -110,7 +108,7 @@ extern "C" {
 /**
  * \brief          The CTR_DRBG context structure.
  */
-typedef struct
+typedef struct mbedtls_ctr_drbg_context
 {
     unsigned char counter[16];  /*!< The counter (V). */
     int reseed_counter;         /*!< The reseed counter. */

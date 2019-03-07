@@ -31,8 +31,8 @@
 #define HAL_UART_HANDLE_SIZE (4U)
 #endif
 
-#define HAL_UART_TRANSFER_MODE                                                               \
-    (0U) /*!< Whether enable transactional function of the uart. (0 - disable, 1 - enable) \ \
+#define HAL_UART_TRANSFER_MODE                                                                     \
+    (0U) /*!< Whether enable transactional function of the uart. (0 - disable, 1 - enable) \ \ \ \ \
             */
 
 typedef void *hal_uart_handle_t;
@@ -50,7 +50,7 @@ typedef enum _hal_uart_status
     kStatus_HAL_UartProtocolError = MAKE_STATUS(
         kStatusGroup_HAL_UART,
         6),                                                        /*!< Error occurs for Noise, Framing, Parity, etc.
-                                                                        For transcational transfer, The up layer needs to abort the transfer and then starts again */
+                                                                        For transactional transfer, The up layer needs to abort the transfer and then starts again */
     kStatus_HAL_UartError = MAKE_STATUS(kStatusGroup_HAL_UART, 7), /*!< Error occurs on HAL uart */
 } hal_uart_status_t;
 

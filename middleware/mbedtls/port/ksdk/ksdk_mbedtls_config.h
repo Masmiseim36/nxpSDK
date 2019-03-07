@@ -117,13 +117,12 @@
 #endif
 
 /* Enable HASHCRYPT use in library if there is HASHCRYPT on chip. */
-#if defined(FSL_FEATURE_SOC_HASH_COUNT) && (FSL_FEATURE_SOC_HASH_COUNT > 0)
+#if defined(FSL_FEATURE_SOC_HASHCRYPT_COUNT) && (FSL_FEATURE_SOC_HASHCRYPT_COUNT > 0)
 #include "fsl_hashcrypt.h"
 
 #define MBEDTLS_FREESCALE_HASHCRYPT_AES    /* Enable use of HASHCRYPT AES.*/
 #define MBEDTLS_FREESCALE_HASHCRYPT_SHA1   /* Enable use of HASHCRYPT SHA1.*/
 #define MBEDTLS_FREESCALE_HASHCRYPT_SHA256 /* Enable use of HASHCRYPT SHA256.*/
-
 #endif
 
 #if defined(MBEDTLS_FREESCALE_LTC_PKHA) || defined(MBEDTLS_FREESCALE_CAU3_PKHA) || defined(MBEDTLS_FREESCALE_CAAM_PKHA)
@@ -172,6 +171,10 @@
 #define MBEDTLS_FREESCALE_CASPER_PKHA /* Enable use of CASPER PKHA.*/
 #define FREESCALE_PKHA_INT_MAX_BYTES (512)
 
+#define MBEDTLS_ECP_MUL_COMB_ALT /* Alternate implementation of ecp_mul_comb() */
+#define MBEDTLS_ECP_MULADD_ALT /* Alternate implementation of mbedtls_ecp_muladd() */
+#define MBEDTLS_MCUX_CASPER_ECC /* CASPER implementation */
+
 #endif
 
 /**
@@ -186,7 +189,9 @@
 #endif
 
 
-/* Define ALT MMCAU & LTC functions. Do not change it. */
+/* Define ALT functions. */
+#define MBEDTLS_ECP_ALT
+
 #if defined(MBEDTLS_FREESCALE_MMCAU_DES) || defined(MBEDTLS_FREESCALE_LTC_DES) || defined(MBEDTLS_FREESCALE_CAAM_DES) || defined(MBEDTLS_FREESCALE_CAU3_DES)
 #define MBEDTLS_DES_ALT
 #define MBEDTLS_DES3_SETKEY_ENC_ALT
@@ -907,10 +912,10 @@ void *pvPortCalloc(size_t num, size_t size); /*Calloc for HEAP3.*/
  *
  * Comment macros to disable the curve and functions for it
  */
-#define MBEDTLS_ECP_DP_SECP192R1_ENABLED
-#define MBEDTLS_ECP_DP_SECP224R1_ENABLED
+//#define MBEDTLS_ECP_DP_SECP192R1_ENABLED
+//#define MBEDTLS_ECP_DP_SECP224R1_ENABLED
 #define MBEDTLS_ECP_DP_SECP256R1_ENABLED
-#define MBEDTLS_ECP_DP_SECP384R1_ENABLED
+//#define MBEDTLS_ECP_DP_SECP384R1_ENABLED
 //#ifndef MBEDTLS_FREESCALE_LTC_PKHA /* PKHA suports only <=512 */
 //#define MBEDTLS_ECP_DP_SECP521R1_ENABLED
 //#endif
@@ -2211,12 +2216,6 @@ void *pvPortCalloc(size_t num, size_t size); /*Calloc for HEAP3.*/
  */
 #if !(defined(MBEDTLS_AES_ENCRYPT_ALT) && defined(MBEDTLS_AES_ALT_NO_256))
 #define MBEDTLS_CTR_DRBG_C
-#elif defined(MBEDTLS_AES_ALT_NO_256)
-/* This macros will add support for CTR_DRBG using AES-128 for crypto engines
- * without AES-256 capability. Please note, that selftest will not pass when
- * this option is enabled, since AES-256 is required by the specification of CTR_DRBG. */
-//#define MBEDTLS_CTR_DRBG_KEYSIZE            16 /**< The key size used by the cipher. */
-//#define MBEDTLS_CTR_DRBG_C
 #endif
 
 /**

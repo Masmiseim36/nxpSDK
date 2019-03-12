@@ -33,18 +33,18 @@
 
 #define HAL_UART_TRANSFER_MODE                                                                     \
     (0U) /*!< Whether enable transactional function of the uart. (0 - disable, 1 - enable) \ \ \ \ \
-            */
+          */
 
 typedef void *hal_uart_handle_t;
 
 /*! @brief uart status */
 typedef enum _hal_uart_status
 {
-    kStatus_HAL_UartSuccess = kStatus_Success,                      /*!< Successfully */
-    kStatus_HAL_UartTxBusy = MAKE_STATUS(kStatusGroup_HAL_UART, 1), /*!< TX busy */
-    kStatus_HAL_UartRxBusy = MAKE_STATUS(kStatusGroup_HAL_UART, 2), /*!< RX busy */
-    kStatus_HAL_UartTxIdle = MAKE_STATUS(kStatusGroup_HAL_UART, 3), /*!< HAL uart transmitter is idle. */
-    kStatus_HAL_UartRxIdle = MAKE_STATUS(kStatusGroup_HAL_UART, 4), /*!< HAL uart receiver is idle */
+    kStatus_HAL_UartSuccess = kStatus_Success,                       /*!< Successfully */
+    kStatus_HAL_UartTxBusy  = MAKE_STATUS(kStatusGroup_HAL_UART, 1), /*!< TX busy */
+    kStatus_HAL_UartRxBusy  = MAKE_STATUS(kStatusGroup_HAL_UART, 2), /*!< RX busy */
+    kStatus_HAL_UartTxIdle  = MAKE_STATUS(kStatusGroup_HAL_UART, 3), /*!< HAL uart transmitter is idle. */
+    kStatus_HAL_UartRxIdle  = MAKE_STATUS(kStatusGroup_HAL_UART, 4), /*!< HAL uart receiver is idle */
     kStatus_HAL_UartBaudrateNotSupport =
         MAKE_STATUS(kStatusGroup_HAL_UART, 5), /*!< Baudrate is not support in current clock source */
     kStatus_HAL_UartProtocolError = MAKE_STATUS(
@@ -58,8 +58,8 @@ typedef enum _hal_uart_status
 typedef enum _hal_uart_parity_mode
 {
     kHAL_UartParityDisabled = 0x0U, /*!< Parity disabled */
-    kHAL_UartParityEven = 0x1U,     /*!< Parity even enabled */
-    kHAL_UartParityOdd = 0x2U,      /*!< Parity odd enabled */
+    kHAL_UartParityEven     = 0x1U, /*!< Parity even enabled */
+    kHAL_UartParityOdd      = 0x2U, /*!< Parity odd enabled */
 } hal_uart_parity_mode_t;
 
 /*! @brief uart stop bit count. */
@@ -107,31 +107,30 @@ extern "C" {
  */
 
 /*!
-* @brief Initializes a uart instance with the uart handle and the user configuration structure.
-*
-* This function configures the uart module with user-defined settings. The user can configure the configuration
-* structure. The parameter handle is a pointer to point to a memory space of size #HAL_UART_HANDLE_SIZE allocated by the
-* caller.
-* Example below shows how to use this API to configure the uart.
-*  @code
-*   uint8_t g_UartHandleBuffer[HAL_UART_HANDLE_SIZE];
-*   hal_uart_handle_t g_UartHandle = &g_UartHandleBuffer[0];
-*   hal_uart_config_t config;
-*   config.srcClock_Hz = 48000000;
-*   config.baudRate_Bps = 115200U;
-*   config.parityMode = kHAL_UartParityDisabled;
-*   config.stopBitCount = kHAL_UartOneStopBit;
-*   config.enableRx = 1;
-*   config.enableTx = 1;
-*   config.instance = 0;
-*   HAL_UartInit(g_UartHandle, &config);
-*  @endcode
-*
-* @param handle Pointer to point to a memory space of size #HAL_UART_HANDLE_SIZE allocated by the caller.
-* @param config Pointer to user-defined configuration structure.
-* @retval kStatus_HAL_UartBaudrateNotSupport Baudrate is not support in current clock source.
-* @retval kStatus_HAL_UartSuccess uart initialization succeed
-*/
+ * @brief Initializes a uart instance with the uart handle and the user configuration structure.
+ *
+ * This function configures the uart module with user-defined settings. The user can configure the configuration
+ * structure. The parameter handle is a pointer to point to a memory space of size #HAL_UART_HANDLE_SIZE allocated by
+ * the caller. Example below shows how to use this API to configure the uart.
+ *  @code
+ *   uint8_t g_UartHandleBuffer[HAL_UART_HANDLE_SIZE];
+ *   hal_uart_handle_t g_UartHandle = &g_UartHandleBuffer[0];
+ *   hal_uart_config_t config;
+ *   config.srcClock_Hz = 48000000;
+ *   config.baudRate_Bps = 115200U;
+ *   config.parityMode = kHAL_UartParityDisabled;
+ *   config.stopBitCount = kHAL_UartOneStopBit;
+ *   config.enableRx = 1;
+ *   config.enableTx = 1;
+ *   config.instance = 0;
+ *   HAL_UartInit(g_UartHandle, &config);
+ *  @endcode
+ *
+ * @param handle Pointer to point to a memory space of size #HAL_UART_HANDLE_SIZE allocated by the caller.
+ * @param config Pointer to user-defined configuration structure.
+ * @retval kStatus_HAL_UartBaudrateNotSupport Baudrate is not support in current clock source.
+ * @retval kStatus_HAL_UartSuccess uart initialization succeed
+ */
 hal_uart_status_t HAL_UartInit(hal_uart_handle_t handle, hal_uart_config_t *config);
 
 /*!

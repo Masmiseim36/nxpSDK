@@ -90,7 +90,7 @@ static void Serial_UartCallback(hal_uart_handle_t handle, hal_uart_status_t stat
             serialUartHandle->rx.callback(serialUartHandle->rx.callbackParam, &msg, kStatus_SerialManager_Success);
         }
 #if (defined(HAL_UART_TRANSFER_MODE) && (HAL_UART_TRANSFER_MODE > 0U))
-        transfer.data = &serialUartHandle->rx.readBuffer[0];
+        transfer.data     = &serialUartHandle->rx.readBuffer[0];
         transfer.dataSize = sizeof(serialUartHandle->rx.readBuffer);
         if (kStatus_HAL_UartSuccess ==
             HAL_UartTransferReceiveNonBlocking(((hal_uart_handle_t)&serialUartHandle->usartHandleBuffer[0]), &transfer))
@@ -142,16 +142,16 @@ serial_manager_status_t Serial_UartInit(serial_handle_t serialHandle, void *seri
         return kStatus_SerialManager_Error;
     }
 
-    uartConfig = (serial_port_uart_config_t *)serialConfig;
+    uartConfig       = (serial_port_uart_config_t *)serialConfig;
     serialUartHandle = (serial_uart_state_t *)serialHandle;
 
     config.baudRate_Bps = uartConfig->baudRate;
-    config.parityMode = (hal_uart_parity_mode_t)uartConfig->parityMode;
+    config.parityMode   = (hal_uart_parity_mode_t)uartConfig->parityMode;
     config.stopBitCount = (hal_uart_stop_bit_count_t)uartConfig->stopBitCount;
-    config.enableRx = uartConfig->enableRx;
-    config.enableTx = uartConfig->enableTx;
-    config.srcClock_Hz = uartConfig->clockRate;
-    config.instance = uartConfig->instance;
+    config.enableRx     = uartConfig->enableRx;
+    config.enableTx     = uartConfig->enableTx;
+    config.srcClock_Hz  = uartConfig->clockRate;
+    config.instance     = uartConfig->instance;
 
     if (kStatus_HAL_UartSuccess != HAL_UartInit(((hal_uart_handle_t)&serialUartHandle->usartHandleBuffer[0]), &config))
     {
@@ -176,7 +176,7 @@ serial_manager_status_t Serial_UartInit(serial_handle_t serialHandle, void *seri
     {
         serialUartHandle->rx.busy = 1U;
 #if (defined(HAL_UART_TRANSFER_MODE) && (HAL_UART_TRANSFER_MODE > 0U))
-        transfer.data = &serialUartHandle->rx.readBuffer[0];
+        transfer.data     = &serialUartHandle->rx.readBuffer[0];
         transfer.dataSize = sizeof(serialUartHandle->rx.readBuffer);
         if (kStatus_HAL_UartSuccess !=
             HAL_UartTransferReceiveNonBlocking(((hal_uart_handle_t)&serialUartHandle->usartHandleBuffer[0]), &transfer))
@@ -245,7 +245,7 @@ serial_manager_status_t Serial_UartWrite(serial_handle_t serialHandle, uint8_t *
     serialUartHandle->tx.length = length;
 
 #if (defined(HAL_UART_TRANSFER_MODE) && (HAL_UART_TRANSFER_MODE > 0U))
-    transfer.data = buffer;
+    transfer.data     = buffer;
     transfer.dataSize = length;
     if (kStatus_HAL_UartSuccess !=
         HAL_UartTransferSendNonBlocking(((hal_uart_handle_t)&serialUartHandle->usartHandleBuffer[0]), &transfer))
@@ -304,8 +304,8 @@ serial_manager_status_t Serial_UartCancelWrite(serial_handle_t serialHandle)
 
     serialUartHandle = (serial_uart_state_t *)serialHandle;
 
-    primask = DisableGlobalIRQ();
-    isBusy = serialUartHandle->tx.busy;
+    primask                   = DisableGlobalIRQ();
+    isBusy                    = serialUartHandle->tx.busy;
     serialUartHandle->tx.busy = 0U;
     EnableGlobalIRQ(primask);
 
@@ -336,7 +336,7 @@ serial_manager_status_t Serial_UartInstallTxCallback(serial_handle_t serialHandl
 
     serialUartHandle = (serial_uart_state_t *)serialHandle;
 
-    serialUartHandle->tx.callback = callback;
+    serialUartHandle->tx.callback      = callback;
     serialUartHandle->tx.callbackParam = callbackParam;
 
     return kStatus_SerialManager_Success;
@@ -352,7 +352,7 @@ serial_manager_status_t Serial_UartInstallRxCallback(serial_handle_t serialHandl
 
     serialUartHandle = (serial_uart_state_t *)serialHandle;
 
-    serialUartHandle->rx.callback = callback;
+    serialUartHandle->rx.callback      = callback;
     serialUartHandle->rx.callbackParam = callbackParam;
 
     return kStatus_SerialManager_Success;

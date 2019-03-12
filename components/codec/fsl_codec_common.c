@@ -104,7 +104,7 @@ status_t CODEC_I2C_ModifyReg(uint8_t i2cAddr,
 status_t CODEC_Init(codec_handle_t *handle, codec_config_t *config)
 {
     /* Set the handle information */
-    handle->I2C_SendFunc = config->I2C_SendFunc;
+    handle->I2C_SendFunc    = config->I2C_SendFunc;
     handle->I2C_ReceiveFunc = config->I2C_ReceiveFunc;
     memcpy(&handle->op, &config->op, sizeof(codec_operation_t));
     return handle->op.Init(handle, config->codecConfig);

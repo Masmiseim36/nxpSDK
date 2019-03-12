@@ -29,14 +29,14 @@ typedef status_t (*codec_i2c_receive_func_t)(
 /*! @brief CODEC device register address type. */
 typedef enum _codec_reg_addr
 {
-    kCODEC_RegAddr8Bit = 1U,  /*!< 8-bit register address.  */
+    kCODEC_RegAddr8Bit  = 1U, /*!< 8-bit register address.  */
     kCODEC_RegAddr16Bit = 2U, /*!< 16-bit register address. */
 } codec_reg_addr_t;
 
 /*! @brief CODEC device register width. */
 typedef enum _codec_reg_width
 {
-    kCODEC_RegWidth8Bit = 1U,  /*!< 8-bit register width.  */
+    kCODEC_RegWidth8Bit  = 1U, /*!< 8-bit register width.  */
     kCODEC_RegWidth16Bit = 2U, /*!< 16-bit register width. */
     kCODEC_RegWidth32Bit = 4U, /*!< 32-bit register width. */
 } codec_reg_width_t;
@@ -44,11 +44,11 @@ typedef enum _codec_reg_width
 /*! @brief AUDIO format definition. */
 typedef enum _codec_protocol
 {
-    kCODEC_BusI2S = 0x0,            /*!< I2S type */
-    kCODEC_BusLeftJustified = 0x1,  /*!< Left justified mode */
+    kCODEC_BusI2S            = 0x0, /*!< I2S type */
+    kCODEC_BusLeftJustified  = 0x1, /*!< Left justified mode */
     kCODEC_BusRightJustified = 0x2, /*!< Right justified mode */
-    kCODEC_BusPCMA = 0x3,           /*!< PCM A mode */
-    kCODEC_BusPCMB = 0x4            /*!< PCM B mode */
+    kCODEC_BusPCMA           = 0x3, /*!< PCM A mode */
+    kCODEC_BusPCMB           = 0x4  /*!< PCM B mode */
 } codec_protocol_t;
 
 typedef struct _audio_format
@@ -62,9 +62,9 @@ typedef enum
     kAUDIO_Stereo16Bits = 0,
     kAUDIO_Stereo24Bits = 1,
     kAUDIO_Stereo32Bits = 2,
-    kAUDIO_DSD8bits = 48,
-    kAUDIO_DSD16bits = 49,
-    kAUDIO_DSD32bits = 50,
+    kAUDIO_DSD8bits     = 48,
+    kAUDIO_DSD16bits    = 49,
+    kAUDIO_DSD32bits    = 50,
 } audio_format_type_t;
 
 /*!@brief Define the format numbers used in the SDK. */

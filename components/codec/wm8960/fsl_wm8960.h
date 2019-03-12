@@ -192,52 +192,52 @@
 /*! @brief Modules in WM8960 board. */
 typedef enum _WM8960_module
 {
-    kWM8960_ModuleADC = 0x0,     /*!< ADC module in WM8960 */
-    kWM8960_ModuleDAC = 0x1,     /*!< DAC module in WM8960 */
-    kWM8960_ModuleVREF = 0x2,    /*!< VREF module */
-    kWM8960_ModuleHP = 0x03,     /*!< Headphone */
-    kWM8960_ModuleMICB = 0x4,    /*!< Mic bias */
-    kWM8960_ModuleMIC = 0x5,     /*!< Input Mic */
-    kWM8960_ModuleLineIn = 0x6,  /*!< Analog in PGA  */
-    kWM8960_ModuleLineOut = 0x7, /*!< Line out module */
-    kWM8960_ModuleSpeaker = 0x8, /*!< Speaker module */
-    kWM8960_ModuleOMIX = 0x9,    /*!< Output mixer */
+    kWM8960_ModuleADC     = 0x0,  /*!< ADC module in WM8960 */
+    kWM8960_ModuleDAC     = 0x1,  /*!< DAC module in WM8960 */
+    kWM8960_ModuleVREF    = 0x2,  /*!< VREF module */
+    kWM8960_ModuleHP      = 0x03, /*!< Headphone */
+    kWM8960_ModuleMICB    = 0x4,  /*!< Mic bias */
+    kWM8960_ModuleMIC     = 0x5,  /*!< Input Mic */
+    kWM8960_ModuleLineIn  = 0x6,  /*!< Analog in PGA  */
+    kWM8960_ModuleLineOut = 0x7,  /*!< Line out module */
+    kWM8960_ModuleSpeaker = 0x8,  /*!< Speaker module */
+    kWM8960_ModuleOMIX    = 0x9,  /*!< Output mixer */
 } wm8960_module_t;
 
 /*!
-* @brief WM8960 data route.
-* Only provide some typical data route, not all route listed.
-* Note: Users cannot combine any routes, once a new route is set, the previous one would be replaced.
-*/
+ * @brief WM8960 data route.
+ * Only provide some typical data route, not all route listed.
+ * Note: Users cannot combine any routes, once a new route is set, the previous one would be replaced.
+ */
 typedef enum _wm8960_route
 {
-    kWM8960_RouteBypass = 0x0,            /*!< LINEIN->Headphone. */
-    kWM8960_RoutePlayback = 0x1,          /*!<  I2SIN->DAC->Headphone. */
+    kWM8960_RouteBypass            = 0x0, /*!< LINEIN->Headphone. */
+    kWM8960_RoutePlayback          = 0x1, /*!<  I2SIN->DAC->Headphone. */
     kWM8960_RoutePlaybackandRecord = 0x2, /*!< I2SIN->DAC->Headphone, LINEIN->ADC->I2SOUT. */
-    kWM8960_RouteRecord = 0x5             /*!< LINEIN->ADC->I2SOUT. */
+    kWM8960_RouteRecord            = 0x5  /*!< LINEIN->ADC->I2SOUT. */
 } wm8960_route_t;
 
 /*!
-* @brief The audio data transfer protocol choice.
-* WM8960 only supports I2S format and PCM format.
-*/
+ * @brief The audio data transfer protocol choice.
+ * WM8960 only supports I2S format and PCM format.
+ */
 typedef enum _wm8960_protocol
 {
-    kWM8960_BusI2S = 0x0,            /*!< I2S type */
-    kWM8960_BusLeftJustified = 0x1,  /*!< Left justified mode */
+    kWM8960_BusI2S            = 0x0, /*!< I2S type */
+    kWM8960_BusLeftJustified  = 0x1, /*!< Left justified mode */
     kWM8960_BusRightJustified = 0x2, /*!< Right justified mode */
-    kWM8960_BusPCMA = 0x3,           /*!< PCM A mode */
-    kWM8960_BusPCMB = 0x4            /*!< PCM B mode */
+    kWM8960_BusPCMA           = 0x3, /*!< PCM A mode */
+    kWM8960_BusPCMB           = 0x4  /*!< PCM B mode */
 } wm8960_protocol_t;
 
 typedef enum _wm8960_input
 {
-    kWM8960_InputClosed = 0x0,                /*!< Input device is closed */
-    kWM8960_InputSingleEndedMic = 0x1,        /*!< Input as single ended mic, only use L/RINPUT1 */
+    kWM8960_InputClosed                = 0x0, /*!< Input device is closed */
+    kWM8960_InputSingleEndedMic        = 0x1, /*!< Input as single ended mic, only use L/RINPUT1 */
     kWM8960_InputDifferentialMicInput2 = 0x2, /*!< Input as differential mic, use L/RINPUT1 and L/RINPUT2 */
     kWM8960_InputDifferentialMicInput3 = 0x3, /*!< Input as differential mic, use L/RINPUT1 and L/RINPUT3*/
-    kWM8960_InputLineINPUT2 = 0x4,            /*!< Input as line input, only use L/RINPUT2 */
-    kWM8960_InputLineINPUT3 = 0x5             /*!< Input as line input, only use L/RINPUT3 */
+    kWM8960_InputLineINPUT2            = 0x4, /*!< Input as line input, only use L/RINPUT2 */
+    kWM8960_InputLineINPUT3            = 0x5  /*!< Input as line input, only use L/RINPUT3 */
 } wm8960_input_t;
 
 /*! @brief Initialize structure of WM8960 */

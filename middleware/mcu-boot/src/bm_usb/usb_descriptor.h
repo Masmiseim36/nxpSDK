@@ -25,13 +25,59 @@
  * For Kibble HID configurations
  *******************************************************************************/
 
-#define BL_MIN_PACKET_SIZE (kMinUsbHidPacketBufferSize)
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// ROM need to fill in the report size for each endpoints (1,2,3,4)
+//  See g_hid_generic_report_descriptor[] for more details.
+//  SW needs to fill in the descriptor by using
+//                   - HID_USAGE_HIDTC_DATA_OUT(__id, __count, __size)
+//                   - HID_USAGE_HIDTC_DATA_IN(__id, __count, __size)
+//
+//  (__size * __count) / 8(bits) = BL_ACTUAL_REPORT_SIZE
+//  Considering that both __size and __count are just 1-bit field,
+//  The formula of calculation for HID related fields is as follows:
+//  For HID communication: The wMaxPacketSize = BL_ACTUAL_REPORT_SIZE + 1
+//  BL_HS_REPORT_SIZE * BL_HS_CONFIG_REPORT_SIZE = BL_ACTUAL_REPORT_SIZE * 8 (bits)
+//  In which:
+//  - __size = BL_xS_CONFIG_REPORT_SIZE = 8*BL_CONFIG_REPORT_SIZE_MULTIPLER (4 < BL_CONFIG_REPORT_SIZE_MULTIPLER < 64)
+//  - __count = BL_HS_REPORT_SIZE = BL_ACTUAL_REPORT_SIZE/BL_CONFIG_REPORT_SIZE_MULTIPLER(0 < BL_HS_REPORT_SIZE < 256)
+//
+//  For FS HID, due to the wMaxPacketSize <= 64
+//      -   The BL_FS_CONFIG_REPORT_SIZE can be just 8
+//      -   The BL_FS_REPORT_SIZE can be (BL_MIN_PACKET_SIZE + BL_PACKET_SIZE_HEADER_SIZE)
+//
+//  For HS HID, due to the wMaxPacket can be up to 1024
+//      -  The BL_HS_CONFIG_REPORT_SIZE and BL_HS_REPORT_SIZE needs to be selected by above formula. Some typical
+//          values are listed below.
+//
+//
+//          -- Note--:
+//          In later wMaxPacketSize configuration, the wMaxPacketSize must be at least :
+//          (BL_ACTUAL_REPORT_SIZE + 1)
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#define BL_MIN_PACKET_SIZE (BL_EXPANDED_USB_HID_PACKET_SIZE)
 #define BL_PACKET_SIZE_HEADER_SIZE (3) // alignment byte + length lsb + length msb (does not include report id)
 
+#if (BL_MIN_PACKET_SIZE == 1017) || (BL_MIN_PACKET_SIZE == 1012)
 #define BL_CONFIG_REPORT_SIZE_MULTIPLER (5)
+#elif(BL_MIN_PACKET_SIZE == 1019)
+#define BL_CONFIG_REPORT_SIZE_MULTIPLER (7)
+#endif
+
 #define BL_ACTUAL_REPORT_SIZE (BL_MIN_PACKET_SIZE + BL_PACKET_SIZE_HEADER_SIZE)
 #define BL_FS_REPORT_SIZE BL_ACTUAL_REPORT_SIZE
-#define BL_HS_REPORT_SIZE ((BL_ACTUAL_REPORT_SIZE + (BL_CONFIG_REPORT_SIZE_MULTIPLER - 1)) / BL_CONFIG_REPORT_SIZE_MULTIPLER)
+#define BL_HS_REPORT_SIZE (BL_ACTUAL_REPORT_SIZE / BL_CONFIG_REPORT_SIZE_MULTIPLER)
+
+// Static check for the validity of BL_ACTUAL_REPORT_SIZE and BL_CONFIG_REPORT_SIZE_MULTIPLER
+#if (BL_ACTUAL_REPORT_SIZE > 63)
+#if (BL_HS_REPORT_SIZE * BL_CONFIG_REPORT_SIZE_MULTIPLER != BL_ACTUAL_REPORT_SIZE)
+#error BL_ACTUAL_REPORT_SIZE must be divisible by BL_CONFIG_REPORT_SIZE_MULTIPLER
+#endif
+#if (BL_CONFIG_REPORT_SIZE_MULTIPLER < 5) || (BL_CONFIG_REPORT_SIZE_MULTIPLER > 63)
+#error BL_CONFIG_REPORT_SIZE_MULTIPLER must be greater than 4 and less than 64
+#endif
+#endif
 
 /*******************************************************************************
  * For generic HID
@@ -125,15 +171,35 @@
 #define USB_HID_GENERIC_SUBCLASS (0x00)
 #define USB_HID_GENERIC_PROTOCOL (0x00)
 
-#define HS_HID_GENERIC_INTERRUPT_OUT_PACKET_SIZE (BL_ACTUAL_REPORT_SIZE + 1)
-#define FS_HID_GENERIC_INTERRUPT_OUT_PACKET_SIZE (BL_ACTUAL_REPORT_SIZE + 1)
-#define HS_HID_GENERIC_INTERRUPT_OUT_INTERVAL (0x01) /* 2^(1-1) = 125us */
-#define FS_HID_GENERIC_INTERRUPT_OUT_INTERVAL (0x01)
-
-#define HS_HID_GENERIC_INTERRUPT_IN_PACKET_SIZE (BL_ACTUAL_REPORT_SIZE + 1)
-#define FS_HID_GENERIC_INTERRUPT_IN_PACKET_SIZE (BL_ACTUAL_REPORT_SIZE + 1)
-#define HS_HID_GENERIC_INTERRUPT_IN_INTERVAL (0x01) /* 2^(1-1) = 125us */
-#define FS_HID_GENERIC_INTERRUPT_IN_INTERVAL (0x01)
+/*
+ * o Configure wMaxPacketSize, Maximum packet size this endpoint is capable of
+ *   sending or receiving when this configuration is selected;
+ * o Configure bInterval, Interval for polling endpoint for data transfers.
+ *   Expressed in frames or microframes depending on the device operating
+ *   speed (i.e., either 1 millisecond or 125 ¦Ìs units),For interrupt endpoints,
+ *   the bInterval value is used as the exponent for a 2^(bInterval-1) value;
+ *   High-speed endpoints can specify a desired period 2^(bInterval-1)x125 ¦Ìs,
+ *   where bInterval value is in the range 1 to (including)16, and 2^(bInterval-1)x1ms
+ *   for full-speed where the value may be from 1 to 255;
+ * o For the HS/FS USB-HID devices, the max supported usb-hid device
+ *	 numbers(Num) in one usb hub are calculated as follows:
+ *   Num = (T_DRAT * Period * Percentage / endpointNumbers) / wMaxPacketSize
+ *   Where the high-speed and full-speed data rate (T_DRAT) are nominally
+ *	 480.00 Mb/s, 12.00 Mb/s. High-speed endpoints can be allocated at most
+ *   80%(Percentage) of a microframe for periodic transfers. The USB requires that
+ *   no more than 90%(Percentage) of any frame be allocated for periodic full-speed
+ *   transfers, and the transfer speed is calculated as wMaxPacketSize / Period.
+ *   Period is calculated as 2^(bInterval-1) * (frames or microframes).
+ */
+#define USB_HID_REPORT_ID_SIZE (1)
+#define HS_HID_GENERIC_INTERRUPT_OUT_PACKET_SIZE (BL_ACTUAL_REPORT_SIZE + USB_HID_REPORT_ID_SIZE)
+#define FS_HID_GENERIC_INTERRUPT_OUT_PACKET_SIZE (BL_ACTUAL_REPORT_SIZE + USB_HID_REPORT_ID_SIZE)
+#define HS_HID_GENERIC_INTERRUPT_OUT_INTERVAL (0x02) /* 2^(2-1) *0.125ms = 0.25ms */
+#define FS_HID_GENERIC_INTERRUPT_OUT_INTERVAL (0x01) /* 2^(1-1) *1ms = 1ms */
+#define HS_HID_GENERIC_INTERRUPT_IN_PACKET_SIZE (BL_ACTUAL_REPORT_SIZE + USB_HID_REPORT_ID_SIZE)
+#define FS_HID_GENERIC_INTERRUPT_IN_PACKET_SIZE (BL_ACTUAL_REPORT_SIZE + USB_HID_REPORT_ID_SIZE)
+#define HS_HID_GENERIC_INTERRUPT_IN_INTERVAL (0x02) /* 2^(2-1) *0.125ms = 0.25ms */
+#define FS_HID_GENERIC_INTERRUPT_IN_INTERVAL (0x01) /* 2^(1-1) *1ms = 1ms */
 
 #if (USB_DEVICE_CONFIG_HID == 1) && (USB_DEVICE_CONFIG_MSC == 1)
 #define USB_COMPOSITE_INTERFACE_COUNT (USB_HID_GENERIC_INTERFACE_COUNT + USB_MSC_INTERFACE_COUNT)

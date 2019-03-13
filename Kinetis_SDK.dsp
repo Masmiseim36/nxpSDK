@@ -14878,6 +14878,42 @@ SOURCE=.\boards\evkmimxrt1064\cmsis_driver_examples\lpspi\int_b2b_transfer\slave
 # Begin Group "6UL_DriverExamples"
 
 # PROP Default_Filter ""
+# Begin Group "UART_Interrupt"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx6ul\driver_examples\uart\interrupt\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx6ul\driver_examples\uart\interrupt\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx6ul\driver_examples\uart\interrupt\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx6ul\driver_examples\uart\interrupt\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx6ul\driver_examples\uart\interrupt\clock_config_ocram.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx6ul\driver_examples\uart\interrupt\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx6ul\driver_examples\uart\interrupt\pin_mux.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx6ul\driver_examples\uart\interrupt\uart_interrupt.c
+# End Source File
+# End Group
 # End Group
 # Begin Group "6UL_ProjectTemplate"
 

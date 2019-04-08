@@ -12,6 +12,15 @@
 #include "sslsrv_port.h"
 #include "sslsrv_supp.h"
 
+#if defined(MBEDTLS_THREADING_C)
+#include "mbedtls/threading.h"
+
+extern void aws_mbedtls_mutex_init(mbedtls_threading_mutex_t *mutex);
+extern void aws_mbedtls_mutex_free(mbedtls_threading_mutex_t *mutex);
+extern int aws_mbedtls_mutex_lock(mbedtls_threading_mutex_t *mutex);
+extern int aws_mbedtls_mutex_unlock(mbedtls_threading_mutex_t *mutex);
+#endif
+
 #if defined(MBEDTLS_DEBUG_C)
 /* Mbedtls debug */
 static void my_debug(void *ctx, int level, const char *file, int line, const char *str)
@@ -34,6 +43,11 @@ sslsrv_tls_ctx_t sslsrv_tls_init(const SSLSRV_TLS_PARAM_STRUCT *params)
         ctx = sslsrv_mem_alloc_zero(sizeof(*ctx));
         if (ctx)
         {
+#if defined(MBEDTLS_THREADING_C)
+            mbedtls_threading_set_alt(aws_mbedtls_mutex_init, aws_mbedtls_mutex_free, aws_mbedtls_mutex_lock,
+                                      aws_mbedtls_mutex_unlock);
+#endif
+
             mbedtls_ssl_config_init(&ctx->conf);
 #if defined(MBEDTLS_SSL_CACHE_C)
             mbedtls_ssl_cache_init(&ctx->cache);

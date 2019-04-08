@@ -6518,6 +6518,18 @@
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk/aes_alt.c</name>
       </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk/ecp_alt.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk/ecp_alt.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk/ecp_curves_alt.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk/ecp_alt_ksdk.c</name>
+      </file>
     </group>
   </group>
   <group>

@@ -38,9 +38,10 @@
 /* Amazon FreeRTOS Demo Includes */
 #include "FreeRTOS.h"
 #include "task.h"
-#include "aws_clientcredential.h"
 #include "aws_logging_task.h"
 #include "aws_system_init.h"
+
+#include "device_configuration.h"
 
 /* lwIP Includes */
 #include "lwip/tcpip.h"
@@ -48,15 +49,15 @@
 #include "lwip/prot/dhcp.h"
 #include "netif/ethernet.h"
 #include "ethernetif.h"
-
-#include "device_configuration.h"
-
+#include "lwip/netifapi.h"
 #include "clock_config.h"
 #include "fsl_gpio.h"
 #include "fsl_iomuxc.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+#define INIT_SUCCESS 0
+#define INIT_FAIL 1
 
 /* MAC address configuration. */
 #define configMAC_ADDR                     \
@@ -79,15 +80,57 @@
  ******************************************************************************/
 void BOARD_InitNetwork(void);
 extern void vStartShadowDemoTasks(void);
+extern int initNetwork(void);
 
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-static struct netif fsl_netif0;
+struct netif fsl_netif0;
+extern struct netif fsl_netif0;
+const char *clientcredentialJITR_DEVICE_CERTIFICATE_AUTHORITY_PEM = NULL;
 
 /*******************************************************************************
  * Code
  ******************************************************************************/
+int initNetwork(void)
+{
+    ip4_addr_t fsl_netif0_ipaddr, fsl_netif0_netmask, fsl_netif0_gw;
+    ethernetif_config_t fsl_enet_config0 = {
+        .phyAddress = EXAMPLE_PHY_ADDRESS, .clockName = EXAMPLE_CLOCK_NAME, .macAddress = configMAC_ADDR,
+    };
+
+    IP4_ADDR(&fsl_netif0_ipaddr, 0, 0, 0, 0);
+    IP4_ADDR(&fsl_netif0_netmask, 0, 0, 0, 0);
+    IP4_ADDR(&fsl_netif0_gw, 0, 0, 0, 0);
+
+    tcpip_init(NULL, NULL);
+
+    netifapi_netif_add(&fsl_netif0, &fsl_netif0_ipaddr, &fsl_netif0_netmask, &fsl_netif0_gw, &fsl_enet_config0,
+                       ethernetif0_init, tcpip_input);
+    netifapi_netif_set_default(&fsl_netif0);
+    netifapi_netif_set_up(&fsl_netif0);
+
+    configPRINTF(("Getting IP address from DHCP ...\r\n"));
+    netifapi_dhcp_start(&fsl_netif0);
+
+    struct dhcp *dhcp;
+    dhcp = (struct dhcp *)netif_get_client_data(&fsl_netif0, LWIP_NETIF_CLIENT_DATA_INDEX_DHCP);
+
+    while (dhcp->state != DHCP_STATE_BOUND)
+    {
+        vTaskDelay(1000);
+    }
+
+    if (dhcp->state == DHCP_STATE_BOUND)
+    {
+        configPRINTF(("IPv4 Address: %u.%u.%u.%u\r\n", ((u8_t *)&fsl_netif0.ip_addr.addr)[0],
+                      ((u8_t *)&fsl_netif0.ip_addr.addr)[1], ((u8_t *)&fsl_netif0.ip_addr.addr)[2],
+                      ((u8_t *)&fsl_netif0.ip_addr.addr)[3]));
+    }
+    configPRINTF(("DHCP OK\r\n"));
+
+    return INIT_SUCCESS;
+}
 void BOARD_InitModuleClock(void)
 {
     const clock_enet_pll_config_t config = {.enableClkOutput = true, .enableClkOutput25M = false, .loopDivider = 1};
@@ -103,47 +146,16 @@ void delay(void)
     }
 }
 
-void BOARD_InitNetwork(void)
+void print_string(const char *string)
 {
-    ip4_addr_t fsl_netif0_ipaddr, fsl_netif0_netmask, fsl_netif0_gw;
-    ethernetif_config_t fsl_enet_config0 = {
-        .phyAddress = EXAMPLE_PHY_ADDRESS, .clockName = EXAMPLE_CLOCK_NAME, .macAddress = configMAC_ADDR,
-    };
-
-    IP4_ADDR(&fsl_netif0_ipaddr, 0, 0, 0, 0);
-    IP4_ADDR(&fsl_netif0_netmask, 0, 0, 0, 0);
-    IP4_ADDR(&fsl_netif0_gw, 0, 0, 0, 0);
-
-    tcpip_init(NULL, NULL);
-
-    netif_add(&fsl_netif0, &fsl_netif0_ipaddr, &fsl_netif0_netmask, &fsl_netif0_gw, &fsl_enet_config0, ethernetif0_init,
-              tcpip_input);
-    netif_set_default(&fsl_netif0);
-    netif_set_up(&fsl_netif0);
-
-    configPRINTF(("Getting IP address from DHCP ...\r\n"));
-    dhcp_start(&fsl_netif0);
-
-    struct dhcp *dhcp;
-    dhcp = (struct dhcp *)netif_get_client_data(&fsl_netif0, LWIP_NETIF_CLIENT_DATA_INDEX_DHCP);
-
-    while (dhcp->state != DHCP_STATE_BOUND)
-    {
-        vTaskDelay(1000);
-    }
-
-    configPRINTF(("IPv4 Address: %u.%u.%u.%u\r\n", ((u8_t *)&fsl_netif0.ip_addr.addr)[0],
-                  ((u8_t *)&fsl_netif0.ip_addr.addr)[1], ((u8_t *)&fsl_netif0.ip_addr.addr)[2],
-                  ((u8_t *)&fsl_netif0.ip_addr.addr)[3]));
-
-    configPRINTF(("DHCP OK\r\n"));
+    PRINTF(string);
 }
 
 void vApplicationDaemonTaskStartupHook(void)
 {
     if (SYSTEM_Init() == pdPASS)
     {
-        BOARD_InitNetwork();
+        initNetwork();
 
         /* Initialize mflash file system for device configuration */
         if (dev_cfg_init() != 0)

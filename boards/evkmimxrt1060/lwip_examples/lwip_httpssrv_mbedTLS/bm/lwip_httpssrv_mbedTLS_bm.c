@@ -1,11 +1,11 @@
 /*
-* Copyright (c) 2016, Freescale Semiconductor, Inc.
-* Copyright 2016-2018 NXP
-* All rights reserved.
-*
-*
-* SPDX-License-Identifier: BSD-3-Clause
-*/
+ * Copyright (c) 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016-2018 NXP
+ * All rights reserved.
+ *
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
 
 /*******************************************************************************
  * Includes
@@ -33,7 +33,6 @@
 #include "mbedtls/ssl.h"
 #include "mbedtls/ssl_cache.h"
 #include "mbedtls/debug.h"
-
 
 #include "pin_mux.h"
 #include "clock_config.h"
@@ -79,12 +78,12 @@
 
 
 /*******************************************************************************
-* Prototypes
-******************************************************************************/
+ * Prototypes
+ ******************************************************************************/
 
 /*******************************************************************************
-* Variables
-******************************************************************************/
+ * Variables
+ ******************************************************************************/
 
 const char *pers = "ssl_server";
 mbedtls_entropy_context entropy;
@@ -212,12 +211,14 @@ int main(void)
         goto exit;
     }
 
+#if (!defined(MBEDTLS_ECDSA_C) || defined(MBEDTLS_ECP_DP_SECP384R1_ENABLED))
     ret = mbedtls_x509_crt_parse(&srvcert, (const unsigned char *)mbedtls_test_cas_pem, mbedtls_test_cas_pem_len);
     if (ret != 0)
     {
         PRINTF(" failed\r\n  !  mbedtls_x509_crt_parse returned %d\r\n\r\n", ret);
         goto exit;
     }
+#endif
 
     ret = mbedtls_pk_parse_key(&pkey, (const unsigned char *)mbedtls_test_srv_key, mbedtls_test_srv_key_len, NULL, 0);
     if (ret != 0)

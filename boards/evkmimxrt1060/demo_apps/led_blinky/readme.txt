@@ -25,8 +25,8 @@ When the demo runs successfully, you will find the LED is blinking.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.1
+- IAR embedded Workbench  8.32.3
 - Keil MDK  5.26
 - GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
+- MCUXpresso 10.3.1
 

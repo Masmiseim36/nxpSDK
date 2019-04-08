@@ -101,9 +101,6 @@
     <source path="boards/evkmimxrt1060/lwip_examples/lwip_httpsrv/freertos/mdk" target_path="src" type="configuration" toolchain="mdk">
       <files mask="evkmimxrt1060_ram.ini"/>
     </source>
-    <source path="boards/evkmimxrt1060/lwip_examples/lwip_httpsrv/freertos/mdk" target_path="src" type="linker" toolchain="mdk">
-      <files mask="MIMXRT1062xxxxx_ram.scf"/>
-    </source>
     <source path="boards/evkmimxrt1060/lwip_examples/lwip_httpsrv/freertos" target_path="board" type="c_include">
       <files mask="board.h"/>
       <files mask="clock_config.h"/>
@@ -123,6 +120,9 @@
     </source>
     <source path="boards/evkmimxrt1060/lwip_examples/lwip_httpsrv/freertos" target_path="source" type="src">
       <files mask="lwip_httpsrv_freertos.c"/>
+    </source>
+    <source path="devices/MIMXRT1062/arm" target_path="src" type="linker" toolchain="mdk">
+      <files mask="MIMXRT1062xxxxx_ram.scf"/>
     </source>
     <source path="devices/MIMXRT1062/gcc" target_path="src" type="linker" toolchain="armgcc">
       <files mask="MIMXRT1062xxxxx_ram.ld"/>

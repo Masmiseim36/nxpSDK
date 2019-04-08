@@ -7,8 +7,8 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 /*
-*   SSLSRV support functions.
-*/
+ *   SSLSRV support functions.
+ */
 
 #include "sslsrv.h"
 #include "sslsrv_prv.h"

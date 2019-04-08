@@ -6256,6 +6256,9 @@
         <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/lib/include/private/mpu_wrappers.h</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/lib/include/private/mpu_prototypes.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/lib/include/private/portable.h</name>
       </file>
       <file>
@@ -6263,6 +6266,9 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/lib/include/private/stack_macros.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/lib/include/private/threading_alt.h</name>
       </file>
     </group>
   </group>

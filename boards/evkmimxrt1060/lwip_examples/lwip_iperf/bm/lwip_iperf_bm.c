@@ -1,11 +1,11 @@
 /*
-* Copyright (c) 2016, Freescale Semiconductor, Inc.
+ * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
-* All rights reserved.
-*
-* 
-* SPDX-License-Identifier: BSD-3-Clause
-*/
+ * All rights reserved.
+ *
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
 
 /*******************************************************************************
  * Includes
@@ -62,12 +62,12 @@
 #define EXAMPLE_CLOCK_NAME kCLOCK_CoreSysClk
 
 /*******************************************************************************
-* Prototypes
-******************************************************************************/
+ * Prototypes
+ ******************************************************************************/
 
 /*******************************************************************************
-* Variables
-******************************************************************************/
+ * Variables
+ ******************************************************************************/
 
 /*******************************************************************************
  * Code
@@ -124,7 +124,7 @@ static void lwiperf_report(void *arg,
                            u32_t bandwidth_kbitpsec)
 {
     PRINTF("-------------------------------------------------\r\n");
-    if ((report_type < (sizeof(report_type_str)/sizeof(report_type_str[0]))) && local_addr && remote_addr)
+    if ((report_type < (sizeof(report_type_str) / sizeof(report_type_str[0]))) && local_addr && remote_addr)
     {
         PRINTF(" %s \r\n", report_type_str[report_type]);
         PRINTF(" Local address : %u.%u.%u.%u ", ((u8_t *)local_addr)[0], ((u8_t *)local_addr)[1],
@@ -151,9 +151,7 @@ int main(void)
     struct netif fsl_netif0;
     ip4_addr_t fsl_netif0_ipaddr, fsl_netif0_netmask, fsl_netif0_gw;
     ethernetif_config_t fsl_enet_config0 = {
-        .phyAddress = EXAMPLE_PHY_ADDRESS,
-        .clockName = EXAMPLE_CLOCK_NAME,
-        .macAddress = configMAC_ADDR,
+        .phyAddress = EXAMPLE_PHY_ADDRESS, .clockName = EXAMPLE_CLOCK_NAME, .macAddress = configMAC_ADDR,
     };
 
     gpio_pin_config_t gpio_config = {kGPIO_DigitalOutput, 0, kGPIO_NoIntmode};
@@ -182,8 +180,8 @@ int main(void)
 
     lwip_init();
 
-    netif_add(&fsl_netif0, &fsl_netif0_ipaddr, &fsl_netif0_netmask, &fsl_netif0_gw,
-              &fsl_enet_config0, ethernetif0_init, ethernet_input);
+    netif_add(&fsl_netif0, &fsl_netif0_ipaddr, &fsl_netif0_netmask, &fsl_netif0_gw, &fsl_enet_config0, ethernetif0_init,
+              ethernet_input);
     netif_set_default(&fsl_netif0);
     netif_set_up(&fsl_netif0);
 

@@ -146,7 +146,7 @@
     </source>
     <source path="boards/evkmimxrt1060/aws_examples/greengrass_discovery_enet" target_path="source" type="src">
       <files mask="aws_greengrass_discovery_demo.c"/>
-      <files mask="main_enet.c"/>
+      <files mask="main.c"/>
     </source>
   </example>
 </ksdk:examples>

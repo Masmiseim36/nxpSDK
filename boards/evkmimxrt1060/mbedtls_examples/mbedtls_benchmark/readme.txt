@@ -96,7 +96,7 @@ This example can't run pass on MCUXpresso IDE v10.2.1, it will be fixed in MCUXp
 Toolchain supported
 ===================
 - GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
-- IAR embedded Workbench  8.32.1
+- MCUXpresso 10.3.1
+- IAR embedded Workbench  8.32.3
 - Keil MDK  5.26
 

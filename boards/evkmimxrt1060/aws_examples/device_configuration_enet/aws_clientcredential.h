@@ -26,10 +26,6 @@
 #ifndef __AWS_CLIENTCREDENTIAL__H__
 #define __AWS_CLIENTCREDENTIAL__H__
 
-/*
- * Include for device certificate and private key
- */
-#include "aws_clientcredential_keys.h"
 
 /*
  * MQTT Broker endpoint.
@@ -67,15 +63,8 @@ extern char clientcredentialWIFI_PASSWORD[];
  */
 extern char clientcredentialWIFI_SECURITY;
 
-/*
- * Length of device certificate included from aws_clientcredential_keys.h .
- */
-static const uint32_t clientcredentialCLIENT_CERTIFICATE_LENGTH = 0;
 
-/*
- * Length of device private key included from aws_clientcredential_keys.h .
- */
+extern const char* clientcredentialJITR_DEVICE_CERTIFICATE_AUTHORITY_PEM;
 
-static const uint32_t clientcredentialCLIENT_PRIVATE_KEY_LENGTH = 0;
 
 #endif

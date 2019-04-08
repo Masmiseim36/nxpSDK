@@ -78,14 +78,11 @@
           <value>XIP_EXTERNAL_FLASH=1</value>
           <value>XIP_BOOT_HEADER_ENABLE=1</value>
           <value>FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE</value>
-          <value>MBEDTLS_CTR_DRBG_C</value>
-          <value>MBEDTLS_CTR_DRBG_KEYSIZE=16</value>
-          <value>MBEDTLS_SSL_CIPHERSUITES=MBEDTLS_TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA</value>
           <value>USE_RTOS=1</value>
           <value>PRINTF_ADVANCED_ENABLE=1</value>
           <value>HTTPSRV_CFG_WEBSOCKET_ENABLED=1</value>
           <value>HTTPSRV_CFG_MBEDTLS_ENABLE=1</value>
-          <value>MBEDTLS_CONFIG_FILE='"ksdk_mbedtls_config.h"'</value>
+          <value>MBEDTLS_CONFIG_FILE='"lwip_mbedtls_config.h"'</value>
           <value>FSL_RTOS_FREE_RTOS</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
@@ -156,6 +153,7 @@
     </source>
     <source path="boards/evkmimxrt1060/lwip_examples/lwip_httpssrv_mbedTLS/freertos" target_path="source" type="c_include">
       <files mask="FreeRTOSConfig.h"/>
+      <files mask="lwip_mbedtls_config.h"/>
       <files mask="lwipopts.h"/>
     </source>
     <source path="boards/evkmimxrt1060/lwip_examples/lwip_httpssrv_mbedTLS/freertos" target_path="source" type="src">

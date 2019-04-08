@@ -41,7 +41,7 @@ uint32_t SSLSRV_init(SSLSRV_PARAM_STRUCT *params)
 
         BaseType_t xReturned;
         xReturned = xTaskCreate(sslsrv_server_task, SSLSRV_SERVER_TASK_NAME, SSLSRV_CFG_SERVER_STACK_SIZE, server,
-                                server->params.task_prio, (void **)&server->server_tid);
+                                server->params.task_prio, (TaskHandle_t *)&server->server_tid);
         if (xReturned != pdPASS)
         {
             sslsrv_destroy_server(server);

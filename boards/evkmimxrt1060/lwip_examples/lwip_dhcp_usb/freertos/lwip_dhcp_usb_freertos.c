@@ -1,11 +1,11 @@
 /*
-* Copyright (c) 2016, Freescale Semiconductor, Inc.
+ * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2018 NXP
-* All rights reserved.
-*
-* 
-* SPDX-License-Identifier: BSD-3-Clause
-*/
+ * All rights reserved.
+ *
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
 
 /*******************************************************************************
  * Includes
@@ -61,12 +61,12 @@
 #define PRINT_THREAD_PRIO DEFAULT_THREAD_PRIO
 
 /*******************************************************************************
-* Prototypes
-******************************************************************************/
+ * Prototypes
+ ******************************************************************************/
 
 /*******************************************************************************
-* Variables
-******************************************************************************/
+ * Variables
+ ******************************************************************************/
 extern usb_host_handle g_HostHandle;
 /*set when dhcp get ip address*/
 uint32_t dhcpReady;
@@ -75,7 +75,9 @@ uint8_t pingReady;
 /*set when app get the URL's ip addrss*/
 uint8_t dnsReady;
 ip4_addr_t currentaddr;
-uint8_t website[40] = {'w','w','w','.','n','x','p','.','c','o','m',};
+uint8_t website[40] = {
+    'w', 'w', 'w', '.', 'n', 'x', 'p', '.', 'c', 'o', 'm',
+};
 struct netif fsl_netif0;
 ethernetifConfig_t ethernetConfig;
 ip4_addr_t fsl_netif0_ipaddr, fsl_netif0_netmask, fsl_netif0_gw;
@@ -89,7 +91,6 @@ void USB_OTG1_IRQHandler(void)
     USB_HostEhciIsrFunction(g_HostHandle);
 }
 
-
 void USB_OTG2_IRQHandler(void)
 {
     USB_HostEhciIsrFunction(g_HostHandle);
@@ -97,11 +98,9 @@ void USB_OTG2_IRQHandler(void)
 
 void USB_HostClockInit(void)
 {
-
     usb_phy_config_struct_t phyConfig = {
         BOARD_USB_PHY_D_CAL, BOARD_USB_PHY_TXCAL45DP, BOARD_USB_PHY_TXCAL45DM,
     };
-
 
     if (CONTROLLER_ID == kUSB_ControllerEhci0)
     {
@@ -114,7 +113,6 @@ void USB_HostClockInit(void)
         CLOCK_EnableUsbhs1Clock(kCLOCK_Usb480M, 480000000U);
     }
     USB_EhciPhyInit(CONTROLLER_ID, BOARD_XTAL0_CLK_HZ, &phyConfig);
-
 }
 
 void USB_HostIsrEnable(void)
@@ -149,7 +147,7 @@ static void print_dhcp_state(void *arg)
     struct netif *netif = (struct netif *)arg;
     struct dhcp *dhcp;
     u8_t dhcp_last_state = DHCP_STATE_OFF;
-    
+
     while (netif_is_up(netif))
     {
         dhcp = netif_dhcp_data(netif);
@@ -211,19 +209,18 @@ static void print_dhcp_state(void *arg)
                 PRINTF(" IPv4 Subnet mask : %s\r\n", ipaddr_ntoa(&netif->netmask));
                 PRINTF(" IPv4 Gateway     : %s\r\n\r\n", ipaddr_ntoa(&netif->gw));
                 dhcpReady = 1;
-         
             }
         }
-        if(dhcpReady)
+        if (dhcpReady)
         {
             dhcpReady = 0;
             struct netconn *netconn;
             netconn = netconn_new(NETCONN_TCP);
-            netconn_set_recvtimeout (netconn, 3000);
+            netconn_set_recvtimeout(netconn, 3000);
 
-            err_t    err;
-            err = netconn_gethostbyname((char*)&website[0],&currentaddr);
-            if(err != ERR_OK)
+            err_t err;
+            err = netconn_gethostbyname((char *)&website[0], &currentaddr);
+            if (err != ERR_OK)
             {
                 dnsReady = 0;
                 PRINTF("error in get host name\r\n");
@@ -233,21 +230,20 @@ static void print_dhcp_state(void *arg)
                 dnsReady = 1;
             }
             PRINTF("\r\n the IP Address of nxp.com is   : %s\r\n", ipaddr_ntoa(&currentaddr));
-           
-            while(netconn_close(netconn)!=ERR_OK);
+
+            while (netconn_close(netconn) != ERR_OK)
+                ;
             netconn_free(netconn);
             if (dnsReady)
-            {          
-                if(!pingReady)
-                {   
+            {
+                if (!pingReady)
+                {
                     pingReady = 1;
-                    ping_init(&currentaddr);       
+                    ping_init(&currentaddr);
                 }
                 dnsReady = 0;
             }
         }
-
-
     }
     vTaskDelete(NULL);
 }
@@ -257,7 +253,6 @@ static void print_dhcp_state(void *arg)
  */
 static void stack_init(void *arg)
 {
-
     ethernetConfig.controllerId = CONTROLLER_ID;
     ethernetConfig.privateData = NULL;
     IP4_ADDR(&fsl_netif0_ipaddr, 0U, 0U, 0U, 0U);
@@ -266,10 +261,10 @@ static void stack_init(void *arg)
 
     tcpip_init(NULL, NULL);
 
-    netif_add(&fsl_netif0, &fsl_netif0_ipaddr, &fsl_netif0_netmask, &fsl_netif0_gw, &ethernetConfig, USB_EthernetIfInIt,
-              tcpip_input);
-    netif_set_default(&fsl_netif0);
-    netif_set_up(&fsl_netif0);
+    netifapi_netif_add(&fsl_netif0, &fsl_netif0_ipaddr, &fsl_netif0_netmask, &fsl_netif0_gw, &ethernetConfig,
+                       USB_EthernetIfInIt, tcpip_input);
+    netifapi_netif_set_default(&fsl_netif0);
+    netifapi_netif_set_up(&fsl_netif0);
 
     netifapi_dhcp_start(&fsl_netif0);
 

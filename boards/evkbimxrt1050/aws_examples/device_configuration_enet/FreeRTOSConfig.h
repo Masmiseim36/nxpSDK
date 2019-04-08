@@ -42,10 +42,8 @@
 
 /* Ensure stdint is only used by the compiler, and not the assembler. */
 #if defined( __ICCARM__ ) || defined( __ARMCC_VERSION ) || defined( __GNUC__)
-    #include <stdint.h>
-    #include "fsl_debug_console.h"
     extern uint32_t SystemCoreClock;
-    extern int DbgConsole_Printf( const char *fmt_s, ... );
+    extern void print_string( const char * string );
     extern void vLoggingPrintf( const char *pcFormat, ... );
 #endif
 
@@ -112,7 +110,7 @@
 #define configPRINTF( x )          vLoggingPrintf x
 
 /* Map the logging task's printf to the board specific output function. */
-#define configPRINT_STRING    PRINTF
+#define configPRINT_STRING    print_string
 
 /* Sets the length of the buffers into which logging messages are written - so
  * also defines the maximum length of each log message. */
@@ -160,8 +158,6 @@
 #ifdef __ICCARM__
 	/* Logging task definitions. */
 	extern void vMainUARTPrintString( char * pcString );
-	void vLoggingPrintf( const char * pcFormat,
-						 ... );
 
 	extern int iMainRand32( void );
 

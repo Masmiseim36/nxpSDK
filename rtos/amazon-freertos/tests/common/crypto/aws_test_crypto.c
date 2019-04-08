@@ -1,5 +1,5 @@
 /*
- * Amazon FreeRTOS Crypto AFQP V1.1.0
+ * Amazon FreeRTOS Crypto AFQP V1.1.4
  * Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -48,10 +48,10 @@ TEST_TEAR_DOWN( Full_CRYPTO )
 
 TEST_GROUP_RUNNER( Full_CRYPTO )
 {
-    RUN_TEST_CASE( Full_CRYPTO, AFQP_VerifySignatureTestVectors );
+    RUN_TEST_CASE( Full_CRYPTO, VerifySignatureTestVectors );
 }
 
-TEST( Full_CRYPTO, AFQP_VerifySignatureTestVectors )
+TEST( Full_CRYPTO, VerifySignatureTestVectors )
 {
     BaseType_t xResult = pdFALSE;
     void * pvSignatureVerificationContext = NULL;

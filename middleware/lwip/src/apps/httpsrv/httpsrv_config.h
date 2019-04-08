@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016 - 2019 NXP
  * All rights reserved.
  *
  * 
@@ -26,7 +26,7 @@
 
 /* HTTPS task stack size.*/
 #ifndef HTTPSRV_CFG_HTTPS_SESSION_STACK_SIZE
-#define HTTPSRV_CFG_HTTPS_SESSION_STACK_SIZE (28000 / sizeof(uint32_t))
+#define HTTPSRV_CFG_HTTPS_SESSION_STACK_SIZE (10000 / sizeof(uint32_t))
 #endif
 
 /* Task priority.*/

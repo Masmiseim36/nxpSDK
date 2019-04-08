@@ -25,6 +25,7 @@
 #define RNDIS_CONTROL_MSG (0x04)
 #define RNDIS_INTERRUPT_MSG (0x08)
 #define RNDIS_LWIP_INPUT (0x10)
+#define RNDIS_DEVICE_INIT_READY (0x20)
 #define RNDIS_EVENT_MASK (0xff)
    
 /*! @brief init information */

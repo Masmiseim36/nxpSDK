@@ -215,7 +215,6 @@ status_t flexspi_configure_dll(uint32_t instance, flexspi_mem_config_t *config)
             flexspiDll[0] = FLEXSPI_DLLCR_DEFAULT; // 1 fixed delay cells in DLL delay chain)
             flexspiDll[1] = FLEXSPI_DLLCR_DEFAULT; // 1 fixed delay cells in DLL delay chain)
         }
-#if FLEXSPI_ENABLE_OCTAL_FLASH_SUPPORT
         else
         {
             flexspi_get_clock(instance, kFlexSpiClock_SerialRootClock, &flexspiRootClk);
@@ -295,7 +294,6 @@ status_t flexspi_configure_dll(uint32_t instance, flexspi_mem_config_t *config)
                 }
             }
         }
-#endif // FLEXSPI_ENABLE_OCTAL_FLASH_SUPPORT
 
         if (base->MCR0 & FLEXSPI_MCR0_MDIS_MASK)
         {
@@ -827,7 +825,6 @@ status_t flexspi_init(uint32_t instance, flexspi_mem_config_t *config)
                                          FLEXSPI_MCR0_AHBGRANTWAIT_MASK | FLEXSPI_MCR0_COMBINATIONEN_MASK |
                                          FLEXSPI_MCR0_ATDFEN_MASK | FLEXSPI_MCR0_ARDFEN_MASK);
 
-#if FLEXSPI_HAS_NO_CMD_MODE_SUPPORT
         // If this condition meets, it means FlexSPI PORT B exists, the the 8 bit is supported by combining PORTA[3:0]
         // with PORTB[3:0]
         if ((sizeof(base->FLSHCR1) / sizeof(base->FLSHCR1[0])) > 2)
@@ -838,7 +835,6 @@ status_t flexspi_init(uint32_t instance, flexspi_mem_config_t *config)
                 mcr0 |= FLEXSPI_MCR0_COMBINATIONEN_MASK;
             }
         }
-#endif
 
         // Configure AHBGRANTWAIT and IPGRANTWAIT
         mcr0 |= FLEXSPI_MCR0_IPGRANTWAIT_MASK | FLEXSPI_MCR0_AHBGRANTWAIT_MASK;
@@ -846,15 +842,12 @@ status_t flexspi_init(uint32_t instance, flexspi_mem_config_t *config)
         mcr0 |= FLEXSPI_MCR0_RXCLKSRC(config->readSampleClkSrc);
         base->MCR0 = mcr0;
 
-#if FLEXSPI_HAS_NO_CMD_MODE_SUPPORT
         // Configure MCR1
         flexspi_config_mcr1(instance, config);
-#endif
 
         // Configure MCR2
         base->MCR2 &= ~FLEXSPI_MCR2_SAMEDEVICEEN_MASK;
 
- #if FLEXSPI_HAS_NO_CMD_MODE_SUPPORT       
         // If this condition meets, it means FlexSPI PORT B exists, SCKB pads used as PORTB SCK with be used a inverted
         // SCK for PORTA
         // Enable differential clock as needed.
@@ -865,7 +858,6 @@ status_t flexspi_init(uint32_t instance, flexspi_mem_config_t *config)
                 base->MCR2 |= FLEXSPI_MCR2_SCKBDIFFOPT_MASK;
             }
         }
-#endif
 
         // Configure AHB buffer
         flexspi_config_ahb_buffers(base, config);

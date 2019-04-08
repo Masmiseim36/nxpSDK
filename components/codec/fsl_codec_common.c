@@ -11,16 +11,10 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-audio_format_t saiFormatMap[FORMAT_NUM_USED] = {{kAUDIO_Stereo16Bits, 16U}, {kAUDIO_Stereo24Bits, 24U},
-                                                {kAUDIO_Stereo32Bits, 32U}, {kAUDIO_DSD8bits, 8U},
-                                                {kAUDIO_DSD16bits, 16U},    {kAUDIO_DSD32bits, 32U}};
+
 /*******************************************************************************
  * Code
  ******************************************************************************/
-uint32_t CODEC_GetMappedFormatBits(audio_format_type_t format)
-{
-    return saiFormatMap[format].bitwidth;
-}
 status_t CODEC_I2C_WriteReg(uint8_t i2cAddr,
                             codec_reg_addr_t addrType,
                             uint32_t reg,
@@ -62,7 +56,7 @@ status_t CODEC_I2C_ReadReg(uint8_t i2cAddr,
     uint8_t data[4];
     uint8_t i = 0;
     status_t status;
-    uint8_t width = (uint8_t)regWidth;
+    uint8_t width = (uint8_t) regWidth;
 
     status = i2cReceiveFunc(i2cAddr, reg, addrType, data, width);
 
@@ -104,7 +98,7 @@ status_t CODEC_I2C_ModifyReg(uint8_t i2cAddr,
 status_t CODEC_Init(codec_handle_t *handle, codec_config_t *config)
 {
     /* Set the handle information */
-    handle->I2C_SendFunc    = config->I2C_SendFunc;
+    handle->I2C_SendFunc = config->I2C_SendFunc;
     handle->I2C_ReceiveFunc = config->I2C_ReceiveFunc;
     memcpy(&handle->op, &config->op, sizeof(codec_operation_t));
     return handle->op.Init(handle, config->codecConfig);

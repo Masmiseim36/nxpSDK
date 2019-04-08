@@ -6,12 +6,12 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include <stdint.h>
 #include <stdbool.h>
-#include "fsl_sdmmc_event.h"
+#include <stdint.h>
 #include "FreeRTOS.h"
-#include "semphr.h"
 #include "event_groups.h"
+#include "fsl_sdmmc_event.h"
+#include "semphr.h"
 
 /*******************************************************************************
  * Definitons
@@ -86,7 +86,7 @@ bool SDMMCEVENT_Wait(sdmmc_event_t eventType, uint32_t timeoutMilliseconds)
     uint32_t timeoutTicks;
     SemaphoreHandle_t *event = SDMMCEVENT_GetInstance(eventType);
 
-    if (timeoutMilliseconds && event)
+    if (timeoutMilliseconds && event && (*event != 0U))
     {
         if (timeoutMilliseconds == ~0U)
         {
@@ -117,7 +117,7 @@ bool SDMMCEVENT_Notify(sdmmc_event_t eventType)
     BaseType_t xHigherPriorityTaskWoken = pdFALSE;
     BaseType_t xResult = pdFAIL;
 
-    if (event)
+    if (event && (*event != 0U))
     {
         xResult = xSemaphoreGiveFromISR(*event, &xHigherPriorityTaskWoken);
         if (xResult != pdFAIL)
@@ -140,7 +140,7 @@ void SDMMCEVENT_Delete(sdmmc_event_t eventType)
 {
     SemaphoreHandle_t *event = SDMMCEVENT_GetInstance(eventType);
 
-    if (event)
+    if (event && (*event != 0U))
     {
         vSemaphoreDelete(*event);
     }

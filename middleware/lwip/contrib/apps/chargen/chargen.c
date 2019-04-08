@@ -56,7 +56,7 @@
 
 #include "chargen.h"
 
-#if LWIP_SOCKET
+#if LWIP_SOCKET && LWIP_SOCKET_SELECT
 
 #define MAX_SERV                 5         /* Maximum number of chargen services. Don't need too many */
 #define CHARGEN_THREAD_NAME      "chargen"
@@ -87,7 +87,7 @@ close_chargen(struct charcb *p_charcb)
 
   /* Either an error or tcp connection closed on other
    * end. Close here */
-  close(p_charcb->socket);
+  lwip_close(p_charcb->socket);
   /* Free charcb */
   if (charcb_list == p_charcb) {
     charcb_list = p_charcb->next;
@@ -116,7 +116,7 @@ do_read(struct charcb *p_charcb)
   int readcount;
 
   /* Read some data */
-  readcount = read(p_charcb->socket, &buffer, 80);
+  readcount = lwip_read(p_charcb->socket, &buffer, 80);
   if (readcount <= 0) {
     close_chargen(p_charcb);
     return -1;
@@ -149,13 +149,13 @@ chargen_thread(void *arg)
   memset(&chargen_saddr, 0, sizeof (chargen_saddr));
 #if LWIP_IPV6
   /* First acquire our socket for listening for connections */
-  listenfd = socket(AF_INET6, SOCK_STREAM, 0);
+  listenfd = lwip_socket(AF_INET6, SOCK_STREAM, 0);
   chargen_saddr.sin6_family = AF_INET6;
   chargen_saddr.sin6_addr = in6addr_any;
   chargen_saddr.sin6_port = lwip_htons(19); /* Chargen server port */
 #else /* LWIP_IPV6 */
   /* First acquire our socket for listening for connections */
-  listenfd = socket(AF_INET, SOCK_STREAM, 0);
+  listenfd = lwip_socket(AF_INET, SOCK_STREAM, 0);
   chargen_saddr.sin_family = AF_INET;
   chargen_saddr.sin_addr.s_addr = PP_HTONL(INADDR_ANY);
   chargen_saddr.sin_port = lwip_htons(19); /* Chargen server port */
@@ -163,12 +163,12 @@ chargen_thread(void *arg)
 
   LWIP_ASSERT("chargen_thread(): Socket create failed.", listenfd >= 0);
 
-  if (bind(listenfd, (struct sockaddr *) &chargen_saddr, sizeof (chargen_saddr)) == -1) {
+  if (lwip_bind(listenfd, (struct sockaddr *) &chargen_saddr, sizeof (chargen_saddr)) == -1) {
     LWIP_ASSERT("chargen_thread(): Socket bind failed.", 0);
   }
 
   /* Put socket into listening mode */
-  if (listen(listenfd, MAX_SERV) == -1) {
+  if (lwip_listen(listenfd, MAX_SERV) == -1) {
     LWIP_ASSERT("chargen_thread(): Listen failed.", 0);
   }
 
@@ -190,7 +190,7 @@ chargen_thread(void *arg)
     }
 
     /* Wait for data or a new connection */
-    i = select(maxfdp1, &readset, &writeset, 0, 0);
+    i = lwip_select(maxfdp1, &readset, &writeset, 0, 0);
 
     if (i == 0) {
       continue;
@@ -201,7 +201,7 @@ chargen_thread(void *arg)
       /* Lets create a new control block */
       p_charcb = (struct charcb *) mem_malloc(sizeof (struct charcb));
       if (p_charcb) {
-        p_charcb->socket = accept(listenfd,
+        p_charcb->socket = lwip_accept(listenfd,
                 (struct sockaddr *) &p_charcb->cliaddr,
                 &p_charcb->clilen);
         if (p_charcb->socket < 0) {
@@ -218,9 +218,9 @@ chargen_thread(void *arg)
         struct sockaddr cliaddr;
         socklen_t clilen;
 
-        sock = accept(listenfd, &cliaddr, &clilen);
+        sock = lwip_accept(listenfd, &cliaddr, &clilen);
         if (sock >= 0) {
-          close(sock);
+          lwip_close(sock);
         }
       }
     }
@@ -246,7 +246,7 @@ chargen_thread(void *arg)
         }
         line[i] = 0;
         strcat(line, "\n\r");
-        if (write(p_charcb->socket, line, strlen(line)) < 0) {
+        if (lwip_write(p_charcb->socket, line, strlen(line)) < 0) {
           close_chargen(p_charcb);
           break;
         }
@@ -271,4 +271,4 @@ chargen_init(void)
   sys_thread_new(CHARGEN_THREAD_NAME, chargen_thread, 0, CHARGEN_THREAD_STACKSIZE, CHARGEN_PRIORITY);
 }
 
-#endif /* LWIP_SOCKET */
+#endif /* LWIP_SOCKET && LWIP_SOCKET_SELECT */

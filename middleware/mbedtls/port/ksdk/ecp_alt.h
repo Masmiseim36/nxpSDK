@@ -41,6 +41,9 @@ extern "C" {
 #endif
 
 #if defined(MBEDTLS_ECP_ALT)
+#if defined(TGT_A71CH)
+#include "HLSETypes.h"
+#endif
 /*
  * default mbed TLS elliptic curve arithmetic implementation
  *
@@ -99,6 +102,11 @@ typedef struct mbedtls_ecp_group
     void *t_data;               /*!< Unused. */
     mbedtls_ecp_point *T;       /*!< Pre-computed points for ecp_mul_comb(). */
     size_t T_size;              /*!< The number of pre-computed points. */
+
+#if defined(TGT_A71CH)
+    /** Reference to object mapped between HLSE Layer of A71CH Host library         */
+    HLSE_OBJECT_HANDLE hlse_handle;
+#endif
 }
 mbedtls_ecp_group;
 

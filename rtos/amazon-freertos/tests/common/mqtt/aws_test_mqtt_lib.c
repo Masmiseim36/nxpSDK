@@ -1,5 +1,5 @@
 /*
- * Amazon FreeRTOS MQTT AFQP V1.1.0
+ * Amazon FreeRTOS MQTT AFQP V1.1.4
  * Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -260,7 +260,7 @@ static void prvInitializeCallbackCounter( void )
 
 static MQTTReturnCode_t prvInitializeMQTTContext( void )
 {
-    MQTTInitParams_t xInitParams;
+    MQTTInitParams_t xInitParams = {0};
     MQTTReturnCode_t xReturnCode;
 
     /* Setup init parameters. */
@@ -282,7 +282,7 @@ static MQTTReturnCode_t prvInitializeMQTTContext( void )
 
 static MQTTReturnCode_t prvSendMQTTConnect( void )
 {
-    MQTTConnectParams_t xConnectParams;
+    MQTTConnectParams_t xConnectParams = {0};
     MQTTReturnCode_t xReturnCode;
 
     /* Setup connect parameters. */
@@ -718,7 +718,7 @@ TEST( Full_MQTT, AFQP_MQTT_Init_HappyCase )
  */
 TEST( Full_MQTT, AFQP_MQTT_Init_NULLParams )
 {
-    MQTTInitParams_t xInitParams;
+    MQTTInitParams_t xInitParams = {0};
 
     /* Setup init parameters. */
     xInitParams.pxCallback = &( prvMQTTEventCallback );

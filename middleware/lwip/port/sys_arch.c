@@ -32,7 +32,7 @@
  
 /*
  * Copyright (c) 2013-2016, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -59,10 +59,8 @@
 #include "lwip/init.h"
 #endif
 
-#if LWIP_SOCKET_SET_ERRNO
 #ifndef errno
 int errno = 0;
-#endif
 #endif
 
 /*
@@ -180,17 +178,13 @@ void sys_mbox_post( sys_mbox_t *pxMailBox, void *pxMessageToPost )
 err_t sys_mbox_trypost( sys_mbox_t *pxMailBox, void *pxMessageToPost )
 {
     portBASE_TYPE taskToWake = pdFALSE;
-    if( xQueueIsQueueFullFromISR( *pxMailBox ))
-    {
-        return ERR_VAL;
-    }
 #ifdef __CA7_REV
     if (SystemGetIRQNestingLevel())
 #else
     if (__get_IPSR())
 #endif
     {
-        if (pdTRUE == xQueueSendFromISR(*pxMailBox, &pxMessageToPost, &taskToWake))
+        if (pdTRUE == xQueueSendToBackFromISR(*pxMailBox, &pxMessageToPost, &taskToWake))
         {
             if(taskToWake == pdTRUE)
             {
@@ -207,7 +201,7 @@ err_t sys_mbox_trypost( sys_mbox_t *pxMailBox, void *pxMessageToPost )
     }
     else
     {
-        if(pdTRUE == xQueueSend(*pxMailBox, &pxMessageToPost, 0) )
+        if(pdTRUE == xQueueSendToBack(*pxMailBox, &pxMessageToPost, 0) )
         {
             return ERR_OK;
         }
@@ -218,6 +212,24 @@ err_t sys_mbox_trypost( sys_mbox_t *pxMailBox, void *pxMessageToPost )
             return ERR_MEM;
         }
     }
+}
+
+/*---------------------------------------------------------------------------*
+ * Routine:  sys_mbox_trypost_fromisr
+ *---------------------------------------------------------------------------*
+ * Description:
+ *      Try to post the "msg" to the mailbox.  Returns immediately with
+ *      error if cannot. To be be used from ISR.
+ * Inputs:
+ *      sys_mbox_t mbox         -- Handle of mailbox
+ *      void *msg               -- Pointer to data to post
+ * Outputs:
+ *      err_t                   -- ERR_OK if message posted, else ERR_MEM
+ *                                  if not.
+ *---------------------------------------------------------------------------*/
+err_t sys_mbox_trypost_fromisr(sys_mbox_t *mbox, void *msg)
+{
+    return sys_mbox_trypost(mbox, msg);
 }
 
 /*---------------------------------------------------------------------------*

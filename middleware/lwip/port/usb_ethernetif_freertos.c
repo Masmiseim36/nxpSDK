@@ -16,7 +16,7 @@
 #include "netif/ppp/pppoe.h"
 #include "lwip/igmp.h"
 #include "lwip/mld6.h"
-
+#include "lwip/netifapi.h"
 #if USE_RTOS && defined(FSL_RTOS_FREE_RTOS)
 #include "FreeRTOS.h"
 #include "event_groups.h"
@@ -340,7 +340,11 @@ static void USB_HostApplicationInit(uint8_t controllerId, struct netif *netif)
     {
         usb_echo("create cdc task error\r\n");
     }
-
+    xEventGroupWaitBits(g_RndisInstance.event_group,    /* The event group handle. */
+                         RNDIS_DEVICE_INIT_READY,        /* The bit pattern the event group is waiting for. */
+                         pdTRUE,         /* BIT_n will be cleared automatically. */
+                         pdFALSE,        /* Don't wait for both bits, either bit unblock task. */
+                         portMAX_DELAY); /* Block indefinitely to wait for the condition to be met. */
     while (!g_RndisInstance.attach)
     {
     }
@@ -482,15 +486,10 @@ void USB_HostCdcRndisControlCallback(void *param, uint8_t *data, uint32_t dataLe
         {
            rndisInstance->runState = kUSB_HostCdcRndisRunWaitSetMsg;
            rndis_query_cmplt_struct_t * msg = (rndis_query_cmplt_struct_t *)data;
-           if(NETIF_MAX_HWADDR_LEN != msg->messageLength)
-           {
-                netif->hwaddr_len = NETIF_MAX_HWADDR_LEN;
-                memcpy(netif->hwaddr,(((uint8_t*)&msg->requestID + msg->informationBufferOffset)), NETIF_MAX_HWADDR_LEN);
-           }
-           else
-           {
-              usb_echo("error mac address\r\n");
-           }
+
+           netif->hwaddr_len = NETIF_MAX_HWADDR_LEN;
+
+           memcpy(netif->hwaddr,(((uint8_t*)&msg->requestID + msg->informationBufferOffset)), NETIF_MAX_HWADDR_LEN);
         }
         else if (rndisInstance->previousRunState == kUSB_HostCdcRndisRunWaitSetMsgDone)
         {
@@ -725,7 +724,9 @@ void USB_HosCdcRndisTask(void *param)
         case kUSB_HostCdcRndisRunGetState:
             rndisInstance->attach = 1;
             netif = (struct netif *)rndisInstance->netif;
-            netif_set_link_up(netif);
+           
+            xEventGroupSetBits(g_RndisInstance.event_group, RNDIS_DEVICE_INIT_READY);
+            netifapi_netif_set_link_up(netif);
         case kUSB_HostCdcRndisRunDataReceive:
             rndisInstance->runState = kUSB_HostCdcRndisRunIdle;
             USB_HostRndisRecvDataMsg(rndisInstance->classHandle, rndisInstance->inPutBuffer, RNDIS_FRAME_MAX_FRAMELEN, 
@@ -849,7 +850,7 @@ usb_status_t USB_HostCdcRndisEvent(usb_device_handle deviceHandle,
 
                 g_RndisInstance.attach = 0;
                 netif = (struct netif *)g_RndisInstance.netif;
-                netif_set_link_down(netif);
+                netifapi_netif_set_link_down(netif);
                 g_RndisInstance.deviceState = kStatus_DEV_Detached;
             }
             break;

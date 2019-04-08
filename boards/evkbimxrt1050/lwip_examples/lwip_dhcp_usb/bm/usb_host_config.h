@@ -215,7 +215,7 @@
  *        - if greater than 0, host CDC class driver is enable.
  */
 #define USB_HOST_CONFIG_CDC (1U)
-      /*!
+/*!
  * @brief host CDC RNDSI class instance count, meantime it indicates CDC rndis class enable or disable.
  *        - if 0, host CDC class driver is disable.
  *        - if greater than 0, host CDC class driver is enable.

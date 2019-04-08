@@ -34,7 +34,7 @@
 
 #include "lwip/opt.h"
 
-#if LWIP_NETCONN
+#if LWIP_NETCONN && LWIP_TCP
 
 #include <string.h>
 #include <stdio.h>
@@ -44,6 +44,11 @@
 #include "lwip/def.h"
 #include "lwip/api.h"
 #include "lwip/stats.h"
+
+#if LWIP_SOCKET
+#include "lwip/errno.h"
+#include "lwip/if_api.h"
+#endif
 
 #ifdef WIN32
 #define NEWLINE "\r\n"
@@ -81,7 +86,7 @@ struct command {
 #define NCONNS 10
 static struct netconn *conns[NCONNS];
 
-/* help_msg is split into 2 strings to prevent exceeding the C89 maximum length of 509 per string */
+/* help_msg is split into 3 strings to prevent exceeding the C89 maximum length of 509 per string */
 static char help_msg1[] = "Available commands:"NEWLINE"\
 open [IP address] [TCP port]: opens a TCP connection to the specified address."NEWLINE"\
 lstn [TCP port]: sets up a server on the specified port."NEWLINE"\
@@ -95,7 +100,11 @@ usnd [connection #] [message]: sends a message on a UDP connection."NEWLINE"\
 recv [connection #]: recieves data on a TCP or UDP connection."NEWLINE"\
 clos [connection #]: closes a TCP or UDP connection."NEWLINE"\
 stat: prints out lwIP statistics."NEWLINE"\
-quit: quits."NEWLINE"";
+idxtoname [index]: outputs interface name from index."NEWLINE"\
+nametoidx [name]: outputs interface index from name."NEWLINE;
+static char help_msg3[] = 
+"gethostnm [name]: outputs IP address of host."NEWLINE"\
+quit: quits"NEWLINE"";
 
 #if LWIP_STATS
 static char padding_10spaces[] = "          ";
@@ -879,7 +888,7 @@ com_udpb(struct command *com)
   }
 
 #if LWIP_IPV4
-  if (IP_IS_V6(&ipaddr)) {
+  if (IP_IS_V6_VAL(ipaddr)) {
     err = netconn_bind(conns[i], &ip_addr_broadcast, lport);
     if (err != ERR_OK) {
       netconn_delete(conns[i]);
@@ -955,11 +964,66 @@ com_usnd(struct command *com)
   return ESUCCESS;
 }
 /*-----------------------------------------------------------------------------------*/
+#if LWIP_SOCKET
+/*-----------------------------------------------------------------------------------*/
+static s8_t
+com_idxtoname(struct command *com)
+{
+  long i = strtol(com->args[0], NULL, 10);
+
+  if (lwip_if_indextoname((unsigned int)i, (char *)buffer)) {
+    netconn_write(com->conn, buffer, strlen((const char *)buffer), NETCONN_COPY);
+    sendstr(NEWLINE, com->conn);
+  } else {
+    snprintf((char *)buffer, sizeof(buffer), "if_indextoname() failed: %d"NEWLINE, errno);
+    netconn_write(com->conn, buffer, strlen((const char *)buffer), NETCONN_COPY);
+  }
+  return ESUCCESS;
+}
+/*-----------------------------------------------------------------------------------*/
+static s8_t
+com_nametoidx(struct command *com)
+{
+  unsigned int idx = lwip_if_nametoindex(com->args[0]);
+
+  if (idx) {
+    snprintf((char *)buffer, sizeof(buffer), "%u"NEWLINE, idx);
+    netconn_write(com->conn, buffer, strlen((const char *)buffer), NETCONN_COPY);
+  } else {
+    sendstr("No interface found"NEWLINE, com->conn);
+  }
+  return ESUCCESS;
+}
+#endif /* LWIP_SOCKET */
+/*-----------------------------------------------------------------------------------*/
+#if LWIP_DNS
+static s8_t
+com_gethostbyname(struct command *com)
+{
+  ip_addr_t addr;
+  err_t err = netconn_gethostbyname(com->args[0], &addr);
+
+  if (err == ERR_OK) {
+    if (ipaddr_ntoa_r(&addr, (char *)buffer, sizeof(buffer))) {
+      sendstr("Host found: ", com->conn);
+      sendstr((char *)buffer, com->conn);
+      sendstr(NEWLINE, com->conn);
+    } else {
+        sendstr("ipaddr_ntoa_r failed", com->conn);
+    }
+  } else {
+    sendstr("No host found"NEWLINE, com->conn);
+  }
+  return ESUCCESS;
+}
+#endif /* LWIP_DNS */
+/*-----------------------------------------------------------------------------------*/
 static s8_t
 com_help(struct command *com)
 {
   sendstr(help_msg1, com->conn);
   sendstr(help_msg2, com->conn);
+  sendstr(help_msg3, com->conn);
   return ESUCCESS;
 }
 /*-----------------------------------------------------------------------------------*/
@@ -1007,6 +1071,19 @@ parse_command(struct command *com, u32_t len)
   } else if (strncmp((const char *)buffer, "usnd", 4) == 0) {
     com->exec = com_usnd;
     com->nargs = 2;
+#if LWIP_SOCKET
+  } else if (strncmp((const char *)buffer, "idxtoname", 9) == 0) {
+    com->exec = com_idxtoname;
+    com->nargs = 1;
+  } else if (strncmp((const char *)buffer, "nametoidx", 9) == 0) {
+    com->exec = com_nametoidx;
+    com->nargs = 1;
+#endif /* LWIP_SOCKET */
+#if LWIP_DNS
+  } else if (strncmp((const char *)buffer, "gethostnm", 9) == 0) {
+    com->exec = com_gethostbyname;
+    com->nargs = 1;
+#endif /* LWIP_DNS */
   } else if (strncmp((const char *)buffer, "help", 4) == 0) {
     com->exec = com_help;
     com->nargs = 0;
@@ -1103,9 +1180,12 @@ shell_main(struct netconn *conn)
   do {
     ret = netconn_recv_tcp_pbuf(conn, &p);
     if (ret == ERR_OK) {
-      pbuf_copy_partial(p, &buffer[len], BUFSIZE - len, 0);
+      pbuf_copy_partial(p, &buffer[len], (u16_t)(BUFSIZE - len), 0);
       cur_len = p->tot_len;
-      len += cur_len;
+      len = (u16_t)(len + cur_len);
+      if ((len < cur_len) || (len > BUFSIZE)) {
+        len = BUFSIZE;
+      }
 #if SHELL_ECHO
       echomem = mem_malloc(cur_len);
       if (echomem != NULL) {
@@ -1168,13 +1248,16 @@ shell_thread(void *arg)
 
 #if LWIP_IPV6
   conn = netconn_new(NETCONN_TCP_IPV6);
-  netconn_bind(conn, IP6_ADDR_ANY, 23);
+  LWIP_ERROR("shell: invalid conn", (conn != NULL), return;);
+  err = netconn_bind(conn, IP6_ADDR_ANY, 23);
 #else /* LWIP_IPV6 */
   conn = netconn_new(NETCONN_TCP);
-  netconn_bind(conn, IP_ADDR_ANY, 23);
-#endif /* LWIP_IPV6 */
   LWIP_ERROR("shell: invalid conn", (conn != NULL), return;);
-  netconn_listen(conn);
+  err = netconn_bind(conn, IP_ADDR_ANY, 23);
+#endif /* LWIP_IPV6 */
+  LWIP_ERROR("shell: netconn_bind failed", (err == ERR_OK), netconn_delete(conn); return;);
+  err = netconn_listen(conn);
+  LWIP_ERROR("shell: netconn_listen failed", (err == ERR_OK), netconn_delete(conn); return;);
 
   while (1) {
     err = netconn_accept(conn, &newconn);
@@ -1191,4 +1274,4 @@ shell_init(void)
   sys_thread_new("shell_thread", shell_thread, NULL, DEFAULT_THREAD_STACKSIZE, DEFAULT_THREAD_PRIO);
 }
 
-#endif /* LWIP_NETCONN */
+#endif /* LWIP_NETCONN && LWIP_TCP */

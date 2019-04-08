@@ -228,6 +228,85 @@ status_t SDMMC_SwitchVoltage(SDMMCHOST_TYPE *base, SDMMCHOST_TRANSFER_FUNCTION t
     return error;
 }
 
+status_t SDMMC_SwitchToVoltage(SDMMCHOST_TYPE *base,
+                               SDMMCHOST_TRANSFER_FUNCTION transfer,
+                               sdmmchost_card_switch_voltage_t switchVoltageFunc)
+{
+    assert(transfer);
+
+    SDMMCHOST_TRANSFER content = {0};
+    SDMMCHOST_COMMAND command = {0};
+    status_t error = kStatus_Success;
+
+    command.index = kSD_VoltageSwitch;
+    command.argument = 0U;
+    command.responseType = kCARD_ResponseTypeR1;
+
+    content.command = &command;
+    content.data = NULL;
+    if (kStatus_Success != transfer(base, &content))
+    {
+        return kStatus_SDMMC_TransferFailed;
+    }
+    /* disable card clock */
+    SDMMCHOST_ENABLE_CARD_CLOCK(base, false);
+
+    /* check data line and cmd line status */
+    if ((GET_SDMMCHOST_STATUS(base) &
+         (CARD_DATA1_STATUS_MASK | CARD_DATA2_STATUS_MASK | CARD_DATA3_STATUS_MASK | CARD_DATA0_NOT_BUSY)) != 0U)
+    {
+        return kStatus_SDMMC_SwitchVoltageFail;
+    }
+
+    if (switchVoltageFunc != NULL)
+    {
+        switchVoltageFunc();
+    }
+    else
+    {
+        /* host switch to 1.8V */
+        SDMMCHOST_SWITCH_VOLTAGE180V(base, true);
+    }
+
+    SDMMCHOST_Delay(100U);
+
+    /*enable sd clock*/
+    SDMMCHOST_ENABLE_CARD_CLOCK(base, true);
+    /*enable force clock on*/
+    SDMMCHOST_FORCE_SDCLOCK_ON(base, true);
+    /* dealy 1ms,not exactly correct when use while */
+    SDMMCHOST_Delay(10U);
+    /*disable force clock on*/
+    SDMMCHOST_FORCE_SDCLOCK_ON(base, false);
+
+    /* check data line and cmd line status */
+    if ((GET_SDMMCHOST_STATUS(base) &
+         (CARD_DATA1_STATUS_MASK | CARD_DATA2_STATUS_MASK | CARD_DATA3_STATUS_MASK | CARD_DATA0_NOT_BUSY)) == 0U)
+    {
+        error = kStatus_SDMMC_SwitchVoltageFail;
+        /* power reset the card */
+        SDMMCHOST_ENABLE_SD_POWER(false);
+        SDMMCHOST_Delay(10U);
+        SDMMCHOST_ENABLE_SD_POWER(true);
+        SDMMCHOST_Delay(10U);
+        /* re-check the data line status */
+        if ((GET_SDMMCHOST_STATUS(base) &
+             (CARD_DATA1_STATUS_MASK | CARD_DATA2_STATUS_MASK | CARD_DATA3_STATUS_MASK | CARD_DATA0_NOT_BUSY)))
+        {
+            error = kStatus_SDMMC_SwitchVoltage18VFail33VSuccess;
+            SDMMC_LOG("\r\nNote: Current card support 1.8V, but board don't support, so sdmmc switch back to 3.3V.");
+        }
+        else
+        {
+            SDMMC_LOG(
+                "\r\nError: Current card support 1.8V, but board don't support, sdmmc tried to switch back\
+                    to 3.3V, but failed, please check board setting.");
+        }
+    }
+
+    return error;
+}
+
 status_t SDMMC_ExecuteTuning(SDMMCHOST_TYPE *base,
                              SDMMCHOST_TRANSFER_FUNCTION transfer,
                              uint32_t tuningCmd,

@@ -1,5 +1,5 @@
 /*
- * Amazon FreeRTOS MQTT AFQP V1.1.0
+ * Amazon FreeRTOS MQTT AFQP V1.1.4
  * Copyright (C) 2018 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -236,8 +236,8 @@ static MQTTBool_t prvMQTTCallback( void * pvUserData,
  */
 static BaseType_t prvCreateClientAndConnectToBroker( BaseType_t xUseAlpn )
 {
-    MQTTAgentReturnCode_t xReturned;
-    SemaphoreHandle_t xSemaphore = NULL;
+    MQTTAgentReturnCode_t xReturned = eMQTTAgentFailure;
+    StaticSemaphore_t xSemaphore = { 0 };
     MQTTAgentHandle_t xMQTTHandle = NULL;
     MQTTAgentSubscribeParams_t xSubscribeParams;
     MQTTAgentPublishParams_t xPublishParameters;
@@ -246,9 +246,8 @@ static BaseType_t prvCreateClientAndConnectToBroker( BaseType_t xUseAlpn )
 
     memcpy( &xConnectParameters, &xDefaultConnectParameters, sizeof( MQTTAgentConnectParams_t ) );
 
-    /* Initialize the semaphore. */
-    vSemaphoreCreateBinary( xSemaphore );
-    TEST_ASSERT_NOT_NULL( xSemaphore );
+    /* Initialize the semaphore as unavailable. */
+    TEST_ASSERT_NOT_NULL( xSemaphoreCreateCountingStatic( 1, 0, &xSemaphore ) );
 
     /* Fill in the MQTTAgentConnectParams_t member that is not const. */
     xConnectParameters.usClientIdLength = ( uint16_t ) strlen(
@@ -271,11 +270,11 @@ static BaseType_t prvCreateClientAndConnectToBroker( BaseType_t xUseAlpn )
         xReturned = MQTT_AGENT_Connect( xMQTTHandle,
                                         &xConnectParameters,
                                         mqttagenttestTIMEOUT );
-        TEST_ASSERT_EQUAL_INT( xReturned, eMQTTAgentSuccess );
+        TEST_ASSERT_EQUAL_INT_MESSAGE( xReturned, eMQTTAgentSuccess, "Failed to connect to the MQTT broker with MQTT_AGENT_Connect()." );
 
         /* Setup subscribe parameters to subscribe to echo topic. */
         xSubscribeParams.pucTopic = mqttagenttestTOPIC_NAME;
-        xSubscribeParams.pvPublishCallbackContext = xSemaphore;
+        xSubscribeParams.pvPublishCallbackContext = &xSemaphore;
         xSubscribeParams.pxPublishCallback = prvMQTTCallback;
         xSubscribeParams.usTopicLength = ( uint16_t ) strlen( ( const char * ) mqttagenttestTOPIC_NAME );
         xSubscribeParams.xQoS = eMQTTQoS1;
@@ -301,7 +300,7 @@ static BaseType_t prvCreateClientAndConnectToBroker( BaseType_t xUseAlpn )
         TEST_ASSERT_EQUAL_INT( xReturned, eMQTTAgentSuccess );
 
         /* Take the semaphore to ensure the message is Received. */
-        if( pdFALSE == xSemaphoreTake( xSemaphore, mqttagenttestTIMEOUT ) )
+        if( pdFALSE == xSemaphoreTake( ( QueueHandle_t ) &( xSemaphore ), mqttagenttestTIMEOUT ) )
         {
             TEST_FAIL();
         }
@@ -310,12 +309,13 @@ static BaseType_t prvCreateClientAndConnectToBroker( BaseType_t xUseAlpn )
         xReturned = MQTT_AGENT_Disconnect( xMQTTHandle, mqttagenttestTIMEOUT );
         TEST_ASSERT_EQUAL_INT( xReturned, eMQTTAgentSuccess );
     }
+    else
+    {
+        TEST_FAIL();
+    }
 
     /*Don't forget to reset the flag, since connect parameters are global, all test afterwards would use ALPN. */
     xConnectParameters.xFlags &= ~mqttagentUSE_AWS_IOT_ALPN_443;
-    /* Free the semaphore. */
-    vSemaphoreDelete( xSemaphore );
-    xSemaphore = NULL;
 
     if( xMQTTAgentCreated == pdTRUE )
     {

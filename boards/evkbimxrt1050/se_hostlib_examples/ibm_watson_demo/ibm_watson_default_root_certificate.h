@@ -43,6 +43,10 @@ static const char tlsATS1_ROOT_CERTIFICATE_PEM[] = {0};
 
 static const uint32_t tlsATS1_ROOT_CERTIFICATE_LENGTH = sizeof( tlsATS1_ROOT_CERTIFICATE_PEM );
 
+static const char tlsSTARFIELD_ROOT_CERTIFICATE_PEM[] = {0};
+
+static const uint32_t tlsSTARFIELD_ROOT_CERTIFICATE_LENGTH = sizeof( tlsSTARFIELD_ROOT_CERTIFICATE_PEM );
+
 /* Ensure include/private/aws_default_root_certificates.h gets skipped */
 #define __DEFAULT__ROOT__CERTIFICATES__H__
 

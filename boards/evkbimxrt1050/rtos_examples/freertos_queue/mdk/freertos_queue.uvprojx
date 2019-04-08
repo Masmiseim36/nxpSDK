@@ -561,6 +561,11 @@
               <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/mpu_wrappers.h</FilePath>
             </File>
             <File>
+              <FileName>mpu_prototypes.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/mpu_prototypes.h</FilePath>
+            </File>
+            <File>
               <FileName>portable.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/portable.h</FilePath>
@@ -574,6 +579,11 @@
               <FileName>stack_macros.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/stack_macros.h</FilePath>
+            </File>
+            <File>
+              <FileName>threading_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/threading_alt.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1452,6 +1462,11 @@
               <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/mpu_wrappers.h</FilePath>
             </File>
             <File>
+              <FileName>mpu_prototypes.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/mpu_prototypes.h</FilePath>
+            </File>
+            <File>
               <FileName>portable.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/portable.h</FilePath>
@@ -1465,6 +1480,11 @@
               <FileName>stack_macros.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/stack_macros.h</FilePath>
+            </File>
+            <File>
+              <FileName>threading_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/threading_alt.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2339,6 +2359,11 @@
               <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/mpu_wrappers.h</FilePath>
             </File>
             <File>
+              <FileName>mpu_prototypes.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/mpu_prototypes.h</FilePath>
+            </File>
+            <File>
               <FileName>portable.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/portable.h</FilePath>
@@ -2352,6 +2377,11 @@
               <FileName>stack_macros.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/stack_macros.h</FilePath>
+            </File>
+            <File>
+              <FileName>threading_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/threading_alt.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3224,6 +3254,11 @@
               <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/mpu_wrappers.h</FilePath>
             </File>
             <File>
+              <FileName>mpu_prototypes.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/mpu_prototypes.h</FilePath>
+            </File>
+            <File>
               <FileName>portable.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/portable.h</FilePath>
@@ -3237,6 +3272,11 @@
               <FileName>stack_macros.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/stack_macros.h</FilePath>
+            </File>
+            <File>
+              <FileName>threading_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/threading_alt.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4114,6 +4154,11 @@
               <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/mpu_wrappers.h</FilePath>
             </File>
             <File>
+              <FileName>mpu_prototypes.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/mpu_prototypes.h</FilePath>
+            </File>
+            <File>
               <FileName>portable.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/portable.h</FilePath>
@@ -4127,6 +4172,11 @@
               <FileName>stack_macros.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/stack_macros.h</FilePath>
+            </File>
+            <File>
+              <FileName>threading_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/threading_alt.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5000,6 +5050,11 @@
               <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/mpu_wrappers.h</FilePath>
             </File>
             <File>
+              <FileName>mpu_prototypes.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/mpu_prototypes.h</FilePath>
+            </File>
+            <File>
               <FileName>portable.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/portable.h</FilePath>
@@ -5013,6 +5068,11 @@
               <FileName>stack_macros.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/stack_macros.h</FilePath>
+            </File>
+            <File>
+              <FileName>threading_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/amazon-freertos/lib/include/private/threading_alt.h</FilePath>
             </File>
           </Files>
         </Group>

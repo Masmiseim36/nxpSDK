@@ -1,5 +1,5 @@
 /*
- * Amazon FreeRTOS Memory Leak Test V1.1.0
+ * Amazon FreeRTOS Memory Leak Test V1.1.4
  * Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -54,7 +54,6 @@ TEST_TEAR_DOWN( Full_MemoryLeak )
 
 TEST_GROUP_RUNNER( Full_MemoryLeak )
 {
-    /* Windows simulator does not use FreeRTOS heap. */
     RUN_TEST_CASE( Full_MemoryLeak, CheckHeap );
 }
 

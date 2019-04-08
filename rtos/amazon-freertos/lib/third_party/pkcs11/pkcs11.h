@@ -212,7 +212,7 @@ extern "C" {
 /* All the various Cryptoki types and #define'd values are in the
  * file pkcs11t.h. */
 #include "pkcs11t.h"
-#if !defined(__CC_ARM) && !defined(__ARMCC_VERSION)
+#if !defined( __PASTE )
 	#define __PASTE(x,y)      x##y
 #endif
 

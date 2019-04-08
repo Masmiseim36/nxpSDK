@@ -53,9 +53,7 @@
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
           <value>CPU_MIMXRT1052DVL6B</value>
           <value>SDK_DEBUGCONSOLE=1</value>
-          <value>PRINTF_FLOAT_ENABLE=0</value>
           <value>SCANF_FLOAT_ENABLE=0</value>
-          <value>PRINTF_ADVANCED_ENABLE=0</value>
           <value>SCANF_ADVANCED_ENABLE=0</value>
           <value>XIP_EXTERNAL_FLASH=1</value>
           <value>XIP_BOOT_HEADER_ENABLE=1</value>

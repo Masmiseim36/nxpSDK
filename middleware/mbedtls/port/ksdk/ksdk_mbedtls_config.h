@@ -121,8 +121,11 @@
 #include "fsl_hashcrypt.h"
 
 #define MBEDTLS_FREESCALE_HASHCRYPT_AES    /* Enable use of HASHCRYPT AES.*/
-#define MBEDTLS_FREESCALE_HASHCRYPT_SHA1   /* Enable use of HASHCRYPT SHA1.*/
-#define MBEDTLS_FREESCALE_HASHCRYPT_SHA256 /* Enable use of HASHCRYPT SHA256.*/
+/* Hashcrypt is not able to calculate SHA in parallel with AES.
+ * HW acceleration of SHA is disabled by default in MbedTLS integration.
+ */
+//#define MBEDTLS_FREESCALE_HASHCRYPT_SHA1   /* Enable use of HASHCRYPT SHA1.*/
+//#define MBEDTLS_FREESCALE_HASHCRYPT_SHA256 /* Enable use of HASHCRYPT SHA256.*/
 #endif
 
 #if defined(MBEDTLS_FREESCALE_LTC_PKHA) || defined(MBEDTLS_FREESCALE_CAU3_PKHA) || defined(MBEDTLS_FREESCALE_CAAM_PKHA)
@@ -157,10 +160,13 @@
 #if defined(FSL_FEATURE_SOC_SHA_COUNT) && (FSL_FEATURE_SOC_SHA_COUNT > 0)
 #include "fsl_sha.h"
 
-#define SHA_INSTANCE SHA0            /* AES base register.*/
-#define MBEDTLS_FREESCALE_LPC_SHA1   /* Enable use of LPC SHA.*/
-#define MBEDTLS_FREESCALE_LPC_SHA256 /* Enable use of LPC SHA256.*/
-
+/* SHA HW accelerator does not support to compute multiple interleaved hashes, 
+ * it doesn't support context switch.
+ * HW acceleration of SHA is disabled by default in MbedTLS integration.
+ */
+//#define SHA_INSTANCE SHA0            /* AES base register.*/
+//#define MBEDTLS_FREESCALE_LPC_SHA1   /* Enable use of LPC SHA.*/
+//#define MBEDTLS_FREESCALE_LPC_SHA256 /* Enable use of LPC SHA256.*/
 #endif
 
 /* Enable CASPER use in library if there is CASPER on chip. */
@@ -2216,6 +2222,12 @@ void *pvPortCalloc(size_t num, size_t size); /*Calloc for HEAP3.*/
  */
 #if !(defined(MBEDTLS_AES_ENCRYPT_ALT) && defined(MBEDTLS_AES_ALT_NO_256))
 #define MBEDTLS_CTR_DRBG_C
+#elif defined(MBEDTLS_AES_ALT_NO_256)
+/* This macros will add support for CTR_DRBG using AES-128 for crypto engines
+ * without AES-256 capability. Please note, that selftest will not pass when
+ * this option is enabled, since AES-256 is required by the specification of CTR_DRBG. */
+//#define MBEDTLS_CTR_DRBG_KEYSIZE            16 /**< The key size used by the cipher. */
+//#define MBEDTLS_CTR_DRBG_C
 #endif
 
 /**

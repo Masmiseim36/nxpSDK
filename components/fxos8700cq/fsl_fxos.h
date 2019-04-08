@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- *
+ * 
  * SPDX-License-Identifier: BSD-3-Clause
  */
 #ifndef _FSL_FXOS_H_
@@ -10,7 +10,7 @@
 
 #include "fsl_common.h"
 
-#define FXOS8700CQ_ACCEL_RESOLUTION_BITS 14
+#define FXOS8700CQ_ACCEL_RESOLUTION_BITS  14
 
 /*
  *  STATUS Register
@@ -669,9 +669,10 @@
 #define A_TRAN_INIT_Z_LSB 0x7C
 
 /*! @brief Define I2C access function. */
-typedef status_t (*I2C_SendFunc_t)(uint8_t deviceAddress, uint32_t subAddress, uint8_t subaddressSize, uint32_t txBuff);
-typedef status_t (*I2C_ReceiveFunc_t)(
-    uint8_t deviceAddress, uint32_t subAddress, uint8_t subaddressSize, uint8_t *rxBuff, uint8_t rxBuffSize);
+typedef status_t (*I2C_SendFunc_t)(uint8_t deviceAddress, uint32_t subAddress, uint8_t subaddressSize,
+                         uint32_t txBuff);
+typedef status_t (*I2C_ReceiveFunc_t)(uint8_t deviceAddress, uint32_t subAddress, uint8_t subaddressSize,
+                            uint8_t *rxBuff, uint8_t rxBuffSize);
 
 /*! @brief fxos8700cq configure definition. This structure should be global.*/
 typedef struct _fxos_handle
@@ -680,8 +681,8 @@ typedef struct _fxos_handle
     I2C_SendFunc_t I2C_SendFunc;
     /* Pointer to the user-defined I2C Receive Data function. */
     I2C_ReceiveFunc_t I2C_ReceiveFunc;
-    /* The I2C slave address . */
-    uint8_t slaveAddress;
+    /* The I2C slave address . */ 
+    uint8_t slaveAddress;    
 } fxos_handle_t;
 
 typedef struct _fxos8700cq_data
@@ -707,8 +708,8 @@ typedef struct _fxos_config
     I2C_SendFunc_t I2C_SendFunc;
     /* Pointer to the user-defined I2C Receive Data function. */
     I2C_ReceiveFunc_t I2C_ReceiveFunc;
-    /* The I2C slave address . */
-    uint8_t slaveAddress;
+    /* The I2C slave address . */ 
+    uint8_t slaveAddress;   
 } fxos_config_t;
 
 /*!
@@ -766,7 +767,7 @@ status_t FXOS_ReadReg(fxos_handle_t *handle, uint8_t reg, uint8_t *val, uint8_t 
 /*!
  * @brief Get device accelerator resolution bits.
  *
- * @return accelerator resolution bits.
+  * @return accelerator resolution bits.
  */
 static inline uint8_t FXOS_GetResolutionBits(void)
 {

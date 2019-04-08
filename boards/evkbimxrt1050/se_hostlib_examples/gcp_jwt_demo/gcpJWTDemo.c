@@ -72,10 +72,10 @@ void getECDSASign_RandS(
     mbedtls_ctr_drbg_context ctr_drbg;
     mbedtls_entropy_init( &entropy );
     mbedtls_ctr_drbg_init( &ctr_drbg );
-
-    if( ( ret = mbedtls_ctr_drbg_seed( &ctr_drbg, mbedtls_entropy_func, &entropy,
+    ret = mbedtls_ctr_drbg_seed( &ctr_drbg, mbedtls_entropy_func, &entropy,
                                (const unsigned char *) "XYZ",
-                               sizeof("PERS" ) ) != 0 ))
+                               sizeof("PERS" ) );
+    if( ret != 0 )
     {
         mbedtls_printf( " failed\n  ! mbedtls_ctr_drbg_seed returned -0x%04x\n", -ret );
         goto exit;

@@ -36,12 +36,6 @@ enum _mmc_card_flag
     kMMC_SupportHighSpeedBootFlag = (1U << 11U),           /*!< support high speed boot flag*/
 };
 
-/*! @brief card user parameter, user can define the parameter according the board, card capability */
-typedef struct _mmccard_usr_param
-{
-    const sdmmchost_pwr_card_t *pwr; /*!< power control configuration */
-} mmccard_usr_param_t;
-
 /*!
  * @brief mmc card state
  *

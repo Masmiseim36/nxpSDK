@@ -743,7 +743,6 @@ add_executable(se_hostlib_vcomA71CH.elf
 "${ProjDirPath}/../virtual_com.h"
 "${ProjDirPath}/../vcom2i2c.c"
 "${ProjDirPath}/../vcom2i2c.h"
-"${ProjDirPath}/../usb_device_board_config.h"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../board.c"

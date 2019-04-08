@@ -187,7 +187,6 @@
     </source>
     <source path="boards/evkbimxrt1050/aws_examples/device_configuration_enet" target_path="source" type="c_include">
       <files mask="aws_clientcredential.h"/>
-      <files mask="aws_clientcredential_keys.h"/>
       <files mask="aws_logging_task.h"/>
       <files mask="aws_mbedtls_config.h"/>
       <files mask="device_configuration.h"/>

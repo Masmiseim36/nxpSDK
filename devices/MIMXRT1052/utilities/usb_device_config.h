@@ -158,4 +158,26 @@
 
 /* @} */
 
+/*!
+ * @name Hardware instance define
+ * @{
+ */
+
+/*! @brief KHCI instance count */
+#define USB_DEVICE_CONFIG_KHCI (0U)
+
+/*! @brief EHCI instance count */
+#define USB_DEVICE_CONFIG_EHCI (1U)
+
+/*! @brief LPC USB IP3511 FS instance count */
+#define USB_DEVICE_CONFIG_LPCIP3511FS (0U)
+
+/*! @brief LPC USB IP3511 HS instance count */
+#define USB_DEVICE_CONFIG_LPCIP3511HS (0U)
+
+/*! @brief Device instance count, the sum of KHCI and EHCI instance counts*/
+#define USB_DEVICE_CONFIG_NUM \
+    (USB_DEVICE_CONFIG_KHCI + USB_DEVICE_CONFIG_EHCI + USB_DEVICE_CONFIG_LPCIP3511FS + USB_DEVICE_CONFIG_LPCIP3511HS)
+
+/* @} */
 #endif /* _USB_DEVICE_CONFIG_H_ */

@@ -32,7 +32,7 @@
 
 /*
  * Copyright (c) 2013-2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -326,6 +326,58 @@ static inline enet_tx_bd_struct_t *get_tx_desc(struct ethernetif *ethernetif, ui
 }
 #endif
 
+static void ethernetif_phy_init(struct ethernetif *ethernetif,
+                                const ethernetif_config_t *ethernetifConfig,
+                                enet_config_t *config)
+{
+    uint32_t sysClock;
+    status_t status;
+    bool link = false;
+    uint32_t count = 0;
+    phy_speed_t speed;
+    phy_duplex_t duplex;
+
+    sysClock = CLOCK_GetFreq(ethernetifConfig->clockName);
+
+    LWIP_PLATFORM_DIAG(("Initializing PHY..."));
+
+    while ((count < ENET_ATONEGOTIATION_TIMEOUT) && (!link))
+    {
+        status = PHY_Init(ethernetif->base, ethernetifConfig->phyAddress, sysClock);
+
+        if (kStatus_Success == status)
+        {
+            PHY_GetLinkStatus(ethernetif->base, ethernetifConfig->phyAddress, &link);
+        }
+        else if (kStatus_PHY_AutoNegotiateFail == status)
+        {
+            LWIP_PLATFORM_DIAG(("PHY Auto-negotiation failed. Please check the ENET cable connection and link partner setting."));
+        }
+        else
+        {
+            LWIP_ASSERT("\r\nCannot initialize PHY.\r\n", 0);
+        }
+
+        count++;
+    }
+
+    if (link)
+    {
+        /* Get the actual PHY link speed. */
+        PHY_GetLinkSpeedDuplex(ethernetif->base, ethernetifConfig->phyAddress, &speed, &duplex);
+        /* Change the MII speed and duplex for actual link status. */
+        config->miiSpeed = (enet_mii_speed_t)speed;
+        config->miiDuplex = (enet_mii_duplex_t)duplex;
+    }
+#if 0 /* Disable assert. If initial auto-negation is timeout, \ \
+         the ENET is set to default (100Mbs and full-duplex). */
+    else
+    {
+        LWIP_ASSERT("\r\nGiving up PHY initialization. Please check the ENET cable connection and link partner setting and reset the board.\r\n", 0);
+    }
+#endif
+}
+
 /**
  * Initializes ENET driver.
  */
@@ -335,11 +387,6 @@ static void enet_init(struct netif *netif, struct ethernetif *ethernetif,
 {
     enet_config_t config;
     uint32_t sysClock;
-    status_t status;
-    bool link = false;
-    phy_speed_t speed;
-    phy_duplex_t duplex;
-    uint32_t count = 0;
     enet_buffer_config_t buffCfg[ENET_RING_NUM];
 
     /* prepare the buffer configuration. */
@@ -357,35 +404,7 @@ static void enet_init(struct netif *netif, struct ethernetif *ethernetif,
     ENET_GetDefaultConfig(&config);
     config.ringNum = ENET_RING_NUM;
 
-    status = PHY_Init(ethernetif->base, ethernetifConfig->phyAddress, sysClock);
-    if (kStatus_Success != status)
-    {
-        LWIP_ASSERT("\r\nCannot initialize PHY.\r\n", 0);
-    }
-
-    while ((count < ENET_ATONEGOTIATION_TIMEOUT) && (!link))
-    {
-        PHY_GetLinkStatus(ethernetif->base, ethernetifConfig->phyAddress, &link);
-
-        if (link)
-        {
-            /* Get the actual PHY link speed. */
-            PHY_GetLinkSpeedDuplex(ethernetif->base, ethernetifConfig->phyAddress, &speed, &duplex);
-            /* Change the MII speed and duplex for actual link status. */
-            config.miiSpeed = (enet_mii_speed_t)speed;
-            config.miiDuplex = (enet_mii_duplex_t)duplex;
-        }
-
-        count++;
-    }
-
-#if 0 /* Disable assert. If initial auto-negation is timeout, \ \
-        the ENET set to default 100Mbs and full-duplex.*/
-    if (count == ENET_ATONEGOTIATION_TIMEOUT)
-    {
-        LWIP_ASSERT("\r\nPHY Link down, please check the cable connection.\r\n", 0);
-    }
-#endif
+    ethernetif_phy_init(ethernetif, ethernetifConfig, &config);
 
 #if USE_RTOS && defined(FSL_RTOS_FREE_RTOS)
     uint32_t instance;
@@ -442,12 +461,7 @@ static void enet_init(struct netif *netif, struct ethernetif *ethernetif,
                       const ethernetif_config_t *ethernetifConfig)
 {
     enet_config_t config;
-    status_t status;
     uint32_t sysClock;
-    bool link = false;
-    phy_speed_t speed;
-    phy_duplex_t duplex;
-    uint32_t count = 0;
     enet_buffer_config_t buffCfg[ENET_RING_NUM];
     uint32_t rxBufferStartAddr[ENET_RXBD_NUM];
     uint32_t i;
@@ -473,34 +487,7 @@ static void enet_init(struct netif *netif, struct ethernetif *ethernetif,
     ENET_GetDefaultConfig(&config);
     config.multiqueueCfg = NULL;
 
-    status = PHY_Init(ethernetif->base, ethernetifConfig->phyAddress, sysClock);
-    if (kStatus_Success != status)
-    {
-        LWIP_ASSERT("\r\nCannot initialize PHY.\r\n", 0);
-    }
-
-    while ((count < ENET_ATONEGOTIATION_TIMEOUT) && (!link))
-    {
-        PHY_GetLinkStatus(ethernetif->base, ethernetifConfig->phyAddress, &link);
-        if (link)
-        {
-            /* Get the actual PHY link speed. */
-            PHY_GetLinkSpeedDuplex(ethernetif->base, ethernetifConfig->phyAddress, &speed, &duplex);
-            /* Change the MII speed and duplex for actual link status. */
-            config.miiSpeed = (enet_mii_speed_t)speed;
-            config.miiDuplex = (enet_mii_duplex_t)duplex;
-        }
-
-        count++;
-    }
-
-#if 0 /* Disable assert. If initial auto-negation is timeout, \ \
-        the ENET set to default 100Mbs and full-duplex.*/
-    if (count == ENET_ATONEGOTIATION_TIMEOUT)
-    {
-        LWIP_ASSERT("\r\nPHY Link down, please check the cable connection.\r\n", 0);
-    }
-#endif
+    ethernetif_phy_init(ethernetif, ethernetifConfig, &config);
 
 #if USE_RTOS && defined(FSL_RTOS_FREE_RTOS)
     /* Create the Event for transmit busy release trigger. */

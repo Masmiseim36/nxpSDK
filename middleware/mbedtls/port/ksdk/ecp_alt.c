@@ -57,6 +57,10 @@
 
 #if defined(MBEDTLS_ECP_ALT)
 
+#if defined(TGT_A71CH)
+#include <ax_mbedtls.h>
+#endif
+
 #if defined(MBEDTLS_PLATFORM_C)
 #include "mbedtls/platform.h"
 #else
@@ -350,7 +354,7 @@ void mbedtls_ecp_group_free( mbedtls_ecp_group *grp )
 /*
  * Unallocate (the components of) a key pair
  */
-void mbedtls_ecp_keypair_free( mbedtls_ecp_keypair *key )
+void mbedtls_ecp_keypair_free_o( mbedtls_ecp_keypair *key )
 {
     if( key == NULL )
         return;
@@ -359,6 +363,27 @@ void mbedtls_ecp_keypair_free( mbedtls_ecp_keypair *key )
     mbedtls_mpi_free( &key->d );
     mbedtls_ecp_point_free( &key->Q );
 }
+/*
+ * Secure element hostlib handling
+ */
+#if defined(TGT_A71CH)
+void mbedtls_ecp_keypair_free( mbedtls_ecp_keypair *key )
+{
+    if( key == NULL )
+        return;
+
+    if ( key->grp.hlse_handle != 0 )
+    {
+        key->grp.hlse_handle = 0;
+    }
+    mbedtls_ecp_keypair_free(key);
+}
+#else
+void mbedtls_ecp_keypair_free( mbedtls_ecp_keypair *key )
+{
+    mbedtls_ecp_keypair_free_o(key);
+}
+#endif
 
 /*
  * Copy the contents of a point
@@ -595,7 +620,7 @@ int mbedtls_ecp_tls_write_point( const mbedtls_ecp_group *grp, const mbedtls_ecp
 /*
  * Set a group from an ECParameters record (RFC 4492)
  */
-int mbedtls_ecp_tls_read_group( mbedtls_ecp_group *grp, const unsigned char **buf, size_t len )
+int mbedtls_ecp_tls_read_group_o( mbedtls_ecp_group *grp, const unsigned char **buf, size_t len )
 {
     uint16_t tls_id;
     const mbedtls_ecp_curve_info *curve_info;
@@ -624,7 +649,26 @@ int mbedtls_ecp_tls_read_group( mbedtls_ecp_group *grp, const unsigned char **bu
 
     return mbedtls_ecp_group_load( grp, curve_info->grp_id );
 }
-
+/*
+ *  Use modified handling for secure element hostlib
+ */
+#if defined(TGT_A71CH)
+int mbedtls_ecp_tls_read_group( mbedtls_ecp_group *grp, const unsigned char **buf, size_t len )
+{
+    int ret;
+    HLSE_OBJECT_HANDLE backup_type_ax_index;
+    backup_type_ax_index = grp->hlse_handle;
+    ret = mbedtls_ecp_tls_read_group_o(grp, buf, len);
+    grp->hlse_handle = backup_type_ax_index;
+    return ret;
+}
+#else
+int mbedtls_ecp_tls_read_group( mbedtls_ecp_group *grp, const unsigned char **buf, size_t len )
+{
+    int ret = mbedtls_ecp_tls_read_group_o(grp, buf, len);
+    return ret;
+}
+#endif
 /*
  * Write the ECParameters record corresponding to a group (RFC 4492)
  */
@@ -743,7 +787,7 @@ cleanup:
  * Normalize jacobian coordinates so that Z == 0 || Z == 1  (GECC 3.2.1)
  * Cost: 1N := 1I + 3M + 1S
  */
-#if !defined(MBEDTLS_ECP_MUL_COMB_ALT) || !defined(MBEDTLS_ECP_ADD_ALT) 
+#if !defined(MBEDTLS_ECP_MUL_COMB_ALT) || !defined(MBEDTLS_ECP_ADD_ALT)
 static int ecp_normalize_jac( const mbedtls_ecp_group *grp, mbedtls_ecp_point *pt )
 {
     int ret;
@@ -1840,9 +1884,9 @@ cleanup:
 /*
  * Addition: R = P + Q, result's coordinates normalized
  */
-#if !defined(MBEDTLS_ECP_ADD_ALT) 
+#if !defined(MBEDTLS_ECP_ADD_ALT)
 int ecp_add( const mbedtls_ecp_group *grp, mbedtls_ecp_point *R,  const mbedtls_ecp_point *P, const mbedtls_ecp_point *Q )
-{    
+{
     int ret;
 
     if( ecp_get_type( grp ) != ECP_TYPE_SHORT_WEIERSTRASS )

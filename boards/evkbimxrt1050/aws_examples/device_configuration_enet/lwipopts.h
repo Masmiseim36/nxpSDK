@@ -4,7 +4,7 @@
   * This file is based on \src\include\lwip\opt.h
   ******************************************************************************
    * Copyright (c) 2013-2016, Freescale Semiconductor, Inc.
-   * Copyright 2016-2017 NXP
+   * Copyright 2016-2019 NXP
    * All rights reserved.
    *
    * SPDX-License-Identifier: BSD-3-Clause
@@ -161,6 +161,12 @@
 /* Enable backlog*/
 #ifndef TCP_LISTEN_BACKLOG
 #define TCP_LISTEN_BACKLOG 1
+#endif
+
+/* ---------- Network Interfaces options ---------- */
+/* Support netif api (in netifapi.c). */
+#ifndef LWIP_NETIF_API
+#define LWIP_NETIF_API 1
 #endif
 
 /* ---------- ICMP options ---------- */

@@ -63,8 +63,8 @@ Input other char to read/write/erase data blocks again.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.1
+- IAR embedded Workbench  8.32.3
 - Keil MDK  5.26
 - GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.0
+- MCUXpresso 10.3.1
 

@@ -199,7 +199,6 @@ static void cmac_pad( unsigned char padded_block[MBEDTLS_CIPHER_BLKSIZE_MAX],
     }
 }
 
-#if !defined(MBEDTLS_CIPHER_CMAC_ALT)
 int mbedtls_cipher_cmac_starts( mbedtls_cipher_context_t *ctx,
                                 const unsigned char *key, size_t keybits )
 {
@@ -239,7 +238,6 @@ int mbedtls_cipher_cmac_starts( mbedtls_cipher_context_t *ctx,
 
     return 0;
 }
-#endif /* MBEDTLS_CIPHER_CMAC_ALT */
 
 int mbedtls_cipher_cmac_update( mbedtls_cipher_context_t *ctx,
                                 const unsigned char *input, size_t ilen )
@@ -552,6 +550,7 @@ static const unsigned char aes_128_expected_result[NB_CMAC_TESTS_PER_KEY][MBEDTL
     }
 };
 
+#ifndef MBEDTLS_AES_ALT_NO_192
 /* CMAC-AES192 Test Data */
 static const unsigned char aes_192_key[24] = {
     0x8e, 0x73, 0xb0, 0xf7,     0xda, 0x0e, 0x64, 0x52,
@@ -592,6 +591,7 @@ static const unsigned char aes_192_expected_result[NB_CMAC_TESTS_PER_KEY][MBEDTL
         0x4d, 0x77, 0x58, 0x96,     0x59, 0xf3, 0x9a, 0x11
     }
 };
+#endif /* MBEDTLS_AES_ALT_NO_192 */
 
 /* CMAC-AES256 Test Data */
 static const unsigned char aes_256_key[32] = {

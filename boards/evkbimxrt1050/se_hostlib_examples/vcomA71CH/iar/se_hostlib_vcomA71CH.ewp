@@ -4027,9 +4027,6 @@
     <file>
       <name>$PROJ_DIR$/../vcom2i2c.h</name>
     </file>
-    <file>
-      <name>$PROJ_DIR$/../usb_device_board_config.h</name>
-    </file>
   </group>
   <group>
     <name>board</name>

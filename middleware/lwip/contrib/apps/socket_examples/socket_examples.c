@@ -12,7 +12,7 @@
 #include <stdio.h>
 
 #ifndef SOCK_TARGET_HOST4
-#define SOCK_TARGET_HOST4  "192.168.1.1"
+#define SOCK_TARGET_HOST4  "192.168.0.1"
 #endif
 
 #ifndef SOCK_TARGET_HOST6
@@ -66,9 +66,10 @@ static ip_addr_t dstaddr;
 static void
 sockex_nonblocking_connect(void *arg)
 {
+#if LWIP_SOCKET_SELECT
   int s;
   int ret;
-  u32_t opt;
+  int opt;
 #if LWIP_IPV6
   struct sockaddr_in6 addr;
 #else /* LWIP_IPV6 */
@@ -79,6 +80,7 @@ sockex_nonblocking_connect(void *arg)
   u32_t ticks_a, ticks_b;
   int err;
   const ip_addr_t *ipaddr = (const ip_addr_t*)arg;
+  struct pollfd fds;
   INIT_FDSETS(&sets);
 
   /* set up address to connect to */
@@ -201,6 +203,13 @@ sockex_nonblocking_connect(void *arg)
   LWIP_ASSERT("!FD_ISSET(s, &readset)", !FD_ISSET(s, &sets.readset));
   LWIP_ASSERT("!FD_ISSET(s, &errset)", !FD_ISSET(s, &sets.errset));
 
+  fds.fd = s;
+  fds.events = POLLIN|POLLOUT;
+  fds.revents = 0;
+  ret = lwip_poll(&fds, 1, 0);
+  LWIP_ASSERT("ret == 0", ret == 0);
+  LWIP_ASSERT("fds.revents == 0", fds.revents == 0);
+
   FD_ZERO(&sets.readset);
   FD_SET(s, &sets.readset);
   FD_ZERO(&sets.writeset);
@@ -215,6 +224,13 @@ sockex_nonblocking_connect(void *arg)
   LWIP_ASSERT("FD_ISSET(s, &writeset)", FD_ISSET(s, &sets.writeset));
   LWIP_ASSERT("!FD_ISSET(s, &readset)", !FD_ISSET(s, &sets.readset));
   LWIP_ASSERT("!FD_ISSET(s, &errset)", !FD_ISSET(s, &sets.errset));
+
+  fds.fd = s;
+  fds.events = POLLIN|POLLOUT;
+  fds.revents = 0;
+  ret = lwip_poll(&fds, 1, 0);
+  LWIP_ASSERT("ret == 1", ret == 1);
+  LWIP_ASSERT("fds.revents & POLLOUT", fds.revents & POLLOUT);
 
   /* now write should succeed */
   ret = lwip_write(s, "test", 4);
@@ -296,7 +312,10 @@ sockex_nonblocking_connect(void *arg)
   LWIP_UNUSED_ARG(ret);
 
   printf("select() needed %d ticks to return error\n", (int)(ticks_b - ticks_a));
-  printf("all tests done, thread ending\n");
+  printf("sockex_nonblocking_connect finished successfully\n");
+#else
+  LWIP_UNUSED_ARG(arg);
+#endif
 }
 
 /** This is an example function that tests
@@ -307,7 +326,11 @@ sockex_testrecv(void *arg)
   int s;
   int ret;
   int err;
+#if LWIP_SO_SNDRCVTIMEO_NONSTANDARD
   int opt, opt2;
+#else
+  struct timeval opt, opt2;
+#endif
   socklen_t opt2size;
 #if LWIP_IPV6
   struct sockaddr_in6 addr;
@@ -316,9 +339,11 @@ sockex_testrecv(void *arg)
 #endif /* LWIP_IPV6 */
   size_t len;
   char rxbuf[SOCK_TARGET_MAXHTTPPAGESIZE];
+#if LWIP_SOCKET_SELECT
   fd_set readset;
   fd_set errset;
   struct timeval tv;
+#endif
   const ip_addr_t *ipaddr = (const ip_addr_t*)arg;
 
   /* set up address to connect to */
@@ -351,15 +376,30 @@ sockex_testrecv(void *arg)
   LWIP_ASSERT("ret == 0", ret == 0);
 
   /* set recv timeout (100 ms) */
+#if LWIP_SO_SNDRCVTIMEO_NONSTANDARD
   opt = 100;
-  ret = lwip_setsockopt(s, SOL_SOCKET, SO_RCVTIMEO, &opt, sizeof(int));
+#else
+  opt.tv_sec = 0;
+  opt.tv_usec = 100 * 1000;
+#endif
+  ret = lwip_setsockopt(s, SOL_SOCKET, SO_RCVTIMEO, &opt, sizeof(opt));
   LWIP_ASSERT("ret == 0", ret == 0);
+#if LWIP_SO_SNDRCVTIMEO_NONSTANDARD
   opt2 = 0;
+#else
+  opt2.tv_sec = 0;
+  opt2.tv_usec = 0;
+#endif
   opt2size = sizeof(opt2);
   ret = lwip_getsockopt(s, SOL_SOCKET, SO_RCVTIMEO, &opt2, &opt2size);
   LWIP_ASSERT("ret == 0", ret == 0);
   LWIP_ASSERT("opt2size == sizeof(opt2)", opt2size == sizeof(opt2));
+#if LWIP_SO_SNDRCVTIMEO_NONSTANDARD
   LWIP_ASSERT("opt == opt2", opt == opt2);
+#else
+  LWIP_ASSERT("opt == opt2", opt.tv_sec == opt2.tv_sec);
+  LWIP_ASSERT("opt == opt2", opt.tv_usec == opt2.tv_usec);
+#endif
 
   /* write the start of a GET request */
 #define SNDSTR1 "G"
@@ -387,6 +427,7 @@ sockex_testrecv(void *arg)
   ret = lwip_read(s, rxbuf, SOCK_TARGET_MAXHTTPPAGESIZE);
   LWIP_ASSERT("ret > 0", ret > 0);
 
+#if LWIP_SOCKET_SELECT
   /* now select should directly return because the socket is readable */
   FD_ZERO(&readset);
   FD_ZERO(&errset);
@@ -398,6 +439,7 @@ sockex_testrecv(void *arg)
   LWIP_ASSERT("ret == 1", ret == 1);
   LWIP_ASSERT("!FD_ISSET(s, &errset)", !FD_ISSET(s, &errset));
   LWIP_ASSERT("FD_ISSET(s, &readset)", FD_ISSET(s, &readset));
+#endif
 
   /* should not time out but receive a response */
   ret = lwip_read(s, rxbuf, SOCK_TARGET_MAXHTTPPAGESIZE);
@@ -416,6 +458,7 @@ sockex_testrecv(void *arg)
   printf("sockex_testrecv finished successfully\n");
 }
 
+#if LWIP_SOCKET_SELECT
 /** helper struct for the 2 functions below (multithreaded: thread-argument) */
 struct sockex_select_helper {
   int socket;
@@ -594,28 +637,37 @@ sockex_testtwoselects(void *arg)
 
   printf("sockex_testtwoselects finished successfully\n");
 }
+#else
+static void
+sockex_testtwoselects(void *arg)
+{
+  LWIP_UNUSED_ARG(arg);
+}
+#endif
 
 #if !SOCKET_EXAMPLES_RUN_PARALLEL
 static void
 socket_example_test(void* arg)
 {
+  sys_msleep(1000);
   sockex_nonblocking_connect(arg);
   sockex_testrecv(arg);
   sockex_testtwoselects(arg);
+  printf("all tests done, thread ending\n");
 }
 #endif
 
 void socket_examples_init(void)
 {
-
+  int addr_ok;
 #if LWIP_IPV6
   IP_SET_TYPE_VAL(dstaddr, IPADDR_TYPE_V6);
-  ip6addr_aton(SOCK_TARGET_HOST6, ip_2_ip6(&dstaddr));
+  addr_ok = ip6addr_aton(SOCK_TARGET_HOST6, ip_2_ip6(&dstaddr));
 #else /* LWIP_IPV6 */
   IP_SET_TYPE_VAL(dstaddr, IPADDR_TYPE_V4);
-  ip4addr_aton(SOCK_TARGET_HOST4, ip_2_ip4(&dstaddr));
+  addr_ok = ip4addr_aton(SOCK_TARGET_HOST4, ip_2_ip4(&dstaddr));
 #endif /* LWIP_IPV6 */
-  
+  LWIP_ASSERT("invalid address", addr_ok);
 #if SOCKET_EXAMPLES_RUN_PARALLEL
   sys_thread_new("sockex_nonblocking_connect", sockex_nonblocking_connect, &dstaddr, 0, 0);
   sys_thread_new("sockex_testrecv", sockex_testrecv, &dstaddr, 0, 0);

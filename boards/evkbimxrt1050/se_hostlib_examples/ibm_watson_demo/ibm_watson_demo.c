@@ -348,12 +348,13 @@ int main(void)
     /* Run RTOS */
     vTaskStartScheduler();
 
+    __disable_irq();
+    __WFI();  /* Never exit */
+
     /* Should not reach this statement */
     for (;;)
         ;
 
-    __disable_irq();
-     __WFI();  /* Never exit */
 }
 
 void WatsonIoTDemo_task(void * ctx) {

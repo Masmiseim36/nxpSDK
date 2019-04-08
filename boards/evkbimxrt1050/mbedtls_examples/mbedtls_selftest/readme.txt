@@ -229,8 +229,8 @@ No special settings are required.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.1
+- IAR embedded Workbench  8.32.3
 - GCC ARM Embedded  7.3.1
 - Keil MDK  5.26
-- MCUXpresso 10.3.0
+- MCUXpresso 10.3.1
 

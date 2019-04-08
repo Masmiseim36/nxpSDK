@@ -258,7 +258,7 @@ unsigned long gcpNTPGetEpochEnet()
 
     RefTs_Seconds = (ntohl(ntp_buffer.cmd_rsp.RefTs_Seconds));
     RefTs_Seconds -= (((70ul*365ul) + 17ul)*24ul*60ul*60ul);
-	closesocket(fd);
+    closesocket(fd);
 
     if (RefTs_Seconds < MIN_EPOCH)
         goto exit;
@@ -292,22 +292,22 @@ unsigned long gcpNTPGetEpochWifi(void)
     addr.sin_addr.s_addr = resolveHostname(NTP_SERVER_NAME);
     if (addr.sin_addr.s_addr == 0)
     {
-            nwstatus = NETWORK_ERR_NET_UNKNOWN_HOST;
-            goto exit;
+      nwstatus = NETWORK_ERR_NET_UNKNOWN_HOST;
+      goto exit;
     }
 
     fd = qcom_socket(ATH_AF_INET, SOCK_DGRAM_TYPE, 0);//ATH_IPPROTO_UDP);
     if (isValueFailed(fd, -1, "qcom_socket"))
     {
-        nwstatus = NETWORK_ERR_NET_SOCKET_FAILED;
-        goto exit;
+      nwstatus = NETWORK_ERR_NET_SOCKET_FAILED;
+      goto exit;
     }
 
     status = (A_STATUS)qcom_connect(fd, (struct sockaddr *)&addr, sizeof(addr));
     if (isQcomError(status, "qcom_connect"))
     {
-    	nwstatus = NETWORK_ERR_NET_CONNECT_FAILED;
-    	goto exit;
+      nwstatus = NETWORK_ERR_NET_CONNECT_FAILED;
+      goto exit;
     }
 
     ntp_buffer.cmd_rsp.LI_VN_Mode = 0x1b;//(NTP_leap << 6 | NTP_version << 3 | NTP_mode);
@@ -315,15 +315,15 @@ unsigned long gcpNTPGetEpochWifi(void)
     sendBuf = custom_alloc( sizeof(ntp_buffer) );
     if( sendBuf == NULL )
     {
-        return -1;
+      goto exit;
     }
     memcpy( sendBuf, ntp_buffer.buffer, sizeof(ntp_buffer) );
     ret = qcom_sendto(fd, sendBuf, sizeof(ntp_buffer), 0, (struct sockaddr *)&addr, sizeof(struct sockaddr));
     if(ret < 0)
     {
-        LOG_W( " failed\n  ! qcom_sendto returned %d\n\n", ret );
-        nwstatus = NETWORK_ERR_NET_SOCKET_FAILED;
-        goto exit;
+      LOG_W( " failed\n  ! qcom_sendto returned %d\n\n", ret );
+      nwstatus = NETWORK_ERR_NET_SOCKET_FAILED;
+      goto exit;
     }
     custom_free(sendBuf);
     sendBuf = NULL;
@@ -332,22 +332,22 @@ unsigned long gcpNTPGetEpochWifi(void)
     ret = t_select(enetCtx, fd, 2000);
     if (ret == -1)
     {
-    	nwstatus = NETWORK_ERR_NET_UNKNOWN_HOST;
-    	goto exit;
+      nwstatus = NETWORK_ERR_NET_UNKNOWN_HOST;
+      goto exit;
     }
     len = sizeof(struct sockaddr);
     ret = qcom_recvfrom(fd, &sendBuf, sizeof(ntp_buffer), 0, (struct sockaddr *)&addr, &len);
     if (ret < 0 )
     {
-		LOG_W( " failed\n  ! qcom_recvfrom returned %d\n\n", ret );
-		nwstatus = NETWORK_ERR_NET_SOCKET_FAILED;
-		goto exit;
+      LOG_W( " failed\n  ! qcom_recvfrom returned %d\n\n", ret );
+      nwstatus = NETWORK_ERR_NET_SOCKET_FAILED;
+      goto exit;
     }
     qcom_socket_close(fd);
     memcpy(ntp_buffer.buffer, sendBuf, sizeof(ntp_buffer));
 
-	RefTs_Seconds = (ntohl(ntp_buffer.cmd_rsp.RefTs_Seconds));
-	RefTs_Seconds -= (((70ul*365ul) + 17ul)*24ul*60ul*60ul);
+    RefTs_Seconds = (ntohl(ntp_buffer.cmd_rsp.RefTs_Seconds));
+    RefTs_Seconds -= (((70ul*365ul) + 17ul)*24ul*60ul*60ul);
 
     if (RefTs_Seconds < MIN_EPOCH)
         goto exit;
@@ -357,8 +357,8 @@ unsigned long gcpNTPGetEpochWifi(void)
     return RefTs_Seconds;
 
 exit:
-	LOG_W("ERROR Getting EPOCH %d\r\n", nwstatus);
-	IOT_UNUSED(nwstatus);
+    LOG_W("ERROR Getting EPOCH %d\r\n", nwstatus);
+    IOT_UNUSED(nwstatus);
     qcom_socket_close(fd);
     return 0;
 }

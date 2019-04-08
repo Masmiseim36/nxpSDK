@@ -1,5 +1,5 @@
 Release Name: MCUXpresso Software Development Kit (SDK)
-Release Version: 2.5.0
+Release Version: 2.5.1
 Package License: LA_OPT_NXP_Software_License.htm - Production Use, Section 2.3 applies
 
 KSDK_Peripheral_Driver     Description: Peripheral drivers are designed for  
@@ -12,6 +12,16 @@ KSDK_Peripheral_Driver     Description: Peripheral drivers are designed for
                            name: KSDK Peripheral Driver                      
                            Location: devices/<device>/drivers                
 
+jsmn                       version: NA                                       
+                           Location:                                         
+                           rtos/amazon-freertos/lib/third_party/jsmn         
+                           Description: JSMN (Jasmine) JSON parser.          
+                           License: MIT                                      
+                           Author: Serge A. Zaitsev                          
+                           name: JSMN                                        
+                           Format: source code                               
+                           URL: http://zserge.com/jsmn.html                  
+
 usb                        version: 2.1.0                                    
                            Location: middleware/usb                          
                            Description: Freescale USB stack. This is a       
@@ -22,13 +32,44 @@ usb                        version: 2.1.0
                            name: USB                                         
                            Format: source code                               
 
+issdk                      version: 1.7                                      
+                           Location: middleware/issdk                        
+                           Description: Freescale IoT Sensing SDK. It        
+                           combines a set of robust Sensor Drivers and       
+                           Algorithms along with example applications.       
+                           License: Open Source - BSD-3-Clause               
+                           Author: Freescale                                 
+                           name: ISSDK                                       
+                           Format: source code                               
+
+Pedometer_Library          version: 1.0                                      
+                           Location:                                         
+                           middleware/issdk/algorithms/pedometer/lib         
+                           Description: Pedometer algorithm library for Arm  
+                           Cortex M0+ and M4 processors                      
+                           License: LA_OPT_NXP_Software_License              
+                           Author: KEYnetik, Inc                             
+                           name: Pedometer Library                           
+                           Format: binary library                            
+
+Amazon_FreeRTOS            Author: Real Time Engineers, Ltd.                 
+                           Description: IoT operating system for             
+                           microcontrollers                                  
+                           Format: source code                               
+                           License: MIT. See                                 
+                           ,<rootfolder>/rtos/amazon-freertos/License.       
+                           Location: rtos/amazon-freertos                    
+                           name: Amazon FreeRTOS                             
+                           URL: https://aws.amazon.com/freertos/             
+                           version: 1.4.6                                    
+
 sdmmc                      name: SD MMC SDIO Card middleware                 
                            Location: middleware/sdmmc                        
                            License: Open Source - BSC-3-Clause               
                            Description: A software component support SD card,
                            eMMC card, SDIO card.                             
                            Author: Freescale                                 
-                           version: 2.2.7                                    
+                           version: 2.2.11                                   
                            Format: source code                               
 
 sdmmc_sdspi                name: SD Card middleware                          
@@ -69,7 +110,7 @@ fatfs                      Approved Open Source License: Yes
                            module for small embedded systems.                
                            Format: source code                               
                            License: Open Source - FatFs License,             
-                           middleware/fatfs/documents/doc/appnote.html       
+                           middleware/fatfs/doc/en/appnote.html              
                            Location: middleware/fatfs                        
                            name: FatFs                                       
                            URL: http://elm-chan.org/fsw/ff/00index_e.html    
@@ -84,6 +125,15 @@ mbedtls                    Author: ARM
                            name: MBED TLS stack                              
                            URL: https://tls.mbed.org/                        
                            version: 2.13.1                                   
+
+lwip                       Author: Swedish Institute of Computer Science     
+                           Description: A light-weight TCP/IP stack          
+                           Format: source code                               
+                           License: Open Source - BSD-3-Clause               
+                           Location: middleware/lwip                         
+                           name: lwIP TCP/IP Stack                           
+                           URL: http://savannah.nongnu.org/projects/lwip     
+                           version: 2.1.2                                    
 
 cmsisdsp                   name: CMSIS DSP Library                           
                            Format: source code                               
@@ -110,6 +160,56 @@ cmsiscore                  Author: ARM
                            version: 5.1.1 (CMSIS Download 5.3.0)             
                            Description: Industry-standard header files       
                            distributes by ARM for cortex-M cores             
+
+rtcesl                     Author: NXP                                       
+                           version: 4.5                                      
+                           name: rtcesl                                      
+                           Format: object code & header files                
+                           License: Open Source - BSD-3-Clause               
+                           Location: middleware/rtcesl                       
+                           Description: NXP Real Time Control Embedded       
+                           Software Library.                                 
+
+motor_control              Author: NXP                                       
+                           version: 1.1.0                                    
+                           name: motor_control                               
+                           Format: source code                               
+                           License: Open Source - BSD-3-Clause               
+                           Location: middleware/motor_control                
+                           Description: Motor control examples for PMSM and  
+                           BLDC motors.                                      
+
+motor_control - jQuery     Author: jQWidgets                                 
+                           version: v3.7.1 (2015-Feb)                        
+                           name: motor_control                               
+                           Format: library                                   
+                           License: Commercial -                             
+                           http://www.jqwidgets.com/license/                 
+                           Location:                                         
+                           middleware/motor_control/freemaster/fm_control    
+                           Description: Advanced jQuery and HTML5 UI         
+                           framework.                                        
+
+motor_control - JavaScript Author: jQuery Foundation, Inc.                   
+                           version: v1.11.1                                  
+                           name: motor_control                               
+                           Format: source code                               
+                           License: Open Source - MIT (jquery.org/license)   
+                           Location:                                         
+                           middleware/motor_control/freemaster/fm_control/jqu
+                           ery-1.11.1.min.js                                 
+                           Description: Cross-platform JavaScript library.   
+
+motor_control - FreeMASTER Author: NXP                                       
+driver                     version: 2.0.3.1                                  
+                           name: motor_control - FreeMASTER driver           
+                           Format: source code & header files                
+                           License: Proprietary. See                         
+                           LA_OPT_NXP_Software_License.htm.                  
+                           Location:                                         
+                           middleware/motor_control/freemaster/freemaster_drv
+                           Description: NXP FreeMASTER. Real time non        
+                           intrusive debugger.                               
 
 cmsis_drivers              Author: Freescale                                 
                            version: 2.x.x                                    
@@ -141,6 +241,76 @@ percepio_snapshot          version: 3.0.9
                            Author: Percepio                                  
                            name: Percepio Tracealyzer - Snapshot Demo        
                            Format: source code                               
+
+emwin                      version: 5.48                                     
+                           Location: middleware/emwin                        
+                           Description: emWin graphics library               
+                           License: Licensed to NXP, binary distribution only
+                           Author: SEGGER Microcontroller Systems LLC        
+                           name: emWin                                       
+                           Format: placeholder only                          
+                           URL:                                              
+                           http://www.nxp.com/pages/emwin-graphics-library:EM
+                           WIN-GRAPHICS-LIBRARY                              
+
+gradle                     version: 4.1                                      
+                           Location:                                         
+                           boards/<board>/aws_examples/remote_control_android
+                           /gradle,                                          
+                           boards/<board>/aws_examples/led_wifi_android/gradl
+                           e,                                                
+                           boards/<board>/aws_examples/device_configuration_a
+                           ndroid/gradle                                     
+                           Description: Gradle build tool                    
+                           License: Apache-2-Clause                          
+                           Author: Gradle Inc (https://gradle.org)           
+                           name: Gradle                                      
+                           Format: binary library                            
+                           URL: https://github.com/gradle/gradle             
+
+AwsRemoteControl           Location:                                         
+                           boards/<board>/aws_examples/remote_control_android
+                           /AwsRemoteControl.apk                             
+                           Description: AWS Remote Control example Android   
+                           application                                       
+                           License: Apache-2-Clause & BSD                    
+                           Author: Android Open Source Project & NXP         
+                           name: AWS Remote Control                          
+                           version: 1.0                                      
+                           Format: binary                                    
+
+AwsDeviceConfiguration     Location:                                         
+                           boards/<board>/aws_examples/device_configuration_a
+                           ndroid/AwsDeviceConfiguration.apk                 
+                           Description: AWS Device Configuration example     
+                           Android application                               
+                           License: Apache-2-Clause & BSD                    
+                           Author: Android Open Source Project & NXP         
+                           name: AWS Device Configuration                    
+                           version: 1.0                                      
+                           Format: binary                                    
+
+libjpeg                    Location: middleware/libjpeg                      
+                           version: 9b                                       
+                           Description: JPEG image encoding, decoding, and   
+                           transcoding                                       
+                           License: IJG, See middleware/libjpeg/README       
+                           Author: IJG (http://www.ijg.org/)                 
+                           name: LIBJPEG                                     
+                           Format: source code                               
+                           URL: http://www.ijg.org                           
+
+LittleFS                   version: 1.3                                      
+                           Location: middleware/littlefs                     
+                           Description: LittleFS - A little fail-safe        
+                           filesystem designed for microcontrollers          
+                           License: Apache License 2.0, See                  
+                           <rootfolder>/middleware/littlefs/LICENSE.md       
+                           Author: Christopher Haster                        
+                           (https://github.com/geky)                         
+                           name: LittleFS                                    
+                           Format: source code                               
+                           URL: https://github.com/geky/littlefs             
 
 Bootloader Source          Description: Software drivers for Bootloaders and 
                            Flashloaders                                      
@@ -284,77 +454,6 @@ cpp_option_parser          version: NA
                            http://www.bradapp.com/ftp/src/libs/C++/Options.ht
                            ml                                                
 
-rtcesl                     Author: NXP                                       
-                           version: 4.5                                      
-                           name: rtcesl                                      
-                           Format: object code & header files                
-                           License: Open Source - BSD-3-Clause               
-                           Location: middleware/rtcesl                       
-                           Description: NXP Real Time Control Embedded       
-                           Software Library.                                 
-
-motor_control              Author: NXP                                       
-                           version: 1.1.0                                    
-                           name: motor_control                               
-                           Format: source code                               
-                           License: Open Source - BSD-3-Clause               
-                           Location: middleware/motor_control                
-                           Description: Motor control examples for PMSM and  
-                           BLDC motors.                                      
-
-motor_control - jQuery     Author: jQWidgets                                 
-                           version: v3.7.1 (2015-Feb)                        
-                           name: motor_control                               
-                           Format: library                                   
-                           License: Commercial -                             
-                           http://www.jqwidgets.com/license/                 
-                           Location:                                         
-                           middleware/motor_control/freemaster/fm_control    
-                           Description: Advanced jQuery and HTML5 UI         
-                           framework.                                        
-
-motor_control - JavaScript Author: jQuery Foundation, Inc.                   
-                           version: v1.11.1                                  
-                           name: motor_control                               
-                           Format: source code                               
-                           License: Open Source - MIT (jquery.org/license)   
-                           Location:                                         
-                           middleware/motor_control/freemaster/fm_control/jqu
-                           ery-1.11.1.min.js                                 
-                           Description: Cross-platform JavaScript library.   
-
-motor_control - FreeMASTER Author: NXP                                       
-driver                     version: 2.0.3.1                                  
-                           name: motor_control - FreeMASTER driver           
-                           Format: source code & header files                
-                           License: Proprietary. See                         
-                           LA_OPT_NXP_Software_License.htm.                  
-                           Location:                                         
-                           middleware/motor_control/freemaster/freemaster_drv
-                           Description: NXP FreeMASTER. Real time non        
-                           intrusive debugger.                               
-
-jsmn                       version: NA                                       
-                           Location:                                         
-                           rtos/amazon-freertos/lib/third_party/jsmn         
-                           Description: JSMN (Jasmine) JSON parser.          
-                           License: MIT                                      
-                           Author: Serge A. Zaitsev                          
-                           name: JSMN                                        
-                           Format: source code                               
-                           URL: http://zserge.com/jsmn.html                  
-
-Amazon_FreeRTOS            Author: Real Time Engineers, Ltd.                 
-                           Description: IoT operating system for             
-                           microcontrollers                                  
-                           Format: source code                               
-                           License: MIT. See                                 
-                           ,<rootfolder>/rtos/amazon-freertos/License.       
-                           Location: rtos/amazon-freertos                    
-                           name: Amazon FreeRTOS                             
-                           URL: https://aws.amazon.com/freertos/             
-                           version: 1.4.0                                    
-
 wifi_qca                   version: 2.0.0                                    
                            Location: middleware/wifi_qca                     
                            Description: Qualcomm Wi-Fi stack                 
@@ -364,51 +463,6 @@ wifi_qca                   version: 2.0.0
                            Format: source code                               
                            URL:                                              
                            https://www.qualcomm.com/products/wifi-platforms  
-
-gradle                     version: 4.1                                      
-                           Location:                                         
-                           boards/<board>/aws_examples/remote_control_android
-                           /gradle,                                          
-                           boards/<board>/aws_examples/led_wifi_android/gradl
-                           e,                                                
-                           boards/<board>/aws_examples/device_configuration_a
-                           ndroid/gradle                                     
-                           Description: Gradle build tool                    
-                           License: Apache-2-Clause                          
-                           Author: Gradle Inc (https://gradle.org)           
-                           name: Gradle                                      
-                           Format: binary library                            
-                           URL: https://github.com/gradle/gradle             
-
-AwsRemoteControl           Location:                                         
-                           boards/<board>/aws_examples/remote_control_android
-                           /AwsRemoteControl.apk                             
-                           Description: AWS Remote Control example Android   
-                           application                                       
-                           License: Apache-2-Clause & BSD                    
-                           Author: Android Open Source Project & NXP         
-                           name: AWS Remote Control                          
-                           version: 1.0                                      
-                           Format: binary                                    
-
-AwsDeviceConfiguration     Location:                                         
-                           boards/<board>/aws_examples/device_configuration_a
-                           ndroid/AwsDeviceConfiguration.apk                 
-                           Description: AWS Device Configuration example     
-                           Android application                               
-                           License: Apache-2-Clause & BSD                    
-                           Author: Android Open Source Project & NXP         
-                           name: AWS Device Configuration                    
-                           version: 1.0                                      
-                           Format: binary                                    
-
-SE_hostlib                 version: 1.4.2                                    
-                           Location: middleware/se_hostlib                   
-                           Description: Secure element host library          
-                           License: NXP proprietary license                  
-                           Author: NXP                                       
-                           name: se_hostlib                                  
-                           Format: source code                               
 
 FNET                       version: 4.4.1                                    
                            Location:                                         
@@ -429,39 +483,35 @@ Unity                      Author: Unity Project by Mike Karlesky, Mark
                            License: MIT. See                                 
                            ,<rootfolder>/rtos/amazon-freertos/lib/third_party
                            /unity/docs/license.txt                           
-                           Location: rtos/amazon-freertos                    
+                           Location:                                         
+                           rtos/amazon-freertos/lib/third_party/unity        
                            name: Unity                                       
                            URL: http://www.throwtheswitch.org/unity          
                            version: 2.4.2                                    
 
-lwip                       Author: Swedish Institute of Computer Science     
-                           Description: A light-weight TCP/IP stack          
+wifi_wiced                 version: 1.0.0                                    
+                           Location: middleware/wiced                        
+                           Description: Cypress WICED framework              
+                           License: Cypress IOT Community License Agreement  
+                           Author: Cypress Semiconductor Corporation         
+                           name: wifi_wiced                                  
                            Format: source code                               
-                           License: Open Source - BSD-3-Clause               
-                           Location: middleware/lwip                         
-                           name: lwIP TCP/IP Stack                           
-                           URL: http://savannah.nongnu.org/projects/lwip     
-                           version: 2.0.3                                    
 
-emwin                      version: 5.48                                     
-                           Location: middleware/emwin                        
-                           Description: emWin graphics library               
-                           License: Licensed to NXP, binary distribution only
-                           Author: SEGGER Microcontroller Systems LLC        
-                           name: emWin                                       
-                           Format: placeholder only                          
-                           URL:                                              
-                           http://www.nxp.com/pages/emwin-graphics-library:EM
-                           WIN-GRAPHICS-LIBRARY                              
+wifi_wiced - wl_tool       Location:                                         
+                           middleware/wiced/43xxx_Wi-Fi/libraries/test/wl_too
+                           l/wl4343WA1.exe                                   
+                           Description: Manufacturing test utility           
+                           License: Cypress IOT Community License Agreement  
+                           Author: Cypress Semiconductor Corporation         
+                           name: wl_tool                                     
+                           Format: binary                                    
 
-issdk                      version: 1.7                                      
-                           Location: middleware/issdk                        
-                           Description: Freescale IoT Sensing SDK. It        
-                           combines a set of robust Sensor Drivers and       
-                           Algorithms along with example applications.       
-                           License: Open Source - BSD-3-Clause               
-                           Author: Freescale                                 
-                           name: ISSDK                                       
+SE_hostlib                 version: 1.4.2                                    
+                           Location: middleware/se_hostlib                   
+                           Description: Secure element host library          
+                           License: NXP proprietary license                  
+                           Author: NXP                                       
+                           name: se_hostlib                                  
                            Format: source code                               
 
 Pedometer_Library          version: 1.0                                      
@@ -473,28 +523,6 @@ Pedometer_Library          version: 1.0
                            Author: KEYnetik, Inc                             
                            name: Pedometer Library                           
                            Format: binary library                            
-
-libjpeg                    Location: middleware/libjpeg                      
-                           version: 9b                                       
-                           Description: JPEG image encoding, decoding, and   
-                           transcoding                                       
-                           License: IJG, See middleware/libjpeg/README       
-                           Author: IJG (http://www.ijg.org/)                 
-                           name: LIBJPEG                                     
-                           Format: source code                               
-                           URL: http://www.ijg.org                           
-
-LittleFS                   version: 1.3                                      
-                           Location: middleware/littlefs                     
-                           Description: LittleFS - A little fail-safe        
-                           filesystem designed for microcontrollers          
-                           License: Apache License 2.0, See                  
-                           <rootfolder>/middleware/littlefs/LICENSE.md       
-                           Author: Christopher Haster                        
-                           (https://github.com/geky)                         
-                           name: LittleFS                                    
-                           Format: source code                               
-                           URL: https://github.com/geky/littlefs             
 
 CJSON                      version: 1.7.4                                    
                            Location: middleware/cjson                        

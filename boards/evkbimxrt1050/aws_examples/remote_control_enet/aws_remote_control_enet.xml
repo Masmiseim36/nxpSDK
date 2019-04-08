@@ -150,7 +150,7 @@
       <files mask="lwipopts.h"/>
     </source>
     <source path="boards/evkbimxrt1050/aws_examples/remote_control_enet" target_path="source" type="src">
-      <files mask="main_enet.c"/>
+      <files mask="main.c"/>
       <files mask="remote_control.c"/>
     </source>
   </example>

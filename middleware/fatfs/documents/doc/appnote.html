@@ -37,7 +37,7 @@
 <li>ANSI C<br>
 The FatFs module is a middleware written in ANSI C (C89). There is no platform dependence, so long as the compiler is in compliance with C89 or later.</li>
 <li>Size of integer types<br>
-Integer types used in FatFs are defined in <tt>integer.h</tt>. It assumes that size of <tt>char</tt>/<tt>short</tt>/<tt>long</tt> are 8/16/32 bit respectively and <tt>int</tt> is 16 or 32 bit. This will not be a problem on most compilers. When a conflict with existing definitions occurred, you must resolve it with care. Note that FatFs does not use <tt>stdint.h</tt> and <tt>wchar.h</tt> because of compatibility with C89.</li>
+Integer types used in FatFs are defined in <tt>integer.h</tt>. It assumes that size of <tt>char</tt>/<tt>short</tt>/<tt>long</tt> are 8/16/32 bit respectively and <tt>int</tt> is 16 or 32 bit. This will not be a problem on most compilers. When a conflict with existing definitions occured, you must resolve it with care. Note that FatFs does not use <tt>stdint.h</tt> and <tt>wchar.h</tt> because of compatibility with C89.</li>
 </ul>
 
 <h4>System Organizations</h4>
@@ -231,7 +231,7 @@ Figure 5. Minimized critical section<br>
 <img src="../res/f5.png" width="320" height="436" alt="fig.5">
 </div>
 <br class="clr">
-<p>An interruption in the red section can cause a cross link; as a result, the object being changed can be lost. If an interruption in the yellow section is occurred, there is one or more possibility listed below.</p>
+<p>An interruption in the red section can cause a cross link; as a result, the object being changed can be lost. If an interruption in the yellow section is occured, there is one or more possibility listed below.</p>
 <ul>
 <li>The file data being rewrited is collapsed.</li>
 <li>The file being appended returns initial state.</li>

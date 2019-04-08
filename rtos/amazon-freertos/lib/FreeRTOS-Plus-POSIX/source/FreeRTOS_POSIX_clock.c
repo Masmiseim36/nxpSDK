@@ -1,5 +1,5 @@
 /*
- * Amazon FreeRTOS+POSIX V1.0.0
+ * Amazon FreeRTOS+POSIX V1.0.2
  * Copyright (C) 2018 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -30,6 +30,7 @@
 
 /* C standard library includes. */
 #include <stddef.h>
+#include <string.h>
 
 /* FreeRTOS+POSIX includes. */
 #include "FreeRTOS_POSIX.h"
@@ -37,18 +38,20 @@
 #include "FreeRTOS_POSIX/time.h"
 #include "FreeRTOS_POSIX/utils.h"
 
-/**
- * @brief The maximum value of the time_t type.
- */
-#define TIME_T_MAX    ( ( time_t ) ~0UL )
+/* Declaration of snprintf. The header stdio.h is not included because it
+ * includes conflicting symbols on some platforms. */
+extern int snprintf( char * s,
+                     size_t n,
+                     const char * format,
+                     ... );
 
 /*-----------------------------------------------------------*/
 
 clock_t clock( void )
 {
-    /* Return the amount of time since the scheduler started that wasn't spent
-     * in the idle task. */
-    return ( clock_t ) ( xTaskGetTickCount() - xTaskGetIdleTickCount() );
+    /* This function is currently unsupported. It will always return -1. */
+
+    return ( clock_t ) -1;
 }
 
 /*-----------------------------------------------------------*/
@@ -74,9 +77,6 @@ int clock_getres( clockid_t clock_id,
 {
     /* Silence warnings about unused parameters. */
     ( void ) clock_id;
-
-    /* The FreeRTOS tick rate should never be 0 or negative. */
-    configASSERT( configTICK_RATE_HZ >= 0 );
 
     /* Convert FreeRTOS tick resolution as timespec. */
     if( res != NULL )
@@ -104,9 +104,6 @@ int clock_gettime( clockid_t clock_id,
     /* Silence warnings about unused parameters. */
     ( void ) clock_id;
 
-    /* Maximum delay should never be 0. */
-    configASSERT( portMAX_DELAY > 0UL );
-
     /* Check tp. */
     if( tp == NULL )
     {
@@ -123,44 +120,13 @@ int clock_gettime( clockid_t clock_id,
 
         /* Adjust the tick count for the number of times a TickType_t has overflowed.
          * portMAX_DELAY should be the maximum value of a TickType_t. */
-        ullTickCount = ( uint64_t ) portMAX_DELAY * ( uint64_t ) ( xCurrentTime.xOverflowCount );
+        ullTickCount = ( uint64_t ) ( xCurrentTime.xOverflowCount ) << ( sizeof( TickType_t ) * 8 );
 
-        /* Check for an overflow from the above multiplication. */
-        if( ullTickCount / ( ( uint64_t ) portMAX_DELAY ) != xCurrentTime.xOverflowCount )
-        {
-            /* The number of seconds in the above tick count will not fit in time_t. */
-            errno = EOVERFLOW;
-            iStatus = -1;
-        }
-    }
-
-    if( iStatus == 0 )
-    {
+        /* Add the current tick count. */
         ullTickCount += xCurrentTime.xTimeOnEntering;
 
-        /* Check for an overflow from the above addition. */
-        if( ullTickCount - xCurrentTime.xTimeOnEntering > ullTickCount )
-        {
-            /* The number of seconds in the above tick count will not fit in time_t. */
-            errno = EOVERFLOW;
-            iStatus = -1;
-        }
-    }
-
-    if( iStatus == 0 )
-    {
-        /* Check that ullTickCount can be safely converted to time_t. */
-        if( ullTickCount > ( uint64_t ) TIME_T_MAX )
-        {
-            /* The number of seconds in ullTickCount will not fit in time_t. */
-            errno = EOVERFLOW;
-            iStatus = -1;
-        }
-        else
-        {
-            /* Convert ullTickCount to timespec. */
-            UTILS_NanosecondsToTimespec( ( int64_t ) ullTickCount * NANOSECONDS_PER_TICK, tp );
-        }
+        /* Convert ullTickCount to timespec. */
+        UTILS_NanosecondsToTimespec( ( int64_t ) ullTickCount * NANOSECONDS_PER_TICK, tp );
     }
 
     return iStatus;
@@ -175,6 +141,7 @@ int clock_nanosleep( clockid_t clock_id,
 {
     int iStatus = 0;
     TickType_t xSleepTime = 0;
+    struct timespec xCurrentTime = { 0 };
 
     /* Silence warnings about unused parameters. */
     ( void ) clock_id;
@@ -187,13 +154,24 @@ int clock_nanosleep( clockid_t clock_id,
         iStatus = EINVAL;
     }
 
+    /* Get current time */
+    if( ( iStatus == 0 ) && ( clock_gettime( CLOCK_REALTIME, &xCurrentTime ) != 0 ) )
+    {
+        iStatus = EINVAL;
+    }
+
     if( iStatus == 0 )
     {
         /* Check for absolute time sleep. */
         if( ( flags & TIMER_ABSTIME ) == TIMER_ABSTIME )
         {
+            /* Get current time */
+            if( clock_gettime( CLOCK_REALTIME, &xCurrentTime ) != 0 )
+            {
+                iStatus = EINVAL;
+            }
             /* Get number of ticks until absolute time. */
-            if( UTILS_AbsoluteTimespecToTicks( rqtp, &xSleepTime ) == 0 )
+            if( ( iStatus == 0 ) && ( UTILS_AbsoluteTimespecToDeltaTicks( rqtp, &xCurrentTime, &xSleepTime ) == 0 ) )
             {
                 /* Delay until absolute time if vTaskDelayUntil is available. */
                 #if ( INCLUDE_vTaskDelayUntil == 1 )
@@ -245,6 +223,32 @@ int clock_settime( clockid_t clock_id,
 
 /*-----------------------------------------------------------*/
 
+struct tm * localtime_r( const time_t * timer,
+                         struct tm * result )
+{
+    /* Silence warnings about unused parameters. */
+    ( void ) timer;
+    ( void ) result;
+
+    /* This function is only supported if the "custom" FreeRTOS+POSIX tm struct
+     * is used. */
+    #if ( posixconfigENABLE_TM == 0 )
+        errno = ENOTSUP;
+
+        return NULL;
+    #else
+
+        /* Zero the tm, then store the FreeRTOS tick count. The input parameter
+         * timer isn't used. */
+        ( void ) memset( result, 0x00, sizeof( struct tm ) );
+        result->tm_tick = ( time_t ) xTaskGetTickCount();
+
+        return result;
+    #endif
+}
+
+/*-----------------------------------------------------------*/
+
 int nanosleep( const struct timespec * rqtp,
                struct timespec * rmtp )
 {
@@ -271,6 +275,47 @@ int nanosleep( const struct timespec * rqtp,
     }
 
     return iStatus;
+}
+
+/*-----------------------------------------------------------*/
+
+size_t strftime( char * s,
+                 size_t maxsize,
+                 const char * format,
+                 const struct tm * timeptr )
+{
+    int iStatus = 0;
+    size_t bytesPrinted = 0;
+
+    /* Silence warnings about unused parameters. */
+    ( void ) format;
+
+    /* Print the time in the buffer. */
+    iStatus = snprintf( s, maxsize, "%ld", ( long int ) timeptr->tm_tick );
+
+    /* Check for encoding and size errors. */
+    if( ( iStatus > 0 ) && ( ( size_t ) iStatus < maxsize ) )
+    {
+        bytesPrinted = ( size_t ) iStatus;
+    }
+
+    return bytesPrinted;
+}
+
+/*-----------------------------------------------------------*/
+
+time_t time( time_t * tloc )
+{
+    /* Read the current FreeRTOS tick count and convert it to seconds. */
+    time_t xCurrentTime = ( time_t ) ( xTaskGetTickCount() / configTICK_RATE_HZ );
+
+    /* Set the output parameter if provided. */
+    if( tloc != NULL )
+    {
+        *tloc = xCurrentTime;
+    }
+
+    return xCurrentTime;
 }
 
 /*-----------------------------------------------------------*/

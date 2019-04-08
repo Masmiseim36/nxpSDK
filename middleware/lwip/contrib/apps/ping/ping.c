@@ -95,7 +95,9 @@
 /* ping variables */
 static const ip_addr_t* ping_target;
 static u16_t ping_seq_num;
+#ifdef LWIP_DEBUG
 static u32_t ping_time;
+#endif /* LWIP_DEBUG */
 #if !PING_USE_SOCKETS
 static struct raw_pcb *ping_pcb;
 #endif /* PING_USE_SOCKETS */
@@ -134,7 +136,7 @@ ping_send(int s, const ip_addr_t *addr)
   LWIP_ASSERT("ping_size is too big", ping_size <= 0xffff);
 
 #if LWIP_IPV6
-  if(IP_IS_V6(addr) && !ip6_addr_isipv6mappedipv4(ip_2_ip6(addr))) {
+  if(IP_IS_V6(addr) && !ip6_addr_isipv4mappedipv6(ip_2_ip6(addr))) {
     /* todo: support ICMP6 echo */
     return ERR_VAL;
   }
@@ -189,7 +191,7 @@ ping_recv(int s)
       if(from.ss_family == AF_INET) {
         struct sockaddr_in *from4 = (struct sockaddr_in*)&from;
         inet_addr_to_ip4addr(ip_2_ip4(&fromaddr), &from4->sin_addr);
-        IP_SET_TYPE(&fromaddr, IPADDR_TYPE_V4);
+        IP_SET_TYPE_VAL(fromaddr, IPADDR_TYPE_V4);
       }
 #endif /* LWIP_IPV4 */
 
@@ -197,12 +199,12 @@ ping_recv(int s)
       if(from.ss_family == AF_INET6) {
         struct sockaddr_in6 *from6 = (struct sockaddr_in6*)&from;
         inet6_addr_to_ip6addr(ip_2_ip6(&fromaddr), &from6->sin6_addr);
-        IP_SET_TYPE(&fromaddr, IPADDR_TYPE_V6);
+        IP_SET_TYPE_VAL(fromaddr, IPADDR_TYPE_V6);
       }
 #endif /* LWIP_IPV6 */
       
       LWIP_DEBUGF( PING_DEBUG, ("ping: recv "));
-      ip_addr_debug_print(PING_DEBUG, &fromaddr);
+      ip_addr_debug_print_val(PING_DEBUG, fromaddr);
       LWIP_DEBUGF( PING_DEBUG, (" %"U32_F" ms\n", (sys_now() - ping_time)));
 
       /* todo: support ICMP6 echo */
@@ -250,7 +252,7 @@ ping_thread(void *arg)
   LWIP_UNUSED_ARG(arg);
 
 #if LWIP_IPV6
-  if(IP_IS_V4(ping_target) || ip6_addr_isipv6mappedipv4(ip_2_ip6(ping_target))) {
+  if(IP_IS_V4(ping_target) || ip6_addr_isipv4mappedipv6(ip_2_ip6(ping_target))) {
     s = lwip_socket(AF_INET6, SOCK_RAW, IP_PROTO_ICMP);
   } else {
     s = lwip_socket(AF_INET6, SOCK_RAW, IP6_NEXTH_ICMP6);
@@ -272,7 +274,9 @@ ping_thread(void *arg)
       ip_addr_debug_print(PING_DEBUG, ping_target);
       LWIP_DEBUGF( PING_DEBUG, ("\n"));
 
+#ifdef LWIP_DEBUG
       ping_time = sys_now();
+#endif /* LWIP_DEBUG */
       ping_recv(s);
     } else {
       LWIP_DEBUGF( PING_DEBUG, ("ping: send "));
@@ -296,7 +300,7 @@ ping_recv(void *arg, struct raw_pcb *pcb, struct pbuf *p, const ip_addr_t *addr)
   LWIP_ASSERT("p != NULL", p != NULL);
 
   if ((p->tot_len >= (PBUF_IP_HLEN + sizeof(struct icmp_echo_hdr))) &&
-      pbuf_header(p, -PBUF_IP_HLEN) == 0) {
+      pbuf_remove_header(p, PBUF_IP_HLEN) == 0) {
     iecho = (struct icmp_echo_hdr *)p->payload;
 
     if ((iecho->id == PING_ID) && (iecho->seqno == lwip_htons(ping_seq_num))) {
@@ -310,14 +314,14 @@ ping_recv(void *arg, struct raw_pcb *pcb, struct pbuf *p, const ip_addr_t *addr)
       return 1; /* eat the packet */
     }
     /* not eaten, restore original packet */
-    pbuf_header(p, PBUF_IP_HLEN);
+    pbuf_add_header(p, PBUF_IP_HLEN);
   }
 
   return 0; /* don't eat the packet */
 }
 
 static void
-ping_send(struct raw_pcb *raw, ip_addr_t *addr)
+ping_send(struct raw_pcb *raw, const ip_addr_t *addr)
 {
   struct pbuf *p;
   struct icmp_echo_hdr *iecho;
@@ -338,7 +342,9 @@ ping_send(struct raw_pcb *raw, ip_addr_t *addr)
     ping_prepare_echo(iecho, (u16_t)ping_size);
 
     raw_sendto(raw, p, addr);
+#ifdef LWIP_DEBUG
     ping_time = sys_now();
+#endif /* LWIP_DEBUG */
   }
   pbuf_free(p);
 }
@@ -347,12 +353,10 @@ static void
 ping_timeout(void *arg)
 {
   struct raw_pcb *pcb = (struct raw_pcb*)arg;
-  ip_addr_t ping_target_copy;
 
   LWIP_ASSERT("ping_timeout: no pcb given!", pcb != NULL);
 
-  ip_addr_copy_from_ip4(ping_target_copy, *ping_target);
-  ping_send(pcb, &ping_target_copy);
+  ping_send(pcb, ping_target);
 
   sys_timeout(PING_DELAY, ping_timeout, pcb);
 }
@@ -371,10 +375,8 @@ ping_raw_init(void)
 void
 ping_send_now(void)
 {
-  ip_addr_t ping_target_copy;
   LWIP_ASSERT("ping_pcb != NULL", ping_pcb != NULL);
-  ip_addr_copy_from_ip4(ping_target_copy, *ping_target);
-  ping_send(ping_pcb, &ping_target_copy);
+  ping_send(ping_pcb, ping_target);
 }
 
 #endif /* PING_USE_SOCKETS */
@@ -383,7 +385,7 @@ void
 ping_init(const ip_addr_t* ping_addr)
 {
   ping_target = ping_addr;
-  
+
 #if PING_USE_SOCKETS
   sys_thread_new("ping_thread", ping_thread, NULL, DEFAULT_THREAD_STACKSIZE, DEFAULT_THREAD_PRIO);
 #else /* PING_USE_SOCKETS */

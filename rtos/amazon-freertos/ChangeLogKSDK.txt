@@ -1,0 +1,30 @@
+/**
+@page rtos_log RTOS Change Log
+
+@section FreeRTOS FreeRTOS for MCUXpresso SDK.
+The current version is Amazon-FreeRTOS 1.4.6 Original package is available at <a href="https://github.com/aws/amazon-freertos">github.com/aws/amazon-freertos</a>.
+
+  - 1.4.6_rev0
+    - New features:
+      - Update support of CM33 port with Trustzone, MPU, FPU support
+      - Add support for AWS test for Cypress WiFi
+      - Use lwip netif api to avoid lwIP raw API calls outside of tcpip thread in aws_wifi.c
+    - Other changes:
+      - Fix issues with mflash driver
+      - Fix other build warnings, errors 
+
+  - 1.4.0_rev1
+    - New features:
+      - Add implementation of vTaskEndScheduler for CM0 GCC port.
+      - Support for CM33, CM33F architectures based on CM3, CM4F ports
+
+  - 1.4.0_rev0
+    - New features:
+      - Support for pkcs11 for several platforms, secure element host library under pkcs11/portable/nxp folder
+      - Lwip, wifi_qca support for secure_sockets in secure_sockets/portable/nxp folder
+      - Flash driver support for several platforms in third_party/mcu_vendor/nxp folder
+      - Generic support for aws_wifi under wifi/portable/nxp/common folder
+    - Other changes:
+      - Fix several build warnings, errors
+
+*/

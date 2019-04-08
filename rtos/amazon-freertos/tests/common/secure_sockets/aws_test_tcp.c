@@ -1,5 +1,5 @@
 /*
- * Amazon FreeRTOS Secure Sockets AFQP V1.1.0
+ * Amazon FreeRTOS Secure Sockets AFQP V1.1.4
  * Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -41,9 +41,9 @@
 #include "aws_logging_task.h"
 
 /* Test framework includes. */
-#include "unity.h"
 #include "unity_fixture.h"
 #include "aws_test_runner.h"
+#include "aws_test_utils.h"
 #include "aws_test_tcp.h"
 
 /* Update this file with port-specific values. */
@@ -73,7 +73,8 @@ typedef enum
  * for the echo reply, then close the socket again before starting over.  This
  * delay is used between each iteration to ensure the network does not get too
  * congested. */
-#define tcptestLOOP_DELAY    ( ( TickType_t ) 150 / portTICK_PERIOD_MS )
+#define tcptestLOOP_DELAY_MS    ( 150 )
+#define tcptestLOOP_DELAY       ( ( TickType_t ) tcptestLOOP_DELAY_MS / portTICK_PERIOD_MS )
 
 /* The number of times SOCKETS_Connect_TCP opens and closes a socket. */
 /* Need to test at least 20 times. So bugs were not discovered with only 10 loops. */
@@ -84,12 +85,12 @@ typedef enum
 #define tcptestRX_BUFFER_FILLER          0xFF
 #define tcptestTX_BUFFER_FILLER          0xAA
 
-/* Size of cTxBuffer and cRxBuffer. */
+/* Size of pcTxBuffer and pcRxBuffer. */
 #define tcptestBUFFER_SIZE               ( testrunnerBUFFER_SIZE / 2 )
 
 /* Global buffers are shared between tests to reduce RAM usage. */
-char * cTxBuffer = &cBuffer[ 0 ];
-char * cRxBuffer = &cBuffer[ tcptestBUFFER_SIZE ];
+char * pcTxBuffer = &cBuffer[ 0 ];
+char * pcRxBuffer = &cBuffer[ tcptestBUFFER_SIZE ];
 
 /* Default Rx and Tx time outs are used to ensure the sockets do not
  * wait too long for missing data. */
@@ -235,7 +236,7 @@ static BaseType_t prvCheckRxTxBuffers( uint8_t * pucTxBuffer,
 
 /* Creates a TCP Socket.
  * Causes a test failure if socket creation fails. */
-static Socket_t prvTcpSocketHelper( volatile BaseType_t * xSocketOpen )
+static Socket_t prvTcpSocketHelper( volatile BaseType_t * pxSocketOpen )
 {
     Socket_t xSocket;
 
@@ -247,7 +248,7 @@ static Socket_t prvTcpSocketHelper( volatile BaseType_t * xSocketOpen )
     if( xSocket != SOCKETS_INVALID_SOCKET )
     {
         /* Test variable for closing exits/fails before closing. */
-        *xSocketOpen = pdTRUE;
+        *pxSocketOpen = pdTRUE;
     }
 
     return xSocket;
@@ -258,18 +259,18 @@ static Socket_t prvTcpSocketHelper( volatile BaseType_t * xSocketOpen )
 
 /* Sets secure socket options and returns the address of the secure echo server. */
 static BaseType_t prvSecureConnectHelper( Socket_t xSocket,
-                                          SocketsSockaddr_t * xHostAddress )
+                                          SocketsSockaddr_t * pxHostAddress )
 {
     BaseType_t xResult = pdFAIL;
 
     /* Echo requests are sent to the secure echo server and port. */
-    xHostAddress->ulAddress = SOCKETS_inet_addr_quick( tcptestECHO_SERVER_TLS_ADDR0,
-                                                       tcptestECHO_SERVER_TLS_ADDR1,
-                                                       tcptestECHO_SERVER_TLS_ADDR2,
-                                                       tcptestECHO_SERVER_TLS_ADDR3 );
-    xHostAddress->usPort = SOCKETS_htons( tcptestECHO_PORT_TLS );
-    xHostAddress->ucLength = sizeof( SocketsSockaddr_t );
-    xHostAddress->ucSocketDomain = SOCKETS_AF_INET;
+    pxHostAddress->ulAddress = SOCKETS_inet_addr_quick( tcptestECHO_SERVER_TLS_ADDR0,
+                                                        tcptestECHO_SERVER_TLS_ADDR1,
+                                                        tcptestECHO_SERVER_TLS_ADDR2,
+                                                        tcptestECHO_SERVER_TLS_ADDR3 );
+    pxHostAddress->usPort = SOCKETS_htons( tcptestECHO_PORT_TLS );
+    pxHostAddress->ucLength = sizeof( SocketsSockaddr_t );
+    pxHostAddress->ucSocketDomain = SOCKETS_AF_INET;
 
     /* Set the socket to use TLS. */
     xResult = SOCKETS_SetSockOpt( xSocket,
@@ -303,17 +304,17 @@ static BaseType_t prvSecureConnectHelper( Socket_t xSocket,
 /*-----------------------------------------------------------*/
 
 static BaseType_t prvNonSecureConnectHelper( Socket_t xSocket,
-                                             SocketsSockaddr_t * xHostAddress )
+                                             SocketsSockaddr_t * pxHostAddress )
 {
     /* Echo requests are sent to the echo server.  The echo server is
     * listening to tcptestECHO_PORT on this computer's IP address. */
-    xHostAddress->ulAddress = SOCKETS_inet_addr_quick( tcptestECHO_SERVER_ADDR0,
-                                                       tcptestECHO_SERVER_ADDR1,
-                                                       tcptestECHO_SERVER_ADDR2,
-                                                       tcptestECHO_SERVER_ADDR3 );
-    xHostAddress->usPort = SOCKETS_htons( tcptestECHO_PORT );
-    xHostAddress->ucLength = sizeof( SocketsSockaddr_t );
-    xHostAddress->ucSocketDomain = SOCKETS_AF_INET;
+    pxHostAddress->ulAddress = SOCKETS_inet_addr_quick( tcptestECHO_SERVER_ADDR0,
+                                                        tcptestECHO_SERVER_ADDR1,
+                                                        tcptestECHO_SERVER_ADDR2,
+                                                        tcptestECHO_SERVER_ADDR3 );
+    pxHostAddress->usPort = SOCKETS_htons( tcptestECHO_PORT );
+    pxHostAddress->ucLength = sizeof( SocketsSockaddr_t );
+    pxHostAddress->ucSocketDomain = SOCKETS_AF_INET;
 
     return SOCKETS_ERROR_NONE;
 }
@@ -321,18 +322,18 @@ static BaseType_t prvNonSecureConnectHelper( Socket_t xSocket,
 /*-----------------------------------------------------------*/
 
 static BaseType_t prvAwsIotBrokerConnectHelper( Socket_t xSocket,
-                                                SocketsSockaddr_t * xHostAddress )
+                                                SocketsSockaddr_t * pxHostAddress )
 {
     BaseType_t xResult = SOCKETS_SOCKET_ERROR;
 
     /* Resolve the broker endpoint to an IP address. */
-    xHostAddress->ulAddress = SOCKETS_GetHostByName( clientcredentialMQTT_BROKER_ENDPOINT );
+    pxHostAddress->ulAddress = SOCKETS_GetHostByName( clientcredentialMQTT_BROKER_ENDPOINT );
 
-    if( xHostAddress->ulAddress != 0 )
+    if( pxHostAddress->ulAddress != 0 )
     {
-        xHostAddress->usPort = SOCKETS_htons( clientcredentialMQTT_BROKER_PORT );
-        xHostAddress->ucLength = sizeof( SocketsSockaddr_t );
-        xHostAddress->ucSocketDomain = SOCKETS_AF_INET;
+        pxHostAddress->usPort = SOCKETS_htons( clientcredentialMQTT_BROKER_PORT );
+        pxHostAddress->ucLength = sizeof( SocketsSockaddr_t );
+        pxHostAddress->ucSocketDomain = SOCKETS_AF_INET;
 
         /* Set the socket to use TLS. */
         xResult = SOCKETS_SetSockOpt( xSocket,
@@ -355,7 +356,6 @@ static BaseType_t prvConnectHelper( Socket_t xSocket,
                                     Server_t xConn )
 {
     BaseType_t xResult = pdFAIL;
-    BaseType_t xRetry = 0;
     SocketsSockaddr_t xEchoServerAddress;
 
     if( xConn == eSecure )
@@ -378,13 +378,14 @@ static BaseType_t prvConnectHelper( Socket_t xSocket,
 
     if( xResult == SOCKETS_ERROR_NONE )
     {
-        do
-        {
-            xResult = SOCKETS_Connect( xSocket,
-                                       &xEchoServerAddress,
-                                       sizeof( xEchoServerAddress ) );
-            xRetry++;
-        } while( xResult != SOCKETS_ERROR_NONE && xRetry < tcptestRETRY_CONNECTION_TIMES );
+        uint32_t ulInitialRetryPeriodMs = tcptestLOOP_DELAY_MS;
+        BaseType_t xMaxRetries = tcptestRETRY_CONNECTION_TIMES;
+        RETRY_EXPONENTIAL( xResult = SOCKETS_Connect( xSocket,
+                                                      &xEchoServerAddress,
+                                                      sizeof( xEchoServerAddress ) ),
+                           SOCKETS_ERROR_NONE,
+                           ulInitialRetryPeriodMs,
+                           xMaxRetries );
     }
 
     return xResult;
@@ -429,21 +430,23 @@ static BaseType_t prvSetSockOptHelper( Socket_t xSocket,
 
 /*-----------------------------------------------------------*/
 
-static BaseType_t prvConnectHelperWithRetry( volatile Socket_t *pxSocket,
+static BaseType_t prvConnectHelperWithRetry( volatile Socket_t * pxSocket,
                                              Server_t xConn,
                                              TickType_t xRxTimeOut,
                                              TickType_t xTxTimeOut,
-                                             volatile BaseType_t *pxSocketIsAllocated )
+                                             volatile BaseType_t * pxSocketIsAllocated )
 {
+    BaseType_t xIsConnected = pdFALSE;
     BaseType_t xResult = SOCKETS_ERROR_NONE;
     BaseType_t xRetry = 0;
     SocketsSockaddr_t xEchoServerAddress;
-    BaseType_t xIsConnected = pdFALSE;
+    TickType_t xRetryTimeoutTicks = tcptestLOOP_DELAY;
 
     do
     {
         /* Create the socket. */
         *pxSocket = prvTcpSocketHelper( pxSocketIsAllocated );
+
         if( SOCKETS_INVALID_SOCKET == *pxSocket )
         {
             xResult = SOCKETS_SOCKET_ERROR;
@@ -481,8 +484,9 @@ static BaseType_t prvConnectHelperWithRetry( volatile Socket_t *pxSocket,
         if( SOCKETS_ERROR_NONE == xResult )
         {
             xResult = SOCKETS_Connect( *pxSocket,
-                &xEchoServerAddress,
-                sizeof( xEchoServerAddress ) );
+                                       &xEchoServerAddress,
+                                       sizeof( xEchoServerAddress ) );
+
             if( SOCKETS_ERROR_NONE == xResult )
             {
                 xIsConnected = pdTRUE;
@@ -495,7 +499,9 @@ static BaseType_t prvConnectHelperWithRetry( volatile Socket_t *pxSocket,
                     *pxSocket = SOCKETS_INVALID_SOCKET;
                     xResult = SOCKETS_ERROR_NONE;
                     xRetry++;
-                    vTaskDelay( tcptestLOOP_DELAY );
+                    vTaskDelay( xRetryTimeoutTicks );
+                    /* Exponetially backoff the retry times */
+                    xRetryTimeoutTicks *= 2; /*Arbitrarily chose 2*/
                 }
                 else
                 {
@@ -598,7 +604,7 @@ static BaseType_t prvShutdownHelper( Socket_t xSocket )
 {
     BaseType_t xResult;
 
-    /* The caller is done with the connected socket; initiate a graceful close: 
+    /* The caller is done with the connected socket; initiate a graceful close:
      * send a FIN packet and wait for the server to stop sending. */
     xResult = SOCKETS_Shutdown( xSocket, SOCKETS_SHUT_RDWR );
 
@@ -608,7 +614,7 @@ static BaseType_t prvShutdownHelper( Socket_t xSocket )
         do
         {
             xResult = SOCKETS_Recv( xSocket,            /* The socket being received from. */
-                                    cRxBuffer,          /* The buffer into which the received data will be written. */
+                                    pcRxBuffer,         /* The buffer into which the received data will be written. */
                                     tcptestBUFFER_SIZE, /* The size of the buffer provided to receive the data. */
                                     0 );
         }
@@ -623,13 +629,13 @@ static BaseType_t prvShutdownHelper( Socket_t xSocket )
 /*-----------------------------------------------------------*/
 
 static BaseType_t prvCloseHelper( Socket_t xSocket,
-                                  volatile BaseType_t * xSocketOpen )
+                                  volatile BaseType_t * pxSocketOpen )
 {
     BaseType_t xResult;
 
     xResult = SOCKETS_Close( xSocket );
 
-    *xSocketOpen = pdFALSE;
+    *pxSocketOpen = pdFALSE;
 
     return xResult;
 }
@@ -711,7 +717,7 @@ static BaseType_t prvCheckRxTxBuffers( uint8_t * pucTxBuffer,
 /*-----------------------------------------------------------*/
 
 static BaseType_t prvCheckBufferUnmodified( uint8_t * pucBuffer,
-                                            uint8_t cFiller,
+                                            uint8_t ucFiller,
                                             size_t xLength )
 {
     BaseType_t xResult;
@@ -721,7 +727,7 @@ static BaseType_t prvCheckBufferUnmodified( uint8_t * pucBuffer,
 
     for( xIndex = 0; xIndex < xLength; xIndex++ )
     {
-        if( pucBuffer[ xIndex ] != cFiller )
+        if( pucBuffer[ xIndex ] != ucFiller )
         {
             xResult = pdFAIL;
             tcptestFAILUREPRINTF( ( "Buffer modified at byte %d \r\n", xIndex ) );
@@ -974,7 +980,7 @@ static void prvSOCKETS_Recv_On_Unconnected_Socket( Server_t xConn )
 
         /* We connect another socket. The rational for this is a bug that was experienced in the past
          * where the data would be received  by from another socket. */
-         /* Attempt to establish the requested connection. */
+        /* Attempt to establish the requested connection. */
         xResult = prvConnectHelperWithRetry( &xConnectedSocket, xConn, xReceiveTimeOut, xSendTimeOut, &xConnectedSocketOpen );
         TEST_ASSERT_EQUAL_INT32_MESSAGE( SOCKETS_ERROR_NONE, xResult, "Failed to connect" );
 
@@ -1058,7 +1064,7 @@ static void prvSOCKETS_SetSockOpt_RCVTIMEO( Server_t xConn )
     TickType_t xEndTime;
     TickType_t xTimeout;
     TickType_t xTimeouts[] = { 30, 100, 10000 }; /* TODO: Add 0, nonblocking tests */
-    uint8_t pucBuffer;
+    uint8_t ucBuffer;
     BaseType_t xIndex;
 
 
@@ -1093,7 +1099,7 @@ static void prvSOCKETS_SetSockOpt_RCVTIMEO( Server_t xConn )
         TEST_ASSERT_EQUAL_INT32_MESSAGE( SOCKETS_ERROR_NONE, xResult, "Failed to set receive timeout" );
 
         xStartTime = xTaskGetTickCount();
-        xResult = SOCKETS_Recv( xSocket, &pucBuffer, 1, 0 );
+        xResult = SOCKETS_Recv( xSocket, &ucBuffer, 1, 0 );
         xEndTime = xTaskGetTickCount();
         TEST_ASSERT_LESS_THAN_MESSAGE( 1, xResult, "Receive call failed in receive timeout test" );
         xResult = prvCheckTimeout( xStartTime, xEndTime, xTimeout );
@@ -1135,8 +1141,8 @@ static void prvSOCKETS_NonBlocking_Test( Server_t xConn )
     TickType_t xEndTime;
     TickType_t xTimeout = 0;
     TickType_t xWaitTime = 1000;
-    uint8_t * pucTxBuffer = ( uint8_t * ) cTxBuffer;
-    uint8_t * pucRxBuffer = ( uint8_t * ) cRxBuffer;
+    uint8_t * pucTxBuffer = ( uint8_t * ) pcTxBuffer;
+    uint8_t * pucRxBuffer = ( uint8_t * ) pcRxBuffer;
     size_t xMessageLength = 1200;
     size_t xNumBytesReceived = 0;
 
@@ -1324,7 +1330,7 @@ static void prvSOCKETS_Shutdown( Server_t xConn )
     xResult = pdPASS;
 
     /* Shutdown: Read. */
-    
+
     /* Attempt to establish the requested connection. */
     xResult = prvConnectHelperWithRetry( &xSocket, xConn, xReceiveTimeOut, xSendTimeOut, &xSocketOpen );
     TEST_ASSERT_EQUAL_INT32_MESSAGE( SOCKETS_ERROR_NONE, xResult, "Failed to connect" );
@@ -1337,6 +1343,7 @@ static void prvSOCKETS_Shutdown( Server_t xConn )
         xResult = SOCKETS_Recv( xSocket, &ucBuf, 1, 0 );
     }
     while( xResult >= 0 );
+
     TEST_ASSERT_LESS_THAN_UINT32( 0, xResult );
 
     xResult = prvCloseHelper( xSocket, &xSocketOpen );
@@ -1354,14 +1361,14 @@ static void prvSOCKETS_Shutdown( Server_t xConn )
     xResult = SOCKETS_Shutdown( xSocket, SOCKETS_SHUT_WR );
     TEST_ASSERT_EQUAL_INT32( SOCKETS_ERROR_NONE, xResult );
 
-    /* Expected behavior of send after Shutdown/WRITE is ambiguous. 
-    do
-    {
-        xResult = SOCKETS_Send( xSocket, &ucBuf, 1, 0 );
-    }
-    while( xResult >= 0 );
-    TEST_ASSERT_LESS_THAN_UINT32( 0, xResult );
-    */
+    /* Expected behavior of send after Shutdown/WRITE is ambiguous.
+     * do
+     * {
+     *  xResult = SOCKETS_Send( xSocket, &ucBuf, 1, 0 );
+     * }
+     * while( xResult >= 0 );
+     * TEST_ASSERT_LESS_THAN_UINT32( 0, xResult );
+     */
 
     xResult = prvCloseHelper( xSocket, &xSocketOpen );
     TEST_ASSERT_EQUAL_INT32_MESSAGE( SOCKETS_ERROR_NONE, xResult, "Socket failed to close" );
@@ -1380,6 +1387,7 @@ static void prvSOCKETS_Shutdown( Server_t xConn )
         xResult = SOCKETS_Recv( xSocket, &ucBuf, 1, 0 );
     }
     while( xResult >= 0 );
+
     TEST_ASSERT_LESS_THAN_UINT32( 0, xResult );
 
     xResult = prvCloseHelper( xSocket, &xSocketOpen );
@@ -1416,11 +1424,11 @@ static void prvTestSOCKETS_Close( Server_t xConn )
     xResult = prvCloseHelper( xSocket, &xSocketOpen );
     TEST_ASSERT_EQUAL_INT32_MESSAGE( SOCKETS_ERROR_NONE, xResult, "Socket failed to close" );
 
-    /* The secure sockets API abstraction requires that Socket_t be treated as 
-    opaque. It could be a pointer, a handle, an index, or whatever. In addition, 
-    SOCKETS_Close treats the socket only as input. Therefore, it is not a valid 
-    test to pass a socket that has been freed, via explicit close, to other
-    downstream socket APIs. */
+    /* The secure sockets API abstraction requires that Socket_t be treated as
+     * opaque. It could be a pointer, a handle, an index, or whatever. In addition,
+     * SOCKETS_Close treats the socket only as input. Therefore, it is not a valid
+     * test to pass a socket that has been freed, via explicit close, to other
+     * downstream socket APIs. */
     xSocket = SOCKETS_INVALID_SOCKET;
 
     /* Closed socket should not connect, send or receive */
@@ -1489,8 +1497,8 @@ static void prvTestSOCKETS_Recv_ByteByByte( Server_t xConn )
     BaseType_t xResult = pdFAIL;
     uint32_t ulTxCount;
     size_t xBytesReceived;
-    uint8_t * pucTxBuffer = ( uint8_t * ) cTxBuffer;
-    uint8_t * pucRxBuffer = ( uint8_t * ) cRxBuffer;
+    uint8_t * pucTxBuffer = ( uint8_t * ) pcTxBuffer;
+    uint8_t * pucRxBuffer = ( uint8_t * ) pcRxBuffer;
     size_t xMessageLengths[] = { 2, 7, 8, 9, 20 };
 
     tcptestPRINTF( ( "Starting %s.\r\n", __FUNCTION__ ) );
@@ -1562,9 +1570,9 @@ static void prvSOCKETS_SendRecv_VaryLength( Server_t xConn )
     uint32_t ulIndex;
     uint32_t ulTxCount;
     const uint32_t ulMaxLoopCount = 10;
-    uint32_t i;
-    uint8_t * pucTxBuffer = ( uint8_t * ) cTxBuffer;
-    uint8_t * pucRxBuffer = ( uint8_t * ) cRxBuffer;
+    uint32_t ulI;
+    uint8_t * pucTxBuffer = ( uint8_t * ) pcTxBuffer;
+    uint8_t * pucRxBuffer = ( uint8_t * ) pcRxBuffer;
     size_t xMessageLengths[] = { 1, 2, 7, 8, 9, 1199, 1200, 1201 }; /* TODO: Add 0, send sizes larger than MTU. */
 
     tcptestPRINTF( ( "Starting %s.\r\n", __FUNCTION__ ) );
@@ -1579,7 +1587,7 @@ static void prvSOCKETS_SendRecv_VaryLength( Server_t xConn )
         TEST_ASSERT_EQUAL_INT32_MESSAGE( SOCKETS_ERROR_NONE, xResult, "Failed to connect" );
 
         /* Send each message length ulMaxLoopCount times. */
-        for( i = 0; i < ulMaxLoopCount; i++ )
+        for( ulI = 0; ulI < ulMaxLoopCount; ulI++ )
         {
             memset( pucTxBuffer, tcptestTX_BUFFER_FILLER, tcptestBUFFER_SIZE );
 
@@ -1734,9 +1742,9 @@ TEST( Full_TCP, AFQP_SOCKETS_Socket_InvalidInputParams )
 
 static void prvSOCKETS_Socket_InvalidTooManySockets( Server_t xConn )
 {
-    #if !defined( WIN32 ) && !defined( PIC32MZ ) && !defined( ESP32 ) /* Socket can be created as much as there is memory */
+    #if !defined( WIN32 ) && !defined( PIC32MZ ) && !defined( ESP32 ) && !defined( ZYNQ7000 ) && !defined( __RX ) /* Socket can be created as much as there is memory */
         BaseType_t xResult;
-        Socket_t pxCreatedSockets[ integrationtestportableMAX_NUM_UNSECURE_SOCKETS ];
+        Socket_t xCreatedSockets[ integrationtestportableMAX_NUM_UNSECURE_SOCKETS ];
         BaseType_t xSocketsCreated;
         Socket_t xSocket;
 
@@ -1756,7 +1764,7 @@ static void prvSOCKETS_Socket_InvalidTooManySockets( Server_t xConn )
             }
             else
             {
-                pxCreatedSockets[ xSocketsCreated ] = xSocket;
+                xCreatedSockets[ xSocketsCreated ] = xSocket;
             }
         }
 
@@ -1775,7 +1783,7 @@ static void prvSOCKETS_Socket_InvalidTooManySockets( Server_t xConn )
         while( xSocketsCreated > 0 )
         {
             --xSocketsCreated;
-            SOCKETS_Close( pxCreatedSockets[ xSocketsCreated ] );
+            SOCKETS_Close( xCreatedSockets[ xSocketsCreated ] );
         }
 
         TEST_ASSERT_EQUAL_UINT32_MESSAGE( pdPASS, xResult, "Max num sockets test failed" );
@@ -1971,7 +1979,7 @@ TEST( Full_TCP, AFQP_SECURE_SOCKETS_Connect_InvalidAddressLength )
 static void prvSend_Invalid( Server_t xConn )
 {
     BaseType_t xResult;
-    uint8_t * pucTxBuffer = ( uint8_t * ) cTxBuffer;
+    uint8_t * pucTxBuffer = ( uint8_t * ) pcTxBuffer;
 
     tcptestPRINTF( ( "Starting %s.\r\n", __FUNCTION__ ) );
 
@@ -2054,7 +2062,7 @@ static void prvRecv_Invalid( Server_t xConn )
     TEST_ASSERT_LESS_THAN_INT32_MESSAGE( 0, xResult, "Socket receive with NULL receive buffer should have triggered error" );
 
     /* Receive on invalid socket should fail. */
-    xResult = SOCKETS_Recv( SOCKETS_INVALID_SOCKET, cRxBuffer, tcptestBUFFER_SIZE, 0 );
+    xResult = SOCKETS_Recv( SOCKETS_INVALID_SOCKET, pcRxBuffer, tcptestBUFFER_SIZE, 0 );
     TEST_ASSERT_LESS_THAN_INT32_MESSAGE( 0, xResult, "Socket receive with invalid socket should have triggered error" );
 
     /* Cleanup. */
@@ -2084,13 +2092,13 @@ static void prvServerDomainName( void )
     SocketsSockaddr_t xAwsBrokerAddress;
 
     /* TODO: Generically change this. */
-    char pcRealAddress[ sizeof( clientcredentialMQTT_BROKER_ENDPOINT ) ];
-    char pcFakeAddress[ sizeof( clientcredentialMQTT_BROKER_ENDPOINT ) ];
+    char cRealAddress[ sizeof( clientcredentialMQTT_BROKER_ENDPOINT ) ];
+    char cFakeAddress[ sizeof( clientcredentialMQTT_BROKER_ENDPOINT ) ];
 
-    memcpy( pcRealAddress, clientcredentialMQTT_BROKER_ENDPOINT, sizeof( clientcredentialMQTT_BROKER_ENDPOINT ) );
-    memcpy( pcFakeAddress, pcRealAddress, sizeof( clientcredentialMQTT_BROKER_ENDPOINT ) );
+    memcpy( cRealAddress, clientcredentialMQTT_BROKER_ENDPOINT, sizeof( clientcredentialMQTT_BROKER_ENDPOINT ) );
+    memcpy( cFakeAddress, cRealAddress, sizeof( clientcredentialMQTT_BROKER_ENDPOINT ) );
     /* .com -> .cpm */
-    pcFakeAddress[ sizeof( clientcredentialMQTT_BROKER_ENDPOINT ) - 3 ]++;
+    cFakeAddress[ sizeof( clientcredentialMQTT_BROKER_ENDPOINT ) - 3 ]++;
 
 
     tcptestPRINTF( ( "Starting %s.\r\n", __FUNCTION__ ) );
@@ -2105,8 +2113,8 @@ static void prvServerDomainName( void )
     xResult = SOCKETS_SetSockOpt( xSocket,
                                   0,
                                   SOCKETS_SO_SERVER_NAME_INDICATION,
-                                  pcRealAddress,
-                                  sizeof( pcRealAddress ) );
+                                  cRealAddress,
+                                  sizeof( cRealAddress ) );
     xResult = prvConnectHelper( xSocket, eAwsBroker );
     TEST_ASSERT_EQUAL_INT32_MESSAGE( SOCKETS_ERROR_NONE, xResult, "Failed to connect" );
 
@@ -2123,8 +2131,8 @@ static void prvServerDomainName( void )
     xResult = SOCKETS_SetSockOpt( xSocket,
                                   0,
                                   SOCKETS_SO_SERVER_NAME_INDICATION,
-                                  pcFakeAddress,
-                                  sizeof( pcFakeAddress ) );
+                                  cFakeAddress,
+                                  sizeof( cFakeAddress ) );
 
     /* Get the address struct for AWS Broker and SetSockOpt REQUIRE_TLS. */
     xResult = prvAwsIotBrokerConnectHelper( xSocket, &xAwsBrokerAddress );
@@ -2137,7 +2145,7 @@ static void prvServerDomainName( void )
      *  was established without verifying the server. */
     if( xResult != SOCKETS_TLS_HANDSHAKE_ERROR )
     {
-        xResult = SOCKETS_Send( xSocket, cTxBuffer, 100, 0 );
+        xResult = SOCKETS_Send( xSocket, pcTxBuffer, 100, 0 );
         TEST_ASSERT_LESS_THAN_INT32_MESSAGE( 0, xResult, "Send allowed after subject name connection failure." );
     }
 
@@ -2264,12 +2272,12 @@ TEST( Full_TCP, AFQP_SECURE_SOCKETS_SockEventHandler )
  */
 static void prvSOCKETS_Threadsafe_SameSocketDifferentTasks( Server_t xConn )
 {
-    BaseType_t lTotalReceived, lReturned = 0;
+    BaseType_t xTotalReceived, xReturned = 0;
     size_t xRecvLoop, xRecvLen;
-    tcptestEchoTestModes_t mode;
+    tcptestEchoTestModes_t xMode;
     BaseType_t xResult;
     volatile char * pcReceivedString;
-    volatile BaseType_t pcReceivedStringAllocated = pdFALSE;
+    volatile BaseType_t xReceivedStringAllocated = pdFALSE;
     volatile BaseType_t xSocketPassingQueueAllocated = pdFALSE;
     volatile BaseType_t xSyncEventGroupAllocated = pdFALSE;
     volatile TaskHandle_t xCreatedTask;
@@ -2278,7 +2286,7 @@ static void prvSOCKETS_Threadsafe_SameSocketDifferentTasks( Server_t xConn )
     {
         pcReceivedString = pvPortMalloc( ipconfigTCP_MSS * sizeof( char ) );
         configASSERT( pcReceivedString != NULL );
-        pcReceivedStringAllocated = pdTRUE;
+        xReceivedStringAllocated = pdTRUE;
 
         /* Create the queue used to pass the socket to use from the Tx task to the
          * Rx task. */
@@ -2318,36 +2326,36 @@ static void prvSOCKETS_Threadsafe_SameSocketDifferentTasks( Server_t xConn )
             }
 
             /* Nothing received yet. */
-            lTotalReceived = 0;
+            xTotalReceived = 0;
 
-            mode = ( tcptestEchoTestModes_t ) ( xRecvLoop % tcptestMAX_ECHO_TEST_MODES ); /* % should be optimized to simple masking since only 4 modes are present.*/
-                                                                                          /* Using % to avoid bug in case a new state is unknowingly added. */
+            xMode = ( tcptestEchoTestModes_t ) ( xRecvLoop % tcptestMAX_ECHO_TEST_MODES ); /* % should be optimized to simple masking since only 4 modes are present.*/
+                                                                                           /* Using % to avoid bug in case a new state is unknowingly added. */
 
             xRecvLen = ipconfigTCP_MSS;
             vTaskPrioritySet( NULL, tcptestECHO_TEST_HIGH_PRIORITY );
 
             /* Set low priority if requested . */
-            if( ( mode == LARGE_BUFFER_LOW_PRIORITY ) || ( mode == SMALL_BUFFER_LOW_PRIORITY ) )
+            if( ( xMode == LARGE_BUFFER_LOW_PRIORITY ) || ( xMode == SMALL_BUFFER_LOW_PRIORITY ) )
             {
                 vTaskPrioritySet( NULL, tcptestECHO_TEST_LOW_PRIORITY );
             }
 
-            if( ( mode == SMALL_BUFFER_HIGH_PRIORITY ) || ( mode == SMALL_BUFFER_LOW_PRIORITY ) )
+            if( ( xMode == SMALL_BUFFER_HIGH_PRIORITY ) || ( xMode == SMALL_BUFFER_LOW_PRIORITY ) )
             {
                 xRecvLen = 1;
             }
 
-            while( lTotalReceived < tcptestTWICE_MAX_FRAME_SIZE )
+            while( xTotalReceived < tcptestTWICE_MAX_FRAME_SIZE )
             {
-                lReturned = SOCKETS_Recv( ( Socket_t ) xSocket, ( char * ) pcReceivedString, xRecvLen, 0 );
+                xReturned = SOCKETS_Recv( ( Socket_t ) xSocket, ( char * ) pcReceivedString, xRecvLen, 0 );
 
-                TEST_ASSERT_NOT_EQUAL_MESSAGE( 0, lReturned, "Timeout occurred" );
-                TEST_ASSERT_GREATER_THAN_MESSAGE( 0, lReturned, "Error occured receiving large message" );
+                TEST_ASSERT_NOT_EQUAL_MESSAGE( 0, xReturned, "Timeout occurred" );
+                TEST_ASSERT_GREATER_THAN_MESSAGE( 0, xReturned, "Error occured receiving large message" );
 
                 /* Data was received. */
-                TEST_ASSERT_EQUAL_MEMORY( &cTransmittedString[ lTotalReceived ], pcReceivedString, lReturned );
+                TEST_ASSERT_EQUAL_MEMORY( &cTransmittedString[ xTotalReceived ], pcReceivedString, xReturned );
 
-                lTotalReceived += lReturned;
+                xTotalReceived += xReturned;
             }
 
             /* Rendez-vous with the Tx task ready to start a new cycle with a
@@ -2369,7 +2377,7 @@ static void prvSOCKETS_Threadsafe_SameSocketDifferentTasks( Server_t xConn )
     }
 
     /* Free all dynamic memory. */
-    if( pcReceivedStringAllocated == pdTRUE )
+    if( xReceivedStringAllocated == pdTRUE )
     {
         vPortFree( ( char * ) pcReceivedString );
     }
@@ -2408,11 +2416,12 @@ TEST( Full_TCP, AFQP_SECURE_SOCKETS_Threadsafe_SameSocketDifferentTasks )
 
 static void prvEchoClientTxTask( void * pvParameters )
 {
-    BaseType_t lTransmitted, lReturned = 0;
-    size_t xLenToSend, xSendLoop;
+    BaseType_t xReturned = 0;
+    BaseType_t xTransmitted;
     BaseType_t xStatus;
-    tcptestEchoTestModes_t mode;
+    size_t xLenToSend, xSendLoop;
     size_t xMaxBufferSize;
+    tcptestEchoTestModes_t xMode;
 
 
     /* Avoid warning about unused parameter. */
@@ -2428,20 +2437,20 @@ static void prvEchoClientTxTask( void * pvParameters )
      */
     for( xSendLoop = 1; xSendLoop < tcptestMAX_LOOPS_ECHO_TEST + 1; xSendLoop++ )
     {
-        mode = ( tcptestEchoTestModes_t ) ( xSendLoop % tcptestMAX_ECHO_TEST_MODES ); /* % should be optimized to simple masking since only 4 modes are present.*/
-                                                                                      /* Using % to avoid bug in case a new state is unknowingly added. */
+        xMode = ( tcptestEchoTestModes_t ) ( xSendLoop % tcptestMAX_ECHO_TEST_MODES ); /* % should be optimized to simple masking since only 4 modes are present.*/
+                                                                                       /* Using % to avoid bug in case a new state is unknowingly added. */
 
         vTaskPrioritySet( NULL, tcptestECHO_TEST_HIGH_PRIORITY );
         xMaxBufferSize = tcptestTWICE_MAX_FRAME_SIZE;
 
         /* Set low priority if requested . */
-        if( ( mode == LARGE_BUFFER_LOW_PRIORITY ) || ( mode == SMALL_BUFFER_LOW_PRIORITY ) )
+        if( ( xMode == LARGE_BUFFER_LOW_PRIORITY ) || ( xMode == SMALL_BUFFER_LOW_PRIORITY ) )
         {
             vTaskPrioritySet( NULL, tcptestECHO_TEST_LOW_PRIORITY );
         }
 
         /* Set buffer size to 1 if requested. */
-        if( ( mode == SMALL_BUFFER_HIGH_PRIORITY ) || ( mode == SMALL_BUFFER_LOW_PRIORITY ) )
+        if( ( xMode == SMALL_BUFFER_HIGH_PRIORITY ) || ( xMode == SMALL_BUFFER_LOW_PRIORITY ) )
         {
             xMaxBufferSize = 1;
         }
@@ -2455,16 +2464,16 @@ static void prvEchoClientTxTask( void * pvParameters )
             break;
         }
 
-        lTransmitted = 0;
+        xTransmitted = 0;
         xStatus = pdTRUE;
 
         /* Keep sending until the entire buffer has been sent. */
-        while( lTransmitted < tcptestTWICE_MAX_FRAME_SIZE )
+        while( xTransmitted < tcptestTWICE_MAX_FRAME_SIZE )
         {
             /* How many bytes are left to send?  Attempt to send them
              * all at once (so the length is potentially greater than the
              * MSS). */
-            xLenToSend = tcptestTWICE_MAX_FRAME_SIZE - lTransmitted;
+            xLenToSend = tcptestTWICE_MAX_FRAME_SIZE - xTransmitted;
 
             /* Every loop switch the size of the packet from maximum to smallest. */
             if( xLenToSend > xMaxBufferSize )
@@ -2472,15 +2481,15 @@ static void prvEchoClientTxTask( void * pvParameters )
                 xLenToSend = xMaxBufferSize;
             }
 
-            lReturned = SOCKETS_Send( xSocket,                                            /* The socket being sent to. */
-                                      ( void * ) &( cTransmittedString[ lTransmitted ] ), /* The data being sent. */
+            xReturned = SOCKETS_Send( xSocket,                                            /* The socket being sent to. */
+                                      ( void * ) &( cTransmittedString[ xTransmitted ] ), /* The data being sent. */
                                       xLenToSend,                                         /* The length of the data being sent. */
                                       0 );                                                /* ulFlags. */
 
-            if( lReturned >= 0 )
+            if( xReturned >= 0 )
             {
                 /* Data was sent successfully. */
-                lTransmitted += lReturned;
+                xTransmitted += xReturned;
             }
             else
             {
@@ -2519,7 +2528,7 @@ void prvStartTCPEchoClientTasks_DifferentSockets( Server_t xConn )
 {
     uint16_t usIndex;
     tcptestEchoClientsTaskParams_t xTcptestEchoClientsTaskParams[ tcptestNUM_ECHO_CLIENTS ];
-    uint32_t usEventMask;
+    uint32_t ulEventMask;
     volatile BaseType_t xSyncEventGroupAllocated = pdFALSE;
     BaseType_t xResult;
 
@@ -2547,7 +2556,7 @@ void prvStartTCPEchoClientTasks_DifferentSockets( Server_t xConn )
             TEST_ASSERT_EQUAL_MESSAGE( pdPASS, xResult, "Task creation failed" );
         }
 
-        usEventMask = xEventGroupSync( xSyncEventGroup, /* The event group used for the rendezvous. */
+        ulEventMask = xEventGroupSync( xSyncEventGroup, /* The event group used for the rendezvous. */
                                        0,
                                        tcptestECHO_CLIENT_EVENT_MASK,
                                        tcptestECHO_TEST_SYNC_TIMEOUT_TICKS );
@@ -2555,7 +2564,7 @@ void prvStartTCPEchoClientTasks_DifferentSockets( Server_t xConn )
         /* For each task not completed, delete the task.  */
         for( usIndex = 0; usIndex < tcptestNUM_ECHO_CLIENTS; usIndex++ )
         {
-            if( ( usEventMask & ( 1 << usIndex ) ) == 0 )
+            if( ( ulEventMask & ( 1 << usIndex ) ) == 0 )
             {
                 vTaskDelete( xTcptestEchoClientsTaskParams[ usIndex ].xTaskHandle );
             }
@@ -2564,8 +2573,8 @@ void prvStartTCPEchoClientTasks_DifferentSockets( Server_t xConn )
         for( usIndex = 0; usIndex < tcptestNUM_ECHO_CLIENTS; usIndex++ )
         {
             TEST_ASSERT_EQUAL_MESSAGE( SOCKETS_ERROR_NONE,
-                xTcptestEchoClientsTaskParams[ usIndex ].xResult,
-                "Check aws_secure_sockets.h for error code" );
+                                       xTcptestEchoClientsTaskParams[ usIndex ].xResult,
+                                       "Check aws_secure_sockets.h for error code" );
         }
     }
 
@@ -2596,7 +2605,7 @@ static void prvThreadSafeDifferentSocketsDifferentTasks( void * pvParameters )
     Socket_t xTaskSocket = SOCKETS_INVALID_SOCKET;
     int32_t lLoopCount = 0UL;
     BaseType_t xReceivedBytes, xReturned;
-    BaseType_t lTransmitted;
+    BaseType_t xTransmitted;
     char * pcReceivedString;
     BaseType_t xResult = SOCKETS_SOCKET_ERROR;
     BaseType_t xReceivedStringAllocated = pdFALSE;
@@ -2626,32 +2635,33 @@ static void prvThreadSafeDifferentSocketsDifferentTasks( void * pvParameters )
         {
             /* Attempt to establish the requested connection. */
             xResult = prvConnectHelperWithRetry( &xTaskSocket,
-                                                 pxTcptestEchoClientsTaskParams->xConn, 
-                                                 xEchoTestRxTxTimeOut, 
-                                                 xEchoTestRxTxTimeOut, 
+                                                 pxTcptestEchoClientsTaskParams->xConn,
+                                                 xEchoTestRxTxTimeOut,
+                                                 xEchoTestRxTxTimeOut,
                                                  &xSocketOpen );
+
             if( xResult != SOCKETS_ERROR_NONE )
             {
                 tcptestFAILUREPRINTF( ( "%s: Task %d failed to connect with error code %d on loop %d \r\n",
-                    __FUNCTION__,
-                    xResult,
-                    lLoopCount,
-                    ( int )pxTcptestEchoClientsTaskParams->usTaskTag ) );
+                                        __FUNCTION__,
+                                        xResult,
+                                        lLoopCount,
+                                        ( int ) pxTcptestEchoClientsTaskParams->usTaskTag ) );
                 break;
             }
 
             /* Send the string to the socket. */
-            lTransmitted = SOCKETS_Send( xTaskSocket,                   /* The socket being sent to. */
+            xTransmitted = SOCKETS_Send( xTaskSocket,                   /* The socket being sent to. */
                                          ( void * ) cTransmittedString, /* The data being sent. */
                                          ipconfigTCP_MSS,               /* The length of the data being sent. */
                                          0 );                           /* No flags. */
 
-            if( lTransmitted < ipconfigTCP_MSS )
+            if( xTransmitted < ipconfigTCP_MSS )
             {
                 tcptestFAILUREPRINTF( ( "%s: Task %d error  %ld while transmitting data\r\n",
                                         __FUNCTION__,
                                         ( int ) pxTcptestEchoClientsTaskParams->usTaskTag,
-                                        lTransmitted ) );
+                                        xTransmitted ) );
                 xResult = SOCKETS_SOCKET_ERROR;
                 break;
             }
@@ -2661,7 +2671,7 @@ static void prvThreadSafeDifferentSocketsDifferentTasks( void * pvParameters )
             xReceivedBytes = 0;
 
             /* Receive data echoed back to the socket. */
-            while( xReceivedBytes < lTransmitted )
+            while( xReceivedBytes < xTransmitted )
             {
                 xReturned = SOCKETS_Recv( xTaskSocket,                             /* The socket being received from. */
                                           &( pcReceivedString[ xReceivedBytes ] ), /* The buffer into which the received data will be written. */
@@ -2682,7 +2692,7 @@ static void prvThreadSafeDifferentSocketsDifferentTasks( void * pvParameters )
             if( xReceivedBytes == ipconfigTCP_MSS )
             {
                 /* Compare the transmitted string to the received string. */
-                if( strncmp( pcReceivedString, cTransmittedString, lTransmitted ) != 0 )
+                if( strncmp( pcReceivedString, cTransmittedString, xTransmitted ) != 0 )
                 {
                     tcptestFAILUREPRINTF( ( "%s: Task %d error while receiving data \r\n",
                                             __FUNCTION__,
@@ -2763,15 +2773,15 @@ TEST( Full_TCP, AFQP_SECURE_SOCKETS_NonBlockingConnect )
 static void prvTwoSecureConnections( void )
 {
     BaseType_t xResult = pdFAIL;
-    uint8_t * pucRxBuffer = ( uint8_t * ) cRxBuffer;
+    uint8_t * pucRxBuffer = ( uint8_t * ) pcRxBuffer;
     uint32_t ulIndex;
     volatile Socket_t xSocketAWS;
     volatile BaseType_t xSocketOpenAWS = pdFALSE;
     volatile Socket_t xSocketSecServer;
     volatile BaseType_t xSocketOpenSecServer = pdFALSE;
 
-    static const char pcMessageAWS[] = "Message to AWS!  This message should not be sent to the secure server.";
-    static const char pcMessageSecServer[] = "Message to Secure Server!  This message should not be sent to AWS.";
+    static const char cMessageAWS[] = "Message to AWS!  This message should not be sent to the secure server.";
+    static const char cMessageSecServer[] = "Message to Secure Server!  This message should not be sent to AWS.";
 
     if( TEST_PROTECT() )
     {
@@ -2784,21 +2794,21 @@ static void prvTwoSecureConnections( void )
         TEST_ASSERT_EQUAL_INT32_MESSAGE( SOCKETS_ERROR_NONE, xResult, "Failed to connect to secure server" );
 
         /* Send message 1x to AWS Broker, 2x to Secure Echo Server, alternating. */
-        xResult = prvSendHelper( xSocketSecServer, ( uint8_t * ) pcMessageSecServer, sizeof( pcMessageSecServer ) );
+        xResult = prvSendHelper( xSocketSecServer, ( uint8_t * ) cMessageSecServer, sizeof( cMessageSecServer ) );
         TEST_ASSERT_EQUAL_UINT32_MESSAGE( pdPASS, xResult, "Send to secure server failed." );
-        xResult = prvSendHelper( xSocketAWS, ( uint8_t * ) pcMessageAWS, sizeof( pcMessageAWS ) );
+        xResult = prvSendHelper( xSocketAWS, ( uint8_t * ) cMessageAWS, sizeof( cMessageAWS ) );
         TEST_ASSERT_EQUAL_UINT32_MESSAGE( pdPASS, xResult, "Send to AWS failed." );
-        xResult = prvSendHelper( xSocketSecServer, ( uint8_t * ) pcMessageSecServer, sizeof( pcMessageSecServer ) );
+        xResult = prvSendHelper( xSocketSecServer, ( uint8_t * ) cMessageSecServer, sizeof( cMessageSecServer ) );
         TEST_ASSERT_EQUAL_UINT32_MESSAGE( pdPASS, xResult, "Send to secure server failed." );
 
         /* Receive from secure echo server 1x. */
-        xResult = prvRecvHelper( xSocketSecServer, pucRxBuffer, sizeof( pcMessageSecServer ) );
+        xResult = prvRecvHelper( xSocketSecServer, pucRxBuffer, sizeof( cMessageSecServer ) );
         TEST_ASSERT_EQUAL_UINT32_MESSAGE( pdPASS, xResult, "Received incorrect number of bytes from sec server." );
 
         /* Verify the response is correct. */
-        for( ulIndex = 0; ulIndex < sizeof( pcMessageSecServer ); ulIndex++ )
+        for( ulIndex = 0; ulIndex < sizeof( cMessageSecServer ); ulIndex++ )
         {
-            if( pucRxBuffer[ ulIndex ] != pcMessageSecServer[ ulIndex ] )
+            if( pucRxBuffer[ ulIndex ] != cMessageSecServer[ ulIndex ] )
             {
                 xResult = pdFAIL;
             }
@@ -2807,7 +2817,7 @@ static void prvTwoSecureConnections( void )
         TEST_ASSERT_EQUAL_MESSAGE( pdPASS, xResult, "Received incorrect message from secure server. " );
 
         /* There is no echo from the AWS broker, but let's make sure we don't see anything unexpected. */
-        xResult = SOCKETS_Recv( xSocketAWS, pucRxBuffer, sizeof( pcMessageAWS ), 0 /* flags. */ );
+        xResult = SOCKETS_Recv( xSocketAWS, pucRxBuffer, sizeof( cMessageAWS ), 0 /* flags. */ );
 
         if( ( xResult != 0 ) && ( xResult != SOCKETS_EWOULDBLOCK ) ) /* TS-2390 */
         {
@@ -2815,12 +2825,12 @@ static void prvTwoSecureConnections( void )
         }
 
         /* Receive the second message from the secure echo server. */
-        xResult = prvRecvHelper( xSocketSecServer, pucRxBuffer, sizeof( pcMessageSecServer ) );
+        xResult = prvRecvHelper( xSocketSecServer, pucRxBuffer, sizeof( cMessageSecServer ) );
         TEST_ASSERT_EQUAL_UINT32_MESSAGE( pdPASS, xResult, "Received incorrect number of bytes from sec server." );
 
-        for( ulIndex = 0; ulIndex < sizeof( pcMessageSecServer ); ulIndex++ )
+        for( ulIndex = 0; ulIndex < sizeof( cMessageSecServer ); ulIndex++ )
         {
-            if( pucRxBuffer[ ulIndex ] != pcMessageSecServer[ ulIndex ] )
+            if( pucRxBuffer[ ulIndex ] != cMessageSecServer[ ulIndex ] )
             {
                 xResult = pdFAIL;
             }
@@ -2919,7 +2929,7 @@ TEST( Full_TCP, AFQP_SOCKETS_inet_addr_quick_HappyCase )
 TEST( Full_TCP, AFQP_SECURE_SOCKETS_SetSecureOptionsAfterConnect )
 {
     BaseType_t xResult = pdFAIL;
-    char * ppcAlpns[] = { socketsAWS_IOT_ALPN_MQTT };
+    char * pcAlpns[] = { socketsAWS_IOT_ALPN_MQTT };
 
     tcptestPRINTF( ( "Starting %s.\r\n", __FUNCTION__ ) );
 
@@ -2940,8 +2950,8 @@ TEST( Full_TCP, AFQP_SECURE_SOCKETS_SetSecureOptionsAfterConnect )
         xResult = SOCKETS_SetSockOpt( xSocket,
                                       0, /* Level - Unused. */
                                       SOCKETS_SO_ALPN_PROTOCOLS,
-                                      ppcAlpns,
-                                      sizeof( ppcAlpns ) / sizeof( ppcAlpns[ 0 ] ) );
+                                      pcAlpns,
+                                      sizeof( pcAlpns ) / sizeof( pcAlpns[ 0 ] ) );
         TEST_ASSERT_LESS_THAN_MESSAGE( SOCKETS_ERROR_NONE, xResult, "ALPN setup after connect succeed when fail was expected." );
 
 

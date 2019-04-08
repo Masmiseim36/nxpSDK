@@ -400,11 +400,6 @@
               <FileType>5</FileType>
               <FilePath>../vcom2i2c.h</FilePath>
             </File>
-            <File>
-              <FileName>usb_device_board_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../usb_device_board_config.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -1521,11 +1516,6 @@
               <FileType>5</FileType>
               <FilePath>../vcom2i2c.h</FilePath>
             </File>
-            <File>
-              <FileName>usb_device_board_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../usb_device_board_config.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -2635,11 +2625,6 @@
               <FileName>vcom2i2c.h</FileName>
               <FileType>5</FileType>
               <FilePath>../vcom2i2c.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_board_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../usb_device_board_config.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3755,11 +3740,6 @@
               <FileName>vcom2i2c.h</FileName>
               <FileType>5</FileType>
               <FilePath>../vcom2i2c.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_board_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../usb_device_board_config.h</FilePath>
             </File>
           </Files>
         </Group>

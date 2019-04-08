@@ -854,11 +854,6 @@
               <FilePath>../../../../../middleware/se_hostlib/hostLib/mbedtls/inc/ax_mbedtls.h</FilePath>
             </File>
             <File>
-              <FileName>ecp_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/mbedtls/inc/ecp_alt.h</FilePath>
-            </File>
-            <File>
               <FileName>ax_mbedtls.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/se_hostlib/hostLib/mbedtls/src/ax_mbedtls.c</FilePath>
@@ -872,21 +867,6 @@
               <FileName>ecdh_alt_ax.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/se_hostlib/hostLib/mbedtls/src/ecdh_alt_ax.c</FilePath>
-            </File>
-            <File>
-              <FileName>ecp_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/mbedtls/src/ecp_alt.c</FilePath>
-            </File>
-            <File>
-              <FileName>ecp_alt_ax.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/mbedtls/src/ecp_alt_ax.c</FilePath>
-            </File>
-            <File>
-              <FileName>ecp_curves_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/mbedtls/src/ecp_curves_alt.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1952,6 +1932,26 @@
               <FileName>aes_alt.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/port/ksdk/aes_alt.c</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ecp_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_alt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ecp_alt.c</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_curves_alt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ecp_curves_alt.c</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_alt_ksdk.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ecp_alt_ksdk.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3047,11 +3047,6 @@
               <FilePath>../../../../../middleware/se_hostlib/hostLib/mbedtls/inc/ax_mbedtls.h</FilePath>
             </File>
             <File>
-              <FileName>ecp_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/mbedtls/inc/ecp_alt.h</FilePath>
-            </File>
-            <File>
               <FileName>ax_mbedtls.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/se_hostlib/hostLib/mbedtls/src/ax_mbedtls.c</FilePath>
@@ -3065,21 +3060,6 @@
               <FileName>ecdh_alt_ax.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/se_hostlib/hostLib/mbedtls/src/ecdh_alt_ax.c</FilePath>
-            </File>
-            <File>
-              <FileName>ecp_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/mbedtls/src/ecp_alt.c</FilePath>
-            </File>
-            <File>
-              <FileName>ecp_alt_ax.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/mbedtls/src/ecp_alt_ax.c</FilePath>
-            </File>
-            <File>
-              <FileName>ecp_curves_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostLib/mbedtls/src/ecp_curves_alt.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4145,6 +4125,26 @@
               <FileName>aes_alt.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/port/ksdk/aes_alt.c</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ecp_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_alt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ecp_alt.c</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_curves_alt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ecp_curves_alt.c</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_alt_ksdk.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ecp_alt_ksdk.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -25,9 +25,9 @@
  * Definitions
  ******************************************************************************/
 
- /*******************************************************************************
- * Prototypes
- ******************************************************************************/
+/*******************************************************************************
+* Prototypes
+******************************************************************************/
 
 /*******************************************************************************
  * Variables
@@ -38,15 +38,21 @@
  ******************************************************************************/
 #if defined(MBEDTLS_MCUX_CASPER_ECC)
 
-#if defined(MBEDTLS_ECP_DP_SECP192R1_ENABLED) || \
-    defined(MBEDTLS_ECP_DP_SECP224R1_ENABLED) || \
-    defined(MBEDTLS_ECP_DP_SECP384R1_ENABLED) || \
-    defined(MBEDTLS_ECP_DP_SECP521R1_ENABLED)
+#if defined(MBEDTLS_ECP_DP_SECP192R1_ENABLED) || defined(MBEDTLS_ECP_DP_SECP224R1_ENABLED) || \
+    defined(MBEDTLS_ECP_DP_SECP384R1_ENABLED) || defined(MBEDTLS_ECP_DP_SECP521R1_ENABLED)
 #error "CASPER hw acceleration currently supported only for SECP256R1."
 #endif
 
+typedef struct _ecp
+{
+    union
+    {
+        uint8_t b[68];
+        uint32_t w[68 / 4];
+    } data;
+} casper_ecp_t;
+
 #if defined(MBEDTLS_ECP_MUL_COMB_ALT)
-//#include "fsl_casper.h"
 static void reverse_array(uint8_t *src, size_t src_len)
 {
     int i;
@@ -60,186 +66,93 @@ static void reverse_array(uint8_t *src, size_t src_len)
         src[src_len - 1 - i] = tmp;
     }
 }
-#if 0
-static void reverse_array_masked(uint8_t *src, size_t src_len, int (*f_rng)(void *, unsigned char *, size_t), void *p_rng)
+
+int ecp_mul_comb(mbedtls_ecp_group *grp,
+                 mbedtls_ecp_point *R,
+                 const mbedtls_mpi *m,
+                 const mbedtls_ecp_point *P,
+                 int (*f_rng)(void *, unsigned char *, size_t),
+                 void *p_rng)
 {
-    int i;
-    uint8_t tempMask[4] = {0};
-    
-    if (f_rng != NULL)
-    {
-        f_rng(p_rng, tempMask, sizeof(tempMask));
-    }
-    
-    size_t szLeft = src_len - (src_len & 0xfffffffc);
-    for (int ii = 0; ii < (src_len & 0xfffffffc); ii += 4u)
-    {
-        ((uint32_t*)(src+ii))[0] ^= *(uint32_t*)tempMask;
-    }
-    if (szLeft)
-    {
-        for (int ii = 0; ii < szLeft; ii++)
-        {
-            *(src + src_len - szLeft + ii) ^= tempMask[ii];
-        }
-    }
+    casper_ecp_t p = {0};
+    uint32_t M[8] = {0};
 
-    for (i = 0; i < src_len / 2; i++)
-    {
-        uint8_t tmp;
+    size_t olen = sizeof(casper_ecp_t);
 
-        tmp = src[i];
-        src[i] = src[src_len - 1 - i];
-        src[src_len - 1 - i] = tmp;
-    }
-    
-    for (int ii = 0; ii < (src_len & 0xfffffffc); ii += 4u)
-    {
-        ((uint32_t*)(src+ii))[0] ^= *(uint32_t*)tempMask;
-    }
-    if (szLeft)
-    {
-        for (int ii = 0; ii < szLeft; ii++)
-        {
-            *(src + src_len - szLeft + ii) ^= tempMask[ii];
-        }
-    }
-}
-#endif
+    mbedtls_ecp_point_write_binary(grp, P, MBEDTLS_ECP_PF_UNCOMPRESSED, &olen, &p.data.b[3], sizeof(casper_ecp_t));
+    reverse_array(&p.data.b[4], 32);
+    reverse_array(&p.data.b[4 + 32], 32);
+    CASPER_ecc_init();
 
-//int mbedtls_ecp_mul( mbedtls_ecp_group *grp, mbedtls_ecp_point *R,
-//             const mbedtls_mpi *m, const mbedtls_ecp_point *P,
-//             int (*f_rng)(void *, unsigned char *, size_t), void *p_rng )
-int ecp_mul_comb( mbedtls_ecp_group *grp, mbedtls_ecp_point *R,
-                         const mbedtls_mpi *m, const mbedtls_ecp_point *P,
-                         int (*f_rng)(void *, unsigned char *, size_t),
-                         void *p_rng )
-{
-  struct _ecp
-  {    
-    uint8_t arr[68];
-  } p;
-  
-  //uint32_t X1[8]; uint32_t Y1[8]; 
-  uint32_t M[8] = {0};
-  
-    size_t olen = sizeof(p);
-  
-  mbedtls_ecp_point_write_binary(grp, P, MBEDTLS_ECP_PF_UNCOMPRESSED, &olen, &p.arr[3], sizeof(p.arr));
-  reverse_array(&p.arr[4], 32);
-  reverse_array(&p.arr[4+32], 32);
-  CASPER_ecc_init ();
-  //toMontgomery(X1, (void*)&p.arr[4]);
-  //toMontgomery(Y1, (void*)&p.arr[4+32]);
-  
-  //CASPER_MEMCPY(&CASPER_MEM[INOUT_SCRATCH_START + 0 * CASPER_NUM_LIMBS], X1, NUM_LIMBS * sizeof(uint32_t));
-  //CASPER_MEMCPY(&CASPER_MEM[INOUT_SCRATCH_START + 1 * CASPER_NUM_LIMBS], Y1, NUM_LIMBS * sizeof(uint32_t));
-  if (mbedtls_mpi_size(m) > sizeof(M))
-  {
-   __BKPT(0);
-  }
-  mbedtls_mpi_write_binary(m, (void*)M, mbedtls_mpi_size(m));
-  reverse_array((void*)M, 32);
-  //reverse_array_masked(M, 32, f_rng, p_rng);
-      
-  //Jac_scalar_multiplication(&CASPER_MEM[INOUT_SCRATCH_START + 6 * CASPER_NUM_LIMBS], &CASPER_MEM[INOUT_SCRATCH_START + 7 * CASPER_NUM_LIMBS], &CASPER_MEM[INOUT_SCRATCH_START + 8 * CASPER_NUM_LIMBS],
-  //                          &CASPER_MEM[INOUT_SCRATCH_START + 0 * CASPER_NUM_LIMBS], &CASPER_MEM[INOUT_SCRATCH_START + 1 * CASPER_NUM_LIMBS], 
-   //                         M, NISTp256, NISTp256_q);
+    if (mbedtls_mpi_size(m) > sizeof(M))
+    {
+        __BKPT(0);
+        return MBEDTLS_ERR_ECP_BUFFER_TOO_SMALL;
+    }
+    mbedtls_mpi_write_binary(m, (void *)M, mbedtls_mpi_size(m));
+    reverse_array((void *)M, 32);
 
-  //Jac_toAffine(&CASPER_MEM[INOUT_SCRATCH_START + 3 * CASPER_NUM_LIMBS], &CASPER_MEM[INOUT_SCRATCH_START + 4 * CASPER_NUM_LIMBS], 
-  //             &CASPER_MEM[INOUT_SCRATCH_START + 6 * CASPER_NUM_LIMBS], &CASPER_MEM[INOUT_SCRATCH_START + 7 * CASPER_NUM_LIMBS], &CASPER_MEM[INOUT_SCRATCH_START + 8 * CASPER_NUM_LIMBS]);
-  //
-  //uint32_t one[8] = { 0x1, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 };
-  //CASPER_MEMCPY(&CASPER_MEM[INOUT_SCRATCH_START + 0 * CASPER_NUM_LIMBS], one, NUM_LIMBS * sizeof(uint32_t));
-  //multiply_casper(&CASPER_MEM[INOUT_SCRATCH_START + 5 * CASPER_NUM_LIMBS], &CASPER_MEM[INOUT_SCRATCH_START + 3 * CASPER_NUM_LIMBS], &CASPER_MEM[INOUT_SCRATCH_START + 0 * CASPER_NUM_LIMBS]);
-  //multiply_casper(&CASPER_MEM[INOUT_SCRATCH_START + 6 * CASPER_NUM_LIMBS], &CASPER_MEM[INOUT_SCRATCH_START + 4 * CASPER_NUM_LIMBS], &CASPER_MEM[INOUT_SCRATCH_START + 0 * CASPER_NUM_LIMBS]);
-  
-  //CASPER_MEMCPY(&p.arr[4], &CASPER_MEM[INOUT_SCRATCH_START + 5 * CASPER_NUM_LIMBS], 32);
-  //CASPER_MEMCPY(&p.arr[4+32], &CASPER_MEM[INOUT_SCRATCH_START + 6 * CASPER_NUM_LIMBS], 32);
-  CASPER_ECC_SECP256R1_Mul(CASPER, (void*)&p.arr[4], (void*)&p.arr[4+32], (void*)&p.arr[4], (void*)&p.arr[4+32], (void*)M);
-  reverse_array(&p.arr[4], 32);
-  reverse_array(&p.arr[4+32], 32);
-  mbedtls_ecp_point_read_binary(grp, R, &p.arr[3], 65);
-  return 0;
+    CASPER_ECC_SECP256R1_Mul(CASPER, &p.data.w[1], &p.data.w[1 + 8], &p.data.w[1], &p.data.w[1 + 8], (void *)M);
+    reverse_array(&p.data.b[4], 32);
+    reverse_array(&p.data.b[4 + 32], 32);
+    mbedtls_ecp_point_read_binary(grp, R, &p.data.b[3], 65);
+    return 0;
 }
 #endif /* MBEDTLS_ECP_MUL_COMB_ALT */
 
 #if defined(MBEDTLS_ECP_MULADD_ALT)
-int mbedtls_ecp_muladd( mbedtls_ecp_group *grp, mbedtls_ecp_point *R,
-             const mbedtls_mpi *m, const mbedtls_ecp_point *P,
-             const mbedtls_mpi *n, const mbedtls_ecp_point *Q )
+int mbedtls_ecp_muladd(mbedtls_ecp_group *grp,
+                       mbedtls_ecp_point *R,
+                       const mbedtls_mpi *m,
+                       const mbedtls_ecp_point *P,
+                       const mbedtls_mpi *n,
+                       const mbedtls_ecp_point *Q)
 {
-  struct _ecp
-  {    
-    uint8_t arr[68];
-  } p1, p2;
-  
-  //uint32_t X1[8]; uint32_t Y1[8]; 
-  uint32_t M[8] = {0};
-  //uint32_t X2[8]; uint32_t Y2[8]; 
-  uint32_t N[8] = {0};
-  
-  size_t olen1= sizeof(p1);
-  
-  mbedtls_ecp_point_write_binary(grp, P, MBEDTLS_ECP_PF_UNCOMPRESSED, &olen1, &p1.arr[3], sizeof(p1.arr));
-  reverse_array(&p1.arr[4], 32);
-  reverse_array(&p1.arr[4+32], 32);
-  CASPER_ecc_init ();
-  //toMontgomery(X1, (void*)&p1.arr[4]);
-  //toMontgomery(Y1, (void*)&p1.arr[4+32]);
-  
-  //CASPER_MEMCPY(&CASPER_MEM[INOUT_SCRATCH_START + 0 * CASPER_NUM_LIMBS], X1, NUM_LIMBS * sizeof(uint32_t));
-  //CASPER_MEMCPY(&CASPER_MEM[INOUT_SCRATCH_START + 1 * CASPER_NUM_LIMBS], Y1, NUM_LIMBS * sizeof(uint32_t));
-  if (mbedtls_mpi_size(m) > sizeof(M))
-  {
-    __BKPT(0);
-  }
-  mbedtls_mpi_write_binary(m, (void*)M, mbedtls_mpi_size(m));
-  reverse_array((void*)M, 32);
-  /* */
-  size_t olen2= sizeof(p2);
-  
-  mbedtls_ecp_point_write_binary(grp, Q, MBEDTLS_ECP_PF_UNCOMPRESSED, &olen2, &p2.arr[3], sizeof(p2.arr));
-  reverse_array(&p2.arr[4], 32);
-  reverse_array(&p2.arr[4+32], 32);
-  //toMontgomery(X2, (void*)&p2.arr[4]);
-  //toMontgomery(Y2, (void*)&p2.arr[4+32]);
-  
-  //CASPER_MEMCPY(&CASPER_MEM[INOUT_SCRATCH_START + 2 * CASPER_NUM_LIMBS], X2, NUM_LIMBS * sizeof(uint32_t));
-  //CASPER_MEMCPY(&CASPER_MEM[INOUT_SCRATCH_START + 3 * CASPER_NUM_LIMBS], Y2, NUM_LIMBS * sizeof(uint32_t));
-  if (mbedtls_mpi_size(n) > sizeof(N))
-  {
-    __BKPT(0);
-  }
-  mbedtls_mpi_write_binary(n, (void*)N, mbedtls_mpi_size(n));
-  reverse_array((void*)N, 32);
-      
-  //double_scalar_multiplication(&CASPER_MEM[INOUT_SCRATCH_START + 4 * CASPER_NUM_LIMBS], &CASPER_MEM[INOUT_SCRATCH_START + 5 * CASPER_NUM_LIMBS], &CASPER_MEM[INOUT_SCRATCH_START + 6 * CASPER_NUM_LIMBS],
-  //                             &CASPER_MEM[INOUT_SCRATCH_START + 0 * CASPER_NUM_LIMBS], &CASPER_MEM[INOUT_SCRATCH_START + 1 * CASPER_NUM_LIMBS], M,
-  //                             &CASPER_MEM[INOUT_SCRATCH_START + 2 * CASPER_NUM_LIMBS], &CASPER_MEM[INOUT_SCRATCH_START + 3 * CASPER_NUM_LIMBS], N);
+    casper_ecp_t p1 = {0};
+    casper_ecp_t p2 = {0};
 
-  //Jac_toAffine(&CASPER_MEM[LUT_SCRATCH_START + 0 * CASPER_NUM_LIMBS], &CASPER_MEM[LUT_SCRATCH_START + 1 * CASPER_NUM_LIMBS],
-  //                 &CASPER_MEM[INOUT_SCRATCH_START + 4 * CASPER_NUM_LIMBS], &CASPER_MEM[INOUT_SCRATCH_START + 5 * CASPER_NUM_LIMBS], &CASPER_MEM[INOUT_SCRATCH_START + 6 * CASPER_NUM_LIMBS]);
-  
-  //uint32_t one[8] = { 0x1, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 };
-  //CASPER_MEMCPY(&CASPER_MEM[INOUT_SCRATCH_START + 0 * CASPER_NUM_LIMBS], one, NUM_LIMBS * sizeof(uint32_t));
-  //multiply_casper(&CASPER_MEM[INOUT_SCRATCH_START + 1 * CASPER_NUM_LIMBS], &CASPER_MEM[LUT_SCRATCH_START + 0 * CASPER_NUM_LIMBS], &CASPER_MEM[INOUT_SCRATCH_START + 0 * CASPER_NUM_LIMBS]);
-  //multiply_casper(&CASPER_MEM[INOUT_SCRATCH_START + 2 * CASPER_NUM_LIMBS], &CASPER_MEM[LUT_SCRATCH_START + 1 * CASPER_NUM_LIMBS], &CASPER_MEM[INOUT_SCRATCH_START + 0 * CASPER_NUM_LIMBS]);
-  
-  //CASPER_MEMCPY(&p1.arr[4], &CASPER_MEM[INOUT_SCRATCH_START + 1 * CASPER_NUM_LIMBS], 32);
-  //CASPER_MEMCPY(&p1.arr[4+32], &CASPER_MEM[INOUT_SCRATCH_START + 2 * CASPER_NUM_LIMBS], 32);
-  CASPER_ECC_SECP256R1_MulAdd(CASPER,
-                              (void*)&p1.arr[4], (void*)&p1.arr[4+32],
-                              (void*)&p1.arr[4], (void*)&p1.arr[4+32],(void*)M,
-                              (void*)&p2.arr[4], (void*)&p2.arr[4+32],(void*)N);
-  reverse_array(&p1.arr[4], 32);
-  reverse_array(&p1.arr[4+32], 32);
-  mbedtls_ecp_point_read_binary(grp, R, &p1.arr[3], 65);
-  return 0;
+    uint32_t M[8] = {0};
+    uint32_t N[8] = {0};
+
+    size_t olen1 = sizeof(casper_ecp_t);
+
+    mbedtls_ecp_point_write_binary(grp, P, MBEDTLS_ECP_PF_UNCOMPRESSED, &olen1, &p1.data.b[3], sizeof(casper_ecp_t));
+    reverse_array(&p1.data.b[4], 32);
+    reverse_array(&p1.data.b[4 + 32], 32);
+
+    CASPER_ecc_init();
+    if (mbedtls_mpi_size(m) > sizeof(M))
+    {
+        __BKPT(0);
+        return MBEDTLS_ERR_ECP_BUFFER_TOO_SMALL;
+    }
+    mbedtls_mpi_write_binary(m, (void *)M, mbedtls_mpi_size(m));
+    reverse_array((void *)M, 32);
+    /* */
+    size_t olen2 = sizeof(casper_ecp_t);
+
+    mbedtls_ecp_point_write_binary(grp, Q, MBEDTLS_ECP_PF_UNCOMPRESSED, &olen2, &p2.data.b[3], sizeof(casper_ecp_t));
+    reverse_array(&p2.data.b[4], 32);
+    reverse_array(&p2.data.b[4 + 32], 32);
+
+    if (mbedtls_mpi_size(n) > sizeof(N))
+    {
+        __BKPT(0);
+        return MBEDTLS_ERR_ECP_BUFFER_TOO_SMALL;
+    }
+    mbedtls_mpi_write_binary(n, (void *)N, mbedtls_mpi_size(n));
+    reverse_array((void *)N, 32);
+
+    CASPER_ECC_SECP256R1_MulAdd(CASPER, &p1.data.w[1], &p1.data.w[1 + 8], &p1.data.w[1], &p1.data.w[1 + 8], (void *)M,
+                                &p2.data.w[1], &p2.data.w[1 + 8], (void *)N);
+    reverse_array(&p1.data.b[4], 32);
+    reverse_array(&p1.data.b[4 + 32], 32);
+    mbedtls_ecp_point_read_binary(grp, R, &p1.data.b[3], 65);
+    return 0;
 }
 #endif /* MBEDTLS_ECP_MULADD_ALT */
 
 #endif /* MBEDTLS_MCUX_CASPER_ECC */
- 
+
 #endif /* MBEDTLS_ECP_ALT */
 #endif /* MBEDTLS_ECP_C */

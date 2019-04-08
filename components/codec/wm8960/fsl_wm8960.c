@@ -55,9 +55,9 @@ status_t WM8960_Init(codec_handle_t *handle, void *wm8960_configure)
     if (config == NULL)
     {
         /*
-         * VMID=50K, Enable VREF, AINL, AINR, ADCL and ADCR
-         * I2S_IN (bit 0), I2S_OUT (bit 1), DAP (bit 4), DAC (bit 5), ADC (bit 6) are powered on
-         */
+        * VMID=50K, Enable VREF, AINL, AINR, ADCL and ADCR
+        * I2S_IN (bit 0), I2S_OUT (bit 1), DAP (bit 4), DAC (bit 5), ADC (bit 6) are powered on
+        */
         WM8960_WriteReg(handle, WM8960_POWER1, 0xFE);
 
         /*
@@ -583,9 +583,9 @@ status_t WM8960_SetMute(codec_handle_t *handle, wm8960_module_t module, bool isE
 
 status_t WM8960_ConfigDataFormat(codec_handle_t *handle, uint32_t sysclk, uint32_t sample_rate, uint32_t bits)
 {
-    status_t retval  = kStatus_Success;
+    status_t retval = kStatus_Success;
     uint32_t divider = 0;
-    uint16_t val     = 0;
+    uint16_t val = 0;
 
     /* Compute sample rate divider, dac and adc are the same sample rate */
     divider = sysclk / sample_rate;
@@ -635,7 +635,7 @@ status_t WM8960_ConfigDataFormat(codec_handle_t *handle, uint32_t sysclk, uint32
             val = 0x1CF;
             break;
         default:
-            val    = 0;
+            val = 0;
             retval = kStatus_InvalidArgument;
             break;
     }
@@ -673,7 +673,7 @@ status_t WM8960_ConfigDataFormat(codec_handle_t *handle, uint32_t sysclk, uint32
 status_t WM8960_SetJackDetect(codec_handle_t *handle, bool isEnabled)
 {
     uint8_t retval = 0;
-    uint16_t val   = 0;
+    uint16_t val = 0;
 
     WM8960_ReadReg(WM8960_ADDCTL2, &val);
 
@@ -726,9 +726,9 @@ status_t WM8960_ReadReg(uint8_t reg, uint16_t *val)
 
 status_t WM8960_ModifyReg(codec_handle_t *handle, uint8_t reg, uint16_t mask, uint16_t val)
 {
-    uint8_t retval   = 0;
+    uint8_t retval = 0;
     uint16_t reg_val = 0;
-    retval           = WM8960_ReadReg(reg, &reg_val);
+    retval = WM8960_ReadReg(reg, &reg_val);
     if (retval != kStatus_Success)
     {
         return kStatus_Fail;

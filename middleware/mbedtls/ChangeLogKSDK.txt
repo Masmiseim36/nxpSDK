@@ -3,6 +3,9 @@
  
 @section mbedtls mbedTLS for MCUXpresso SDK
   The current version of mbedTLS is based on mbedTLS 2.13.1 released 2018-09-06
+ - 2.13.1_rev2
+    - Bug fixes:
+      - Disable default HW acceleration of SHA in parallel with AES.
 
  - 2.13.1_rev1
     - Bug fixes:

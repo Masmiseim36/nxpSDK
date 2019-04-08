@@ -346,7 +346,13 @@ static status_t SD_SwitchVoltage(sd_card_t *card)
 {
     assert(card);
 
-    return SDMMC_SwitchVoltage(card->host.base, card->host.transfer);
+    if ((card->usrParam.cardVoltage != NULL) && (card->usrParam.cardVoltage->cardSignalLine1V8 != NULL))
+    {
+        return SDMMC_SwitchToVoltage(card->host.base, card->host.transfer,
+                                     card->usrParam.cardVoltage->cardSignalLine1V8);
+    }
+
+    return SDMMC_SwitchToVoltage(card->host.base, card->host.transfer, NULL);
 }
 
 static status_t SD_StopTransmission(sd_card_t *card)
@@ -1733,6 +1739,15 @@ status_t SD_ProbeBusVoltage(sd_card_t *card)
     /* 3.3V voltage should be supported as default */
     applicationCommand41Argument |=
         SDMMC_MASK(kSD_OcrVdd29_30Flag) | SDMMC_MASK(kSD_OcrVdd32_33Flag) | SDMMC_MASK(kSD_OcrVdd33_34Flag);
+    /* make sure card signal line voltage is 3.3v before initalization */
+    if ((card->usrParam.cardVoltage != NULL) && (card->usrParam.cardVoltage->cardSignalLine3V3 != NULL))
+    {
+        card->usrParam.cardVoltage->cardSignalLine3V3();
+    }
+    else
+    {
+        SDMMCHOST_SWITCH_VOLTAGE180V(card->host.base, false);
+    }
     card->operationVoltage = kCARD_OperationVoltage330V;
 
     /* allow user select the work voltage, if not select, sdmmc will handle it automatically */
@@ -1887,7 +1902,7 @@ status_t SD_HostInit(sd_card_t *card)
 {
     assert(card);
 
-    if ((!card->isHostReady) && SDMMCHOST_Init(&(card->host), (void *)(card->usrParam.cd)) != kStatus_Success)
+    if ((!card->isHostReady) && SDMMCHOST_Init(&(card->host), (void *)(&(card->usrParam))) != kStatus_Success)
     {
         return kStatus_Fail;
     }

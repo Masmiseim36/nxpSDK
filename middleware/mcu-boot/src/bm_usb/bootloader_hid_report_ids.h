@@ -38,6 +38,11 @@ typedef struct _bl_hid_report
 {
     bl_hid_header_t header; //!< Header of the report.
     uint8_t packet[kMinUsbHidPacketBufferSize]; //!< The packet data that is transferred in the report.
+#if BL_FEATURE_EXPAND_PACKET_SIZE
+#if BL_CONFIG_HS_USB_HID && (((BL_MIN_PACKET_SIZE + BL_PACKET_SIZE_HEADER_SIZE) % BL_CONFIG_REPORT_SIZE_MULTIPLER))
+    uint8_t padding[BL_HS_REPORT_SIZE * BL_CONFIG_REPORT_SIZE_MULTIPLER - BL_FS_REPORT_SIZE];
+#endif
+#endif
 } bl_hid_report_t;
 
 #endif // __BOOTLOADER_HID_REPORT_IDS_H__

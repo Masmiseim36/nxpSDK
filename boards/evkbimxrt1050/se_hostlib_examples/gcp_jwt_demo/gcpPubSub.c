@@ -182,7 +182,6 @@ static void led_handler(
             LED_BLUE_TOGGLE();
         }
         break;
-        break;
     default:
         printf("wrong LED \n");
     }

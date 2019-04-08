@@ -30,13 +30,6 @@ enum _sd_card_flag
     kSD_SupportSpeedClassControlCmd = (1U << 7U), /*!< card support speed class control flag */
 };
 
-/*! @brief card user parameter, user can define the parameter according the board, card capability */
-typedef struct _sdcard_usr_param
-{
-    const sdmmchost_detect_card_t *cd; /*!< card detect type */
-    const sdmmchost_pwr_card_t *pwr;   /*!< power control configuration */
-} sdcard_usr_param_t;
-
 /*!
  * @brief SD card state
  *

@@ -8,8 +8,8 @@
  */
 
 /*
-*   SSLSRV tasks and session processing.
-*/
+ *   SSLSRV tasks and session processing.
+ */
 
 #include "sslsrv.h"
 #include "sslsrv_prv.h"

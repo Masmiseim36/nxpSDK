@@ -95,20 +95,11 @@
       <include_path path="lwip/src/include"/>
       <include_path path="lwip/src/include/lwip/apps"/>
     </include_paths>
-    <source path="boards/evkbimxrt1050/lwip_examples/lwip_httpsrv/freertos/armgcc" target_path="src" type="linker" toolchain="armgcc">
-      <files mask="MIMXRT1052xxxxx_ram.ld"/>
-    </source>
-    <source path="boards/evkbimxrt1050/lwip_examples/lwip_httpsrv/freertos/iar" target_path="src" type="linker" toolchain="iar">
-      <files mask="MIMXRT1052xxxxx_ram.icf"/>
-    </source>
     <source path="boards/evkbimxrt1050/lwip_examples/lwip_httpsrv/freertos/iar" target_path="src" type="other" toolchain="iar">
       <files mask="evkbimxrt1050.mac"/>
     </source>
     <source path="boards/evkbimxrt1050/lwip_examples/lwip_httpsrv/freertos/mdk" target_path="src" type="configuration" toolchain="mdk">
       <files mask="evkbimxrt1050_ram.ini"/>
-    </source>
-    <source path="boards/evkbimxrt1050/lwip_examples/lwip_httpsrv/freertos/mdk" target_path="src" type="linker" toolchain="mdk">
-      <files mask="MIMXRT1052xxxxx_ram.scf"/>
     </source>
     <source path="boards/evkbimxrt1050/lwip_examples/lwip_httpsrv/freertos" target_path="board" type="c_include">
       <files mask="board.h"/>
@@ -129,6 +120,15 @@
     </source>
     <source path="boards/evkbimxrt1050/lwip_examples/lwip_httpsrv/freertos" target_path="source" type="src">
       <files mask="lwip_httpsrv_freertos.c"/>
+    </source>
+    <source path="devices/MIMXRT1052/arm" target_path="src" type="linker" toolchain="mdk">
+      <files mask="MIMXRT1052xxxxx_ram.scf"/>
+    </source>
+    <source path="devices/MIMXRT1052/gcc" target_path="src" type="linker" toolchain="armgcc">
+      <files mask="MIMXRT1052xxxxx_ram.ld"/>
+    </source>
+    <source path="devices/MIMXRT1052/iar" target_path="src" type="linker" toolchain="iar">
+      <files mask="MIMXRT1052xxxxx_ram.icf"/>
     </source>
   </example>
 </ksdk:examples>

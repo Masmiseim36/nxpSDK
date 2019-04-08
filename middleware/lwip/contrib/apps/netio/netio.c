@@ -5,7 +5,7 @@
 
 /* See http://www.nwlab.net/art/netio/netio.html to get the netio tool */
 
-#if LWIP_TCP
+#if LWIP_TCP && LWIP_CALLBACK_API
 static err_t
 netio_recv(void *arg, struct tcp_pcb *pcb, struct pbuf *p, err_t err)
 {
@@ -52,4 +52,4 @@ netio_init(void)
   pcb = tcp_listen(pcb);
   tcp_accept(pcb, netio_accept);
 }
-#endif /* LWIP_TCP */
+#endif /* LWIP_TCP && LWIP_CALLBACK_API */

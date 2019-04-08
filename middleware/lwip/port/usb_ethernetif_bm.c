@@ -452,15 +452,10 @@ void USB_HostCdcRndisControlCallback(void *param, uint8_t *data, uint32_t dataLe
         {
            rndisInstance->runState = kUSB_HostCdcRndisRunWaitSetMsg;
            rndis_query_cmplt_struct_t * msg = (rndis_query_cmplt_struct_t *)data;
-           if(NETIF_MAX_HWADDR_LEN != msg->messageLength)
-           {
-                netif->hwaddr_len = NETIF_MAX_HWADDR_LEN;
-                memcpy(netif->hwaddr,(((uint8_t*)&msg->requestID + msg->informationBufferOffset)), NETIF_MAX_HWADDR_LEN);
-           }
-           else
-           {
-              usb_echo("error mac address\r\n");
-           }
+
+           netif->hwaddr_len = NETIF_MAX_HWADDR_LEN;
+
+           memcpy(netif->hwaddr,(((uint8_t*)&msg->requestID + msg->informationBufferOffset)), NETIF_MAX_HWADDR_LEN);
         }
         else if (rndisInstance->previousRunState == kUSB_HostCdcRndisRunWaitSetMsgDone)
         {

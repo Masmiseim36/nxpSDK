@@ -124,7 +124,7 @@ rtp_send_packets( int sock, struct sockaddr_in* to)
 {
   struct rtp_hdr* rtphdr;
   u8_t*           rtp_payload;
-  int             rtp_payload_size;
+  size_t          rtp_payload_size;
   size_t          rtp_data_index;
 
   /* prepare RTP packet */
@@ -138,18 +138,21 @@ rtp_send_packets( int sock, struct sockaddr_in* to)
   rtp_data_index = 0;
   do {
     rtp_payload      = rtp_send_packet+sizeof(struct rtp_hdr);
-    rtp_payload_size = LWIP_MIN(RTP_PAYLOAD_SIZE, (sizeof(rtp_data) - rtp_data_index));
+    rtp_payload_size = LWIP_MIN(RTP_PAYLOAD_SIZE, sizeof(rtp_data) - rtp_data_index);
 
     MEMCPY(rtp_payload, rtp_data + rtp_data_index, rtp_payload_size);
 
     /* set MARKER bit in RTP header on the last packet of an image */
-    rtphdr->payloadtype = RTP_PAYLOADTYPE | (((rtp_data_index + rtp_payload_size)
-      >= sizeof(rtp_data)) ? RTP_MARKER_MASK : 0);
+    if ((rtp_data_index + rtp_payload_size) >= sizeof(rtp_data)) {
+      rtphdr->payloadtype = RTP_PAYLOADTYPE | RTP_MARKER_MASK;
+    } else {
+      rtphdr->payloadtype = RTP_PAYLOADTYPE;
+    }
 
     /* send RTP stream packet */
-    if (sendto(sock, rtp_send_packet, sizeof(struct rtp_hdr) + rtp_payload_size,
+    if (lwip_sendto(sock, rtp_send_packet, sizeof(struct rtp_hdr) + rtp_payload_size,
         0, (struct sockaddr *)to, sizeof(struct sockaddr)) >= 0) {
-      rtphdr->seqNum  = lwip_htons(lwip_ntohs(rtphdr->seqNum) + 1);
+      rtphdr->seqNum  = lwip_htons((u16_t)(lwip_ntohs(rtphdr->seqNum) + 1));
       rtp_data_index += rtp_payload_size;
     } else {
       LWIP_DEBUGF(RTP_DEBUG, ("rtp_sender: not sendto==%i\n", errno));
@@ -176,7 +179,7 @@ rtp_send_thread(void *arg)
   /* if we got a valid RTP stream address... */
   if (rtp_stream_address != 0) {
     /* create new socket */
-    sock = socket(AF_INET, SOCK_DGRAM, 0);
+    sock = lwip_socket(AF_INET, SOCK_DGRAM, 0);
     if (sock >= 0) {
       /* prepare local address */
       memset(&local, 0, sizeof(local));
@@ -185,7 +188,7 @@ rtp_send_thread(void *arg)
       local.sin_addr.s_addr = PP_HTONL(INADDR_ANY);
 
       /* bind to local address */
-      if (bind(sock, (struct sockaddr *)&local, sizeof(local)) == 0) {
+      if (lwip_bind(sock, (struct sockaddr *)&local, sizeof(local)) == 0) {
         /* prepare RTP stream address */
         memset(&to, 0, sizeof(to));
         to.sin_family      = AF_INET;
@@ -201,7 +204,7 @@ rtp_send_thread(void *arg)
       }
 
       /* close the socket */
-      closesocket(sock);
+      lwip_close(sock);
     }
   }
 }
@@ -220,7 +223,7 @@ rtp_recv_thread(void *arg)
   struct rtp_hdr*    rtphdr;
   u32_t              rtp_stream_address;
   int                timeout;
-  size_t             result;
+  int                result;
   int                recvrtppackets  = 0;
   int                lostrtppackets  = 0;
   u16_t              lastrtpseq = 0;
@@ -233,7 +236,7 @@ rtp_recv_thread(void *arg)
   /* if we got a valid RTP stream address... */
   if (rtp_stream_address != 0) {
     /* create new socket */
-    sock = socket(AF_INET, SOCK_DGRAM, 0);
+    sock = lwip_socket(AF_INET, SOCK_DGRAM, 0);
     if (sock >= 0) {
       /* prepare local address */
       memset(&local, 0, sizeof(local));
@@ -242,27 +245,32 @@ rtp_recv_thread(void *arg)
       local.sin_addr.s_addr = PP_HTONL(INADDR_ANY);
 
       /* bind to local address */
-      if (bind(sock, (struct sockaddr *)&local, sizeof(local)) == 0) {
+      if (lwip_bind(sock, (struct sockaddr *)&local, sizeof(local)) == 0) {
         /* set recv timeout */
         timeout = RTP_RECV_TIMEOUT;
-        setsockopt(sock, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout));
+        result = lwip_setsockopt(sock, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout));
+        if (result) {
+          LWIP_DEBUGF(RTP_DEBUG, ("rtp_recv_thread: setsockopt(SO_RCVTIMEO) failed: errno=%d\n", errno));
+        }
 
         /* prepare multicast "ip_mreq" struct */
         ipmreq.imr_multiaddr.s_addr = rtp_stream_address;
         ipmreq.imr_interface.s_addr = PP_HTONL(INADDR_ANY);
 
         /* join multicast group */
-        if (setsockopt(sock, IPPROTO_IP, IP_ADD_MEMBERSHIP, &ipmreq, sizeof(ipmreq)) == 0) {
+        if (lwip_setsockopt(sock, IPPROTO_IP, IP_ADD_MEMBERSHIP, &ipmreq, sizeof(ipmreq)) == 0) {
           /* receive RTP packets */
           while(1) {
             fromlen = sizeof(from);
-            result  = recvfrom(sock, rtp_recv_packet, sizeof(rtp_recv_packet), 0,
+            result  = lwip_recvfrom(sock, rtp_recv_packet, sizeof(rtp_recv_packet), 0,
               (struct sockaddr *)&from, (socklen_t *)&fromlen);
-            if (result >= sizeof(struct rtp_hdr)) {
+            if ((result > 0) && ((size_t)result >= sizeof(struct rtp_hdr))) {
+              size_t recved = (size_t)result;
               rtphdr = (struct rtp_hdr *)rtp_recv_packet;
               recvrtppackets++;
               if ((lastrtpseq == 0) || ((lastrtpseq + 1) == lwip_ntohs(rtphdr->seqNum))) {
-                RTP_RECV_PROCESSING((rtp_recv_packet + sizeof(rtp_hdr)),(result-sizeof(rtp_hdr)));
+                RTP_RECV_PROCESSING((rtp_recv_packet + sizeof(rtp_hdr)), (recved-sizeof(rtp_hdr)));
+                LWIP_UNUSED_ARG(recved); /* just in case... */
               } else {
                 lostrtppackets++;
               }
@@ -276,12 +284,16 @@ rtp_recv_thread(void *arg)
           }
 
           /* leave multicast group */
-          setsockopt(sock, IPPROTO_IP, IP_DROP_MEMBERSHIP, &ipmreq, sizeof(ipmreq));
+          /* TODO: this code is never reached
+          result = lwip_setsockopt(sock, IPPROTO_IP, IP_DROP_MEMBERSHIP, &ipmreq, sizeof(ipmreq));
+          if (result) {
+            LWIP_DEBUGF(RTP_DEBUG, ("rtp_recv_thread: setsockopt(IP_DROP_MEMBERSHIP) failed: errno=%d\n", errno));
+          }*/
         }
       }
 
       /* close the socket */
-      closesocket(sock);
+      lwip_close(sock);
     }
   }
 }

@@ -1818,7 +1818,10 @@ void *pvPortCalloc(size_t num, size_t size); /*Calloc for HEAP3.*/
  *
  * Uncomment this to allow your own alternate threading implementation.
  */
-//#define MBEDTLS_THREADING_ALT
+/* Mbedtls threading is used only with the iot examples */
+#if defined( WATSONP ) || defined( AWS_IOT )  || defined ( GCP_IOT )
+#define MBEDTLS_THREADING_ALT
+#endif
 
 /**
  * \def MBEDTLS_THREADING_PTHREAD
@@ -2911,7 +2914,10 @@ void *pvPortCalloc(size_t num, size_t size); /*Calloc for HEAP3.*/
  *
  * Enable this layer to allow use of mutexes within mbed TLS
  */
-//#define MBEDTLS_THREADING_C
+/* Mbedtls threading is used only with the iot examples */
+#if defined( WATSONP ) || defined( AWS_IOT )  || defined ( GCP_IOT )
+#define MBEDTLS_THREADING_C
+#endif
 
 /**
  * \def MBEDTLS_TIMING_C

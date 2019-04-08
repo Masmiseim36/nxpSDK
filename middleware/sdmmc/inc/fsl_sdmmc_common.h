@@ -23,7 +23,7 @@
  * Definitions
  ******************************************************************************/
 /*! @brief Middleware version. */
-#define FSL_SDMMC_DRIVER_VERSION (MAKE_VERSION(2U, 2U, 6U)) /*2.2.6*/
+#define FSL_SDMMC_DRIVER_VERSION (MAKE_VERSION(2U, 2U, 11U)) /*2.2.11*/
 
 /*! @brief Reverse byte sequence in uint32_t */
 #define SWAP_WORD_BYTE_SEQUENCE(x) (__REV(x))
@@ -122,10 +122,10 @@ enum _sdmmc_status
 /*! @brief card operation voltage */
 typedef enum _sdmmc_operation_voltage
 {
-    kCARD_OperationVoltageNone = 0U, /*!< indicate current voltage setting is not setting bu suser*/
+    kCARD_OperationVoltageNone = 0U, /*!< indicate current voltage setting is not setting by suser*/
     kCARD_OperationVoltage330V = 1U, /*!< card operation voltage around 3.3v */
     kCARD_OperationVoltage300V = 2U, /*!< card operation voltage around 3.0v */
-    kCARD_OperationVoltage180V = 3U, /*!< card operation voltage around 31.8v */
+    kCARD_OperationVoltage180V = 3U, /*!< card operation voltage around 1.8v */
 } sdmmc_operation_voltage_t;
 
 /*************************************************************************************************
@@ -134,6 +134,10 @@ typedef enum _sdmmc_operation_voltage
 #if defined(__cplusplus)
 extern "C" {
 #endif
+/*!
+ * @name common function
+ * @{
+ */
 
 /*!
  * @brief Selects the card to put it into transfer state.
@@ -215,12 +219,24 @@ void SDMMC_Delay(uint32_t num);
 
 /*!
  * @brief provide a voltage switch function for SD/SDIO card
- *
+ * @deprecated Do not use this function, it has been superceded by SDMMC_SwitchToVoltage.
  * @param base SDMMCHOST peripheral base address.
  * @param transfer SDMMCHOST transfer function.
  */
 status_t SDMMC_SwitchVoltage(SDMMCHOST_TYPE *base, SDMMCHOST_TRANSFER_FUNCTION transfer);
 
+/*!
+ * @brief provide a voltage switch function for SD/SDIO card
+ *
+ * @param base SDMMCHOST peripheral base address.
+ * @param transfer SDMMCHOST transfer function.
+ * @param switchVoltageFunc voltage switch function.
+ * @return error code.
+ */
+
+status_t SDMMC_SwitchToVoltage(SDMMCHOST_TYPE *base,
+                               SDMMCHOST_TRANSFER_FUNCTION transfer,
+                               sdmmchost_card_switch_voltage_t switchVoltageFunc);
 /*!
  * @brief excute tuning
  *
@@ -233,6 +249,7 @@ status_t SDMMC_ExecuteTuning(SDMMCHOST_TYPE *base,
                              SDMMCHOST_TRANSFER_FUNCTION transfer,
                              uint32_t tuningCmd,
                              uint32_t blockSize);
+/* @} */
 
 #if defined(__cplusplus)
 }

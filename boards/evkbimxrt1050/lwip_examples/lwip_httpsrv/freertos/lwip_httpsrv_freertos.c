@@ -91,8 +91,8 @@
 #define MDNS_HOSTNAME "lwip-http"
 
 /*******************************************************************************
-* Prototypes
-******************************************************************************/
+ * Prototypes
+ ******************************************************************************/
 
 static void cgi_urldecode(char *url);
 static int cgi_rtc_data(HTTPSRV_CGI_REQ_STRUCT *param);
@@ -101,8 +101,8 @@ static int ssi_date_time(HTTPSRV_SSI_PARAM_STRUCT *param);
 static bool cgi_get_varval(char *var_str, char *var_name, char *var_val, uint32_t length);
 
 /*******************************************************************************
-* Variables
-******************************************************************************/
+ * Variables
+ ******************************************************************************/
 static struct netif fsl_netif0;
 /* FS data.*/
 extern const HTTPSRV_FS_DIR_ENTRY httpsrv_fs_data[];

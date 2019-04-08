@@ -142,9 +142,9 @@ int main(void)
     RESET_PeripheralReset(kSHA_RST_SHIFT_RSTn);
 #endif
 
-   BOARD_InitBootPins();
-   BOARD_BootClockFROHF96M();
-   BOARD_InitDebugConsole();
+    BOARD_InitBootPins();
+    BOARD_BootClockRUN();
+    BOARD_InitDebugConsole();
    /* Disable MPU. */
    base->CTRL &= ~(0x1U);
 #else

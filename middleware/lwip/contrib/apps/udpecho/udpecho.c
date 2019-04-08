@@ -58,18 +58,6 @@ udpecho_thread(void *arg)
 #endif /* LWIP_IPV6 */
   LWIP_ERROR("udpecho: invalid conn", (conn != NULL), return;);
 
-#if LWIP_IGMP /* Only for testing of multicast join*/
-{
-  #include "lwip\netif.h"
-
-  ip4_addr_t multiaddr;
-  IP4_ADDR(&multiaddr, 224, 5, 6, 7);
-
-  err = netconn_join_leave_group(conn, &multiaddr, &netif_default->ip_addr, NETCONN_JOIN);
-  LWIP_ERROR("udpecho: join group is failed", (err == ERR_OK), return;);
-}
-#endif
-
   while (1) {
     err = netconn_recv(conn, &buf);
     if (err == ERR_OK) {

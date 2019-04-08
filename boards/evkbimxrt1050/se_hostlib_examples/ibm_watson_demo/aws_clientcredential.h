@@ -32,19 +32,6 @@ static const char clientcredentialMQTT_BROKER_ENDPOINT[] = "a29rg0ytflhg6y.iot.e
  */
 #define clientcredentialGREENGRASS_DISCOVERY_PORT 8443
 
-
-/*
- * Not used
- */
-static const uint32_t clientcredentialCLIENT_CERTIFICATE_LENGTH = sizeof( clientcredentialCLIENT_CERTIFICATE_PEM );
-
-/*
- * Length of device private key included from aws_clientcredential_keys.h .
- */
-
-static const uint32_t clientcredentialCLIENT_PRIVATE_KEY_LENGTH = sizeof( clientcredentialCLIENT_PRIVATE_KEY_PEM );
-
-
 #ifdef AWS_IOT
 #   include "aws_default_root_certificates.h"
 #	include "aws_iot_config.h"

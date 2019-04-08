@@ -75,10 +75,11 @@
 #include "lwip/sys.h"
 #include <string.h>
 
+#ifdef LWIP_HOOK_TCP_ISN
+
 /* pull in md5 of ppp? */
-#define  PPP_SUPPORT  1
 #include "netif/ppp/ppp_opts.h"
-#if !LWIP_USE_EXTERNAL_POLARSSL && !LWIP_USE_EXTERNAL_MBEDTLS
+#if !PPP_SUPPORT || (!LWIP_USE_EXTERNAL_POLARSSL && !LWIP_USE_EXTERNAL_MBEDTLS)
 #undef  LWIP_INCLUDED_POLARSSL_MD5
 #define LWIP_INCLUDED_POLARSSL_MD5 1
 #include "netif/ppp/polarssl/md5.h"
@@ -159,10 +160,10 @@ lwip_hook_tcp_isn(const ip_addr_t *local_ip, u16_t local_port,
   }   
 #endif /* LWIP_IPV4 */
 
-  input[32] = local_port >> 8;
-  input[33] = local_port & 0xff;
-  input[34] = remote_port >> 8;
-  input[35] = remote_port & 0xff;
+  input[32] = (u8_t)(local_port >> 8);
+  input[33] = (u8_t)(local_port & 0xff);
+  input[34] = (u8_t)(remote_port >> 8);
+  input[35] = (u8_t)(remote_port & 0xff);
 
   /* The secret and padding are already filled in. */
 
@@ -177,3 +178,5 @@ lwip_hook_tcp_isn(const ip_addr_t *local_ip, u16_t local_port,
   /* Add the current time in 4-microsecond units. */
   return isn + base_time + sys_now() * 250;
 }
+
+#endif /* LWIP_HOOK_TCP_ISN */

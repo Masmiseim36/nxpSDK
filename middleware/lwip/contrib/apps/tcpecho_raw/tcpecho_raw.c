@@ -46,7 +46,7 @@
 #include "lwip/tcp.h"
 #include "tcpecho_raw.h"
 
-#if LWIP_TCP
+#if LWIP_TCP && LWIP_CALLBACK_API
 
 static struct tcp_pcb *tcpecho_raw_pcb;
 
@@ -300,4 +300,4 @@ tcpecho_raw_init(void)
   }
 }
 
-#endif /* LWIP_TCP */
+#endif /* LWIP_TCP && LWIP_CALLBACK_API */

@@ -120,7 +120,6 @@
       <files mask="readme.txt"/>
     </source>
     <source path="boards/evkbimxrt1050/se_hostlib_examples/vcomA71CH" target_path="source" type="c_include">
-      <files mask="usb_device_board_config.h"/>
       <files mask="vcom2i2c.h"/>
       <files mask="virtual_com.h"/>
     </source>

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * 
@@ -405,7 +405,7 @@ static int32_t httpsrv_init_socket(HTTPSRV_STRUCT *server)
     }
 
     /* Listen */
-    error = listen(server->sock, server->params.max_ses);
+    error = listen(server->sock, 0);
     if (error == -1)
     {
         return (HTTPSRV_LISTEN_FAIL);

@@ -192,7 +192,7 @@ static status_t flexspi_nor_wait_bus_busy(FLEXSPI_Type *base)
 {
     /* Wait status ready. */
     bool isBusy;
-    uint32_t readValue;
+    uint32_t readValue[1] = {0};
     status_t status;
     flexspi_transfer_t flashXfer;
 
@@ -201,7 +201,7 @@ static status_t flexspi_nor_wait_bus_busy(FLEXSPI_Type *base)
     flashXfer.cmdType = kFLEXSPI_Read;
     flashXfer.SeqNumber = 2;
     flashXfer.seqIndex = HYPERFLASH_CMD_LUT_SEQ_IDX_READSTATUS;
-    flashXfer.data = &readValue;
+    flashXfer.data = &readValue[0];
     flashXfer.dataSize = 2;
 
     do
@@ -212,7 +212,7 @@ static status_t flexspi_nor_wait_bus_busy(FLEXSPI_Type *base)
         {
             return status;
         }
-        if (readValue & 0x8000)
+        if (readValue[0] & 0x8000)
         {
             isBusy = false;
         }
@@ -221,7 +221,7 @@ static status_t flexspi_nor_wait_bus_busy(FLEXSPI_Type *base)
             isBusy = true;
         }
 
-        if (readValue & 0x3200)
+        if (readValue[0] & 0x3200)
         {
             status = kStatus_Fail;
             break;

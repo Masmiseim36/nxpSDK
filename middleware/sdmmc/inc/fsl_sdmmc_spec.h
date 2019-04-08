@@ -355,27 +355,36 @@ typedef enum _sdmmc_command
     kSDMMC_ReadOcr = 58U,            /*!< Read OCR */
 } sdmmc_command_t;
 
+/*! @brief sdio card cccr register number */
+#define SDIO_CCCR_REG_NUMBER (0x16U)
+/*! @brief sdio IO ready timeout steps */
+#ifndef SDIO_IO_READY_TIMEOUT_UNIT
+#define SDIO_IO_READY_TIMEOUT_UNIT (10U)
+#endif
 /*! @brief sdio card cccr register addr */
 enum _sdio_cccr_reg
 {
-    kSDIO_RegCCCRSdioVer = 0x00U,      /*!< CCCR & SDIO version*/
-    kSDIO_RegSDVersion = 0x01U,        /*!< SD version */
-    kSDIO_RegIOEnable = 0x02U,         /*!< io enable register */
-    kSDIO_RegIOReady = 0x03U,          /*!< io ready register */
-    kSDIO_RegIOIntEnable = 0x04U,      /*!< io interrupt enable register */
-    kSDIO_RegIOIntPending = 0x05U,     /*!< io interrupt pending register */
-    kSDIO_RegIOAbort = 0x06U,          /*!< io abort register */
-    kSDIO_RegBusInterface = 0x07U,     /*!< bus interface register */
-    kSDIO_RegCardCapability = 0x08U,   /*!< card capability register */
-    kSDIO_RegCommonCISPointer = 0x09U, /*!< common CIS pointer register */
-    kSDIO_RegBusSuspend = 0x0C,        /*!< bus suspend register */
-    kSDIO_RegFunctionSelect = 0x0DU,   /*!< function select register */
-    kSDIO_RegExecutionFlag = 0x0EU,    /*!< execution flag register */
-    kSDIO_RegReadyFlag = 0x0FU,        /*!< ready flag register */
-    kSDIO_RegFN0BlockSizeLow = 0x10U,  /*!< FN0 block size register */
-    kSDIO_RegFN0BlockSizeHigh = 0x11U, /*!< FN0 block size register */
-    kSDIO_RegPowerControl = 0x12U,     /*!< power control register */
-    kSDIO_RegHighSpeed = 0x13U,        /*!< high speed register */
+    kSDIO_RegCCCRSdioVer = 0x00U,        /*!< CCCR & SDIO version*/
+    kSDIO_RegSDVersion = 0x01U,          /*!< SD version */
+    kSDIO_RegIOEnable = 0x02U,           /*!< io enable register */
+    kSDIO_RegIOReady = 0x03U,            /*!< io ready register */
+    kSDIO_RegIOIntEnable = 0x04U,        /*!< io interrupt enable register */
+    kSDIO_RegIOIntPending = 0x05U,       /*!< io interrupt pending register */
+    kSDIO_RegIOAbort = 0x06U,            /*!< io abort register */
+    kSDIO_RegBusInterface = 0x07U,       /*!< bus interface register */
+    kSDIO_RegCardCapability = 0x08U,     /*!< card capability register */
+    kSDIO_RegCommonCISPointer = 0x09U,   /*!< common CIS pointer register */
+    kSDIO_RegBusSuspend = 0x0C,          /*!< bus suspend register */
+    kSDIO_RegFunctionSelect = 0x0DU,     /*!< function select register */
+    kSDIO_RegExecutionFlag = 0x0EU,      /*!< execution flag register */
+    kSDIO_RegReadyFlag = 0x0FU,          /*!< ready flag register */
+    kSDIO_RegFN0BlockSizeLow = 0x10U,    /*!< FN0 block size register */
+    kSDIO_RegFN0BlockSizeHigh = 0x11U,   /*!< FN0 block size register */
+    kSDIO_RegPowerControl = 0x12U,       /*!< power control register */
+    kSDIO_RegBusSpeed = 0x13U,           /*!< bus speed register */
+    kSDIO_RegUHSITimingSupport = 0x14U,  /*!< UHS-I timing support register */
+    kSDIO_RegDriverStrength = 0x15U,     /*!< Driver strength register */
+    kSDIO_RegInterruptExtension = 0x16U, /*!< Interrupt extension register */
 };
 
 /*! @brief sdio card individual commands */
@@ -455,6 +464,11 @@ enum _sdio_ocr_flag
     kSDIO_OcrVdd34_35Flag = 22, /*!< VDD 3.3-3.4 */
     kSDIO_OcrVdd35_36Flag = 23, /*!< VDD 3.4-3.5 */
 };
+/*! @brief sdio ocr voltage window mask */
+#define SDIO_OCR_VOLTAGE_WINDOW_MASK (0xFFFFU << 8U)
+
+/*! @brief sdio ocr reigster IO NUMBER mask  */
+#define SDIO_OCR_IO_NUM_MASK (7U << kSDIO_OcrIONumber)
 
 /*! @brief sdio capability flag */
 enum _sdio_capability_flag
@@ -470,7 +484,36 @@ enum _sdio_capability_flag
     kSDIO_CCCRSupportHighSpeed = (1U << 9U),                /*!< support high speed */
     kSDIO_CCCRSupportContinuousSPIInt = (1U << 10U),        /*!< support continuous SPI interrupt */
 };
+/*! @brief UHS timing mode flag */
+#define SDIO_CCCR_SUPPORT_HIGHSPEED (1u << 9U)
+#define SDIO_CCCR_SUPPORT_SDR50 (1U << 11U)
+#define SDIO_CCCR_SUPPORT_SDR104 (1U << 12U)
+#define SDIO_CCCR_SUPPORT_DDR50 (1U << 13U)
+#define SDIO_CCCR_SUPPORT_DRIVER_TYPE_A (1U << 14U)
+#define SDIO_CCCR_SUPPORT_DRIVER_TYPE_C (1U << 15U)
+#define SDIO_CCCR_SUPPORT_DRIVER_TYPE_D (1U << 16U)
+#define SDIO_CCCR_SUPPORT_ASYNC_INT (1U << 17U)
 
+#define SDIO_CCCR_BUS_SPEED_MASK (7U << 1U)
+#define SDIO_CCCR_ENABLE_HIGHSPEED_MODE (1U << 1U)
+#define SDIO_CCCR_ENABLE_SDR50_MODE (2U << 1U)
+#define SDIO_CCCR_ENABLE_SDR104_MODE (3U << 1U)
+#define SDIO_CCCR_ENABLE_DDR50_MODE (4U << 1U)
+
+/*! @brief Driver type flag */
+#define SDIO_CCCR_DRIVER_TYPE_MASK (3U << 4U)
+#define SDIO_CCCR_ENABLE_DRIVER_TYPE_B (0U << 4U)
+#define SDIO_CCCR_ENABLE_DRIVER_TYPE_A (1U << 4U)
+#define SDIO_CCCR_ENABLE_DRIVER_TYPE_C (2U << 4U)
+#define SDIO_CCCR_ENABLE_DRIVER_TYPE_D (3U << 4U)
+
+/*! @brief aync interrupt flag*/
+#define SDIO_CCCR_ASYNC_INT_MASK (1U)
+#define SDIO_CCCR_ENABLE_AYNC_INT (1U << 1U)
+
+/*! @brief 8 bit data bus flag*/
+#define SDIO_CCCR_SUPPORT_8BIT_BUS (1U << 18U)
+#define SDIO_CCCR_SUPPORT_LOW_SPEED_4BIT_BUS (1U << 7U)
 /*! @brief sdio fbr flag */
 enum _sdio_fbr_flag
 {
@@ -481,8 +524,9 @@ enum _sdio_fbr_flag
 /*! @brief sdio bus width */
 typedef enum _sdio_bus_width
 {
-    kSDIO_DataBus1Bit = 0x00U, /*!< 1bit bus mode */
+    kSDIO_DataBus1Bit = 0x00U, /*!< 1 bit bus mode */
     kSDIO_DataBus4Bit = 0X02U, /*!< 4 bit bus mode*/
+    kSDIO_DataBus8Bit = 0X03U, /*!< 8 bit bus mode*/
 } sdio_bus_width_t;
 
 /*! @brief MMC card individual commands */

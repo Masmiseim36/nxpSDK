@@ -1,5 +1,5 @@
 /*
- * FreeRTOS+TCP V2.0.7
+ * FreeRTOS+TCP V2.0.10
  * Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -244,7 +244,7 @@ FreeRTOS_Socket_t *pxSocket;
 UDPPacket_t *pxUDPPacket = (UDPPacket_t *) pxNetworkBuffer->pucEthernetBuffer;
 
 	/* Caller must check for minimum packet size. */
-    pxSocket = pxUDPSocketLookup( usPort );
+	pxSocket = pxUDPSocketLookup( usPort );
 
 	if( pxSocket )
 	{

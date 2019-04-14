@@ -104,26 +104,22 @@ void BOARD_InitMemory(void)
 
     for (i = 0; i < 32; i++)
     {
-        MMU_ConfigSection(MMU_L1Table, (const void *)(0x0C000000U + (i << 20)), (0x0C000000U + (i << 20)),
-                          &s_mmuDevAttr); /* QSPI Rx Buf */
+        MMU_ConfigSection(MMU_L1Table, (const void *)(0x0C000000U + (i << 20)), (0x0C000000U + (i << 20)), &s_mmuDevAttr); /* QSPI Rx Buf */
     }
 
     for (i = 0; i < 256; i++)
     {
-        MMU_ConfigSection(MMU_L1Table, (const void *)(0x50000000U + (i << 20)), (0x50000000U + (i << 20)),
-                          &s_mmuRamAttr); /* EIM */
+        MMU_ConfigSection(MMU_L1Table, (const void *)(0x50000000U + (i << 20)), (0x50000000U + (i << 20)), &s_mmuRamAttr); /* EIM */
     }
 
     for (i = 0; i < 256; i++)
     {
-        MMU_ConfigSection(MMU_L1Table, (const void *)(0x60000000U + (i << 20)), (0x60000000U + (i << 20)),
-                          &s_mmuRomAttr); /* QSPI */
+        MMU_ConfigSection(MMU_L1Table, (const void *)(0x60000000U + (i << 20)), (0x60000000U + (i << 20)), &s_mmuRomAttr); /* QSPI */
     }
 
     for (i = 0; i < 2048; i++)
     {
-        MMU_ConfigSection(MMU_L1Table, (const void *)(0x80000000U + (i << 20)), (0x80000000U + (i << 20)),
-                          &s_mmuRamAttr); /* DDR */
+        MMU_ConfigSection(MMU_L1Table, (const void *)(0x80000000U + (i << 20)), (0x80000000U + (i << 20)), &s_mmuRamAttr); /* DDR */
     }
 
 /* You can place global or static variables in NonCacheable section to make it uncacheable.*/

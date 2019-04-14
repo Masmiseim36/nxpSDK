@@ -13674,72 +13674,535 @@ SOURCE=.\boards\evkmimxrt1015\xip\evkmimxrt1015_sdram_ini_dcd.h
 # Begin Group "driver example"
 
 # PROP Default_Filter ""
-# Begin Group "flexSPI Polling Nr. 1"
+# Begin Group "1020_ADC_Interrupt"
 
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\boards\evkmimxrt1020\driver_examples\flexspi\nor\polling_transfer\board.c
+SOURCE=.\boards\evkmimxrt1020\driver_examples\adc\interrupt\adc_interrupt.c
 # End Source File
 # Begin Source File
 
-SOURCE=.\boards\evkmimxrt1020\driver_examples\flexspi\nor\polling_transfer\board.h
+SOURCE=.\boards\evkmimxrt1020\driver_examples\adc\interrupt\board.c
 # End Source File
 # Begin Source File
 
-SOURCE=.\boards\evkmimxrt1020\driver_examples\flexspi\nor\polling_transfer\clock_config.c
+SOURCE=.\boards\evkmimxrt1020\driver_examples\adc\interrupt\board.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\boards\evkmimxrt1020\driver_examples\flexspi\nor\polling_transfer\clock_config.h
+SOURCE=.\boards\evkmimxrt1020\driver_examples\adc\interrupt\clock_config.c
 # End Source File
 # Begin Source File
 
-SOURCE=.\boards\evkmimxrt1020\driver_examples\flexspi\nor\polling_transfer\flexspi_nor_polling_transfer.c
+SOURCE=.\boards\evkmimxrt1020\driver_examples\adc\interrupt\clock_config.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\boards\evkmimxrt1020\driver_examples\flexspi\nor\polling_transfer\pin_mux.c
+SOURCE=.\boards\evkmimxrt1020\driver_examples\adc\interrupt\pin_mux.c
 # End Source File
 # Begin Source File
 
-SOURCE=.\boards\evkmimxrt1020\driver_examples\flexspi\nor\polling_transfer\pin_mux.h
+SOURCE=.\boards\evkmimxrt1020\driver_examples\adc\interrupt\pin_mux.h
 # End Source File
 # End Group
-# End Group
-# Begin Group "flexcan_loopback"
+# Begin Group "1020_ADC_Polling"
 
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\boards\evkmimxrt1020\driver_examples\flexcan\loopback\board.c
+SOURCE=.\boards\evkmimxrt1020\driver_examples\adc\polling\adc_polling.c
 # End Source File
 # Begin Source File
 
-SOURCE=.\boards\evkmimxrt1020\driver_examples\flexcan\loopback\board.h
+SOURCE=.\boards\evkmimxrt1020\driver_examples\adc\polling\board.c
 # End Source File
 # Begin Source File
 
-SOURCE=.\boards\evkmimxrt1020\driver_examples\flexcan\loopback\clock_config.c
+SOURCE=.\boards\evkmimxrt1020\driver_examples\adc\polling\board.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\boards\evkmimxrt1020\driver_examples\flexcan\loopback\clock_config.h
+SOURCE=.\boards\evkmimxrt1020\driver_examples\adc\polling\clock_config.c
 # End Source File
 # Begin Source File
 
-SOURCE=.\boards\evkmimxrt1020\driver_examples\flexcan\loopback\flexcan_loopback.c
+SOURCE=.\boards\evkmimxrt1020\driver_examples\adc\polling\clock_config.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\boards\evkmimxrt1020\driver_examples\flexcan\loopback\pin_mux.c
+SOURCE=.\boards\evkmimxrt1020\driver_examples\adc\polling\pin_mux.c
 # End Source File
 # Begin Source File
 
-SOURCE=.\boards\evkmimxrt1020\driver_examples\flexcan\loopback\pin_mux.h
+SOURCE=.\boards\evkmimxrt1020\driver_examples\adc\polling\pin_mux.h
 # End Source File
 # End Group
-# Begin Group "flexcan_interrupt"
+# Begin Group "1020_adc_etc_hardware_trigger_"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\adc_etc\adc_etc_hardware_trigger_conv\adc_etc_hardware_trigger_conv.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\adc_etc\adc_etc_hardware_trigger_conv\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\adc_etc\adc_etc_hardware_trigger_conv\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\adc_etc\adc_etc_hardware_trigger_conv\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\adc_etc\adc_etc_hardware_trigger_conv\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\adc_etc\adc_etc_hardware_trigger_conv\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\adc_etc\adc_etc_hardware_trigger_conv\pin_mux.h
+# End Source File
+# End Group
+# Begin Group "1020_adc_etc_software_trigger_"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\adc_etc\adc_etc_software_trigger_conv\adc_etc_software_trigger_conv.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\adc_etc\adc_etc_software_trigger_conv\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\adc_etc\adc_etc_software_trigger_conv\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\adc_etc\adc_etc_software_trigger_conv\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\adc_etc\adc_etc_software_trigger_conv\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\adc_etc\adc_etc_software_trigger_conv\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\adc_etc\adc_etc_software_trigger_conv\pin_mux.h
+# End Source File
+# End Group
+# Begin Group "1020_bee"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\bee\bee.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\bee\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\bee\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\bee\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\bee\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\bee\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\bee\pin_mux.h
+# End Source File
+# End Group
+# Begin Group "1020_cache"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\cache\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\cache\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\cache\cache.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\cache\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\cache\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\cache\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\cache\pin_mux.h
+# End Source File
+# End Group
+# Begin Group "1020_CMP_Interrupt"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\cmp\interrupt\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\cmp\interrupt\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\cmp\interrupt\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\cmp\interrupt\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\cmp\interrupt\cmp_interrupt.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\cmp\interrupt\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\cmp\interrupt\pin_mux.h
+# End Source File
+# End Group
+# Begin Group "1020_CMP_Polling"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\cmp\polling\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\cmp\polling\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\cmp\polling\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\cmp\polling\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\cmp\polling\cmp_polling.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\cmp\polling\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\cmp\polling\pin_mux.h
+# End Source File
+# End Group
+# Begin Group "1020_DCP"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\dcp\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\dcp\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\dcp\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\dcp\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\dcp\dcp.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\dcp\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\dcp\pin_mux.h
+# End Source File
+# End Group
+# Begin Group "1020_EDMA_Memory2Memoy"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\edma\memory_to_memory\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\edma\memory_to_memory\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\edma\memory_to_memory\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\edma\memory_to_memory\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\edma\memory_to_memory\edma_memory_to_memory.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\edma\memory_to_memory\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\edma\memory_to_memory\pin_mux.h
+# End Source File
+# End Group
+# Begin Group "1020_EDMA_ScatterGather"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\edma\scatter_gather\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\edma\scatter_gather\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\edma\scatter_gather\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\edma\scatter_gather\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\edma\scatter_gather\edma_scatter_gather.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\edma\scatter_gather\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\edma\scatter_gather\pin_mux.h
+# End Source File
+# End Group
+# Begin Group "1020_ENC_basic"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\enc\basic\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\enc\basic\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\enc\basic\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\enc\basic\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\enc\basic\enc_basic.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\enc\basic\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\enc\basic\pin_mux.h
+# End Source File
+# End Group
+# Begin Group "1020_ENC_IndexInterrupt"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\enc\index_interrupt\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\enc\index_interrupt\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\enc\index_interrupt\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\enc\index_interrupt\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\enc\index_interrupt\enc_index_interrupt.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\enc\index_interrupt\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\enc\index_interrupt\pin_mux.h
+# End Source File
+# End Group
+# Begin Group "1020_ENET_PTP1588"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\enet\txrx_ptp1588_transfer\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\enet\txrx_ptp1588_transfer\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\enet\txrx_ptp1588_transfer\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\enet\txrx_ptp1588_transfer\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\enet\txrx_ptp1588_transfer\enet_txrx_ptp1588_transfer.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\enet\txrx_ptp1588_transfer\fsl_phy.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\enet\txrx_ptp1588_transfer\fsl_phy.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\enet\txrx_ptp1588_transfer\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\enet\txrx_ptp1588_transfer\pin_mux.h
+# End Source File
+# End Group
+# Begin Group "1020_ENET_Transfer"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\enet\txrx_transfer\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\enet\txrx_transfer\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\enet\txrx_transfer\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\enet\txrx_transfer\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\enet\txrx_transfer\enet_txrx_transfer.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\enet\txrx_transfer\fsl_phy.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\enet\txrx_transfer\fsl_phy.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\enet\txrx_transfer\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\enet\txrx_transfer\pin_mux.h
+# End Source File
+# End Group
+# Begin Group "1020_EWM"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\ewm\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\ewm\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\ewm\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\ewm\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\ewm\ewm.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\ewm\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\ewm\pin_mux.h
+# End Source File
+# End Group
+# Begin Group "1020_FlexCAN_Interrupttranser"
 
 # PROP Default_Filter ""
 # Begin Source File
@@ -13771,7 +14234,39 @@ SOURCE=.\boards\evkmimxrt1020\driver_examples\flexcan\interrupt_transfer\pin_mux
 SOURCE=.\boards\evkmimxrt1020\driver_examples\flexcan\interrupt_transfer\pin_mux.h
 # End Source File
 # End Group
-# Begin Group "flexcan_loopbacktransfer"
+# Begin Group "1020_FlexCAN_Loopback"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexcan\loopback\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexcan\loopback\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexcan\loopback\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexcan\loopback\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexcan\loopback\flexcan_loopback.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexcan\loopback\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexcan\loopback\pin_mux.h
+# End Source File
+# End Group
+# Begin Group "1020_FlexCAN_LoopbackTransfer"
 
 # PROP Default_Filter ""
 # Begin Source File
@@ -13802,6 +14297,559 @@ SOURCE=.\boards\evkmimxrt1020\driver_examples\flexcan\loopback_transfer\pin_mux.
 
 SOURCE=.\boards\evkmimxrt1020\driver_examples\flexcan\loopback_transfer\pin_mux.h
 # End Source File
+# End Group
+# Begin Group "1020_FlexIO_I2C_Interrupt"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\i2c\interrupt_lpi2c_transfer\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\i2c\interrupt_lpi2c_transfer\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\i2c\interrupt_lpi2c_transfer\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\i2c\interrupt_lpi2c_transfer\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\i2c\interrupt_lpi2c_transfer\flexio_i2c_interrupt_lpi2c_transfer.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\i2c\interrupt_lpi2c_transfer\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\i2c\interrupt_lpi2c_transfer\pin_mux.h
+# End Source File
+# End Group
+# Begin Group "1020_FlexIO_I2C_ReadAccelerate"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\i2c\read_accel_value_transfer\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\i2c\read_accel_value_transfer\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\i2c\read_accel_value_transfer\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\i2c\read_accel_value_transfer\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\i2c\read_accel_value_transfer\flexio_i2c_read_accel_value_transfer.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\i2c\read_accel_value_transfer\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\i2c\read_accel_value_transfer\pin_mux.h
+# End Source File
+# End Group
+# Begin Group "1020_FlexIO_I2S_EDMA"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\i2s\edma_transfer\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\i2s\edma_transfer\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\i2s\edma_transfer\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\i2s\edma_transfer\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\i2s\edma_transfer\flexio_i2s_edma_transfer.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\i2s\edma_transfer\fsl_codec_common.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\i2s\edma_transfer\fsl_codec_common.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\i2s\edma_transfer\fsl_wm8960.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\i2s\edma_transfer\fsl_wm8960.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\i2s\edma_transfer\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\i2s\edma_transfer\pin_mux.h
+# End Source File
+# End Group
+# Begin Group "1020_FlexIO_I2S_Interrupt"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\i2s\interrupt_transfer\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\i2s\interrupt_transfer\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\i2s\interrupt_transfer\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\i2s\interrupt_transfer\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\i2s\interrupt_transfer\flexio_i2s_interrupt_transfer.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\i2s\interrupt_transfer\fsl_codec_common.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\i2s\interrupt_transfer\fsl_codec_common.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\i2s\interrupt_transfer\fsl_wm8960.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\i2s\interrupt_transfer\fsl_wm8960.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\i2s\interrupt_transfer\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\i2s\interrupt_transfer\pin_mux.h
+# End Source File
+# End Group
+# Begin Group "1020_FlexIO_PWM"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\pwm\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\pwm\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\pwm\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\pwm\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\pwm\flexio_pwm.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\pwm\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\pwm\pin_mux.h
+# End Source File
+# End Group
+# Begin Group "1020_FlexIO_SPI_EDMA_Master"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\spi\edma_lpspi_transfer\master\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\spi\edma_lpspi_transfer\master\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\spi\edma_lpspi_transfer\master\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\spi\edma_lpspi_transfer\master\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\spi\edma_lpspi_transfer\master\flexio_spi_edma_lpspi_transfer_master.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\spi\edma_lpspi_transfer\master\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\spi\edma_lpspi_transfer\master\pin_mux.h
+# End Source File
+# End Group
+# Begin Group "1020_FlexIO_SPI_EDMA_Slave"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\spi\edma_lpspi_transfer\slave\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\spi\edma_lpspi_transfer\slave\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\spi\edma_lpspi_transfer\slave\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\spi\edma_lpspi_transfer\slave\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\spi\edma_lpspi_transfer\slave\flexio_spi_edma_lpspi_transfer_slave.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\spi\edma_lpspi_transfer\slave\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\spi\edma_lpspi_transfer\slave\pin_mux.h
+# End Source File
+# End Group
+# Begin Group "1020_FlexIO_SPI_Interrupt_Mast"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\spi\int_lpspi_transfer\master\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\spi\int_lpspi_transfer\master\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\spi\int_lpspi_transfer\master\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\spi\int_lpspi_transfer\master\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\spi\int_lpspi_transfer\master\flexio_spi_int_lpspi_transfer_master.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\spi\int_lpspi_transfer\master\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\spi\int_lpspi_transfer\master\pin_mux.h
+# End Source File
+# End Group
+# Begin Group "1020_FlexIO_SPI_Interrupt_Slav"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\spi\int_lpspi_transfer\slave\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\spi\int_lpspi_transfer\slave\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\spi\int_lpspi_transfer\slave\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\spi\int_lpspi_transfer\slave\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\spi\int_lpspi_transfer\slave\flexio_spi_int_lpspi_transfer_slave.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\spi\int_lpspi_transfer\slave\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\spi\int_lpspi_transfer\slave\pin_mux.h
+# End Source File
+# End Group
+# Begin Group "1020_FlexIO_UART_EDMA"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\uart\edma_transfer\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\uart\edma_transfer\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\uart\edma_transfer\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\uart\edma_transfer\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\uart\edma_transfer\flexio_uart_edma_transfer.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\uart\edma_transfer\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\uart\edma_transfer\pin_mux.h
+# End Source File
+# End Group
+# Begin Group "1020_FlexIO_UART_Interrupt_Rea"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\uart\int_rb_transfer\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\uart\int_rb_transfer\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\uart\int_rb_transfer\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\uart\int_rb_transfer\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\uart\int_rb_transfer\flexio_uart_int_rb_transfer.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\uart\int_rb_transfer\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\uart\int_rb_transfer\pin_mux.h
+# End Source File
+# End Group
+# Begin Group "1020_FlexIO_UART_Interrupt"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\uart\interrupt_transfer\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\uart\interrupt_transfer\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\uart\interrupt_transfer\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\uart\interrupt_transfer\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\uart\interrupt_transfer\flexio_uart_interrupt_transfer.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\uart\interrupt_transfer\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\uart\interrupt_transfer\pin_mux.h
+# End Source File
+# End Group
+# Begin Group "1020_FlexIO_UART_Polling"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\uart\polling_transfer\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\uart\polling_transfer\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\uart\polling_transfer\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\uart\polling_transfer\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\uart\polling_transfer\flexio_uart_polling_transfer.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\uart\polling_transfer\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexio\uart\polling_transfer\pin_mux.h
+# End Source File
+# End Group
+# Begin Group "1020_FlexRAM_Access"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexram\ram_access\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexram\ram_access\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexram\ram_access\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexram\ram_access\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexram\ram_access\flexram.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexram\ram_access\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexram\ram_access\pin_mux.h
+# End Source File
+# End Group
+# Begin Group "1020_FlexRAM_Allocate"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexram\ram_allocate\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexram\ram_allocate\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexram\ram_allocate\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexram\ram_allocate\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexram\ram_allocate\flexram.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexram\ram_allocate\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexram\ram_allocate\pin_mux.h
+# End Source File
+# End Group
+# Begin Group "1020_FlexSPI_NOR_Polling"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexspi\nor\polling_transfer\app.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexspi\nor\polling_transfer\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexspi\nor\polling_transfer\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexspi\nor\polling_transfer\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexspi\nor\polling_transfer\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexspi\nor\polling_transfer\flexspi_nor_flash_ops.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexspi\nor\polling_transfer\flexspi_nor_polling_transfer.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexspi\nor\polling_transfer\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmimxrt1020\driver_examples\flexspi\nor\polling_transfer\pin_mux.h
+# End Source File
+# End Group
 # End Group
 # End Group
 # Begin Group "EVK-iMXRT1050B"
@@ -15291,6 +16339,50 @@ SOURCE=.\boards\evkmcimx6ul\project_template\pin_mux.c
 SOURCE=.\boards\evkmcimx6ul\project_template\pin_mux.h
 # End Source File
 # End Group
+# Begin Group "6UL_rtos_examples"
+
+# PROP Default_Filter ""
+# Begin Group "freertos_debug_console"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx6ul\rtos_examples\freertos_debug_console\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx6ul\rtos_examples\freertos_debug_console\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx6ul\rtos_examples\freertos_debug_console\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx6ul\rtos_examples\freertos_debug_console\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx6ul\rtos_examples\freertos_debug_console\clock_config_ocram.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx6ul\rtos_examples\freertos_debug_console\freertos_debug_console.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx6ul\rtos_examples\freertos_debug_console\FreeRTOSConfig.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx6ul\rtos_examples\freertos_debug_console\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx6ul\rtos_examples\freertos_debug_console\pin_mux.h
+# End Source File
+# End Group
+# End Group
 # End Group
 # Begin Group "EVK-MCIMX7ULP"
 
@@ -15613,6 +16705,78 @@ SOURCE=.\boards\evkmcimx7ulp\driver_examples\lpi2c\interrupt\pin_mux.h
 # Begin Group "7UL_lpuart"
 
 # PROP Default_Filter ""
+# Begin Group "7UL_edma_transfer"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\driver_examples\lpuart\edma_transfer\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\driver_examples\lpuart\edma_transfer\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\driver_examples\lpuart\edma_transfer\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\driver_examples\lpuart\edma_transfer\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\driver_examples\lpuart\edma_transfer\fsl_iomuxc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\driver_examples\lpuart\edma_transfer\lpuart_edma_transfer.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\driver_examples\lpuart\edma_transfer\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\driver_examples\lpuart\edma_transfer\pin_mux.h
+# End Source File
+# End Group
+# Begin Group "7UL_interrupt"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\driver_examples\lpuart\interrupt\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\driver_examples\lpuart\interrupt\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\driver_examples\lpuart\interrupt\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\driver_examples\lpuart\interrupt\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\driver_examples\lpuart\interrupt\fsl_iomuxc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\driver_examples\lpuart\interrupt\lpuart_interrupt.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\driver_examples\lpuart\interrupt\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\boards\evkmcimx7ulp\driver_examples\lpuart\interrupt\pin_mux.h
+# End Source File
+# End Group
 # End Group
 # Begin Group "7UL_ltc"
 

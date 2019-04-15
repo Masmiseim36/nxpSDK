@@ -21,8 +21,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief Driver version 2.2.5. */
-#define FSL_USDHC_DRIVER_VERSION (MAKE_VERSION(2U, 2U, 5U))
+/*! @brief Driver version 2.2.7. */
+#define FSL_USDHC_DRIVER_VERSION (MAKE_VERSION(2U, 2U, 7U))
 /*@}*/
 
 /*! @brief Maximum block count can be set one time */
@@ -220,10 +220,9 @@ enum _usdhc_standard_tuning
     kUSDHC_ExecuteTuning = 0U,        /*!< not support */
     kUSDHC_TuningSampleClockSel = 0U, /*!< not support */
 #else
-    kUSDHC_ExecuteTuning = USDHC_AUTOCMD12_ERR_STATUS_EXECUTE_TUNING_MASK, /*!< used to start tuning procedure */
-    kUSDHC_TuningSampleClockSel =
-        USDHC_AUTOCMD12_ERR_STATUS_SMP_CLK_SEL_MASK,               /*!< when std_tuning_en bit is set, this bit is used
-                                                                    select sampleing clock */
+    kUSDHC_ExecuteTuning = USDHC_AUTOCMD12_ERR_STATUS_EXECUTE_TUNING_MASK,     /*!< used to start tuning procedure */
+    kUSDHC_TuningSampleClockSel = USDHC_AUTOCMD12_ERR_STATUS_SMP_CLK_SEL_MASK, /*!< when std_tuning_en bit is set, this
+                                                                                bit is used select sampleing clock */
 #endif
 };
 
@@ -245,7 +244,7 @@ enum _usdhc_adma_error_state
         0x00U, /*!< Stop DMA, previous location set in the ADMA system address is error address */
     kUSDHC_AdmaErrorStateFetchDescriptor =
         0x01U, /*!< Fetch descriptor, current location set in the ADMA system address is error address */
-    kUSDHC_AdmaErrorStateChangeAddress = 0x02U, /*!< Change address, no DMA error is occured */
+    kUSDHC_AdmaErrorStateChangeAddress = 0x02U, /*!< Change address, no DMA error is occurred */
     kUSDHC_AdmaErrorStateTransferData =
         0x03U, /*!< Transfer data, previous location set in the ADMA system address is error address */
     kUSDHC_AdmaErrorStateInvalidLength = 0x04U,     /*!< Invalid length in ADMA descriptor */
@@ -277,7 +276,7 @@ enum _usdhc_force_event
 #if defined(FSL_FEATURE_USDHC_HAS_SDR50_MODE) && (!FSL_FEATURE_USDHC_HAS_SDR50_MODE)
     kUSDHC_ForceEventTuningError = 0U, /*!< not support */
 #else
-    kUSDHC_ForceEventTuningError = USDHC_FORCE_EVENT_FEVTTNE_MASK, /*!< Tuning error */
+    kUSDHC_ForceEventTuningError = USDHC_FORCE_EVENT_FEVTTNE_MASK,             /*!< Tuning error */
 #endif
 
     kUSDHC_ForceEventsAll =
@@ -400,8 +399,13 @@ typedef enum _usdhc_card_response_type
 #define USDHC_ADMA1_DESCRIPTOR_LENGTH_SHIFT (12U)
 /*! @brief The mask for LENGTH field in ADMA1's descriptor */
 #define USDHC_ADMA1_DESCRIPTOR_LENGTH_MASK (0xFFFFU)
-/*! @brief The maximum value of LENGTH filed in ADMA1's descriptor */
-#define USDHC_ADMA1_DESCRIPTOR_MAX_LENGTH_PER_ENTRY (USDHC_ADMA1_DESCRIPTOR_LENGTH_MASK - 3U)
+/*! @brief The maximum value of LENGTH filed in ADMA1's descriptor
+ * Since the ADMA1 support max transfer size is 65535 which is not divisible by
+ * 4096, so to make sure a large data load transfer(>64KB) continuously(require the data
+ * address should be alwawys align with 4096), software will set the maximum data length
+ * for ADMA1 to (64 - 4)KB.
+ */
+#define USDHC_ADMA1_DESCRIPTOR_MAX_LENGTH_PER_ENTRY (USDHC_ADMA1_DESCRIPTOR_LENGTH_MASK + 1U - 4096U)
 
 /*! @brief The mask for the control/status field in ADMA1 descriptor */
 enum _usdhc_adma1_descriptor_flag
@@ -630,7 +634,6 @@ struct _usdhc_handle
     usdhc_command_t *volatile command; /*!< Command to send */
 
     /* Transfer status */
-    volatile uint32_t interruptFlags;   /*!< Interrupt flags of last transaction */
     volatile uint32_t transferredWords; /*!< Words transferred by DATAPORT way */
 
     /* Callback functions */
@@ -731,9 +734,9 @@ status_t USDHC_SetAdmaTableConfig(USDHC_Type *base,
  * This function is used to config the USDHC DMA related registers.
  * @param base USDHC peripheral base address.
  * @param adma configuration
- * @param dataAddr tranfer data address, a simple DMA parameter, if ADMA is used, leave it to NULL.
- * @param enAutoCmd23 flag to indicate Auto CMD23 is enable or not, a simple DMA parameter,if ADMA is used, leave it to
- * false.
+ * @param dataAddr transfer data address, a simple DMA parameter, if ADMA is used, leave it to NULL.
+ * @param enAutoCmd23 flag to indicate Auto CMD23 is enable or not, a simple DMA parameter,if ADMA is used, leave it
+ * to false.
  * @retval kStatus_OutOfRange ADMA descriptor table length isn't enough to describe data.
  * @retval kStatus_Success Operate successfully.
  */
@@ -848,6 +851,17 @@ static inline void USDHC_DisableInterruptSignal(USDHC_Type *base, uint32_t mask)
  * @name Status
  * @{
  */
+
+/*!
+ * @brief Gets the enabled interrupt status.
+ *
+ * @param base USDHC peripheral base address.
+ * @return Current interrupt status flags mask(_usdhc_interrupt_status_flag).
+ */
+static inline uint32_t USDHC_GetEnabledInterruptStatusFlags(USDHC_Type *base)
+{
+    return (base->INT_STATUS) & (base->INT_SIGNAL_EN);
+}
 
 /*!
  * @brief Gets the current interrupt status.
@@ -1019,11 +1033,11 @@ static inline uint32_t USDHC_ReadData(USDHC_Type *base)
 }
 
 /*!
-* @brief send command function
-*
-* @param base USDHC peripheral base address.
-* @param command configuration
-*/
+ * @brief send command function
+ *
+ * @param base USDHC peripheral base address.
+ * @param command configuration
+ */
 void USDHC_SendCommand(USDHC_Type *base, usdhc_command_t *command);
 
 /*!
@@ -1189,10 +1203,10 @@ static inline void UDSHC_SelectVoltage(USDHC_Type *base, bool en18v)
 
 #if defined(FSL_FEATURE_USDHC_HAS_SDR50_MODE) && (FSL_FEATURE_USDHC_HAS_SDR50_MODE)
 /*!
-* @brief check the SDR50 mode request tuning bit
-* When this bit set, user should call USDHC_StandardTuning function
-* @param base USDHC peripheral base address.
-*/
+ * @brief check the SDR50 mode request tuning bit
+ * When this bit set, user should call USDHC_StandardTuning function
+ * @param base USDHC peripheral base address.
+ */
 static inline bool USDHC_RequestTuningForSDR50(USDHC_Type *base)
 {
     return base->HOST_CTRL_CAP & USDHC_HOST_CTRL_CAP_USE_TUNING_SDR50_MASK ? true : false;
@@ -1407,8 +1421,8 @@ static inline uint32_t USDHC_GetStrobeDLLStatus(USDHC_Type *base)
  * This function waits until the command response/data is received or the USDHC encounters an error by polling the
  * status
  * flag.
- * The application must not call this API in multiple threads at the same time. Because of that this API doesn't support
- * the re-entry mechanism.
+ * The application must not call this API in multiple threads at the same time. Because of that this API doesn't
+ * support the re-entry mechanism.
  *
  * @note There is no need to call the API 'USDHC_TransferCreateHandle' when calling this API.
  *
@@ -1439,10 +1453,9 @@ void USDHC_TransferCreateHandle(USDHC_Type *base,
 /*!
  * @brief Transfers the command/data using an interrupt and an asynchronous method.
  *
- * This function sends a command and data and returns immediately. It doesn't wait the transfer complete or encounter an
- * error.
- * The application must not call this API in multiple threads at the same time. Because of that this API doesn't support
- * the re-entry mechanism.
+ * This function sends a command and data and returns immediately. It doesn't wait the transfer complete or
+ * encounter an error. The application must not call this API in multiple threads at the same time. Because of that
+ * this API doesn't support the re-entry mechanism.
  *
  * @note Call the API 'USDHC_TransferCreateHandle' when calling this API.
  *

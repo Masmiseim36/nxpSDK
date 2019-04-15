@@ -26,6 +26,8 @@
 #define USDHC_MAX_CLKFS ((USDHC_SYS_CTRL_SDCLKFS_MASK >> USDHC_SYS_CTRL_SDCLKFS_SHIFT) + 1U)
 #define USDHC_PREV_DVS(x) ((x) -= 1U)
 #define USDHC_PREV_CLKFS(x, y) ((x) >>= (y))
+/*! @brief USDHC ADMA table address align size */
+#define USDHC_ADMA_TABLE_ADDRESS_ALIGN (4U)
 
 /* Typedef for interrupt handler. */
 typedef void (*usdhc_isr_t)(USDHC_Type *base, usdhc_handle_t *handle);
@@ -167,21 +169,21 @@ static void USDHC_TransferHandleSdioInterrupt(USDHC_Type *base, usdhc_handle_t *
 static void USDHC_TransferHandleBlockGap(USDHC_Type *base, usdhc_handle_t *handle);
 
 /*!
-* @brief Handle retuning
-*
-* @param base USDHC peripheral base address.
-* @param handle USDHC handle.
-* @param interrupt flags
-*/
+ * @brief Handle retuning
+ *
+ * @param base USDHC peripheral base address.
+ * @param handle USDHC handle.
+ * @param interrupt flags
+ */
 static void USDHC_TransferHandleReTuning(USDHC_Type *base, usdhc_handle_t *handle, uint32_t interruptFlags);
 
 /*!
-* @brief wait command done
-*
-* @param base USDHC peripheral base address.
-* @param command configuration
-* @param pollingCmdDone polling command done flag
-*/
+ * @brief wait command done
+ *
+ * @param base USDHC peripheral base address.
+ * @param command configuration
+ * @param pollingCmdDone polling command done flag
+ */
 static status_t USDHC_WaitCommandDone(USDHC_Type *base, usdhc_command_t *command, bool pollingCmdDone);
 
 /*******************************************************************************
@@ -396,10 +398,10 @@ static uint32_t USDHC_ReadDataPort(USDHC_Type *base, usdhc_data_t *data, uint32_
     if ((base->MIX_CTRL & USDHC_MIX_CTRL_DMAEN_MASK) == 0U)
     {
         /*
-       * Add non aligned access support ,user need make sure your buffer size is big
-       * enough to hold the data,in other words,user need make sure the buffer size
-       * is 4 byte aligned
-       */
+         * Add non aligned access support ,user need make sure your buffer size is big
+         * enough to hold the data,in other words,user need make sure the buffer size
+         * is 4 byte aligned
+         */
         if (data->blockSize % sizeof(uint32_t) != 0U)
         {
             data->blockSize +=
@@ -445,10 +447,10 @@ static status_t USDHC_ReadByDataPortBlocking(USDHC_Type *base, usdhc_data_t *dat
     status_t error = kStatus_Success;
 
     /*
-       * Add non aligned access support ,user need make sure your buffer size is big
-       * enough to hold the data,in other words,user need make sure the buffer size
-       * is 4 byte aligned
-       */
+     * Add non aligned access support ,user need make sure your buffer size is big
+     * enough to hold the data,in other words,user need make sure the buffer size
+     * is 4 byte aligned
+     */
     if (data->blockSize % sizeof(uint32_t) != 0U)
     {
         data->blockSize +=
@@ -516,10 +518,10 @@ static uint32_t USDHC_WriteDataPort(USDHC_Type *base, usdhc_data_t *data, uint32
     if ((base->MIX_CTRL & USDHC_MIX_CTRL_DMAEN_MASK) == 0U)
     {
         /*
-           * Add non aligned access support ,user need make sure your buffer size is big
-           * enough to hold the data,in other words,user need make sure the buffer size
-           * is 4 byte aligned
-           */
+         * Add non aligned access support ,user need make sure your buffer size is big
+         * enough to hold the data,in other words,user need make sure the buffer size
+         * is 4 byte aligned
+         */
         if (data->blockSize % sizeof(uint32_t) != 0U)
         {
             data->blockSize +=
@@ -565,10 +567,10 @@ static status_t USDHC_WriteByDataPortBlocking(USDHC_Type *base, usdhc_data_t *da
     status_t error = kStatus_Success;
 
     /*
-       * Add non aligned access support ,user need make sure your buffer size is big
-       * enough to hold the data,in other words,user need make sure the buffer size
-       * is 4 byte aligned
-       */
+     * Add non aligned access support ,user need make sure your buffer size is big
+     * enough to hold the data,in other words,user need make sure the buffer size
+     * is 4 byte aligned
+     */
     if (data->blockSize % sizeof(uint32_t) != 0U)
     {
         data->blockSize +=
@@ -631,11 +633,11 @@ static status_t USDHC_WriteByDataPortBlocking(USDHC_Type *base, usdhc_data_t *da
 }
 
 /*!
-* brief send command function
-*
-* param base USDHC peripheral base address.
-* param command configuration
-*/
+ * brief send command function
+ *
+ * param base USDHC peripheral base address.
+ * param command configuration
+ */
 void USDHC_SendCommand(USDHC_Type *base, usdhc_command_t *command)
 {
     assert(NULL != command);
@@ -1184,10 +1186,10 @@ status_t USDHC_SetADMA1Descriptor(
         return kStatus_USDHC_NotSupport;
     }
     /*
-    * Add non aligned access support ,user need make sure your buffer size is big
-    * enough to hold the data,in other words,user need make sure the buffer size
-    * is 4 byte aligned
-    */
+     * Add non aligned access support ,user need make sure your buffer size is big
+     * enough to hold the data,in other words,user need make sure the buffer size
+     * is 4 byte aligned
+     */
     if (dataBytes % sizeof(uint32_t) != 0U)
     {
         /* make the data length as word-aligned */
@@ -1265,10 +1267,10 @@ status_t USDHC_SetADMA2Descriptor(
         return kStatus_USDHC_DMADataAddrNotAlign;
     }
     /*
-    * Add non aligned access support ,user need make sure your buffer size is big
-    * enough to hold the data,in other words,user need make sure the buffer size
-    * is 4 byte aligned
-    */
+     * Add non aligned access support ,user need make sure your buffer size is big
+     * enough to hold the data,in other words,user need make sure the buffer size
+     * is 4 byte aligned
+     */
     if (dataBytes % sizeof(uint32_t) != 0U)
     {
         /* make the data length as word-aligned */
@@ -1351,7 +1353,7 @@ status_t USDHC_SetADMA2Descriptor(
  * This function is used to config the USDHC DMA related registers.
  * param base USDHC peripheral base address.
  * param adma configuration
- * param dataAddr tranfer data address, a simple DMA parameter, if ADMA is used, leave it to NULL.
+ * param dataAddr transfer data address, a simple DMA parameter, if ADMA is used, leave it to NULL.
  * param enAutoCmd23 flag to indicate Auto CMD23 is enable or not, a simple DMA parameter,if ADMA is used, leave it to
  * false.
  * retval kStatus_OutOfRange ADMA descriptor table length isn't enough to describe data.
@@ -1364,6 +1366,8 @@ status_t USDHC_SetInternalDmaConfig(USDHC_Type *base,
 {
     assert(dmaConfig);
     assert(dataAddr);
+    assert((NULL != dmaConfig->admaTable) &&
+           (((USDHC_ADMA_TABLE_ADDRESS_ALIGN - 1U) & (uint32_t)dmaConfig->admaTable) == 0U));
 
 #if FSL_FEATURE_USDHC_HAS_EXT_DMA
     /* disable the external DMA if support */
@@ -1421,7 +1425,8 @@ status_t USDHC_SetAdmaTableConfig(USDHC_Type *base,
                                   uint32_t flags)
 {
     assert(NULL != dmaConfig);
-    assert(NULL != dmaConfig->admaTable);
+    assert((NULL != dmaConfig->admaTable) &&
+           (((USDHC_ADMA_TABLE_ADDRESS_ALIGN - 1U) & (uint32_t)dmaConfig->admaTable) == 0U));
     assert(NULL != dataConfig);
 
     status_t error = kStatus_Fail;
@@ -1594,9 +1599,9 @@ status_t USDHC_TransferNonBlocking(USDHC_Type *base,
     }
 
     /* Save command and data into handle before transferring. */
+
     handle->command = command;
     handle->data = data;
-    handle->interruptFlags = 0U;
     /* transferredWords will only be updated in ISR when transfer way is DATAPORT. */
     handle->transferredWords = 0U;
 
@@ -1950,8 +1955,7 @@ void USDHC_TransferHandleIRQ(USDHC_Type *base, usdhc_handle_t *handle)
 
     uint32_t interruptFlags;
 
-    interruptFlags = USDHC_GetInterruptStatusFlags(base);
-    handle->interruptFlags = interruptFlags;
+    interruptFlags = USDHC_GetEnabledInterruptStatusFlags(base);
 
     if (interruptFlags & kUSDHC_CardDetectFlag)
     {

@@ -9,7 +9,7 @@
  *
  *
  * SPDX-License-Identifier: BSD-3-Clause
-*/
+ */
 
 #ifndef _GATT_DB_ATT_INTERFACE_H_
 #define _GATT_DB_ATT_INTERFACE_H_
@@ -174,7 +174,7 @@ attErrorCode_t GattDb_AttWrite(deviceId_t deviceId,
  * \param[in] deviceId       The device ID of the requesting ATT Client.
  * \param[in] pReqParams     The command parameters.
  * \return                   TRUE if value has been written, FALSE otherwise
-  */
+ */
 void GattDb_AttWriteCommand(deviceId_t deviceId, attWriteRequestAndCommandParams_t *pReqParams);
 
 /*!
@@ -255,5 +255,5 @@ attErrorCode_t GattDb_AttPrepareNotificationIndication(deviceId_t deviceId,
 #endif /* _GATT_DB_ATT_INTERFACE_H_ */
 
 /*! *********************************************************************************
-* @}
-********************************************************************************** */
+ * @}
+ ********************************************************************************** */

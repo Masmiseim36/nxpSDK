@@ -25,7 +25,7 @@
 
 #if !(defined(FSL_FEATURE_XRDC_NO_MRGD_DXACP) && FSL_FEATURE_XRDC_NO_MRGD_DXACP)
 #define XRDC_MRGD_DXACP_WIDTH (3U) /* The width of XRDC_MRDG_DxACP. */
-#elif(defined(FSL_FEATURE_XRDC_HAS_MRGD_DXSEL) && FSL_FEATURE_XRDC_HAS_MRGD_DXSEL)
+#elif (defined(FSL_FEATURE_XRDC_HAS_MRGD_DXSEL) && FSL_FEATURE_XRDC_HAS_MRGD_DXSEL)
 #define XRDC_MRGD_DXSEL_WIDTH (3U) /* The width of XRDC_MRDG_DxSEL. */
 #endif
 #define XRDC_PDAC_DXACP_WIDTH (3U) /* The width of XRDC_PDAC_DxACP. */
@@ -62,7 +62,7 @@ static const clock_ip_name_t s_xrdcClock[] = XRDC_CLOCKS;
 static uint32_t XRDC_CountLeadingZeros(uint32_t data)
 {
     uint32_t count = 0U;
-    uint32_t mask = 0x80000000U;
+    uint32_t mask  = 0x80000000U;
 
     while ((data & mask) == 0U)
     {
@@ -143,8 +143,8 @@ void XRDC_GetHardwareConfig(XRDC_Type *base, xrdc_hardware_config_t *config)
 
     config->masterNumber = ((base->HWCFG0 & XRDC_HWCFG0_NMSTR_MASK) >> XRDC_HWCFG0_NMSTR_SHIFT) + 1U;
     config->domainNumber = ((base->HWCFG0 & XRDC_HWCFG0_NDID_MASK) >> XRDC_HWCFG0_NDID_SHIFT) + 1U;
-    config->pacNumber = ((base->HWCFG0 & XRDC_HWCFG0_NPAC_MASK) >> XRDC_HWCFG0_NPAC_SHIFT) + 1U;
-    config->mrcNumber = ((base->HWCFG0 & XRDC_HWCFG0_NMRC_MASK) >> XRDC_HWCFG0_NMRC_SHIFT) + 1U;
+    config->pacNumber    = ((base->HWCFG0 & XRDC_HWCFG0_NPAC_MASK) >> XRDC_HWCFG0_NPAC_SHIFT) + 1U;
+    config->mrcNumber    = ((base->HWCFG0 & XRDC_HWCFG0_NMRC_MASK) >> XRDC_HWCFG0_NMRC_SHIFT) + 1U;
 }
 
 /*!
@@ -207,14 +207,14 @@ status_t XRDC_GetAndClearFirstSpecificDomainError(XRDC_Type *base, xrdc_error_t 
     base->FDID = XRDC_FDID_FDID(domainId);
 #endif /* FSL_FEATURE_XRDC_HAS_FDID */
     /* Get the error information. */
-    regW1 = base->DERR_W[errorIndex][1];
+    regW1             = base->DERR_W[errorIndex][1];
     error->controller = (xrdc_controller_t)errorIndex;
-    error->address = base->DERR_W[errorIndex][0];
+    error->address    = base->DERR_W[errorIndex][0];
     error->errorState = (xrdc_error_state_t)XRDC_DERR_W1_EST_VAL(regW1);
-    error->errorAttr = (xrdc_error_attr_t)XRDC_DERR_W1_EATR_VAL(regW1);
-    error->errorType = (xrdc_error_type_t)XRDC_DERR_W1_ERW_VAL(regW1);
-    error->errorPort = XRDC_DERR_W1_EPORT_VAL(regW1);
-    error->domainId = XRDC_DERR_W1_EDID_VAL(regW1);
+    error->errorAttr  = (xrdc_error_attr_t)XRDC_DERR_W1_EATR_VAL(regW1);
+    error->errorType  = (xrdc_error_type_t)XRDC_DERR_W1_ERW_VAL(regW1);
+    error->errorPort  = XRDC_DERR_W1_EPORT_VAL(regW1);
+    error->domainId   = XRDC_DERR_W1_EDID_VAL(regW1);
 
     /* Clear error pending. */
     base->DERR_W[errorIndex][3] = XRDC_DERR_W_RECR(0x01U);
@@ -253,7 +253,7 @@ void XRDC_GetMemAccessDefaultConfig(xrdc_mem_access_config_t *config)
 
 #if !(defined(FSL_FEATURE_XRDC_NO_MRGD_SE) && FSL_FEATURE_XRDC_NO_MRGD_SE)
     config->enableSema = false;
-    config->semaNum = 0U;
+    config->semaNum    = 0U;
 #endif /* FSL_FEATURE_XRDC_NO_MRGD_SE */
 
 #if !(defined(FSL_FEATURE_XRDC_NO_MRGD_SZ) && FSL_FEATURE_XRDC_NO_MRGD_SZ)
@@ -270,8 +270,8 @@ void XRDC_GetMemAccessDefaultConfig(xrdc_mem_access_config_t *config)
 #if (defined(FSL_FEATURE_XRDC_HAS_MRGD_ACCSET) && FSL_FEATURE_XRDC_HAS_MRGD_ACCSET)
     config->enableAccset1Lock = false;
     config->enableAccset2Lock = false;
-    config->accset1 = 0x000U;
-    config->accset2 = 0x000U;
+    config->accset1           = 0x000U;
+    config->accset2           = 0x000U;
 #endif /* FSL_FEATURE_XRDC_HAS_MRGD_ACCSET */
 
     config->lockMode = kXRDC_AccessConfigLockWritable;
@@ -285,7 +285,7 @@ void XRDC_GetMemAccessDefaultConfig(xrdc_mem_access_config_t *config)
     {
 #if !(defined(FSL_FEATURE_XRDC_NO_MRGD_DXACP) && FSL_FEATURE_XRDC_NO_MRGD_DXACP)
         config->policy[i] = kXRDC_AccessPolicyNone;
-#elif(defined(FSL_FEATURE_XRDC_HAS_MRGD_DXSEL) && FSL_FEATURE_XRDC_HAS_MRGD_DXSEL)
+#elif (defined(FSL_FEATURE_XRDC_HAS_MRGD_DXSEL) && FSL_FEATURE_XRDC_HAS_MRGD_DXSEL)
         config->policy[i] = kXRDC_AccessFlagsNone;
 #endif
     }
@@ -376,7 +376,7 @@ void XRDC_SetMemAccessConfig(XRDC_Type *base, const xrdc_mem_access_config_t *co
 /* Set MRGD_W2[D0ACP ~ D7ACP] or MRGD_W2[D0SEL ~ D2SEL]. */
 #if (FSL_FEATURE_XRDC_DOMAIN_COUNT <= 8U)
     i = FSL_FEATURE_XRDC_DOMAIN_COUNT;
-#elif(FSL_FEATURE_XRDC_DOMAIN_COUNT <= 16U)
+#elif (FSL_FEATURE_XRDC_DOMAIN_COUNT <= 16U)
     i = 8U;
 #else
 #error Does not support more than 16 domain.
@@ -386,7 +386,7 @@ void XRDC_SetMemAccessConfig(XRDC_Type *base, const xrdc_mem_access_config_t *co
     {
 #if !(defined(FSL_FEATURE_XRDC_NO_MRGD_DXACP) && FSL_FEATURE_XRDC_NO_MRGD_DXACP)
         regValue <<= XRDC_MRGD_DXACP_WIDTH;
-#elif(defined(FSL_FEATURE_XRDC_HAS_MRGD_DXSEL) && FSL_FEATURE_XRDC_HAS_MRGD_DXSEL)
+#elif (defined(FSL_FEATURE_XRDC_HAS_MRGD_DXSEL) && FSL_FEATURE_XRDC_HAS_MRGD_DXSEL)
         regValue <<= XRDC_MRGD_DXSEL_WIDTH;
 #endif
         regValue |= config->policy[i];
@@ -484,7 +484,7 @@ void XRDC_ForceMemExclAccessLockRelease(XRDC_Type *base, xrdc_mem_t mem)
 {
     uint32_t primask;
 
-    primask = DisableGlobalIRQ();
+    primask                   = DisableGlobalIRQ();
     base->MRGD[mem].MRGD_W[3] = XRDC_FORCE_EXCL_ACS_LOCK_REL_VAL1;
     base->MRGD[mem].MRGD_W[3] = XRDC_FORCE_EXCL_ACS_LOCK_REL_VAL2;
     EnableGlobalIRQ(primask);
@@ -554,7 +554,7 @@ void XRDC_GetPeriphAccessDefaultConfig(xrdc_periph_access_config_t *config)
 
 #if !(defined(FSL_FEATURE_XRDC_NO_PDAC_SE) && FSL_FEATURE_XRDC_NO_PDAC_SE)
     config->enableSema = false;
-    config->semaNum = 0U;
+    config->semaNum    = 0U;
 #endif /* FSL_FEATURE_XRDC_NO_PDAC_SE */
     config->lockMode = kXRDC_AccessConfigLockWritable;
 #if (defined(FSL_FEATURE_XRDC_HAS_PDAC_EAL) && FSL_FEATURE_XRDC_HAS_PDAC_EAL)
@@ -620,7 +620,7 @@ void XRDC_SetPeriphAccessConfig(XRDC_Type *base, const xrdc_periph_access_config
     regValue = 0U;
 #if (FSL_FEATURE_XRDC_DOMAIN_COUNT <= 8U)
     i = FSL_FEATURE_XRDC_DOMAIN_COUNT;
-#elif(FSL_FEATURE_XRDC_DOMAIN_COUNT <= 16U)
+#elif (FSL_FEATURE_XRDC_DOMAIN_COUNT <= 16U)
     i = 8U;
 #else
 #error Does not support more than 16 domain.
@@ -680,7 +680,7 @@ void XRDC_ForcePeriphExclAccessLockRelease(XRDC_Type *base, xrdc_periph_t periph
 {
     uint32_t primask;
 
-    primask = DisableGlobalIRQ();
+    primask                 = DisableGlobalIRQ();
     base->PDAC_W[periph][1] = XRDC_FORCE_EXCL_ACS_LOCK_REL_VAL1;
     base->PDAC_W[periph][1] = XRDC_FORCE_EXCL_ACS_LOCK_REL_VAL2;
     EnableGlobalIRQ(primask);

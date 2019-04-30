@@ -2,7 +2,7 @@
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -17,7 +17,7 @@
  * Definitions
  ******************************************************************************/
 #define BOARD_TPM TPM2
-#define TPM_SOURCE_CLOCK (CLOCK_GetIpFreq(kCLOCK_Tpm2)/4)
+#define TPM_SOURCE_CLOCK (CLOCK_GetIpFreq(kCLOCK_Tpm2) / 4)
 #define BOARD_TPM_IRQ_NUM TPM2_IRQn
 #define BOARD_TPM_HANDLER TPM2_IRQHandler
 
@@ -28,7 +28,7 @@
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-volatile bool tpmIsrFlag = false;
+volatile bool tpmIsrFlag           = false;
 volatile uint32_t milisecondCounts = 0U;
 
 /*******************************************************************************
@@ -40,7 +40,7 @@ volatile uint32_t milisecondCounts = 0U;
 int main(void)
 {
     uint32_t cnt;
-    uint32_t loop = 2;
+    uint32_t loop       = 2;
     uint32_t secondLoop = 1000U;
     const char *signals = "-|";
     tpm_config_t tpmInfo;
@@ -106,4 +106,5 @@ void BOARD_TPM_HANDLER(void)
     /* Clear interrupt flag.*/
     TPM_ClearStatusFlags(BOARD_TPM, kTPM_TimeOverflowFlag);
     tpmIsrFlag = true;
+    __DSB();
 }

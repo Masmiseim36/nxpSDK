@@ -328,7 +328,7 @@
           <state>$PROJ_DIR$/../../../../../devices/MCIMX7U5/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MCIMX7U5</state>
           <state>$PROJ_DIR$/../../../../../devices/MCIMX7U5/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MCIMX7U5/utilities</state>
+          <state>$PROJ_DIR$/../../../../../devices/MCIMX7U5/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
@@ -1315,7 +1315,7 @@
           <state>$PROJ_DIR$/../../../../../devices/MCIMX7U5/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MCIMX7U5</state>
           <state>$PROJ_DIR$/../../../../../devices/MCIMX7U5/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MCIMX7U5/utilities</state>
+          <state>$PROJ_DIR$/../../../../../devices/MCIMX7U5/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
@@ -2078,9 +2078,9 @@
     </group>
   </group>
   <group>
-    <name>mbedTLS</name>
+    <name>mbedtls</name>
     <group>
-      <name>mbedTLS_include</name>
+      <name>mbedtls_include</name>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/mbedtls/aes.h</name>
       </file>
@@ -2317,7 +2317,7 @@
       </file>
     </group>
     <group>
-      <name>mbedTLS_source</name>
+      <name>mbedtls_source</name>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/aes.c</name>
       </file>
@@ -2557,7 +2557,7 @@
       </file>
     </group>
     <group>
-      <name>mbedTLS_port</name>
+      <name>mbedtls_port</name>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls.c</name>
       </file>
@@ -2626,13 +2626,13 @@
       <name>$PROJ_DIR$/../../../../../devices/MCIMX7U5/utilities/str/fsl_str.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MCIMX7U5/utilities/fsl_debug_console.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MCIMX7U5/utilities/debug_console/fsl_debug_console.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MCIMX7U5/utilities/fsl_debug_console.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MCIMX7U5/utilities/debug_console/fsl_debug_console.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MCIMX7U5/utilities/fsl_debug_console_conf.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MCIMX7U5/utilities/debug_console/fsl_debug_console_conf.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MCIMX7U5/utilities/fsl_assert.c</name>

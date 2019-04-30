@@ -23,20 +23,20 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_PF1550_INTB_GPIO         GPIOB
-#define DEMO_PF1550_INTB_PORT         PORTB
-#define DEMO_PF1550_INTB_PIN          (11U)
-#define DEMO_PF1550_INTB_HANDLER      PCTLB_IRQHandler
-#define DEMO_PF1550_PORT_IRQ          PCTLB_IRQn
-#define DEMO_PF1550_EWM_OUT_B_GPIO    GPIOA
-#define DEMO_PF1550_EWM_OUT_B_PIN     (22U)
-#define DEMO_BATT_ADC_EN_GPIO         GPIOA
-#define DEMO_BATT_ADC_EN_PIN          (12U)
-#define DEMO_LPADC_BASE               ADC0
-#define DEMO_PF1550_LPI2C             LPI2C3
+#define DEMO_PF1550_INTB_GPIO GPIOB
+#define DEMO_PF1550_INTB_PORT PORTB
+#define DEMO_PF1550_INTB_PIN (11U)
+#define DEMO_PF1550_INTB_HANDLER PCTLB_IRQHandler
+#define DEMO_PF1550_PORT_IRQ PCTLB_IRQn
+#define DEMO_PF1550_EWM_OUT_B_GPIO GPIOA
+#define DEMO_PF1550_EWM_OUT_B_PIN (22U)
+#define DEMO_BATT_ADC_EN_GPIO GPIOA
+#define DEMO_BATT_ADC_EN_PIN (12U)
+#define DEMO_LPADC_BASE ADC0
+#define DEMO_PF1550_LPI2C LPI2C3
 #define DEMO_PF1550_LPI2C_CLKSRC_FREQ CLOCK_GetIpFreq(kCLOCK_Lpi2c3)
-#define DEMO_PF1550_LPI2C_BAUDRATE    (100000U)
-#define LPIT_SOURCECLOCK              CLOCK_GetIpFreq(kCLOCK_Lpit0)
+#define DEMO_PF1550_LPI2C_BAUDRATE (100000U)
+#define LPIT_SOURCECLOCK CLOCK_GetIpFreq(kCLOCK_Lpit0)
 
 /*******************************************************************************
  * Prototypes
@@ -69,6 +69,7 @@ void DEMO_PF1550_INTB_HANDLER(void)
     PORT_SetPinInterruptConfig(DEMO_PF1550_INTB_PORT, DEMO_PF1550_INTB_PIN, kPORT_InterruptOrDMADisabled);
     /* Inform main loop PF1550 INTB Pad Interrupt is asserted. */
     pf1550IntFlag = true;
+    __DSB();
 }
 
 static void lpi2c_master_callback(LPI2C_Type *base, lpi2c_master_handle_t *handle, status_t status, void *userData)
@@ -122,7 +123,7 @@ static uint32_t DEMO_GetInputNumWithEcho(uint32_t length, bool allowZero)
     uint8_t i, j;
     uint8_t digCount = 0U;
     uint32_t temp1 = 0U, temp2 = 0U;
-    uint32_t result = 0U;
+    uint32_t result  = 0U;
     bool getFirstDig = false;
 
     assert(length <= (sizeof(digBuffer) / sizeof(digBuffer[0U])));
@@ -543,54 +544,54 @@ static void DEMO_Charger(void)
     lpadc_conv_result_t mLpadcResultConfigStruct;
 
     const pf1550_charger_attribute_t chargerAttribute = {
-        .fastChargeCurrent_mA = 1000U,
-        .fastChargeVoltage_uV = 4200000U,
-        .preChargeTime_min = 45U,
-        .fastChargeTime_hr = 6U,
-        .endOfChargeTime_min = 40U,
+        .fastChargeCurrent_mA           = 1000U,
+        .fastChargeVoltage_uV           = 4200000U,
+        .preChargeTime_min              = 45U,
+        .fastChargeTime_hr              = 6U,
+        .endOfChargeTime_min            = 40U,
         .endOfChargeCurrentThreshold_mA = 50U,
-        .restartVoltageThreshold_uV = 150000U,
-        .miniSystemVoltage_uV = 3500000U,
+        .restartVoltageThreshold_uV     = 150000U,
+        .miniSystemVoltage_uV           = 3500000U,
     };
     const pf1550_batFET_attribute_t batFetAttribute = {
-        .overcurrentThreshold_mA = 2200U,
-        .overcurrentProtectEnable = true,
+        .overcurrentThreshold_mA        = 2200U,
+        .overcurrentProtectEnable       = true,
         .overcurrentProtectEnableNoVbus = true,
-        .overvoltageFaultProtectEnable = true,
-        .watchDogFaultProtectEnable = true,
-        .thermalFaultProtectEnable = true,
-        .thermalShutdownProtectEnable = true,
-        .timerFaultProtectEnable = true,
+        .overvoltageFaultProtectEnable  = true,
+        .watchDogFaultProtectEnable     = true,
+        .thermalFaultProtectEnable      = true,
+        .thermalShutdownProtectEnable   = true,
+        .timerFaultProtectEnable        = true,
     };
     const pf1550_power_path_attribute_t powerPathAttribute = {
-        .vbusCurrentLimit_mA = 1000U,
-        .vbusDpmVoltage_uV = 4600000U,
+        .vbusCurrentLimit_mA     = 1000U,
+        .vbusDpmVoltage_uV       = 4600000U,
         .vbusDpmStopThreshold_uV = 250000U,
-        .vbusOvDebounce_us = 100U,
-        .vbus2vsysDebounce_us = 100U,
-        .vbus2vsysThreashold_uV = 50000U,
-        .usbPhyVoltage_uV = 3300000U,
-        .vsysWakeupDelay_ms = 16U,
-        .usbPhyDischargerEnbale = false,
-        .usbPhyLdoEnable = false,
+        .vbusOvDebounce_us       = 100U,
+        .vbus2vsysDebounce_us    = 100U,
+        .vbus2vsysThreashold_uV  = 50000U,
+        .usbPhyVoltage_uV        = 3300000U,
+        .vsysWakeupDelay_ms      = 16U,
+        .usbPhyDischargerEnbale  = false,
+        .usbPhyLdoEnable         = false,
     };
     const pf1550_thermal_attribute_t thermalAttribute = {
-        .mode = kPF1550_ThermalMode_2,
+        .mode                      = kPF1550_ThermalMode_2,
         .junctionThermalSetPoint_C = 80U,
-        .thermalColdThreshold_C = 0U,
-        .thermalCoolThreshold_C = 15U,
-        .thermalWarmThreshold_C = 45U,
-        .thermalHotThreshold_C = 55U,
-        .thermalVoltageAdjust_uV = 200000U,
-        .thermalCurrentAdjust_pct = 50U,
-        .thermalFoldbackEnable = true,
+        .thermalColdThreshold_C    = 0U,
+        .thermalCoolThreshold_C    = 15U,
+        .thermalWarmThreshold_C    = 45U,
+        .thermalHotThreshold_C     = 55U,
+        .thermalVoltageAdjust_uV   = 200000U,
+        .thermalCurrentAdjust_pct  = 50U,
+        .thermalFoldbackEnable     = true,
     };
     const pf1550_led_attribute_t ledAttribute = {
-        .mode = kPF1550_LedMode_1,
-        .pwmDuty_pct = 50U,
+        .mode             = kPF1550_LedMode_1,
+        .pwmDuty_pct      = 50U,
         .pwmFrequency_mHz = 1000U,
-        .rampEnable = false,
-        .swCtrlEnable = false,
+        .rampEnable       = false,
+        .swCtrlEnable     = false,
     };
     uint32_t category;
     uint32_t status;
@@ -632,11 +633,11 @@ static void DEMO_Charger(void)
     /* Init lpit module */
     LPIT_Init(LPIT0, &lpitConfig);
 
-    lpitChannelConfig.chainChannel = false;
+    lpitChannelConfig.chainChannel          = false;
     lpitChannelConfig.enableReloadOnTrigger = false;
-    lpitChannelConfig.enableStartOnTrigger = false;
-    lpitChannelConfig.enableStopOnTimeout = false;
-    lpitChannelConfig.timerMode = kLPIT_PeriodicCounter;
+    lpitChannelConfig.enableStartOnTrigger  = false;
+    lpitChannelConfig.enableStopOnTimeout   = false;
+    lpitChannelConfig.timerMode             = kLPIT_PeriodicCounter;
     /* Set default values for the trigger source */
     lpitChannelConfig.triggerSelect = kLPIT_Trigger_TimerChn0;
     lpitChannelConfig.triggerSource = kLPIT_TriggerSource_External;
@@ -689,14 +690,14 @@ static void DEMO_Charger(void)
 
             /* Set conversion CMD configuration. */
             LPADC_GetDefaultConvCommandConfig(&mLpadcCommandConfigStruct);
-            mLpadcCommandConfigStruct.channelNumber = 10; /* Take channel8A as ADC input.  */
+            mLpadcCommandConfigStruct.channelNumber   = 10; /* Take channel8A as ADC input.  */
             mLpadcCommandConfigStruct.sampleScaleMode = kLPADC_SamplePartScale;
             LPADC_SetConvCommandConfig(DEMO_LPADC_BASE, 15U,
                                        &mLpadcCommandConfigStruct); /* Configurate the CMD15 buffer. */
 
             /* Set trigger configuration. */
             LPADC_GetDefaultConvTriggerConfig(&mLpadcTriggerConfigStruct);
-            mLpadcTriggerConfigStruct.targetCommandId = 15U; /* CMD15 is executed. */
+            mLpadcTriggerConfigStruct.targetCommandId       = 15U; /* CMD15 is executed. */
             mLpadcTriggerConfigStruct.enableHardwareTrigger = false;
             LPADC_SetConvTriggerConfig(DEMO_LPADC_BASE, 0U, &mLpadcTriggerConfigStruct); /* Configurate the trigger0. */
 
@@ -737,7 +738,7 @@ int main(void)
 
     /* Init GPIO used by BATT_ADC_EN for Battery Measurement. */
     gpioPinConfig.pinDirection = kGPIO_DigitalOutput;
-    gpioPinConfig.outputLogic = 0x0U;
+    gpioPinConfig.outputLogic  = 0x0U;
     GPIO_PinInit(DEMO_BATT_ADC_EN_GPIO, DEMO_BATT_ADC_EN_PIN, &gpioPinConfig);
 
     /* Init LPI2C used by PF1550. */
@@ -760,13 +761,13 @@ int main(void)
 
     /* Init PF1550 Component. */
     PF1550_GetDefaultConfig(&pf1550Config);
-    pf1550Config.I2C_SendFunc = I2C_SendFunc;
+    pf1550Config.I2C_SendFunc    = I2C_SendFunc;
     pf1550Config.I2C_ReceiveFunc = I2C_ReceiveFunc;
     PF1550_Init(&pf1550Handle, &pf1550Config);
 
-    pf1550OnkeyAttribute.debounce = kPF1550_OnkeyDebounce_Falling31ms25Rising31ms25;
+    pf1550OnkeyAttribute.debounce                    = kPF1550_OnkeyDebounce_Falling31ms25Rising31ms25;
     pf1550OnkeyAttribute.enableTurnOffSystemViaOnkey = false;
-    pf1550OnkeyAttribute.pushTime = kPF1550_OnkeyPushResetTime_16s;
+    pf1550OnkeyAttribute.pushTime                    = kPF1550_OnkeyPushResetTime_16s;
     PF1550_SetOnKeyPadAttibute(&pf1550Handle, &pf1550OnkeyAttribute);
 
     /* Print the initial banner. */
@@ -818,16 +819,16 @@ static status_t I2C_SendFunc(
     lpi2c_master_transfer_t masterXfer;
 
     /* Prepare transfer structure. */
-    masterXfer.slaveAddress = deviceAddress;
-    masterXfer.direction = kLPI2C_Write;
-    masterXfer.subaddress = subAddress;
+    masterXfer.slaveAddress   = deviceAddress;
+    masterXfer.direction      = kLPI2C_Write;
+    masterXfer.subaddress     = subAddress;
     masterXfer.subaddressSize = subAddressSize;
-    masterXfer.data = (void *)txBuff;
-    masterXfer.dataSize = txBuffSize;
-    masterXfer.flags = kLPI2C_TransferDefaultFlag;
+    masterXfer.data           = (void *)txBuff;
+    masterXfer.dataSize       = txBuffSize;
+    masterXfer.flags          = kLPI2C_TransferDefaultFlag;
 
     lpi2cIntFlag = false;
-    reVal = LPI2C_MasterTransferNonBlocking(DEMO_PF1550_LPI2C, &lpi2cHandle, &masterXfer);
+    reVal        = LPI2C_MasterTransferNonBlocking(DEMO_PF1550_LPI2C, &lpi2cHandle, &masterXfer);
     if (kStatus_Success != reVal)
     {
         return reVal;
@@ -847,16 +848,16 @@ static status_t I2C_ReceiveFunc(
     lpi2c_master_transfer_t masterXfer;
 
     /* Prepare transfer structure. */
-    masterXfer.slaveAddress = deviceAddress;
-    masterXfer.direction = kLPI2C_Read;
-    masterXfer.subaddress = subAddress;
+    masterXfer.slaveAddress   = deviceAddress;
+    masterXfer.direction      = kLPI2C_Read;
+    masterXfer.subaddress     = subAddress;
     masterXfer.subaddressSize = subAddressSize;
-    masterXfer.data = rxBuff;
-    masterXfer.dataSize = rxBuffSize;
-    masterXfer.flags = kLPI2C_TransferDefaultFlag;
+    masterXfer.data           = rxBuff;
+    masterXfer.dataSize       = rxBuffSize;
+    masterXfer.flags          = kLPI2C_TransferDefaultFlag;
 
     lpi2cIntFlag = false;
-    reVal = LPI2C_MasterTransferNonBlocking(DEMO_PF1550_LPI2C, &lpi2cHandle, &masterXfer);
+    reVal        = LPI2C_MasterTransferNonBlocking(DEMO_PF1550_LPI2C, &lpi2cHandle, &masterXfer);
     if (kStatus_Success != reVal)
     {
         return reVal;

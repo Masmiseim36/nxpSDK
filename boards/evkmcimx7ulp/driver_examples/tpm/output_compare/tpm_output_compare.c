@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -53,12 +53,12 @@ int main(void)
     PRINTF("\r\nProbe the signal using an oscilloscope");
 
     TPM_GetDefaultConfig(&tpmInfo);
-    
+
 #if defined(TPM_PRESCALER_VALUE)
     /* Set divider to TPM_PRESCALER_VALUE instead of default 1 to be the led toggling visible */
     tpmInfo.prescale = TPM_PRESCALER_VALUE;
-#endif    
-    
+#endif
+
     /* Initialize TPM module */
     TPM_Init(DEMO_TPM_BASEADDR, &tpmInfo);
 

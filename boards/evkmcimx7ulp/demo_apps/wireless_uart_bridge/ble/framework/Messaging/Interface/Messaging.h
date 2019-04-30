@@ -3,13 +3,12 @@
  * Copyright (c) 2016 - 2017 , NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
-*/
+ */
 
 #ifndef _MESSAGING_H
 #define _MESSAGING_H
-
 
 /************************************************************************************
 *************************************************************************************
@@ -25,8 +24,8 @@
 * Public type definitions
 *************************************************************************************
 ************************************************************************************/
-#define  anchor_t        list_t
-#define  msgQueue_t      list_t
+#define anchor_t list_t
+#define msgQueue_t list_t
 
 /************************************************************************************
 *************************************************************************************
@@ -47,11 +46,15 @@
 #define MSG_InitQueue(anchor) ListInitMsg(anchor)
 #define List_ClearAnchor(anchor) ListInitMsg(anchor)
 
-#define  MSG_Alloc(element)         MEM_BufferAlloc(element)
-#define  MSG_AllocType(type)        MEM_BufferAlloc(sizeof(type))
-#define  MM_Free                    MEM_BufferFree
-#define  MSG_Free(element)          MEM_BufferFree(element)
-#define  MSG_FreeQueue(anchor)      while(MSG_Pending(anchor)) { MSG_Free(MSG_DeQueue(anchor)); }
+#define MSG_Alloc(element) MEM_BufferAlloc(element)
+#define MSG_AllocType(type) MEM_BufferAlloc(sizeof(type))
+#define MM_Free MEM_BufferFree
+#define MSG_Free(element) MEM_BufferFree(element)
+#define MSG_FreeQueue(anchor)          \
+    while (MSG_Pending(anchor))        \
+    {                                  \
+        MSG_Free(MSG_DeQueue(anchor)); \
+    }
 
 /************************************************************************************
 *************************************************************************************
@@ -59,14 +62,14 @@
 *************************************************************************************
 ************************************************************************************/
 #define ListInitMsg(listPtr) ListInit((listPtr), 0)
-listStatus_t ListAddTailMsg    ( listHandle_t list, void* pMsg );
-listStatus_t ListAddHeadMsg    ( listHandle_t list, void* pMsg );
-listStatus_t ListAddPrevMsg    ( void* pMsg, void* pNewMsg );
-listStatus_t ListRemoveMsg     ( void* pMsg );
-void *ListRemoveHeadMsg( listHandle_t list );
-void *ListGetHeadMsg   ( listHandle_t list );
-void *ListGetNextMsg   ( void* pMsg );
+listStatus_t ListAddTailMsg(listHandle_t list, void *pMsg);
+listStatus_t ListAddHeadMsg(listHandle_t list, void *pMsg);
+listStatus_t ListAddPrevMsg(void *pMsg, void *pNewMsg);
+listStatus_t ListRemoveMsg(void *pMsg);
+void *ListRemoveHeadMsg(listHandle_t list);
+void *ListGetHeadMsg(listHandle_t list);
+void *ListGetNextMsg(void *pMsg);
 
 /*================================================================================================*/
 
-#endif  /* _MESSAGING_H */
+#endif /* _MESSAGING_H */

@@ -2,7 +2,7 @@
  * Copyright (c) 2017, NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -20,17 +20,17 @@
  * Definitions
  ******************************************************************************/
 /**
-* @brief Get SRTM list object structure pointer.
-*/
+ * @brief Get SRTM list object structure pointer.
+ */
 #define SRTM_LIST_OBJ(type, field, list) (type)((uint32_t)list - (uint32_t)(&((type)0)->field))
 
 /**
-* @brief SRTM list fields
-*/
+ * @brief SRTM list fields
+ */
 typedef struct _srtm_list
 {
-    struct _srtm_list *prev;  /*!< previous list node */
-    struct _srtm_list *next;  /*!< next list node */
+    struct _srtm_list *prev; /*!< previous list node */
+    struct _srtm_list *next; /*!< next list node */
 } srtm_list_t;
 
 /*******************************************************************************
@@ -77,10 +77,10 @@ static inline void SRTM_List_AddHead(srtm_list_t *list, srtm_list_t *node)
     assert(list);
     assert(node);
 
-    node->next = list->next;
-    node->prev = list;
+    node->next       = list->next;
+    node->prev       = list;
     list->next->prev = node;
-    list->next = node;
+    list->next       = node;
 }
 
 /*!
@@ -94,10 +94,10 @@ static inline void SRTM_List_AddTail(srtm_list_t *list, srtm_list_t *node)
     assert(list);
     assert(node);
 
-    node->prev = list->prev;
-    node->next = list;
+    node->prev       = list->prev;
+    node->next       = list;
     list->prev->next = node;
-    list->prev = node;
+    list->prev       = node;
 }
 
 /*!

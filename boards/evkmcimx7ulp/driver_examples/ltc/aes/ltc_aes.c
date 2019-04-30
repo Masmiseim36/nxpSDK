@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -139,7 +139,7 @@ static void ltc_aes_cbc_exam(void)
 static void ltc_aes_ccm_exam(void)
 {
     unsigned int j, i;
-    uint8_t nonce[] = {0x00, 0x00, 0x00, 0x03, 0x02, 0x01, 0x00, 0xA0, 0xA1, 0xA2, 0xA3, 0xA4, 0xA5};
+    uint8_t nonce[]           = {0x00, 0x00, 0x00, 0x03, 0x02, 0x01, 0x00, 0xA0, 0xA1, 0xA2, 0xA3, 0xA4, 0xA5};
     uint8_t key[CCM_KEY_SIZE] = {0};
     uint8_t aad[CCM_AAD_SIZE];
     uint8_t tag[CCM_TAG_SIZE] = {0};
@@ -205,8 +205,8 @@ static void ltc_aes_ccm_exam(void)
 static void ltc_aes_cmac_exam(void)
 {
     uint32_t i, j, hash_size;
-    uint8_t key[CMAC_KEY_SIZE] = {0};
-    uint8_t hash[CMAC_HASH_SIZE] = {0};
+    uint8_t key[CMAC_KEY_SIZE]    = {0};
+    uint8_t hash[CMAC_HASH_SIZE]  = {0};
     uint8_t hash2[CMAC_HASH_SIZE] = {0};
     ltc_hash_ctx_t ctx; /* CMAC context */
 

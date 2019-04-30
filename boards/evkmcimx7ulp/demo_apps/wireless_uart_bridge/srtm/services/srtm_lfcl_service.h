@@ -2,7 +2,7 @@
  * Copyright (c) 2017, NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -39,7 +39,7 @@ typedef enum _srtm_lfcl_event
     SRTM_Lfcl_Event_ShutdownReq = 0x23U, /*!< Peer core request to shutdown */
 
     /* SRTM power mode event from lifecycle service */
-    SRTM_Lfcl_Event_WakeupReq   = 0x30U, /*!< Request peer core to exit suspend mode */
+    SRTM_Lfcl_Event_WakeupReq = 0x30U, /*!< Request peer core to exit suspend mode */
 
     /* SRTM heart beat event from peer core */
     SRTM_Lfcl_Event_HeartBeatEnable  = 0x40U, /*!< Peer core request to enable heart beat monitor */
@@ -48,11 +48,10 @@ typedef enum _srtm_lfcl_event
 } srtm_lfcl_event_t;
 
 /**
-* @brief SRTM life cycle service callback function type.
-*/
-typedef srtm_status_t (*srtm_lfcl_service_cb_t)(srtm_service_t service, srtm_peercore_t core,
-                                                srtm_lfcl_event_t event, void *eventParam,
-                                                void *userParam);
+ * @brief SRTM life cycle service callback function type.
+ */
+typedef srtm_status_t (*srtm_lfcl_service_cb_t)(
+    srtm_service_t service, srtm_peercore_t core, srtm_lfcl_event_t event, void *eventParam, void *userParam);
 
 /*******************************************************************************
  * API
@@ -83,8 +82,7 @@ void SRTM_LfclService_Destroy(srtm_service_t service);
  * @param param User parameter to be used in callback.
  * @return SRTM_Status_Success on success and others on failure.
  */
-srtm_status_t SRTM_LfclService_Subscribe(srtm_service_t service, srtm_lfcl_service_cb_t callback,
-                                         void *param);
+srtm_status_t SRTM_LfclService_Subscribe(srtm_service_t service, srtm_lfcl_service_cb_t callback, void *param);
 
 /*!
  * @brief Unsubscribe lifecycle service callback.
@@ -94,8 +92,7 @@ srtm_status_t SRTM_LfclService_Subscribe(srtm_service_t service, srtm_lfcl_servi
  * @param param User parameter to be used in callback.
  * @return SRTM_Status_Success on success and others on failure.
  */
-srtm_status_t SRTM_LfclService_Unsubscribe(srtm_service_t service, srtm_lfcl_service_cb_t callback,
-                                           void *param);
+srtm_status_t SRTM_LfclService_Unsubscribe(srtm_service_t service, srtm_lfcl_service_cb_t callback, void *param);
 
 #ifdef __cplusplus
 }

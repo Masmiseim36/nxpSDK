@@ -126,13 +126,13 @@ extern int SRTM_DEBUG_MESSAGE_FUNC(const char *fmt_s, ...);
 #define SRTM_DEBUG_VERBOSE_DEBUG (4U)
 
 /**
-* @brief Timeout definition: infinite wait that never timeout
-*/
+ * @brief Timeout definition: infinite wait that never timeout
+ */
 #define SRTM_WAIT_FOR_EVER (0xFFFFFFFFU)
 
 /**
-* @brief Timeout definition: no wait that return immediately
-*/
+ * @brief Timeout definition: no wait that return immediately
+ */
 #define SRTM_NO_WAIT (0x0U)
 
 /*! @brief SRTM error code */
@@ -158,58 +158,58 @@ typedef enum _srtm_status
 } srtm_status_t;
 
 /**
-* @brief SRTM message is a pointer to the SRTM message instance
-*/
+ * @brief SRTM message is a pointer to the SRTM message instance
+ */
 typedef struct _srtm_message *srtm_message_t;
 
 /**
-* @brief SRTM request is a pointer to the SRTM request message
-*/
+ * @brief SRTM request is a pointer to the SRTM request message
+ */
 typedef srtm_message_t srtm_request_t;
 
 /**
-* @brief SRTM response is a pointer to the SRTM response message
-*/
+ * @brief SRTM response is a pointer to the SRTM response message
+ */
 typedef srtm_message_t srtm_response_t;
 
 /**
-* @brief SRTM notification is a pointer to the SRTM notification message
-*/
+ * @brief SRTM notification is a pointer to the SRTM notification message
+ */
 typedef srtm_message_t srtm_notification_t;
 
 /**
-* @brief SRTM procedure is a pointer to the SRTM local procedure message
-*/
+ * @brief SRTM procedure is a pointer to the SRTM local procedure message
+ */
 typedef srtm_message_t srtm_procedure_t;
 
 /**
-* @brief SRTM rawdata is a pointer to the SRTM raw data message
-*/
+ * @brief SRTM rawdata is a pointer to the SRTM raw data message
+ */
 typedef srtm_message_t srtm_rawdata_t;
 
 /**
-* @brief SRTM dispatcher is a pointer to the SRTM dispatcher instance
-*/
+ * @brief SRTM dispatcher is a pointer to the SRTM dispatcher instance
+ */
 typedef struct _srtm_dispatcher *srtm_dispatcher_t;
 
 /**
-* @brief SRTM peer core handle is a pointer to the SRTM peer core instance
-*/
+ * @brief SRTM peer core handle is a pointer to the SRTM peer core instance
+ */
 typedef struct _srtm_peercore *srtm_peercore_t;
 
 /**
-* @brief SRTM channel handle is a pointer to the SRTM channel instance
-*/
+ * @brief SRTM channel handle is a pointer to the SRTM channel instance
+ */
 typedef struct _srtm_channel *srtm_channel_t;
 
 /**
-* @brief SRTM service handle is a pointer to the SRTM service instance
-*/
+ * @brief SRTM service handle is a pointer to the SRTM service instance
+ */
 typedef struct _srtm_service *srtm_service_t;
 
 /**
-* @brief SRTM version fields
-*/
+ * @brief SRTM version fields
+ */
 typedef struct _srtm_version
 {
     uint8_t major;  /*!< Major */

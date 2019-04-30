@@ -49,18 +49,18 @@ typedef enum
 } srtm_audio_state_t;
 
 /**
-* @brief SRTM SAI adapter structure pointer.
-*/
+ * @brief SRTM SAI adapter structure pointer.
+ */
 typedef struct _srtm_sai_adapter *srtm_sai_adapter_t;
 
 /**
-* @brief SRTM Audio Codec adapter structure pointer.
-*/
+ * @brief SRTM Audio Codec adapter structure pointer.
+ */
 typedef struct _srtm_codec_adapter *srtm_codec_adapter_t;
 
 /**
-* @brief SRTM SAI adapter structure
-*/
+ * @brief SRTM SAI adapter structure
+ */
 struct _srtm_sai_adapter
 {
     /* Bound service */
@@ -96,8 +96,8 @@ struct _srtm_sai_adapter
 };
 
 /**
-* @brief SRTM Audio Codec adapter structure
-*/
+ * @brief SRTM Audio Codec adapter structure
+ */
 struct _srtm_codec_adapter
 {
     /* Interfaces implemented by Audio Codec adapter. */
@@ -107,8 +107,8 @@ struct _srtm_codec_adapter
 };
 
 /**
-* @brief SRTM Audio payload structure
-*/
+ * @brief SRTM Audio payload structure
+ */
 SRTM_ANON_DEC_BEGIN
 SRTM_PACKED_BEGIN struct _srtm_audio_payload
 {

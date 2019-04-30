@@ -290,11 +290,11 @@ status_t SMC_SetPowerModeVlls2(SMC_Type *base)
 
 #else /* FSL_FEATURE_SMC_HAS_SUB_STOP_MODE */
 /*!
-                         * brief Configure the system to VLLS power mode.
-                         *
-                         * param base SMC peripheral base address.
-                         * return SMC configuration error code.
-                         */
+ * brief Configure the system to VLLS power mode.
+ *
+ * param base SMC peripheral base address.
+ * return SMC configuration error code.
+ */
 status_t SMC_SetPowerModeVlls(SMC_Type *base)
 {
     uint32_t reg;

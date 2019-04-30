@@ -5,7 +5,7 @@
  *
  *
  * SPDX-License-Identifier: BSD-3-Clause
-*/
+ */
 
 #ifndef _SERIAL_MANAGER_H_
 #define _SERIAL_MANAGER_H_
@@ -139,23 +139,23 @@
 /* Define the types of serial interfaces */
 typedef enum
 {
-    gSerialMgrNone_c = 0,
-    gSerialMgrUart_c = 1,
-    gSerialMgrUSB_c = 2,
-    gSerialMgrUSB_VNIC_c = 3,
+    gSerialMgrNone_c      = 0,
+    gSerialMgrUart_c      = 1,
+    gSerialMgrUSB_c       = 2,
+    gSerialMgrUSB_VNIC_c  = 3,
     gSerialMgrIICMaster_c = 4,
-    gSerialMgrIICSlave_c = 5,
+    gSerialMgrIICSlave_c  = 5,
     gSerialMgrSPIMaster_c = 6,
-    gSerialMgrSPISlave_c = 7,
-    gSerialMgrLpuart_c = 8,
-    gSerialMgrLpsci_c = 9,
-    gSerialMgrCustom_c = 10
+    gSerialMgrSPISlave_c  = 7,
+    gSerialMgrLpuart_c    = 8,
+    gSerialMgrLpsci_c     = 9,
+    gSerialMgrCustom_c    = 10
 } serialInterfaceType_t;
 
 /* Define if the Tx is blocking or not */
 typedef enum
 {
-    gNoBlock_d = 0,
+    gNoBlock_d      = 0,
     gAllowToBlock_d = 1,
 } serialBlock_t;
 
@@ -173,13 +173,13 @@ typedef void (*pSerialCallBack_t)(void *param);
 /* Supported baudrates for UART */
 typedef enum
 {
-    gUARTBaudRate1200_c = 1200UL,
-    gUARTBaudRate2400_c = 2400UL,
-    gUARTBaudRate4800_c = 4800UL,
-    gUARTBaudRate9600_c = 9600UL,
-    gUARTBaudRate19200_c = 19200UL,
-    gUARTBaudRate38400_c = 38400UL,
-    gUARTBaudRate57600_c = 57600UL,
+    gUARTBaudRate1200_c   = 1200UL,
+    gUARTBaudRate2400_c   = 2400UL,
+    gUARTBaudRate4800_c   = 4800UL,
+    gUARTBaudRate9600_c   = 9600UL,
+    gUARTBaudRate19200_c  = 19200UL,
+    gUARTBaudRate38400_c  = 38400UL,
+    gUARTBaudRate57600_c  = 57600UL,
     gUARTBaudRate115200_c = 115200UL,
     gUARTBaudRate230400_c = 230400UL
 } serialUartBaudRate_t;
@@ -187,10 +187,10 @@ typedef enum
 /* Supported baudrates for SPI */
 typedef enum
 {
-    gSPI_BaudRate_100000_c = 100000,
-    gSPI_BaudRate_200000_c = 200000,
-    gSPI_BaudRate_400000_c = 400000,
-    gSPI_BaudRate_800000_c = 800000,
+    gSPI_BaudRate_100000_c  = 100000,
+    gSPI_BaudRate_200000_c  = 200000,
+    gSPI_BaudRate_400000_c  = 400000,
+    gSPI_BaudRate_800000_c  = 800000,
     gSPI_BaudRate_1000000_c = 1000000,
     gSPI_BaudRate_2000000_c = 2000000,
     gSPI_BaudRate_4000000_c = 4000000,
@@ -200,7 +200,7 @@ typedef enum
 /* Supported baudrates for IIC */
 typedef enum
 {
-    gIIC_BaudRate_50000_c = 50000,
+    gIIC_BaudRate_50000_c  = 50000,
     gIIC_BaudRate_100000_c = 100000,
     gIIC_BaudRate_200000_c = 200000,
     gIIC_BaudRate_400000_c = 400000,
@@ -209,16 +209,16 @@ typedef enum
 /* Serial Manager status codes */
 typedef enum
 {
-    gSerial_Success_c = 0,
-    gSerial_InvalidParameter_c = 1,
-    gSerial_InvalidInterface_c = 2,
+    gSerial_Success_c              = 0,
+    gSerial_InvalidParameter_c     = 1,
+    gSerial_InvalidInterface_c     = 2,
     gSerial_MaxInterfacesReached_c = 3,
-    gSerial_InterfaceNotReady_c = 4,
-    gSerial_InterfaceInUse_c = 5,
-    gSerial_InternalError_c = 6,
-    gSerial_SemCreateError_c = 7,
-    gSerial_OutOfMemory_c = 8,
-    gSerial_OsError_c = 9,
+    gSerial_InterfaceNotReady_c    = 4,
+    gSerial_InterfaceInUse_c       = 5,
+    gSerial_InternalError_c        = 6,
+    gSerial_SemCreateError_c       = 7,
+    gSerial_OutOfMemory_c          = 8,
+    gSerial_OsError_c              = 9,
 } serialStatus_t;
 
 /*! *********************************************************************************

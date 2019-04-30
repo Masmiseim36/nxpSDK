@@ -4,11 +4,11 @@
 ;            MCIMX7U5_cm4
 ;  @version: 7.0
 ;  @date:    2018-11-5
-;  @build:   b181105
+;  @build:   b190124
 ; -------------------------------------------------------------------------
 ;
 ; Copyright 1997-2016 Freescale Semiconductor, Inc.
-; Copyright 2016-2018 NXP
+; Copyright 2016-2019 NXP
 ; All rights reserved.
 ;
 ; SPDX-License-Identifier: BSD-3-Clause

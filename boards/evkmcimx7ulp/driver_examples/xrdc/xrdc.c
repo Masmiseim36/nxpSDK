@@ -2,7 +2,7 @@
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -62,41 +62,41 @@ void APP_SetXrdcConfig(void)
 
     /* All peripherals set to accessible for A7. */
     const xrdc_periph_t periphAccessibleA7[] = {
-        kXRDC_PeriphEdma0,       kXRDC_PeriphEdma0_tcd,    kXRDC_PeriphRgpio0,     kXRDC_PeriphXrdc0,
-        kXRDC_PeriphXrdc1,       kXRDC_PeriphXrdc2,        kXRDC_PeriphXrdc3,      kXRDC_PeriphSema42_0,
-        kXRDC_PeriphDmamux0,     kXRDC_PeriphLlwu,         kXRDC_PeriphMu_A,       kXRDC_PeriphTrgmux0,
-        kXRDC_PeriphWdog0,       kXRDC_PeriphPcc0,         kXRDC_PeriphScg0,       kXRDC_PeriphCrc,
-        kXRDC_PeriphLtc,         kXRDC_PeriphTrng,         kXRDC_PeriphLpit0,      kXRDC_PeriphLptmr0,
-        kXRDC_PeriphLptmr1,      kXRDC_PeriphTpm0,         kXRDC_PeriphTpm1,       kXRDC_PeriphFlexio0,
-        kXRDC_PeriphLpi2c0,      kXRDC_PeriphLpi2c1,       kXRDC_PeriphLpi2c2,     kXRDC_PeriphLpi2c3,
-        kXRDC_PeriphSai0,        kXRDC_PeriphLpspi0,       kXRDC_PeriphLpspi1,     kXRDC_PeriphLpuart0,
-        kXRDC_PeriphLpuart1,     kXRDC_PeriphIomuxc0,      kXRDC_PeriphPctlA,      kXRDC_PeriphPctlB,
-        kXRDC_PeriphAdc0,        kXRDC_PeriphCmp0,         kXRDC_PeriphCmp1,       kXRDC_PeriphDac0,
-        kXRDC_PeriphDac1,        kXRDC_PeriphRomc0,        kXRDC_PeriphDaprom,     kXRDC_PeriphFunnel,
-        kXRDC_PeriphEtf,         kXRDC_PeriphTpiu,         kXRDC_PeriphEtr,        kXRDC_PeriphCti,
-        kXRDC_PeriphSwo,         kXRDC_PeriphTimestampGen, kXRDC_PeriphA7_apb_rom, kXRDC_PeriphA7_apb_cpu_dbg,
-        kXRDC_PeriphA7_apb_pmu,  kXRDC_PeriphA7_apb_cti,   kXRDC_PeriphA7_apb_etm, kXRDC_PeriphEwm,
-        kXRDC_PeriphPmc0,        kXRDC_PeriphSim,          kXRDC_PeriphCmc0,       kXRDC_PeriphQspi,
-        kXRDC_PeriphOcotp_ctrl,  kXRDC_PeriphTpm2,         kXRDC_PeriphTpm3,
-        kXRDC_PeriphSai1,        kXRDC_PeriphLpuart2,      kXRDC_PeriphLpuart3,    kXRDC_PeriphAdc1,
-        kXRDC_PeriphPcc1,        kXRDC_PeriphEdma1,        kXRDC_PeriphEdma1_tcd,  kXRDC_PeriphRgpio1,
-        kXRDC_PeriphFlexbus,     kXRDC_PeriphSema42_1,     kXRDC_PeriphDmamux1,    kXRDC_PeriphMu_B,
-        kXRDC_PeriphSnvs,        kXRDC_PeriphCaam,         kXRDC_PeriphTpm4,       kXRDC_PeriphTpm5,
-        kXRDC_PeriphLpit1,       kXRDC_PeriphLpspi2,       kXRDC_PeriphLpspi3,     kXRDC_PeriphLpi2c4,
-        kXRDC_PeriphLpi2c5,      kXRDC_PeriphLpuart4,      kXRDC_PeriphLpuart5,    kXRDC_PeriphFlexio1,
-        kXRDC_PeriphUsb0,        kXRDC_PeriphUsb1,         kXRDC_PeriphUsbPhy,     kXRDC_PeriphUsb_pl301,
-        kXRDC_PeriphUsdhc0,      kXRDC_PeriphUsdhc1,       kXRDC_PeriphTrgmux1,    kXRDC_PeriphWdog1,
-        kXRDC_PeriphScg1,        kXRDC_PeriphPcc2,         kXRDC_PeriphPmc1,       kXRDC_PeriphCmc1,
-        kXRDC_PeriphWdog2,       kXRDC_PeriphRomc1,        kXRDC_PeriphTpm6,       kXRDC_PeriphTpm7,
-        kXRDC_PeriphLpi2c6,      kXRDC_PeriphLpi2c7,       kXRDC_PeriphLpuart6,    kXRDC_PeriphLpuart7,
-        kXRDC_PeriphViu,         kXRDC_PeriphDsi,          kXRDC_PeriphLcdif,      kXRDC_PeriphMmdc,
-        kXRDC_PeriphIomuxc1,     kXRDC_PeriphIomuxc_ddr,   kXRDC_PeriphPctlC,      kXRDC_PeriphPctlD,
-        kXRDC_PeriphPctlE,       kXRDC_PeriphPctlF,        kXRDC_PeriphPcc3,
+        kXRDC_PeriphEdma0,      kXRDC_PeriphEdma0_tcd,    kXRDC_PeriphRgpio0,     kXRDC_PeriphXrdc0,
+        kXRDC_PeriphXrdc1,      kXRDC_PeriphXrdc2,        kXRDC_PeriphXrdc3,      kXRDC_PeriphSema42_0,
+        kXRDC_PeriphDmamux0,    kXRDC_PeriphLlwu,         kXRDC_PeriphMu_A,       kXRDC_PeriphTrgmux0,
+        kXRDC_PeriphWdog0,      kXRDC_PeriphPcc0,         kXRDC_PeriphScg0,       kXRDC_PeriphCrc,
+        kXRDC_PeriphLtc,        kXRDC_PeriphTrng,         kXRDC_PeriphLpit0,      kXRDC_PeriphLptmr0,
+        kXRDC_PeriphLptmr1,     kXRDC_PeriphTpm0,         kXRDC_PeriphTpm1,       kXRDC_PeriphFlexio0,
+        kXRDC_PeriphLpi2c0,     kXRDC_PeriphLpi2c1,       kXRDC_PeriphLpi2c2,     kXRDC_PeriphLpi2c3,
+        kXRDC_PeriphSai0,       kXRDC_PeriphLpspi0,       kXRDC_PeriphLpspi1,     kXRDC_PeriphLpuart0,
+        kXRDC_PeriphLpuart1,    kXRDC_PeriphIomuxc0,      kXRDC_PeriphPctlA,      kXRDC_PeriphPctlB,
+        kXRDC_PeriphAdc0,       kXRDC_PeriphCmp0,         kXRDC_PeriphCmp1,       kXRDC_PeriphDac0,
+        kXRDC_PeriphDac1,       kXRDC_PeriphRomc0,        kXRDC_PeriphDaprom,     kXRDC_PeriphFunnel,
+        kXRDC_PeriphEtf,        kXRDC_PeriphTpiu,         kXRDC_PeriphEtr,        kXRDC_PeriphCti,
+        kXRDC_PeriphSwo,        kXRDC_PeriphTimestampGen, kXRDC_PeriphA7_apb_rom, kXRDC_PeriphA7_apb_cpu_dbg,
+        kXRDC_PeriphA7_apb_pmu, kXRDC_PeriphA7_apb_cti,   kXRDC_PeriphA7_apb_etm, kXRDC_PeriphEwm,
+        kXRDC_PeriphPmc0,       kXRDC_PeriphSim,          kXRDC_PeriphCmc0,       kXRDC_PeriphQspi,
+        kXRDC_PeriphOcotp_ctrl, kXRDC_PeriphTpm2,         kXRDC_PeriphTpm3,       kXRDC_PeriphSai1,
+        kXRDC_PeriphLpuart2,    kXRDC_PeriphLpuart3,      kXRDC_PeriphAdc1,       kXRDC_PeriphPcc1,
+        kXRDC_PeriphEdma1,      kXRDC_PeriphEdma1_tcd,    kXRDC_PeriphRgpio1,     kXRDC_PeriphFlexbus,
+        kXRDC_PeriphSema42_1,   kXRDC_PeriphDmamux1,      kXRDC_PeriphMu_B,       kXRDC_PeriphSnvs,
+        kXRDC_PeriphCaam,       kXRDC_PeriphTpm4,         kXRDC_PeriphTpm5,       kXRDC_PeriphLpit1,
+        kXRDC_PeriphLpspi2,     kXRDC_PeriphLpspi3,       kXRDC_PeriphLpi2c4,     kXRDC_PeriphLpi2c5,
+        kXRDC_PeriphLpuart4,    kXRDC_PeriphLpuart5,      kXRDC_PeriphFlexio1,    kXRDC_PeriphUsb0,
+        kXRDC_PeriphUsb1,       kXRDC_PeriphUsbPhy,       kXRDC_PeriphUsb_pl301,  kXRDC_PeriphUsdhc0,
+        kXRDC_PeriphUsdhc1,     kXRDC_PeriphTrgmux1,      kXRDC_PeriphWdog1,      kXRDC_PeriphScg1,
+        kXRDC_PeriphPcc2,       kXRDC_PeriphPmc1,         kXRDC_PeriphCmc1,       kXRDC_PeriphWdog2,
+        kXRDC_PeriphRomc1,      kXRDC_PeriphTpm6,         kXRDC_PeriphTpm7,       kXRDC_PeriphLpi2c6,
+        kXRDC_PeriphLpi2c7,     kXRDC_PeriphLpuart6,      kXRDC_PeriphLpuart7,    kXRDC_PeriphViu,
+        kXRDC_PeriphDsi,        kXRDC_PeriphLcdif,        kXRDC_PeriphMmdc,       kXRDC_PeriphIomuxc1,
+        kXRDC_PeriphIomuxc_ddr, kXRDC_PeriphPctlC,        kXRDC_PeriphPctlD,      kXRDC_PeriphPctlE,
+        kXRDC_PeriphPctlF,      kXRDC_PeriphPcc3,
     };
 
     /*
-     * Wait for MMDC clock be enable by UBOOT before configure XRDC memory region controller (MRC) 6, otherwise M4 will break down during
-     * set the MRC 6 related MRGD registers value.
+     * Wait for MMDC clock be enable by UBOOT before configure XRDC memory region controller (MRC) 6, otherwise M4 will
+     * break down during set the MRC 6 related MRGD registers value.
      */
     while (!(PCC3->PCC_MMDC & PCC_CLKCFG_INUSE_MASK))
     {
@@ -126,66 +126,66 @@ void APP_SetXrdcConfig(void)
     XRDC_GetMemAccessDefaultConfig(&memConfig);
 
     /* Cortex-M TCM. 0x1FFFD000 to 0x2000FFFF. */
-    memConfig.mem = kXRDC_MemMrc0_0;
-    memConfig.baseAddress = 0x1FFD0000;
-    memConfig.size = kXRDC_MemSize64K;
+    memConfig.mem                  = kXRDC_MemMrc0_0;
+    memConfig.baseAddress          = 0x1FFD0000;
+    memConfig.size                 = kXRDC_MemSize64K;
     memConfig.policy[A7_DOMAIN_ID] = kXRDC_AccessPolicyAll;
     XRDC_SetMemAccessConfig(XRDC, &memConfig);
-    memConfig.mem = kXRDC_MemMrc0_1;
-    memConfig.baseAddress = 0x1FFE0000;
-    memConfig.size = kXRDC_MemSize128K;
+    memConfig.mem                  = kXRDC_MemMrc0_1;
+    memConfig.baseAddress          = 0x1FFE0000;
+    memConfig.size                 = kXRDC_MemSize128K;
     memConfig.policy[A7_DOMAIN_ID] = kXRDC_AccessPolicyAll;
     XRDC_SetMemAccessConfig(XRDC, &memConfig);
-    memConfig.mem = kXRDC_MemMrc0_2;
-    memConfig.baseAddress = 0x20000000;
-    memConfig.size = kXRDC_MemSize64K;
+    memConfig.mem                  = kXRDC_MemMrc0_2;
+    memConfig.baseAddress          = 0x20000000;
+    memConfig.size                 = kXRDC_MemSize64K;
     memConfig.policy[A7_DOMAIN_ID] = kXRDC_AccessPolicyAll;
     XRDC_SetMemAccessConfig(XRDC, &memConfig);
 
     /* QSPI flash. 0xC0000000 to 0xCFFFFFFF */
-    memConfig.mem = kXRDC_MemMrc1_0;
-    memConfig.baseAddress = 0xC0000000U;
-    memConfig.size = kXRDC_MemSize256M;
+    memConfig.mem                  = kXRDC_MemMrc1_0;
+    memConfig.baseAddress          = 0xC0000000U;
+    memConfig.size                 = kXRDC_MemSize256M;
     memConfig.policy[A7_DOMAIN_ID] = kXRDC_AccessPolicyAll;
     XRDC_SetMemAccessConfig(XRDC, &memConfig);
 
     /* SRAM0. 0x2F000000 to 0x2F001FFF. */
-    memConfig.mem = kXRDC_MemMrc2_0;
-    memConfig.baseAddress = 0x2F000000;
-    memConfig.size = kXRDC_MemSize128K;
+    memConfig.mem                  = kXRDC_MemMrc2_0;
+    memConfig.baseAddress          = 0x2F000000;
+    memConfig.size                 = kXRDC_MemSize128K;
     memConfig.policy[A7_DOMAIN_ID] = kXRDC_AccessPolicyAll;
     XRDC_SetMemAccessConfig(XRDC, &memConfig);
 
     /* srcRAM. 0x26000000 to 0x26007FFF. */
-    memConfig.mem = kXRDC_MemMrc3_0;
-    memConfig.baseAddress = 0x2F000000;
-    memConfig.size = kXRDC_MemSize32K;
+    memConfig.mem                  = kXRDC_MemMrc3_0;
+    memConfig.baseAddress          = 0x2F000000;
+    memConfig.size                 = kXRDC_MemSize32K;
     memConfig.policy[A7_DOMAIN_ID] = kXRDC_AccessPolicyAll;
     XRDC_SetMemAccessConfig(XRDC, &memConfig);
 
     /* FlexBus. 0xB0000000 to 0xBFFFFFFF. */
-    memConfig.mem = kXRDC_MemMrc4_0;
-    memConfig.baseAddress = 0xB0000000;
-    memConfig.size = kXRDC_MemSize256M;
+    memConfig.mem                  = kXRDC_MemMrc4_0;
+    memConfig.baseAddress          = 0xB0000000;
+    memConfig.size                 = kXRDC_MemSize256M;
     memConfig.policy[A7_DOMAIN_ID] = kXRDC_AccessPolicyAll;
     XRDC_SetMemAccessConfig(XRDC, &memConfig);
 
     /* SRAM1. 0x2F020000 to 0x2F03FFFF. */
-    memConfig.mem = kXRDC_MemMrc5_0;
-    memConfig.baseAddress = 0x2F020000;
-    memConfig.size = kXRDC_MemSize128K;
+    memConfig.mem                  = kXRDC_MemMrc5_0;
+    memConfig.baseAddress          = 0x2F020000;
+    memConfig.size                 = kXRDC_MemSize128K;
     memConfig.policy[A7_DOMAIN_ID] = kXRDC_AccessPolicyAll;
     XRDC_SetMemAccessConfig(XRDC, &memConfig);
 
     /* DDR. 0x60000000 to 0x9FFFFFFF. */
-    memConfig.mem = kXRDC_MemMrc6_0;
-    memConfig.baseAddress = 0x60000000U;
-    memConfig.size = kXRDC_MemSize512M;
+    memConfig.mem                  = kXRDC_MemMrc6_0;
+    memConfig.baseAddress          = 0x60000000U;
+    memConfig.size                 = kXRDC_MemSize512M;
     memConfig.policy[A7_DOMAIN_ID] = kXRDC_AccessPolicyAll;
     XRDC_SetMemAccessConfig(XRDC, &memConfig);
-    memConfig.mem = kXRDC_MemMrc6_1;
-    memConfig.baseAddress = 0x80000000U;
-    memConfig.size = kXRDC_MemSize512M;
+    memConfig.mem                  = kXRDC_MemMrc6_1;
+    memConfig.baseAddress          = 0x80000000U;
+    memConfig.size                 = kXRDC_MemSize512M;
     memConfig.policy[A7_DOMAIN_ID] = kXRDC_AccessPolicyAll;
     XRDC_SetMemAccessConfig(XRDC, &memConfig);
 
@@ -208,7 +208,7 @@ void APP_SetXrdcConfig(void)
      */
     XRDC_GetPeriphAccessDefaultConfig(&periConfig);
     periConfig.policy[APP_DOMAIN_ID] = kXRDC_AccessPolicyAll;
-    periConfig.policy[A7_DOMAIN_ID] = kXRDC_AccessPolicyAll;
+    periConfig.policy[A7_DOMAIN_ID]  = kXRDC_AccessPolicyAll;
 
     for (i = 0; i < ARRAY_SIZE(periphAccessible); i++)
     {
@@ -221,9 +221,9 @@ void APP_SetXrdcConfig(void)
      * TCM is always accessible for CM4, so don't need to set memory policy.
      * Enable M4 access policy to QuadSPI aliasing memory.
      */
-    memConfig.mem = kXRDC_MemMrc1_1;
-    memConfig.baseAddress = 0x4000000U;
-    memConfig.size = kXRDC_MemSize8M;
+    memConfig.mem                   = kXRDC_MemMrc1_1;
+    memConfig.baseAddress           = 0x4000000U;
+    memConfig.size                  = kXRDC_MemSize8M;
     memConfig.policy[APP_DOMAIN_ID] = kXRDC_AccessPolicyAll;
     XRDC_SetMemAccessConfig(XRDC, &memConfig);
 }
@@ -237,9 +237,9 @@ void APP_CheckAndResolvePeriphAccessError(xrdc_error_t *error)
 
         xrdc_periph_access_config_t periConfig;
         XRDC_GetPeriphAccessDefaultConfig(&periConfig);
-        periConfig.periph = kXRDC_PeriphWdog0;
+        periConfig.periph                = kXRDC_PeriphWdog0;
         periConfig.policy[APP_DOMAIN_ID] = kXRDC_AccessPolicyAll;
-        periConfig.policy[A7_DOMAIN_ID] = kXRDC_AccessPolicyAll;
+        periConfig.policy[A7_DOMAIN_ID]  = kXRDC_AccessPolicyAll;
         XRDC_SetPeriphAccessConfig(XRDC, &periConfig);
     }
 }
@@ -253,11 +253,11 @@ void APP_CheckAndResolveMemoryAccessError(xrdc_error_t *error)
 
         xrdc_mem_access_config_t memConfig;
         XRDC_GetMemAccessDefaultConfig(&memConfig);
-        memConfig.mem = kXRDC_MemMrc5_0;
-        memConfig.baseAddress = MEM_REGION_START;
-        memConfig.size = MEM_REGION_SIZE;
+        memConfig.mem                   = kXRDC_MemMrc5_0;
+        memConfig.baseAddress           = MEM_REGION_START;
+        memConfig.size                  = MEM_REGION_SIZE;
         memConfig.policy[APP_DOMAIN_ID] = kXRDC_AccessPolicyAll;
-        memConfig.policy[A7_DOMAIN_ID] = kXRDC_AccessPolicyAll;
+        memConfig.policy[A7_DOMAIN_ID]  = kXRDC_AccessPolicyAll;
         XRDC_SetMemAccessConfig(XRDC, &memConfig);
     }
 }
@@ -267,9 +267,9 @@ void APP_SetPeriphUnaccessible(void)
     xrdc_periph_access_config_t periConfig;
 
     XRDC_GetPeriphAccessDefaultConfig(&periConfig);
-    periConfig.periph = kXRDC_PeriphWdog0;
+    periConfig.periph                = kXRDC_PeriphWdog0;
     periConfig.policy[APP_DOMAIN_ID] = kXRDC_AccessPolicyNone;
-    periConfig.policy[A7_DOMAIN_ID] = kXRDC_AccessPolicyAll;
+    periConfig.policy[A7_DOMAIN_ID]  = kXRDC_AccessPolicyAll;
     XRDC_SetPeriphAccessConfig(XRDC, &periConfig);
 }
 
@@ -278,11 +278,11 @@ void APP_SetMemoryUnaccessible(void)
     xrdc_mem_access_config_t memConfig;
 
     XRDC_GetMemAccessDefaultConfig(&memConfig);
-    memConfig.mem = kXRDC_MemMrc5_0;
-    memConfig.baseAddress = MEM_REGION_START;
-    memConfig.size = MEM_REGION_SIZE;
+    memConfig.mem                   = kXRDC_MemMrc5_0;
+    memConfig.baseAddress           = MEM_REGION_START;
+    memConfig.size                  = MEM_REGION_SIZE;
     memConfig.policy[APP_DOMAIN_ID] = kXRDC_AccessPolicyNone;
-    memConfig.policy[A7_DOMAIN_ID] = kXRDC_AccessPolicyAll;
+    memConfig.policy[A7_DOMAIN_ID]  = kXRDC_AccessPolicyAll;
     XRDC_SetMemAccessConfig(XRDC, &memConfig);
 }
 
@@ -314,6 +314,7 @@ void HardFault_Handler(void)
         APP_CheckAndResolvePeriphAccessError(&error);
         g_hardfaultFlag = true;
     }
+    __DSB();
 }
 
 /*!

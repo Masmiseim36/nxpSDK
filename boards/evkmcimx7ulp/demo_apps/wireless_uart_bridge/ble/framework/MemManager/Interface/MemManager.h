@@ -3,9 +3,9 @@
  * Copyright (c) 2016 - 2017 , NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
-*/
+ */
 
 #ifndef _MEM_MANAGER_H_
 #define _MEM_MANAGER_H_
@@ -23,7 +23,7 @@
 * Public macros
 *************************************************************************************
 ********************************************************************************** */
-             
+
 /*! *********************************************************************************
 *************************************************************************************
 * Private type definitions
@@ -37,9 +37,9 @@
 ********************************************************************************** */
 /*Initialises the Memory Manager.*/
 /*Frees the given buffer.*/
-void MEM_BufferFree(void* buffer);
+void MEM_BufferFree(void *buffer);
 /*Returns the allocated buffer of the given size.*/
-void* MEM_BufferAlloc(uint32_t numBytes);
+void *MEM_BufferAlloc(uint32_t numBytes);
 
 /*! *********************************************************************************
 *************************************************************************************
@@ -56,8 +56,8 @@ void* MEM_BufferAlloc(uint32_t numBytes);
 /*Header description for buffers.*/
 typedef struct listHeader_tag
 {
-  listElement_t link;
-}listHeader_t;
+    listElement_t link;
+} listHeader_t;
 
 /*! *********************************************************************************
 *************************************************************************************
@@ -65,4 +65,4 @@ typedef struct listHeader_tag
 *************************************************************************************
 ********************************************************************************** */
 
-#endif /* _MEM_MANAGER_H_ */ 
+#endif /* _MEM_MANAGER_H_ */

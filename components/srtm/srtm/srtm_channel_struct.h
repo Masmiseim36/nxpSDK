@@ -2,7 +2,7 @@
  * Copyright (c) 2017, NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -16,12 +16,12 @@
  * Definitions
  ******************************************************************************/
 /**
-* @brief SRTM channel struct
-*/
+ * @brief SRTM channel struct
+ */
 struct _srtm_channel
 {
-    srtm_list_t node;      /*!< SRTM channel list node to link to a list */
-    srtm_peercore_t core;  /*!< SRTM peer core channel belongs to */
+    srtm_list_t node;     /*!< SRTM channel list node to link to a list */
+    srtm_peercore_t core; /*!< SRTM peer core channel belongs to */
 
     void (*destroy)(srtm_channel_t channel);
     srtm_status_t (*start)(srtm_channel_t channel);

@@ -23,15 +23,15 @@
  */
 typedef enum _lpm_power_mode
 {
-    LPM_PowerModeRun = 0,   /* Normal RUN mode */
-    LPM_PowerModeWait,      /* WAIT mode. */
-    LPM_PowerModeStop,      /* STOP mode. */
-    LPM_PowerModeVlpr,      /* VLPR mode. */
-    LPM_PowerModeVlpw,      /* VLPW mode. */
-    LPM_PowerModeVlps,      /* VLPS mode. */
-    LPM_PowerModeHsrun,     /* HighSpeed RUN mode */
-    LPM_PowerModeLls,       /* LLS mode */
-    LPM_PowerModeVlls,      /* VLLS mode */
+    LPM_PowerModeRun = 0, /* Normal RUN mode */
+    LPM_PowerModeWait,    /* WAIT mode. */
+    LPM_PowerModeStop,    /* STOP mode. */
+    LPM_PowerModeVlpr,    /* VLPR mode. */
+    LPM_PowerModeVlpw,    /* VLPW mode. */
+    LPM_PowerModeVlps,    /* VLPS mode. */
+    LPM_PowerModeHsrun,   /* HighSpeed RUN mode */
+    LPM_PowerModeLls,     /* LLS mode */
+    LPM_PowerModeVlls,    /* VLLS mode */
 } lpm_power_mode_t;
 
 typedef bool (*lpm_power_mode_callback_t)(lpm_power_mode_t curMode, lpm_power_mode_t newMode, void *data);

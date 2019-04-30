@@ -7,7 +7,7 @@
  * Copyright (c) 2016 - 2017 , NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -34,7 +34,7 @@
 /*! Wireless UART Service - Configuration */
 typedef struct wusConfig_tag
 {
-    uint16_t    serviceHandle;
+    uint16_t serviceHandle;
 } wusConfig_t;
 
 /*! Wireless UART Client - Configuration */
@@ -60,39 +60,39 @@ extern "C" {
 #endif
 
 /*!**********************************************************************************
-* \brief        Starts Wireless UART Service functionality
-*
-* \param[in]    pServiceConfig  Pointer to structure that contains server 
-*                               configuration information.
-*
-* \return       gBleSuccess_c or error.
-************************************************************************************/
+ * \brief        Starts Wireless UART Service functionality
+ *
+ * \param[in]    pServiceConfig  Pointer to structure that contains server
+ *                               configuration information.
+ *
+ * \return       gBleSuccess_c or error.
+ ************************************************************************************/
 bleResult_t Wus_Start(wusConfig_t *pServiceConfig);
 
 /*!**********************************************************************************
-* \brief        Stops Wireless UART Service functionality
-*
-* \param[in]    pServiceConfig  Pointer to structure that contains server 
-*                               configuration information.
-*
-* \return       gBleSuccess_c or error.
-************************************************************************************/
+ * \brief        Stops Wireless UART Service functionality
+ *
+ * \param[in]    pServiceConfig  Pointer to structure that contains server
+ *                               configuration information.
+ *
+ * \return       gBleSuccess_c or error.
+ ************************************************************************************/
 bleResult_t Wus_Stop(wusConfig_t *pServiceConfig);
 
 /*!**********************************************************************************
-* \brief        Subscribes a GATT client to the Wireless UART Service
-*
-* \param[in]    pClient  Client Id in Device DB.
-*
-* \return       gBleSuccess_c or error.
-************************************************************************************/
+ * \brief        Subscribes a GATT client to the Wireless UART Service
+ *
+ * \param[in]    pClient  Client Id in Device DB.
+ *
+ * \return       gBleSuccess_c or error.
+ ************************************************************************************/
 bleResult_t Wus_Subscribe(deviceId_t clientDeviceId);
 
 /*!**********************************************************************************
-* \brief        Unsubscribes a GATT client from the Wireless UART Service
-*
-* \return       gBleSuccess_c or error.
-************************************************************************************/
+ * \brief        Unsubscribes a GATT client from the Wireless UART Service
+ *
+ * \return       gBleSuccess_c or error.
+ ************************************************************************************/
 bleResult_t Wus_Unsubscribe(void);
 
 #ifdef __cplusplus

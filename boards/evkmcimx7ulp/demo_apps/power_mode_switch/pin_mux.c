@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP.
+ * Copyright 2019 NXP.
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -13,11 +13,11 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v4.0
+product: Pins v4.1
 processor: MCIMX7U5xxx05
 package_id: MCIMX7U5CVP05
 mcu_data: ksdk2_0
-processor_version: 0.0.0
+processor_version: 3.0.0
 board: MCIMX7ULP-EVK-REV-B
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
@@ -151,151 +151,6 @@ void BOARD_InitPins(void) {                                /*!< Function assigne
                         IOMUXC0_SW_MUX_CTL_PAD_PS_MASK);
     IOMUXC_SetPinMux(BOARD_INITPINS_SEN_INT_PIN_FUNCTION_ID, 0U);
     IOMUXC_SetPinConfig(BOARD_INITPINS_SEN_INT_PIN_FUNCTION_ID,
-                        IOMUXC0_SW_MUX_CTL_PAD_PE_MASK |
-                        IOMUXC0_SW_MUX_CTL_PAD_PS_MASK);
-}
-
-
-/*
- * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
-BOARD_InitPinsNoQSPI:
-- options: {callFromInitBoot: 'false', coreID: cm4}
-- pin_list:
-  - {pin_num: AG20, peripheral: PTA, signal: 'port, 25', pin_signal: PTA25, OBE: OBE_1_Enabled}
-  - {pin_num: AB19, peripheral: LPUART0, signal: lpuart_rx, pin_signal: PTA19, PE: PE_1_pull_enabled, PS: PS_1_pull_up}
-  - {pin_num: AC19, peripheral: LPUART0, signal: lpuart_tx, pin_signal: PTA18, PE: PE_1_pull_enabled, PS: PS_1_pull_up}
-  - {pin_num: AD15, peripheral: I2S0, signal: i2s_mclk, pin_signal: PTA4, OBE: OBE_1_Enabled, DSE: DSE_1_Hi_Drive}
-  - {pin_num: AG14, peripheral: I2S0, signal: 'i2s_rxd, 0', pin_signal: PTA2}
-  - {pin_num: AC15, peripheral: I2S0, signal: i2s_tx_bclk, pin_signal: PTA5, DSE: DSE_1_Hi_Drive}
-  - {pin_num: AB15, peripheral: I2S0, signal: i2s_tx_fs, pin_signal: PTA6, DSE: DSE_1_Hi_Drive}
-  - {pin_num: AD14, peripheral: I2S0, signal: 'i2s_txd, 0', pin_signal: PTA7, DSE: DSE_1_Hi_Drive}
-  - {pin_num: AF14, peripheral: PTA, signal: 'port, 3', pin_signal: PTA3, IBE: IBE_1_Enabled}
-  - {pin_num: AF16, peripheral: PTA, signal: 'port, 13', pin_signal: PTA13, IBE: IBE_1_Enabled}
-  - {pin_num: AF17, peripheral: PTA, signal: 'port, 14', pin_signal: PTA14, OBE: OBE_1_Enabled}
-  - {pin_num: AF18, peripheral: PTA, signal: 'port, 15', pin_signal: PTA15, OBE: OBE_1_Enabled}
-  - {pin_num: AF24, peripheral: PTA, signal: 'port, 31', pin_signal: PTA31, IBE: IBE_1_Enabled, PE: PE_1_pull_enabled, PS: PS_1_pull_up}
-  - {pin_num: AF2, peripheral: PTB, signal: 'port, 1', pin_signal: PTB1, PE: PE_1_pull_enabled}
-  - {pin_num: AE3, peripheral: PTB, signal: 'port, 2', pin_signal: PTB2, PE: PE_1_pull_enabled}
-  - {pin_num: AE4, peripheral: PTB, signal: 'port, 3', pin_signal: PTB3, PE: PE_1_pull_enabled}
-  - {pin_num: AC7, peripheral: PTB, signal: 'port, 10', pin_signal: PTB10, PE: PE_1_pull_enabled}
-  - {pin_num: AG4, peripheral: PTB, signal: 'port, 4', pin_signal: PTB4, PE: PE_1_pull_enabled}
-  - {pin_num: AF4, peripheral: PTB, signal: 'port, 5', pin_signal: PTB5, PS: PS_1_pull_up}
-  - {pin_num: AF5, peripheral: PTB, signal: 'port, 6', pin_signal: PTB6, OBE: OBE_1_Enabled}
-  - {pin_num: AF6, peripheral: PTB, signal: 'port, 7', pin_signal: PTB7, IBE: IBE_1_Enabled, PE: PE_1_pull_enabled, PS: PS_1_pull_up}
-  - {pin_num: AD7, peripheral: PTB, signal: 'port, 9', pin_signal: PTB9, PE: PE_1_pull_enabled, PS: PS_1_pull_up}
-  - {pin_num: AB7, peripheral: PTB, signal: 'port, 11', pin_signal: PTB11, PE: PE_1_pull_enabled, PS: PS_1_pull_up}
-  - {pin_num: AG8, peripheral: RTC, signal: rtc_clkout, pin_signal: PTB14, IBE: IBE_0_Disabled}
-  - {pin_num: AG6, peripheral: PTB, signal: 'port, 8', pin_signal: PTB8, PE: PE_1_pull_enabled, PS: PS_1_pull_up}
-  - {pin_num: AF8, peripheral: PTB, signal: 'port, 15', pin_signal: PTB15, PE: PE_1_pull_enabled}
-  - {pin_num: AF9, peripheral: PTB, signal: 'port, 16', pin_signal: PTB16, PE: PE_1_pull_enabled}
-  - {pin_num: AF10, peripheral: PTB, signal: 'port, 17', pin_signal: PTB17, PE: PE_1_pull_enabled}
-  - {pin_num: AG10, peripheral: PTB, signal: 'port, 18', pin_signal: PTB18, PE: PE_1_pull_enabled}
-  - {pin_num: AD10, peripheral: PTB, signal: 'port, 19', pin_signal: PTB19, PE: PE_1_pull_enabled}
- * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
- */
-
-/* FUNCTION ************************************************************************************************************
- *
- * Function Name : BOARD_InitPinsNoQSPI
- * Description   : Configures pin routing and optionally pin electrical features.
- *
- * END ****************************************************************************************************************/
-void BOARD_InitPinsNoQSPI(void) {                          /*!< Function assigned for the core: Cortex-M4[cm4] */
-    IOMUXC_SetPinMux(BOARD_INITPINSNOQSPI_VOL_DOWN_PIN_FUNCTION_ID, 0U);
-    IOMUXC_SetPinConfig(BOARD_INITPINSNOQSPI_VOL_DOWN_PIN_FUNCTION_ID,
-                        IOMUXC0_SW_MUX_CTL_PAD_IBE_MASK);
-    IOMUXC_SetPinMux(BOARD_INITPINSNOQSPI_WL_REG_ON_PIN_FUNCTION_ID, 0U);
-    IOMUXC_SetPinConfig(BOARD_INITPINSNOQSPI_WL_REG_ON_PIN_FUNCTION_ID,
-                        IOMUXC0_SW_MUX_CTL_PAD_OBE_MASK);
-    IOMUXC_SetPinMux(BOARD_INITPINSNOQSPI_BT_REG_ON_PIN_FUNCTION_ID, 0U);
-    IOMUXC_SetPinConfig(BOARD_INITPINSNOQSPI_BT_REG_ON_PIN_FUNCTION_ID,
-                        IOMUXC0_SW_MUX_CTL_PAD_OBE_MASK);
-    IOMUXC_SetPinMux(BOARD_INITPINSNOQSPI_UART0_TX_PIN_FUNCTION_ID, 0U);
-    IOMUXC_SetPinConfig(BOARD_INITPINSNOQSPI_UART0_TX_PIN_FUNCTION_ID,
-                        IOMUXC0_SW_MUX_CTL_PAD_PE_MASK |
-                        IOMUXC0_SW_MUX_CTL_PAD_PS_MASK);
-    IOMUXC_SetPinMux(BOARD_INITPINSNOQSPI_UART0_RX_PIN_FUNCTION_ID, 0U);
-    IOMUXC_SetPinConfig(BOARD_INITPINSNOQSPI_UART0_RX_PIN_FUNCTION_ID,
-                        IOMUXC0_SW_MUX_CTL_PAD_PE_MASK |
-                        IOMUXC0_SW_MUX_CTL_PAD_PS_MASK);
-    IOMUXC_SetPinMux(BOARD_INITPINSNOQSPI_I2S0_RXD0_PIN_FUNCTION_ID, 0U);
-    IOMUXC_SetPinMux(BOARD_INITPINSNOQSPI_A7_POW_EN_PIN_FUNCTION_ID, 0U);
-    IOMUXC_SetPinConfig(BOARD_INITPINSNOQSPI_A7_POW_EN_PIN_FUNCTION_ID,
-                        IOMUXC0_SW_MUX_CTL_PAD_OBE_MASK);
-    IOMUXC_SetPinMux(BOARD_INITPINSNOQSPI_VOL_UP_PIN_FUNCTION_ID, 0U);
-    IOMUXC_SetPinConfig(BOARD_INITPINSNOQSPI_VOL_UP_PIN_FUNCTION_ID,
-                        IOMUXC0_SW_MUX_CTL_PAD_IBE_MASK);
-    IOMUXC_SetPinMux(BOARD_INITPINSNOQSPI_WL_HOST_WAKE_PIN_FUNCTION_ID, 0U);
-    IOMUXC_SetPinConfig(BOARD_INITPINSNOQSPI_WL_HOST_WAKE_PIN_FUNCTION_ID,
-                        IOMUXC0_SW_MUX_CTL_PAD_IBE_MASK |
-                        IOMUXC0_SW_MUX_CTL_PAD_PE_MASK |
-                        IOMUXC0_SW_MUX_CTL_PAD_PS_MASK);
-    IOMUXC_SetPinMux(BOARD_INITPINSNOQSPI_I2S0_MCLK_PIN_FUNCTION_ID, 0U);
-    IOMUXC_SetPinConfig(BOARD_INITPINSNOQSPI_I2S0_MCLK_PIN_FUNCTION_ID,
-                        IOMUXC0_SW_MUX_CTL_PAD_OBE_MASK |
-                        IOMUXC0_SW_MUX_CTL_PAD_DSE_MASK);
-    IOMUXC_SetPinMux(BOARD_INITPINSNOQSPI_I2S0_TX_BCLK_PIN_FUNCTION_ID, 0U);
-    IOMUXC_SetPinConfig(BOARD_INITPINSNOQSPI_I2S0_TX_BCLK_PIN_FUNCTION_ID,
-                        IOMUXC0_SW_MUX_CTL_PAD_DSE_MASK);
-    IOMUXC_SetPinMux(BOARD_INITPINSNOQSPI_I2S0_TX_FS_PIN_FUNCTION_ID, 0U);
-    IOMUXC_SetPinConfig(BOARD_INITPINSNOQSPI_I2S0_TX_FS_PIN_FUNCTION_ID,
-                        IOMUXC0_SW_MUX_CTL_PAD_DSE_MASK);
-    IOMUXC_SetPinMux(BOARD_INITPINSNOQSPI_I2S0_TXD0_PIN_FUNCTION_ID, 0U);
-    IOMUXC_SetPinConfig(BOARD_INITPINSNOQSPI_I2S0_TXD0_PIN_FUNCTION_ID,
-                        IOMUXC0_SW_MUX_CTL_PAD_DSE_MASK);
-    IOMUXC_SetPinMux(BOARD_INITPINSNOQSPI_I2S1_TX_BCLK_PIN_FUNCTION_ID, 0U);
-    IOMUXC_SetPinConfig(BOARD_INITPINSNOQSPI_I2S1_TX_BCLK_PIN_FUNCTION_ID,
-                        IOMUXC0_SW_MUX_CTL_PAD_PE_MASK);
-    IOMUXC_SetPinMux(BOARD_INITPINSNOQSPI_I2S1_RXD0_PIN_FUNCTION_ID, 0U);
-    IOMUXC_SetPinConfig(BOARD_INITPINSNOQSPI_I2S1_RXD0_PIN_FUNCTION_ID,
-                        IOMUXC0_SW_MUX_CTL_PAD_PE_MASK);
-    IOMUXC_SetPinMux(BOARD_INITPINSNOQSPI_PMIC_INT_PIN_FUNCTION_ID, 0U);
-    IOMUXC_SetPinConfig(BOARD_INITPINSNOQSPI_PMIC_INT_PIN_FUNCTION_ID,
-                        IOMUXC0_SW_MUX_CTL_PAD_PE_MASK |
-                        IOMUXC0_SW_MUX_CTL_PAD_PS_MASK);
-    IOMUXC_SetPinMux(BOARD_INITPINSNOQSPI_RTC_CLK_PIN_FUNCTION_ID, 0U);
-    IOMUXC_SetPinMux(BOARD_INITPINSNOQSPI_QSPIA_SCLK_PIN_FUNCTION_ID, 0U);
-    IOMUXC_SetPinConfig(BOARD_INITPINSNOQSPI_QSPIA_SCLK_PIN_FUNCTION_ID,
-                        IOMUXC0_SW_MUX_CTL_PAD_PE_MASK);
-    IOMUXC_SetPinMux(BOARD_INITPINSNOQSPI_QSPIA_DATA3_PIN_FUNCTION_ID, 0U);
-    IOMUXC_SetPinConfig(BOARD_INITPINSNOQSPI_QSPIA_DATA3_PIN_FUNCTION_ID,
-                        IOMUXC0_SW_MUX_CTL_PAD_PE_MASK);
-    IOMUXC_SetPinMux(BOARD_INITPINSNOQSPI_QSPIA_DATA2_PIN_FUNCTION_ID, 0U);
-    IOMUXC_SetPinConfig(BOARD_INITPINSNOQSPI_QSPIA_DATA2_PIN_FUNCTION_ID,
-                        IOMUXC0_SW_MUX_CTL_PAD_PE_MASK);
-    IOMUXC_SetPinMux(BOARD_INITPINSNOQSPI_QSPIA_DATA1_PIN_FUNCTION_ID, 0U);
-    IOMUXC_SetPinConfig(BOARD_INITPINSNOQSPI_QSPIA_DATA1_PIN_FUNCTION_ID,
-                        IOMUXC0_SW_MUX_CTL_PAD_PE_MASK);
-    IOMUXC_SetPinMux(BOARD_INITPINSNOQSPI_QSPIA_DATA0_PIN_FUNCTION_ID, 0U);
-    IOMUXC_SetPinConfig(BOARD_INITPINSNOQSPI_QSPIA_DATA0_PIN_FUNCTION_ID,
-                        IOMUXC0_SW_MUX_CTL_PAD_PE_MASK);
-    IOMUXC_SetPinMux(BOARD_INITPINSNOQSPI_I2S1_TX_FS_PIN_FUNCTION_ID, 0U);
-    IOMUXC_SetPinConfig(BOARD_INITPINSNOQSPI_I2S1_TX_FS_PIN_FUNCTION_ID,
-                        IOMUXC0_SW_MUX_CTL_PAD_PE_MASK);
-    IOMUXC_SetPinMux(BOARD_INITPINSNOQSPI_I2S1_TXD0_PIN_FUNCTION_ID, 0U);
-    IOMUXC_SetPinConfig(BOARD_INITPINSNOQSPI_I2S1_TXD0_PIN_FUNCTION_ID,
-                        IOMUXC0_SW_MUX_CTL_PAD_PE_MASK);
-    IOMUXC_SetPinMux(BOARD_INITPINSNOQSPI_PTB4_PIN_FUNCTION_ID, 0U);
-    IOMUXC_SetPinConfig(BOARD_INITPINSNOQSPI_PTB4_PIN_FUNCTION_ID,
-                        IOMUXC0_SW_MUX_CTL_PAD_PE_MASK);
-    IOMUXC_SetPinMux(BOARD_INITPINSNOQSPI_PTB5_PIN_FUNCTION_ID, 0U);
-    IOMUXC_SetPinConfig(BOARD_INITPINSNOQSPI_PTB5_PIN_FUNCTION_ID,
-                        IOMUXC0_SW_MUX_CTL_PAD_PE_MASK |
-                        IOMUXC0_SW_MUX_CTL_PAD_PS_MASK);
-    IOMUXC_SetPinMux(BOARD_INITPINSNOQSPI_DDR_SW_EN_PIN_FUNCTION_ID, 0U);
-    IOMUXC_SetPinConfig(BOARD_INITPINSNOQSPI_DDR_SW_EN_PIN_FUNCTION_ID,
-                        IOMUXC0_SW_MUX_CTL_PAD_OBE_MASK);
-    IOMUXC_SetPinMux(BOARD_INITPINSNOQSPI_BT_HOST_WAKE_PIN_FUNCTION_ID, 0U);
-    IOMUXC_SetPinConfig(BOARD_INITPINSNOQSPI_BT_HOST_WAKE_PIN_FUNCTION_ID,
-                        IOMUXC0_SW_MUX_CTL_PAD_IBE_MASK |
-                        IOMUXC0_SW_MUX_CTL_PAD_PE_MASK |
-                        IOMUXC0_SW_MUX_CTL_PAD_PS_MASK);
-    IOMUXC_SetPinMux(BOARD_INITPINSNOQSPI_QSPIA_SS0_B_PIN_FUNCTION_ID, 0U);
-    IOMUXC_SetPinConfig(BOARD_INITPINSNOQSPI_QSPIA_SS0_B_PIN_FUNCTION_ID,
-                        IOMUXC0_SW_MUX_CTL_PAD_PE_MASK |
-                        IOMUXC0_SW_MUX_CTL_PAD_PS_MASK);
-    IOMUXC_SetPinMux(BOARD_INITPINSNOQSPI_SEN_INT_PIN_FUNCTION_ID, 0U);
-    IOMUXC_SetPinConfig(BOARD_INITPINSNOQSPI_SEN_INT_PIN_FUNCTION_ID,
                         IOMUXC0_SW_MUX_CTL_PAD_PE_MASK |
                         IOMUXC0_SW_MUX_CTL_PAD_PS_MASK);
 }

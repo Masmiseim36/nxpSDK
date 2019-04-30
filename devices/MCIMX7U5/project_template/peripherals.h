@@ -9,7 +9,7 @@
  * @file    peripherals.h
  * @brief   Peripherals initialization header file.
  */
- 
+
 /* This is an empty template for board specific configuration.*/
 
 #ifndef _PERIPHERALS_H_

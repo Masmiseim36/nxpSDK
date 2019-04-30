@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -146,10 +146,10 @@ typedef struct _xrdc_non_processor_domain_assignment
  */
 typedef enum _xrdc_pid_lock
 {
-    kXRDC_PidLockSecurePrivilegeWritable = 0U,  /*!< Writable by any secure privileged write. */
+    kXRDC_PidLockSecurePrivilegeWritable  = 0U, /*!< Writable by any secure privileged write. */
     kXRDC_PidLockSecurePrivilegeWritable1 = 1U, /*!< Writable by any secure privileged write. */
-    kXRDC_PidLockMasterXOnly = 2U,              /*!< PIDx is only writable by master x.       */
-    kXRDC_PidLockLocked = 3U                    /*!< Read-only until the next reset.          */
+    kXRDC_PidLockMasterXOnly              = 2U, /*!< PIDx is only writable by master x.       */
+    kXRDC_PidLockLocked                   = 3U  /*!< Read-only until the next reset.          */
 } xrdc_pid_lock_t;
 
 /*!
@@ -175,14 +175,14 @@ typedef struct _xrdc_pid_config
 typedef enum _xrdc_access_policy
 {
     /* policy SecurePriv  SecureUser  NonSecurePriv  NonSecureUsr*/
-    kXRDC_AccessPolicyNone = 0U,      /*  000      none        none        none            none    */
-    kXRDC_AccessPolicySpuR = 1U,      /*  001      r             r         none            none    */
-    kXRDC_AccessPolicySpRw = 2U,      /*  010      r,w         none        none            none    */
-    kXRDC_AccessPolicySpuRw = 3U,     /*  011      r,w          r,w        none            none    */
-    kXRDC_AccessPolicySpuRwNpR = 4U,  /*  100      r,w          r,w         r              none    */
+    kXRDC_AccessPolicyNone      = 0U, /*  000      none        none        none            none    */
+    kXRDC_AccessPolicySpuR      = 1U, /*  001      r             r         none            none    */
+    kXRDC_AccessPolicySpRw      = 2U, /*  010      r,w         none        none            none    */
+    kXRDC_AccessPolicySpuRw     = 3U, /*  011      r,w          r,w        none            none    */
+    kXRDC_AccessPolicySpuRwNpR  = 4U, /*  100      r,w          r,w         r              none    */
     kXRDC_AccessPolicySpuRwNpuR = 5U, /*  101      r,w          r,w         r                r     */
     kXRDC_AccessPolicySpuRwNpRw = 6U, /*  110      r,w          r,w         r,w            none    */
-    kXRDC_AccessPolicyAll = 7U        /*  111      r,w          r,w         r,w             r,w    */
+    kXRDC_AccessPolicyAll       = 7U  /*  111      r,w          r,w         r,w             r,w    */
 } xrdc_access_policy_t;
 
 /*!
@@ -190,10 +190,10 @@ typedef enum _xrdc_access_policy
  */
 typedef enum _xrdc_access_config_lock
 {
-    kXRDC_AccessConfigLockWritable = 0U,    /*!< Entire PDACn/MRGDn can be written.       */
-    kXRDC_AccessConfigLockWritable1 = 1U,   /*!< Entire PDACn/MRGDn can be written.       */
+    kXRDC_AccessConfigLockWritable    = 0U, /*!< Entire PDACn/MRGDn can be written.       */
+    kXRDC_AccessConfigLockWritable1   = 1U, /*!< Entire PDACn/MRGDn can be written.       */
     kXRDC_AccessConfigLockDomainXOnly = 2U, /*!< Domain x only write the DxACP field.     */
-    kXRDC_AccessConfigLockLocked = 3U       /*!< PDACn is read-only until the next reset. */
+    kXRDC_AccessConfigLockLocked      = 3U  /*!< PDACn is read-only until the next reset. */
 } xrdc_access_config_lock_t;
 
 #if (defined(FSL_FEATURE_XRDC_HAS_PDAC_EAL) && FSL_FEATURE_XRDC_HAS_PDAC_EAL) || \
@@ -203,9 +203,9 @@ typedef enum _xrdc_access_config_lock
  */
 typedef enum _xrdc_excl_access_lock_config
 {
-    kXRDC_ExclAccessLockDisabled = 0U,             /*!< Lock disabled.       */
+    kXRDC_ExclAccessLockDisabled             = 0U, /*!< Lock disabled.       */
     kXRDC_ExclAccessLockDisabledUntilNextRst = 1U, /*!< Lock disabled until next reset.       */
-    kXRDC_ExclAccessLockEnabledStateAvail = 2U,    /*!< Lock enabled, lock state = available.     */
+    kXRDC_ExclAccessLockEnabledStateAvail    = 2U, /*!< Lock enabled, lock state = available.     */
     kXRDC_ExclAccessLockEnabledStateNotAvail = 3U  /*!< Lock enabled, lock state = not available. */
 } xrdc_excl_access_lock_config_t;
 #endif
@@ -234,34 +234,34 @@ typedef struct _xrdc_periph_access_config
 typedef enum _xrdc_mem_size
 {
     kXRDC_MemSizeNone = 0U,  /*!< None size.          */
-    kXRDC_MemSize32B = 4U,   /*!< 2^(4+1)    = 32     */
-    kXRDC_MemSize64B = 5U,   /*!< 2^(5+1)    = 64     */
+    kXRDC_MemSize32B  = 4U,  /*!< 2^(4+1)    = 32     */
+    kXRDC_MemSize64B  = 5U,  /*!< 2^(5+1)    = 64     */
     kXRDC_MemSize128B = 6U,  /*!< 2^(6+1)    = 128    */
     kXRDC_MemSize256B = 7U,  /*!< 2^(7+1)    = 256    */
     kXRDC_MemSize512B = 8U,  /*!< 2^(8+1)    = 512    */
-    kXRDC_MemSize1K = 9U,    /*!< 2^(9+1)    = 1kB    */
-    kXRDC_MemSize2K = 10U,   /*!< 2^(10+1)   = 2kB    */
-    kXRDC_MemSize4K = 11U,   /*!< 2^(11+1)   = 4kB    */
-    kXRDC_MemSize8K = 12U,   /*!< 2^(12+1)   = 8kB    */
-    kXRDC_MemSize16K = 13U,  /*!< 2^(13+1)   = 16kB   */
-    kXRDC_MemSize32K = 14U,  /*!< 2^(14+1)   = 32kB   */
-    kXRDC_MemSize64K = 15U,  /*!< 2^(15+1)   = 64kB   */
+    kXRDC_MemSize1K   = 9U,  /*!< 2^(9+1)    = 1kB    */
+    kXRDC_MemSize2K   = 10U, /*!< 2^(10+1)   = 2kB    */
+    kXRDC_MemSize4K   = 11U, /*!< 2^(11+1)   = 4kB    */
+    kXRDC_MemSize8K   = 12U, /*!< 2^(12+1)   = 8kB    */
+    kXRDC_MemSize16K  = 13U, /*!< 2^(13+1)   = 16kB   */
+    kXRDC_MemSize32K  = 14U, /*!< 2^(14+1)   = 32kB   */
+    kXRDC_MemSize64K  = 15U, /*!< 2^(15+1)   = 64kB   */
     kXRDC_MemSize128K = 16U, /*!< 2^(16+1)   = 128kB  */
     kXRDC_MemSize256K = 17U, /*!< 2^(17+1)   = 256kB  */
     kXRDC_MemSize512K = 18U, /*!< 2^(18+1)   = 512kB  */
-    kXRDC_MemSize1M = 19U,   /*!< 2^(19+1)   = 1MB    */
-    kXRDC_MemSize2M = 20U,   /*!< 2^(20+1)   = 2MB    */
-    kXRDC_MemSize4M = 21U,   /*!< 2^(21+1)   = 4MB    */
-    kXRDC_MemSize8M = 22U,   /*!< 2^(22+1)   = 8MB    */
-    kXRDC_MemSize16M = 23U,  /*!< 2^(23+1)   = 16MB   */
-    kXRDC_MemSize32M = 24U,  /*!< 2^(24+1)   = 32MB   */
-    kXRDC_MemSize64M = 25U,  /*!< 2^(25+1)   = 64MB   */
+    kXRDC_MemSize1M   = 19U, /*!< 2^(19+1)   = 1MB    */
+    kXRDC_MemSize2M   = 20U, /*!< 2^(20+1)   = 2MB    */
+    kXRDC_MemSize4M   = 21U, /*!< 2^(21+1)   = 4MB    */
+    kXRDC_MemSize8M   = 22U, /*!< 2^(22+1)   = 8MB    */
+    kXRDC_MemSize16M  = 23U, /*!< 2^(23+1)   = 16MB   */
+    kXRDC_MemSize32M  = 24U, /*!< 2^(24+1)   = 32MB   */
+    kXRDC_MemSize64M  = 25U, /*!< 2^(25+1)   = 64MB   */
     kXRDC_MemSize128M = 26U, /*!< 2^(26+1)   = 128MB  */
     kXRDC_MemSize256M = 27U, /*!< 2^(27+1)   = 256MB  */
     kXRDC_MemSize512M = 28U, /*!< 2^(28+1)   = 512MB  */
-    kXRDC_MemSize1G = 29U,   /*!< 2^(29+1)   = 1GB    */
-    kXRDC_MemSize2G = 30U,   /*!< 2^(30+1)   = 2GB    */
-    kXRDC_MemSize4G = 31U    /*!< 2^(31+1)   = 4GB    */
+    kXRDC_MemSize1G   = 29U, /*!< 2^(29+1)   = 1GB    */
+    kXRDC_MemSize2G   = 30U, /*!< 2^(30+1)   = 2GB    */
+    kXRDC_MemSize4G   = 31U  /*!< 2^(31+1)   = 4GB    */
 } xrdc_mem_size_t;
 #endif /* FSL_FEATURE_XRDC_NO_MRGD_SZ */
 
@@ -352,7 +352,7 @@ typedef struct _xrdc_mem_access_config
 
 #if !(defined(FSL_FEATURE_XRDC_NO_MRGD_DXACP) && FSL_FEATURE_XRDC_NO_MRGD_DXACP)
     xrdc_access_policy_t policy[FSL_FEATURE_XRDC_DOMAIN_COUNT]; /*!< Access policy for each domain. */
-#elif(defined(FSL_FEATURE_XRDC_HAS_MRGD_DXSEL) && FSL_FEATURE_XRDC_HAS_MRGD_DXSEL)
+#elif (defined(FSL_FEATURE_XRDC_HAS_MRGD_DXSEL) && FSL_FEATURE_XRDC_HAS_MRGD_DXSEL)
     xrdc_access_flags_select_t
         policy[FSL_FEATURE_XRDC_DOMAIN_COUNT]; /*!< Access policy/flags select for each domain. */
 #endif
@@ -376,22 +376,22 @@ typedef struct _xrdc_mem_access_config
  */
 typedef enum _xrdc_controller
 {
-    kXRDC_MemController0 = 0U,     /*!< Memory region controller 0.     */
-    kXRDC_MemController1 = 1U,     /*!< Memory region controller 1.     */
-    kXRDC_MemController2 = 2U,     /*!< Memory region controller 2.     */
-    kXRDC_MemController3 = 3U,     /*!< Memory region controller 3.     */
-    kXRDC_MemController4 = 4U,     /*!< Memory region controller 4.     */
-    kXRDC_MemController5 = 5U,     /*!< Memory region controller 5.     */
-    kXRDC_MemController6 = 6U,     /*!< Memory region controller 6.     */
-    kXRDC_MemController7 = 7U,     /*!< Memory region controller 7.     */
-    kXRDC_MemController8 = 8U,     /*!< Memory region controller 8.     */
-    kXRDC_MemController9 = 9U,     /*!< Memory region controller 9.     */
-    kXRDC_MemController10 = 10U,   /*!< Memory region controller 10.    */
-    kXRDC_MemController11 = 11U,   /*!< Memory region controller 11.    */
-    kXRDC_MemController12 = 12U,   /*!< Memory region controller 12.    */
-    kXRDC_MemController13 = 13U,   /*!< Memory region controller 13.    */
-    kXRDC_MemController14 = 14U,   /*!< Memory region controller 14.    */
-    kXRDC_MemController15 = 15U,   /*!< Memory region controller 15.    */
+    kXRDC_MemController0    = 0U,  /*!< Memory region controller 0.     */
+    kXRDC_MemController1    = 1U,  /*!< Memory region controller 1.     */
+    kXRDC_MemController2    = 2U,  /*!< Memory region controller 2.     */
+    kXRDC_MemController3    = 3U,  /*!< Memory region controller 3.     */
+    kXRDC_MemController4    = 4U,  /*!< Memory region controller 4.     */
+    kXRDC_MemController5    = 5U,  /*!< Memory region controller 5.     */
+    kXRDC_MemController6    = 6U,  /*!< Memory region controller 6.     */
+    kXRDC_MemController7    = 7U,  /*!< Memory region controller 7.     */
+    kXRDC_MemController8    = 8U,  /*!< Memory region controller 8.     */
+    kXRDC_MemController9    = 9U,  /*!< Memory region controller 9.     */
+    kXRDC_MemController10   = 10U, /*!< Memory region controller 10.    */
+    kXRDC_MemController11   = 11U, /*!< Memory region controller 11.    */
+    kXRDC_MemController12   = 12U, /*!< Memory region controller 12.    */
+    kXRDC_MemController13   = 13U, /*!< Memory region controller 13.    */
+    kXRDC_MemController14   = 14U, /*!< Memory region controller 14.    */
+    kXRDC_MemController15   = 15U, /*!< Memory region controller 15.    */
     kXRDC_PeriphController0 = 16U, /*!< Peripheral access controller 0. */
     kXRDC_PeriphController1 = 17U, /*!< Peripheral access controller 1. */
     kXRDC_PeriphController2 = 18U, /*!< Peripheral access controller 2. */
@@ -403,10 +403,10 @@ typedef enum _xrdc_controller
  */
 typedef enum _xrdc_error_state
 {
-    kXRDC_ErrorStateNone = 0x00U,   /*!< No access violation detected.       */
-    kXRDC_ErrorStateNone1 = 0x01U,  /*!< No access violation detected.       */
+    kXRDC_ErrorStateNone   = 0x00U, /*!< No access violation detected.       */
+    kXRDC_ErrorStateNone1  = 0x01U, /*!< No access violation detected.       */
     kXRDC_ErrorStateSingle = 0x02U, /*!< Single access violation detected.   */
-    kXRDC_ErrorStateMulti = 0x03U   /*!< Multiple access violation detected. */
+    kXRDC_ErrorStateMulti  = 0x03U  /*!< Multiple access violation detected. */
 } xrdc_error_state_t;
 
 /*!
@@ -414,12 +414,12 @@ typedef enum _xrdc_error_state
  */
 typedef enum _xrdc_error_attr
 {
-    kXRDC_ErrorSecureUserInst = 0x00U,         /*!< Secure user mode, instruction fetch access.           */
-    kXRDC_ErrorSecureUserData = 0x01U,         /*!< Secure user mode, data access.                        */
-    kXRDC_ErrorSecurePrivilegeInst = 0x02U,    /*!< Secure privileged mode, instruction fetch access.     */
-    kXRDC_ErrorSecurePrivilegeData = 0x03U,    /*!< Secure privileged mode, data access.                  */
-    kXRDC_ErrorNonSecureUserInst = 0x04U,      /*!< NonSecure user mode, instruction fetch access.        */
-    kXRDC_ErrorNonSecureUserData = 0x05U,      /*!< NonSecure user mode, data access.                     */
+    kXRDC_ErrorSecureUserInst         = 0x00U, /*!< Secure user mode, instruction fetch access.           */
+    kXRDC_ErrorSecureUserData         = 0x01U, /*!< Secure user mode, data access.                        */
+    kXRDC_ErrorSecurePrivilegeInst    = 0x02U, /*!< Secure privileged mode, instruction fetch access.     */
+    kXRDC_ErrorSecurePrivilegeData    = 0x03U, /*!< Secure privileged mode, data access.                  */
+    kXRDC_ErrorNonSecureUserInst      = 0x04U, /*!< NonSecure user mode, instruction fetch access.        */
+    kXRDC_ErrorNonSecureUserData      = 0x05U, /*!< NonSecure user mode, data access.                     */
     kXRDC_ErrorNonSecurePrivilegeInst = 0x06U, /*!< NonSecure privileged mode, instruction fetch access.  */
     kXRDC_ErrorNonSecurePrivilegeData = 0x07U  /*!< NonSecure privileged mode, data access.               */
 } xrdc_error_attr_t;
@@ -429,8 +429,8 @@ typedef enum _xrdc_error_attr
  */
 typedef enum _xrdc_error_type
 {
-    kXRDC_ErrorTypeRead = 0x00U, /*!< Error occurs on read reference.  */
-    kXRDC_ErrorTypeWrite = 0x01U /*!< Error occurs on write reference. */
+    kXRDC_ErrorTypeRead  = 0x00U, /*!< Error occurs on read reference.  */
+    kXRDC_ErrorTypeWrite = 0x01U  /*!< Error occurs on write reference. */
 } xrdc_error_type_t;
 
 /*!
@@ -925,7 +925,7 @@ static inline void XRDC_SetMemAccessLockMode(XRDC_Type *base, xrdc_mem_t mem, xr
     reg = ((reg & ~XRDC_MRGD_W_LK2_MASK) | XRDC_MRGD_W_LK2(lockMode));
 
     base->MRGD[mem].MRGD_W[3] = reg;
-#elif(defined(FSL_FEATURE_XRDC_HAS_MRGD_W4_LK2) && FSL_FEATURE_XRDC_HAS_MRGD_W4_LK2)
+#elif (defined(FSL_FEATURE_XRDC_HAS_MRGD_W4_LK2) && FSL_FEATURE_XRDC_HAS_MRGD_W4_LK2)
     uint32_t reg = base->MRGD[mem].MRGD_W[4];
 
     reg = ((reg & ~XRDC_MRGD_W_LK2_MASK) | XRDC_MRGD_W_LK2(lockMode));
@@ -972,7 +972,7 @@ static inline void XRDC_SetMemAccessValid(XRDC_Type *base, xrdc_mem_t mem, bool 
     {
         base->MRGD[mem].MRGD_W[3] &= ~XRDC_MRGD_W_VLD_MASK;
     }
-#elif(defined(FSL_FEATURE_XRDC_HAS_MRGD_W4_VLD) && FSL_FEATURE_XRDC_HAS_MRGD_W4_VLD)
+#elif (defined(FSL_FEATURE_XRDC_HAS_MRGD_W4_VLD) && FSL_FEATURE_XRDC_HAS_MRGD_W4_VLD)
     if (valid)
     {
         base->MRGD[mem].MRGD_W[4] |= XRDC_MRGD_W_VLD_MASK;

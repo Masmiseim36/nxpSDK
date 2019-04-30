@@ -81,8 +81,8 @@
 /*! @brief A type for the handle special key. */
 typedef enum _fun_key_status
 {
-    kSHELL_Normal = 0U,   /*!< Normal key */
-    kSHELL_Special = 1U,  /*!< Special key */
+    kSHELL_Normal   = 0U, /*!< Normal key */
+    kSHELL_Special  = 1U, /*!< Special key */
     kSHELL_Function = 2U, /*!< Function key */
 } fun_key_status_t;
 
@@ -226,7 +226,7 @@ static void SHELL_SerialManagerRxCallback(void *callbackParam,
 #if defined(OSA_USED)
 
 #if (defined(SHELL_USE_COMMON_TASK) && (SHELL_USE_COMMON_TASK > 0U))
-            shellHandle->commontaskMsg.callback = SHELL_Task;
+            shellHandle->commontaskMsg.callback      = SHELL_Task;
             shellHandle->commontaskMsg.callbackParam = shellHandle;
             COMMON_TASK_post_message(&shellHandle->commontaskMsg);
 #else
@@ -250,7 +250,7 @@ static void SHELL_SerialManagerRxCallback(void *callbackParam,
 static void SHELL_WriteBuffer(char *buffer, int32_t *indicator, char val, int len)
 {
     shell_context_handle_t *shellContextHandle;
-    int i = 0;
+    int i              = 0;
     shellContextHandle = (shell_context_handle_t *)buffer;
 
     for (i = 0; i < len; i++)
@@ -479,7 +479,7 @@ void SHELL_Task(shell_handle_t shellHandle)
                         SHELL_ProcessCommand(shellContextHandle, shellContextHandle->line);
                         /* Reset all params */
                         shellContextHandle->c_pos = shellContextHandle->l_pos = 0;
-                        shellContextHandle->hist_current = 0;
+                        shellContextHandle->hist_current                      = 0;
                         SHELL_Write(shellContextHandle, shellContextHandle->prompt, strlen(shellContextHandle->prompt));
                         memset(shellContextHandle->line, 0, sizeof(shellContextHandle->line));
                         continue;
@@ -570,16 +570,16 @@ static void SHELL_ProcessCommand(shell_context_handle_t *shellContextHandle, con
     uint8_t i = 0;
 
     tmpLen = strlen(cmd);
-    argc = SHELL_ParseLine(cmd, tmpLen, argv);
+    argc   = SHELL_ParseLine(cmd, tmpLen, argv);
 
     if ((tmpCommand == NULL) && (argc > 0))
     {
         p = LIST_GetHead(&shellContextHandle->commandContextListHead);
         while (p)
         {
-            tmpCommand = SHEEL_COMMAND_POINTER(p);
+            tmpCommand       = SHEEL_COMMAND_POINTER(p);
             tmpCommandString = tmpCommand->pcCommand;
-            tmpCommandLen = strlen(tmpCommandString);
+            tmpCommandLen    = strlen(tmpCommandString);
             /* Compare with space or end of string */
             if ((cmd[tmpCommandLen] == ' ') || (cmd[tmpCommandLen] == 0x00))
             {
@@ -694,7 +694,7 @@ static void SHELL_AutoComplete(shell_context_handle_t *shellContextHandle)
     const char *namePtr;
     const char *cmdName;
 
-    minLen = 0;
+    minLen  = 0;
     namePtr = NULL;
 
     if (!strlen(shellContextHandle->line))
@@ -713,13 +713,13 @@ static void SHELL_AutoComplete(shell_context_handle_t *shellContextHandle)
     while (p)
     {
         tmpCommand = SHEEL_COMMAND_POINTER(p);
-        cmdName = tmpCommand->pcCommand;
+        cmdName    = tmpCommand->pcCommand;
         if (SHELL_StringCompare(shellContextHandle->line, cmdName, strlen(shellContextHandle->line)) == 0)
         {
             if (minLen == 0)
             {
                 namePtr = cmdName;
-                minLen = strlen(namePtr);
+                minLen  = strlen(namePtr);
                 /* Show possible matches */
                 SHELL_Write(shellContextHandle, (char *)cmdName, strlen(cmdName));
                 SHELL_Write(shellContextHandle, "\r\n", 2);
@@ -769,9 +769,9 @@ static int32_t SHELL_ParseLine(const char *cmd, uint32_t len, char *argv[])
     memset(s_paramBuffer, '\0', len + 1);
     memcpy(s_paramBuffer, cmd, len);
 
-    p = s_paramBuffer;
+    p        = s_paramBuffer;
     position = 0;
-    argc = 0;
+    argc     = 0;
 
     while (position < len)
     {
@@ -873,7 +873,7 @@ shell_status_t SHELL_Init(shell_handle_t shellHandle, serial_handle_t serialHand
 
 #endif
 
-    shellContextHandle->prompt = prompt;
+    shellContextHandle->prompt       = prompt;
     shellContextHandle->serialHandle = serialHandle;
 
     shellContextHandle->serialWriteHandle = (serial_write_handle_t)&shellContextHandle->serialWriteHandleBuffer[0];
@@ -949,7 +949,11 @@ shell_status_t SHELL_Write(shell_handle_t shellHandle, char *buffer, uint32_t le
 
     assert(shellHandle);
     assert(buffer);
-    assert(length);
+
+    if (!length)
+    {
+        return kStatus_SHELL_Success;
+    }
 
     shellContextHandle = (shell_context_handle_t *)shellHandle;
 
@@ -997,7 +1001,7 @@ int SHELL_Printf(shell_handle_t shellHandle, const char *formatString, ...)
     va_start(ap, formatString);
 
     shellContextHandle->printLength = 0U;
-    length = SHELL_Sprintf(shellHandle, formatString, ap);
+    length                          = SHELL_Sprintf(shellHandle, formatString, ap);
     SerialManager_WriteBlocking(shellContextHandle->serialWriteHandle, (uint8_t *)shellContextHandle->printBuffer,
                                 length);
     va_end(ap);

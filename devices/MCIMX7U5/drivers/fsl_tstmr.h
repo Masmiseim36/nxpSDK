@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 #ifndef _FSL_TSTMR_H_
@@ -23,7 +23,6 @@
 #ifndef FSL_COMPONENT_ID
 #define FSL_COMPONENT_ID "platform.drivers.tstmr"
 #endif
-
 
 /*! @name Driver version */
 /*@{*/
@@ -48,9 +47,9 @@ extern "C" {
  *
  * @return The 56-bit time stamp value.
  */
-static inline uint64_t TSTMR_ReadTimeStamp(TSTMR_Type* base)
+static inline uint64_t TSTMR_ReadTimeStamp(TSTMR_Type *base)
 {
-    return *(volatile uint64_t*)(base);
+    return *(volatile uint64_t *)(base);
 }
 
 /*!
@@ -62,7 +61,7 @@ static inline uint64_t TSTMR_ReadTimeStamp(TSTMR_Type* base)
  * @param base      TSTMR peripheral base address.
  * @param delayInUs Delay value in microseconds.
  */
-static inline void TSTMR_DelayUs(TSTMR_Type* base, uint32_t delayInUs)
+static inline void TSTMR_DelayUs(TSTMR_Type *base, uint32_t delayInUs)
 {
     uint64_t startTime = TSTMR_ReadTimeStamp(base);
 #if defined(FSL_FEATURE_TSTMR_CLOCK_FREQUENCY_1MHZ) && FSL_FEATURE_TSTMR_CLOCK_FREQUENCY_1MHZ

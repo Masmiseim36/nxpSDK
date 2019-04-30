@@ -2,7 +2,7 @@
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -14,7 +14,8 @@
  ******************************************************************************/
 
 /* Power mode definition used in application. */
-typedef enum _app_power_mode {
+typedef enum _app_power_mode
+{
     kAPP_PowerModeRun = 'A', /* Normal RUN mode */
     kAPP_PowerModeWait,      /* WAIT mode. */
     kAPP_PowerModeStop,      /* STOP mode. */

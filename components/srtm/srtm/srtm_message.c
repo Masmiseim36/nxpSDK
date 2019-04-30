@@ -102,17 +102,17 @@ static srtm_message_t SRTM_CommMessage_Create(srtm_message_type_t type,
 
     if (msg)
     {
-        msg->type = type;
-        msg->direct = direct;
+        msg->type    = type;
+        msg->direct  = direct;
         msg->channel = channel;
 
-        head = (srtm_packet_head_t *)(msg->data);
-        head->category = category;
+        head               = (srtm_packet_head_t *)(msg->data);
+        head->category     = category;
         head->majorVersion = SRTM_MESSAGE_MAJOR_VERSION(version);
         head->minorVersion = SRTM_MESSAGE_MINOR_VERSION(version);
-        head->type = (uint8_t)type;
-        head->command = command;
-        head->priority = msg->priority;
+        head->type         = (uint8_t)type;
+        head->command      = command;
+        head->priority     = msg->priority;
     }
 
     return msg;
@@ -141,9 +141,9 @@ srtm_procedure_t SRTM_Procedure_Create(srtm_message_proc_cb_t procedure, void *p
 
     if (msg)
     {
-        msg->type = SRTM_MessageTypeProcedure;
-        msg->direct = SRTM_MessageDirectNone;
-        msg->procMsg.cb = procedure;
+        msg->type           = SRTM_MessageTypeProcedure;
+        msg->direct         = SRTM_MessageDirectNone;
+        msg->procMsg.cb     = procedure;
         msg->procMsg.param1 = param1;
         msg->procMsg.param2 = param2;
     }
@@ -164,8 +164,8 @@ srtm_rawdata_t SRTM_RawData_Create(srtm_channel_t channel, uint32_t dataLen)
 
     if (msg)
     {
-        msg->type = SRTM_MessageTypeRawData;
-        msg->direct = SRTM_MessageDirectTx;
+        msg->type    = SRTM_MessageTypeRawData;
+        msg->direct  = SRTM_MessageDirectTx;
         msg->channel = channel;
     }
 
@@ -249,7 +249,7 @@ void SRTM_Message_SetPriority(srtm_message_t message, uint8_t priority)
     message->priority = priority;
     if (message->type < SRTM_MessageTypeCommLast)
     {
-        head = SRTM_CommMessage_GetPacketHead(message);
+        head           = SRTM_CommMessage_GetPacketHead(message);
         head->priority = priority;
     }
 }
@@ -258,7 +258,7 @@ void SRTM_Message_SetFreeFunc(srtm_message_t message, srtm_message_free_t func, 
 {
     assert(message);
 
-    message->free = func;
+    message->free      = func;
     message->freeParam = param;
 }
 

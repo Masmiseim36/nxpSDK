@@ -34,6 +34,8 @@
 #include "fsl_trng.h"
 #elif defined(FSL_FEATURE_SOC_RNG_COUNT) && (FSL_FEATURE_SOC_RNG_COUNT > 0)
 #include "fsl_rnga.h"
+#elif defined(FSL_FEATURE_SOC_LPC_RNG1_COUNT) && (FSL_FEATURE_SOC_LPC_RNG1_COUNT > 0)
+#include "fsl_rng.h"
 #endif
 
 #define CLEAN_RETURN(value) \
@@ -4380,6 +4382,8 @@ void mbedtls_sha256_process(mbedtls_sha256_context *ctx, const unsigned char dat
 #include "fsl_rnga.h"
 #elif defined(FSL_FEATURE_SOC_LPC_RNG_COUNT) && (FSL_FEATURE_SOC_LPC_RNG_COUNT > 0)
 #include "fsl_rng.h"
+#elif defined(FSL_FEATURE_SOC_LPC_RNG1_COUNT) && (FSL_FEATURE_SOC_LPC_RNG1_COUNT > 0)
+#include "fsl_rng.h"
 #endif
 
 int mbedtls_hardware_poll(void *data, unsigned char *output, size_t len, size_t *olen)
@@ -4428,6 +4432,20 @@ int mbedtls_hardware_poll(void *data, unsigned char *output, size_t len, size_t 
     }
 
     result = kStatus_Success;
+#elif defined(FSL_FEATURE_SOC_LPC_RNG1_COUNT) && (FSL_FEATURE_SOC_LPC_RNG1_COUNT > 0)
+    status_t status = kStatus_Fail;
+
+    while(status != kStatus_Success)
+    {
+        status = RNG_GetRandomData(RNG, output, len);
+
+        if(status == kStatus_Fail)
+        {
+            RNG_Init(RNG);
+        }
+    }
+
+    result = status;
 #endif
     if (result == kStatus_Success)
     {

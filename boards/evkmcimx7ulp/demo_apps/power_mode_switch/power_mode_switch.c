@@ -36,17 +36,17 @@
 /* LPTMR0 is LLWU internal module 0. */
 #define SYSTICK_LLWU_MODULE (0U)
 /* Allow systick to be a wakeup source in VLLS. */
-#define SYSTICK_LLWU_WAKEUP (true)
+#define SYSTICK_LLWU_WAKEUP (false)
 
 /* Enable GPIO PAD low power operation.
- * NOTE: DON'T TURN THIS OPTION ON UNLESS YOU UNDERSTAND IT WELL.
+ * NOTE: ONLY ON EVK BOARD CAN THIS OPTION SET TO 1.
  * Rational: i.MX7ULP supports voltage detection circuitry on pads which results in additional power consumption.
  *           We can disable this feature to save power, but it may cause malfunction or even SoC pad damage.
  *           Please read "GPIO pads operating range configuration" in Reference Manual SIM module carefully
  *           before turn APP_ENABLE_GPIO_PAD_LOW_POWER to "1". If there's any change on board, the pad range setting
  *           code need to be modified accordingly.
  */
-#define APP_ENABLE_GPIO_PAD_LOW_POWER (0)
+#define APP_ENABLE_GPIO_PAD_LOW_POWER (1)
 
 #define APP_LPTMR1_IRQ_PRIO (5U)
 
@@ -94,40 +94,40 @@ extern bool BOARD_IsRunOnQSPI(void);
 
 static const pmc0_hsrun_mode_config_t s_pmc0HsrunModeConfig = {
     .coreRegulatorVoltLevel = 33U, /* 0.596 + 33 * 0.01083 = 0.95339 */
-    .enableForwardBias = 1U};
+    .enableForwardBias      = 1U};
 
 static const pmc0_run_mode_config_t s_pmc0RunModeConfig = {.coreRegulatorVoltLevel =
                                                                28U}; /* 0.596 + 28 * 0.01083 = 0.89924 */
 
 static const pmc0_vlpr_mode_config_t s_pmc0VlprModeConfig = {
-    .arrayRegulatorSelect = 0U,
-    .coreRegulatorSelect = 0U,
-    .lvdMonitorSelect = 0U,
-    .hvdMonitorSelect = 0U,
-    .enableForceHpBandgap = 0U,
+    .arrayRegulatorSelect   = 0U,
+    .coreRegulatorSelect    = 0U,
+    .lvdMonitorSelect       = 0U,
+    .hvdMonitorSelect       = 0U,
+    .enableForceHpBandgap   = 0U,
     .coreRegulatorVoltLevel = 24U, /* 0.596 + 24 * 0.01083 = 0.85592 */
-    .enableReverseBackBias = 0U};
+    .enableReverseBackBias  = 1U};
 
 static const pmc0_stop_mode_config_t s_pmc0StopModeConfig = {.coreRegulatorVoltLevel =
                                                                  28U}; /* 0.596 + 28 * 0.01083 = 0.89924 */
 
 static const pmc0_vlps_mode_config_t s_pmc0VlpsModeConfig = {
-    .arrayRegulatorSelect = 0U,
-    .coreRegulatorSelect = 0U,
-    .lvdMonitorSelect = 0U,
-    .hvdMonitorSelect = 0U,
-    .enableForceHpBandgap = 0U,
+    .arrayRegulatorSelect   = 0U,
+    .coreRegulatorSelect    = 0U,
+    .lvdMonitorSelect       = 0U,
+    .hvdMonitorSelect       = 0U,
+    .enableForceHpBandgap   = 0U,
     .coreRegulatorVoltLevel = 28U, /* 0.596 + 28 * 0.01083 = 0.89924 */
-    .enableReverseBackBias = 0U};
+    .enableReverseBackBias  = 1U};
 
 static const pmc0_lls_mode_config_t s_pmc0LlsModeConfig = {
-    .arrayRegulatorSelect = 0U,
-    .coreRegulatorSelect = 0U,
-    .lvdMonitorSelect = 0U,
-    .hvdMonitorSelect = 0U,
-    .enableForceHpBandgap = 0U,
+    .arrayRegulatorSelect   = 0U,
+    .coreRegulatorSelect    = 0U,
+    .lvdMonitorSelect       = 0U,
+    .hvdMonitorSelect       = 0U,
+    .enableForceHpBandgap   = 0U,
     .coreRegulatorVoltLevel = 13U, /* 0.596 + 13 * 0.01083 = 0.73679 */
-    .enableReverseBackBias = 0U};
+    .enableReverseBackBias  = 1U};
 
 static const pmc0_vlls_mode_config_t s_pmc0VllsModeConfig = {
     .arrayRegulatorSelect = 2U, .lvdMonitorSelect = 0U, .hvdMonitorSelect = 0U, .enableForceHpBandgap = 0U};
@@ -141,9 +141,9 @@ static void APP_InitDebugConsole(void)
 
 void APP_InitPMC0(void)
 {
-    pmc0_bias_config_t bcfg = {.RBBNWellVoltageLevelSelect = 0,
-                               .RBBPWellVoltageLevelSelect = 0,
-                               .DisableRBBPullDown = 0,
+    pmc0_bias_config_t bcfg = {.RBBNWellVoltageLevelSelect = 5,
+                               .RBBPWellVoltageLevelSelect = 5,
+                               .DisableRBBPullDown         = 0,
                                .FBBNWellVoltageLevelSelect = 5,
                                .FBBPWellVoltageLevelSelect = 5};
 
@@ -185,17 +185,7 @@ static void BOARD_InitClock(void)
 static void BOARD_InitClockAndPins(void)
 {
     BOARD_InitClock();
-
-    if (BOARD_IsRunOnQSPI())
-    {
-        BOARD_InitPins();
-    }
-    else
-    {
-        /* If not XIP, configure pins without QSPI feature which saves power. */
-        BOARD_InitPinsNoQSPI();
-    }
-
+    BOARD_InitPins();
     APP_SRTM_I2C_ReleaseBus();
     BOARD_I2C_ConfigurePins();
 }
@@ -564,7 +554,7 @@ static uint32_t APP_GetInputNumWithEcho(uint32_t length, bool allowZero)
     uint8_t i, j;
     uint8_t digCount = 0U;
     uint32_t temp1, temp2 = 0U;
-    uint32_t result = 0U;
+    uint32_t result  = 0U;
     bool getFirstDig = false;
 
     assert(length <= (sizeof(digBuffer) / sizeof(digBuffer[0U])));
@@ -750,7 +740,7 @@ void PowerModeSwitchTask(void *pvParameters)
     /* Setup LPTMR. */
     LPTMR_GetDefaultConfig(&lptmrConfig);
     lptmrConfig.prescalerClockSource = kLPTMR_PrescalerClock_1; /* Use LPO 1KHz as clock source. */
-    lptmrConfig.bypassPrescaler = true;
+    lptmrConfig.bypassPrescaler      = true;
     LPTMR_Init(LPTMR1, &lptmrConfig);
     NVIC_SetPriority(LPTMR1_IRQn, APP_LPTMR1_IRQ_PRIO);
 
@@ -966,10 +956,11 @@ int main(void)
 
 #if APP_ENABLE_GPIO_PAD_LOW_POWER
     /* NOTE: Please see the definition of APP_ENABLE_GPIO_PAD_LOW_POWER before using the DGO update here. */
-    /* Set PTB/PTC/PTE to low range, PTA/PTF to high range to save power. */
-    APP_UpdateSimDgo(11, SIM_SIM_DGO_GP11_PTA_RANGE_CTRL_MASK | SIM_SIM_DGO_GP11_PTB_RANGE_CTRL_MASK |
-                             SIM_SIM_DGO_GP11_PTC_RANGE_CTRL_MASK | SIM_SIM_DGO_GP11_PTE_RANGE_CTRL_MASK |
-                             SIM_SIM_DGO_GP11_PTF_RANGE_CTRL_MASK,
+    /* Set PTB/PTC/PTE to low range, PTA/PTF to high range to save power. Need to align with board design. */
+    APP_UpdateSimDgo(11,
+                     SIM_SIM_DGO_GP11_PTA_RANGE_CTRL_MASK | SIM_SIM_DGO_GP11_PTB_RANGE_CTRL_MASK |
+                         SIM_SIM_DGO_GP11_PTC_RANGE_CTRL_MASK | SIM_SIM_DGO_GP11_PTE_RANGE_CTRL_MASK |
+                         SIM_SIM_DGO_GP11_PTF_RANGE_CTRL_MASK,
                      SIM_SIM_DGO_GP11_PTA_RANGE_CTRL(2) | SIM_SIM_DGO_GP11_PTB_RANGE_CTRL(1) |
                          SIM_SIM_DGO_GP11_PTC_RANGE_CTRL(1) | SIM_SIM_DGO_GP11_PTE_RANGE_CTRL(1) |
                          SIM_SIM_DGO_GP11_PTF_RANGE_CTRL(2));

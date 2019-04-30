@@ -3,9 +3,9 @@
  * Copyright (c) 2016 - 2017 , NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
-*/
+ */
 
 #ifndef _FSCI_BLE_H
 #define _FSCI_BLE_H
@@ -38,7 +38,7 @@
 *************************************************************************************
 ************************************************************************************/
 
-/*! FSCI interface on which the monitored commands, events or statuses 
+/*! FSCI interface on which the monitored commands, events or statuses
 should be printed */
 extern uint32_t fsciBleInterfaceId;
 
@@ -53,41 +53,32 @@ extern "C" {
 #endif
 
 /*! *********************************************************************************
-* \brief  Allocates a FSCI packet.
-*
-* \param[in]    opCodeGroup     FSCI operation group.
-* \param[in]    opCode          FSCI operation code.
-* \param[in]    dataSize        Size of the payload.
-*
-* \return The allocated FSCI packet
-*
-********************************************************************************** */
-clientPacketStructured_t* fsciBleAllocFsciPacket
-(
-    opGroup_t   opCodeGroup,
-    uint8_t     opCode, 
-    uint16_t    dataSize
-);
+ * \brief  Allocates a FSCI packet.
+ *
+ * \param[in]    opCodeGroup     FSCI operation group.
+ * \param[in]    opCode          FSCI operation code.
+ * \param[in]    dataSize        Size of the payload.
+ *
+ * \return The allocated FSCI packet
+ *
+ ********************************************************************************** */
+clientPacketStructured_t *fsciBleAllocFsciPacket(opGroup_t opCodeGroup, uint8_t opCode, uint16_t dataSize);
 
 /*! *********************************************************************************
-* \brief  Creates a FSCI packet without payload and sends it over UART.
-*
-* \param[in]    opCodeGroup     FSCI operation group.
-* \param[in]    opCode          FSCI operation code.
-*
-********************************************************************************** */
-void fsciBleNoParamCmdOrEvtMonitor
-(
-    opGroup_t   opCodeGroup, 
-    uint8_t     opCode
-);
+ * \brief  Creates a FSCI packet without payload and sends it over UART.
+ *
+ * \param[in]    opCodeGroup     FSCI operation group.
+ * \param[in]    opCode          FSCI operation code.
+ *
+ ********************************************************************************** */
+void fsciBleNoParamCmdOrEvtMonitor(opGroup_t opCodeGroup, uint8_t opCode);
 
 #ifdef __cplusplus
 }
-#endif 
+#endif
 
 #endif /* _FSCI_BLE_H */
 
 /*! *********************************************************************************
-* @}
-********************************************************************************** */
+ * @}
+ ********************************************************************************** */

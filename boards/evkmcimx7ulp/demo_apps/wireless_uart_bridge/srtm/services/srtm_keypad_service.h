@@ -46,10 +46,10 @@ typedef enum _srtm_keypad_event
 } srtm_keypad_event_t;
 
 /**
-* @brief SRTM keypad service configure keypad event function type.
-*/
-typedef srtm_status_t (*srtm_keypad_service_conf_t)(srtm_service_t service, srtm_peercore_t core,
-                                                    uint8_t keyIdx, srtm_keypad_event_t event, bool wakeup);
+ * @brief SRTM keypad service configure keypad event function type.
+ */
+typedef srtm_status_t (*srtm_keypad_service_conf_t)(
+    srtm_service_t service, srtm_peercore_t core, uint8_t keyIdx, srtm_keypad_event_t event, bool wakeup);
 
 /*******************************************************************************
  * API
@@ -91,8 +91,10 @@ void SRTM_KeypadService_Reset(srtm_service_t service, srtm_peercore_t core);
  * @param param user callback parameter.
  * @return SRTM_Status_Success on success and others on failure.
  */
-srtm_status_t SRTM_KeypadService_RegisterKey(srtm_service_t service, uint8_t keyIdx,
-                                             srtm_keypad_service_conf_t confKEvent, void *param);
+srtm_status_t SRTM_KeypadService_RegisterKey(srtm_service_t service,
+                                             uint8_t keyIdx,
+                                             srtm_keypad_service_conf_t confKEvent,
+                                             void *param);
 
 /*!
  * @brief Unregister keypad service pin. The operation cannot work when service is running.

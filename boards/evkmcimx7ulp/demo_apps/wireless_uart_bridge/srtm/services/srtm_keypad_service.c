@@ -46,14 +46,14 @@ typedef struct _srtm_keypad_key
     srtm_notification_t notif; /* SRTM notification message for keypad event */
     srtm_keypad_service_conf_t confKEvent;
     void *param;
-} *srtm_keypad_key_t;
+} * srtm_keypad_key_t;
 
 /* Service handle */
 typedef struct _srtm_keypad_service
 {
     struct _srtm_service service;
     srtm_list_t keys; /*!< SRTM keypad keys list */
-} *srtm_keypad_service_t;
+} * srtm_keypad_service_t;
 
 /*******************************************************************************
  * Prototypes
@@ -86,8 +86,8 @@ static void SRTM_KeypadService_RecycleMessage(srtm_message_t msg, void *param)
     EnableGlobalIRQ(primask);
 }
 
-static srtm_keypad_key_t SRTM_KeypadService_FindKey(srtm_keypad_service_t handle, uint8_t keyIdx, bool remove,
-                                                    bool notify, srtm_keypad_value_t value)
+static srtm_keypad_key_t SRTM_KeypadService_FindKey(
+    srtm_keypad_service_t handle, uint8_t keyIdx, bool remove, bool notify, srtm_keypad_value_t value)
 {
     srtm_keypad_key_t key = NULL;
     srtm_list_t *list;
@@ -107,7 +107,7 @@ static srtm_keypad_key_t SRTM_KeypadService_FindKey(srtm_keypad_service_t handle
             }
             if (notify)
             {
-                notif = key->notif;
+                notif      = key->notif;
                 key->notif = NULL;
             }
             break;
@@ -120,7 +120,7 @@ static srtm_keypad_key_t SRTM_KeypadService_FindKey(srtm_keypad_service_t handle
         /* If notification message exists, just deliver it. Otherwise it's on the way, no need
            to deliver again. */
         notif->channel = key->channel;
-        payload = SRTM_CommMessage_GetPayload(notif);
+        payload        = SRTM_CommMessage_GetPayload(notif);
         *(payload + 1) = (uint8_t)value;
         SRTM_Dispatcher_DeliverNotification(handle->service.dispatcher, notif);
     }
@@ -149,7 +149,7 @@ static srtm_status_t SRTM_KeypadService_Request(srtm_service_t service, srtm_req
     assert(channel);
     command = SRTM_CommMessage_GetCommand(request);
     payload = SRTM_CommMessage_GetPayload(request);
-    len = SRTM_CommMessage_GetPayloadLen(request);
+    len     = SRTM_CommMessage_GetPayloadLen(request);
 
     status = SRTM_Service_CheckVersion(service, request, SRTM_KEYPAD_VERSION);
     if (status != SRTM_Status_Success || !payload || len < 3)
@@ -161,7 +161,7 @@ static srtm_status_t SRTM_KeypadService_Request(srtm_service_t service, srtm_req
     else
     {
         keyIdx = *payload;
-        key = SRTM_KeypadService_FindKey(handle, keyIdx, false, false, SRTM_KeypadValueReleased);
+        key    = SRTM_KeypadService_FindKey(handle, keyIdx, false, false, SRTM_KeypadValueReleased);
         if (!key)
         {
             SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_WARN, "%s: Key 0x%x not registered!\r\n", __func__, keyIdx);
@@ -177,8 +177,8 @@ static srtm_status_t SRTM_KeypadService_Request(srtm_service_t service, srtm_req
                     assert(key->confKEvent);
                     status = key->confKEvent(service, channel->core, keyIdx, (srtm_keypad_event_t)(*(payload + 1)),
                                              (bool)(*(payload + 2)));
-                    retCode = status == SRTM_Status_Success ? SRTM_KEYPAD_RETURN_CODE_SUCEESS
-                                                            : SRTM_KEYPAD_RETURN_CODE_FAIL;
+                    retCode =
+                        status == SRTM_Status_Success ? SRTM_KEYPAD_RETURN_CODE_SUCEESS : SRTM_KEYPAD_RETURN_CODE_FAIL;
                     break;
                 default:
                     SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_WARN, "%s: command %d unsupported!\r\n", __func__, command);
@@ -194,8 +194,8 @@ static srtm_status_t SRTM_KeypadService_Request(srtm_service_t service, srtm_req
         return SRTM_Status_OutOfMemory;
     }
 
-    payload = SRTM_CommMessage_GetPayload(response);
-    *payload = keyIdx;
+    payload        = SRTM_CommMessage_GetPayload(response);
+    *payload       = keyIdx;
     *(payload + 1) = retCode;
 
     /* Now the response is ready */
@@ -223,10 +223,10 @@ srtm_service_t SRTM_KeypadService_Create(void)
 
     SRTM_List_Init(&handle->service.node);
     handle->service.dispatcher = NULL;
-    handle->service.category = SRTM_KEYPAD_CATEGORY;
-    handle->service.destroy = SRTM_KeypadService_Destroy;
-    handle->service.request = SRTM_KeypadService_Request;
-    handle->service.notify = SRTM_KeypadService_Notify;
+    handle->service.category   = SRTM_KEYPAD_CATEGORY;
+    handle->service.destroy    = SRTM_KeypadService_Destroy;
+    handle->service.request    = SRTM_KeypadService_Request;
+    handle->service.notify     = SRTM_KeypadService_Notify;
 
     return &handle->service;
 }
@@ -243,7 +243,7 @@ void SRTM_KeypadService_Destroy(srtm_service_t service)
     /* Service must be unregistered from dispatcher before destroy */
     assert(SRTM_List_IsEmpty(&service->node));
 
-    while(!SRTM_List_IsEmpty(&handle->keys))
+    while (!SRTM_List_IsEmpty(&handle->keys))
     {
         list = handle->keys.next;
         SRTM_List_Remove(list);
@@ -267,13 +267,15 @@ void SRTM_KeypadService_Reset(srtm_service_t service, srtm_peercore_t core)
     /* Currently assume just one peer core, need to update all keys. */
     for (list = handle->keys.next; list != &handle->keys; list = list->next)
     {
-        key = SRTM_LIST_OBJ(srtm_keypad_key_t, node, list);
+        key          = SRTM_LIST_OBJ(srtm_keypad_key_t, node, list);
         key->channel = NULL;
     }
 }
 
-srtm_status_t SRTM_KeypadService_RegisterKey(srtm_service_t service, uint8_t keyIdx,
-                                             srtm_keypad_service_conf_t confKEvent, void *param)
+srtm_status_t SRTM_KeypadService_RegisterKey(srtm_service_t service,
+                                             uint8_t keyIdx,
+                                             srtm_keypad_service_conf_t confKEvent,
+                                             void *param)
 {
     srtm_keypad_service_t handle = (srtm_keypad_service_t)service;
     srtm_keypad_key_t key;
@@ -299,11 +301,11 @@ srtm_status_t SRTM_KeypadService_RegisterKey(srtm_service_t service, uint8_t key
         return SRTM_Status_OutOfMemory;
     }
 
-    key->keyIdx = keyIdx;
+    key->keyIdx     = keyIdx;
     key->confKEvent = confKEvent;
-    key->param = param;
-    key->notif = SRTM_Notification_Create(NULL, SRTM_KEYPAD_CATEGORY, SRTM_KEYPAD_VERSION,
-                                          SRTM_KEYPAD_NTF_KEYPAD_EVENT, 2U);
+    key->param      = param;
+    key->notif =
+        SRTM_Notification_Create(NULL, SRTM_KEYPAD_CATEGORY, SRTM_KEYPAD_VERSION, SRTM_KEYPAD_NTF_KEYPAD_EVENT, 2U);
     assert(key->notif);
     SRTM_Message_SetFreeFunc(key->notif, SRTM_KeypadService_RecycleMessage, key);
     payload = (uint8_t *)SRTM_CommMessage_GetPayload(key->notif);

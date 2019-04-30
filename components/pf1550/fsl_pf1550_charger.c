@@ -1,7 +1,7 @@
 /*
  * Copyright 2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -79,7 +79,7 @@ void PF1550_SetChargerAttibute(pf1550_handle_t *handle, const pf1550_charger_att
     PF1550_ModifyReg(handle, PF1550_CHG_EOC_CNFG, 0x70U, (uint8_t)temp);
 
     /* Set Charger restart threshold. */
-    if (attribute->restartVoltageThreshold_uV  == 0U)
+    if (attribute->restartVoltageThreshold_uV == 0U)
     {
         temp = 3U;
     }
@@ -421,7 +421,7 @@ void PF1550_SetThermalAttibute(pf1550_handle_t *handle, const pf1550_thermal_att
     PF1550_ModifyReg(handle, PF1550_THM_ADJ_SETTING, 0x30U, (uint8_t)temp);
 
     /* Enable/disable thermal foldback current function. */
-    temp = attribute->thermalFoldbackEnable ? (1U << 7U): 0U;
+    temp = attribute->thermalFoldbackEnable ? (1U << 7U) : 0U;
     PF1550_ModifyReg(handle, PF1550_THM_REG_CNFG, 0x80U, (uint8_t)temp);
 }
 

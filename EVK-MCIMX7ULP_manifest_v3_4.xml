@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SDK_2.x_EVK-MCIMX7ULP" name="EVK-MCIMX7ULP" brief="This is SDK version 2.5.0 manifest file. It describes the content of the EVK-MCIMX7ULP and additional settings for tools that support SDK version 2.5.0" format_version="3.4" api_version="2.0.0" configuration="36ed985e87e5f5a0796d22ffcbfc99fa" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.4.xsd">
-  <!--Timestamp (UTC): 2019-01-07 17:16:09.527481-->
+<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SDK_2.x_EVK-MCIMX7ULP" name="EVK-MCIMX7ULP" brief="This is SDK version 2.5.1 manifest file. It describes the content of the EVK-MCIMX7ULP and additional settings for tools that support SDK version 2.5.1" format_version="3.4" api_version="2.0.0" configuration="d94a7cefd9db37f71a6b6f4327c543ee" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.4.xsd">
+  <!--Timestamp (UTC): 2019-04-25 12:44:44.295210-->
   <defines>
     <define name="CPU_$|package|" value=""/>
     <define name="CPU_$|package|_$|core|" value=""/>
@@ -10,21 +10,21 @@
     <definition extID="com.crt.advproject.config.exe.release"/>
     <definition extID="QSPI_FLASH_MCIMX7U5xxxxx"/>
   </externalDefinitions>
-  <ksdk id="MCUXpresso250" name="MCUXpresso250" version="2.5.0"/>
+  <ksdk id="MCUXpresso251" name="MCUXpresso251" version="2.5.1" revision="215 2019-04-25"/>
   <compilers>
     <compiler id="compiler_gcc" name="gcc" type="gcc"/>
     <compiler id="compiler_iar" name="iar" type="iar"/>
   </compilers>
   <toolchainSettings/>
   <toolchains>
-    <toolchain id="armgcc" name="GCC_ARM_Embedded" version="7.3.1" full_name="GCC ARM Embedded" compiler="compiler_gcc" type="armgcc" vendor="GCC ARM Embedded" vendor_url="http://launchpad.net/gcc-arm-embedded"/>
-    <toolchain id="iar" name="IAR_Embedded_Workbench_for_ARM" version="8.32.1" full_name="IAR Embedded Workbench for ARM" compiler="compiler_iar" type="iar" vendor="IAR Systems" vendor_url="http://www.iar.com"/>
+    <toolchain id="armgcc" name="GCC_ARM_Embedded" version="8.2.1" full_name="GCC ARM Embedded" compiler="compiler_gcc" type="armgcc" vendor="GCC ARM Embedded" vendor_url="http://launchpad.net/gcc-arm-embedded"/>
+    <toolchain id="iar" name="IAR_Embedded_Workbench_for_ARM" version="8.32.3" full_name="IAR Embedded Workbench for ARM" compiler="compiler_iar" type="iar" vendor="IAR Systems" vendor_url="http://www.iar.com"/>
   </toolchains>
   <boards>
     <board id="evkmcimx7ulp" name="EVK-MCIMX7ULP" href="http://www.nxp.com" version="1.0.0" package="MCIMX7U5DVP08">
       <description>The evkmcimx7ulp is an development platform for MCIMX7U5,MCIMX7U3 MCUs</description>
       <image path="docs/images" type="image">
-        <files mask="evkmcimx7ulp.gif"/>
+        <files mask="EVK-MCIMX7ULP.gif"/>
       </image>
       <metadataSet>
         <metadata key="html">
@@ -59,7 +59,7 @@
             <files mask="ecompass.xml"/>
           </external>
         </example>
-        <example id="evkmcimx7ulp_flexio_pwm" name="flexio_pwm" brief="The flexio_pwm example describes how to use SDK drivers to implement the PWM feature by FLEXIO IP module. It outputs the PWM singal with fixed frequency defined by &quot;DEMO_FLEXIO_FREQUENCY&quot; in source code and dynamic duty from 99 to 1 to one of the FLEXIO pin." toolchain="armgcc iar" category="driver_examples" path="boards/evkmcimx7ulp/driver_examples/flexio/pwm">
+        <example id="evkmcimx7ulp_flexio_pwm" name="flexio_pwm" brief="This demo describes how to use SDK drivers to implement the PWM feature by FLEXIO IP module. It outputs the PWM singal with fixed frequency defined by &quot;DEMO_FLEXIO_FREQUENCY&quot; in source code and dynamic duty from 99 to 1 to one of the FLEXIO pin." toolchain="armgcc iar" category="driver_examples/flexio" path="boards/evkmcimx7ulp/driver_examples/flexio/pwm">
           <external path="boards/evkmcimx7ulp/driver_examples/flexio/pwm" type="xml">
             <files mask="flexio_pwm.xml"/>
           </external>
@@ -119,7 +119,7 @@
             <files mask="freertos_sem.xml"/>
           </external>
         </example>
-        <example id="evkmcimx7ulp_freertos_swtimer" name="freertos_swtimer" brief="This document explains the freertos_swtimer example. It shows usage of software timer and itscallback.The example application creates one software timer SwTimer. The timer’s callback SwTimerCallback isperiodically executed and text “Tick.” is printed to terminal." toolchain="armgcc iar" category="rtos_examples" path="boards/evkmcimx7ulp/rtos_examples/freertos_swtimer">
+        <example id="evkmcimx7ulp_freertos_swtimer" name="freertos_swtimer" brief="This document explains the freertos_swtimer example. It shows usage of software timer and itscallback.The example application creates one software timer SwTimer. The timer's callback SwTimerCallback isperiodically executed and text &quot;Tick.&quot; is printed to terminal." toolchain="armgcc iar" category="rtos_examples" path="boards/evkmcimx7ulp/rtos_examples/freertos_swtimer">
           <external path="boards/evkmcimx7ulp/rtos_examples/freertos_swtimer" type="xml">
             <files mask="freertos_swtimer.xml"/>
           </external>
@@ -554,16 +554,6 @@
             <files mask="mbedtls_benchmark.xml"/>
           </external>
         </example>
-        <example id="evkmcimx7ulp_wolfssl_selftest" name="wolfssl_selftest" brief="The wolfssl_selftest demo application demonstrates cryptographic acceleration on supported platforms that have eitheran MMCAU or LTC peripheral. The hardware acceleration is enabled by default and can be configured at build time inthe middleware/wolfssl/wolfssl/wolfcrypt/settings.h header file. FREESCALE_USE_MMCAU and FREESCALE_USE_LTC macros canbe used to compile the wolfssl_benchmark project source code with support for the Freescale hardware cryptographicaccelerator, or when none of these macros is defined, all algorithms are implemented in software only." toolchain="armgcc iar" category="wolfssl_examples" path="boards/evkmcimx7ulp/wolfssl_examples/wolfssl_selftest">
-          <external path="boards/evkmcimx7ulp/wolfssl_examples/wolfssl_selftest" type="xml">
-            <files mask="wolfssl_selftest.xml"/>
-          </external>
-        </example>
-        <example id="evkmcimx7ulp_wolfssl_benchmark" name="wolfssl_benchmark" brief="The wolfssl_benchmark demo application demonstrates cryptographic acceleration on supported platforms that have MMCAU,LTC or similar accelerator peripheral. The hardware acceleration is enabled by default, and can be configured at build time inthe middleware/wolfssl/wolfssl/wolfcrypt/settings.h header file. FREESCALE_USE_MMCAU, FREESCALE_USE_LTC, FREESCALE_USE_LPC_AESand FREESCALE_USE_LPC_SHA macros can be used to compile the wolfssl_benchmark project source code with support forthe Freescale hardware cryptographic accelerator, or when none of these macros is defined, all algorithms are implemented in software only." toolchain="armgcc iar" category="wolfssl_examples" path="boards/evkmcimx7ulp/wolfssl_examples/wolfssl_benchmark">
-          <external path="boards/evkmcimx7ulp/wolfssl_examples/wolfssl_benchmark" type="xml">
-            <files mask="wolfssl_benchmark.xml"/>
-          </external>
-        </example>
       </examples>
     </board>
   </boards>
@@ -690,7 +680,7 @@
         <files mask="RTE_Device.h"/>
       </source>
     </component>
-    <component id="platform.drivers.sai_edma.MCIMX7U5" name="sai_edma" brief="SAI Driver" version="2.1.5" full_name="SAI Driver" devices="MCIMX7U5xxxxx" dependency="platform.Include_common.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.common.MCIMX7U5 platform.drivers.dmamux.MCIMX7U5 platform.drivers.edma.MCIMX7U5 platform.drivers.sai.MCIMX7U5" user_visible="true" type="driver">
+    <component id="platform.drivers.sai_edma.MCIMX7U5" name="sai_edma" brief="SAI Driver" version="2.2.0" full_name="SAI Driver" devices="MCIMX7U5xxxxx" dependency="platform.Include_common.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.common.MCIMX7U5 platform.drivers.dmamux.MCIMX7U5 platform.drivers.edma.MCIMX7U5 platform.drivers.sai.MCIMX7U5" user_visible="true" type="driver">
       <source path="devices/MCIMX7U5/drivers" target_path="drivers" type="c_include">
         <files mask="fsl_sai_edma.h"/>
       </source>
@@ -698,7 +688,7 @@
         <files mask="fsl_sai_edma.c"/>
       </source>
     </component>
-    <component id="platform.drivers.lpi2c_edma.MCIMX7U5" name="i2c_edma" brief="LPI2C Driver" version="2.1.5" full_name="LPI2C Driver" devices="MCIMX7U5xxxxx" dependency="platform.Include_common.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.common.MCIMX7U5 platform.drivers.dmamux.MCIMX7U5 platform.drivers.edma.MCIMX7U5 platform.drivers.lpi2c.MCIMX7U5" user_visible="true" type="driver">
+    <component id="platform.drivers.lpi2c_edma.MCIMX7U5" name="i2c_edma" brief="LPI2C Driver" version="2.1.6" full_name="LPI2C Driver" devices="MCIMX7U5xxxxx" dependency="platform.Include_common.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.common.MCIMX7U5 platform.drivers.dmamux.MCIMX7U5 platform.drivers.edma.MCIMX7U5 platform.drivers.lpi2c.MCIMX7U5" user_visible="true" type="driver">
       <source path="devices/MCIMX7U5/drivers" target_path="drivers" type="src">
         <files mask="fsl_lpi2c_edma.c"/>
       </source>
@@ -714,7 +704,7 @@
         <files mask="fsl_lpspi_edma.c"/>
       </source>
     </component>
-    <component id="platform.drivers.lpuart_edma.MCIMX7U5" name="lpuart_edma" brief="LPUART Driver" version="2.2.6" full_name="LPUART Driver" devices="MCIMX7U5xxxxx" dependency="platform.Include_common.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.common.MCIMX7U5 platform.drivers.dmamux.MCIMX7U5 platform.drivers.edma.MCIMX7U5 platform.drivers.lpuart.MCIMX7U5" user_visible="true" type="driver">
+    <component id="platform.drivers.lpuart_edma.MCIMX7U5" name="lpuart_edma" brief="LPUART Driver" version="2.2.7" full_name="LPUART Driver" devices="MCIMX7U5xxxxx" dependency="platform.Include_common.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.common.MCIMX7U5 platform.drivers.dmamux.MCIMX7U5 platform.drivers.edma.MCIMX7U5 platform.drivers.lpuart.MCIMX7U5" user_visible="true" type="driver">
       <source path="devices/MCIMX7U5/drivers" target_path="drivers" type="c_include">
         <files mask="fsl_lpuart_edma.h"/>
       </source>
@@ -727,7 +717,7 @@
         <files mask="fsl_sbrk.c"/>
       </source>
     </component>
-    <component id="platform.utilities.assert.MCIMX7U5" name="assert" version="1.0.0" devices="MCIMX7U5xxxxx" dependency="component.serial_manager.MCIMX7U5 utility.debug_console.MCIMX7U5" user_visible="true" type="utilities">
+    <component id="platform.utilities.assert.MCIMX7U5" name="assert" version="1.0.0" devices="MCIMX7U5xxxxx" dependency="component.serial_manager.MCIMX7U5 platform.Include_common.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.common.MCIMX7U5 utility.debug_console.MCIMX7U5" user_visible="true" type="utilities">
       <source path="devices/MCIMX7U5/utilities" target_path="utilities" type="src">
         <files mask="fsl_assert.c"/>
       </source>
@@ -769,7 +759,7 @@
     <component id="docs.MCIMX7U5.MCIMX7U5" name="MCIMX7U5" version="1.0.0" devices="MCIMX7U5xxxxx" user_visible="true" type="documentation">
       <source path="docs" target_path="src" type="doc">
         <files mask="Getting Started with MCUXpresso SDK Supporting i.MX 7ULP.pdf"/>
-        <files mask="MCUXpresso SDK Release Notes Supporting EVK-MCIMX7ULP.pdf"/>
+        <files mask="MCUXpresso SDK Release Notes Supporting MCIMX7ULP-EVKB.pdf"/>
       </source>
     </component>
     <component id="platform.Include_common.MCIMX7U5" name="CMSIS_Include_common" version="5.1.1" devices="MCIMX7U5xxxxx" user_visible="true" type="CMSIS_Include">
@@ -1712,7 +1702,7 @@
         <files mask="fsl_notifier.h"/>
       </source>
     </component>
-    <component id="utility.shell.MCIMX7U5" name="shell" version="1.0.0" devices="MCIMX7U5xxxxx" dependency="component.serial_manager.MCIMX7U5" user_visible="true" type="utilities">
+    <component id="utility.shell.MCIMX7U5" name="shell" version="1.0.0" devices="MCIMX7U5xxxxx" dependency="component.lists.MCIMX7U5 component.serial_manager.MCIMX7U5 platform.Include_common.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.common.MCIMX7U5 utility.debug_console.MCIMX7U5" user_visible="true" type="utilities">
       <source path="devices/MCIMX7U5/utilities" target_path="utilities" type="src">
         <files mask="fsl_shell.c"/>
       </source>
@@ -1720,7 +1710,7 @@
         <files mask="fsl_shell.h"/>
       </source>
     </component>
-    <component id="driver.wm8960.MCIMX7U5" name="wm8960" version="1.0.0" devices="MCIMX7U5xxxxx" category="Device/SDK Drivers" user_visible="true" type="other">
+    <component id="driver.wm8960.MCIMX7U5" name="wm8960" version="2.0.2" devices="MCIMX7U5xxxxx" category="Device/SDK Drivers" user_visible="true" type="other">
       <source path="components/codec/wm8960" target_path="codec" type="c_include">
         <files mask="fsl_wm8960.h"/>
       </source>
@@ -1744,206 +1734,9 @@
         <files mask="fsl_pf1550_charger.c"/>
       </source>
     </component>
-    <component id="middleware.template_application.wolfssl.MCIMX7U5" name="wolfssl" brief="wolfSSL template" version="3.9.8" revision="3" full_name="wolfSSL template application" devices="MCIMX7U5xxxxx" dependency="middleware.wolfssl.MCIMX7U5" category="Security/wolfSSL library" user_visible="true" type="middleware">
-      <source path="middleware/wolfssl/template_application" target_path="wolfssl/template_application" type="c_include">
-        <files mask="user_settings.h"/>
-      </source>
-    </component>
-    <component id="middleware.wolfssl.MCIMX7U5" name="wolfssl" brief="wolfSSL library" version="3.9.8" revision="3" devices="MCIMX7U5xxxxx" category="Security/wolfSSL library" user_visible="false" type="middleware">
-      <source path="middleware/wolfssl/wolfssl" target_path="wolfssl/wolfssl" type="c_include">
-        <files mask="callbacks.h"/>
-        <files mask="certs_test.h"/>
-        <files mask="crl.h"/>
-        <files mask="error-ssl.h"/>
-        <files mask="internal.h"/>
-        <files mask="ocsp.h"/>
-        <files mask="options.h"/>
-        <files mask="sniffer.h"/>
-        <files mask="sniffer_error.h"/>
-        <files mask="ssl.h"/>
-        <files mask="test.h"/>
-        <files mask="version.h"/>
-      </source>
-      <source path="middleware/wolfssl/wolfssl/openssl" target_path="wolfssl/wolfssl/openssl" type="c_include">
-        <files mask="ec.h"/>
-        <files mask="ssl.h"/>
-        <files mask="bn.h"/>
-      </source>
-      <source path="middleware/wolfssl/wolfssl/wolfcrypt" target_path="wolfssl/wolfssl/wolfcrypt" type="c_include">
-        <files mask="aes.h"/>
-        <files mask="arc4.h"/>
-        <files mask="asn.h"/>
-        <files mask="asn_public.h"/>
-        <files mask="blake2.h"/>
-        <files mask="blake2-impl.h"/>
-        <files mask="blake2-int.h"/>
-        <files mask="camellia.h"/>
-        <files mask="cmac.h"/>
-        <files mask="chacha.h"/>
-        <files mask="chacha20_poly1305.h"/>
-        <files mask="coding.h"/>
-        <files mask="compress.h"/>
-        <files mask="curve25519.h"/>
-        <files mask="des3.h"/>
-        <files mask="dh.h"/>
-        <files mask="dsa.h"/>
-        <files mask="ecc.h"/>
-        <files mask="ed25519.h"/>
-        <files mask="error-crypt.h"/>
-        <files mask="fe_operations.h"/>
-        <files mask="fips_test.h"/>
-        <files mask="ge_operations.h"/>
-        <files mask="hash.h"/>
-        <files mask="hc128.h"/>
-        <files mask="hmac.h"/>
-        <files mask="integer.h"/>
-        <files mask="idea.h"/>
-        <files mask="logging.h"/>
-        <files mask="md2.h"/>
-        <files mask="md4.h"/>
-        <files mask="md5.h"/>
-        <files mask="mem_track.h"/>
-        <files mask="memory.h"/>
-        <files mask="misc.h"/>
-        <files mask="mpi_class.h"/>
-        <files mask="mpi_superclass.h"/>
-        <files mask="pkcs7.h"/>
-        <files mask="poly1305.h"/>
-        <files mask="pwdbased.h"/>
-        <files mask="rabbit.h"/>
-        <files mask="random.h"/>
-        <files mask="ripemd.h"/>
-        <files mask="rsa.h"/>
-        <files mask="settings.h"/>
-        <files mask="sha.h"/>
-        <files mask="sha256.h"/>
-        <files mask="sha512.h"/>
-        <files mask="signature.h"/>
-        <files mask="srp.h"/>
-        <files mask="tfm.h"/>
-        <files mask="types.h"/>
-        <files mask="visibility.h"/>
-        <files mask="wc_encrypt.h"/>
-        <files mask="wc_port.h"/>
-      </source>
-      <source path="middleware/wolfssl/wolfcrypt/src" target_path="wolfssl/wolfcrypt/src" type="src">
-        <files mask="aes.c"/>
-        <files mask="arc4.c"/>
-        <files mask="asm.c"/>
-        <files mask="asn.c"/>
-        <files mask="blake2b.c"/>
-        <files mask="camellia.c"/>
-        <files mask="cmac.c"/>
-        <files mask="chacha.c"/>
-        <files mask="chacha20_poly1305.c"/>
-        <files mask="coding.c"/>
-        <files mask="compress.c"/>
-        <files mask="curve25519.c"/>
-        <files mask="des3.c"/>
-        <files mask="dh.c"/>
-        <files mask="dsa.c"/>
-        <files mask="ecc.c"/>
-        <files mask="ecc_fp.c"/>
-        <files mask="ed25519.c"/>
-        <files mask="error.c"/>
-        <files mask="fe_low_mem.c"/>
-        <files mask="fe_operations.c"/>
-        <files mask="ge_low_mem.c"/>
-        <files mask="ge_operations.c"/>
-        <files mask="hash.c"/>
-        <files mask="hc128.c"/>
-        <files mask="hmac.c"/>
-        <files mask="integer.c"/>
-        <files mask="idea.c"/>
-        <files mask="logging.c"/>
-        <files mask="md2.c"/>
-        <files mask="md4.c"/>
-        <files mask="md5.c"/>
-        <files mask="memory.c"/>
-        <files mask="misc.c"/>
-        <files mask="pkcs7.c"/>
-        <files mask="poly1305.c"/>
-        <files mask="pwdbased.c"/>
-        <files mask="rabbit.c"/>
-        <files mask="random.c"/>
-        <files mask="ripemd.c"/>
-        <files mask="rsa.c"/>
-        <files mask="sha.c"/>
-        <files mask="sha256.c"/>
-        <files mask="sha512.c"/>
-        <files mask="signature.c"/>
-        <files mask="srp.c"/>
-        <files mask="tfm.c"/>
-        <files mask="wc_encrypt.c"/>
-        <files mask="wc_port.c"/>
-      </source>
-      <source path="middleware/wolfssl/src" target_path="wolfssl/src" type="src">
-        <files mask="async.c"/>
-        <files mask="crl.c"/>
-        <files mask="internal.c"/>
-        <files mask="io.c"/>
-        <files mask="keys.c"/>
-        <files mask="ocsp.c"/>
-        <files mask="sniffer.c"/>
-        <files mask="ssl.c"/>
-        <files mask="tls.c"/>
-      </source>
-      <source path="middleware/wolfssl/wolfcrypt/src/port/nxp" target_path="wolfssl/wolfcrypt/src/port/nxp" type="src">
-        <files mask="ksdk_port.c"/>
-      </source>
-      <source path="middleware/wolfssl/wolfssl/wolfcrypt/port/nxp" target_path="wolfssl/wolfssl/wolfcrypt/port/nxp" type="c_include">
-        <files mask="ksdk_port.h"/>
-      </source>
-      <include_paths>
-        <include_path path="wolfssl"/>
-        <include_path path="wolfssl/wolfssl/wolfcrypt/port"/>
-      </include_paths>
-    </component>
-    <component id="middleware.wolfssl.unused_files.MCIMX7U5" name="unused_files" brief="wolfSSL files unused by projects" version="3.9.8" revision="3" devices="MCIMX7U5xxxxx" category="Security/wolfSSL library" user_visible="false" type="other">
-      <source exclude="true" path="middleware/wolfssl" target_path="wolfssl/wolfssl_files" type="doc">
-        <files mask="wolfSSL_cyaSSL_evaluation_license_agreement.pdf"/>
-        <files mask="ChangeLogKSDK.txt"/>
-        <files mask="README.txt"/>
-        <files mask="wolfSSL_for_Kinetis_SDK_v2.0_readme.txt"/>
-      </source>
-      <source exclude="true" path="middleware/wolfssl/wolfssl/openssl" target_path="wolfssl/wolfssl/openssl" type="c_include">
-        <files mask="asn1.h"/>
-        <files mask="bio.h"/>
-        <files mask="conf.h"/>
-        <files mask="crypto.h"/>
-        <files mask="des.h"/>
-        <files mask="dh.h"/>
-        <files mask="dsa.h"/>
-        <files mask="ec25519.h"/>
-        <files mask="ecdh.h"/>
-        <files mask="ecdsa.h"/>
-        <files mask="ed25519.h"/>
-        <files mask="engine.h"/>
-        <files mask="err.h"/>
-        <files mask="evp.h"/>
-        <files mask="hmac.h"/>
-        <files mask="lhash.h"/>
-        <files mask="md4.h"/>
-        <files mask="md5.h"/>
-        <files mask="ocsp.h"/>
-        <files mask="opensslconf.h"/>
-        <files mask="opensslv.h"/>
-        <files mask="ossl_typ.h"/>
-        <files mask="pem.h"/>
-        <files mask="pkcs12.h"/>
-        <files mask="rand.h"/>
-        <files mask="ripemd.h"/>
-        <files mask="rsa.h"/>
-        <files mask="sha.h"/>
-        <files mask="stack.h"/>
-        <files mask="ui.h"/>
-        <files mask="x509.h"/>
-        <files mask="x509v3.h"/>
-      </source>
-    </component>
     <component id="middleware.template_application.mbedtls.MCIMX7U5" name="mbedtls" brief="mbedtls template" version="2.13.1" full_name="mbedtls template application" devices="MCIMX7U5xxxxx" dependency="middleware.mbedtls.MCIMX7U5" category="Security/mbedTLS library" user_visible="true" type="middleware"/>
     <component id="middleware.mbedtls.MCIMX7U5" name="mbedtls" brief="mbedTLS library" version="2.13.1" devices="MCIMX7U5xxxxx" dependency="middleware.template_application.mbedtls.MCIMX7U5" category="Security/mbedTLS library" user_visible="true" type="middleware">
-      <source path="middleware/mbedtls/include/mbedtls" target_path="mbedTLS/include/mbedtls" type="c_include">
+      <source path="middleware/mbedtls/include/mbedtls" target_path="mbedtls/include/mbedtls" type="c_include">
         <files mask="aes.h"/>
         <files mask="aesni.h"/>
         <files mask="arc4.h"/>
@@ -2023,7 +1816,7 @@
         <files mask="x509_csr.h"/>
         <files mask="xtea.h"/>
       </source>
-      <source path="middleware/mbedtls/library" target_path="mbedTLS/library" type="src">
+      <source path="middleware/mbedtls/library" target_path="mbedtls/library" type="src">
         <files mask="aes.c"/>
         <files mask="aesni.c"/>
         <files mask="arc4.c"/>
@@ -2103,7 +1896,7 @@
         <files mask="x509write_csr.c"/>
         <files mask="xtea.c"/>
       </source>
-      <source path="middleware/mbedtls/port/ksdk" target_path="mbedTLS/port/ksdk" type="src">
+      <source path="middleware/mbedtls/port/ksdk" target_path="mbedtls/port/ksdk" type="src">
         <files mask="ksdk_mbedtls.c"/>
         <files mask="des_alt.c"/>
         <files mask="aes_alt.c"/>
@@ -2111,7 +1904,7 @@
         <files mask="ecp_curves_alt.c"/>
         <files mask="ecp_alt_ksdk.c"/>
       </source>
-      <source path="middleware/mbedtls/port/ksdk" target_path="mbedTLS/port/ksdk" type="c_include">
+      <source path="middleware/mbedtls/port/ksdk" target_path="mbedtls/port/ksdk" type="c_include">
         <files mask="ksdk_mbedtls.h"/>
         <files mask="ksdk_mbedtls_config.h"/>
         <files mask="sha1_alt.h"/>
@@ -2121,29 +1914,29 @@
         <files mask="ecp_alt.h"/>
       </source>
       <include_paths>
-        <include_path path="mbedTLS/include"/>
+        <include_path path="mbedtls/include"/>
       </include_paths>
     </component>
     <component id="middleware.mbedtls.pkcs11.MCIMX7U5" name="mbedtls_pkcs11" brief="PKCS11" version="2.13.1" devices="MCIMX7U5xxxxx" dependency="middleware.mbedtls.MCIMX7U5 middleware.template_application.mbedtls.MCIMX7U5" category="Security/mbedTLS library" user_visible="false" type="other">
-      <source path="middleware/mbedtls/library" target_path="mbedTLS/library" type="src">
+      <source path="middleware/mbedtls/library" target_path="mbedtls/library" type="src">
         <files mask="pkcs11.c"/>
       </source>
     </component>
     <component id="middleware.mbedtls.unused_files.MCIMX7U5" name="unused_files" brief="mbedTLS files unused by projects" version="2.13.1" devices="MCIMX7U5xxxxx" category="Security/mbedTLS library" user_visible="false" type="other">
-      <source exclude="true" path="middleware/mbedtls/configs" target_path="mbedTLS/configs" type="doc">
+      <source exclude="true" path="middleware/mbedtls/configs" target_path="mbedtls/configs" type="doc">
         <files mask="README.txt"/>
       </source>
-      <source exclude="true" path="middleware/mbedtls/configs" target_path="mbedTLS/configs" type="c_include">
+      <source exclude="true" path="middleware/mbedtls/configs" target_path="mbedtls/configs" type="c_include">
         <files mask="config-mini-tls1_1.h"/>
         <files mask="config-no-entropy.h"/>
         <files mask="config-suite-b.h"/>
         <files mask="config-ccm-psk-tls1_2.h"/>
         <files mask="config-thread.h"/>
       </source>
-      <source exclude="true" path="middleware/mbedtls/doxygen" target_path="mbedTLS/doxygen" type="other">
+      <source exclude="true" path="middleware/mbedtls/doxygen" target_path="mbedtls/doxygen" type="other">
         <files mask="mbedtls.doxyfile"/>
       </source>
-      <source exclude="true" path="middleware/mbedtls/doxygen/input" target_path="mbedTLS/doxygen/input" type="c_include">
+      <source exclude="true" path="middleware/mbedtls/doxygen/input" target_path="mbedtls/doxygen/input" type="c_include">
         <files mask="doc_mainpage.h"/>
         <files mask="doc_rng.h"/>
         <files mask="doc_x509.h"/>
@@ -2152,37 +1945,37 @@
         <files mask="doc_hashing.h"/>
         <files mask="doc_encdec.h"/>
       </source>
-      <source exclude="true" path="middleware/mbedtls/include" target_path="mbedTLS/include" type="other">
+      <source exclude="true" path="middleware/mbedtls/include" target_path="mbedtls/include" type="other">
         <files mask=".gitignore"/>
       </source>
-      <source exclude="true" path="middleware/mbedtls/include" target_path="mbedTLS/include" type="doc">
+      <source exclude="true" path="middleware/mbedtls/include" target_path="mbedtls/include" type="doc">
         <files mask="CMakeLists.txt"/>
       </source>
-      <source exclude="true" path="middleware/mbedtls/library" target_path="mbedTLS/library" type="other">
+      <source exclude="true" path="middleware/mbedtls/library" target_path="mbedtls/library" type="other">
         <files mask=".gitignore"/>
         <files mask="Makefile"/>
       </source>
-      <source exclude="true" path="middleware/mbedtls/library" target_path="mbedTLS/library" type="doc">
+      <source exclude="true" path="middleware/mbedtls/library" target_path="mbedtls/library" type="doc">
         <files mask="CMakeLists.txt"/>
       </source>
-      <source exclude="true" path="middleware/mbedtls/programs" target_path="mbedTLS/programs" type="other">
+      <source exclude="true" path="middleware/mbedtls/programs" target_path="mbedtls/programs" type="other">
         <files mask="Makefile"/>
       </source>
-      <source exclude="true" path="middleware/mbedtls/programs/aes" target_path="mbedTLS/programs/aes" type="src">
+      <source exclude="true" path="middleware/mbedtls/programs/aes" target_path="mbedtls/programs/aes" type="src">
         <files mask="crypt_and_hash.c"/>
         <files mask="aescrypt2.c"/>
       </source>
-      <source exclude="true" path="middleware/mbedtls/programs/aes" target_path="mbedTLS/programs/aes" type="doc">
+      <source exclude="true" path="middleware/mbedtls/programs/aes" target_path="mbedtls/programs/aes" type="doc">
         <files mask="CMakeLists.txt"/>
       </source>
-      <source exclude="true" path="middleware/mbedtls/programs/hash" target_path="mbedTLS/programs/hash" type="src">
+      <source exclude="true" path="middleware/mbedtls/programs/hash" target_path="mbedtls/programs/hash" type="src">
         <files mask="hello.c"/>
         <files mask="generic_sum.c"/>
       </source>
-      <source exclude="true" path="middleware/mbedtls/programs/hash" target_path="mbedTLS/programs/hash" type="doc">
+      <source exclude="true" path="middleware/mbedtls/programs/hash" target_path="mbedtls/programs/hash" type="doc">
         <files mask="CMakeLists.txt"/>
       </source>
-      <source exclude="true" path="middleware/mbedtls/programs/pkey" target_path="mbedTLS/programs/pkey" type="src">
+      <source exclude="true" path="middleware/mbedtls/programs/pkey" target_path="mbedtls/programs/pkey" type="src">
         <files mask="rsa_verify_pss.c"/>
         <files mask="rsa_sign.c"/>
         <files mask="pk_decrypt.c"/>
@@ -2204,21 +1997,21 @@
         <files mask="key_app_writer.c"/>
         <files mask="rsa_genkey.c"/>
       </source>
-      <source exclude="true" path="middleware/mbedtls/programs/pkey" target_path="mbedTLS/programs/pkey" type="doc">
+      <source exclude="true" path="middleware/mbedtls/programs/pkey" target_path="mbedtls/programs/pkey" type="doc">
         <files mask="dh_prime.txt"/>
         <files mask="rsa_pub.txt"/>
         <files mask="CMakeLists.txt"/>
         <files mask="rsa_priv.txt"/>
       </source>
-      <source exclude="true" path="middleware/mbedtls/programs/random" target_path="mbedTLS/programs/random" type="src">
+      <source exclude="true" path="middleware/mbedtls/programs/random" target_path="mbedtls/programs/random" type="src">
         <files mask="gen_random_havege.c"/>
         <files mask="gen_entropy.c"/>
         <files mask="gen_random_ctr_drbg.c"/>
       </source>
-      <source exclude="true" path="middleware/mbedtls/programs/random" target_path="mbedTLS/programs/random" type="doc">
+      <source exclude="true" path="middleware/mbedtls/programs/random" target_path="mbedtls/programs/random" type="doc">
         <files mask="CMakeLists.txt"/>
       </source>
-      <source exclude="true" path="middleware/mbedtls/programs/ssl" target_path="mbedTLS/programs/ssl" type="src">
+      <source exclude="true" path="middleware/mbedtls/programs/ssl" target_path="mbedtls/programs/ssl" type="src">
         <files mask="ssl_client2.c"/>
         <files mask="ssl_mail_client.c"/>
         <files mask="ssl_client1.c"/>
@@ -2230,10 +2023,10 @@
         <files mask="ssl_pthread_server.c"/>
         <files mask="mini_client.c"/>
       </source>
-      <source exclude="true" path="middleware/mbedtls/programs/ssl" target_path="mbedTLS/programs/ssl" type="doc">
+      <source exclude="true" path="middleware/mbedtls/programs/ssl" target_path="mbedtls/programs/ssl" type="doc">
         <files mask="CMakeLists.txt"/>
       </source>
-      <source exclude="true" path="middleware/mbedtls/programs/test" target_path="mbedTLS/programs/test" type="src">
+      <source exclude="true" path="middleware/mbedtls/programs/test" target_path="mbedtls/programs/test" type="src">
         <files mask="zeroize.c"/>
         <files mask="benchmark.c"/>
         <files mask="cpp_dummy_build.cpp"/>
@@ -2241,30 +2034,30 @@
         <files mask="ssl_cert_test.c"/>
         <files mask="selftest.c"/>
       </source>
-      <source exclude="true" path="middleware/mbedtls/programs/test" target_path="mbedTLS/programs/test" type="script">
+      <source exclude="true" path="middleware/mbedtls/programs/test" target_path="mbedtls/programs/test" type="script">
         <files mask="udp_proxy_wrapper.sh"/>
       </source>
-      <source exclude="true" path="middleware/mbedtls/programs/test" target_path="mbedTLS/programs/test" type="doc">
+      <source exclude="true" path="middleware/mbedtls/programs/test" target_path="mbedtls/programs/test" type="doc">
         <files mask="CMakeLists.txt"/>
       </source>
-      <source exclude="true" path="middleware/mbedtls/programs/util" target_path="mbedTLS/programs/util" type="src">
+      <source exclude="true" path="middleware/mbedtls/programs/util" target_path="mbedtls/programs/util" type="src">
         <files mask="strerror.c"/>
         <files mask="pem2der.c"/>
       </source>
-      <source exclude="true" path="middleware/mbedtls/programs/util" target_path="mbedTLS/programs/util" type="doc">
+      <source exclude="true" path="middleware/mbedtls/programs/util" target_path="mbedtls/programs/util" type="doc">
         <files mask="CMakeLists.txt"/>
       </source>
-      <source exclude="true" path="middleware/mbedtls/programs/x509" target_path="mbedTLS/programs/x509" type="src">
+      <source exclude="true" path="middleware/mbedtls/programs/x509" target_path="mbedtls/programs/x509" type="src">
         <files mask="cert_req.c"/>
         <files mask="req_app.c"/>
         <files mask="cert_app.c"/>
         <files mask="crl_app.c"/>
         <files mask="cert_write.c"/>
       </source>
-      <source exclude="true" path="middleware/mbedtls/programs/x509" target_path="mbedTLS/programs/x509" type="doc">
+      <source exclude="true" path="middleware/mbedtls/programs/x509" target_path="mbedtls/programs/x509" type="doc">
         <files mask="CMakeLists.txt"/>
       </source>
-      <source exclude="true" path="middleware/mbedtls/scripts" target_path="mbedTLS/scripts" type="script">
+      <source exclude="true" path="middleware/mbedtls/scripts" target_path="mbedtls/scripts" type="script">
         <files mask="tmp_ignore_makefiles.sh"/>
         <files mask="output_env.sh"/>
         <files mask="bump_version.sh"/>
@@ -2274,7 +2067,7 @@
         <files mask="memory.sh"/>
         <files mask="footprint.sh"/>
       </source>
-      <source exclude="true" path="middleware/mbedtls/scripts" target_path="mbedTLS/scripts" type="other">
+      <source exclude="true" path="middleware/mbedtls/scripts" target_path="mbedtls/scripts" type="other">
         <files mask="generate_visualc_files.pl"/>
         <files mask="rm-calloc-cast.cocci"/>
         <files mask="rename.pl"/>
@@ -2284,7 +2077,7 @@
         <files mask="find-mem-leak.cocci"/>
         <files mask="massif_max.pl"/>
       </source>
-      <source exclude="true" path="middleware/mbedtls/scripts/data_files" target_path="mbedTLS/scripts/data_files" type="other">
+      <source exclude="true" path="middleware/mbedtls/scripts/data_files" target_path="mbedtls/scripts/data_files" type="other">
         <files mask="vs2010-app-template.vcxproj"/>
         <files mask="error.fmt"/>
         <files mask="vs6-workspace-template.dsw"/>
@@ -2294,13 +2087,13 @@
         <files mask="vs6-main-template.dsp"/>
         <files mask="vs6-app-template.dsp"/>
       </source>
-      <source exclude="true" path="middleware/mbedtls/scripts/data_files" target_path="mbedTLS/scripts/data_files" type="doc">
+      <source exclude="true" path="middleware/mbedtls/scripts/data_files" target_path="mbedtls/scripts/data_files" type="doc">
         <files mask="rename-1.3-2.0.txt"/>
       </source>
-      <source exclude="true" path="middleware/mbedtls/tests" target_path="mbedTLS/tests" type="other">
+      <source exclude="true" path="middleware/mbedtls/tests" target_path="mbedtls/tests" type="other">
         <files mask="Makefile"/>
       </source>
-      <source exclude="true" path="middleware/mbedtls/tests/data_files" target_path="mbedTLS/tests/data_files" type="other">
+      <source exclude="true" path="middleware/mbedtls/tests/data_files" target_path="mbedtls/tests/data_files" type="other">
         <files mask="mpi_too_big"/>
         <files mask="hash_file_2"/>
         <files mask="Makefile"/>
@@ -2310,13 +2103,13 @@
         <files mask="hash_file_4"/>
         <files mask="hash_file_5"/>
       </source>
-      <source exclude="true" path="middleware/mbedtls/tests/data_files/dir3" target_path="mbedTLS/tests/data_files/dir3" type="other">
+      <source exclude="true" path="middleware/mbedtls/tests/data_files/dir3" target_path="mbedtls/tests/data_files/dir3" type="other">
         <files mask="Readme"/>
       </source>
-      <source exclude="true" path="middleware/mbedtls/tests/data_files/dir4" target_path="mbedTLS/tests/data_files/dir4" type="other">
+      <source exclude="true" path="middleware/mbedtls/tests/data_files/dir4" target_path="mbedtls/tests/data_files/dir4" type="other">
         <files mask="Readme"/>
       </source>
-      <source exclude="true" path="middleware/mbedtls/tests/scripts" target_path="mbedTLS/tests/scripts" type="other">
+      <source exclude="true" path="middleware/mbedtls/tests/scripts" target_path="mbedtls/tests/scripts" type="other">
         <files mask="recursion.pl"/>
         <files mask="gen_gcm_encrypt.pl"/>
         <files mask="depends-pkalgs.pl"/>
@@ -2333,7 +2126,7 @@
         <files mask="key-exchanges.pl"/>
         <files mask="test-ref-configs.pl"/>
       </source>
-      <source exclude="true" path="middleware/mbedtls/tests/scripts" target_path="mbedTLS/tests/scripts" type="script">
+      <source exclude="true" path="middleware/mbedtls/tests/scripts" target_path="mbedtls/tests/scripts" type="script">
         <files mask="generate_test_code.py"/>
         <files mask="doxygen.sh"/>
         <files mask="list-macros.sh"/>
@@ -2351,7 +2144,7 @@
         <files mask="test_generate_test_code.py"/>
         <files mask="all.sh"/>
       </source>
-      <source exclude="true" path="middleware/mbedtls/tests/suites" target_path="mbedTLS/tests/suites" type="other">
+      <source exclude="true" path="middleware/mbedtls/tests/suites" target_path="mbedtls/tests/suites" type="other">
         <files mask="test_suite_pk.function"/>
         <files mask="test_suite_gcm.aes128_de.data"/>
         <files mask="test_suite_x509write.function"/>
@@ -2473,13 +2266,13 @@
         <files mask="test_suite_nist_kw.function"/>
         <files mask="test_suite_x509parse.data"/>
       </source>
-      <source exclude="true" path="middleware/mbedtls/tests/git-scripts" target_path="mbedTLS/tests/git-scripts" type="script">
+      <source exclude="true" path="middleware/mbedtls/tests/git-scripts" target_path="mbedtls/tests/git-scripts" type="script">
         <files mask="pre-push.sh"/>
       </source>
-      <source exclude="true" path="middleware/mbedtls/tests/git-scripts" target_path="mbedTLS/tests/git-scripts" type="other">
+      <source exclude="true" path="middleware/mbedtls/tests/git-scripts" target_path="mbedtls/tests/git-scripts" type="other">
         <files mask="README.md"/>
       </source>
-      <source exclude="true" path="middleware/mbedtls/visualc/VS2010" target_path="mbedTLS/visualc/VS2010" type="other">
+      <source exclude="true" path="middleware/mbedtls/visualc/VS2010" target_path="mbedtls/visualc/VS2010" type="other">
         <files mask="pk_decrypt.vcxproj"/>
         <files mask="pk_encrypt.vcxproj"/>
         <files mask="ecdsa.vcxproj"/>
@@ -2531,44 +2324,44 @@
         <files mask="ssl_server2.vcxproj"/>
         <files mask="rsa_genkey.vcxproj"/>
       </source>
-      <source exclude="true" path="middleware/mbedtls/yotta/data" target_path="mbedTLS/yotta/data" type="other">
+      <source exclude="true" path="middleware/mbedtls/yotta/data" target_path="mbedtls/yotta/data" type="other">
         <files mask="module.json"/>
         <files mask="README.md"/>
       </source>
-      <source exclude="true" path="middleware/mbedtls/yotta/data" target_path="mbedTLS/yotta/data" type="script">
+      <source exclude="true" path="middleware/mbedtls/yotta/data" target_path="mbedtls/yotta/data" type="script">
         <files mask="adjust-config.sh"/>
       </source>
-      <source exclude="true" path="middleware/mbedtls/yotta/data" target_path="mbedTLS/yotta/data" type="c_include">
+      <source exclude="true" path="middleware/mbedtls/yotta/data" target_path="mbedtls/yotta/data" type="c_include">
         <files mask="target_config.h"/>
       </source>
-      <source exclude="true" path="middleware/mbedtls/yotta/data" target_path="mbedTLS/yotta/data" type="src">
+      <source exclude="true" path="middleware/mbedtls/yotta/data" target_path="mbedtls/yotta/data" type="src">
         <files mask="entropy_hardware_poll.c"/>
       </source>
-      <source exclude="true" path="middleware/mbedtls/yotta/data/example-authcrypt" target_path="mbedTLS/yotta/data/example-authcrypt" type="src">
+      <source exclude="true" path="middleware/mbedtls/yotta/data/example-authcrypt" target_path="mbedtls/yotta/data/example-authcrypt" type="src">
         <files mask="main.cpp"/>
       </source>
-      <source exclude="true" path="middleware/mbedtls/yotta/data/example-authcrypt" target_path="mbedTLS/yotta/data/example-authcrypt" type="other">
+      <source exclude="true" path="middleware/mbedtls/yotta/data/example-authcrypt" target_path="mbedtls/yotta/data/example-authcrypt" type="other">
         <files mask="README.md"/>
       </source>
-      <source exclude="true" path="middleware/mbedtls/yotta/data/example-benchmark" target_path="mbedTLS/yotta/data/example-benchmark" type="src">
+      <source exclude="true" path="middleware/mbedtls/yotta/data/example-benchmark" target_path="mbedtls/yotta/data/example-benchmark" type="src">
         <files mask="main.cpp"/>
       </source>
-      <source exclude="true" path="middleware/mbedtls/yotta/data/example-benchmark" target_path="mbedTLS/yotta/data/example-benchmark" type="other">
+      <source exclude="true" path="middleware/mbedtls/yotta/data/example-benchmark" target_path="mbedtls/yotta/data/example-benchmark" type="other">
         <files mask="README.md"/>
       </source>
-      <source exclude="true" path="middleware/mbedtls/yotta/data/example-hashing" target_path="mbedTLS/yotta/data/example-hashing" type="src">
+      <source exclude="true" path="middleware/mbedtls/yotta/data/example-hashing" target_path="mbedtls/yotta/data/example-hashing" type="src">
         <files mask="main.cpp"/>
       </source>
-      <source exclude="true" path="middleware/mbedtls/yotta/data/example-hashing" target_path="mbedTLS/yotta/data/example-hashing" type="other">
+      <source exclude="true" path="middleware/mbedtls/yotta/data/example-hashing" target_path="mbedtls/yotta/data/example-hashing" type="other">
         <files mask="README.md"/>
       </source>
-      <source exclude="true" path="middleware/mbedtls/yotta/data/example-selftest" target_path="mbedTLS/yotta/data/example-selftest" type="src">
+      <source exclude="true" path="middleware/mbedtls/yotta/data/example-selftest" target_path="mbedtls/yotta/data/example-selftest" type="src">
         <files mask="main.cpp"/>
       </source>
-      <source exclude="true" path="middleware/mbedtls/yotta/data/example-selftest" target_path="mbedTLS/yotta/data/example-selftest" type="other">
+      <source exclude="true" path="middleware/mbedtls/yotta/data/example-selftest" target_path="mbedtls/yotta/data/example-selftest" type="other">
         <files mask="README.md"/>
       </source>
-      <source exclude="true" path="middleware/mbedtls" target_path="mbedTLS" type="other">
+      <source exclude="true" path="middleware/mbedtls" target_path="mbedtls" type="other">
         <files mask=".gitignore"/>
         <files mask=".travis.yml"/>
         <files mask="ChangeLog"/>
@@ -2578,7 +2371,7 @@
         <files mask="Makefile"/>
         <files mask="README.md"/>
       </source>
-      <source exclude="true" path="middleware/mbedtls" target_path="mbedTLS" type="doc">
+      <source exclude="true" path="middleware/mbedtls" target_path="mbedtls" type="doc">
         <files mask="apache-2.0.txt"/>
         <files mask="ChangeLogKSDK.txt"/>
         <files mask="CMakeLists.txt"/>
@@ -2660,7 +2453,7 @@
         <files mask="fsl_fxos.c"/>
       </source>
     </component>
-    <component id="component.lpuart_adapter.MCIMX7U5" name="lpuart_adapter" version="1.0.0" devices="MCIMX7U5xxxxx" dependency="platform.Include_common.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.common.MCIMX7U5 platform.drivers.lpuart.MCIMX7U5" category="Device/SDK Drivers" user_visible="true" type="other">
+    <component id="component.lpuart_adapter.MCIMX7U5" name="lpuart_adapter" version="1.0.0" full_name="lpuart_adapter" devices="MCIMX7U5xxxxx" dependency="platform.Include_common.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.common.MCIMX7U5 platform.drivers.lpuart.MCIMX7U5" user_visible="true" type="utilities">
       <source path="components/uart" target_path="component/uart" type="c_include">
         <files mask="uart.h"/>
       </source>
@@ -2684,7 +2477,7 @@
         <files mask="serial_manager.c"/>
       </source>
     </component>
-    <component id="component.serial_manager_uart.MCIMX7U5" name="serial_manager_uart" version="1.0.0" devices="MCIMX7U5xxxxx" dependency="platform.Include_common.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.common.MCIMX7U5 platform.drivers.lpuart.MCIMX7U5" category="Device/SDK Utilities" user_visible="true" type="other">
+    <component id="component.serial_manager_uart.MCIMX7U5" name="serial_manager_uart" version="1.0.0" full_name="Serial Manager uart" devices="MCIMX7U5xxxxx" dependency="platform.Include_common.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.common.MCIMX7U5 platform.drivers.lpuart.MCIMX7U5" user_visible="true" type="utilities">
       <source path="components/serial_manager" target_path="component/serial_manager" type="c_include">
         <files mask="serial_port_uart.h"/>
       </source>
@@ -2692,17 +2485,17 @@
         <files mask="serial_port_uart.c"/>
       </source>
     </component>
-    <component id="utility.debug_console.MCIMX7U5" name="debug_console" version="1.0.0" devices="MCIMX7U5xxxxx" dependency="component.serial_manager.MCIMX7U5" user_visible="true" type="utilities">
+    <component id="utility.debug_console.MCIMX7U5" name="debug_console" version="1.0.0" devices="MCIMX7U5xxxxx" dependency="component.serial_manager.MCIMX7U5 platform.Include_common.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.common.MCIMX7U5" user_visible="true" type="utilities">
       <source path="devices/MCIMX7U5/utilities/str" target_path="utilities" type="src">
         <files mask="fsl_str.c"/>
       </source>
       <source path="devices/MCIMX7U5/utilities/str" target_path="utilities" type="c_include">
         <files mask="fsl_str.h"/>
       </source>
-      <source path="devices/MCIMX7U5/utilities" target_path="utilities" type="src">
+      <source path="devices/MCIMX7U5/utilities/debug_console" target_path="utilities" type="src">
         <files mask="fsl_debug_console.c"/>
       </source>
-      <source path="devices/MCIMX7U5/utilities" target_path="utilities" type="c_include">
+      <source path="devices/MCIMX7U5/utilities/debug_console" target_path="utilities" type="c_include">
         <files mask="fsl_debug_console.h"/>
         <files mask="fsl_debug_console_conf.h"/>
       </source>
@@ -5170,7 +4963,7 @@
       </source>
     </component>
     <component id="middleware.template_application.freertos.MCIMX7U5" name="freertos" brief="FreeRTOS template application" version="10.0.1" full_name="FreeRTOS template" devices="MCIMX7U5xxxxx" dependency="middleware.freertos.MCIMX7U5" category="Operating System/FreeRTOS Operating System" user_visible="true" type="project_template">
-      <source path="rtos/template_application/ARM_CM4F" target_path="source" type="c_include" device_cores="m4_MCIMX7U5xxxxx">
+      <source path="rtos/amazon-freertos/template_application/ARM_CM4F" target_path="source" type="c_include" device_cores="m4_MCIMX7U5xxxxx">
         <files mask="FreeRTOSConfig.h"/>
       </source>
       <source exclude="true" path="rtos/amazon-freertos/lib/FreeRTOS/portable/MemMang" target_path="amazon-freertos/FreeRTOS/portable" type="src">
@@ -5183,7 +4976,7 @@
         <files mask="heap_4.c"/>
       </source>
     </component>
-    <component id="middleware.freertos.MCIMX7U5" name="common" brief="Amazon FreeRTOS, Real Time Operating System" version="10.0.1" full_name="Amazon-FreeRTOS Kernel" devices="MCIMX7U5xxxxx" dependency="middleware.template_application.freertos.MCIMX7U5" user_visible="true" type="OS">
+    <component id="middleware.freertos.MCIMX7U5" name="Amazon-FreeRTOS" brief="Amazon FreeRTOS, Real Time Operating System" version="10.0.1" full_name="Amazon-FreeRTOS Kernel" devices="MCIMX7U5xxxxx" dependency="middleware.template_application.freertos.MCIMX7U5" user_visible="true" type="OS">
       <defines>
         <define name="FSL_RTOS_FREE_RTOS" value=""/>
         <define name="SDK_OS_FREE_RTOS" value=""/>
@@ -5206,9 +4999,11 @@
         <files mask="deprecated_definitions.h"/>
         <files mask="list.h"/>
         <files mask="mpu_wrappers.h"/>
+        <files mask="mpu_prototypes.h"/>
         <files mask="portable.h"/>
         <files mask="projdefs.h"/>
         <files mask="stack_macros.h"/>
+        <files mask="threading_alt.h"/>
       </source>
       <source path="rtos/amazon-freertos/lib/FreeRTOS" target_path="amazon-freertos/FreeRTOS" type="src">
         <files mask="event_groups.c"/>
@@ -5239,6 +5034,37 @@
       <source toolchain="armgcc" path="rtos/amazon-freertos/lib/FreeRTOS/portable/GCC/ARM_CM4F" target_path="amazon-freertos/FreeRTOS/portable" type="src" device_cores="m4_MCIMX7U5xxxxx">
         <files mask="fsl_tickless_systick.c"/>
         <files mask="port.c"/>
+      </source>
+    </component>
+    <component id="middleware.freertos.cm33_secure_port.MCIMX7U5" name="cm33_secure_port" brief="Amazon FreeRTOS, Real Time Operating System port files" version="0.0.1" full_name="Amazon-FreeRTOS cm33 secure port" devices="MCIMX7U5xxxxx" dependency="middleware.freertos.MCIMX7U5 middleware.template_application.freertos.MCIMX7U5" category="Operating System/FreeRTOS Operating System" user_visible="true" type="middleware"/>
+    <component id="middleware.freertos.cm33_nonsecure_port.MCIMX7U5" name="cm33_nonsecure_port" brief="Amazon FreeRTOS, Real Time Operating System port files" version="0.0.1" full_name="Amazon-FreeRTOS cm33 nonsecure port" devices="MCIMX7U5xxxxx" dependency="middleware.freertos.MCIMX7U5 middleware.template_application.freertos.MCIMX7U5" category="Operating System/FreeRTOS Operating System" user_visible="true" type="middleware"/>
+    <component id="middleware.freertos.secure_context.MCIMX7U5" name="secure_context" brief="Amazon FreeRTOS, Real Time Operating System" version="0.0.1" full_name="Amazon-FreeRTOS Secure Context" devices="MCIMX7U5xxxxx" user_visible="true" type="middleware">
+      <source toolchain="iar" path="rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM33/secure" target_path="amazon-freertos/secure_context" type="src">
+        <files mask="secure_context_port.c"/>
+        <files mask="secure_context.c"/>
+        <files mask="secure_init.c"/>
+        <files mask="secure_heap.c"/>
+      </source>
+      <source toolchain="iar" path="rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM33/secure" target_path="amazon-freertos/secure_context" type="asm_include">
+        <files mask="secure_context_port_asm.s"/>
+      </source>
+      <source toolchain="iar" path="rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM33/secure" target_path="amazon-freertos/secure_context" type="c_include">
+        <files mask="secure_context.h"/>
+        <files mask="secure_port_macros.h"/>
+        <files mask="secure_init.h"/>
+        <files mask="secure_heap.h"/>
+      </source>
+      <source toolchain="armgcc" path="rtos/amazon-freertos/lib/FreeRTOS/portable/GCC/ARM_CM33/secure" target_path="amazon-freertos/secure_context" type="src">
+        <files mask="secure_context_port.c"/>
+        <files mask="secure_context.c"/>
+        <files mask="secure_init.c"/>
+        <files mask="secure_heap.c"/>
+      </source>
+      <source toolchain="armgcc" path="rtos/amazon-freertos/lib/FreeRTOS/portable/GCC/ARM_CM33/secure" target_path="amazon-freertos/secure_context" type="c_include">
+        <files mask="secure_context.h"/>
+        <files mask="secure_port_macros.h"/>
+        <files mask="secure_init.h"/>
+        <files mask="secure_heap.h"/>
       </source>
     </component>
     <component id="middleware.freertos.heap.heap_1.MCIMX7U5" name="heap_1" brief="FreeRTOS heap_1 allocator" version="10.0.1" full_name="FreeRTOS_heap_1" devices="MCIMX7U5xxxxx" dependency="middleware.freertos.MCIMX7U5 middleware.template_application.freertos.MCIMX7U5" category="Operating System/FreeRTOS Operating System" user_visible="true" type="other">
@@ -5274,6 +5100,28 @@
     <component id="middleware.freertos.freertos_tickless_lpit.MCIMX7U5" name="freertos_tickless_lpit" brief="FreeRTOS lpit tickless" version="10.0.1" full_name="FreeRTOS_lpit_tickless" devices="MCIMX7U5xxxxx" dependency="middleware.freertos.MCIMX7U5 middleware.template_application.freertos.MCIMX7U5 platform.Include_common.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.common.MCIMX7U5 platform.drivers.lpit.MCIMX7U5" category="Operating System/FreeRTOS Operating System" user_visible="true" type="other">
       <source path="rtos/amazon-freertos/lib/FreeRTOS/portable/low_power_tickless" target_path="amazon-freertos/FreeRTOS/portable" type="src" device_cores="m4_MCIMX7U5xxxxx">
         <files mask="fsl_tickless_lpit.c"/>
+      </source>
+    </component>
+    <component id="middleware.freertos.posix.MCIMX7U5" name="FreeRTOS_POSIX" brief="FreeRTOS POSIX wrapper" version="10.0.1" full_name="FreeRTOS_POSIX" devices="MCIMX7U5xxxxx" dependency="middleware.freertos.MCIMX7U5 middleware.template_application.freertos.MCIMX7U5" category="Operating System/FreeRTOS Operating System" user_visible="true" type="other">
+      <source path="rtos/amazon-freertos/lib/FreeRTOS-Plus-POSIX/source" target_path="amazon-freertos/FreeRTOS-Plus-POSIX/source" type="src">
+        <files mask="FreeRTOS_POSIX_utils.c"/>
+        <files mask="FreeRTOS_POSIX_unistd.c"/>
+        <files mask="FreeRTOS_POSIX_timer.c"/>
+        <files mask="FreeRTOS_POSIX_semaphore.c"/>
+        <files mask="FreeRTOS_POSIX_sched.c"/>
+        <files mask="FreeRTOS_POSIX_pthread_mutex.c"/>
+        <files mask="FreeRTOS_POSIX_pthread_cond.c"/>
+        <files mask="FreeRTOS_POSIX_pthread_barrier.c"/>
+        <files mask="FreeRTOS_POSIX_pthread.c"/>
+        <files mask="FreeRTOS_POSIX_mqueue.c"/>
+        <files mask="FreeRTOS_POSIX_clock.c"/>
+      </source>
+      <source path="rtos/amazon-freertos/lib/FreeRTOS-Plus-POSIX/include/portable" target_path="amazon-freertos/FreeRTOS-Plus-POSIX/include" type="c_include">
+        <files mask="FreeRTOS_POSIX_portable_default.h"/>
+      </source>
+      <source path="rtos/amazon-freertos/lib/FreeRTOS-Plus-POSIX/include" target_path="amazon-freertos/FreeRTOS-Plus-POSIX/include" type="c_include">
+        <files mask="FreeRTOS_POSIX_internal.h"/>
+        <files mask="FreeRTOS_POSIX.h"/>
       </source>
     </component>
     <component id="platform.drivers.lpspi_cmsis.MCIMX7U5" name="lpspi_cmsis" brief="LPSPI CMSIS Driver" version="2.0.0" devices="MCIMX7U5xxxxx" dependency="RTE_Device.MCIMX7U5 platform.CMSIS_Driver_Include.Common_CMSISInclude.MCIMX7U5 platform.CMSIS_Driver_Include.SPI_CMSISInclude.MCIMX7U5 platform.Include_common.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.common.MCIMX7U5 platform.drivers.dmamux.MCIMX7U5 platform.drivers.edma.MCIMX7U5 platform.drivers.lpspi.MCIMX7U5 platform.drivers.lpspi_edma.MCIMX7U5" user_visible="true" type="CMSIS_driver">
@@ -5324,7 +5172,7 @@
         <files mask="fsl_sema42.c"/>
       </source>
     </component>
-    <component id="platform.drivers.sai.MCIMX7U5" name="sai" brief="SAI Driver" version="2.1.7" full_name="SAI Driver" devices="MCIMX7U5xxxxx" dependency="platform.Include_common.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.common.MCIMX7U5" user_visible="true" type="driver">
+    <component id="platform.drivers.sai.MCIMX7U5" name="sai" brief="SAI Driver" version="2.2.0" full_name="SAI Driver" devices="MCIMX7U5xxxxx" dependency="platform.Include_common.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.common.MCIMX7U5" user_visible="true" type="driver">
       <source path="devices/MCIMX7U5/drivers" target_path="drivers" type="c_include">
         <files mask="fsl_sai.h"/>
       </source>
@@ -5337,7 +5185,7 @@
         <files mask="fsl_tstmr.h"/>
       </source>
     </component>
-    <component id="platform.drivers.snvs_lp.MCIMX7U5" name="snvs_lp" brief="SNVS LP Driver" version="2.0.0" full_name="SNVS LP Driver" devices="MCIMX7U5xxxxx" dependency="platform.Include_common.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.common.MCIMX7U5" user_visible="true" type="driver">
+    <component id="platform.drivers.snvs_lp.MCIMX7U5" name="snvs_lp" brief="SNVS LP Driver" version="2.1.0" full_name="SNVS LP Driver" devices="MCIMX7U5xxxxx" dependency="platform.Include_common.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.common.MCIMX7U5" user_visible="true" type="driver">
       <source path="devices/MCIMX7U5/drivers" target_path="drivers" type="src">
         <files mask="fsl_snvs_lp.c"/>
       </source>
@@ -5345,7 +5193,7 @@
         <files mask="fsl_snvs_lp.h"/>
       </source>
     </component>
-    <component id="platform.drivers.snvs_hp.MCIMX7U5" name="snvs_hp" brief="SNVS HP Driver" version="2.0.1" full_name="SNVS HP Driver" devices="MCIMX7U5xxxxx" dependency="platform.Include_common.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.common.MCIMX7U5" user_visible="true" type="driver">
+    <component id="platform.drivers.snvs_hp.MCIMX7U5" name="snvs_hp" brief="SNVS HP Driver" version="2.1.1" full_name="SNVS HP Driver" devices="MCIMX7U5xxxxx" dependency="platform.Include_common.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.common.MCIMX7U5" user_visible="true" type="driver">
       <source path="devices/MCIMX7U5/drivers" target_path="drivers" type="src">
         <files mask="fsl_snvs_hp.c"/>
       </source>
@@ -5353,7 +5201,7 @@
         <files mask="fsl_snvs_hp.h"/>
       </source>
     </component>
-    <component id="platform.drivers.trng.MCIMX7U5" name="trng" brief="TRNG Driver" version="2.0.3" full_name="TRNG Driver" devices="MCIMX7U5xxxxx" dependency="platform.Include_common.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.common.MCIMX7U5" user_visible="true" type="driver">
+    <component id="platform.drivers.trng.MCIMX7U5" name="trng" brief="TRNG Driver" version="2.0.4" full_name="TRNG Driver" devices="MCIMX7U5xxxxx" dependency="platform.Include_common.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.common.MCIMX7U5" user_visible="true" type="driver">
       <source path="devices/MCIMX7U5/drivers" target_path="drivers" type="src">
         <files mask="fsl_trng.c"/>
       </source>
@@ -5369,7 +5217,7 @@
         <files mask="fsl_trgmux.c"/>
       </source>
     </component>
-    <component id="platform.drivers.tpm.MCIMX7U5" name="tpm" brief="TPM Driver" version="2.0.2" full_name="TPM Driver" devices="MCIMX7U5xxxxx" dependency="platform.Include_common.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.common.MCIMX7U5" user_visible="true" type="driver">
+    <component id="platform.drivers.tpm.MCIMX7U5" name="tpm" brief="TPM Driver" version="2.0.3" full_name="TPM Driver" devices="MCIMX7U5xxxxx" dependency="platform.Include_common.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.common.MCIMX7U5" user_visible="true" type="driver">
       <source path="devices/MCIMX7U5/drivers" target_path="drivers" type="src">
         <files mask="fsl_tpm.c"/>
       </source>
@@ -5377,7 +5225,7 @@
         <files mask="fsl_tpm.h"/>
       </source>
     </component>
-    <component id="platform.drivers.qspi_edma.MCIMX7U5" name="qspi_edma" brief="QSPI Driver" version="2.0.3" full_name="QSPI Driver" devices="MCIMX7U5xxxxx" dependency="platform.Include_common.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.common.MCIMX7U5 platform.drivers.dmamux.MCIMX7U5 platform.drivers.edma.MCIMX7U5 platform.drivers.qspi.MCIMX7U5" user_visible="true" type="driver">
+    <component id="platform.drivers.qspi_edma.MCIMX7U5" name="qspi_edma" brief="QSPI Driver" version="2.0.2" full_name="QSPI Driver" devices="MCIMX7U5xxxxx" dependency="platform.Include_common.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.common.MCIMX7U5 platform.drivers.dmamux.MCIMX7U5 platform.drivers.edma.MCIMX7U5 platform.drivers.qspi.MCIMX7U5" user_visible="true" type="driver">
       <source path="devices/MCIMX7U5/drivers" target_path="drivers" type="c_include">
         <files mask="fsl_qspi_edma.h"/>
       </source>
@@ -5385,7 +5233,7 @@
         <files mask="fsl_qspi_edma.c"/>
       </source>
     </component>
-    <component id="platform.drivers.qspi.MCIMX7U5" name="qspi" brief="QSPI Driver" version="2.0.3" full_name="QSPI Driver" devices="MCIMX7U5xxxxx" dependency="platform.Include_common.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.common.MCIMX7U5" user_visible="true" type="driver">
+    <component id="platform.drivers.qspi.MCIMX7U5" name="qspi" brief="QSPI Driver" version="2.0.2" full_name="QSPI Driver" devices="MCIMX7U5xxxxx" dependency="platform.Include_common.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.common.MCIMX7U5" user_visible="true" type="driver">
       <source path="devices/MCIMX7U5/drivers" target_path="drivers" type="c_include">
         <files mask="fsl_qspi.h"/>
       </source>
@@ -5419,7 +5267,7 @@
         <files mask="fsl_mu.c"/>
       </source>
     </component>
-    <component id="platform.drivers.ltc_edma.MCIMX7U5" name="ltc_edma" brief="LTC Driver" version="2.0.5" full_name="LTC Driver" devices="MCIMX7U5xxxxx" dependency="platform.Include_common.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.common.MCIMX7U5 platform.drivers.dmamux.MCIMX7U5 platform.drivers.edma.MCIMX7U5 platform.drivers.ltc.MCIMX7U5" user_visible="true" type="driver">
+    <component id="platform.drivers.ltc_edma.MCIMX7U5" name="ltc_edma" brief="LTC Driver" version="2.0.7" full_name="LTC Driver" devices="MCIMX7U5xxxxx" dependency="platform.Include_common.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.common.MCIMX7U5 platform.drivers.dmamux.MCIMX7U5 platform.drivers.edma.MCIMX7U5 platform.drivers.ltc.MCIMX7U5" user_visible="true" type="driver">
       <source path="devices/MCIMX7U5/drivers" target_path="drivers" type="c_include">
         <files mask="fsl_ltc_edma.h"/>
       </source>
@@ -5427,7 +5275,7 @@
         <files mask="fsl_ltc_edma.c"/>
       </source>
     </component>
-    <component id="platform.drivers.ltc.MCIMX7U5" name="ltc" brief="LTC Driver" version="2.0.5" full_name="LTC Driver" devices="MCIMX7U5xxxxx" dependency="platform.Include_common.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.common.MCIMX7U5" user_visible="true" type="driver">
+    <component id="platform.drivers.ltc.MCIMX7U5" name="ltc" brief="LTC Driver" version="2.0.7" full_name="LTC Driver" devices="MCIMX7U5xxxxx" dependency="platform.Include_common.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.common.MCIMX7U5" user_visible="true" type="driver">
       <source path="devices/MCIMX7U5/drivers" target_path="drivers" type="c_include">
         <files mask="fsl_ltc.h"/>
       </source>
@@ -5435,7 +5283,7 @@
         <files mask="fsl_ltc.c"/>
       </source>
     </component>
-    <component id="platform.drivers.lpuart_freertos.MCIMX7U5" name="lpuart_freertos" brief="LPUART Driver" version="2.2.6" full_name="LPUART Driver" devices="MCIMX7U5xxxxx" dependency="middleware.freertos.MCIMX7U5 middleware.template_application.freertos.MCIMX7U5 platform.Include_common.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.common.MCIMX7U5 platform.drivers.lpuart.MCIMX7U5" user_visible="true" type="driver">
+    <component id="platform.drivers.lpuart_freertos.MCIMX7U5" name="lpuart_freertos" brief="LPUART Driver" version="2.2.7" full_name="LPUART Driver" devices="MCIMX7U5xxxxx" dependency="middleware.freertos.MCIMX7U5 middleware.template_application.freertos.MCIMX7U5 platform.Include_common.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.common.MCIMX7U5 platform.drivers.lpuart.MCIMX7U5" user_visible="true" type="driver">
       <source path="devices/MCIMX7U5/drivers" target_path="drivers/freertos" type="c_include">
         <files mask="fsl_lpuart_freertos.h"/>
       </source>
@@ -5443,7 +5291,7 @@
         <files mask="fsl_lpuart_freertos.c"/>
       </source>
     </component>
-    <component id="platform.drivers.lpuart.MCIMX7U5" name="lpuart" brief="LPUART Driver" version="2.2.6" full_name="LPUART Driver" devices="MCIMX7U5xxxxx" dependency="platform.Include_common.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.common.MCIMX7U5" user_visible="true" type="driver">
+    <component id="platform.drivers.lpuart.MCIMX7U5" name="lpuart" brief="LPUART Driver" version="2.2.7" full_name="LPUART Driver" devices="MCIMX7U5xxxxx" dependency="platform.Include_common.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.common.MCIMX7U5" user_visible="true" type="driver">
       <source path="devices/MCIMX7U5/drivers" target_path="drivers" type="c_include">
         <files mask="fsl_lpuart.h"/>
       </source>
@@ -5451,7 +5299,7 @@
         <files mask="fsl_lpuart.c"/>
       </source>
     </component>
-    <component id="platform.drivers.lptmr.MCIMX7U5" name="lptmr" brief="LPTMR Driver" version="2.0.1" full_name="LPTMR Driver" devices="MCIMX7U5xxxxx" dependency="platform.Include_common.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.common.MCIMX7U5" user_visible="true" type="driver">
+    <component id="platform.drivers.lptmr.MCIMX7U5" name="lptmr" brief="LPTMR Driver" version="2.0.2" full_name="LPTMR Driver" devices="MCIMX7U5xxxxx" dependency="platform.Include_common.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.common.MCIMX7U5" user_visible="true" type="driver">
       <source path="devices/MCIMX7U5/drivers" target_path="drivers" type="src">
         <files mask="fsl_lptmr.c"/>
       </source>
@@ -5459,7 +5307,7 @@
         <files mask="fsl_lptmr.h"/>
       </source>
     </component>
-    <component id="platform.drivers.lpspi.MCIMX7U5" name="lpspi" brief="LPSPI Driver" version="2.0.2" full_name="LPSPI Driver" devices="MCIMX7U5xxxxx" dependency="platform.Include_common.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.common.MCIMX7U5" user_visible="true" type="driver">
+    <component id="platform.drivers.lpspi.MCIMX7U5" name="lpspi" brief="LPSPI Driver" version="2.0.3" full_name="LPSPI Driver" devices="MCIMX7U5xxxxx" dependency="platform.Include_common.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.common.MCIMX7U5" user_visible="true" type="driver">
       <source path="devices/MCIMX7U5/drivers" target_path="drivers" type="src">
         <files mask="fsl_lpspi.c"/>
       </source>
@@ -5483,7 +5331,7 @@
         <files mask="fsl_lpit.h"/>
       </source>
     </component>
-    <component id="platform.drivers.lpi2c_freertos.MCIMX7U5" name="i2c_freertos" brief="LPI2C Driver" version="2.1.5" full_name="LPI2C Driver" devices="MCIMX7U5xxxxx" dependency="middleware.freertos.MCIMX7U5 middleware.template_application.freertos.MCIMX7U5 platform.Include_common.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.common.MCIMX7U5 platform.drivers.lpi2c.MCIMX7U5" user_visible="true" type="driver">
+    <component id="platform.drivers.lpi2c_freertos.MCIMX7U5" name="i2c_freertos" brief="LPI2C Driver" version="2.1.6" full_name="LPI2C Driver" devices="MCIMX7U5xxxxx" dependency="middleware.freertos.MCIMX7U5 middleware.template_application.freertos.MCIMX7U5 platform.Include_common.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.common.MCIMX7U5 platform.drivers.lpi2c.MCIMX7U5" user_visible="true" type="driver">
       <source path="devices/MCIMX7U5/drivers" target_path="drivers/freertos" type="c_include">
         <files mask="fsl_lpi2c_freertos.h"/>
       </source>
@@ -5491,7 +5339,7 @@
         <files mask="fsl_lpi2c_freertos.c"/>
       </source>
     </component>
-    <component id="platform.drivers.lpi2c.MCIMX7U5" name="i2c" brief="LPI2C Driver" version="2.1.5" full_name="LPI2C Driver" devices="MCIMX7U5xxxxx" dependency="platform.Include_common.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.common.MCIMX7U5" user_visible="true" type="driver">
+    <component id="platform.drivers.lpi2c.MCIMX7U5" name="i2c" brief="LPI2C Driver" version="2.1.7" full_name="LPI2C Driver" devices="MCIMX7U5xxxxx" dependency="platform.Include_common.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.common.MCIMX7U5" user_visible="true" type="driver">
       <source path="devices/MCIMX7U5/drivers" target_path="drivers" type="src">
         <files mask="fsl_lpi2c.c"/>
       </source>
@@ -5499,7 +5347,7 @@
         <files mask="fsl_lpi2c.h"/>
       </source>
     </component>
-    <component id="platform.drivers.lpadc.MCIMX7U5" name="lpadc" brief="LPADC Driver" version="2.0.0" full_name="LPADC Driver" devices="MCIMX7U5xxxxx" dependency="platform.Include_common.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.common.MCIMX7U5" user_visible="true" type="driver">
+    <component id="platform.drivers.lpadc.MCIMX7U5" name="lpadc" brief="LPADC Driver" version="2.0.4" full_name="LPADC Driver" devices="MCIMX7U5xxxxx" dependency="platform.Include_common.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.common.MCIMX7U5" user_visible="true" type="driver">
       <source path="devices/MCIMX7U5/drivers" target_path="drivers" type="src">
         <files mask="fsl_lpadc.c"/>
       </source>
@@ -5523,7 +5371,7 @@
         <files mask="fsl_llwu.c"/>
       </source>
     </component>
-    <component id="platform.drivers.gpio.MCIMX7U5" name="gpio" brief="GPIO Driver" version="2.3.1" full_name="GPIO Driver" devices="MCIMX7U5xxxxx" dependency="platform.Include_common.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.common.MCIMX7U5" user_visible="true" type="driver">
+    <component id="platform.drivers.gpio.MCIMX7U5" name="gpio" brief="GPIO Driver" version="2.3.2" full_name="GPIO Driver" devices="MCIMX7U5xxxxx" dependency="platform.Include_common.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.common.MCIMX7U5" user_visible="true" type="driver">
       <source path="devices/MCIMX7U5/drivers" target_path="drivers" type="c_include">
         <files mask="fsl_gpio.h"/>
       </source>
@@ -5579,7 +5427,7 @@
         <files mask="fsl_flexio_i2s.h"/>
       </source>
     </component>
-    <component id="platform.drivers.flexio_i2c_master.MCIMX7U5" name="flexio_i2c_master" brief="FLEXIO I2C Driver" version="2.1.6" full_name="FLEXIO I2C Driver" devices="MCIMX7U5xxxxx" dependency="platform.Include_common.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.common.MCIMX7U5 platform.drivers.flexio.MCIMX7U5" user_visible="true" type="driver">
+    <component id="platform.drivers.flexio_i2c_master.MCIMX7U5" name="flexio_i2c_master" brief="FLEXIO I2C Driver" version="2.1.7" full_name="FLEXIO I2C Driver" devices="MCIMX7U5xxxxx" dependency="platform.Include_common.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.common.MCIMX7U5 platform.drivers.flexio.MCIMX7U5" user_visible="true" type="driver">
       <source path="devices/MCIMX7U5/drivers" target_path="drivers" type="src">
         <files mask="fsl_flexio_i2c_master.c"/>
       </source>
@@ -5619,7 +5467,7 @@
         <files mask="fsl_dac12.h"/>
       </source>
     </component>
-    <component id="platform.drivers.edma.MCIMX7U5" name="edma" brief="EDMA Driver" version="2.1.5" full_name="EDMA Driver" devices="MCIMX7U5xxxxx" dependency="platform.Include_common.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.common.MCIMX7U5 platform.drivers.dmamux.MCIMX7U5" user_visible="true" type="driver">
+    <component id="platform.drivers.edma.MCIMX7U5" name="edma" brief="EDMA Driver" version="2.1.7" full_name="EDMA Driver" devices="MCIMX7U5xxxxx" dependency="platform.Include_common.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.common.MCIMX7U5 platform.drivers.dmamux.MCIMX7U5" user_visible="true" type="driver">
       <source path="devices/MCIMX7U5/drivers" target_path="drivers" type="c_include">
         <files mask="fsl_edma.h"/>
       </source>
@@ -5651,7 +5499,7 @@
         <files mask="fsl_acmp.h"/>
       </source>
     </component>
-    <component id="platform.drivers.common.MCIMX7U5" name="common" brief="COMMON Driver" version="2.0.1" full_name="COMMON Driver" devices="MCIMX7U5xxxxx" dependency="platform.Include_common.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 platform.drivers.clock.MCIMX7U5" user_visible="true" type="driver">
+    <component id="platform.drivers.common.MCIMX7U5" name="common" brief="COMMON Driver" version="2.0.2" full_name="COMMON Driver" devices="MCIMX7U5xxxxx" dependency="platform.Include_common.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 platform.drivers.clock.MCIMX7U5" user_visible="true" type="driver">
       <source path="devices/MCIMX7U5/drivers" target_path="drivers" type="c_include">
         <files mask="fsl_common.h"/>
       </source>
@@ -5660,13 +5508,13 @@
       </source>
     </component>
     <component id="project_template.MCIMX7U5.MCIMX7U5" name="MCIMX7U5" version="1.0.0" devices="MCIMX7U5xxxxx" dependency="component.serial_manager.MCIMX7U5 component.serial_manager_uart.MCIMX7U5 platform.Include_common.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 platform.devices.MCIMX7U5_startup.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.common.MCIMX7U5 platform.drivers.lpuart.MCIMX7U5 platform.drivers.msmc.MCIMX7U5 utility.debug_console.MCIMX7U5" category="Board Support/SDK Project Template" user_visible="true" type="project_template">
-      <source path="devices/MCIMX7U5/project_template" target_path="src" type="c_include">
+      <source path="devices/MCIMX7U5/project_template" target_path="board" type="c_include">
         <files mask="board.h"/>
         <files mask="clock_config.h"/>
         <files mask="pin_mux.h"/>
         <files mask="peripherals.h"/>
       </source>
-      <source path="devices/MCIMX7U5/project_template" target_path="src" type="src">
+      <source path="devices/MCIMX7U5/project_template" target_path="board" type="src">
         <files mask="board.c"/>
         <files mask="clock_config.c"/>
         <files mask="pin_mux.c"/>
@@ -5674,13 +5522,13 @@
       </source>
     </component>
     <component id="project_template.evkmcimx7ulp.MCIMX7U5" name="evkmcimx7ulp" version="1.0.0" devices="MCIMX7U5xxxxx" dependency="component.serial_manager.MCIMX7U5 component.serial_manager_uart.MCIMX7U5 platform.Include_common.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 platform.devices.MCIMX7U5_startup.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.common.MCIMX7U5 platform.drivers.lpuart.MCIMX7U5 platform.drivers.msmc.MCIMX7U5 utility.debug_console.MCIMX7U5" category="Board Support/SDK Project Template" user_visible="true" type="project_template">
-      <source path="boards/evkmcimx7ulp/project_template" target_path="src" type="c_include">
+      <source path="boards/evkmcimx7ulp/project_template" target_path="board/boards" type="c_include">
         <files mask="board.h"/>
         <files mask="clock_config.h"/>
         <files mask="pin_mux.h"/>
         <files mask="peripherals.h"/>
       </source>
-      <source path="boards/evkmcimx7ulp/project_template" target_path="src" type="src">
+      <source path="boards/evkmcimx7ulp/project_template" target_path="board/boards" type="src">
         <files mask="board.c"/>
         <files mask="clock_config.c"/>
         <files mask="pin_mux.c"/>

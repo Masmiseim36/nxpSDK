@@ -2,7 +2,7 @@
  * Copyright (c) 2017, NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -34,7 +34,7 @@
 srtm_peercore_t SRTM_PeerCore_Create(uint32_t id)
 {
     srtm_peercore_t core = (srtm_peercore_t)SRTM_Heap_Malloc(sizeof(struct _srtm_peercore));
-    srtm_mutex_t mutex = SRTM_Mutex_Create();
+    srtm_mutex_t mutex   = SRTM_Mutex_Create();
 
     assert(core && mutex);
 
@@ -43,12 +43,12 @@ srtm_peercore_t SRTM_PeerCore_Create(uint32_t id)
     SRTM_List_Init(&core->channels);
     SRTM_List_Init(&core->pendingQ);
 
-    core->id = id;
-    core->dispatcher = NULL;
-    core->mutex = mutex;
-    core->started = false;
-    core->state = SRTM_PeerCore_State_Inactive;
-    core->wakeupFunc = NULL;
+    core->id          = id;
+    core->dispatcher  = NULL;
+    core->mutex       = mutex;
+    core->started     = false;
+    core->state       = SRTM_PeerCore_State_Inactive;
+    core->wakeupFunc  = NULL;
     core->wakeupParam = NULL;
 
     return core;
@@ -64,11 +64,11 @@ void SRTM_PeerCore_Destroy(srtm_peercore_t core)
 
     SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_INFO, "%s\r\n", __func__);
 
-    while(!SRTM_List_IsEmpty(&core->channels))
+    while (!SRTM_List_IsEmpty(&core->channels))
     {
         list = core->channels.next;
         SRTM_List_Remove(list);
-        channel = SRTM_LIST_OBJ(srtm_channel_t, node, list);
+        channel       = SRTM_LIST_OBJ(srtm_channel_t, node, list);
         channel->core = NULL;
         SRTM_Channel_Destroy(channel);
     }
@@ -104,11 +104,10 @@ srtm_status_t SRTM_PeerCore_Start(srtm_peercore_t core)
 
     core->started = true;
 
-
     for (list = core->channels.next; list != &core->channels; list = list->next)
     {
         channel = SRTM_LIST_OBJ(srtm_channel_t, node, list);
-        status = SRTM_Channel_Start(channel);
+        status  = SRTM_Channel_Start(channel);
     }
 
     return status;
@@ -134,7 +133,7 @@ srtm_status_t SRTM_PeerCore_Stop(srtm_peercore_t core)
     for (list = core->channels.next; list != &core->channels; list = list->next)
     {
         channel = SRTM_LIST_OBJ(srtm_channel_t, node, list);
-        status = SRTM_Channel_Stop(channel);
+        status  = SRTM_Channel_Stop(channel);
     }
 
     return status;
@@ -170,7 +169,7 @@ srtm_status_t SRTM_PeerCore_Deactivate(srtm_peercore_t core, srtm_peercore_wakeu
 
     SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_INFO, "%s\r\n", __func__);
 
-    core->wakeupFunc = wakeup;
+    core->wakeupFunc  = wakeup;
     core->wakeupParam = param;
 
     core->state = SRTM_PeerCore_State_Deactivating;

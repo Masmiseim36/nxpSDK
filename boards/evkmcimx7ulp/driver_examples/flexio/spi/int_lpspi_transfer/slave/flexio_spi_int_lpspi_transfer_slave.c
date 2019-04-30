@@ -50,16 +50,16 @@ void FLEXIO_SPI_SlaveUserCallback(FLEXIO_SPI_Type *base,
  ******************************************************************************/
 uint8_t masterRxData[TRANSFER_SIZE] = {0U};
 uint8_t masterTxData[TRANSFER_SIZE] = {0U};
-uint8_t slaveRxData[TRANSFER_SIZE] = {0U};
-uint8_t slaveTxData[TRANSFER_SIZE] = {0U};
+uint8_t slaveRxData[TRANSFER_SIZE]  = {0U};
+uint8_t slaveTxData[TRANSFER_SIZE]  = {0U};
 
 lpspi_master_handle_t g_m_handle;
 FLEXIO_SPI_Type spiDev;
 flexio_spi_slave_handle_t g_s_handle;
 
-volatile bool isSlaveTransferCompleted = false;
+volatile bool isSlaveTransferCompleted  = false;
 volatile bool isMasterTransferCompleted = false;
-bool isMasterIrqInIntmux = false;
+bool isMasterIrqInIntmux                = false;
 
 /*******************************************************************************
  * Code
@@ -116,20 +116,20 @@ int main(void)
     flexio_spi_transfer_t slaveXfer;
 
     /*Master config*/
-    masterConfig.baudRate = TRANSFER_BAUDRATE;
+    masterConfig.baudRate     = TRANSFER_BAUDRATE;
     masterConfig.bitsPerFrame = 8;
-    masterConfig.cpol = kLPSPI_ClockPolarityActiveHigh;
-    masterConfig.cpha = kLPSPI_ClockPhaseFirstEdge;
-    masterConfig.direction = kLPSPI_MsbFirst;
+    masterConfig.cpol         = kLPSPI_ClockPolarityActiveHigh;
+    masterConfig.cpha         = kLPSPI_ClockPhaseFirstEdge;
+    masterConfig.direction    = kLPSPI_MsbFirst;
 
-    masterConfig.pcsToSckDelayInNanoSec = 1000000000 / masterConfig.baudRate;
-    masterConfig.lastSckToPcsDelayInNanoSec = 1000000000 / masterConfig.baudRate;
+    masterConfig.pcsToSckDelayInNanoSec        = 1000000000 / masterConfig.baudRate;
+    masterConfig.lastSckToPcsDelayInNanoSec    = 1000000000 / masterConfig.baudRate;
     masterConfig.betweenTransferDelayInNanoSec = 1000000000 / masterConfig.baudRate;
 
-    masterConfig.whichPcs = MASTER_LPSPI_PCS_FOR_INIT;
+    masterConfig.whichPcs           = MASTER_LPSPI_PCS_FOR_INIT;
     masterConfig.pcsActiveHighOrLow = kLPSPI_PcsActiveLow;
 
-    masterConfig.pinCfg = kLPSPI_SdiInSdoOut;
+    masterConfig.pinCfg        = kLPSPI_SdiInSdoOut;
     masterConfig.dataOutConfig = kLpspiDataOutRetained;
 
     LPSPI_MasterInit(MASTER_LPSPI_BASEADDR, &masterConfig, MASTER_LPSPI_CLOCK_FREQUENCY);
@@ -137,14 +137,14 @@ int main(void)
     /* Slave config */
     FLEXIO_SPI_SlaveGetDefaultConfig(&slaveConfig);
 
-    spiDev.flexioBase = SLAVE_FLEXIO_SPI_BASEADDR;
-    spiDev.SDOPinIndex = FLEXIO_SPI_SOUT_PIN;
-    spiDev.SDIPinIndex = FLEXIO_SPI_SIN_PIN;
-    spiDev.SCKPinIndex = FLEXIO_SPI_CLK_PIN;
-    spiDev.CSnPinIndex = FLEXIO_SPI_PCS_PIN;
+    spiDev.flexioBase      = SLAVE_FLEXIO_SPI_BASEADDR;
+    spiDev.SDOPinIndex     = FLEXIO_SPI_SOUT_PIN;
+    spiDev.SDIPinIndex     = FLEXIO_SPI_SIN_PIN;
+    spiDev.SCKPinIndex     = FLEXIO_SPI_CLK_PIN;
+    spiDev.CSnPinIndex     = FLEXIO_SPI_PCS_PIN;
     spiDev.shifterIndex[0] = 0U;
     spiDev.shifterIndex[1] = 1U;
-    spiDev.timerIndex[0] = 0U;
+    spiDev.timerIndex[0]   = 0U;
     FLEXIO_SPI_SlaveInit(&spiDev, &slaveConfig);
 
     /* Set slave interrupt priority higher. */
@@ -170,10 +170,10 @@ int main(void)
     FLEXIO_SPI_SlaveTransferCreateHandle(&spiDev, &g_s_handle, FLEXIO_SPI_SlaveUserCallback, NULL);
 
     /*Set slave transfer ready to receive/send data*/
-    slaveXfer.txData = slaveTxData;
-    slaveXfer.rxData = slaveRxData;
+    slaveXfer.txData   = slaveTxData;
+    slaveXfer.rxData   = slaveRxData;
     slaveXfer.dataSize = TRANSFER_SIZE;
-    slaveXfer.flags = kFLEXIO_SPI_8bitMsb;
+    slaveXfer.flags    = kFLEXIO_SPI_8bitMsb;
 
     FLEXIO_SPI_SlaveTransferNonBlocking(&spiDev, &g_s_handle, &slaveXfer);
 
@@ -181,9 +181,9 @@ int main(void)
     LPSPI_MasterTransferCreateHandle(MASTER_LPSPI_BASEADDR, &g_m_handle, LPSPI_MasterUserCallback, NULL);
 
     /*Start master transfer*/
-    masterXfer.txData = masterTxData;
-    masterXfer.rxData = masterRxData;
-    masterXfer.dataSize = TRANSFER_SIZE;
+    masterXfer.txData      = masterTxData;
+    masterXfer.rxData      = masterRxData;
+    masterXfer.dataSize    = TRANSFER_SIZE;
     masterXfer.configFlags = MASTER_LPSPI_PCS_FOR_TRANSFER;
 
     LPSPI_MasterTransferNonBlocking(MASTER_LPSPI_BASEADDR, &g_m_handle, &masterXfer);

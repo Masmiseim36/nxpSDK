@@ -7,9 +7,9 @@
  * Copyright (c) 2016 - 2017 , NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
-*/
+ */
 
 /************************************************************************************
 *************************************************************************************
@@ -43,7 +43,7 @@ static void BleConnManager_GapCommonConfig(void);
 * Private memory declarations
 *************************************************************************************
 ************************************************************************************/
-static bleDeviceAddress_t   maBleDeviceAddress;
+static bleDeviceAddress_t maBleDeviceAddress;
 
 #if gAppUseBonding_d
 uint8_t gcBondedDevices = 0;
@@ -53,8 +53,8 @@ static uint8_t mcDevicesInResolvingList = 0;
 #endif /* gAppUseBonding_d */
 
 #if gAppUsePairing_d
-static bleDeviceAddress_t   maPeerDeviceAddress;
-static bleAddressType_t     mPeerDeviceAddressType;
+static bleDeviceAddress_t maPeerDeviceAddress;
+static bleAddressType_t mPeerDeviceAddressType;
 #endif
 /************************************************************************************
 *************************************************************************************
@@ -62,7 +62,7 @@ static bleAddressType_t     mPeerDeviceAddressType;
 *************************************************************************************
 ************************************************************************************/
 
-void BleConnManager_GenericEvent(gapGenericEvent_t* pGenericEvent)
+void BleConnManager_GenericEvent(gapGenericEvent_t *pGenericEvent)
 {
     switch (pGenericEvent->eventType)
     {
@@ -70,16 +70,16 @@ void BleConnManager_GenericEvent(gapGenericEvent_t* pGenericEvent)
         {
             /* Use address read from the controller */
             FLib_MemCpy(maBleDeviceAddress, pGenericEvent->eventData.aAddress, sizeof(bleDeviceAddress_t));
-#if gAppUsePairing_d            
+#if gAppUsePairing_d
             gSmpKeys.addressType = gBleAddrTypePublic_c;
-            gSmpKeys.aAddress = maBleDeviceAddress;
-#endif            
+            gSmpKeys.aAddress    = maBleDeviceAddress;
+#endif
         }
         break;
 
         case gInternalError_c:
         {
-            panic(0,0,0,0);
+            panic(0, 0, 0, 0);
         }
         break;
 
@@ -93,61 +93,60 @@ void BleConnManager_GapDualRoleConfig(void)
     BleConnManager_GapCommonConfig();
 
 #if gAppUsePrivacy_d
-   gAdvParams.peerAddressType = gBleAddrTypeRandom_c;    
-   gScanParams.ownAddressType = gBleAddrTypeRandom_c;       
-#endif    
+    gAdvParams.peerAddressType = gBleAddrTypeRandom_c;
+    gScanParams.ownAddressType = gBleAddrTypeRandom_c;
+#endif
 
     /* Setup Advertising and scanning data */
-    Gap_SetAdvertisingData(&gAppAdvertisingData, &gAppScanRspData);    
+    Gap_SetAdvertisingData(&gAppAdvertisingData, &gAppScanRspData);
 }
 
 void BleConnManager_GapPeripheralConfig(void)
 {
     BleConnManager_GapCommonConfig();
-    
+
 #if gAppUsePrivacy_d
-   gAdvParams.peerAddressType = gBleAddrTypeRandom_c; 
+    gAdvParams.peerAddressType = gBleAddrTypeRandom_c;
 #endif
-   
+
     /* Setup Advertising and scanning data */
-    Gap_SetAdvertisingData(&gAppAdvertisingData, &gAppScanRspData);    
+    Gap_SetAdvertisingData(&gAppAdvertisingData, &gAppScanRspData);
 }
 
 void BleConnManager_GapCentralConfig(void)
-{  
+{
 #if gAppUsePrivacy_d
-    gScanParams.ownAddressType = gBleAddrTypeRandom_c;    
-#endif  
-   
+    gScanParams.ownAddressType = gBleAddrTypeRandom_c;
+#endif
+
     BleConnManager_GapCommonConfig();
 }
 
-void BleConnManager_GapPeripheralEvent(deviceId_t peerDeviceId, gapConnectionEvent_t* pConnectionEvent)
+void BleConnManager_GapPeripheralEvent(deviceId_t peerDeviceId, gapConnectionEvent_t *pConnectionEvent)
 {
     switch (pConnectionEvent->eventType)
     {
         case gConnEvtConnected_c:
         {
-#if gAppUsePairing_d          
+#if gAppUsePairing_d
 #if gAppUseBonding_d
             bool_t isBonded = FALSE;
 
             /* Copy peer device address information */
             mPeerDeviceAddressType = pConnectionEvent->eventData.connectedEvent.peerAddressType;
-            FLib_MemCpy(maPeerDeviceAddress, pConnectionEvent->eventData.connectedEvent.peerAddress, sizeof(bleDeviceAddress_t));
+            FLib_MemCpy(maPeerDeviceAddress, pConnectionEvent->eventData.connectedEvent.peerAddress,
+                        sizeof(bleDeviceAddress_t));
 
-            if (gBleSuccess_c == Gap_CheckIfBonded(peerDeviceId, &isBonded) &&
-                FALSE == isBonded)
+            if (gBleSuccess_c == Gap_CheckIfBonded(peerDeviceId, &isBonded) && FALSE == isBonded)
 #endif
             {
-                Gap_SendSlaveSecurityRequest(peerDeviceId,
-                                gPairingParameters.withBonding,
-                                gPairingParameters.securityModeAndLevel);
+                Gap_SendSlaveSecurityRequest(peerDeviceId, gPairingParameters.withBonding,
+                                             gPairingParameters.securityModeAndLevel);
             }
 #endif
 
 #if gConnUpdateAlwaysAccept_d
-                Gap_EnableUpdateConnectionParameters(peerDeviceId, TRUE);
+            Gap_EnableUpdateConnectionParameters(peerDeviceId, TRUE);
 #endif
         }
         break;
@@ -155,20 +154,20 @@ void BleConnManager_GapPeripheralEvent(deviceId_t peerDeviceId, gapConnectionEve
         case gConnEvtParameterUpdateRequest_c:
         {
 #if !gConnUpdateAlwaysAccept_d
-        	gapConnParamsUpdateReq_t *pUpdateReq = &pConnectionEvent->eventData.connectionUpdateRequest;
-        	bool_t result;
+            gapConnParamsUpdateReq_t *pUpdateReq = &pConnectionEvent->eventData.connectionUpdateRequest;
+            bool_t result;
 
-                /* Check values match the configured intervals */
-        	result = (pUpdateReq->intervalMin > gConnUpdateIntervalMin_d) &&
-                            (pUpdateReq->intervalMax < gConnUpdateIntervalMax_d) &&
-                            (pUpdateReq->slaveLatency > gConnUpdateLatencyMin_d) &&
-                            (pUpdateReq->slaveLatency < gConnUpdateLatencyMax_d) &&
-                            (pUpdateReq->timeoutMultiplier > gConnUpdateIntervalMin_d) &&
-                            (pUpdateReq->timeoutMultiplier > gConnUpdateIntervalMin_d);
+            /* Check values match the configured intervals */
+            result = (pUpdateReq->intervalMin > gConnUpdateIntervalMin_d) &&
+                     (pUpdateReq->intervalMax < gConnUpdateIntervalMax_d) &&
+                     (pUpdateReq->slaveLatency > gConnUpdateLatencyMin_d) &&
+                     (pUpdateReq->slaveLatency < gConnUpdateLatencyMax_d) &&
+                     (pUpdateReq->timeoutMultiplier > gConnUpdateIntervalMin_d) &&
+                     (pUpdateReq->timeoutMultiplier > gConnUpdateIntervalMin_d);
 
-        	Gap_EnableUpdateConnectionParameters(peerDeviceId, result);
+            Gap_EnableUpdateConnectionParameters(peerDeviceId, result);
 #else
-        	Gap_EnableUpdateConnectionParameters(peerDeviceId, TRUE);
+            Gap_EnableUpdateConnectionParameters(peerDeviceId, TRUE);
 #endif
         }
         break;
@@ -216,7 +215,8 @@ void BleConnManager_GapPeripheralEvent(deviceId_t peerDeviceId, gapConnectionEve
             if (pConnectionEvent->eventData.keysReceivedEvent.pKeys->aIrk != NULL)
             {
                 mPeerDeviceAddressType = pConnectionEvent->eventData.keysReceivedEvent.pKeys->addressType;
-                FLib_MemCpy(maPeerDeviceAddress, pConnectionEvent->eventData.keysReceivedEvent.pKeys->aAddress, sizeof(bleDeviceAddress_t));
+                FLib_MemCpy(maPeerDeviceAddress, pConnectionEvent->eventData.keysReceivedEvent.pKeys->aAddress,
+                            sizeof(bleDeviceAddress_t));
             }
         }
         break;
@@ -232,11 +232,10 @@ void BleConnManager_GapPeripheralEvent(deviceId_t peerDeviceId, gapConnectionEve
 #if gAppUsePrivacy_d
                 gapIdentityInformation_t aOutIdentityAddresses[gcGapControllerResolvingListSize_c];
                 uint8_t identitiesCount = 0;
-                bleResult_t result = Gap_GetBondedDevicesIdentityInformation(aOutIdentityAddresses,
-                                                 gcGapControllerResolvingListSize_c, &identitiesCount);
-               if (gBleSuccess_c == result &&
-                   (identitiesCount <= gcGapControllerResolvingListSize_c) &&
-                   (identitiesCount == mcDevicesInResolvingList + 1))
+                bleResult_t result      = Gap_GetBondedDevicesIdentityInformation(
+                    aOutIdentityAddresses, gcGapControllerResolvingListSize_c, &identitiesCount);
+                if (gBleSuccess_c == result && (identitiesCount <= gcGapControllerResolvingListSize_c) &&
+                    (identitiesCount == mcDevicesInResolvingList + 1))
                 {
                     /* Disable existing Privacy. */
                     if (mcDevicesInResolvingList == 0)
@@ -274,7 +273,7 @@ void BleConnManager_GapPeripheralEvent(deviceId_t peerDeviceId, gapConnectionEve
 
         case gConnEvtLeScDisplayNumericValue_c:
         {
-            (void) pConnectionEvent->eventData.numericValueForDisplay;
+            (void)pConnectionEvent->eventData.numericValueForDisplay;
             /* Display on a screen for user confirmation then validate/invalidate based on value. */
             Gap_LeScValidateNumericValue(peerDeviceId, TRUE);
         }
@@ -282,43 +281,41 @@ void BleConnManager_GapPeripheralEvent(deviceId_t peerDeviceId, gapConnectionEve
 
 #endif /* gAppUsePairing_d */
 
-    default:
-        break;
+        default:
+            break;
     }
 }
 
-
-void BleConnManager_GapCentralEvent(deviceId_t peerDeviceId, gapConnectionEvent_t* pConnectionEvent)
+void BleConnManager_GapCentralEvent(deviceId_t peerDeviceId, gapConnectionEvent_t *pConnectionEvent)
 {
     switch (pConnectionEvent->eventType)
     {
-		case gConnEvtConnected_c:
-		{
+        case gConnEvtConnected_c:
+        {
 #if gConnUpdateAlwaysAccept_d
-			Gap_EnableUpdateConnectionParameters(peerDeviceId, TRUE);
+            Gap_EnableUpdateConnectionParameters(peerDeviceId, TRUE);
 #endif
-		}
-    break;
+        }
+        break;
         case gConnEvtSlaveSecurityRequest_c:
         {
-#if gAppUsePairing_d          
+#if gAppUsePairing_d
             bool_t isBonded = FALSE;
-           
-            if ((gBleSuccess_c == Gap_CheckIfBonded(peerDeviceId, &isBonded)) &&
-                (isBonded))
+
+            if ((gBleSuccess_c == Gap_CheckIfBonded(peerDeviceId, &isBonded)) && (isBonded))
             {
                 Gap_EncryptLink(peerDeviceId);
-            }              
+            }
             else
             {
                 Gap_Pair(peerDeviceId, &gPairingParameters);
             }
 #else
             Gap_RejectPairing(peerDeviceId, gPairingNotSupported_c);
-#endif            
+#endif
         }
         break;
-        
+
         case gConnEvtPairingRequest_c:
         {
 #if gAppUsePairing_d
@@ -340,10 +337,10 @@ void BleConnManager_GapCentralEvent(deviceId_t peerDeviceId, gapConnectionEvent_
             break;
 
         case gConnEvtLeScDisplayNumericValue_c:
-            (void) pConnectionEvent->eventData.numericValueForDisplay;
+            (void)pConnectionEvent->eventData.numericValueForDisplay;
             /* Display on a screen for user confirmation then validate/invalidate based on value. */
             Gap_LeScValidateNumericValue(peerDeviceId, TRUE);
-        break;
+            break;
 
         case gConnEvtKeyExchangeRequest_c:
         {
@@ -400,11 +397,10 @@ void BleConnManager_GapCentralEvent(deviceId_t peerDeviceId, gapConnectionEvent_
 #if gAppUsePrivacy_d
                 gapIdentityInformation_t aOutIdentityAddresses[gcGapControllerResolvingListSize_c];
                 uint8_t identitiesCount = 0;
-                bleResult_t result = Gap_GetBondedDevicesIdentityInformation(aOutIdentityAddresses,
-                                                 gcGapControllerResolvingListSize_c, &identitiesCount);
-               if (gBleSuccess_c == result &&
-                   (identitiesCount <= gcGapControllerResolvingListSize_c) &&
-                   (identitiesCount == mcDevicesInResolvingList + 1))
+                bleResult_t result      = Gap_GetBondedDevicesIdentityInformation(
+                    aOutIdentityAddresses, gcGapControllerResolvingListSize_c, &identitiesCount);
+                if (gBleSuccess_c == result && (identitiesCount <= gcGapControllerResolvingListSize_c) &&
+                    (identitiesCount == mcDevicesInResolvingList + 1))
                 {
                     /* Disable existing Privacy. */
                     if (mcDevicesInResolvingList == 0)
@@ -425,8 +421,8 @@ void BleConnManager_GapCentralEvent(deviceId_t peerDeviceId, gapConnectionEvent_
         }
 #endif /* gAppUsePairing_d */
 
-    default:
-        break;
+        default:
+            break;
     }
 }
 
@@ -467,11 +463,11 @@ static void BleConnManager_GapCommonConfig(void)
 
 #if gAppUsePrivacy_d
 #if gAppUseBonding_d
-    gapIdentityInformation_t   aOutIdentityAddresses[gcGapControllerResolvingListSize_c];
+    gapIdentityInformation_t aOutIdentityAddresses[gcGapControllerResolvingListSize_c];
     uint8_t identitiesCount = 0;
 
-    result = Gap_GetBondedDevicesIdentityInformation(aOutIdentityAddresses,
-                                     gcGapControllerResolvingListSize_c, &identitiesCount);
+    result = Gap_GetBondedDevicesIdentityInformation(aOutIdentityAddresses, gcGapControllerResolvingListSize_c,
+                                                     &identitiesCount);
     if (gBleSuccess_c == result && identitiesCount > 0)
     {
         mcDevicesInResolvingList = identitiesCount;
@@ -494,5 +490,5 @@ static void BleConnManager_GapCommonConfig(void)
 }
 
 /*! *********************************************************************************
-* @}
-********************************************************************************** */
+ * @}
+ ********************************************************************************** */

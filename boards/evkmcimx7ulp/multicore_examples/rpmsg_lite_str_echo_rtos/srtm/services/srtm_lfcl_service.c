@@ -2,7 +2,7 @@
  * Copyright (c) 2017, NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -52,7 +52,7 @@ typedef struct _srtm_lfcl_callback
     srtm_list_t node;
     srtm_lfcl_service_cb_t callback;
     void *param;
-} *srtm_lfcl_callback_t;
+} * srtm_lfcl_callback_t;
 
 /* Service handle */
 typedef struct _srtm_lfcl_service
@@ -60,7 +60,7 @@ typedef struct _srtm_lfcl_service
     struct _srtm_service service;
     srtm_list_t subscribers; /*!< SRTM life cycle event subscribers */
     srtm_mutex_t mutex;
-} *srtm_lfcl_service_t;
+} * srtm_lfcl_service_t;
 
 /*******************************************************************************
  * Prototypes
@@ -85,7 +85,7 @@ static srtm_status_t SRTM_LfclService_NotifySubscribers(srtm_lfcl_service_t hand
     SRTM_Mutex_Lock(handle->mutex);
     for (list = handle->subscribers.next; list != &handle->subscribers; list = list->next)
     {
-        cb = SRTM_LIST_OBJ(srtm_lfcl_callback_t, node, list);
+        cb     = SRTM_LIST_OBJ(srtm_lfcl_callback_t, node, list);
         status = cb->callback(&handle->service, core, event, eventParam, cb->param);
         if (status != SRTM_Status_Success)
         {
@@ -111,11 +111,8 @@ static void SRTM_LfclService_DeactivatePeerCore(srtm_dispatcher_t disp, void *pa
     SRTM_PeerCore_Deactivate(core, SRTM_LfclService_WakeupPeerCore, param1);
 }
 
-static srtm_status_t SRTM_LfclService_ChangePowerMode(srtm_lfcl_service_t handle,
-                                                      srtm_peercore_t core,
-                                                      uint8_t mode,
-                                                      srtm_procedure_t *pPre,
-                                                      srtm_procedure_t *pPost)
+static srtm_status_t SRTM_LfclService_ChangePowerMode(
+    srtm_lfcl_service_t handle, srtm_peercore_t core, uint8_t mode, srtm_procedure_t *pPre, srtm_procedure_t *pPost)
 {
     srtm_status_t status;
 
@@ -161,12 +158,9 @@ static srtm_status_t SRTM_LfclService_ChangePowerMode(srtm_lfcl_service_t handle
     return status;
 }
 
-static srtm_status_t SRTM_LfclService_EnableHeartBeat(srtm_lfcl_service_t handle,
-                                                      srtm_peercore_t core,
-                                                      uint8_t enable)
+static srtm_status_t SRTM_LfclService_EnableHeartBeat(srtm_lfcl_service_t handle, srtm_peercore_t core, uint8_t enable)
 {
-    srtm_lfcl_event_t event = enable ? SRTM_Lfcl_Event_HeartBeatEnable :
-                                       SRTM_Lfcl_Event_HeartBeatDisable;
+    srtm_lfcl_event_t event = enable ? SRTM_Lfcl_Event_HeartBeatEnable : SRTM_Lfcl_Event_HeartBeatDisable;
 
     SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_INFO, "%s: %d\r\n", __func__, enable);
 
@@ -189,7 +183,7 @@ static srtm_status_t SRTM_LfclService_Request(srtm_service_t service, srtm_reque
     uint8_t command, retCode;
     uint8_t *payload;
     srtm_response_t response;
-    srtm_procedure_t pre = NULL;
+    srtm_procedure_t pre  = NULL;
     srtm_procedure_t post = NULL;
     srtm_list_t listHead;
 
@@ -213,14 +207,12 @@ static srtm_status_t SRTM_LfclService_Request(srtm_service_t service, srtm_reque
         switch (command)
         {
             case SRTM_LFCL_CMD_CHANGE_POWER_MODE:
-                status = SRTM_LfclService_ChangePowerMode(handle, channel->core, *payload, &pre, &post);
-                retCode = status == SRTM_Status_Success ? SRTM_LFCL_RETURN_CODE_SUCEESS
-                                                        : SRTM_LFCL_RETURN_CODE_FAIL;
+                status  = SRTM_LfclService_ChangePowerMode(handle, channel->core, *payload, &pre, &post);
+                retCode = status == SRTM_Status_Success ? SRTM_LFCL_RETURN_CODE_SUCEESS : SRTM_LFCL_RETURN_CODE_FAIL;
                 break;
             case SRTM_LFCL_CMD_HEART_BEAT_ENABLE:
-                status = SRTM_LfclService_EnableHeartBeat(handle, channel->core, *payload);
-                retCode = status == SRTM_Status_Success ? SRTM_LFCL_RETURN_CODE_SUCEESS
-                                                        : SRTM_LFCL_RETURN_CODE_FAIL;
+                status  = SRTM_LfclService_EnableHeartBeat(handle, channel->core, *payload);
+                retCode = status == SRTM_Status_Success ? SRTM_LFCL_RETURN_CODE_SUCEESS : SRTM_LFCL_RETURN_CODE_FAIL;
                 break;
             default:
                 SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_WARN, "%s: command %d unsupported!\r\n", __func__, command);
@@ -235,8 +227,7 @@ static srtm_status_t SRTM_LfclService_Request(srtm_service_t service, srtm_reque
         return SRTM_Status_TransferNotAvail;
     }
 
-    response = SRTM_Response_Create(channel, SRTM_LFCL_CATEGORY, SRTM_LFCL_VERSION,
-                                    command, 1U);
+    response = SRTM_Response_Create(channel, SRTM_LFCL_CATEGORY, SRTM_LFCL_VERSION, command, 1U);
     if (!response)
     {
         if (pre)
@@ -250,7 +241,7 @@ static srtm_status_t SRTM_LfclService_Request(srtm_service_t service, srtm_reque
         return SRTM_Status_OutOfMemory;
     }
 
-    payload = SRTM_CommMessage_GetPayload(response);
+    payload  = SRTM_CommMessage_GetPayload(response);
     *payload = retCode;
 
     /* Now the response is ready */
@@ -323,10 +314,10 @@ srtm_service_t SRTM_LfclService_Create(void)
 
     SRTM_List_Init(&handle->service.node);
     handle->service.dispatcher = NULL;
-    handle->service.category = SRTM_LFCL_CATEGORY;
-    handle->service.destroy = SRTM_LfclService_Destroy;
-    handle->service.request = SRTM_LfclService_Request;
-    handle->service.notify = SRTM_LfclService_Notify;
+    handle->service.category   = SRTM_LFCL_CATEGORY;
+    handle->service.destroy    = SRTM_LfclService_Destroy;
+    handle->service.request    = SRTM_LfclService_Request;
+    handle->service.notify     = SRTM_LfclService_Notify;
 
     return &handle->service;
 }
@@ -343,7 +334,7 @@ void SRTM_LfclService_Destroy(srtm_service_t service)
     /* Service must be unregistered from dispatcher before destroy */
     assert(SRTM_List_IsEmpty(&service->node));
 
-    while(!SRTM_List_IsEmpty(&handle->subscribers))
+    while (!SRTM_List_IsEmpty(&handle->subscribers))
     {
         list = handle->subscribers.next;
         SRTM_List_Remove(list);
@@ -351,12 +342,11 @@ void SRTM_LfclService_Destroy(srtm_service_t service)
         SRTM_Heap_Free(cb);
     }
 
-    SRTM_Mutex_Destroy(handle->mutex);    
+    SRTM_Mutex_Destroy(handle->mutex);
     SRTM_Heap_Free(handle);
 }
 
-srtm_status_t SRTM_LfclService_Subscribe(srtm_service_t service, srtm_lfcl_service_cb_t callback,
-                                         void *param)
+srtm_status_t SRTM_LfclService_Subscribe(srtm_service_t service, srtm_lfcl_service_cb_t callback, void *param)
 {
     srtm_lfcl_service_t handle = (srtm_lfcl_service_t)service;
     srtm_lfcl_callback_t cb;
@@ -373,7 +363,7 @@ srtm_status_t SRTM_LfclService_Subscribe(srtm_service_t service, srtm_lfcl_servi
     }
 
     cb->callback = callback;
-    cb->param = param;
+    cb->param    = param;
 
     SRTM_Mutex_Lock(handle->mutex);
     SRTM_List_AddTail(&handle->subscribers, &cb->node);
@@ -382,11 +372,10 @@ srtm_status_t SRTM_LfclService_Subscribe(srtm_service_t service, srtm_lfcl_servi
     return SRTM_Status_Success;
 }
 
-srtm_status_t SRTM_LfclService_Unsubscribe(srtm_service_t service, srtm_lfcl_service_cb_t callback,
-                                           void *param)
+srtm_status_t SRTM_LfclService_Unsubscribe(srtm_service_t service, srtm_lfcl_service_cb_t callback, void *param)
 {
     srtm_lfcl_service_t handle = (srtm_lfcl_service_t)service;
-    srtm_lfcl_callback_t cb = NULL;
+    srtm_lfcl_callback_t cb    = NULL;
     srtm_list_t *list;
 
     assert(service);

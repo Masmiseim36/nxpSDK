@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -69,14 +69,14 @@ int main(void)
 
     /* Configure channel. Select the positive port input from DAC and negative port input from minus mux input. */
     channelConfigStruct.minusMuxInput = DEMO_ACMP_MINUS_INPUT;
-    channelConfigStruct.plusMuxInput = DEMO_ACMP_PLUS_INPUT;
+    channelConfigStruct.plusMuxInput  = DEMO_ACMP_PLUS_INPUT;
     ACMP_SetChannelConfig(DEMO_ACMP_BASEADDR, &channelConfigStruct);
 
     /* Configure DAC. */
     dacConfigStruct.referenceVoltageSource = kACMP_VrefSourceVin1;
-    dacConfigStruct.DACValue = 0x7FU; /* Half of referene voltage. */
-    dacConfigStruct.enableOutput = false;
-    dacConfigStruct.workMode = kACMP_DACWorkLowSpeedMode;
+    dacConfigStruct.DACValue               = 0x7FU; /* Half of referene voltage. */
+    dacConfigStruct.enableOutput           = false;
+    dacConfigStruct.workMode               = kACMP_DACWorkLowSpeedMode;
     ACMP_SetDACConfig(DEMO_ACMP_BASEADDR, &dacConfigStruct);
 
     ACMP_Enable(DEMO_ACMP_BASEADDR, true);

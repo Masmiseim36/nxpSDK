@@ -29,7 +29,6 @@
 #define RPMSG_LITE_NS_ANNOUNCE_STRING "rpmsg-virtual-tty-channel"
 #define RPMSG_LITE_MASTER_IS_LINUX
 
-
 #define APP_TASK_STACK_SIZE 256
 #define APP_ERPC_READY_EVENT_DATA (1)
 
@@ -112,7 +111,7 @@ void app_task(void *param)
     transport = erpc_transport_rpmsg_lite_rtos_remote_init(101, 100, (void *)startupData,
                                                            ERPC_TRANSPORT_RPMSG_LITE_LINK_ID, SignalReady, NULL);
 #elif defined(RPMSG_LITE_MASTER_IS_LINUX)
-    transport = erpc_transport_rpmsg_lite_tty_rtos_remote_init(101, 1024, (void *)RPMSG_LITE_SHMEM_BASE,
+    transport              = erpc_transport_rpmsg_lite_tty_rtos_remote_init(101, 1024, (void *)RPMSG_LITE_SHMEM_BASE,
                                                                ERPC_TRANSPORT_RPMSG_LITE_LINK_ID, NULL,
                                                                RPMSG_LITE_NS_ANNOUNCE_STRING);
 #else

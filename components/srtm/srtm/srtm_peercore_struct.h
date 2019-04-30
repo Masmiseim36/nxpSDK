@@ -2,7 +2,7 @@
  * Copyright (c) 2017, NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -17,8 +17,8 @@
  * Definitions
  ******************************************************************************/
 /**
-* @brief SRTM peer core struct
-*/
+ * @brief SRTM peer core struct
+ */
 struct _srtm_peercore
 {
     uint32_t id;          /*!< SRTM peer core ID */

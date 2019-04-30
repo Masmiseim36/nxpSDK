@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2018 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -17,8 +17,8 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_LPIT_BASE  LPIT0
-#define DEMO_LPIT_IRQn  LPIT0_IRQn
+#define DEMO_LPIT_BASE LPIT0
+#define DEMO_LPIT_IRQn LPIT0_IRQn
 #define DEMO_LPIT_IRQHandler LPIT0_IRQHandler
 /* Get source clock for LPIT driver */
 #define LPIT_SOURCECLOCK CLOCK_GetIpFreq(kCLOCK_Lpit0)
@@ -79,11 +79,11 @@ int main(void)
     /* Init lpit module */
     LPIT_Init(DEMO_LPIT_BASE, &lpitConfig);
 
-    lpitChannelConfig.chainChannel = false;
+    lpitChannelConfig.chainChannel          = false;
     lpitChannelConfig.enableReloadOnTrigger = false;
-    lpitChannelConfig.enableStartOnTrigger = false;
-    lpitChannelConfig.enableStopOnTimeout = false;
-    lpitChannelConfig.timerMode = kLPIT_PeriodicCounter;
+    lpitChannelConfig.enableStartOnTrigger  = false;
+    lpitChannelConfig.enableStopOnTimeout   = false;
+    lpitChannelConfig.timerMode             = kLPIT_PeriodicCounter;
     /* Set default values for the trigger source */
     lpitChannelConfig.triggerSelect = kLPIT_Trigger_TimerChn0;
     lpitChannelConfig.triggerSource = kLPIT_TriggerSource_External;

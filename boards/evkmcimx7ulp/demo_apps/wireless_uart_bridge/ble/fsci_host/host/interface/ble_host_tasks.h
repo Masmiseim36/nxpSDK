@@ -7,9 +7,9 @@
  * Copyright (c) 2016 - 2017 , NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
-*/
+ */
 
 #ifndef _BLE_HOST_TASKS_H_
 #define _BLE_HOST_TASKS_H_
@@ -30,9 +30,9 @@
 *************************************************************************************
 ************************************************************************************/
 /*! App to Host message queue for the Host Task */
-extern msgQueue_t   gApp2Host_TaskQueue;
+extern msgQueue_t gApp2Host_TaskQueue;
 /*! HCI to Host message queue for the Host Task */
-extern msgQueue_t   gHci2Host_TaskQueue;
+extern msgQueue_t gHci2Host_TaskQueue;
 
 /*! Event for the Host Task Queue */
 extern osaEventId_t gHost_TaskEvent;
@@ -48,20 +48,20 @@ extern "C" {
 #endif
 
 /*! *********************************************************************************
-* \brief  Contains the Host Task logic.
-*
-* \remarks This function must be called exclusively by the Host Task code
-* from the application.
-*
-********************************************************************************** */
-void Host_TaskHandler(void * args);
+ * \brief  Contains the Host Task logic.
+ *
+ * \remarks This function must be called exclusively by the Host Task code
+ * from the application.
+ *
+ ********************************************************************************** */
+void Host_TaskHandler(void *args);
 
 #ifdef __cplusplus
 }
-#endif 
+#endif
 
 #endif /* _BLE_HOST_TASKS_H_ */
 
 /*! *********************************************************************************
-* @}
-********************************************************************************** */
+ * @}
+ ********************************************************************************** */

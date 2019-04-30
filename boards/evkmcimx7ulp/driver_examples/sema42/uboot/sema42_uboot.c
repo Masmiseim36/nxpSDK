@@ -2,7 +2,7 @@
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -87,39 +87,39 @@ void APP_InitDomainConfig(void)
     memConfig.policy[APP_CORTEX_A_DID] = kXRDC_AccessPolicyAll;
     memConfig.policy[APP_CORTEX_M_DID] = kXRDC_AccessPolicyAll;
     /* SRAM0. */
-    memConfig.mem = kXRDC_MemMrc2_0;
+    memConfig.mem         = kXRDC_MemMrc2_0;
     memConfig.baseAddress = 0x2F000000U;
-    memConfig.size = kXRDC_MemSize128K;
+    memConfig.size        = kXRDC_MemSize128K;
     XRDC_SetMemAccessConfig(XRDC, &memConfig);
 
     /* SRAM1. */
-    memConfig.mem = kXRDC_MemMrc5_0;
+    memConfig.mem         = kXRDC_MemMrc5_0;
     memConfig.baseAddress = 0x2F020000U;
-    memConfig.size = kXRDC_MemSize128K;
+    memConfig.size        = kXRDC_MemSize128K;
     XRDC_SetMemAccessConfig(XRDC, &memConfig);
 
     /* QSPI flash. */
-    memConfig.mem = kXRDC_MemMrc1_0;
+    memConfig.mem         = kXRDC_MemMrc1_0;
     memConfig.baseAddress = 0xC0000000U;
-    memConfig.size = kXRDC_MemSize256M;
+    memConfig.size        = kXRDC_MemSize256M;
     XRDC_SetMemAccessConfig(XRDC, &memConfig);
-    memConfig.mem = kXRDC_MemMrc1_1;
+    memConfig.mem         = kXRDC_MemMrc1_1;
     memConfig.baseAddress = 0x04000000U;
-    memConfig.size = kXRDC_MemSize64M;
+    memConfig.size        = kXRDC_MemSize64M;
     XRDC_SetMemAccessConfig(XRDC, &memConfig);
-    memConfig.mem = kXRDC_MemMrc1_2;
+    memConfig.mem         = kXRDC_MemMrc1_2;
     memConfig.baseAddress = 0x08000000U;
-    memConfig.size = kXRDC_MemSize64M;
+    memConfig.size        = kXRDC_MemSize64M;
     XRDC_SetMemAccessConfig(XRDC, &memConfig);
 
     /* MMDC. */
-    memConfig.mem = kXRDC_MemMrc6_0;
+    memConfig.mem         = kXRDC_MemMrc6_0;
     memConfig.baseAddress = 0x60000000U;
-    memConfig.size = kXRDC_MemSize512M;
+    memConfig.size        = kXRDC_MemSize512M;
     XRDC_SetMemAccessConfig(XRDC, &memConfig);
-    memConfig.mem = kXRDC_MemMrc6_1;
+    memConfig.mem         = kXRDC_MemMrc6_1;
     memConfig.baseAddress = 0x80000000U;
-    memConfig.size = kXRDC_MemSize1G;
+    memConfig.size        = kXRDC_MemSize1G;
     XRDC_SetMemAccessConfig(XRDC, &memConfig);
 
     XRDC_SetGlobalValid(XRDC, true);

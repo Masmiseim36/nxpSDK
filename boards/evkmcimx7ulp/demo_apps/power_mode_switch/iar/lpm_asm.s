@@ -172,7 +172,7 @@ LPM_InitQSPI
 
         LDR     R0, =0x410B2094
         LDR     R1, =0x43000000
-        STR     R1, [R0]                     ; Select QSPI clock to SOSC DIV1 and enable it
+        STR     R1, [R0]                     ; Select QSPI clock to FIRC DIV1 and enable it
 
         LDR     R0, =0x410A5000
         LDR     R1, [R0]

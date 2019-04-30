@@ -1,15 +1,15 @@
 /*! *********************************************************************************
-* \defgroup Device Information Service
-* @{
-********************************************************************************** */
+ * \defgroup Device Information Service
+ * @{
+ ********************************************************************************** */
 /*
  * Copyright (c) 2014, Freescale Semiconductor, Inc.
  * Copyright (c) 2016 - 2017 , NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
-*/
+ */
 
 #ifndef _DEVICE_INFO_INTERFACE_H_
 #define _DEVICE_INFO_INTERFACE_H_
@@ -34,43 +34,43 @@
 
 typedef struct utf8s_tag
 {
-    uint16_t    stringLength;
-    char        *pUtf8s;
-}utf8s_t;
+    uint16_t stringLength;
+    char *pUtf8s;
+} utf8s_t;
 
 typedef struct systemId_tag
 {
-    uint8_t    oui[3];
-    uint8_t    manufacturerId[5];
-}systemId_t;
+    uint8_t oui[3];
+    uint8_t manufacturerId[5];
+} systemId_t;
 
 typedef struct regCertDataList_tag
 {
-    uint16_t    length;
-    void        *pList;
-}regCertDataList_t;
+    uint16_t length;
+    void *pList;
+} regCertDataList_t;
 
 typedef struct pnpId_tag
 {
-    uint8_t     vendorIdSource;
-    uint16_t    vendorId;
-    uint16_t    productId;
-    uint16_t    productVersion;
-}pnpId_t;
+    uint8_t vendorIdSource;
+    uint16_t vendorId;
+    uint16_t productId;
+    uint16_t productVersion;
+} pnpId_t;
 
 /*! Device Info - Configuration */
 typedef struct disConfig_tag
 {
-    uint16_t            serviceHandle;
-    utf8s_t             manufacturerName;
-    utf8s_t             modelNumber;
-    utf8s_t             serialNumber;
-    utf8s_t             hwRevision;
-    utf8s_t             fwRevision;
-    utf8s_t             swRevision;
-    systemId_t*         pSystemId;
-    regCertDataList_t   rcdl;
-    pnpId_t*            pPnpId;
+    uint16_t serviceHandle;
+    utf8s_t manufacturerName;
+    utf8s_t modelNumber;
+    utf8s_t serialNumber;
+    utf8s_t hwRevision;
+    utf8s_t fwRevision;
+    utf8s_t swRevision;
+    systemId_t *pSystemId;
+    regCertDataList_t rcdl;
+    pnpId_t *pPnpId;
 } disConfig_t;
 
 /************************************************************************************
@@ -90,31 +90,31 @@ extern "C" {
 #endif
 
 /*!**********************************************************************************
-* \brief        Starts Device Info service functionality
-*
-* \param[in]    pServiceConfig  Pointer to structure that contains server 
-*                               configuration information.
-*
-* \return       gBleSuccess_c or error.
-************************************************************************************/
+ * \brief        Starts Device Info service functionality
+ *
+ * \param[in]    pServiceConfig  Pointer to structure that contains server
+ *                               configuration information.
+ *
+ * \return       gBleSuccess_c or error.
+ ************************************************************************************/
 bleResult_t Dis_Start(disConfig_t *pServiceConfig);
 
 /*!**********************************************************************************
-* \brief        Stops Device Info service functionality
-*
-* \param[in]    pServiceConfig  Pointer to structure that contains server 
-*                               configuration information.
-*
-* \return       gBleSuccess_c or error.
-************************************************************************************/
+ * \brief        Stops Device Info service functionality
+ *
+ * \param[in]    pServiceConfig  Pointer to structure that contains server
+ *                               configuration information.
+ *
+ * \return       gBleSuccess_c or error.
+ ************************************************************************************/
 bleResult_t Dis_Stop(disConfig_t *pServiceConfig);
 
 #ifdef __cplusplus
 }
-#endif 
+#endif
 
 #endif /* _BATTERY_INTERFACE_H */
 
 /*! *********************************************************************************
-* @}
-********************************************************************************** */
+ * @}
+ ********************************************************************************** */

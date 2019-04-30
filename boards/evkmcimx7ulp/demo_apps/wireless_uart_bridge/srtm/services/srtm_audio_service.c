@@ -124,8 +124,8 @@ static void SRTM_AudioService_HandlePeriodDone(srtm_dispatcher_t dispatcher,
 {
     srtm_notification_t notif;
     struct _srtm_audio_payload *payload;
-    uint32_t audioIdx = index >> 24U;
-    uint32_t periodIdx = index & 0xFFFFFFU;
+    uint32_t audioIdx        = index >> 24U;
+    uint32_t periodIdx       = index & 0xFFFFFFU;
     srtm_audio_iface_t iface = SRTM_AudioService_FindInterface(handle, audioIdx);
 
     assert(iface && iface->channel);
@@ -144,8 +144,8 @@ static void SRTM_AudioService_HandlePeriodDone(srtm_dispatcher_t dispatcher,
         return;
     }
 
-    payload = (struct _srtm_audio_payload *)SRTM_CommMessage_GetPayload(notif);
-    payload->index = (uint8_t)audioIdx;
+    payload            = (struct _srtm_audio_payload *)SRTM_CommMessage_GetPayload(notif);
+    payload->index     = (uint8_t)audioIdx;
     payload->periodIdx = periodIdx;
 
     SRTM_Dispatcher_DeliverNotification(handle->service.dispatcher, notif);
@@ -168,7 +168,7 @@ static srtm_status_t SRTM_AudioService_PeriodDone(srtm_service_t service,
                                                   uint32_t periodIdx)
 {
     srtm_audio_service_t handle = (srtm_audio_service_t)service;
-    srtm_audio_iface_t iface = SRTM_AudioService_FindInterface(handle, index);
+    srtm_audio_iface_t iface    = SRTM_AudioService_FindInterface(handle, index);
     uint32_t primask;
     srtm_list_t *list;
     srtm_procedure_t proc = NULL;
@@ -226,9 +226,9 @@ static srtm_status_t SRTM_AudioService_Request(srtm_service_t service, srtm_requ
 
     SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_INFO, "%s\r\n", __func__);
 
-    channel = SRTM_CommMessage_GetChannel(request);
-    command = SRTM_CommMessage_GetCommand(request);
-    audioReq = (struct _srtm_audio_payload *)SRTM_CommMessage_GetPayload(request);
+    channel    = SRTM_CommMessage_GetChannel(request);
+    command    = SRTM_CommMessage_GetCommand(request);
+    audioReq   = (struct _srtm_audio_payload *)SRTM_CommMessage_GetPayload(request);
     payloadLen = SRTM_CommMessage_GetPayloadLen(request);
 
     response = SRTM_Response_Create(channel, SRTM_AUDIO_CATEGORY, SRTM_AUDIO_VERSION, command,
@@ -239,7 +239,7 @@ static srtm_status_t SRTM_AudioService_Request(srtm_service_t service, srtm_requ
     }
 
     audioRespBuf = (uint8_t *)SRTM_CommMessage_GetPayload(response);
-    audioResp = (struct _srtm_audio_payload *)audioRespBuf;
+    audioResp    = (struct _srtm_audio_payload *)audioRespBuf;
 
     status = SRTM_Service_CheckVersion(service, request, SRTM_AUDIO_VERSION);
     if (status != SRTM_Status_Success || !audioReq || payloadLen != sizeof(struct _srtm_audio_payload))
@@ -251,7 +251,7 @@ static srtm_status_t SRTM_AudioService_Request(srtm_service_t service, srtm_requ
     else
     {
         audioRespBuf[0] = audioReq->index;
-        iface = SRTM_AudioService_FindInterface(handle, audioReq->index);
+        iface           = SRTM_AudioService_FindInterface(handle, audioReq->index);
         if (!iface)
         {
             SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_WARN, "%s: audio interface %d not found!\r\n", __func__,
@@ -260,7 +260,7 @@ static srtm_status_t SRTM_AudioService_Request(srtm_service_t service, srtm_requ
         }
         else
         {
-            sai = iface->sai;
+            sai   = iface->sai;
             codec = iface->codec;
             switch (command)
             {
@@ -632,8 +632,8 @@ static srtm_status_t SRTM_AudioService_Notify(srtm_service_t service, srtm_notif
 
     SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_INFO, "%s\r\n", __func__);
 
-    command = SRTM_CommMessage_GetCommand(notif);
-    payload = (struct _srtm_audio_payload *)SRTM_CommMessage_GetPayload(notif);
+    command    = SRTM_CommMessage_GetCommand(notif);
+    payload    = (struct _srtm_audio_payload *)SRTM_CommMessage_GetPayload(notif);
     payloadLen = SRTM_CommMessage_GetPayloadLen(notif);
 
     status = SRTM_Service_CheckVersion(service, notif, SRTM_AUDIO_VERSION);
@@ -694,14 +694,14 @@ static srtm_audio_iface_t SRTM_AudioService_CreateIface(srtm_audio_service_t han
 
         if (sai)
         {
-            sai->service = &handle->service;
+            sai->service    = &handle->service;
             sai->periodDone = SRTM_AudioService_PeriodDone;
         }
-        iface->index = index;
+        iface->index    = index;
         iface->useCount = 0;
-        iface->sai = sai;
-        iface->codec = codec;
-        iface->channel = NULL;
+        iface->sai      = sai;
+        iface->codec    = codec;
+        iface->channel  = NULL;
         /* Create procedure messages list to be used in ISR */
         SRTM_List_Init(&iface->freeProcs);
         for (i = 0; i < SRTM_AUDIO_SERVICE_CONFIG_PROC_NUMBER; i++)
@@ -741,7 +741,7 @@ static void SRTM_AudioService_DestroyIface(srtm_audio_iface_t iface)
 static srtm_audio_iface_t SRTM_AudioService_FindInterface(srtm_audio_service_t handle, uint8_t index)
 {
     srtm_list_t *list;
-    srtm_audio_iface_t iface = NULL;
+    srtm_audio_iface_t iface     = NULL;
     srtm_audio_iface_t cur_iface = NULL;
 
     for (list = handle->ifaces.next; list != &handle->ifaces; list = list->next)
@@ -769,10 +769,10 @@ srtm_service_t SRTM_AudioService_Create(srtm_sai_adapter_t sai, srtm_codec_adapt
 
     SRTM_List_Init(&handle->service.node);
     handle->service.dispatcher = NULL;
-    handle->service.category = SRTM_AUDIO_CATEGORY;
-    handle->service.destroy = SRTM_AudioService_Destroy;
-    handle->service.request = SRTM_AudioService_Request;
-    handle->service.notify = SRTM_AudioService_Notify;
+    handle->service.category   = SRTM_AUDIO_CATEGORY;
+    handle->service.destroy    = SRTM_AudioService_Destroy;
+    handle->service.request    = SRTM_AudioService_Request;
+    handle->service.notify     = SRTM_AudioService_Notify;
 
     SRTM_List_Init(&handle->ifaces);
     iface = SRTM_AudioService_CreateIface(handle, 0, sai, codec);
@@ -828,7 +828,7 @@ void SRTM_AudioService_Reset(srtm_service_t service, srtm_peercore_t core)
             iface->sai->close(iface->sai, SRTM_AudioDirRx, iface->index);
             iface->sai->close(iface->sai, SRTM_AudioDirTx, iface->index);
         }
-        iface->channel = NULL;
+        iface->channel  = NULL;
         iface->useCount = 0;
     }
 }

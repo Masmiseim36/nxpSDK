@@ -166,6 +166,10 @@ SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
 
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} muldefs")
 
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Map=output.map")
+
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mcpu=cortex-m4")
 
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mfloat-abi=hard")
@@ -240,7 +244,7 @@ include_directories(${ProjDirPath}/../../../../../devices/MCIMX7U5)
 
 include_directories(${ProjDirPath}/../../../../../devices/MCIMX7U5/utilities/str)
 
-include_directories(${ProjDirPath}/../../../../../devices/MCIMX7U5/utilities)
+include_directories(${ProjDirPath}/../../../../../devices/MCIMX7U5/utilities/debug_console)
 
 include_directories(${ProjDirPath}/../../../../../components/uart)
 
@@ -421,9 +425,9 @@ add_executable(wireless_uart_bridge.elf
 "${ProjDirPath}/../../../../../devices/MCIMX7U5/system_MCIMX7U5_cm4.h"
 "${ProjDirPath}/../../../../../devices/MCIMX7U5/utilities/str/fsl_str.c"
 "${ProjDirPath}/../../../../../devices/MCIMX7U5/utilities/str/fsl_str.h"
-"${ProjDirPath}/../../../../../devices/MCIMX7U5/utilities/fsl_debug_console.c"
-"${ProjDirPath}/../../../../../devices/MCIMX7U5/utilities/fsl_debug_console.h"
-"${ProjDirPath}/../../../../../devices/MCIMX7U5/utilities/fsl_debug_console_conf.h"
+"${ProjDirPath}/../../../../../devices/MCIMX7U5/utilities/debug_console/fsl_debug_console.c"
+"${ProjDirPath}/../../../../../devices/MCIMX7U5/utilities/debug_console/fsl_debug_console.h"
+"${ProjDirPath}/../../../../../devices/MCIMX7U5/utilities/debug_console/fsl_debug_console_conf.h"
 "${ProjDirPath}/../../../../../components/uart/uart.h"
 "${ProjDirPath}/../../../../../components/uart/lpuart_adapter.c"
 "${ProjDirPath}/../../../../../components/serial_manager/serial_manager.h"
@@ -475,9 +479,11 @@ add_executable(wireless_uart_bridge.elf
 "${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/deprecated_definitions.h"
 "${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/list.h"
 "${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/mpu_wrappers.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/mpu_prototypes.h"
 "${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/portable.h"
 "${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/projdefs.h"
 "${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/stack_macros.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/threading_alt.h"
 "${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/event_groups.c"
 "${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/list.c"
 "${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/queue.c"

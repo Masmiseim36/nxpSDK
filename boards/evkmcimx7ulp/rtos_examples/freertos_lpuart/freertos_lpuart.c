@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -38,8 +38,8 @@ static void uart_task(void *pvParameters);
 /*******************************************************************************
  * Code
  ******************************************************************************/
-const char *to_send = "FreeRTOS LPUART driver example!\r\n";
-const char *send_ring_overrun = "\r\nRing buffer overrun!\r\n";
+const char *to_send               = "FreeRTOS LPUART driver example!\r\n";
+const char *send_ring_overrun     = "\r\nRing buffer overrun!\r\n";
 const char *send_hardware_overrun = "\r\nHardware buffer overrun!\r\n";
 uint8_t background_buffer[32];
 uint8_t recv_buffer[4];
@@ -48,10 +48,10 @@ lpuart_rtos_handle_t handle;
 struct _lpuart_handle t_handle;
 
 lpuart_rtos_config_t lpuart_config = {
-    .baudrate = 115200,
-    .parity = kLPUART_ParityDisabled,
-    .stopbits = kLPUART_OneStopBit,
-    .buffer = background_buffer,
+    .baudrate    = 115200,
+    .parity      = kLPUART_ParityDisabled,
+    .stopbits    = kLPUART_OneStopBit,
+    .buffer      = background_buffer,
     .buffer_size = sizeof(background_buffer),
 };
 
@@ -85,7 +85,7 @@ static void uart_task(void *pvParameters)
     size_t n;
 
     lpuart_config.srcclk = DEMO_LPUART_CLK_FREQ;
-    lpuart_config.base = DEMO_LPUART;
+    lpuart_config.base   = DEMO_LPUART;
 
     if (0 > LPUART_RTOS_Init(&handle, &t_handle, &lpuart_config))
     {

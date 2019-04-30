@@ -2,7 +2,7 @@
  * Copyright (c) 2017, NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -21,21 +21,21 @@
  * Definitions
  ******************************************************************************/
 /**
-* @brief SRTM RPMsg endpoint channel configuration fields
-*/
+ * @brief SRTM RPMsg endpoint channel configuration fields
+ */
 typedef struct _srtm_rpmsg_endpoint_config
 {
     struct rpmsg_lite_instance *rpmsgHandle; /*!< RPMsg handle initialized by app */
-    unsigned long localAddr; /*!< RPMsg local endpoint address */
-    unsigned long peerAddr; /*!< RPMsg peer endpoint address */
-    const char *epName; /*!< RPMsg endpoint name for name service announcement */
+    unsigned long localAddr;                 /*!< RPMsg local endpoint address */
+    unsigned long peerAddr;                  /*!< RPMsg peer endpoint address */
+    const char *epName;                      /*!< RPMsg endpoint name for name service announcement */
 } srtm_rpmsg_endpoint_config_t;
 
 /**
-* @brief SRTM RPMsg endpoint channel RX callback function type.
-*/
-typedef int (*srtm_rpmsg_endpoint_rx_cb_t)(srtm_channel_t channel, void *payload, int payloadLen,
-                                           unsigned long src, void *param);
+ * @brief SRTM RPMsg endpoint channel RX callback function type.
+ */
+typedef int (*srtm_rpmsg_endpoint_rx_cb_t)(
+    srtm_channel_t channel, void *payload, int payloadLen, unsigned long src, void *param);
 
 /*******************************************************************************
  * API

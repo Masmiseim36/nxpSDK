@@ -3,9 +3,9 @@
  * Copyright (c) 2016 - 2017 , NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
-*/
+ */
 
 /************************************************************************************
 *************************************************************************************
@@ -14,7 +14,6 @@
 ************************************************************************************/
 
 #include "fsci_ble_l2cap_types.h"
-
 
 /************************************************************************************
 *************************************************************************************
@@ -46,7 +45,8 @@
 *************************************************************************************
 ************************************************************************************/
 
-void fsciBleL2capGetLeCbConnectionRequestFromBuffer(l2caLeCbConnectionRequest_t* pLeCbConnectionRequest, uint8_t** ppBuffer)
+void fsciBleL2capGetLeCbConnectionRequestFromBuffer(l2caLeCbConnectionRequest_t *pLeCbConnectionRequest,
+                                                    uint8_t **ppBuffer)
 {
     /* Read l2caLeCbConnectionRequest_t structure fields from buffer */
     fsciBleGetDeviceIdFromBuffer(&pLeCbConnectionRequest->deviceId, ppBuffer);
@@ -56,8 +56,8 @@ void fsciBleL2capGetLeCbConnectionRequestFromBuffer(l2caLeCbConnectionRequest_t*
     fsciBleGetUint16ValueFromBuffer(pLeCbConnectionRequest->initialCredits, *ppBuffer);
 }
 
-
-void fsciBleL2capGetBufferFromLeCbConnectionRequest(l2caLeCbConnectionRequest_t* pLeCbConnectionRequest, uint8_t** ppBuffer)
+void fsciBleL2capGetBufferFromLeCbConnectionRequest(l2caLeCbConnectionRequest_t *pLeCbConnectionRequest,
+                                                    uint8_t **ppBuffer)
 {
     /* Write l2caLeCbConnectionRequest_t structure fields in buffer */
     fsciBleGetBufferFromDeviceId(&pLeCbConnectionRequest->deviceId, ppBuffer);
@@ -67,8 +67,8 @@ void fsciBleL2capGetBufferFromLeCbConnectionRequest(l2caLeCbConnectionRequest_t*
     fsciBleGetBufferFromUint16Value(pLeCbConnectionRequest->initialCredits, *ppBuffer);
 }
 
-
-void fsciBleL2capGetLeCbConnectionCompleteFromBuffer(l2caLeCbConnectionComplete_t* pLeCbConnectionComplete, uint8_t** ppBuffer)
+void fsciBleL2capGetLeCbConnectionCompleteFromBuffer(l2caLeCbConnectionComplete_t *pLeCbConnectionComplete,
+                                                     uint8_t **ppBuffer)
 {
     /* Read l2caLeCbConnectionComplete_t structure fields from buffer */
     fsciBleGetDeviceIdFromBuffer(&pLeCbConnectionComplete->deviceId, ppBuffer);
@@ -79,8 +79,8 @@ void fsciBleL2capGetLeCbConnectionCompleteFromBuffer(l2caLeCbConnectionComplete_
     fsciBleGetEnumValueFromBuffer(pLeCbConnectionComplete->result, *ppBuffer, l2caLeCbConnectionRequestResult_t);
 }
 
-
-void fsciBleL2capGetBufferFromLeCbConnectionComplete(l2caLeCbConnectionComplete_t* pLeCbConnectionComplete, uint8_t** ppBuffer)
+void fsciBleL2capGetBufferFromLeCbConnectionComplete(l2caLeCbConnectionComplete_t *pLeCbConnectionComplete,
+                                                     uint8_t **ppBuffer)
 {
     /* Write l2caLeCbConnectionComplete_t structure fields in buffer */
     fsciBleGetBufferFromDeviceId(&pLeCbConnectionComplete->deviceId, ppBuffer);
@@ -91,39 +91,35 @@ void fsciBleL2capGetBufferFromLeCbConnectionComplete(l2caLeCbConnectionComplete_
     fsciBleGetBufferFromEnumValue(pLeCbConnectionComplete->result, *ppBuffer, l2caLeCbConnectionRequestResult_t);
 }
 
-
-void fsciBleL2capGetLeCbDisconnectionFromBuffer(l2caLeCbDisconnection_t* pLeCbDisconnection, uint8_t** ppBuffer)
+void fsciBleL2capGetLeCbDisconnectionFromBuffer(l2caLeCbDisconnection_t *pLeCbDisconnection, uint8_t **ppBuffer)
 {
     /* Read l2caLeCbDisconnection_t structure fields from buffer */
     fsciBleGetDeviceIdFromBuffer(&pLeCbDisconnection->deviceId, ppBuffer);
     fsciBleGetUint16ValueFromBuffer(pLeCbDisconnection->cId, *ppBuffer);
 }
 
-
-void fsciBleL2capGetBufferFromLeCbDisconnection(l2caLeCbDisconnection_t* pLeCbDisconnection, uint8_t** ppBuffer)
+void fsciBleL2capGetBufferFromLeCbDisconnection(l2caLeCbDisconnection_t *pLeCbDisconnection, uint8_t **ppBuffer)
 {
     /* Write l2caLeCbDisconnection_t structure fields in buffer */
     fsciBleGetBufferFromDeviceId(&pLeCbDisconnection->deviceId, ppBuffer);
     fsciBleGetBufferFromUint16Value(pLeCbDisconnection->cId, *ppBuffer);
 }
 
-
-void fsciBleL2capGetLeCbNoPeerCreditsFromBuffer(l2caLeCbNoPeerCredits_t* pLeCbNoPeerCredits, uint8_t** ppBuffer)
+void fsciBleL2capGetLeCbNoPeerCreditsFromBuffer(l2caLeCbNoPeerCredits_t *pLeCbNoPeerCredits, uint8_t **ppBuffer)
 {
     /* Read l2caLeCbNoPeerCredits_t structure fields from buffer */
     fsciBleGetDeviceIdFromBuffer(&pLeCbNoPeerCredits->deviceId, ppBuffer);
     fsciBleGetUint16ValueFromBuffer(pLeCbNoPeerCredits->cId, *ppBuffer);
 }
 
-
-void fsciBleL2capGetBufferFromLeCbNoPeerCredits(l2caLeCbNoPeerCredits_t* pLeCbNoPeerCredits, uint8_t** ppBuffer)
+void fsciBleL2capGetBufferFromLeCbNoPeerCredits(l2caLeCbNoPeerCredits_t *pLeCbNoPeerCredits, uint8_t **ppBuffer)
 {
     fsciBleGetBufferFromDeviceId(&pLeCbNoPeerCredits->deviceId, ppBuffer);
     fsciBleGetBufferFromUint16Value(pLeCbNoPeerCredits->cId, *ppBuffer);
 }
 
-
-void fsciBleL2capGetLeCbLocalCreditsNotificationFromBuffer(l2caLeCbLocalCreditsNotification_t* pLeCbLocalCreditsNotification, uint8_t** ppBuffer)
+void fsciBleL2capGetLeCbLocalCreditsNotificationFromBuffer(
+    l2caLeCbLocalCreditsNotification_t *pLeCbLocalCreditsNotification, uint8_t **ppBuffer)
 {
     /* Read l2caLeCbLocalCreditsNotification_t structure fields from buffer */
     fsciBleGetDeviceIdFromBuffer(&pLeCbLocalCreditsNotification->deviceId, ppBuffer);
@@ -131,8 +127,8 @@ void fsciBleL2capGetLeCbLocalCreditsNotificationFromBuffer(l2caLeCbLocalCreditsN
     fsciBleGetUint16ValueFromBuffer(pLeCbLocalCreditsNotification->localCredits, *ppBuffer);
 }
 
-
-void fsciBleL2capGetBufferFromLeCbLocalCreditsNotification(l2caLeCbLocalCreditsNotification_t* pLeCbLocalCreditsNotification, uint8_t** ppBuffer)
+void fsciBleL2capGetBufferFromLeCbLocalCreditsNotification(
+    l2caLeCbLocalCreditsNotification_t *pLeCbLocalCreditsNotification, uint8_t **ppBuffer)
 {
     /* Write l2caLeCbLocalCreditsNotification_t structure fields in buffer */
     fsciBleGetBufferFromDeviceId(&pLeCbLocalCreditsNotification->deviceId, ppBuffer);
@@ -147,5 +143,5 @@ void fsciBleL2capGetBufferFromLeCbLocalCreditsNotification(l2caLeCbLocalCreditsN
 ************************************************************************************/
 
 /*! *********************************************************************************
-* @}
-********************************************************************************** */
+ * @}
+ ********************************************************************************** */

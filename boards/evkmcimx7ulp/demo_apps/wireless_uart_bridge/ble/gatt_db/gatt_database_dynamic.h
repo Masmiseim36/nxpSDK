@@ -7,9 +7,9 @@
  * Copyright (c) 2016 - 2017 , NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
-*/
+ */
 
 #ifndef _GATT_DATABASE_DYNAMIC_H_
 #define _GATT_DATABASE_DYNAMIC_H_
@@ -38,38 +38,38 @@
 
 typedef struct descriptorInfo_tag
 {
-    bleUuidType_t                           uuidType;
-    bleUuid_t                               uuid;
-    uint16_t                                handle;
-    uint16_t                                valueLength;
-    uint8_t*                                pValue;
-    gattAttributePermissionsBitFields_t     accessPermissions;
-}descriptorInfo_t;
+    bleUuidType_t uuidType;
+    bleUuid_t uuid;
+    uint16_t handle;
+    uint16_t valueLength;
+    uint8_t *pValue;
+    gattAttributePermissionsBitFields_t accessPermissions;
+} descriptorInfo_t;
 
 typedef struct characteristicInfo_tag
 {
-    bleUuidType_t                           uuidType;
-    bleUuid_t                               uuid;
-    uint16_t                                handle;
+    bleUuidType_t uuidType;
+    bleUuid_t uuid;
+    uint16_t handle;
     gattCharacteristicPropertiesBitFields_t properties;
-    uint16_t                                maxValueLength;
-    uint16_t                                valueLength;
-    uint8_t*                                pValue;
-    gattAttributePermissionsBitFields_t     accessPermissions;
-    bool_t                                  bAddCccd;
-    uint16_t                                cccdHandle;
-    uint8_t                                 nbOfDescriptors;
-    descriptorInfo_t*                       pDescriptorInfo;
-}characteristicInfo_t;
+    uint16_t maxValueLength;
+    uint16_t valueLength;
+    uint8_t *pValue;
+    gattAttributePermissionsBitFields_t accessPermissions;
+    bool_t bAddCccd;
+    uint16_t cccdHandle;
+    uint8_t nbOfDescriptors;
+    descriptorInfo_t *pDescriptorInfo;
+} characteristicInfo_t;
 
 typedef struct serviceInfo_tag
 {
-    bleUuidType_t                           uuidType;
-    bleUuid_t                               uuid;
-    uint16_t                                handle;
-    uint8_t                                 nbOfCharacteristics;
-    characteristicInfo_t*                   pCharacteristicInfo;
-}serviceInfo_t;
+    bleUuidType_t uuidType;
+    bleUuid_t uuid;
+    uint16_t handle;
+    uint8_t nbOfCharacteristics;
+    characteristicInfo_t *pCharacteristicInfo;
+} serviceInfo_t;
 
 /* Output handles returned by the service add functions obtained from Ble Host */
 
@@ -79,7 +79,7 @@ typedef struct gattServiceHandles_tag
     uint16_t serviceHandle;
     uint16_t charServiceChangedHandle;
     uint16_t charServiceChangedCccdHandle;
-}gattServiceHandles_t;
+} gattServiceHandles_t;
 
 /* GAP service */
 typedef struct gapServiceHandles_tag
@@ -88,14 +88,14 @@ typedef struct gapServiceHandles_tag
     uint16_t charDeviceNameHandle;
     uint16_t charAppearanceHandle;
     uint16_t charPpcpHandle;
-}gapServiceHandles_t;
+} gapServiceHandles_t;
 
 /* Wireless Uart service */
 typedef struct wirelessUartServiceHandles_tag
 {
     uint16_t serviceHandle;
     uint16_t charUartStreamHandle;
-}wirelessUartServiceHandles_t;
+} wirelessUartServiceHandles_t;
 
 /* Battery service */
 typedef struct batteryServiceHandles_tag
@@ -103,7 +103,7 @@ typedef struct batteryServiceHandles_tag
     uint16_t serviceHandle;
     uint16_t charBatteryLevelHandle;
     uint16_t charBatteryLevelCccdHandle;
-}batteryServiceHandles_t;
+} batteryServiceHandles_t;
 
 /* Device info service */
 typedef struct deviceInfoServiceHandles_tag
@@ -114,10 +114,10 @@ typedef struct deviceInfoServiceHandles_tag
     uint16_t charSerialNoHandle;
     uint16_t charHwRevHandle;
     uint16_t charFwRevHandle;
-    uint16_t charSwRevHandle;  
+    uint16_t charSwRevHandle;
     uint16_t charSystemIdHandle;
-    uint16_t charRcdlHandle;     
-}deviceInfoServiceHandles_t;
+    uint16_t charRcdlHandle;
+} deviceInfoServiceHandles_t;
 
 /************************************************************************************
 *************************************************************************************
@@ -135,24 +135,24 @@ typedef struct deviceInfoServiceHandles_tag
 extern "C" {
 #endif
 
-bleResult_t GattDbDynamic_AddServiceInDatabase(serviceInfo_t* pServiceInfo);
-  
-bleResult_t GattDbDynamic_AddGattService(gattServiceHandles_t* pOutServiceHandles);
-bleResult_t GattDbDynamic_AddGapService(gapServiceHandles_t* pOutServiceHandles);
-bleResult_t GattDbDynamic_AddWirelessUartService(wirelessUartServiceHandles_t* pOutServiceHandles);
-bleResult_t GattDbDynamic_AddBatteryService(batteryServiceHandles_t* pOutServiceHandles);
-bleResult_t GattDbDynamic_AddDeviceInformationService(deviceInfoServiceHandles_t* pOutServiceHandles);
+bleResult_t GattDbDynamic_AddServiceInDatabase(serviceInfo_t *pServiceInfo);
 
-serviceInfo_t* GattDbDynamic_GetWirelessUartService(void);
-serviceInfo_t* GattDbDynamic_GetBatteryService(void);
-serviceInfo_t* GattDbDynamic_GetDeviceInformationService(void);
+bleResult_t GattDbDynamic_AddGattService(gattServiceHandles_t *pOutServiceHandles);
+bleResult_t GattDbDynamic_AddGapService(gapServiceHandles_t *pOutServiceHandles);
+bleResult_t GattDbDynamic_AddWirelessUartService(wirelessUartServiceHandles_t *pOutServiceHandles);
+bleResult_t GattDbDynamic_AddBatteryService(batteryServiceHandles_t *pOutServiceHandles);
+bleResult_t GattDbDynamic_AddDeviceInformationService(deviceInfoServiceHandles_t *pOutServiceHandles);
+
+serviceInfo_t *GattDbDynamic_GetWirelessUartService(void);
+serviceInfo_t *GattDbDynamic_GetBatteryService(void);
+serviceInfo_t *GattDbDynamic_GetDeviceInformationService(void);
 
 #ifdef __cplusplus
 }
-#endif 
+#endif
 
 #endif /* _GATT_DATABASE_DYNAMIC_H_ */
 
 /*! *********************************************************************************
-* @}
-********************************************************************************** */
+ * @}
+ ********************************************************************************** */

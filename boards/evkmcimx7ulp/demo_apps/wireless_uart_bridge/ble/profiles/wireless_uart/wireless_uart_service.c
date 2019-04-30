@@ -7,7 +7,7 @@
  * Copyright (c) 2016 - 2017 , NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -54,14 +54,14 @@ static deviceId_t mWus_SubscribedClientId;
 * Public functions
 *************************************************************************************
 ************************************************************************************/
-bleResult_t Wus_Start (wusConfig_t *pServiceConfig)
-{    
+bleResult_t Wus_Start(wusConfig_t *pServiceConfig)
+{
     mWus_SubscribedClientId = gInvalidDeviceId_c;
-    
+
     return gBleSuccess_c;
 }
 
-bleResult_t Wus_Stop (wusConfig_t *pServiceConfig)
+bleResult_t Wus_Stop(wusConfig_t *pServiceConfig)
 {
     return Wus_Unsubscribe();
 }

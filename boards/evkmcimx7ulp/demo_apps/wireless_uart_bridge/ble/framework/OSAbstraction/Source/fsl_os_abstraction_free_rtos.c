@@ -3,9 +3,9 @@
  * Copyright (c) 2016 - 2017 , NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
-*/
+ */
 
 /*! *********************************************************************************
 *************************************************************************************
@@ -24,10 +24,13 @@
 * Private macros
 *************************************************************************************
 ********************************************************************************** */
-#define millisecToTicks(millisec) ((millisec * configTICK_RATE_HZ + 999)/1000)
+#define millisecToTicks(millisec) ((millisec * configTICK_RATE_HZ + 999) / 1000)
 
 #ifdef DEBUG_ASSERT
-#define OS_ASSERT(condition) if(!(condition))while(1);
+#define OS_ASSERT(condition) \
+    if (!(condition))        \
+        while (1)            \
+            ;
 #else
 #define OS_ASSERT(condition) (void)(condition);
 #endif
@@ -39,9 +42,9 @@
 #endif
 
 /*! @brief Converts milliseconds to ticks*/
-#define MSEC_TO_TICK(msec)  (((uint32_t)(msec)+500uL/(uint32_t)configTICK_RATE_HZ) \
-                             *(uint32_t)configTICK_RATE_HZ/1000uL)
-#define TICKS_TO_MSEC(tick) ((tick)*1000uL/(uint32_t)configTICK_RATE_HZ)
+#define MSEC_TO_TICK(msec) \
+    (((uint32_t)(msec) + 500uL / (uint32_t)configTICK_RATE_HZ) * (uint32_t)configTICK_RATE_HZ / 1000uL)
+#define TICKS_TO_MSEC(tick) ((tick)*1000uL / (uint32_t)configTICK_RATE_HZ)
 /************************************************************************************
 *************************************************************************************
 * Private type definitions
@@ -52,17 +55,17 @@ typedef struct osEventStruct_tag
 {
     uint32_t inUse;
     event_t event;
-}osEventStruct_t;
+} osEventStruct_t;
 
 typedef struct osObjStruct_tag
 {
     uint32_t inUse;
     uint32_t osObj;
-}osObjStruct_t;
+} osObjStruct_t;
 
 typedef struct osObjectInfo_tag
 {
-    void* pHeap;
+    void *pHeap;
     uint32_t objectStructSize;
     uint32_t objNo;
 } osObjectInfo_t;
@@ -72,7 +75,7 @@ typedef struct osTimerStruct_tag
     TimerHandle_t handle;
     osaTimerFctPtr_t callback;
     void *param;
-}osTimerStruct_t;
+} osTimerStruct_t;
 
 /*! *********************************************************************************
 *************************************************************************************
@@ -80,22 +83,21 @@ typedef struct osTimerStruct_tag
 *************************************************************************************
 ********************************************************************************** */
 #if osObjectAlloc_c
-static void* osObjectAlloc(const osObjectInfo_t* pOsObjectInfo);
-static bool_t osObjectIsAllocated(const osObjectInfo_t* pOsObjectInfo, void* pObjectStruct);
-static void osObjectFree(const osObjectInfo_t* pOsObjectInfo, void* pObjectStruct);
+static void *osObjectAlloc(const osObjectInfo_t *pOsObjectInfo);
+static bool_t osObjectIsAllocated(const osObjectInfo_t *pOsObjectInfo, void *pObjectStruct);
+static void osObjectFree(const osObjectInfo_t *pOsObjectInfo, void *pObjectStruct);
 #endif
 extern void main_task(void const *argument);
-void startup_task(void* argument);
-
+void startup_task(void *argument);
 
 /*! *********************************************************************************
 *************************************************************************************
 * Public memory declarations
 *************************************************************************************
 ********************************************************************************** */
-const uint8_t gUseRtos_c = USE_RTOS;  // USE_RTOS = 0 for BareMetal and 1 for OS
+const uint8_t gUseRtos_c = USE_RTOS; // USE_RTOS = 0 for BareMetal and 1 for OS
 static uint32_t g_base_priority_array[OSA_MAX_ISR_CRITICAL_SECTION_DEPTH];
-static int32_t  g_base_priority_top = 0;
+static int32_t g_base_priority_top = 0;
 
 /*! *********************************************************************************
 *************************************************************************************
@@ -105,9 +107,8 @@ static int32_t  g_base_priority_top = 0;
 
 #if osNumberOfEvents
 osEventStruct_t osEventHeap[osNumberOfEvents];
-const osObjectInfo_t osEventInfo = {osEventHeap, sizeof(osEventStruct_t),osNumberOfEvents};
+const osObjectInfo_t osEventInfo = {osEventHeap, sizeof(osEventStruct_t), osNumberOfEvents};
 #endif
-
 
 /*! *********************************************************************************
 *************************************************************************************
@@ -121,10 +122,11 @@ const osObjectInfo_t osEventInfo = {osEventHeap, sizeof(osEventStruct_t),osNumbe
  * Description   : Wrapper over main_task..
  *
  *END**************************************************************************/
-void startup_task(void* argument)
+void startup_task(void *argument)
 {
     main_task(argument);
-    while(1);
+    while (1)
+        ;
 }
 
 /*FUNCTION**********************************************************************
@@ -159,7 +161,7 @@ osaStatus_t OSA_TaskYield(void)
  *END**************************************************************************/
 osaTaskPriority_t OSA_TaskGetPriority(osaTaskId_t taskId)
 {
-  return (osaTaskPriority_t)(PRIORITY_RTOS_TO_OSA(uxTaskPriorityGet((task_handler_t)taskId)));
+    return (osaTaskPriority_t)(PRIORITY_RTOS_TO_OSA(uxTaskPriorityGet((task_handler_t)taskId)));
 }
 
 /*FUNCTION**********************************************************************
@@ -175,57 +177,56 @@ osaStatus_t OSA_TaskSetPriority(osaTaskId_t taskId, osaTaskPriority_t taskPriori
 }
 
 /*FUNCTION**********************************************************************
-*
-* Function Name : OSA_TaskCreate
-* Description   : This function is used to create a task and make it ready.
-* Param[in]     :  threadDef  - Definition of the thread.
-*                  task_param - Parameter to pass to the new thread.
-* Return Thread handle of the new thread, or NULL if failed.
-*
-*END**************************************************************************/
-osaTaskId_t OSA_TaskCreate(osaThreadDef_t *thread_def,osaTaskParam_t task_param)
+ *
+ * Function Name : OSA_TaskCreate
+ * Description   : This function is used to create a task and make it ready.
+ * Param[in]     :  threadDef  - Definition of the thread.
+ *                  task_param - Parameter to pass to the new thread.
+ * Return Thread handle of the new thread, or NULL if failed.
+ *
+ *END**************************************************************************/
+osaTaskId_t OSA_TaskCreate(osaThreadDef_t *thread_def, osaTaskParam_t task_param)
 {
-  osaTaskId_t taskId = NULL;
-  task_handler_t task_handler;
-  
-  if (xTaskCreate(
-                  (task_t)thread_def->pthread,  /* pointer to the task */
-                  (char const*)thread_def->tname, /* task name for kernel awareness debugging */
-                  thread_def->stacksize/sizeof(portSTACK_TYPE), /* task stack size */
-                  (task_param_t)task_param, /* optional task startup argument */
-                  PRIORITY_OSA_TO_RTOS(thread_def->tpriority),  /* initial priority */
-                  &task_handler /* optional task handle to create */
+    osaTaskId_t taskId = NULL;
+    task_handler_t task_handler;
+
+    if (xTaskCreate((task_t)thread_def->pthread,                    /* pointer to the task */
+                    (char const *)thread_def->tname,                /* task name for kernel awareness debugging */
+                    thread_def->stacksize / sizeof(portSTACK_TYPE), /* task stack size */
+                    (task_param_t)task_param,                       /* optional task startup argument */
+                    PRIORITY_OSA_TO_RTOS(thread_def->tpriority),    /* initial priority */
+                    &task_handler                                   /* optional task handle to create */
                     ) == pdPASS)
-  {
-    taskId = (osaTaskId_t)task_handler;
-  }
-  return taskId;
+    {
+        taskId = (osaTaskId_t)task_handler;
+    }
+    return taskId;
 }
 
 /*FUNCTION**********************************************************************
  *
  * Function Name : OSA_TaskDestroy
- * Description   : This function destroy a task. 
+ * Description   : This function destroy a task.
  * Param[in]     :taskId - Thread handle.
  * Return osaStatus_Success if the task is destroied, otherwise return osaStatus_Error.
  *
  *END**************************************************************************/
 osaStatus_t OSA_TaskDestroy(osaTaskId_t taskId)
 {
-  osaStatus_t status;
-  uint16_t oldPriority;
-  /*Change priority to avoid context switches*/
-  oldPriority = OSA_TaskGetPriority(OSA_TaskGetId());
-  (void)OSA_TaskSetPriority(OSA_TaskGetId(), OSA_PRIORITY_REAL_TIME);
+    osaStatus_t status;
+    uint16_t oldPriority;
+    /*Change priority to avoid context switches*/
+    oldPriority = OSA_TaskGetPriority(OSA_TaskGetId());
+    (void)OSA_TaskSetPriority(OSA_TaskGetId(), OSA_PRIORITY_REAL_TIME);
 #if INCLUDE_vTaskDelete /* vTaskDelete() enabled */
-  vTaskDelete((task_handler_t)taskId);
-  status = osaStatus_Success;
+    vTaskDelete((task_handler_t)taskId);
+    status = osaStatus_Success;
 #else
-  status = osaStatus_Error; /* vTaskDelete() not available */
+    status = osaStatus_Error; /* vTaskDelete() not available */
 #endif
-  (void)OSA_TaskSetPriority(OSA_TaskGetId(), oldPriority);
-  
-  return status;
+    (void)OSA_TaskSetPriority(OSA_TaskGetId(), oldPriority);
+
+    return status;
 }
 
 /*FUNCTION**********************************************************************
@@ -262,9 +263,9 @@ uint32_t OSA_TimeGetMsec(void)
 /*FUNCTION**********************************************************************
  *
  * Function Name : OSA_SemaphoreCreate
- * Description   : This function is used to create a semaphore. 
- * Return         : Semaphore handle of the new semaphore, or NULL if failed. 
-  *
+ * Description   : This function is used to create a semaphore.
+ * Return         : Semaphore handle of the new semaphore, or NULL if failed.
+ *
  *END**************************************************************************/
 osaSemaphoreId_t OSA_SemaphoreCreate(uint32_t initValue)
 {
@@ -272,11 +273,10 @@ osaSemaphoreId_t OSA_SemaphoreCreate(uint32_t initValue)
     semaphore_t sem;
     sem = xSemaphoreCreateCounting(0xFF, initValue);
     return (osaSemaphoreId_t)sem;
-#else 
+#else
     (void)initValue;
     return NULL;
 #endif
-    
 }
 
 /*FUNCTION**********************************************************************
@@ -289,17 +289,17 @@ osaSemaphoreId_t OSA_SemaphoreCreate(uint32_t initValue)
 osaStatus_t OSA_SemaphoreDestroy(osaSemaphoreId_t semId)
 {
 #if osNumberOfSemaphores
-  semaphore_t sem = (semaphore_t)semId; 
-  if(sem == NULL)
-  {
-    return osaStatus_Error;
-  }   
-  vSemaphoreDelete(sem);
-  return osaStatus_Success;
+    semaphore_t sem = (semaphore_t)semId;
+    if (sem == NULL)
+    {
+        return osaStatus_Error;
+    }
+    vSemaphoreDelete(sem);
+    return osaStatus_Success;
 #else
-  (void)semId;
-  return osaStatus_Error;
-#endif  
+    (void)semId;
+    return osaStatus_Error;
+#endif
 }
 
 /*FUNCTION**********************************************************************
@@ -318,36 +318,36 @@ osaStatus_t OSA_SemaphoreDestroy(osaSemaphoreId_t semId)
 osaStatus_t OSA_SemaphoreWait(osaSemaphoreId_t semId, uint32_t millisec)
 {
 #if osNumberOfSemaphores
-  uint32_t timeoutTicks;
-  if(semId == NULL)
-  {
-    return osaStatus_Error;
-  }
-  semaphore_t sem = (semaphore_t)semId;
-  
-  /* Convert timeout from millisecond to tick. */
-  if (millisec == osaWaitForever_c)
-  {
-    timeoutTicks = portMAX_DELAY;
-  }
-  else
-  {
-    timeoutTicks = MSEC_TO_TICK(millisec);
-  }
-  
-  if (xSemaphoreTake(sem, timeoutTicks)==pdFALSE)
-  {
-    return osaStatus_Timeout; /* timeout */
-  }
-  else
-  {
-    return osaStatus_Success; /* semaphore taken */
-  }
+    uint32_t timeoutTicks;
+    if (semId == NULL)
+    {
+        return osaStatus_Error;
+    }
+    semaphore_t sem = (semaphore_t)semId;
+
+    /* Convert timeout from millisecond to tick. */
+    if (millisec == osaWaitForever_c)
+    {
+        timeoutTicks = portMAX_DELAY;
+    }
+    else
+    {
+        timeoutTicks = MSEC_TO_TICK(millisec);
+    }
+
+    if (xSemaphoreTake(sem, timeoutTicks) == pdFALSE)
+    {
+        return osaStatus_Timeout; /* timeout */
+    }
+    else
+    {
+        return osaStatus_Success; /* semaphore taken */
+    }
 #else
-  (void)semId; 
-  (void)millisec;
-  return osaStatus_Error;
-#endif  
+    (void)semId;
+    (void)millisec;
+    return osaStatus_Error;
+#endif
 }
 
 /*FUNCTION**********************************************************************
@@ -362,63 +362,63 @@ osaStatus_t OSA_SemaphoreWait(osaSemaphoreId_t semId, uint32_t millisec)
 osaStatus_t OSA_SemaphorePost(osaSemaphoreId_t semId)
 {
 #if osNumberOfSemaphores
-  osaStatus_t status = osaStatus_Error;
-  if(semId)
-  {
-    semaphore_t sem = (semaphore_t)semId;
-    
-    if (__get_IPSR())
+    osaStatus_t status = osaStatus_Error;
+    if (semId)
     {
-      portBASE_TYPE taskToWake = pdFALSE;
-      
-      if (pdTRUE==xSemaphoreGiveFromISR(sem, &taskToWake))
-      {
-        if (pdTRUE == taskToWake)
+        semaphore_t sem = (semaphore_t)semId;
+
+        if (__get_IPSR())
         {
-          portYIELD();
+            portBASE_TYPE taskToWake = pdFALSE;
+
+            if (pdTRUE == xSemaphoreGiveFromISR(sem, &taskToWake))
+            {
+                if (pdTRUE == taskToWake)
+                {
+                    portYIELD();
+                }
+                status = osaStatus_Success;
+            }
+            else
+            {
+                status = osaStatus_Error;
+            }
         }
-        status = osaStatus_Success;
-      }
-      else
-      {
-        status = osaStatus_Error;
-      }
+        else
+        {
+            if (pdTRUE == xSemaphoreGive(sem))
+            {
+                status = osaStatus_Success; /* sync object given */
+            }
+            else
+            {
+                status = osaStatus_Error;
+            }
+        }
     }
-    else
-    {
-      if (pdTRUE == xSemaphoreGive(sem))
-      {
-        status = osaStatus_Success; /* sync object given */
-      }
-      else
-      {
-        status = osaStatus_Error;
-      }
-    }    
-  }
-  return status;
+    return status;
 #else
-  (void)semId;
-  return osaStatus_Error;
-#endif  
+    (void)semId;
+    return osaStatus_Error;
+#endif
 }
 
 /*FUNCTION**********************************************************************
  *
  * Function Name : OSA_MutexCreate
  * Description   : This function is used to create a mutex.
- * Return        : Mutex handle of the new mutex, or NULL if failed. 
+ * Return        : Mutex handle of the new mutex, or NULL if failed.
  *
  *END**************************************************************************/
 osaMutexId_t OSA_MutexCreate(void)
 {
-#if osNumberOfMutexes  
+#if osNumberOfMutexes
     mutex_t mutex;
     mutex = xSemaphoreCreateMutex();
     return (osaMutexId_t)mutex;
 #else
     return NULL;
-#endif      
+#endif
 }
 
 /*FUNCTION**********************************************************************
@@ -433,12 +433,12 @@ osaMutexId_t OSA_MutexCreate(void)
  *END**************************************************************************/
 osaStatus_t OSA_MutexLock(osaMutexId_t mutexId, uint32_t millisec)
 {
-#if osNumberOfMutexes    
+#if osNumberOfMutexes
     uint32_t timeoutTicks;
     mutex_t mutex = (mutex_t)mutexId;
-    if(mutexId == NULL)
+    if (mutexId == NULL)
     {
-     return osaStatus_Error;
+        return osaStatus_Error;
     }
     /* If pMutex has been locked by current task, return error. */
     if (xSemaphoreGetMutexHolder(mutex) == xTaskGetCurrentTaskHandle())
@@ -456,7 +456,7 @@ osaStatus_t OSA_MutexLock(osaMutexId_t mutexId, uint32_t millisec)
         timeoutTicks = MSEC_TO_TICK(millisec);
     }
 
-    if (xSemaphoreTake(mutex, timeoutTicks)==pdFALSE)
+    if (xSemaphoreTake(mutex, timeoutTicks) == pdFALSE)
     {
         return osaStatus_Timeout; /* timeout */
     }
@@ -466,9 +466,9 @@ osaStatus_t OSA_MutexLock(osaMutexId_t mutexId, uint32_t millisec)
     }
 #else
     (void)mutexId;
-    (void)millisec;  
+    (void)millisec;
     return osaStatus_Error;
-#endif  
+#endif
 }
 
 /*FUNCTION**********************************************************************
@@ -479,30 +479,30 @@ osaStatus_t OSA_MutexLock(osaMutexId_t mutexId, uint32_t millisec)
  *END**************************************************************************/
 osaStatus_t OSA_MutexUnlock(osaMutexId_t mutexId)
 {
-#if osNumberOfMutexes  
-  mutex_t mutex = (mutex_t)mutexId;
-  if(mutexId == NULL)
-  {
-    return osaStatus_Error;
-  }
-  /* If pMutex is not locked by current task, return error. */
-  if (xSemaphoreGetMutexHolder(mutex) != xTaskGetCurrentTaskHandle())
-  {
-    return osaStatus_Error;
-  }
-  
-  if (xSemaphoreGive(mutex)==pdPASS)
-  {
-    return osaStatus_Success;
-  }
-  else
-  {
-    return osaStatus_Error;
-  }
+#if osNumberOfMutexes
+    mutex_t mutex = (mutex_t)mutexId;
+    if (mutexId == NULL)
+    {
+        return osaStatus_Error;
+    }
+    /* If pMutex is not locked by current task, return error. */
+    if (xSemaphoreGetMutexHolder(mutex) != xTaskGetCurrentTaskHandle())
+    {
+        return osaStatus_Error;
+    }
+
+    if (xSemaphoreGive(mutex) == pdPASS)
+    {
+        return osaStatus_Success;
+    }
+    else
+    {
+        return osaStatus_Error;
+    }
 #else
-  (void)mutexId;
-  return osaStatus_Error;  
-#endif  
+    (void)mutexId;
+    return osaStatus_Error;
+#endif
 }
 
 /*FUNCTION**********************************************************************
@@ -514,57 +514,57 @@ osaStatus_t OSA_MutexUnlock(osaMutexId_t mutexId)
  *END**************************************************************************/
 osaStatus_t OSA_MutexDestroy(osaMutexId_t mutexId)
 {
-#if osNumberOfMutexes    
-  mutex_t mutex = (mutex_t)mutexId;
-  if(mutexId == NULL)
-  {
-    return osaStatus_Error;    
-  }
-  vSemaphoreDelete(mutex);
-  return osaStatus_Success;
+#if osNumberOfMutexes
+    mutex_t mutex = (mutex_t)mutexId;
+    if (mutexId == NULL)
+    {
+        return osaStatus_Error;
+    }
+    vSemaphoreDelete(mutex);
+    return osaStatus_Success;
 #else
-  (void)mutexId;
-  return osaStatus_Error;    
-#endif  
+    (void)mutexId;
+    return osaStatus_Error;
+#endif
 }
 
 /*FUNCTION**********************************************************************
  *
  * Function Name : OSA_EventCreate
  * Description   : This function is used to create a event object.
- * Return        : Event handle of the new event, or NULL if failed. 
+ * Return        : Event handle of the new event, or NULL if failed.
  *
  *END**************************************************************************/
 osaEventId_t OSA_EventCreate(bool_t autoClear)
 {
-#if osNumberOfEvents  
-  osaEventId_t eventId;
-  osEventStruct_t* pEventStruct; 
-  OSA_InterruptDisable();
-  eventId = pEventStruct = osObjectAlloc(&osEventInfo);
-  OSA_InterruptEnable();
-  if(eventId == NULL)
-  {
-    return NULL;
-  }
-  
-  pEventStruct->event.eventHandler = xEventGroupCreate();
-  if (pEventStruct->event.eventHandler)
-  {
-    pEventStruct->event.autoClear = autoClear;
-  }
-  else
-  {
+#if osNumberOfEvents
+    osaEventId_t eventId;
+    osEventStruct_t *pEventStruct;
     OSA_InterruptDisable();
-    osObjectFree(&osEventInfo, eventId);
+    eventId = pEventStruct = osObjectAlloc(&osEventInfo);
     OSA_InterruptEnable();
-    eventId = NULL;
-  }
-  return eventId;
+    if (eventId == NULL)
+    {
+        return NULL;
+    }
+
+    pEventStruct->event.eventHandler = xEventGroupCreate();
+    if (pEventStruct->event.eventHandler)
+    {
+        pEventStruct->event.autoClear = autoClear;
+    }
+    else
+    {
+        OSA_InterruptDisable();
+        osObjectFree(&osEventInfo, eventId);
+        OSA_InterruptEnable();
+        eventId = NULL;
+    }
+    return eventId;
 #else
-  (void)autoClear;
-  return NULL;
-#endif  
+    (void)autoClear;
+    return NULL;
+#endif
 }
 
 /*FUNCTION**********************************************************************
@@ -576,36 +576,36 @@ osaEventId_t OSA_EventCreate(bool_t autoClear)
  *END**************************************************************************/
 osaStatus_t OSA_EventSet(osaEventId_t eventId, osaEventFlags_t flagsToSet)
 {
-#if osNumberOfEvents    
-  osEventStruct_t* pEventStruct; 
-  portBASE_TYPE taskToWake = pdFALSE;
-  if(osObjectIsAllocated(&osEventInfo, eventId) == FALSE)
-  {
-    return osaStatus_Error;
-  }
-  pEventStruct = (osEventStruct_t*)eventId;  
-  if(pEventStruct->event.eventHandler == NULL)
-  {
-    return osaStatus_Error;
-  }
-  if (__get_IPSR())
-  {
-    xEventGroupSetBitsFromISR(pEventStruct->event.eventHandler, (event_flags_t)flagsToSet, &taskToWake);
-    if (pdTRUE == taskToWake)
+#if osNumberOfEvents
+    osEventStruct_t *pEventStruct;
+    portBASE_TYPE taskToWake = pdFALSE;
+    if (osObjectIsAllocated(&osEventInfo, eventId) == FALSE)
     {
-      portYIELD();
+        return osaStatus_Error;
     }
-  }
-  else
-  {
-    xEventGroupSetBits(pEventStruct->event.eventHandler, (event_flags_t)flagsToSet);
-  }
-  return osaStatus_Success;
+    pEventStruct = (osEventStruct_t *)eventId;
+    if (pEventStruct->event.eventHandler == NULL)
+    {
+        return osaStatus_Error;
+    }
+    if (__get_IPSR())
+    {
+        xEventGroupSetBitsFromISR(pEventStruct->event.eventHandler, (event_flags_t)flagsToSet, &taskToWake);
+        if (pdTRUE == taskToWake)
+        {
+            portYIELD();
+        }
+    }
+    else
+    {
+        xEventGroupSetBits(pEventStruct->event.eventHandler, (event_flags_t)flagsToSet);
+    }
+    return osaStatus_Success;
 #else
-  (void)eventId;
-  (void)flagsToSet;  
-  return osaStatus_Error;
-#endif  
+    (void)eventId;
+    (void)flagsToSet;
+    return osaStatus_Error;
+#endif
 }
 
 /*FUNCTION**********************************************************************
@@ -617,34 +617,34 @@ osaStatus_t OSA_EventSet(osaEventId_t eventId, osaEventFlags_t flagsToSet)
  *END**************************************************************************/
 osaStatus_t OSA_EventClear(osaEventId_t eventId, osaEventFlags_t flagsToClear)
 {
-#if osNumberOfEvents      
-  
-  osEventStruct_t* pEventStruct; 
-  if(osObjectIsAllocated(&osEventInfo, eventId) == FALSE)
-  {
-    return osaStatus_Error;
-  }
-  pEventStruct = (osEventStruct_t*)eventId;  
-  if(pEventStruct->event.eventHandler == NULL)
-  {
-    return osaStatus_Error;
-  } 
-  
-  if (__get_IPSR())
-  {
-    xEventGroupClearBitsFromISR(pEventStruct->event.eventHandler, (event_flags_t)flagsToClear);
-  }
-  else
-  {
-    xEventGroupClearBits(pEventStruct->event.eventHandler, (event_flags_t)flagsToClear);
-  }
-  
-  return osaStatus_Success;
+#if osNumberOfEvents
+
+    osEventStruct_t *pEventStruct;
+    if (osObjectIsAllocated(&osEventInfo, eventId) == FALSE)
+    {
+        return osaStatus_Error;
+    }
+    pEventStruct = (osEventStruct_t *)eventId;
+    if (pEventStruct->event.eventHandler == NULL)
+    {
+        return osaStatus_Error;
+    }
+
+    if (__get_IPSR())
+    {
+        xEventGroupClearBitsFromISR(pEventStruct->event.eventHandler, (event_flags_t)flagsToClear);
+    }
+    else
+    {
+        xEventGroupClearBits(pEventStruct->event.eventHandler, (event_flags_t)flagsToClear);
+    }
+
+    return osaStatus_Success;
 #else
-  (void)eventId;
-  (void)flagsToClear;  
-  return osaStatus_Error;
-#endif  
+    (void)eventId;
+    (void)flagsToClear;
+    return osaStatus_Error;
+#endif
 }
 
 /*FUNCTION**********************************************************************
@@ -662,63 +662,65 @@ osaStatus_t OSA_EventClear(osaEventId_t eventId, osaEventFlags_t flagsToClear)
  * 'timeout', returns osaStatus_Error if any errors occur during waiting.
  *
  *END**************************************************************************/
-osaStatus_t OSA_EventWait(osaEventId_t eventId, osaEventFlags_t flagsToWait, bool_t waitAll, uint32_t millisec, osaEventFlags_t *pSetFlags)
+osaStatus_t OSA_EventWait(
+    osaEventId_t eventId, osaEventFlags_t flagsToWait, bool_t waitAll, uint32_t millisec, osaEventFlags_t *pSetFlags)
 {
-#if osNumberOfEvents  
-  osEventStruct_t* pEventStruct; 
-  BaseType_t clearMode;
-  uint32_t timeoutTicks;
-  event_flags_t flagsSave;
-  if(osObjectIsAllocated(&osEventInfo, eventId) == FALSE)
-  {
-    return osaStatus_Error;
-  }
-  
-  /* Clean FreeRTOS cotrol flags */
-  flagsToWait = flagsToWait & 0x00FFFFFF;
-  
-  pEventStruct = (osEventStruct_t*)eventId;  
-  if(pEventStruct->event.eventHandler == NULL)
-  {
-    return osaStatus_Error;
-  }
-  
-  /* Convert timeout from millisecond to tick. */
-  if (millisec == osaWaitForever_c)
-  {
-    timeoutTicks = portMAX_DELAY;
-  }
-  else
-  {
-    timeoutTicks = millisec/portTICK_PERIOD_MS;
-  }
-  
-  clearMode = (pEventStruct->event.autoClear) ? pdTRUE: pdFALSE;
-  
-  flagsSave = xEventGroupWaitBits(pEventStruct->event.eventHandler,(event_flags_t)flagsToWait,clearMode,(BaseType_t)waitAll,timeoutTicks);
-  
-  flagsSave &= (event_flags_t)flagsToWait;
-  if(pSetFlags)
-  {
-    *pSetFlags = (osaEventFlags_t)flagsSave;
-  }
-  
-  if (flagsSave)
-  {
-    return osaStatus_Success;
-  }
-  else
-  {
-    return osaStatus_Timeout;
-  }
+#if osNumberOfEvents
+    osEventStruct_t *pEventStruct;
+    BaseType_t clearMode;
+    uint32_t timeoutTicks;
+    event_flags_t flagsSave;
+    if (osObjectIsAllocated(&osEventInfo, eventId) == FALSE)
+    {
+        return osaStatus_Error;
+    }
+
+    /* Clean FreeRTOS cotrol flags */
+    flagsToWait = flagsToWait & 0x00FFFFFF;
+
+    pEventStruct = (osEventStruct_t *)eventId;
+    if (pEventStruct->event.eventHandler == NULL)
+    {
+        return osaStatus_Error;
+    }
+
+    /* Convert timeout from millisecond to tick. */
+    if (millisec == osaWaitForever_c)
+    {
+        timeoutTicks = portMAX_DELAY;
+    }
+    else
+    {
+        timeoutTicks = millisec / portTICK_PERIOD_MS;
+    }
+
+    clearMode = (pEventStruct->event.autoClear) ? pdTRUE : pdFALSE;
+
+    flagsSave = xEventGroupWaitBits(pEventStruct->event.eventHandler, (event_flags_t)flagsToWait, clearMode,
+                                    (BaseType_t)waitAll, timeoutTicks);
+
+    flagsSave &= (event_flags_t)flagsToWait;
+    if (pSetFlags)
+    {
+        *pSetFlags = (osaEventFlags_t)flagsSave;
+    }
+
+    if (flagsSave)
+    {
+        return osaStatus_Success;
+    }
+    else
+    {
+        return osaStatus_Timeout;
+    }
 #else
-  (void)eventId;
-  (void)flagsToWait;  
-  (void)waitAll;  
-  (void)millisec;  
-  (void)pSetFlags;  
-  return osaStatus_Error;
-#endif  
+    (void)eventId;
+    (void)flagsToWait;
+    (void)waitAll;
+    (void)millisec;
+    (void)pSetFlags;
+    return osaStatus_Error;
+#endif
 }
 
 /*FUNCTION**********************************************************************
@@ -731,26 +733,26 @@ osaStatus_t OSA_EventWait(osaEventId_t eventId, osaEventFlags_t flagsToWait, boo
  *END**************************************************************************/
 osaStatus_t OSA_EventDestroy(osaEventId_t eventId)
 {
-#if osNumberOfEvents    
-  osEventStruct_t* pEventStruct; 
-  if(osObjectIsAllocated(&osEventInfo, eventId) == FALSE)
-  {
-    return osaStatus_Error;
-  }
-  pEventStruct = (osEventStruct_t*)eventId;
-  if(pEventStruct->event.eventHandler == NULL)
-  {
-    return osaStatus_Error;
-  }
-  vEventGroupDelete(pEventStruct->event.eventHandler);
-  OSA_InterruptDisable();
-  osObjectFree(&osEventInfo, eventId);
-  OSA_InterruptEnable();
-  return osaStatus_Success;
+#if osNumberOfEvents
+    osEventStruct_t *pEventStruct;
+    if (osObjectIsAllocated(&osEventInfo, eventId) == FALSE)
+    {
+        return osaStatus_Error;
+    }
+    pEventStruct = (osEventStruct_t *)eventId;
+    if (pEventStruct->event.eventHandler == NULL)
+    {
+        return osaStatus_Error;
+    }
+    vEventGroupDelete(pEventStruct->event.eventHandler);
+    OSA_InterruptDisable();
+    osObjectFree(&osEventInfo, eventId);
+    OSA_InterruptEnable();
+    return osaStatus_Success;
 #else
-  (void)eventId;
-  return osaStatus_Error;
-#endif  
+    (void)eventId;
+    return osaStatus_Error;
+#endif
 }
 
 /*FUNCTION**********************************************************************
@@ -761,68 +763,66 @@ osaStatus_t OSA_EventDestroy(osaEventId_t eventId)
  * return NULL.
  *
  *END**************************************************************************/
-osaMsgQId_t OSA_MsgQCreate( uint32_t  msgNo )
+osaMsgQId_t OSA_MsgQCreate(uint32_t msgNo)
 {
 #if osNumberOfMessageQs
-    msg_queue_handler_t msg_queue_handler; 
+    msg_queue_handler_t msg_queue_handler;
 
     /* Create the message queue where each element is a pointer to the message item. */
-    msg_queue_handler = xQueueCreate(msgNo,sizeof(osaMsg_t));
+    msg_queue_handler = xQueueCreate(msgNo, sizeof(osaMsg_t));
     return (osaMsgQId_t)msg_queue_handler;
 #else
     (void)msgNo;
     return NULL;
-#endif  
+#endif
 }
-
 
 /*FUNCTION**********************************************************************
  *
  * Function Name : OSA_MsgQPut
  * Description   : This function is used to put a message to a message queue.
-* Return         : osaStatus_Success if the message is put successfully, otherwise return osaStatus_Error.
+ * Return         : osaStatus_Success if the message is put successfully, otherwise return osaStatus_Error.
  *
  *END**************************************************************************/
-osaStatus_t OSA_MsgQPut(osaMsgQId_t msgQId, void* pMessage)
+osaStatus_t OSA_MsgQPut(osaMsgQId_t msgQId, void *pMessage)
 {
-#if osNumberOfMessageQs  
-  msg_queue_handler_t handler;
-  osaStatus_t osaStatus;
-  if(msgQId == NULL)
-  {
-    return osaStatus_Error;
-  }
-  handler = (msg_queue_handler_t)msgQId;
-  {
-    if (__get_IPSR())
+#if osNumberOfMessageQs
+    msg_queue_handler_t handler;
+    osaStatus_t osaStatus;
+    if (msgQId == NULL)
     {
-      portBASE_TYPE taskToWake = pdFALSE;
-      
-      if (pdTRUE == xQueueSendToBackFromISR(handler, pMessage, &taskToWake))
-      {
-        if (pdTRUE == taskToWake)
+        return osaStatus_Error;
+    }
+    handler = (msg_queue_handler_t)msgQId;
+    {
+        if (__get_IPSR())
         {
-          portYIELD();
+            portBASE_TYPE taskToWake = pdFALSE;
+
+            if (pdTRUE == xQueueSendToBackFromISR(handler, pMessage, &taskToWake))
+            {
+                if (pdTRUE == taskToWake)
+                {
+                    portYIELD();
+                }
+                osaStatus = osaStatus_Success;
+            }
+            else
+            {
+                osaStatus = osaStatus_Error;
+            }
         }
-        osaStatus = osaStatus_Success;
-      }
-      else
-      {
-        osaStatus =  osaStatus_Error;
-      }
-      
+        else
+        {
+            osaStatus = (xQueueSendToBack(handler, pMessage, 0) == pdPASS) ? (osaStatus_Success) : (osaStatus_Error);
+        }
     }
-    else
-    {
-      osaStatus = (xQueueSendToBack(handler, pMessage, 0)== pdPASS)?(osaStatus_Success):(osaStatus_Error);
-    }
-  }
-  return osaStatus;
+    return osaStatus;
 #else
-  (void)msgQId;
-  (void)pMessage;
-  return osaStatus_Error;
-#endif  
+    (void)msgQId;
+    (void)pMessage;
+    return osaStatus_Error;
+#endif
 }
 
 /*FUNCTION**********************************************************************
@@ -840,38 +840,38 @@ osaStatus_t OSA_MsgQPut(osaMsgQId_t msgQId, void* pMessage)
  *END**************************************************************************/
 osaStatus_t OSA_MsgQGet(osaMsgQId_t msgQId, void *pMessage, uint32_t millisec)
 {
-#if osNumberOfMessageQs  
-  osaStatus_t osaStatus;
-  msg_queue_handler_t handler;
-  uint32_t timeoutTicks;
-  if( msgQId == NULL )
-  {
-    return osaStatus_Error;
-  }
-  handler = (msg_queue_handler_t)msgQId;
-  if (millisec == osaWaitForever_c)
-  {
-    timeoutTicks = portMAX_DELAY;
-  }
-  else
-  {
-    timeoutTicks = MSEC_TO_TICK(millisec);
-  }
-  if (xQueueReceive(handler, pMessage, timeoutTicks)!=pdPASS)
-  {
-    osaStatus =  osaStatus_Timeout; /* not able to send it to the queue? */
-  }
-  else
-  {
-    osaStatus = osaStatus_Success;
-  }
-  return osaStatus;
+#if osNumberOfMessageQs
+    osaStatus_t osaStatus;
+    msg_queue_handler_t handler;
+    uint32_t timeoutTicks;
+    if (msgQId == NULL)
+    {
+        return osaStatus_Error;
+    }
+    handler = (msg_queue_handler_t)msgQId;
+    if (millisec == osaWaitForever_c)
+    {
+        timeoutTicks = portMAX_DELAY;
+    }
+    else
+    {
+        timeoutTicks = MSEC_TO_TICK(millisec);
+    }
+    if (xQueueReceive(handler, pMessage, timeoutTicks) != pdPASS)
+    {
+        osaStatus = osaStatus_Timeout; /* not able to send it to the queue? */
+    }
+    else
+    {
+        osaStatus = osaStatus_Success;
+    }
+    return osaStatus;
 #else
-  (void)msgQId;
-  (void)pMessage;
-  (void)millisec;
-  return osaStatus_Error;
-#endif  
+    (void)msgQId;
+    (void)pMessage;
+    (void)millisec;
+    return osaStatus_Error;
+#endif
 }
 
 /*FUNCTION**********************************************************************
@@ -883,19 +883,19 @@ osaStatus_t OSA_MsgQGet(osaMsgQId_t msgQId, void *pMessage, uint32_t millisec)
  *END**************************************************************************/
 osaStatus_t OSA_MsgQDestroy(osaMsgQId_t msgQId)
 {
-#if osNumberOfMessageQs  
-  msg_queue_handler_t handler;
-  if(msgQId == NULL )
-  {
-    return osaStatus_Error;
-  }
-  handler = (msg_queue_handler_t)msgQId;
-  vQueueDelete(handler);
-  return osaStatus_Success;
+#if osNumberOfMessageQs
+    msg_queue_handler_t handler;
+    if (msgQId == NULL)
+    {
+        return osaStatus_Error;
+    }
+    handler = (msg_queue_handler_t)msgQId;
+    vQueueDelete(handler);
+    return osaStatus_Success;
 #else
-  (void)msgQId;
-  return osaStatus_Error;
-#endif  
+    (void)msgQId;
+    return osaStatus_Error;
+#endif
 }
 
 /*FUNCTION**********************************************************************
@@ -908,24 +908,24 @@ osaStatus_t OSA_MsgQDestroy(osaMsgQId_t msgQId)
  *END**************************************************************************/
 osaTimerId_t OSA_TimerCreate(void)
 {
-  osTimerStruct_t *ts = (osTimerStruct_t *)pvPortMalloc(sizeof(osTimerStruct_t));
+    osTimerStruct_t *ts = (osTimerStruct_t *)pvPortMalloc(sizeof(osTimerStruct_t));
 
-  if(ts)
-  {
-    ts->handle = NULL;
-  }
+    if (ts)
+    {
+        ts->handle = NULL;
+    }
 
-  return (osaTimerId_t)ts;
+    return (osaTimerId_t)ts;
 }
 
 static void OSA_TimerCallback(TimerHandle_t timer)
 {
-  osTimerStruct_t *ts = pvTimerGetTimerID(timer);
+    osTimerStruct_t *ts = pvTimerGetTimerID(timer);
 
-  if(ts->callback)
-  {
-    ts->callback(ts->param);
-  }
+    if (ts->callback)
+    {
+        ts->callback(ts->param);
+    }
 }
 
 /*FUNCTION**********************************************************************
@@ -935,52 +935,53 @@ static void OSA_TimerCallback(TimerHandle_t timer)
  * Return        : osaStatus_Success if the timer starts successfully, otherwise return osaStatus_Error.
  *
  *END**************************************************************************/
-osaStatus_t OSA_TimerStart(osaTimerId_t timerId, bool_t oneshot, uint32_t millisec, osaTimerFctPtr_t callback, void *param)
+osaStatus_t OSA_TimerStart(
+    osaTimerId_t timerId, bool_t oneshot, uint32_t millisec, osaTimerFctPtr_t callback, void *param)
 {
-  osaStatus_t osaStatus;
-  osTimerStruct_t *ts;
+    osaStatus_t osaStatus;
+    osTimerStruct_t *ts;
 
-  if(timerId == NULL)
-  {
-    return osaStatus_Error;
-  }
-
-  ts = (osTimerStruct_t *)timerId;
-  ts->callback = callback;
-  ts->param = param;
-
-  if (!ts->handle)
-  {
-    ts->handle = xTimerCreate("osaTimer", millisecToTicks(millisec), !oneshot, ts, OSA_TimerCallback);
-    if(ts->handle == NULL)
+    if (timerId == NULL)
     {
-      return osaStatus_Error;
+        return osaStatus_Error;
     }
-  }
 
-  if (__get_IPSR())
-  {
-    portBASE_TYPE taskToWake = pdFALSE;
+    ts           = (osTimerStruct_t *)timerId;
+    ts->callback = callback;
+    ts->param    = param;
 
-    if (pdPASS == xTimerStartFromISR(ts->handle, &taskToWake))
+    if (!ts->handle)
     {
-      if (pdTRUE == taskToWake)
-      {
-        portYIELD();
-      }
-      osaStatus = osaStatus_Success;
+        ts->handle = xTimerCreate("osaTimer", millisecToTicks(millisec), !oneshot, ts, OSA_TimerCallback);
+        if (ts->handle == NULL)
+        {
+            return osaStatus_Error;
+        }
+    }
+
+    if (__get_IPSR())
+    {
+        portBASE_TYPE taskToWake = pdFALSE;
+
+        if (pdPASS == xTimerStartFromISR(ts->handle, &taskToWake))
+        {
+            if (pdTRUE == taskToWake)
+            {
+                portYIELD();
+            }
+            osaStatus = osaStatus_Success;
+        }
+        else
+        {
+            osaStatus = osaStatus_Error;
+        }
     }
     else
     {
-      osaStatus =  osaStatus_Error;
+        osaStatus = (xTimerStart(ts->handle, 0) == pdPASS) ? (osaStatus_Success) : (osaStatus_Error);
     }
-  }
-  else
-  {
-    osaStatus = (xTimerStart(ts->handle, 0) == pdPASS) ? (osaStatus_Success) : (osaStatus_Error);
-  }
 
-  return osaStatus;
+    return osaStatus;
 }
 
 /*FUNCTION**********************************************************************
@@ -992,56 +993,56 @@ osaStatus_t OSA_TimerStart(osaTimerId_t timerId, bool_t oneshot, uint32_t millis
  *END**************************************************************************/
 osaStatus_t OSA_TimerStop(osaTimerId_t timerId)
 {
-  osaStatus_t osaStatus;
-  osTimerStruct_t *ts;
+    osaStatus_t osaStatus;
+    osTimerStruct_t *ts;
 
-  if(timerId == NULL)
-  {
-    return osaStatus_Error;
-  }
-
-  ts = (osTimerStruct_t *)timerId;
-
-  if(ts->handle == NULL)
-  { /* Timer didn't start */
-    return osaStatus_Success;
-  }
-
-  if (__get_IPSR())
-  {
-    portBASE_TYPE taskToWake = pdFALSE;
-
-    if (pdPASS == xTimerStopFromISR(ts->handle, &taskToWake))
+    if (timerId == NULL)
     {
-      if (pdTRUE == taskToWake)
-      {
-        portYIELD();
-      }
-      osaStatus = osaStatus_Success;
+        return osaStatus_Error;
+    }
+
+    ts = (osTimerStruct_t *)timerId;
+
+    if (ts->handle == NULL)
+    { /* Timer didn't start */
+        return osaStatus_Success;
+    }
+
+    if (__get_IPSR())
+    {
+        portBASE_TYPE taskToWake = pdFALSE;
+
+        if (pdPASS == xTimerStopFromISR(ts->handle, &taskToWake))
+        {
+            if (pdTRUE == taskToWake)
+            {
+                portYIELD();
+            }
+            osaStatus = osaStatus_Success;
+        }
+        else
+        {
+            osaStatus = osaStatus_Error;
+        }
     }
     else
     {
-      osaStatus = osaStatus_Error;
+        osaStatus = (xTimerStop(ts->handle, 0) == pdPASS) ? (osaStatus_Success) : (osaStatus_Error);
     }
-  }
-  else
-  {
-    osaStatus = (xTimerStop(ts->handle, 0) == pdPASS) ? (osaStatus_Success) : (osaStatus_Error);
-  }
 
-  if(osaStatus == osaStatus_Success)
-  {
-    if(xTimerDelete(ts->handle, 0) == pdPASS)
+    if (osaStatus == osaStatus_Success)
     {
-      ts->handle = NULL;
+        if (xTimerDelete(ts->handle, 0) == pdPASS)
+        {
+            ts->handle = NULL;
+        }
+        else
+        {
+            osaStatus = osaStatus_Error;
+        }
     }
-    else
-    {
-      osaStatus = osaStatus_Error;
-    }
-  }
 
-  return osaStatus;
+    return osaStatus;
 }
 
 /*FUNCTION**********************************************************************
@@ -1053,21 +1054,21 @@ osaStatus_t OSA_TimerStop(osaTimerId_t timerId)
  *END**************************************************************************/
 osaStatus_t OSA_TimerDestroy(osaTimerId_t timerId)
 {
-  osTimerStruct_t *ts = (osTimerStruct_t *)timerId;
+    osTimerStruct_t *ts = (osTimerStruct_t *)timerId;
 
-  if(timerId == NULL )
-  {
-    return osaStatus_Error;
-  }
+    if (timerId == NULL)
+    {
+        return osaStatus_Error;
+    }
 
-  if(ts->handle != NULL && OSA_TimerStop(timerId) != osaStatus_Success)
-  {
-    return osaStatus_Error;
-  }
+    if (ts->handle != NULL && OSA_TimerStop(timerId) != osaStatus_Success)
+    {
+        return osaStatus_Error;
+    }
 
-  vPortFree(timerId);
+    vPortFree(timerId);
 
-  return osaStatus_Success;
+    return osaStatus_Success;
 }
 
 /*FUNCTION**********************************************************************
@@ -1077,9 +1078,9 @@ osaStatus_t OSA_TimerDestroy(osaTimerId_t timerId)
  * Return        : allocated buffer pointer, NULL if failed.
  *
  *END**************************************************************************/
-void* OSA_Malloc(uint32_t bytes)
+void *OSA_Malloc(uint32_t bytes)
 {
-  return pvPortMalloc(bytes);
+    return pvPortMalloc(bytes);
 }
 
 /*FUNCTION**********************************************************************
@@ -1090,7 +1091,7 @@ void* OSA_Malloc(uint32_t bytes)
  *END**************************************************************************/
 void OSA_Free(void *buf)
 {
-  vPortFree(buf);
+    vPortFree(buf);
 }
 
 /*FUNCTION**********************************************************************
@@ -1101,19 +1102,18 @@ void OSA_Free(void *buf)
  *END**************************************************************************/
 void OSA_InterruptEnable(void)
 {
-  if (__get_IPSR())
-  {
-    if(g_base_priority_top)
+    if (__get_IPSR())
     {
-    g_base_priority_top--;
-    portCLEAR_INTERRUPT_MASK_FROM_ISR(g_base_priority_array[g_base_priority_top]);
+        if (g_base_priority_top)
+        {
+            g_base_priority_top--;
+            portCLEAR_INTERRUPT_MASK_FROM_ISR(g_base_priority_array[g_base_priority_top]);
+        }
     }
-
-  }
-  else
-  {
-    portEXIT_CRITICAL();
-  }
+    else
+    {
+        portEXIT_CRITICAL();
+    }
 }
 
 /*FUNCTION**********************************************************************
@@ -1124,20 +1124,18 @@ void OSA_InterruptEnable(void)
  *END**************************************************************************/
 void OSA_InterruptDisable(void)
 {
-  if (__get_IPSR())
-  {
-    if(g_base_priority_top < OSA_MAX_ISR_CRITICAL_SECTION_DEPTH)
+    if (__get_IPSR())
     {
-      g_base_priority_array[g_base_priority_top] = portSET_INTERRUPT_MASK_FROM_ISR();
-      g_base_priority_top++;
+        if (g_base_priority_top < OSA_MAX_ISR_CRITICAL_SECTION_DEPTH)
+        {
+            g_base_priority_array[g_base_priority_top] = portSET_INTERRUPT_MASK_FROM_ISR();
+            g_base_priority_top++;
+        }
     }
-    
-  }
-  else
-  {
-    portENTER_CRITICAL();
-  }
-  
+    else
+    {
+        portENTER_CRITICAL();
+    }
 }
 
 /*FUNCTION**********************************************************************
@@ -1148,13 +1146,12 @@ void OSA_InterruptDisable(void)
  *END**************************************************************************/
 void OSA_InstallIntHandler(uint32_t IRQNumber, void (*handler)(void))
 {
-
-#if defined ( __IAR_SYSTEMS_ICC__ )
-    _Pragma ("diag_suppress = Pm138")
+#if defined(__IAR_SYSTEMS_ICC__)
+    _Pragma("diag_suppress = Pm138")
 #endif
-    InstallIRQHandler((IRQn_Type)IRQNumber, (uint32_t)handler);
-#if defined ( __IAR_SYSTEMS_ICC__ )
-    _Pragma ("diag_remark = PM138")
+        InstallIRQHandler((IRQn_Type)IRQNumber, (uint32_t)handler);
+#if defined(__IAR_SYSTEMS_ICC__)
+    _Pragma("diag_remark = PM138")
 #endif
 }
 
@@ -1165,29 +1162,29 @@ void OSA_InstallIntHandler(uint32_t IRQNumber, void (*handler)(void))
 ********************************************************************************** */
 
 /*! *********************************************************************************
-* \brief     Allocates a osObjectStruct_t block in the osObjectHeap array.
-* \param[in] pointer to the object info struct.
-* Object can be semaphore, mutex, message Queue, event
-* \return Pointer to the allocated osObjectStruct_t, NULL if failed.
-*
-* \pre 
-*
-* \post
-*
-* \remarks Function is unprotected from interrupts. 
-*
-********************************************************************************** */
+ * \brief     Allocates a osObjectStruct_t block in the osObjectHeap array.
+ * \param[in] pointer to the object info struct.
+ * Object can be semaphore, mutex, message Queue, event
+ * \return Pointer to the allocated osObjectStruct_t, NULL if failed.
+ *
+ * \pre
+ *
+ * \post
+ *
+ * \remarks Function is unprotected from interrupts.
+ *
+ ********************************************************************************** */
 #if osObjectAlloc_c
-static void* osObjectAlloc(const osObjectInfo_t* pOsObjectInfo)
+static void *osObjectAlloc(const osObjectInfo_t *pOsObjectInfo)
 {
     uint32_t i;
-    uint8_t* pObj = (uint8_t*)pOsObjectInfo->pHeap;
-    for( i=0 ; i < pOsObjectInfo->objNo ; i++, pObj += pOsObjectInfo->objectStructSize)
+    uint8_t *pObj = (uint8_t *)pOsObjectInfo->pHeap;
+    for (i = 0; i < pOsObjectInfo->objNo; i++, pObj += pOsObjectInfo->objectStructSize)
     {
-        if(((osObjStruct_t*)pObj)->inUse == 0)
+        if (((osObjStruct_t *)pObj)->inUse == 0)
         {
-            ((osObjStruct_t*)pObj)->inUse = 1;
-            return (void*)pObj;
+            ((osObjStruct_t *)pObj)->inUse = 1;
+            return (void *)pObj;
         }
     }
     return NULL;
@@ -1195,29 +1192,29 @@ static void* osObjectAlloc(const osObjectInfo_t* pOsObjectInfo)
 #endif
 
 /*! *********************************************************************************
-* \brief     Verifies the object is valid and allocated in the osObjectHeap array.
-* \param[in] the pointer to the object info struct.
-* \param[in] the pointer to the object struct.
-* Object can be semaphore, mutex,  message Queue, event
-* \return TRUE if the object is valid and allocated, FALSE otherwise
-*
-* \pre 
-*
-* \post
-*
-* \remarks Function is unprotected from interrupts. 
-*
-********************************************************************************** */
+ * \brief     Verifies the object is valid and allocated in the osObjectHeap array.
+ * \param[in] the pointer to the object info struct.
+ * \param[in] the pointer to the object struct.
+ * Object can be semaphore, mutex,  message Queue, event
+ * \return TRUE if the object is valid and allocated, FALSE otherwise
+ *
+ * \pre
+ *
+ * \post
+ *
+ * \remarks Function is unprotected from interrupts.
+ *
+ ********************************************************************************** */
 #if osObjectAlloc_c
-static bool_t osObjectIsAllocated(const osObjectInfo_t* pOsObjectInfo, void* pObjectStruct)
+static bool_t osObjectIsAllocated(const osObjectInfo_t *pOsObjectInfo, void *pObjectStruct)
 {
     uint32_t i;
-    uint8_t* pObj = (uint8_t*)pOsObjectInfo->pHeap;
-    for( i=0 ; i < pOsObjectInfo->objNo ; i++ , pObj += pOsObjectInfo->objectStructSize)
+    uint8_t *pObj = (uint8_t *)pOsObjectInfo->pHeap;
+    for (i = 0; i < pOsObjectInfo->objNo; i++, pObj += pOsObjectInfo->objectStructSize)
     {
-        if(pObj == pObjectStruct)
+        if (pObj == pObjectStruct)
         {
-            if(((osObjStruct_t*)pObj)->inUse)
+            if (((osObjStruct_t *)pObj)->inUse)
             {
                 return TRUE;
             }
@@ -1229,32 +1226,31 @@ static bool_t osObjectIsAllocated(const osObjectInfo_t* pOsObjectInfo, void* pOb
 #endif
 
 /*! *********************************************************************************
-* \brief     Frees an osObjectStruct_t block from the osObjectHeap array.
-* \param[in] pointer to the object info struct.
-* \param[in] Pointer to the allocated osObjectStruct_t to free.
-* Object can be semaphore, mutex, message Queue, event
-* \return none.
-*
-* \pre 
-*
-* \post
-*
-* \remarks Function is unprotected from interrupts. 
-*
-********************************************************************************** */
+ * \brief     Frees an osObjectStruct_t block from the osObjectHeap array.
+ * \param[in] pointer to the object info struct.
+ * \param[in] Pointer to the allocated osObjectStruct_t to free.
+ * Object can be semaphore, mutex, message Queue, event
+ * \return none.
+ *
+ * \pre
+ *
+ * \post
+ *
+ * \remarks Function is unprotected from interrupts.
+ *
+ ********************************************************************************** */
 #if osObjectAlloc_c
-static void osObjectFree(const osObjectInfo_t* pOsObjectInfo, void* pObjectStruct)
+static void osObjectFree(const osObjectInfo_t *pOsObjectInfo, void *pObjectStruct)
 {
     uint32_t i;
-    uint8_t* pObj = (uint8_t*)pOsObjectInfo->pHeap;
-    for( i=0; i < pOsObjectInfo->objNo; i++, pObj += pOsObjectInfo->objectStructSize )
+    uint8_t *pObj = (uint8_t *)pOsObjectInfo->pHeap;
+    for (i = 0; i < pOsObjectInfo->objNo; i++, pObj += pOsObjectInfo->objectStructSize)
     {
-        if(pObj == pObjectStruct)
+        if (pObj == pObjectStruct)
         {
-            ((osObjStruct_t*)pObj)->inUse = 0;
+            ((osObjStruct_t *)pObj)->inUse = 0;
             break;
         }
     }
 }
 #endif
-

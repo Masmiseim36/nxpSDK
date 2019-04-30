@@ -126,7 +126,7 @@ static advState_t mAdvState;
 /* Service Data*/
 static wusConfig_t mWuServiceConfig;
 static basConfig_t basServiceConfig = {gGattDbInvalidHandle_d, 0};
-static uint16_t cpHandles[1] = {gGattDbInvalidHandle_d};
+static uint16_t cpHandles[1]        = {gGattDbInvalidHandle_d};
 
 static const gFsciSerialConfig_t mFsciSerials[] = {
     /* Baudrate,            interface type,            channel No,                   virtual interface */
@@ -145,11 +145,11 @@ extern "C" {
 #endif
 void BleApp_Init(void);
 void BleApp_Start(void);
-void BleApp_GenericCallback (gapGenericEvent_t* pGenericEvent);
+void BleApp_GenericCallback(gapGenericEvent_t *pGenericEvent);
 
 #ifdef __cplusplus
 }
-#endif 
+#endif
 
 /* Gatt and Att callbacks */
 static void BleApp_AdvertisingCallback(gapAdvertisingEvent_t *pAdvertisingEvent);
@@ -187,7 +187,7 @@ static void BleTask(void *param)
 static void BleApp_FlushUartStream(void *pParam)
 {
     rpmsg_message_t *message = (rpmsg_message_t *)pParam;
-    uint32_t length = 0U;
+    uint32_t length          = 0U;
 
     if (mPeerInformation.appState != mAppRunning_c)
     {
@@ -286,8 +286,8 @@ static void BridgeTask(void *param)
                 {
                     a7Addr = remoteAddr;
                 }
-                message = pvPortMalloc(sizeof(rpmsg_message_t));
-                message->buffer = rpmsgBuffer;
+                message            = pvPortMalloc(sizeof(rpmsg_message_t));
+                message->buffer    = rpmsgBuffer;
                 message->bufferLen = rpmsgBufferLen;
 
                 if (bleConnectedFlag)
@@ -348,9 +348,9 @@ int main(void)
 }
 
 /*! *********************************************************************************
-* \brief    Initializes application specific functionality before the BLE stack init.
-*
-********************************************************************************** */
+ * \brief    Initializes application specific functionality before the BLE stack init.
+ *
+ ********************************************************************************** */
 void BleApp_Init(void)
 {
     /* UI */
@@ -374,10 +374,10 @@ void BleApp_Start(void)
 }
 
 /*! *********************************************************************************
-* \brief        Handles BLE generic callback.
-*
-* \param[in]    pGenericEvent    Pointer to gapGenericEvent_t.
-********************************************************************************** */
+ * \brief        Handles BLE generic callback.
+ *
+ * \param[in]    pGenericEvent    Pointer to gapGenericEvent_t.
+ ********************************************************************************** */
 void BleApp_GenericCallback(gapGenericEvent_t *pGenericEvent)
 {
     /* Call BLE Conn Manager */
@@ -410,10 +410,10 @@ void BleApp_GenericCallback(gapGenericEvent_t *pGenericEvent)
 ************************************************************************************/
 
 /*! *********************************************************************************
-* \brief        Configures BLE Stack after initialization. Usually used for
-*               configuring advertising, scanning, white list, services, et al.
-*
-********************************************************************************** */
+ * \brief        Configures BLE Stack after initialization. Usually used for
+ *               configuring advertising, scanning, white list, services, et al.
+ *
+ ********************************************************************************** */
 static void BleApp_Config(void)
 {
     /* Init GATT DB dynamically */
@@ -429,7 +429,7 @@ static void BleApp_Config(void)
     BleServDisc_RegisterCallback(BleApp_ServiceDiscoveryCallback);
 
     mPeerInformation.appState = mAppIdle_c;
-    mAdvState.advOn = FALSE;
+    mAdvState.advOn           = FALSE;
 
     /* Start services */
     Wus_Start(&mWuServiceConfig);
@@ -439,10 +439,10 @@ static void BleApp_Config(void)
 }
 
 /*! *********************************************************************************
-* \brief        Configures GAP Advertise parameters. Advertise will satrt after
-*               the parameters are set.
-*
-********************************************************************************** */
+ * \brief        Configures GAP Advertise parameters. Advertise will satrt after
+ *               the parameters are set.
+ *
+ ********************************************************************************** */
 static void BleApp_Advertise(void)
 {
     /* Set advertising parameters*/
@@ -450,10 +450,10 @@ static void BleApp_Advertise(void)
 }
 
 /*! *********************************************************************************
-* \brief        Handles BLE Advertising callback from host stack.
-*
-* \param[in]    pAdvertisingEvent    Pointer to gapAdvertisingEvent_t.
-********************************************************************************** */
+ * \brief        Handles BLE Advertising callback from host stack.
+ *
+ * \param[in]    pAdvertisingEvent    Pointer to gapAdvertisingEvent_t.
+ ********************************************************************************** */
 static void BleApp_AdvertisingCallback(gapAdvertisingEvent_t *pAdvertisingEvent)
 {
     switch (pAdvertisingEvent->eventType)
@@ -477,11 +477,11 @@ static void BleApp_AdvertisingCallback(gapAdvertisingEvent_t *pAdvertisingEvent)
 }
 
 /*! *********************************************************************************
-* \brief        Handles BLE Connection callback from host stack.
-*
-* \param[in]    peerDeviceId        Peer device ID.
-* \param[in]    pConnectionEvent    Pointer to gapConnectionEvent_t.
-********************************************************************************** */
+ * \brief        Handles BLE Connection callback from host stack.
+ *
+ * \param[in]    peerDeviceId        Peer device ID.
+ * \param[in]    pConnectionEvent    Pointer to gapConnectionEvent_t.
+ ********************************************************************************** */
 static void BleApp_ConnectionCallback(deviceId_t peerDeviceId, gapConnectionEvent_t *pConnectionEvent)
 {
     /* Connection Manager to handle Host Stack interactions */
@@ -563,13 +563,13 @@ static void BleApp_ServiceDiscoveryCallback(deviceId_t peerDeviceId, servDiscEve
 }
 
 /*! *********************************************************************************
-* \brief        Handles GATT client callback from host stack.
-*
-* \param[in]    serverDeviceId      GATT Server device ID.
-* \param[in]    procedureType    	Procedure type.
-* \param[in]    procedureResult    	Procedure result.
-* \param[in]    error    			Callback result.
-********************************************************************************** */
+ * \brief        Handles GATT client callback from host stack.
+ *
+ * \param[in]    serverDeviceId      GATT Server device ID.
+ * \param[in]    procedureType    	Procedure type.
+ * \param[in]    procedureResult    	Procedure result.
+ * \param[in]    error    			Callback result.
+ ********************************************************************************** */
 static void BleApp_GattClientCallback(deviceId_t serverDeviceId,
                                       gattProcedureType_t procedureType,
                                       gattProcedureResult_t procedureResult,
@@ -674,8 +674,8 @@ static void BleApp_StoreService(deviceId_t peerDeviceId, gattService_t *pService
 
 static void BleApp_ReceivedUartStream(uint8_t *pStream, uint16_t streamLength)
 {
-    uint8_t *data = pStream;
-    uint16_t dataLen = 0U;
+    uint8_t *data       = pStream;
+    uint16_t dataLen    = 0U;
     uint16_t dataRemain = streamLength;
 
     for (;;)
@@ -702,14 +702,14 @@ static void BleApp_ReceivedUartStream(uint8_t *pStream, uint16_t streamLength)
 }
 
 /*! *********************************************************************************
-* \brief        Creates GATT DB dynamically for the BLE BB
-*
-********************************************************************************** */
+ * \brief        Creates GATT DB dynamically for the BLE BB
+ *
+ ********************************************************************************** */
 static void BleApp_CreateGattDb(void)
 {
     wirelessUartServiceHandles_t *pWuHandles = NULL;
-    batteryServiceHandles_t *pBsHandles = NULL;
-    deviceInfoServiceHandles_t *pDisHandles = NULL;
+    batteryServiceHandles_t *pBsHandles      = NULL;
+    deviceInfoServiceHandles_t *pDisHandles  = NULL;
 
     /* GATT */
     GattDbDynamic_AddGattService(NULL);
@@ -722,9 +722,9 @@ static void BleApp_CreateGattDb(void)
     GattDbDynamic_AddWirelessUartService(pWuHandles);
     if (NULL != pWuHandles)
     {
-        mWuServiceConfig.serviceHandle = pWuHandles->serviceHandle;
+        mWuServiceConfig.serviceHandle   = pWuHandles->serviceHandle;
         serviceSecurity[0].serviceHandle = pWuHandles->serviceHandle;
-        cpHandles[0] = pWuHandles->charUartStreamHandle + 1; /* value_uart_stream */
+        cpHandles[0]                     = pWuHandles->charUartStreamHandle + 1; /* value_uart_stream */
         MEM_BufferFree(pWuHandles);
     }
 
@@ -733,7 +733,7 @@ static void BleApp_CreateGattDb(void)
     GattDbDynamic_AddBatteryService(pBsHandles);
     if (NULL != pBsHandles)
     {
-        basServiceConfig.serviceHandle = pBsHandles->serviceHandle;
+        basServiceConfig.serviceHandle   = pBsHandles->serviceHandle;
         serviceSecurity[1].serviceHandle = pBsHandles->serviceHandle;
         MEM_BufferFree(pBsHandles);
     }

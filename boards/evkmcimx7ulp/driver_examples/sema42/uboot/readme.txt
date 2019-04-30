@@ -6,8 +6,8 @@ the uboot runs on the Cortex-A core.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.1
-- GCC ARM Embedded  7.3.1
+- IAR embedded Workbench  8.32.3
+- GCC ARM Embedded  8.2.1
 
 Hardware requirements
 =====================

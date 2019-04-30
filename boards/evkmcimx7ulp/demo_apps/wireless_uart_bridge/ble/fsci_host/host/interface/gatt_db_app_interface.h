@@ -7,9 +7,9 @@
  * Copyright (c) 2016 - 2017 , NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
-*/
+ */
 
 #ifndef _GATT_DB_APP_INTERFACE_H_
 #define _GATT_DB_APP_INTERFACE_H_
@@ -25,16 +25,16 @@ extern "C" {
 #endif
 
 /*! *********************************************************************************
-* \brief    Initializes the GATT database at runtime.
-*
-* \remarks  This function should be called only once at device start-up. In the current
-* stack implementation, it is called internally by Ble_HostInitialize.
-*
-* \remarks This function executes synchronously.
-*
-* \return   gBleSuccess_c or error.
-*
-********************************************************************************** */
+ * \brief    Initializes the GATT database at runtime.
+ *
+ * \remarks  This function should be called only once at device start-up. In the current
+ * stack implementation, it is called internally by Ble_HostInitialize.
+ *
+ * \remarks This function executes synchronously.
+ *
+ * \return   gBleSuccess_c or error.
+ *
+ ********************************************************************************** */
 bleResult_t GattDb_Init(void);
 
 /*!
@@ -52,12 +52,7 @@ bleResult_t GattDb_Init(void);
  *
  * \remarks This function executes synchronously.
  */
-bleResult_t GattDb_WriteAttribute
-(
-    uint16_t    handle,
-    uint16_t    valueLength,
-    uint8_t*    aValue
-);
+bleResult_t GattDb_WriteAttribute(uint16_t handle, uint16_t valueLength, uint8_t *aValue);
 
 /*!
  * \brief Reads an attribute from the application level.
@@ -73,13 +68,7 @@ bleResult_t GattDb_WriteAttribute
  *
  * \remarks This function executes synchronously.
  */
-bleResult_t GattDb_ReadAttribute
-(
-    uint16_t    handle,
-    uint16_t    maxBytes,
-    uint8_t*    aOutValue,
-    uint16_t*   pOutValueLength
-);
+bleResult_t GattDb_ReadAttribute(uint16_t handle, uint16_t maxBytes, uint8_t *aOutValue, uint16_t *pOutValueLength);
 
 /*!
  * \brief Finds the handle of a Service Declaration with a given UUID inside the database.
@@ -100,13 +89,10 @@ bleResult_t GattDb_ReadAttribute
  * If multiple Services with the same UUID are expected, then after the first successful call the function
  * may be called again with the startHandle equal to the found service handle plus one.
  */
-bleResult_t GattDb_FindServiceHandle
-(
-    uint16_t        startHandle,
-    bleUuidType_t   serviceUuidType,
-    bleUuid_t*      pServiceUuid,
-    uint16_t*       pOutServiceHandle
-);
+bleResult_t GattDb_FindServiceHandle(uint16_t startHandle,
+                                     bleUuidType_t serviceUuidType,
+                                     bleUuid_t *pServiceUuid,
+                                     uint16_t *pOutServiceHandle);
 
 /*!
  * \brief Finds the handle of a Characteristic Value with a given UUID inside a Service.
@@ -126,13 +112,10 @@ bleResult_t GattDb_FindServiceHandle
  *
  * \remarks This function executes synchronously.
  */
-bleResult_t GattDb_FindCharValueHandleInService
-(
-    uint16_t        serviceHandle,
-    bleUuidType_t   characteristicUuidType,
-    bleUuid_t*      pCharacteristicUuid,
-    uint16_t*       pOutCharValueHandle
-);
+bleResult_t GattDb_FindCharValueHandleInService(uint16_t serviceHandle,
+                                                bleUuidType_t characteristicUuidType,
+                                                bleUuid_t *pCharacteristicUuid,
+                                                uint16_t *pOutCharValueHandle);
 
 /*!
  * \brief Finds the handle of a Characteristic's CCCD given the Characteristic's Value handle.
@@ -148,11 +131,7 @@ bleResult_t GattDb_FindCharValueHandleInService
  *
  * \remarks This function executes synchronously.
  */
-bleResult_t GattDb_FindCccdHandleForCharValueHandle
-(
-    uint16_t        charValueHandle,
-    uint16_t*       pOutCccdHandle
-);
+bleResult_t GattDb_FindCccdHandleForCharValueHandle(uint16_t charValueHandle, uint16_t *pOutCccdHandle);
 
 /*!
  * \brief Finds the handle of a Characteristic Descriptor given the Characteristic's Value handle and Descriptor's UUID.
@@ -170,20 +149,17 @@ bleResult_t GattDb_FindCccdHandleForCharValueHandle
  *
  * \remarks This function executes synchronously.
  */
-bleResult_t GattDb_FindDescriptorHandleForCharValueHandle
-(
-    uint16_t        charValueHandle,
-    bleUuidType_t   descriptorUuidType,
-    bleUuid_t*      pDescriptorUuid,
-    uint16_t*       pOutDescriptorHandle
-);
+bleResult_t GattDb_FindDescriptorHandleForCharValueHandle(uint16_t charValueHandle,
+                                                          bleUuidType_t descriptorUuidType,
+                                                          bleUuid_t *pDescriptorUuid,
+                                                          uint16_t *pOutDescriptorHandle);
 
 #ifdef __cplusplus
 }
-#endif 
+#endif
 
 #endif /* _GATT_DB_APP_INTERFACE_H_ */
 
 /*! *********************************************************************************
-* @}
-********************************************************************************** */
+ * @}
+ ********************************************************************************** */

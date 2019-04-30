@@ -3,9 +3,9 @@
  * Copyright (c) 2016 - 2017 , NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
-*/
+ */
 
 /************************************************************************************
 *************************************************************************************
@@ -45,7 +45,7 @@
 *************************************************************************************
 ************************************************************************************/
 
-void fsciBleGattDbAppGetCharPresFormatFromBuffer(gattDbCharPresFormat_t* pCharPresFormat, uint8_t** ppBuffer)
+void fsciBleGattDbAppGetCharPresFormatFromBuffer(gattDbCharPresFormat_t *pCharPresFormat, uint8_t **ppBuffer)
 {
     fsciBleGetUint8ValueFromBuffer(pCharPresFormat->format, *ppBuffer);
     fsciBleGetUint8ValueFromBuffer(pCharPresFormat->exponent, *ppBuffer);
@@ -54,14 +54,13 @@ void fsciBleGattDbAppGetCharPresFormatFromBuffer(gattDbCharPresFormat_t* pCharPr
     fsciBleGetUint16ValueFromBuffer(pCharPresFormat->description, *ppBuffer);
 }
 
-
-void fsciBleGattDbAppGetBufferFromCharPresFormat(gattDbCharPresFormat_t* pCharPresFormat, uint8_t** ppBuffer)
+void fsciBleGattDbAppGetBufferFromCharPresFormat(gattDbCharPresFormat_t *pCharPresFormat, uint8_t **ppBuffer)
 {
     fsciBleGetBufferFromUint8Value(pCharPresFormat->format, *ppBuffer);
     fsciBleGetBufferFromUint8Value(pCharPresFormat->exponent, *ppBuffer);
     fsciBleGetBufferFromUint16Value(pCharPresFormat->unitUuid16, *ppBuffer);
     fsciBleGetBufferFromUint8Value(pCharPresFormat->ns, *ppBuffer);
-    fsciBleGetBufferFromUint16Value(pCharPresFormat->description, *ppBuffer);  
+    fsciBleGetBufferFromUint16Value(pCharPresFormat->description, *ppBuffer);
 }
 
 /************************************************************************************
@@ -71,5 +70,5 @@ void fsciBleGattDbAppGetBufferFromCharPresFormat(gattDbCharPresFormat_t* pCharPr
 ************************************************************************************/
 
 /*! *********************************************************************************
-* @}
-********************************************************************************** */
+ * @}
+ ********************************************************************************** */

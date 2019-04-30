@@ -5,7 +5,7 @@
  *
  *
  * SPDX-License-Identifier: BSD-3-Clause
-*/
+ */
 
 /*! *********************************************************************************
 *************************************************************************************
@@ -150,9 +150,9 @@ typedef struct serial_tag
  */
 typedef enum
 {
-    gSMGR_Rx_c = (1 << 0),
+    gSMGR_Rx_c     = (1 << 0),
     gSMGR_TxDone_c = (1 << 1),
-    gSMGR_TxNew_c = (1 << 2)
+    gSMGR_TxNew_c  = (1 << 2)
 } serialEventType_t;
 
 /*
@@ -267,24 +267,24 @@ static smgrDrvData_t mDrvData[gSerialManagerMaxInterfaces_c];
 #if (gSerialMgrUseIIC_c)
 gpioInputPinConfig_t mI2cMasterDapCfg = {
     .gpioPort = gI2cMasterDap_Port_d,
-    .gpioPin = gI2cMasterDap_Pin_d,
+    .gpioPin  = gI2cMasterDap_Pin_d,
 #if gSerialMgrSlaveDapTxLogicOne_c
-    .pullSelect = pinPull_Down_c,
+    .pullSelect      = pinPull_Down_c,
     .interruptSelect = pinInt_LogicOne_c,
 #else
-    .pullSelect = pinPull_Up_c,
-    .interruptSelect = pinInt_LogicZero_c,
+    .pullSelect                                       = pinPull_Up_c,
+    .interruptSelect                                  = pinInt_LogicZero_c,
 #endif
 };
 
 gpioOutputPinConfig_t mI2cSlaveDapCfg = {.gpioPort = gI2cSlaveDap_Port_d,
-                                         .gpioPin = gI2cSlaveDap_Pin_d,
+                                         .gpioPin  = gI2cSlaveDap_Pin_d,
 #if gSerialMgrSlaveDapTxLogicOne_c
                                          .outputLogic = 0,
 #else
                                          .outputLogic = 1,
 #endif
-                                         .slewRate = pinSlewRate_Fast_c,
+                                         .slewRate      = pinSlewRate_Fast_c,
                                          .driveStrength = pinDriveStrength_Low_c};
 #endif /* #if (gSerialMgrUseIIC_c) */
 
@@ -297,24 +297,24 @@ spiBusConfig_t gSpiConfig = {
 
 gpioInputPinConfig_t mSpiMasterDapCfg = {
     .gpioPort = gSpiMasterDap_Port_d,
-    .gpioPin = gSpiMasterDap_Pin_d,
+    .gpioPin  = gSpiMasterDap_Pin_d,
 #if gSerialMgrSlaveDapTxLogicOne_c
-    .pullSelect = pinPull_Down_c,
+    .pullSelect      = pinPull_Down_c,
     .interruptSelect = pinInt_LogicOne_c,
 #else
-    .pullSelect = pinPull_Up_c,
-    .interruptSelect = pinInt_LogicZero_c,
+    .pullSelect                                       = pinPull_Up_c,
+    .interruptSelect                                  = pinInt_LogicZero_c,
 #endif
 };
 
 gpioOutputPinConfig_t mSpiSlaveDapCfg = {.gpioPort = gSpiSlaveDap_Port_d,
-                                         .gpioPin = gSpiSlaveDap_Pin_d,
+                                         .gpioPin  = gSpiSlaveDap_Pin_d,
 #if gSerialMgrSlaveDapTxLogicOne_c
                                          .outputLogic = 0,
 #else
                                          .outputLogic = 1,
 #endif
-                                         .slewRate = pinSlewRate_Fast_c,
+                                         .slewRate      = pinSlewRate_Fast_c,
                                          .driveStrength = pinDriveStrength_Low_c};
 
 #endif
@@ -328,9 +328,9 @@ gpioOutputPinConfig_t mSpiSlaveDapCfg = {.gpioPort = gSpiSlaveDap_Port_d,
 ********************************************************************************** */
 
 /*! *********************************************************************************
-* \brief   Creates the SerialManager's task and initializes internal data structures
-*
-********************************************************************************** */
+ * \brief   Creates the SerialManager's task and initializes internal data structures
+ *
+ ********************************************************************************** */
 void Serial_Init(void)
 {
 #if (gSerialManagerMaxInterfaces_c)
@@ -366,11 +366,11 @@ void Serial_Init(void)
 }
 
 /*! *********************************************************************************
-* \brief   The main task of the Serial Manager
-*
-* \param[in] initialData unused
-*
-********************************************************************************** */
+ * \brief   The main task of the Serial Manager
+ *
+ * \param[in] initialData unused
+ *
+ ********************************************************************************** */
 #if (gSerialManagerMaxInterfaces_c)
 void SerialManagerTask(osaTaskParam_t argument)
 {
@@ -390,7 +390,7 @@ void SerialManagerTask(osaTaskParam_t argument)
         for (i = 0; i < gSerialManagerMaxInterfaces_c; i++)
         {
             OSA_InterruptDisable();
-            ev = mSerials[i].events;
+            ev                 = mSerials[i].events;
             mSerials[i].events = 0;
             OSA_InterruptEnable();
 
@@ -440,15 +440,15 @@ void SerialManagerTask(osaTaskParam_t argument)
 #endif
 
 /*! *********************************************************************************
-* \brief   Initialize a communication interface.
-*
-* \param[in] pInterfaceId   pointer to a location where the interface Id will be stored
-* \param[in] interfaceType  the type of the interface: UART/SPI/IIC/USB
-* \param[in] instance       the instance of the HW module (ex: if UART1 is used, this value should be 1)
-*
-* \return The interface number if success or gSerialManagerInvalidInterface_c if an error occurred.
-*
-********************************************************************************** */
+ * \brief   Initialize a communication interface.
+ *
+ * \param[in] pInterfaceId   pointer to a location where the interface Id will be stored
+ * \param[in] interfaceType  the type of the interface: UART/SPI/IIC/USB
+ * \param[in] instance       the instance of the HW module (ex: if UART1 is used, this value should be 1)
+ *
+ * \return The interface number if success or gSerialManagerInvalidInterface_c if an error occurred.
+ *
+ ********************************************************************************** */
 serialStatus_t Serial_InitInterface(uint8_t *pInterfaceId, serialInterfaceType_t interfaceType, uint8_t instance)
 {
     serialStatus_t status = gSerial_Success_c;
@@ -522,7 +522,7 @@ serialStatus_t Serial_InitInterface(uint8_t *pInterfaceId, serialInterfaceType_t
                     break;
                 case gSerialMgrIICMaster_c:
 #if gSerialMgrUseIIC_c
-                    mDrvData[i].i2cState.master = TRUE;
+                    mDrvData[i].i2cState.master  = TRUE;
                     mDrvData[i].i2cState.address = gSerialMgrIICAddress_c;
                     I2C_Initialize(instance, &mDrvData[i].i2cState);
                     I2C_InstallRxCalback(instance, Serial_I2cRxCb, i);
@@ -535,7 +535,7 @@ serialStatus_t Serial_InitInterface(uint8_t *pInterfaceId, serialInterfaceType_t
                 case gSerialMgrIICSlave_c:
 #if gSerialMgrUseIIC_c
                     GpioOutputPinInit(&mI2cSlaveDapCfg, 1);
-                    mDrvData[i].i2cState.master = FALSE;
+                    mDrvData[i].i2cState.master  = FALSE;
                     mDrvData[i].i2cState.address = gSerialMgrIICAddress_c;
                     I2C_Initialize(instance, &mDrvData[i].i2cState);
                     mDrvData[i].i2cState.pRxData = &mSerials[i].rxBuffer[mSerials[i].rxIn];
@@ -547,9 +547,9 @@ serialStatus_t Serial_InitInterface(uint8_t *pInterfaceId, serialInterfaceType_t
                 case gSerialMgrSPIMaster_c:
 #if gSerialMgrUseSPI_c
                     Spi_Init(instance, &(mDrvData[i].spiState), SpiCallback, (void *)i);
-                    gSpiConfig.master = TRUE;
+                    gSpiConfig.master                 = TRUE;
                     mDrvData[i].spiState.signalRxByte = TRUE;
-                    mDrvData[i].spiState.pRxData = &pSer->rxBuffer[pSer->rxIn];
+                    mDrvData[i].spiState.pRxData      = &pSer->rxBuffer[pSer->rxIn];
                     Spi_Configure(instance, &gSpiConfig);
                     GpioInstallIsr(SpiMasterDapISR, gGpioIsrPrioNormal_c, mSMGR_DapIsrPrio_c, &mSpiMasterDapCfg);
                     GpioInputPinInit(&mSpiMasterDapCfg, 1);
@@ -559,9 +559,9 @@ serialStatus_t Serial_InitInterface(uint8_t *pInterfaceId, serialInterfaceType_t
                 case gSerialMgrSPISlave_c:
 #if gSerialMgrUseSPI_c
                     Spi_Init(instance, &(mDrvData[i].spiState), SpiCallback, (void *)i);
-                    gSpiConfig.master = FALSE;
+                    gSpiConfig.master                 = FALSE;
                     mDrvData[i].spiState.signalRxByte = TRUE;
-                    mDrvData[i].spiState.pRxData = &pSer->rxBuffer[pSer->rxIn];
+                    mDrvData[i].spiState.pRxData      = &pSer->rxBuffer[pSer->rxIn];
                     Spi_Configure(instance, &gSpiConfig);
                     GpioOutputPinInit(&mSpiSlaveDapCfg, 1);
 #endif
@@ -593,7 +593,7 @@ serialStatus_t Serial_InitInterface(uint8_t *pInterfaceId, serialInterfaceType_t
             if (status == gSerial_Success_c)
             {
                 pSer->serialType = interfaceType;
-                *pInterfaceId = i;
+                *pInterfaceId    = i;
             }
             OSA_InterruptEnable();
             break;
@@ -614,24 +614,24 @@ serialStatus_t Serial_InitInterface(uint8_t *pInterfaceId, serialInterfaceType_t
 }
 
 /*! *********************************************************************************
-* \brief   Transmit a data buffer asynchronously
-*
-* \param[in] InterfaceId the interface number
-* \param[in] pBuf pointer to data location
-* \param[in] bufLen the number of bytes to be sent
-* \param[in] pSerialRxCallBack pointer to a function that will be called when
-*            a new char is available
-*
-* \return The status of the operation
-*
-********************************************************************************** */
+ * \brief   Transmit a data buffer asynchronously
+ *
+ * \param[in] InterfaceId the interface number
+ * \param[in] pBuf pointer to data location
+ * \param[in] bufLen the number of bytes to be sent
+ * \param[in] pSerialRxCallBack pointer to a function that will be called when
+ *            a new char is available
+ *
+ * \return The status of the operation
+ *
+ ********************************************************************************** */
 serialStatus_t Serial_AsyncWrite(
     uint8_t InterfaceId, uint8_t *pBuf, uint16_t bufLen, pSerialCallBack_t cb, void *pTxParam)
 {
     serialStatus_t status = gSerial_Success_c;
 #if gSerialManagerMaxInterfaces_c
     SerialMsg_t *pMsg = NULL;
-    serial_t *pSer = &mSerials[InterfaceId];
+    serial_t *pSer    = &mSerials[InterfaceId];
 
 #if gSerialMgr_ParamValidation_d
     if ((NULL == pBuf) || (0 == bufLen) || (InterfaceId >= gSerialManagerMaxInterfaces_c) ||
@@ -662,11 +662,11 @@ serialStatus_t Serial_AsyncWrite(
             if ((0 == pSer->txQueue[pSer->txIn].dataSize) && (NULL == pSer->txQueue[pSer->txIn].txCallback) &&
                 (pSer->txNo < gSerialMgrTxQueueSize_c))
             {
-                pMsg = &pSer->txQueue[pSer->txIn];
-                pMsg->dataSize = bufLen;
-                pMsg->pData = (void *)pBuf;
+                pMsg             = &pSer->txQueue[pSer->txIn];
+                pMsg->dataSize   = bufLen;
+                pMsg->pData      = (void *)pBuf;
                 pMsg->txCallback = cb;
-                pMsg->pTxParam = pTxParam;
+                pMsg->pTxParam   = pTxParam;
                 mSerial_IncIdx_d(pSer->txIn, gSerialMgrTxQueueSize_c) pSer->txNo++;
             }
 #if (gSerialMgr_BlockSenderOnQueueFull_c) && (gSMGR_UseOsSemForSynchronization_c)
@@ -716,21 +716,21 @@ serialStatus_t Serial_AsyncWrite(
 }
 
 /*! *********************************************************************************
-* \brief Transmit a data buffer synchronously. The task will block until the Tx is done
-*
-* \param[in] pBuf pointer to data location
-* \param[in] bufLen the number of bytes to be sent
-* \param[in] InterfaceId the interface number
-*
-* \return The status of the operation
-*
-********************************************************************************** */
+ * \brief Transmit a data buffer synchronously. The task will block until the Tx is done
+ *
+ * \param[in] pBuf pointer to data location
+ * \param[in] bufLen the number of bytes to be sent
+ * \param[in] InterfaceId the interface number
+ *
+ * \return The status of the operation
+ *
+ ********************************************************************************** */
 serialStatus_t Serial_SyncWrite(uint8_t InterfaceId, uint8_t *pBuf, uint16_t bufLen)
 {
     serialStatus_t status = gSerial_Success_c;
 #if gSerialManagerMaxInterfaces_c
     pSerialCallBack_t cb = NULL;
-    serial_t *pSer = &mSerials[InterfaceId];
+    serial_t *pSer       = &mSerials[InterfaceId];
 
 #if gSMGR_UseOsSemForSynchronization_c
     /* If the calling task is SMGR do not block on semaphore */
@@ -791,16 +791,16 @@ serialStatus_t Serial_SyncWrite(uint8_t InterfaceId, uint8_t *pBuf, uint16_t buf
 }
 
 /*! *********************************************************************************
-* \brief   Returns a specified number of characters from the Rx buffer
-*
-* \param[in] InterfaceId the interface number
-* \param[out] pData pointer to location where to store the characters
-* \param[in] dataSize the number of characters to be read
-* \param[out] bytesRead the number of characters read
-*
-* \return The status of the operation
-*
-********************************************************************************** */
+ * \brief   Returns a specified number of characters from the Rx buffer
+ *
+ * \param[in] InterfaceId the interface number
+ * \param[out] pData pointer to location where to store the characters
+ * \param[in] dataSize the number of characters to be read
+ * \param[out] bytesRead the number of characters read
+ *
+ * \return The status of the operation
+ *
+ ********************************************************************************** */
 serialStatus_t Serial_Read(uint8_t InterfaceId, uint8_t *pData, uint16_t dataSize, uint16_t *bytesRead)
 {
     serialStatus_t status = gSerial_Success_c;
@@ -875,14 +875,14 @@ serialStatus_t Serial_Read(uint8_t InterfaceId, uint8_t *pData, uint16_t dataSiz
 }
 
 /*! *********************************************************************************
-* \brief   Returns a the number of bytes available in the RX buffer
-*
-* \param[in] InterfaceId the interface number
-* \param[out] bytesCount the number of bytes available
-*
-* \return The status of the operation
-*
-********************************************************************************** */
+ * \brief   Returns a the number of bytes available in the RX buffer
+ *
+ * \param[in] InterfaceId the interface number
+ * \param[out] bytesCount the number of bytes available
+ *
+ * \return The status of the operation
+ *
+ ********************************************************************************** */
 serialStatus_t Serial_RxBufferByteCount(uint8_t InterfaceId, uint16_t *bytesCount)
 {
     serialStatus_t status = gSerial_Success_c;
@@ -916,15 +916,15 @@ serialStatus_t Serial_RxBufferByteCount(uint8_t InterfaceId, uint16_t *bytesCoun
 }
 
 /*! *********************************************************************************
-* \brief   Sets a pointer to a function that will be called when data is received
-*
-* \param[in] InterfaceId the interface number
-* \param[in] pfCallBack pointer to the function to be called
-* \param[in] pRxParam pointer to a parameter which will be passed to the CB function
-*
-* \return The status of the operation
-*
-********************************************************************************** */
+ * \brief   Sets a pointer to a function that will be called when data is received
+ *
+ * \param[in] InterfaceId the interface number
+ * \param[in] pfCallBack pointer to the function to be called
+ * \param[in] pRxParam pointer to a parameter which will be passed to the CB function
+ *
+ * \return The status of the operation
+ *
+ ********************************************************************************** */
 serialStatus_t Serial_SetRxCallBack(uint8_t InterfaceId, pSerialCallBack_t cb, void *pRxParam)
 {
     serialStatus_t status = gSerial_Success_c;
@@ -938,7 +938,7 @@ serialStatus_t Serial_SetRxCallBack(uint8_t InterfaceId, pSerialCallBack_t cb, v
 #endif
     {
         mSerials[InterfaceId].rxCallback = cb;
-        mSerials[InterfaceId].pRxParam = pRxParam;
+        mSerials[InterfaceId].pRxParam   = pRxParam;
     }
 #else
     (void)InterfaceId;
@@ -949,14 +949,14 @@ serialStatus_t Serial_SetRxCallBack(uint8_t InterfaceId, pSerialCallBack_t cb, v
 }
 
 /*! *********************************************************************************
-* \brief   Set the communication speed for an interface
-*
-* \param[in] baudRate communication speed
-* \param[in] InterfaceId the interface number
-*
-* \return The status of the operation
-*
-********************************************************************************** */
+ * \brief   Set the communication speed for an interface
+ *
+ * \param[in] baudRate communication speed
+ * \param[in] InterfaceId the interface number
+ *
+ * \return The status of the operation
+ *
+ ********************************************************************************** */
 serialStatus_t Serial_SetBaudRate(uint8_t InterfaceId, uint32_t baudRate)
 {
     serialStatus_t status = gSerial_Success_c;
@@ -1023,15 +1023,15 @@ serialStatus_t Serial_SetBaudRate(uint8_t InterfaceId, uint32_t baudRate)
 }
 
 /*! *********************************************************************************
-* \brief   Prints a string to the serial interface
-*
-* \param[in] InterfaceId the interface number
-* \param[in] pString pointer to the string to be printed
-* \param[in] allowToBlock specify if the task will wait for the tx to finish or not.
-*
-* \return The status of the operation
-*
-********************************************************************************** */
+ * \brief   Prints a string to the serial interface
+ *
+ * \param[in] InterfaceId the interface number
+ * \param[in] pString pointer to the string to be printed
+ * \param[in] allowToBlock specify if the task will wait for the tx to finish or not.
+ *
+ * \return The status of the operation
+ *
+ ********************************************************************************** */
 serialStatus_t Serial_Print(uint8_t InterfaceId, char *pString, serialBlock_t allowToBlock)
 {
     serialStatus_t status = gSerial_Success_c;
@@ -1053,18 +1053,18 @@ serialStatus_t Serial_Print(uint8_t InterfaceId, char *pString, serialBlock_t al
 }
 
 /*! *********************************************************************************
-* \brief   Prints an number in hedadecimal format to the serial interface
-*
-* \param[in] InterfaceId the interface number
-* \param[in] hex pointer to the number to be printed
-* \param[in] len the number ob bytes of the number
-* \param[in] flags specify display options: comma, space, new line
-*
-* \return The status of the operation
-*
-* \remarks The task will waituntil the tx has finished
-*
-********************************************************************************** */
+ * \brief   Prints an number in hedadecimal format to the serial interface
+ *
+ * \param[in] InterfaceId the interface number
+ * \param[in] hex pointer to the number to be printed
+ * \param[in] len the number ob bytes of the number
+ * \param[in] flags specify display options: comma, space, new line
+ *
+ * \return The status of the operation
+ *
+ * \remarks The task will waituntil the tx has finished
+ *
+ ********************************************************************************** */
 serialStatus_t Serial_PrintHex(uint8_t InterfaceId, uint8_t *hex, uint8_t len, uint8_t flags)
 {
     serialStatus_t status = gSerial_Success_c;
@@ -1083,7 +1083,7 @@ serialStatus_t Serial_PrintHex(uint8_t InterfaceId, uint8_t *hex, uint8_t len, u
     while (len)
     {
         /* start preparing the print of a new byte */
-        i = 0;
+        i              = 0;
         hexString[i++] = HexToAscii((*hex) >> 4);
         hexString[i++] = HexToAscii(*hex);
 
@@ -1122,16 +1122,16 @@ serialStatus_t Serial_PrintHex(uint8_t InterfaceId, uint8_t *hex, uint8_t len, u
 }
 
 /*! *********************************************************************************
-* \brief   Prints an unsigned integer to the serial interface
-*
-* \param[in] InterfaceId the interface number
-* \param[in] nr the number to be printed
-*
-* \return The status of the operation
-*
-* \remarks The task will waituntil the tx has finished
-*
-********************************************************************************** */
+ * \brief   Prints an unsigned integer to the serial interface
+ *
+ * \param[in] InterfaceId the interface number
+ * \param[in] nr the number to be printed
+ *
+ * \return The status of the operation
+ *
+ * \remarks The task will waituntil the tx has finished
+ *
+ ********************************************************************************** */
 serialStatus_t Serial_PrintDec(uint8_t InterfaceId, uint32_t nr)
 {
 #if (gSerialManagerMaxInterfaces_c)
@@ -1147,7 +1147,7 @@ serialStatus_t Serial_PrintDec(uint8_t InterfaceId, uint32_t nr)
         while (nr)
         {
             decString[i] = '0' + (uint8_t)(nr % 10);
-            nr = nr / 10;
+            nr           = nr / 10;
             i--;
         }
         i++;
@@ -1163,19 +1163,19 @@ serialStatus_t Serial_PrintDec(uint8_t InterfaceId, uint32_t nr)
 }
 
 /*! *********************************************************************************
-* \brief   Configures the enabled hardware modules of the given interface type as a wakeup source from STOP mode
-*
-* \param[in] interface type of the modules to configure
-*
-* \return  gSerial_Success_c if there is at least one module to configure
-*          gSerial_InvalidInterface_c otherwise
-* \pre
-*
-* \post
-*
-* \remarks
-*
-********************************************************************************** */
+ * \brief   Configures the enabled hardware modules of the given interface type as a wakeup source from STOP mode
+ *
+ * \param[in] interface type of the modules to configure
+ *
+ * \return  gSerial_Success_c if there is at least one module to configure
+ *          gSerial_InvalidInterface_c otherwise
+ * \pre
+ *
+ * \post
+ *
+ * \remarks
+ *
+ ********************************************************************************** */
 
 serialStatus_t Serial_EnableLowPowerWakeup(serialInterfaceType_t interfaceType)
 {
@@ -1217,19 +1217,19 @@ serialStatus_t Serial_EnableLowPowerWakeup(serialInterfaceType_t interfaceType)
 }
 
 /*! *********************************************************************************
-* \brief   Configures the enabled hardware modules of the given interface type as modules without wakeup capabilities
-*
-* \param[in] interface type of the modules to configure
-*
-* \return  gSerial_Success_c if there is at least one module to configure
-*          gSerial_InvalidInterface_c otherwise
-* \pre
-*
-* \post
-*
-* \remarks
-*
-********************************************************************************** */
+ * \brief   Configures the enabled hardware modules of the given interface type as modules without wakeup capabilities
+ *
+ * \param[in] interface type of the modules to configure
+ *
+ * \return  gSerial_Success_c if there is at least one module to configure
+ *          gSerial_InvalidInterface_c otherwise
+ * \pre
+ *
+ * \post
+ *
+ * \remarks
+ *
+ ********************************************************************************** */
 serialStatus_t Serial_DisableLowPowerWakeup(serialInterfaceType_t interfaceType)
 {
     serialStatus_t status = gSerial_Success_c;
@@ -1270,19 +1270,19 @@ serialStatus_t Serial_DisableLowPowerWakeup(serialInterfaceType_t interfaceType)
 }
 
 /*! *********************************************************************************
-* \brief   Decides whether a enabled hardware module of the given interface type woke up the CPU from STOP mode.
-*
-* \param[in] interface type of the modules to be evaluated as wakeup source.
-*
-* \return  TRUE if a module of the given interface type was the wakeup source
-*          FALSE otherwise
-* \pre
-*
-* \post
-*
-* \remarks
-*
-********************************************************************************** */
+ * \brief   Decides whether a enabled hardware module of the given interface type woke up the CPU from STOP mode.
+ *
+ * \param[in] interface type of the modules to be evaluated as wakeup source.
+ *
+ * \return  TRUE if a module of the given interface type was the wakeup source
+ *          FALSE otherwise
+ * \pre
+ *
+ * \post
+ *
+ * \remarks
+ *
+ ********************************************************************************** */
 bool_t Serial_IsWakeUpSource(serialInterfaceType_t interfaceType)
 {
     bool_t status = FALSE;
@@ -1339,17 +1339,17 @@ bool_t Serial_IsWakeUpSource(serialInterfaceType_t interfaceType)
 ********************************************************************************* */
 #if (gSerialManagerMaxInterfaces_c)
 /*! *********************************************************************************
-* \brief Transmit a data buffer to the specified interface.
-*
-* \param[in] InterfaceId the interface number
-*
-* \return The status of the operation
-*
-********************************************************************************** */
+ * \brief Transmit a data buffer to the specified interface.
+ *
+ * \param[in] InterfaceId the interface number
+ *
+ * \return The status of the operation
+ *
+ ********************************************************************************** */
 static serialStatus_t Serial_WriteInternal(uint8_t InterfaceId)
 {
     serialStatus_t status = gSerial_Success_c;
-    serial_t *pSer = &mSerials[InterfaceId];
+    serial_t *pSer        = &mSerials[InterfaceId];
     uint16_t idx;
 
     OSA_InterruptDisable();
@@ -1509,15 +1509,15 @@ static serialStatus_t Serial_WriteInternal(uint8_t InterfaceId)
 }
 
 /*! *********************************************************************************
-* \brief Inform the Serial Manager task that new data is available
-*
-* \param[in] pData The id interface
-*
-* \return none
-*
-* \remarks Called from usb task
-*
-********************************************************************************** */
+ * \brief Inform the Serial Manager task that new data is available
+ *
+ * \param[in] pData The id interface
+ *
+ * \return none
+ *
+ * \remarks Called from usb task
+ *
+ ********************************************************************************** */
 #if gSerialMgrUseUSB_c
 void SerialManager_VirtualComRxNotify(uint8_t *pData, uint16_t dataSize, uint8_t interface)
 {
@@ -1540,27 +1540,27 @@ void SerialManager_VirtualComRxNotify(uint8_t *pData, uint16_t dataSize, uint8_t
 #endif
 
 /*! *********************************************************************************
-* \brief Inform the Serial Manager task that new data is available
-*
-* \param[in] pData The id interface
-*
-* \return none
-*
-* \remarks Called from usb task
-*
-********************************************************************************** */
+ * \brief Inform the Serial Manager task that new data is available
+ *
+ * \param[in] pData The id interface
+ *
+ * \return none
+ *
+ * \remarks Called from usb task
+ *
+ ********************************************************************************** */
 #if gSerialMgrUseUSB_VNIC_c
 uint16_t SerialManager_VirtualNicRxNotify(uint8_t *pData, uint16_t dataSize, uint8_t interface)
 {
     bufIndex_t inIndex;
     uint16_t charReceived = 0;
-    inIndex = mSerials[interface].rxIn;
+    inIndex               = mSerials[interface].rxIn;
     mSerial_IncIdx_d(inIndex, gSMRxBufSize_c);
     while (dataSize && (inIndex != mSerials[interface].rxOut))
     {
         // OSA_InterruptDisable();
         mSerials[interface].rxBuffer[mSerials[interface].rxIn] = *pData++;
-        mSerials[interface].rxIn = inIndex;
+        mSerials[interface].rxIn                               = inIndex;
         charReceived++;
         mSerial_IncIdx_d(inIndex, gSMRxBufSize_c);
         // OSA_InterruptEnable();
@@ -1576,20 +1576,20 @@ uint16_t SerialManager_VirtualNicRxNotify(uint8_t *pData, uint16_t dataSize, uin
 #endif
 
 /*! *********************************************************************************
-* \brief Inform the Serial Manager task that new data is available
-*
-* \param[in] pData The id interface
-*
-* \return none
-*
-* \remarks Called from ISR
-*
-********************************************************************************** */
+ * \brief Inform the Serial Manager task that new data is available
+ *
+ * \param[in] pData The id interface
+ *
+ * \return none
+ *
+ * \remarks Called from ISR
+ *
+ ********************************************************************************** */
 void SerialManager_RxNotify(uint32_t i)
 {
     serial_t *pSer = &mSerials[i];
 #if gSerialMgrUseFSCIHdr_c
-    uint8_t rxByte = pSer->rxBuffer[pSer->rxIn];
+    uint8_t rxByte        = pSer->rxBuffer[pSer->rxIn];
     uint8_t slaveDapRxEnd = 0;
 #endif
 
@@ -1634,7 +1634,7 @@ void SerialManager_RxNotify(uint32_t i)
                 if (pSer->rxFsciLen == (pSer->rxFsciIn - mSMGR_FSCIHdrLen_c))
                 {
                     pSer->rxFsciPkt = 0;
-                    pSer->rxFsciIn = 0;
+                    pSer->rxFsciIn  = 0;
                     pSer->rxFsciLen = 0;
 
 #if gSerialMgrSlaveDapTxLogicOne_c
@@ -1706,21 +1706,21 @@ void SerialManager_RxNotify(uint32_t i)
 }
 
 /*! *********************************************************************************
-* \brief Inform the Serial Manager task that a transmission has finished
-*
-* \param[in] pData the Id interface
-*
-* \return none
-*
-* \remarks Called from ISR
-*
-********************************************************************************** */
+ * \brief Inform the Serial Manager task that a transmission has finished
+ *
+ * \param[in] pData the Id interface
+ *
+ * \return none
+ *
+ * \remarks Called from ISR
+ *
+ ********************************************************************************** */
 void SerialManager_TxNotify(uint32_t i)
 {
     serial_t *pSer = &mSerials[i];
 
     OSA_InterruptDisable();
-    pSer->txQueue[pSer->txCurrent].dataSize = 0; /* Mark as transmitted */
+    pSer->txQueue[pSer->txCurrent].dataSize                                = 0; /* Mark as transmitted */
     mSerial_IncIdx_d(pSer->txCurrent, gSerialMgrTxQueueSize_c) pSer->state = 0;
     OSA_InterruptEnable();
 
@@ -1780,12 +1780,12 @@ void SerialManager_TxNotify(uint32_t i)
 }
 
 /*! *********************************************************************************
-* \brief   This function will mark all finished TX queue entries as empty.
-*          If a calback was provided, it will be run.
-*
-* \param[in] pSer pointer to the serial interface internal structure
-*
-********************************************************************************** */
+ * \brief   This function will mark all finished TX queue entries as empty.
+ *          If a calback was provided, it will be run.
+ *
+ * \param[in] pSer pointer to the serial interface internal structure
+ *
+ ********************************************************************************** */
 static void Serial_TxQueueMaintenance(serial_t *pSer)
 {
     uint32_t i;
@@ -1851,11 +1851,11 @@ static void Serial_TxQueueMaintenance(serial_t *pSer)
 }
 
 /*! *********************************************************************************
-* \brief   This function will unblock the task who called Serial_SyncWrite().
-*
-* \param[in] pSer pointer to the serial interface internal structure
-*
-********************************************************************************** */
+ * \brief   This function will unblock the task who called Serial_SyncWrite().
+ *
+ * \param[in] pSer pointer to the serial interface internal structure
+ *
+ ********************************************************************************** */
 #if gSMGR_UseOsSemForSynchronization_c
 static void Serial_SyncTxCallback(void *pSer)
 {
@@ -1864,14 +1864,14 @@ static void Serial_SyncTxCallback(void *pSer)
 #endif
 
 /*! *********************************************************************************
-* \brief   This function will return the interfaceId for the specified interface
-*
-* \param[in] type     the interface type
-* \param[in] channel  the instance of the interfacte
-*
-* \return The mSerials index for the specified interface type and channel
-*
-********************************************************************************** */
+ * \brief   This function will return the interfaceId for the specified interface
+ *
+ * \param[in] type     the interface type
+ * \param[in] channel  the instance of the interfacte
+ *
+ * \return The mSerials index for the specified interface type and channel
+ *
+ ********************************************************************************** */
 uint32_t Serial_GetInterfaceId(serialInterfaceType_t type, uint32_t channel)
 {
     uint32_t i = gSerialMgrInvalidIdx_c;
@@ -1888,14 +1888,14 @@ uint32_t Serial_GetInterfaceId(serialInterfaceType_t type, uint32_t channel)
 }
 
 /*! *********************************************************************************
-* \brief   This function will return the first interfaceId for the specified interface type
-*
-* \param[in] type     the interface type
-*
-* \return The mSerials index for the specified interface type
-*
-*
-********************************************************************************** */
+ * \brief   This function will return the first interfaceId for the specified interface type
+ *
+ * \param[in] type     the interface type
+ *
+ * \return The mSerials index for the specified interface type
+ *
+ *
+ ********************************************************************************** */
 #if (gSerialMgrUseSPI_c) || (gSerialMgrUseIIC_c)
 static uint32_t Serial_GetInterfaceIdFromType(serialInterfaceType_t type)
 {
@@ -1914,16 +1914,16 @@ static uint32_t Serial_GetInterfaceIdFromType(serialInterfaceType_t type)
 #endif
 
 /*! *********************************************************************************
-* \brief   SPI transfet complete ISR callback
-*
-* \param[in] instance     the instance of the SPI module
-*
-********************************************************************************** */
+ * \brief   SPI transfet complete ISR callback
+ *
+ * \param[in] instance     the instance of the SPI module
+ *
+ ********************************************************************************** */
 #if (gSerialMgrUseSPI_c)
 static void SpiCallback(uint32_t flags, spiState_t *pState)
 {
     uint32_t instance = (uint32_t)pState->callbackParam;
-    serial_t *pSer = &mSerials[instance];
+    serial_t *pSer    = &mSerials[instance];
 
     if (flags & gSPI_TxEndFlag_d)
     {
@@ -1946,9 +1946,9 @@ static void SpiCallback(uint32_t flags, spiState_t *pState)
 #endif
 
 /*! *********************************************************************************
-* \brief   SPI Master data available pin ISR
-*
-********************************************************************************** */
+ * \brief   SPI Master data available pin ISR
+ *
+ ********************************************************************************** */
 #if (gSerialMgrUseSPI_c)
 static void SpiMasterDapISR(void)
 {
@@ -1992,11 +1992,11 @@ static void SpiMasterDapISR(void)
 #endif
 
 /*! *********************************************************************************
-* \brief   I2C Rx ISR callback.
-*
-* \param[in] state     pointer to the I2C state structure
-*
-********************************************************************************** */
+ * \brief   I2C Rx ISR callback.
+ *
+ * \param[in] state     pointer to the I2C state structure
+ *
+ ********************************************************************************** */
 #if (gSerialMgrUseIIC_c)
 static void Serial_I2cRxCb(i2cState_t *state)
 {
@@ -2008,11 +2008,11 @@ static void Serial_I2cRxCb(i2cState_t *state)
 }
 
 /*! *********************************************************************************
-* \brief   I2C Tx ISR callback.
-*
-* \param[in] state     pointer to the I2C state structure
-*
-********************************************************************************** */
+ * \brief   I2C Tx ISR callback.
+ *
+ * \param[in] state     pointer to the I2C state structure
+ *
+ ********************************************************************************** */
 static void Serial_I2cTxCb(i2cState_t *state)
 {
     SerialManager_TxNotify(state->txCbParam);
@@ -2020,9 +2020,9 @@ static void Serial_I2cTxCb(i2cState_t *state)
 #endif
 
 /*! *********************************************************************************
-* \brief   I2C Master data available pin ISR
-*
-********************************************************************************** */
+ * \brief   I2C Master data available pin ISR
+ *
+ ********************************************************************************** */
 #if (gSerialMgrUseIIC_c)
 static void I2cMasterDapISR(void)
 {
@@ -2061,11 +2061,11 @@ static void I2cMasterDapISR(void)
 
 #if (gSerialMgrUseUart_c)
 /*! *********************************************************************************
-* \brief   UART Rx ISR callback.
-*
-* \param[in] state     pointer to the UART state structure
-*
-********************************************************************************** */
+ * \brief   UART Rx ISR callback.
+ *
+ * \param[in] state     pointer to the UART state structure
+ *
+ ********************************************************************************** */
 static void Serial_UartRxCb(uartState_t *state)
 {
     uint32_t i = state->rxCbParam;
@@ -2076,11 +2076,11 @@ static void Serial_UartRxCb(uartState_t *state)
 }
 
 /*! *********************************************************************************
-* \brief   UART Tx ISR callback.
-*
-* \param[in] state     pointer to the UART state structure
-*
-********************************************************************************** */
+ * \brief   UART Tx ISR callback.
+ *
+ * \param[in] state     pointer to the UART state structure
+ *
+ ********************************************************************************** */
 static void Serial_UartTxCb(uartState_t *state)
 {
     SerialManager_TxNotify(state->txCbParam);
@@ -2089,28 +2089,28 @@ static void Serial_UartTxCb(uartState_t *state)
 
 #if gSerialMgrUseCustomInterface_c
 /*! *********************************************************************************
-* \brief   This function is used for a custom interface to notify the SerialManager
-*          that the data transfer has ended
-*
-* \param[in] InterfaceId the interface number
-*
-********************************************************************************** */
+ * \brief   This function is used for a custom interface to notify the SerialManager
+ *          that the data transfer has ended
+ *
+ * \param[in] InterfaceId the interface number
+ *
+ ********************************************************************************** */
 void Serial_CustomSendCompleted(uint32_t InterfaceId)
 {
     SerialManager_TxNotify(InterfaceId);
 }
 
 /*! *********************************************************************************
-* \brief   This function is used for a custom interface to notify the SerialManager
-*          that the data transfer has ended
-*
-* \param[in] InterfaceId - The interface number
-* \param[in] pRxData     - Pointer to the received bytes
-* \param[in] size        - Number of bytes received
-*
-* \return The number of bytes that have not been stored.
-*
-********************************************************************************** */
+ * \brief   This function is used for a custom interface to notify the SerialManager
+ *          that the data transfer has ended
+ *
+ * \param[in] InterfaceId - The interface number
+ * \param[in] pRxData     - Pointer to the received bytes
+ * \param[in] size        - Number of bytes received
+ *
+ * \return The number of bytes that have not been stored.
+ *
+ ********************************************************************************** */
 uint32_t Serial_CustomReceiveData(uint8_t InterfaceId, uint8_t *pRxData, uint32_t size)
 {
     serial_t *pSer = &mSerials[InterfaceId];

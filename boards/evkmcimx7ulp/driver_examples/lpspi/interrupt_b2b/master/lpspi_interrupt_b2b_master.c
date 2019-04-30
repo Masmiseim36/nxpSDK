@@ -1,7 +1,7 @@
 /*
  * Copyright 2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -56,9 +56,9 @@ void EXAMPLE_LPSPI_MASTER_IRQHandler(void)
     if (masterRxCount < TRANSFER_SIZE)
     {
         /* First, disable the interrupts to avoid potentially triggering another interrupt
-        * while reading out the RX FIFO as more data may be coming into the RX FIFO. We'll
-        * re-enable the interrupts EXAMPLE_LPSPI_MASTER_BASEADDRd on the LPSPI state after reading out the FIFO.
-        */
+         * while reading out the RX FIFO as more data may be coming into the RX FIFO. We'll
+         * re-enable the interrupts EXAMPLE_LPSPI_MASTER_BASEADDRd on the LPSPI state after reading out the FIFO.
+         */
         LPSPI_DisableInterrupts(EXAMPLE_LPSPI_MASTER_BASEADDR, kLPSPI_RxInterruptEnable);
 
         while (LPSPI_GetRxFifoCount(EXAMPLE_LPSPI_MASTER_BASEADDR))
@@ -75,8 +75,8 @@ void EXAMPLE_LPSPI_MASTER_IRQHandler(void)
         }
 
         /* Re-enable the interrupts only if rxCount indicates there is more data to receive,
-        * else we may get a spurious interrupt.
-        * */
+         * else we may get a spurious interrupt.
+         * */
         if (masterRxCount < TRANSFER_SIZE)
         {
             /* Set the TDF and RDF interrupt enables simultaneously to avoid race conditions */
@@ -153,20 +153,20 @@ int main(void)
     lpspi_master_config_t masterConfig;
 
     /*Master config*/
-    masterConfig.baudRate = TRANSFER_BAUDRATE;
+    masterConfig.baudRate     = TRANSFER_BAUDRATE;
     masterConfig.bitsPerFrame = 8;
-    masterConfig.cpol = kLPSPI_ClockPolarityActiveHigh;
-    masterConfig.cpha = kLPSPI_ClockPhaseFirstEdge;
-    masterConfig.direction = kLPSPI_MsbFirst;
+    masterConfig.cpol         = kLPSPI_ClockPolarityActiveHigh;
+    masterConfig.cpha         = kLPSPI_ClockPhaseFirstEdge;
+    masterConfig.direction    = kLPSPI_MsbFirst;
 
-    masterConfig.pcsToSckDelayInNanoSec = 1000000000 / masterConfig.baudRate;
-    masterConfig.lastSckToPcsDelayInNanoSec = 1000000000 / masterConfig.baudRate;
+    masterConfig.pcsToSckDelayInNanoSec        = 1000000000 / masterConfig.baudRate;
+    masterConfig.lastSckToPcsDelayInNanoSec    = 1000000000 / masterConfig.baudRate;
     masterConfig.betweenTransferDelayInNanoSec = 1000000000 / masterConfig.baudRate;
 
-    masterConfig.whichPcs = EXAMPLE_LPSPI_MASTER_PCS_FOR_INIT;
+    masterConfig.whichPcs           = EXAMPLE_LPSPI_MASTER_PCS_FOR_INIT;
     masterConfig.pcsActiveHighOrLow = kLPSPI_PcsActiveLow;
 
-    masterConfig.pinCfg = kLPSPI_SdiInSdoOut;
+    masterConfig.pinCfg        = kLPSPI_SdiInSdoOut;
     masterConfig.dataOutConfig = kLpspiDataOutRetained;
 
     srcClock_Hz = LPSPI_MASTER_CLK_FREQ;
@@ -181,9 +181,9 @@ int main(void)
     }
 
     isMasterTransferCompleted = false;
-    masterTxCount = 0;
-    masterRxCount = 0;
-    whichPcs = EXAMPLE_LPSPI_MASTER_PCS_FOR_INIT;
+    masterTxCount             = 0;
+    masterRxCount             = 0;
+    whichPcs                  = EXAMPLE_LPSPI_MASTER_PCS_FOR_INIT;
 
     /*The TX and RX FIFO sizes are always the same*/
     g_masterFifoSize = LPSPI_GetRxFifoSize(EXAMPLE_LPSPI_MASTER_BASEADDR);
@@ -191,12 +191,12 @@ int main(void)
     /*Set the RX and TX watermarks to reduce the ISR times.*/
     if (g_masterFifoSize > 1)
     {
-        txWatermark = 1;
+        txWatermark         = 1;
         g_masterRxWatermark = g_masterFifoSize - 2;
     }
     else
     {
-        txWatermark = 0;
+        txWatermark         = 0;
         g_masterRxWatermark = 0;
     }
 
@@ -217,8 +217,8 @@ int main(void)
         LPSPI_TCR_CONT(0) | LPSPI_TCR_CONTC(0) | LPSPI_TCR_RXMSK(0) | LPSPI_TCR_TXMSK(0) | LPSPI_TCR_PCS(whichPcs);
 
     /* Enable the NVIC for LPSPI peripheral. Note that below code is useless if the LPSPI interrupt is in INTMUX ,
-    * and you should also enable the INTMUX interupt in your application.
-    */
+     * and you should also enable the INTMUX interupt in your application.
+     */
     EnableIRQ(EXAMPLE_LPSPI_MASTER_IRQN);
 
     /*TCR is also shared the FIFO , so wait for TCR written.*/

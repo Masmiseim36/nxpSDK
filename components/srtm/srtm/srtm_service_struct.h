@@ -2,7 +2,7 @@
  * Copyright (c) 2017, NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -16,11 +16,11 @@
  * Definitions
  ******************************************************************************/
 /**
-* @brief SRTM service struct
-*/
+ * @brief SRTM service struct
+ */
 struct _srtm_service
 {
-    srtm_list_t node;  /*!< SRTM service list node to link to a list */
+    srtm_list_t node; /*!< SRTM service list node to link to a list */
     srtm_dispatcher_t dispatcher;
     uint8_t category;
 
@@ -44,8 +44,7 @@ extern "C" {
  * @param svcVer The service version to check.
  * @return SRTM_Status_Success on success and others on failure.
  */
-srtm_status_t SRTM_Service_CheckVersion(srtm_service_t service, srtm_message_t msg,
-                                        uint16_t svcVer);
+srtm_status_t SRTM_Service_CheckVersion(srtm_service_t service, srtm_message_t msg, uint16_t svcVer);
 
 #ifdef __cplusplus
 }

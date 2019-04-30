@@ -167,7 +167,7 @@ status_t MU_TriggerInterrupts(MU_Type *base, uint32_t mask)
     if (!(reg & mask))
     {
         /* All interrupts have been accepted, trigger now. */
-        reg = (reg & ~(MU_CR_GIRn_MASK | MU_CR_NMI_MASK)) | mask;
+        reg      = (reg & ~(MU_CR_GIRn_MASK | MU_CR_NMI_MASK)) | mask;
         base->CR = reg;
         return kStatus_Success;
     }

@@ -1,15 +1,15 @@
 /*! *********************************************************************************
-* \addtogroup ATT
-* @{
-********************************************************************************** */
+ * \addtogroup ATT
+ * @{
+ ********************************************************************************** */
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright (c) 2016 - 2017 , NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
-*/
+ */
 
 #ifndef _ATT_PARAMS_H_
 #define _ATT_PARAMS_H_
@@ -23,8 +23,8 @@
 /*! Error Response Parameters */
 typedef struct attErrorResponseParams_tag
 {
-    attOpcode_t    requestOpcodeInError;
-    uint16_t       attributeHandleInError;
+    attOpcode_t requestOpcodeInError;
+    uint16_t attributeHandleInError;
     attErrorCode_t errorCode;
 } attErrorResponseParams_t;
 
@@ -55,19 +55,21 @@ typedef struct attFindInfoHandleUuid16Pair_tag
 typedef struct attFindInfoHandleUuid128Pair_tag
 {
     uint16_t handle;
-    uint8_t  uuid128[16];
+    uint8_t uuid128[16];
 } attFindInfoHandleUuid128Pair_t;
 
 /*! Find Information Response Parameters */
 typedef struct attFindInformationResponseParams_tag
 {
     attUuidFormat_t format;
-    uint8_t         handleUuidPairCount;
+    uint8_t handleUuidPairCount;
     union
     {
-        attFindInfoHandleUuid16Pair_t  handleUuid16[(gAttMaxDataSize_d(gAttMaxMtu_c) - 1)/4]; /* 4 = 2+2 bytes per handle-UUID pair */
-        attFindInfoHandleUuid128Pair_t handleUuid128[(gAttMaxDataSize_d(gAttMaxMtu_c) - 1)/18]; /* 18 = 2+16 bytes per handle-UUID pair */
-    }               informationData;
+        attFindInfoHandleUuid16Pair_t
+            handleUuid16[(gAttMaxDataSize_d(gAttMaxMtu_c) - 1) / 4]; /* 4 = 2+2 bytes per handle-UUID pair */
+        attFindInfoHandleUuid128Pair_t
+            handleUuid128[(gAttMaxDataSize_d(gAttMaxMtu_c) - 1) / 18]; /* 18 = 2+16 bytes per handle-UUID pair */
+    } informationData;
 } attFindInformationResponseParams_t;
 
 /*! Find By Type Value Request Parameters */
@@ -75,8 +77,8 @@ typedef struct attFindByTypeValueRequestParams_tag
 {
     uint16_t startingHandle;
     uint16_t endingHandle;
-    uint16_t attributeType; /* 16 bit UUID */
-    uint8_t  attributeValue[gAttMaxDataSize_d(gAttMaxMtu_c) - 6]; /* 6 = 4 for handles + 2 for type */
+    uint16_t attributeType;                                      /* 16 bit UUID */
+    uint8_t attributeValue[gAttMaxDataSize_d(gAttMaxMtu_c) - 6]; /* 6 = 4 for handles + 2 for type */
     uint16_t attributeLength;
 } attFindByTypeValueRequestParams_t;
 
@@ -85,28 +87,29 @@ typedef attFindInformationRequestParams_t attFindByTypeValueHandleGroupPair_t;
 /*! Find By Type Value Response - Parameters */
 typedef struct attFindByTypeValueResponseParams_tag
 {
-    attFindByTypeValueHandleGroupPair_t handleGroup[gAttMaxDataSize_d(gAttMaxMtu_c)/4]; /* 4 bytes for starting and ending handle */
-    uint16_t                            groupCount;
+    attFindByTypeValueHandleGroupPair_t
+        handleGroup[gAttMaxDataSize_d(gAttMaxMtu_c) / 4]; /* 4 bytes for starting and ending handle */
+    uint16_t groupCount;
 } attFindByTypeValueResponseParams_t;
 
 /*! Read By Type Request Parameters */
 typedef struct attReadByTypeRequestParams_tag
 {
-    uint16_t        startingHandle;
-    uint16_t        endingHandle;
+    uint16_t startingHandle;
+    uint16_t endingHandle;
     attUuidFormat_t format;
     union
     {
         uint16_t uuid16;
-        uint8_t  uuid128[16];
-    }               attributeType;
+        uint8_t uuid128[16];
+    } attributeType;
 } attReadByTypeRequestParams_t;
 
 /*! Read By Type Response Parameters */
 typedef struct attReadByTypeResponseParams_tag
 {
-    uint8_t  length; /* Fixed length of each handle+value pair in the Attribute Data List */
-    uint8_t  attributeDataList[gAttMaxDataSize_d(gAttMaxMtu_c) - 1]; /* 1 byte for length */
+    uint8_t length; /* Fixed length of each handle+value pair in the Attribute Data List */
+    uint8_t attributeDataList[gAttMaxDataSize_d(gAttMaxMtu_c) - 1]; /* 1 byte for length */
     uint16_t attributeDataListLength;
 } attReadByTypeResponseParams_t;
 
@@ -119,7 +122,7 @@ typedef struct attReadRequestParams_tag
 /*! Read Response Parameters */
 typedef struct attReadResponseParams_tag
 {
-    uint8_t  attributeValue[gAttMaxDataSize_d(gAttMaxMtu_c)];
+    uint8_t attributeValue[gAttMaxDataSize_d(gAttMaxMtu_c)];
     uint16_t attributeLength;
 } attReadResponseParams_t;
 
@@ -143,7 +146,7 @@ typedef struct attReadMultipleRequestParams_tag
 /*! Read Multiple Response Parameters */
 typedef struct attReadMultipleResponseParams_tag
 {
-    uint8_t  listOfValues[gAttMaxDataSize_d(gAttMaxMtu_c)];
+    uint8_t listOfValues[gAttMaxDataSize_d(gAttMaxMtu_c)];
     uint16_t listLength;
 } attReadMultipleResponseParams_t;
 
@@ -157,18 +160,18 @@ typedef attReadByTypeResponseParams_t attReadByGroupTypeResponseParams_t;
 /*! Write Request and Write Command Parameters */
 typedef struct attWriteRequestAndCommandParams_tag
 {
-    uint16_t  attributeHandle;
-    uint8_t   attributeValue[gAttMaxWriteDataSize_d(gAttMaxMtu_c)];
-    uint16_t  attributeLength;
+    uint16_t attributeHandle;
+    uint8_t attributeValue[gAttMaxWriteDataSize_d(gAttMaxMtu_c)];
+    uint16_t attributeLength;
 } attWriteRequestAndCommandParams_t;
 
 /*! Signed Write Command Parameters */
 typedef struct attSignedWriteCommandParams_tag
 {
     uint16_t attributeHandle;
-    uint8_t  attributeValue[gAttMaxWriteDataSize_d(gAttMaxMtu_c) - gAttAuthSignatureSize];
+    uint8_t attributeValue[gAttMaxWriteDataSize_d(gAttMaxMtu_c) - gAttAuthSignatureSize];
     uint16_t attributeLength;
-    uint8_t  authenticationSignature[gAttAuthSignatureSize];
+    uint8_t authenticationSignature[gAttAuthSignatureSize];
 } attSignedWriteCommandParams_t;
 
 /*! Prepare Write Request and Prepare Write Response Parameters */
@@ -176,7 +179,7 @@ typedef struct attPrepareWriteRequestResponseParams_tag
 {
     uint16_t attributeHandle;
     uint16_t valueOffset;
-    uint8_t  attributeValue[gAttMaxPrepWriteDataSize_d(gAttMaxMtu_c)];
+    uint8_t attributeValue[gAttMaxPrepWriteDataSize_d(gAttMaxMtu_c)];
     uint16_t attributeLength;
 } attPrepareWriteRequestResponseParams_t;
 
@@ -192,5 +195,5 @@ typedef attWriteRequestAndCommandParams_t attHandleValueNotificationIndicationPa
 #endif /* _ATT_PARAMS_H_ */
 
 /*! *********************************************************************************
-* @}
-********************************************************************************** */
+ * @}
+ ********************************************************************************** */

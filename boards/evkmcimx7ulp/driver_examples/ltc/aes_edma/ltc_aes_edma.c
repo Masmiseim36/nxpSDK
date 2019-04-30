@@ -2,7 +2,7 @@
  * Copyright (c) 2015-2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -64,7 +64,7 @@ static uint8_t output[OUTPUT_ARRAY_LEN];
 ltc_edma_handle_t g_ltcEdmaHandle;
 edma_handle_t g_ltcInputFifoEdmaHandle;
 edma_handle_t g_ltcOutputFifoEdmaHandle;
-volatile bool g_ltcEdmaDone = false;
+volatile bool g_ltcEdmaDone       = false;
 volatile status_t g_ltcEdmaStatus = kStatus_Success;
 
 static void ltc_EdmaUserCallback(LTC_Type *base, ltc_edma_handle_t *handle, status_t status, void *userData);
@@ -150,10 +150,10 @@ static void ltc_EdmaUserCallback(LTC_Type *base, ltc_edma_handle_t *handle, stat
 {
     /* Not used.*/
     userData = userData;
-    base = base;
-    handle = handle;
+    base     = base;
+    handle   = handle;
 
-    g_ltcEdmaDone = true;
+    g_ltcEdmaDone   = true;
     g_ltcEdmaStatus = status;
 }
 

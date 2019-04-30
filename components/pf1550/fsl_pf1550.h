@@ -21,108 +21,108 @@
  ******************************************************************************/
 
 /*! @brief PF1550 Default I2C address. */
-#define PF1550_DEFAULT_I2C_ADDR  0x08U
+#define PF1550_DEFAULT_I2C_ADDR 0x08U
 
 /*! @brief Define the Register Memory Map of PF1550. */
 /*! PMIC Register Memory Map. */
-#define PF1550_DEVICE_ID         0x00U
-#define PF1550_OTP_FLAVOR        0x01U
-#define PF1550_SILICON_REV       0x02U
-#define PF1550_INT_CATEGORY      0x06U
-#define PF1550_SW_INT_STAT0      0x08U
-#define PF1550_SW_INT_MASK0      0x09U
-#define PF1550_SW_INT_SENSE0     0x0AU
-#define PF1550_SW_INT_STAT1      0x0BU
-#define PF1550_SW_INT_MASK1      0x0CU
-#define PF1550_SW_INT_SENSE1     0x0DU
-#define PF1550_SW_INT_STAT2      0x0EU
-#define PF1550_SW_INT_MASK2      0x0FU
-#define PF1550_SW_INT_SENSE2     0x10U
-#define PF1550_LDO_INT_STAT0     0x18U
-#define PF1550_LDO_INT_MASK0     0x19U
-#define PF1550_LDO_INT_SENSE0    0x1AU
-#define PF1550_TEMP_INT_STAT0    0x20U
-#define PF1550_TEMP_INT_MASK0    0x21U
-#define PF1550_TEMP_INT_SENSE0   0x22U
-#define PF1550_ONKEY_INT_STAT0   0x24U
-#define PF1550_ONKEY_INT_MASK0   0x25U
-#define PF1550_ONKEY_INT_SENSE0  0x26U
-#define PF1550_MISC_INT_STAT0    0x28U
-#define PF1550_MISC_INT_MASK0    0x29U
-#define PF1550_MISC_INT_SENSE0   0x2AU
-#define PF1550_COINCELL_CONTROL  0x30U
-#define PF1550_SW1_VOLT          0x32U
-#define PF1550_SW1_STBY_VOLT     0x33U
-#define PF1550_SW1_SLP_VOLT      0x34U
-#define PF1550_SW1_CTRL          0x35U
-#define PF1550_SW1_CTRL1         0x36U
-#define PF1550_SW2_VOLT          0x38U
-#define PF1550_SW2_STBY_VOLT     0x39U
-#define PF1550_SW2_SLP_VOLT      0x3AU
-#define PF1550_SW2_CTRL          0x3BU
-#define PF1550_SW2_CTRL1         0x3CU
-#define PF1550_SW3_VOLT          0x3EU
-#define PF1550_SW3_STBY_VOLT     0x3FU
-#define PF1550_SW3_SLP_VOLT      0x40U
-#define PF1550_SW3_CTRL          0x41U
-#define PF1550_SW3_CTRL1         0x42U
-#define PF1550_VSNVS_CTRL        0x48U
-#define PF1550_VREFDDR_CTRL      0x4AU
-#define PF1550_LDO1_VOLT         0x4CU
-#define PF1550_LDO1_CTRL         0x4DU
-#define PF1550_LDO2_VOLT         0x4FU
-#define PF1550_LDO2_CTRL         0x50U
-#define PF1550_LDO3_VOLT         0x52U
-#define PF1550_LDO3_CTRL         0x53U
-#define PF1550_PWRCTRL0          0x58U
-#define PF1550_PWRCTRL1          0x59U
-#define PF1550_PWRCTRL2          0x5AU
-#define PF1550_PWRCTRL3          0x5BU
-#define PF1550_SW1_PWRDN_SEQ     0x5FU
-#define PF1550_SW2_PWRDN_SEQ     0x60U
-#define PF1550_SW3_PWRDN_SEQ     0x61U
-#define PF1550_LDO1_PWRDN_SEQ    0x62U
-#define PF1550_LDO2_PWRDN_SEQ    0x63U
-#define PF1550_LDO3_PWRDN_SEQ    0x64U
+#define PF1550_DEVICE_ID 0x00U
+#define PF1550_OTP_FLAVOR 0x01U
+#define PF1550_SILICON_REV 0x02U
+#define PF1550_INT_CATEGORY 0x06U
+#define PF1550_SW_INT_STAT0 0x08U
+#define PF1550_SW_INT_MASK0 0x09U
+#define PF1550_SW_INT_SENSE0 0x0AU
+#define PF1550_SW_INT_STAT1 0x0BU
+#define PF1550_SW_INT_MASK1 0x0CU
+#define PF1550_SW_INT_SENSE1 0x0DU
+#define PF1550_SW_INT_STAT2 0x0EU
+#define PF1550_SW_INT_MASK2 0x0FU
+#define PF1550_SW_INT_SENSE2 0x10U
+#define PF1550_LDO_INT_STAT0 0x18U
+#define PF1550_LDO_INT_MASK0 0x19U
+#define PF1550_LDO_INT_SENSE0 0x1AU
+#define PF1550_TEMP_INT_STAT0 0x20U
+#define PF1550_TEMP_INT_MASK0 0x21U
+#define PF1550_TEMP_INT_SENSE0 0x22U
+#define PF1550_ONKEY_INT_STAT0 0x24U
+#define PF1550_ONKEY_INT_MASK0 0x25U
+#define PF1550_ONKEY_INT_SENSE0 0x26U
+#define PF1550_MISC_INT_STAT0 0x28U
+#define PF1550_MISC_INT_MASK0 0x29U
+#define PF1550_MISC_INT_SENSE0 0x2AU
+#define PF1550_COINCELL_CONTROL 0x30U
+#define PF1550_SW1_VOLT 0x32U
+#define PF1550_SW1_STBY_VOLT 0x33U
+#define PF1550_SW1_SLP_VOLT 0x34U
+#define PF1550_SW1_CTRL 0x35U
+#define PF1550_SW1_CTRL1 0x36U
+#define PF1550_SW2_VOLT 0x38U
+#define PF1550_SW2_STBY_VOLT 0x39U
+#define PF1550_SW2_SLP_VOLT 0x3AU
+#define PF1550_SW2_CTRL 0x3BU
+#define PF1550_SW2_CTRL1 0x3CU
+#define PF1550_SW3_VOLT 0x3EU
+#define PF1550_SW3_STBY_VOLT 0x3FU
+#define PF1550_SW3_SLP_VOLT 0x40U
+#define PF1550_SW3_CTRL 0x41U
+#define PF1550_SW3_CTRL1 0x42U
+#define PF1550_VSNVS_CTRL 0x48U
+#define PF1550_VREFDDR_CTRL 0x4AU
+#define PF1550_LDO1_VOLT 0x4CU
+#define PF1550_LDO1_CTRL 0x4DU
+#define PF1550_LDO2_VOLT 0x4FU
+#define PF1550_LDO2_CTRL 0x50U
+#define PF1550_LDO3_VOLT 0x52U
+#define PF1550_LDO3_CTRL 0x53U
+#define PF1550_PWRCTRL0 0x58U
+#define PF1550_PWRCTRL1 0x59U
+#define PF1550_PWRCTRL2 0x5AU
+#define PF1550_PWRCTRL3 0x5BU
+#define PF1550_SW1_PWRDN_SEQ 0x5FU
+#define PF1550_SW2_PWRDN_SEQ 0x60U
+#define PF1550_SW3_PWRDN_SEQ 0x61U
+#define PF1550_LDO1_PWRDN_SEQ 0x62U
+#define PF1550_LDO2_PWRDN_SEQ 0x63U
+#define PF1550_LDO3_PWRDN_SEQ 0x64U
 #define PF1550_VREFDDR_PWRDN_SEQ 0x65U
-#define PF1550_STATE_INFO        0x67U
-#define PF1550_I2C_ADDR          0x68U
-#define PF1550_IO_DRV0           0x69U
-#define PF1550_IO_DRV1           0x6AU
-#define PF1550_RC_16MHZ          0x6BU
-#define PF1550_KEY1              0x6FU
+#define PF1550_STATE_INFO 0x67U
+#define PF1550_I2C_ADDR 0x68U
+#define PF1550_IO_DRV0 0x69U
+#define PF1550_IO_DRV1 0x6AU
+#define PF1550_RC_16MHZ 0x6BU
+#define PF1550_KEY1 0x6FU
 /*! Charger Register Memory Map. */
-#define PF1550_CHG_INT           0x80U
-#define PF1550_CHG_INT_MASK      0x82U
-#define PF1550_CHG_INT_OK        0x84U
-#define PF1550_VBUS_SNS          0x86U
-#define PF1550_CHG_SNS           0x87U
-#define PF1550_BATT_SNS          0x88U
-#define PF1550_CHG_OPER          0x89U
-#define PF1550_CHG_TMR           0x8AU
-#define PF1550_CHG_EOC_CNFG      0x8DU
-#define PF1550_CHG_CURR_CNFG     0x8EU
-#define PF1550_BATT_REG          0x8FU
-#define PF1550_BATFET_CNFG       0x91U
-#define PF1550_THM_REG_CNFG      0x92U
-#define PF1550_VBUS_INLIM_CNFG   0x94U
-#define PF1550_VBUS_LIN_DPM      0x95U
-#define PF1550_USB_PHY_LDO_CNFG  0x96U
-#define PF1550_DBNC_DELAY_TIME   0x98U
-#define PF1550_CHG_INT_CNFG      0x99U
-#define PF1550_THM_ADJ_SETTING   0x9AU
-#define PF1550_VBUS2SYS_CNFG     0x9BU
-#define PF1550_LED_PWM           0x9CU
+#define PF1550_CHG_INT 0x80U
+#define PF1550_CHG_INT_MASK 0x82U
+#define PF1550_CHG_INT_OK 0x84U
+#define PF1550_VBUS_SNS 0x86U
+#define PF1550_CHG_SNS 0x87U
+#define PF1550_BATT_SNS 0x88U
+#define PF1550_CHG_OPER 0x89U
+#define PF1550_CHG_TMR 0x8AU
+#define PF1550_CHG_EOC_CNFG 0x8DU
+#define PF1550_CHG_CURR_CNFG 0x8EU
+#define PF1550_BATT_REG 0x8FU
+#define PF1550_BATFET_CNFG 0x91U
+#define PF1550_THM_REG_CNFG 0x92U
+#define PF1550_VBUS_INLIM_CNFG 0x94U
+#define PF1550_VBUS_LIN_DPM 0x95U
+#define PF1550_USB_PHY_LDO_CNFG 0x96U
+#define PF1550_DBNC_DELAY_TIME 0x98U
+#define PF1550_CHG_INT_CNFG 0x99U
+#define PF1550_THM_ADJ_SETTING 0x9AU
+#define PF1550_VBUS2SYS_CNFG 0x9BU
+#define PF1550_LED_PWM 0x9CU
 #define PF1550_FAULT_BATFET_CNFG 0x9DU
-#define PF1550_LED_CNFG          0x9EU
-#define PF1550_CHGR_KEY2         0x9FU
+#define PF1550_LED_CNFG 0x9EU
+#define PF1550_CHGR_KEY2 0x9FU
 /*! Test Register Memory Map. */
-#define PF1550_KEY3              0xDFU
-#define PF1550_FMRADDR           0xC4U
-#define PF1550_FMRDATA           0xC5U
+#define PF1550_KEY3 0xDFU
+#define PF1550_FMRADDR 0xC4U
+#define PF1550_FMRDATA 0xC5U
 /*! OTP Register Memory Map. */
-#define PF1550_OTP_SW1_SW2       0x1EU
-#define PF1550_OTP_SW2_SW3       0x1FU
+#define PF1550_OTP_SW1_SW2 0x1EU
+#define PF1550_OTP_SW2_SW3 0x1FU
 
 /*! @brief PF1550 Operating Status definition. */
 typedef enum _pf1550_operating_status
@@ -136,7 +136,7 @@ typedef enum _pf1550_operating_status
     kPF1550_OperatingStatusSystemOn    = 0x7U, /* Indicates the state machine is in any of the
                                                   SystemOn Status including Run, Standby, Sleep
                                                   and Low-Power. */
-    kPF1550_OperatingStatusSystemOff   = 0x8U, /* Indicates the state machine is in any of the
+    kPF1550_OperatingStatusSystemOff = 0x8U,   /* Indicates the state machine is in any of the
                                                   SystemOff Status including RegsDisable, CoreOff
                                                   and ShipMode. */
 } pf1550_operating_status_t;
@@ -163,7 +163,7 @@ typedef enum _pf1550_interrupt_category
     kPF1550_IntCategoryOnkey   = 0x20U, /* Any of the ONKEY interrupt status bit is set. */
     kPF1550_IntCategoryTemp    = 0x40U, /* Any of the PMIC junction temperature
                                            interrupt status bit is set. */
-    kPF1550_IntCategoryMisc    = 0x80U, /* Any of the interrupts not covered by the above
+    kPF1550_IntCategoryMisc = 0x80U,    /* Any of the interrupts not covered by the above
                                            mentioned categories status bit is set. */
 } pf1550_interrupt_category_t;
 
@@ -209,23 +209,27 @@ enum _pf1550_onkey_interrupt_source
 /*! @brief PF1550 Misc. Interrupt Source definition. */
 enum _pf1550_misc_interrupt_source
 {
-    kPF1550_IntSrcMiscPowerUp          = 0x01U, /* Completion of transition from STANDBY to RUN
-                                                   and from SLEEP to RUN interrupt source. */
-    kPF1550_IntSrcMiscPowerDown        = 0x02U, /* Completion of transition from RUN to STANDBY
-                                                   and from RUN to SLEEP interrupt source. */
-    kPF1550_IntSrcMiscPowerOn          = 0x04U, /* Power on button event interrupt source
-                                                   (keep same function as PF3000/PF0100). */
-    kPF1550_IntSrcMiscLowSysWarn       = 0x08U, /* LOW_SYS_WARN threshold crossed interrupt source. */
-    kPF1550_IntSrcMiscOverLoad         = 0x10U, /* SYS_OVLO threshold crossed interrupt source. */
+    kPF1550_IntSrcMiscPowerUp = 0x01U,    /* Completion of transition from STANDBY to RUN
+                                             and from SLEEP to RUN interrupt source. */
+    kPF1550_IntSrcMiscPowerDown = 0x02U,  /* Completion of transition from RUN to STANDBY
+                                             and from RUN to SLEEP interrupt source. */
+    kPF1550_IntSrcMiscPowerOn = 0x04U,    /* Power on button event interrupt source
+                                             (keep same function as PF3000/PF0100). */
+    kPF1550_IntSrcMiscLowSysWarn = 0x08U, /* LOW_SYS_WARN threshold crossed interrupt source. */
+    kPF1550_IntSrcMiscOverLoad   = 0x10U, /* SYS_OVLO threshold crossed interrupt source. */
 };
 
 /*! @brief PF1550 Undervoltage Detection Threshold definition. */
 typedef enum _pf1550_undervoltage_detect_threshold
 {
-    kPF1550_UnderVoltDetThres_Rising2V65Falling2V55 = 0x0U, /* Undervoltage Detection Threshold: Rising 2.65V; Falling 2.55V. */
-    kPF1550_UnderVoltDetThres_Rising2V8Falling2V7   = 0x1U, /* Undervoltage Detection Threshold: Rising 2.8V; Falling 2.7V. */
-    kPF1550_UnderVoltDetThres_Rising3V0Falling2V9   = 0x2U, /* Undervoltage Detection Threshold: Rising 3.0V; Falling 2.9V. */
-    kPF1550_UnderVoltDetThres_Rising3V1Falling3V0   = 0x3U, /* Undervoltage Detection Threshold: Rising 3.1V; Falling 3.0V. */
+    kPF1550_UnderVoltDetThres_Rising2V65Falling2V55 =
+        0x0U, /* Undervoltage Detection Threshold: Rising 2.65V; Falling 2.55V. */
+    kPF1550_UnderVoltDetThres_Rising2V8Falling2V7 =
+        0x1U, /* Undervoltage Detection Threshold: Rising 2.8V; Falling 2.7V. */
+    kPF1550_UnderVoltDetThres_Rising3V0Falling2V9 =
+        0x2U, /* Undervoltage Detection Threshold: Rising 3.0V; Falling 2.9V. */
+    kPF1550_UnderVoltDetThres_Rising3V1Falling3V0 =
+        0x3U, /* Undervoltage Detection Threshold: Rising 3.1V; Falling 3.0V. */
 } pf1550_undervoltage_detect_threshold_t;
 
 /*! @brief PF1550 Low Vsys Warning Threshold definition. */
@@ -249,9 +253,12 @@ typedef enum _pf1550_onkey_push_reset_time
 /*! @brief PF1550 ONKEY Push Debounce Time definition. */
 typedef enum _pf1550_onkey_debounce
 {
-    kPF1550_OnkeyDebounce_Falling31ms25Rising31ms25 = 0x0U, /* ONKEY Push Debounce: 31.25ms falling edge; 31.25ms rising edge. */
-    kPF1550_OnkeyDebounce_Falling125msRising31ms25  = 0x2U, /* ONKEY Push Debounce: 125ms falling edge; 31.25ms rising edge. */
-    kPF1550_OnkeyDebounce_Falling750msRising31ms25  = 0x3U, /* ONKEY Push Debounce: 750ms falling edge; 31.25ms rising edge. */
+    kPF1550_OnkeyDebounce_Falling31ms25Rising31ms25 =
+        0x0U, /* ONKEY Push Debounce: 31.25ms falling edge; 31.25ms rising edge. */
+    kPF1550_OnkeyDebounce_Falling125msRising31ms25 =
+        0x2U, /* ONKEY Push Debounce: 125ms falling edge; 31.25ms rising edge. */
+    kPF1550_OnkeyDebounce_Falling750msRising31ms25 =
+        0x3U, /* ONKEY Push Debounce: 750ms falling edge; 31.25ms rising edge. */
 } pf1550_onkey_debounce_t;
 
 /*! @brief PF1550 Standby Delay Time definition. */
@@ -285,9 +292,12 @@ typedef enum _pf1550_power_up_delay
 /*! @brief PF1550 Power On Pad Debounce Time definition. */
 typedef enum _pf1550_power_on_debounce
 {
-    kPF1550_PowerOnDebounce_Fall31ms25Rise31ms25 = 0x0U, /* Power On Pad Debounce: 31.25ms falling edge; 31.25ms rising edge. */
-    kPF1550_PowerOnDebounce_Fall125msRise31ms25  = 0x2U, /* Power On Pad Debounce: 125ms falling edge; 31.25ms rising edge. */
-    kPF1550_PowerOnDebounce_Fall750msRise31ms25  = 0x3U, /* Power On Pad Debounce: 750ms falling edge; 31.25ms rising edge. */
+    kPF1550_PowerOnDebounce_Fall31ms25Rise31ms25 =
+        0x0U, /* Power On Pad Debounce: 31.25ms falling edge; 31.25ms rising edge. */
+    kPF1550_PowerOnDebounce_Fall125msRise31ms25 =
+        0x2U, /* Power On Pad Debounce: 125ms falling edge; 31.25ms rising edge. */
+    kPF1550_PowerOnDebounce_Fall750msRise31ms25 =
+        0x3U, /* Power On Pad Debounce: 750ms falling edge; 31.25ms rising edge. */
 } pf1550_power_on_debounce_t;
 
 /*! @brief PF1550 Regulator Power Down Sequence Attribute definition. */
@@ -346,10 +356,10 @@ typedef struct _pf1550_switch_attribute
     pf1550_switch_current_limit_t currentLimit;               /* Switch Current Limit Selection. */
     pf1550_regulator_power_down_sequence_t powerDownSequence; /* The power down sequencer performs the functional
                                                                  opposite to the power up sequencer. */
-    bool enableLowPowerMode;                                  /* Lets the buck enter low power mode during Standby and Sleep. */
-    bool enableForcedPwm;                                     /* Forced in PWM mode irrespective of load current. */
-    bool enableForcedPwmInDvs;                                /* Forces to track the DVS reference while it is falling. */
-    bool enableDischargeResistor;                             /* Enables discharge resistor on output when regulator disabled. */
+    bool enableLowPowerMode;      /* Lets the buck enter low power mode during Standby and Sleep. */
+    bool enableForcedPwm;         /* Forced in PWM mode irrespective of load current. */
+    bool enableForcedPwmInDvs;    /* Forces to track the DVS reference while it is falling. */
+    bool enableDischargeResistor; /* Enables discharge resistor on output when regulator disabled. */
 } pf1550_switch_attribute_t;
 
 /*! @brief PF1550 LDO Attribute Structure definition. */
@@ -357,9 +367,9 @@ typedef struct _pf1550_ldo_attribute
 {
     pf1550_regulator_power_down_sequence_t powerDownSequence; /* The power down sequencer performs the functional
                                                                  opposite to the power up sequencer. */
-    bool enableLowPowerMode;                                  /* Lets LDO enter low power mode during Standby and Sleep. */
-    bool enableLoadSwitch;                                    /* Set LDO to a load switch (fully on) mode.
-                                                                 Changing from true to false is not allowed. */
+    bool enableLowPowerMode; /* Lets LDO enter low power mode during Standby and Sleep. */
+    bool enableLoadSwitch;   /* Set LDO to a load switch (fully on) mode.
+                                Changing from true to false is not allowed. */
 } pf1550_ldo_attribute_t;
 
 /*! @brief PF1550 Vrefddr Attribute Structure definition. */
@@ -406,11 +416,11 @@ typedef struct _pf1550_standby_attribute
 typedef struct _pf1550_handle
 {
     /* Pointer to the user-defined I2C Send Data function. */
-    status_t (*I2C_SendFunc)(uint8_t deviceAddress, uint32_t subAddress, uint8_t subAddressSize,
-                             const uint8_t *txBuff, uint8_t txBuffSize);
+    status_t (*I2C_SendFunc)(
+        uint8_t deviceAddress, uint32_t subAddress, uint8_t subAddressSize, const uint8_t *txBuff, uint8_t txBuffSize);
     /* Pointer to the user-defined I2C Receive Data function. */
-    status_t (*I2C_ReceiveFunc)(uint8_t deviceAddress, uint32_t subAddress, uint8_t subAddressSize,
-                                uint8_t *rxBuff, uint8_t rxBuffSize);
+    status_t (*I2C_ReceiveFunc)(
+        uint8_t deviceAddress, uint32_t subAddress, uint8_t subAddressSize, uint8_t *rxBuff, uint8_t rxBuffSize);
     /* The I2C Slave Address Read From OTP. */
     uint8_t slaveAddress;
 } pf1550_handle_t;
@@ -419,11 +429,11 @@ typedef struct _pf1550_handle
 typedef struct _pf1550_config
 {
     /* Pointer to the user-defined I2C Send Data function. */
-    status_t (*I2C_SendFunc)(uint8_t deviceAddress, uint32_t subAddress, uint8_t subAddressSize,
-                             const uint8_t *txBuff, uint8_t txBuffSize);
+    status_t (*I2C_SendFunc)(
+        uint8_t deviceAddress, uint32_t subAddress, uint8_t subAddressSize, const uint8_t *txBuff, uint8_t txBuffSize);
     /* Pointer to the user-defined I2C Receive Data function. */
-    status_t (*I2C_ReceiveFunc)(uint8_t deviceAddress, uint32_t subAddress, uint8_t subAddressSize,
-                                uint8_t *rxBuff, uint8_t rxBuffSize);
+    status_t (*I2C_ReceiveFunc)(
+        uint8_t deviceAddress, uint32_t subAddress, uint8_t subAddressSize, uint8_t *rxBuff, uint8_t rxBuffSize);
     /* Undervoltage Detection Threshold Selection. */
     pf1550_undervoltage_detect_threshold_t threshold;
     /* Power Up Delay Time Selection. */
@@ -559,8 +569,7 @@ bool PF1550_DumpReg(pf1550_handle_t *handle, uint8_t reg, uint8_t *buffer, uint8
  * @param category The interrupt category to set.
  * @param source Logic ORed interrupt sources of selected interrupt category to enable.
  */
-void PF1550_EnableInterrupts(pf1550_handle_t *handle,
-            pf1550_interrupt_category_t category, uint32_t source);
+void PF1550_EnableInterrupts(pf1550_handle_t *handle, pf1550_interrupt_category_t category, uint32_t source);
 
 /*!
  * @brief Disable PF1550 interrupts according to the provided interrupt source mask.
@@ -579,8 +588,7 @@ void PF1550_EnableInterrupts(pf1550_handle_t *handle,
  * @param category The interrupt category to set.
  * @param source Logic ORed interrupt sources of selected interrupt category to disable.
  */
-void PF1550_DisableInterrupts(pf1550_handle_t *handle,
-            pf1550_interrupt_category_t category, uint32_t source);
+void PF1550_DisableInterrupts(pf1550_handle_t *handle, pf1550_interrupt_category_t category, uint32_t source);
 
 /*!
  * @brief Get Interrupt Category of PF1550.
@@ -611,8 +619,7 @@ uint32_t PF1550_GetInterruptCategory(pf1550_handle_t *handle);
  * @param category The interrupt category that to query.
  * @return status flags which are ORed by the enumerators in the corresponding interrupt source.
  */
-uint32_t PF1550_GetInterruptStatus(pf1550_handle_t *handle,
-                pf1550_interrupt_category_t category);
+uint32_t PF1550_GetInterruptStatus(pf1550_handle_t *handle, pf1550_interrupt_category_t category);
 
 /*!
  * @brief Clear interrupt flags of selected interrupt category.
@@ -630,8 +637,7 @@ uint32_t PF1550_GetInterruptStatus(pf1550_handle_t *handle,
  * @param category The interrupt category that set.
  * @param source Logic ORed interrupt sources of selected interrupt category to clear.
  */
-void PF1550_ClearInterruptStatus(pf1550_handle_t *handle,
-            pf1550_interrupt_category_t category, uint32_t source);
+void PF1550_ClearInterruptStatus(pf1550_handle_t *handle, pf1550_interrupt_category_t category, uint32_t source);
 /* @} */
 
 /*!
@@ -653,8 +659,10 @@ void PF1550_ClearInterruptStatus(pf1550_handle_t *handle,
  * @param status The operating status of PF1550 to set.
  * @param enable Set true to enable regulator, set false to disable regulator.
  */
-void PF1550_EnableRegulator(pf1550_handle_t *handle, pf1550_module_t module,
-            pf1550_operating_status_t status, bool enable);
+void PF1550_EnableRegulator(pf1550_handle_t *handle,
+                            pf1550_module_t module,
+                            pf1550_operating_status_t status,
+                            bool enable);
 
 /*!
  * @brief Query the output state of selected regulator.
@@ -670,8 +678,7 @@ void PF1550_EnableRegulator(pf1550_handle_t *handle, pf1550_module_t module,
  * @param status The operating status of PF1550 to set.
  * @return true if regulator is enabled, false if regulator is disabled.
  */
-bool PF1550_IsRegulatorEnabled(pf1550_handle_t *handle, pf1550_module_t module,
-            pf1550_operating_status_t status);
+bool PF1550_IsRegulatorEnabled(pf1550_handle_t *handle, pf1550_module_t module, pf1550_operating_status_t status);
 
 /*!
  * @brief Set the output voltage of selected regulator.
@@ -688,8 +695,10 @@ bool PF1550_IsRegulatorEnabled(pf1550_handle_t *handle, pf1550_module_t module,
  * @param status The operating status of PF1550 to set.
  * @param voltage The output voltage in uV to set.
  */
-void PF1550_SetRegulatorOutputVoltage(pf1550_handle_t *handle, pf1550_module_t module,
-            pf1550_operating_status_t status, uint32_t voltage);
+void PF1550_SetRegulatorOutputVoltage(pf1550_handle_t *handle,
+                                      pf1550_module_t module,
+                                      pf1550_operating_status_t status,
+                                      uint32_t voltage);
 
 /*!
  * @brief Query the output voltage of selected regulator.
@@ -706,8 +715,9 @@ void PF1550_SetRegulatorOutputVoltage(pf1550_handle_t *handle, pf1550_module_t m
  * @param status The operating status of PF1550 to set.
  * @return voltage The output voltage in uV of selected regulator.
  */
-uint32_t PF1550_GetRegulatorOutputVoltage(pf1550_handle_t *handle, pf1550_module_t module,
-                pf1550_operating_status_t status);
+uint32_t PF1550_GetRegulatorOutputVoltage(pf1550_handle_t *handle,
+                                          pf1550_module_t module,
+                                          pf1550_operating_status_t status);
 
 /*!
  * @brief Set the attributes of selected Buck Switch.
@@ -720,8 +730,9 @@ uint32_t PF1550_GetRegulatorOutputVoltage(pf1550_handle_t *handle, pf1550_module
  * @param module Sub-modules in PF1550 device.
  * @param attribute Pointer to the Switch Attribute structure to set.
  */
-void PF1550_SetSwitchAttribute(pf1550_handle_t *handle, pf1550_module_t module,
-            const pf1550_switch_attribute_t *attribute);
+void PF1550_SetSwitchAttribute(pf1550_handle_t *handle,
+                               pf1550_module_t module,
+                               const pf1550_switch_attribute_t *attribute);
 
 /*!
  * @brief Set the attributes of selected LDO.
@@ -734,8 +745,7 @@ void PF1550_SetSwitchAttribute(pf1550_handle_t *handle, pf1550_module_t module,
  * @param module Sub-modules in PF1550 device.
  * @param attribute Pointer to the LDO Attribute structure to set.
  */
-void PF1550_SetLdoAttribute(pf1550_handle_t *handle, pf1550_module_t module,
-            const pf1550_ldo_attribute_t *attribute);
+void PF1550_SetLdoAttribute(pf1550_handle_t *handle, pf1550_module_t module, const pf1550_ldo_attribute_t *attribute);
 
 /*!
  * @brief Set the attributes of Vref DDR.
@@ -748,8 +758,7 @@ void PF1550_SetLdoAttribute(pf1550_handle_t *handle, pf1550_module_t module,
  * @param module Sub-modules in PF1550 device.
  * @param attribute Pointer to the Vref DDR Attribute structure to set.
  */
-void PF1550_SetVrefDdrAttribute(pf1550_handle_t *handle,
-            const pf1550_vrefddr_attribute_t *attribute);
+void PF1550_SetVrefDdrAttribute(pf1550_handle_t *handle, const pf1550_vrefddr_attribute_t *attribute);
 
 /*!
  * @brief Set the attributes of Vsnvs.
@@ -762,8 +771,7 @@ void PF1550_SetVrefDdrAttribute(pf1550_handle_t *handle,
  * @param module Sub-modules in PF1550 device.
  * @param attribute Pointer to the Vsnvs Attribute structure to set.
  */
-void PF1550_SetVsnvsAttribute(pf1550_handle_t *handle,
-            const pf1550_vsnvs_attribute_t *attribute);
+void PF1550_SetVsnvsAttribute(pf1550_handle_t *handle, const pf1550_vsnvs_attribute_t *attribute);
 /* @} */
 
 /*!
@@ -782,8 +790,7 @@ void PF1550_SetVsnvsAttribute(pf1550_handle_t *handle,
  * @param module Sub-modules in PF1550 device.
  * @param attribute Pointer to the ONKEY Pad Attribute structure to set.
  */
-void PF1550_SetOnKeyPadAttibute(pf1550_handle_t *handle,
-            const pf1550_onkey_attribute_t *attribute);
+void PF1550_SetOnKeyPadAttibute(pf1550_handle_t *handle, const pf1550_onkey_attribute_t *attribute);
 
 /*!
  * @brief Set the attributes of PowerOn Pad.
@@ -796,8 +803,7 @@ void PF1550_SetOnKeyPadAttibute(pf1550_handle_t *handle,
  * @param module Sub-modules in PF1550 device.
  * @param attribute Pointer to the PowerOn Pad Attribute structure to set.
  */
-void PF1550_SetPwrOnPadAttibute(pf1550_handle_t *handle,
-            const pf1550_power_on_attribute_t *attribute);
+void PF1550_SetPwrOnPadAttibute(pf1550_handle_t *handle, const pf1550_power_on_attribute_t *attribute);
 
 /*!
  * @brief Set the attributes of Standby Pad.
@@ -810,8 +816,7 @@ void PF1550_SetPwrOnPadAttibute(pf1550_handle_t *handle,
  * @param module Sub-modules in PF1550 device.
  * @param attribute Pointer to the Standby Pad Attribute structure to set.
  */
-void PF1550_SetStandbyPadAttibute(pf1550_handle_t *handle,
-            const pf1550_standby_attribute_t *attribute);
+void PF1550_SetStandbyPadAttibute(pf1550_handle_t *handle, const pf1550_standby_attribute_t *attribute);
 /* @} */
 
 /*!

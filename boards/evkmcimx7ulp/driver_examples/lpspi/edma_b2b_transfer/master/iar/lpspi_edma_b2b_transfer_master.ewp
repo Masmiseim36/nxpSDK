@@ -323,7 +323,7 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MCIMX7U5/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MCIMX7U5</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MCIMX7U5/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MCIMX7U5/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MCIMX7U5/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
@@ -1301,7 +1301,7 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MCIMX7U5/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MCIMX7U5</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MCIMX7U5/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MCIMX7U5/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MCIMX7U5/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
@@ -2280,7 +2280,7 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MCIMX7U5/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MCIMX7U5</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MCIMX7U5/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MCIMX7U5/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MCIMX7U5/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
@@ -3258,7 +3258,7 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MCIMX7U5/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MCIMX7U5</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MCIMX7U5/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MCIMX7U5/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MCIMX7U5/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
@@ -4038,13 +4038,13 @@
       <name>$PROJ_DIR$/../../../../../../../devices/MCIMX7U5/utilities/str/fsl_str.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MCIMX7U5/utilities/fsl_debug_console.c</name>
+      <name>$PROJ_DIR$/../../../../../../../devices/MCIMX7U5/utilities/debug_console/fsl_debug_console.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MCIMX7U5/utilities/fsl_debug_console.h</name>
+      <name>$PROJ_DIR$/../../../../../../../devices/MCIMX7U5/utilities/debug_console/fsl_debug_console.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MCIMX7U5/utilities/fsl_debug_console_conf.h</name>
+      <name>$PROJ_DIR$/../../../../../../../devices/MCIMX7U5/utilities/debug_console/fsl_debug_console_conf.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MCIMX7U5/utilities/fsl_assert.c</name>

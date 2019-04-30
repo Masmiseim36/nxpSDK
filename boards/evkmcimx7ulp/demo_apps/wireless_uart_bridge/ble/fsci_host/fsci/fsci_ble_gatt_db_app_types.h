@@ -3,9 +3,9 @@
  * Copyright (c) 2016 - 2017 , NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
-*/
+ */
 
 #ifndef _FSCI_BLE_GATT_DB_APP_TYPES_H
 #define _FSCI_BLE_GATT_DB_APP_TYPES_H
@@ -48,25 +48,17 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-  
-void fsciBleGattDbAppGetCharPresFormatFromBuffer
-(
-    gattDbCharPresFormat_t* pCharPresFormat, 
-    uint8_t**               ppBuffer
-);
 
-void fsciBleGattDbAppGetBufferFromCharPresFormat
-(
-    gattDbCharPresFormat_t* pCharPresFormat, 
-    uint8_t**               ppBuffer
-);
+void fsciBleGattDbAppGetCharPresFormatFromBuffer(gattDbCharPresFormat_t *pCharPresFormat, uint8_t **ppBuffer);
+
+void fsciBleGattDbAppGetBufferFromCharPresFormat(gattDbCharPresFormat_t *pCharPresFormat, uint8_t **ppBuffer);
 
 #ifdef __cplusplus
 }
-#endif 
+#endif
 
 #endif /* _FSCI_BLE_GATT_DB_APP_TYPES_H */
 
 /*! *********************************************************************************
-* @}
-********************************************************************************** */
+ * @}
+ ********************************************************************************** */

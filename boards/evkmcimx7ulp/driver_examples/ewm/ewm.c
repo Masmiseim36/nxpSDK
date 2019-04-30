@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -36,10 +36,10 @@
  ******************************************************************************/
 
 /*******************************************************************************
-* Variables
-******************************************************************************/
+ * Variables
+ ******************************************************************************/
 volatile bool ewmIsrFlag = false;
-static EWM_Type *base = EWM;
+static EWM_Type *base    = EWM;
 
 /*******************************************************************************
  * Code
@@ -52,7 +52,8 @@ static EWM_Type *base = EWM;
 void gpio_configure(void)
 {
     gpio_pin_config_t sw_config = {
-        kGPIO_DigitalInput, 0,
+        kGPIO_DigitalInput,
+        0,
     };
     GPIO_PinInit(SW_GPIO, SW_GPIO_PIN, &sw_config);
 }

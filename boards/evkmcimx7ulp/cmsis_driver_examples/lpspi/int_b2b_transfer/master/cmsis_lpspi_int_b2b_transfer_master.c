@@ -37,8 +37,8 @@ uint8_t masterRxData[TRANSFER_SIZE] = {0U};
 uint8_t masterTxData[TRANSFER_SIZE] = {0U};
 
 volatile bool isTransferCompleted = false;
-volatile bool isMasterOnTransmit = false;
-volatile bool isMasterOnReceive = false;
+volatile bool isMasterOnTransmit  = false;
+volatile bool isMasterOnReceive   = false;
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -119,7 +119,7 @@ int main(void)
         PRINTF("\r\n");
 
         isTransferCompleted = false;
-        isMasterOnTransmit = true;
+        isMasterOnTransmit  = true;
         /* Start master transfer, send data to slave */
         DRIVER_MASTER_SPI.Send(masterTxData, TRANSFER_SIZE);
         /* Wait transfer complete */
@@ -134,7 +134,7 @@ int main(void)
         }
 
         isTransferCompleted = false;
-        isMasterOnReceive = true;
+        isMasterOnReceive   = true;
         /* Start master transfer, receive data from slave */
         DRIVER_MASTER_SPI.Receive(masterRxData, TRANSFER_SIZE);
 

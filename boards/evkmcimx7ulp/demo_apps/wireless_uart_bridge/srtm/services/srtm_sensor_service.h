@@ -35,13 +35,13 @@ typedef enum
 } srtm_sensor_type_t;
 
 /**
-* @brief SRTM Sensor adapter structure pointer.
-*/
+ * @brief SRTM Sensor adapter structure pointer.
+ */
 typedef struct _srtm_sensor_adapter *srtm_sensor_adapter_t;
 
 /**
-* @brief SRTM Sensor adapter structure
-*/
+ * @brief SRTM Sensor adapter structure
+ */
 struct _srtm_sensor_adapter
 {
     /* Bound service */
@@ -49,27 +49,34 @@ struct _srtm_sensor_adapter
 
     /* Interfaces implemented by Sensor service. */
     srtm_status_t (*updateState)(srtm_service_t service, srtm_sensor_type_t type, uint8_t index);
-    srtm_status_t (*reportData)(srtm_service_t service, srtm_sensor_type_t type, uint8_t index,
-                                uint8_t *data, uint32_t dataLen);
+    srtm_status_t (*reportData)(
+        srtm_service_t service, srtm_sensor_type_t type, uint8_t index, uint8_t *data, uint32_t dataLen);
 
     /* Interfaces implemented by Sensor adapter. */
-    srtm_status_t (*enableStateDetector)(srtm_sensor_adapter_t adapter, srtm_sensor_type_t type,
-                                         uint8_t index, bool enable);
-    srtm_status_t (*enableDataReport)(srtm_sensor_adapter_t adapter, srtm_sensor_type_t type,
-                                      uint8_t index, bool enable);
-    srtm_status_t (*setPollDelay)(srtm_sensor_adapter_t adapter, srtm_sensor_type_t type,
-                                  uint8_t index, uint32_t millisec);
+    srtm_status_t (*enableStateDetector)(srtm_sensor_adapter_t adapter,
+                                         srtm_sensor_type_t type,
+                                         uint8_t index,
+                                         bool enable);
+    srtm_status_t (*enableDataReport)(srtm_sensor_adapter_t adapter,
+                                      srtm_sensor_type_t type,
+                                      uint8_t index,
+                                      bool enable);
+    srtm_status_t (*setPollDelay)(srtm_sensor_adapter_t adapter,
+                                  srtm_sensor_type_t type,
+                                  uint8_t index,
+                                  uint32_t millisec);
 };
 
 /**
-* @brief SRTM Sensor payload structure
-*/
+ * @brief SRTM Sensor payload structure
+ */
 SRTM_ANON_DEC_BEGIN
 SRTM_PACKED_BEGIN struct _srtm_sensor_payload
 {
     uint8_t type;
     uint8_t index;
-    union {
+    union
+    {
         uint8_t enable;
         uint8_t retCode;
         uint32_t pollDelay;

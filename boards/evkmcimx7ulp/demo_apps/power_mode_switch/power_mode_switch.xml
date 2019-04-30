@@ -64,9 +64,6 @@
         <option id="com.crt.advproject.c.misc.dialect" type="enum">
           <value>com.crt.advproject.misc.dialect.gnu99</value>
         </option>
-        <option id="com.crt.advproject.gcc.exe.debug.option.debugging.level" type="enum">
-          <value>gnu.c.debugging.level.default</value>
-        </option>
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
           <value>SRTM_DEBUG_MESSAGE_FUNC=DbgConsole_Printf</value>
           <value>SRTM_DEBUG_VERBOSE_LEVEL=SRTM_DEBUG_VERBOSE_WARN</value>

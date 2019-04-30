@@ -1,13 +1,13 @@
 /*! *********************************************************************************
-* \addtogroup Battery Service
-* @{
-********************************************************************************** */
+ * \addtogroup Battery Service
+ * @{
+ ********************************************************************************** */
 /*
  * Copyright (c) 2014, Freescale Semiconductor, Inc.
  * Copyright (c) 2016 - 2017 , NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -57,7 +57,7 @@ static void Bas_SendNotifications(uint16_t handle);
 *************************************************************************************
 ************************************************************************************/
 
-bleResult_t Bas_Start (basConfig_t *pServiceConfig)
+bleResult_t Bas_Start(basConfig_t *pServiceConfig)
 {
     /* Record initial battery level measurement */
     Bas_RecordBatteryMeasurement(pServiceConfig->serviceHandle, pServiceConfig->batteryLevel);
@@ -65,7 +65,7 @@ bleResult_t Bas_Start (basConfig_t *pServiceConfig)
     return gBleSuccess_c;
 }
 
-bleResult_t Bas_Stop (basConfig_t *pServiceConfig)
+bleResult_t Bas_Stop(basConfig_t *pServiceConfig)
 {
     mBas_SubscribedClientId = gInvalidDeviceId_c;
     return gBleSuccess_c;
@@ -83,15 +83,14 @@ bleResult_t Bas_Unsubscribe()
     return gBleSuccess_c;
 }
 
-bleResult_t Bas_RecordBatteryMeasurement (uint16_t serviceHandle, uint8_t batteryLevel)
+bleResult_t Bas_RecordBatteryMeasurement(uint16_t serviceHandle, uint8_t batteryLevel)
 {
-    uint16_t  handle;
+    uint16_t handle;
     bleResult_t result;
     bleUuid_t uuid = Uuid16(gBleSig_BatteryLevel_d);
 
     /* Get handle of  characteristic */
-    result = GattDb_FindCharValueHandleInService(serviceHandle,
-        gBleUuidType16_c, &uuid, &handle);
+    result = GattDb_FindCharValueHandleInService(serviceHandle, gBleUuidType16_c, &uuid, &handle);
 
     if (result != gBleSuccess_c)
         return result;
@@ -112,25 +111,21 @@ bleResult_t Bas_RecordBatteryMeasurement (uint16_t serviceHandle, uint8_t batter
 * Private functions
 *************************************************************************************
 ************************************************************************************/
-static void Bas_SendNotifications
-(
-  uint16_t handle
-)
+static void Bas_SendNotifications(uint16_t handle)
 {
-    uint16_t  handleCccd;
+    uint16_t handleCccd;
     bool_t isNotifActive;
-   
+
     /* Get handle of CCCD */
     if (GattDb_FindCccdHandleForCharValueHandle(handle, &handleCccd) != gBleSuccess_c)
         return;
 
-    if (gBleSuccess_c == Gap_CheckNotificationStatus
-        (mBas_SubscribedClientId, handleCccd, &isNotifActive) &&
+    if (gBleSuccess_c == Gap_CheckNotificationStatus(mBas_SubscribedClientId, handleCccd, &isNotifActive) &&
         TRUE == isNotifActive)
     {
         GattServer_SendNotification(mBas_SubscribedClientId, handle);
     }
 }
 /*! *********************************************************************************
-* @}
-********************************************************************************** */
+ * @}
+ ********************************************************************************** */

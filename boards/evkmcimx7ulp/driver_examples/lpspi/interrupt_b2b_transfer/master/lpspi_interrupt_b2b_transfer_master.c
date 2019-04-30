@@ -86,20 +86,20 @@ int main(void)
     lpspi_transfer_t masterXfer;
 
     /*Master config*/
-    masterConfig.baudRate = TRANSFER_BAUDRATE;
+    masterConfig.baudRate     = TRANSFER_BAUDRATE;
     masterConfig.bitsPerFrame = 8 * TRANSFER_SIZE;
-    masterConfig.cpol = kLPSPI_ClockPolarityActiveHigh;
-    masterConfig.cpha = kLPSPI_ClockPhaseFirstEdge;
-    masterConfig.direction = kLPSPI_MsbFirst;
+    masterConfig.cpol         = kLPSPI_ClockPolarityActiveHigh;
+    masterConfig.cpha         = kLPSPI_ClockPhaseFirstEdge;
+    masterConfig.direction    = kLPSPI_MsbFirst;
 
-    masterConfig.pcsToSckDelayInNanoSec = 1000000000 / masterConfig.baudRate;
-    masterConfig.lastSckToPcsDelayInNanoSec = 1000000000 / masterConfig.baudRate;
+    masterConfig.pcsToSckDelayInNanoSec        = 1000000000 / masterConfig.baudRate;
+    masterConfig.lastSckToPcsDelayInNanoSec    = 1000000000 / masterConfig.baudRate;
     masterConfig.betweenTransferDelayInNanoSec = 1000000000 / masterConfig.baudRate;
 
-    masterConfig.whichPcs = EXAMPLE_LPSPI_MASTER_PCS_FOR_INIT;
+    masterConfig.whichPcs           = EXAMPLE_LPSPI_MASTER_PCS_FOR_INIT;
     masterConfig.pcsActiveHighOrLow = kLPSPI_PcsActiveLow;
 
-    masterConfig.pinCfg = kLPSPI_SdiInSdoOut;
+    masterConfig.pinCfg        = kLPSPI_SdiInSdoOut;
     masterConfig.dataOutConfig = kLpspiDataOutRetained;
 
     srcClock_Hz = LPSPI_MASTER_CLK_FREQ;
@@ -131,8 +131,8 @@ int main(void)
 
         /* Start master transfer, send data to slave */
         isTransferCompleted = false;
-        masterXfer.txData = masterTxData;
-        masterXfer.rxData = NULL;
+        masterXfer.txData   = masterTxData;
+        masterXfer.rxData   = NULL;
         masterXfer.dataSize = TRANSFER_SIZE;
         masterXfer.configFlags =
             EXAMPLE_LPSPI_MASTER_PCS_FOR_TRANSFER | kLPSPI_MasterPcsContinuous | kLPSPI_SlaveByteSwap;
@@ -152,8 +152,8 @@ int main(void)
 
         /* Start master transfer, receive data from slave */
         isTransferCompleted = false;
-        masterXfer.txData = NULL;
-        masterXfer.rxData = masterRxData;
+        masterXfer.txData   = NULL;
+        masterXfer.rxData   = masterRxData;
         masterXfer.dataSize = TRANSFER_SIZE;
         masterXfer.configFlags =
             EXAMPLE_LPSPI_MASTER_PCS_FOR_TRANSFER | kLPSPI_MasterPcsContinuous | kLPSPI_SlaveByteSwap;

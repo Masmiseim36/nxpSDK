@@ -24,8 +24,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief LTC EDMA driver version. Version 2.0.5. */
-#define FSL_LTC_EDMA_DRIVER_VERSION (MAKE_VERSION(2, 0, 5))
+/*! @brief LTC EDMA driver version. Version 2.0.7. */
+#define FSL_LTC_EDMA_DRIVER_VERSION (MAKE_VERSION(2, 0, 7))
 /*@}*/
 
 /* @brief The LTC eDMA handle type. */
@@ -55,15 +55,14 @@ struct _ltc_edma_handle
     uint32_t size;                          /*!< Size of input and output data in bytes.*/
     uint32_t modeReg;                       /*!< LTC mode register.*/
     /* Used by AES CTR*/
-    uint8_t *counter;   /*!< Input counter (updates on return)*/
-    const uint8_t *key; /*!< Input key to use for forward AES cipher*/
-    uint32_t keySize;   /*!< Size of the input key, in bytes. Must be 16, 24, or 32.*/
-    uint8_t
-        *counterlast; /*!< Output cipher of last counter, for chained CTR calls. NULL can be passed if chained calls are
-                         not used.*/
-    uint32_t *szLeft; /*!< Output number of bytes in left unused in counterlast block. NULL can be passed if chained
-                         calls are not used.*/
-    uint32_t lastSize; /*!< Last size.*/
+    uint8_t *counter;     /*!< Input counter (updates on return)*/
+    const uint8_t *key;   /*!< Input key to use for forward AES cipher*/
+    uint32_t keySize;     /*!< Size of the input key, in bytes. Must be 16, 24, or 32.*/
+    uint8_t *counterlast; /*!< Output cipher of last counter, for chained CTR calls. NULL can be passed if chained calls
+                             are not used.*/
+    uint32_t *szLeft;     /*!< Output number of bytes in left unused in counterlast block. NULL can be passed if chained
+                             calls are not used.*/
+    uint32_t lastSize;    /*!< Last size.*/
 };
 
 /*******************************************************************************
@@ -239,6 +238,7 @@ status_t LTC_AES_CryptCtrEDMA(LTC_Type *base,
  *@}
  */
 
+#if defined(FSL_FEATURE_LTC_HAS_DES) && FSL_FEATURE_LTC_HAS_DES
 /*******************************************************************************
  * DES API
  ******************************************************************************/
@@ -821,6 +821,7 @@ status_t LTC_DES3_DecryptOfbEDMA(LTC_Type *base,
                                  const uint8_t key1[LTC_DES_KEY_SIZE],
                                  const uint8_t key2[LTC_DES_KEY_SIZE],
                                  const uint8_t key3[LTC_DES_KEY_SIZE]);
+#endif /* FSL_FEATURE_LTC_HAS_DES */
 
 /*!
  *@}

@@ -2,7 +2,7 @@
  * Copyright (c) 2017, NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -18,8 +18,7 @@ typedef struct _srtm_snvs_lp_rtc_adapter
 {
     struct _srtm_rtc_adapter adapter;
     SNVS_Type *base;
-} *srtm_snvs_lp_rtc_adapter_t;
-
+} * srtm_snvs_lp_rtc_adapter_t;
 
 /*******************************************************************************
  * Prototypes
@@ -35,13 +34,13 @@ typedef struct _srtm_snvs_lp_rtc_adapter
 static uint32_t RTC_GetSeconds(SNVS_Type *base)
 {
     uint32_t seconds = 0;
-    uint32_t tmp = 0;
+    uint32_t tmp     = 0;
 
     /* Do consecutive reads until value is correct */
     do
     {
         seconds = tmp;
-        tmp = (base->LPSRTCMR << 17U) | (base->LPSRTCLR >> 15U);
+        tmp     = (base->LPSRTCMR << 17U) | (base->LPSRTCLR >> 15U);
     } while (tmp != seconds);
 
     return seconds;
@@ -68,7 +67,7 @@ static void RTC_SetSeconds(SNVS_Type *base, uint32_t seconds)
 static srtm_status_t RTC_SetAlarm(SNVS_Type *base, uint32_t seconds)
 {
     uint32_t currSeconds = 0U;
-    uint32_t tmp = base->LPCR;
+    uint32_t tmp         = base->LPCR;
 
     currSeconds = RTC_GetSeconds(base);
 
@@ -132,15 +131,16 @@ static srtm_status_t SRTM_SnvsLpRtcAdapter_GetAlarm(srtm_rtc_adapter_t adapter, 
     pAlarm->seconds = handle->base->LPTAR;
 
     pAlarm->enabled = (SNVS_LP_SRTC_GetEnabledInterrupts(handle->base) & kSNVS_SRTC_AlarmInterrupt) ?
-                      SRTM_RTC_ALARM_ENABLED : SRTM_RTC_ALARM_DISABLED;
+                          SRTM_RTC_ALARM_ENABLED :
+                          SRTM_RTC_ALARM_DISABLED;
     pAlarm->pending = (SNVS_LP_SRTC_GetStatusFlags(handle->base) & kSNVS_SRTC_AlarmInterruptFlag) ?
-                      SRTM_RTC_ALARM_PENDING : SRTM_RTC_ALARM_NOT_PENDING;
+                          SRTM_RTC_ALARM_PENDING :
+                          SRTM_RTC_ALARM_NOT_PENDING;
 
     return SRTM_Status_Success;
 }
 
-static srtm_status_t SRTM_SnvsLpRtcAdapter_SetAlarm(srtm_rtc_adapter_t adapter,
-                                                    const struct _srtm_rtc_alarm *pAlarm)
+static srtm_status_t SRTM_SnvsLpRtcAdapter_SetAlarm(srtm_rtc_adapter_t adapter, const struct _srtm_rtc_alarm *pAlarm)
 {
     srtm_status_t status;
     srtm_snvs_lp_rtc_adapter_t handle = (srtm_snvs_lp_rtc_adapter_t)adapter;
@@ -206,14 +206,14 @@ srtm_rtc_adapter_t SRTM_SnvsLpRtcAdapter_Create(SNVS_Type *base)
     handle->base = base;
 
     /* Fields to be filled when creating service with this adapter. */
-    handle->adapter.service = NULL;
+    handle->adapter.service     = NULL;
     handle->adapter.notifyAlarm = NULL;
 
     /* Adapter interfaces. */
-    handle->adapter.getTime = SRTM_SnvsLpRtcAdapter_GetTime;
-    handle->adapter.setTime = SRTM_SnvsLpRtcAdapter_SetTime;
-    handle->adapter.getAlarm = SRTM_SnvsLpRtcAdapter_GetAlarm;
-    handle->adapter.setAlarm = SRTM_SnvsLpRtcAdapter_SetAlarm;
+    handle->adapter.getTime     = SRTM_SnvsLpRtcAdapter_GetTime;
+    handle->adapter.setTime     = SRTM_SnvsLpRtcAdapter_SetTime;
+    handle->adapter.getAlarm    = SRTM_SnvsLpRtcAdapter_GetAlarm;
+    handle->adapter.setAlarm    = SRTM_SnvsLpRtcAdapter_SetAlarm;
     handle->adapter.enableAlarm = SRTM_SnvsLpRtcAdapter_EnableAlarm;
 
     /* Enable RTC */

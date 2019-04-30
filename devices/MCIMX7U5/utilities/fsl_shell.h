@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -23,7 +23,9 @@
  ******************************************************************************/
 
 /*! @brief Whether use non-blocking mode. */
+#ifndef SHELL_NON_BLOCKING_MODE
 #define SHELL_NON_BLOCKING_MODE SERIAL_MANAGER_NON_BLOCKING_MODE
+#endif
 
 /*! @brief Macro to set on/off auto-complete feature. */
 #define SHELL_AUTO_COMPLETE (1U)
@@ -50,10 +52,10 @@
 
 typedef enum _shell_status
 {
-    kStatus_SHELL_Success = kStatus_Success,                                  /*!< Success */
-    kStatus_SHELL_Error = MAKE_STATUS(kStatusGroup_SHELL, 1),                 /*!< Failed */
+    kStatus_SHELL_Success               = kStatus_Success,                    /*!< Success */
+    kStatus_SHELL_Error                 = MAKE_STATUS(kStatusGroup_SHELL, 1), /*!< Failed */
     kStatus_SHELL_OpenWriteHandleFailed = MAKE_STATUS(kStatusGroup_SHELL, 2), /*!< Open write handle failed */
-    kStatus_SHELL_OpenReadHandleFailed = MAKE_STATUS(kStatusGroup_SHELL, 3),  /*!< Open read handle failed */
+    kStatus_SHELL_OpenReadHandleFailed  = MAKE_STATUS(kStatusGroup_SHELL, 3), /*!< Open read handle failed */
 } shell_status_t;
 
 /*! @brief The handle of the shell module */
@@ -98,8 +100,8 @@ _Pragma("diag_suppress=Pm120")
  * @param paramCount The max parameter count of the current command.
  */
 #define SHELL_COMMAND_DEFINE(command, descriptor, callback, paramCount) \
-    \
-shell_command_t g_shellCommand##command = {                             \
+                                                                        \
+    shell_command_t g_shellCommand##command = {                         \
         (#command), (descriptor), (callback), (paramCount), {0},        \
     }
 
@@ -217,7 +219,7 @@ shell_command_t g_shellCommand##command = {                             \
     void SHELL_Task(shell_handle_t shellHandle);
 #endif
 
-/* @} */
+    /* @} */
 
 #if defined(__cplusplus)
 }

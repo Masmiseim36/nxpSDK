@@ -13,7 +13,7 @@
 #include "fsl_edma.h"
 
 /*!
- * @addtogroup qspi
+ * @addtogroup qspi_edma_driver
  * @{
  */
 

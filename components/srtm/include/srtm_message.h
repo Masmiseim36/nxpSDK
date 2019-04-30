@@ -2,7 +2,7 @@
  * Copyright (c) 2017, NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -20,20 +20,19 @@
  * Definitions
  ******************************************************************************/
 /*! @brief Get SRTM major version */
-#define SRTM_MESSAGE_MAJOR_VERSION(ver) (((uint16_t)((ver) & 0xFF00U)) >> 8U)
+#define SRTM_MESSAGE_MAJOR_VERSION(ver) (((uint16_t)((ver)&0xFF00U)) >> 8U)
 /*! @brief Get SRTM minor version */
-#define SRTM_MESSAGE_MINOR_VERSION(ver) ((uint16_t)((ver) & 0xFFU))
+#define SRTM_MESSAGE_MINOR_VERSION(ver) ((uint16_t)((ver)&0xFFU))
 
 /**
-* @brief SRTM local procedure callback function
-*/
+ * @brief SRTM local procedure callback function
+ */
 typedef void (*srtm_message_proc_cb_t)(srtm_dispatcher_t dispatcher, void *param1, void *param2);
 
 /**
-* @brief SRTM free function pointer
-*/
+ * @brief SRTM free function pointer
+ */
 typedef void (*srtm_message_free_t)(srtm_message_t message, void *param);
-
 
 /*******************************************************************************
  * API
@@ -101,8 +100,8 @@ uint32_t SRTM_RawData_GetDataLen(srtm_rawdata_t data);
  * @param payloadLen SRTM application protocol payload.
  * @return SRTM request handle, or NULL on failure.
  */
-srtm_request_t SRTM_Request_Create(srtm_channel_t channel, uint8_t category, uint16_t version,
-                                   uint8_t command, uint16_t payloadLen);
+srtm_request_t SRTM_Request_Create(
+    srtm_channel_t channel, uint8_t category, uint16_t version, uint8_t command, uint16_t payloadLen);
 
 /*!
  * @brief Destroy SRTM request message.
@@ -131,8 +130,8 @@ srtm_status_t SRTM_Request_GetErrorCode(srtm_request_t request);
  * @param payloadLen SRTM application protocol payload.
  * @return SRTM response handle, or NULL on failure.
  */
-srtm_response_t SRTM_Response_Create(srtm_channel_t channel, uint8_t category, uint16_t version,
-                                     uint8_t command, uint16_t payloadLen);
+srtm_response_t SRTM_Response_Create(
+    srtm_channel_t channel, uint8_t category, uint16_t version, uint8_t command, uint16_t payloadLen);
 
 /*!
  * @brief Destroy SRTM response message.
@@ -151,9 +150,8 @@ void SRTM_Response_Destroy(srtm_response_t response);
  * @param payloadLen SRTM application protocol payload length.
  * @return SRTM notification handle, or NULL on failure.
  */
-srtm_notification_t SRTM_Notification_Create(srtm_channel_t channel, uint8_t category,
-                                             uint16_t version, uint8_t command,
-                                             uint16_t payloadLen);
+srtm_notification_t SRTM_Notification_Create(
+    srtm_channel_t channel, uint8_t category, uint16_t version, uint8_t command, uint16_t payloadLen);
 
 /*!
  * @brief Destroy SRTM notification message.

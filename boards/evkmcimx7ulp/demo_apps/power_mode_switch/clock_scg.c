@@ -45,7 +45,7 @@ void APP_SetClockRunFromHsrun(void)
 void APP_SetClockRunFromVlpr(void)
 {
     QuadSPI_Type *qspi = BOARD_IsRunOnQSPI() ? QuadSPI0 : NULL;
-    uint32_t *config = (uint32_t *)(&g_sysClkConfigNormalRun);
+    uint32_t *config   = (uint32_t *)(&g_sysClkConfigNormalRun);
 
     /* Recover SPLL */
     SCG0->SPLLCSR |= SCG_SPLLCSR_SPLLEN_MASK;
@@ -64,7 +64,7 @@ void APP_SetClockRunFromVlpr(void)
 void APP_SetClockVlpr(void)
 {
     QuadSPI_Type *qspi = BOARD_IsRunOnQSPI() ? QuadSPI0 : NULL;
-    uint32_t *config = (uint32_t *)(&g_sysClkConfigVlpr);
+    uint32_t *config   = (uint32_t *)(&g_sysClkConfigVlpr);
 
     /* When switching from RUN to VLPR, first switch RUN clock source to VLPR source */
     BOARD_SetRunMode(SCG0, *config, qspi, kCLOCK_Qspi,

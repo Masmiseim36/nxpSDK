@@ -2,7 +2,7 @@
  * Copyright (c) 2017, NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -20,20 +20,20 @@
  * Definitions
  ******************************************************************************/
 /**
-* @brief SRTM peer core state
-*/
+ * @brief SRTM peer core state
+ */
 typedef enum _srtm_peercore_state
 {
-    SRTM_PeerCore_State_Inactive = 0x00U,  /*!< Peer core is not ready to communicate */
-    SRTM_PeerCore_State_Activating,        /*!< Peer core wakeup in progress */
-    SRTM_PeerCore_State_Activated,         /*!< Peer core is ready to communicate */
-    SRTM_PeerCore_State_Deactivating,      /*!< Peer core is going to suspend */
-    SRTM_PeerCore_State_Deactivated,       /*!< Peer core suspended and not ready to communicate */
+    SRTM_PeerCore_State_Inactive = 0x00U, /*!< Peer core is not ready to communicate */
+    SRTM_PeerCore_State_Activating,       /*!< Peer core wakeup in progress */
+    SRTM_PeerCore_State_Activated,        /*!< Peer core is ready to communicate */
+    SRTM_PeerCore_State_Deactivating,     /*!< Peer core is going to suspend */
+    SRTM_PeerCore_State_Deactivated,      /*!< Peer core suspended and not ready to communicate */
 } srtm_peercore_state_t;
 
 /**
-* @brief SRTM peer core wakeup callback function
-*/
+ * @brief SRTM peer core wakeup callback function
+ */
 typedef srtm_status_t (*srtm_peercore_wakeup_cb_t)(srtm_peercore_t core, void *param);
 
 /*******************************************************************************
@@ -98,8 +98,7 @@ srtm_status_t SRTM_PeerCore_Activate(srtm_peercore_t core);
  * @param param SRTM peer core wakeup parameter.
  * @return SRTM_Status_Success on success and others on failure.
  */
-srtm_status_t SRTM_PeerCore_Deactivate(srtm_peercore_t core, srtm_peercore_wakeup_cb_t wakeup,
-                                       void *param);
+srtm_status_t SRTM_PeerCore_Deactivate(srtm_peercore_t core, srtm_peercore_wakeup_cb_t wakeup, void *param);
 
 /*!
  * @brief Add communication channel to the SRTM peer core.

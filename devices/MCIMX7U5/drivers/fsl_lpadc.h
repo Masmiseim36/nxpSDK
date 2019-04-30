@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -23,8 +23,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief LPADC driver version 2.0.0. */
-#define FSL_LPADC_DRIVER_VERSION (MAKE_VERSION(2, 0, 1))
+/*! @brief LPADC driver version 2.0.4. */
+#define FSL_LPADC_DRIVER_VERSION (MAKE_VERSION(2, 0, 4))
 /*@}*/
 
 /*!
@@ -41,6 +41,37 @@
  */
 #define LPADC_GET_ACTIVE_TRIGGER_STATUE(statusVal) ((statusVal & ADC_STAT_TRGACT_MASK) >> ADC_STAT_TRGACT_SHIFT)
 
+#if (defined(FSL_FEATURE_LPADC_FIFO_COUNT) && (FSL_FEATURE_LPADC_FIFO_COUNT == 2))
+/*!
+ * @brief Define hardware flags of the module.
+ */
+enum _lpadc_status_flags
+{
+    kLPADC_ResultFIFO0OverflowFlag = ADC_STAT_FOF0_MASK, /*!< Indicates that more data has been written to the Result
+                                                               FIFO 0 than it can hold. */
+    kLPADC_ResultFIFO0ReadyFlag = ADC_STAT_RDY0_MASK,    /*!< Indicates when the number of valid datawords in the result
+                                                               FIFO 0 is greater than the setting watermark level. */
+    kLPADC_ResultFIFO1OverflowFlag = ADC_STAT_FOF1_MASK, /*!< Indicates that more data has been written to the Result
+                                                              FIFO 1 than it can hold. */
+    kLPADC_ResultFIFO1ReadyFlag = ADC_STAT_RDY1_MASK,    /*!< Indicates when the number of valid datawords in the result
+                                                              FIFO 1 is greater than the setting watermark level. */
+};
+
+/*!
+ * @brief Define interrupt switchers of the module.
+ */
+enum _lpadc_interrupt_enable
+{
+    kLPADC_ResultFIFO0OverflowInterruptEnable = ADC_IE_FOFIE0_MASK, /*!< Configures ADC to generate overflow interrupt
+                                                                         requests when FOF0 flag is asserted. */
+    kLPADC_FIFO0WatermarkInterruptEnable = ADC_IE_FWMIE0_MASK,      /*!< Configures ADC to generate watermark interrupt
+                                                                         requests when RDY0 flag is asserted. */
+    kLPADC_ResultFIFO1OverflowInterruptEnable = ADC_IE_FOFIE1_MASK, /*!< Configures ADC to generate overflow interrupt
+                                                                         requests when FOF1 flag is asserted. */
+    kLPADC_FIFO1WatermarkInterruptEnable = ADC_IE_FWMIE1_MASK,      /*!< Configures ADC to generate watermark interrupt
+                                                                         requests when RDY1 flag is asserted. */
+};
+#else
 /*!
  * @brief Define hardware flags of the module.
  */
@@ -62,6 +93,7 @@ enum _lpadc_interrupt_enable
     kLPADC_FIFOWatermarkInterruptEnable = ADC_IE_FWMIE_MASK,      /*!< Configures ADC to generate watermark interrupt
                                                                        requests when RDY flag is asserted. */
 };
+#endif /* FSL_FEATURE_LPADC_FIFO_COUNT */
 
 /*!
  * @brief Define enumeration of sample scale mode.
@@ -80,7 +112,7 @@ typedef enum _lpadc_sample_scale_mode
 /*!
  * @brief Define enumeration of channel sample mode.
  *
- * The channel sample mode configures the channel with single end/differential, side A/B.
+ * The channel sample mode configures the channel with single-end/differential/dual-single-end, side A/B.
  */
 typedef enum _lpadc_sample_channel_mode
 {
@@ -89,7 +121,11 @@ typedef enum _lpadc_sample_channel_mode
 #if defined(FSL_FEATURE_LPADC_HAS_CMDL_DIFF) && FSL_FEATURE_LPADC_HAS_CMDL_DIFF
     kLPADC_SampleChannelDiffBothSideAB = 2U, /*!< Differential mode, using A as plus side and B as minue side. */
     kLPADC_SampleChannelDiffBothSideBA = 3U, /*!< Differential mode, using B as plus side and A as minue side. */
-#endif                                       /* FSL_FEATURE_LPADC_HAS_CMDL_DIFF */
+#elif defined(FSL_FEATURE_LPADC_HAS_CMDL_CTYPE) && FSL_FEATURE_LPADC_HAS_CMDL_CTYPE
+    kLPADC_SampleChannelDiffBothSide = 2U, /*!< Differential mode, using A and B. */
+    kLPADC_SampleChannelDualSingleEndBothSide =
+        3U, /*!< Dual-Single-Ended Mode. Both A side and B side channels are converted independently. */
+#endif
 } lpadc_sample_channel_mode_t;
 
 /*!
@@ -100,13 +136,13 @@ typedef enum _lpadc_sample_channel_mode
  */
 typedef enum _lpadc_hardware_average_mode
 {
-    kLPADC_HardwareAverageCount1 = 0U,   /*!< Single conversion. */
-    kLPADC_HardwareAverageCount2 = 1U,   /*!< 2 conversions averaged. */
-    kLPADC_HardwareAverageCount4 = 2U,   /*!< 4 conversions averaged. */
-    kLPADC_HardwareAverageCount8 = 3U,   /*!< 8 conversions averaged. */
-    kLPADC_HardwareAverageCount16 = 4U,  /*!< 16 conversions averaged. */
-    kLPADC_HardwareAverageCount32 = 5U,  /*!< 32 conversions averaged. */
-    kLPADC_HardwareAverageCount64 = 6U,  /*!< 64 conversions averaged. */
+    kLPADC_HardwareAverageCount1   = 0U, /*!< Single conversion. */
+    kLPADC_HardwareAverageCount2   = 1U, /*!< 2 conversions averaged. */
+    kLPADC_HardwareAverageCount4   = 2U, /*!< 4 conversions averaged. */
+    kLPADC_HardwareAverageCount8   = 3U, /*!< 8 conversions averaged. */
+    kLPADC_HardwareAverageCount16  = 4U, /*!< 16 conversions averaged. */
+    kLPADC_HardwareAverageCount32  = 5U, /*!< 32 conversions averaged. */
+    kLPADC_HardwareAverageCount64  = 6U, /*!< 64 conversions averaged. */
     kLPADC_HardwareAverageCount128 = 7U, /*!< 128 conversions averaged. */
 } lpadc_hardware_average_mode_t;
 
@@ -119,13 +155,13 @@ typedef enum _lpadc_hardware_average_mode
  */
 typedef enum _lpadc_sample_time_mode
 {
-    kLPADC_SampleTimeADCK3 = 0U,   /*!< 3 ADCK cycles total sample time. */
-    kLPADC_SampleTimeADCK5 = 1U,   /*!< 5 ADCK cycles total sample time. */
-    kLPADC_SampleTimeADCK7 = 2U,   /*!< 7 ADCK cycles total sample time. */
-    kLPADC_SampleTimeADCK11 = 3U,  /*!< 11 ADCK cycles total sample time. */
-    kLPADC_SampleTimeADCK19 = 4U,  /*!< 19 ADCK cycles total sample time. */
-    kLPADC_SampleTimeADCK35 = 5U,  /*!< 35 ADCK cycles total sample time. */
-    kLPADC_SampleTimeADCK67 = 6U,  /*!< 69 ADCK cycles total sample time. */
+    kLPADC_SampleTimeADCK3   = 0U, /*!< 3 ADCK cycles total sample time. */
+    kLPADC_SampleTimeADCK5   = 1U, /*!< 5 ADCK cycles total sample time. */
+    kLPADC_SampleTimeADCK7   = 2U, /*!< 7 ADCK cycles total sample time. */
+    kLPADC_SampleTimeADCK11  = 3U, /*!< 11 ADCK cycles total sample time. */
+    kLPADC_SampleTimeADCK19  = 4U, /*!< 19 ADCK cycles total sample time. */
+    kLPADC_SampleTimeADCK35  = 5U, /*!< 35 ADCK cycles total sample time. */
+    kLPADC_SampleTimeADCK67  = 6U, /*!< 69 ADCK cycles total sample time. */
     kLPADC_SampleTimeADCK131 = 7U, /*!< 131 ADCK cycles total sample time. */
 } lpadc_sample_time_mode_t;
 
@@ -138,10 +174,43 @@ typedef enum _lpadc_sample_time_mode
  */
 typedef enum _lpadc_hardware_compare_mode
 {
-    kLPADC_HardwareCompareDisabled = 0U,        /*!< Compare disabled. */
-    kLPADC_HardwareCompareStoreOnTrue = 2U,     /*!< Compare enabled. Store on true. */
+    kLPADC_HardwareCompareDisabled        = 0U, /*!< Compare disabled. */
+    kLPADC_HardwareCompareStoreOnTrue     = 2U, /*!< Compare enabled. Store on true. */
     kLPADC_HardwareCompareRepeatUntilTrue = 3U, /*!< Compare enabled. Repeat channel acquisition until true. */
 } lpadc_hardware_compare_mode_t;
+
+/*!
+ * @brief Define enumeration of conversion resolution mode.
+ *
+ * Configure the resolution bit in specific conversion type. For detailed resolution accuracy, see to
+ * #_lpadc_sample_channel_mode
+ */
+typedef enum _lpadc_conversion_resolution_mode
+{
+    kLPADC_ConversionResolutionStandard = 0U, /*!< Standard resolution. Single-ended 12-bit conversion, Differential
+                                                   13-bit conversion with 2’s complement output. */
+    kLPADC_ConversionResolutionHigh = 1U,     /*!< High resolution. Single-ended 16-bit conversion; Differential 16-bit
+                                                   conversion with 2’s complement output. */
+} lpadc_conversion_resolution_mode_t;
+
+#if defined(FSL_FEATURE_LPADC_HAS_CTRL_CAL_AVGS) && FSL_FEATURE_LPADC_HAS_CTRL_CAL_AVGS
+/*!
+ * @brief Define enumeration of conversion averages mode.
+ *
+ * Configure the converion average number for auto-calibration.
+ */
+typedef enum _lpadc_conversion_average_mode
+{
+    kLPADC_ConversionAverage1   = 0U, /*!< Single conversion. */
+    kLPADC_ConversionAverage2   = 1U, /*!< 2 conversions averaged. */
+    kLPADC_ConversionAverage4   = 2U, /*!< 4 conversions averaged. */
+    kLPADC_ConversionAverage8   = 3U, /*!< 8 conversions averaged. */
+    kLPADC_ConversionAverage16  = 4U, /*!< 16 conversions averaged. */
+    kLPADC_ConversionAverage32  = 5U, /*!< 32 conversions averaged. */
+    kLPADC_ConversionAverage64  = 6U, /*!< 64 conversions averaged. */
+    kLPADC_ConversionAverage128 = 7U, /*!< 128 conversions averaged. */
+} lpadc_conversion_average_mode_t;
+#endif /* FSL_FEATURE_LPADC_HAS_CTRL_CAL_AVGS */
 
 /*!
  * @brief Define enumeration of reference voltage source.
@@ -183,6 +252,9 @@ typedef enum _lpadc_trigger_priority_policy
                                                     the current conversion is completed (including averaging iterations
                                                     and compare function if enabled) and stored to the result FIFO
                                                     before the higher priority trigger/command is initiated. */
+    kLPADC_TriggerPriorityPreemptSubsequently = 2U, /*!< If a higher priority trigger is received during command
+                                                    processing, the current command will be completed (averaging,
+                                                    looping, compare) before servicing the higher priority trigger. */
 } lpadc_trigger_priority_policy_t;
 
 /*!
@@ -204,6 +276,9 @@ typedef struct
                                 enabled in Doze mode, immediate entries to Wait or Stop are allowed. When disabled, the
                                 ADC will wait for the current averaging iteration/FIFO storage to complete before
                                 acknowledging stop or wait mode entry. */
+#if defined(FSL_FEATURE_LPADC_HAS_CTRL_CAL_AVGS) && FSL_FEATURE_LPADC_HAS_CTRL_CAL_AVGS
+    lpadc_conversion_average_mode_t conversionAverageMode; /*!< Auto-Calibration Averages. */
+#endif                                                     /* FSL_FEATURE_LPADC_HAS_CTRL_CAL_AVGS */
     bool enableAnalogPreliminary; /*!< ADC analog circuits are pre-enabled and ready to execute conversions without
                                        startup delays(at the cost of higher DC current consumption). */
     uint32_t powerUpDelay; /*!< When the analog circuits are not pre-enabled, the ADC analog circuits are only powered
@@ -222,11 +297,21 @@ typedef struct
     uint32_t convPauseDelay; /*!< Controls the duration of pausing during command execution sequencing. The pause delay
                                   is a count of (convPauseDelay*4) ADCK cycles. Only available when ADC pausing
                                   function is enabled. The available value range is in 9-bit. */
+#if (defined(FSL_FEATURE_LPADC_FIFO_COUNT) && (FSL_FEATURE_LPADC_FIFO_COUNT == 2))
+    /* for FIFO0. */
+    uint32_t FIFO0Watermark; /*!< FIFO0Watermark is a programmable threshold setting. When the number of datawords
+                                stored in the ADC Result FIFO0 is greater than the value in this field, the ready flag
+                                would be asserted to indicate stored data has reached the programmable threshold. */
+    /* for FIFO1. */
+    uint32_t FIFO1Watermark; /*!< FIFO1Watermark is a programmable threshold setting. When the number of datawords
+                                stored in the ADC Result FIFO1 is greater than the value in this field, the ready flag
+                                would be asserted to indicate stored data has reached the programmable threshold. */
+#else
     /* for FIFO. */
     uint32_t FIFOWatermark; /*!< FIFOWatermark is a programmable threshold setting. When the number of datawords stored
                                  in the ADC Result FIFO is greater than the value in this field, the ready flag would be
                                  asserted to indicate stored data has reached the programmable threshold. */
-
+#endif /* FSL_FEATURE_LPADC_FIFO_COUNT */
 } lpadc_config_t;
 
 /*!
@@ -253,6 +338,14 @@ typedef struct
     lpadc_hardware_compare_mode_t hardwareCompareMode; /*!< Hardware compare selection. */
     uint32_t hardwareCompareValueHigh; /*!< Compare Value High. The available value range is in 16-bit. */
     uint32_t hardwareCompareValueLow;  /*!< Compare Value Low. The available value range is in 16-bit. */
+#if defined(FSL_FEATURE_LPADC_HAS_CMDL_MODE) && FSL_FEATURE_LPADC_HAS_CMDL_MODE
+    lpadc_conversion_resolution_mode_t conversionResoultuionMode; /*!< Conversion resolution mode. */
+#endif                                                            /* FSL_FEATURE_LPADC_HAS_CMDL_MODE */
+#if defined(FSL_FEATURE_LPADC_HAS_CMDH_WAIT_TRIG) && FSL_FEATURE_LPADC_HAS_CMDH_WAIT_TRIG
+    bool enableWaitTrigger; /*!< Wait for trigger assertion before execution: when disabled, this command will be
+                                 automatically executed; when enabled, the active trigger must be asserted again before
+                                 executing this command. */
+#endif                      /* FSL_FEATURE_LPADC_HAS_CMDH_WAIT_TRIG */
 } lpadc_conv_command_config_t;
 
 /*!
@@ -269,6 +362,10 @@ typedef struct
     uint32_t priority; /*!< Sets the priority of the associated trigger source. If two or more triggers have the same
                             priority level setting, the lower order trigger event has the higher priority. The lower
                             value for this field is for the higher priority, the available value range is 1-bit. */
+#if (defined(FSL_FEATURE_LPADC_FIFO_COUNT) && (FSL_FEATURE_LPADC_FIFO_COUNT == 2))
+    uint8_t channelAFIFOSelect; /* SAR Result Destination For Channel A. */
+    uint8_t channelBFIFOSelect; /* SAR Result Destination For Channel B. */
+#endif                          /* FSL_FEATURE_LPADC_FIFO_COUNT */
     bool enableHardwareTrigger; /*!< Enable hardware trigger source to initiate conversion on the rising edge of the
                                      input trigger source or not. THe software trigger is always available. */
 } lpadc_conv_trigger_config_t;
@@ -348,6 +445,27 @@ static inline void LPADC_Enable(ADC_Type *base, bool enable)
     }
 }
 
+#if (defined(FSL_FEATURE_LPADC_FIFO_COUNT) && (FSL_FEATURE_LPADC_FIFO_COUNT == 2))
+/*!
+ * @brief Do reset the conversion FIFO0.
+ *
+ * @param base LPADC peripheral base address.
+ */
+static inline void LPADC_DoResetFIFO0(ADC_Type *base)
+{
+    base->CTRL |= ADC_CTRL_RSTFIFO0_MASK;
+}
+
+/*!
+ * @brief Do reset the conversion FIFO1.
+ *
+ * @param base LPADC peripheral base address.
+ */
+static inline void LPADC_DoResetFIFO1(ADC_Type *base)
+{
+    base->CTRL |= ADC_CTRL_RSTFIFO1_MASK;
+}
+#else
 /*!
  * @brief Do reset the conversion FIFO.
  *
@@ -357,6 +475,7 @@ static inline void LPADC_DoResetFIFO(ADC_Type *base)
 {
     base->CTRL |= ADC_CTRL_RSTFIFO_MASK;
 }
+#endif /* FSL_FEATURE_LPADC_FIFO_COUNT */
 
 /*!
  * @brief Do reset the module's configuration.
@@ -436,6 +555,43 @@ static inline void LPADC_DisableInterrupts(ADC_Type *base, uint32_t mask)
  * @{
  */
 
+#if (defined(FSL_FEATURE_LPADC_FIFO_COUNT) && (FSL_FEATURE_LPADC_FIFO_COUNT == 2))
+/*!
+ * @brief Switch on/off the DMA trigger for FIFO0 watermark event.
+ *
+ * @param base LPADC peripheral base address.
+ * @param enable Switcher to the event.
+ */
+static inline void LPADC_EnableFIFO0WatermarkDMA(ADC_Type *base, bool enable)
+{
+    if (enable)
+    {
+        base->DE |= ADC_DE_FWMDE0_MASK;
+    }
+    else
+    {
+        base->DE &= ~ADC_DE_FWMDE0_MASK;
+    }
+}
+
+/*!
+ * @brief Switch on/off the DMA trigger for FIFO1 watermark event.
+ *
+ * @param base LPADC peripheral base address.
+ * @param enable Switcher to the event.
+ */
+static inline void LPADC_EnableFIFO1WatermarkDMA(ADC_Type *base, bool enable)
+{
+    if (enable)
+    {
+        base->DE |= ADC_DE_FWMDE1_MASK;
+    }
+    else
+    {
+        base->DE &= ~ADC_DE_FWMDE1_MASK;
+    }
+}
+#else
 /*!
  * @brief Switch on/off the DMA trigger for FIFO watermark event.
  *
@@ -453,14 +609,38 @@ static inline void LPADC_EnableFIFOWatermarkDMA(ADC_Type *base, bool enable)
         base->DE &= ~ADC_DE_FWMDE_MASK;
     }
 }
-
-/* @} */
+#endif /* FSL_FEATURE_LPADC_FIFO_COUNT */
+       /* @} */
 
 /*!
  * @name Trigger and conversion with FIFO.
  * @{
  */
 
+#if (defined(FSL_FEATURE_LPADC_FIFO_COUNT) && (FSL_FEATURE_LPADC_FIFO_COUNT == 2))
+/*!
+ * @brief Get the count of result kept in conversion FIFOn.
+ *
+ * @param base LPADC peripheral base address.
+ * @param index Result FIFO index.
+ * @return The count of result kept in conversion FIFOn.
+ */
+static inline uint32_t LPADC_GetConvResultCount(ADC_Type *base, uint8_t index)
+{
+    return (ADC_FCTRL_FCOUNT_MASK & base->FCTRL[index]) >> ADC_FCTRL_FCOUNT_SHIFT;
+}
+
+/*!
+ * brief Get the result in conversion FIFOn.
+ *
+ * param base LPADC peripheral base address.
+ * param result Pointer to structure variable that keeps the conversion result in conversion FIFOn.
+ * param index Result FIFO index.
+ *
+ * return Status whether FIFOn entry is valid.
+ */
+bool LPADC_GetConvResult(ADC_Type *base, lpadc_conv_result_t *result, uint8_t index);
+#else
 /*!
  * @brief Get the count of result kept in conversion FIFO.
  *
@@ -481,6 +661,7 @@ static inline uint32_t LPADC_GetConvResultCount(ADC_Type *base)
  * @return Status whether FIFO entry is valid.
  */
 bool LPADC_GetConvResult(ADC_Type *base, lpadc_conv_result_t *result);
+#endif /* FSL_FEATURE_LPADC_FIFO_COUNT */
 
 /*!
  * @brief Configure the conversion trigger source.
@@ -545,6 +726,8 @@ void LPADC_SetConvCommandConfig(ADC_Type *base, uint32_t commandId, const lpadc_
  *   config->hardwareCompareMode        = kLPADC_HardwareCompareDisabled;
  *   config->hardwareCompareValueHigh   = 0U;
  *   config->hardwareCompareValueLow    = 0U;
+ *   config->conversionResoultuionMode  = kLPADC_ConversionResolutionStandard;
+ *   config->enableWaitTrigger          = false;
  * @endcode
  * @param config Pointer to configuration structure.
  */
@@ -564,8 +747,6 @@ void LPADC_GetDefaultConvCommandConfig(lpadc_conv_command_config_t *config);
  * @bool enable switcher to the calibration function.
  */
 void LPADC_EnableCalibration(ADC_Type *base, bool enable);
-#endif /* FSL_FEATURE_LPADC_HAS_CFG_CALOFS */
-
 #if defined(FSL_FEATURE_LPADC_HAS_OFSTRIM) && FSL_FEATURE_LPADC_HAS_OFSTRIM
 /*!
  * @brief Set proper offset value to trim ADC.
@@ -580,26 +761,73 @@ static inline void LPADC_SetOffsetValue(ADC_Type *base, uint32_t value)
 {
     base->OFSTRIM = (value & ADC_OFSTRIM_OFSTRIM_MASK) >> ADC_OFSTRIM_OFSTRIM_SHIFT;
 }
-#endif /* FSL_FEATURE_LPADC_HAS_OFSTRIM */
 
-#if defined(FSL_FEATURE_LPADC_HAS_CFG_CALOFS) && FSL_FEATURE_LPADC_HAS_CFG_CALOFS
-#if defined(FSL_FEATURE_LPADC_HAS_OFSTRIM) && FSL_FEATURE_LPADC_HAS_OFSTRIM
 /*!
-* @brief Do auto calibration.
-*
-* Calibration function should be executed before using converter in application. It used the software trigger and a
-* dummy conversion, get the offset and write them into the OFSTRIM register. It called some of functional API including:
-*   -LPADC_EnableCalibration(...)
-*   -LPADC_LPADC_SetOffsetValue(...)
-*   -LPADC_SetConvCommandConfig(...)
-*   -LPADC_SetConvTriggerConfig(...)
-*
-* @param base  LPADC peripheral base address.
-*/
+ * @brief Do auto calibration.
+ *
+ * Calibration function should be executed before using converter in application. It used the software trigger and a
+ * dummy conversion, get the offset and write them into the OFSTRIM register. It called some of functional API
+ * including: -LPADC_EnableCalibration(...) -LPADC_LPADC_SetOffsetValue(...) -LPADC_SetConvCommandConfig(...)
+ *   -LPADC_SetConvTriggerConfig(...)
+ *
+ * @param base  LPADC peripheral base address.
+ */
 void LPADC_DoAutoCalibration(ADC_Type *base);
 #endif /* FSL_FEATURE_LPADC_HAS_OFSTRIM */
 #endif /* FSL_FEATURE_LPADC_HAS_CFG_CALOFS */
 
+#if defined(FSL_FEATURE_LPADC_HAS_CTRL_CALOFS) && FSL_FEATURE_LPADC_HAS_CTRL_CALOFS
+#if defined(FSL_FEATURE_LPADC_HAS_OFSTRIM) && FSL_FEATURE_LPADC_HAS_OFSTRIM
+/*!
+ * @brief Set proper offset value to trim ADC.
+ *
+ * Set the offset trim value for offset calibration manually.
+ *
+ * @param base  LPADC peripheral base address.
+ * @param valueA Setting offset value A.
+ * @param valueB Setting offset value B.
+ * @note In normal adc sequence, the values are automatically calculated by LPADC_EnableOffsetCalibration.
+ */
+static inline void LPADC_SetOffsetValue(ADC_Type *base, uint32_t valueA, uint32_t valueB)
+{
+    base->OFSTRIM = ADC_OFSTRIM_OFSTRIM_A(valueA) | ADC_OFSTRIM_OFSTRIM_B(valueB);
+}
+#endif /* FSL_FEATURE_LPADC_HAS_OFSTRIM */
+
+/*!
+ * @brief Enable the offset calibration function.
+ *
+ * @param base LPADC peripheral base address.
+ * @bool enable switcher to the calibration function.
+ */
+static inline void LPADC_EnableOffsetCalibration(ADC_Type *base, bool enable)
+{
+    if (enable)
+    {
+        base->CTRL |= ADC_CTRL_CALOFS_MASK;
+    }
+    else
+    {
+        base->CTRL &= ~ADC_CTRL_CALOFS_MASK;
+    }
+}
+
+/*!
+ * @brief Do offset calibration.
+ *
+ * @param base LPADC peripheral base address.
+ */
+void LPADC_DoOffsetCalibration(ADC_Type *base);
+
+#if defined(FSL_FEATURE_LPADC_HAS_CTRL_CAL_REQ) && FSL_FEATURE_LPADC_HAS_CTRL_CAL_REQ
+/*!
+ * brief Do auto calibration.
+ *
+ * param base  LPADC peripheral base address.
+ */
+void LPADC_DoAutoCalibration(ADC_Type *base);
+#endif /* FSL_FEATURE_LPADC_HAS_CTRL_CAL_REQ */
+#endif /* FSL_FEATURE_LPADC_HAS_CTRL_CALOFS */
 /* @} */
 
 #if defined(__cplusplus)

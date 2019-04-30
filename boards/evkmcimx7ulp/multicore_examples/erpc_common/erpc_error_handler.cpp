@@ -96,7 +96,7 @@ void erpc_error_handler(erpc_status_t err, uint32_t functionID)
     /* When error occurred on client side. */
     if (functionID != 0)
     {
-        PRINTF("Function id '%u'.", functionID);
+        PRINTF("Function id '%u'.", (unsigned int)functionID);
     }
     PRINTF("\r\n");
 

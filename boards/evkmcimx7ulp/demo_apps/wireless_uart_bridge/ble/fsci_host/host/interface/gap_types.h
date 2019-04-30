@@ -7,7 +7,7 @@
  * Copyright (c) 2016 - 2017 , NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
 */
 
@@ -56,13 +56,13 @@
 #define isMode_1(modeLevel) (!isMode_2(modeLevel))
 #define isSameMode(modeLevelA, modeLevelB) (isMode_1(modeLevelA) == isMode_1(modeLevelB))
 #define addSameSecurityModes(modeLevelA,modeLevelB) \
-    (modeLevelA > modeLevelB ? modeLevelA : modeLevelB)     
+    (modeLevelA > modeLevelB ? modeLevelA : modeLevelB)
 #define addMode1AndMode2(mode1,mode2) \
     (mode1 == gSecurityMode_1_Level_1_c ? \
      mode2 : \
          (mode1 == gSecurityMode_1_Level_2_c && mode2 == gSecurityMode_2_Level_1_c ? \
           gSecurityMode_1_Level_2_c : \
-          gSecurityMode_1_Level_3_c))        
+          gSecurityMode_1_Level_3_c))
 #define addDifferentSecurityModes(modeLevelA,modeLevelB) \
     (isMode_1(modeLevelA) ? \
      addMode1AndMode2(modeLevelA, modeLevelB) : \
@@ -70,7 +70,7 @@
 
 /*! The default value for the LTK size */
 #define gDefaultEncryptionKeySize_d   7
-        
+
 /*! The default value for the Device Security (no requirements) */
 #define gGapDefaultDeviceSecurity_d \
 { \
@@ -164,7 +164,7 @@
 /*! Maximum valid value for RSSI (dB) */
 #define gGapRssiMax_d                +20
 /*! A special invalid value for the RSSI indicating that the measurement is not available. */
-#define gGapRssiNotAvailable_d       127 
+#define gGapRssiNotAvailable_d       127
 
 /*! Default value for Scanning Parameters struct */
 #define gGapDefaultScanningParameters_d \
@@ -290,11 +290,11 @@ typedef struct gapSmpKeys_tag {
 
     uint8_t*    aIrk;       /*!< Identity Resolving Key. NULL if aIrk is not distributed. */
     uint8_t*    aCsrk;      /*!< Connection Signature Resolving Key. NULL if aCsrk is not distributed. */
-   
+
     uint8_t     cRandSize;  /*!< Size of RAND; usually equal to gcMaxRandSize_d. If aLtk is NULL, this is ignored. */
     uint8_t*    aRand;      /*!< RAND value used to identify the LTK. If aLtk is NULL, this is ignored. */
     uint16_t    ediv;       /*!< EDIV value used to identify the LTK. If aLtk is NULL, this is ignored. */
-    
+
     bleAddressType_t    addressType; /*!< Public or Random address. If aAddress is NULL, this is ignored. */
     uint8_t*            aAddress;    /*!< Device Address. NULL if address is not distributed. If aIrk is NULL, this is ignored. */
 } gapSmpKeys_t;
@@ -322,7 +322,7 @@ typedef enum gapSecurityModeAndLevel_tag {
     gSecurityMode_2_Level_1_c = (uint8_t)gSecurityMode_2_c | (uint8_t)gSecurityLevel_NoMitmProtection_c,    /*!< Mode 2 Level 1 - Data Signing without authentication. */
     gSecurityMode_2_Level_2_c = (uint8_t)gSecurityMode_2_c | (uint8_t)gSecurityLevel_WithMitmProtection_c   /*!< Mode 2 Level 2 - Data Signing with authentication. */
 } gapSecurityModeAndLevel_t;
-    
+
 /*! Security Requirements structure for a Device, a Service or a Characteristic */
 typedef struct gapSecurityRequirements_tag {
     gapSecurityModeAndLevel_t   securityModeLevel;          /*!< Security mode and level. */
@@ -422,7 +422,7 @@ typedef enum {
     gProcessScanAllConnWL_c          = 0x02,     /*!< Accept all scan requests, but connect requests only from devices in White List. */
     gProcessWhiteListOnly_c          = 0x03,     /*!< Accept connect and scan requests only from devices in White List. */
 } gapAdvertisingFilterPolicy_t;
-    
+
 /*! Advertising Parameters; for defaults see gGapDefaultAdvertisingParameters_d. */
 typedef struct gapAdvertisingParameters_tag {
     uint16_t                            minInterval;            /*!< Minimum desired advertising interval. Default: 1.28 s. */
@@ -447,7 +447,7 @@ typedef struct gapScanningParameters_tag {
     bleScanType_t               type;               /*!< Scanning type. Default: passive. */
     uint16_t                    interval;           /*!< Scanning interval. Default: 10 ms. */
     uint16_t                    window;             /*!< Scanning window. Default: 10 ms. */
-    bleAddressType_t            ownAddressType;     /*!< Indicates whether the address used in scan requests is the public address (BD_ADDR) or the random address (set by Gap_SetRandomAddress). Default: public address. 
+    bleAddressType_t            ownAddressType;     /*!< Indicates whether the address used in scan requests is the public address (BD_ADDR) or the random address (set by Gap_SetRandomAddress). Default: public address.
                                                          If BLE 4.2 Controller Privacy is enabled, this parameter is irrelevant as Private Resolvable Addresses are always used. */
     bleScanningFilterPolicy_t   filterPolicy;       /*!< Indicates whether the advertising packets are filtered using the White List. Default: does not use White List (scan all). */
 } gapScanningParameters_t;
@@ -472,7 +472,7 @@ typedef struct gapConnectionRequestParameters_tag {
     uint16_t                    supervisionTimeout;     /*!< The maximum time interval between consecutive over-the-air packets; if this timer expires, the connection is dropped. Default: 10 s. */
     uint16_t                    connEventLengthMin;     /*!< The minimum desired connection event length. Default: 0 ms. */
     uint16_t                    connEventLengthMax;     /*!< The maximum desired connection event length. Default: maximum possible, ~41 s. (lets the Controller decide). */
-    bool_t                      usePeerIdentityAddress; /*!< If Controller Privacy is enabled and this parameter is TRUE, the address defined in the peerAddressType and peerAddress is an identity address. 
+    bool_t                      usePeerIdentityAddress; /*!< If Controller Privacy is enabled and this parameter is TRUE, the address defined in the peerAddressType and peerAddress is an identity address.
                                                              Otherwise, it is a device address. */
 } gapConnectionRequestParameters_t;
 
@@ -658,7 +658,7 @@ typedef enum gapConnectionEventType_tag {
     gConnEvtTxPowerLevelRead_c,             /*!< TX power level for an active connection has been read. Data in gapConnectionEvent_t.eventData.txPowerLevel_dBm. */
     gConnEvtPowerReadFailure_c,             /*!< Power reading could not be performed. Data in gapConnectionEvent_t.eventData.failReason. */
     gConnEvtParameterUpdateRequest_c,       /*!< A connection parameter update request has been received. Data in gapConnectionEvent_t.eventData.connectionUpdateRequest. */
-    gConnEvtParameterUpdateComplete_c,      /*!< The connection has new parameters. Data in gapConnectionEvent_t.eventData.connectionUpdateComplete. */      
+    gConnEvtParameterUpdateComplete_c,      /*!< The connection has new parameters. Data in gapConnectionEvent_t.eventData.connectionUpdateComplete. */
     gConnEvtLeDataLengthChanged_c,          /*!< The new TX/RX Data Length paramaters. Data in gapConnectionEvent_t.eventData.rssi_dBm.leDataLengthChanged. */
     gConnEvtLeScOobDataRequest_c,           /*!< Event sent to request LE SC OOB Data (r, Cr and Addr) received from a peer. */
     gConnEvtLeScDisplayNumericValue_c,      /*!< Event sent to display and confirm a Numeric Comparison Value when using the LE SC Numeric Comparison pairing method. */
@@ -676,7 +676,7 @@ typedef struct gapConnectedEvent_tag {
     bleDeviceAddress_t          peerRpa;                /*!< Peer Resolvable Private Address if Controller Privacy is active and peerRpaResolved is TRUE. */
     bool_t                      localRpaUsed;           /*!< If this is TRUE, the Controller has used an RPA contained in the localRpa field. This parameter is irrelevant
                                                              if BLE 4.2 Controller Privacy is not enabled. */
-    bleDeviceAddress_t          localRpa;               /*!< Local Resolvable Private Address if Controller Privacy is active and localRpaUsed is TRUE. */    
+    bleDeviceAddress_t          localRpa;               /*!< Local Resolvable Private Address if Controller Privacy is active and localRpaUsed is TRUE. */
 } gapConnectedEvent_t;
 
 /*! Event data structure for the gConnEvtKeyExchangeRequest_c event. */

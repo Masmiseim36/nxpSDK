@@ -105,9 +105,10 @@ void app_task(void *param)
         ;
     PRINTF("Link is up!\r\n");
 
-    my_queue = rpmsg_queue_create(my_rpmsg);
-    my_ept = rpmsg_lite_create_ept(my_rpmsg, LOCAL_EPT_ADDR, rpmsg_queue_rx_cb, my_queue);
+    my_queue  = rpmsg_queue_create(my_rpmsg);
+    my_ept    = rpmsg_lite_create_ept(my_rpmsg, LOCAL_EPT_ADDR, rpmsg_queue_rx_cb, my_queue);
     ns_handle = rpmsg_ns_bind(my_rpmsg, app_nameservice_isr_cb, NULL);
+    platform_time_delay(1000);
     rpmsg_ns_announce(my_rpmsg, my_ept, RPMSG_LITE_NS_ANNOUNCE_STRING, RL_NS_CREATE);
     PRINTF("Nameservice announce sent.\r\n");
 

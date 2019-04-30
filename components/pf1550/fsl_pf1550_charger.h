@@ -1,7 +1,7 @@
 /*
  * Copyright 2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -32,7 +32,6 @@ enum _pf1550_charger_interrupt_source
     kPF1550_IntSrcChargerThm        = 0x80U, /* THM interrupt source. */
 };
 
-
 /*! @brief PF1550 Charger Working Mode definition. */
 enum _pf1550_charger_mode
 {
@@ -56,24 +55,27 @@ enum _pf1550_battery_mode
     kPF1550_BattModeVbattLessThanVpre    = 0x00010000U, /* VBATT < VPRECHG.LB. */
     kPF1550_BattModeTimerFault           = 0x00020000U, /* Charger is in timer fault mode. */
     kPF1550_BattModeVbattGreaterThanVpre = 0x00040000U, /* VPRECHG.LB < VBATT. */
-    kPF1550_BattModeOv                   = 0x00050000U, /* the battery voltage is greater than the battery overvoltage flag threshold (VBATOV). */
-    kPF1550_BattModeNoBatt               = 0x00060000U, /* Battery not detected with a valid input and after VSYS wake-up. */
+    kPF1550_BattModeOv =
+        0x00050000U, /* the battery voltage is greater than the battery overvoltage flag threshold (VBATOV). */
+    kPF1550_BattModeNoBatt = 0x00060000U, /* Battery not detected with a valid input and after VSYS wake-up. */
 };
 
 /*! @brief PF1550 Charger Status definition. */
 enum _pf1550_charger_status
 {
-    kPF1550_ChargerStatusVbusUvlo    = 0x00000004U, /* VBUS_LIN < VBUS_LIN_UVLO or VBUS is detached. */
-    kPF1550_ChargerStatusVbusIn2Sys  = 0x00000008U, /* VBUS_LIN < VBATT + VIN2SYS. */
-    kPF1550_ChargerStatusVbusOvlo    = 0x00000010U, /* VBUS_LIN > VBUS_LIN_OVLO. */
-    kPF1550_ChargerStatusVbusValid   = 0x00000020U, /* VBUS_LIN > VBUS_LIN_UVLO, VBUS_LIN > VBAT + VIN2SYS and VBUS_LIN < VBUS_LIN_OVLO. */
+    kPF1550_ChargerStatusVbusUvlo   = 0x00000004U, /* VBUS_LIN < VBUS_LIN_UVLO or VBUS is detached. */
+    kPF1550_ChargerStatusVbusIn2Sys = 0x00000008U, /* VBUS_LIN < VBATT + VIN2SYS. */
+    kPF1550_ChargerStatusVbusOvlo   = 0x00000010U, /* VBUS_LIN > VBUS_LIN_OVLO. */
+    kPF1550_ChargerStatusVbusValid =
+        0x00000020U, /* VBUS_LIN > VBUS_LIN_UVLO, VBUS_LIN > VBAT + VIN2SYS and VBUS_LIN < VBUS_LIN_OVLO. */
     kPF1550_ChargerStatusVbusDpm     = 0x00000080U, /* VBUS_LIN DPM threshold has been triggered. */
     kPF1550_ChargerStatusChargerMode = 0x00000F00U, /* Charger working mode mask. */
     kPF1550_ChargerStatusWdogTimeout = 0x00002000U, /* Watch dog timer is expired. */
     kPF1550_ChargerStatusThm         = 0x00004000U, /* Thermistor temperature is < Cool, or > Warm threshold. */
-    kPF1550_ChargerStatusTreg        = 0x00008000U, /* The junction temperature is greater than the threshold set by REGTEMP. */
-    kPF1550_ChargerStatusBattMode    = 0x00070000U, /* Battery working mode mask. */
-    kPF1550_ChargerStatusBattOc      = 0x00200000U, /* VBATT to VSYS overcurrent fault. */
+    kPF1550_ChargerStatusTreg =
+        0x00008000U, /* The junction temperature is greater than the threshold set by REGTEMP. */
+    kPF1550_ChargerStatusBattMode = 0x00070000U, /* Battery working mode mask. */
+    kPF1550_ChargerStatusBattOc   = 0x00200000U, /* VBATT to VSYS overcurrent fault. */
 };
 
 /*! @brief PF1550 Charger Operation definition. */
@@ -81,11 +83,12 @@ typedef enum _pf1550_charger_operation
 {
     kPF1550_ChargerOperation_ChargerOffLinearOff = 0x0U, /* Charger = off, linear = off. The BATFET switch is on
                                                            to allow the battery to support the system. */
-    kPF1550_ChargerOperation_ChargerOffLinearOn  = 0x1U, /* Charger = off, linear = on, When there is a valid input,
-                                                           the linear regulator regulates the system voltage to be VCHGCV. */
-    kPF1550_ChargerOperation_ChargerOnLinearOn   = 0x2U, /* Charger = on, linear = on. When there is a valid input,
-                                                           the battery is charging. VSYS is the larger of VMINSYS
-                                                           and ~ VBATT + IBAT * RBATFET. */
+    kPF1550_ChargerOperation_ChargerOffLinearOn =
+        0x1U,                                          /* Charger = off, linear = on, When there is a valid input,
+                                                         the linear regulator regulates the system voltage to be VCHGCV. */
+    kPF1550_ChargerOperation_ChargerOnLinearOn = 0x2U, /* Charger = on, linear = on. When there is a valid input,
+                                                         the battery is charging. VSYS is the larger of VMINSYS
+                                                         and ~ VBATT + IBAT * RBATFET. */
 } pf1550_charger_operation_t;
 
 /*! @brief PF1550 Thermaistor Configuration definition. */

@@ -69,7 +69,7 @@ static void SRTM_RtcService_RecycleMessage(srtm_message_t msg, void *param)
 static srtm_status_t SRTM_RtcService_Request(srtm_service_t service, srtm_request_t request)
 {
     srtm_status_t status;
-    srtm_rtc_service_t handle = (srtm_rtc_service_t)service;
+    srtm_rtc_service_t handle  = (srtm_rtc_service_t)service;
     srtm_rtc_adapter_t adapter = handle->adapter;
     srtm_channel_t channel;
     uint8_t command;
@@ -83,9 +83,9 @@ static srtm_status_t SRTM_RtcService_Request(srtm_service_t service, srtm_reques
 
     SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_INFO, "%s\r\n", __func__);
 
-    channel = SRTM_CommMessage_GetChannel(request);
-    command = SRTM_CommMessage_GetCommand(request);
-    rtcReq = (struct _srtm_rtc_payload *)SRTM_CommMessage_GetPayload(request);
+    channel    = SRTM_CommMessage_GetChannel(request);
+    command    = SRTM_CommMessage_GetCommand(request);
+    rtcReq     = (struct _srtm_rtc_payload *)SRTM_CommMessage_GetPayload(request);
     payloadLen = SRTM_CommMessage_GetPayloadLen(request);
 
     response =
@@ -163,15 +163,15 @@ static srtm_status_t SRTM_RtcService_Notify(srtm_service_t service, srtm_notific
 /* CALLED IN RTC DRIVER ISR */
 static srtm_status_t SRTM_RtcService_NotifyAlarm(srtm_service_t service)
 {
-    srtm_status_t status = SRTM_Status_Success;
+    srtm_status_t status      = SRTM_Status_Success;
     srtm_rtc_service_t handle = (srtm_rtc_service_t)service;
 
     /* If service is still serving and no pending alarm */
     if (service->dispatcher && handle->notif && handle->channel)
     {
         handle->notif->channel = handle->channel;
-        status = SRTM_Dispatcher_DeliverNotification(service->dispatcher, handle->notif);
-        handle->notif = NULL;
+        status                 = SRTM_Dispatcher_DeliverNotification(service->dispatcher, handle->notif);
+        handle->notif          = NULL;
     }
 
     return status;
@@ -186,19 +186,19 @@ srtm_service_t SRTM_RtcService_Create(srtm_rtc_adapter_t adapter)
     handle = (srtm_rtc_service_t)SRTM_Heap_Malloc(sizeof(struct _srtm_rtc_service));
     assert(handle);
 
-    adapter->service = &handle->service;
+    adapter->service     = &handle->service;
     adapter->notifyAlarm = SRTM_RtcService_NotifyAlarm;
-    handle->adapter = adapter;
+    handle->adapter      = adapter;
 
     SRTM_List_Init(&handle->service.node);
     handle->service.dispatcher = NULL;
-    handle->service.category = SRTM_RTC_CATEGORY;
-    handle->service.destroy = SRTM_RtcService_Destroy;
-    handle->service.request = SRTM_RtcService_Request;
-    handle->service.notify = SRTM_RtcService_Notify;
+    handle->service.category   = SRTM_RTC_CATEGORY;
+    handle->service.destroy    = SRTM_RtcService_Destroy;
+    handle->service.request    = SRTM_RtcService_Request;
+    handle->service.notify     = SRTM_RtcService_Notify;
 
     handle->channel = NULL;
-    handle->notif = SRTM_Notification_Create(NULL, SRTM_RTC_CATEGORY, SRTM_RTC_VERSION, SRTM_RTC_NTF_ALARM, 0);
+    handle->notif   = SRTM_Notification_Create(NULL, SRTM_RTC_CATEGORY, SRTM_RTC_VERSION, SRTM_RTC_NTF_ALARM, 0);
     assert(handle->notif);
     SRTM_Message_SetFreeFunc(handle->notif, SRTM_RtcService_RecycleMessage, handle);
 

@@ -50,14 +50,14 @@ typedef struct _srtm_io_pin
     srtm_io_service_get_input_t getInput;
     srtm_io_service_conf_input_t confIEvent;
     void *param;
-} *srtm_io_pin_t;
+} * srtm_io_pin_t;
 
 /* Service handle */
 typedef struct _srtm_io_service
 {
     struct _srtm_service service;
     srtm_list_t pins; /*!< SRTM IO pins list */
-} *srtm_io_service_t;
+} * srtm_io_service_t;
 
 /*******************************************************************************
  * Prototypes
@@ -109,7 +109,7 @@ static srtm_io_pin_t SRTM_IoService_FindPin(srtm_io_service_t handle, uint16_t i
             }
             if (notify)
             {
-                notif = pin->notif;
+                notif      = pin->notif;
                 pin->notif = NULL;
             }
             break;
@@ -150,7 +150,7 @@ static srtm_status_t SRTM_IoService_Request(srtm_service_t service, srtm_request
     assert(channel);
     command = SRTM_CommMessage_GetCommand(request);
     payload = SRTM_CommMessage_GetPayload(request);
-    len = SRTM_CommMessage_GetPayloadLen(request);
+    len     = SRTM_CommMessage_GetPayloadLen(request);
 
     status = SRTM_Service_CheckVersion(service, request, SRTM_IO_VERSION);
     if (status != SRTM_Status_Success || !payload || len < 2)
@@ -162,7 +162,7 @@ static srtm_status_t SRTM_IoService_Request(srtm_service_t service, srtm_request
     else
     {
         ioId = (((uint16_t)(*(payload + 1))) << 8) | *payload;
-        pin = SRTM_IoService_FindPin(handle, ioId, false, false);
+        pin  = SRTM_IoService_FindPin(handle, ioId, false, false);
         if (!pin)
         {
             SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_WARN, "%s: Pin 0x%x not registered!\r\n", __func__, ioId);
@@ -179,14 +179,14 @@ static srtm_status_t SRTM_IoService_Request(srtm_service_t service, srtm_request
                     {
                         status = pin->confIEvent(service, channel->core, ioId, (srtm_io_event_t)(*(payload + 2)),
                                                  (bool)(*(payload + 3)));
-                        retCode = status == SRTM_Status_Success ? SRTM_IO_RETURN_CODE_SUCEESS
-                                                                : SRTM_IO_RETURN_CODE_FAIL;
+                        retCode =
+                            status == SRTM_Status_Success ? SRTM_IO_RETURN_CODE_SUCEESS : SRTM_IO_RETURN_CODE_FAIL;
                     }
                     else
                     {
                         SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_WARN,
-                                           "%s: Command ConfInputEvent not allowed or len %d error!\r\n",
-                                           __func__, len);
+                                           "%s: Command ConfInputEvent not allowed or len %d error!\r\n", __func__,
+                                           len);
                         retCode = SRTM_IO_RETURN_CODE_FAIL;
                     }
                     break;
@@ -194,8 +194,8 @@ static srtm_status_t SRTM_IoService_Request(srtm_service_t service, srtm_request
                     if (len >= 3 && pin->setOutput)
                     {
                         status = pin->setOutput(service, channel->core, ioId, (srtm_io_value_t)(*(payload + 2)));
-                        retCode = status == SRTM_Status_Success ? SRTM_IO_RETURN_CODE_SUCEESS
-                                                                : SRTM_IO_RETURN_CODE_FAIL;
+                        retCode =
+                            status == SRTM_Status_Success ? SRTM_IO_RETURN_CODE_SUCEESS : SRTM_IO_RETURN_CODE_FAIL;
                     }
                     else
                     {
@@ -208,8 +208,8 @@ static srtm_status_t SRTM_IoService_Request(srtm_service_t service, srtm_request
                     if (pin->getInput)
                     {
                         status = pin->getInput(service, channel->core, ioId, &value);
-                        retCode = status == SRTM_Status_Success ? SRTM_IO_RETURN_CODE_SUCEESS
-                                                                : SRTM_IO_RETURN_CODE_FAIL;
+                        retCode =
+                            status == SRTM_Status_Success ? SRTM_IO_RETURN_CODE_SUCEESS : SRTM_IO_RETURN_CODE_FAIL;
                     }
                     else
                     {
@@ -232,8 +232,8 @@ static srtm_status_t SRTM_IoService_Request(srtm_service_t service, srtm_request
         return SRTM_Status_OutOfMemory;
     }
 
-    payload = SRTM_CommMessage_GetPayload(response);
-    *payload = ioId;
+    payload        = SRTM_CommMessage_GetPayload(response);
+    *payload       = ioId;
     *(payload + 1) = ioId >> 8U;
     *(payload + 2) = retCode;
     *(payload + 3) = (uint8_t)value; /* Only used in SRTM_IO_CMD_GET_INPUT */
@@ -263,10 +263,10 @@ srtm_service_t SRTM_IoService_Create(void)
 
     SRTM_List_Init(&handle->service.node);
     handle->service.dispatcher = NULL;
-    handle->service.category = SRTM_IO_CATEGORY;
-    handle->service.destroy = SRTM_IoService_Destroy;
-    handle->service.request = SRTM_IoService_Request;
-    handle->service.notify = SRTM_IoService_Notify;
+    handle->service.category   = SRTM_IO_CATEGORY;
+    handle->service.destroy    = SRTM_IoService_Destroy;
+    handle->service.request    = SRTM_IoService_Request;
+    handle->service.notify     = SRTM_IoService_Notify;
 
     return &handle->service;
 }
@@ -283,7 +283,7 @@ void SRTM_IoService_Destroy(srtm_service_t service)
     /* Service must be unregistered from dispatcher before destroy */
     assert(SRTM_List_IsEmpty(&service->node));
 
-    while(!SRTM_List_IsEmpty(&handle->pins))
+    while (!SRTM_List_IsEmpty(&handle->pins))
     {
         list = handle->pins.next;
         SRTM_List_Remove(list);
@@ -307,13 +307,16 @@ void SRTM_IoService_Reset(srtm_service_t service, srtm_peercore_t core)
     /* Currently assume just one peer core, need to update all pins. */
     for (list = handle->pins.next; list != &handle->pins; list = list->next)
     {
-        pin = SRTM_LIST_OBJ(srtm_io_pin_t, node, list);
+        pin          = SRTM_LIST_OBJ(srtm_io_pin_t, node, list);
         pin->channel = NULL;
     }
 }
 
-srtm_status_t SRTM_IoService_RegisterPin(srtm_service_t service, uint16_t ioId, srtm_io_service_set_output_t setOutput,
-                                         srtm_io_service_get_input_t getInput, srtm_io_service_conf_input_t confIEvent,
+srtm_status_t SRTM_IoService_RegisterPin(srtm_service_t service,
+                                         uint16_t ioId,
+                                         srtm_io_service_set_output_t setOutput,
+                                         srtm_io_service_get_input_t getInput,
+                                         srtm_io_service_conf_input_t confIEvent,
                                          void *param)
 {
     srtm_io_service_t handle = (srtm_io_service_t)service;
@@ -340,18 +343,18 @@ srtm_status_t SRTM_IoService_RegisterPin(srtm_service_t service, uint16_t ioId, 
         return SRTM_Status_OutOfMemory;
     }
 
-    pin->ioId = ioId;
-    pin->setOutput = setOutput;
-    pin->getInput = getInput;
+    pin->ioId       = ioId;
+    pin->setOutput  = setOutput;
+    pin->getInput   = getInput;
     pin->confIEvent = confIEvent;
-    pin->param = param;
-    pin->notif = SRTM_Notification_Create(NULL, SRTM_IO_CATEGORY, SRTM_IO_VERSION, SRTM_IO_NTF_INPUT_EVENT, 2U);
+    pin->param      = param;
+    pin->notif      = SRTM_Notification_Create(NULL, SRTM_IO_CATEGORY, SRTM_IO_VERSION, SRTM_IO_NTF_INPUT_EVENT, 2U);
     assert(pin->notif);
     SRTM_Message_SetFreeFunc(pin->notif, SRTM_IoService_RecycleMessage, pin);
     payload = (uint8_t *)SRTM_CommMessage_GetPayload(pin->notif);
     /* Little endian IO pin ID */
-    *payload = ioId;
-    *(payload+1) = ioId >> 8U;
+    *payload       = ioId;
+    *(payload + 1) = ioId >> 8U;
 
     primask = DisableGlobalIRQ();
     SRTM_List_AddTail(&handle->pins, &pin->node);

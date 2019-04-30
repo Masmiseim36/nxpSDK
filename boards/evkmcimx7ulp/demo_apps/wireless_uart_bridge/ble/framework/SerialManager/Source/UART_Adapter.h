@@ -3,9 +3,9 @@
  * Copyright (c) 2016 - 2017 , NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
-*/
+ */
 
 #ifndef __UART_ADAPTER_H__
 #define __UART_ADAPTER_H__
@@ -19,7 +19,6 @@
 #define gUartIsrPrio_c (0x40)
 #endif
 
-
 /*! *********************************************************************************
 *************************************************************************************
 * Public type definitions
@@ -27,9 +26,10 @@
 ********************************************************************************** */
 typedef struct uartState_tag uartState_t;
 
-typedef void (*uartCallback_t)(uartState_t* state);
+typedef void (*uartCallback_t)(uartState_t *state);
 
-struct uartState_tag {
+struct uartState_tag
+{
     uartCallback_t txCb;
     uartCallback_t rxCb;
     uint32_t txCbParam;
@@ -40,7 +40,8 @@ struct uartState_tag {
     volatile uint32_t rxSize;
 };
 
-enum uartStatus_tag {
+enum uartStatus_tag
+{
     gUartSuccess_c,
     gUartInvalidParameter_c,
     gUartBusy_c
@@ -53,8 +54,8 @@ enum uartStatus_tag {
 ********************************************************************************** */
 uint32_t UART_Initialize(uint32_t instance, uartState_t *pState);
 uint32_t UART_SetBaudrate(uint32_t instance, uint32_t baudrate);
-uint32_t UART_SendData(uint32_t instance, uint8_t* pData, uint32_t size);
-uint32_t UART_ReceiveData(uint32_t instance, uint8_t* pData, uint32_t size);
+uint32_t UART_SendData(uint32_t instance, uint8_t *pData, uint32_t size);
+uint32_t UART_ReceiveData(uint32_t instance, uint8_t *pData, uint32_t size);
 uint32_t UART_InstallRxCalback(uint32_t instance, uartCallback_t cb, uint32_t cbParam);
 uint32_t UART_InstallTxCalback(uint32_t instance, uartCallback_t cb, uint32_t cbParam);
 uint32_t UART_IsTxActive(uint32_t instance);
@@ -64,8 +65,8 @@ uint32_t UART_IsWakeupSource(uint32_t instance);
 
 uint32_t LPUART_Initialize(uint32_t instance, uartState_t *pState);
 uint32_t LPUART_SetBaudrate(uint32_t instance, uint32_t baudrate);
-uint32_t LPUART_SendData(uint32_t instance, uint8_t* pData, uint32_t size);
-uint32_t LPUART_ReceiveData(uint32_t instance, uint8_t* pData, uint32_t size);
+uint32_t LPUART_SendData(uint32_t instance, uint8_t *pData, uint32_t size);
+uint32_t LPUART_ReceiveData(uint32_t instance, uint8_t *pData, uint32_t size);
 uint32_t LPUART_InstallRxCalback(uint32_t instance, uartCallback_t cb, uint32_t cbParam);
 uint32_t LPUART_InstallTxCalback(uint32_t instance, uartCallback_t cb, uint32_t cbParam);
 uint32_t LPUART_IsTxActive(uint32_t instance);
@@ -75,8 +76,8 @@ uint32_t LPUART_IsWakeupSource(uint32_t instance);
 
 uint32_t LPSCI_Initialize(uint32_t instance, uartState_t *pState);
 uint32_t LPSCI_SetBaudrate(uint32_t instance, uint32_t baudrate);
-uint32_t LPSCI_SendData(uint32_t instance, uint8_t* pData, uint32_t size);
-uint32_t LPSCI_ReceiveData(uint32_t instance, uint8_t* pData, uint32_t size);
+uint32_t LPSCI_SendData(uint32_t instance, uint8_t *pData, uint32_t size);
+uint32_t LPSCI_ReceiveData(uint32_t instance, uint8_t *pData, uint32_t size);
 uint32_t LPSCI_InstallRxCalback(uint32_t instance, uartCallback_t cb, uint32_t cbParam);
 uint32_t LPSCI_InstallTxCalback(uint32_t instance, uartCallback_t cb, uint32_t cbParam);
 uint32_t LPSCI_IsTxActive(uint32_t instance);

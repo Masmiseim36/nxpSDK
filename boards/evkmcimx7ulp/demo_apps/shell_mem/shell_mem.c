@@ -27,7 +27,7 @@
 
 typedef enum
 {
-    APP_MemAccess8Bit = 0U,
+    APP_MemAccess8Bit  = 0U,
     APP_MemAccess16Bit = 1U,
     APP_MemAccess32Bit = 2U
 } app_mem_access_unit_t;
@@ -177,7 +177,7 @@ SHELL_COMMAND_DEFINE(flashwrite,
                      FlashWriteControl,
                      3);
 
-static uint8_t s_shellHandleBuffer[SHELL_HANDLE_SIZE];
+SDK_ALIGN(static uint8_t s_shellHandleBuffer[SHELL_HANDLE_SIZE], 4);
 static shell_handle_t s_shellHandle;
 
 extern serial_handle_t g_serialHandle;
@@ -188,7 +188,7 @@ extern serial_handle_t g_serialHandle;
 
 static shell_status_t MemGetControl(shell_handle_t shellHandle, int32_t argc, char **argv, app_mem_access_unit_t unit)
 {
-    uint32_t addr = strtoul(argv[1], NULL, 0);
+    uint32_t addr  = strtoul(argv[1], NULL, 0);
     uint32_t count = strtoul(argv[2], NULL, 0);
     uint8_t *p8;
     uint16_t *p16;
@@ -248,7 +248,7 @@ static shell_status_t MemGetControl(shell_handle_t shellHandle, int32_t argc, ch
 
 static shell_status_t MemSetControl(shell_handle_t shellHandle, int32_t argc, char **argv, app_mem_access_unit_t unit)
 {
-    uint32_t addr = strtoul(argv[1], NULL, 0);
+    uint32_t addr  = strtoul(argv[1], NULL, 0);
     uint32_t value = strtoul(argv[2], NULL, 0);
     uint32_t count = strtoul(argv[3], NULL, 0);
     uint8_t *p8;
@@ -359,8 +359,8 @@ static shell_status_t MemCmpControl(shell_handle_t shellHandle, int32_t argc, ch
 
 static shell_status_t MemCpyControl(shell_handle_t shellHandle, int32_t argc, char **argv, app_mem_access_unit_t unit)
 {
-    uint32_t dst = strtoul(argv[1], NULL, 0);
-    uint32_t src = strtoul(argv[2], NULL, 0);
+    uint32_t dst   = strtoul(argv[1], NULL, 0);
+    uint32_t src   = strtoul(argv[2], NULL, 0);
     uint32_t count = strtoul(argv[3], NULL, 0);
     uint8_t *p8Dst, *p8Src;
     uint16_t *p16Dst, *p16Src;
@@ -465,16 +465,16 @@ static shell_status_t MemCpy32Control(shell_handle_t shellHandle, int32_t argc, 
 static shell_status_t FlashEraseControl(shell_handle_t shellHandle, int32_t argc, char **argv)
 {
     uint32_t offset = strtoul(argv[1], NULL, 0);
-    uint32_t bytes = strtoul(argv[2], NULL, 0);
+    uint32_t bytes  = strtoul(argv[2], NULL, 0);
 
     return (shell_status_t)APP_EraseFlash(offset, bytes);
 }
 
 static shell_status_t FlashWriteControl(shell_handle_t shellHandle, int32_t argc, char **argv)
 {
-    uint32_t addr = strtoul(argv[1], NULL, 0);
+    uint32_t addr   = strtoul(argv[1], NULL, 0);
     uint32_t offset = strtoul(argv[2], NULL, 0);
-    uint32_t bytes = strtoul(argv[3], NULL, 0);
+    uint32_t bytes  = strtoul(argv[3], NULL, 0);
 
     return (shell_status_t)APP_WriteFlash((uint32_t *)addr, offset, bytes);
 }

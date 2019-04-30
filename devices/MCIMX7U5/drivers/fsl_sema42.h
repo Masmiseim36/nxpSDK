@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -40,17 +40,17 @@ enum _sema42_status
  */
 typedef enum _sema42_gate_status
 {
-    kSEMA42_Unlocked = 0U,        /*!< The gate is unlocked.               */
-    kSEMA42_LockedByProc0 = 1U,   /*!< The gate is locked by processor 0.  */
-    kSEMA42_LockedByProc1 = 2U,   /*!< The gate is locked by processor 1.  */
-    kSEMA42_LockedByProc2 = 3U,   /*!< The gate is locked by processor 2.  */
-    kSEMA42_LockedByProc3 = 4U,   /*!< The gate is locked by processor 3.  */
-    kSEMA42_LockedByProc4 = 5U,   /*!< The gate is locked by processor 4.  */
-    kSEMA42_LockedByProc5 = 6U,   /*!< The gate is locked by processor 5.  */
-    kSEMA42_LockedByProc6 = 7U,   /*!< The gate is locked by processor 6.  */
-    kSEMA42_LockedByProc7 = 8U,   /*!< The gate is locked by processor 7.  */
-    kSEMA42_LockedByProc8 = 9U,   /*!< The gate is locked by processor 8.  */
-    kSEMA42_LockedByProc9 = 10U,  /*!< The gate is locked by processor 9.  */
+    kSEMA42_Unlocked       = 0U,  /*!< The gate is unlocked.               */
+    kSEMA42_LockedByProc0  = 1U,  /*!< The gate is locked by processor 0.  */
+    kSEMA42_LockedByProc1  = 2U,  /*!< The gate is locked by processor 1.  */
+    kSEMA42_LockedByProc2  = 3U,  /*!< The gate is locked by processor 2.  */
+    kSEMA42_LockedByProc3  = 4U,  /*!< The gate is locked by processor 3.  */
+    kSEMA42_LockedByProc4  = 5U,  /*!< The gate is locked by processor 4.  */
+    kSEMA42_LockedByProc5  = 6U,  /*!< The gate is locked by processor 5.  */
+    kSEMA42_LockedByProc6  = 7U,  /*!< The gate is locked by processor 6.  */
+    kSEMA42_LockedByProc7  = 8U,  /*!< The gate is locked by processor 7.  */
+    kSEMA42_LockedByProc8  = 9U,  /*!< The gate is locked by processor 8.  */
+    kSEMA42_LockedByProc9  = 10U, /*!< The gate is locked by processor 9.  */
     kSEMA42_LockedByProc10 = 11U, /*!< The gate is locked by processor 10. */
     kSEMA42_LockedByProc11 = 12U, /*!< The gate is locked by processor 11. */
     kSEMA42_LockedByProc12 = 13U, /*!< The gate is locked by processor 12. */

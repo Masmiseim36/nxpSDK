@@ -1,7 +1,7 @@
 /*
  * Copyright 2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -34,48 +34,10 @@
  ******************************************************************************/
 
 uint8_t g_slave_buff[I2C_DATA_LENGTH];
-lpi2c_slave_handle_t g_s_handle;
-volatile bool g_SlaveCompletionFlag = false;
 
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
-static void lpi2c_slave_callback(LPI2C_Type *base, lpi2c_slave_transfer_t *xfer, void *param)
-{
-    switch (xfer->event)
-    {
-        /*  Address match event */
-        case kLPI2C_SlaveAddressMatchEvent:
-            xfer->data = NULL;
-            xfer->dataSize = 0;
-            break;
-        /*  Transmit request */
-        case kLPI2C_SlaveTransmitEvent:
-            /*  Update information for transmit process */
-            xfer->data = &g_slave_buff[2];
-            xfer->dataSize = g_slave_buff[1];
-            break;
-
-        /*  Receive request */
-        case kLPI2C_SlaveReceiveEvent:
-            /*  Update information for received process */
-            xfer->data = g_slave_buff;
-            xfer->dataSize = I2C_DATA_LENGTH;
-            break;
-
-        /*  Transfer done */
-        case kLPI2C_SlaveCompletionEvent:
-            g_SlaveCompletionFlag = true;
-            xfer->data = NULL;
-            xfer->dataSize = 0;
-            break;
-
-        default:
-            g_SlaveCompletionFlag = false;
-            break;
-    }
-}
 
 /*!
  * @brief Main function
@@ -118,22 +80,20 @@ int main(void)
 
     memset(g_slave_buff, 0, sizeof(g_slave_buff));
 
-    /* Create the LPI2C handle for the non-blocking transfer */
-    LPI2C_SlaveTransferCreateHandle(EXAMPLE_I2C_SLAVE, &g_s_handle, lpi2c_slave_callback, NULL);
-
     /* Start accepting I2C transfers on the LPI2C slave peripheral */
-    reVal = LPI2C_SlaveTransferNonBlocking(EXAMPLE_I2C_SLAVE, &g_s_handle,
-                                           kLPI2C_SlaveCompletionEvent | kLPI2C_SlaveAddressMatchEvent);
+    reVal = LPI2C_SlaveReceive(EXAMPLE_I2C_SLAVE, g_slave_buff, I2C_DATA_LENGTH, 0);
+
     if (reVal != kStatus_Success)
     {
         return -1;
     }
 
-    /*  wait for transfer completed. */
-    while (!g_SlaveCompletionFlag)
+    reVal = LPI2C_SlaveSend(EXAMPLE_I2C_SLAVE, &g_slave_buff[2], g_slave_buff[1], 0);
+
+    if (reVal != kStatus_Success)
     {
+        return -1;
     }
-    g_SlaveCompletionFlag = false;
 
     PRINTF("Slave received data :");
     for (uint32_t i = 0U; i < g_slave_buff[1]; i++)
@@ -145,12 +105,6 @@ int main(void)
         PRINTF("0x%2x  ", g_slave_buff[2 + i]);
     }
     PRINTF("\r\n\r\n");
-
-    /* Wait for master receive completed.*/
-    while (!g_SlaveCompletionFlag)
-    {
-    }
-    g_SlaveCompletionFlag = false;
 
     PRINTF("\r\nEnd of LPI2C example .\r\n");
 

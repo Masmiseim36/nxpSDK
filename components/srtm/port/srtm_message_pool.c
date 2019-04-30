@@ -72,7 +72,7 @@ void *SRTM_MessagePool_Alloc(uint32_t size)
                 SRTM_List_AddTail(&srtmMsgList, &srtmMsgs[i].node);
             }
 #ifdef SRTM_DEBUG_MESSAGE_FUNC
-            freeMsgCount = sizeof(srtmMsgs) / sizeof(srtm_message_buf_t);
+            freeMsgCount    = sizeof(srtmMsgs) / sizeof(srtm_message_buf_t);
             minFreeMsgCount = freeMsgCount;
 #endif
         }
@@ -119,11 +119,12 @@ void SRTM_MessagePool_Free(void *buf)
     srtm_message_buf_t *msgBuf;
     uint32_t primask;
 
-    if ((uint32_t *)buf >= (uint32_t *)&srtmMsgs[0] && (uint32_t *)buf < (uint32_t *)&srtmMsgs[sizeof(srtmMsgs) / sizeof(srtm_message_buf_t)])
+    if ((uint32_t *)buf >= (uint32_t *)&srtmMsgs[0] &&
+        (uint32_t *)buf < (uint32_t *)&srtmMsgs[sizeof(srtmMsgs) / sizeof(srtm_message_buf_t)])
     {
         /* buffer locates in message pool */
         assert(((uint32_t)buf - (uint32_t)&srtmMsgs[0]) % sizeof(srtm_message_buf_t) == 0);
-        msgBuf = (srtm_message_buf_t *)buf;
+        msgBuf  = (srtm_message_buf_t *)buf;
         primask = DisableGlobalIRQ();
         SRTM_List_AddTail(&srtmMsgList, &msgBuf->node);
 #ifdef SRTM_DEBUG_MESSAGE_FUNC

@@ -19,8 +19,8 @@ Other hook types used for RTOS and resource statistics are also demonstrated in 
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.1
-- GCC ARM Embedded  7.3.1
+- IAR embedded Workbench  8.32.3
+- GCC ARM Embedded  8.2.1
 
 Hardware requirements
 =====================

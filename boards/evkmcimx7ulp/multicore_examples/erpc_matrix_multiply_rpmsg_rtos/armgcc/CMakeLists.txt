@@ -520,6 +520,10 @@ SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")
 
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} muldefs")
 
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Map=output.map")
+
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -mcpu=cortex-m4")
 
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -mfloat-abi=hard")
@@ -569,6 +573,10 @@ SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -z")
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
 
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} muldefs")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Map=output.map")
 
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mcpu=cortex-m4")
 
@@ -622,6 +630,10 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG} -X
 
 SET(CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG} muldefs")
 
+SET(CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG} -Map=output.map")
+
 SET(CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG} -mcpu=cortex-m4")
 
 SET(CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG} -mfloat-abi=hard")
@@ -672,6 +684,10 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE
 
 SET(CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE} muldefs")
 
+SET(CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE} -Map=output.map")
+
 SET(CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE} -mcpu=cortex-m4")
 
 SET(CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE} -mfloat-abi=hard")
@@ -706,7 +722,7 @@ include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeR
 
 include_directories(${ProjDirPath}/..)
 
-include_directories(${ProjDirPath}/../service)
+include_directories(${ProjDirPath}/../../erpc_common/erpc_matrix_multiply/service)
 
 include_directories(${ProjDirPath}/../../..)
 
@@ -730,7 +746,7 @@ include_directories(${ProjDirPath}/../../../../../devices/MCIMX7U5)
 
 include_directories(${ProjDirPath}/../../../../../devices/MCIMX7U5/utilities/str)
 
-include_directories(${ProjDirPath}/../../../../../devices/MCIMX7U5/utilities)
+include_directories(${ProjDirPath}/../../../../../devices/MCIMX7U5/utilities/debug_console)
 
 include_directories(${ProjDirPath}/../../../../../components/uart)
 
@@ -774,12 +790,6 @@ include_directories(${ProjDirPath}/../../../../../middleware/multicore/erpc/erpc
 
 add_executable(erpc_matrix_multiply_rpmsg_rtos_imxcm4.elf 
 "${ProjDirPath}/../main_core1.c"
-"${ProjDirPath}/../../erpc_common/erpc_error_handler.h"
-"${ProjDirPath}/../../erpc_common/erpc_error_handler.cpp"
-"${ProjDirPath}/../service/erpc_matrix_multiply.erpc"
-"${ProjDirPath}/../service/erpc_matrix_multiply.h"
-"${ProjDirPath}/../service/erpc_matrix_multiply_server.h"
-"${ProjDirPath}/../service/erpc_matrix_multiply_server.cpp"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../rpmsg_config.h"
@@ -793,6 +803,12 @@ add_executable(erpc_matrix_multiply_rpmsg_rtos_imxcm4.elf
 "${ProjDirPath}/../python/service/erpc_matrix_multiply/common.py"
 "${ProjDirPath}/../python/service/erpc_matrix_multiply/interface.py"
 "${ProjDirPath}/../python/service/erpc_matrix_multiply/server.py"
+"${ProjDirPath}/../../erpc_common/erpc_error_handler.h"
+"${ProjDirPath}/../../erpc_common/erpc_error_handler.cpp"
+"${ProjDirPath}/../../erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply.erpc"
+"${ProjDirPath}/../../erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply.h"
+"${ProjDirPath}/../../erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply_server.h"
+"${ProjDirPath}/../../erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply_server.cpp"
 "${ProjDirPath}/../FreeRTOSConfig.h"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
@@ -861,9 +877,11 @@ add_executable(erpc_matrix_multiply_rpmsg_rtos_imxcm4.elf
 "${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/deprecated_definitions.h"
 "${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/list.h"
 "${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/mpu_wrappers.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/mpu_prototypes.h"
 "${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/portable.h"
 "${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/projdefs.h"
 "${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/stack_macros.h"
+"${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private/threading_alt.h"
 "${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/event_groups.c"
 "${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/list.c"
 "${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/FreeRTOS/queue.c"
@@ -883,9 +901,9 @@ add_executable(erpc_matrix_multiply_rpmsg_rtos_imxcm4.elf
 "${ProjDirPath}/../../../../../devices/MCIMX7U5/system_MCIMX7U5_cm4.h"
 "${ProjDirPath}/../../../../../devices/MCIMX7U5/utilities/str/fsl_str.c"
 "${ProjDirPath}/../../../../../devices/MCIMX7U5/utilities/str/fsl_str.h"
-"${ProjDirPath}/../../../../../devices/MCIMX7U5/utilities/fsl_debug_console.c"
-"${ProjDirPath}/../../../../../devices/MCIMX7U5/utilities/fsl_debug_console.h"
-"${ProjDirPath}/../../../../../devices/MCIMX7U5/utilities/fsl_debug_console_conf.h"
+"${ProjDirPath}/../../../../../devices/MCIMX7U5/utilities/debug_console/fsl_debug_console.c"
+"${ProjDirPath}/../../../../../devices/MCIMX7U5/utilities/debug_console/fsl_debug_console.h"
+"${ProjDirPath}/../../../../../devices/MCIMX7U5/utilities/debug_console/fsl_debug_console_conf.h"
 "${ProjDirPath}/../../../../../components/uart/uart.h"
 "${ProjDirPath}/../../../../../components/uart/lpuart_adapter.c"
 "${ProjDirPath}/../../../../../components/serial_manager/serial_manager.h"

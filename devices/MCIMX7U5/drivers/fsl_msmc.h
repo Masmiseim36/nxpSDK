@@ -2,7 +2,7 @@
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 #ifndef _FSL_MSMC_H_
@@ -30,11 +30,11 @@
  */
 typedef enum _smc_power_mode_protection
 {
-    kSMC_AllowPowerModeVlls = SMC_PMPROT_AVLLS_MASK,   /*!< Allow Very-Low-Leakage Stop Mode. */
-    kSMC_AllowPowerModeLls = SMC_PMPROT_ALLS_MASK,     /*!< Allow Low-Leakage Stop Mode.      */
-    kSMC_AllowPowerModeVlp = SMC_PMPROT_AVLP_MASK,     /*!< Allow Very-Low-Power Mode.        */
+    kSMC_AllowPowerModeVlls  = SMC_PMPROT_AVLLS_MASK,  /*!< Allow Very-Low-Leakage Stop Mode. */
+    kSMC_AllowPowerModeLls   = SMC_PMPROT_ALLS_MASK,   /*!< Allow Low-Leakage Stop Mode.      */
+    kSMC_AllowPowerModeVlp   = SMC_PMPROT_AVLP_MASK,   /*!< Allow Very-Low-Power Mode.        */
     kSMC_AllowPowerModeHsrun = SMC_PMPROT_AHSRUN_MASK, /*!< Allow High Speed Run mode.        */
-    kSMC_AllowPowerModeAll = SMC_PMPROT_AVLLS_MASK | SMC_PMPROT_ALLS_MASK | SMC_PMPROT_AVLP_MASK |
+    kSMC_AllowPowerModeAll   = SMC_PMPROT_AVLLS_MASK | SMC_PMPROT_ALLS_MASK | SMC_PMPROT_AVLP_MASK |
                              SMC_PMPROT_AHSRUN_MASK /*!< Allow all power mode.              */
 } smc_power_mode_protection_t;
 
@@ -43,10 +43,10 @@ typedef enum _smc_power_mode_protection
  */
 typedef enum _smc_power_state
 {
-    kSMC_PowerStateRun = 1U,        /*!< 0000_0001 - Current power mode is RUN   */
-    kSMC_PowerStateStop = 1U << 1U, /*!< 0000_0010 - Current power mode is any STOP mode  */
-    kSMC_PowerStateVlpr = 1U << 2U, /*!< 0000_0100 - Current power mode is VLPR  */
-    kSMC_PowerStateHsrun = 1U << 7U /*!< 1000_0000 - Current power mode is HSRUN */
+    kSMC_PowerStateRun   = 1U,       /*!< 0000_0001 - Current power mode is RUN   */
+    kSMC_PowerStateStop  = 1U << 1U, /*!< 0000_0010 - Current power mode is any STOP mode  */
+    kSMC_PowerStateVlpr  = 1U << 2U, /*!< 0000_0100 - Current power mode is VLPR  */
+    kSMC_PowerStateHsrun = 1U << 7U  /*!< 1000_0000 - Current power mode is HSRUN */
 } smc_power_state_t;
 
 /*!
@@ -68,8 +68,8 @@ typedef enum _smc_power_stop_entry_status
 typedef enum _smc_run_mode
 {
     kSMC_RunNormal = 0U, /*!< normal RUN mode.             */
-    kSMC_RunVlpr = 2U,   /*!< Very-Low-Power RUN mode.     */
-    kSMC_Hsrun = 3U      /*!< High Speed Run mode (HSRUN). */
+    kSMC_RunVlpr   = 2U, /*!< Very-Low-Power RUN mode.     */
+    kSMC_Hsrun     = 3U  /*!< High Speed Run mode (HSRUN). */
 } smc_run_mode_t;
 
 /*!
@@ -78,8 +78,8 @@ typedef enum _smc_run_mode
 typedef enum _smc_stop_mode
 {
     kSMC_StopNormal = 0U, /*!< Normal STOP mode.           */
-    kSMC_StopVlps = 2U,   /*!< Very-Low-Power STOP mode.   */
-    kSMC_StopLls = 3U,    /*!< Low-Leakage Stop mode.      */
+    kSMC_StopVlps   = 2U, /*!< Very-Low-Power STOP mode.   */
+    kSMC_StopLls    = 3U, /*!< Low-Leakage Stop mode.      */
 #if (defined(FSL_FEATURE_SMC_HAS_SUB_STOP_MODE) && FSL_FEATURE_SMC_HAS_SUB_STOP_MODE)
 #if (defined(FSL_FEATURE_SMC_HAS_STOP_SUBMODE2) && FSL_FEATURE_SMC_HAS_STOP_SUBMODE2)
     kSMC_StopVlls2 = 4U, /*!< Very-Low-Leakage Stop mode, VLPS2/3. */
@@ -97,7 +97,7 @@ typedef enum _smc_stop_mode
  */
 typedef enum _smc_partial_stop_mode
 {
-    kSMC_PartialStop = 0U,  /*!< STOP - Normal Stop mode*/
+    kSMC_PartialStop  = 0U, /*!< STOP - Normal Stop mode*/
     kSMC_PartialStop1 = 1U, /*!< Partial Stop with both system and bus clocks disabled*/
     kSMC_PartialStop2 = 2U, /*!< Partial Stop with system clock disabled and bus clock enabled*/
     kSMC_PartialStop3 = 3U, /*!< Partial Stop with system clock enabled and bus clock disabled*/
@@ -117,23 +117,23 @@ enum _smc_status
 typedef enum _smc_reset_source
 {
     kSMC_SourceWakeup = SMC_SRS_WAKEUP_MASK, /*!< Very low-leakage wakeup reset */
-    kSMC_SourcePor = SMC_SRS_POR_MASK,       /*!< Power on reset */
-    kSMC_SourceLvd = SMC_SRS_LVD_MASK,       /*!< Low-voltage detect reset */
-    kSMC_SourceHvd = SMC_SRS_HVD_MASK,       /*!< High-voltage detect reset */
-    kSMC_SourceWarm = SMC_SRS_WARM_MASK,     /*!< Warm reset. Warm Reset flag will assert if any of the system reset
+    kSMC_SourcePor    = SMC_SRS_POR_MASK,    /*!< Power on reset */
+    kSMC_SourceLvd    = SMC_SRS_LVD_MASK,    /*!< Low-voltage detect reset */
+    kSMC_SourceHvd    = SMC_SRS_HVD_MASK,    /*!< High-voltage detect reset */
+    kSMC_SourceWarm   = SMC_SRS_WARM_MASK,   /*!< Warm reset. Warm Reset flag will assert if any of the system reset
                                                  sources in this register assert (SRS[31:8]) */
     kSMC_SourceFatal = SMC_SRS_FATAL_MASK,   /*!< Fatal reset */
     kSMC_SourceCore =
         SMC_SRS_CORE_MASK, /*!< Software reset that only reset the core, NOT a sticky system reset source. */
-    kSMC_SourcePin = SMC_SRS_PIN_MASK,         /*!< RESET_B pin reset. */
-    kSMC_SourceMdm = SMC_SRS_MDM_MASK,         /*!< MDM reset. */
-    kSMC_SourceRstAck = SMC_SRS_RSTACK_MASK,   /*!< Reset Controller timeout reset. */
-    kSMC_SourceStopAck = SMC_SRS_STOPACK_MASK, /*!< Stop timeout reset */
-    kSMC_SourceScg = SMC_SRS_SCG_MASK,         /*!< SCG loss of lock or loss of clock */
-    kSMC_SourceWdog = SMC_SRS_WDOG_MASK,       /*!< Watchdog reset */
-    kSMC_SourceSoftware = SMC_SRS_SW_MASK,     /*!< Software reset */
-    kSMC_SourceLockup = SMC_SRS_LOCKUP_MASK,   /*!< Lockup reset. Core lockup or exception. */
-    kSMC_SourceJtag = SMC_SRS_JTAG_MASK,       /*!< JTAG system reset */
+    kSMC_SourcePin      = SMC_SRS_PIN_MASK,     /*!< RESET_B pin reset. */
+    kSMC_SourceMdm      = SMC_SRS_MDM_MASK,     /*!< MDM reset. */
+    kSMC_SourceRstAck   = SMC_SRS_RSTACK_MASK,  /*!< Reset Controller timeout reset. */
+    kSMC_SourceStopAck  = SMC_SRS_STOPACK_MASK, /*!< Stop timeout reset */
+    kSMC_SourceScg      = SMC_SRS_SCG_MASK,     /*!< SCG loss of lock or loss of clock */
+    kSMC_SourceWdog     = SMC_SRS_WDOG_MASK,    /*!< Watchdog reset */
+    kSMC_SourceSoftware = SMC_SRS_SW_MASK,      /*!< Software reset */
+    kSMC_SourceLockup   = SMC_SRS_LOCKUP_MASK,  /*!< Lockup reset. Core lockup or exception. */
+    kSMC_SourceJtag     = SMC_SRS_JTAG_MASK,    /*!< JTAG system reset */
 #if (defined(FSL_FEATURE_SMC_HAS_SRS_VBAT) && FSL_FEATURE_SMC_HAS_SRS_VBAT)
     kSMC_SourceVbat = SMC_SRS_VBAT_MASK,
 #endif
@@ -155,24 +155,19 @@ typedef enum _smc_reset_source
                      SMC_SRS_RSTACK_MASK | SMC_SRS_STOPACK_MASK | SMC_SRS_SCG_MASK | SMC_SRS_WDOG_MASK |
                      SMC_SRS_SW_MASK | SMC_SRS_LOCKUP_MASK | SMC_SRS_JTAG_MASK
 #if (defined(FSL_FEATURE_SMC_HAS_SRS_VBAT) && FSL_FEATURE_SMC_HAS_SRS_VBAT)
-                     |
-                     SMC_SRS_VBAT_MASK
+                     | SMC_SRS_VBAT_MASK
 #endif
 #if (defined(FSL_FEATURE_SMC_HAS_SRS_SECVIO) && FSL_FEATURE_SMC_HAS_SRS_SECVIO)
-                     |
-                     SMC_SRS_SECVIO_MASK
+                     | SMC_SRS_SECVIO_MASK
 #endif /* FSL_FEATURE_SMC_HAS_SRS_SECVIO */
 #if (defined(FSL_FEATURE_SMC_HAS_SRS_TAMPER) && FSL_FEATURE_SMC_HAS_SRS_TAMPER)
-                     |
-                     SMC_SRS_TAMPER_MASK
+                     | SMC_SRS_TAMPER_MASK
 #endif /* FSL_FEATURE_SMC_HAS_SRS_TAMPER */
 #if (defined(FSL_FEATURE_SMC_HAS_SRS_CORE0) && FSL_FEATURE_SMC_HAS_SRS_CORE0)
-                     |
-                     SMC_SRS_CORE0_MASK
+                     | SMC_SRS_CORE0_MASK
 #endif /* FSL_FEATURE_SMC_HAS_SRS_CORE0 */
 #if (defined(FSL_FEATURE_SMC_HAS_SRS_CORE1) && FSL_FEATURE_SMC_HAS_SRS_CORE1)
-                     |
-                     SMC_SRS_CORE1_MASK
+                     | SMC_SRS_CORE1_MASK
 #endif /* FSL_FEATURE_SMC_HAS_SRS_CORE1 */
     ,
 } smc_reset_source_t;
@@ -182,13 +177,13 @@ typedef enum _smc_reset_source
  */
 typedef enum _smc_interrupt_enable
 {
-    kSMC_IntNone = 0U,                       /*!< No interrupt enabled.       */
-    kSMC_IntPin = SMC_SRIE_PIN_MASK,         /*!< Pin reset interrupt.        */
-    kSMC_IntMdm = SMC_SRIE_MDM_MASK,         /*!< MDM reset interrupt.        */
-    kSMC_IntStopAck = SMC_SRIE_STOPACK_MASK, /*!< Stop timeout reset interrupt.  */
-    kSMC_IntWdog = SMC_SRIE_WDOG_MASK,       /*!< Watchdog interrupt.         */
-    kSMC_IntSoftware = SMC_SRIE_SW_MASK,     /*!< Software reset interrupts.  */
-    kSMC_IntLockup = SMC_SRIE_LOCKUP_MASK,   /*!< Lock up interrupt.          */
+    kSMC_IntNone     = 0U,                    /*!< No interrupt enabled.       */
+    kSMC_IntPin      = SMC_SRIE_PIN_MASK,     /*!< Pin reset interrupt.        */
+    kSMC_IntMdm      = SMC_SRIE_MDM_MASK,     /*!< MDM reset interrupt.        */
+    kSMC_IntStopAck  = SMC_SRIE_STOPACK_MASK, /*!< Stop timeout reset interrupt.  */
+    kSMC_IntWdog     = SMC_SRIE_WDOG_MASK,    /*!< Watchdog interrupt.         */
+    kSMC_IntSoftware = SMC_SRIE_SW_MASK,      /*!< Software reset interrupts.  */
+    kSMC_IntLockup   = SMC_SRIE_LOCKUP_MASK,  /*!< Lock up interrupt.          */
 #if defined(FSL_FEATURE_SMC_HAS_SRIE_VBAT) && FSL_FEATURE_SMC_HAS_SRIE_VBAT
     kSMC_IntVbat = SMC_SRIE_VBAT_MASK,
 #endif
@@ -199,19 +194,16 @@ typedef enum _smc_interrupt_enable
     kSMC_IntCore1 = SMC_SRIE_CORE1_MASK, /*! Core 1 interrupts. */
 #endif                                   /* FSL_FEATURE_SMC_HAS_SRIE_CORE1 */
     kSMC_IntAll = SMC_SRIE_PIN_MASK |    /*!< All system reset interrupts.      */
-                  SMC_SRIE_MDM_MASK |
-                  SMC_SRIE_STOPACK_MASK | SMC_SRIE_WDOG_MASK | SMC_SRIE_SW_MASK | SMC_SRIE_LOCKUP_MASK
+                  SMC_SRIE_MDM_MASK | SMC_SRIE_STOPACK_MASK | SMC_SRIE_WDOG_MASK | SMC_SRIE_SW_MASK |
+                  SMC_SRIE_LOCKUP_MASK
 #if defined(FSL_FEATURE_SMC_HAS_SRIE_VBAT) && FSL_FEATURE_SMC_HAS_SRIE_VBAT
-                  |
-                  SMC_SRIE_VBAT_MASK
+                  | SMC_SRIE_VBAT_MASK
 #endif /* FSL_FEATURE_SMC_HAS_SRIE_VBAT */
 #if (defined(FSL_FEATURE_SMC_HAS_SRIE_CORE0) && FSL_FEATURE_SMC_HAS_SRIE_CORE0)
-                  |
-                  SMC_SRIE_CORE0_MASK
+                  | SMC_SRIE_CORE0_MASK
 #endif /* FSL_FEATURE_SMC_HAS_SRIE_CORE0 */
 #if (defined(FSL_FEATURE_SMC_HAS_SRIE_CORE1) && FSL_FEATURE_SMC_HAS_SRIE_CORE1)
-                  |
-                  SMC_SRIE_CORE1_MASK
+                  | SMC_SRIE_CORE1_MASK
 #endif /* FSL_FEATURE_SMC_HAS_SRIE_CORE1 */
 } smc_interrupt_enable_t;
 

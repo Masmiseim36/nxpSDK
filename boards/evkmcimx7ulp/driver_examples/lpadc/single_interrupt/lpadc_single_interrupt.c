@@ -19,6 +19,8 @@
  ******************************************************************************/
 #define DEMO_LPADC_BASE ADC1
 #define DEMO_LPADC_IRQn ADC1_IRQn
+#define DEMO_LPADC_USER_CHANNEL 6U
+#define DEMO_LPADC_USER_CMDID 15U
 #define DEMO_LPADC_IRQ_HANDLER_FUNC ADC1_IRQHandler
 
 
@@ -73,17 +75,17 @@ int main(void)
 
     LPADC_GetDefaultConfig(&mLpadcConfigStruct);
     mLpadcConfigStruct.enableAnalogPreliminary = true;
-    mLpadcConfigStruct.FIFOWatermark = 0U; /* Set watermark as 0U. */
+    mLpadcConfigStruct.FIFOWatermark           = 0U; /* Set watermark as 0U. */
     LPADC_Init(DEMO_LPADC_BASE, &mLpadcConfigStruct);
 
     /* Set conversion CMD configuration. */
     LPADC_GetDefaultConvCommandConfig(&mLpadcCommandConfigStruct);
-    mLpadcCommandConfigStruct.channelNumber = 6U;                                 /* Take channel6A as ADC input.  */
-    LPADC_SetConvCommandConfig(DEMO_LPADC_BASE, 15U, &mLpadcCommandConfigStruct); /* Configurate the CMD15 buffer. */
+    mLpadcCommandConfigStruct.channelNumber = DEMO_LPADC_USER_CHANNEL;
+    LPADC_SetConvCommandConfig(DEMO_LPADC_BASE, DEMO_LPADC_USER_CMDID, &mLpadcCommandConfigStruct);
 
     /* Set trigger configuration. */
     LPADC_GetDefaultConvTriggerConfig(&mLpadcTriggerConfigStruct);
-    mLpadcTriggerConfigStruct.targetCommandId = 15U; /* CMD15 is executed. */
+    mLpadcTriggerConfigStruct.targetCommandId       = DEMO_LPADC_USER_CMDID;
     mLpadcTriggerConfigStruct.enableHardwareTrigger = false;
     LPADC_SetConvTriggerConfig(DEMO_LPADC_BASE, 0U, &mLpadcTriggerConfigStruct); /* Configurate the trigger0. */
 
@@ -104,8 +106,8 @@ int main(void)
 #endif
 
     /* When the number of datawords stored in the ADC Result FIFO is greater
-    * than watermark value(0U), LPADC watermark interrupt would be triggered.
-    */
+     * than watermark value(0U), LPADC watermark interrupt would be triggered.
+     */
     PRINTF("Please press any key to get user channel's ADC value.\r\n");
     GETCHAR();
     LPADC_DoSoftwareTrigger(DEMO_LPADC_BASE, 1U);

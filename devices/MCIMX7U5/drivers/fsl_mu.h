@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 #ifndef _FSL_MU_H_
@@ -50,11 +50,11 @@ enum _mu_status_flags
     kMU_GenInt2Flag = (1U << (MU_SR_GIPn_SHIFT + 1U)), /*!< General purpose interrupt 0 pending. */
     kMU_GenInt3Flag = (1U << (MU_SR_GIPn_SHIFT + 0U)), /*!< General purpose interrupt 0 pending. */
 
-    kMU_EventPendingFlag = MU_SR_EP_MASK,   /*!< MU event pending.               */
+    kMU_EventPendingFlag  = MU_SR_EP_MASK,  /*!< MU event pending.               */
     kMU_FlagsUpdatingFlag = MU_SR_FUP_MASK, /*!< MU flags update is on-going.    */
 
 #if (defined(FSL_FEATURE_MU_HAS_RESET_INT) && FSL_FEATURE_MU_HAS_RESET_INT)
-    kMU_ResetAssertInterruptFlag = MU_SR_RAIP_MASK,   /*!< The other core reset assert interrupt pending.    */
+    kMU_ResetAssertInterruptFlag   = MU_SR_RAIP_MASK, /*!< The other core reset assert interrupt pending.    */
     kMU_ResetDeassertInterruptFlag = MU_SR_RDIP_MASK, /*!< The other core reset de-assert interrupt pending. */
 #endif
 
@@ -63,7 +63,7 @@ enum _mu_status_flags
 #endif
 
 #if (defined(FSL_FEATURE_MU_HAS_SR_MURIP) && FSL_FEATURE_MU_HAS_SR_MURIP)
-    kMU_MuResetInterruptFlag = MU_SR_MURIP_MASK, /*!< The other side initializes MU reset. */
+        kMU_MuResetInterruptFlag = MU_SR_MURIP_MASK, /*!< The other side initializes MU reset. */
 #endif
 #if (defined(FSL_FEATURE_MU_HAS_SR_HRIP) && FSL_FEATURE_MU_HAS_SR_HRIP)
     kMU_HardwareResetInterruptFlag = MU_SR_HRIP_MASK, /*!< Current side has been hardware reset by the other side. */
@@ -91,7 +91,7 @@ enum _mu_interrupt_enable
     kMU_GenInt3InterruptEnable = (1U << (MU_CR_GIEn_SHIFT + 0U)), /*!< General purpose interrupt 3. */
 
 #if (defined(FSL_FEATURE_MU_HAS_RESET_INT) && FSL_FEATURE_MU_HAS_RESET_INT)
-    kMU_ResetAssertInterruptEnable = MU_CR_RAIE_MASK,   /*!< The other core reset assert interrupt.    */
+    kMU_ResetAssertInterruptEnable   = MU_CR_RAIE_MASK, /*!< The other core reset assert interrupt.    */
     kMU_ResetDeassertInterruptEnable = MU_CR_RDIE_MASK, /*!< The other core reset de-assert interrupt. */
 #endif
 #if (defined(FSL_FEATURE_MU_HAS_SR_MURIP) && FSL_FEATURE_MU_HAS_SR_MURIP)
@@ -261,8 +261,8 @@ uint32_t MU_ReceiveMsg(MU_Type *base, uint32_t regIndex);
 static inline void MU_SetFlagsNonBlocking(MU_Type *base, uint32_t flags)
 {
     uint32_t reg = base->CR;
-    reg = (reg & ~((MU_CR_GIRn_MASK | MU_CR_NMI_MASK) | MU_CR_Fn_MASK)) | MU_CR_Fn(flags);
-    base->CR = reg;
+    reg          = (reg & ~((MU_CR_GIRn_MASK | MU_CR_NMI_MASK) | MU_CR_Fn_MASK)) | MU_CR_Fn(flags);
+    base->CR     = reg;
 }
 
 /*!
@@ -404,8 +404,8 @@ static inline void MU_ClearStatusFlags(MU_Type *base, uint32_t mask)
 static inline void MU_EnableInterrupts(MU_Type *base, uint32_t mask)
 {
     uint32_t reg = base->CR;
-    reg = (reg & ~(MU_CR_GIRn_MASK | MU_CR_NMI_MASK)) | mask;
-    base->CR = reg;
+    reg          = (reg & ~(MU_CR_GIRn_MASK | MU_CR_NMI_MASK)) | mask;
+    base->CR     = reg;
 }
 
 /*!
@@ -501,8 +501,8 @@ static inline void MU_HoldCoreBReset(MU_Type *base)
     base->CCR |= MU_CCR_RSTH_MASK;
 #else  /* FSL_FEATURE_MU_HAS_CCR */
     uint32_t reg = base->CR;
-    reg = (reg & ~(MU_CR_GIRn_MASK | MU_CR_NMI_MASK)) | MU_CR_RSTH_MASK;
-    base->CR = reg;
+    reg          = (reg & ~(MU_CR_GIRn_MASK | MU_CR_NMI_MASK)) | MU_CR_RSTH_MASK;
+    base->CR     = reg;
 #endif /* FSL_FEATURE_MU_HAS_CCR */
 }
 
@@ -548,8 +548,8 @@ static inline void MU_HoldOtherCoreReset(MU_Type *base)
 static inline void MU_ResetBothSides(MU_Type *base)
 {
     uint32_t reg = base->CR;
-    reg = (reg & ~(MU_CR_GIRn_MASK | MU_CR_NMI_MASK)) | MU_CR_MUR_MASK;
-    base->CR = reg;
+    reg          = (reg & ~(MU_CR_GIRn_MASK | MU_CR_NMI_MASK)) | MU_CR_MUR_MASK;
+    base->CR     = reg;
 
 #if (defined(FSL_FEATURE_MU_HAS_SR_RS) && FSL_FEATURE_MU_HAS_SR_RS)
     /* Wait for the other side out of reset. */

@@ -2,7 +2,7 @@
  * Copyright (c) 2013 - 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -13,7 +13,7 @@
 #include "fsl_edma.h"
 #include "fsl_dmamux.h"
 #include "fsl_lpit.h"
-#include "fsl_port.h"   
+#include "fsl_port.h"
 #include "board.h"
 #include "fsl_common.h"
 #include "pin_mux.h"
@@ -69,8 +69,8 @@ static void lpi2c_master_callback(LPI2C_Type *base,
                                   status_t completionStatus,
                                   void *param);
 /*******************************************************************************
-* Variables
-*******************************************************************************/
+ * Variables
+ *******************************************************************************/
 static uint8_t recvData[6];
 
 static uint32_t sendDataCmd[] = {
@@ -81,9 +81,9 @@ static uint32_t sendDataCmd[] = {
     (LPI2C_CMD_STOP << 8) | 0                     /* Stop */
 };
 
-static volatile bool gDmaDone = false;
+static volatile bool gDmaDone            = false;
 static volatile bool g_i2cCompletionFlag = false;
-static volatile bool g_i2cNakFlag = false;
+static volatile bool g_i2cNakFlag        = false;
 
 lpi2c_master_handle_t g_i2c_handle;
 
@@ -133,7 +133,7 @@ static void APP_LPI2C_Init(void)
     LPI2C_MasterGetDefaultConfig(&masterConfig);
     masterConfig.baudRate_Hz = 400000U;
     masterConfig.debugEnable = true;
-    masterConfig.enableDoze = true;
+    masterConfig.enableDoze  = true;
     LPI2C_MasterInit(BOARD_ACCEL_I2C_BASEADDR, &masterConfig, DEMO_LPI2C_CLOCK_FREQUNCY);
     LPI2C_MasterTransferCreateHandle(BOARD_ACCEL_I2C_BASEADDR, &g_i2c_handle, lpi2c_master_callback, NULL);
 
@@ -147,13 +147,13 @@ static void APP_ACCEL_WriteReg(uint8_t reg, uint8_t value)
     lpi2c_master_transfer_t masterXfer;
 
     memset(&masterXfer, 0, sizeof(lpi2c_master_transfer_t));
-    masterXfer.slaveAddress = ACCEL_I2C_ADDR;
-    masterXfer.direction = kLPI2C_Write;
-    masterXfer.subaddress = reg;
+    masterXfer.slaveAddress   = ACCEL_I2C_ADDR;
+    masterXfer.direction      = kLPI2C_Write;
+    masterXfer.subaddress     = reg;
     masterXfer.subaddressSize = 1;
-    masterXfer.data = &value;
-    masterXfer.dataSize = 1;
-    masterXfer.flags = kLPI2C_TransferDefaultFlag;
+    masterXfer.data           = &value;
+    masterXfer.dataSize       = 1;
+    masterXfer.flags          = kLPI2C_TransferDefaultFlag;
 
     /* Send master data to slave */
     LPI2C_MasterTransferNonBlocking(BOARD_ACCEL_I2C_BASEADDR, &g_i2c_handle, &masterXfer);
@@ -163,7 +163,7 @@ static void APP_ACCEL_WriteReg(uint8_t reg, uint8_t value)
     {
     }
     g_i2cCompletionFlag = false;
-    g_i2cNakFlag = false;
+    g_i2cNakFlag        = false;
 }
 
 /* Init the accelerometer */
@@ -173,13 +173,13 @@ static void APP_ACCEL_Init(void)
     lpi2c_master_transfer_t masterXfer;
 
     memset(&masterXfer, 0, sizeof(lpi2c_master_transfer_t));
-    masterXfer.slaveAddress = ACCEL_I2C_ADDR;
-    masterXfer.direction = kLPI2C_Read;
-    masterXfer.subaddress = ACCEL_REG_WHO_AM_I;
+    masterXfer.slaveAddress   = ACCEL_I2C_ADDR;
+    masterXfer.direction      = kLPI2C_Read;
+    masterXfer.subaddress     = ACCEL_REG_WHO_AM_I;
     masterXfer.subaddressSize = 1;
-    masterXfer.data = &rxData;
-    masterXfer.dataSize = 1;
-    masterXfer.flags = kLPI2C_TransferDefaultFlag;
+    masterXfer.data           = &rxData;
+    masterXfer.dataSize       = 1;
+    masterXfer.flags          = kLPI2C_TransferDefaultFlag;
     LPI2C_MasterTransferNonBlocking(BOARD_ACCEL_I2C_BASEADDR, &g_i2c_handle, &masterXfer);
 
     /* Wait for transfer completed. */
@@ -187,7 +187,7 @@ static void APP_ACCEL_Init(void)
     {
     }
     g_i2cCompletionFlag = false;
-    g_i2cNakFlag = false;
+    g_i2cNakFlag        = false;
 
     if (rxData != ACCEL_WHO_AM_I)
     {
@@ -238,15 +238,15 @@ static void APP_ACCEL_ReadData(void)
     edma_tcd_t *tcd = (edma_tcd_t *)((uint32_t)(&tcds[1]) & (~0x1FU));
 
     /* Source and dest address, all 1Bytes(8bit) data width */
-    transferConfig.srcAddr = LPI2C_MasterGetRxFifoAddress(BOARD_ACCEL_I2C_BASEADDR);
-    transferConfig.srcTransferSize = kEDMA_TransferSize1Bytes;
-    transferConfig.destAddr = (uint32_t)recvData;
+    transferConfig.srcAddr          = LPI2C_MasterGetRxFifoAddress(BOARD_ACCEL_I2C_BASEADDR);
+    transferConfig.srcTransferSize  = kEDMA_TransferSize1Bytes;
+    transferConfig.destAddr         = (uint32_t)recvData;
     transferConfig.destTransferSize = kEDMA_TransferSize1Bytes;
     /* Offset applied to current address to form next transfer address */
-    transferConfig.srcOffset = 0;
+    transferConfig.srcOffset  = 0;
     transferConfig.destOffset = 1;
     /* 1bytes per DMA request */
-    transferConfig.minorLoopBytes = 1;
+    transferConfig.minorLoopBytes  = 1;
     transferConfig.majorLoopCounts = sizeof(recvData);
 
     /*
@@ -268,15 +268,15 @@ static void APP_ACCEL_ReadData(void)
     }
 
     /* Source and dest address, all 4Bytes(32bit) data width */
-    transferConfig.srcAddr = (uint32_t)sendDataCmd;
-    transferConfig.srcTransferSize = kEDMA_TransferSize4Bytes;
-    transferConfig.destAddr = LPI2C_MasterGetTxFifoAddress(BOARD_ACCEL_I2C_BASEADDR);
+    transferConfig.srcAddr          = (uint32_t)sendDataCmd;
+    transferConfig.srcTransferSize  = kEDMA_TransferSize4Bytes;
+    transferConfig.destAddr         = LPI2C_MasterGetTxFifoAddress(BOARD_ACCEL_I2C_BASEADDR);
     transferConfig.destTransferSize = kEDMA_TransferSize4Bytes;
     /* Offset applied to current address to form next transfer address */
-    transferConfig.srcOffset = 4;
+    transferConfig.srcOffset  = 4;
     transferConfig.destOffset = 0;
     /* 4bytes per DMA request */
-    transferConfig.minorLoopBytes = 4;
+    transferConfig.minorLoopBytes  = 4;
     transferConfig.majorLoopCounts = sizeof(sendDataCmd) / sizeof(uint32_t);
 
     EDMA_SetTransferConfig(DMA0, channel0, &transferConfig, linkTcd);
@@ -298,16 +298,16 @@ static void APP_LPIT_Init(void)
     /* Init LPIT0 module and enable run in debug and low power mode*/
     LPIT_GetDefaultConfig(&lpitConfig);
     lpitConfig.enableRunInDebug = true;
-    lpitConfig.enableRunInDoze = true;
+    lpitConfig.enableRunInDoze  = true;
     LPIT_Init(LPIT0, &lpitConfig);
 
-    chnlSetup.timerMode = kLPIT_PeriodicCounter;
-    chnlSetup.chainChannel = false;
-    chnlSetup.triggerSelect = kLPIT_Trigger_TimerChn0;
-    chnlSetup.triggerSource = kLPIT_TriggerSource_Internal;
+    chnlSetup.timerMode             = kLPIT_PeriodicCounter;
+    chnlSetup.chainChannel          = false;
+    chnlSetup.triggerSelect         = kLPIT_Trigger_TimerChn0;
+    chnlSetup.triggerSource         = kLPIT_TriggerSource_Internal;
     chnlSetup.enableReloadOnTrigger = false;
-    chnlSetup.enableStopOnTimeout = false;
-    chnlSetup.enableStartOnTrigger = false;
+    chnlSetup.enableStopOnTimeout   = false;
+    chnlSetup.enableStartOnTrigger  = false;
     LPIT_SetupChannel(LPIT0, kLPIT_Chnl_0, &chnlSetup);
 
     /* Set timer0 period: 500ms */
@@ -322,7 +322,7 @@ static void APP_LPIT_Init(void)
 static void APP_EnterVlps(void)
 {
     status_t ret = kStatus_Success;
-    ret = SMC_SetPowerModeVlps(DEMO_SMC);
+    ret          = SMC_SetPowerModeVlps(DEMO_SMC);
     if (ret == kStatus_SMC_StopAbort)
     {
         PRINTF("Enter VLPS mode aborted!\r\n");

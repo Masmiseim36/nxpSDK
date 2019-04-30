@@ -9,14 +9,14 @@
  * @file    board.h
  * @brief   Board initialization header file.
  */
- 
+
 /* This is an empty template for board specific configuration.*/
 
 #ifndef _BOARD_H_
 #define _BOARD_H_
 
 /**
- * @brief	The board name 
+ * @brief	The board name
  */
 #define BOARD_NAME "board"
 
@@ -34,5 +34,3 @@ void BOARD_InitDebugConsole(void);
 #endif /* __cplusplus */
 
 #endif /* _BOARD_H_ */
-
-

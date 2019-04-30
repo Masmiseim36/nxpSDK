@@ -2,7 +2,7 @@
  * Copyright (c) 2015-2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 #ifndef _FSL_LTC_H_
@@ -20,9 +20,9 @@
  */
 /*! @name Driver version */
 /*@{*/
-/*! @brief LTC driver version. Version 2.0.5.
+/*! @brief LTC driver version. Version 2.0.7.
  *
- * Current version: 2.0.5
+ * Current version: 2.0.7
  *
  * Change log:
  * - Version 2.0.1
@@ -39,8 +39,14 @@
  *
  * - Version 2.0.5
  *   - Fix MISRA issues
+ *
+ * - Version 2.0.6
+ *   - fixed [KPSDK-23603][LTC] AES Decrypt in ECB and CBC modes fail when ciphertext size > 0xff0 bytes
+ *
+ * - Version 2.0.7
+ *   - Fix MISRA-2012 issues
  */
-#define FSL_LTC_DRIVER_VERSION (MAKE_VERSION(2, 0, 5))
+#define FSL_LTC_DRIVER_VERSION (MAKE_VERSION(2, 0, 7))
 /*@}*/
 /*! @} */
 
@@ -52,7 +58,7 @@
  * @{
  */
 /*! AES block size in bytes */
-#define LTC_AES_BLOCK_SIZE 16
+#define LTC_AES_BLOCK_SIZE 16U
 /*! AES Input Vector size in bytes */
 #define LTC_AES_IV_SIZE 16
 
@@ -138,21 +144,21 @@ typedef struct _ltc_pkha_ecc_point_t
 typedef enum _ltc_pkha_timing_t
 {
     kLTC_PKHA_NoTimingEqualized = 0U, /*!< Normal version of a PKHA operation */
-    kLTC_PKHA_TimingEqualized = 1U    /*!< Timing-equalized version of a PKHA operation  */
+    kLTC_PKHA_TimingEqualized   = 1U  /*!< Timing-equalized version of a PKHA operation  */
 } ltc_pkha_timing_t;
 
 /*! @brief Integer vs binary polynomial arithmetic selection. */
 typedef enum _ltc_pkha_f2m_t
 {
     kLTC_PKHA_IntegerArith = 0U, /*!< Use integer arithmetic */
-    kLTC_PKHA_F2mArith = 1U      /*!< Use binary polynomial arithmetic */
+    kLTC_PKHA_F2mArith     = 1U  /*!< Use binary polynomial arithmetic */
 } ltc_pkha_f2m_t;
 
 /*! @brief Montgomery or normal PKHA input format. */
 typedef enum _ltc_pkha_montgomery_form_t
 {
-    kLTC_PKHA_NormalValue = 0U,     /*!< PKHA number is normal integer */
-    kLTC_PKHA_MontgomeryFormat = 1U /*!< PKHA number is in montgomery format */
+    kLTC_PKHA_NormalValue      = 0U, /*!< PKHA number is normal integer */
+    kLTC_PKHA_MontgomeryFormat = 1U  /*!< PKHA number is in montgomery format */
 } ltc_pkha_montgomery_form_t;
 
 /*!
@@ -493,6 +499,7 @@ status_t LTC_AES_DecryptTagCcm(LTC_Type *base,
  *@}
  */
 
+#if defined(FSL_FEATURE_LTC_HAS_DES) && FSL_FEATURE_LTC_HAS_DES
 /*******************************************************************************
  * DES API
  ******************************************************************************/
@@ -1021,6 +1028,7 @@ status_t LTC_DES3_DecryptOfb(LTC_Type *base,
                              const uint8_t key1[LTC_DES_KEY_SIZE],
                              const uint8_t key2[LTC_DES_KEY_SIZE],
                              const uint8_t key3[LTC_DES_KEY_SIZE]);
+#endif /* FSL_FEATURE_LTC_HAS_DES */
 
 /*!
  *@}
@@ -1106,6 +1114,7 @@ status_t LTC_HASH(LTC_Type *base,
  *@}
  */
 
+#if defined(FSL_FEATURE_LTC_HAS_PKHA) && FSL_FEATURE_LTC_HAS_PKHA
 /*******************************************************************************
  * PKHA API
  ******************************************************************************/
@@ -1552,13 +1561,14 @@ status_t LTC_PKHA_ECC_PointMul(LTC_Type *base,
                                ltc_pkha_f2m_t arithType,
                                ltc_pkha_ecc_point_t *result,
                                bool *infinity);
+#endif /* FSL_FEATURE_LTC_HAS_PKHA */
 
 /*!
  *@}
  */
 
 /*******************************************************************************
- * Private - only used internally to share code between fsl_ltc_edma.c and fsl_ltc.c 
+ * Private - only used internally to share code between fsl_ltc_edma.c and fsl_ltc.c
  ******************************************************************************/
 /*!
  * @internal
@@ -1578,7 +1588,7 @@ status_t LTC_PKHA_ECC_PointMul(LTC_Type *base,
 #define LTC_MD_AS_INITIALIZE (0x1U)   /*!< Bit field value for LTC_MD_AS: Initialize */
 #define LTC_MD_AS_FINALIZE (0x2U)     /*!< Bit field value for LTC_MD_AS: Finalize */
 #define LTC_MD_AS_INIT_FINAL (0x3U)   /*!< Bit field value for LTC_MD_AS: Initialize/Finalize */
- 
+
 /*! Full word representing the actual bit values for the LTC mode register. */
 typedef uint32_t ltc_mode_t;
 
@@ -1589,11 +1599,11 @@ typedef enum _ltc_algorithm
 #endif /* FSL_FEATURE_LTC_HAS_PKHA */
     kLTC_AlgorithmAES = LTC_MD_ALG_AES << LTC_MD_ALG_SHIFT,
 #if defined(FSL_FEATURE_LTC_HAS_DES) && FSL_FEATURE_LTC_HAS_DES
-    kLTC_AlgorithmDES = LTC_MD_ALG_DES << LTC_MD_ALG_SHIFT,
+    kLTC_AlgorithmDES  = LTC_MD_ALG_DES << LTC_MD_ALG_SHIFT,
     kLTC_Algorithm3DES = LTC_MD_ALG_TRIPLE_DES << LTC_MD_ALG_SHIFT,
 #endif /* FSL_FEATURE_LTC_HAS_DES */
 #if defined(FSL_FEATURE_LTC_HAS_SHA) && FSL_FEATURE_LTC_HAS_SHA
-    kLTC_AlgorithmSHA1 = LTC_MD_ALG_SHA1 << LTC_MD_ALG_SHIFT,
+    kLTC_AlgorithmSHA1   = LTC_MD_ALG_SHA1 << LTC_MD_ALG_SHIFT,
     kLTC_AlgorithmSHA224 = LTC_MD_ALG_SHA224 << LTC_MD_ALG_SHIFT,
     kLTC_AlgorithmSHA256 = LTC_MD_ALG_SHA256 << LTC_MD_ALG_SHIFT,
 #endif /* FSL_FEATURE_LTC_HAS_SHA */
@@ -1601,15 +1611,15 @@ typedef enum _ltc_algorithm
 
 typedef enum _ltc_mode_symmetric_alg
 {
-    kLTC_ModeCTR = 0x00U << LTC_MD_AAI_SHIFT,
-    kLTC_ModeCBC = 0x10U << LTC_MD_AAI_SHIFT,
-    kLTC_ModeECB = 0x20U << LTC_MD_AAI_SHIFT,
-    kLTC_ModeCFB = 0x30U << LTC_MD_AAI_SHIFT,
-    kLTC_ModeOFB = 0x40U << LTC_MD_AAI_SHIFT,
-    kLTC_ModeCMAC = 0x60U << LTC_MD_AAI_SHIFT,
+    kLTC_ModeCTR     = 0x00U << LTC_MD_AAI_SHIFT,
+    kLTC_ModeCBC     = 0x10U << LTC_MD_AAI_SHIFT,
+    kLTC_ModeECB     = 0x20U << LTC_MD_AAI_SHIFT,
+    kLTC_ModeCFB     = 0x30U << LTC_MD_AAI_SHIFT,
+    kLTC_ModeOFB     = 0x40U << LTC_MD_AAI_SHIFT,
+    kLTC_ModeCMAC    = 0x60U << LTC_MD_AAI_SHIFT,
     kLTC_ModeXCBCMAC = 0x70U << LTC_MD_AAI_SHIFT,
-    kLTC_ModeCCM = 0x80U << LTC_MD_AAI_SHIFT,
-    kLTC_ModeGCM = 0x90U << LTC_MD_AAI_SHIFT,
+    kLTC_ModeCCM     = 0x80U << LTC_MD_AAI_SHIFT,
+    kLTC_ModeGCM     = 0x90U << LTC_MD_AAI_SHIFT,
 } ltc_mode_symmetric_alg_t;
 
 typedef enum _ltc_mode_encrypt
@@ -1620,12 +1630,12 @@ typedef enum _ltc_mode_encrypt
 
 typedef enum _ltc_mode_algorithm_state
 {
-    kLTC_ModeUpdate = LTC_MD_AS_UPDATE << LTC_MD_AS_SHIFT,
-    kLTC_ModeInit = LTC_MD_AS_INITIALIZE << LTC_MD_AS_SHIFT,
-    kLTC_ModeFinalize = LTC_MD_AS_FINALIZE << LTC_MD_AS_SHIFT,
+    kLTC_ModeUpdate    = LTC_MD_AS_UPDATE << LTC_MD_AS_SHIFT,
+    kLTC_ModeInit      = LTC_MD_AS_INITIALIZE << LTC_MD_AS_SHIFT,
+    kLTC_ModeFinalize  = LTC_MD_AS_FINALIZE << LTC_MD_AS_SHIFT,
     kLTC_ModeInitFinal = LTC_MD_AS_INIT_FINAL << LTC_MD_AS_SHIFT
 } ltc_mode_algorithm_state_t;
- 
+
 extern status_t ltc_get_context(LTC_Type *base, uint8_t *dest, uint8_t dataSize, uint8_t startIndex);
 extern status_t ltc_set_context(LTC_Type *base, const uint8_t *data, uint8_t dataSize, uint8_t startIndex);
 extern status_t ltc_symmetric_update(LTC_Type *base,
@@ -1638,10 +1648,12 @@ extern void ltc_memcpy(void *dst, const void *src, size_t size);
 extern bool ltc_check_key_size(const uint32_t keySize);
 extern status_t ltc_wait(LTC_Type *base);
 extern void ltc_clear_all(LTC_Type *base, bool addPKHA);
+#if defined(FSL_FEATURE_LTC_HAS_DES) && FSL_FEATURE_LTC_HAS_DES
 extern status_t ltc_3des_check_input_args(ltc_mode_symmetric_alg_t modeAs,
                                           uint32_t size,
                                           const uint8_t *key1,
                                           const uint8_t *key2);
+#endif /* FSL_FEATURE_LTC_HAS_DES */
 extern void ltc_symmetric_process(LTC_Type *base, uint32_t inSize, const uint8_t **inData, uint8_t **outData);
 extern status_t ltc_symmetric_process_data(LTC_Type *base, const uint8_t *inData, uint32_t inSize, uint8_t *outData);
 /*!

@@ -55,15 +55,15 @@
 
 enum
 {
-    APP_INPUT_ONOFF = 0U,
-    APP_INPUT_VOL_PLUS = 1U,
-    APP_INPUT_VOL_MINUS = 2U,
+    APP_INPUT_ONOFF        = 0U,
+    APP_INPUT_VOL_PLUS     = 1U,
+    APP_INPUT_VOL_MINUS    = 2U,
     APP_INPUT_BT_HOST_WAKE = 3U,
     APP_INPUT_WL_HOST_WAKE = 4U,
 
     APP_OUTPUT_WL_REG_ON = 5U,
     APP_OUTPUT_BT_REG_ON = 6U,
-    APP_IO_NUM = 7U
+    APP_IO_NUM           = 7U
 };
 
 #define APP_INPUT_GPIO_START APP_INPUT_VOL_PLUS
@@ -214,15 +214,15 @@ static const srtm_io_event_t llwuPinModeEvents[] = {
     SRTM_IoEventEitherEdge   /* kLLWU_ExternalPinAnyEdge */
 };
 
-static codec_config_t codecConfig = {.I2C_SendFunc = Codec_I2C_SendFunc,
+static codec_config_t codecConfig = {.I2C_SendFunc    = Codec_I2C_SendFunc,
                                      .I2C_ReceiveFunc = Codec_I2C_ReceiveFunc,
-                                     .op.Init = WM8960_Init,
-                                     .op.Deinit = WM8960_Deinit,
-                                     .op.SetFormat = WM8960_ConfigDataFormat};
+                                     .op.Init         = WM8960_Init,
+                                     .op.Deinit       = WM8960_Deinit,
+                                     .op.SetFormat    = WM8960_ConfigDataFormat};
 
 static struct _srtm_sensor_adapter sensorAdapter = {.enableStateDetector = APP_SRTM_Sensor_EnableStateDetector,
-                                                    .enableDataReport = APP_SRTM_Sensor_EnableDataReport,
-                                                    .setPollDelay = APP_SRTM_Sensor_SetPollDelay};
+                                                    .enableDataReport    = APP_SRTM_Sensor_EnableDataReport,
+                                                    .setPollDelay        = APP_SRTM_Sensor_SetPollDelay};
 
 static lpi2c_rtos_handle_t lpi2c0Handle;
 static lpi2c_rtos_handle_t lpi2c3Handle;
@@ -250,10 +250,10 @@ static app_irq_handler_t irqHandler;
 static void *irqHandlerParam;
 static TimerHandle_t linkupTimer;
 static app_pedometer_t pedometer = {.stateEnabled = false,
-                                    .dataEnabled = false,
-                                    .pollDelay = 1000, /* 1 sec by default. */
-                                    .expired = 0,
-                                    .lastCount = 0};
+                                    .dataEnabled  = false,
+                                    .pollDelay    = 1000, /* 1 sec by default. */
+                                    .expired      = 0,
+                                    .lastCount    = 0};
 
 static KeynetikConfig pedoConfig = {
     /* Step length in centimeters. Auto calculate. */
@@ -266,7 +266,8 @@ static KeynetikConfig pedoConfig = {
     .filtersteps = 4,
     .bits =
         {
-            .filtertime = 3, .male = 1,
+            .filtertime = 3,
+            .male       = 1,
         },
     /* Calculate speed every 5 seconds */
     .speedperiod = 5,
@@ -420,8 +421,8 @@ void USBPHY_IRQHandler(void)
 
 void SNVS_IRQHandler(void)
 {
-    BaseType_t reschedule = pdFALSE;
-    srtm_io_event_t ioPress = APP_Keypad_GetIoEvent(APP_KEYPAD_INDEX_ONOFF, SRTM_KeypadEventPress);
+    BaseType_t reschedule    = pdFALSE;
+    srtm_io_event_t ioPress  = APP_Keypad_GetIoEvent(APP_KEYPAD_INDEX_ONOFF, SRTM_KeypadEventPress);
     srtm_io_event_t ioEither = APP_Keypad_GetIoEvent(APP_KEYPAD_INDEX_ONOFF, SRTM_KeypadEventPressOrRelease);
 
     /* If application has handler */
@@ -464,8 +465,8 @@ void SNVS_IRQHandler(void)
 static void APP_HandleGPIOHander(uint8_t gpioIdx)
 {
     BaseType_t reschedule = pdFALSE;
-    PORT_Type *port = ports[gpioIdx];
-    GPIO_Type *gpio = gpios[gpioIdx];
+    PORT_Type *port       = ports[gpioIdx];
+    GPIO_Type *gpio       = gpios[gpioIdx];
 
     if (APP_GPIO_IDX(APP_PIN_BT_HOST_WAKE) == gpioIdx &&
         (1U << APP_PIN_IDX(APP_PIN_BT_HOST_WAKE)) & PORT_GetPinsInterruptFlags(port))
@@ -544,7 +545,7 @@ void PCTLB_IRQHandler(void)
 static srtm_status_t APP_IO_ConfOutput(uint16_t ioId, srtm_io_value_t ioValue)
 {
     uint8_t gpioIdx = APP_GPIO_IDX(ioId);
-    uint8_t pinIdx = APP_PIN_IDX(ioId);
+    uint8_t pinIdx  = APP_PIN_IDX(ioId);
 
     assert(gpioIdx < 2U); /* We only support GPIOA and GPIOB */
     assert(pinIdx < 32U);
@@ -574,7 +575,7 @@ static srtm_status_t APP_IO_GetInput(srtm_service_t service,
                                      srtm_io_value_t *pIoValue)
 {
     uint8_t gpioIdx = APP_GPIO_IDX(ioId);
-    uint8_t pinIdx = APP_PIN_IDX(ioId);
+    uint8_t pinIdx  = APP_PIN_IDX(ioId);
 
     assert(gpioIdx < 2U); /* We only support GPIOA and GPIOB */
     assert(pinIdx < 32U);
@@ -587,9 +588,9 @@ static srtm_status_t APP_IO_GetInput(srtm_service_t service,
 
 static srtm_status_t APP_IO_ConfInput(uint8_t inputIdx, srtm_io_event_t event, bool wakeup)
 {
-    uint16_t ioId = suspendContext.io.data[inputIdx].ioId;
+    uint16_t ioId   = suspendContext.io.data[inputIdx].ioId;
     uint8_t gpioIdx = APP_GPIO_IDX(ioId);
-    uint8_t pinIdx = APP_PIN_IDX(ioId);
+    uint8_t pinIdx  = APP_PIN_IDX(ioId);
     uint8_t llwuIdx = APP_IO_GetLLWUPin(ioId);
 
     assert(gpioIdx < 2U || gpioIdx == 0xFFU); /* We only support GPIOA and GPIOB, or the special SNVS power IO */
@@ -666,7 +667,7 @@ static srtm_status_t APP_IO_ConfIEvent(
 
     assert(inputIdx < APP_OUTPUT_GPIO_START);
 
-    suspendContext.io.data[inputIdx].event = event;
+    suspendContext.io.data[inputIdx].event  = event;
     suspendContext.io.data[inputIdx].wakeup = wakeup;
 
     return APP_IO_ConfInput(inputIdx, event, wakeup);
@@ -679,7 +680,7 @@ static srtm_status_t APP_IO_ConfKEvent(
 
     assert(inputIdx < APP_OUTPUT_GPIO_START);
 
-    suspendContext.io.data[inputIdx].event = APP_Keypad_GetIoEvent(keyIdx, event);
+    suspendContext.io.data[inputIdx].event  = APP_Keypad_GetIoEvent(keyIdx, event);
     suspendContext.io.data[inputIdx].wakeup = wakeup;
 
     return APP_IO_ConfInput(inputIdx, suspendContext.io.data[inputIdx].event, wakeup);
@@ -763,13 +764,13 @@ static status_t I2C_SendFunc(lpi2c_rtos_handle_t *handle,
     lpi2c_master_transfer_t masterXfer;
 
     /* Prepare transfer structure. */
-    masterXfer.slaveAddress = deviceAddress;
-    masterXfer.direction = kLPI2C_Write;
-    masterXfer.subaddress = subAddress;
+    masterXfer.slaveAddress   = deviceAddress;
+    masterXfer.direction      = kLPI2C_Write;
+    masterXfer.subaddress     = subAddress;
     masterXfer.subaddressSize = subAddressSize;
-    masterXfer.data = (void *)txBuff;
-    masterXfer.dataSize = txBuffSize;
-    masterXfer.flags = kLPI2C_TransferDefaultFlag;
+    masterXfer.data           = (void *)txBuff;
+    masterXfer.dataSize       = txBuffSize;
+    masterXfer.flags          = kLPI2C_TransferDefaultFlag;
 
     /* Calling I2C Transfer API to start send. */
     return LPI2C_RTOS_Transfer(handle, &masterXfer);
@@ -785,13 +786,13 @@ static status_t I2C_ReceiveFunc(lpi2c_rtos_handle_t *handle,
     lpi2c_master_transfer_t masterXfer;
 
     /* Prepare transfer structure. */
-    masterXfer.slaveAddress = deviceAddress;
-    masterXfer.direction = kLPI2C_Read;
-    masterXfer.subaddress = subAddress;
+    masterXfer.slaveAddress   = deviceAddress;
+    masterXfer.direction      = kLPI2C_Read;
+    masterXfer.subaddress     = subAddress;
     masterXfer.subaddressSize = subAddressSize;
-    masterXfer.data = rxBuff;
-    masterXfer.dataSize = rxBuffSize;
-    masterXfer.flags = kLPI2C_TransferDefaultFlag;
+    masterXfer.data           = rxBuff;
+    masterXfer.dataSize       = rxBuffSize;
+    masterXfer.flags          = kLPI2C_TransferDefaultFlag;
 
     /* Calling I2C Transfer API to start receive. */
     return LPI2C_RTOS_Transfer(handle, &masterXfer);
@@ -920,23 +921,23 @@ static srtm_status_t APP_SRTM_Sensor_InitPedometer(void)
     /* Put the device into standby mode so that configuration can be applied.*/
     status = Sensor_I2C_ReceiveFunc(FXOS8700_DEVICE_ADDR_SA_00, FXOS8700_CTRL_REG1, 1, &data, 1);
     assert(status == kStatus_Success);
-    data = (data & ~FXOS8700_CTRL_REG1_ACTIVE_MASK) | FXOS8700_CTRL_REG1_ACTIVE_STANDBY_MODE;
+    data   = (data & ~FXOS8700_CTRL_REG1_ACTIVE_MASK) | FXOS8700_CTRL_REG1_ACTIVE_STANDBY_MODE;
     status = Sensor_I2C_SendFunc(FXOS8700_DEVICE_ADDR_SA_00, FXOS8700_CTRL_REG1, 1, &data, 1);
     assert(status == kStatus_Success);
     /* Configure the fxos8700 to 50Hz sampling rate. */
-    data = (data & ~FXOS8700_CTRL_REG1_DR_MASK) | APP_PEDOMETER_SENSOR_SAMPLE_RATE;
+    data   = (data & ~FXOS8700_CTRL_REG1_DR_MASK) | APP_PEDOMETER_SENSOR_SAMPLE_RATE;
     status = Sensor_I2C_SendFunc(FXOS8700_DEVICE_ADDR_SA_00, FXOS8700_CTRL_REG1, 1, &data, 1);
     assert(status == kStatus_Success);
     /* Configure the fxos8700 as accel only mode.*/
     status = Sensor_I2C_ReceiveFunc(FXOS8700_DEVICE_ADDR_SA_00, FXOS8700_M_CTRL_REG2, 1, &data, 1);
     assert(status == kStatus_Success);
-    data = (data & ~FXOS8700_M_CTRL_REG2_M_AUTOINC_MASK) | FXOS8700_M_CTRL_REG2_M_AUTOINC_ACCEL_ONLY_MODE;
+    data   = (data & ~FXOS8700_M_CTRL_REG2_M_AUTOINC_MASK) | FXOS8700_M_CTRL_REG2_M_AUTOINC_ACCEL_ONLY_MODE;
     status = Sensor_I2C_SendFunc(FXOS8700_DEVICE_ADDR_SA_00, FXOS8700_M_CTRL_REG2, 1, &data, 1);
     assert(status == kStatus_Success);
     /* Put the device into active mode and ready for reading data.*/
     status = Sensor_I2C_ReceiveFunc(FXOS8700_DEVICE_ADDR_SA_00, FXOS8700_CTRL_REG1, 1, &data, 1);
     assert(status == kStatus_Success);
-    data = (data & ~FXOS8700_CTRL_REG1_ACTIVE_MASK) | FXOS8700_CTRL_REG1_ACTIVE_ACTIVE_MODE;
+    data   = (data & ~FXOS8700_CTRL_REG1_ACTIVE_MASK) | FXOS8700_CTRL_REG1_ACTIVE_ACTIVE_MODE;
     status = Sensor_I2C_SendFunc(FXOS8700_DEVICE_ADDR_SA_00, FXOS8700_CTRL_REG1, 1, &data, 1);
     assert(status == kStatus_Success);
 
@@ -962,7 +963,7 @@ static srtm_status_t APP_SRTM_Sensor_DeinitPedometer(void)
     assert(status == kStatus_Success);
     if (status == kStatus_Success)
     {
-        data = (data & ~FXOS8700_CTRL_REG1_ACTIVE_MASK) | FXOS8700_CTRL_REG1_ACTIVE_STANDBY_MODE;
+        data   = (data & ~FXOS8700_CTRL_REG1_ACTIVE_MASK) | FXOS8700_CTRL_REG1_ACTIVE_STANDBY_MODE;
         status = Sensor_I2C_SendFunc(FXOS8700_DEVICE_ADDR_SA_00, FXOS8700_CTRL_REG1, 1, &data, 1);
         assert(status == kStatus_Success);
     }
@@ -1030,8 +1031,8 @@ static srtm_status_t APP_SRTM_Sensor_EnableDataReport(srtm_sensor_adapter_t adap
         if (status == SRTM_Status_Success)
         {
             pedometer.dataEnabled = true;
-            pedometer.expired = 0;
-            pedometer.lastCount = keynetikStepCount;
+            pedometer.expired     = 0;
+            pedometer.lastCount   = keynetikStepCount;
         }
     }
     else if (!enable && pedometer.dataEnabled)
@@ -1085,7 +1086,7 @@ void APP_UpdateSimDgo(uint32_t gpIdx, uint32_t mask, uint32_t value)
     *reg = (*reg & ~mask) | value;
     if (gpIdx <= 6)
     {
-        shift = gpIdx - 1;
+        shift              = gpIdx - 1;
         SIM->SIM_DGO_CTRL0 = (SIM->SIM_DGO_CTRL0 & ~mask0) | (1U << shift);
         /* Wait DGO GP1 updated */
         while ((SIM->SIM_DGO_CTRL0 & (1U << (shift + 13))) == 0)
@@ -1096,7 +1097,7 @@ void APP_UpdateSimDgo(uint32_t gpIdx, uint32_t mask, uint32_t value)
     }
     else
     {
-        shift = gpIdx - 7;
+        shift              = gpIdx - 7;
         SIM->SIM_DGO_CTRL1 = (SIM->SIM_DGO_CTRL1 & ~mask1) | (1U << shift);
         /* Wait DGO GP1 updated */
         while ((SIM->SIM_DGO_CTRL1 & (1U << (shift + 13))) == 0)
@@ -1116,6 +1117,10 @@ static void APP_PowerOffCA7(bool suspendMode)
         PF1550_EnableRegulator(&pf1550Handle, kPF1550_ModuleVrefDdr, kPF1550_OperatingStatusRun, false);
         PF1550_EnableRegulator(&pf1550Handle, kPF1550_ModuleSwitch2, kPF1550_OperatingStatusRun, false);
     }
+    else if ((SIM->GPR1 & 1U) == 0) /* USB wakeup is not needed */
+    {
+        PF1550_EnableRegulator(&pf1550Handle, kPF1550_ModuleSwitch1, kPF1550_OperatingStatusRun, false);
+    }
     PF1550_EnableRegulator(&pf1550Handle, kPF1550_ModuleLdo2, kPF1550_OperatingStatusRun, false);
 
     peercorePower = suspendMode ? APP_SRTM_PowerOffVlls : APP_SRTM_PowerOff;
@@ -1129,8 +1134,8 @@ static void APP_PowerOnCA7(bool suspendMode)
         /* Enable application domain power */
         PF1550_EnableRegulator(&pf1550Handle, kPF1550_ModuleSwitch2, kPF1550_OperatingStatusRun, true);
         PF1550_EnableRegulator(&pf1550Handle, kPF1550_ModuleVrefDdr, kPF1550_OperatingStatusRun, true);
-        PF1550_EnableRegulator(&pf1550Handle, kPF1550_ModuleSwitch1, kPF1550_OperatingStatusRun, true);
     }
+    PF1550_EnableRegulator(&pf1550Handle, kPF1550_ModuleSwitch1, kPF1550_OperatingStatusRun, true);
 
     vTaskDelay(APP_MS2TICK(100U));
 
@@ -1225,7 +1230,7 @@ static void APP_SRTM_PollSuspend(srtm_dispatcher_t dispatcher, void *param1, voi
     mu_power_mode_t mode;
 
     state = SRTM_PeerCore_GetState(core);
-    mode = MU_GetOtherCorePowerMode(MUA);
+    mode  = MU_GetOtherCorePowerMode(MUA);
 
     if (mode == kMU_PowerModeDsm)
     {
@@ -1327,7 +1332,7 @@ static void APP_LinkupTimerCallback(TimerHandle_t xTimer)
 static void APP_VolPlusTimerCallback(TimerHandle_t xTimer)
 {
     uint8_t gpioIdx = APP_GPIO_IDX(APP_PIN_VOL_PLUS);
-    uint8_t pinIdx = APP_PIN_IDX(APP_PIN_VOL_PLUS);
+    uint8_t pinIdx  = APP_PIN_IDX(APP_PIN_VOL_PLUS);
     srtm_keypad_value_t value;
 
     if (GPIO_PinRead(gpios[gpioIdx], pinIdx) == suspendContext.io.data[APP_INPUT_VOL_PLUS].value)
@@ -1348,7 +1353,7 @@ static void APP_VolPlusTimerCallback(TimerHandle_t xTimer)
 static void APP_VolMinusTimerCallback(TimerHandle_t xTimer)
 {
     uint8_t gpioIdx = APP_GPIO_IDX(APP_PIN_VOL_MINUS);
-    uint8_t pinIdx = APP_PIN_IDX(APP_PIN_VOL_MINUS);
+    uint8_t pinIdx  = APP_PIN_IDX(APP_PIN_VOL_MINUS);
     srtm_keypad_value_t value;
 
     if (GPIO_PinRead(gpios[gpioIdx], pinIdx) == suspendContext.io.data[APP_INPUT_VOL_MINUS].value)
@@ -1369,7 +1374,7 @@ static void APP_VolMinusTimerCallback(TimerHandle_t xTimer)
 static void APP_OnOffTimerCallback(TimerHandle_t xTimer)
 {
     srtm_io_event_t ioRelease = APP_Keypad_GetIoEvent(APP_KEYPAD_INDEX_ONOFF, SRTM_KeypadEventRelease);
-    srtm_io_event_t ioEither = APP_Keypad_GetIoEvent(APP_KEYPAD_INDEX_ONOFF, SRTM_KeypadEventPressOrRelease);
+    srtm_io_event_t ioEither  = APP_Keypad_GetIoEvent(APP_KEYPAD_INDEX_ONOFF, SRTM_KeypadEventPressOrRelease);
 
     if ((SNVS->HPSR & SNVS_HPSR_BTN_MASK) == SNVS_HPSR_BTN_MASK)
     {
@@ -1378,8 +1383,9 @@ static void APP_OnOffTimerCallback(TimerHandle_t xTimer)
             /* If CA7 is powered off, ONOFF key is used to power on it. */
             APP_SRTM_BootCA7();
         }
-        else if (keypadService && (suspendContext.io.data[APP_INPUT_ONOFF].wakeup ||
-                                   MU_GetOtherCorePowerMode(MUA) != kMU_PowerModeDsm) &&
+        else if (keypadService &&
+                 (suspendContext.io.data[APP_INPUT_ONOFF].wakeup ||
+                  MU_GetOtherCorePowerMode(MUA) != kMU_PowerModeDsm) &&
                  (suspendContext.io.data[APP_INPUT_ONOFF].event == ioRelease ||
                   suspendContext.io.data[APP_INPUT_ONOFF].event == ioEither))
         {
@@ -1466,47 +1472,47 @@ static void APP_SRTM_Linkup(void)
 
     /* Common RPMsg channel config */
     rpmsgConfig.localAddr = RL_ADDR_ANY;
-    rpmsgConfig.peerAddr = RL_ADDR_ANY;
+    rpmsgConfig.peerAddr  = RL_ADDR_ANY;
 
     /* Create and add SRTM PMIC channel to peer core */
     rpmsgConfig.rpmsgHandle = rpmsgHandle;
-    rpmsgConfig.epName = APP_SRTM_PMIC_CHANNEL_NAME;
-    chan = SRTM_RPMsgEndpoint_Create(&rpmsgConfig);
+    rpmsgConfig.epName      = APP_SRTM_PMIC_CHANNEL_NAME;
+    chan                    = SRTM_RPMsgEndpoint_Create(&rpmsgConfig);
     SRTM_PeerCore_AddChannel(core, chan);
 
     rpmsgConfig.rpmsgHandle = rpmsgHandle;
-    rpmsgConfig.epName = APP_SRTM_AUDIO_CHANNEL_NAME;
-    chan = SRTM_RPMsgEndpoint_Create(&rpmsgConfig);
+    rpmsgConfig.epName      = APP_SRTM_AUDIO_CHANNEL_NAME;
+    chan                    = SRTM_RPMsgEndpoint_Create(&rpmsgConfig);
     SRTM_PeerCore_AddChannel(core, chan);
 
     /* Create and add SRTM Life Cycle channel to peer core */
     rpmsgConfig.rpmsgHandle = rpmsgHandle;
-    rpmsgConfig.epName = APP_SRTM_LFCL_CHANNEL_NAME;
-    chan = SRTM_RPMsgEndpoint_Create(&rpmsgConfig);
+    rpmsgConfig.epName      = APP_SRTM_LFCL_CHANNEL_NAME;
+    chan                    = SRTM_RPMsgEndpoint_Create(&rpmsgConfig);
     SRTM_PeerCore_AddChannel(core, chan);
 
     /* Create and add SRTM Keypad channel to peer core */
     rpmsgConfig.rpmsgHandle = rpmsgHandle;
-    rpmsgConfig.epName = APP_SRTM_KEYPAD_CHANNEL_NAME;
-    chan = SRTM_RPMsgEndpoint_Create(&rpmsgConfig);
+    rpmsgConfig.epName      = APP_SRTM_KEYPAD_CHANNEL_NAME;
+    chan                    = SRTM_RPMsgEndpoint_Create(&rpmsgConfig);
     SRTM_PeerCore_AddChannel(core, chan);
 
     /* Create and add SRTM IO channel to peer core */
     rpmsgConfig.rpmsgHandle = rpmsgHandle;
-    rpmsgConfig.epName = APP_SRTM_IO_CHANNEL_NAME;
-    chan = SRTM_RPMsgEndpoint_Create(&rpmsgConfig);
+    rpmsgConfig.epName      = APP_SRTM_IO_CHANNEL_NAME;
+    chan                    = SRTM_RPMsgEndpoint_Create(&rpmsgConfig);
     SRTM_PeerCore_AddChannel(core, chan);
 
     /* Create and add SRTM RTC channel to peer core */
     rpmsgConfig.rpmsgHandle = rpmsgHandle;
-    rpmsgConfig.epName = APP_SRTM_RTC_CHANNEL_NAME;
-    chan = SRTM_RPMsgEndpoint_Create(&rpmsgConfig);
+    rpmsgConfig.epName      = APP_SRTM_RTC_CHANNEL_NAME;
+    chan                    = SRTM_RPMsgEndpoint_Create(&rpmsgConfig);
     SRTM_PeerCore_AddChannel(core, chan);
 
     /* Create and add SRTM Sensor channel to peer core */
     rpmsgConfig.rpmsgHandle = rpmsgHandle;
-    rpmsgConfig.epName = APP_SRTM_SENSOR_CHANNEL_NAME;
-    chan = SRTM_RPMsgEndpoint_Create(&rpmsgConfig);
+    rpmsgConfig.epName      = APP_SRTM_SENSOR_CHANNEL_NAME;
+    chan                    = SRTM_RPMsgEndpoint_Create(&rpmsgConfig);
     SRTM_PeerCore_AddChannel(core, chan);
 
     SRTM_Dispatcher_AddPeerCore(disp, core);
@@ -1545,7 +1551,7 @@ static void APP_SRTM_GpioReset(void)
         if (suspendContext.io.data[i].override)
         {
             /* The IO is configured by CM4 instead of CA7, don't reset HW configuration. */
-            suspendContext.io.data[i].event = SRTM_IoEventNone;
+            suspendContext.io.data[i].event  = SRTM_IoEventNone;
             suspendContext.io.data[i].wakeup = false;
         }
         else
@@ -1658,7 +1664,7 @@ static void APP_SRTM_InitPmicService(void)
 
     /* Initialize PMIC driver */
     PF1550_GetDefaultConfig(&pf1550Config);
-    pf1550Config.I2C_SendFunc = PMIC_I2C_SendFunc;
+    pf1550Config.I2C_SendFunc    = PMIC_I2C_SendFunc;
     pf1550Config.I2C_ReceiveFunc = PMIC_I2C_ReceiveFunc;
     PF1550_Init(&pf1550Handle, &pf1550Config);
 
@@ -1669,7 +1675,7 @@ static void APP_SRTM_InitPmicService(void)
 
     /* Create and register PMIC service */
     pmicAdapter = SRTM_Pf1550Adapter_Create(&pf1550Handle);
-    service = SRTM_PmicService_Create(pmicAdapter);
+    service     = SRTM_PmicService_Create(pmicAdapter);
     SRTM_Dispatcher_RegisterService(disp, service);
 }
 
@@ -1771,24 +1777,24 @@ static void APP_SRTM_InitAudioService(void)
     SAI_TxGetDefaultConfig(&saiTxConfig.config);
     saiTxConfig.config.syncMode = kSAI_ModeAsync; /* Tx in async mode */
     saiTxConfig.config.protocol = kSAI_BusI2S;
-    saiTxConfig.dataLine = 0;
-    saiTxConfig.watermark = FSL_FEATURE_SAI_FIFO_COUNT - 1;
-    saiTxConfig.mclk = CLOCK_GetIpFreq(kCLOCK_Sai0);
-    saiTxConfig.bclk = saiTxConfig.mclk;
-    saiTxConfig.stopOnSuspend = true;   /* Audio data is in DRAM which is not accessable in A7 suspend. */
-    saiTxConfig.threshold = UINT32_MAX; /* Every period transmitted triggers periodDone message to A7. */
-    saiTxConfig.dmaChannel = APP_SAI_TX_DMA_CHANNEL;
+    saiTxConfig.dataLine        = 0;
+    saiTxConfig.watermark       = FSL_FEATURE_SAI_FIFO_COUNT - 1;
+    saiTxConfig.mclk            = CLOCK_GetIpFreq(kCLOCK_Sai0);
+    saiTxConfig.bclk            = saiTxConfig.mclk;
+    saiTxConfig.stopOnSuspend   = true;       /* Audio data is in DRAM which is not accessable in A7 suspend. */
+    saiTxConfig.threshold       = UINT32_MAX; /* Every period transmitted triggers periodDone message to A7. */
+    saiTxConfig.dmaChannel      = APP_SAI_TX_DMA_CHANNEL;
 
     SAI_RxGetDefaultConfig(&saiRxConfig.config);
     saiRxConfig.config.syncMode = kSAI_ModeSync; /* Rx in sync mode */
     saiRxConfig.config.protocol = kSAI_BusI2S;
-    saiRxConfig.dataLine = 0;
-    saiRxConfig.watermark = 1;
-    saiRxConfig.mclk = saiTxConfig.mclk;
-    saiRxConfig.bclk = saiRxConfig.mclk;
-    saiRxConfig.stopOnSuspend = true;   /* Audio data is in DRAM which is not accessable in A7 suspend. */
-    saiRxConfig.threshold = UINT32_MAX; /* Every period received triggers periodDone message to A7. */
-    saiRxConfig.dmaChannel = APP_SAI_RX_DMA_CHANNEL;
+    saiRxConfig.dataLine        = 0;
+    saiRxConfig.watermark       = 1;
+    saiRxConfig.mclk            = saiTxConfig.mclk;
+    saiRxConfig.bclk            = saiRxConfig.mclk;
+    saiRxConfig.stopOnSuspend   = true;       /* Audio data is in DRAM which is not accessable in A7 suspend. */
+    saiRxConfig.threshold       = UINT32_MAX; /* Every period received triggers periodDone message to A7. */
+    saiRxConfig.dmaChannel      = APP_SAI_RX_DMA_CHANNEL;
 
     saiAdapter = SRTM_SaiEdmaAdapter_Create(I2S0, DMA0, &saiTxConfig, &saiRxConfig);
     assert(saiAdapter);
@@ -1796,22 +1802,22 @@ static void APP_SRTM_InitAudioService(void)
     /*  Set LPI2C Master IRQ Priority. */
     NVIC_SetPriority(LPI2C0_IRQn, APP_LPI2C0_IRQ_PRIO);
     /* Initialize WM8960 codec */
-    wm8960Config.route = kWM8960_RoutePlaybackandRecord;
-    wm8960Config.bus = kWM8960_BusI2S;
-    wm8960Config.master_slave = false; /* Slave */
-    wm8960Config.enableSpeaker = false;
-    wm8960Config.leftInputSource = kWM8960_InputDifferentialMicInput3;
+    wm8960Config.route            = kWM8960_RoutePlaybackandRecord;
+    wm8960Config.bus              = kWM8960_BusI2S;
+    wm8960Config.master_slave     = false; /* Slave */
+    wm8960Config.enableSpeaker    = false;
+    wm8960Config.leftInputSource  = kWM8960_InputDifferentialMicInput3;
     wm8960Config.rightInputSource = kWM8960_InputClosed;
-    codecConfig.codecConfig = &wm8960Config;
+    codecConfig.codecConfig       = &wm8960Config;
     CODEC_Init(&wm8960Handle, &codecConfig);
 
     /* Create I2C Codec adaptor */
-    i2cCodecConfig.mclk = saiTxConfig.mclk;
-    i2cCodecConfig.addrType = kCODEC_RegAddr8Bit;
-    i2cCodecConfig.regWidth = kCODEC_RegWidth8Bit;
+    i2cCodecConfig.mclk        = saiTxConfig.mclk;
+    i2cCodecConfig.addrType    = kCODEC_RegAddr8Bit;
+    i2cCodecConfig.regWidth    = kCODEC_RegWidth8Bit;
     i2cCodecConfig.writeRegMap = APP_SRTM_WriteCodecRegMap;
-    i2cCodecConfig.readRegMap = APP_SRTM_ReadCodecRegMap;
-    codecAdapter = SRTM_I2CCodecAdapter_Create(&wm8960Handle, &i2cCodecConfig);
+    i2cCodecConfig.readRegMap  = APP_SRTM_ReadCodecRegMap;
+    codecAdapter               = SRTM_I2CCodecAdapter_Create(&wm8960Handle, &i2cCodecConfig);
     assert(codecAdapter);
 
     /* Create and register audio service */
@@ -1834,7 +1840,8 @@ static void APP_SRTM_InitIoKeyDevice(void)
     uint32_t i;
 
     gpio_pin_config_t gpioConfig = {
-        kGPIO_DigitalOutput, 0U,
+        kGPIO_DigitalOutput,
+        0U,
     };
 
     /* Init output configuration */
@@ -1862,18 +1869,18 @@ static void APP_SRTM_InitIoKeyService(void)
 {
     /* Init IO structure used in the application. */
     /* Keypad */
-    suspendContext.io.data[APP_INPUT_ONOFF].index = APP_KEYPAD_INDEX_ONOFF;
-    suspendContext.io.data[APP_INPUT_VOL_PLUS].index = APP_KEYPAD_INDEX_VOL_PLUS;
+    suspendContext.io.data[APP_INPUT_ONOFF].index     = APP_KEYPAD_INDEX_ONOFF;
+    suspendContext.io.data[APP_INPUT_VOL_PLUS].index  = APP_KEYPAD_INDEX_VOL_PLUS;
     suspendContext.io.data[APP_INPUT_VOL_MINUS].index = APP_KEYPAD_INDEX_VOL_MINUS;
 
     /* GPIO ID */
-    suspendContext.io.data[APP_INPUT_ONOFF].ioId = APP_PIN_ONOFF; /* Special SNVS IO */
-    suspendContext.io.data[APP_INPUT_VOL_PLUS].ioId = APP_PIN_VOL_PLUS;
-    suspendContext.io.data[APP_INPUT_VOL_MINUS].ioId = APP_PIN_VOL_MINUS;
+    suspendContext.io.data[APP_INPUT_ONOFF].ioId        = APP_PIN_ONOFF; /* Special SNVS IO */
+    suspendContext.io.data[APP_INPUT_VOL_PLUS].ioId     = APP_PIN_VOL_PLUS;
+    suspendContext.io.data[APP_INPUT_VOL_MINUS].ioId    = APP_PIN_VOL_MINUS;
     suspendContext.io.data[APP_INPUT_BT_HOST_WAKE].ioId = APP_PIN_BT_HOST_WAKE;
     suspendContext.io.data[APP_INPUT_WL_HOST_WAKE].ioId = APP_PIN_WL_HOST_WAKE;
-    suspendContext.io.data[APP_OUTPUT_WL_REG_ON].ioId = APP_PIN_WL_REG_ON;
-    suspendContext.io.data[APP_OUTPUT_BT_REG_ON].ioId = APP_PIN_BT_REG_ON;
+    suspendContext.io.data[APP_OUTPUT_WL_REG_ON].ioId   = APP_PIN_WL_REG_ON;
+    suspendContext.io.data[APP_OUTPUT_BT_REG_ON].ioId   = APP_PIN_BT_REG_ON;
 
     APP_SRTM_InitIoKeyDevice();
 
@@ -1939,7 +1946,7 @@ static void APP_ResetCA7Regulators(void)
 
 static void APP_SRTM_GetPf1550Reg(srtm_dispatcher_t dispatcher, void *param1, void *param2)
 {
-    uint32_t reg = (uint32_t)param1;
+    uint32_t reg     = (uint32_t)param1;
     uint32_t *pValue = (uint32_t *)param2;
 
     /* Clear high bytes. */
@@ -1949,7 +1956,7 @@ static void APP_SRTM_GetPf1550Reg(srtm_dispatcher_t dispatcher, void *param1, vo
 
 static void APP_SRTM_SetPf1550Reg(srtm_dispatcher_t dispatcher, void *param1, void *param2)
 {
-    uint32_t reg = (uint32_t)param1;
+    uint32_t reg   = (uint32_t)param1;
     uint32_t value = (uint32_t)param2;
 
     PF1550_WriteReg(&pf1550Handle, reg, value);
@@ -1957,11 +1964,11 @@ static void APP_SRTM_SetPf1550Reg(srtm_dispatcher_t dispatcher, void *param1, vo
 
 static void APP_SRTM_DoSetWakeupPin(srtm_dispatcher_t dispatcher, void *param1, void *param2)
 {
-    uint16_t ioId = (uint32_t)param1;
-    uint16_t event = (uint32_t)param2;
+    uint16_t ioId    = (uint32_t)param1;
+    uint16_t event   = (uint32_t)param2;
     uint8_t inputIdx = APP_IO_GetIoIndex(ioId);
-    bool wakeup = (bool)(event >> 8);
-    uint8_t pinMode = (uint8_t)event;
+    bool wakeup      = (bool)(event >> 8);
+    uint8_t pinMode  = (uint8_t)event;
 
     assert(inputIdx < APP_OUTPUT_GPIO_START);
     assert(pinMode < ARRAY_SIZE(llwuPinModeEvents));
@@ -1986,7 +1993,7 @@ static void APP_SRTM_DoSetWakeupPin(srtm_dispatcher_t dispatcher, void *param1, 
 static void APP_SRTM_DoSetWakeupModule(srtm_dispatcher_t dispatcher, void *param1, void *param2)
 {
     uint32_t module = (uint32_t)param1;
-    bool enable = (bool)param2;
+    bool enable     = (bool)param2;
 
     LLWU_EnableInternalModuleInterruptWakup(LLWU, module, enable);
 }
@@ -2133,7 +2140,7 @@ void APP_SRTM_I2C_ReleaseBus(void)
 
     /* Initialize PTB12/PTB13 as GPIO */
     pin_config.pinDirection = kGPIO_DigitalOutput;
-    pin_config.outputLogic = 1U;
+    pin_config.outputLogic  = 1U;
     IOMUXC_SetPinMux(IOMUXC_PTA16_PTA16, 0U);
     IOMUXC_SetPinMux(IOMUXC_PTA17_PTA17, 0U);
     IOMUXC_SetPinConfig(IOMUXC_PTA16_PTA16, IOMUXC0_SW_MUX_CTL_PAD_OBE_MASK);
@@ -2189,7 +2196,8 @@ void APP_SRTM_I2C_ReleaseBus(void)
 static void APP_SRTM_InitPeriph(bool resume)
 {
     gpio_pin_config_t gpioConfig = {
-        kGPIO_DigitalOutput, 0U,
+        kGPIO_DigitalOutput,
+        0U,
     };
 
     /* Init output DDR_SW_EN# to enabled. */
@@ -2374,13 +2382,13 @@ void APP_SRTM_SetWakeupModule(uint32_t module, bool enable)
 
 void APP_SRTM_SetRpmsgMonitor(app_rpmsg_monitor_t monitor, void *param)
 {
-    rpmsgMonitor = monitor;
+    rpmsgMonitor      = monitor;
     rpmsgMonitorParam = param;
 }
 
 void APP_SRTM_SetIRQHandler(app_irq_handler_t handler, void *param)
 {
-    irqHandler = handler;
+    irqHandler      = handler;
     irqHandlerParam = param;
 }
 

@@ -14,7 +14,7 @@ product: Peripherals v1.0
  * @file    peripherals.c
  * @brief   Peripherals initialization file.
  */
- 
+
 /* This is an empty template for board specific configuration.*/
 
 #include "peripherals.h"
@@ -22,6 +22,7 @@ product: Peripherals v1.0
 /**
  * @brief Set up and initialize all required blocks and functions related to the peripherals hardware.
  */
-void BOARD_InitBootPeripherals(void) {
-	/* The user initialization should be placed here */
+void BOARD_InitBootPeripherals(void)
+{
+    /* The user initialization should be placed here */
 }

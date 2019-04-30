@@ -31,6 +31,13 @@
  */
 #define SYSTICK_COUNT_PER_TICK (SYSTICK_SOURCE_CLOCK / configTICK_RATE_HZ)
 
+#define PFD_GATES_MASK                                                                               \
+    (SCG_SPLLPFD_PFD0_CLKGATE_MASK | SCG_SPLLPFD_PFD1_CLKGATE_MASK | SCG_SPLLPFD_PFD2_CLKGATE_MASK | \
+     SCG_SPLLPFD_PFD3_CLKGATE_MASK)
+#define PFD_VALID_MASK                                                                         \
+    (SCG_SPLLPFD_PFD0_VALID_MASK | SCG_SPLLPFD_PFD1_VALID_MASK | SCG_SPLLPFD_PFD2_VALID_MASK | \
+     SCG_SPLLPFD_PFD3_VALID_MASK)
+
 struct _lpm_power_mode_listener
 {
     lpm_power_mode_callback_t callback;
@@ -51,6 +58,13 @@ typedef struct _lpm_nvic_context
 static lpm_power_mode_t s_curMode;
 static lpm_nvic_context_t s_nvicContext;
 static volatile uint32_t s_psp;
+static uint32_t s_rccr;
+static uint32_t s_qspipcc;
+static uint32_t s_sosccsr;
+static uint32_t s_firccsr;
+static uint32_t s_sirccsr;
+static uint32_t s_spllcsr;
+static uint32_t s_apllcsr;
 
 static SemaphoreHandle_t s_mutex;
 static lpm_power_mode_listener_t *s_listenerHead;
@@ -58,9 +72,9 @@ static lpm_power_mode_listener_t *s_listenerTail;
 
 #if (defined(__ICCARM__))
 static uint8_t s_suspendMem[0x4000] @"M4SuspendRam";
-#elif(defined(__ARMCC_VERSION))
+#elif (defined(__ARMCC_VERSION))
 static uint8_t s_suspendMem[0x4000] __attribute__((section("M4SuspendRam"), zero_init));
-#elif(defined(__GNUC__))
+#elif (defined(__GNUC__))
 static uint8_t s_suspendMem[0x4000] __attribute__((section("M4SuspendRam,\"aw\",%nobits @")));
 #else
 #error Toolchain not supported.
@@ -70,12 +84,126 @@ static uint8_t s_suspendMem[0x4000] __attribute__((section("M4SuspendRam,\"aw\",
 extern bool LPM_Suspend(void);
 extern void LPM_Resume(void);
 
+AT_QUICKACCESS_SECTION_CODE(extern void BOARD_SetRunMode(
+    SCG_Type *scg, uint32_t scgRunConfig, QuadSPI_Type *qspi, clock_ip_name_t qspiClock, uint32_t qspiClockConfig));
+extern bool BOARD_IsRunOnQSPI(void);
+
 /* FreeRTOS implemented Systick handler. */
 extern void xPortSysTickHandler(void);
 
 /*******************************************************************************
  * Code
  ******************************************************************************/
+static void LPM_DisableSOSC(void)
+{
+    QuadSPI_Type *qspi = BOARD_IsRunOnQSPI() ? QuadSPI0 : NULL;
+
+    /* SOSC can only be disabled when A7 is in VLLS */
+    if (MU_GetOtherCorePowerMode(MUA) != kMU_PowerModeDsm)
+    {
+        return;
+    }
+
+    /* Power down OCOTP. */
+    OCOTP_CTRL->HW_OCOTP_PDN = 1;
+
+    s_rccr = 0;
+    /* Only RUN/VLPR may enter VLLS/LLS/VLPS, and VLPR doesn't use SOSC */
+    if (SMC_GetPowerModeState(MSMC0) == kSMC_PowerStateRun)
+    {
+        s_rccr    = SCG0->RCCR;
+        s_qspipcc = *((volatile uint32_t *)kCLOCK_Qspi);
+        /* Switch CPU and QSPI to FIRC */
+        BOARD_SetRunMode(SCG0, (kSCG_SysClkSrcFirc << SCG_RCCR_SCS_SHIFT) | SCG_RCCR_DIVSLOW(1), qspi, kCLOCK_Qspi,
+                         PCC1_PCC_QSPI_OTFAD_CGC_MASK | PCC1_PCC_QSPI_OTFAD_PCS(3));
+        s_spllcsr = SCG0->SPLLCSR & SCG_SPLLCSR_SPLLEN_MASK;
+        s_apllcsr = SCG0->APLLCSR & SCG_APLLCSR_APLLEN_MASK;
+        /* Disable SPLL. */
+        if (s_spllcsr)
+        {
+            SCG0->SPLLCSR &= ~SCG_SPLLCSR_SPLLEN_MASK;
+        }
+        /* Disable APLL. */
+        if (s_apllcsr)
+        {
+            SCG0->APLLCSR &= ~SCG_APLLCSR_APLLEN_MASK;
+        }
+    }
+    s_sosccsr = SCG0->SOSCCSR & SCG_SOSCCSR_SOSCEN_MASK;
+    /* Disable SOSC. */
+    if (s_sosccsr)
+    {
+        SCG0->SOSCCSR &= ~SCG_SOSCCSR_SOSCEN_MASK;
+    }
+    /* Disable FIRC in VLPS. */
+    s_firccsr = SCG0->FIRCCSR & SCG_FIRCCSR_FIRCLPEN_MASK;
+    if (s_firccsr)
+    {
+        SCG0->FIRCCSR &= ~SCG_FIRCCSR_FIRCLPEN_MASK;
+    }
+    /* Disable SIRC in VLPS. */
+    s_sirccsr = SCG0->SIRCCSR & SCG_SIRCCSR_SIRCLPEN_MASK;
+    if (s_sirccsr)
+    {
+        SCG0->SIRCCSR &= ~SCG_SIRCCSR_SIRCLPEN_MASK;
+    }
+}
+
+static void LPM_EnableSOSC(void)
+{
+    QuadSPI_Type *qspi = BOARD_IsRunOnQSPI() ? QuadSPI0 : NULL;
+
+    /* SOSC can only be disabled when A7 is in VLLS */
+    if (MU_GetOtherCorePowerMode(MUA) != kMU_PowerModeDsm)
+    {
+        return;
+    }
+
+    /* Restore FIRC VLPS Enable */
+    if (s_firccsr)
+    {
+        SCG->FIRCCSR |= SCG_FIRCCSR_FIRCLPEN_MASK;
+    }
+
+    /* Restore SIRC VLPS Enable */
+    if (s_sirccsr)
+    {
+        SCG->SIRCCSR |= SCG_SIRCCSR_SIRCLPEN_MASK;
+    }
+
+    /* Restore SOSC clock */
+    if (s_sosccsr)
+    {
+        SCG->SOSCCSR |= SCG_SOSCCSR_SOSCEN_MASK;
+        while (!(SCG->SOSCCSR & SCG_SOSCCSR_SOSCVLD_MASK))
+        {
+        }
+    }
+
+    if (s_rccr)
+    {
+        /* Restore SPLL */
+        if (s_spllcsr)
+        {
+            SCG0->SPLLCSR |= SCG_SPLLCSR_SPLLEN_MASK;
+            while (!(SCG->SPLLCSR & SCG_SPLLCSR_SPLLVLD_MASK))
+            {
+            }
+        }
+        /* Restore APLL */
+        if (s_apllcsr)
+        {
+            SCG0->APLLCSR |= SCG_APLLCSR_APLLEN_MASK;
+            while (!(SCG->APLLCSR & SCG_APLLCSR_APLLVLD_MASK))
+            {
+            }
+        }
+
+        /* Switching CPU and QSPI clock back */
+        BOARD_SetRunMode(SCG0, s_rccr, qspi, kCLOCK_Qspi, s_qspipcc);
+    }
+}
+
 static uint32_t LPM_EnterTicklessIdle(uint32_t timeoutMilliSec, uint64_t *pCounter)
 {
     uint64_t counter;
@@ -93,14 +221,14 @@ static uint32_t LPM_EnterTicklessIdle(uint32_t timeoutMilliSec, uint64_t *pCount
     }
 
     maxMS = 0xFFFFU / SYSTICK_TICKLESS_CLOCK * 1000;
-    ms = timeoutMilliSec > maxMS ? maxMS : timeoutMilliSec;
+    ms    = timeoutMilliSec > maxMS ? maxMS : timeoutMilliSec;
 
     /* Calculate the LPTMR counter needed for timeout */
     timeoutTicks = (uint64_t)ms * configTICK_RATE_HZ / 1000;
-    counter = (uint64_t)timeoutTicks * countPerTick;
+    counter      = (uint64_t)timeoutTicks * countPerTick;
 
     expired = LPTMR_GetCurrentTimerCount(SYSTICK_BASE);
-    flag = LPTMR_GetStatusFlags(SYSTICK_BASE);
+    flag    = LPTMR_GetStatusFlags(SYSTICK_BASE);
     LPTMR_Deinit(SYSTICK_BASE); /* Flag cleared and timer stopped. */
     NVIC_ClearPendingIRQ(SYSTICK_IRQn);
     if (flag)
@@ -174,9 +302,9 @@ static void LPM_ExitTicklessIdle(uint32_t timeoutTicks, uint64_t timeoutCounter)
     else
     {
         /* remaining counter */
-        counter = timeoutCounter - expired;
+        counter       = timeoutCounter - expired;
         completeTicks = timeoutTicks - (counter - 1) / countPerTick - 1;
-        counter = (counter - 1) % countPerTick + 1;
+        counter       = (counter - 1) % countPerTick + 1;
     }
 
     /* Now reinit Systick with systick clock source. */
@@ -267,7 +395,7 @@ bool LPM_IsTargetModeValid(lpm_power_mode_t targetPowerMode, const char **pError
         case kSMC_PowerStateHsrun:
             if (LPM_PowerModeRun != targetPowerMode)
             {
-                errorMsg = "Current mode is HSRUN, please choose RUN mode as target mode.\r\n";
+                errorMsg  = "Current mode is HSRUN, please choose RUN mode as target mode.\r\n";
                 modeValid = false;
             }
             break;
@@ -275,7 +403,7 @@ bool LPM_IsTargetModeValid(lpm_power_mode_t targetPowerMode, const char **pError
         case kSMC_PowerStateRun:
             if (LPM_PowerModeVlpw == targetPowerMode)
             {
-                errorMsg = "Could not enter VLPW mode from RUN mode.\r\n";
+                errorMsg  = "Could not enter VLPW mode from RUN mode.\r\n";
                 modeValid = false;
             }
             break;
@@ -284,13 +412,13 @@ bool LPM_IsTargetModeValid(lpm_power_mode_t targetPowerMode, const char **pError
             if ((LPM_PowerModeWait == targetPowerMode) || (LPM_PowerModeHsrun == targetPowerMode) ||
                 (LPM_PowerModeStop == targetPowerMode))
             {
-                errorMsg = "Could not enter HSRUN/STOP/WAIT modes from VLPR mode.\r\n";
+                errorMsg  = "Could not enter HSRUN/STOP/WAIT modes from VLPR mode.\r\n";
                 modeValid = false;
             }
             break;
 
         default:
-            errorMsg = "Wrong power state.\r\n";
+            errorMsg  = "Wrong power state.\r\n";
             modeValid = false;
             break;
     }
@@ -303,7 +431,7 @@ bool LPM_IsTargetModeValid(lpm_power_mode_t targetPowerMode, const char **pError
             case LPM_PowerModeLls:
                 if (powerMode != kMU_PowerModeDsm)
                 {
-                    errorMsg = "M4 can enter LLS Mode only when A7 in LLS Mode or VLLS Mode!!!\r\n";
+                    errorMsg  = "M4 can enter LLS Mode only when A7 in LLS Mode or VLLS Mode!!!\r\n";
                     modeValid = false;
                 }
                 break;
@@ -311,7 +439,7 @@ bool LPM_IsTargetModeValid(lpm_power_mode_t targetPowerMode, const char **pError
             case LPM_PowerModeVlls:
                 if (powerMode != kMU_PowerModeDsm)
                 {
-                    errorMsg = "M4 can enter VLLS Mode only when A7 in VLLS Mode!!!\r\n";
+                    errorMsg  = "M4 can enter VLLS Mode only when A7 in VLLS Mode!!!\r\n";
                     modeValid = false;
                 }
                 break;
@@ -328,7 +456,7 @@ bool LPM_IsTargetModeValid(lpm_power_mode_t targetPowerMode, const char **pError
             ((LPM_PowerModeHsrun == targetPowerMode) && (kSMC_PowerStateHsrun == curPowerState)) ||
             ((LPM_PowerModeVlpr == targetPowerMode) && (kSMC_PowerStateVlpr == curPowerState)))
         {
-            errorMsg = "Already in the target power mode.\r\n";
+            errorMsg  = "Already in the target power mode.\r\n";
             modeValid = false;
         }
     }
@@ -425,10 +553,14 @@ bool LPM_WaitForInterrupt(uint32_t timeoutMilliSec)
             status = SMC_SetPowerModeWait(MSMC0);
             break;
         case LPM_PowerModeVlps:
+            LPM_DisableSOSC();
             status = SMC_SetPowerModeVlps(MSMC0);
+            LPM_EnableSOSC();
             break;
         case LPM_PowerModeLls:
+            LPM_DisableSOSC();
             status = SMC_SetPowerModeLls(MSMC0);
+            LPM_EnableSOSC();
             break;
         case LPM_PowerModeVlls:
             if (!LPM_Suspend())
@@ -460,15 +592,15 @@ void LPM_RegisterPowerListener(lpm_power_mode_callback_t callback, void *data)
     assert(l);
 
     l->callback = callback;
-    l->data = data;
-    l->next = NULL;
+    l->data     = data;
+    l->next     = NULL;
 
     xSemaphoreTake(s_mutex, portMAX_DELAY);
 
     if (s_listenerHead)
     {
         s_listenerTail->next = l;
-        s_listenerTail = l;
+        s_listenerTail       = l;
     }
     else
     {
@@ -576,7 +708,7 @@ void LPM_NvicStateSave(void)
     uint32_t irqNum;
 
     irqRegs = (SCnSCB->ICTR & SCnSCB_ICTR_INTLINESNUM_Msk) + 1;
-    irqNum = irqRegs * 32;
+    irqNum  = irqRegs * 32;
 
     s_nvicContext.PriorityGroup = NVIC_GetPriorityGrouping();
 
@@ -590,11 +722,11 @@ void LPM_NvicStateSave(void)
         s_nvicContext.IP[i] = NVIC->IP[i];
     }
 
-    s_nvicContext.SHP[0] = SCB->SHP[0];   /* MemManage */
-    s_nvicContext.SHP[1] = SCB->SHP[1];   /* BusFault */
-    s_nvicContext.SHP[2] = SCB->SHP[2];   /* UsageFault */
-    s_nvicContext.SHP[7] = SCB->SHP[7];   /* SVCall */
-    s_nvicContext.SHP[8] = SCB->SHP[8];   /* DebugMonitor */
+    s_nvicContext.SHP[0]  = SCB->SHP[0];  /* MemManage */
+    s_nvicContext.SHP[1]  = SCB->SHP[1];  /* BusFault */
+    s_nvicContext.SHP[2]  = SCB->SHP[2];  /* UsageFault */
+    s_nvicContext.SHP[7]  = SCB->SHP[7];  /* SVCall */
+    s_nvicContext.SHP[8]  = SCB->SHP[8];  /* DebugMonitor */
     s_nvicContext.SHP[10] = SCB->SHP[10]; /* PendSV */
     s_nvicContext.SHP[11] = SCB->SHP[11]; /* SysTick */
 }
@@ -606,7 +738,7 @@ void LPM_NvicStateRestore(void)
     uint32_t irqNum;
 
     irqRegs = (SCnSCB->ICTR & SCnSCB_ICTR_INTLINESNUM_Msk) + 1;
-    irqNum = irqRegs * 32;
+    irqNum  = irqRegs * 32;
 
     NVIC_SetPriorityGrouping(s_nvicContext.PriorityGroup);
 
@@ -620,11 +752,11 @@ void LPM_NvicStateRestore(void)
         NVIC->IP[i] = s_nvicContext.IP[i];
     }
 
-    SCB->SHP[0] = s_nvicContext.SHP[0];   /* MemManage */
-    SCB->SHP[1] = s_nvicContext.SHP[1];   /* BusFault */
-    SCB->SHP[2] = s_nvicContext.SHP[2];   /* UsageFault */
-    SCB->SHP[7] = s_nvicContext.SHP[7];   /* SVCall */
-    SCB->SHP[8] = s_nvicContext.SHP[8];   /* DebugMonitor */
+    SCB->SHP[0]  = s_nvicContext.SHP[0];  /* MemManage */
+    SCB->SHP[1]  = s_nvicContext.SHP[1];  /* BusFault */
+    SCB->SHP[2]  = s_nvicContext.SHP[2];  /* UsageFault */
+    SCB->SHP[7]  = s_nvicContext.SHP[7];  /* SVCall */
+    SCB->SHP[8]  = s_nvicContext.SHP[8];  /* DebugMonitor */
     SCB->SHP[10] = s_nvicContext.SHP[10]; /* PendSV */
     SCB->SHP[11] = s_nvicContext.SHP[11]; /* SysTick */
 }
@@ -639,12 +771,8 @@ void LPM_SystemSuspend(uint32_t psp)
 
     s_psp = psp; /* Save PSP for resume context */
 
-    /* Save data which will be updated by ROM resume. */
-    memcpy(s_suspendMem, ROM_RESERVED_MEM, sizeof(s_suspendMem));
-    memcpy(ROM_HEADER_MEM, ROM_RESERVED_MEM + sizeof(s_suspendMem), ROM_HEADER_SIZE);
-
     /* Setup VLLS Resume Entry. */
-    SIM->SIM_DGO_GP1 = (uint32_t)LPM_Resume;
+    SIM->SIM_DGO_GP1   = (uint32_t)LPM_Resume;
     SIM->SIM_DGO_CTRL0 = (SIM->SIM_DGO_CTRL0 & ~mask0) | SIM_SIM_DGO_CTRL0_UPDATE_DGO_GP1_MASK;
     /* Wait DGO GP1 updated */
     while ((SIM->SIM_DGO_CTRL0 & SIM_SIM_DGO_CTRL0_WR_ACK_DGO_GP1_MASK) == 0)
@@ -654,7 +782,12 @@ void LPM_SystemSuspend(uint32_t psp)
     SIM->SIM_DGO_CTRL0 =
         (SIM->SIM_DGO_CTRL0 & ~(SIM_SIM_DGO_CTRL0_UPDATE_DGO_GP1_MASK | mask0)) | SIM_SIM_DGO_CTRL0_WR_ACK_DGO_GP1_MASK;
 
+    LPM_DisableSOSC();
+    /* Save data which will be updated by ROM resume. */
+    memcpy(s_suspendMem, ROM_RESERVED_MEM, sizeof(s_suspendMem));
+    memcpy(ROM_HEADER_MEM, ROM_RESERVED_MEM + sizeof(s_suspendMem), ROM_HEADER_SIZE);
     SMC_SetPowerModeVlls(MSMC0);
+    LPM_EnableSOSC();
 }
 
 uint32_t LPM_SystemResume(bool resume)
@@ -668,7 +801,7 @@ uint32_t LPM_SystemResume(bool resume)
     SMC_SetPowerModeProtection(MSMC0, kSMC_AllowPowerModeAll);
 
     /* Clear VLLS Resume Entry. */
-    SIM->SIM_DGO_GP1 = 0U;
+    SIM->SIM_DGO_GP1   = 0U;
     SIM->SIM_DGO_CTRL0 = (SIM->SIM_DGO_CTRL0 & ~mask0) | SIM_SIM_DGO_CTRL0_UPDATE_DGO_GP1_MASK;
     /* Wait DGO GP1 updated */
     while ((SIM->SIM_DGO_CTRL0 & SIM_SIM_DGO_CTRL0_WR_ACK_DGO_GP1_MASK) == 0)

@@ -2,7 +2,7 @@
  * Copyright (c) 2017, NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -18,47 +18,47 @@
  * Definitions
  ******************************************************************************/
 /**
-* @brief SRTM dispatcher message number to hold the received data.
-*
-* The received message is freed for reuse once it gets processed by the
-* dispatcher task. In a busy traffic, 8 received messages might be used
-* up and latter calling SRTM_Dispatcher_PostRecvData() from channel will
-* return failed. In this case, user need to augment the number. 
-*/
+ * @brief SRTM dispatcher message number to hold the received data.
+ *
+ * The received message is freed for reuse once it gets processed by the
+ * dispatcher task. In a busy traffic, 8 received messages might be used
+ * up and latter calling SRTM_Dispatcher_PostRecvData() from channel will
+ * return failed. In this case, user need to augment the number.
+ */
 #ifndef SRTM_DISPATCHER_CONFIG_RX_MSG_NUMBER
-#define SRTM_DISPATCHER_CONFIG_RX_MSG_NUMBER          (8U)
+#define SRTM_DISPATCHER_CONFIG_RX_MSG_NUMBER (8U)
 #endif
 
 /**
-* @brief SRTM dispatcher message maximum length in bytes.
-*
-* The maximum buffer length for SRTM_Dispatcher_PostRecvData() call. User
-* need to augment the number when there's long message in application
-* protocol.
-*/
+ * @brief SRTM dispatcher message maximum length in bytes.
+ *
+ * The maximum buffer length for SRTM_Dispatcher_PostRecvData() call. User
+ * need to augment the number when there's long message in application
+ * protocol.
+ */
 #ifndef SRTM_DISPATCHER_CONFIG_RX_MSG_MAX_LEN
-#define SRTM_DISPATCHER_CONFIG_RX_MSG_MAX_LEN         (256U)
+#define SRTM_DISPATCHER_CONFIG_RX_MSG_MAX_LEN (256U)
 #endif
 
 /**
-* @brief SRTM dispatcher struct
-*/
+ * @brief SRTM dispatcher struct
+ */
 struct _srtm_dispatcher
 {
-    srtm_list_t cores;       /*!< SRTM peer core list head */
-    srtm_list_t services;    /*!< SRTM service list head */
+    srtm_list_t cores;    /*!< SRTM peer core list head */
+    srtm_list_t services; /*!< SRTM service list head */
 
-    srtm_mutex_t mutex;      /*!< Mutex for multi-task protection */
+    srtm_mutex_t mutex; /*!< Mutex for multi-task protection */
 
     srtm_list_t freeRxMsgs;  /*!< Free Rx messages list to hold the callback Rx data */
     srtm_list_t messageQ;    /*!< Message queue to hold the messages to process */
     srtm_list_t waitingReqs; /*!< Message queue to hold the request waiting for the response */
 
-    volatile bool stopReq;   /*!< SRTM dispatcher stop request flag */
-    bool started;            /*!< SRTM dispatcher started flag */
-    srtm_sem_t startSig;     /*!< SRTM dispatcher start signal */
-    srtm_sem_t stopSig;      /*!< SRTM dispatcher stop signal */
-    srtm_sem_t queueSig;     /*!< SRTM dispatcher messageQ signal */
+    volatile bool stopReq; /*!< SRTM dispatcher stop request flag */
+    bool started;          /*!< SRTM dispatcher started flag */
+    srtm_sem_t startSig;   /*!< SRTM dispatcher start signal */
+    srtm_sem_t stopSig;    /*!< SRTM dispatcher stop signal */
+    srtm_sem_t queueSig;   /*!< SRTM dispatcher messageQ signal */
 };
 
 /*******************************************************************************
@@ -77,8 +77,7 @@ extern "C" {
  * @param len The buffer len of Rx data in bytes.
  * @return SRTM_Status_Success on success and others on failure.
  */
-srtm_status_t SRTM_Dispatcher_PostRecvData(srtm_dispatcher_t disp, srtm_channel_t channel,
-                                          void *buf, uint32_t len);
+srtm_status_t SRTM_Dispatcher_PostRecvData(srtm_dispatcher_t disp, srtm_channel_t channel, void *buf, uint32_t len);
 
 /*!
  * @brief The main message processor of dispatcher.

@@ -37,13 +37,13 @@
  * Variables
  ******************************************************************************/
 
-uint8_t g_slave_buff[LPI2C_DATA_LENGTH] = {0};
+uint8_t g_slave_buff[LPI2C_DATA_LENGTH]  = {0};
 uint8_t g_master_buff[LPI2C_DATA_LENGTH] = {0};
-volatile uint8_t g_masterTxIndex = 0U;
-volatile uint8_t g_masterRxIndex = 0U;
-volatile uint8_t g_slaveTxIndex = 0U;
-volatile uint8_t g_slaveRxIndex = 0U;
-volatile bool g_masterReadBegin = false;
+volatile uint8_t g_masterTxIndex         = 0U;
+volatile uint8_t g_masterRxIndex         = 0U;
+volatile uint8_t g_slaveTxIndex          = 0U;
+volatile uint8_t g_slaveRxIndex          = 0U;
+volatile bool g_masterReadBegin          = false;
 
 /*******************************************************************************
  * Code
@@ -168,9 +168,9 @@ void LPI2C_SLAVE_IRQHandler(void)
  */
 int main(void)
 {
-    lpi2c_slave_config_t slaveConfig = {0};
+    lpi2c_slave_config_t slaveConfig   = {0};
     lpi2c_master_config_t masterConfig = {0};
-    status_t reVal = kStatus_Fail;
+    status_t reVal                     = kStatus_Fail;
 
     BOARD_InitPins();
     BOARD_BootClockRUN();

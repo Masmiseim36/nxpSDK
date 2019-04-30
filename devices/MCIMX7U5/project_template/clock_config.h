@@ -9,7 +9,7 @@
  * @file    clock_config.h
  * @brief   Board clocks header file.
  */
- 
+
 /* This is an empty template for board specific configuration.*/
 
 #ifndef _CLOCK_CONFIG_H_
@@ -29,5 +29,3 @@ void BOARD_InitBootClocks(void);
 #endif /* __cplusplus */
 
 #endif /* _CLOCK_CONFIG_H_ */
-
-

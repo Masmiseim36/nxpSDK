@@ -184,12 +184,12 @@ void DAC12_GetDefaultConfig(dac12_config_t *config)
     /* Initializes the configure structure to zero. */
     memset(config, 0, sizeof(*config));
 
-    config->fifoWatermarkLevel = 0U;
-    config->fifoWorkMode = kDAC12_FIFODisabled;
-    config->referenceVoltageSource = kDAC12_ReferenceVoltageSourceAlt1;
-    config->fifoTriggerMode = kDAC12_FIFOTriggerByHardwareMode;
-    config->referenceCurrentSource = kDAC12_ReferenceCurrentSourceAlt0;
-    config->speedMode = kDAC12_SpeedLowMode;
-    config->enableAnalogBuffer = false;
+    config->fifoWatermarkLevel                = 0U;
+    config->fifoWorkMode                      = kDAC12_FIFODisabled;
+    config->referenceVoltageSource            = kDAC12_ReferenceVoltageSourceAlt1;
+    config->fifoTriggerMode                   = kDAC12_FIFOTriggerByHardwareMode;
+    config->referenceCurrentSource            = kDAC12_ReferenceCurrentSourceAlt0;
+    config->speedMode                         = kDAC12_SpeedLowMode;
+    config->enableAnalogBuffer                = false;
     config->currentReferenceInternalTrimValue = 0x4;
 }

@@ -23,7 +23,6 @@
     <definition extID="armgcc"/>
     <definition extID="mdk"/>
     <definition extID="mcuxpresso"/>
-    <definition extID="dsmdk"/>
   </externalDefinitions>
   <example id="evkmcimx7ulp_dac12_fifo_interrupt" name="dac12_fifo_interrupt" category="driver_examples/dac12" dependency="platform.drivers.dac12.MCIMX7U5 platform.drivers.port.MCIMX7U5 platform.drivers.clock.MCIMX7U5 platform.drivers.common.MCIMX7U5 platform.devices.MCIMX7U5_CMSIS.MCIMX7U5 utility.debug_console.MCIMX7U5 component.lpuart_adapter.MCIMX7U5 component.serial_manager.MCIMX7U5 component.serial_manager_uart.MCIMX7U5 platform.drivers.lpuart.MCIMX7U5 component.lists.MCIMX7U5 platform.devices.MCIMX7U5_startup.MCIMX7U5 platform.drivers.gpio.MCIMX7U5 platform.drivers.msmc.MCIMX7U5 platform.utilities.assert.MCIMX7U5 platform.Include_core_cm4.MCIMX7U5 platform.Include_common.MCIMX7U5">
     <projects>
@@ -39,9 +38,6 @@
         </option>
         <option id="com.crt.advproject.c.misc.dialect" type="enum">
           <value>com.crt.advproject.misc.dialect.gnu99</value>
-        </option>
-        <option id="com.crt.advproject.gcc.exe.debug.option.debugging.level" type="enum">
-          <value>gnu.c.debugging.level.default</value>
         </option>
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
           <value>CPU_MCIMX7U5DVP08</value>
@@ -82,9 +78,6 @@
     </source>
     <source path="boards/evkmcimx7ulp/driver_examples/dac12/fifo_interrupt" target_path="source" type="src">
       <files mask="dac12_fifo_interrupt.c"/>
-    </source>
-    <source path="devices/MCIMX7U5/arm" target_path="src" type="linker" toolchain="dsmdk">
-      <files mask="MCIMX7U5xxxxx_cm4_ram.scf"/>
     </source>
   </example>
 </ksdk:examples>

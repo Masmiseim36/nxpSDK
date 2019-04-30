@@ -2,7 +2,7 @@
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -55,10 +55,10 @@ enum _dac12_status_flags
  */
 enum _dac12_interrupt_enable
 {
-    kDAC12_UnderOrOverflowInterruptEnable = DAC_CR_UVIE_MASK, /*!< Underflow and overflow interrupt enable. */
-    kDAC12_WatermarkInterruptEnable = DAC_CR_WTMIE_MASK,      /*!< Watermark interrupt enable. */
-    kDAC12_NearlyEmptyInterruptEnable = DAC_CR_EMPTIE_MASK,   /*!< Nearly empty interrupt enable. */
-    kDAC12_FullInterruptEnable = DAC_CR_FULLIE_MASK           /*!< Full interrupt enable. */
+    kDAC12_UnderOrOverflowInterruptEnable = DAC_CR_UVIE_MASK,   /*!< Underflow and overflow interrupt enable. */
+    kDAC12_WatermarkInterruptEnable       = DAC_CR_WTMIE_MASK,  /*!< Watermark interrupt enable. */
+    kDAC12_NearlyEmptyInterruptEnable     = DAC_CR_EMPTIE_MASK, /*!< Nearly empty interrupt enable. */
+    kDAC12_FullInterruptEnable            = DAC_CR_FULLIE_MASK  /*!< Full interrupt enable. */
 };
 
 /*!
@@ -66,12 +66,12 @@ enum _dac12_interrupt_enable
  */
 typedef enum _dac12_fifo_size_info
 {
-    kDAC12_FIFOSize2 = 0U,   /*!< FIFO depth is 2. */
-    kDAC12_FIFOSize4 = 1U,   /*!< FIFO depth is 4. */
-    kDAC12_FIFOSize8 = 2U,   /*!< FIFO depth is 8. */
-    kDAC12_FIFOSize16 = 3U,  /*!< FIFO depth is 16. */
-    kDAC12_FIFOSize32 = 4U,  /*!< FIFO depth is 32. */
-    kDAC12_FIFOSize64 = 5U,  /*!< FIFO depth is 64. */
+    kDAC12_FIFOSize2   = 0U, /*!< FIFO depth is 2. */
+    kDAC12_FIFOSize4   = 1U, /*!< FIFO depth is 4. */
+    kDAC12_FIFOSize8   = 2U, /*!< FIFO depth is 8. */
+    kDAC12_FIFOSize16  = 3U, /*!< FIFO depth is 16. */
+    kDAC12_FIFOSize32  = 4U, /*!< FIFO depth is 32. */
+    kDAC12_FIFOSize64  = 5U, /*!< FIFO depth is 64. */
     kDAC12_FIFOSize128 = 6U, /*!< FIFO depth is 128. */
     kDAC12_FIFOSize256 = 7U, /*!< FIFO depth is 256. */
 } dac12_fifo_size_info_t;
@@ -84,7 +84,7 @@ typedef enum _dac12_fifo_work_mode
     kDAC12_FIFODisabled = 0U, /*!< FIFO disabled and only one level buffer is enabled. Any data written from this buffer
                                    goes to conversion. */
     kDAC12_FIFOWorkAsNormalMode = 1U, /*!< Data will first read from FIFO to buffer then go to conversion. */
-    kDAC12_FIFOWorkAsSwingMode = 2U   /*!< In Swing mode, the FIFO must be set up to be full. In Swing back mode, a
+    kDAC12_FIFOWorkAsSwingMode  = 2U  /*!< In Swing mode, the FIFO must be set up to be full. In Swing back mode, a
                                            trigger changes the read pointer to make it swing between the FIFO Full and
                                            Nearly Empty state. That is, the trigger increases the read pointer till FIFO
                                            is nearly empty and decreases the read pointer till the FIFO is full. */
@@ -131,9 +131,9 @@ typedef enum _dac12_reference_current_source
  */
 typedef enum _dac12_speed_mode
 {
-    kDAC12_SpeedLowMode = 0U,    /*!< Low speed mode. */
+    kDAC12_SpeedLowMode    = 0U, /*!< Low speed mode. */
     kDAC12_SpeedMiddleMode = 1U, /*!< Middle speed mode. */
-    kDAC12_SpeedHighMode = 2U,   /*!< High speed mode. */
+    kDAC12_SpeedHighMode   = 2U, /*!< High speed mode. */
 } dac12_speed_mode_t;
 
 /*!

@@ -7,9 +7,9 @@
  * Copyright (c) 2016 - 2017 , NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
-*/
+ */
 
 /************************************************************************************
 *************************************************************************************
@@ -34,8 +34,8 @@
 * X-Macro expansions - enums, structs and memory allocations
 *************************************************************************************
 ************************************************************************************/
-gattDbAttribute_t*  gattDatabase;
-uint16_t            gGattDbAttributeCount_c;
+gattDbAttribute_t *gattDatabase;
+uint16_t gGattDbAttributeCount_c;
 
 /************************************************************************************
 *************************************************************************************
@@ -44,23 +44,24 @@ uint16_t            gGattDbAttributeCount_c;
 ************************************************************************************/
 
 /*! *********************************************************************************
-* \brief    Function performing runtime initialization of the GATT database.
-*
-* \remarks  This function should be called only once at device startup.
-*
-********************************************************************************** */
-bleResult_t GattDb_Init() {
+ * \brief    Function performing runtime initialization of the GATT database.
+ *
+ * \remarks  This function should be called only once at device startup.
+ *
+ ********************************************************************************** */
+bleResult_t GattDb_Init()
+{
     return GattDbDynamic_Init();
 }
 
 /*! *********************************************************************************
-* \brief    Database searching function, return the index for a given attribute handle.
-*
-* \param[in] handle  The attribute handle.
-*
-* \return  The index of the given attribute in the database or gGattDbInvalidHandleIndex_d.
-*
-********************************************************************************** */
+ * \brief    Database searching function, return the index for a given attribute handle.
+ *
+ * \param[in] handle  The attribute handle.
+ *
+ * \return  The index of the given attribute in the database or gGattDbInvalidHandleIndex_d.
+ *
+ ********************************************************************************** */
 uint16_t GattDb_GetIndexOfHandle(uint16_t handle)
 {
     uint16_t init = (handle >= gGattDbAttributeCount_c) ? (gGattDbAttributeCount_c - 1) : handle;
@@ -75,5 +76,5 @@ uint16_t GattDb_GetIndexOfHandle(uint16_t handle)
 }
 
 /*! *********************************************************************************
-* @}
-********************************************************************************** */
+ * @}
+ ********************************************************************************** */

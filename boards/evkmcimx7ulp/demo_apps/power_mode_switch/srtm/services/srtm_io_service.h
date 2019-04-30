@@ -48,23 +48,26 @@ typedef enum _srtm_io_event
 } srtm_io_event_t;
 
 /**
-* @brief SRTM IO service set output value function type.
-*/
-typedef srtm_status_t (*srtm_io_service_set_output_t)(srtm_service_t service, srtm_peercore_t core,
-                                                      uint16_t ioId, srtm_io_value_t ioValue);
+ * @brief SRTM IO service set output value function type.
+ */
+typedef srtm_status_t (*srtm_io_service_set_output_t)(srtm_service_t service,
+                                                      srtm_peercore_t core,
+                                                      uint16_t ioId,
+                                                      srtm_io_value_t ioValue);
 
 /**
-* @brief SRTM IO service get input value function type.
-*/
-typedef srtm_status_t (*srtm_io_service_get_input_t)(srtm_service_t service, srtm_peercore_t core,
-                                                     uint16_t ioId, srtm_io_value_t *pIoValue);
-
+ * @brief SRTM IO service get input value function type.
+ */
+typedef srtm_status_t (*srtm_io_service_get_input_t)(srtm_service_t service,
+                                                     srtm_peercore_t core,
+                                                     uint16_t ioId,
+                                                     srtm_io_value_t *pIoValue);
 
 /**
-* @brief SRTM IO service configure input event function type.
-*/
-typedef srtm_status_t (*srtm_io_service_conf_input_t)(srtm_service_t service, srtm_peercore_t core,
-                                                      uint16_t ioId, srtm_io_event_t event, bool wakeup);
+ * @brief SRTM IO service configure input event function type.
+ */
+typedef srtm_status_t (*srtm_io_service_conf_input_t)(
+    srtm_service_t service, srtm_peercore_t core, uint16_t ioId, srtm_io_event_t event, bool wakeup);
 
 /*******************************************************************************
  * API
@@ -108,8 +111,11 @@ void SRTM_IoService_Reset(srtm_service_t service, srtm_peercore_t core);
  * @param param user callback parameter.
  * @return SRTM_Status_Success on success and others on failure.
  */
-srtm_status_t SRTM_IoService_RegisterPin(srtm_service_t service, uint16_t ioId, srtm_io_service_set_output_t setOutput,
-                                         srtm_io_service_get_input_t getInput, srtm_io_service_conf_input_t confIEvent,
+srtm_status_t SRTM_IoService_RegisterPin(srtm_service_t service,
+                                         uint16_t ioId,
+                                         srtm_io_service_set_output_t setOutput,
+                                         srtm_io_service_get_input_t getInput,
+                                         srtm_io_service_conf_input_t confIEvent,
                                          void *param);
 
 /*!

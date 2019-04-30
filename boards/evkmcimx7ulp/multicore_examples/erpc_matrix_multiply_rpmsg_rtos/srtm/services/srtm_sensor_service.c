@@ -34,12 +34,12 @@
 
 /* Sensor Service Request Command definition */
 #define SRTM_SENSOR_CMD_ENABLE_STATE_DETECTOR (0x0U)
-#define SRTM_SENSOR_CMD_ENABLE_DATA_REPORT    (0x1U)
-#define SRTM_SENSOR_CMD_SET_POLL_DELAY        (0x2U)
+#define SRTM_SENSOR_CMD_ENABLE_DATA_REPORT (0x1U)
+#define SRTM_SENSOR_CMD_SET_POLL_DELAY (0x2U)
 
 /* Sensor Service Notification Command definition */
-#define SRTM_SENSOR_NTF_STATE_CHANGED         (0x0U)
-#define SRTM_SENSOR_NTF_DATA                  (0x1U)
+#define SRTM_SENSOR_NTF_STATE_CHANGED (0x0U)
+#define SRTM_SENSOR_NTF_DATA (0x1U)
 
 /* Service handle */
 typedef struct _srtm_sensor_service
@@ -48,7 +48,7 @@ typedef struct _srtm_sensor_service
     srtm_sensor_adapter_t sensor;
     /* Currently assume just one peer core, to support multiple peer cores, channel need to be a list */
     srtm_channel_t channel;
-} *srtm_sensor_service_t;
+} * srtm_sensor_service_t;
 
 /*******************************************************************************
  * Prototypes
@@ -78,8 +78,8 @@ static srtm_status_t SRTM_SensorService_UpdateState(srtm_service_t service, srtm
         return SRTM_Status_OutOfMemory;
     }
 
-    payload = (struct _srtm_sensor_payload *)SRTM_CommMessage_GetPayload(notif);
-    payload->type = (uint8_t)type;
+    payload        = (struct _srtm_sensor_payload *)SRTM_CommMessage_GetPayload(notif);
+    payload->type  = (uint8_t)type;
     payload->index = index;
 
     SRTM_Dispatcher_DeliverNotification(handle->service.dispatcher, notif);
@@ -87,8 +87,8 @@ static srtm_status_t SRTM_SensorService_UpdateState(srtm_service_t service, srtm
     return SRTM_Status_Success;
 }
 
-static srtm_status_t SRTM_SensorService_ReportData(srtm_service_t service, srtm_sensor_type_t type, uint8_t index,
-                                                   uint8_t *data, uint32_t dataLen)
+static srtm_status_t SRTM_SensorService_ReportData(
+    srtm_service_t service, srtm_sensor_type_t type, uint8_t index, uint8_t *data, uint32_t dataLen)
 {
     srtm_notification_t notif;
     struct _srtm_sensor_payload *payload;
@@ -97,16 +97,16 @@ static srtm_status_t SRTM_SensorService_ReportData(srtm_service_t service, srtm_
     SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_INFO, "%s\r\n", __func__);
 
     /* First allocate a notification and send to peer core */
-    notif = SRTM_Notification_Create(handle->channel, SRTM_SENSOR_CATEGORY, SRTM_SENSOR_VERSION,
-                                     SRTM_SENSOR_NTF_DATA, sizeof(struct _srtm_sensor_payload));
+    notif = SRTM_Notification_Create(handle->channel, SRTM_SENSOR_CATEGORY, SRTM_SENSOR_VERSION, SRTM_SENSOR_NTF_DATA,
+                                     sizeof(struct _srtm_sensor_payload));
     if (!notif)
     {
         SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_ERROR, "%s: alloc notification failed.\r\n", __func__);
         return SRTM_Status_OutOfMemory;
     }
 
-    payload = (struct _srtm_sensor_payload *)SRTM_CommMessage_GetPayload(notif);
-    payload->type = (uint8_t)type;
+    payload        = (struct _srtm_sensor_payload *)SRTM_CommMessage_GetPayload(notif);
+    payload->type  = (uint8_t)type;
     payload->index = index;
     assert(dataLen == 4);
     payload->data = *((uint32_t *)data);
@@ -134,13 +134,13 @@ static srtm_status_t SRTM_SensorService_Request(srtm_service_t service, srtm_req
 
     SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_INFO, "%s\r\n", __func__);
 
-    channel = SRTM_CommMessage_GetChannel(request);
-    command = SRTM_CommMessage_GetCommand(request);
-    sensorReq = (struct _srtm_sensor_payload *)SRTM_CommMessage_GetPayload(request);
+    channel    = SRTM_CommMessage_GetChannel(request);
+    command    = SRTM_CommMessage_GetCommand(request);
+    sensorReq  = (struct _srtm_sensor_payload *)SRTM_CommMessage_GetPayload(request);
     payloadLen = SRTM_CommMessage_GetPayloadLen(request);
 
-    response = SRTM_Response_Create(channel, SRTM_SENSOR_CATEGORY, SRTM_SENSOR_VERSION,
-                                    command, sizeof(struct _srtm_sensor_payload));
+    response = SRTM_Response_Create(channel, SRTM_SENSOR_CATEGORY, SRTM_SENSOR_VERSION, command,
+                                    sizeof(struct _srtm_sensor_payload));
     if (!response)
     {
         return SRTM_Status_OutOfMemory;
@@ -154,17 +154,16 @@ static srtm_status_t SRTM_SensorService_Request(srtm_service_t service, srtm_req
     sensorResp = (struct _srtm_sensor_payload *)SRTM_CommMessage_GetPayload(response);
 
     status = SRTM_Service_CheckVersion(service, request, SRTM_SENSOR_VERSION);
-    if (status != SRTM_Status_Success || !sensorReq ||
-        payloadLen != sizeof(struct _srtm_sensor_payload))
+    if (status != SRTM_Status_Success || !sensorReq || payloadLen != sizeof(struct _srtm_sensor_payload))
     {
         SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_WARN, "%s: format error!\r\n", __func__);
-        sensorResp->type = sensorReq ? sensorReq->type : 0;
-        sensorResp->index = sensorReq ? sensorReq->index : 0;
+        sensorResp->type    = sensorReq ? sensorReq->type : 0;
+        sensorResp->index   = sensorReq ? sensorReq->index : 0;
         sensorResp->retCode = SRTM_SENSOR_RETURN_CODE_UNSUPPORTED;
     }
     else
     {
-        sensorResp->type = sensorReq->type;
+        sensorResp->type  = sensorReq->type;
         sensorResp->index = sensorReq->index;
         switch (command)
         {
@@ -172,22 +171,22 @@ static srtm_status_t SRTM_SensorService_Request(srtm_service_t service, srtm_req
                 assert(sensor->enableStateDetector);
                 status = sensor->enableStateDetector(sensor, (srtm_sensor_type_t)sensorReq->type, sensorReq->index,
                                                      sensorReq->enable ? true : false);
-                sensorResp->retCode = status == SRTM_Status_Success ?
-                                      SRTM_SENSOR_RETURN_CODE_SUCEESS : SRTM_SENSOR_RETURN_CODE_FAIL;
+                sensorResp->retCode =
+                    status == SRTM_Status_Success ? SRTM_SENSOR_RETURN_CODE_SUCEESS : SRTM_SENSOR_RETURN_CODE_FAIL;
                 break;
             case SRTM_SENSOR_CMD_ENABLE_DATA_REPORT:
                 assert(sensor->enableDataReport);
                 status = sensor->enableDataReport(sensor, (srtm_sensor_type_t)sensorReq->type, sensorReq->index,
                                                   sensorReq->enable ? true : false);
-                sensorResp->retCode = status == SRTM_Status_Success ?
-                                      SRTM_SENSOR_RETURN_CODE_SUCEESS : SRTM_SENSOR_RETURN_CODE_FAIL;
+                sensorResp->retCode =
+                    status == SRTM_Status_Success ? SRTM_SENSOR_RETURN_CODE_SUCEESS : SRTM_SENSOR_RETURN_CODE_FAIL;
                 break;
             case SRTM_SENSOR_CMD_SET_POLL_DELAY:
                 assert(sensor->setPollDelay);
                 status = sensor->setPollDelay(sensor, (srtm_sensor_type_t)sensorReq->type, sensorReq->index,
                                               sensorReq->pollDelay);
-                sensorResp->retCode = status == SRTM_Status_Success ?
-                                      SRTM_SENSOR_RETURN_CODE_SUCEESS : SRTM_SENSOR_RETURN_CODE_FAIL;
+                sensorResp->retCode =
+                    status == SRTM_Status_Success ? SRTM_SENSOR_RETURN_CODE_SUCEESS : SRTM_SENSOR_RETURN_CODE_FAIL;
                 break;
             default:
                 SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_WARN, "%s: command %d unsupported!\r\n", __func__, command);
@@ -216,17 +215,17 @@ srtm_service_t SRTM_SensorService_Create(srtm_sensor_adapter_t sensor)
     handle = (srtm_sensor_service_t)SRTM_Heap_Malloc(sizeof(struct _srtm_sensor_service));
     assert(handle);
 
-    sensor->service = &handle->service;
+    sensor->service     = &handle->service;
     sensor->updateState = SRTM_SensorService_UpdateState;
-    sensor->reportData = SRTM_SensorService_ReportData;
-    handle->sensor = sensor;
+    sensor->reportData  = SRTM_SensorService_ReportData;
+    handle->sensor      = sensor;
 
     SRTM_List_Init(&handle->service.node);
     handle->service.dispatcher = NULL;
-    handle->service.category = SRTM_SENSOR_CATEGORY;
-    handle->service.destroy = SRTM_SensorService_Destroy;
-    handle->service.request = SRTM_SensorService_Request;
-    handle->service.notify = SRTM_SensorService_Notify;
+    handle->service.category   = SRTM_SENSOR_CATEGORY;
+    handle->service.destroy    = SRTM_SensorService_Destroy;
+    handle->service.request    = SRTM_SensorService_Request;
+    handle->service.notify     = SRTM_SensorService_Notify;
 
     handle->channel = NULL;
 

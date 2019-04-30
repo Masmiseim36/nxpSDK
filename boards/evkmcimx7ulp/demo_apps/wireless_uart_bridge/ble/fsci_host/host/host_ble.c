@@ -1,15 +1,15 @@
 /*! *********************************************************************************
-* \addtogroup HOST_BBOX_UTILITY
-* @{
-********************************************************************************** */
+ * \addtogroup HOST_BBOX_UTILITY
+ * @{
+ ********************************************************************************** */
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright (c) 2016 - 2017 , NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
-*/
+ */
 
 /************************************************************************************
 *************************************************************************************
@@ -50,7 +50,7 @@ volatile bool_t bFunctionHasOutParams = FALSE;
 extern clientPacket_t *pFsciHostSyncRsp;
 
 #if gFsciHostSyncUseEvent_c
-extern osaEventId_t    gFsciHostSyncRspEvent;
+extern osaEventId_t gFsciHostSyncRspEvent;
 #endif
 #endif
 
@@ -68,7 +68,8 @@ extern osaEventId_t    gFsciHostSyncRspEvent;
 
 bleResult_t Ble_Initialize(gapGenericCallback_t gapGenericCallback)
 {
-    return Ble_HostInitialize(gapGenericCallback, NULL);;
+    return Ble_HostInitialize(gapGenericCallback, NULL);
+    ;
 }
 
 bleResult_t Ble_GetCmdStatus(void)
@@ -77,9 +78,9 @@ bleResult_t Ble_GetCmdStatus(void)
 #if gFsciHostSyncUseEvent_c
     osaEventFlags_t flags;
 #endif
-    
+
     /* Wait for result from the serial interface */
-    while( !pFsciHostSyncRsp )
+    while (!pFsciHostSyncRsp)
     {
 #if gFsciHostSyncUseEvent_c
         if (OSA_EventWait(gFsciHostSyncRspEvent, gFSCIHost_RspReady_c, FALSE, 1000, &flags) == osaStatus_Timeout)
@@ -88,35 +89,34 @@ bleResult_t Ble_GetCmdStatus(void)
             return gBleOverflow_c;
         }
 #else
-        FSCI_receivePacket((void*)fsciBleInterfaceId);
+        FSCI_receivePacket((void *)fsciBleInterfaceId);
 #endif
-        if( NULL == pFsciHostSyncRsp )
+        if (NULL == pFsciHostSyncRsp)
         {
             continue;
         }
 
         result = (bleResult_t)pFsciHostSyncRsp->structured.payload[0];
     }
-    
-    /* Check status and wait for outParameters */ 
-    if( gBleSuccess_c == result )
+
+    /* Check status and wait for outParameters */
+    if (gBleSuccess_c == result)
     {
-        while(bFunctionHasOutParams)
+        while (bFunctionHasOutParams)
         {
 #if gFsciHostSyncUseEvent_c
             OSA_EventWait(gFsciHostSyncRspEvent, gFSCIHost_RspParamReady_c, FALSE, osaWaitForever_c, &flags);
 #else
-            FSCI_receivePacket((void*)fsciBleInterfaceId);
+            FSCI_receivePacket((void *)fsciBleInterfaceId);
 #endif
         }
     }
-    
+
     /* Free FSCI packet */
     MEM_BufferFree(pFsciHostSyncRsp);
-    
+
     return result;
 }
-
 
 void Ble_OutParamsReady(void)
 {
@@ -131,5 +131,5 @@ void Ble_OutParamsReady(void)
  ************************************************************************************/
 
 /*! *********************************************************************************
-* @}
-********************************************************************************** */
+ * @}
+ ********************************************************************************** */

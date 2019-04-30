@@ -1,7 +1,7 @@
 /*
  * Copyright 2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -110,14 +110,14 @@ int main(void)
 
     /*Slave config*/
     slaveConfig.bitsPerFrame = 8 * TRANSFER_SIZE;
-    slaveConfig.cpol = kLPSPI_ClockPolarityActiveHigh;
-    slaveConfig.cpha = kLPSPI_ClockPhaseFirstEdge;
-    slaveConfig.direction = kLPSPI_MsbFirst;
+    slaveConfig.cpol         = kLPSPI_ClockPolarityActiveHigh;
+    slaveConfig.cpha         = kLPSPI_ClockPhaseFirstEdge;
+    slaveConfig.direction    = kLPSPI_MsbFirst;
 
-    slaveConfig.whichPcs = EXAMPLE_LPSPI_SLAVE_PCS_FOR_INIT;
+    slaveConfig.whichPcs           = EXAMPLE_LPSPI_SLAVE_PCS_FOR_INIT;
     slaveConfig.pcsActiveHighOrLow = kLPSPI_PcsActiveLow;
 
-    slaveConfig.pinCfg = kLPSPI_SdiInSdoOut;
+    slaveConfig.pinCfg        = kLPSPI_SdiInSdoOut;
     slaveConfig.dataOutConfig = kLpspiDataOutRetained;
 
     LPSPI_SlaveInit(EXAMPLE_LPSPI_SLAVE_BASEADDR, &slaveConfig);
@@ -147,9 +147,9 @@ int main(void)
         /* Set slave transfer ready to receive data */
         isTransferCompleted = false;
 
-        slaveXfer.txData = NULL;
-        slaveXfer.rxData = slaveRxData;
-        slaveXfer.dataSize = TRANSFER_SIZE;
+        slaveXfer.txData      = NULL;
+        slaveXfer.rxData      = slaveRxData;
+        slaveXfer.dataSize    = TRANSFER_SIZE;
         slaveXfer.configFlags = EXAMPLE_LPSPI_SLAVE_PCS_FOR_TRANSFER | kLPSPI_SlaveByteSwap;
 
         LPSPI_SlaveTransferEDMA(EXAMPLE_LPSPI_SLAVE_BASEADDR, &g_s_edma_handle, &slaveXfer);
@@ -161,9 +161,9 @@ int main(void)
         /* Set slave transfer ready to send back data */
         isTransferCompleted = false;
 
-        slaveXfer.txData = slaveRxData;
-        slaveXfer.rxData = NULL;
-        slaveXfer.dataSize = TRANSFER_SIZE;
+        slaveXfer.txData      = slaveRxData;
+        slaveXfer.rxData      = NULL;
+        slaveXfer.dataSize    = TRANSFER_SIZE;
         slaveXfer.configFlags = EXAMPLE_LPSPI_SLAVE_PCS_FOR_TRANSFER | kLPSPI_SlaveByteSwap;
 
         LPSPI_SlaveTransferEDMA(EXAMPLE_LPSPI_SLAVE_BASEADDR, &g_s_edma_handle, &slaveXfer);

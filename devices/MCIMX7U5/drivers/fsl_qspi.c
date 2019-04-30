@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2017 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -25,6 +25,7 @@ enum _qspi_transfer_state
 
 #define QSPI_AHB_BUFFER_REG(base, index) (((volatile uint32_t *)&((base)->BUF0CR))[(index)])
 
+#if (!defined(FSL_FEATURE_QSPI_HAS_NO_SOCCR_REG)) || !FSL_FEATURE_QSPI_HAS_NO_SOCCR_REG
 #ifndef QuadSPI_SOCCR_DQS_LOOPBACK_EN_MASK
 #define QuadSPI_SOCCR_DQS_LOOPBACK_EN_MASK (0x100U)
 #endif
@@ -54,6 +55,7 @@ enum _qspi_transfer_state
     (((uint32_t)(((uint32_t)(x)) << QuadSPI_SOCCR_DQS_IFA_DELAY_CHAIN_SEL_SHIFT)) & \
      QuadSPI_SOCCR_DQS_IFA_DELAY_CHAIN_SEL_MASK)
 #endif
+#endif /* FSL_FEATURE_QSPI_HAS_NO_SOCCR_REG */
 
 /*******************************************************************************
  * Prototypes
@@ -73,10 +75,10 @@ static const clock_ip_name_t s_qspiClock[] = QSPI_CLOCKS;
  * Code
  ******************************************************************************/
 /*!
-* brief Get the instance number for QSPI.
-*
-* param base QSPI base pointer.
-*/
+ * brief Get the instance number for QSPI.
+ *
+ * param base QSPI base pointer.
+ */
 uint32_t QSPI_GetInstance(QuadSPI_Type *base)
 {
     uint32_t instance;
@@ -107,7 +109,7 @@ uint32_t QSPI_GetInstance(QuadSPI_Type *base)
  */
 void QSPI_Init(QuadSPI_Type *base, qspi_config_t *config, uint32_t srcClock_Hz)
 {
-    uint32_t i = 0;
+    uint32_t i   = 0;
     uint32_t val = 0;
 
 #if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
@@ -128,9 +130,15 @@ void QSPI_Init(QuadSPI_Type *base, qspi_config_t *config, uint32_t srcClock_Hz)
     /* Set qspi clock source */
     base->SOCCR = config->clockSource;
 
-    /* Set the divider of QSPI clock */
-    base->MCR &= ~QuadSPI_MCR_SCLKCFG_MASK;
-    base->MCR |= QuadSPI_MCR_SCLKCFG(srcClock_Hz / config->baudRate - 1U);
+    /* Read MCR value, mask SCLKCFG field */
+    val = base->MCR;
+    val &= ~QuadSPI_MCR_SCLKCFG_MASK;
+
+    /* To avoid the configured baudrate exceeds the expected baudrate value, which may possibly put the
+    QSPI work under unsupported frequency, set the divider higher when there is reminder, use ceiling
+    operation, ceiling(a/b) = (a-1)/b + 1. */
+    val |= QuadSPI_MCR_SCLKCFG((srcClock_Hz - 1) / config->baudRate);
+    base->MCR = val;
 #endif /* FSL_FEATURE_QSPI_CLOCK_CONTROL_EXTERNAL */
 
     /* Set AHB buffer size and buffer master */
@@ -174,15 +182,15 @@ void QSPI_GetDefaultQspiConfig(qspi_config_t *config)
     /* Initializes the configure structure to zero. */
     memset(config, 0, sizeof(*config));
 
-    config->clockSource = 2U;
-    config->baudRate = 24000000U;
-    config->AHBbufferMaster[0] = 0xE;
-    config->AHBbufferMaster[1] = 0xE;
-    config->AHBbufferMaster[2] = 0xE;
+    config->clockSource               = 2U;
+    config->baudRate                  = 24000000U;
+    config->AHBbufferMaster[0]        = 0xE;
+    config->AHBbufferMaster[1]        = 0xE;
+    config->AHBbufferMaster[2]        = 0xE;
     config->enableAHBbuffer3AllMaster = true;
-    config->txWatermark = 8;
-    config->rxWatermark = 8;
-    config->enableQspi = true;
+    config->txWatermark               = 8;
+    config->rxWatermark               = 8;
+    config->enableQspi                = true;
 }
 
 /*!
@@ -212,8 +220,8 @@ void QSPI_Deinit(QuadSPI_Type *base)
 void QSPI_SetFlashConfig(QuadSPI_Type *base, qspi_flash_config_t *config)
 {
     uint32_t address = FSL_FEATURE_QSPI_AMBA_BASE + config->flashA1Size;
-    uint32_t val = 0;
-    uint32_t i = 0;
+    uint32_t val     = 0;
+    uint32_t i       = 0;
 
     /* Disable module */
     QSPI_Enable(base, false);
@@ -231,19 +239,19 @@ void QSPI_SetFlashConfig(QuadSPI_Type *base, qspi_flash_config_t *config)
 
 #if !defined(FSL_FEATURE_QSPI_HAS_NO_SFACR) || (!FSL_FEATURE_QSPI_HAS_NO_SFACR)
     /* Set Word Addressable feature */
-    val = QuadSPI_SFACR_WA(config->enableWordAddress) | QuadSPI_SFACR_CAS(config->cloumnspace);
+    val         = QuadSPI_SFACR_WA(config->enableWordAddress) | QuadSPI_SFACR_CAS(config->cloumnspace);
     base->SFACR = val;
 #endif /* FSL_FEATURE_QSPI_HAS_NO_SFACR */
 
     /* Config look up table */
     base->LUTKEY = 0x5AF05AF0U;
-    base->LCKCR = 0x2U;
+    base->LCKCR  = 0x2U;
     for (i = 0; i < FSL_FEATURE_QSPI_LUT_DEPTH; i++)
     {
         base->LUT[i] = config->lookuptable[i];
     }
     base->LUTKEY = 0x5AF05AF0U;
-    base->LCKCR = 0x1U;
+    base->LCKCR  = 0x1U;
 
 #if !defined(FSL_FEATURE_QSPI_HAS_NO_TDH) || (!FSL_FEATURE_QSPI_HAS_NO_TDH)
     /* Config flash timing */
@@ -262,14 +270,15 @@ void QSPI_SetFlashConfig(QuadSPI_Type *base, qspi_flash_config_t *config)
     QSPI_Enable(base, true);
 }
 
+#if (!defined(FSL_FEATURE_QSPI_HAS_NO_SOCCR_REG)) || !FSL_FEATURE_QSPI_HAS_NO_SOCCR_REG
 /*!
- * brief Configures the serial flash DQS parameter.
+ * @brief Configures the serial flash DQS parameter.
  *
  * This function configures the serial flash DQS relevant parameters, such as the delay chain tap number, .
  * DQS shift phase, whether need to inverse and the rxc sample clock selection.
  *
- * param base Pointer to QuadSPI Type.
- * param config Dqs configuration parameters.
+ * @param base Pointer to QuadSPI Type.
+ * @param config Dqs configuration parameters.
  */
 void QSPI_SetDqsConfig(QuadSPI_Type *base, qspi_dqs_config_t *config)
 {
@@ -293,7 +302,7 @@ void QSPI_SetDqsConfig(QuadSPI_Type *base, qspi_dqs_config_t *config)
 #if defined(QuadSPI_SOCCR_DQS_IFB_DELAY_CHAIN_SEL_MASK)
           | QuadSPI_SOCCR_DQS_IFB_DELAY_CHAIN_SEL_MASK
 #endif
-          );
+        );
     soccrVal |= QuadSPI_SOCCR_DQS_PHASE_SEL(config->shift);
 
     switch (config->rxSampleClock)
@@ -314,14 +323,15 @@ void QSPI_SetDqsConfig(QuadSPI_Type *base, qspi_dqs_config_t *config)
 #if defined(QuadSPI_SOCCR_DQS_IFB_DELAY_CHAIN_SEL_MASK)
                  | QuadSPI_SOCCR_DQS_IFB_DELAY_CHAIN_SEL(config->portBDelayTapNum)
 #endif
-                     );
+    );
 
-    base->MCR = mcrVal;
+    base->MCR   = mcrVal;
     base->SOCCR = soccrVal;
 
     /* Enable QSPI again */
     QSPI_Enable(base, true);
 }
+#endif /* FSL_FEATURE_QSPI_HAS_NO_SOCCR_REG */
 
 /*!
  * brief Software reset for the QSPI logic.
@@ -408,18 +418,18 @@ void QSPI_ExecuteAHBCommand(QuadSPI_Type *base, uint32_t index)
 }
 
 /*! brief Updates the LUT table.
-*
-* param base Pointer to QuadSPI Type.
-* param index Which LUT index needs to be located. It should be an integer divided by 4.
-* param cmd Command sequence array.
-*/
+ *
+ * param base Pointer to QuadSPI Type.
+ * param index Which LUT index needs to be located. It should be an integer divided by 4.
+ * param cmd Command sequence array.
+ */
 void QSPI_UpdateLUT(QuadSPI_Type *base, uint32_t index, uint32_t *cmd)
 {
     uint8_t i = 0;
 
     /* Unlock the LUT */
     base->LUTKEY = 0x5AF05AF0U;
-    base->LCKCR = 0x2U;
+    base->LCKCR  = 0x2U;
 
     /* Write data into LUT */
     for (i = 0; i < 4; i++)
@@ -430,7 +440,7 @@ void QSPI_UpdateLUT(QuadSPI_Type *base, uint32_t index, uint32_t *cmd)
 
     /* Lcok LUT again */
     base->LUTKEY = 0x5AF05AF0U;
-    base->LCKCR = 0x1U;
+    base->LCKCR  = 0x1U;
 }
 
 /*! brief Set the RX buffer readout area.
@@ -483,8 +493,7 @@ void QSPI_WriteBlocking(QuadSPI_Type *base, uint32_t *buffer, size_t size)
         while (QSPI_GetStatusFlags(base) & kQSPI_TxBufferFull)
         {
         }
-        QSPI_WriteData(base, *buffer);
-        buffer++;
+        base->TBDR = *buffer++;
     }
 }
 
@@ -500,9 +509,9 @@ void QSPI_WriteBlocking(QuadSPI_Type *base, uint32_t *buffer, size_t size)
  */
 void QSPI_ReadBlocking(QuadSPI_Type *base, uint32_t *buffer, size_t size)
 {
-    uint32_t i = 0;
-    uint32_t j = 0;
-    uint32_t temp = 0;
+    uint32_t i     = 0;
+    uint32_t j     = 0;
+    uint32_t temp  = 0;
     uint32_t level = (base->RBCT & QuadSPI_RBCT_WMRK_MASK) + 1U;
 
     while (i < size / 4)

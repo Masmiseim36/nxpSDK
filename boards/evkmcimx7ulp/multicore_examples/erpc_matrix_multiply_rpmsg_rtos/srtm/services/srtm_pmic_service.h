@@ -2,7 +2,7 @@
  * Copyright (c) 2017, NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -30,13 +30,13 @@
 #endif
 
 /**
-* @brief SRTM PMIC adapter structure pointer.
-*/
+ * @brief SRTM PMIC adapter structure pointer.
+ */
 typedef struct _srtm_pmic_adapter *srtm_pmic_adapter_t;
 
 /**
-* @brief SRTM PMIC adapter structure
-*/
+ * @brief SRTM PMIC adapter structure
+ */
 struct _srtm_pmic_adapter
 {
     srtm_status_t (*enable)(srtm_pmic_adapter_t adapter, uint8_t regulator);
@@ -50,8 +50,8 @@ struct _srtm_pmic_adapter
 };
 
 /**
-* @brief SRTM PMIC payload structure
-*/
+ * @brief SRTM PMIC payload structure
+ */
 SRTM_PACKED_BEGIN struct _srtm_pmic_payload
 {
     uint8_t reg;

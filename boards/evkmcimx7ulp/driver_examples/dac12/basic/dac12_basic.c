@@ -2,7 +2,7 @@
  * Copyright (c) 2013 - 2015, Freescale Semiconductor, Inc.
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -76,7 +76,7 @@ int main(void)
         DAC12_SetData(DEMO_DAC12_BASE, dacValue);
         PRINTF("DAC out: %d\r\n", dacValue);
         /*
-        * The value in the first item would be converted. User can measure the output voltage from DAC_OUTx pin.
-        */
+         * The value in the first item would be converted. User can measure the output voltage from DAC_OUTx pin.
+         */
     }
 }

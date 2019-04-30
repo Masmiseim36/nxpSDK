@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -42,6 +42,7 @@ void TPM_INPUT_CAPTURE_HANDLER(void)
 
     /* Clear interrupt flag.*/
     TPM_ClearStatusFlags(DEMO_TPM_BASEADDR, TPM_CHANNEL_FLAG);
+    __DSB();
 }
 
 /*!

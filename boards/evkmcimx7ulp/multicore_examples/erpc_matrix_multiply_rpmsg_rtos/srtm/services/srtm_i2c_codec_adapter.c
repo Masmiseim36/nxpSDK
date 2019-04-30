@@ -124,13 +124,13 @@ srtm_codec_adapter_t SRTM_I2CCodecAdapter_Create(codec_handle_t *driver, srtm_i2
 
     handle->driver = driver;
     memcpy(&handle->config, config, sizeof(struct _srtm_i2c_codec_config));
-    handle->srate = 0;
+    handle->srate  = 0;
     handle->format = 0;
 
     /* Adapter interfaces. */
     handle->adapter.setParam = SRTM_I2CCodecAdapter_SetParam;
-    handle->adapter.setReg = SRTM_I2CCodecAdapter_SetReg;
-    handle->adapter.getReg = SRTM_I2CCodecAdapter_GetReg;
+    handle->adapter.setReg   = SRTM_I2CCodecAdapter_SetReg;
+    handle->adapter.getReg   = SRTM_I2CCodecAdapter_GetReg;
 
     return &handle->adapter;
 }

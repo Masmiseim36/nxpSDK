@@ -14,7 +14,7 @@ product: Clocks v4.0
  * @file    clock_config.c
  * @brief   Board clocks initialization file.
  */
- 
+
 /* This is a empty template for board specific configuration.*/
 
 #include "fsl_common.h"
@@ -23,9 +23,10 @@ product: Clocks v4.0
 /**
  * @brief Set up and initialize all required blocks and functions related to the board hardware.
  */
-void BOARD_InitBootClocks(void) {
-	/* The user initialization should be placed here */
+void BOARD_InitBootClocks(void)
+{
+    /* The user initialization should be placed here */
 
-	/* Read core clock setting. */
-	SystemCoreClockUpdate();
+    /* Read core clock setting. */
+    SystemCoreClockUpdate();
 }

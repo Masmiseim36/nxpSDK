@@ -1,7 +1,7 @@
 /*
  * Copyright 2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -112,14 +112,14 @@ int main(void)
 
     /*Slave config*/
     slaveConfig.bitsPerFrame = 8;
-    slaveConfig.cpol = kLPSPI_ClockPolarityActiveHigh;
-    slaveConfig.cpha = kLPSPI_ClockPhaseFirstEdge;
-    slaveConfig.direction = kLPSPI_MsbFirst;
+    slaveConfig.cpol         = kLPSPI_ClockPolarityActiveHigh;
+    slaveConfig.cpha         = kLPSPI_ClockPhaseFirstEdge;
+    slaveConfig.direction    = kLPSPI_MsbFirst;
 
-    slaveConfig.whichPcs = EXAMPLE_LPSPI_SLAVE_PCS_FOR_INIT;
+    slaveConfig.whichPcs           = EXAMPLE_LPSPI_SLAVE_PCS_FOR_INIT;
     slaveConfig.pcsActiveHighOrLow = kLPSPI_PcsActiveLow;
 
-    slaveConfig.pinCfg = kLPSPI_SdiInSdoOut;
+    slaveConfig.pinCfg        = kLPSPI_SdiInSdoOut;
     slaveConfig.dataOutConfig = kLpspiDataOutRetained;
 
     LPSPI_SlaveInit(EXAMPLE_LPSPI_SLAVE_BASEADDR, &slaveConfig);
@@ -132,9 +132,9 @@ int main(void)
     }
     /******************Set up slave first ******************/
     isSlaveTransferCompleted = false;
-    slaveTxCount = 0;
-    slaveRxCount = 0;
-    whichPcs = EXAMPLE_LPSPI_SLAVE_PCS_FOR_INIT;
+    slaveTxCount             = 0;
+    slaveRxCount             = 0;
+    whichPcs                 = EXAMPLE_LPSPI_SLAVE_PCS_FOR_INIT;
 
     /*The TX and RX FIFO sizes are always the same*/
     g_slaveFifoSize = LPSPI_GetRxFifoSize(EXAMPLE_LPSPI_SLAVE_BASEADDR);
@@ -142,12 +142,12 @@ int main(void)
     /*Set the RX and TX watermarks to reduce the ISR times.*/
     if (g_slaveFifoSize > 1)
     {
-        txWatermark = 1;
+        txWatermark        = 1;
         g_slaveRxWatermark = g_slaveFifoSize - 2;
     }
     else
     {
-        txWatermark = 0;
+        txWatermark        = 0;
         g_slaveRxWatermark = 0;
     }
 
@@ -168,8 +168,8 @@ int main(void)
         LPSPI_TCR_CONT(0) | LPSPI_TCR_CONTC(0) | LPSPI_TCR_RXMSK(0) | LPSPI_TCR_TXMSK(0) | LPSPI_TCR_PCS(whichPcs);
 
     /* Enable the NVIC for LPSPI peripheral. Note that below code is useless if the LPSPI interrupt is in INTMUX ,
-    * and you should also enable the INTMUX interrupt in your application.
-    */
+     * and you should also enable the INTMUX interrupt in your application.
+     */
     EnableIRQ(EXAMPLE_LPSPI_SLAVE_IRQN);
 
     /*TCR is also shared the FIFO , so wait for TCR written.*/

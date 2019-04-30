@@ -152,14 +152,14 @@ int main(void)
 
     /* subAddress = 0x01, data = g_master_txBuff - write to slave.
       start + slaveaddress(w) + subAddress + length of data buffer + data buffer + stop*/
-    uint8_t deviceAddress = 0x01U;
-    masterXfer.slaveAddress = I2C_MASTER_SLAVE_ADDR_7BIT;
-    masterXfer.direction = kLPI2C_Write;
-    masterXfer.subaddress = (uint32_t)deviceAddress;
+    uint8_t deviceAddress     = 0x01U;
+    masterXfer.slaveAddress   = I2C_MASTER_SLAVE_ADDR_7BIT;
+    masterXfer.direction      = kLPI2C_Write;
+    masterXfer.subaddress     = (uint32_t)deviceAddress;
     masterXfer.subaddressSize = 1;
-    masterXfer.data = g_master_txBuff;
-    masterXfer.dataSize = I2C_DATA_LENGTH;
-    masterXfer.flags = kLPI2C_TransferDefaultFlag;
+    masterXfer.data           = g_master_txBuff;
+    masterXfer.dataSize       = I2C_DATA_LENGTH;
+    masterXfer.flags          = kLPI2C_TransferDefaultFlag;
 
     /* Send master non-blocking data to slave */
     reVal = LPI2C_MasterTransferEDMA(EXAMPLE_I2C_MASTER, &g_m_edma_handle, &masterXfer);
@@ -178,13 +178,13 @@ int main(void)
 
     /* subAddress = 0x01, data = g_master_rxBuff - read from slave.
       start + slaveaddress(w) + subAddress + repeated start + slaveaddress(r) + rx data buffer + stop */
-    masterXfer.slaveAddress = I2C_MASTER_SLAVE_ADDR_7BIT;
-    masterXfer.direction = kLPI2C_Read;
-    masterXfer.subaddress = (uint32_t)deviceAddress;
+    masterXfer.slaveAddress   = I2C_MASTER_SLAVE_ADDR_7BIT;
+    masterXfer.direction      = kLPI2C_Read;
+    masterXfer.subaddress     = (uint32_t)deviceAddress;
     masterXfer.subaddressSize = 1;
-    masterXfer.data = g_master_rxBuff;
-    masterXfer.dataSize = I2C_DATA_LENGTH - 1;
-    masterXfer.flags = kLPI2C_TransferDefaultFlag;
+    masterXfer.data           = g_master_rxBuff;
+    masterXfer.dataSize       = I2C_DATA_LENGTH - 1;
+    masterXfer.flags          = kLPI2C_TransferDefaultFlag;
 
     /* Receive non-blocking data from slave */
     reVal = LPI2C_MasterTransferEDMA(EXAMPLE_I2C_MASTER, &g_m_edma_handle, &masterXfer);

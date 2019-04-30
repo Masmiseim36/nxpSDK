@@ -2,7 +2,7 @@
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -68,16 +68,16 @@ void BOARD_I2C_ReleaseBus(void)
 {
     uint8_t i = 0;
     gpio_pin_config_t pin_config;
-    
+
     pin_config.pinDirection = kGPIO_DigitalOutput;
-    pin_config.outputLogic = 1U;
-    
+    pin_config.outputLogic  = 1U;
+
     /* Initialize PTB12/PTB13 as GPIO */
     IOMUXC_SetPinMux(IOMUXC_PTB12_PTB12, 0);
     IOMUXC_SetPinMux(IOMUXC_PTB13_PTB13, 0);
     IOMUXC_SetPinConfig(IOMUXC_PTB12_PTB12, IOMUXC0_SW_MUX_CTL_PAD_OBE_MASK);
     IOMUXC_SetPinConfig(IOMUXC_PTB13_PTB13, IOMUXC0_SW_MUX_CTL_PAD_OBE_MASK);
-    
+
     CLOCK_EnableClock(kCLOCK_Rgpio2p0);
 
     GPIO_PinInit(I2C_RELEASE_SCL_GPIO, I2C_RELEASE_SCL_PIN, &pin_config);
@@ -121,14 +121,14 @@ static void Timer_Init(void)
     tpm_chnl_pwm_signal_param_t tpmParam[2];
 
     /* Configure tpm params with frequency 24kHZ */
-    tpmParam[0].chnlNumber = (tpm_chnl_t)BOARD_FIRST_TIMER_CHANNEL;
-    tpmParam[0].level = kTPM_LowTrue;
-    tpmParam[0].dutyCyclePercent = 0U;
+    tpmParam[0].chnlNumber            = (tpm_chnl_t)BOARD_FIRST_TIMER_CHANNEL;
+    tpmParam[0].level                 = kTPM_LowTrue;
+    tpmParam[0].dutyCyclePercent      = 0U;
     tpmParam[0].firstEdgeDelayPercent = 0U;
 
-    tpmParam[1].chnlNumber = (tpm_chnl_t)BOARD_SECOND_TIMER_CHANNEL;
-    tpmParam[1].level = kTPM_LowTrue;
-    tpmParam[1].dutyCyclePercent = 0U;
+    tpmParam[1].chnlNumber            = (tpm_chnl_t)BOARD_SECOND_TIMER_CHANNEL;
+    tpmParam[1].level                 = kTPM_LowTrue;
+    tpmParam[1].dutyCyclePercent      = 0U;
     tpmParam[1].firstEdgeDelayPercent = 0U;
 
     TPM_GetDefaultConfig(&tpmInfo);
@@ -152,18 +152,18 @@ static void Board_UpdatePwm(uint16_t x, uint16_t y)
 int main(void)
 {
     fxos_handle_t fxosHandle = {0};
-    fxos_data_t sensorData = {0};
-    fxos_config_t config = {0}; 
+    fxos_data_t sensorData   = {0};
+    fxos_config_t config     = {0};
     status_t result;
-    uint8_t sensorRange = 0;
-    uint8_t dataScale = 0;
-    int16_t xData = 0;
-    int16_t yData = 0;
-    int16_t xAngle = 0;
-    int16_t yAngle = 0;
-    int16_t xDuty = 0;
-    int16_t yDuty = 0;
-    uint8_t i = 0;
+    uint8_t sensorRange     = 0;
+    uint8_t dataScale       = 0;
+    int16_t xData           = 0;
+    int16_t yData           = 0;
+    int16_t xAngle          = 0;
+    int16_t yAngle          = 0;
+    int16_t xDuty           = 0;
+    int16_t yDuty           = 0;
+    uint8_t i               = 0;
     uint8_t array_addr_size = 0;
 
     /* Board pin, clock, debug console init */
@@ -182,7 +182,7 @@ int main(void)
     /* I2C initialize */
     BOARD_Accel_I2C_Init();
     /* Configure the I2C function */
-    config.I2C_SendFunc = BOARD_Accel_I2C_Send;
+    config.I2C_SendFunc    = BOARD_Accel_I2C_Send;
     config.I2C_ReceiveFunc = BOARD_Accel_I2C_Receive;
 
     /* Initialize sensor devices */

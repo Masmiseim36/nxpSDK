@@ -2,7 +2,7 @@
  * Copyright (c) 2013 - 2015, Freescale Semiconductor, Inc.
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -30,7 +30,7 @@ void BOARD_InitDebugConsole(void);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-volatile uint32_t g_DacIndex = 0U;
+volatile uint32_t g_DacIndex         = 0U;
 volatile uint32_t g_DacInterruptDone = false;
 /* User-defined wave for DAC output. */
 const uint32_t g_DacValues[DEMO_DAC_VALUE_ARRAY_SIZE] = {
@@ -42,8 +42,8 @@ const uint32_t g_DacValues[DEMO_DAC_VALUE_ARRAY_SIZE] = {
  ******************************************************************************/
 
 /*!
-* @brief Main function
-*/
+ * @brief Main function
+ */
 int main(void)
 {
     uint32_t mDacIndex = 0;
@@ -57,8 +57,8 @@ int main(void)
 
     /* Configure the DAC. */
     DAC12_GetDefaultConfig(&dacConfigStruct);
-    dacConfigStruct.fifoWorkMode = kDAC12_FIFOWorkAsNormalMode;
-    dacConfigStruct.fifoTriggerMode = kDAC12_FIFOTriggerBySoftwareMode;
+    dacConfigStruct.fifoWorkMode       = kDAC12_FIFOWorkAsNormalMode;
+    dacConfigStruct.fifoTriggerMode    = kDAC12_FIFOTriggerBySoftwareMode;
     dacConfigStruct.fifoWatermarkLevel = 4U; /* Watermark event would occur when remaining FIFO data is less than 4U. */
     DAC12_Init(DEMO_DAC12_BASE, &dacConfigStruct);
     DAC12_Enable(DEMO_DAC12_BASE, true); /* Enable output. */
@@ -110,4 +110,5 @@ void DEMO_DAC12_HANDLER_FUNC(void)
         }
     }
     g_DacInterruptDone = true;
+    __DSB();
 }

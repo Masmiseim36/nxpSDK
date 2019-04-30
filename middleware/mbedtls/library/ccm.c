@@ -392,7 +392,7 @@ int mbedtls_ccm_auth_decrypt( mbedtls_ccm_context *ctx, size_t length,
 /*
  * The data is the same for all tests, only the used length changes
  */
-static const unsigned char key[] = {
+static const unsigned char key[] __attribute__((aligned)) = {
     0x40, 0x41, 0x42, 0x43, 0x44, 0x45, 0x46, 0x47,
     0x48, 0x49, 0x4a, 0x4b, 0x4c, 0x4d, 0x4e, 0x4f
 };

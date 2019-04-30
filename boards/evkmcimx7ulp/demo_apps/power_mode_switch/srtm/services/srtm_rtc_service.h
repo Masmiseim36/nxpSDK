@@ -51,13 +51,13 @@ SRTM_PACKED_BEGIN struct _srtm_rtc_payload
 } SRTM_PACKED_END;
 
 /**
-* @brief SRTM RTC adapter structure pointer.
-*/
+ * @brief SRTM RTC adapter structure pointer.
+ */
 typedef struct _srtm_rtc_adapter *srtm_rtc_adapter_t;
 
 /**
-* @brief SRTM RTC adapter structure
-*/
+ * @brief SRTM RTC adapter structure
+ */
 struct _srtm_rtc_adapter
 {
     /* Bound service */

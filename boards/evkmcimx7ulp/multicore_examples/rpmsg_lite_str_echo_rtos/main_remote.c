@@ -83,7 +83,7 @@ void app_task(void *param)
         ;
 
     my_queue = rpmsg_queue_create(my_rpmsg);
-    my_ept = rpmsg_lite_create_ept(my_rpmsg, LOCAL_EPT_ADDR, rpmsg_queue_rx_cb, my_queue);
+    my_ept   = rpmsg_lite_create_ept(my_rpmsg, LOCAL_EPT_ADDR, rpmsg_queue_rx_cb, my_queue);
     rpmsg_ns_bind(my_rpmsg, app_nameservice_isr_cb, NULL);
     rpmsg_ns_announce(my_rpmsg, my_ept, RPMSG_LITE_NS_ANNOUNCE_STRING, RL_NS_CREATE);
 

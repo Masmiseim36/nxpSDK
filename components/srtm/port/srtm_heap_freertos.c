@@ -2,7 +2,7 @@
  * Copyright (c) 2017, NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -36,12 +36,11 @@ void *SRTM_Heap_Malloc(uint32_t size)
 
     if (((++count) & SRTM_HEAP_STAT_COUNT_MASK) == 0)
     {
-        freeSize = xPortGetFreeHeapSize();
+        freeSize    = xPortGetFreeHeapSize();
         minFreeSize = xPortGetMinimumEverFreeHeapSize();
-        SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_INFO,
-                           "#### Heap free space 0x%x, min 0x%x ####\r\n",
-                           freeSize, minFreeSize);
-    }    
+        SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_INFO, "#### Heap free space 0x%x, min 0x%x ####\r\n", freeSize,
+                           minFreeSize);
+    }
 #endif
     return pvPortMalloc(size);
 }

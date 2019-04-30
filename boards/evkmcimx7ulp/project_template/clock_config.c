@@ -29,13 +29,13 @@ void BOARD_InitBootClocks(void)
  * SOSCDIV2_CLK output  : 0MHz (async bus clock)
  * SOSCDIV3_CLK output  : 0MHz (async slow clock)
  */
-const scg_sosc_config_t g_scgSysOscConfig = {.freq = BOARD_XTAL0_CLK_HZ,
-                                             .enableMode = kSCG_SysOscEnable,
+const scg_sosc_config_t g_scgSysOscConfig = {.freq        = BOARD_XTAL0_CLK_HZ,
+                                             .enableMode  = kSCG_SysOscEnable,
                                              .monitorMode = kSCG_SysOscMonitorDisable,
-                                             .div1 = kSCG_AsyncClkDisable,
-                                             .div2 = kSCG_AsyncClkDisable,
-                                             .div3 = kSCG_AsyncClkDisable,
-                                             .workMode = kSCG_SysOscModeOscLowPower};
+                                             .div1        = kSCG_AsyncClkDisable,
+                                             .div2        = kSCG_AsyncClkDisable,
+                                             .div3        = kSCG_AsyncClkDisable,
+                                             .workMode    = kSCG_SysOscModeOscLowPower};
 
 /*
  * SIRC clock ROM setting.
@@ -45,10 +45,10 @@ const scg_sosc_config_t g_scgSysOscConfig = {.freq = BOARD_XTAL0_CLK_HZ,
  * SIRCDIV3_CLK output  : 0MHz  (async slow clock)
  */
 const scg_sirc_config_t g_scgSircConfig = {.enableMode = kSCG_SircEnable | kSCG_SircEnableInLowPower,
-                                           .div1 = kSCG_AsyncClkDisable,
-                                           .div2 = kSCG_AsyncClkDisable,
-                                           .div3 = kSCG_AsyncClkDisable,
-                                           .range = kSCG_SircRangeHigh};
+                                           .div1       = kSCG_AsyncClkDisable,
+                                           .div2       = kSCG_AsyncClkDisable,
+                                           .div3       = kSCG_AsyncClkDisable,
+                                           .range      = kSCG_SircRangeHigh};
 
 /*
  * FIRC clock ROM setting.
@@ -58,10 +58,10 @@ const scg_sirc_config_t g_scgSircConfig = {.enableMode = kSCG_SircEnable | kSCG_
  * FIRCDIV3_CLK output  : 0MHz (async slow clock)
  */
 const scg_firc_config_t g_scgFircConfig = {.enableMode = kSCG_FircEnable,
-                                           .div1 = kSCG_AsyncClkDisable,
-                                           .div2 = kSCG_AsyncClkDisable,
-                                           .div3 = kSCG_AsyncClkDisable,
-                                           .range = kSCG_FircRange48M,
+                                           .div1       = kSCG_AsyncClkDisable,
+                                           .div2       = kSCG_AsyncClkDisable,
+                                           .div3       = kSCG_AsyncClkDisable,
+                                           .range      = kSCG_FircRange48M,
                                            .trimConfig = NULL};
 
 /*
@@ -72,15 +72,15 @@ const scg_firc_config_t g_scgFircConfig = {.enableMode = kSCG_FircEnable,
  * SYSPLLDIV3_CLK output  : 0MHz   (async slow clock)
  * PFD0 selected for sync system clock
  */
-const scg_spll_config_t g_scgSysPllConfig = {.enableMode = kSCG_SysPllEnable,
-                                             .div1 = kSCG_AsyncClkDivBy1,
-                                             .div2 = kSCG_AsyncClkDivBy2,
-                                             .div3 = kSCG_AsyncClkDisable,
-                                             .src = kSCG_SysPllSrcSysOsc,
+const scg_spll_config_t g_scgSysPllConfig = {.enableMode    = kSCG_SysPllEnable,
+                                             .div1          = kSCG_AsyncClkDivBy1,
+                                             .div2          = kSCG_AsyncClkDivBy2,
+                                             .div3          = kSCG_AsyncClkDisable,
+                                             .src           = kSCG_SysPllSrcSysOsc,
                                              .isPfdSelected = true,
-                                             .prediv = 0U,
-                                             .pfdClkout = kSCG_SysPllPfd0Clk,
-                                             .mult = 3U}; /* x20 */
+                                             .prediv        = 0U,
+                                             .pfdClkout     = kSCG_SysPllPfd0Clk,
+                                             .mult          = 3U}; /* x20 */
 
 /*
  * AUXPLL clock setting.
@@ -89,20 +89,19 @@ const scg_spll_config_t g_scgSysPllConfig = {.enableMode = kSCG_SysPllEnable,
  * AUXPLLDIV2_CLK output  : 6.144MHz (async bus clock)
  * AUXPLLDIV3_CLK output  : 0MHz     (async slow clock)
  */
-const scg_apll_config_t g_scgAuxPllConfig = {.enableMode = kSCG_AuxPllEnable,
-                                             .div1 = kSCG_AsyncClkDivBy1,
-                                             .div2 = kSCG_AsyncClkDivBy1,
-                                             .div3 = kSCG_AsyncClkDisable,
-                                             .src = kSCG_AuxPllSrcSysOsc,
+const scg_apll_config_t g_scgAuxPllConfig = {.enableMode    = kSCG_AuxPllEnable,
+                                             .div1          = kSCG_AsyncClkDivBy1,
+                                             .div2          = kSCG_AsyncClkDivBy1,
+                                             .div3          = kSCG_AsyncClkDisable,
+                                             .src           = kSCG_AuxPllSrcSysOsc,
                                              .isPfdSelected = false,
-                                             .prediv = 0U,
-                                             .pfdClkout = kSCG_AuxPllPfd0Clk,
-                                             .mult = 22U,
-                                             .pllPostdiv1 = kSCG_SysClkDivBy11,
-                                             .pllPostdiv2 = kSCG_SysClkDivBy8,
-                                             .num = 528000U,
-                                             .denom = 1000000U}; /* 24 x 22.528 = 540.672MHz */
-
+                                             .prediv        = 0U,
+                                             .pfdClkout     = kSCG_AuxPllPfd0Clk,
+                                             .mult          = 22U,
+                                             .pllPostdiv1   = kSCG_SysClkDivBy11,
+                                             .pllPostdiv2   = kSCG_SysClkDivBy8,
+                                             .num           = 528000U,
+                                             .denom         = 1000000U}; /* 24 x 22.528 = 540.672MHz */
 
 /*
  * Select SIRC as system clock source, before configuring other clock sources.
@@ -112,12 +111,13 @@ const scg_apll_config_t g_scgAuxPllConfig = {.enableMode = kSCG_AuxPllEnable,
  * Bus clock      : 16MHz
  * Slow clock     : 8MHz
  */
-const scg_sys_clk_config_t g_sysClkConfigSircSource = {.divCore = kSCG_SysClkDivBy1, /* Core clock divider. */
-                                                       .divPlat = kSCG_SysClkDivBy1, /* Platform clock divider. */
-                                                       .divBus = kSCG_SysClkDivBy1,  /* Bus clock divider. */
-                                                       .divSlow = kSCG_SysClkDivBy2, /* Slow clock divider. */
-                                                       .src = kSCG_SysClkSrcSirc     /* System clock source. */
-                                                      };
+const scg_sys_clk_config_t g_sysClkConfigSircSource = {
+    .divCore = kSCG_SysClkDivBy1, /* Core clock divider. */
+    .divPlat = kSCG_SysClkDivBy1, /* Platform clock divider. */
+    .divBus  = kSCG_SysClkDivBy1, /* Bus clock divider. */
+    .divSlow = kSCG_SysClkDivBy2, /* Slow clock divider. */
+    .src     = kSCG_SysClkSrcSirc /* System clock source. */
+};
 
 /*
  * System clock source and divider in Normal RUN mode.
@@ -127,12 +127,13 @@ const scg_sys_clk_config_t g_sysClkConfigSircSource = {.divCore = kSCG_SysClkDiv
  * Bus clock      : 49MHz
  * Slow clock     : 24.5MHz
  */
-const scg_sys_clk_config_t g_sysClkConfigNormalRun = {.divCore = kSCG_SysClkDivBy4, /* Core clock divider. */
-                                                      .divPlat = kSCG_SysClkDivBy1, /* Platform clock divider. */
-                                                      .divBus = kSCG_SysClkDivBy2,  /* Bus clock divider. */
-                                                      .divSlow = kSCG_SysClkDivBy4, /* Slow clock divider. */
-                                                      .src = kSCG_SysClkSrcSysPll   /* System clock source. */
-                                                     };
+const scg_sys_clk_config_t g_sysClkConfigNormalRun = {
+    .divCore = kSCG_SysClkDivBy4,   /* Core clock divider. */
+    .divPlat = kSCG_SysClkDivBy1,   /* Platform clock divider. */
+    .divBus  = kSCG_SysClkDivBy2,   /* Bus clock divider. */
+    .divSlow = kSCG_SysClkDivBy4,   /* Slow clock divider. */
+    .src     = kSCG_SysClkSrcSysPll /* System clock source. */
+};
 
 /*
  * System clock source and divider in HSRUN mode.
@@ -142,12 +143,13 @@ const scg_sys_clk_config_t g_sysClkConfigNormalRun = {.divCore = kSCG_SysClkDivB
  * Bus clock      : 98MHz
  * Slow clock     : 49MHz
  */
-const scg_sys_clk_config_t g_sysClkConfigHsrun = {.divCore = kSCG_SysClkDivBy2, /* Core clock divider. */
-                                                  .divPlat = kSCG_SysClkDivBy1, /* Platform clock divider. */
-                                                  .divBus = kSCG_SysClkDivBy2,  /* Bus clock divider. */
-                                                  .divSlow = kSCG_SysClkDivBy4, /* Slow clock divider. */
-                                                  .src = kSCG_SysClkSrcSysPll   /* System clock source. */
-                                                 };
+const scg_sys_clk_config_t g_sysClkConfigHsrun = {
+    .divCore = kSCG_SysClkDivBy2,   /* Core clock divider. */
+    .divPlat = kSCG_SysClkDivBy1,   /* Platform clock divider. */
+    .divBus  = kSCG_SysClkDivBy2,   /* Bus clock divider. */
+    .divSlow = kSCG_SysClkDivBy4,   /* Slow clock divider. */
+    .src     = kSCG_SysClkSrcSysPll /* System clock source. */
+};
 
 /*
  * System clock source and divider in VLPR mode.
@@ -157,18 +159,19 @@ const scg_sys_clk_config_t g_sysClkConfigHsrun = {.divCore = kSCG_SysClkDivBy2, 
  * Bus clock      : 16MHz
  * Slow clock     : 8MHz
  */
-const scg_sys_clk_config_t g_sysClkConfigVlpr = {.divCore = kSCG_SysClkDivBy1, /* Core clock divider. */
-                                                 .divPlat = kSCG_SysClkDivBy1, /* Platform clock divider. */
-                                                 .divBus = kSCG_SysClkDivBy1,  /* Bus clock divider. */
-                                                 .divSlow = kSCG_SysClkDivBy2, /* Slow clock divider. */
-                                                 .src = kSCG_SysClkSrcSirc     /* System clock source. */
-                                                };
+const scg_sys_clk_config_t g_sysClkConfigVlpr = {
+    .divCore = kSCG_SysClkDivBy1, /* Core clock divider. */
+    .divPlat = kSCG_SysClkDivBy1, /* Platform clock divider. */
+    .divBus  = kSCG_SysClkDivBy1, /* Bus clock divider. */
+    .divSlow = kSCG_SysClkDivBy2, /* Slow clock divider. */
+    .src     = kSCG_SysClkSrcSirc /* System clock source. */
+};
 
 /*******************************************************************************
  * Code
  ******************************************************************************/
-typedef void (*BOARD_SetRunModeFunc)(SCG_Type *scg, uint32_t scgRunConfig, QuadSPI_Type *qspi,
-                                     clock_ip_name_t qspiClock, uint32_t qspiClockConfig);
+typedef void (*BOARD_SetRunModeFunc)(
+    SCG_Type *scg, uint32_t scgRunConfig, QuadSPI_Type *qspi, clock_ip_name_t qspiClock, uint32_t qspiClockConfig);
 #if 0
 void BOARD_SetRunMode(SCG_Type *scg, uint32_t scgRunConfig, QuadSPI_Type *qspi,
                       clock_ip_name_t qspiClock, uint32_t qspiClockConfig)
@@ -213,8 +216,7 @@ void BOARD_SetRunMode(SCG_Type *scg, uint32_t scgRunConfig, QuadSPI_Type *qspi,
 }
 #endif
 /* The code array is built from above BOARD_SetRunMode() prototype */
-uint16_t BOARD_SetRunModeCode[] =
-{
+uint16_t BOARD_SetRunModeCode[] = {
     0xb430,         /* push    {r4, r5} */
     0x6141,         /* str     r1, [r0, #20] */
     0xf001, 0x6570, /* and.w   r5, r1, #251658240    ; 0xf000000 */
@@ -302,7 +304,6 @@ static void BOARD_InitClock(void)
     CLOCK_SetSircAsyncClkDiv(kSCG_AsyncDiv1Clk, kSCG_AsyncClkDivBy1);
     CLOCK_SetSircAsyncClkDiv(kSCG_AsyncDiv2Clk, kSCG_AsyncClkDivBy1);
 }
-
 
 /*
  * Clock in VLPR mode:

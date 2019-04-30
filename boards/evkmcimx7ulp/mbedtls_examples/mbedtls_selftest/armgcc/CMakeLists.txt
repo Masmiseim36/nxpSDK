@@ -298,6 +298,10 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG} -X
 
 SET(CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG} muldefs")
 
+SET(CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG} -Map=output.map")
+
 SET(CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG} -mcpu=cortex-m4")
 
 SET(CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG} -mfloat-abi=hard")
@@ -352,6 +356,10 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE
 
 SET(CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE} muldefs")
 
+SET(CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE} -Xlinker")
+
+SET(CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE} -Map=output.map")
+
 SET(CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE} -mcpu=cortex-m4")
 
 SET(CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE} -mfloat-abi=hard")
@@ -390,7 +398,7 @@ include_directories(${ProjDirPath}/../../../../../devices/MCIMX7U5)
 
 include_directories(${ProjDirPath}/../../../../../devices/MCIMX7U5/utilities/str)
 
-include_directories(${ProjDirPath}/../../../../../devices/MCIMX7U5/utilities)
+include_directories(${ProjDirPath}/../../../../../devices/MCIMX7U5/utilities/debug_console)
 
 include_directories(${ProjDirPath}/../../../../../components/uart)
 
@@ -596,9 +604,9 @@ add_executable(mbedtls_selftest.elf
 "${ProjDirPath}/../../../../../devices/MCIMX7U5/system_MCIMX7U5_cm4.h"
 "${ProjDirPath}/../../../../../devices/MCIMX7U5/utilities/str/fsl_str.c"
 "${ProjDirPath}/../../../../../devices/MCIMX7U5/utilities/str/fsl_str.h"
-"${ProjDirPath}/../../../../../devices/MCIMX7U5/utilities/fsl_debug_console.c"
-"${ProjDirPath}/../../../../../devices/MCIMX7U5/utilities/fsl_debug_console.h"
-"${ProjDirPath}/../../../../../devices/MCIMX7U5/utilities/fsl_debug_console_conf.h"
+"${ProjDirPath}/../../../../../devices/MCIMX7U5/utilities/debug_console/fsl_debug_console.c"
+"${ProjDirPath}/../../../../../devices/MCIMX7U5/utilities/debug_console/fsl_debug_console.h"
+"${ProjDirPath}/../../../../../devices/MCIMX7U5/utilities/debug_console/fsl_debug_console_conf.h"
 "${ProjDirPath}/../../../../../components/uart/uart.h"
 "${ProjDirPath}/../../../../../components/uart/lpuart_adapter.c"
 "${ProjDirPath}/../../../../../components/serial_manager/serial_manager.h"

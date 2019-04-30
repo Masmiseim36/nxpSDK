@@ -2,7 +2,7 @@
  * Copyright (c) 2017, NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -20,10 +20,9 @@
  * Definitions
  ******************************************************************************/
 /**
-* @brief SRTM response callback function
-*/
-typedef void (*srtm_dispatcher_resp_cb_t)(srtm_dispatcher_t disp, srtm_message_t req,
-                                          srtm_message_t resp, void *param);
+ * @brief SRTM response callback function
+ */
+typedef void (*srtm_dispatcher_resp_cb_t)(srtm_dispatcher_t disp, srtm_message_t req, srtm_message_t resp, void *param);
 
 /*******************************************************************************
  * API
@@ -32,7 +31,7 @@ typedef void (*srtm_dispatcher_resp_cb_t)(srtm_dispatcher_t disp, srtm_message_t
 extern "C" {
 #endif
 
- /*!
+/*!
  * @brief Create SRTM dispatcher object.
  *
  * @return SRTM dispacher handle, or NULL on failure.
@@ -117,8 +116,10 @@ srtm_status_t SRTM_Dispatcher_UnregisterService(srtm_dispatcher_t disp, srtm_ser
  * @param timeout Maximum milliseconds to wait for the response.
  * @return SRTM_Status_Success on success and others on failure.
  */
-srtm_status_t SRTM_Dispatcher_Request(srtm_dispatcher_t disp, srtm_request_t req,
-                                      srtm_response_t *pResp, uint32_t timeout);
+srtm_status_t SRTM_Dispatcher_Request(srtm_dispatcher_t disp,
+                                      srtm_request_t req,
+                                      srtm_response_t *pResp,
+                                      uint32_t timeout);
 
 /*!
  * @brief Deliver request to peer core and return immediately.
@@ -135,8 +136,10 @@ srtm_status_t SRTM_Dispatcher_Request(srtm_dispatcher_t disp, srtm_request_t req
  * @param param User paramter to be used in callback.
  * @return SRTM_Status_Success on success and others on failure.
  */
-srtm_status_t SRTM_Dispatcher_DeliverRequest(srtm_dispatcher_t disp, srtm_request_t req,
-                                             srtm_dispatcher_resp_cb_t callback, void *param);
+srtm_status_t SRTM_Dispatcher_DeliverRequest(srtm_dispatcher_t disp,
+                                             srtm_request_t req,
+                                             srtm_dispatcher_resp_cb_t callback,
+                                             void *param);
 
 /*!
  * @brief Deliver response to peer core and return immediately.
@@ -148,8 +151,7 @@ srtm_status_t SRTM_Dispatcher_DeliverRequest(srtm_dispatcher_t disp, srtm_reques
  * @param resp SRTM response to send to peer core.
  * @return SRTM_Status_Success on success and others on failure.
  */
-srtm_status_t SRTM_Dispatcher_DeliverResponse(srtm_dispatcher_t disp,
-                                              srtm_response_t resp);
+srtm_status_t SRTM_Dispatcher_DeliverResponse(srtm_dispatcher_t disp, srtm_response_t resp);
 
 /*!
  * @brief Deliver notification to peer core and return immediately.
@@ -161,8 +163,7 @@ srtm_status_t SRTM_Dispatcher_DeliverResponse(srtm_dispatcher_t disp,
  * @param notif SRTM notification to send to peer core.
  * @return SRTM_Status_Success on success and others on failure.
  */
-srtm_status_t SRTM_Dispatcher_DeliverNotification(srtm_dispatcher_t disp,
-                                                  srtm_notification_t notif);
+srtm_status_t SRTM_Dispatcher_DeliverNotification(srtm_dispatcher_t disp, srtm_notification_t notif);
 
 /*!
  * @brief Deliver raw data message to peer core and return immediately.
@@ -175,8 +176,7 @@ srtm_status_t SRTM_Dispatcher_DeliverNotification(srtm_dispatcher_t disp,
  * @param data Raw data message to send to peer core.
  * @return SRTM_Status_Success on success and others on failure.
  */
-srtm_status_t SRTM_Dispatcher_DeliverRawData(srtm_dispatcher_t disp,
-                                             srtm_rawdata_t data);
+srtm_status_t SRTM_Dispatcher_DeliverRawData(srtm_dispatcher_t disp, srtm_rawdata_t data);
 
 /*!
  * @brief Deliver procedure message to dispatcher and return after the procedure is called.

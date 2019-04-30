@@ -2,7 +2,7 @@
  * Copyright (c) 2017, NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -20,7 +20,6 @@
 #include "srtm_channel_struct.h"
 #include "srtm_message.h"
 #include "srtm_message_struct.h"
-
 #include "fsl_common.h"
 
 /*******************************************************************************
@@ -43,21 +42,19 @@ static void SRTM_DumpMessage(srtm_message_t msg)
 #ifdef SRTM_DEBUG_MESSAGE_FUNC
     srtm_packet_head_t *head;
 
-    SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_DEBUG,
-                       "  -- Msg type %d, dir %d, dlen %d, chan 0x%08x, err %d, prio %d\r\n",
+    SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_DEBUG, "  -- Msg type %d, dir %d, dlen %d, chan 0x%08x, err %d, prio %d\r\n",
                        msg->type, msg->direct, msg->dataLen, msg->channel, msg->error, msg->priority);
     if (msg->dataLen >= sizeof(struct _srtm_packet_head))
     {
         head = (srtm_packet_head_t *)msg->data;
-        SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_DEBUG,
-                           "  -- Data cat %d, majv %d, minv %d, type %d, cmd %d, prio %d\r\n",
-                           head->category, head->majorVersion, head->minorVersion, head->type,
-                           head->command, head->priority);
+        SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_DEBUG, "  -- Data cat %d, majv %d, minv %d, type %d, cmd %d, prio %d\r\n",
+                           head->category, head->majorVersion, head->minorVersion, head->type, head->command,
+                           head->priority);
     }
     else if (msg->type == SRTM_MessageTypeProcedure)
     {
-        SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_DEBUG, "  -- Callback 0x%08x, param 0x%x, 0x%x\r\n",
-                           msg->procMsg.cb, msg->procMsg.param1, msg->procMsg.param2);
+        SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_DEBUG, "  -- Callback 0x%08x, param 0x%x, 0x%x\r\n", msg->procMsg.cb,
+                           msg->procMsg.param1, msg->procMsg.param2);
     }
 #endif
 }
@@ -199,9 +196,9 @@ static void SRTM_Dispatcher_RecycleMessage(srtm_message_t msg, void *param)
 srtm_dispatcher_t SRTM_Dispatcher_Create(void)
 {
     srtm_dispatcher_t disp = (srtm_dispatcher_t)SRTM_Heap_Malloc(sizeof(struct _srtm_dispatcher));
-    srtm_mutex_t mutex = SRTM_Mutex_Create();
-    srtm_sem_t startSig = SRTM_Sem_Create(1U, 0U);
-    srtm_sem_t stopSig = SRTM_Sem_Create(1U, 0U);
+    srtm_mutex_t mutex     = SRTM_Mutex_Create();
+    srtm_sem_t startSig    = SRTM_Sem_Create(1U, 0U);
+    srtm_sem_t stopSig     = SRTM_Sem_Create(1U, 0U);
     /* Assume same maximum message number of local and remote in messageQ */
     srtm_sem_t queueSig = SRTM_Sem_Create(SRTM_DISPATCHER_CONFIG_RX_MSG_NUMBER * 2, 0U);
     srtm_message_t msg;
@@ -216,11 +213,11 @@ srtm_dispatcher_t SRTM_Dispatcher_Create(void)
     SRTM_List_Init(&disp->freeRxMsgs);
     SRTM_List_Init(&disp->messageQ);
     SRTM_List_Init(&disp->waitingReqs);
-    disp->mutex = mutex;
-    disp->stopReq = false;
-    disp->started = false;
+    disp->mutex    = mutex;
+    disp->stopReq  = false;
+    disp->started  = false;
     disp->startSig = startSig;
-    disp->stopSig = stopSig;
+    disp->stopSig  = stopSig;
     disp->queueSig = queueSig;
 
     for (i = 0; i < SRTM_DISPATCHER_CONFIG_RX_MSG_NUMBER; i++)
@@ -251,7 +248,7 @@ void SRTM_Dispatcher_Destroy(srtm_dispatcher_t disp)
     /* Before destroy, all the waiting request should responded */
     assert(SRTM_List_IsEmpty(&disp->waitingReqs));
 
-    while(!SRTM_List_IsEmpty(&disp->cores))
+    while (!SRTM_List_IsEmpty(&disp->cores))
     {
         list = disp->cores.next;
         SRTM_List_Remove(list);
@@ -259,7 +256,7 @@ void SRTM_Dispatcher_Destroy(srtm_dispatcher_t disp)
         SRTM_PeerCore_Destroy(core);
     }
 
-    while(!SRTM_List_IsEmpty(&disp->services))
+    while (!SRTM_List_IsEmpty(&disp->services))
     {
         list = disp->services.next;
         SRTM_List_Remove(list);
@@ -417,7 +414,7 @@ srtm_status_t SRTM_Dispatcher_RemovePeerCore(srtm_dispatcher_t disp, srtm_peerco
     primask = DisableGlobalIRQ();
     for (list = disp->messageQ.next; list != &disp->messageQ; list = next)
     {
-        next = list->next;
+        next    = list->next;
         message = SRTM_LIST_OBJ(srtm_message_t, node, list);
         if (message->channel && message->channel->core == core)
         {
@@ -432,7 +429,7 @@ srtm_status_t SRTM_Dispatcher_RemovePeerCore(srtm_dispatcher_t disp, srtm_peerco
     SRTM_Mutex_Lock(disp->mutex);
     for (list = disp->waitingReqs.next; list != &disp->waitingReqs; list = next)
     {
-        next = list->next;
+        next    = list->next;
         message = SRTM_LIST_OBJ(srtm_message_t, node, list);
         if (message->channel && message->channel->core == core)
         {
@@ -510,8 +507,10 @@ srtm_status_t SRTM_Dispatcher_UnregisterService(srtm_dispatcher_t disp, srtm_ser
     return SRTM_Status_Success;
 }
 
-srtm_status_t SRTM_Dispatcher_Request(srtm_dispatcher_t disp, srtm_request_t req,
-                                     srtm_response_t *pResp, uint32_t timeout)
+srtm_status_t SRTM_Dispatcher_Request(srtm_dispatcher_t disp,
+                                      srtm_request_t req,
+                                      srtm_response_t *pResp,
+                                      uint32_t timeout)
 {
     srtm_sem_t signal;
     srtm_status_t status;
@@ -529,7 +528,7 @@ srtm_status_t SRTM_Dispatcher_Request(srtm_dispatcher_t disp, srtm_request_t req
     }
 
     req->reqMsg.isSyncReq = true;
-    req->reqMsg.sync.sig = signal;
+    req->reqMsg.sync.sig  = signal;
     req->reqMsg.sync.resp = NULL;
 
     req->error = SRTM_Status_Success;
@@ -576,39 +575,38 @@ srtm_status_t SRTM_Dispatcher_Request(srtm_dispatcher_t disp, srtm_request_t req
     return status;
 }
 
-srtm_status_t SRTM_Dispatcher_DeliverRequest(srtm_dispatcher_t disp, srtm_request_t req,
-                                            srtm_dispatcher_resp_cb_t callback, void *param)
+srtm_status_t SRTM_Dispatcher_DeliverRequest(srtm_dispatcher_t disp,
+                                             srtm_request_t req,
+                                             srtm_dispatcher_resp_cb_t callback,
+                                             void *param)
 {
     assert(disp);
     assert(req);
 
     SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_DEBUG, "%s\r\n", __func__);
 
-    req->reqMsg.isSyncReq = false;
-    req->reqMsg.async.cb = callback;
+    req->reqMsg.isSyncReq   = false;
+    req->reqMsg.async.cb    = callback;
     req->reqMsg.async.param = param;
 
     return SRTM_Dispatcher_DeliverRawData(disp, req);
 }
 
-srtm_status_t SRTM_Dispatcher_DeliverResponse(srtm_dispatcher_t disp,
-                                             srtm_response_t resp)
+srtm_status_t SRTM_Dispatcher_DeliverResponse(srtm_dispatcher_t disp, srtm_response_t resp)
 {
     SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_DEBUG, "%s\r\n", __func__);
 
     return SRTM_Dispatcher_DeliverRawData(disp, resp);
 }
 
-srtm_status_t SRTM_Dispatcher_DeliverNotification(srtm_dispatcher_t disp,
-                                                 srtm_notification_t notif)
+srtm_status_t SRTM_Dispatcher_DeliverNotification(srtm_dispatcher_t disp, srtm_notification_t notif)
 {
     SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_DEBUG, "%s\r\n", __func__);
 
     return SRTM_Dispatcher_DeliverRawData(disp, notif);
 }
 
-srtm_status_t SRTM_Dispatcher_DeliverRawData(srtm_dispatcher_t disp,
-                                            srtm_rawdata_t data)
+srtm_status_t SRTM_Dispatcher_DeliverRawData(srtm_dispatcher_t disp, srtm_rawdata_t data)
 {
     assert(disp);
     assert(data);
@@ -696,8 +694,7 @@ srtm_status_t SRTM_Dispatcher_PostProc(srtm_dispatcher_t disp, srtm_procedure_t 
     return SRTM_Status_Success;
 }
 
-srtm_status_t SRTM_Dispatcher_PostRecvData(srtm_dispatcher_t disp, srtm_channel_t channel,
-                                           void *buf, uint32_t len)
+srtm_status_t SRTM_Dispatcher_PostRecvData(srtm_dispatcher_t disp, srtm_channel_t channel, void *buf, uint32_t len)
 {
     srtm_list_t *list;
     srtm_message_t message = NULL;
@@ -731,10 +728,10 @@ srtm_status_t SRTM_Dispatcher_PostRecvData(srtm_dispatcher_t disp, srtm_channel_
         memcpy(message->data, buf, len);
         message->dataLen = len;
         message->channel = channel;
-        message->error = SRTM_Status_Success;
+        message->error   = SRTM_Status_Success;
 
-        head = (srtm_packet_head_t *)buf;
-        message->type = (srtm_message_type_t)head->type;
+        head              = (srtm_packet_head_t *)buf;
+        message->type     = (srtm_message_type_t)head->type;
         message->priority = head->priority;
 
         SRTM_Dispatcher_QueueMessage(disp, message);
@@ -789,14 +786,13 @@ static srtm_status_t SRTM_Dispatcher_HandleResponse(srtm_dispatcher_t disp, srtm
     SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_DEBUG, "%s\r\n", __func__);
 
     category = SRTM_CommMessage_GetCategory(msg);
-    command = SRTM_CommMessage_GetCommand(msg);
+    command  = SRTM_CommMessage_GetCommand(msg);
 
     SRTM_Mutex_Lock(disp->mutex);
     for (list = disp->waitingReqs.next; list != &disp->waitingReqs; list = list->next)
     {
         req = SRTM_LIST_OBJ(srtm_request_t, node, list);
-        if (SRTM_CommMessage_GetCategory(req) == category &&
-            SRTM_CommMessage_GetCommand(req) == command &&
+        if (SRTM_CommMessage_GetCategory(req) == category && SRTM_CommMessage_GetCommand(req) == command &&
             req->channel == msg->channel) /* FIXME: need a UID? */
         {
             SRTM_List_Remove(list);
@@ -850,7 +846,7 @@ static srtm_status_t SRTM_Dispatcher_SendMessage(srtm_dispatcher_t disp, srtm_me
     status = SRTM_Channel_SendData(msg->channel, msg->data, msg->dataLen);
     assert(status == SRTM_Status_Success); /* For debugging the message sending failure */
 
-    switch(msg->type)
+    switch (msg->type)
     {
         case SRTM_MessageTypeRawData:
             SRTM_RawData_Destroy(msg);
@@ -892,7 +888,7 @@ static srtm_status_t SRTM_Dispatcher_HandleTxMessage(srtm_dispatcher_t disp, srt
     assert(msg->channel);
     assert(msg->channel->core);
 
-    core = msg->channel->core;
+    core  = msg->channel->core;
     state = SRTM_PeerCore_GetState(core);
 
     SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_DEBUG, "%s\r\n", __func__);
@@ -960,8 +956,8 @@ srtm_status_t SRTM_Dispatcher_ProcessMessage(srtm_dispatcher_t disp, srtm_messag
                 break;
             default:
                 /* We cannot handle message other than Communication Message */
-                SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_WARN,
-                                   "%s: unsupported RX message type %d\r\n", __func__, msg->type);
+                SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_WARN, "%s: unsupported RX message type %d\r\n", __func__,
+                                   msg->type);
                 break;
         }
         SRTM_Dispatcher_FreeMessage(disp, msg);
@@ -971,8 +967,8 @@ srtm_status_t SRTM_Dispatcher_ProcessMessage(srtm_dispatcher_t disp, srtm_messag
         switch (msg->type)
         {
             case SRTM_MessageTypeProcedure:
-                SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_DEBUG,
-                                   "%s: Callback procedure 0x%08x\r\n", __func__, msg->procMsg.cb);
+                SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_DEBUG, "%s: Callback procedure 0x%08x\r\n", __func__,
+                                   msg->procMsg.cb);
                 msg->procMsg.cb(disp, msg->procMsg.param1, msg->procMsg.param2);
                 if (msg->procMsg.sig) /* Called by SRTM_Dispatcher_CallProc() */
                 {

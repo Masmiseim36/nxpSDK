@@ -11,7 +11,6 @@
 #ifndef _RPMSG_CONFIG_H
 #define _RPMSG_CONFIG_H
 
-
 /*!
  * @addtogroup config
  * @{
@@ -29,9 +28,9 @@
 
 //! @def RL_BUFFER_PAYLOAD_SIZE
 //!
-//! Size of the buffer payload, it must be equal to (240, 496, 1008, ...) 
+//! Size of the buffer payload, it must be equal to (240, 496, 1008, ...)
 //! [2^n - 16].
-//! The default value is 495.
+//! The default value is 496.
 #define RL_BUFFER_PAYLOAD_SIZE (496)
 //! @def RL_BUFFER_COUNT
 //!
@@ -53,15 +52,15 @@
 
 //! @def RL_CLEAR_USED_BUFFERS
 //!
-//! Clearing used buffers before returning back to the pool of free buffers 
+//! Clearing used buffers before returning back to the pool of free buffers
 //! enabled/disabled.
 //! The default value is 0 (disabled).
 #define RL_CLEAR_USED_BUFFERS (0)
 
 //! @def RL_USE_MCMGR_IPC_ISR_HANDLER
 //!
-//! When enabled IPC interrupts are managed by the Multicore Manager (IPC 
-//! interrupts router), when disabled RPMsg-Lite manages IPC interrupts 
+//! When enabled IPC interrupts are managed by the Multicore Manager (IPC
+//! interrupts router), when disabled RPMsg-Lite manages IPC interrupts
 //! by itself.
 //! The default value is 0 (no MCMGR IPC ISR handler used).
 #define RL_USE_MCMGR_IPC_ISR_HANDLER (0)

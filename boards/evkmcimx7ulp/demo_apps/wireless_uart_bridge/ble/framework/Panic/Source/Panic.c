@@ -5,7 +5,7 @@
  *
  *
  * SPDX-License-Identifier: BSD-3-Clause
-*/
+ */
 
 /*! *********************************************************************************
 *************************************************************************************
@@ -32,14 +32,14 @@ panicData_t panic_data;
 ********************************************************************************** */
 
 /*! *********************************************************************************
-* \brief  This function will halt the system
-*
-* \param[in]  id Description of the param2 in parameter
-* \param[in]  location address where the Panic occurred
-* \param[in]  extra1 parameter to be stored in Panic structure
-* \param[in]  extra2 parameter to be stored in Panic structure
-*
-********************************************************************************** */
+ * \brief  This function will halt the system
+ *
+ * \param[in]  id Description of the param2 in parameter
+ * \param[in]  location address where the Panic occurred
+ * \param[in]  extra1 parameter to be stored in Panic structure
+ * \param[in]  extra2 parameter to be stored in Panic structure
+ *
+ ********************************************************************************** */
 
 void panic(panicId_t id, uint32_t location, uint32_t extra1, uint32_t extra2)
 {
@@ -52,11 +52,11 @@ void panic(panicId_t id, uint32_t location, uint32_t extra1, uint32_t extra2)
     __asm("str  r2, [SP, #4]");
     __asm("pop {r2}");
 
-    panic_data.id = id;
-    panic_data.location = location;
-    panic_data.extra1 = extra1;
-    panic_data.extra2 = extra2;
-    panic_data.linkRegister = savedLR;
+    panic_data.id            = id;
+    panic_data.location      = location;
+    panic_data.extra1        = extra1;
+    panic_data.extra2        = extra2;
+    panic_data.linkRegister  = savedLR;
     panic_data.cpsr_contents = 0;
 
     OSA_InterruptDisable(); /* disable interrupts */

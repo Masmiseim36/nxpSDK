@@ -2,7 +2,7 @@
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 #ifndef _FSL_PMC0_H_
@@ -24,7 +24,6 @@
 #define FSL_COMPONENT_ID "platform.drivers.pmc0"
 #endif
 
-
 /*! @name Driver version */
 /*@{*/
 /*! @brief PMC 0 driver version */
@@ -41,8 +40,8 @@
  */
 typedef enum _pmc0_high_volt_detect_monitor_select
 {
-    kPMC0_HighVoltDetectLowPowerMonitor = 0U, /*!< LP monitor is selected. */
-    kPMC0_HighVoltDetectHighPowerMonitor = 1U /*!< HP monitor is selected. */
+    kPMC0_HighVoltDetectLowPowerMonitor  = 0U, /*!< LP monitor is selected. */
+    kPMC0_HighVoltDetectHighPowerMonitor = 1U  /*!< HP monitor is selected. */
 } pmc0_high_volt_detect_monitor_select_t;
 
 /*!
@@ -50,8 +49,8 @@ typedef enum _pmc0_high_volt_detect_monitor_select
  */
 typedef enum _pmc0_low_volt_detect_monitor_select
 {
-    kPMC0_LowVoltDetectLowPowerMonitor = 0U, /*!< LP monitor is selected. */
-    kPMC0_LowVoltDetectHighPowerMonitor = 1U /*!< HP monitor is selected. */
+    kPMC0_LowVoltDetectLowPowerMonitor  = 0U, /*!< LP monitor is selected. */
+    kPMC0_LowVoltDetectHighPowerMonitor = 1U  /*!< HP monitor is selected. */
 } pmc0_low_volt_detect_monitor_select_t;
 
 /*!
@@ -59,8 +58,8 @@ typedef enum _pmc0_low_volt_detect_monitor_select
  */
 typedef enum _pmc0_core_regulator_select
 {
-    kPMC0_CoreLowPowerRegulator = 0U, /*!< Core LP regulator is selected. */
-    kPMC0_CoreHighPowerRegulator = 1U /*!< Core HP regulator is selected. */
+    kPMC0_CoreLowPowerRegulator  = 0U, /*!< Core LP regulator is selected. */
+    kPMC0_CoreHighPowerRegulator = 1U  /*!< Core HP regulator is selected. */
 } pmc0_core_regulator_select_t;
 
 /*!
@@ -68,8 +67,8 @@ typedef enum _pmc0_core_regulator_select
  */
 typedef enum _pmc0_array_regulator_select
 {
-    kPMC0_ArrayLowPowerRegulator = 0U, /*!< Array LP regulator is selected. */
-    kPMC0_ArrayHighPowerRegulator = 1U /*!< Array HP regulator is selected. */
+    kPMC0_ArrayLowPowerRegulator  = 0U, /*!< Array LP regulator is selected. */
+    kPMC0_ArrayHighPowerRegulator = 1U  /*!< Array HP regulator is selected. */
 } pmc0_array_regulator_select_t;
 
 /*!
@@ -78,70 +77,70 @@ typedef enum _pmc0_array_regulator_select
 typedef enum _pmc0_vlls_array_regulator_select
 {
     kPMC0_VllsArrayRegulatorOff = 0U, /*!< Array regulator is selected OFF. This is selectable only for VLLS mode. */
-    kPMC0_VllsArrayLowPowerRegulator = 2U, /*!< Array LP regulator is selected. */
-    kPMC0_VllsArrayHighPowerRegulator = 3U /*!< Array HP regulator is selected. */
+    kPMC0_VllsArrayLowPowerRegulator  = 2U, /*!< Array LP regulator is selected. */
+    kPMC0_VllsArrayHighPowerRegulator = 3U  /*!< Array HP regulator is selected. */
 } pmc0_vlls_array_regulator_select_t;
 
 /*!
-* @brief FBB P-Well voltage level select
-*/
+ * @brief FBB P-Well voltage level select
+ */
 typedef enum _pmc0_fbb_p_well_voltage_level_select
 {
-    kPMC0_FbbPWellNoBiasCondition = 0U,       /*!< No BIAS condition is selected. */
-    kPMC0_FbbPWellVoltageLevelAt50Mv = 1U,    /*!< Voltage level at 50mV is selected. */
-    kPMC0_FbbPWellVoltageLevelAt150Mv = 2U,   /*!< Voltage level at 150mV is selected. */
-    kPMC0_FbbPWellVoltageLevelAt100Mv = 3U,   /*!< Voltage level at 100mV is selected. */
-    kPMC0_FbbPWellVoltageLevelAt350Mv = 4U,   /*!< Voltage level at 350mV is selected. */
-    kPMC0_FbbPWellVoltageLevelAt300Mv = 5U,   /*!< Voltage level at 300mV is selected. */
-    kPMC0_FbbPWellVoltageLevelAt200Mv = 6U,   /*!< Voltage level at 200mV is selected. */
-    kPMC0_FbbPWellVoltageLevelAt250Mv = 7U,   /*!< Voltage level at 250mV is selected. */
+    kPMC0_FbbPWellNoBiasCondition     = 0U, /*!< No BIAS condition is selected. */
+    kPMC0_FbbPWellVoltageLevelAt50Mv  = 1U, /*!< Voltage level at 50mV is selected. */
+    kPMC0_FbbPWellVoltageLevelAt150Mv = 2U, /*!< Voltage level at 150mV is selected. */
+    kPMC0_FbbPWellVoltageLevelAt100Mv = 3U, /*!< Voltage level at 100mV is selected. */
+    kPMC0_FbbPWellVoltageLevelAt350Mv = 4U, /*!< Voltage level at 350mV is selected. */
+    kPMC0_FbbPWellVoltageLevelAt300Mv = 5U, /*!< Voltage level at 300mV is selected. */
+    kPMC0_FbbPWellVoltageLevelAt200Mv = 6U, /*!< Voltage level at 200mV is selected. */
+    kPMC0_FbbPWellVoltageLevelAt250Mv = 7U, /*!< Voltage level at 250mV is selected. */
 } pmc0_fbb_p_well_voltage_level_select_t;
 
 /*!
-* @brief FBB N-Well voltage level select
-*/
+ * @brief FBB N-Well voltage level select
+ */
 typedef enum _pmc0_fbb_n_well_voltage_level_select
 {
-    kPMC0_FbbNWellNoBiasCondition = 0U,            /*!< No BIAS condition is selected. */
-    kPMC0_FbbNWellVoltageLevelAtMinus50Mv = 1U,    /*!< Voltage level at -50mV is selected. */
-    kPMC0_FbbNWellVoltageLevelAtMinus150Mv = 2U,   /*!< Voltage level at -150mV is selected. */
-    kPMC0_FbbNWellVoltageLevelAtMinus100Mv = 3U,   /*!< Voltage level at -100mV is selected. */
-    kPMC0_FbbNWellVoltageLevelAtMinus350Mv = 4U,   /*!< Voltage level at -350mV is selected. */
-    kPMC0_FbbNWellVoltageLevelAtMinus300Mv = 5U,   /*!< Voltage level at -300mV is selected. */
-    kPMC0_FbbNWellVoltageLevelAtMinus200Mv = 6U,   /*!< Voltage level at -200mV is selected. */
-    kPMC0_FbbNWellVoltageLevelAtMinus250Mv = 7U,   /*!< Voltage level at -250mV is selected. */    
+    kPMC0_FbbNWellNoBiasCondition          = 0U, /*!< No BIAS condition is selected. */
+    kPMC0_FbbNWellVoltageLevelAtMinus50Mv  = 1U, /*!< Voltage level at -50mV is selected. */
+    kPMC0_FbbNWellVoltageLevelAtMinus150Mv = 2U, /*!< Voltage level at -150mV is selected. */
+    kPMC0_FbbNWellVoltageLevelAtMinus100Mv = 3U, /*!< Voltage level at -100mV is selected. */
+    kPMC0_FbbNWellVoltageLevelAtMinus350Mv = 4U, /*!< Voltage level at -350mV is selected. */
+    kPMC0_FbbNWellVoltageLevelAtMinus300Mv = 5U, /*!< Voltage level at -300mV is selected. */
+    kPMC0_FbbNWellVoltageLevelAtMinus200Mv = 6U, /*!< Voltage level at -200mV is selected. */
+    kPMC0_FbbNWellVoltageLevelAtMinus250Mv = 7U, /*!< Voltage level at -250mV is selected. */
 } pmc0_fbb_n_well_voltage_level_select_t;
 
 /*!
-* @brief RBB P-Well voltage level select
-*/
+ * @brief RBB P-Well voltage level select
+ */
 typedef enum _pmc0_rbb_p_well_voltage_level_select
 {
-    kPMC0_RBBPWellVoltageLevelAtMinus0_5V = 0U,    /*!< Voltage level at -0.5V is selected. */
-    kPMC0_RBBPWellVoltageLevelAtMinus0_6V = 1U,    /*!< Voltage level at -0.6V is selected. */
-    kPMC0_RBBPWellVoltageLevelAtMinus0_7V = 2U,    /*!< Voltage level at -0.7V is selected. */
-    kPMC0_RBBPWellVoltageLevelAtMinus0_8V = 3U,    /*!< Voltage level at -0.8V is selected. */
-    kPMC0_RBBPWellVoltageLevelAtMinus0_9V = 4U,    /*!< Voltage level at -0.9V is selected. */
-    kPMC0_RBBPWellVoltageLevelAtMinus1_0V = 5U,    /*!< Voltage level at -1.0V is selected. */
-    kPMC0_RBBPWellVoltageLevelAtMinus1_1V = 6U,    /*!< Voltage level at -1.1V is selected. */
-    kPMC0_RBBPWellVoltageLevelAtMinus1_2V = 7U,    /*!< Voltage level at -1.2V is selected. */ 
-    kPMC0_RBBPWellVoltageLevelAtMinus1_3V = 8U,    /*!< Voltage level at -1.3V is selected. */ 
+    kPMC0_RBBPWellVoltageLevelAtMinus0_5V = 0U, /*!< Voltage level at -0.5V is selected. */
+    kPMC0_RBBPWellVoltageLevelAtMinus0_6V = 1U, /*!< Voltage level at -0.6V is selected. */
+    kPMC0_RBBPWellVoltageLevelAtMinus0_7V = 2U, /*!< Voltage level at -0.7V is selected. */
+    kPMC0_RBBPWellVoltageLevelAtMinus0_8V = 3U, /*!< Voltage level at -0.8V is selected. */
+    kPMC0_RBBPWellVoltageLevelAtMinus0_9V = 4U, /*!< Voltage level at -0.9V is selected. */
+    kPMC0_RBBPWellVoltageLevelAtMinus1_0V = 5U, /*!< Voltage level at -1.0V is selected. */
+    kPMC0_RBBPWellVoltageLevelAtMinus1_1V = 6U, /*!< Voltage level at -1.1V is selected. */
+    kPMC0_RBBPWellVoltageLevelAtMinus1_2V = 7U, /*!< Voltage level at -1.2V is selected. */
+    kPMC0_RBBPWellVoltageLevelAtMinus1_3V = 8U, /*!< Voltage level at -1.3V is selected. */
 } pmc0_rbb_p_well_voltage_level_select_t;
 
 /*!
-* @brief RBB N-Well voltage level select
-*/
+ * @brief RBB N-Well voltage level select
+ */
 typedef enum _pmc0_rbb_n_well_voltage_level_select
 {
-    kPMC0_RBBNWellVoltageLevelAt0_5V = 0U,    /*!< Voltage level at 0.5V is selected. */
-    kPMC0_RBBNWellVoltageLevelAt0_6V = 1U,    /*!< Voltage level at 0.6V is selected. */
-    kPMC0_RBBNWellVoltageLevelAt0_7V = 2U,    /*!< Voltage level at 0.7V is selected. */
-    kPMC0_RBBNWellVoltageLevelAt0_8V = 3U,    /*!< Voltage level at 0.8V is selected. */
-    kPMC0_RBBNWellVoltageLevelAt0_9V = 4U,    /*!< Voltage level at 0.9V is selected. */
-    kPMC0_RBBNWellVoltageLevelAt1_0V = 5U,    /*!< Voltage level at 1.0V is selected. */
-    kPMC0_RBBNWellVoltageLevelAt1_1V = 6U,    /*!< Voltage level at 1.1V is selected. */
-    kPMC0_RBBNWellVoltageLevelAt1_2V = 7U,    /*!< Voltage level at 1.2V is selected. */ 
-    kPMC0_RBBNWellVoltageLevelAt1_3V = 8U,    /*!< Voltage level at 1.3V is selected. */     
+    kPMC0_RBBNWellVoltageLevelAt0_5V = 0U, /*!< Voltage level at 0.5V is selected. */
+    kPMC0_RBBNWellVoltageLevelAt0_6V = 1U, /*!< Voltage level at 0.6V is selected. */
+    kPMC0_RBBNWellVoltageLevelAt0_7V = 2U, /*!< Voltage level at 0.7V is selected. */
+    kPMC0_RBBNWellVoltageLevelAt0_8V = 3U, /*!< Voltage level at 0.8V is selected. */
+    kPMC0_RBBNWellVoltageLevelAt0_9V = 4U, /*!< Voltage level at 0.9V is selected. */
+    kPMC0_RBBNWellVoltageLevelAt1_0V = 5U, /*!< Voltage level at 1.0V is selected. */
+    kPMC0_RBBNWellVoltageLevelAt1_1V = 6U, /*!< Voltage level at 1.1V is selected. */
+    kPMC0_RBBNWellVoltageLevelAt1_2V = 7U, /*!< Voltage level at 1.2V is selected. */
+    kPMC0_RBBNWellVoltageLevelAt1_3V = 8U, /*!< Voltage level at 1.3V is selected. */
 } pmc0_rbb_n_well_voltage_level_select_t;
 
 /*!
@@ -157,29 +156,28 @@ enum _pmc0_status_flags
         PMC0_STATUS_HVDF_MASK, /*!< 1.8V High-Voltage Detector Flag, sets when high-voltage event was detected. */
     kPMC0_HighVoltDetectValueFlag = PMC0_STATUS_HVDV_MASK, /*!< 1.8V High-Voltage Detector Value, sets when current
                                                                  value of the 1.8V HVD monitor output is 1. */
-    kPMC0_CoreRegulatorVoltLevelFlag =
-        PMC0_STATUS_COREVLF_MASK, /*!< Core Regulator Voltage Level Flag, sets when core regulator voltage level is
-                                     changing (not stable). */
+    kPMC0_CoreRegulatorVoltLevelFlag = PMC0_STATUS_COREVLF_MASK, /*!< Core Regulator Voltage Level Flag, sets when core
+                                                                    regulator voltage level is changing (not stable). */
     kPMC0_SramFlag =
         PMC0_STATUS_SRAMF_MASK, /*!< SRAM Flag, sets when a change mode request is being processed in the SRAMs. */
-    kPMC0_PMC1VoltageSourceFlag = 
+    kPMC0_PMC1VoltageSourceFlag =
         PMC0_STATUS_PMC1VSRC_MASK, /*!< This flag indicates what is the voltage source selected to supply the PMC 1
-                                        and where the sense point of the PMC 1's LVD/HVD is placed. '0' means internal 
+                                        and where the sense point of the PMC 1's LVD/HVD is placed. '0' means internal
                                         LDO supplies the PMC 1. '1' means external PMIC supplies the PMC 1. */
 };
 
 /*!
-* @brief PMC 0 power mode status flags.
-*/
+ * @brief PMC 0 power mode status flags.
+ */
 enum _pmc0_power_mode_status_flags
 {
-    kPMC0_HSRUNModeStatusFlags = 0U,   /*!< The PMC 0 is in HSRUN mode. */
-    kPMC0_RUNModeStatusFlags = 1U,     /*!< The PMC 0 is in RUN mode. */
-    kPMC0_STOPModeStatusFlags = 2U,    /*!< The PMC 0 is in STOP mode. */
-    kPMC0_VLPRModeStatusFlags = 3U,    /*!< The PMC 0 is in VLPR mode. */
-    kPMC0_VLPSModeStatusFlags = 4U,    /*!< The PMC 0 is in VLPS mode. */
-    kPMC0_LLSModeStatusFlags = 5U,     /*!< The PMC 0 is in LLSM mode. */
-    kPMC0_VLLSModeStatusFlags = 6U,    /*!< The PMC 0 is in VLLS mode. */   
+    kPMC0_HSRUNModeStatusFlags = 0U, /*!< The PMC 0 is in HSRUN mode. */
+    kPMC0_RUNModeStatusFlags   = 1U, /*!< The PMC 0 is in RUN mode. */
+    kPMC0_STOPModeStatusFlags  = 2U, /*!< The PMC 0 is in STOP mode. */
+    kPMC0_VLPRModeStatusFlags  = 3U, /*!< The PMC 0 is in VLPR mode. */
+    kPMC0_VLPSModeStatusFlags  = 4U, /*!< The PMC 0 is in VLPS mode. */
+    kPMC0_LLSModeStatusFlags   = 5U, /*!< The PMC 0 is in LLSM mode. */
+    kPMC0_VLLSModeStatusFlags  = 6U, /*!< The PMC 0 is in VLLS mode. */
 };
 
 /*!
@@ -229,9 +227,9 @@ typedef struct _pmc0_vlpr_mode_config
  */
 typedef struct _pmc0_stop_mode_config
 {
-    uint32_t : 16;                   /*!< Reserved. */
+    uint32_t : 16;                       /*!< Reserved. */
     uint32_t coreRegulatorVoltLevel : 6; /*!< Core Regulator Voltage Level. */
-    uint32_t : 10;                   /*!< Reserved. */
+    uint32_t : 10;                       /*!< Reserved. */
 } pmc0_stop_mode_config_t;
 
 /*!
@@ -289,18 +287,22 @@ typedef struct _pmc0_vlls_mode_config
 } pmc0_vlls_mode_config_t;
 
 /*!
-* @brief PMC 0 bias configuration.
-*/
+ * @brief PMC 0 bias configuration.
+ */
 typedef struct _pmc0_bias_config
 {
-    uint32_t RBBNWellVoltageLevelSelect : 4; 
+    uint32_t RBBNWellVoltageLevelSelect : 4;
     uint32_t : 4;                            /*!< Reserved. */
-    uint32_t RBBPWellVoltageLevelSelect : 4; /*!< Select PMC0 RBB P-Well voltage level. @ref pmc0_rbb_p_well_voltage_level_select_t */
+    uint32_t RBBPWellVoltageLevelSelect : 4; /*!< Select PMC0 RBB P-Well voltage level. @ref
+                                                pmc0_rbb_p_well_voltage_level_select_t */
     uint32_t : 3;                            /*!< Reserved. */
-    uint32_t DisableRBBPullDown : 1;         /*!< Disable RBB pull-down. '1' means to disable pull-down. '0' means to enable pull-down.*/
-    uint32_t FBBNWellVoltageLevelSelect : 4; /*!< Select PMC0 FBB N-Well voltage level. @ref pmc0_fbb_n_well_voltage_level_select_t */
+    uint32_t DisableRBBPullDown : 1; /*!< Disable RBB pull-down. '1' means to disable pull-down. '0' means to enable
+                                        pull-down.*/
+    uint32_t FBBNWellVoltageLevelSelect : 4; /*!< Select PMC0 FBB N-Well voltage level. @ref
+                                                pmc0_fbb_n_well_voltage_level_select_t */
     uint32_t : 4;                            /*!< Reserved. */
-    uint32_t FBBPWellVoltageLevelSelect : 4; /*!< Select PMC0 FBB P-Well voltage level. @ref pmc0_fbb_p_well_voltage_level_select_t */
+    uint32_t FBBPWellVoltageLevelSelect : 4; /*!< Select PMC0 FBB P-Well voltage level. @ref
+                                                pmc0_fbb_p_well_voltage_level_select_t */
     uint32_t : 4;                            /*!< Reserved. */
 } pmc0_bias_config_t;
 
@@ -397,8 +399,8 @@ static inline void PMC0_ConfigureVlprMode(const pmc0_vlpr_mode_config_t *config)
     assert(config->coreRegulatorVoltLevel <= CORE_REGULATOR_VOLT_LEVEL_MAX);
 
     PMC0->VLPR = (*((const uint32_t *)config)) &
-                 (PMC0_VLPR_ARRAYREG_MASK | PMC0_VLPR_COREREG_MASK | PMC0_VLPR_MONLVD_MASK |
-                  PMC0_VLPR_MONLVD_MASK | PMC0_VLPR_FBGHP_MASK | PMC0_VLPR_COREREGVL_MASK | PMC0_VLPR_RBBEN_MASK);
+                 (PMC0_VLPR_ARRAYREG_MASK | PMC0_VLPR_COREREG_MASK | PMC0_VLPR_MONLVD_MASK | PMC0_VLPR_MONLVD_MASK |
+                  PMC0_VLPR_FBGHP_MASK | PMC0_VLPR_COREREGVL_MASK | PMC0_VLPR_RBBEN_MASK);
 }
 
 /*!
@@ -442,8 +444,8 @@ static inline void PMC0_ConfigureVlpsMode(const pmc0_vlps_mode_config_t *config)
     assert(config->coreRegulatorVoltLevel <= CORE_REGULATOR_VOLT_LEVEL_MAX);
 
     PMC0->VLPS = (*((const uint32_t *)config)) &
-                 (PMC0_VLPS_ARRAYREG_MASK | PMC0_VLPS_COREREG_MASK | PMC0_VLPS_MONLVD_MASK |
-                  PMC0_VLPS_MONLVD_MASK | PMC0_VLPS_FBGHP_MASK | PMC0_VLPS_COREREGVL_MASK | PMC0_VLPS_RBBEN_MASK);
+                 (PMC0_VLPS_ARRAYREG_MASK | PMC0_VLPS_COREREG_MASK | PMC0_VLPS_MONLVD_MASK | PMC0_VLPS_MONLVD_MASK |
+                  PMC0_VLPS_FBGHP_MASK | PMC0_VLPS_COREREGVL_MASK | PMC0_VLPS_RBBEN_MASK);
 }
 
 /*!
@@ -466,8 +468,8 @@ static inline void PMC0_ConfigureLlsMode(const pmc0_lls_mode_config_t *config)
     assert(config->coreRegulatorVoltLevel <= CORE_REGULATOR_VOLT_LEVEL_MAX);
 
     PMC0->LLS = (*((const uint32_t *)config)) &
-                (PMC0_LLS_ARRAYREG_MASK | PMC0_LLS_COREREG_MASK | PMC0_LLS_MONLVD_MASK |
-                 PMC0_LLS_MONLVD_MASK | PMC0_LLS_FBGHP_MASK | PMC0_LLS_COREREGVL_MASK | PMC0_LLS_RBBEN_MASK);
+                (PMC0_LLS_ARRAYREG_MASK | PMC0_LLS_COREREG_MASK | PMC0_LLS_MONLVD_MASK | PMC0_LLS_MONLVD_MASK |
+                 PMC0_LLS_FBGHP_MASK | PMC0_LLS_COREREGVL_MASK | PMC0_LLS_RBBEN_MASK);
 }
 
 /*!
@@ -490,37 +492,37 @@ static inline void PMC0_ConfigureVllsMode(const pmc0_vlls_mode_config_t *config)
 {
     assert(config);
 
-    PMC0->VLLS = (*((const uint32_t *)config)) & (PMC0_VLLS_ARRAYREG_MASK | PMC0_VLLS_MONLVD_MASK |
-                                                  PMC0_VLLS_MONLVD_MASK | PMC0_VLLS_FBGHP_MASK);
+    PMC0->VLLS = (*((const uint32_t *)config)) &
+                 (PMC0_VLLS_ARRAYREG_MASK | PMC0_VLLS_MONLVD_MASK | PMC0_VLLS_MONLVD_MASK | PMC0_VLLS_FBGHP_MASK);
 }
 
 /*!
-* @brief Get current power mode of PMC 0.
-*
-* @code
-*      if(kPMC0_HSRUNModeStatusFlags == PMC0_GetPMC0PowerModeStatusFlags(void))
-*      { 
-*           ...
-*      }
-* @endcode
-*
-* @return PMC 0 current power mode status flags in the _pmc0_power_mode_status_flags. 
-*
-*/
+ * @brief Get current power mode of PMC 0.
+ *
+ * @code
+ *      if(kPMC0_HSRUNModeStatusFlags == PMC0_GetPMC0PowerModeStatusFlags(void))
+ *      {
+ *           ...
+ *      }
+ * @endcode
+ *
+ * @return PMC 0 current power mode status flags in the _pmc0_power_mode_status_flags.
+ *
+ */
 static inline uint32_t PMC0_GetPMC0PowerModeStatusFlags(void)
 {
     return (PMC0->PM_STAT & PMC0_PM_STAT_PMC0CURRPM_MASK) >> PMC0_PM_STAT_PMC0CURRPM_SHIFT;
 }
 
 /*!
-* @brief Get the status of PMC 0 power mode transition.
-*
-* @return If return 'true', which means PMC 0 is in a power mode transition.
-*         If return 'false', which means PMC 0 is not in a power mode transition.
-*/
+ * @brief Get the status of PMC 0 power mode transition.
+ *
+ * @return If return 'true', which means PMC 0 is in a power mode transition.
+ *         If return 'false', which means PMC 0 is not in a power mode transition.
+ */
 static inline bool PMC0_GetPMC0PowerTransitionStatus(void)
 {
-    if(PMC0_PM_STAT_PMC0TRANPM_MASK & PMC0->PM_STAT)
+    if (PMC0_PM_STAT_PMC0TRANPM_MASK & PMC0->PM_STAT)
     {
         return true;
     }
@@ -531,32 +533,32 @@ static inline bool PMC0_GetPMC0PowerTransitionStatus(void)
 }
 
 /*!
-* @brief Get current power mode of PMC 1.
-*
-* @code
-*      if(kPMC0_HSRUNModeStatusFlags == PMC0_GetPMC1PowerModeStatusFlags(void))
-*      { 
-*           ...
-*      }
-* @endcode
-*
-* @return PMC 1 current power mode status flags in the _pmc0_power_mode_status_flags. 
-*
-*/
+ * @brief Get current power mode of PMC 1.
+ *
+ * @code
+ *      if(kPMC0_HSRUNModeStatusFlags == PMC0_GetPMC1PowerModeStatusFlags(void))
+ *      {
+ *           ...
+ *      }
+ * @endcode
+ *
+ * @return PMC 1 current power mode status flags in the _pmc0_power_mode_status_flags.
+ *
+ */
 static inline uint32_t PMC0_GetPMC1PowerModeStatusFlags(void)
 {
     return (PMC0->PM_STAT & PMC0_PM_STAT_PMC1CURRPM_MASK) >> PMC0_PM_STAT_PMC1CURRPM_SHIFT;
 }
 
 /*!
-* @brief Get the status of PMC 1 power mode transition.
-*
-* @return If return 'true', which means PMC 1 is in a power mode transition.
-*         If return 'false', which means PMC 1 is not in a power mode transition.
-*/
+ * @brief Get the status of PMC 1 power mode transition.
+ *
+ * @return If return 'true', which means PMC 1 is in a power mode transition.
+ *         If return 'false', which means PMC 1 is not in a power mode transition.
+ */
 static inline bool PMC0_GetPMC1PowerTransitionStatus(void)
 {
-    if(PMC0_PM_STAT_PMC1TRANPM_MASK & PMC0->PM_STAT)
+    if (PMC0_PM_STAT_PMC1TRANPM_MASK & PMC0->PM_STAT)
     {
         return true;
     }
@@ -705,7 +707,6 @@ static inline void PMC0_ClearPadsIsolation(void)
     PMC0->CTRL |= PMC0_CTRL_ISOACK_MASK;
 }
 
-
 /*!
  * @brief Powers on PMC 1.
  *
@@ -761,16 +762,16 @@ static inline void PMC0_EnablePmc1LdoRegulator(bool enable)
 
 /*!
  * @brief Enable the PMC 1 RBB(reverse back bias) mode.
- *     
- * This function enables PMC1 RBB mode. Since this circuit when enabled has current consumption. 
+ *
+ * This function enables PMC1 RBB mode. Since this circuit when enabled has current consumption.
  * It is recommended to use it just in high temperatures when the leakage reduction is much higher
- * than the current consumption.   
- * 
+ * than the current consumption.
+ *
  * @param enable Switcher of PMC1 RBB mode. "true" means to enable, "false" means disable.
  */
 static inline void PMC0_EnablePmc1RBBMode(bool enable)
 {
-    if(enable)
+    if (enable)
     {
         PMC0->ACTRL |= PMC0_ACTRL_SWRBBEN_MASK;
     }
@@ -781,19 +782,19 @@ static inline void PMC0_EnablePmc1RBBMode(bool enable)
 }
 
 /*!
-* @brief Configure the PMC 0 bias voltage level and enable/disable pull-down.
-*
-* This function change the RBB&FBB voltage level and RBB pull-down.
-*
-* @param config PMC 0 bias configuration structure.
-*/
+ * @brief Configure the PMC 0 bias voltage level and enable/disable pull-down.
+ *
+ * This function change the RBB&FBB voltage level and RBB pull-down.
+ *
+ * @param config PMC 0 bias configuration structure.
+ */
 static inline void PMC0_SetBiasConfig(const pmc0_bias_config_t *config)
 {
     assert(NULL != config);
-    
-    PMC0->BCTRL = (*((uint32_t *)config)) & (PMC0_BCTRL_RBBNLEVEL_MASK | PMC0_BCTRL_RBBPLEVEL_MASK |\
-                                             PMC0_BCTRL_RBBPDDIS_MASK | PMC0_BCTRL_FBBNLEVEL_MASK | \
-                                             PMC0_BCTRL_FBBPLEVEL_MASK);
+
+    PMC0->BCTRL =
+        (*((uint32_t *)config)) & (PMC0_BCTRL_RBBNLEVEL_MASK | PMC0_BCTRL_RBBPLEVEL_MASK | PMC0_BCTRL_RBBPDDIS_MASK |
+                                   PMC0_BCTRL_FBBNLEVEL_MASK | PMC0_BCTRL_FBBPLEVEL_MASK);
 }
 
 /*!

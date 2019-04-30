@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -32,9 +32,9 @@ void delay(void);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-volatile bool brightnessUp = true; /* Indicate LED is brighter or dimmer */
+volatile bool brightnessUp        = true; /* Indicate LED is brighter or dimmer */
 volatile uint8_t updatedDutycycle = 10U;
-volatile uint8_t getCharValue = 0U;
+volatile uint8_t getCharValue     = 0U;
 
 /*******************************************************************************
  * Code
@@ -47,13 +47,13 @@ int main(void)
     tpm_config_t tpmInfo;
     tpm_chnl_pwm_signal_param_t tpmParam;
 
-#ifndef TPM_LED_ON_LEVEL  
-  #define TPM_LED_ON_LEVEL kTPM_LowTrue
+#ifndef TPM_LED_ON_LEVEL
+#define TPM_LED_ON_LEVEL kTPM_LowTrue
 #endif
-    
+
     /* Configure tpm params with frequency 24kHZ */
-    tpmParam.chnlNumber = (tpm_chnl_t)BOARD_TPM_CHANNEL;
-    tpmParam.level = TPM_LED_ON_LEVEL;
+    tpmParam.chnlNumber       = (tpm_chnl_t)BOARD_TPM_CHANNEL;
+    tpmParam.level            = TPM_LED_ON_LEVEL;
     tpmParam.dutyCyclePercent = updatedDutycycle;
 
     /* Board pin, clock, debug console init */
@@ -65,7 +65,9 @@ int main(void)
 
     /* Print a note to terminal */
     PRINTF("\r\nTPM example to output center-aligned PWM signal\r\n");
-    PRINTF("\r\nIf an LED is connected to the TPM pin, you will see a change in LED brightness if you enter different values");
+    PRINTF(
+        "\r\nIf an LED is connected to the TPM pin, you will see a change in LED brightness if you enter different "
+        "values");
     PRINTF("\r\nIf no LED is connected to the TPM pin, then probe the signal using an oscilloscope");
 
     TPM_GetDefaultConfig(&tpmInfo);

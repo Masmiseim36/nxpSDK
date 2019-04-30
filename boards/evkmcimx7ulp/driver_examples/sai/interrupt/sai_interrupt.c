@@ -1,15 +1,15 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "board.h"
-#include "music.h"
-#include "fsl_sai.h"
 #include "fsl_debug_console.h"
+#include "fsl_sai.h"
+#include "music.h"
 
 #include "fsl_wm8960.h"
 #include "pin_mux.h"
@@ -38,6 +38,19 @@
 #define I2C_RELEASE_BUS_COUNT 100U
 #define OVER_SAMPLE_RATE (384U)
 
+/* demo audio sample rate */
+#define DEMO_AUDIO_SAMPLE_RATE (kSAI_SampleRate16KHz)
+/* demo audio master clock */
+#if (defined FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER && FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) || \
+    (defined FSL_FEATURE_PCC_HAS_SAI_DIVIDER && FSL_FEATURE_PCC_HAS_SAI_DIVIDER)
+#define DEMO_AUDIO_MASTER_CLOCK OVER_SAMPLE_RATE *DEMO_AUDIO_SAMPLE_RATE
+#else
+#define DEMO_AUDIO_MASTER_CLOCK DEMO_SAI_CLK_FREQ
+#endif
+/* demo audio data channel */
+#define DEMO_AUDIO_DATA_CHANNEL (2U)
+/* demo audio bit width */
+#define DEMO_AUDIO_BIT_WIDTH kSAI_WordWidth16bits
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -47,10 +60,22 @@ void BOARD_EnableSaiMclkOutput(void);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-static size_t g_index = 0;
+static size_t g_index           = 0;
 static volatile bool isFinished = false;
-codec_handle_t codecHandle = {0};
+codec_handle_t codecHandle      = {0};
 extern codec_config_t boardCodecConfig;
+
+#if (defined(FSL_FEATURE_SAI_HAS_MCR) && (FSL_FEATURE_SAI_HAS_MCR)) || \
+    (defined(FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) && (FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER))
+sai_master_clock_t mclkConfig = {
+#if defined(FSL_FEATURE_SAI_HAS_MCR) && (FSL_FEATURE_SAI_HAS_MCR)
+    .mclkOutputEnable = true,
+#if !(defined(FSL_FEATURE_SAI_HAS_NO_MCR_MICS) && (FSL_FEATURE_SAI_HAS_NO_MCR_MICS))
+    .mclkSource = kSAI_MclkSourceSysclk,
+#endif
+#endif
+};
+#endif
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -70,7 +95,7 @@ void BOARD_I2C_ReleaseBus(void)
     gpio_pin_config_t pin_config;
 
     pin_config.pinDirection = kGPIO_DigitalOutput;
-    pin_config.outputLogic = 1U;
+    pin_config.outputLogic  = 1U;
 
     CLOCK_EnableClock(kCLOCK_Rgpio2p0);
 
@@ -111,8 +136,8 @@ void BOARD_I2C_ReleaseBus(void)
 
 void SAI_TxIRQHandler(void)
 {
-    uint8_t i = 0;
-    uint8_t j = 0;
+    uint8_t i     = 0;
+    uint8_t j     = 0;
     uint32_t data = 0;
     uint32_t temp = 0;
 
@@ -127,7 +152,7 @@ void SAI_TxIRQHandler(void)
         for (i = 0; i < FSL_FEATURE_SAI_FIFO_COUNT; i++)
         {
             data = 0;
-            for (j = 0; j < DEMO_SAI_BITWIDTH / 8U; j++)
+            for (j = 0; j < DEMO_AUDIO_BIT_WIDTH / 8U; j++)
             {
                 temp = (uint32_t)(music[g_index]);
                 data |= (temp << (8U * j));
@@ -155,10 +180,8 @@ void SAI_TxIRQHandler(void)
  */
 int main(void)
 {
-    sai_config_t config;
-    uint32_t mclkSourceClockHz = 0U;
-    sai_transfer_format_t format;
     uint32_t delayCycle = 500000;
+    sai_transceiver_t config;
 
     BOARD_InitPins();
     BOARD_BootClockRUN();
@@ -172,37 +195,31 @@ int main(void)
     CLOCK_SetIpSrcDiv(kCLOCK_Sai0, kCLOCK_IpSrcRtcAuxPllAsync, 0, 0);
     BOARD_Codec_I2C_Init();
 
-    memset(&format, 0U, sizeof(sai_transfer_format_t));
-
     PRINTF("SAI functional interrupt example started!\n\r");
 
-    /*
-     * config.masterSlave = kSAI_Master;
-     * config.mclkSource = kSAI_MclkSourceSysclk;
-     * config.protocol = kSAI_BusLeftJustified;
-     * config.syncMode = kSAI_ModeAsync;
-     * config.mclkOutputEnable = true;
-     */
-    SAI_TxGetDefaultConfig(&config);
-    SAI_TxInit(DEMO_SAI, &config);
+    /* SAI init */
+    SAI_Init(DEMO_SAI);
+    /* I2S mode configurations */
+    SAI_GetClassicI2SConfig(&config, DEMO_AUDIO_BIT_WIDTH, kSAI_Stereo, kSAI_Channel0Mask);
+    SAI_TxSetConfig(DEMO_SAI, &config);
 
-    /* Configure the audio format */
-    format.bitWidth = DEMO_SAI_BITWIDTH;
-    format.channel = DEMO_SAI_CHANNEL;
-    format.sampleRate_Hz = kSAI_SampleRate16KHz;
-#if (defined FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER && FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) || \
-    (defined FSL_FEATURE_PCC_HAS_SAI_DIVIDER && FSL_FEATURE_PCC_HAS_SAI_DIVIDER)
-    format.masterClockHz = OVER_SAMPLE_RATE * format.sampleRate_Hz;
-#else
-    format.masterClockHz = DEMO_SAI_CLK_FREQ;
+    /* set bit clock divider */
+    SAI_TxSetBitClockRate(DEMO_SAI, DEMO_AUDIO_MASTER_CLOCK, DEMO_AUDIO_SAMPLE_RATE, DEMO_AUDIO_BIT_WIDTH,
+                          DEMO_AUDIO_DATA_CHANNEL);
+
+    /* master clock configurations */
+#if (defined(FSL_FEATURE_SAI_HAS_MCR) && (FSL_FEATURE_SAI_HAS_MCR)) || \
+    (defined(FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) && (FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER))
+#if defined(FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) && (FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER)
+    mclkConfig.mclkHz          = DEMO_AUDIO_MASTER_CLOCK;
+    mclkConfig.mclkSourceClkHz = DEMO_SAI_CLK_FREQ;
 #endif
-    format.protocol = config.protocol;
-    format.stereo = kSAI_Stereo;
-    format.isFrameSyncCompact = true;
+    SAI_SetMasterClockConfig(DEMO_SAI, &mclkConfig);
+#endif
 
     /* Use default setting to init codec */
     CODEC_Init(&codecHandle, &boardCodecConfig);
-    CODEC_SetFormat(&codecHandle, format.masterClockHz, format.sampleRate_Hz, format.bitWidth);
+    CODEC_SetFormat(&codecHandle, DEMO_AUDIO_MASTER_CLOCK, DEMO_AUDIO_SAMPLE_RATE, DEMO_AUDIO_BIT_WIDTH);
 
 #if defined(CODEC_CYCLE)
     delayCycle = CODEC_CYCLE;
@@ -212,9 +229,6 @@ int main(void)
         __ASM("nop");
         delayCycle--;
     }
-
-    mclkSourceClockHz = DEMO_SAI_CLK_FREQ;
-    SAI_TxSetFormat(DEMO_SAI, &format, mclkSourceClockHz, format.masterClockHz);
 
     /*  Enable interrupt */
     EnableIRQ(DEMO_SAI_IRQ);

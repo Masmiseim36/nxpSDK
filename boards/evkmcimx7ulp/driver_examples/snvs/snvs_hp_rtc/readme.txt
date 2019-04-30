@@ -4,8 +4,8 @@ The SNVS HP RTC project is a simple demonstration program of the SDK SNVS HP dri
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.1
-- GCC ARM Embedded  7.3.1
+- IAR embedded Workbench  8.32.3
+- GCC ARM Embedded  8.2.1
 
 Hardware requirements
 =====================

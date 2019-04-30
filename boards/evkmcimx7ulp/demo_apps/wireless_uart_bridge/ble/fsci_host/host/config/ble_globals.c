@@ -1,15 +1,15 @@
 /*! *********************************************************************************
-* \addtogroup BLE
-* @{
-********************************************************************************** */
+ * \addtogroup BLE
+ * @{
+ ********************************************************************************** */
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright (c) 2016 - 2017 , NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
-*/
+ */
 
 /************************************************************************************
 *************************************************************************************
@@ -43,14 +43,14 @@ uint8_t gcGattDbMaxPrepareWriteOperationsInQueue_c = gPrepareWriteQueueSize_c;
 attPrepareWriteRequestParams_t gPrepareWriteQueues[gcGattDbMaxPrepareWriteClients_c][gPrepareWriteQueueSize_c];
 
 uint16_t gGapDefaultTxOctets = gBleDefaultTxOctets_c;
-uint16_t gGapDefaultTxTime = gBleDefaultTxTime_c;
+uint16_t gGapDefaultTxTime   = gBleDefaultTxTime_c;
 
-uint16_t gGapHostPrivacyTimeout = gBleHostPrivacyTimeout_c;
+uint16_t gGapHostPrivacyTimeout       = gBleHostPrivacyTimeout_c;
 uint16_t gGapControllerPrivacyTimeout = gBleControllerPrivacyTimeout_c;
 
 bool_t gGapLeSecureConnectionsOnlyMode = gBleLeSecureConnectionsOnlyMode_c;
-bool_t gGapLeScOobHasMitmProtection = gBleLeScOobHasMitmProtection_c;
+bool_t gGapLeScOobHasMitmProtection    = gBleLeScOobHasMitmProtection_c;
 
 /*! *********************************************************************************
-* @}
-********************************************************************************** */
+ * @}
+ ********************************************************************************** */

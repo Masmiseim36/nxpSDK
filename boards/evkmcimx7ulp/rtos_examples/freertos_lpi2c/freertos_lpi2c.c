@@ -156,7 +156,7 @@ static void lpi2c_slave_callback(LPI2C_Type *base, lpi2c_slave_transfer_t *xfer,
     switch (xfer->event)
     {
         case kLPI2C_SlaveReceiveEvent:
-            xfer->data = g_slave_buff;
+            xfer->data     = g_slave_buff;
             xfer->dataSize = I2C_DATA_LENGTH;
             break;
         case kLPI2C_SlaveCompletionEvent:
@@ -179,7 +179,7 @@ static void slave_task(void *pvParameters)
     callback_message_t cb_msg;
 
     cb_msg.sem = xSemaphoreCreateBinary();
-    lpi2c_sem = cb_msg.sem;
+    lpi2c_sem  = cb_msg.sem;
     if (cb_msg.sem == NULL)
     {
         PRINTF("I2C slave: Error creating semaphore\r\n");
@@ -309,13 +309,13 @@ static void master_task(void *pvParameters)
     }
 
     memset(&masterXfer, 0, sizeof(masterXfer));
-    masterXfer.slaveAddress = I2C_MASTER_SLAVE_ADDR_7BIT;
-    masterXfer.direction = kLPI2C_Write;
-    masterXfer.subaddress = 0;
+    masterXfer.slaveAddress   = I2C_MASTER_SLAVE_ADDR_7BIT;
+    masterXfer.direction      = kLPI2C_Write;
+    masterXfer.subaddress     = 0;
     masterXfer.subaddressSize = 0;
-    masterXfer.data = g_master_buff;
-    masterXfer.dataSize = I2C_DATA_LENGTH;
-    masterXfer.flags = kLPI2C_TransferDefaultFlag;
+    masterXfer.data           = g_master_buff;
+    masterXfer.dataSize       = I2C_DATA_LENGTH;
+    masterXfer.flags          = kLPI2C_TransferDefaultFlag;
 
     status = LPI2C_RTOS_Transfer(&master_rtos_handle, &masterXfer);
     if (status == kStatus_Success)

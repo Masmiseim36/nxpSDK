@@ -2,7 +2,7 @@
  * Copyright (c) 2017, NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -34,7 +34,7 @@ typedef struct _srtm_rpmsg_endpoint
     srtm_rpmsg_endpoint_rx_cb_t rxCallback;
     void *rxCallbackParam;
     bool started;
-} *srtm_rpmsg_endpoint_t;
+} * srtm_rpmsg_endpoint_t;
 
 /*******************************************************************************
  * Prototypes
@@ -47,8 +47,7 @@ typedef struct _srtm_rpmsg_endpoint
 /*******************************************************************************
  * Code
  ******************************************************************************/
-static int SRTM_RPMsgEndpoint_RxHandler(void *payload, int payload_len, unsigned long src,
-                                        void *priv)
+static int SRTM_RPMsgEndpoint_RxHandler(void *payload, int payload_len, unsigned long src, void *priv)
 {
     srtm_rpmsg_endpoint_t handle = (srtm_rpmsg_endpoint_t)priv;
 
@@ -72,15 +71,13 @@ static int SRTM_RPMsgEndpoint_RxHandler(void *payload, int payload_len, unsigned
     {
         if (handle->rxCallback)
         {
-            return handle->rxCallback(&handle->channel, payload, payload_len, src,
-                                      handle->rxCallbackParam);
+            return handle->rxCallback(&handle->channel, payload, payload_len, src, handle->rxCallbackParam);
         }
 
         assert(handle->channel.core);
         assert(handle->channel.core->dispatcher);
 
-        SRTM_Dispatcher_PostRecvData(handle->channel.core->dispatcher, &handle->channel,
-                                     payload, payload_len);
+        SRTM_Dispatcher_PostRecvData(handle->channel.core->dispatcher, &handle->channel, payload, payload_len);
     }
     else
     {
@@ -93,7 +90,7 @@ static int SRTM_RPMsgEndpoint_RxHandler(void *payload, int payload_len, unsigned
 static srtm_status_t SRTM_RPMsgEndpoint_Start(srtm_channel_t channel)
 {
     srtm_rpmsg_endpoint_t handle = (srtm_rpmsg_endpoint_t)channel;
-    srtm_status_t status = SRTM_Status_Success;
+    srtm_status_t status         = SRTM_Status_Success;
 
     assert(handle);
 
@@ -107,7 +104,7 @@ static srtm_status_t SRTM_RPMsgEndpoint_Start(srtm_channel_t channel)
 static srtm_status_t SRTM_RPMsgEndpoint_Stop(srtm_channel_t channel)
 {
     srtm_rpmsg_endpoint_t handle = (srtm_rpmsg_endpoint_t)channel;
-    srtm_status_t status = SRTM_Status_Success;
+    srtm_status_t status         = SRTM_Status_Success;
 
     assert(handle);
 
@@ -121,7 +118,7 @@ static srtm_status_t SRTM_RPMsgEndpoint_Stop(srtm_channel_t channel)
 static srtm_status_t SRTM_RPMsgEndpoint_SendData(srtm_channel_t channel, void *data, uint32_t len)
 {
     srtm_rpmsg_endpoint_t handle = (srtm_rpmsg_endpoint_t)channel;
-    srtm_status_t status = SRTM_Status_InvalidState;
+    srtm_status_t status         = SRTM_Status_InvalidState;
 
     assert(handle);
     assert(handle->config.rpmsgHandle);
@@ -139,8 +136,8 @@ static srtm_status_t SRTM_RPMsgEndpoint_SendData(srtm_channel_t channel, void *d
         }
         SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_ERROR, "\r\n");
 #endif
-        if (rpmsg_lite_send(handle->config.rpmsgHandle, handle->rpmsgEndpoint, handle->config.peerAddr,
-                            (char *)data, len, RL_BLOCK) == RL_SUCCESS)
+        if (rpmsg_lite_send(handle->config.rpmsgHandle, handle->rpmsgEndpoint, handle->config.peerAddr, (char *)data,
+                            len, RL_BLOCK) == RL_SUCCESS)
         {
             status = SRTM_Status_Success;
         }
@@ -170,11 +167,11 @@ srtm_channel_t SRTM_RPMsgEndpoint_Create(srtm_rpmsg_endpoint_config_t *config)
     handle = (srtm_rpmsg_endpoint_t)SRTM_Heap_Malloc(sizeof(struct _srtm_rpmsg_endpoint));
     assert(handle);
 
-    handle->started = false;
-    handle->rxCallback = NULL;
+    handle->started         = false;
+    handle->rxCallback      = NULL;
     handle->rxCallbackParam = NULL;
-    handle->rpmsgEndpoint = rpmsg_lite_create_ept(config->rpmsgHandle, config->localAddr,
-                                                  SRTM_RPMsgEndpoint_RxHandler, handle);
+    handle->rpmsgEndpoint =
+        rpmsg_lite_create_ept(config->rpmsgHandle, config->localAddr, SRTM_RPMsgEndpoint_RxHandler, handle);
     assert(handle->rpmsgEndpoint);
 
     memcpy(&handle->config, config, sizeof(struct _srtm_rpmsg_endpoint_config));
@@ -184,16 +181,16 @@ srtm_channel_t SRTM_RPMsgEndpoint_Create(srtm_rpmsg_endpoint_config_t *config)
     }
 
     SRTM_List_Init(&handle->channel.node);
-    handle->channel.core = NULL;
-    handle->channel.destroy = SRTM_RPMsgEndpoint_Destroy;
-    handle->channel.start = SRTM_RPMsgEndpoint_Start;
-    handle->channel.stop = SRTM_RPMsgEndpoint_Stop;
+    handle->channel.core     = NULL;
+    handle->channel.destroy  = SRTM_RPMsgEndpoint_Destroy;
+    handle->channel.start    = SRTM_RPMsgEndpoint_Start;
+    handle->channel.stop     = SRTM_RPMsgEndpoint_Stop;
     handle->channel.sendData = SRTM_RPMsgEndpoint_SendData;
 
     if (config->epName)
     {
-        if (rpmsg_ns_announce(config->rpmsgHandle, handle->rpmsgEndpoint, (char *)config->epName,
-                              RL_NS_CREATE) != RL_SUCCESS)
+        if (rpmsg_ns_announce(config->rpmsgHandle, handle->rpmsgEndpoint, (char *)config->epName, RL_NS_CREATE) !=
+            RL_SUCCESS)
         {
             assert(false);
         }
@@ -207,7 +204,7 @@ void SRTM_RPMsgEndpoint_Destroy(srtm_channel_t channel)
     srtm_rpmsg_endpoint_t handle = (srtm_rpmsg_endpoint_t)channel;
 
     assert(channel);
-    assert(!channel->core); /* Channel must be removed from core before destroy */
+    assert(!channel->core);                    /* Channel must be removed from core before destroy */
     assert(SRTM_List_IsEmpty(&channel->node)); /* Channel must not on any list */
 
     SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_INFO, "%s\r\n", __func__);
@@ -227,7 +224,7 @@ srtm_status_t SRTM_RPMsgEndpoint_OverrideRxHandler(srtm_channel_t channel,
 
     SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_INFO, "%s\r\n", __func__);
 
-    handle->rxCallback = callback;
+    handle->rxCallback      = callback;
     handle->rxCallbackParam = param;
 
     return SRTM_Status_Success;

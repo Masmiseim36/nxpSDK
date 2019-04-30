@@ -3,9 +3,9 @@
  * Copyright (c) 2016 - 2017 , NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
-*/
+ */
 
 #ifndef __PANIC_H__
 #define __PANIC_H__
@@ -16,7 +16,6 @@
 *************************************************************************************
 ********************************************************************************** */
 #include "EmbeddedTypes.h"
-
 
 /*! *********************************************************************************
 *************************************************************************************
@@ -33,10 +32,9 @@ typedef struct
     uint32_t extra1;
     uint32_t extra2;
     uint32_t linkRegister;
-    uint32_t cpsr_contents;   /* may not be used initially */
-    uint8_t stack_dump[4];    /* initially just contain the contents of the LR */
+    uint32_t cpsr_contents; /* may not be used initially */
+    uint8_t stack_dump[4];  /* initially just contain the contents of the LR */
 } panicData_t;
-
 
 /*! *********************************************************************************
 *************************************************************************************
@@ -47,19 +45,13 @@ typedef struct
 #define gUsePanic_c 0
 #endif
 
-#define ID_PANIC(grp,value) ((panicId_t)(((panicId_t)(grp) << 16)+((panicId_t)(value))))
+#define ID_PANIC(grp, value) ((panicId_t)(((panicId_t)(grp) << 16) + ((panicId_t)(value))))
 
 /*! *********************************************************************************
 *************************************************************************************
 * Public prototypes
 *************************************************************************************
 ********************************************************************************** */
-void panic
-(
-    panicId_t id,
-    uint32_t location,
-    uint32_t extra1,
-    uint32_t extra2
-);
+void panic(panicId_t id, uint32_t location, uint32_t extra1, uint32_t extra2);
 
 #endif /* __PANIC_H__ */

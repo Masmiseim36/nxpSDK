@@ -19,6 +19,7 @@
  ******************************************************************************/
 #define EXAMPLE_I2C_MASTER_BASE (LPI2C3_BASE)
 #define LPI2C_MASTER_CLOCK_FREQUENCY CLOCK_GetIpFreq(kCLOCK_Lpi2c3)
+#define WAIT_TIME 10U
 
 #define EXAMPLE_I2C_MASTER ((LPI2C_Type *)EXAMPLE_I2C_MASTER_BASE)
 
@@ -36,7 +37,6 @@
 
 uint8_t g_master_txBuff[LPI2C_DATA_LENGTH];
 uint8_t g_master_rxBuff[LPI2C_DATA_LENGTH];
-volatile bool g_MasterCompletionFlag = false;
 
 /*******************************************************************************
  * Code
@@ -48,7 +48,7 @@ volatile bool g_MasterCompletionFlag = false;
 int main(void)
 {
     lpi2c_master_config_t masterConfig;
-    status_t reVal = kStatus_Fail;
+    status_t reVal        = kStatus_Fail;
     uint8_t deviceAddress = 0x01U;
 
     BOARD_InitPins();
@@ -68,7 +68,7 @@ int main(void)
     }
 
     PRINTF("Master will send data :");
-    for (uint32_t i = 0U; i < LPI2C_DATA_LENGTH - 1; i++)
+    for (uint32_t i = 0U; i < LPI2C_DATA_LENGTH - 1U; i++)
     {
         if (i % 8 == 0)
         {
@@ -95,13 +95,10 @@ int main(void)
 
     /* Initialize the LPI2C master peripheral */
     LPI2C_MasterInit(EXAMPLE_I2C_MASTER, &masterConfig, LPI2C_MASTER_CLOCK_FREQUENCY);
-
+    
     /* Send master blocking data to slave */
     if (kStatus_Success == LPI2C_MasterStart(EXAMPLE_I2C_MASTER, LPI2C_MASTER_SLAVE_ADDR_7BIT, kLPI2C_Write))
     {
-        while (LPI2C_MasterGetStatusFlags(EXAMPLE_I2C_MASTER) & kLPI2C_MasterNackDetectFlag)
-        {
-        }
         /* subAddress = 0x01, data = g_master_txBuff - write to slave.
           start + slaveaddress(w) + subAddress + length of data buffer + data buffer + stop*/
         reVal = LPI2C_MasterSend(EXAMPLE_I2C_MASTER, &deviceAddress, 1);
@@ -123,30 +120,22 @@ int main(void)
         }
     }
 
+    /* Wait until the slave is ready for transmit, wait time depend on user's case.
+       Slave devices that need some time to process received byte or are not ready yet to
+       send the next byte, can pull the clock low to signal to the master that it should wait.*/
+    for (uint32_t i = 0U; i < WAIT_TIME; i++)
+    {
+        __NOP();
+    }
+    
     PRINTF("Receive sent data from slave :");
 
     /* Receive blocking data from slave */
-    /* subAddress = 0x01, data = g_master_rxBuff - read from slave.
-      start + slaveaddress(w) + subAddress + repeated start + slaveaddress(r) + rx data buffer + stop */
-    if (kStatus_Success == LPI2C_MasterStart(EXAMPLE_I2C_MASTER, LPI2C_MASTER_SLAVE_ADDR_7BIT, kLPI2C_Write))
+    /* data = g_master_rxBuff - read from slave.
+      start + slaveaddress(w) + rx data buffer + stop */
+    if (kStatus_Success == LPI2C_MasterStart(EXAMPLE_I2C_MASTER, LPI2C_MASTER_SLAVE_ADDR_7BIT, kLPI2C_Read))
     {
-        while (LPI2C_MasterGetStatusFlags(EXAMPLE_I2C_MASTER) & kLPI2C_MasterNackDetectFlag)
-        {
-        }
-
-        reVal = LPI2C_MasterSend(EXAMPLE_I2C_MASTER, &deviceAddress, 1);
-        if (reVal != kStatus_Success)
-        {
-            return -1;
-        }
-
-        reVal = LPI2C_MasterRepeatedStart(EXAMPLE_I2C_MASTER, LPI2C_MASTER_SLAVE_ADDR_7BIT, kLPI2C_Read);
-        if (reVal != kStatus_Success)
-        {
-            return -1;
-        }
-
-        reVal = LPI2C_MasterReceive(EXAMPLE_I2C_MASTER, g_master_rxBuff, LPI2C_DATA_LENGTH);
+        reVal = LPI2C_MasterReceive(EXAMPLE_I2C_MASTER, g_master_rxBuff, LPI2C_DATA_LENGTH -1);
         if (reVal != kStatus_Success)
         {
             return -1;
@@ -170,7 +159,7 @@ int main(void)
     PRINTF("\r\n\r\n");
 
     /* Transfer completed. Check the data.*/
-    for (uint32_t i = 0U; i < LPI2C_DATA_LENGTH - 1; i++)
+    for (uint32_t i = 0U; i < LPI2C_DATA_LENGTH - 1U; i++)
     {
         if (g_master_rxBuff[i] != g_master_txBuff[i + 1])
         {

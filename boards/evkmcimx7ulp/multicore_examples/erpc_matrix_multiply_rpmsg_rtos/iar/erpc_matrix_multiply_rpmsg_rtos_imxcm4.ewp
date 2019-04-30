@@ -315,7 +315,7 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../service</state>
+          <state>$PROJ_DIR$/../../erpc_common/erpc_matrix_multiply/service</state>
           <state>$PROJ_DIR$/../../..</state>
           <state>$PROJ_DIR$/../../erpc_common</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
@@ -331,7 +331,7 @@
           <state>$PROJ_DIR$/../../../../../devices/MCIMX7U5/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MCIMX7U5</state>
           <state>$PROJ_DIR$/../../../../../devices/MCIMX7U5/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MCIMX7U5/utilities</state>
+          <state>$PROJ_DIR$/../../../../../devices/MCIMX7U5/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
@@ -1330,7 +1330,7 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../service</state>
+          <state>$PROJ_DIR$/../../erpc_common/erpc_matrix_multiply/service</state>
           <state>$PROJ_DIR$/../../..</state>
           <state>$PROJ_DIR$/../../erpc_common</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
@@ -1346,7 +1346,7 @@
           <state>$PROJ_DIR$/../../../../../devices/MCIMX7U5/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MCIMX7U5</state>
           <state>$PROJ_DIR$/../../../../../devices/MCIMX7U5/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MCIMX7U5/utilities</state>
+          <state>$PROJ_DIR$/../../../../../devices/MCIMX7U5/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
@@ -2346,7 +2346,7 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../service</state>
+          <state>$PROJ_DIR$/../../erpc_common/erpc_matrix_multiply/service</state>
           <state>$PROJ_DIR$/../../..</state>
           <state>$PROJ_DIR$/../../erpc_common</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
@@ -2362,7 +2362,7 @@
           <state>$PROJ_DIR$/../../../../../devices/MCIMX7U5/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MCIMX7U5</state>
           <state>$PROJ_DIR$/../../../../../devices/MCIMX7U5/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MCIMX7U5/utilities</state>
+          <state>$PROJ_DIR$/../../../../../devices/MCIMX7U5/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
@@ -3361,7 +3361,7 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../service</state>
+          <state>$PROJ_DIR$/../../erpc_common/erpc_matrix_multiply/service</state>
           <state>$PROJ_DIR$/../../..</state>
           <state>$PROJ_DIR$/../../erpc_common</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
@@ -3377,7 +3377,7 @@
           <state>$PROJ_DIR$/../../../../../devices/MCIMX7U5/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MCIMX7U5</state>
           <state>$PROJ_DIR$/../../../../../devices/MCIMX7U5/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MCIMX7U5/utilities</state>
+          <state>$PROJ_DIR$/../../../../../devices/MCIMX7U5/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
@@ -4075,6 +4075,12 @@
       <name>$PROJ_DIR$/../erpc_config.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../erpc_common/erpc_error_handler.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../erpc_common/erpc_error_handler.cpp</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../FreeRTOSConfig.h</name>
     </file>
     <file>
@@ -4085,13 +4091,76 @@
     </file>
   </group>
   <group>
+    <name>board</name>
+    <file>
+      <name>$PROJ_DIR$/../pin_mux.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../pin_mux.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../board.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../board.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../clock_config.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../clock_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../fsl_iomuxc.h</name>
+    </file>
+  </group>
+  <group>
+    <name>src</name>
+    <file>
+      <name>$PROJ_DIR$/../python/erpc_matrix_multiply_python.md</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../python/example.py</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../python/service/__init__.py</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../python/service/erpc_matrix_multiply.erpc</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../python/service/erpc_matrix_multiply/__init__.py</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../python/service/erpc_matrix_multiply/client.py</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../python/service/erpc_matrix_multiply/common.py</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../python/service/erpc_matrix_multiply/interface.py</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../python/service/erpc_matrix_multiply/server.py</name>
+    </file>
+  </group>
+  <group>
     <name>erpc</name>
-    <file>
-      <name>$PROJ_DIR$/../../erpc_common/erpc_error_handler.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../erpc_common/erpc_error_handler.cpp</name>
-    </file>
+    <group>
+      <name>service</name>
+      <file>
+        <name>$PROJ_DIR$/../../erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply.erpc</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply_server.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply_server.cpp</name>
+      </file>
+    </group>
     <group>
       <name>infra</name>
       <file>
@@ -4197,75 +4266,6 @@
         <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/port/erpc_config_internal.h</name>
       </file>
     </group>
-  </group>
-  <group>
-    <name>service</name>
-    <file>
-      <name>$PROJ_DIR$/../service/erpc_matrix_multiply.erpc</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../service/erpc_matrix_multiply.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../service/erpc_matrix_multiply_server.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../service/erpc_matrix_multiply_server.cpp</name>
-    </file>
-  </group>
-  <group>
-    <name>board</name>
-    <file>
-      <name>$PROJ_DIR$/../pin_mux.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../pin_mux.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../board.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../board.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../clock_config.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../clock_config.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../fsl_iomuxc.h</name>
-    </file>
-  </group>
-  <group>
-    <name>src</name>
-    <file>
-      <name>$PROJ_DIR$/../python/erpc_matrix_multiply_python.md</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../python/example.py</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../python/service/__init__.py</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../python/service/erpc_matrix_multiply.erpc</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../python/service/erpc_matrix_multiply/__init__.py</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../python/service/erpc_matrix_multiply/client.py</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../python/service/erpc_matrix_multiply/common.py</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../python/service/erpc_matrix_multiply/interface.py</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../python/service/erpc_matrix_multiply/server.py</name>
-    </file>
   </group>
   <group>
     <name>doc</name>
@@ -4581,6 +4581,9 @@
         <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private/mpu_wrappers.h</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private/mpu_prototypes.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private/portable.h</name>
       </file>
       <file>
@@ -4588,6 +4591,9 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private/stack_macros.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private/threading_alt.h</name>
       </file>
     </group>
     <group>
@@ -4663,13 +4669,13 @@
       <name>$PROJ_DIR$/../../../../../devices/MCIMX7U5/utilities/str/fsl_str.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MCIMX7U5/utilities/fsl_debug_console.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MCIMX7U5/utilities/debug_console/fsl_debug_console.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MCIMX7U5/utilities/fsl_debug_console.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MCIMX7U5/utilities/debug_console/fsl_debug_console.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MCIMX7U5/utilities/fsl_debug_console_conf.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MCIMX7U5/utilities/debug_console/fsl_debug_console_conf.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MCIMX7U5/utilities/fsl_assert.c</name>

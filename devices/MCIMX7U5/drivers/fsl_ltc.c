@@ -43,11 +43,11 @@ enum _ltc_status_flag
 #if defined(FSL_FEATURE_LTC_HAS_SHA) && FSL_FEATURE_LTC_HAS_SHA
     kLTC_StatusMdhaBusy = 1U << LTC_STA_MB_SHIFT,
 #endif /* FSL_FEATURE_LTC_HAS_SHA */
-    kLTC_StatusDoneIsr = 1U << LTC_STA_DI_SHIFT,
+    kLTC_StatusDoneIsr  = 1U << LTC_STA_DI_SHIFT,
     kLTC_StatusErrorIsr = 1U << LTC_STA_EI_SHIFT,
 #if defined(FSL_FEATURE_LTC_HAS_PKHA) && FSL_FEATURE_LTC_HAS_PKHA
-    kLTC_StatusPublicKeyPrime = 1U << LTC_STA_PKP_SHIFT,
-    kLTC_StatusPublicKeyOpOne = 1U << LTC_STA_PKO_SHIFT,
+    kLTC_StatusPublicKeyPrime  = 1U << LTC_STA_PKP_SHIFT,
+    kLTC_StatusPublicKeyOpOne  = 1U << LTC_STA_PKO_SHIFT,
     kLTC_StatusPublicKeyOpZero = 1U << LTC_STA_PKZ_SHIFT,
 #endif /* FSL_FEATURE_LTC_HAS_PKHA */
     kLTC_StatusAll = LTC_STA_AB_MASK |
@@ -59,28 +59,27 @@ enum _ltc_status_flag
 #endif /* FSL_FEATURE_LTC_HAS_SHA */
                      LTC_STA_DI_MASK | LTC_STA_EI_MASK
 #if defined(FSL_FEATURE_LTC_HAS_PKHA) && FSL_FEATURE_LTC_HAS_PKHA
-                     |
-                     LTC_STA_PB_MASK | LTC_STA_PKP_MASK | LTC_STA_PKO_MASK | LTC_STA_PKZ_MASK
+                     | LTC_STA_PB_MASK | LTC_STA_PKP_MASK | LTC_STA_PKO_MASK | LTC_STA_PKZ_MASK
 #endif /* FSL_FEATURE_LTC_HAS_PKHA */
 };
 
 /*! @brief LTC clear register */
 typedef enum _ltc_clear_written
 {
-    kLTC_ClearMode = 1U << LTC_CW_CM_SHIFT,
+    kLTC_ClearMode     = 1U << LTC_CW_CM_SHIFT,
     kLTC_ClearDataSize = 1U << LTC_CW_CDS_SHIFT,
-    kLTC_ClearIcvSize = 1U << LTC_CW_CICV_SHIFT,
-    kLTC_ClearContext = 1U << LTC_CW_CCR_SHIFT,
-    kLTC_ClearKey = 1U << LTC_CW_CKR_SHIFT,
+    kLTC_ClearIcvSize  = 1U << LTC_CW_CICV_SHIFT,
+    kLTC_ClearContext  = 1U << LTC_CW_CCR_SHIFT,
+    kLTC_ClearKey      = 1U << LTC_CW_CKR_SHIFT,
 #if defined(FSL_FEATURE_LTC_HAS_PKHA) && FSL_FEATURE_LTC_HAS_PKHA
     kLTC_ClearPkhaSizeA = 1U << LTC_CW_CPKA_SHIFT,
     kLTC_ClearPkhaSizeB = 1U << LTC_CW_CPKB_SHIFT,
     kLTC_ClearPkhaSizeN = 1U << LTC_CW_CPKN_SHIFT,
     kLTC_ClearPkhaSizeE = 1U << LTC_CW_CPKE_SHIFT,
-    kLTC_ClearAllSize = (int)kLTC_ClearPkhaSizeA | kLTC_ClearPkhaSizeB | kLTC_ClearPkhaSizeN | kLTC_ClearPkhaSizeE,
+    kLTC_ClearAllSize   = (int)kLTC_ClearPkhaSizeA | kLTC_ClearPkhaSizeB | kLTC_ClearPkhaSizeN | kLTC_ClearPkhaSizeE,
 #endif /* FSL_FEATURE_LTC_HAS_PKHA */
     kLTC_ClearOutputFifo = 1U << LTC_CW_COF_SHIFT,
-    kLTC_ClearInputFifo = (int)(1U << LTC_CW_CIF_SHIFT),
+    kLTC_ClearInputFifo  = (int)(1U << LTC_CW_CIF_SHIFT),
     kLTC_ClearAll = (int)(LTC_CW_CM_MASK | LTC_CW_CDS_MASK | LTC_CW_CICV_MASK | LTC_CW_CCR_MASK | LTC_CW_CKR_MASK |
 #if defined(FSL_FEATURE_LTC_HAS_PKHA) && FSL_FEATURE_LTC_HAS_PKHA
                           LTC_CW_CPKA_MASK | LTC_CW_CPKB_MASK | LTC_CW_CPKN_MASK | LTC_CW_CPKE_MASK |
@@ -110,31 +109,31 @@ typedef union _ltc_xcm_block_t
 /*! @brief PKHA functions - arithmetic, copy/clear memory. */
 typedef enum _ltc_pkha_func_t
 {
-    kLTC_PKHA_ClearMem = 1U,
-    kLTC_PKHA_ArithModAdd = 2U,         /*!< (A + B) mod N */
-    kLTC_PKHA_ArithModSub1 = 3U,        /*!< (A - B) mod N */
-    kLTC_PKHA_ArithModSub2 = 4U,        /*!< (B - A) mod N */
-    kLTC_PKHA_ArithModMul = 5U,         /*!< (A x B) mod N */
-    kLTC_PKHA_ArithModExp = 6U,         /*!< (A^E) mod N */
-    kLTC_PKHA_ArithModRed = 7U,         /*!< (A) mod N */
-    kLTC_PKHA_ArithModInv = 8U,         /*!< (A^-1) mod N */
-    kLTC_PKHA_ArithEccAdd = 9U,         /*!< (P1 + P2) */
-    kLTC_PKHA_ArithEccDouble = 10U,     /*!< (P2 + P2) */
-    kLTC_PKHA_ArithEccMul = 11U,        /*!< (E x P1) */
-    kLTC_PKHA_ArithModR2 = 12U,         /*!< (R^2 mod N) */
-    kLTC_PKHA_ArithGcd = 14U,           /*!< GCD (A, N) */
+    kLTC_PKHA_ClearMem           = 1U,
+    kLTC_PKHA_ArithModAdd        = 2U,  /*!< (A + B) mod N */
+    kLTC_PKHA_ArithModSub1       = 3U,  /*!< (A - B) mod N */
+    kLTC_PKHA_ArithModSub2       = 4U,  /*!< (B - A) mod N */
+    kLTC_PKHA_ArithModMul        = 5U,  /*!< (A x B) mod N */
+    kLTC_PKHA_ArithModExp        = 6U,  /*!< (A^E) mod N */
+    kLTC_PKHA_ArithModRed        = 7U,  /*!< (A) mod N */
+    kLTC_PKHA_ArithModInv        = 8U,  /*!< (A^-1) mod N */
+    kLTC_PKHA_ArithEccAdd        = 9U,  /*!< (P1 + P2) */
+    kLTC_PKHA_ArithEccDouble     = 10U, /*!< (P2 + P2) */
+    kLTC_PKHA_ArithEccMul        = 11U, /*!< (E x P1) */
+    kLTC_PKHA_ArithModR2         = 12U, /*!< (R^2 mod N) */
+    kLTC_PKHA_ArithGcd           = 14U, /*!< GCD (A, N) */
     kLTC_PKHA_ArithPrimalityTest = 15U, /*!< Miller-Rabin */
-    kLTC_PKHA_CopyMemSizeN = 16U,
-    kLTC_PKHA_CopyMemSizeSrc = 17U,
+    kLTC_PKHA_CopyMemSizeN       = 16U,
+    kLTC_PKHA_CopyMemSizeSrc     = 17U,
 } ltc_pkha_func_t;
 
 /*! @brief Register areas for PKHA clear memory operations. */
 typedef enum _ltc_pkha_reg_area
 {
-    kLTC_PKHA_RegA = 8U,
-    kLTC_PKHA_RegB = 4U,
-    kLTC_PKHA_RegE = 2U,
-    kLTC_PKHA_RegN = 1U,
+    kLTC_PKHA_RegA   = 8U,
+    kLTC_PKHA_RegB   = 4U,
+    kLTC_PKHA_RegE   = 2U,
+    kLTC_PKHA_RegN   = 1U,
     kLTC_PKHA_RegAll = kLTC_PKHA_RegA | kLTC_PKHA_RegB | kLTC_PKHA_RegE | kLTC_PKHA_RegN,
 } ltc_pkha_reg_area_t;
 
@@ -151,8 +150,8 @@ typedef enum _ltc_pkha_quad_area_t
 /*! @brief User-supplied (R^2 mod N) input or LTC should calculate. */
 typedef enum _ltc_pkha_r2_t
 {
-    kLTC_PKHA_CalcR2 = 0U, /*!< Calculate (R^2 mod N) */
-    kLTC_PKHA_InputR2 = 1U /*!< (R^2 mod N) supplied as input */
+    kLTC_PKHA_CalcR2  = 0U, /*!< Calculate (R^2 mod N) */
+    kLTC_PKHA_InputR2 = 1U  /*!< (R^2 mod N) supplied as input */
 } ltc_pkha_r2_t;
 
 /*! @brief LTC PKHA parameters */
@@ -202,7 +201,7 @@ bool ltc_check_key_size(const uint32_t keySize)
 #if defined(FSL_FEATURE_LTC_HAS_AES256) && FSL_FEATURE_LTC_HAS_AES256
             || ((keySize == 32u))
 #endif /* FSL_FEATURE_LTC_HAS_AES256 */
-                );
+    );
 }
 
 /*! @brief LTC driver wait mechanism. */
@@ -211,28 +210,28 @@ status_t ltc_wait(LTC_Type *base)
     status_t status;
 
     bool error = false;
-    bool done = false;
+    bool done  = false;
 
     /* Wait for 'done' or 'error' flag. */
     while ((!error) && (!done))
     {
         uint32_t temp32 = base->STA;
-        error = temp32 & LTC_STA_EI_MASK;
-        done = temp32 & LTC_STA_DI_MASK;
+        error           = (0U != (temp32 & LTC_STA_EI_MASK)) ? true : false;
+        done            = (0U != (temp32 & LTC_STA_DI_MASK)) ? true : false;
     }
 
     if (error)
     {
         base->COM = LTC_COM_ALL_MASK; /* Reset all engine to clear the error flag */
-        status = kStatus_Fail;
+        status    = kStatus_Fail;
     }
     else /* 'done' */
     {
         status = kStatus_Success;
 
-        base->CW = kLTC_ClearDataSize;
+        base->CW = (uint32_t)kLTC_ClearDataSize;
         /* Clear 'done' interrupt status.  This also clears the mode register. */
-        base->STA = kLTC_StatusDoneIsr;
+        base->STA = (uint32_t)kLTC_StatusDoneIsr;
     }
 
     return status;
@@ -259,13 +258,13 @@ void ltc_clear_all(LTC_Type *base, bool addPKHA)
 void ltc_memcpy(void *dst, const void *src, size_t size)
 {
 #if defined(__cplusplus)
-    register uint8_t *to = (uint8_t *)dst;
+    register uint8_t *to         = (uint8_t *)dst;
     register const uint8_t *from = (const uint8_t *)src;
 #else
-    register uint8_t *to = dst;
+    register uint8_t *to         = dst;
     register const uint8_t *from = src;
 #endif
-    while (size)
+    while (0U != size)
     {
         *to = *from;
         size--;
@@ -294,7 +293,7 @@ static inline uint32_t ltc_get_word_from_unaligned(const uint8_t *srcAddr)
 #if (!(defined(__CORTEX_M)) || (defined(__CORTEX_M) && (__CORTEX_M == 0)))
     register const uint8_t *src = srcAddr;
     /* Cortex M0 does not support misaligned loads */
-    if ((uint32_t)src & 0x3u)
+    if (0U != ((uint32_t)src & 0x3u))
     {
         union _align_bytes_t
         {
@@ -303,15 +302,15 @@ static inline uint32_t ltc_get_word_from_unaligned(const uint8_t *srcAddr)
         } my_bytes;
 
         my_bytes.byte[0] = *src;
-        my_bytes.byte[1] = *(src + 1);
-        my_bytes.byte[2] = *(src + 2);
-        my_bytes.byte[3] = *(src + 3);
+        my_bytes.byte[1] = src[1];
+        my_bytes.byte[2] = src[2];
+        my_bytes.byte[3] = src[3];
         return my_bytes.word;
     }
     else
     {
         /* addr aligned to 0-modulo-4 so it is safe to type cast */
-        return *((const uint32_t *)src);
+        return *((const uint32_t *)(uint32_t)src);
     }
 #elif defined(__CC_ARM)
     /* -O3 optimization in Keil 5.15 and 5.16a uses LDM instruction here (LDM r4!, {r0})
@@ -348,16 +347,16 @@ static inline void ltc_set_unaligned_from_word(uint32_t srcWord, uint8_t *dstAdd
 #if (!(defined(__CORTEX_M)) || (defined(__CORTEX_M) && (__CORTEX_M == 0)))
     register uint8_t *dst = dstAddr;
     /* Cortex M0 does not support misaligned stores */
-    if ((uint32_t)dst & 0x3u)
+    if (0U != ((uint32_t)dst & 0x3u))
     {
-        *dst++ = (srcWord & 0x000000FFU);
-        *dst++ = (srcWord & 0x0000FF00U) >> 8;
-        *dst++ = (srcWord & 0x00FF0000U) >> 16;
-        *dst++ = (srcWord & 0xFF000000U) >> 24;
+        *dst++ = (uint8_t)(srcWord & 0x000000FFU);
+        *dst++ = (uint8_t)((srcWord & 0x0000FF00U) >> 8U);
+        *dst++ = (uint8_t)((srcWord & 0x00FF0000U) >> 16U);
+        *dst++ = (uint8_t)((srcWord & 0xFF000000U) >> 24U);
     }
     else
     {
-        *((uint32_t *)dstAddr) = srcWord; /* addr aligned to 0-modulo-4 so it is safe to type cast */
+        *((uint32_t *)(uint32_t)dstAddr) = srcWord; /* addr aligned to 0-modulo-4 so it is safe to type cast */
     }
 #elif defined(__CC_ARM)
     __asm
@@ -380,18 +379,15 @@ static inline void ltc_set_unaligned_from_word(uint32_t srcWord, uint8_t *dstAdd
  * @param key Key
  * @param keySize Number of bytes for all keys to be loaded (maximum 32, must be a
  *                multiple of 4).
- * @returns Key set status
  */
-static status_t ltc_set_key(LTC_Type *base, const uint8_t *key, uint8_t keySize)
+static void ltc_set_key(LTC_Type *base, const uint8_t *key, uint8_t keySize)
 {
-    int32_t i;
+    uint32_t i;
 
-    for (i = 0; i < (keySize / 4); i++)
+    for (i = 0; i < ((uint32_t)keySize / 4u); i++)
     {
-        base->KEY[i] = ltc_get_word_from_unaligned(key + i * sizeof(uint32_t));
+        base->KEY[i] = ltc_get_word_from_unaligned(&key[i * sizeof(uint32_t)]);
     }
-
-    return kStatus_Success;
 }
 
 /*!
@@ -402,18 +398,15 @@ static status_t ltc_set_key(LTC_Type *base, const uint8_t *key, uint8_t keySize)
  * @param base LTC peripheral base address
  * @param key Array of data to store keys
  * @param keySize Number of bytes of keys to retrieve
- * @returns Key set status
  */
-static status_t ltc_get_key(LTC_Type *base, uint8_t *key, uint8_t keySize)
+static void ltc_get_key(LTC_Type *base, uint8_t *key, uint8_t keySize)
 {
-    int32_t i;
+    uint32_t i;
 
-    for (i = 0; i < (keySize / 4); i++)
+    for (i = 0; i < ((uint32_t)keySize / 4U); i++)
     {
-        ltc_set_unaligned_from_word(base->KEY[i], key + i * sizeof(uint32_t));
+        ltc_set_unaligned_from_word(base->KEY[i], &key[i * sizeof(uint32_t)]);
     }
-
-    return kStatus_Success;
 }
 
 /*!
@@ -434,28 +427,28 @@ static status_t ltc_get_key(LTC_Type *base, uint8_t *key, uint8_t keySize)
 status_t ltc_set_context(LTC_Type *base, const uint8_t *data, uint8_t dataSize, uint8_t startIndex)
 {
     int32_t i;
-    int32_t j;
-    int32_t szLeft;
+    uint8_t j;
+    uint8_t szLeft;
 
     /* Context register is 16 words in size (64 bytes).  Ensure we are only
      * writing a valid amount of data. */
-    if (startIndex + (dataSize / 4) >= 16)
+    if (startIndex + (dataSize / 4u) >= 16u)
     {
         return kStatus_InvalidArgument;
     }
 
-    j = 0;
-    szLeft = dataSize % 4;
-    for (i = startIndex; i < (startIndex + dataSize / 4); i++)
+    j      = 0;
+    szLeft = dataSize % 4u;
+    for (i = (int32_t)startIndex; i < ((uint32_t)startIndex + (uint32_t)dataSize / 4u); i++)
     {
-        base->CTX[i] = ltc_get_word_from_unaligned(data + j);
-        j += sizeof(uint32_t);
+        base->CTX[i] = ltc_get_word_from_unaligned(&data[j]);
+        j += (uint8_t)sizeof(uint32_t);
     }
 
-    if (szLeft)
+    if (0U != szLeft)
     {
         uint32_t context_data = {0};
-        ltc_memcpy(&context_data, data + j, szLeft);
+        ltc_memcpy(&context_data, &data[j], (uint32_t)szLeft);
         base->CTX[i] = context_data;
     }
     return kStatus_Success;
@@ -480,29 +473,29 @@ status_t ltc_get_context(LTC_Type *base, uint8_t *dest, uint8_t dataSize, uint8_
 {
     int32_t i;
     int32_t j;
-    int32_t szLeft;
+    uint8_t szLeft;
     uint32_t rdCtx;
 
     /* Context register is 16 words in size (64 bytes).  Ensure we are only
      * writing a valid amount of data. */
-    if (startIndex + (dataSize / 4) >= 16)
+    if (startIndex + (dataSize / 4u) >= 16u)
     {
         return kStatus_InvalidArgument;
     }
 
-    j = 0;
-    szLeft = dataSize % 4;
-    for (i = startIndex; i < (startIndex + dataSize / 4); i++)
+    j      = 0;
+    szLeft = dataSize % 4u;
+    for (i = (int32_t)startIndex; i < ((uint32_t)startIndex + (uint32_t)dataSize / 4u); i++)
     {
-        ltc_set_unaligned_from_word(base->CTX[i], dest + j);
+        ltc_set_unaligned_from_word(base->CTX[i], &dest[j]);
         j += sizeof(uint32_t);
     }
 
-    if (szLeft)
+    if (0U != szLeft)
     {
         rdCtx = 0;
         rdCtx = base->CTX[i];
-        ltc_memcpy(dest + j, &rdCtx, szLeft);
+        ltc_memcpy(&dest[j], &rdCtx, (uint32_t)szLeft);
     }
     return kStatus_Success;
 }
@@ -522,7 +515,7 @@ static status_t ltc_symmetric_alg_state(LTC_Type *base,
 
     /* Set byte swap on for several registers we will be reading and writing
      * user data to/from. */
-    base->CTL |= kLTC_CtrlSwapAll;
+    base->CTL |= (uint32_t)kLTC_CtrlSwapAll;
 
     /* Write the key in place. */
     ltc_set_key(base, key, keySize);
@@ -532,7 +525,7 @@ static status_t ltc_symmetric_alg_state(LTC_Type *base,
     base->KS = keySize;
 
     /* Clear the 'done' interrupt. */
-    base->STA = kLTC_StatusDoneIsr;
+    base->STA = (uint32_t)kLTC_StatusDoneIsr;
 
     /* Set the proper block and algorithm mode. */
     modeReg = (uint32_t)alg | (uint32_t)enc | (uint32_t)as | (uint32_t)mode;
@@ -636,31 +629,31 @@ void ltc_symmetric_process(LTC_Type *base, uint32_t inSize, const uint8_t **inDa
     uint32_t fifoStatus;
 
     register const uint8_t *in = *inData;
-    register uint8_t *out = *outData;
+    register uint8_t *out      = *outData;
 
     outSize = inSize;
-    while ((outSize > 0) || (inSize > 0))
+    while ((outSize > 0u) || (inSize > 0u))
     {
         fifoStatus = base->FIFOSTA;
 
         /* Check output FIFO level to make sure there is at least an entry
          * ready to be read. */
-        if (fifoStatus & LTC_FIFOSTA_OFL_MASK)
+        if (0U != (fifoStatus & LTC_FIFOSTA_OFL_MASK))
         {
             /* Read data from the output FIFO. */
-            if (outSize > 0)
+            if (outSize > 0u)
             {
                 if (outSize >= sizeof(uint32_t))
                 {
                     ltc_set_unaligned_from_word(base->OFIFO, out);
-                    out += sizeof(uint32_t);
+                    out = &out[sizeof(uint32_t)];
                     outSize -= sizeof(uint32_t);
                 }
                 else /* (outSize > 0) && (outSize < 4) */
                 {
                     fifoData = base->OFIFO;
                     ltc_memcpy(out, &fifoData, outSize);
-                    out += outSize;
+                    out     = &out[outSize];
                     outSize = 0;
                 }
             }
@@ -671,31 +664,31 @@ void ltc_symmetric_process(LTC_Type *base, uint32_t inSize, const uint8_t **inDa
          * At the same time we are sure Output FIFO is not full because we have poped at least one entry
          * by the while loop above.
          */
-        if (!(fifoStatus & LTC_FIFOSTA_IFF_MASK))
+        if (0U == (fifoStatus & LTC_FIFOSTA_IFF_MASK))
         {
             /* Copy data to the input FIFO.
              * Data can only be copied one word at a time, so pad the data
              * appropriately if it is less than this size. */
-            if (inSize > 0)
+            if (inSize > 0u)
             {
                 if (inSize >= sizeof(uint32_t))
                 {
                     base->IFIFO = ltc_get_word_from_unaligned(in);
                     inSize -= sizeof(uint32_t);
-                    in += sizeof(uint32_t);
+                    in = &in[sizeof(uint32_t)];
                 }
                 else /* (inSize > 0) && (inSize < 4) */
                 {
                     fifoData = 0;
                     ltc_memcpy(&fifoData, in, inSize);
                     base->IFIFO = fifoData;
-                    in += inSize;
-                    inSize = 0;
+                    in          = &in[inSize];
+                    inSize      = 0;
                 }
             }
         }
     }
-    *inData = in;
+    *inData  = in;
     *outData = out;
 }
 
@@ -712,7 +705,7 @@ status_t ltc_symmetric_process_data(LTC_Type *base, const uint8_t *inData, uint3
 {
     uint32_t lastSize;
 
-    if ((!inData) || (!outData))
+    if ((NULL == inData) || (NULL == outData))
     {
         return kStatus_InvalidArgument;
     }
@@ -724,16 +717,16 @@ status_t ltc_symmetric_process_data(LTC_Type *base, const uint8_t *inData, uint3
     if (inSize <= 16u)
     {
         lastSize = inSize;
-        inSize = 0;
+        inSize   = 0;
     }
     else
     {
         /* Process all 16-byte data chunks. */
         lastSize = inSize % 16u;
-        if (lastSize == 0)
+        if (lastSize == 0u)
         {
             lastSize = 16;
-            inSize -= 16;
+            inSize -= 16u;
         }
         else
         {
@@ -764,10 +757,32 @@ static status_t ltc_process_message_in_sessions(LTC_Type *base,
     ltc_mode_t modeReg; /* read and write LTC mode register */
 
     sz = LTC_FIFO_SZ_MAX_DOWN_ALGN;
+
+    /* modeReg value will be used if message is split into multiple LTC_FIFO_SZ_MAX_DOWN_ALGN chunks */
+    /* in case of AES CBC and AES ECB decryption */
+    /* the conversion of AES forward key to AES reverse key happens with the 1st chunk */
+    /* so all the following chunks already have the reverse key */
+    /* thus we add the MD register bit 12 to the MD value to notify the AES engine
+       that the key is the AES reverse key */
+    /* This really needs to be done only for AES ECB and CBC Decrypt as these are the only */
+    /* cipher block modes that use AES reverse key */
     modeReg = base->MD;
+    /* AES CBC Decrypt */
+    if (modeReg == 0x00100100u)
+    {
+        /* add MSB of AAI - DK (Decrypt Key) bit */
+        modeReg = 0x00101100u;
+    }
+    /* AES ECB Decrypt */
+    if (modeReg == 0x00100200u)
+    {
+        /* add MSB of AAI - DK (Decrypt Key) bit */
+        modeReg = 0x00101200u;
+    }
+
     retval = kStatus_Success;
 
-    while (inSize)
+    while (0U != inSize)
     {
         if (inSize <= sz)
         {
@@ -785,9 +800,9 @@ static status_t ltc_process_message_in_sessions(LTC_Type *base,
             {
                 return retval;
             }
-            inData += sz;
+            inData = &inData[sz];
             inSize -= sz;
-            outData += sz;
+            outData  = &outData[sz];
             base->MD = modeReg;
         }
     }
@@ -800,12 +815,12 @@ static void ltc_move_block_to_ififo(LTC_Type *base, const ltc_xcm_block_t *blk, 
     uint32_t words;
 
     words = num_bytes / 4u;
-    if (num_bytes % 4u)
+    if (0U != (num_bytes % 4u))
     {
         words++;
     }
 
-    if (words > 4)
+    if (words > 4u)
     {
         words = 4;
     }
@@ -825,13 +840,13 @@ static void ltc_move_to_ififo(LTC_Type *base, const uint8_t *data, uint32_t data
     ltc_xcm_block_t blk;
     ltc_xcm_block_t blkZero = {{0x0u, 0x0u, 0x0u, 0x0u}};
 
-    while (dataSize)
+    while (0U != dataSize)
     {
         if (dataSize > 16u)
         {
             ltc_memcpy(&blk, data, 16u);
             dataSize -= 16u;
-            data += 16u;
+            data = &data[16];
         }
         else
         {
@@ -839,7 +854,7 @@ static void ltc_move_to_ififo(LTC_Type *base, const uint8_t *data, uint32_t data
             ltc_memcpy(&blk, data, dataSize);
             dataSize = 0;
         }
-        ltc_move_block_to_ififo(base, &blk, sizeof(ltc_xcm_block_t));
+        ltc_move_block_to_ififo(base, (const ltc_xcm_block_t *)(uint32_t)&blk, sizeof(ltc_xcm_block_t));
     }
 }
 
@@ -870,24 +885,24 @@ static status_t ltc_symmetric_process_data_multiple(LTC_Type *base,
     ltc_mode_algorithm_state_t fsm;
     status_t status;
 
-    if ((!inData) || (!outData))
+    if ((NULL == inData) || (NULL == outData))
     {
         return kStatus_InvalidArgument;
     }
 
-    if (!((kLTC_ModeFinalize == lastAs) || (kLTC_ModeInitFinal == lastAs)))
+    if (!(((uint8_t)kLTC_ModeFinalize == (uint8_t)lastAs) || ((uint8_t)kLTC_ModeInitFinal == (uint8_t)lastAs)))
     {
         return kStatus_InvalidArgument;
     }
 
-    if (0 == inSize)
+    if (0u == inSize)
     {
         return kStatus_Success;
     }
 
     if (inSize <= 16u)
     {
-        fsm = lastAs;
+        fsm      = lastAs;
         lastSize = inSize;
     }
     else
@@ -910,70 +925,68 @@ static status_t ltc_symmetric_process_data_multiple(LTC_Type *base,
     }
 
     max_ltc_fifo_size = LTC_FIFO_SZ_MAX_DOWN_ALGN;
-    fifoConsumed = base->DS;
+    fifoConsumed      = base->DS;
 
-    while (lastSize)
+    while (0U != lastSize)
     {
-        switch (fsm)
+        if (fsm == kLTC_ModeUpdate || kLTC_ModeInit)
         {
-            case kLTC_ModeUpdate:
-            case kLTC_ModeInit:
-                while (inSize)
+            while (0U != inSize)
+            {
+                if (inSize > (max_ltc_fifo_size - fifoConsumed))
                 {
-                    if (inSize > (max_ltc_fifo_size - fifoConsumed))
-                    {
-                        sz = (max_ltc_fifo_size - fifoConsumed);
-                    }
-                    else
-                    {
-                        sz = inSize;
-                    }
-                    base->DS = sz;
-                    ltc_symmetric_process(base, sz, &inData, &outData);
-                    inSize -= sz;
-                    fifoConsumed = 0;
-
-                    /* after we completed INITIALIZE job, are there still any data left? */
-                    if (inSize)
-                    {
-                        fsm = kLTC_ModeUpdate;
-                        status = ltc_wait(base);
-                        if (kStatus_Success != status)
-                        {
-                            return status;
-                        }
-                        modeReg &= ~LTC_MD_AS_MASK;
-                        modeReg |= (uint32_t)fsm;
-                        base->MD = modeReg;
-                    }
-                    else
-                    {
-                        fsm = lastAs;
-                    }
+                    sz = (max_ltc_fifo_size - fifoConsumed);
                 }
-                break;
-
-            case kLTC_ModeFinalize:
-            case kLTC_ModeInitFinal:
-                /* process last block in FINALIZE */
-
-                status = ltc_wait(base);
-                if (kStatus_Success != status)
+                else
                 {
-                    return status;
+                    sz = inSize;
                 }
+                base->DS = sz;
+                ltc_symmetric_process(base, sz, &inData, &outData);
+                inSize -= sz;
+                fifoConsumed = 0;
 
-                modeReg &= ~LTC_MD_AS_MASK;
-                modeReg |= (uint32_t)lastAs;
-                base->MD = modeReg;
+                /* after we completed INITIALIZE job, are there still any data left? */
+                if (0U != inSize)
+                {
+                    fsm    = kLTC_ModeUpdate;
+                    status = ltc_wait(base);
+                    if (kStatus_Success != status)
+                    {
+                        return status;
+                    }
+                    modeReg &= ~LTC_MD_AS_MASK;
+                    modeReg |= (uint32_t)fsm;
+                    base->MD = modeReg;
+                }
+                else
+                {
+                    fsm = lastAs;
+                }
+            }
+        }
 
-                base->DS = lastSize;
-                ltc_symmetric_process(base, lastSize, &inData, &outData);
-                lastSize = 0;
-                break;
+        else if (fsm == kLTC_ModeFinalize || kLTC_ModeInitFinal)
+        {
+            /* process last block in FINALIZE */
 
-            default:
-                break;
+            status = ltc_wait(base);
+            if (kStatus_Success != status)
+            {
+                return status;
+            }
+
+            modeReg &= ~LTC_MD_AS_MASK;
+            modeReg |= (uint32_t)lastAs;
+            base->MD = modeReg;
+
+            base->DS = lastSize;
+            ltc_symmetric_process(base, lastSize, &inData, &outData);
+            lastSize = 0;
+        }
+        else
+        {
+            /*do nothing*/
         }
     }
 
@@ -996,18 +1009,18 @@ static status_t ltc_aes_received_mac_compare(LTC_Type *base, const uint8_t *tag,
 {
     ltc_xcm_block_t blk = {{0x0u, 0x0u, 0x0u, 0x0u}};
 
-    base->CW = kLTC_ClearDataSize;
-    base->STA = kLTC_StatusDoneIsr;
+    base->CW  = (uint32_t)kLTC_ClearDataSize;
+    base->STA = (uint32_t)kLTC_StatusDoneIsr;
 
     modeReg &= ~LTC_MD_AS_MASK;
     modeReg |= (uint32_t)kLTC_ModeUpdate | LTC_MD_ICV_TEST_MASK;
     base->MD = modeReg;
 
-    base->DS = 0u;
+    base->DS   = 0u;
     base->ICVS = tagSize;
     ltc_memcpy(&blk.b[0], &tag[0], tagSize);
 
-    ltc_move_block_to_ififo(base, &blk, tagSize);
+    ltc_move_block_to_ififo(base, (const ltc_xcm_block_t *)(uint32_t)&blk, tagSize);
     return ltc_wait(base);
 }
 
@@ -1028,17 +1041,17 @@ static status_t ltc_aes_received_mac_compare(LTC_Type *base, const uint8_t *tag,
 static status_t ltc_aes_process_tag(LTC_Type *base, uint8_t *tag, uint32_t tagSize, ltc_mode_t modeReg, uint32_t ctx)
 {
     status_t status = kStatus_Success;
-    if (tag)
+    if (NULL != tag)
     {
         /* For decrypt, compare received MAC with the computed MAC. */
-        if (kLTC_ModeDecrypt == (modeReg & LTC_MD_ENC_MASK))
+        if ((uint32_t)kLTC_ModeDecrypt == (modeReg & LTC_MD_ENC_MASK))
         {
             status = ltc_aes_received_mac_compare(base, tag, tagSize, modeReg);
         }
         else /* FSL_AES_GCM_TYPE_ENCRYPT */
         {
             /* For encryption, write the computed and encrypted MAC to user buffer */
-            ltc_get_context(base, &tag[0], tagSize, ctx);
+            status = ltc_get_context(base, &tag[0], (uint8_t)tagSize, (uint8_t)ctx);
         }
     }
     return status;
@@ -1114,12 +1127,17 @@ static status_t ltc_aes_decrypt_ecb(LTC_Type *base,
     status_t retval;
 
     /* Initialize algorithm state. */
-    ltc_symmetric_update(base, key, keySize, kLTC_AlgorithmAES, kLTC_ModeECB, kLTC_ModeDecrypt);
+    retval = ltc_symmetric_update(base, key, (uint8_t)keySize, kLTC_AlgorithmAES, kLTC_ModeECB, kLTC_ModeDecrypt);
+    if (kStatus_Success != retval)
+    {
+        return retval;
+    }
 
     /* set DK bit in the LTC Mode Register AAI field for directly loaded decrypt keys */
     if (keyType == kLTC_DecryptKey)
     {
-        base->MD |= (1U << kLTC_ModeRegBitShiftDK);
+        uint32_t u32mask = 1;
+        base->MD |= (u32mask << (uint32_t)kLTC_ModeRegBitShiftDK);
     }
 
     /* Process data and return status. */
@@ -1157,7 +1175,7 @@ status_t LTC_AES_GenerateDecryptKey(LTC_Type *base, const uint8_t *encryptKey, u
     /* ECB decrypt with encrypt key will convert the key in LTC context into decrypt form of the key */
     status = ltc_aes_decrypt_ecb(base, ciphertext, plaintext, LTC_AES_BLOCK_SIZE, encryptKey, keySize, kLTC_EncryptKey);
     /* now there is decrypt form of the key in the LTC context, so take it */
-    ltc_get_key(base, decryptKey, keySize);
+    ltc_get_key(base, decryptKey, (uint8_t)keySize);
 
     ltc_clear_all(base, false);
 
@@ -1187,13 +1205,17 @@ status_t LTC_AES_EncryptEcb(
         return kStatus_InvalidArgument;
     }
     /* ECB mode, size must be 16-byte multiple */
-    if ((size < 16u) || (size % 16u))
+    if ((size < 16u) || (0U != (size % 16u)))
     {
         return kStatus_InvalidArgument;
     }
 
     /* Initialize algorithm state. */
-    ltc_symmetric_update(base, key, keySize, kLTC_AlgorithmAES, kLTC_ModeECB, kLTC_ModeEncrypt);
+    retval = ltc_symmetric_update(base, key, (uint8_t)keySize, kLTC_AlgorithmAES, kLTC_ModeECB, kLTC_ModeEncrypt);
+    if (kStatus_Success != retval)
+    {
+        return retval;
+    }
 
     /* Process data and return status. */
     retval = ltc_process_message_in_sessions(base, &plaintext[0], size, &ciphertext[0]);
@@ -1230,7 +1252,7 @@ status_t LTC_AES_DecryptEcb(LTC_Type *base,
         return kStatus_InvalidArgument;
     }
     /* ECB mode, size must be 16-byte multiple */
-    if ((size < 16u) || (size % 16u))
+    if ((size < 16u) || (0U != (size % 16u)))
     {
         return kStatus_InvalidArgument;
     }
@@ -1268,16 +1290,24 @@ status_t LTC_AES_EncryptCbc(LTC_Type *base,
     }
 
     /* CBC mode, size must be 16-byte multiple */
-    if ((size < 16u) || (size % 16u))
+    if ((size < 16u) || (0U != (size % 16u)))
     {
         return kStatus_InvalidArgument;
     }
 
     /* Initialize algorithm state. */
-    ltc_symmetric_update(base, key, keySize, kLTC_AlgorithmAES, kLTC_ModeCBC, kLTC_ModeEncrypt);
+    retval = ltc_symmetric_update(base, key, (uint8_t)keySize, kLTC_AlgorithmAES, kLTC_ModeCBC, kLTC_ModeEncrypt);
+    if (kStatus_Success != retval)
+    {
+        return retval;
+    }
 
     /* Write IV data to the context register. */
-    ltc_set_context(base, &iv[0], LTC_AES_IV_SIZE, 0);
+    retval = ltc_set_context(base, &iv[0], LTC_AES_IV_SIZE, 0);
+    if (kStatus_Success != retval)
+    {
+        return retval;
+    }
 
     /* Process data and return status. */
     retval = ltc_process_message_in_sessions(base, &plaintext[0], size, &ciphertext[0]);
@@ -1314,7 +1344,7 @@ status_t LTC_AES_DecryptCbc(LTC_Type *base,
         return kStatus_InvalidArgument;
     }
     /* CBC mode, size must be 16-byte multiple */
-    if ((size < 16u) || (size % 16u))
+    if ((size < 16u) || (0U != (size % 16u)))
     {
         return kStatus_InvalidArgument;
     }
@@ -1322,14 +1352,23 @@ status_t LTC_AES_DecryptCbc(LTC_Type *base,
     /* set DK bit in the LTC Mode Register AAI field for directly loaded decrypt keys */
     if (keyType == kLTC_DecryptKey)
     {
-        base->MD |= (1U << kLTC_ModeRegBitShiftDK);
+        uint32_t u32mask = 1;
+        base->MD |= (u32mask << (uint8_t)kLTC_ModeRegBitShiftDK);
     }
 
     /* Initialize algorithm state. */
-    ltc_symmetric_update(base, key, keySize, kLTC_AlgorithmAES, kLTC_ModeCBC, kLTC_ModeDecrypt);
+    retval = ltc_symmetric_update(base, key, (uint8_t)keySize, kLTC_AlgorithmAES, kLTC_ModeCBC, kLTC_ModeDecrypt);
+    if (kStatus_Success != retval)
+    {
+        return retval;
+    }
 
     /* Write IV data to the context register. */
-    ltc_set_context(base, &iv[0], LTC_AES_IV_SIZE, 0);
+    retval = ltc_set_context(base, &iv[0], LTC_AES_IV_SIZE, 0);
+    if (kStatus_Success != retval)
+    {
+        return retval;
+    }
 
     /* Process data and return status. */
     retval = ltc_process_message_in_sessions(base, &ciphertext[0], size, &plaintext[0]);
@@ -1384,7 +1423,7 @@ status_t LTC_AES_CryptCtr(LTC_Type *base,
         if (size <= 16U)
         {
             lastSize = size;
-            size = 0U;
+            size     = 0U;
         }
         else
         {
@@ -1403,11 +1442,19 @@ status_t LTC_AES_CryptCtr(LTC_Type *base,
     }
 
     /* Initialize algorithm state. */
-    ltc_symmetric_update(base, key, keySize, kLTC_AlgorithmAES, kLTC_ModeCTR, kLTC_ModeEncrypt);
+    retval = ltc_symmetric_update(base, key, (uint8_t)keySize, kLTC_AlgorithmAES, kLTC_ModeCTR, kLTC_ModeEncrypt);
+    if (kStatus_Success != retval)
+    {
+        return retval;
+    }
 
     /* Write initial counter data to the context register.
      * NOTE the counter values start at 4-bytes offset into the context. */
-    ltc_set_context(base, &counter[0], 16U, 4U);
+    retval = ltc_set_context(base, &counter[0], 16U, 4U);
+    if (kStatus_Success != retval)
+    {
+        return retval;
+    }
 
     /* Process data and return status. */
     retval = ltc_process_message_in_sessions(base, input, size, output);
@@ -1416,10 +1463,10 @@ status_t LTC_AES_CryptCtr(LTC_Type *base,
         return retval;
     }
 
-    input += size;
-    output += size;
+    input  = &input[size];
+    output = &output[size];
 
-    if ((counterlast != NULL) && lastSize)
+    if ((counterlast != NULL) && (0U != lastSize))
     {
         uint8_t zeroes[16] = {0};
         ltc_mode_t modeReg;
@@ -1436,7 +1483,7 @@ status_t LTC_AES_CryptCtr(LTC_Type *base,
         {
             return retval;
         }
-        if (szLeft)
+        if (NULL != szLeft)
         {
             *szLeft = 16U - lastSize;
         }
@@ -1449,7 +1496,7 @@ status_t LTC_AES_CryptCtr(LTC_Type *base,
         /* Process data and return status. */
         retval = ltc_symmetric_process_data(base, zeroes, 16U, counterlast);
     }
-    ltc_get_context(base, &counter[0], 16U, 4U);
+    (void)ltc_get_context(base, &counter[0], 16U, 4U);
     ltc_clear_all(base, false);
     return retval;
 }
@@ -1533,14 +1580,14 @@ static status_t ltc_aes_gcm_process_iv_aad(
 {
     uint32_t sz;
     status_t retval;
-    void (*next_size_func)(LTC_Type *ltcBase, uint32_t nextSize, bool authOnly);
+    void (*next_size_func)(LTC_Type * ltcBase, uint32_t nextSize, bool authOnly);
 
     if ((NULL == iv) || (ivSize == 0))
     {
         return kStatus_InvalidArgument;
     }
 
-    sz = LTC_FIFO_SZ_MAX_DOWN_ALGN;
+    sz             = LTC_FIFO_SZ_MAX_DOWN_ALGN;
     next_size_func = type == LTC_AES_GCM_TYPE_AAD ? aadsize_next : ivsize_next;
 
     while (ivSize)
@@ -1558,7 +1605,7 @@ static status_t ltc_aes_gcm_process_iv_aad(
         {
             /* set algorithm state to UPDATE */
             modeReg &= ~LTC_MD_AS_MASK;
-            modeReg |= kLTC_ModeUpdate;
+            modeReg |= (uint32_t)kLTC_ModeUpdate;
             base->MD = modeReg;
 
             next_size_func(base, (uint16_t)sz, true);
@@ -1624,7 +1671,7 @@ static status_t ltc_aes_gcm_process(LTC_Type *base,
         ltc_symmetric_final(base, key, keySize, kLTC_AlgorithmAES, kLTC_ModeGCM, encryptMode);
         modeReg = base->MD;
 
-        iv_only = (aadSize == 0) && (inputSize == 0);
+        iv_only  = (aadSize == 0) && (inputSize == 0);
         aad_only = (inputSize == 0);
 
         /* DS_MASK here is not a bug. IV size field can be written with more than 4-bits,
@@ -1665,7 +1712,11 @@ static status_t ltc_aes_gcm_process(LTC_Type *base,
     }
     else
     {
-        ltc_symmetric_init(base, key, keySize, kLTC_AlgorithmAES, kLTC_ModeGCM, encryptMode);
+        retval = ltc_symmetric_init(base, key, keySize, kLTC_AlgorithmAES, kLTC_ModeGCM, encryptMode);
+        if (kStatus_Success != retval)
+        {
+            return retval;
+        }
         modeReg = base->MD;
 
         /* process IV */
@@ -1706,7 +1757,7 @@ static status_t ltc_aes_gcm_process(LTC_Type *base,
         {
             /* set algorithm state to UPDATE */
             modeReg &= ~LTC_MD_AS_MASK;
-            modeReg |= kLTC_ModeUpdate;
+            modeReg |= (uint32_t)kLTC_ModeUpdate;
             base->MD = modeReg;
             retval =
                 ltc_symmetric_process_data_multiple(base, &src[0], inputSize, &dst[0], modeReg, kLTC_ModeInitFinal);
@@ -1829,13 +1880,13 @@ static status_t ltc_aes_ccm_check_input_args(LTC_Type *base,
                                              uint32_t keySize,
                                              uint32_t tagSize)
 {
-    if (!base)
+    if (NULL == base)
     {
         return kStatus_InvalidArgument;
     }
 
     /* tag can be NULL to skip tag processing */
-    if ((!src) || (!iv) || (!key) || (!dst))
+    if ((NULL == src) || (NULL == iv) || (NULL == key) || (NULL == dst))
     {
         return kStatus_InvalidArgument;
     }
@@ -1847,7 +1898,7 @@ static status_t ltc_aes_ccm_check_input_args(LTC_Type *base,
     }
     /* octet length of MAC (tagSize) must be element of 4,6,8,10,12,14,16 for tag processing or zero to skip tag
      * processing */
-    if (((tagSize > 0) && (tagSize < 4u)) || (tagSize > 16u) || (tagSize & 1u))
+    if (((tagSize > 0u) && (tagSize < 4u)) || (tagSize > 16u) || (0U != (tagSize & 1u)))
     {
         return kStatus_InvalidArgument;
     }
@@ -1868,8 +1919,8 @@ static status_t ltc_aes_ccm_check_input_args(LTC_Type *base,
 
 static uint32_t swap_bytes(uint32_t in)
 {
-    return (((in & 0x000000ffu) << 24) | ((in & 0x0000ff00u) << 8) | ((in & 0x00ff0000u) >> 8) |
-            ((in & 0xff000000u) >> 24));
+    return (((in & 0x000000ffu) << 24U) | ((in & 0x0000ff00u) << 8U) | ((in & 0x00ff0000u) >> 8U) |
+            ((in & 0xff000000u) >> 24U));
 }
 
 static void ltc_aes_ccm_context_init(
@@ -1878,18 +1929,18 @@ static void ltc_aes_ccm_context_init(
     ltc_xcm_block_t blk;
     ltc_xcm_block_t blkZero = {{0x0u, 0x0u, 0x0u, 0x0u}};
 
-    int q; /* octet length of binary representation of the octet length of the payload. computed as (15 - n), where n is
-              length of nonce(=ivSize) */
+    uint32_t q; /* octet length of binary representation of the octet length of the payload. computed as (15 - n), where
+              n is length of nonce(=ivSize) */
     uint8_t flags; /* flags field in B0 and CTR0 */
 
     /* compute B0 */
     ltc_memcpy(&blk, &blkZero, sizeof(blk));
     /* tagSize - size of output MAC */
-    q = 15 - ivSize;
-    flags = (uint8_t)(8 * ((tagSize - 2) / 2) + q - 1); /* 8*M' + L' */
-    if (aadSize)
+    q     = 15u - ivSize;
+    flags = (uint8_t)(8u * ((tagSize - 2u) / 2u) + q - 1u); /* 8*M' + L' */
+    if (0U != aadSize)
     {
-        flags |= 0x40; /* Adata */
+        flags |= 0x40U; /* Adata */
     }
     blk.b[0] = flags;                  /* flags field */
     blk.w[3] = swap_bytes(inputSize);  /* message size, most significant byte first */
@@ -1897,14 +1948,14 @@ static void ltc_aes_ccm_context_init(
 
     /* Write B0 data to the context register.
      */
-    ltc_set_context(base, &blk.b[0], 16, 0);
+    (void)ltc_set_context(base, &blk.b[0], 16, 0);
 
     /* Write CTR0 to the context register.
      */
     ltc_memcpy(&blk, &blkZero, sizeof(blk)); /* ctr(0) field = zero */
-    blk.b[0] = q - 1;                        /* flags field */
+    blk.b[0] = (uint8_t)(q - 1u);            /* flags field */
     ltc_memcpy(&blk.b[1], iv, ivSize);       /* nonce field */
-    ltc_set_context(base, &blk.b[0], 16, 4);
+    (void)ltc_set_context(base, &blk.b[0], 16, 4);
 }
 
 static status_t ltc_aes_ccm_process_aad(
@@ -1914,14 +1965,14 @@ static status_t ltc_aes_ccm_process_aad(
     uint32_t swapped; /* holds byte swap of uint32_t */
     status_t retval;
 
-    if (aadSize)
+    if (0U != aadSize)
     {
         bool aad_only;
         bool aad_single_session;
 
         uint32_t sz = 0;
 
-        aad_only = inputSize == 0u;
+        aad_only           = inputSize == 0u;
         aad_single_session = (((aadSize + 2u) + 15u) & 0xfffffff0u) <= LTC_FIFO_SZ_MAX_DOWN_ALGN;
 
         /* limit by CCM spec: 2^16 - 2^8 = 65280 */
@@ -1935,20 +1986,20 @@ static status_t ltc_aes_ccm_process_aad(
 
         if (aad_single_session)
         {
-            base->AADSZ = LTC_AADSZ_AL(aad_only) | ((aadSize + 2U) & LTC_DS_DS_MASK);
+            base->AADSZ = LTC_AADSZ_AL((true == aad_only ? 1U : 0U)) | ((aadSize + 2U) & LTC_DS_DS_MASK);
             /* move first AAD block (16 bytes block B1) to FIFO */
-            ltc_move_block_to_ififo(base, &blk, sizeof(blk));
+            ltc_move_block_to_ififo(base, (const ltc_xcm_block_t *)(uint32_t)&blk, sizeof(blk));
         }
         else
         {
-            base->AADSZ = LTC_AADSZ_AL(true) | (16U);
+            base->AADSZ = LTC_AADSZ_AL(1U) | (16U);
             /* move first AAD block (16 bytes block B1) to FIFO */
-            ltc_move_block_to_ififo(base, &blk, sizeof(blk));
+            ltc_move_block_to_ififo(base, (const ltc_xcm_block_t *)(uint32_t)&blk, sizeof(blk));
         }
 
         /* track consumed AAD. sz bytes have been moved to fifo. */
         aadSize -= sz;
-        aad += sz;
+        aad = &aad[sz];
 
         if (aad_single_session)
         {
@@ -1965,7 +2016,7 @@ static status_t ltc_aes_ccm_process_aad(
         }
         else
         {
-            while (aadSize)
+            while (0U != aadSize)
             {
                 retval = ltc_wait(base);
                 if (kStatus_Success != retval)
@@ -1980,16 +2031,16 @@ static status_t ltc_aes_ccm_process_aad(
                 sz = LTC_FIFO_SZ_MAX_DOWN_ALGN;
                 if (aadSize < sz)
                 {
-                    base->AADSZ = LTC_AADSZ_AL(aad_only) | (aadSize & LTC_DS_DS_MASK);
+                    base->AADSZ = LTC_AADSZ_AL((true == aad_only ? 1U : 0U)) | (aadSize & LTC_DS_DS_MASK);
                     ltc_move_to_ififo(base, aad, aadSize);
                     aadSize = 0;
                 }
                 else
                 {
-                    base->AADSZ = LTC_AADSZ_AL(true) | (sz & LTC_DS_DS_MASK);
+                    base->AADSZ = LTC_AADSZ_AL(1U) | (sz & LTC_DS_DS_MASK);
                     ltc_move_to_ififo(base, aad, sz);
                     aadSize -= sz;
-                    aad += sz;
+                    aad = &aad[sz];
                 }
             } /* end while */
         }     /* end else */
@@ -2033,16 +2084,24 @@ static status_t ltc_aes_ccm_process(LTC_Type *base,
      * then all can be processed in one session INITIALIZE/FINALIZE.
      * Otherwise, we have to split into multiple session, going through INITIALIZE, UPDATE (if required) and FINALIZE.
      */
-    single_ses_proc_all = ((((aadSize + 2) + 15u) & 0xfffffff0u) + inputSize) <= max_ltc_fifo_sz;
+    single_ses_proc_all = ((((aadSize + 2u) + 15u) & 0xfffffff0u) + inputSize) <= max_ltc_fifo_sz;
 
     /* setup key, algorithm and set the alg.state to INITIALIZE */
     if (single_ses_proc_all)
     {
-        ltc_symmetric_init_final(base, key, keySize, kLTC_AlgorithmAES, kLTC_ModeCCM, encryptMode);
+        retval = ltc_symmetric_init_final(base, key, (uint8_t)keySize, kLTC_AlgorithmAES, kLTC_ModeCCM, encryptMode);
+        if (kStatus_Success != retval)
+        {
+            return retval;
+        }
     }
     else
     {
-        ltc_symmetric_init(base, key, keySize, kLTC_AlgorithmAES, kLTC_ModeCCM, encryptMode);
+        retval = ltc_symmetric_init(base, key, (uint8_t)keySize, kLTC_AlgorithmAES, kLTC_ModeCCM, encryptMode);
+        if (kStatus_Success != retval)
+        {
+            return retval;
+        }
     }
     modeReg = base->MD;
 
@@ -2059,7 +2118,7 @@ static status_t ltc_aes_ccm_process(LTC_Type *base,
     }
 
     /* Workaround for the LTC Data Size register update errata TKT261180 */
-    if (inputSize)
+    if (0U != inputSize)
     {
         while (16u < base->DS)
         {
@@ -2164,7 +2223,7 @@ status_t LTC_AES_DecryptTagCcm(LTC_Type *base,
     status_t status;
 
     tag_ptr = NULL;
-    if (tag)
+    if (NULL != tag)
     {
         ltc_memcpy(temp_tag, tag, tagSize);
         tag_ptr = &temp_tag[0];
@@ -2199,11 +2258,18 @@ static status_t ltc_des_process(LTC_Type *base,
     }
 
     /* Initialize algorithm state. */
-    ltc_symmetric_update(base, &key[0], LTC_DES_KEY_SIZE, kLTC_AlgorithmDES, modeAs, modeEnc);
-
+    retval = ltc_symmetric_update(base, &key[0], LTC_DES_KEY_SIZE, kLTC_AlgorithmDES, modeAs, modeEnc);
+    if (kStatus_Success != retval)
+    {
+        return retval;
+    }
     if ((modeAs != kLTC_ModeECB))
     {
-        ltc_set_context(base, iv, LTC_DES_IV_SIZE, 0);
+        retval = ltc_set_context(base, iv, LTC_DES_IV_SIZE, 0);
+        if (kStatus_Success != retval)
+        {
+            return retval;
+        }
     }
 
     /* Process data and return status. */
@@ -2260,11 +2326,19 @@ static status_t ltc_3des_process(LTC_Type *base,
     }
 
     /* Initialize algorithm state. */
-    ltc_symmetric_update(base, &key[0], keySize, kLTC_Algorithm3DES, modeAs, modeEnc);
+    retval = ltc_symmetric_update(base, &key[0], keySize, kLTC_Algorithm3DES, modeAs, modeEnc);
+    if (kStatus_Success != retval)
+    {
+        return retval;
+    }
 
     if ((modeAs != kLTC_ModeECB))
     {
-        ltc_set_context(base, iv, LTC_DES_IV_SIZE, 0);
+        retval = ltc_set_context(base, iv, LTC_DES_IV_SIZE, 0);
+        if (kStatus_Success != retval)
+        {
+            return retval;
+        }
     }
 
     /* Process data and return status. */
@@ -2879,8 +2953,8 @@ status_t LTC_DES3_DecryptOfb(LTC_Type *base,
 
 enum _ltc_sha_digest_len
 {
-    kLTC_RunLenSha1 = 28u,
-    kLTC_OutLenSha1 = 20u,
+    kLTC_RunLenSha1   = 28u,
+    kLTC_OutLenSha1   = 20u,
     kLTC_RunLenSha224 = 40u,
     kLTC_OutLenSha224 = 28u,
     kLTC_RunLenSha256 = 40u,
@@ -2909,8 +2983,8 @@ typedef union _ltc_hash_block
 typedef enum _ltc_hash_ctx_indexes
 {
     kLTC_HashCtxKeyStartIdx = 12, /*!< context word array index where key is stored */
-    kLTC_HashCtxKeySize = 20,     /*!< context word array index where key size is stored */
-    kLTC_HashCtxNumWords = 21,    /*!< number of context array 32-bit words  */
+    kLTC_HashCtxKeySize     = 20, /*!< context word array index where key size is stored */
+    kLTC_HashCtxNumWords    = 21, /*!< number of context array 32-bit words  */
 } ltc_hash_ctx_indexes;
 
 typedef struct _ltc_hash_ctx_internal
@@ -2932,7 +3006,7 @@ static status_t ltc_hash_check_input_alg(ltc_hash_algo_t algo)
 #if defined(FSL_FEATURE_LTC_HAS_SHA) && FSL_FEATURE_LTC_HAS_SHA
         && (algo != kLTC_Sha1) && (algo != kLTC_Sha224) && (algo != kLTC_Sha256)
 #endif /* FSL_FEATURE_LTC_HAS_SHA */
-            )
+    )
     {
         return kStatus_InvalidArgument;
     }
@@ -3021,7 +3095,7 @@ static uint32_t ltc_hash_algo2mode(ltc_hash_algo_t algo, ltc_mode_algorithm_stat
     }
 
     modeReg |= (uint32_t)asMode;
-    if (algOutSize)
+    if (NULL != algOutSize)
     {
         *algOutSize = outSize;
     }
@@ -3040,17 +3114,17 @@ static void ltc_hash_engine_init(ltc_hash_ctx_internal_t *ctx)
 #if defined(FSL_FEATURE_LTC_HAS_SHA) && FSL_FEATURE_LTC_HAS_SHA
     if (ltc_hash_alg_is_cmac(ctx->algo))
     {
-#endif  /* FSL_FEATURE_LTC_HAS_SHA */
+#endif /* FSL_FEATURE_LTC_HAS_SHA */
         /*
          *  word[kLtcCmacCtxKeySize] = key_length
          *  word[1-8] = key
          */
         keySize = ctx->word[kLTC_HashCtxKeySize];
-        key = (uint8_t *)&ctx->word[kLTC_HashCtxKeyStartIdx];
+        key     = (uint8_t *)&ctx->word[kLTC_HashCtxKeyStartIdx];
 
         /* set LTC mode register to INITIALIZE */
         algo = (ctx->algo == kLTC_XcbcMac) ? kLTC_ModeXCBCMAC : kLTC_ModeCMAC;
-        ltc_symmetric_init(base, key, keySize, kLTC_AlgorithmAES, algo, kLTC_ModeEncrypt);
+        (void)ltc_symmetric_init(base, key, (uint8_t)keySize, kLTC_AlgorithmAES, algo, kLTC_ModeEncrypt);
 #if defined(FSL_FEATURE_LTC_HAS_SHA) && FSL_FEATURE_LTC_HAS_SHA
     }
     else if (ltc_hash_alg_is_sha(ctx->algo))
@@ -3080,18 +3154,18 @@ static void ltc_hash_save_context(ltc_hash_ctx_internal_t *ctx)
     {
         case kLTC_XcbcMac:
             /*
-            *  word[0-3] = mac
-            *  word[3-7] = k3
-            *  word[8-11] = k2
-            *  word[kLtcCmacCtxKeySize] = keySize
-            */
-            sz = 12 * sizeof(uint32_t);
+             *  word[0-3] = mac
+             *  word[3-7] = k3
+             *  word[8-11] = k2
+             *  word[kLtcCmacCtxKeySize] = keySize
+             */
+            sz = 12U * sizeof(uint32_t);
             break;
         case kLTC_Cmac:
             /*
-            *  word[0-3] = mac
-            *  word[3-7] = L */
-            sz = 8 * sizeof(uint32_t);
+             *  word[0-3] = mac
+             *  word[3-7] = L */
+            sz = 8u * sizeof(uint32_t);
             break;
 #if defined(FSL_FEATURE_LTC_HAS_SHA) && FSL_FEATURE_LTC_HAS_SHA
         case kLTC_Sha1:
@@ -3109,12 +3183,13 @@ static void ltc_hash_save_context(ltc_hash_ctx_internal_t *ctx)
             break;
     }
 
-    ltc_get_context(base, (uint8_t *)&ctx->word[0], sz, 0);
+    (void)ltc_get_context(base, (uint8_t *)&ctx->word[0], (uint8_t)sz, 0);
 
     if (true == ltc_hash_alg_is_cmac(ctx->algo))
     {
         /* word[12-19] = key */
-        ltc_get_key(base, (uint8_t *)&ctx->word[kLTC_HashCtxKeyStartIdx], ctx->word[kLTC_HashCtxKeySize]);
+        ltc_get_key(base, (uint8_t *)&ctx->word[kLTC_HashCtxKeyStartIdx],
+                    (uint8_t)ctx->word[(uint8_t)kLTC_HashCtxKeySize]);
     }
 }
 
@@ -3130,18 +3205,18 @@ static void ltc_hash_restore_context(ltc_hash_ctx_internal_t *ctx)
     {
         case kLTC_XcbcMac:
             /*
-            *  word[0-3] = mac
-            *  word[3-7] = k3
-            *  word[8-11] = k2
-            *  word[kLtcCmacCtxKeySize] = keySize
-            */
-            sz = 12 * sizeof(uint32_t);
+             *  word[0-3] = mac
+             *  word[3-7] = k3
+             *  word[8-11] = k2
+             *  word[kLtcCmacCtxKeySize] = keySize
+             */
+            sz = 12U * sizeof(uint32_t);
             break;
         case kLTC_Cmac:
             /*
-            *  word[0-3] = mac
-            *  word[3-7] = L */
-            sz = 8 * sizeof(uint32_t);
+             *  word[0-3] = mac
+             *  word[3-7] = L */
+            sz = 8u * sizeof(uint32_t);
             break;
 #if defined(FSL_FEATURE_LTC_HAS_SHA) && FSL_FEATURE_LTC_HAS_SHA
         case kLTC_Sha1:
@@ -3159,7 +3234,7 @@ static void ltc_hash_restore_context(ltc_hash_ctx_internal_t *ctx)
             break;
     }
 
-    ltc_set_context(base, (const uint8_t *)&ctx->word[0], sz, 0);
+    (void)ltc_set_context(base, (const uint8_t *)&ctx->word[0], (uint8_t)sz, 0);
 
     if (ltc_hash_alg_is_cmac(ctx->algo))
     {
@@ -3167,11 +3242,11 @@ static void ltc_hash_restore_context(ltc_hash_ctx_internal_t *ctx)
          *  word[12-19] = key
          *  word[kLtcCmacCtxKeySize] = keySize
          */
-        base->CW = kLTC_ClearKey; /* clear Key and Key Size registers */
+        base->CW = (uint32_t)kLTC_ClearKey; /* clear Key and Key Size registers */
 
         keySize = ctx->word[kLTC_HashCtxKeySize];
         /* Write the key in place. */
-        ltc_set_key(base, (const uint8_t *)&ctx->word[kLTC_HashCtxKeyStartIdx], keySize);
+        ltc_set_key(base, (const uint8_t *)&ctx->word[kLTC_HashCtxKeyStartIdx], (uint8_t)keySize);
 
         /* Write the key size.  This must be done after writing the key, and this
          * action locks the ability to modify the key registers. */
@@ -3181,8 +3256,8 @@ static void ltc_hash_restore_context(ltc_hash_ctx_internal_t *ctx)
 
 static void ltc_hash_prepare_context_switch(LTC_Type *base)
 {
-    base->CW = (uint32_t)kLTC_ClearDataSize | (uint32_t)kLTC_ClearMode;
-    base->STA = kLTC_StatusDoneIsr;
+    base->CW  = (uint32_t)kLTC_ClearDataSize | (uint32_t)kLTC_ClearMode;
+    base->STA = (uint32_t)kLTC_StatusDoneIsr;
 }
 
 static uint32_t ltc_hash_get_block_size(ltc_hash_algo_t algo)
@@ -3211,7 +3286,7 @@ static void ltc_hash_block_to_ififo(LTC_Type *base, const ltc_hash_block_t *blk,
     uint32_t words;
 
     words = numBytes / 4u;
-    if (numBytes % 4u)
+    if (0U != (numBytes % 4u))
     {
         words++;
     }
@@ -3244,14 +3319,14 @@ static void ltc_hash_move_to_ififo(ltc_hash_ctx_internal_t *ctx,
         blkZero.w[i] = 0;
     }
 
-    while (dataSize)
+    while (0U != dataSize)
     {
         if (dataSize >= blockSize)
         {
             ltc_memcpy(&ctx->blk, data, blockSize);
-            ltc_hash_block_to_ififo(ctx->base, &ctx->blk, blockSize, blockSize);
+            ltc_hash_block_to_ififo(ctx->base, (const ltc_hash_block_t *)(uint32_t)&ctx->blk, blockSize, blockSize);
             dataSize -= blockSize;
-            data += blockSize;
+            data = &data[blockSize];
         }
         else
         {
@@ -3259,7 +3334,7 @@ static void ltc_hash_move_to_ififo(ltc_hash_ctx_internal_t *ctx,
             ltc_memcpy(&ctx->blk, &blkZero, sizeof(ctx->blk));
             ltc_memcpy(&ctx->blk, data, dataSize);
             ctx->blksz = dataSize;
-            dataSize = 0;
+            dataSize   = 0;
         }
     }
 }
@@ -3276,8 +3351,8 @@ static status_t ltc_hash_merge_and_flush_buf(ltc_hash_ctx_internal_t *ctx,
     status_t status = kStatus_Success;
 
     base = ctx->base;
-    sz = 0;
-    if (ctx->blksz)
+    sz   = 0;
+    if (0U != ctx->blksz)
     {
         sz = blockSize - ctx->blksz;
         if (sz > inputSize)
@@ -3285,14 +3360,14 @@ static status_t ltc_hash_merge_and_flush_buf(ltc_hash_ctx_internal_t *ctx,
             sz = inputSize;
         }
         ltc_memcpy(ctx->blk.b + ctx->blksz, input, sz);
-        input += sz;
+        input = &input[sz];
         inputSize -= sz;
         ctx->blksz += sz;
 
         if (ctx->blksz == blockSize)
         {
             base->DS = blockSize;
-            ltc_hash_block_to_ififo(base, &ctx->blk, blockSize, blockSize);
+            ltc_hash_block_to_ififo(base, (const ltc_hash_block_t *)(uint32_t)&ctx->blk, blockSize, blockSize);
             ctx->blksz = 0;
 
             status = ltc_wait(base);
@@ -3302,16 +3377,16 @@ static status_t ltc_hash_merge_and_flush_buf(ltc_hash_ctx_internal_t *ctx,
             }
 
             /* if there is still inputSize left, make sure LTC alg.state is set to UPDATE and continue */
-            if (inputSize)
+            if (0U != inputSize)
             {
                 /* set algorithm state to UPDATE */
                 modeReg &= ~LTC_MD_AS_MASK;
-                modeReg |= kLTC_ModeUpdate;
+                modeReg |= (uint32_t)kLTC_ModeUpdate;
                 base->MD = modeReg;
             }
         }
     }
-    if (consumedSize)
+    if (NULL != consumedSize)
     {
         *consumedSize = sz;
     }
@@ -3331,31 +3406,31 @@ static status_t ltc_hash_move_rest_to_context(
         blkZero.w[i] = 0;
     }
 
-    while (dataSize)
+    while (0U != dataSize)
     {
         if (dataSize > blockSize)
         {
             dataSize -= blockSize;
-            data += blockSize;
+            data = &data[blockSize];
         }
         else
         {
             if (dataSize + ctx->blksz > blockSize)
             {
                 uint32_t sz = 0;
-                status = ltc_hash_merge_and_flush_buf(ctx, data, dataSize, modeReg, blockSize, &sz);
+                status      = ltc_hash_merge_and_flush_buf(ctx, data, dataSize, modeReg, blockSize, &sz);
                 if (kStatus_Success != status)
                 {
                     return status;
                 }
-                data += sz;
+                data = &data[sz];
                 dataSize -= sz;
             }
             /* last incomplete 16/64-bytes block of this message chunk */
             ltc_memcpy(&ctx->blk, &blkZero, blockSize);
             ltc_memcpy(&ctx->blk, data, dataSize);
             ctx->blksz = dataSize;
-            dataSize = 0;
+            dataSize   = 0;
         }
     }
     return status;
@@ -3369,10 +3444,10 @@ static status_t ltc_hash_process_input_data(ltc_hash_ctx_internal_t *ctx,
     uint32_t sz = 0;
     LTC_Type *base;
     uint32_t blockSize = 0;
-    status_t status = kStatus_Success;
+    status_t status    = kStatus_Success;
 
     blockSize = ltc_hash_get_block_size(ctx->algo);
-    if (blockSize == 0)
+    if (blockSize == 0u)
     {
         return kStatus_Fail;
     }
@@ -3384,24 +3459,24 @@ static status_t ltc_hash_process_input_data(ltc_hash_ctx_internal_t *ctx,
     {
         return status;
     }
-    input += sz;
+    input = &input[sz];
     inputSize -= sz;
 
     /* if there is still more than or equal to 64 bytes, move each 64 bytes through LTC */
     sz = LTC_DS_DS_MASK + 1u - LTC_HASH_BLOCK_SIZE;
-    while (inputSize)
+    while (0U != inputSize)
     {
         if (inputSize < sz)
         {
             uint32_t lastSize;
 
             lastSize = inputSize % blockSize;
-            if (lastSize == 0)
+            if (lastSize == 0u)
             {
                 lastSize = blockSize;
             }
             inputSize -= lastSize;
-            if (inputSize)
+            if (0U != inputSize)
             {
                 /* move all complete blocks to ififo. */
                 base->DS = inputSize;
@@ -3413,7 +3488,7 @@ static status_t ltc_hash_process_input_data(ltc_hash_ctx_internal_t *ctx,
                     return status;
                 }
 
-                input += inputSize;
+                input = &input[inputSize];
             }
             /* keep last (in)complete 16-bytes block in context struct. */
             /* when 3rd argument of cmac_move_to_ififo() is <= 16 bytes, it only stores the data to context struct */
@@ -3429,7 +3504,7 @@ static status_t ltc_hash_process_input_data(ltc_hash_ctx_internal_t *ctx,
             base->DS = sz;
             ltc_hash_move_to_ififo(ctx, input, sz, blockSize);
             inputSize -= sz;
-            input += sz;
+            input = &input[sz];
 
             status = ltc_wait(base);
             if (kStatus_Success != status)
@@ -3439,7 +3514,7 @@ static status_t ltc_hash_process_input_data(ltc_hash_ctx_internal_t *ctx,
 
             /* set algorithm state to UPDATE */
             modeReg &= ~LTC_MD_AS_MASK;
-            modeReg |= kLTC_ModeUpdate;
+            modeReg |= (uint32_t)kLTC_ModeUpdate;
             base->MD = modeReg;
         }
     } /* end while */
@@ -3481,9 +3556,9 @@ status_t LTC_HASH_Init(LTC_Type *base, ltc_hash_ctx_t *ctx, ltc_hash_algo_t algo
     }
 
     /* set algorithm in context struct for later use */
-    ctxInternal = (ltc_hash_ctx_internal_t *)ctx;
+    ctxInternal       = (ltc_hash_ctx_internal_t *)(uint32_t)ctx;
     ctxInternal->algo = algo;
-    for (i = 0; i < kLTC_HashCtxNumWords; i++)
+    for (i = 0; i < (uint32_t)kLTC_HashCtxNumWords; i++)
     {
         ctxInternal->word[i] = 0u;
     }
@@ -3501,7 +3576,7 @@ status_t LTC_HASH_Init(LTC_Type *base, ltc_hash_ctx_t *ctx, ltc_hash_algo_t algo
         ctxInternal->blk.w[0] = 0u;
     }
     ctxInternal->state = kLTC_HashInit;
-    ctxInternal->base = base;
+    ctxInternal->base  = base;
 
     return kStatus_Success;
 }
@@ -3526,14 +3601,14 @@ status_t LTC_HASH_Update(ltc_hash_ctx_t *ctx, const uint8_t *input, uint32_t inp
     ltc_hash_ctx_internal_t *ctxInternal;
     uint32_t blockSize;
 
-    ctxInternal = (ltc_hash_ctx_internal_t *)ctx;
-    status = ltc_hash_check_context(ctxInternal, input);
+    ctxInternal = (ltc_hash_ctx_internal_t *)(uint32_t)ctx;
+    status      = ltc_hash_check_context(ctxInternal, input);
     if (kStatus_Success != status)
     {
         return status;
     }
 
-    base = ctxInternal->base;
+    base      = ctxInternal->base;
     blockSize = ltc_hash_get_block_size(ctxInternal->algo);
     /* if we are still less than 64 bytes, keep only in context */
     if ((ctxInternal->blksz + inputSize) <= blockSize)
@@ -3555,19 +3630,19 @@ status_t LTC_HASH_Update(ltc_hash_ctx_t *ctx, const uint8_t *input, uint32_t inp
             {
 #endif /* FSL_FEATURE_LTC_HAS_SHA */
                 ctxInternal->state = kLTC_HashUpdate;
-                isUpdateState = true;
-                base->DS = 0u;
-                status = ltc_wait(base);
+                isUpdateState      = true;
+                base->DS           = 0u;
+                status             = ltc_wait(base);
 #if defined(FSL_FEATURE_LTC_HAS_SHA) && FSL_FEATURE_LTC_HAS_SHA
             }
             else
             {
                 /* Set the proper block and algorithm mode. */
-                modeReg = ltc_hash_algo2mode(ctxInternal->algo, kLTC_ModeInit, NULL);
+                modeReg  = ltc_hash_algo2mode(ctxInternal->algo, kLTC_ModeInit, NULL);
                 base->MD = modeReg;
 
                 ctxInternal->state = kLTC_HashUpdate;
-                status = ltc_hash_process_input_data(ctxInternal, input, inputSize, modeReg);
+                status             = ltc_hash_process_input_data(ctxInternal, input, inputSize, modeReg);
                 ltc_hash_save_context(ctxInternal);
             }
 #endif /* FSL_FEATURE_LTC_HAS_SHA */
@@ -3592,8 +3667,8 @@ status_t LTC_HASH_Update(ltc_hash_ctx_t *ctx, const uint8_t *input, uint32_t inp
     {
         /* set LTC mode register to UPDATE job */
         ltc_hash_prepare_context_switch(base);
-        base->CW = kLTC_ClearDataSize;
-        modeReg = ltc_hash_algo2mode(ctxInternal->algo, kLTC_ModeUpdate, NULL);
+        base->CW = (uint32_t)kLTC_ClearDataSize;
+        modeReg  = ltc_hash_algo2mode(ctxInternal->algo, kLTC_ModeUpdate, NULL);
         base->MD = modeReg;
 
         /* process input data and save LTC context to context structure */
@@ -3624,8 +3699,8 @@ status_t LTC_HASH_Finish(ltc_hash_ctx_t *ctx, uint8_t *output, uint32_t *outputS
     uint32_t *ctxW;
     uint32_t i;
 
-    ctxInternal = (ltc_hash_ctx_internal_t *)ctx;
-    status = ltc_hash_check_context(ctxInternal, output);
+    ctxInternal = (ltc_hash_ctx_internal_t *)(uint32_t)ctx;
+    status      = ltc_hash_check_context(ctxInternal, output);
     if (kStatus_Success != status)
     {
         return status;
@@ -3634,7 +3709,7 @@ status_t LTC_HASH_Finish(ltc_hash_ctx_t *ctx, uint8_t *output, uint32_t *outputS
     base = ctxInternal->base;
     ltc_hash_prepare_context_switch(base);
 
-    base->CW = kLTC_ClearDataSize;
+    base->CW = (uint32_t)kLTC_ClearDataSize;
     if (ctxInternal->state == kLTC_HashInit)
     {
         ltc_hash_engine_init(ctxInternal);
@@ -3643,7 +3718,7 @@ status_t LTC_HASH_Finish(ltc_hash_ctx_t *ctx, uint8_t *output, uint32_t *outputS
         {
 #endif /* FSL_FEATURE_LTC_HAS_SHA */
             base->DS = 0u;
-            status = ltc_wait(base);
+            status   = ltc_wait(base);
             if (kStatus_Success != status)
             {
                 return status;
@@ -3660,7 +3735,7 @@ status_t LTC_HASH_Finish(ltc_hash_ctx_t *ctx, uint8_t *output, uint32_t *outputS
     }
     else
     {
-        modeReg = ltc_hash_algo2mode(ctxInternal->algo, kLTC_ModeFinalize, &algOutSize);
+        modeReg  = ltc_hash_algo2mode(ctxInternal->algo, kLTC_ModeFinalize, &algOutSize);
         base->MD = modeReg;
 
         /* restore LTC context from context struct */
@@ -3669,11 +3744,12 @@ status_t LTC_HASH_Finish(ltc_hash_ctx_t *ctx, uint8_t *output, uint32_t *outputS
 
     /* flush message last incomplete block, if there is any, or write zero to data size register. */
     base->DS = ctxInternal->blksz;
-    ltc_hash_block_to_ififo(base, &ctxInternal->blk, ctxInternal->blksz, ltc_hash_get_block_size(ctxInternal->algo));
+    ltc_hash_block_to_ififo(base, (const ltc_hash_block_t *)(uint32_t)&ctxInternal->blk, ctxInternal->blksz,
+                            ltc_hash_get_block_size(ctxInternal->algo));
     /* Wait for finish of the encryption */
     status = ltc_wait(base);
 
-    if (outputSize)
+    if (NULL != outputSize)
     {
         if (algOutSize < *outputSize)
         {
@@ -3685,10 +3761,10 @@ status_t LTC_HASH_Finish(ltc_hash_ctx_t *ctx, uint8_t *output, uint32_t *outputS
         }
     }
 
-    ltc_get_context(base, &output[0], algOutSize, 0u);
+    (void)ltc_get_context(base, &output[0], (uint8_t)algOutSize, 0u);
 
-    ctxW = (uint32_t *)ctx;
-    for (i = 0; i < LTC_HASH_CTX_SIZE; i++)
+    ctxW = (uint32_t *)(uint32_t)ctx;
+    for (i = 0; i < (uint32_t)LTC_HASH_CTX_SIZE; i++)
     {
         ctxW[i] = 0u;
     }
@@ -3777,16 +3853,16 @@ static status_t ltc_pkha_clear_regabne(LTC_Type *base, bool A, bool B, bool N, b
 
 static void ltc_pkha_default_parms(ltc_pkha_mode_params_t *params)
 {
-    params->func = (ltc_pkha_func_t)0;
-    params->arithType = kLTC_PKHA_IntegerArith;
-    params->montFormIn = kLTC_PKHA_NormalValue;
+    params->func        = (ltc_pkha_func_t)0;
+    params->arithType   = kLTC_PKHA_IntegerArith;
+    params->montFormIn  = kLTC_PKHA_NormalValue;
     params->montFormOut = kLTC_PKHA_NormalValue;
-    params->srcReg = kLTC_PKHA_RegAll;
-    params->srcQuad = kLTC_PKHA_Quad0;
-    params->dstReg = kLTC_PKHA_RegAll;
-    params->dstQuad = kLTC_PKHA_Quad0;
-    params->equalTime = kLTC_PKHA_NoTimingEqualized;
-    params->r2modn = kLTC_PKHA_CalcR2;
+    params->srcReg      = kLTC_PKHA_RegAll;
+    params->srcQuad     = kLTC_PKHA_Quad0;
+    params->dstReg      = kLTC_PKHA_RegAll;
+    params->dstQuad     = kLTC_PKHA_Quad0;
+    params->equalTime   = kLTC_PKHA_NoTimingEqualized;
+    params->r2modn      = kLTC_PKHA_CalcR2;
 }
 
 static void ltc_pkha_write_word(LTC_Type *base, ltc_pkha_reg_area_t reg, uint8_t index, uint32_t data)
@@ -3919,7 +3995,7 @@ static void ltc_pkha_init_data(LTC_Type *base,
         clearMask |= kLTC_ClearPkhaSizeE;
     }
 
-    base->CW = clearMask;
+    base->CW  = clearMask;
     base->STA = kLTC_StatusDoneIsr;
     ltc_pkha_clear_regabne(base, A, B, N, E);
 
@@ -4059,7 +4135,7 @@ static status_t ltc_pkha_modR2(
     ltc_pkha_mode_params_t params;
 
     ltc_pkha_default_parms(&params);
-    params.func = kLTC_PKHA_ArithModR2;
+    params.func      = kLTC_PKHA_ArithModR2;
     params.arithType = arithType;
 
     ltc_pkha_init_data(base, NULL, 0, NULL, 0, N, sizeN, NULL, 0);
@@ -4110,11 +4186,11 @@ static status_t ltc_pkha_modmul(LTC_Type *base,
     }
 
     ltc_pkha_default_parms(&params);
-    params.func = kLTC_PKHA_ArithModMul;
-    params.arithType = arithType;
-    params.montFormIn = montIn;
+    params.func        = kLTC_PKHA_ArithModMul;
+    params.arithType   = arithType;
+    params.montFormIn  = montIn;
     params.montFormOut = montOut;
-    params.equalTime = equalTime;
+    params.equalTime   = equalTime;
 
     ltc_pkha_init_data(base, A, sizeA, B, sizeB, N, sizeN, NULL, 0);
     status = ltc_pkha_init_mode(base, &params);
@@ -4185,8 +4261,8 @@ int LTC_PKHA_CompareBigNum(const uint8_t *a, size_t sizeA, const uint8_t *b, siz
         int val;
         uint32_t equal;
 
-        n = sizeA - 1;
-        i = 0;
+        n     = sizeA - 1;
+        i     = 0;
         equal = 0;
 
         while (n >= 0)
@@ -4327,7 +4403,7 @@ status_t LTC_PKHA_MontgomeryToNormal(LTC_Type *base,
                                      ltc_pkha_timing_t equalTime,
                                      ltc_pkha_f2m_t arithType)
 {
-    uint8_t one = 1;
+    uint8_t one     = 1;
     status_t status = kStatus_InvalidArgument;
 
     /* A = MOD_MUL_IM_OM(A(Montgomery), 1, N) */
@@ -4403,7 +4479,7 @@ status_t LTC_PKHA_ModAdd(LTC_Type *base,
     }
 
     ltc_pkha_default_parms(&params);
-    params.func = kLTC_PKHA_ArithModAdd;
+    params.func      = kLTC_PKHA_ArithModAdd;
     params.arithType = arithType;
 
     ltc_pkha_init_data(base, A, sizeA, B, sizeB, N, sizeN, NULL, 0);
@@ -4627,10 +4703,10 @@ status_t LTC_PKHA_ModExp(LTC_Type *base,
     }
 
     ltc_pkha_default_parms(&params);
-    params.func = kLTC_PKHA_ArithModExp;
-    params.arithType = arithType;
+    params.func       = kLTC_PKHA_ArithModExp;
+    params.arithType  = arithType;
     params.montFormIn = montIn;
-    params.equalTime = equalTime;
+    params.equalTime  = equalTime;
 
     ltc_pkha_init_data(base, A, sizeA, NULL, 0, N, sizeN, E, sizeE);
     status = ltc_pkha_init_mode(base, &params);
@@ -4679,7 +4755,7 @@ status_t LTC_PKHA_ModRed(LTC_Type *base,
     status_t status;
 
     ltc_pkha_default_parms(&params);
-    params.func = kLTC_PKHA_ArithModRed;
+    params.func      = kLTC_PKHA_ArithModRed;
     params.arithType = arithType;
 
     ltc_pkha_init_data(base, A, sizeA, NULL, 0, N, sizeN, NULL, 0);
@@ -4738,7 +4814,7 @@ status_t LTC_PKHA_ModInv(LTC_Type *base,
     }
 
     ltc_pkha_default_parms(&params);
-    params.func = kLTC_PKHA_ArithModInv;
+    params.func      = kLTC_PKHA_ArithModInv;
     params.arithType = arithType;
 
     ltc_pkha_init_data(base, A, sizeA, NULL, 0, N, sizeN, NULL, 0);
@@ -4811,7 +4887,7 @@ status_t LTC_PKHA_GCD(LTC_Type *base,
     status_t status;
 
     ltc_pkha_default_parms(&params);
-    params.func = kLTC_PKHA_ArithGcd;
+    params.func      = kLTC_PKHA_ArithGcd;
     params.arithType = arithType;
 
     ltc_pkha_init_data(base, A, sizeA, NULL, 0, N, sizeN, NULL, 0);
@@ -4913,9 +4989,9 @@ status_t LTC_PKHA_ECC_PointAdd(LTC_Type *base,
     status_t status;
 
     ltc_pkha_default_parms(&params);
-    params.func = kLTC_PKHA_ArithEccAdd;
+    params.func      = kLTC_PKHA_ArithEccAdd;
     params.arithType = arithType;
-    params.r2modn = R2modN ? kLTC_PKHA_InputR2 : kLTC_PKHA_CalcR2;
+    params.r2modn    = R2modN ? kLTC_PKHA_InputR2 : kLTC_PKHA_CalcR2;
 
     clearMask = kLTC_ClearMode;
 
@@ -4925,7 +5001,7 @@ status_t LTC_PKHA_ECC_PointAdd(LTC_Type *base,
     clearMask |= kLTC_ClearPkhaSizeN;
     clearMask |= kLTC_ClearPkhaSizeE;
 
-    base->CW = clearMask;
+    base->CW  = clearMask;
     base->STA = kLTC_StatusDoneIsr;
     ltc_pkha_clear_regabne(base, true, true, true, false);
 
@@ -4990,7 +5066,7 @@ status_t LTC_PKHA_ECC_PointDouble(LTC_Type *base,
     status_t status;
 
     ltc_pkha_default_parms(&params);
-    params.func = kLTC_PKHA_ArithEccDouble;
+    params.func      = kLTC_PKHA_ArithEccDouble;
     params.arithType = arithType;
 
     clearMask = kLTC_ClearMode;
@@ -5001,7 +5077,7 @@ status_t LTC_PKHA_ECC_PointDouble(LTC_Type *base,
     clearMask |= kLTC_ClearPkhaSizeN;
     clearMask |= kLTC_ClearPkhaSizeE;
 
-    base->CW = clearMask;
+    base->CW  = clearMask;
     base->STA = kLTC_StatusDoneIsr;
     ltc_pkha_clear_regabne(base, true, true, true, false);
 
@@ -5071,10 +5147,10 @@ status_t LTC_PKHA_ECC_PointMul(LTC_Type *base,
     status_t status;
 
     ltc_pkha_default_parms(&params);
-    params.func = kLTC_PKHA_ArithEccMul;
+    params.func      = kLTC_PKHA_ArithEccMul;
     params.equalTime = equalTime;
     params.arithType = arithType;
-    params.r2modn = R2modN ? kLTC_PKHA_InputR2 : kLTC_PKHA_CalcR2;
+    params.r2modn    = R2modN ? kLTC_PKHA_InputR2 : kLTC_PKHA_CalcR2;
 
     clearMask = kLTC_ClearMode;
 
@@ -5084,7 +5160,7 @@ status_t LTC_PKHA_ECC_PointMul(LTC_Type *base,
     clearMask |= kLTC_ClearPkhaSizeN;
     clearMask |= kLTC_ClearPkhaSizeE;
 
-    base->CW = clearMask;
+    base->CW  = clearMask;
     base->STA = kLTC_StatusDoneIsr;
     ltc_pkha_clear_regabne(base, true, true, true, true);
 

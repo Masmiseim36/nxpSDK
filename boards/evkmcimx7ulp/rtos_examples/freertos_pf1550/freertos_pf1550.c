@@ -21,16 +21,16 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_PF1550_LPI2C_BASE                    LPI2C3
-#define DEMO_PF1550_LPI2C_IRQ                     LPI2C3_IRQn
-#define DEMO_PF1550_LPI2C_PRIO                    (5U)
-#define DEMO_PF1550_LPI2C_CLKSRC_FREQ             CLOCK_GetIpFreq(kCLOCK_Lpi2c3)
-#define DEMO_PF1550_LPI2C_BAUDRATE                (400000U)
-#define DEMO_PF1550_LPI2C_SCL_GPIO                GPIOB
-#define DEMO_PF1550_LPI2C_SCL_PIN                 (12U)
-#define DEMO_PF1550_LPI2C_SDA_GPIO                GPIOB
-#define DEMO_PF1550_LPI2C_SDA_PIN                 (13U)
-#define DEMO_PF1550_LPI2C_DELAY                   (100U)
+#define DEMO_PF1550_LPI2C_BASE LPI2C3
+#define DEMO_PF1550_LPI2C_IRQ LPI2C3_IRQn
+#define DEMO_PF1550_LPI2C_PRIO (5U)
+#define DEMO_PF1550_LPI2C_CLKSRC_FREQ CLOCK_GetIpFreq(kCLOCK_Lpi2c3)
+#define DEMO_PF1550_LPI2C_BAUDRATE (400000U)
+#define DEMO_PF1550_LPI2C_SCL_GPIO GPIOB
+#define DEMO_PF1550_LPI2C_SCL_PIN (12U)
+#define DEMO_PF1550_LPI2C_SDA_GPIO GPIOB
+#define DEMO_PF1550_LPI2C_SDA_PIN (13U)
+#define DEMO_PF1550_LPI2C_DELAY (100U)
 
 /*******************************************************************************
  * Prototypes
@@ -68,7 +68,7 @@ void BOARD_I2C_ReleaseBus(void)
 
     /* Initialize PTB12/PTB13 as GPIO */
     pin_config.pinDirection = kGPIO_DigitalOutput;
-    pin_config.outputLogic = 1U;
+    pin_config.outputLogic  = 1U;
     IOMUXC_SetPinMux(IOMUXC_PTB12_PTB12, 0U);
     IOMUXC_SetPinMux(IOMUXC_PTB13_PTB13, 0U);
     IOMUXC_SetPinConfig(IOMUXC_PTB12_PTB12, IOMUXC0_SW_MUX_CTL_PAD_OBE_MASK);
@@ -138,7 +138,7 @@ static uint32_t DEMO_GetInputNumWithEcho(uint32_t length, bool allowZero)
     uint8_t i, j;
     uint8_t digCount = 0U;
     uint32_t temp1, temp2;
-    uint32_t result = 0U;
+    uint32_t result  = 0U;
     bool getFirstDig = false;
 
     assert(length <= (sizeof(digBuffer) / sizeof(digBuffer[0U])));
@@ -429,7 +429,7 @@ void User_Application_Task(void *pvParameters)
 
     /* Initialize PF1550 */
     PF1550_GetDefaultConfig(&pf1550Config);
-    pf1550Config.I2C_SendFunc = I2C_SendFunc;
+    pf1550Config.I2C_SendFunc    = I2C_SendFunc;
     pf1550Config.I2C_ReceiveFunc = I2C_ReceiveFunc;
     PF1550_Init(&pf1550Handle, &pf1550Config);
 
@@ -518,13 +518,13 @@ status_t I2C_SendFunc(
     lpi2c_master_transfer_t masterXfer;
 
     /* Prepare transfer structure. */
-    masterXfer.slaveAddress = deviceAddress;
-    masterXfer.direction = kLPI2C_Write;
-    masterXfer.subaddress = subAddress;
+    masterXfer.slaveAddress   = deviceAddress;
+    masterXfer.direction      = kLPI2C_Write;
+    masterXfer.subaddress     = subAddress;
     masterXfer.subaddressSize = subAddressSize;
-    masterXfer.data = (void *)txBuff;
-    masterXfer.dataSize = txBuffSize;
-    masterXfer.flags = kLPI2C_TransferDefaultFlag;
+    masterXfer.data           = (void *)txBuff;
+    masterXfer.dataSize       = txBuffSize;
+    masterXfer.flags          = kLPI2C_TransferDefaultFlag;
 
     /* Calling I2C Transfer API to start send. */
     return LPI2C_RTOS_Transfer(&lpi2c_rtos_handle, &masterXfer);
@@ -536,13 +536,13 @@ status_t I2C_ReceiveFunc(
     lpi2c_master_transfer_t masterXfer;
 
     /* Prepare transfer structure. */
-    masterXfer.slaveAddress = deviceAddress;
-    masterXfer.direction = kLPI2C_Read;
-    masterXfer.subaddress = subAddress;
+    masterXfer.slaveAddress   = deviceAddress;
+    masterXfer.direction      = kLPI2C_Read;
+    masterXfer.subaddress     = subAddress;
     masterXfer.subaddressSize = subAddressSize;
-    masterXfer.data = rxBuff;
-    masterXfer.dataSize = rxBuffSize;
-    masterXfer.flags = kLPI2C_TransferDefaultFlag;
+    masterXfer.data           = rxBuff;
+    masterXfer.dataSize       = rxBuffSize;
+    masterXfer.flags          = kLPI2C_TransferDefaultFlag;
 
     /* Calling I2C Transfer API to start receive. */
     return LPI2C_RTOS_Transfer(&lpi2c_rtos_handle, &masterXfer);

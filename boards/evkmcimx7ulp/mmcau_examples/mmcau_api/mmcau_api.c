@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -147,7 +147,7 @@ static float time_get_ms(void)
     do
     {
         currMsCount = g_msCount;
-        currTick = SysTick->VAL;
+        currTick    = SysTick->VAL;
     } while (currMsCount != g_msCount);
 
     loadTick = CORE_CLK_FREQ / 1000;
@@ -617,7 +617,7 @@ static void mmcau_example_task(void)
     PRINTF("AES CBC Encryption of %d bytes.\r\n", length);
 
     /* Call AES_cbc encryption */
-    cycles = CYCLES_FOR_THROUGHPUT;
+    cycles     = CYCLES_FOR_THROUGHPUT;
     timeBefore = time_get_ms();
     while (cycles)
     {
@@ -639,7 +639,7 @@ static void mmcau_example_task(void)
     PRINTF("AES CBC Decryption of %d bytes.\r\n", length);
 
     /* Call AES_cbc decryption */
-    cycles = CYCLES_FOR_THROUGHPUT;
+    cycles     = CYCLES_FOR_THROUGHPUT;
     timeBefore = time_get_ms();
     while (cycles)
     {
@@ -670,7 +670,7 @@ static void mmcau_example_task(void)
     /*   ENCRYPTION   */
     PRINTF("DES3 CBC Encryption of %d bytes.\r\n", length);
     /* Call DES3_cbc encryption */
-    cycles = CYCLES_FOR_THROUGHPUT;
+    cycles     = CYCLES_FOR_THROUGHPUT;
     timeBefore = time_get_ms();
     while (cycles)
     {
@@ -691,7 +691,7 @@ static void mmcau_example_task(void)
     /*   DECRYPTION   */
     PRINTF("DES3 CBC decryption of %d bytes.\r\n", length);
     /* Call DES3_cbc decryption */
-    cycles = CYCLES_FOR_THROUGHPUT;
+    cycles     = CYCLES_FOR_THROUGHPUT;
     timeBefore = time_get_ms();
     while (cycles)
     {
@@ -728,7 +728,7 @@ static void mmcau_example_task(void)
     blocks = length / CRYPTO_BLOCK_LENGTH;
 
     /*Compute SHA1, SHA256 and MD5*/
-    cycles = CYCLES_FOR_THROUGHPUT;
+    cycles     = CYCLES_FOR_THROUGHPUT;
     timeBefore = time_get_ms();
     while (cycles)
     {
@@ -744,7 +744,7 @@ static void mmcau_example_task(void)
     }
     PRINTF("\r\n\r\n");
 
-    cycles = CYCLES_FOR_THROUGHPUT;
+    cycles     = CYCLES_FOR_THROUGHPUT;
     timeBefore = time_get_ms();
     while (cycles)
     {
@@ -760,7 +760,7 @@ static void mmcau_example_task(void)
     }
     PRINTF("\r\n\r\n");
 
-    cycles = CYCLES_FOR_THROUGHPUT;
+    cycles     = CYCLES_FOR_THROUGHPUT;
     timeBefore = time_get_ms();
     while (cycles)
     {

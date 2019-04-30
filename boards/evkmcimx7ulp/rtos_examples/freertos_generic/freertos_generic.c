@@ -143,8 +143,8 @@ static SemaphoreHandle_t xEventSemaphore = NULL;
  * comments at the top of this file.
  */
 static volatile uint32_t ulCountOfTimerCallbackExecutions = 0;
-static volatile uint32_t ulCountOfItemsReceivedOnQueue = 0;
-static volatile uint32_t ulCountOfReceivedSemaphores = 0;
+static volatile uint32_t ulCountOfItemsReceivedOnQueue    = 0;
+static volatile uint32_t ulCountOfReceivedSemaphores      = 0;
 
 /*******************************************************************************
  * Code
@@ -327,7 +327,7 @@ static void prvEventSemaphoreTask(void *pvParameters)
 void vApplicationTickHook(void)
 {
     BaseType_t xHigherPriorityTaskWoken = pdFALSE;
-    static uint32_t ulCount = 0;
+    static uint32_t ulCount             = 0;
 
     /* The RTOS tick hook function is enabled by setting configUSE_TICK_HOOK to
     1 in FreeRTOSConfig.h.

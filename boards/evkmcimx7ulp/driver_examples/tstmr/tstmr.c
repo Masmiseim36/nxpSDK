@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -52,6 +52,7 @@ int main(void)
 
     ts = TSTMR_ReadTimeStamp(EXAMPLE_TSTMR);
     PRINTF("\r\n End time = %x%x\r\n", (uint32_t)(ts >> 32), (uint32_t)ts);
-    while(1)
-    {}
+    while (1)
+    {
+    }
 }

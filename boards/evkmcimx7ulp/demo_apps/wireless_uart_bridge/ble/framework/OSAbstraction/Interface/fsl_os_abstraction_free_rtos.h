@@ -3,18 +3,20 @@
  * Copyright (c) 2016 - 2017 , NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 #if !defined(__FSL_OS_ABSTRACTION_FREERTOS_H__)
 #define __FSL_OS_ABSTRACTION_FREERTOS_H__
 
-#if defined ( __IAR_SYSTEMS_ICC__ )
+#if defined(__IAR_SYSTEMS_ICC__)
 /**
  * Workaround to disable MISRA C message suppress warnings for IAR compiler.
  * http://supp.iar.com/Support/?note=24725
  */
-#define MISRAC_DISABLE _Pragma ("diag_suppress=                       \
+#define MISRAC_DISABLE \
+    _Pragma(           \
+        "diag_suppress=                       \
     Pm001,Pm002,Pm003,Pm004,Pm005,Pm006,Pm007,Pm008,Pm009,Pm010,Pm011,\
     Pm012,Pm013,Pm014,Pm015,Pm016,Pm017,Pm018,Pm019,Pm020,Pm021,Pm022,\
     Pm023,Pm024,Pm025,Pm026,Pm027,Pm028,Pm029,Pm030,Pm031,Pm032,Pm033,\
@@ -31,7 +33,9 @@
     Pm144,Pm145,Pm146,Pm147,Pm148,Pm149,Pm150,Pm151,Pm152,Pm153,Pm154,\
     Pm155")
 
-#define MISRAC_ENABLE _Pragma ("diag_default=                         \
+#define MISRAC_ENABLE \
+    _Pragma(          \
+        "diag_default=                         \
     Pm001,Pm002,Pm003,Pm004,Pm005,Pm006,Pm007,Pm008,Pm009,Pm010,Pm011,\
     Pm012,Pm013,Pm014,Pm015,Pm016,Pm017,Pm018,Pm019,Pm020,Pm021,Pm022,\
     Pm023,Pm024,Pm025,Pm026,Pm027,Pm028,Pm029,Pm030,Pm031,Pm032,Pm033,\
@@ -70,16 +74,16 @@ MISRAC_ENABLE
  ******************************************************************************/
 
 /*! @brief Type for a task handler, returned by the OSA_TaskCreate function. */
-typedef TaskHandle_t      task_handler_t;
+typedef TaskHandle_t task_handler_t;
 
 /*! @brief Type for a task stack.*/
-typedef portSTACK_TYPE   task_stack_t;
+typedef portSTACK_TYPE task_stack_t;
 
 /*! @brief Type for task parameter */
-typedef void* task_param_t;
+typedef void *task_param_t;
 
 /*! @brief Type for a task function. */
-typedef pdTASK_CODE      task_t;
+typedef pdTASK_CODE task_t;
 
 /*! @brief Type for a mutex. */
 typedef xSemaphoreHandle mutex_t;
@@ -88,32 +92,32 @@ typedef xSemaphoreHandle mutex_t;
 typedef xSemaphoreHandle semaphore_t;
 
 /*! @brief Type for an event flags object.*/
-typedef EventBits_t      event_flags_t;
+typedef EventBits_t event_flags_t;
 
 /*! @brief Type for an event group object in FreeRTOS OS */
-typedef struct EventFreertos {
-    bool_t autoClear;   /*!< Auto clear or manual clear   */
-    EventGroupHandle_t eventHandler;    /*!< FreeRTOS OS event handler       */
+typedef struct EventFreertos
+{
+    bool_t autoClear;                /*!< Auto clear or manual clear   */
+    EventGroupHandle_t eventHandler; /*!< FreeRTOS OS event handler       */
 } event_freertos;
 
 /*! @brief Type for an event group object */
 typedef event_freertos event_t;
 
 /*! @brief Type for a message queue declaration and creation. */
-typedef xQueueHandle  msg_queue_t;
+typedef xQueueHandle msg_queue_t;
 
 /*! @brief Type for a message queue handler */
-typedef xQueueHandle  msg_queue_handler_t;
-
+typedef xQueueHandle msg_queue_handler_t;
 
 /*! @brief Constant to pass as timeout value in order to wait indefinitely. */
-#define  OSA_WAIT_FOREVER  0xFFFFFFFFU
+#define OSA_WAIT_FOREVER 0xFFFFFFFFU
 
 /*! @brief OSA's time range in millisecond, OSA time wraps if exceeds this value. */
 #define FSL_OSA_TIME_RANGE 0xFFFFFFFFU
 
 /*! @brief The default interrupt handler installed in vector table. */
-#define OSA_DEFAULT_INT_HANDLER  ((osa_int_handler_t)(&DefaultISR))
+#define OSA_DEFAULT_INT_HANDLER ((osa_int_handler_t)(&DefaultISR))
 
 /*! @brief The Max depth of Enter/Exist Critical could be nested in interrupt. */
 #define OSA_MAX_ISR_CRITICAL_SECTION_DEPTH 0x8U
@@ -123,17 +127,15 @@ extern void DefaultISR(void);
 /*!
  * @name Thread management
  * @{
- */ 
+ */
 
-    
 /*!
  * @brief To provide unified task piority for upper layer, OSA layer makes conversion.
  */
-#define PRIORITY_OSA_TO_RTOS(osa_prio)  (configMAX_PRIORITIES - (osa_prio) -2)
-#define PRIORITY_RTOS_TO_OSA(rtos_prio) (configMAX_PRIORITIES - (rtos_prio) -2)    
+#define PRIORITY_OSA_TO_RTOS(osa_prio) (configMAX_PRIORITIES - (osa_prio)-2)
+#define PRIORITY_RTOS_TO_OSA(rtos_prio) (configMAX_PRIORITIES - (rtos_prio)-2)
 
 /* @}*/
-
 
 /*!
  * @name Message queues
@@ -147,8 +149,7 @@ extern void DefaultISR(void);
  * @param number Number of elements in the queue.
  * @param size Size of every elements in words.
  */
-#define MSG_QUEUE_DECLARE(name, number, size) \
-    msg_queue_t *name = NULL
+#define MSG_QUEUE_DECLARE(name, number, size) msg_queue_t *name = NULL
 
 /* @}*/
 
@@ -158,4 +159,3 @@ extern void DefaultISR(void);
 /*******************************************************************************
  * EOF
  ******************************************************************************/
-

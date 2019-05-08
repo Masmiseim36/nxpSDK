@@ -3871,6 +3871,930 @@ SOURCE=.\devices\MK82F25615\system_MK82F25615.c
 SOURCE=.\devices\MK82F25615\system_MK82F25615.h
 # End Source File
 # End Group
+# Begin Group "MKL25Z4"
+
+# PROP Default_Filter ""
+# Begin Group "MKL25 CMSIS Drivers"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\cmsis_drivers\fsl_i2c_cmsis.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\cmsis_drivers\fsl_i2c_cmsis.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\cmsis_drivers\fsl_lpsci_cmsis.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\cmsis_drivers\fsl_lpsci_cmsis.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\cmsis_drivers\fsl_spi_cmsis.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\cmsis_drivers\fsl_spi_cmsis.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\cmsis_drivers\fsl_uart_cmsis.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\cmsis_drivers\fsl_uart_cmsis.h
+# End Source File
+# End Group
+# Begin Group "MKL25 Drivers"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\drivers\fsl_adc16.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\drivers\fsl_adc16.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\drivers\fsl_clock.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\drivers\fsl_clock.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\drivers\fsl_cmp.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\drivers\fsl_cmp.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\drivers\fsl_common.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\drivers\fsl_common.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\drivers\fsl_cop.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\drivers\fsl_cop.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\drivers\fsl_dac.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\drivers\fsl_dac.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\drivers\fsl_dma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\drivers\fsl_dma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\drivers\fsl_dmamux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\drivers\fsl_dmamux.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\drivers\fsl_flash.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\drivers\fsl_flash.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\drivers\fsl_gpio.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\drivers\fsl_gpio.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\drivers\fsl_i2c.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\drivers\fsl_i2c.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\drivers\fsl_i2c_dma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\drivers\fsl_i2c_dma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\drivers\fsl_llwu.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\drivers\fsl_llwu.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\drivers\fsl_lpsci.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\drivers\fsl_lpsci.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\drivers\fsl_lpsci_dma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\drivers\fsl_lpsci_dma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\drivers\fsl_lptmr.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\drivers\fsl_lptmr.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\drivers\fsl_pit.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\drivers\fsl_pit.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\drivers\fsl_pmc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\drivers\fsl_pmc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\drivers\fsl_port.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\drivers\fsl_rcm.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\drivers\fsl_rcm.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\drivers\fsl_rtc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\drivers\fsl_rtc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\drivers\fsl_sim.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\drivers\fsl_sim.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\drivers\fsl_smc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\drivers\fsl_smc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\drivers\fsl_spi.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\drivers\fsl_spi.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\drivers\fsl_spi_dma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\drivers\fsl_spi_dma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\drivers\fsl_tpm.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\drivers\fsl_tpm.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\drivers\fsl_tsi_v4.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\drivers\fsl_tsi_v4.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\drivers\fsl_uart.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\drivers\fsl_uart.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\drivers\fsl_uart_dma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\drivers\fsl_uart_dma.h
+# End Source File
+# End Group
+# Begin Group "MKL25 Utilities"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\utilities\fsl_debug_console.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\utilities\fsl_debug_console.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\utilities\fsl_notifier.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\utilities\fsl_notifier.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\utilities\fsl_sbrk.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\utilities\fsl_shell.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\utilities\fsl_shell.h
+# End Source File
+# End Group
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\fsl_device_registers.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\MKL25Z4.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\MKL25Z4_features.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\gcc\startup_MKL25Z4.S
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\system_MKL25Z4.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL25Z4\system_MKL25Z4.h
+# End Source File
+# End Group
+# Begin Group "MKL82Z7"
+
+# PROP Default_Filter ""
+# Begin Group "MKL82 CMSIS drivers"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\cmsis_drivers\fsl_dspi_cmsis.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\cmsis_drivers\fsl_dspi_cmsis.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\cmsis_drivers\fsl_i2c_cmsis.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\cmsis_drivers\fsl_i2c_cmsis.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\cmsis_drivers\fsl_lpuart_cmsis.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\cmsis_drivers\fsl_lpuart_cmsis.h
+# End Source File
+# End Group
+# Begin Group "MKL82 Drivers"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_adc16.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_adc16.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_clock.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_clock.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_cmp.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_cmp.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_common.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_common.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_crc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_crc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_dac.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_dac.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_dmamux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_dmamux.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_dspi.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_dspi.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_dspi_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_dspi_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_dspi_freertos.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_dspi_freertos.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_ewm.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_ewm.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_flash.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_flexio.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_flexio.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_flexio_camera.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_flexio_camera.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_flexio_camera_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_flexio_camera_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_flexio_i2c_master.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_flexio_i2c_master.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_flexio_i2s.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_flexio_i2s.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_flexio_i2s_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_flexio_i2s_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_flexio_spi.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_flexio_spi.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_flexio_spi_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_flexio_spi_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_flexio_uart.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_flexio_uart.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_flexio_uart_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_flexio_uart_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_ftfx_adapter.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_ftfx_cache.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_ftfx_cache.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_ftfx_controller.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_ftfx_controller.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_ftfx_features.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_ftfx_flash.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_ftfx_flash.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_ftfx_flexnvm.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_ftfx_flexnvm.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_ftfx_utilities.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_gpio.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_gpio.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_i2c.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_i2c.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_i2c_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_i2c_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_i2c_freertos.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_i2c_freertos.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_intmux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_intmux.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_llwu.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_llwu.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_lptmr.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_lptmr.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_lpuart.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_lpuart.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_lpuart_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_lpuart_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_lpuart_freertos.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_lpuart_freertos.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_ltc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_ltc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_ltc_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_ltc_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_pit.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_pit.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_pmc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_pmc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_port.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_qspi.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_qspi.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_qspi_edma.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_qspi_edma.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_rcm.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_rcm.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_rtc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_rtc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_sim.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_sim.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_smartcard.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_smartcard_emvsim.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_smartcard_emvsim.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_smartcard_freertos.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_smartcard_freertos.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_smartcard_phy.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_smartcard_phy_emvsim.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_smartcard_phy_tda8035.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_smc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_smc.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_sysmpu.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_sysmpu.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_tpm.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_tpm.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_trng.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_trng.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_tsi_v4.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_tsi_v4.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_vref.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_vref.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_wdog.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\drivers\fsl_wdog.h
+# End Source File
+# End Group
+# Begin Group "MKL82 Project Template"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\project_template\board.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\project_template\board.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\project_template\clock_config.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\project_template\clock_config.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\project_template\peripherals.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\project_template\peripherals.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\project_template\pin_mux.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\project_template\pin_mux.h
+# End Source File
+# End Group
+# Begin Group "MKL82 utilities"
+
+# PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\utilities\fsl_assert.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\utilities\fsl_notifier.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\utilities\fsl_notifier.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\utilities\fsl_sbrk.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\utilities\fsl_shell.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\utilities\fsl_shell.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\utilities\usb_device_config.h
+# End Source File
+# End Group
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\fsl_device_registers.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\MKL82Z7.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\MKL82Z7_features.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\gcc\startup_MKL82Z7.S
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\system_MKL82Z7.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\devices\MKL82Z7\system_MKL82Z7.h
+# End Source File
+# End Group
 # Begin Group "MKV11"
 
 # PROP Default_Filter ""

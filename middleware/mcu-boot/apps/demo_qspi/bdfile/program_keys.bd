@@ -1,0 +1,28 @@
+# No source file needed, keep this block empty
+sources {
+}
+
+# The section block specifies the sequence of boot commands to be written to the SB file.
+section (0) {
+
+    # Use the 'load ifr' statement to program the SB key to IFR memory.
+    # The SB key occupies IFR index 0x30-0x33.
+    # The SB key is 128-bit specifies as 4 little-endian long-word values.
+    # SB Key = {0x00, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88, 0x99, 0xaa, 0xbb, 0xcc, 0xdd, 0xee, 0xff}
+    load ifr 0x33221100 > 0x30;
+    load ifr 0x77665544 > 0x31;
+    load ifr 0xbbaa9988 > 0x32;
+    load ifr 0xffeeddcc > 0x33;
+    
+    # Use the 'load ifr' statement to program the OTFAD KEK to IFR memory.
+    # The KEK is used to unwrap(decrypt) the keyblob at boot time in order to correctly set up the OTFAD engine.
+    # The key is specified as 4 little-endian values, with the "least significant" key word going into the lowest IFR index
+    # KEK = {0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f}
+    load ifr 0x0f0e0d0c > 0x20;
+    load ifr 0x0b0a0908 > 0x21;
+    load ifr 0x07060504 > 0x22;
+    load ifr 0x03020100 > 0x23;
+    
+    # Reset target in order to let these keys take effect.
+    reset;
+}

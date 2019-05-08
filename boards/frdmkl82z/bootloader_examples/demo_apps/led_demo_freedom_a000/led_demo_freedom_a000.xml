@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
+  <externalDefinitions>
+    <definition extID="com.nxp.mcuxpresso"/>
+    <definition extID="device.MKL82Z7_CMSIS.MKL82Z7"/>
+    <definition extID="middleware.mcu-boot.MKL82Z7_startup.MKL82Z7"/>
+    <definition extID="middleware.mcu-boot.src_startup.MKL82Z7"/>
+    <definition extID="platform.Include_common.MKL82Z7"/>
+    <definition extID="platform.Include_core_cm0plus.MKL82Z7"/>
+    <definition extID="iar"/>
+    <definition extID="mdk"/>
+    <definition extID="mcuxpresso"/>
+  </externalDefinitions>
+  <example id="frdmkl82z_led_demo_freedom_a000" name="led_demo_freedom_a000" category="bootloader_examples/demo_apps" dependency="device.MKL82Z7_CMSIS.MKL82Z7 middleware.mcu-boot.MKL82Z7_startup.MKL82Z7 middleware.mcu-boot.src_startup.MKL82Z7 platform.Include_core_cm0plus.MKL82Z7 platform.Include_common.MKL82Z7" toolchain="iar mdk mcuxpresso">
+    <projects>
+      <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
+    </projects>
+    <toolchainSettings>
+      <toolchainSetting id_refs="com.nxp.mcuxpresso">
+        <option id="com.crt.advproject.gas.fpu" type="enum">
+          <value>com.crt.advproject.gas.fpu.none</value>
+        </option>
+        <option id="com.crt.advproject.gcc.fpu" type="enum">
+          <value>com.crt.advproject.gcc.fpu.none</value>
+        </option>
+        <option id="com.crt.advproject.c.misc.dialect" type="enum">
+          <value>com.crt.advproject.misc.dialect.gnu99</value>
+        </option>
+        <option id="com.crt.advproject.gcc.exe.debug.option.debugging.level" type="enum">
+          <value>gnu.c.debugging.level.default</value>
+        </option>
+        <option id="com.crt.advproject.gcc.exe.release.option.debugging.level" type="enum">
+          <value>gnu.c.debugging.level.default</value>
+        </option>
+        <option id="com.crt.advproject.gcc.exe.debug.option.optimization.level" type="enum">
+          <value>gnu.c.optimization.level.size</value>
+        </option>
+        <option id="com.crt.advproject.gcc.exe.release.option.optimization.level" type="enum">
+          <value>gnu.c.optimization.level.size</value>
+        </option>
+        <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
+          <value>__SEMIHOST_HARDFAULT_DISABLE=1</value>
+          <value>CPU_MKL82Z128VLK7</value>
+          <value>FREEDOM</value>
+          <value>FRDM_KL82Z</value>
+        </option>
+        <option id="gnu.c.compiler.option.optimization.flags" type="string">
+          <value>-fno-common</value>
+        </option>
+        <option id="gnu.c.compiler.option.misc.other" type="string">
+          <value>-c  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin</value>
+        </option>
+        <option id="gnu.c.compiler.option.warnings.allwarn" type="boolean">
+          <value>false</value>
+          <value>true</value>
+        </option>
+        <option id="com.crt.advproject.link.fpu" type="enum">
+          <value>com.crt.advproject.link.fpu.none</value>
+        </option>
+        <option id="gnu.c.link.option.nostdlibs" type="boolean">
+          <value>true</value>
+        </option>
+        <option id="gnu.c.link.option.other" type="stringList">
+          <value>--gc-sections</value>
+          <value>-Map=${BuildArtifactFileBaseName}.map</value>
+          <value>--defsym=__ram_vector_table__=1</value>
+        </option>
+        <option id="com.crt.advproject.gas.hdrlib" type="enum">
+          <value>com.crt.advproject.gas.hdrlib.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.gas.specs" type="enum">
+          <value>com.crt.advproject.gas.specs.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.gcc.hdrlib" type="enum">
+          <value>com.crt.advproject.gcc.hdrlib.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.gcc.specs" type="enum">
+          <value>com.crt.advproject.gcc.specs.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.link.gcc.hdrlib" type="enum">
+          <value>com.crt.advproject.gcc.link.hdrlib.newlibnano.none</value>
+        </option>
+      </toolchainSetting>
+    </toolchainSettings>
+    <source path="boards/frdmkl82z/bootloader_examples/demo_apps/led_demo_freedom_a000/iar" target_path="middleware/mcu-boot" type="linker" toolchain="iar">
+      <files mask="MKL82Z128xxx7_application_0xA000.icf"/>
+    </source>
+    <source path="boards/frdmkl82z/bootloader_examples/demo_apps/led_demo_freedom_a000/mcux" target_path="middleware/mcu-boot" type="linker" toolchain="mcuxpresso">
+      <files mask="MKL82Z128xxx7_application_0xa000.ld"/>
+    </source>
+    <source path="boards/frdmkl82z/bootloader_examples/demo_apps/led_demo_freedom_a000/mdk" target_path="middleware/mcu-boot" type="linker" toolchain="mdk">
+      <files mask="MKL82Z128xxx7_application_0xa000.scf"/>
+    </source>
+    <source path="boards/frdmkl82z/bootloader_examples/demo_apps/led_demo_freedom_a000" target_path="MKL82Z7" type="src">
+      <files mask="main.c"/>
+    </source>
+    <source path="middleware/mcu-boot/apps/led_demo/src" target_path="MKL82Z7" type="c_include">
+      <files mask="milliseconds_delay.h"/>
+    </source>
+    <source path="middleware/mcu-boot/apps/led_demo/src" target_path="MKL82Z7" type="src">
+      <files mask="milliseconds_delay.c"/>
+    </source>
+  </example>
+</ksdk:examples>

@@ -1,0 +1,70 @@
+# The sources block assigns file names to identifiers
+sources {
+    # SREC File path
+    mySrecFile = "led_demo_qspi_a000.srec";
+    # QCB file path 
+    qspiConfigBlock = "qspi_config_block.bin";
+}
+
+# The keyblob creates a structure with up to 4 keyblob entries.
+# The empty parentheses syntax specifies an entry of all zeros (no encryption)
+# Each entry consists of 4 parameters:
+# start     - start address of encrypted block.
+# end       - end address of encrypted block.
+# key       - AES-CTR mode encryption key for this range.
+# counter   - initial counter value for AES-CTR encryption for this range.
+keyblob (0) {
+    (
+        start=0x68001000,
+        end = 0x68001fff,
+        key="000102030405060708090a0b0c0d0e0f",
+        counter="0123456789abcdef"
+    )
+    ()
+    ()
+    ()
+}
+
+
+# The section block specifies the sequence of boot commands to be written to
+# the SB file
+section (0) {
+
+    #1. Erase the vector table and flash config field.
+    erase 0xa000..0xc000;
+    
+    # Step 2 and Step 3 are optional if the QuadSPI is configured at startup.
+    #2. Load the QCB to RAM
+    load qspiConfigBlock > 0x20000000;
+    
+    #3. Configure QuadSPI with the QCB above
+    enable qspi 0x20000000;
+    
+    #4. Erase the QuadSPI memory region before programming.
+    erase 0x68000000..0x68004000;
+    
+    #5.Load the QCB above to the start address of QuadSPI memory
+    load qspiConfigBlock > 0x68000000;
+    
+    #6,7. The encrypt statement indicates that load commands should encrypt load from the srec file using AES-CTR mode encrypteion.
+    # The encrypt argument (0) specifies the keyblob parameters range of one of the keyblob entries are left unencrypted.
+    encrypt(0) {
+        # Load all the RO data from SREC field.
+        load mySrecFile;
+    }
+    
+    #8. Load kek to 0xb000
+    load {{000102030405060708090a0b0c0d0e0f}} > 0xb000;
+    
+    #9. Load the encrypted keyblob block to specified location.
+    # The keywrap statement wraps (encrypts) the keyblob specified in the argument (0) using the specified Key Encryption Key (KEK) and loads the keyblob to internal flash.
+    # The load destination (0xc000, which is defined via keyBlobPointer in BCA) must match the keyblob pointer in the Bootloader Configuraion Area(BCA) contained in the SREC image.
+    # Make sure the sector at 0xc000 has not been written by the srec file load above, otherwise it will need to be erased again.
+    keywrap (0) {
+        load {{000102030405060708090a0b0c0d0e0f}} > 0xc000;
+    }
+    
+    #10. Reset target.
+    reset;
+
+}

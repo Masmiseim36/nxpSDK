@@ -1,0 +1,1166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+    <fileVersion>2</fileVersion>
+    <fileChecksum>2972231180</fileChecksum>
+    <configuration>
+        <name>debug</name>
+        <outputs>
+            <file>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\drivers\fsl_clock.c</file>
+            <file>$PROJ_DIR$\debug\obj\clock_config.__cstat.et</file>
+            <file>$TOOLKIT_DIR$\inc\c\string.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\..\..\..\CMSIS\Include\mpu_armv7.h</file>
+            <file>$PROJ_DIR$\debug\obj\system_MIMXRT1052.pbi</file>
+            <file>$PROJ_DIR$\debug\obj\fsl_debug_console.pbi</file>
+            <file>$PROJ_DIR$\debug\obj\pin_mux.pbi</file>
+            <file>$PROJ_DIR$\debug\obj\fsl_flexspi.__cstat.et</file>
+            <file>$PROJ_DIR$\debug\obj\fsl_lpuart.__cstat.et</file>
+            <file>$TOOLKIT_DIR$\lib\m7M_tlv.a</file>
+            <file>$PROJ_DIR$\debug\obj\pin_mux.o</file>
+            <file>$TOOLKIT_DIR$\inc\c\DLib_Product_string.h</file>
+            <file>$PROJ_DIR$\MIMXRT1052xxxxx_ram.icf</file>
+            <file>$PROJ_DIR$\debug\obj\fsl_clock.o</file>
+            <file>$PROJ_DIR$\debug\obj\fsl_common.__cstat.et</file>
+            <file>$PROJ_DIR$\debug\obj\fsl_common.o</file>
+            <file>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\fsl_device_registers.h</file>
+            <file>$PROJ_DIR$\debug\obj\flexspi_hyper_ram_polling_transfer.o</file>
+            <file>$TOOLKIT_DIR$\inc\c\yvals.h</file>
+            <file>$PROJ_DIR$\debug\obj\fsl_debug_console.o</file>
+            <file>$PROJ_DIR$\debug\obj\fsl_str.pbi</file>
+            <file>$PROJ_DIR$\debug\obj\fsl_clock.__cstat.et</file>
+            <file>$TOOLKIT_DIR$\lib\rt7M_tl.a</file>
+            <file>$TOOLKIT_DIR$\inc\c\stddef.h</file>
+            <file>$PROJ_DIR$\debug\obj\fsl_log.o</file>
+            <file>$PROJ_DIR$\debug\obj\startup_MIMXRT1052.o</file>
+            <file>$TOOLKIT_DIR$\inc\c\stdbool.h</file>
+            <file>$PROJ_DIR$\debug\flexspi_hyper_ram_polling_transfer.out</file>
+            <file>$PROJ_DIR$\debug\obj\fsl_gpio.pbi</file>
+            <file>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\MIMXRT1052_features.h</file>
+            <file>$PROJ_DIR$\debug\obj\fsl_lpuart.o</file>
+            <file>$PROJ_DIR$\debug\obj\clock_config.o</file>
+            <file>$TOOLKIT_DIR$\inc\c\stdint.h</file>
+            <file>$PROJ_DIR$\debug\obj\fsl_gpio.o</file>
+            <file>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\MIMXRT1052.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\DLib_float_setup.h</file>
+            <file>$PROJ_DIR$\debug\obj\pin_mux.__cstat.et</file>
+            <file>$PROJ_DIR$\debug\obj\system_MIMXRT1052.__cstat.et</file>
+            <file>$TOOLKIT_DIR$\inc\c\cmsis_iar.h</file>
+            <file>$PROJ_DIR$\debug\obj\fsl_debug_console.__cstat.et</file>
+            <file>$PROJ_DIR$\debug\obj\fsl_clock.pbi</file>
+            <file>$TOOLKIT_DIR$\inc\c\stdlib.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\DLib_Config_Normal.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\math.h</file>
+            <file>$PROJ_DIR$\debug\obj\fsl_lpuart.pbi</file>
+            <file>$PROJ_DIR$\debug\obj\fsl_flexspi.pbi</file>
+            <file>$TOOLKIT_DIR$\inc\c\DLib_Product.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\ycheck.h</file>
+            <file>$PROJ_DIR$\debug\obj\board.o</file>
+            <file>$PROJ_DIR$\debug\obj\flexspi_hyper_ram_polling_transfer.pbi</file>
+            <file>$PROJ_DIR$\debug\obj\fsl_io.o</file>
+            <file>$PROJ_DIR$\debug\obj\board.__cstat.et</file>
+            <file>$PROJ_DIR$\debug\obj\fsl_str.o</file>
+            <file>$PROJ_DIR$\debug\obj\fsl_io.pbi</file>
+            <file>$PROJ_DIR$\debug\obj\fsl_io.__cstat.et</file>
+            <file>$PROJ_DIR$\..\..\..\..\..\..\..\CMSIS\Include\core_cm7.h</file>
+            <file>$TOOLKIT_DIR$\lib\shb_l.a</file>
+            <file>$PROJ_DIR$\..\..\..\..\..\..\..\CMSIS\Include\cmsis_version.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\iccarm_builtin.h</file>
+            <file>$PROJ_DIR$\debug\obj\fsl_str.__cstat.et</file>
+            <file>$PROJ_DIR$\debug\obj\fsl_assert.pbi</file>
+            <file>$PROJ_DIR$\debug\obj\board.pbi</file>
+            <file>$TOOLKIT_DIR$\inc\c\assert.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\..\..\..\CMSIS\Include\cmsis_compiler.h</file>
+            <file>$PROJ_DIR$\debug\list\flexspi_hyper_ram_polling_transfer.map</file>
+            <file>$TOOLKIT_DIR$\inc\c\ysizet.h</file>
+            <file>$PROJ_DIR$\debug\obj\fsl_flexspi.o</file>
+            <file>$PROJ_DIR$\debug\obj\fsl_assert.o</file>
+            <file>$TOOLKIT_DIR$\inc\c\DLib_Product_stdlib.h</file>
+            <file>$PROJ_DIR$\debug\obj\system_MIMXRT1052.o</file>
+            <file>$PROJ_DIR$\debug\obj\fsl_common.pbi</file>
+            <file>$PROJ_DIR$\debug\obj\fsl_gpio.__cstat.et</file>
+            <file>$PROJ_DIR$\debug\obj\fsl_log.pbi</file>
+            <file>$TOOLKIT_DIR$\inc\c\stdarg.h</file>
+            <file>$PROJ_DIR$\debug\obj\fsl_assert.__cstat.et</file>
+            <file>$PROJ_DIR$\debug\obj\flexspi_hyper_ram_polling_transfer.__cstat.et</file>
+            <file>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\drivers\fsl_common.c</file>
+            <file>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\utilities\fsl_debug_console.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\iar\startup_MIMXRT1052.s</file>
+            <file>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\drivers\fsl_flexspi.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\system_MIMXRT1052.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\utilities\fsl_assert.c</file>
+            <file>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\drivers\fsl_gpio.c</file>
+            <file>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\drivers\fsl_iomuxc.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\utilities\io\fsl_io.c</file>
+            <file>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\utilities\log\fsl_log.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\drivers\fsl_lpuart.c</file>
+            <file>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\drivers\fsl_common.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\system_MIMXRT1052.c</file>
+            <file>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\utilities\fsl_debug_console_conf.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\utilities\log\fsl_log.c</file>
+            <file>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\utilities\str\fsl_str.c</file>
+            <file>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\utilities\io\fsl_io.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\drivers\fsl_lpuart.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\drivers\fsl_clock.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\drivers\fsl_flexspi.c</file>
+            <file>$TOOLKIT_DIR$\lib\dl7M_tln.a</file>
+            <file>$PROJ_DIR$\debug\obj\fsl_log.__cstat.et</file>
+            <file>$PROJ_DIR$\debug\obj\clock_config.pbi</file>
+            <file>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\utilities\fsl_debug_console.c</file>
+            <file>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\utilities\str\fsl_str.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\DLib_Defaults.h</file>
+            <file>$PROJ_DIR$\..\flexspi_hyper_ram_polling_transfer.c</file>
+            <file>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\drivers\fsl_gpio.h</file>
+            <file>$PROJ_DIR$\..\board.h</file>
+            <file>$PROJ_DIR$\..\board.c</file>
+            <file>$PROJ_DIR$\..\clock_config.c</file>
+            <file>$PROJ_DIR$\..\clock_config.h</file>
+            <file>$PROJ_DIR$\..\pin_mux.c</file>
+            <file>$PROJ_DIR$\..\pin_mux.h</file>
+        </outputs>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\drivers\fsl_clock.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 13</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 40</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 21</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 87 62 47 18 101 42 46 26 32 2 65 11 41 68 23 16 34 55 57 63 38 58 3 80 29 94</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 47 18 26 46 16 65 2 94 42 80 63 62 32 41 23 101 34 57 87 11 68 29 55 3 38 58</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\debug\flexspi_hyper_ram_polling_transfer.out</name>
+            <outputs>
+                <tool>
+                    <name>ILINK</name>
+                    <file> 64</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ILINK</name>
+                    <file> 12 48 31 17 67 13 15 19 66 33 50 24 30 52 10 25 69 56 22 9 96</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\drivers\fsl_common.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 15</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 70</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 14</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 87 62 47 18 101 42 46 26 32 2 65 11 41 68 23 16 34 55 57 63 38 58 3 80 29 94</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 16 18 26 94 65 57 32 2 42 68 47 46 11 29 55 62 41 23 101 34 80 63 87 3 38 58</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\iar\startup_MIMXRT1052.s</name>
+            <outputs>
+                <tool>
+                    <name>AARM</name>
+                    <file> 25</file>
+                </tool>
+            </outputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\utilities\fsl_assert.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 67</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 60</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 74</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 87 62 47 18 101 42 46 26 32 2 65 11 41 68 23 16 34 55 57 63 38 58 3 80 29 94 77</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 18 58 32 65 23 47 80 62 41 101 34 77 26 2 16 94 42 46 11 68 29 55 3 38 87 57 63</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\drivers\fsl_gpio.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 33</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 28</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 71</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 103 87 62 47 18 101 42 46 26 32 2 65 11 41 68 23 16 34 55 57 63 38 58 3 80 29 94</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 47 16 26 46 11 18 65 87 2 94 42 80 63 62 32 41 23 101 34 57 103 68 29 55 3 38 58</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\utilities\io\fsl_io.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 50</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 53</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 54</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 92 87 62 47 18 101 42 46 26 32 2 65 11 41 68 23 16 34 55 57 63 38 58 3 80 29 94 89 93</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 2 34 18 16 94 42 65 57 32 26 93 87 47 46 11 89 62 41 23 101 80 63 92 68 29 55 3 38 58</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\drivers\fsl_lpuart.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 30</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 44</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 8</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 93 87 62 47 18 101 42 46 26 32 2 65 11 41 68 23 16 34 55 57 63 38 58 3 80 29 94</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 32 94 42 18 16 65 68 2 58 87 26 47 46 11 29 55 3 38 62 41 23 101 34 80 57 63 93</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\system_MIMXRT1052.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 69</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 4</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 37</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 32 47 18 101 42 46 16 34 55 57 63 38 58 3 80 29</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 101 29 55 3 38 18 16 47 42 46 34 80 32 58 57 63</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\utilities\log\fsl_log.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 24</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 72</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 97</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 85 87 62 47 18 101 42 46 26 32 2 65 11 41 68 23 16 34 55 57 63 38 58 3 80 29 94 89 92</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 18 65 32 62 87 23 47 80 92 41 101 34 3 38 89 26 2 16 94 42 46 11 68 29 55 58 85 57 63</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\utilities\str\fsl_str.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 52</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 20</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 59</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 43 47 18 101 42 46 35 41 65 68 100 87 62 26 32 2 11 23 16 34 55 57 63 38 58 3 80 29 94 89</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 23 18 58 47 65 89 42 32 41 46 68 87 62 29 55 3 38 73 100 35 101 26 2 16 94 11 34 80 57 63 43</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\drivers\fsl_flexspi.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 66</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 45</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 7</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 79 23 47 18 101 42 46 65 16 34 55 32 57 63 38 58 3 80 29 87 62 26 2 11 41 68 94</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 23 87 26 47 32 65 101 18 68 29 55 3 62 41 11 16 42 46 34 80 57 63 38 58 2 94 79</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\utilities\fsl_debug_console.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 19</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 5</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 39</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 41 47 18 101 42 46 65 68 77 87 62 26 32 2 11 23 16 34 55 57 63 38 58 3 80 29 94 89 85 100</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 18 32 94 57 16 11 34 26 85 47 2 77 101 68 87 65 80 41 89 100 42 46 62 23 29 55 63 73 3 38 58</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\flexspi_hyper_ram_polling_transfer.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 17</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 49</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 75</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 79 23 47 18 101 42 46 65 16 34 55 32 57 63 38 58 3 80 29 87 62 26 2 11 41 68 94 77 109 104 107 103</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 65 62 11 55 107 23 29 87 109 18 3 41 47 16 77 104 101 32 68 26 103 79 42 46 34 80 57 63 38 58 2 94</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\board.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 48</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 61</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 51</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 87 62 47 18 101 42 46 26 32 2 65 11 41 68 23 16 34 55 57 63 38 58 3 80 29 94 77 104 107 103</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 47 18 41 101 32 62 68 87 107 104 23 65 58 77 26 2 16 94 42 46 11 29 55 3 38 103 34 80 57 63</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\clock_config.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 31</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 98</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 1</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 107 87 62 47 18 101 42 46 26 32 2 65 11 41 68 23 16 34 55 57 63 38 58 3 80 29 94</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 41 101 47 16 62 32 23 18 65 80 63 87 26 2 94 42 46 11 34 57 107 68 29 55 3 38 58</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\pin_mux.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 10</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 6</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 36</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 87 62 47 18 101 42 46 26 32 2 65 11 41 68 23 16 34 55 57 63 38 58 3 80 29 94 83 109</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 18 62 101 32 41 68 109 23 47 65 58 83 26 2 16 94 42 46 11 29 55 3 38 87 34 80 57 63</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>[ROOT_NODE]</name>
+            <outputs>
+                <tool>
+                    <name>ILINK</name>
+                    <file> 64 27</file>
+                </tool>
+            </outputs>
+        </file>
+    </configuration>
+    <configuration>
+        <name>release</name>
+        <outputs />
+        <forcedrebuild>
+            <name>[MULTI_TOOL]</name>
+            <tool>ILINK</tool>
+        </forcedrebuild>
+        <forcedrebuild>
+            <name>[REBUILD_ALL]</name>
+        </forcedrebuild>
+    </configuration>
+    <configuration>
+        <name>sdram_debug</name>
+        <outputs>
+            <file>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\drivers\fsl_clock.c</file>
+            <file>$PROJ_DIR$\sdram_debug\list\fsl_flexspi.lst</file>
+            <file>$PROJ_DIR$\sdram_debug\obj\fsl_lpuart.__cstat.et</file>
+            <file>$PROJ_DIR$\sdram_debug\list\fsl_log.lst</file>
+            <file>$PROJ_DIR$\sdram_debug\obj\fsl_io.pbi</file>
+            <file>$PROJ_DIR$\sdram_debug\list\fsl_clock.lst</file>
+            <file>$PROJ_DIR$\sdram_debug\obj\fsl_assert.pbi</file>
+            <file>$PROJ_DIR$\sdram_debug\obj\fsl_str.pbi</file>
+            <file>$PROJ_DIR$\sdram_debug\list\fsl_gpio.lst</file>
+            <file>$PROJ_DIR$\sdram_debug\obj\fsl_gpio.o</file>
+            <file>$TOOLKIT_DIR$\inc\c\string.h</file>
+            <file>$PROJ_DIR$\sdram_debug\obj\clock_config.__cstat.et</file>
+            <file>$PROJ_DIR$\..\..\..\..\..\..\..\CMSIS\Include\mpu_armv7.h</file>
+            <file>$PROJ_DIR$\sdram_debug\obj\fsl_clock.o</file>
+            <file>$PROJ_DIR$\sdram_debug\obj\pin_mux.__cstat.et</file>
+            <file>$PROJ_DIR$\sdram_debug\list\system_MIMXRT1052.lst</file>
+            <file>$PROJ_DIR$\sdram_debug\list\fsl_lpuart.s</file>
+            <file>$PROJ_DIR$\sdram_debug\list\fsl_common.s</file>
+            <file>$PROJ_DIR$\sdram_debug\list\fsl_debug_console.lst</file>
+            <file>$PROJ_DIR$\sdram_debug\list\fsl_gpio.s</file>
+            <file>$PROJ_DIR$\sdram_debug\list\fsl_assert.lst</file>
+            <file>$PROJ_DIR$\sdram_debug\list\fsl_debug_console.s</file>
+            <file>$PROJ_DIR$\sdram_debug\obj\system_MIMXRT1052.__cstat.et</file>
+            <file>$PROJ_DIR$\sdram_debug\list\flexspi_hyper_ram_polling_transfer.map</file>
+            <file>$TOOLKIT_DIR$\lib\m7M_tlv.a</file>
+            <file>$PROJ_DIR$\sdram_debug\list\fsl_common.lst</file>
+            <file>$PROJ_DIR$\sdram_debug\obj\fsl_assert.__cstat.et</file>
+            <file>$TOOLKIT_DIR$\inc\c\DLib_Product_string.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\fsl_device_registers.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\yvals.h</file>
+            <file>$TOOLKIT_DIR$\lib\rt7M_tl.a</file>
+            <file>$TOOLKIT_DIR$\inc\c\stddef.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\stdbool.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\MIMXRT1052_features.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\stdint.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\MIMXRT1052.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\DLib_float_setup.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\cmsis_iar.h</file>
+            <file>$PROJ_DIR$\sdram_debug\obj\pin_mux.o</file>
+            <file>$PROJ_DIR$\sdram_debug\list\fsl_str.lst</file>
+            <file>$PROJ_DIR$\sdram_debug\obj\fsl_gpio.__cstat.et</file>
+            <file>$PROJ_DIR$\sdram_debug\obj\fsl_flexspi.o</file>
+            <file>$PROJ_DIR$\sdram_debug\obj\fsl_common.pbi</file>
+            <file>$PROJ_DIR$\sdram_debug\list\fsl_io.s</file>
+            <file>$PROJ_DIR$\sdram_debug\list\flexspi_hyper_ram_polling_transfer.log</file>
+            <file>$PROJ_DIR$\sdram_debug\obj\fsl_io.__cstat.et</file>
+            <file>$PROJ_DIR$\sdram_debug\obj\fsl_str.__cstat.et</file>
+            <file>$PROJ_DIR$\sdram_debug\obj\board.o</file>
+            <file>$PROJ_DIR$\sdram_debug\obj\fsl_str.o</file>
+            <file>$PROJ_DIR$\sdram_debug\obj\fsl_log.__cstat.et</file>
+            <file>$PROJ_DIR$\sdram_debug\list\clock_config.lst</file>
+            <file>$PROJ_DIR$\sdram_debug\list\fsl_io.lst</file>
+            <file>$PROJ_DIR$\sdram_debug\list\pin_mux.s</file>
+            <file>$PROJ_DIR$\sdram_debug\list\fsl_assert.s</file>
+            <file>$PROJ_DIR$\sdram_debug\obj\clock_config.pbi</file>
+            <file>$PROJ_DIR$\sdram_debug\list\fsl_flexspi.s</file>
+            <file>$PROJ_DIR$\sdram_debug\obj\fsl_lpuart.pbi</file>
+            <file>$PROJ_DIR$\sdram_debug\obj\pin_mux.pbi</file>
+            <file>$PROJ_DIR$\sdram_debug\list\fsl_log.s</file>
+            <file>$PROJ_DIR$\sdram_debug\list\pin_mux.lst</file>
+            <file>$PROJ_DIR$\sdram_debug\obj\flexspi_hyper_ram_polling_transfer.pbi</file>
+            <file>$PROJ_DIR$\sdram_debug\obj\fsl_lpuart.o</file>
+            <file>$PROJ_DIR$\sdram_debug\obj\fsl_flexspi.__cstat.et</file>
+            <file>$PROJ_DIR$\sdram_debug\obj\fsl_common.__cstat.et</file>
+            <file>$PROJ_DIR$\sdram_debug\flexspi_hyper_ram_polling_transfer.out</file>
+            <file>$PROJ_DIR$\sdram_debug\obj\fsl_log.o</file>
+            <file>$PROJ_DIR$\sdram_debug\obj\fsl_clock.pbi</file>
+            <file>$PROJ_DIR$\sdram_debug\obj\fsl_gpio.pbi</file>
+            <file>$PROJ_DIR$\sdram_debug\obj\fsl_common.o</file>
+            <file>$PROJ_DIR$\sdram_debug\obj\clock_config.o</file>
+            <file>$PROJ_DIR$\MIMXRT1052xxxxx_sdram.icf</file>
+            <file>$PROJ_DIR$\sdram_debug\obj\flexspi_hyper_ram_polling_transfer.o</file>
+            <file>$PROJ_DIR$\sdram_debug\obj\fsl_flexspi.pbi</file>
+            <file>$PROJ_DIR$\sdram_debug\obj\flexspi_hyper_ram_polling_transfer.pbd</file>
+            <file>$PROJ_DIR$\sdram_debug\list\fsl_str.s</file>
+            <file>$PROJ_DIR$\sdram_debug\obj\fsl_assert.o</file>
+            <file>$PROJ_DIR$\sdram_debug\obj\fsl_io.o</file>
+            <file>$PROJ_DIR$\sdram_debug\obj\fsl_debug_console.o</file>
+            <file>$PROJ_DIR$\sdram_debug\obj\fsl_debug_console.pbi</file>
+            <file>$PROJ_DIR$\sdram_debug\obj\board.__cstat.et</file>
+            <file>$PROJ_DIR$\sdram_debug\obj\system_MIMXRT1052.pbi</file>
+            <file>$PROJ_DIR$\sdram_debug\obj\flexspi_hyper_ram_polling_transfer.__cstat.et</file>
+            <file>$PROJ_DIR$\sdram_debug\list\flexspi_hyper_ram_polling_transfer.lst</file>
+            <file>$PROJ_DIR$\sdram_debug\obj\board.pbi</file>
+            <file>$PROJ_DIR$\sdram_debug\obj\fsl_log.pbi</file>
+            <file>$PROJ_DIR$\sdram_debug\list\board.lst</file>
+            <file>$PROJ_DIR$\sdram_debug\list\board.s</file>
+            <file>$PROJ_DIR$\sdram_debug\list\startup_MIMXRT1052.lst</file>
+            <file>$PROJ_DIR$\sdram_debug\list\flexspi_hyper_ram_polling_transfer.s</file>
+            <file>$PROJ_DIR$\sdram_debug\obj\startup_MIMXRT1052.o</file>
+            <file>$PROJ_DIR$\sdram_debug\list\fsl_lpuart.lst</file>
+            <file>$PROJ_DIR$\sdram_debug\list\clock_config.s</file>
+            <file>$PROJ_DIR$\sdram_debug\obj\fsl_debug_console.__cstat.et</file>
+            <file>$PROJ_DIR$\sdram_debug\obj\fsl_clock.__cstat.et</file>
+            <file>$PROJ_DIR$\sdram_debug\obj\system_MIMXRT1052.o</file>
+            <file>$PROJ_DIR$\sdram_debug\list\fsl_clock.s</file>
+            <file>$PROJ_DIR$\sdram_debug\list\system_MIMXRT1052.s</file>
+            <file>$TOOLKIT_DIR$\inc\c\stdlib.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\DLib_Config_Normal.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\math.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\DLib_Product.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\ycheck.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\..\..\..\CMSIS\Include\core_cm7.h</file>
+            <file>$TOOLKIT_DIR$\lib\shb_l.a</file>
+            <file>$PROJ_DIR$\..\..\..\..\..\..\..\CMSIS\Include\cmsis_version.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\iccarm_builtin.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\assert.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\..\..\..\CMSIS\Include\cmsis_compiler.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\ysizet.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\DLib_Product_stdlib.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\stdarg.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\drivers\fsl_common.c</file>
+            <file>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\utilities\fsl_debug_console.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\iar\startup_MIMXRT1052.s</file>
+            <file>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\drivers\fsl_flexspi.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\system_MIMXRT1052.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\utilities\fsl_assert.c</file>
+            <file>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\drivers\fsl_gpio.c</file>
+            <file>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\drivers\fsl_iomuxc.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\utilities\io\fsl_io.c</file>
+            <file>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\utilities\log\fsl_log.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\drivers\fsl_lpuart.c</file>
+            <file>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\drivers\fsl_common.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\system_MIMXRT1052.c</file>
+            <file>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\utilities\fsl_debug_console_conf.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\utilities\log\fsl_log.c</file>
+            <file>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\utilities\str\fsl_str.c</file>
+            <file>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\utilities\io\fsl_io.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\drivers\fsl_lpuart.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\drivers\fsl_clock.h</file>
+            <file>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\drivers\fsl_flexspi.c</file>
+            <file>$TOOLKIT_DIR$\lib\dl7M_tln.a</file>
+            <file>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\utilities\fsl_debug_console.c</file>
+            <file>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\utilities\str\fsl_str.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\DLib_Defaults.h</file>
+            <file>$PROJ_DIR$\..\flexspi_hyper_ram_polling_transfer.c</file>
+            <file>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\drivers\fsl_gpio.h</file>
+            <file>$PROJ_DIR$\..\board.h</file>
+            <file>$PROJ_DIR$\..\board.c</file>
+            <file>$PROJ_DIR$\..\clock_config.c</file>
+            <file>$PROJ_DIR$\..\clock_config.h</file>
+            <file>$PROJ_DIR$\..\pin_mux.c</file>
+            <file>$PROJ_DIR$\..\pin_mux.h</file>
+        </outputs>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\drivers\fsl_clock.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 95 5 13</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 66</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 93</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 122 106 101 29 134 98 100 32 34 10 108 27 97 109 31 28 35 102 104 107 37 105 12 115 33 129</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 101 29 32 100 28 108 10 129 98 115 107 106 34 97 31 134 35 104 122 27 109 33 102 12 37 105</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\sdram_debug\flexspi_hyper_ram_polling_transfer.out</name>
+            <outputs>
+                <tool>
+                    <name>ILINK</name>
+                    <file> 23 44</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ILINK</name>
+                    <file> 70 47 69 71 75 13 68 77 41 9 76 65 61 48 38 89 94 103 30 24 131</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\drivers\fsl_common.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 17 25 68</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 42</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 63</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 122 106 101 29 134 98 100 32 34 10 108 27 97 109 31 28 35 102 104 107 37 105 12 115 33 129</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 28 29 32 129 108 104 34 10 98 109 101 100 27 33 102 106 97 31 134 35 115 107 122 12 37 105</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\iar\startup_MIMXRT1052.s</name>
+            <outputs>
+                <tool>
+                    <name>AARM</name>
+                    <file> 89 87</file>
+                </tool>
+            </outputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\utilities\fsl_assert.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 53 20 75</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 6</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 26</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 122 106 101 29 134 98 100 32 34 10 108 27 97 109 31 28 35 102 104 107 37 105 12 115 33 129 112</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 29 105 34 108 31 101 115 106 97 134 35 112 32 10 28 129 98 100 27 109 33 102 12 37 122 104 107</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\drivers\fsl_gpio.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 19 8 9</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 67</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 40</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 136 122 106 101 29 134 98 100 32 34 10 108 27 97 109 31 28 35 102 104 107 37 105 12 115 33 129</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 101 28 32 100 27 29 108 122 10 129 98 115 107 106 34 97 31 134 35 104 136 109 33 102 12 37 105</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\utilities\io\fsl_io.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 43 51 76</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 4</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 45</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 127 122 106 101 29 134 98 100 32 34 10 108 27 97 109 31 28 35 102 104 107 37 105 12 115 33 129 124 128</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 10 35 29 28 129 98 108 104 34 32 128 122 101 100 27 124 106 97 31 134 115 107 127 109 33 102 12 37 105</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\drivers\fsl_lpuart.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 16 90 61</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 56</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 2</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 128 122 106 101 29 134 98 100 32 34 10 108 27 97 109 31 28 35 102 104 107 37 105 12 115 33 129</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 34 129 98 29 28 108 109 10 105 122 32 101 100 27 33 102 12 37 106 97 31 134 35 115 104 107 128</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\system_MIMXRT1052.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 96 15 94</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 80</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 22</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 34 101 29 134 98 100 28 35 102 104 107 37 105 12 115 33</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 134 33 102 12 37 29 28 101 98 100 35 115 34 105 104 107</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\utilities\log\fsl_log.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 58 3 65</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 84</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 49</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 120 122 106 101 29 134 98 100 32 34 10 108 27 97 109 31 28 35 102 104 107 37 105 12 115 33 129 124 127</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 29 108 34 106 122 31 101 115 127 97 134 35 12 37 124 32 10 28 129 98 100 27 109 33 102 105 120 104 107</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\utilities\str\fsl_str.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 74 39 48</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 7</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 46</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 99 101 29 134 98 100 36 97 108 109 133 122 106 32 34 10 27 31 28 35 102 104 107 37 105 12 115 33 129 124</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 31 29 105 101 108 124 98 34 97 100 109 122 106 33 102 12 37 110 133 36 134 32 10 28 129 27 35 115 104 107 99</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\drivers\fsl_flexspi.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 55 1 41</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 72</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 62</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 114 31 101 29 134 98 100 108 28 35 102 34 104 107 37 105 12 115 33 122 106 32 10 27 97 109 129</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 31 122 32 101 34 108 134 29 109 33 102 12 106 97 27 28 98 100 35 115 104 107 37 105 10 129 114</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\..\..\..\..\devices\MIMXRT1052\utilities\fsl_debug_console.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 21 18 77</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 78</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 92</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 97 101 29 134 98 100 108 109 112 122 106 32 34 10 27 31 28 35 102 104 107 37 105 12 115 33 129 124 120 133</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 29 34 129 104 28 27 35 32 120 101 10 112 134 109 122 108 115 97 124 133 98 100 106 31 33 102 107 110 12 37 105</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\flexspi_hyper_ram_polling_transfer.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 88 82 71</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 60</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 81</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 114 31 101 29 134 98 100 108 28 35 102 34 104 107 37 105 12 115 33 122 106 32 10 27 97 109 129 112 142 137 140 136</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 108 106 27 102 140 31 33 122 142 29 12 97 101 28 112 137 134 34 109 32 136 114 98 100 35 115 104 107 37 105 10 129</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\board.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 86 85 47</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 83</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 79</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 122 106 101 29 134 98 100 32 34 10 108 27 97 109 31 28 35 102 104 107 37 105 12 115 33 129 112 137 140 136</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 101 29 97 134 34 106 109 122 140 137 31 108 105 112 32 10 28 129 98 100 27 33 102 12 37 136 35 115 104 107</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\clock_config.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 91 50 69</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 54</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 11</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 140 122 106 101 29 134 98 100 32 34 10 108 27 97 109 31 28 35 102 104 107 37 105 12 115 33 129</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 27 101 32 100 28 29 122 10 129 98 108 115 107 106 34 97 31 134 35 104 140 109 33 102 12 37 105</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\pin_mux.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 52 59 38</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 57</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 14</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 122 106 101 29 134 98 100 32 34 10 108 27 97 109 31 28 35 102 104 107 37 105 12 115 33 129 118 142</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 29 106 134 34 97 109 142 31 101 108 105 118 32 10 28 129 98 100 27 33 102 12 37 122 35 115 104 107</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>[ROOT_NODE]</name>
+            <outputs>
+                <tool>
+                    <name>ILINK</name>
+                    <file> 64 23 44</file>
+                </tool>
+            </outputs>
+        </file>
+    </configuration>
+    <configuration>
+        <name>sdram_release</name>
+        <outputs />
+        <forcedrebuild>
+            <name>[MULTI_TOOL]</name>
+            <tool>ILINK</tool>
+        </forcedrebuild>
+        <forcedrebuild>
+            <name>[REBUILD_ALL]</name>
+        </forcedrebuild>
+    </configuration>
+</project>
